@@ -36,6 +36,10 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 			if(!user.is_localhost())
 				if(alert(user, "Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
 					return FALSE
+			// monkestation start - plexora
+			SSplexora.restart_requester = user.mob
+			SSplexora.restart_type = PLEXORA_SHUTDOWN_NORMAL
+			// monkestation end
 			SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", 10)
 		if("Regular Restart (with delay)")
 			var/delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
@@ -44,20 +48,37 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 			if(!user.is_localhost())
 				if(alert(user,"Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
 					return FALSE
+				// monkestation start - plexora
+				SSplexora.restart_requester = user.mob
+				SSplexora.restart_type = PLEXORA_SHUTDOWN_NORMAL
+				// monkestation end
 			SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", delay * 10)
 		if("Hard Restart (No Delay, No Feeback Reason)")
+				// monkestation start - plexora
+				SSplexora.restart_type = PLEXORA_SHUTDOWN_HARD
+				SSplexora.restart_requester = user.mob
+				// monkestation end
 			to_chat(world, "World reboot - [init_by]")
 			world.Reboot()
 		if("Hardest Restart (No actions, just reboot)")
+				// monkestation start - plexora
+				SSplexora.restart_type = PLEXORA_SHUTDOWN_HARDEST
+				SSplexora.restart_requester = user.mob
+				// monkestation end
 			to_chat(world, "Hard world reboot - [init_by]")
 			world.Reboot(fast_track = TRUE)
 		if("Server Restart (Kill and restart DD)")
+				// monkestation start - plexora
+				SSplexora.restart_type = PLEXORA_SHUTDOWN_KILLDD
+				SSplexora.restart_requester = user.mob
+				// monkestation end
 			to_chat(world, "Server restart - [init_by]")
 			world.TgsEndProcess()
 
 ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world reboot.", ADMIN_CATEGORY_SERVER)
 	if(!SSticker.cancel_reboot(user))
 		return
+	SSplexora.restart_requester = null // monkestation edit: Plexora
 	log_admin("[key_name(user)] cancelled the pending world reboot.")
 	message_admins("[key_name_admin(user)] cancelled the pending world reboot.")
 	BLACKBOX_LOG_ADMIN_VERB("Cancel Reboot") //MONKE EDIT added just in case?

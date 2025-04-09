@@ -1,7 +1,0 @@
-author: "Gw0sty"
-delete-after: True
-changes:
-  - rscadd: "Chameleon hats now can be used inhand to set hairstyles in ones disguise"
-  - balance: "Medical mech equipment now is also locked behind Odysseus research"
-  - balance: "Research access is now needed to unlock nanite remotes."
-  - code_imp: "Modularized some code"

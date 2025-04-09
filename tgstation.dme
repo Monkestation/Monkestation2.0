@@ -467,6 +467,7 @@
 #include "code\__DEFINES\~monkestation\pain.dm"
 #include "code\__DEFINES\~monkestation\particles.dm"
 #include "code\__DEFINES\~monkestation\physics.dm"
+#include "code\__DEFINES\~monkestation\plexora.dm"
 #include "code\__DEFINES\~monkestation\power.dm"
 #include "code\__DEFINES\~monkestation\projectiles.dm"
 #include "code\__DEFINES\~monkestation\quirk_costs.dm"

@@ -321,8 +321,8 @@
 			if(isliving(target))
 				var/mob/living/living = target
 				if(living.buckled)
-					living.buckled.unbuckle_mob(target, TRUE)
-			target.unbuckle_all_mobs(TRUE)
+					living.buckled.unbuckle_mob(target, force = TRUE)
+			target.unbuckle_all_mobs(force = TRUE)
 
 			if(!do_after(user, pack.speed, target, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
 				return
@@ -332,7 +332,7 @@
 			animation_matrix.Scale(0.5)
 			animation_matrix.Translate((user.x - target.x) * 32, (user.y - target.y) * 32)
 			animate(target, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, transform = animation_matrix, flags = ANIMATION_PARALLEL)
-			sleep(8)
+			sleep(0.8 SECONDS)
 			user.visible_message(span_warning("[user] sucks [target] into their [pack]!"), span_notice("You successfully suck [target] into your [src] and recycle it."))
 			qdel(target)
 			playsound(user, 'sound/machines/juicer.ogg', 50, TRUE)
@@ -452,14 +452,16 @@
 	if(!suck_checks(target, user))
 		return
 
+	target.ai_controller?.set_ai_status(AI_STATUS_OFF)
+	target.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, null)
 	if(!silent)
 		playsound(user, 'sound/effects/refill.ogg', 50, TRUE)
 	var/matrix/animation_matrix = target.transform
 	animation_matrix.Scale(0.5)
 	animation_matrix.Translate((user.x - target.x) * 32, (user.y - target.y) * 32)
 	animate(target, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, transform = animation_matrix, flags = ANIMATION_PARALLEL)
-	sleep(8)
-	target.unbuckle_all_mobs(TRUE)
+	sleep(0.8 SECONDS)
+	target.unbuckle_all_mobs(force = TRUE)
 	target.forceMove(pack)
 	pack.stored += target
 	if((VACUUM_PACK_UPGRADE_STASIS in pack.upgrades) && isslime(target))
@@ -470,9 +472,6 @@
 		user.visible_message(span_warning("[user] sucks [target] into their [pack]!"), span_notice("You successfully suck [target] into your [src]."))
 	var/mob/living/basic/slime/slime = target
 	slime.slime_flags |= STORED_SLIME
-	if(slime.ai_controller)
-		slime.ai_controller.set_ai_status(AI_STATUS_OFF)
-		slime.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, null)
 
 /obj/item/vacuum_nozzle/proc/start_busting(mob/living/basic/revenant/revenant, mob/living/user)
 	revenant.visible_message(span_warning("[user] starts sucking [revenant] into their [src]!"), span_userdanger("You are being sucked into [user]'s [src]!"))
@@ -493,10 +492,10 @@
 		//pack.ghost_busting.reveal(0.5 SECONDS, TRUE)
 
 /obj/item/vacuum_nozzle/proc/check_busting()
-	if(!pack.ghost_busting || !pack.ghost_busting.loc || QDELETED(pack.ghost_busting))
+	if(isnull(pack.ghost_busting?.loc) || QDELING(pack.ghost_busting))
 		return FALSE
 
-	if(!pack.ghost_buster || !pack.ghost_buster.loc || QDELETED(pack.ghost_buster))
+	if(isnull(pack.ghost_buster?.loc) || QDELING(pack.ghost_buster))
 		return FALSE
 
 	if(loc != pack.ghost_buster)

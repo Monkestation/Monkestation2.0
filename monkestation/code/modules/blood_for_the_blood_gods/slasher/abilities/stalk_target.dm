@@ -30,8 +30,8 @@
 
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	slasherdatum.stalk_precent = 0
-	if(slasherdatum && slasherdatum.stalked_human)
-		slasherdatum.stalked_human.tracking_beacon.Destroy()
+	if(slasherdatum?.stalked_human)
+		QDEL_NULL(slasherdatum.stalked_human.tracking_beacon)
 		var/datum/component/team_monitor/owner_monitor = owner.mind.current.team_monitor
 		owner_monitor.hide_hud()
 
@@ -42,8 +42,7 @@
 		owner_human.team_monitor = owner_human.AddComponent(/datum/component/team_monitor, "slasher", null, owner_human.tracking_beacon)
 
 	living_target.tracking_beacon = living_target.AddComponent(/datum/component/tracking_beacon, "slasher", null, null, TRUE, "#660000")
-	if(slasherdatum)
-		slasherdatum.stalked_human = living_target
+	slasherdatum?.stalked_human = living_target
 	owner_human.team_monitor.add_to_tracking_network(living_target.tracking_beacon)
 	owner_human.team_monitor.show_hud(owner_human)
 

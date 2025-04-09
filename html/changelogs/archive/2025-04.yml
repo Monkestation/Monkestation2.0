@@ -171,3 +171,13 @@
   - rscdel: Removed the proto-kinetic grenade launcher.
   - qol: The storyteller will no longer roll antags after the emergency shuttle is
       past the point of no return.
+  Gw0sty:
+  - rscadd: Chameleon hats now can be used inhand to set hairstyles in ones disguise
+  - balance: Medical mech equipment now is also locked behind Odysseus research
+  - balance: Research access is now needed to unlock nanite remotes.
+  - code_imp: Modularized some code
+  Shoddd:
+  - balance: flechette is now weak against armor
+  flleeppyy:
+  - rscadd: Observe verb
+  - rscdel: Replying to mentorhelps via Discord

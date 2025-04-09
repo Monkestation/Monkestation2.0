@@ -1,0 +1,12 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Optimized some more stuff, reducing the potential for server-side lag (time dilation) in some situations."
+  - bugfix: "Chat messages now actually queue as intended."
+  - bugfix: "Fixed improperly cleaning up memories when a mind is deleted."
+  - bugfix: "Messages sent to MMIs in wiremod components now have a 1 second cooldown, to prevent massive spam."
+  - code_imp: "(mc-oofet) Basic mobs that delete on death now ghost before dying."
+  - bugfix: "(SmArtKar, Kapu) Atmospheric tanks no longer fetch icons every tick"
+  - bugfix: "(tontyGH) Pubby's whiteship no longer breaks when it tries to dock."
+  - bugfix: "(SmArtKar) Fixed a Honkerblast 5000 runtime."
+  - bugfix: "(Melbert) Fixed an error from reading an ID card closely when you can't read."
