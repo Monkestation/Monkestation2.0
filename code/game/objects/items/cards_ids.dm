@@ -792,6 +792,7 @@
 	return access.Copy()
 
 /obj/item/card/id/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	return src
 
 /obj/item/card/id/RemoveID()

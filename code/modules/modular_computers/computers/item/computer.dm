@@ -214,6 +214,7 @@
 	return ..()
 
 /obj/item/modular_computer/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	if(computer_id_slot)
 		return computer_id_slot
 	return ..()
