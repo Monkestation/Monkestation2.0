@@ -80,12 +80,12 @@
 
 /mob/proc/force_music(var/url, var/start, var/volume=1)
 	if (client?.media)
-		if(url == "")
-			client.media.forced = 0
+		if(!url)
+			client.media.forced = FALSE
 			client.media.update_music()
 		else
-			client.media.forced = 1
-			client.media.push_music(url, start, volume)
+			client.media.forced = TRUE
+			client.media.push_music(url, start, volume, force = TRUE)
 	return
 
 //
@@ -142,11 +142,11 @@
 	MP_DEBUG("<span class='good'>Sending update to mediapanel ([url], [(world.time - start_time) / 10], [volume * source_volume])...</span>")
 	owner << output(list2params(list(url, (world.time - start_time) / 10, volume * source_volume, balance)), "[WINDOW_ID]:SetMusic")
 
-/datum/media_manager/proc/push_music(var/targetURL, var/targetStartTime, var/targetVolume, var/targetBalance)
+/datum/media_manager/proc/push_music(targetURL, targetStartTime, targetVolume, targetBalance, force = FALSE)
 	if(targetVolume != source_volume)
 		push_volume_recalc(targetVolume)
 
-	if (url != targetURL || abs(targetStartTime - start_time) > 1)
+	if (force || url != targetURL || abs(targetStartTime - start_time) > 1)
 		url = targetURL
 		start_time = targetStartTime
 		source_volume = clamp(targetVolume, 0, 1)
@@ -154,7 +154,7 @@
 		send_update()
 
 /datum/media_manager/proc/stop_music()
-	push_music("", 0, 1)
+	push_music("", 0, 1, force = TRUE)
 
 /datum/media_manager/proc/update_volume(var/value)
 	volume = value

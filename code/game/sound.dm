@@ -307,8 +307,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		media2.set_position(0, 0)
 		media2.play(T.url)
 	else
-		media.push_music(T.url, world.time, 1)
-		media.update_volume(vol * 0.01) // this makes it easier if we modify volume later on
+		media.push_music(T.url, world.time, 1, force = TRUE)
+		media.update_volume(vol) // this makes it easier if we modify volume later on
 	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
 
 /proc/get_rand_frequency()

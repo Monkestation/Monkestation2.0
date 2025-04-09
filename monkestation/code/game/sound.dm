@@ -82,7 +82,7 @@
 			if(client?.byond_version >= 516)
 				client?.media2?.set_volume(new_lobby_volume)
 			else
-				client?.media?.update_volume(new_lobby_volume * 0.01)
+				client?.media?.update_volume(new_lobby_volume)
 
 	var/sound/S = sound(null, channel = channel, volume = vol)
 	S.status = SOUND_UPDATE
