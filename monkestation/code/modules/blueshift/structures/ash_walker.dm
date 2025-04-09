@@ -264,11 +264,11 @@
 
 /obj/structure/railroad/Initialize(mapload)
 	. = ..()
-	for(var/obj/structure/railroad/rail in range(2, src))
+	for(var/obj/structure/railroad/rail in orange(2, src))
 		rail.change_look()
 
 /obj/structure/railroad/Destroy()
-	for(var/obj/structure/railroad/rail in range(2, src))
+	for(var/obj/structure/railroad/rail in orange(2, src))
 		rail.change_look(src)
 	return ..()
 
