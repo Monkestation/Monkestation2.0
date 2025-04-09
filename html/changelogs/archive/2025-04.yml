@@ -190,6 +190,10 @@
   - code_imp: Modularized some code
   Shoddd:
   - balance: flechette is now weak against armor
+  Tostah:
+  - rscadd: When something is implanted with a hive node, grant them the ability to
+      speak Xenocommon
+  - rscadd: New Traitor Misc. Gear; Xenomorph Hive Node Implanter for 5tc.
   flleeppyy:
   - rscadd: Observe verb
   - rscdel: Replying to mentorhelps via Discord
