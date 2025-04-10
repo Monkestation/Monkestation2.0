@@ -9,7 +9,7 @@
 	light_color = COLOR_SOFT_RED
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "syndicate"
-	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"
+	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_depot_dock;syndicate_custom" //MONKESTATION EDIT: syndicate depot lmao
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 
@@ -58,7 +58,7 @@
 	shuttleId = "syndicate"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "syndicate_custom"
-	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1)
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "syndicate_depot_dock" = 1) //MONKESTATION EDIT: syndicate depot
 	view_range = 5.5
 	x_offset = -7
 	y_offset = -1
