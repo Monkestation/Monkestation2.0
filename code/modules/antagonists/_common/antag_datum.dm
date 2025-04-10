@@ -454,11 +454,11 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 /// result of `get_preview_icon` is expected to be the completed version.
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
 	if(!isnull(GLOB.cached_antag_previews[outfit]))
-		return GLOB.cached_antag_previews[outfit]
+		return icon(GLOB.cached_antag_previews[outfit])
 	dummy ||= new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	var/icon = getFlatIcon(dummy)
-	GLOB.cached_antag_previews[outfit] = icon
+	GLOB.cached_antag_previews[outfit] = icon(icon)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
 	SSatoms.prepare_deletion(dummy)
