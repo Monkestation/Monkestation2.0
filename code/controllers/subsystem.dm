@@ -280,6 +280,7 @@
 		queue_node.queue_prev.queue_next = src
 		queue_prev = queue_node.queue_prev
 		queue_node.queue_prev = src
+	return TRUE
 
 
 /datum/controller/subsystem/proc/dequeue()
