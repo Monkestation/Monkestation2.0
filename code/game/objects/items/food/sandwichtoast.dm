@@ -268,7 +268,7 @@
 	consumer.visible_message(span_danger(span_boldbig("[consumer.name] ate it wrong!!!")))
 	explosion(consumer, 0, 0, 0, 0, 0, TRUE, FALSE, FALSE, FALSE)
 	consumer.gib(FALSE, TRUE, TRUE)
-
+	log_admin("[consumer.name] has died to a death sandwich.")
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
