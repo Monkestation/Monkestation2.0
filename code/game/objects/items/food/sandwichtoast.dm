@@ -265,8 +265,8 @@
 		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
 		return
 		//Its funnier that if you eat it wrong you just fucking explode.
-	consumer.gib(FALSE, TRUE, TRUE)
 	consumer.visible_message("[consumer.name] ate it wrong!!!")
+	consumer.gib(FALSE, TRUE, TRUE)
 
 /**
 * Callback to be used with the edible component.
