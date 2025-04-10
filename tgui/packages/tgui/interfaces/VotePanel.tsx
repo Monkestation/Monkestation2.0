@@ -214,7 +214,9 @@ const ChoicesPanel = (props) => {
                         name="vote-yea"
                       />
                     )}
-                  {choice.votes} Votes
+                  {currentVote.displayStatistics
+                    ? choice.votes + ' Votes'
+                    : null}
                 </LabeledList.Item>
                 <LabeledList.Divider />
               </Box>

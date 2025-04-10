@@ -1,8 +1,9 @@
 /datum/vote/map_vote
 	name = "Map"
 	message = "Vote for next round's map!"
-	count_method = VOTE_COUNT_METHOD_MULTI
+	count_method = VOTE_COUNT_METHOD_SINGLE
 	winner_method = VOTE_WINNER_METHOD_SIMPLE //MONKESTATION EDIT, SCREW WEIGHTED RANDOM
+	display_statistics = TRUE // MONKESTATION EDIT, TRUE
 	donator_multiplier = 3 //monkestation addition
 
 /datum/vote/map_vote/New()
