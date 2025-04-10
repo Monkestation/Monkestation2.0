@@ -106,8 +106,10 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
+/*
 	var/avg_iter_count = 0
 	var/avg_drift = 0
+*/
 	/* var/list/enqueue_log = list() */
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
@@ -195,10 +197,11 @@
 	var/queue_node_priority
 	var/queue_node_flags
 
-	var/iter_count = 0
+	/* var/iter_count = 0 */
 
 	/* enqueue_log.Cut() */
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
+/*
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
@@ -207,10 +210,16 @@
 			/* enqueue_log.Cut() */
 			Recreate_MC()
 			return
-
+*/
 
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
+
+		if (queue_node.queue_next == queue_node || queue_node.queue_prev == queue_node)
+			// Log the error for debugging
+			SSplexora.mc_alert("SS:[queue_node] had self-reference in queue. Fixed")
+			message_admins("SS:[queue_node] had self-reference in queue. Fixed.")
+			return FALSE
 
 		/* enqueue_log["[iter_count]"] = list(
 			"node" = "[queue_node]",
@@ -239,10 +248,12 @@
 			if (queue_node_priority < SS_priority)
 				break
 
+/*
 	if(iter_count > 0)
 		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
 		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
 		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift
+*/
 
 	queued_time = world.time
 	queued_priority = SS_priority
