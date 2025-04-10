@@ -267,7 +267,7 @@
 		//Its funnier that if you eat it wrong you just fucking explode.
 	consumer.visible_message(span_danger(span_boldbig("[consumer.name] ate it wrong!!!")))
 	explosion(consumer, 0, 0, 0, 0, 0, FALSE, FALSE, FALSE, FALSE)
-	new /obj/effect/temp_visual/explosion(get_turf[src], 2, COLOR_ORANGE, TRUE, FALSE)
+	new /obj/effect/temp_visual/explosion(get_turf(src), 2, COLOR_ORANGE, TRUE, FALSE)
 	consumer.gib(FALSE, TRUE, TRUE)
 	log_admin("[consumer.name] has died to a death sandwich.")
 	var/msg = span_notice("[consumer.name] has died to a death sandwich.")
