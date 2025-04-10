@@ -266,7 +266,7 @@
 		return
 		//Its funnier that if you eat it wrong you just fucking explode.
 	consumer.gib(FALSE, TRUE, TRUE)
-	to_chat(viewer, ("[consumer.name] ate it wrong!!!"))
+	to_chat(span_notice, ("[consumer.name] ate it wrong!!!"))
 
 /**
 * Callback to be used with the edible component.
