@@ -62,7 +62,7 @@
 #endif
 	SEND_TEXT(world.log, text)
 
-#ifdef ENABLE_ENQUEUE_LOGGING
+/*
 /proc/log_enqueue(text, list/data)
 	logger.Log(LOG_CATEGORY_ENQUEUE, text, data)
-#endif
+*/
