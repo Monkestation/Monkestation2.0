@@ -126,6 +126,10 @@
  * If it fails to meet that criteria, than it is incompatible and this proc returns FALSE. If it is compatibile returns TRUE
  */
 /obj/item/organ/internal/cyberimp/proc/check_compatibility()
+	if(QDELETED(owner))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_BYPASS_CYBERLINK))
+		return TRUE
 	var/obj/item/organ/internal/cyberimp/cyberlink/link = owner.get_organ_slot(ORGAN_SLOT_LINK)
 
 	for(var/info in encode_info)

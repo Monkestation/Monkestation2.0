@@ -133,13 +133,9 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas, empty)
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
-	H.hardset_dna(ui, mutation_index, null, clonename, blood_type, mrace, features)
 	if(panel_open)
 		return NONE
 	if(mess || attempting)
-		return NONE
-	if(H.mob_biotypes & MOB_ROBOTIC) // MONKESTATION ADDITION - no cloning robots.
 		return NONE
 	if(!empty) //Doesn't matter if we're just making a copy
 		clonemind = locate(mindref) in SSticker.minds
@@ -158,6 +154,10 @@
 		current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
+
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
+
+	H.hardset_dna(ui, mutation_index, null, clonename, blood_type, mrace, features)
 
 	if(!HAS_TRAIT(H, TRAIT_RADIMMUNE))//dont apply mutations if the species is Mutation proof.
 		if(efficiency > 2)
@@ -327,7 +327,7 @@
 		if(istype(P.buffer, /obj/machinery/computer/cloning))
 			if(get_area(P.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				P.set_buffer(null)
 				return
 			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/computer/cloning/comp = P.buffer
@@ -335,8 +335,8 @@
 				connected.DetachCloner(src)
 			comp.AttachCloner(src)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			P.set_buffer(src)
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
 		return
 
 	var/mob/living/mob_occupant = occupant

@@ -8,7 +8,7 @@
 	icon = FA_ICON_QUESTION
 
 /datum/quirk/tunnel_vision/add(client/client_source)
-	var/range_name = client_source?.prefs.read_preference(/datum/preference/choiced/tunnel_vision_fov) || "Minor (90 Degrees)"
+	var/range_name = client_source?.prefs?.read_preference(/datum/preference/choiced/tunnel_vision_fov) || "Minor (90 Degrees)"
 	var/fov_range
 	switch(range_name)
 		if ("Severe (270 Degrees)")

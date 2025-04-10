@@ -15,72 +15,13 @@
 			confidential = TRUE)
 		return
 	if(!chosen_client)
-		if(is_mentor())
-			if(findtext(whom, "Discord"))
-				if(!msg)
-					msg = input(src,"Message:", "Private message") as text|null
-
-					if(!msg)
-						return
-				to_chat(src,
-				type = MESSAGE_TYPE_MODCHAT,
-				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(whom, TRUE, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
-				confidential = TRUE)
-
-				var/id = "None"
-				var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
-				if(request)
-					id = "[request.id]"
-					if (ismob(whom))
-						SSplexora.mticket_pm(request, src.mob, whom, msg)
-					else if (istype(whom, /client))
-						var/client/whom_client = whom
-						SSplexora.mticket_pm(request, src.mob, whom_client.mob, msg)
-
-				var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-				if(regular_webhook_url)
-					var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
-					if(!embed)
-						return
-					send2mentorchat_webhook(embed, key)
-
-				return
+		if(findtext(whom, "Discord"))
 			to_chat(src,
 				type = MESSAGE_TYPE_MODCHAT,
-				html = "<font color='red'>Error: Mentor-PM: Client not found.</font>",
-				confidential = TRUE)
-		else
-			if(findtext(whom, "Discord"))
-				if(!msg)
-					msg = input(src,"Message:", "Private message") as text|null
-
-					if(!msg)
-						return
-				to_chat(src,
-				type = MESSAGE_TYPE_MODCHAT,
-				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(whom, TRUE, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
-				confidential = TRUE)
-
-				var/id = "None"
-				var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
-				if(request)
-					id = "[request.id]"
-					if (ismob(whom))
-						SSplexora.mticket_pm(request, src.mob, whom, msg)
-					else if (istype(whom, /client))
-						var/client/whom_client = whom
-						SSplexora.mticket_pm(request, src.mob, whom_client.mob, msg)
-
-				var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-				if(regular_webhook_url)
-					var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
-					if(!embed)
-						return
-					send2mentorchat_webhook(embed, key)
-
-				return
-			/// Mentor we are replying to left. Mentorhelp instead.
-			mentorhelp(msg)
+				html = span_warning("Unfortunately, replying to Discord mentor replys are disabled because the mentor ticket system lacks functionality that Plexora needs.")
+			)
+			return
+		mentorhelp(msg)
 		return
 
 	/// Get message text, limit it's length.and clean/escape html
@@ -148,8 +89,6 @@
 			var/datum/request/request = GLOB.mentor_requests.requests[chosen_client.ckey][length(GLOB.mentor_requests.requests[chosen_client.ckey])]
 			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, html_decode(msg))
 
-
-
 	var/id = "None"
 
 	if(!is_mentor())
@@ -163,13 +102,6 @@
 
 	if(is_mentor() && chosen_client.is_mentor())
 		id = "Both Mentors, ID Retrival may be wrong: [id]"
-
-	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-	if(regular_webhook_url)
-		var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
-		if(!embed)
-			return
-		send2mentorchat_webhook(embed, key)
 
 	/// We don't use message_Mentors here because the sender/receiver might get it too
 	for(var/client/honked_clients in GLOB.mentors | GLOB.admins)

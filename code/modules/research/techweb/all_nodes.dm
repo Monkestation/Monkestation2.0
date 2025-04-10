@@ -146,6 +146,7 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
+		"modlink_scryer", // monkestation addition
 	)
 
 /datum/techweb_node/basic_tools

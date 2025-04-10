@@ -492,9 +492,6 @@ DEFAULT_VIEW_SQUARE 15x15
 ## See above, but for non-urgent ahelps
 #REGULAR_ADMINHELP_WEBHOOK_URL
 
-##See above, but for non-urgent mhelps
-#REGULAR_MENTORHELP_WEBHOOK_URL
-
 ## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
 URGENT_AHELP_COOLDOWN 300
 
@@ -572,3 +569,6 @@ CONFIG_ERRORS_RUNTIME
 ## The age in days if minimum account age is on
 #MINIMUM_AGE
 
+## Tgui payloads larger than the 2kb limit for BYOND topic requests are split into roughly 1kb chunks and sent in sequence.
+## This config option limits the maximum chunk count for which the server will accept a payload, default is 32
+TGUI_MAX_CHUNK_COUNT 32

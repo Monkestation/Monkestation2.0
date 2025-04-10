@@ -622,6 +622,59 @@
   - rscadd: Lisp Quirk
   - balance: the heroic laser musket now appears in the black market less
 2025-03-30:
+  Absolucy:
+  - bugfix: Fixed some various minor bugs and errors.
+  - bugfix: (Sealed101, Melbert) The colossus's finale attack is now 100x more lethal,
+      because it was firing 100x fewer projectiles than intended, although it starts
+      after a half-second delay.
+  - bugfix: The shuttle now takes 10 minutes to arrive on Yellow and Amber alert as
+      intended, rather than being a free redcall.
+  Absolucy, dwasint:
+  - bugfix: Fixed afterimage effects (i.e from the damned rabbit mask) not working.
+  - bugfix: Fixed afterimage effects potentially being very laggy client-side while
+      holding a light.
+  - bugfix: Fixed afterimage effects not properly rotating when the parent did, such
+      as when the parent was lying down.
+  Gw0sty:
+  - qol: Research nodes can be queued, one per player. RDs can place their node at
+      the beginning of the queue.
   TheMrGlasses:
   - balance: Changed the requirements to properly eat the death sandwich to be more
       reference accurate.
+  Ziiro:
+  - rscadd: Two new IPC surgeries have been added to resolve Toxin and Oxygen damage
+      on dead IPCs!
+  - bugfix: Clone pods can no longer create MOB_ROBOTIC bodies
+2025-03-31:
+  Absolucy:
+  - rscadd: You can now attach an internals tank to Vims if they don't have one already.
+  - qol: You can no longer use empty tanks (or any tank with pressure below the habitable
+      threshold) for a Vim.
+  - bugfix: Fixed freerange radios/intercoms being able to broadcast over the radio
+      frequency.
+  - map: Fixed a lot of cameras that were improperly mapped in, resulting in them
+      not showing up on camera consoles.
+  - rscadd: Stat Panel now scales like a chat, depends on the font size. Defaults
+      from the chat font size, but you can separate it.
+  - refactor: (Aylong) Refactored Stat Panel styles and Byond skin theme applying.
+      Stat Panel now looks more like a tgui.
+  - qol: (Aylong) Sidebar has lost its bulging white lines. And top right buttons
+      now flat.
+  - code_imp: (TiviPlus) Made it easier to set custom orders for stat panel tabs in
+      code
+  - bugfix: (TiviPlus) Fixed stat panel turf list menu clicks only working on the
+      text
+  - bugfix: Forcefully reconnecting or disconnecting the chatbox websocket now properly
+      works.
+  Absolucy, Y0SH1M4S73R:
+  - code_imp: Any tgui message that would be too big to send to the server is now
+      split into chunks and sent in sequence. This fixes several issues, such as...
+  - bugfix: It is once again possible to save large amounts of text on paper at once.
+  Gw0sty:
+  - rscadd: Added several experiments for research.
+  - balance: Cargo teleporters now require miniaturised blue space.
+  - balance: Emergency medical beds now require advanced biotech
+  - balance: Less comfortable, and portable medical beds have been provided to the
+      stations instead of emergancy medical beds.
+  - bugfix: Emergency medical beds are no longer coated with a diamond/blue space
+      mix blanket.

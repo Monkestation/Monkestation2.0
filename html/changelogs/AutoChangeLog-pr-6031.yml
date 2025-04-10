@@ -1,4 +1,0 @@
-author: "Ziiro"
-delete-after: True
-changes:
-  - bugfix: "Clone pods can no longer create MOB_ROBOTIC bodies"

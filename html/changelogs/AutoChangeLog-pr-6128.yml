@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "The shuttle now takes 10 minutes to arrive on Yellow and Amber alert as intended, rather than being a free redcall."
