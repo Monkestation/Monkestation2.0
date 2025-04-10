@@ -135,6 +135,9 @@
   Guillaume Prata:
   - balance: The Atmospheric MODsuit now comes pre equipped with the quick carry module.
       Go save some lives!
+  Gw0sty:
+  - balance: Research now generates at 1 point per second, all other metrics based
+      on this number follow suite.
   Jacquerel:
   - rscadd: pAIs can be inserted into MODsuits and can control suit modules (but are
       not capable of moving the suit).
@@ -163,3 +166,34 @@
   stonetear:
   - bugfix: jetpack signals now pass a user argument.  This fixes an error when automatically
       stowing a captain jetpack into your modsuit.
+2025-04-09:
+  Absolucy:
+  - rscdel: Removed the proto-kinetic grenade launcher.
+  - qol: The storyteller will no longer roll antags after the emergency shuttle is
+      past the point of no return.
+  - bugfix: Optimized some more stuff, reducing the potential for server-side lag
+      (time dilation) in some situations.
+  - bugfix: Chat messages now actually queue as intended.
+  - bugfix: Fixed improperly cleaning up memories when a mind is deleted.
+  - bugfix: Messages sent to MMIs in wiremod components now have a 1 second cooldown,
+      to prevent massive spam.
+  - code_imp: (mc-oofet) Basic mobs that delete on death now ghost before dying.
+  - bugfix: (SmArtKar, Kapu) Atmospheric tanks no longer fetch icons every tick
+  - bugfix: (tontyGH) Pubby's whiteship no longer breaks when it tries to dock.
+  - bugfix: (SmArtKar) Fixed a Honkerblast 5000 runtime.
+  - bugfix: (Melbert) Fixed an error from reading an ID card closely when you can't
+      read.
+  Gw0sty:
+  - rscadd: Chameleon hats now can be used inhand to set hairstyles in ones disguise
+  - balance: Medical mech equipment now is also locked behind Odysseus research
+  - balance: Research access is now needed to unlock nanite remotes.
+  - code_imp: Modularized some code
+  Shoddd:
+  - balance: flechette is now weak against armor
+  Tostah:
+  - rscadd: When something is implanted with a hive node, grant them the ability to
+      speak Xenocommon
+  - rscadd: New Traitor Misc. Gear; Xenomorph Hive Node Implanter for 5tc.
+  flleeppyy:
+  - rscadd: Observe verb
+  - rscdel: Replying to mentorhelps via Discord

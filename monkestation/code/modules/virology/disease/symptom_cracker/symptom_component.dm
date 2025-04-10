@@ -110,8 +110,8 @@
 
 	puzzle = new(difficulty = text2num(initial(current_choice.badness)) + 1, parent = src)
 
-	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_SUCCESS, PROC_REF(on_puzzle_success))
-	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_FAILURE, PROC_REF(on_puzzle_fail))
+	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_SUCCESS, PROC_REF(on_puzzle_success), override = TRUE)
+	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_FAILURE, PROC_REF(on_puzzle_fail), override = TRUE)
 	puzzle.ui_interact(user)
 
 
