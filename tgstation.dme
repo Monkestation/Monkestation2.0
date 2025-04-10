@@ -6167,6 +6167,7 @@
 #include "monkestation\code\game\objects\effects\random\ai_module.dm"
 #include "monkestation\code\game\objects\effects\spawners\roomspawner.dm"
 #include "monkestation\code\game\objects\effects\spawners\random\fishing.dm"
+#include "monkestation\code\game\objects\effects\temporary_visuals\explosions.dm"
 #include "monkestation\code\game\objects\items\admin_plushies.dm"
 #include "monkestation\code\game\objects\items\amogus_potion.dm"
 #include "monkestation\code\game\objects\items\caneswords.dm"
