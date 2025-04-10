@@ -36,12 +36,6 @@
 /mob/living/carbon/human/species/goblin
     race = /datum/species/goblin
 
-/datum/language_holder/goblin
-	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/goblin = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-							/datum/language/goblin = list(LANGUAGE_ATOM))
-
 /datum/species/goblin/get_species_description()
 	return "A species of small green humanoids. Reknown for their stealth, they are also primarily known for their skill in tinkering and construction, which is on the level of dwarves."
 
