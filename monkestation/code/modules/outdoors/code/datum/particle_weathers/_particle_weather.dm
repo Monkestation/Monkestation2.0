@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /datum/looping_sound/dust_storm
 	mid_sounds = 'monkestation/code/modules/outdoors/sound/weather/dust/weather_dust.ogg'
-	mid_length = 80
+	mid_length = 8 SECONDS
 	volume = 150
 
 /datum/looping_sound/rain
