@@ -45,7 +45,8 @@
 			stack_trace("Got '[custom_count_method]' in create_vote() for custom voting.")
 			to_chat(vote_creator, span_boldwarning("Unknown choice method. Contact a coder."))
 			return FALSE
-		var/custom_win_method = tgui_input_list(
+
+	var/custom_win_method = tgui_input_list(
 		user = vote_creator,
 		message = "How should the vote winner be determined?",
 		title = "Winner Method",
@@ -57,12 +58,15 @@
 			winner_method = VOTE_WINNER_METHOD_SIMPLE
 		if("Weighted Random")
 			winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
+		if("No Winner")
+			winner_method = VOTE_WINNER_METHOD_NONE
 		if(null)
 			return FALSE
 		else
 			stack_trace("Got '[custom_win_method]' in create_vote() for custom voting.")
 			to_chat(vote_creator, span_boldwarning("Unknown winner method. Contact a coder."))
 			return FALSE
+
 
 	var/display_stats = tgui_alert(
 		vote_creator,

@@ -336,6 +336,7 @@ SUBSYSTEM_DEF(vote)
 		if(!istype(vote))
 			continue
 
+		var/can_vote = vote.can_be_initiated(is_lower_admin)
 		var/list/vote_data = list(
 			"name" = vote_name,
 			"canBeInitiated" = can_vote == VOTE_AVAILABLE,

@@ -228,14 +228,6 @@
 	returned_text += "\n"
 	returned_text += get_winner_text(all_winners, real_winner, non_voters)
 
-	return returned_text
-
-	if(!real_winner) // vote has no winner or cannot be won, but still had votes
-		return returned_text
-
-	returned_text += "\n"
-	returned_text += get_winner_text(all_winners, real_winner, non_voters)
-
 	return fieldset_block(title_text, returned_text, "boxed_message purple_box")
 
 /**
