@@ -13,7 +13,7 @@
 	landmark =  GLOB.wonderland_marks["Wonderland landmark"]
 
 /datum/action/cooldown/wonderland_drop/Activate()
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	StartCooldown(360 SECONDS)
 	var/mob/living/sleeper = owner
 	if(QDELETED(landmark))
 		return

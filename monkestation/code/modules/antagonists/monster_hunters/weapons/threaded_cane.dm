@@ -1,6 +1,7 @@
 /obj/item/melee/trick_weapon/threaded_cane
 	name = "Threaded Cane"
 	desc = "A blind man's whip."
+	ui_desc = "A cane made out of heavy metal, can transform into a whip to strike foes from afar."
 	icon_state = "threaded_cane"
 	base_icon_state = "threaded_cane"
 	inhand_icon_state = "threaded_cane"
