@@ -105,7 +105,7 @@
 		"scanner_gate_shell",
 		"scanner_shell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/bci_shells
 	id = "bci_shells"
@@ -125,7 +125,7 @@
 		"comp_thought_listener",
 		"comp_vox",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 
 /datum/techweb_node/movable_shells_tech
 	id = "movable_shells"
@@ -137,7 +137,7 @@
 		"comp_pull",
 		"drone_shell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/server_shell_tech
 	id = "server_shell"
@@ -147,4 +147,4 @@
 	design_ids = list(
 		"server_shell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

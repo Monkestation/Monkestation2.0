@@ -163,12 +163,10 @@
 				human.clear_fullscreen("slasher_prox", 15)
 				mobs_with_fullscreens -= held
 
-		for(var/mob/living/carbon/human/mobs_in_view as anything in view(7, human))
+		for(var/mob/living/carbon/human/mobs_in_view in view(7, human))
 			var/datum/mind/mind_in_view = mobs_in_view.mind
 			if(!mind_in_view.has_antag_datum(/datum/antagonist/slasher))
 				reduce_fear(human, 2)
-			else
-				continue
 
 
 	for(var/datum/weakref/held_ref as anything in (heartbeats - currently_beating))
@@ -267,7 +265,7 @@
 	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
 	stalked_human.clear_alert("slashing_stalkee")
 	owner.current.clear_alert("slashing_stalker")
-	stalked_human.tracking_beacon.Destroy()
+	QDEL_NULL(stalked_human.tracking_beacon)
 	var/mob/living/carbon/human/human = owner.current
 	var/datum/component/team_monitor/owner_monitor = human.team_monitor
 	owner_monitor.hide_hud()
@@ -295,8 +293,8 @@
 	stalked_human.emote("scream")
 	stalked_human.say("AAAAAAHHHH!!!", forced = "soulsucked")
 	souls_sucked++
-	if(stalked_human && stalked_human.tracking_beacon)
-		stalked_human.tracking_beacon.Destroy()
+	if(stalked_human?.tracking_beacon)
+		QDEL_NULL(stalked_human.tracking_beacon)
 		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
 		owner_monitor?.hide_hud(owner)
 	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
@@ -311,7 +309,7 @@
 		linked_machette.force -= 5
 		linked_machette.throwforce -= 5
 	if(stalked_human && stalked_human.tracking_beacon)
-		stalked_human.tracking_beacon.Destroy()
+		QDEL_NULL(stalked_human.tracking_beacon)
 		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
 		owner_monitor.hide_hud(owner)
 		owner.current.clear_alert("slashing_stalking")

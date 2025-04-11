@@ -7,13 +7,30 @@ import {
   Flex,
   Stack,
   Section,
+  Icon,
+  DmIcon,
 } from '../components';
 import { Window } from '../layouts';
-import { LobbyNotices } from './common/LobbyNotices';
+import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
+
+type Item = {
+  path: string;
+  name: string;
+  cost: number;
+  icon: string;
+  icon_state: string;
+};
+
+type Data = {
+  notices: LobbyNoticesType;
+  currently_owned?: string;
+  balance: number;
+  items: Item[];
+};
 
 const ItemListEntry = (props) => {
   const {
-    product: { name, cost, image },
+    product: { name, cost, icon, icon_state },
     disabled,
     onClick,
   } = props;
@@ -22,19 +39,20 @@ const ItemListEntry = (props) => {
     <>
       <Flex direction="row" align="center">
         <Flex.Item>
-          <img
-            src={`data:image/png;base64,${image}`}
-            style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
-            }}
+          <DmIcon
+            icon={icon}
+            icon_state={icon_state}
+            fallback={<Icon mr={1} name="spinner" spin />}
+            height={'32px'}
+            width={'32px'}
+            verticalAlign="middle"
           />
         </Flex.Item>
         <Flex.Item grow={1}>
           <Box bold>{name}</Box>
         </Flex.Item>
         <Flex.Item>
-          {`Cost: ${cost}`} <i class="fa-solid fa-coins" />
+          {`Cost: ${cost}`} <Icon name="coins" pr={1} />
         </Flex.Item>
         <Flex.Item>
           <Button onClick={onClick} disabled={disabled}>
@@ -48,14 +66,16 @@ const ItemListEntry = (props) => {
 };
 
 export const PreRoundStore = (_props) => {
-  const { act, data } = useBackend();
-  const { balance, items, currently_owned } = data;
+  const {
+    act,
+    data: { notices, balance, items, currently_owned },
+  } = useBackend<Data>();
 
   return (
     <Window resizable title="Pre Round Shop" width={450} height={700}>
       <Window.Content scrollable>
         <Section>
-          <LobbyNotices notices={data.notices} />
+          <LobbyNotices notices={notices} />
           <BlockQuote>
             Purchase an item that will spawn with you round start!
           </BlockQuote>
@@ -71,7 +91,7 @@ export const PreRoundStore = (_props) => {
               <Section>
                 <Flex direction="row" align="center">
                   <Box>
-                    Balance: {balance} <i class="fa-solid fa-coins" />
+                    Balance: {balance} <Icon name="coins" />
                   </Box>
                 </Flex>
               </Section>

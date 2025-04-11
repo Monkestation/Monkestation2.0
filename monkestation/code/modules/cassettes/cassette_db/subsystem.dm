@@ -11,6 +11,9 @@ SUBSYSTEM_DEF(cassette_storage)
 	generate_cassette_datums()
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/cassette_storage/Recover()
+	cassette_datums = SScassette_storage.cassette_datums.Copy()
+
 /datum/controller/subsystem/cassette_storage/proc/generate_cassette_datums()
 	for(var/id in GLOB.approved_ids)
 		var/datum/cassette_data/new_data = new
