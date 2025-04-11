@@ -152,7 +152,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		return -1
 	return 1
 
-
 /datum/controller/master/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
 	var/list/master_attributes = Master.vars
