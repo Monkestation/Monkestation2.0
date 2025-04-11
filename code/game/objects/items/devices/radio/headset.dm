@@ -64,6 +64,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			. += span_info("Alt-click to toggle the high-volume mode.")
 	else
 		. += span_notice("A small screen on the headset flashes, it's too small to read without holding or wearing the headset.")
+	if(!syndie && istype(get_area(src), /area/station/maintenance))
+		. += span_warning("A yellow pulsing Rx light warns your communications might not be received properly. Uh-Oh.")
 
 /obj/item/radio/headset/Initialize(mapload)
 	. = ..()
