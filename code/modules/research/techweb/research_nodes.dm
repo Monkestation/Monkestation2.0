@@ -8,7 +8,7 @@
 		"portadrive_basic",
 		"portadrive_super",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 
 /datum/techweb_node/bluespace_basic //Bluespace-memery
 	id = "bluespace_basic"
@@ -20,7 +20,7 @@
 		"bluespace_crystal",
 		"telesci_gps",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 
 /datum/techweb_node/practical_bluespace
 	id = "practical_bluespace"
@@ -32,14 +32,15 @@
 		"bluespacesyringe",
 		"bluespace_coffeepot",
 		"bs_rped",
+		"cargotele",
 		"minerbag_holding",
 		"ore_silo",
 		"phasic_scanning",
 		"plumbing_receiver",
 		"roastingstick",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = 3500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/bluespace_travel
 	id = "bluespace_travel"
@@ -55,8 +56,8 @@
 		"tele_station",
 		"teleconsole",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_bluespacemachines = 4000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_bluespacemachines = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/micro_bluespace
 	id = "micro_bluespace"
@@ -74,8 +75,8 @@
 		"advanced_gps", // monkestation addition: advanced gps
 		"cargotele", // monkestation addition: Cargo tele shift
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = TECHWEB_TIER_2_POINTS)
 		/* /datum/experiment/exploration_scan/random/condition) this should have a point cost but im not even sure the experiment works properly lmao*/
 
 /datum/techweb_node/bluespace_power
@@ -87,8 +88,8 @@
 		"bluespace_cell",
 		"quadratic_capacitor",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/regulated_bluespace
 	id = "regulated_bluespace"
@@ -98,7 +99,7 @@
 	design_ids = list(
 		"spaceship_navigation_beacon",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 
 /datum/techweb_node/anomaly
@@ -112,7 +113,7 @@
 		//"artifact_heater", //MONKESTATION EDIT REMOVAL
 		//"artifact_xray",	//MONKESTATION EDIT REMOVAL
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/artifact
 	id = "artifact_research"
@@ -125,7 +126,7 @@
 		"disk_artifact",
 		"artifact_wand"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/gravity_gun
 	id = "gravity_gun"
@@ -136,7 +137,7 @@
 		"gravitygun",
 		"mech_gravcatapult",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/advanced_bluespace
 	id = "bluespace_storage"
@@ -146,4 +147,4 @@
 	design_ids = list(
 		"bag_holding",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

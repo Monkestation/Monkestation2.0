@@ -32,11 +32,3 @@
 	rustg_file_write(current_profile_data, prof_file)
 	rustg_file_write(current_sendmaps_data, sendmaps_file)
 	write_cost = MC_AVERAGE(write_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-/datum/controller/subsystem/profiler/get_metrics()
-	. = ..()
-	.["custom"] = list(
-		"fetch_cost" = fetch_cost,
-		"sort_cost" = sort_cost,
-		"write_cost" = write_cost,
-	)

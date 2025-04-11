@@ -72933,21 +72933,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "vcn" = (
-/obj/structure/closet/crate/science{
-	name = "MOD core crate"
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/no_nightlight/directional/east,
 /obj/structure/cable,
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},

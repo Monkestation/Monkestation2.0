@@ -26,7 +26,7 @@
 		/datum/artifact_activator/range/force
 	)
 
-	research_value = 5000
+	research_value = TECHWEB_TIER_2_POINTS
 
 	examine_discovered = span_warning("It appears to generate some kind of forcefield")
 

@@ -1,11 +1,5 @@
 #define ui_honeydisplay "WEST,CENTER-2:15"
 #define FORMAT_HONEY_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
-
-/datum/language_holder/apid
-	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
-
-
 /obj/item/food/meat/slab/human/mutant/apid
 	icon_state = "mothmeat"
 	desc = "Unpleasantly powdery and dry. Kind of pretty, though."
@@ -28,13 +22,6 @@
 	plural_form = "Apids"
 	id = SPECIES_APID
 
-	mutanteyes = /obj/item/organ/internal/eyes/apid
-
-	external_organs = list(
-		/obj/item/organ/external/wings/apid = "Normal",
-		/obj/item/organ/external/antennae_apid = "Moth",
-	)
-
 	inherent_traits = list(
 		TRAIT_TACKLING_WINGED_ATTACKER,
 		TRAIT_ANTENNAE,
@@ -49,7 +36,14 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/apid
 
+	external_organs = list(
+		/obj/item/organ/external/wings/apid = "Normal",
+		/obj/item/organ/external/antennae_apid = "Moth",
+	)
+
+	mutanteyes = /obj/item/organ/internal/eyes/apid
 	mutanttongue =  /obj/item/organ/internal/tongue/apid
+
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/apid,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/apid,

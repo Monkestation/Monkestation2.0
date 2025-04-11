@@ -68,7 +68,7 @@ export class AudioPlayer {
     }
 
     if (!Byond.TRIDENT) {
-      audio.play().catch((error) => logger.log('playback error', error));
+      audio.play()?.catch((error) => logger.log('playback error', error));
     } else {
       audio.play();
     }

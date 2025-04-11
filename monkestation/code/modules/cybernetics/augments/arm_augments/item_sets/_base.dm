@@ -1,6 +1,4 @@
 /obj/item/organ/internal/cyberimp/arm/item_set
-	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
-	var/obj/hand
 	//A list of typepaths to create and insert into ourself on init
 	var/list/items_to_create = list()
 	/// Used to store a list of all items inside, for multi-item implants.
@@ -22,7 +20,6 @@
 		items_list += WEAKREF(new_item)
 
 /obj/item/organ/internal/cyberimp/arm/item_set/Destroy()
-	hand = null
 	active_item = null
 	for(var/datum/weakref/ref in items_list)
 		var/obj/item/to_del = ref.resolve()
@@ -77,38 +74,9 @@
 	else
 		Retract()
 
-/obj/item/organ/internal/cyberimp/arm/item_set/on_insert(mob/living/carbon/arm_owner)
-	. = ..()
-	RegisterSignal(arm_owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_limb_attached))
-	RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
-	on_limb_attached(arm_owner, arm_owner.hand_bodyparts[zone == BODY_ZONE_R_ARM ? RIGHT_HANDS : LEFT_HANDS])
-
 /obj/item/organ/internal/cyberimp/arm/item_set/on_remove(mob/living/carbon/arm_owner)
-	. = ..()
 	Retract(arm_owner)
-	UnregisterSignal(arm_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_KB_MOB_DROPITEM_DOWN))
-	on_limb_detached(hand)
-
-/obj/item/organ/internal/cyberimp/arm/item_set/proc/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
-	SIGNAL_HANDLER
-	if(!limb || QDELETED(limb) || limb.body_zone != zone)
-		return
-	if(hand)
-		on_limb_detached(hand)
-	RegisterSignal(limb, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
-	RegisterSignal(limb, COMSIG_BODYPART_REMOVED, PROC_REF(on_limb_detached))
-	hand = limb
-
-/obj/item/organ/internal/cyberimp/arm/item_set/proc/on_limb_detached(obj/item/bodypart/source)
-	SIGNAL_HANDLER
-	if(source != hand || QDELETED(hand))
-		return
-	UnregisterSignal(hand, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_BODYPART_REMOVED))
-	hand = null
-
-/obj/item/organ/internal/cyberimp/arm/item_set/proc/on_item_attack_self()
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
+	return ..()
 
 /obj/item/organ/internal/cyberimp/arm/item_set/emp_act(severity)
 	. = ..()
@@ -126,14 +94,16 @@
  * quick way to store implant items. In this case, we check to make sure the user has the correct arm
  * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
 **/
-/obj/item/organ/internal/cyberimp/arm/item_set/proc/dropkey(mob/living/carbon/host)
-	SIGNAL_HANDLER
+/obj/item/organ/internal/cyberimp/arm/item_set/dropkey(mob/living/carbon/host)
 	if(!host)
 		return //How did we even get here
 	if(hand != host.hand_bodyparts[host.active_hand_index])
 		return //wrong hand
 	if(Retract())
 		return COMSIG_KB_ACTIVATED
+
+/obj/item/organ/internal/cyberimp/arm/item_set/on_item_attack_self(datum/source, mob/user)
+	INVOKE_ASYNC(src, PROC_REF(ui_action_click), user)
 
 /obj/item/organ/internal/cyberimp/arm/item_set/proc/Retract(mob/living/carbon/passover)
 	var/mob/living/carbon/user = owner

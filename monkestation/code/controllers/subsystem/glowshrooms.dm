@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(glowshrooms)
 	var/list/obj/structure/glowshroom/currentrun_decay = list()
 
 /datum/controller/subsystem/glowshrooms/Recover()
-	glowshrooms = SSglowshrooms.glowshrooms
+	glowshrooms = SSglowshrooms.glowshrooms.Copy()
 
 /datum/controller/subsystem/glowshrooms/fire(resumed)
 	// just... trust me, this makes COMPLETE sense
