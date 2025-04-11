@@ -243,7 +243,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		default_slot = old_default_slot
 		max_save_slots = old_max_save_slots
 		save_preferences()
-
 	return TRUE
 
 /datum/preferences/proc/save_preferences()

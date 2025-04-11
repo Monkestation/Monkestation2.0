@@ -579,3 +579,7 @@
 /obj/item/organ/internal/heart/spider
 	name = "spider heart"
 	heart_bloodtype = /datum/blood_type/spider
+
+/obj/item/organ/internal/heart/moth
+	name = "moth heart"
+	heart_bloodtype = /datum/blood_type/crew/moth

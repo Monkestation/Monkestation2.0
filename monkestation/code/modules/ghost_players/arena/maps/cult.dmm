@@ -338,7 +338,6 @@
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "NS" = (
-/obj/effect/rune/convert,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "NT" = (

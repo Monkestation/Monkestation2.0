@@ -20,6 +20,16 @@
 
 	return screen
 
+/mob/proc/update_fullscreen_alpha(category, alpha = 255, time = 1 SECONDS)
+	var/atom/movable/screen/fullscreen/screen = screens[category]
+	if(!screen)
+		screens -= category
+		return
+	if (client)
+		client.screen -= screen
+		animate(screen, alpha = alpha, time = time)
+		client.screen += screen
+
 /mob/proc/clear_fullscreen(category, animated = 10)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if(!screen)

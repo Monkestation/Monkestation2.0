@@ -52,6 +52,8 @@
 		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
 	)
 
+	var/purge = FALSE
+
 /mob/living/basic/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
@@ -96,14 +98,16 @@
 		spell_count++
 		update_action_buttons()
 
-	if(icon_state)
+	if(icon_state && !new_glow)
 		add_overlay("glow_[icon_state]_[theme]")
+	update_appearance()
 
 /mob/living/basic/construct/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
 	to_chat(src, span_bold(playstyle_string))
+	update_appearance()
 
 /mob/living/basic/construct/examine(mob/user)
 	var/text_span

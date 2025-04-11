@@ -16,7 +16,7 @@
 			effect_magic_resist(target, user)
 		else if(target.get_drunk_amount() >= OLD_MAN_HENDERSON_DRUNKENNESS)
 			effect_henderson(target, user)
-		else if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(target, TRAIT_OCCULTIST) || HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE) || cult.cult_team.cult_ascendent || cult.cult_team.is_sacrifice_target(target.mind))
+		else if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(target, TRAIT_OCCULTIST) || HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE) || cult.cult_team.cult_ascendent)
 			effect_weakened(target, user)
 		else
 			effect_full(target, user)

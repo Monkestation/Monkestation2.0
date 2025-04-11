@@ -41,25 +41,19 @@
  * Proc for use with the concealing spell. Hides the building (makes it invisible).
  */
 /obj/structure/destructible/cult/proc/conceal()
-	set_density(FALSE)
-	visible_message(span_danger("[src] fades away."))
-	invisibility = INVISIBILITY_OBSERVER
-	alpha = 100
-	set_light_power(0)
-	set_light_range(0)
-	update_light()
+	var/obj/structure/cult/concealed/C = new(loc)
+	C.pixel_x = pixel_x
+	C.pixel_y = pixel_y
+	forceMove(C)
+	C.held = src
+	C.icon = icon
+	C.icon_state = icon_state
 
 /*
  * Proc for use with the concealing spell. Reveals the building (makes it visible).
  */
 /obj/structure/destructible/cult/proc/reveal()
-	set_density(initial(density))
-	invisibility = 0
-	visible_message(span_danger("[src] suddenly appears!"))
-	alpha = initial(alpha)
-	set_light_range(initial(light_outer_range))
-	set_light_power(initial(light_power))
-	update_light()
+	return
 
 // Cult buildings that dispense items to cultists.
 /obj/structure/destructible/cult/item_dispenser

@@ -591,7 +591,7 @@ There are several things that need to be remembered:
 	var/list/hands = list()
 	for(var/obj/item/worn_item in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			worn_item.screen_loc = ui_hand_position(get_held_index_of_item(worn_item))
+			worn_item.screen_loc = ui_hand_position(get_held_index_of_item(worn_item), y_pixel_offset = worn_item.base_pixel_y, x_pixel_offset = worn_item.base_pixel_x)
 			client.screen += worn_item
 			if(observers?.len)
 				for(var/M in observers)

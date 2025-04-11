@@ -23,6 +23,8 @@ SUBSYSTEM_DEF(holomaps)
 	var/static/list/holomap_z_transitions = list()
 	var/static/list/list/holomap_position_to_name = list()
 
+	var/list/holomap_markers = list()
+
 /datum/controller/subsystem/holomaps/Recover()
 	flags |= SS_NO_INIT // Make extra sure we don't initialize twice.
 

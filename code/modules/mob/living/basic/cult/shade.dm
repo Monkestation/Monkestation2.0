@@ -1,3 +1,4 @@
+/*
 /mob/living/basic/shade
 	name = "Shade"
 	real_name = "Shade"
@@ -35,6 +36,7 @@
 		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
 		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
 	)
+	var/soulblade_ritual = FALSE
 
 /mob/living/basic/shade/Initialize(mapload)
 	. = ..()
@@ -69,3 +71,4 @@
 		stone.capture_shade(src, user)
 	else
 		. = ..()
+*/

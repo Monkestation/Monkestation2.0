@@ -109,6 +109,7 @@
 		/mob/living/simple_animal/pet/cat/super,
 		/mob/living/simple_animal/pet/gondola/funky,
 		/mob/living/simple_animal/pet/hamster,
+		/mob/living/simple_animal/hostile/hex,
 		//MONKESTATION-SPECIFIC ENTRIES END
 
 		// DO NOT ADD NEW ENTRIES TO THIS LIST
