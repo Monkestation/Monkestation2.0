@@ -1,0 +1,10 @@
+author: "Gw0sty"
+delete-after: True
+changes:
+  - rscadd: "Limb Grower has more designs"
+  - rscadd: "Limb Grower has a new sprite from TG."
+  - rscadd: "Mechfab can print IPC Antennas."
+  - rscadd: "Prosthesis feature manipulation"
+  - bugfix: "defib mounts with defibs inside them roundstart will no longer be invisible."
+  - bugfix: "Printing digitgrade limbs section will no longer just, not work."
+  - bugfix: "Captains now have places to spawn on Icebox"

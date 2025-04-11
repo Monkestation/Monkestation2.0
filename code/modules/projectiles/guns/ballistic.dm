@@ -413,7 +413,7 @@
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
+	if(magazine && chambered?.loaded_projectile && can_misfire && misfire_probability > 0)
 		if(prob(misfire_probability))
 			if(blow_up(user))
 				to_chat(user, span_userdanger("[src] misfires!"))

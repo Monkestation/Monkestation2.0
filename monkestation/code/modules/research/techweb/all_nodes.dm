@@ -4,7 +4,7 @@
 	description = "We have the technology to make him."
 	prereq_ids = list("biotech")
 	design_ids = list("clonecontrol", "clonepod", "clonescanner", "dnascanner", "dna_disk", "clonepod_experimental")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /////////////////////////Nanites/////////////////////////
 /datum/techweb_node/nanite_base
@@ -32,7 +32,7 @@
 		"repeater_nanites",
 		"sensor_nanite_volume",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 
 /datum/techweb_node/nanite_smart
 	id = "nanite_smart"
@@ -48,7 +48,7 @@
 		"voice_nanites",
 		"research_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
 
 /datum/techweb_node/nanite_mesh
 	id = "nanite_mesh"
@@ -65,7 +65,7 @@
 		"shock_nanites",
 		"temperature_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
 
 /datum/techweb_node/nanite_bio
 	id = "nanite_bio"
@@ -86,7 +86,7 @@
 		"sensor_health_nanites",
 		"sensor_species_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
 
 /datum/techweb_node/nanite_neural
 	id = "nanite_neural"
@@ -103,7 +103,7 @@
 		"stun_nanites",
 		"word_filter_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
 
 /datum/techweb_node/nanite_synaptic
 	id = "nanite_synaptic"
@@ -119,7 +119,7 @@
 		"sleep_nanites",
 		"speech_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
 
 /datum/techweb_node/nanite_harmonic
 	id = "nanite_harmonic"
@@ -135,7 +135,7 @@
 		"regenerative_plus_nanites",
 		"oxygen_rush_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 3000)
 
 /datum/techweb_node/nanite_combat
 	id = "nanite_military"
@@ -149,7 +149,7 @@
 		"pyro_nanites",
 		"viral_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500, TECHWEB_POINT_TYPE_NANITES = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 2500)
 
 /datum/techweb_node/nanite_hazard
 	id = "nanite_hazard"
@@ -161,7 +161,7 @@
 		"mitosis_nanites",
 		"spreading_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 4000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 4000)
 
 /datum/techweb_node/nanite_replication_protocols
 	id = "nanite_replication_protocols"
@@ -174,7 +174,7 @@
 		"offline_nanites",
 		"pyramid_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000, TECHWEB_POINT_TYPE_NANITES = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS, TECHWEB_POINT_TYPE_NANITES = 5000)
 
 /datum/techweb_node/nanite_storage_protocols
 	id = "nanite_storage_protocols"
@@ -187,7 +187,7 @@
 		"unsafe_storage_nanites",
 		"zip_nanites",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000, TECHWEB_POINT_TYPE_NANITES = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS, TECHWEB_POINT_TYPE_NANITES = 5000)
 
 /datum/techweb_node/adv_ballistics
 	id = "adv_ballistics"
@@ -198,7 +198,7 @@
 		"mag_autorifle_ap",
 		"mag_autorifle_ic",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/linked_surgery
 	id = "linked_surgery"
@@ -207,7 +207,13 @@
 	prereq_ids = list("exp_surgery", "micro_bluespace")
 	design_ids = list("linked_surgery")
 	boost_item_paths = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/serverlink = TECHWEB_TIER_3_POINTS)
+
+/datum/techweb_node/linked_surgery/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/ipc_parts
 	id = "ipc_parts"
@@ -221,11 +227,10 @@
 		"ipc_arm_right",
 		"ipc_leg_left",
 		"ipc_leg_right",
-		"power_cord"
+		"power_cord",
+		"ipc_antennae",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/bomb_actualizer
 	id = "bomb_actualizer"
@@ -235,7 +240,7 @@
 	design_ids = list(
 		"bomb_actualizer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_7_POINTS)
 
 // Maint mods
 /datum/techweb_node/springlock
@@ -251,7 +256,7 @@
 		/obj/item/mod/module/springlock,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
 
 /datum/techweb_node/rave
@@ -267,7 +272,7 @@
 		/obj/item/mod/module/visor/rave,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
 
 /datum/techweb_node/tanner
@@ -283,7 +288,7 @@
 		/obj/item/mod/module/tanner,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
 
 /datum/techweb_node/balloon
@@ -299,7 +304,7 @@
 		/obj/item/mod/module/balloon,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
 
 /datum/techweb_node/paper_dispenser
@@ -315,7 +320,7 @@
 		/obj/item/mod/module/paper_dispenser,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
 
 /datum/techweb_node/stamp
@@ -331,7 +336,7 @@
 		/obj/item/mod/module/stamp,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
 
 /datum/techweb_node/atrocinator
@@ -347,7 +352,7 @@
 		/obj/item/mod/module/atrocinator,
 	)
 
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
 
 /datum/techweb_node/improved_robotic_tend_wounds
@@ -358,7 +363,7 @@
 	design_ids = list(
 		"surgery_heal_robot_upgrade",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 900)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 
 /datum/techweb_node/advanced_robotic_tend_wounds
 	id = "advanced_robotic_surgery"
@@ -368,4 +373,40 @@
 	design_ids = list(
 		"surgery_heal_robot_upgrade_femto",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1300) // less expensive than the organic surgery research equivalent since its JUST tend wounds
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2) // less expensive than the organic surgery research equivalent since its JUST tend wounds
+
+/datum/techweb_node/explosive_weapons
+	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)
+
+/datum/techweb_node/ai_basic
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR)
+
+/datum/techweb_node/ai_adv
+	discount_experiments = list(/datum/experiment/scanning/random/shell_scan = TECHWEB_DISCOUNT_MINOR * 3)
+
+/datum/techweb_node/robotics
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
+
+/datum/techweb_node/adv_bots
+	discount_experiments = list(/datum/experiment/scanning/random/bot_scan = TECHWEB_DISCOUNT_MINOR * 2.5)
+
+/datum/techweb_node/datatheory
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2.5)
+
+/datum/techweb_node/comptech
+	discount_experiments = list(/datum/experiment/scanning/random/money = TECHWEB_DISCOUNT_MINOR * 2)
+
+/datum/techweb_node/mod_advanced
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
+
+/datum/techweb_node/mod_engineering
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
+
+/datum/techweb_node/mod_medical
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
+
+/datum/techweb_node/mod_security
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)
+
+/datum/techweb_node/mod_entertainment
+	discount_experiments = list(/datum/experiment/scanning/points/modsuit = TECHWEB_DISCOUNT_MINOR * 2)

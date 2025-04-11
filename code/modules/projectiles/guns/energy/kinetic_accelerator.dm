@@ -117,12 +117,17 @@
 		MK.uninstall(src)
 	return ..()
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/borg/upgrade/modkit))
+		modkits |= arrived
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/borg/upgrade/modkit) && !disablemodification) //monkeedit
 		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
 	else
-		..()
+		return ..()
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
@@ -253,7 +258,7 @@
 	if(istype(A, /obj/item/gun/energy/recharge/kinetic_accelerator) && !issilicon(user))
 		install(A, user)
 	else
-		..()
+		return ..()
 
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -285,7 +290,7 @@
 				return
 			to_chat(user, span_notice("You install the modkit."))
 			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
-			KA.modkits += src
+			KA.modkits |= src
 		else
 			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
 	else
@@ -338,14 +343,24 @@
 	modifier = 3.2
 	minebot_upgrade = FALSE
 
+// Recalculate recharge time after adding or removing cooldown mods.
+/obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+
+	var/new_recharge_time = initial(KA.recharge_time)
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+		if(istype(modkit_upgrade, src))
+			new_recharge_time -= modifier
+
+	return new_recharge_time
+
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-		KA.recharge_time -= modifier
+		KA.recharge_time = get_recharge_time(KA)
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-	KA.recharge_time += modifier
 	..()
+	KA.recharge_time = get_recharge_time(KA)
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot
 	name = "minebot cooldown decrease"
@@ -558,7 +573,6 @@
 /obj/item/borg/upgrade/modkit/chassis_mod/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 //monkestation edit start
 	if(is_type_in_list(KA, list(/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
-								/obj/item/gun/energy/recharge/kinetic_accelerator/m79,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/meme,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,

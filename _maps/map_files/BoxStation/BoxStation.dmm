@@ -55162,10 +55162,8 @@
 	dir = 10
 	},
 /obj/machinery/newscaster/directional/west,
-/obj/structure/chair/sofa/corp/right{
-	dir = 4
-	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "rQA" = (
@@ -58314,10 +58312,7 @@
 	},
 /obj/machinery/light/small/directional/west,
 /obj/item/radio/intercom/directional/west,
-/obj/structure/chair/sofa/corp{
-	dir = 4
-	},
-/obj/effect/landmark/start/assistant,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "sUK" = (
@@ -69903,19 +69898,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "wxl" = (
-/obj/structure/closet/crate/secure/science{
-	req_access = list("robotics");
-	name = "MOD Core Crate"
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
 "wxo" = (
@@ -70254,10 +70237,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/structure/chair/sofa/corp/left{
-	dir = 4
-	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/bed/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "wDy" = (

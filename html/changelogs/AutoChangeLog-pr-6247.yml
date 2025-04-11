@@ -1,0 +1,4 @@
+author: "Kitsunemitsu"
+delete-after: True
+changes:
+  - balance: "AI now takes 15 hours of silicon to unlock instead of 3."

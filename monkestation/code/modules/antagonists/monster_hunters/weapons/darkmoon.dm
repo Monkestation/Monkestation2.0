@@ -1,6 +1,5 @@
 /obj/item/melee/trick_weapon/darkmoon
 	name = "Darkmoon Greatsword"
-	base_name = "Darkmoon Greatsword"
 	desc = "Ahh my guiding moonlight, you were by my side all along."
 	icon_state = "darkmoon"
 	base_icon_state = "darkmoon"
@@ -8,43 +7,26 @@
 	w_class = WEIGHT_CLASS_SMALL
 	block_chance = 20
 	on_force = 20
-	base_force = 17
+	force = 17
 	light_system = OVERLAY_LIGHT
 	light_color = "#59b3c9"
 	light_outer_range = 2
 	light_power = 2
 	light_on = FALSE
 	throwforce = 12
-	damtype = BURN
+	active_thrown_force = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	///ready to launch a beam attack?
 	COOLDOWN_DECLARE(moonbeam_fire)
 
-/obj/item/melee/trick_weapon/darkmoon/Initialize(mapload)
+/obj/item/melee/trick_weapon/darkmoon/on_transform(obj/item/source, mob/user, active)
 	. = ..()
-	force = base_force
-	AddComponent(/datum/component/transforming, \
-		force_on = on_force , \
-		throwforce_on = 20, \
-		throw_speed_on = throw_speed, \
-		sharpness_on = SHARP_EDGED, \
-		w_class_on = WEIGHT_CLASS_BULKY, \
-	)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	RegisterSignal(src, COMSIG_WEAPON_UPGRADE, PROC_REF(upgrade_weapon))
-
-
-/obj/item/melee/trick_weapon/darkmoon/proc/on_transform(obj/item/source, mob/user, active)
-	SIGNAL_HANDLER
-	balloon_alert(user, active ? "extended" : "collapsed")
+	balloon_alert(user, active ? "glows with power" : "turns dormant")
 	if(active)
 		playsound(src, 'monkestation/sound/weapons/moonlightsword.ogg', vol = 50)
-	enabled = active
 	set_light_on(active)
-	force = active ? upgraded_val(on_force, upgrade_level) : upgraded_val(base_force, upgrade_level)
-	update_appearance(UPDATE_ICON_STATE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/trick_weapon/darkmoon/attack_secondary(atom/target, mob/living/user, clickparams)

@@ -13,7 +13,7 @@
 		"inspector",
 		"rubber_c35", //monkestation edit: taco sec
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 
 /datum/techweb_node/weaponry
 	id = "weaponry"
@@ -25,8 +25,8 @@
 		"tele_shield",
 		"mag_autorifle_rub", //monkestation edit: autorifles
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
@@ -39,8 +39,8 @@
 		"mag_autorifle", //monkestation edit: autorifles
 		"mag_autorifle_salt", //monkestation edit: autorifles
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/explosive_weapons
 	id = "explosive_weapons"
@@ -52,7 +52,7 @@
 		"large_grenade",
 		"pyro_grenade",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/exotic_ammo
 	id = "exotic_ammo"
@@ -64,7 +64,7 @@
 		"c38_iceblox",
 		"techshotshell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/electric_weapons
 	id = "electronic_weapons"
@@ -75,7 +75,7 @@
 		"ioncarbine",
 		"stunrevolver",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/beam_weapons
 	id = "beam_weapons"
@@ -86,7 +86,7 @@
 		"temp_gun",
 		"xray_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/adv_beam_weapons
 	id = "adv_beam_weapons"
@@ -96,7 +96,7 @@
 	design_ids = list(
 		"beamrifle",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/radioactive_weapons
 	id = "radioactive_weapons"
@@ -106,4 +106,4 @@
 	design_ids = list(
 		"nuclear_gun",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

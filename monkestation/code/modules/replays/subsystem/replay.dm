@@ -79,9 +79,11 @@ SUBSYSTEM_DEF(demo)
 					// do a diff with the previous turf to save those bytes
 					row_list += encode_appearance(this_appearance, istext(last_appearance) ? null : last_appearance)
 			last_appearance = this_appearance
+			CHECK_TICK
 		if(rle_count > 1)
 			row_list += rle_count
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, jointext(row_list, ",") + "\n")
+		CHECK_TICK
 	CHECK_TICK
 	// then do objects
 	log_world("Writing objects")
@@ -107,6 +109,7 @@ SUBSYSTEM_DEF(demo)
 			CHECK_TICK // This is a bit risky because something might change but meh, its not a big deal.
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, jointext(row_list, ",") + "\n")
 
+	CHECK_TICK
 	// track objects that exist in nullspace
 	var/nullspace_list = list()
 	for(var/M in world)

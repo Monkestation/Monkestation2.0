@@ -340,7 +340,7 @@
 		switch(security_num)
 			if(SEC_LEVEL_GREEN)
 				set_coefficient = 2
-			if(SEC_LEVEL_BLUE)
+			if(SEC_LEVEL_BLUE, SEC_LEVEL_YELLOW, SEC_LEVEL_AMBER) // monkestation: yellow and amber alert
 				set_coefficient = 1
 			else
 				set_coefficient = 0.5

@@ -1,0 +1,4 @@
+author: "Ziiro"
+delete-after: True
+changes:
+  - bugfix: "IPCs now use the correct wings when drinking a flight potion"

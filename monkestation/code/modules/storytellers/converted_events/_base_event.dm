@@ -122,11 +122,12 @@
 
 /datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
-	if(!check_required())
-		return FALSE
-
 	if(!.)
 		return
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		return FALSE
+	if(!check_required())
+		return FALSE
 
 /datum/round_event_control/antagonist/solo
 	typepath = /datum/round_event/antagonist/solo
