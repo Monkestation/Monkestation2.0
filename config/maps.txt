@@ -74,5 +74,9 @@ map ouroboros
 	votable
 endmap
 
+map pubbystation
+	votable
+endmap
+
 map graveyard
 endmap
