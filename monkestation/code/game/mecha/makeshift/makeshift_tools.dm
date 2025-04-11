@@ -56,10 +56,10 @@
 	icon_state = "mecha_peashooter"
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
-	projectiles = 15
+	projectiles = 30
 	projectiles_cache = 0
-	projectiles_cache_max = 30
-	projectiles_per_shot = 3
+	projectiles_cache_max = 120
+	projectiles_per_shot = 6
 	projectile_delay = 0.2 SECONDS
 	equip_cooldown = 1 SECONDS
 	harmful = TRUE
