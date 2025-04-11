@@ -181,10 +181,12 @@ monkestation end */
 			qdel(W)
 			M.regenerate_icons()
 
-	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
-	var/msg = "[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!"
-	message_admins(msg)
+	// MONKESTATION EDIT START - tgui tickets
+	var/msg = "[key_name(usr)] made [key_name(M)] drop everything!"
+	log_admin(msg)
+	message_admins("[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!")
 	admin_ticket_log(M, msg)
+	// MONKESTATION EDIT END
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Everything") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)

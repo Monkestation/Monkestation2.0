@@ -799,7 +799,7 @@
 	message_admins("[key_name_admin(usr)] [msg] in [ADMIN_VERBOSEJMP(specificTarget)].")
 	if (length(whoDyin))
 		for (var/mob/living/M in whoDyin)
-			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")
+			admin_ticket_log(M, "[key_name(usr)] [msg]")
 
 /datum/centcom_podlauncher/proc/loadData(list/dataToLoad)
 	bayNumber = dataToLoad["bayNumber"]
