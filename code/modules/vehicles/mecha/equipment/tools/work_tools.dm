@@ -13,13 +13,13 @@
 	movedelay = 0.2
 	toolspeed = 0.8
 	harmful = TRUE
-	mech_flags = EXOSUIT_MODULE_RIPLEY
+	mech_flags = EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_SIDEWINDER	//Monkestation edit - yeah sidewinders can use THE CLAMP but they can't hold much
 	///Bool for whether we beat the hell out of things we punch (and tear off their arms)
 	var/killer_clamp = FALSE
 	///How much base damage this clamp does
 	var/clamp_damage = 20
-	///Var for the chassis we are attached to, needed to access ripley contents and such
-	var/obj/vehicle/sealed/mecha/working/ripley/cargo_holder
+	///Var for the chassis we are attached to, needed to access mech contents and such
+	var/obj/vehicle/sealed/mecha/cargo_holder	//Monkestation edit - Sidewinder addition
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
