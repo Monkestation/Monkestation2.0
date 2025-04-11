@@ -23,7 +23,7 @@
 	prompt_name = "a syndicate depot guard"
 	you_are_text = "You are a security guard, employed at a Syndicate depot."
 	flavour_text = "Protect the depot from enemy forces and prevent its destruction at all costs."
-	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Remember that you still need to satisfy escalation requirements in order to send bombs or grenades to the NT installation. You are here to protect it, and cannot perform deliveries."
+	important_text = "DO NOT abandon the base or approach active Nanotrasen installations.  Remember that you still need to satisfy escalation requirements in order to send bombs or grenades to the NT installation. You are to ensure there is someone at the depot at all times (this does NOT have to be yourself), and should avoid doing deliveries if there is a technician available to do so."
 	outfit = /datum/outfit/syndicate_empty/depot/guard
 
 /datum/outfit/syndicate_empty/depot/guard
