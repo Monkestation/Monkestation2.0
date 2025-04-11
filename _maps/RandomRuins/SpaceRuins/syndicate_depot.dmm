@@ -96,11 +96,21 @@
 /area/ruin/space/has_grav/syndicate_depot)
 "bf" = (
 /obj/effect/turf_decal/delivery/white,
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit,
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/expeditionary/surplus,
+/obj/structure/closet/crate,
+/obj/item/vending_refill/assist,
+/obj/item/vending_refill/snack/imported/mothic,
+/obj/item/vending_refill/snack/imported/tizirian,
+/obj/item/vending_refill/snack/imported/yangyu,
+/obj/item/vending_refill/snack/imported,
+/obj/item/vending_refill/sovietsoda,
+/obj/item/vending_refill/wardrobe,
+/obj/item/vending_refill/youtool,
+/obj/item/vending_refill/medical,
+/obj/item/vending_refill/mechcomp,
+/obj/item/vending_refill/engivend,
+/obj/item/vending_refill/engineering,
+/obj/item/vending_refill/donksoft,
+/obj/item/vending_refill/donksoft,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "bn" = (
@@ -124,6 +134,10 @@
 /obj/item/stamp/granted{
 	pixel_x = 11;
 	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/soda_cans/monkestation/ginger_beer{
+	pixel_x = -10;
+	pixel_y = 26
 	},
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
@@ -195,10 +209,15 @@
 /area/ruin/space/has_grav/syndicate_depot/security)
 "bW" = (
 /obj/effect/turf_decal/delivery/white,
-/obj/structure/closet/crate/engineering,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "bY" = (
@@ -378,12 +397,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "dH" = (
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
+/obj/structure/closet/firecloset/full,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 3
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "dN" = (
@@ -595,6 +614,10 @@
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/fire,
 /obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/expeditionary/surplus,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "fG" = (
@@ -1338,6 +1361,10 @@
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "mh" = (
 /obj/machinery/plantgenes,
+/obj/machinery/splicer{
+	pixel_x = 3;
+	pixel_y = 11
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/hydroponics)
 "mi" = (
@@ -3597,10 +3624,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "II" = (
-/obj/structure/closet/firecloset/full,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 3
-	},
+/obj/machinery/vending/imported/mothic,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "IM" = (
@@ -5396,6 +5420,9 @@
 /obj/structure/closet/crate/engineering,
 /obj/item/inducer/syndicate,
 /obj/item/inducer/syndicate,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Zx" = (
@@ -9224,8 +9251,8 @@ sR
 PX
 oO
 sR
-fS
 dH
+aO
 rw
 DQ
 DQ
