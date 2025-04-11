@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Cached generated preview icons for antags, hopefully increasing performance"
