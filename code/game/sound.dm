@@ -306,10 +306,11 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		media2.set_volume(vol) // this makes it easier if we modify volume later on
 		media2.set_position(0, 0)
 		media2.play(T.url)
+		media2.set_volume(vol) // just to make 100% sure
 	else
 		media.push_music(T.url, world.time, 1, force = TRUE)
 		media.update_volume(vol) // this makes it easier if we modify volume later on
-	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
+	to_chat(src, span_notice("Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>."))
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
