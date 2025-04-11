@@ -116,6 +116,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
 		return
 
+	if(href_list["commandbar_typing"])
+		handle_commandbar_typing(href_list)
+
 	//Monkestation Edit Begin
 	if(mentor_friend(href_list))
 		return
@@ -245,6 +248,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	tgui_panel = new(src, "browseroutput")
 
 	tgui_say = new(src, "tgui_say")
+
+	initialize_commandbar_spy()
 
 	set_right_click_menu_mode()
 
@@ -383,6 +388,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		inline_css = file("html/statbrowser.css"),
 	)
 	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
+
+	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -527,7 +534,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(CONFIG_GET(flag/aggressive_changelog))
 			changelog()
 		else
-			winset(src, "infowindow.changelog", "font-style=bold")
+			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])
@@ -1414,6 +1421,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	message_to_send += "(No admins online)"
 
 	send2adminchat("Server", jointext(message_to_send, " "))
+
+/// This grabs the DPI of the user per their skin
+/client/proc/acquire_dpi()
+	if(byond_version < 516) // why won't you update
+		return
+	window_scaling = text2num(winget(src, null, "dpi"))
+
+	debug_admins("scalies: [window_scaling]")
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE
