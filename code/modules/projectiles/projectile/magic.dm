@@ -403,8 +403,8 @@
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = chosen_one.key
-		trauma.friend.key = oldkey
+		target.PossessByPlayer(chosen_one.key)
+		trauma.friend.PossessByPlayer(oldkey)
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
 		trauma.friend_initialized = TRUE

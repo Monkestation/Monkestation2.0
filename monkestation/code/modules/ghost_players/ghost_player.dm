@@ -58,7 +58,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 /mob/living/carbon/human/ghost/proc/dissolve_and_ghost()
 	var/mob/dead/observer/new_ghost = ghostize(can_reenter_corpse = FALSE)
 	if(!QDELETED(new_ghost))
-		new_ghost.key = old_key
+		new_ghost.PossessByPlayer(old_key)
 		new_ghost.mind = old_mind
 		new_ghost.can_reenter_corpse = old_reenter
 	old_human?.temporary_sleep = FALSE
@@ -142,7 +142,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	var/mob/living/carbon/human/ghost/new_existence = new(key, mind, can_reenter_corpse, brain)
 	our_client?.prefs.safe_transfer_prefs_to(new_existence, TRUE, FALSE)
 	new_existence.move_to_ghostspawn()
-	new_existence.key = key
+	new_existence.PossessByPlayer(key)
 	new_existence.equip_outfit_and_loadout(/datum/outfit/ghost_player, our_client.prefs)
 	for(var/datum/loadout_item/item as anything in loadout_list_to_datums(our_client?.prefs?.loadout_list))
 		if(length(item.restricted_roles))

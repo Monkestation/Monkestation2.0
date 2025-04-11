@@ -50,7 +50,7 @@
 	if(!creator_op)
 		return
 	our_client.prefs.safe_transfer_prefs_to(borg, is_antag = TRUE)
-	borg.ckey = our_client.key
+	borg.PossessByPlayer(our_client.key)
 	var/obj/structure/closet/supplypod/pod = setup_pod()
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
@@ -65,7 +65,7 @@
 	borg.real_name = borg.name
 	borg.update_name_tag() // monkestation edit: name tags
 
-	borg.key = our_client.key
+	borg.PossessByPlayer(our_client.key)
 
 	var/datum/antagonist/assault_operative/new_borg = new()
 	new_borg.send_to_spawnpoint = FALSE

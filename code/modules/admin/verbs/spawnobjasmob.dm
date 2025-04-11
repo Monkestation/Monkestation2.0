@@ -64,7 +64,7 @@
 			basemob.name = basemob.real_name = html_decode(mainsettings["name"]["value"])
 
 		if (mainsettings["ckey"]["value"] != "none")
-			basemob.ckey = mainsettings["ckey"]["value"]
+			basemob.PossessByPlayer(mainsettings["ckey"]["value"])
 
 
 		log_admin("[key_name(usr)] spawned a sentient object-mob [basemob] from [chosen_obj] at [AREACOORD(usr)]")

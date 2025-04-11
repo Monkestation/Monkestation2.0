@@ -124,7 +124,7 @@
 		free_location = get_turf(user)
 
 	partner.forceMove(arrival_pod)
-	partner.ckey = key
+	partner.PossessByPlayer(key)
 
 	/// We give a reference to the mind that'll be the support unit
 	partner_mind = partner.mind

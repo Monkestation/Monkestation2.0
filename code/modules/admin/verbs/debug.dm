@@ -201,7 +201,7 @@
 	var/mob/adminmob = mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.key = key
+	M.PossessByPlayer(key)
 	init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
@@ -228,7 +228,7 @@
 		return
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.ckey = newkey.key
+	M.PossessByPlayer(newkey.key)
 	M.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)

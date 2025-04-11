@@ -11,7 +11,7 @@
 /datum/controller/subsystem/ticker/proc/distribute_rewards_to_client(client/client, added_xp)
 	if(!istype(client) || QDELING(client))
 		return
-	var/datum/player_details/details = get_player_details(client)
+	var/datum/persistent_client/details = client.persistent_client
 	if(!QDELETED(client?.prefs))
 		var/round_end_bonus = 75
 

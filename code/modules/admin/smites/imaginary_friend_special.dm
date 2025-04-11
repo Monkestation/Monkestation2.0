@@ -61,4 +61,4 @@
 	else
 		friend_mob = new /mob/camera/imaginary_friend(get_turf(target), target, friend_candidate_client.prefs)
 
-	friend_mob.key = friend_candidate_client.key
+	friend_mob.PossessByPlayer(friend_candidate_client.key)

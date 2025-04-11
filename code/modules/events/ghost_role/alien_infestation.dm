@@ -103,7 +103,7 @@
 
 		var/obj/vent = pick_n_take(vents)
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.ckey = candidate_ckey
+		new_xeno.PossessByPlayer(candidate_ckey)
 		new_xeno.move_into_vent(vent)
 		selected_count++
 

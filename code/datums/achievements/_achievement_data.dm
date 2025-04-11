@@ -130,4 +130,4 @@
 	set name = "Check achievements"
 	set desc = "See all of your achievements!"
 
-	player_details.achievements.ui_interact(usr)
+	persistent_client.achievements.ui_interact(usr)

@@ -40,7 +40,7 @@
 		ling.adjust_chemicals(chemical_cost)
 		return FALSE
 	var/mob/living/carbon/human/species/teratoma/goober = new(user.drop_location())
-	goober.key = candidate.key
+	goober.PossessByPlayer(candidate.key)
 	if(!goober.mind)
 		goober.mind_initialize()
 	goober.mind.add_antag_datum(/datum/antagonist/teratoma)

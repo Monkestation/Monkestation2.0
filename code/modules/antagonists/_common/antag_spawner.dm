@@ -69,7 +69,7 @@
 	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
-	M.key = C.key
+	M.PossessByPlayer(C.key)
 	var/datum/mind/app_mind = M.mind
 
 	var/datum/antagonist/wizard/apprentice/app = new()
@@ -148,7 +148,7 @@
 	var/mob/living/carbon/human/nukie = new()
 	var/obj/structure/closet/supplypod/pod = setup_pod()
 	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
-	nukie.ckey = our_client.key
+	nukie.PossessByPlayer(our_client.key)
 	var/datum/mind/op_mind = nukie.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
 		nukie.forceMove(pick(GLOB.newplayer_start))
@@ -224,7 +224,7 @@
 	borg.real_name = borg.name
 	borg.update_name_tag() // monkestation edit: name tags
 
-	borg.key = C.key
+	borg.PossessByPlayer(C.key)
 
 	var/datum/antagonist/nukeop/new_borg = new()
 	new_borg.send_to_spawnpoint = FALSE
@@ -269,7 +269,7 @@
 	var/mob/living/basic/demon/spawned = new demon_type(T)
 	new /obj/effect/dummy/phased_mob(T, spawned)
 
-	spawned.key = C.key
+	spawned.PossessByPlayer(C.key)
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"

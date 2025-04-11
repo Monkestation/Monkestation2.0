@@ -24,7 +24,7 @@
 
 /datum/challenge/paranoia/on_apply()
 	. = ..()
-	var/mob/living/carbon/human/current_human = host.find_current_mob()
+	var/mob/living/carbon/human/current_human = host.mob
 	if(!ishuman(current_human))
 		return
 	current_human.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
@@ -33,7 +33,7 @@
 /datum/challenge/paranoia/on_process()
 	if(added)
 		return
-	var/mob/living/carbon/human/current_human = host.find_current_mob()
+	var/mob/living/carbon/human/current_human = host.mob
 	if(!ishuman(current_human))
 		return
 	current_human.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)

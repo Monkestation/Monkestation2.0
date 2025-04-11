@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		return
 	to_chat(user, span_warning("As a borer, you have the option to be friendly or not. Note that how you act will determine how a host responds!"))
 	to_chat(user, span_warning("You are a cortical borer! You can fear someone to make them stop moving, but make sure to inhabit them! You only grow/heal/talk when inside a host!"))
-	ckey = user.ckey
+	PossessByPlayer(user.ckey)
 	if(mind)
 		mind.add_antag_datum(antagonist_datum)
 

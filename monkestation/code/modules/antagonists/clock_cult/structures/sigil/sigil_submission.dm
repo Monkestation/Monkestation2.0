@@ -33,7 +33,7 @@
 	GLOB.main_clock_cult?.check_member_distribution()
 	if(isdrone(converted_mob) && (GLOB.cogscarabs.len < MAXIMUM_COGSCARABS))
 		var/mob/living/basic/drone/cogscarab/cogger = new /mob/living/basic/drone/cogscarab(get_turf(src))
-		cogger.key = converted_mob.key
+		cogger.PossessByPlayer(converted_mob.key)
 		cogger.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
 		cogger.visible_message("A light envelops \the [converted_mob]! As the light fades you see it has become a cogscarab!",
 							   span_brass("Rat'var has granted you your freedom, you must protect the ark at all costs!"))

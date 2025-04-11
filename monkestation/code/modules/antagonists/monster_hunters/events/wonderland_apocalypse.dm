@@ -118,7 +118,7 @@
 		return FALSE
 	enemy_spawned = TRUE
 	var/mob/living/basic/red_rabbit/evil_rabbit = new(get_turf(src))
-	evil_rabbit.key = user.key
+	evil_rabbit.PossessByPlayer(user.key)
 	to_chat(evil_rabbit, span_boldwarning("Destroy everything, spare no one."))
 
 /datum/status_effect/wonderland_district

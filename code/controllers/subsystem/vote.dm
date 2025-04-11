@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(vote)
 	// monkestation start
 	if(!current_vote.can_vote(voter))
 		return
-	var/patreon_rank = get_player_details(voter)?.patreon?.access_rank
+	var/patreon_rank = voter.persistent_client?.patreon?.access_rank
 	// monkestation end
 
 	// If user has already voted, remove their specific vote
@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(vote)
 	// monkestation start
 	if(!current_vote.can_vote(voter))
 		return
-	var/patreon_rank = get_player_details(voter)?.patreon?.access_rank
+	var/patreon_rank = voter.persistent_client?.patreon?.access_rank
 	// monkestation end
 	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
 		return
@@ -246,7 +246,7 @@ SUBSYSTEM_DEF(vote)
 		voting_action.name = "Vote: [current_vote.override_question || current_vote.name]"
 		voting_action.Grant(new_voter.mob)
 
-		new_voter.player_details.player_actions += voting_action
+		new_voter.persistent_client.player_actions += voting_action
 		generated_actions += voting_action
 
 		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
@@ -392,10 +392,10 @@ SUBSYSTEM_DEF(vote)
 // We also need to remove our action from the player actions when we're cleaning up.
 /datum/action/vote/Remove(mob/removed_from)
 	if(removed_from.client)
-		removed_from.client?.player_details.player_actions -= src
+		removed_from.client?.persistent_client.player_actions -= src
 
 	else if(removed_from.ckey)
-		var/datum/player_details/associated_details = GLOB.player_details[removed_from.ckey]
+		var/datum/persistent_client/associated_details = GLOB.persistent_clients_by_ckey[removed_from.ckey]
 		associated_details?.player_actions -= src
 
 	return ..()

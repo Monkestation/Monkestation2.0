@@ -229,7 +229,7 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 
 	//Allow admins and Patreon supporters to bypass the cap/queue
-	if ((relevant_cap && living_player_count() >= relevant_cap) && (get_player_details(new_player)?.patreon?.is_donator() || is_admin(new_player.client) || new_player.client?.is_mentor()))
+	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || new_player.client?.is_mentor()))
 		to_chat(new_player, span_notice("The server is currently overcap, but you are a(n) patreon/mentor/admin!"))
 	else if (SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap))
 		to_chat(new_player, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
@@ -313,9 +313,9 @@
 
 /atom/movable/screen/lobby/button/intents/Click(location, control, params)
 	. = ..()
-	var/datum/player_details/details = get_player_details(hud.mymob)
-	details.challenge_menu ||= new(details)
-	details.challenge_menu.ui_interact(hud.mymob)
+	var/datum/persistent_client/persistent_client = hud.mymob.persistent_client
+	persistent_client.challenge_menu ||= new(persistent_client)
+	persistent_client.challenge_menu.ui_interact(hud.mymob)
 
 /atom/movable/screen/lobby/button/discord
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'

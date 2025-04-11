@@ -41,7 +41,7 @@
 	var/vent = pick(vents)
 	var/mob/living/basic/cortical_borer/spawned_cb = new borer_mob_type(get_turf(vent))
 	spawned_cb.move_into_vent(vent)
-	spawned_cb.ckey = new_borer.ckey
+	spawned_cb.PossessByPlayer(new_borer.ckey)
 	spawned_cb.mind.add_antag_datum(type)
 	notify_ghosts(
 		"Someone has become a borer due to spending an antag token ([spawned_cb])!",

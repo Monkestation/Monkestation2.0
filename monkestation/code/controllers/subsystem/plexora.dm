@@ -551,7 +551,7 @@ SUBSYSTEM_DEF(plexora)
 		returning["present"] = TRUE
 		returning["key"] = client.key
 
-	var/datum/player_details/details = GLOB.player_details[ckey]
+	var/datum/persistent_client/details = GLOB.persistent_clients_by_ckey[ckey]
 
 	if (details)
 		returning["byond_version"] = details.byond_version
@@ -576,7 +576,7 @@ SUBSYSTEM_DEF(plexora)
 	if (!ckey)
 		return list("error" = PLEXORA_ERROR_MISSING_CKEY)
 
-	var/datum/player_details/details = GLOB.player_details[ckey]
+	var/datum/persistent_client/details = GLOB.persistent_clients_by_ckey[ckey]
 
 	if (QDELETED(details))
 		return list("error" = PLEXORA_ERROR_DETAILSNOTEXIST)
