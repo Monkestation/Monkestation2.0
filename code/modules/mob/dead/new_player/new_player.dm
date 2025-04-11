@@ -99,7 +99,10 @@
 		observer.name = observer.real_name
 		observer.client.init_verbs()
 	observer.update_appearance()
-	observer.client.media.stop_music()
+	if(observer.client?.byond_version >= 516)
+		observer.client?.media2?.stop()
+	else
+		observer.client?.media?.stop_music()
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)
 	QDEL_NULL(mind)
 	qdel(src)
