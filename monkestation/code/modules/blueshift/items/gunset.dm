@@ -233,7 +233,7 @@
 	. = ..()
 
 	generate_items_inside(list(
-		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1 //monke edit,
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1, //monke edit
 		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1, //monke edit
 	), src)
 

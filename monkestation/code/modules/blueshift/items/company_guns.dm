@@ -405,7 +405,7 @@
 
 /obj/item/gun/ballistic/automatic/xhihao_smg
 	name = "\improper Bogseo Submachine Gun"
-	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the .27-54 cartridge. \
+	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the hefty .585 cartridge. \
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
 
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
@@ -439,6 +439,7 @@
 	// Hope you didn't need to see anytime soon
 	recoil = 2
 	wield_recoil = 1
+	projectile_wound_bonus = -5
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
