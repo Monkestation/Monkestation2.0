@@ -215,12 +215,14 @@
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag,
+		/obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag = 1,
 		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 3,
 		/obj/item/ammo_box/c980grenade/shrapnel = 2,
 		/obj/item/ammo_box/c980grenade/smoke = 1,
 		/obj/item/ammo_box/c980grenade/riot = 2,
+		/obj/item/clothing/mask/gas/sechailer/swat = 1,
 	), src)
+
 
 /obj/structure/closet/secure_closet/armory_kiboko
 	name = "heavy equipment locker"
