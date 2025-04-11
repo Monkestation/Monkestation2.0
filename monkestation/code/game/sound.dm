@@ -1,15 +1,28 @@
 ///sound volume handling here
 
-/client/verb/open_volume_mixer()
+/datum/verbs/menu/Preferences/verb/open_volume_mixer()
 	set category = "OOC"
 	set name = "Volume Mixer"
-	set desc = "Opens the volume mixer UI"
+	set desc = "Open Volume Mixer"
 
+	var/datum/preferences/prefs = usr?.client?.prefs
+	if(QDELETED(prefs))
+		return
 	if(!prefs.pref_mixer)
 		prefs.pref_mixer = new
-	prefs.pref_mixer.open_ui(src.mob)
+	prefs.pref_mixer.open_ui(usr)
 
 /datum/ui_module/volume_mixer/proc/open_ui(mob/user)
+	var/needs_save = FALSE
+	var/datum/preferences/prefs = user?.client?.prefs
+	if(QDELETED(prefs))
+		return
+	for(var/channel in GLOB.used_sound_channels)
+		if(isnull(prefs.channel_volume["[channel]"]))
+			prefs.channel_volume["[channel]"] = 50
+			needs_save = TRUE
+	if(needs_save)
+		prefs.save_preferences()
 	ui_interact(user)
 
 /datum/ui_module/volume_mixer/ui_interact(mob/user, datum/tgui/ui)
@@ -20,21 +33,15 @@
 		ui.open()
 
 /datum/ui_module/volume_mixer/ui_data(mob/user)
-	var/list/data = list()
-
 	var/list/channels = list()
+	var/list/channel_volume = user.client.prefs.channel_volume
 	for(var/channel in GLOB.used_sound_channels)
-		if(!user.client.prefs.channel_volume["[channel]"])
-			user.client.prefs.channel_volume["[channel]"] = 50
-			user.client.prefs.save_preferences()
 		channels += list(list(
 			"num" = channel,
 			"name" = get_channel_name(channel),
-			"volume" = user.client.prefs.channel_volume["[channel]"]
+			"volume" = channel_volume["[channel]"]
 		))
-	data["channels"] = channels
-
-	return data
+	return list("channels" = channels)
 
 
 /datum/ui_module/volume_mixer/ui_act(action, list/params)
@@ -69,7 +76,17 @@
 /datum/ui_module/volume_mixer/proc/set_channel_volume(channel, vol, mob/user)
 	if((channel == CHANNEL_LOBBYMUSIC) || (channel == CHANNEL_MASTER_VOLUME))
 		if(isnewplayer(user))
-			user.client.media.update_volume((vol))
+			var/client/client = user.client
+			var/new_lobby_volume = 1
+			var/list/channels = client?.prefs?.channel_volume
+			if("[CHANNEL_LOBBYMUSIC]" in channels)
+				new_lobby_volume = channels["[CHANNEL_LOBBYMUSIC]"]
+			if("[CHANNEL_MASTER_VOLUME]" in channels)
+				new_lobby_volume *= (channels["[CHANNEL_MASTER_VOLUME]"] * 0.01)
+			if(client?.byond_version >= 516)
+				client?.media2?.set_volume(new_lobby_volume)
+			else
+				client?.media?.update_volume(new_lobby_volume)
 
 	var/sound/S = sound(null, channel = channel, volume = vol)
 	S.status = SOUND_UPDATE

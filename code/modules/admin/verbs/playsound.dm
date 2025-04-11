@@ -162,6 +162,10 @@
 			if(C.prefs.read_preference(/datum/preference/toggle/sound_midi))
 				if(!stop_web_sounds)
 					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					if(C.byond_version >= 516)
+						C.media2?.stop()
+					else
+						C.media?.stop_music()
 				else
 					C.tgui_panel?.stop_music()
 
