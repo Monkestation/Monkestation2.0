@@ -197,8 +197,19 @@
 				if (!posttransformoutfit)
 					return
 				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+				SSquirks.AssignQuirks(newmob, newmob.client, blacklist = list(/datum/quirk/stowaway)) //MONKESTATION ADDITION
 				if(posttransformoutfit && istype(newmob))
+				/* //MONKESTATION EDIT START - give me my loadout, NOW!
 					newmob.equipOutfit(posttransformoutfit)
+				*/ //MONKESTATION EDIT ORIGINAL
+					if(posttransformoutfit == "Naked")
+						posttransformoutfit = new /datum/outfit()
+					newmob.equip_outfit_and_loadout(posttransformoutfit, newmob.client.prefs)
+					for(var/datum/loadout_item/item as anything in loadout_list_to_datums(newmob.client?.prefs?.loadout_list))
+						if(length(item.restricted_roles))
+							continue
+						item.post_equip_item(newmob.client.prefs, newmob)
+				// MONKESTATION EDIT END
 			if("monkey")
 				M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
 			if("robot")
