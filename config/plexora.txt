@@ -3,3 +3,6 @@
 
 # The base URL for the Plexora instance.
 PLEXORA_URL http://127.0.0.1:1330
+
+## Uncomment to require discord verification using plexora
+#REQUIRE_DISCORD_VERIFICATION
