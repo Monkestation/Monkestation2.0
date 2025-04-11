@@ -402,7 +402,8 @@
 //siemens_coeff - layman's terms, conductivity
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
+//proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE) // MONKESTATION EDIT OLD
+/proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE, always_shock = FALSE) // MONKESTATION EDIT NEW
 	if(!istype(victim) || ismecha(victim.loc))
 		return FALSE //feckin mechs are dumb
 
@@ -417,7 +418,8 @@
 	var/datum/powernet/PN = powernet_info["powernet"]
 	var/obj/item/stock_parts/cell/cell = powernet_info["cell"]
 
-	if(victim.wearing_shock_proof_gloves() && (PN && PN?.netexcess < 100 MW))
+	// MONKESTATION ADDITION -- This whole proc is basically polluted because long ago we didnt care for modularization
+	if(victim.wearing_shock_proof_gloves() && (PN && PN?.netexcess < 100 MW) && !always_shock)
 		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 		return FALSE //to avoid spamming with insulated gloves on
 

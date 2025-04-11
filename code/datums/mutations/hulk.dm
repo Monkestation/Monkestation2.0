@@ -18,7 +18,7 @@
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 	)
-
+	energy_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -49,7 +49,8 @@
 			INVOKE_ASYNC(src, PROC_REF(scream_attack), source)
 		log_combat(source, target, "punched", "hulk powers")
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-		source.changeNext_move(CLICK_CD_MELEE)
+//		source.changeNext_move(CLICK_CD_MELEE) // MONKESTATION EDIT OLD
+		source.changeNext_move(CLICK_CD_MELEE * (GET_MUTATION_ENERGY(src) * 1.5)) // MONKESTATION EDIT NEW -- I'm sorry
 
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -88,7 +89,9 @@
 		qdel(src)
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
-	if(..())
+//	if(..()) // MONKESTATION EDIT OLD
+	. = ..() // MONKESTATION EDIT NEW
+	if(.) // MONKESTATION EDIT NEW
 		return
 	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
