@@ -420,8 +420,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT
 
-	accepted_magazine_type = /obj/item/ammo_box/magazine/miecz
-
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 	can_suppress = TRUE
 
