@@ -193,7 +193,7 @@ window "infowindow"
 		anchor1 = 43,0
 		anchor2 = 57,0
 		saved-params = "is-checked"
-		text = "Discord"
+		text = "Discord" 
 		command = "forum"
 	elem "github"
 		type = BUTTON
@@ -278,14 +278,6 @@ window "outputwindow"
 		is-flat = true
 		button-type = pushbox
 	elem "mediapanel"
-		type = BROWSER
-		pos = 599,460
-		size = 1x1
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		is-visible = false
-		saved-params = ""
-	elem "mediapanel2"
 		type = BROWSER
 		pos = 599,460
 		size = 1x1

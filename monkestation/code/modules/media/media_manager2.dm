@@ -7,7 +7,7 @@
 #define MM2_DEBUG(x)
 #endif
 
-#define MEDIA_WINDOW_ID "outputwindow.mediapanel2"
+#define MEDIA_WINDOW_ID "media2"
 #define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), is_browser ? (MEDIA_WINDOW_ID + ":" + name) : (MEDIA_WINDOW_ID + ".browser:" + name))
 #define WAIT_UNTIL_READY \
 	if(QDELETED(src)) { \
@@ -58,7 +58,7 @@
 #endif
 	var/html = replacetextEx(base_html, "media:href", REF(src))
 	close()
-	owner << browse(html, "window=" + MEDIA_WINDOW_ID)
+	owner << browse(html, "window=" + MEDIA_WINDOW_ID + ";size=1x1;is-visible=false;")
 	is_browser = winexists(owner, MEDIA_WINDOW_ID) == "BROWSER"
 
 /datum/media_manager2/proc/close()
