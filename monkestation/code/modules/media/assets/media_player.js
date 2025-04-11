@@ -35,7 +35,7 @@ window.onunhandledrejection = function(error) {
 	if (error.reason) {
 		msg += ': ' + (error.reason.message || error.reason.description || error.reason);
 		if (error.reason.stack) {
-			error.reason.stack = 'UnhandledRejection: ' + e.reason.stack;
+			error.reason.stack = 'UnhandledRejection: ' + error.reason.stack;
 		}
 	}
 	window.onerror(msg, null, null, null, error.reason);
