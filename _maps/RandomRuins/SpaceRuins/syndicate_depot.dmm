@@ -456,6 +456,7 @@
 "eC" = (
 /obj/machinery/vending/imported/tizirian,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/explosives/alt/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "eF" = (
@@ -4368,6 +4369,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
+"PW" = (
+/turf/closed/wall/mineral/plastitanium/explosive,
+/area/ruin/space/has_grav/syndicate_depot/vault)
 "PX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed,
@@ -8334,7 +8338,7 @@ rE
 hc
 IG
 mz
-mz
+PW
 mz
 mz
 mz
@@ -11550,8 +11554,8 @@ Je
 BF
 BF
 BF
-OZ
-OZ
+Tv
+Tv
 RL
 RL
 RL
@@ -12927,8 +12931,8 @@ Je
 BF
 BF
 BF
-OZ
-OZ
+Tv
+Tv
 BF
 BF
 RL
