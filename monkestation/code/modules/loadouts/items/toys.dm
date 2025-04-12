@@ -117,3 +117,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 /datum/loadout_item/toys/foam_sword
 	name = "Foam Sword"
 	item_path = /obj/item/toy/sword
+
+/datum/loadout_item/toys/walkman
+	name = "Walkman"
+	item_path = /obj/item/device/walkman

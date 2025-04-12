@@ -95,6 +95,10 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	item_path = /obj/item/clothing/neck/ascot
 	requires_purchase = FALSE
 
+/datum/loadout_item/neck/large_scarf
+	name = "Large Scarf"
+	item_path = /obj/item/clothing/neck/large_scarf
+
 /*
 *	NECKTIES
 */
@@ -198,6 +202,10 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 /datum/loadout_item/neck/rainbow_bowtie
 	name = "Rainbow Bow Tie"
 	item_path = /obj/item/clothing/neck/bowtie/rainbow
+
+/datum/loadout_item/neck/modlink
+	name = "MODlink Scryer"
+	item_path = /obj/item/clothing/neck/link_scryer/loaded
 
 /*
 *	DONATOR

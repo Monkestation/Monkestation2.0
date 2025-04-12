@@ -69,7 +69,9 @@
 				/obj/item/clothing/under/dress/tango = 2,
 				/obj/item/clothing/under/dress/ballgown = 2, //MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/dress/wlpinafore = 2, //MONKESTATION EDIT ADDITION
+				/obj/item/clothing/under/dress/ribbondress = 2, //MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/dress/skirt/plaid = 4,
+				/obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator = 4, //MONKESTATION ADDITION
 				/obj/item/clothing/under/dress/skirt/turtleskirt = 4,
 				/obj/item/clothing/under/misc/overalls = 2,
 				/obj/item/clothing/under/pants/camo = 2,

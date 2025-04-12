@@ -10,7 +10,7 @@
 
 	var/static/datum/team/plague_rat/rats_rats_we_are_the_rats
 	var/disease_id
-	var/datum/disease/advanced/bacteria/plague
+	var/datum/disease/acute/bacteria/plague
 	var/turf/invasion
 
 /datum/antagonist/plague_rat/on_gain()
@@ -34,4 +34,7 @@
 
 /datum/antagonist/plague_rat/greet()
 	. = ..()
-	to_chat(owner.current, " <span class='warning'><B>You are a [name]! Carrier of a dangerous Bacteria!</B><BR>Try and spread your contagion across the station!</span>")
+	to_chat(owner.current, span_warning("<B>You are a [name]! Carrier of a dangerous Bacteria!</B><BR>Try and spread your contagion across the station!"))
+
+/datum/antagonist/plague_rat/get_team()
+	return rats_rats_we_are_the_rats

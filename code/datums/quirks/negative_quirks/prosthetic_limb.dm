@@ -11,6 +11,10 @@
 	/// the original limb from before the prosthetic was applied
 	var/obj/item/bodypart/old_limb
 
+/datum/quirk/prosthetic_limb/Destroy()
+	. = ..()
+	QDEL_NULL(old_limb)
+
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_type = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
 	if(isnull(limb_type))  //Client gone or they chose a random prosthetic
@@ -28,6 +32,9 @@
 	you need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 
 /datum/quirk/prosthetic_limb/remove()
+	if(QDELETED(quirk_holder))
+		QDEL_NULL(old_limb)
+		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.del_and_replace_bodypart(old_limb, special = TRUE)
 	old_limb = null

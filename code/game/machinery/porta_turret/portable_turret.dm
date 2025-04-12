@@ -133,6 +133,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!has_cover)
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
+	AddElement(/datum/element/hostile_machine)
+
 /obj/machinery/porta_turret/proc/toggle_on(set_to)
 	var/current = on
 	if (!isnull(set_to))
@@ -350,7 +352,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(!multitool_check_buffer(user, I))
 			return
 		var/obj/item/multitool/M = I
-		M.buffer = src
+		M.set_buffer(src)
 		to_chat(user, span_notice("You add [src] to multitool buffer."))
 	else
 		return ..()
@@ -756,6 +758,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	desc = "An energy blaster auto-turret."
 	armor_type = /datum/armor/syndicate_turret
+
+/obj/machinery/porta_turret/syndicate/energy/ruin/assess_perp(mob/living/carbon/human/perp)
+	if (!check_access(perp.wear_id?.GetID()))
+		return 10
+	return 0
 
 /datum/armor/syndicate_turret
 	melee = 40

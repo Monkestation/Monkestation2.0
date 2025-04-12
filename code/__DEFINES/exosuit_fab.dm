@@ -31,6 +31,15 @@
 #define EXOSUIT_MODULE_RETICENCE (1<<9)
 /// Module is compatible with Marauder models
 #define EXOSUIT_MODULE_MARAUDER (1<<10)
+//monkestation edit start
+// Module is compatbile with makeshift locker mechs
+#define EXOSUIT_MODULE_MAKESHIFT (1<<11)
+// Module is compatbile with ambulance "mechs"
+#define EXOSUIT_MODULE_AMBULANCE (1<<12)
+// Module is compatbile with tank "mechs"
+#define EXOSUIT_MODULE_TRASHTANK (1<<13)
+//monkestation edit end
+
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)

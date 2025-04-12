@@ -133,7 +133,7 @@
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
 
-	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER) && !HAS_TRAIT(owner, TRAIT_TOXIMMUNE))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
 				continue

@@ -11,7 +11,7 @@
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)), \
 		roleplay_friendly = TRUE, \
-		roleplay_emotes = list(/datum/emote/silicon/buzz, /datum/emote/silicon/buzz2, /datum/emote/living/beep), \
+		roleplay_emotes = list(/datum/emote/silicon/buzz, /datum/emote/silicon/buzz2, /datum/emote/silicon/beep), \
 		roleplay_callback = CALLBACK(src, PROC_REF(untip_roleplay)))
 
 	set_wires(new /datum/wires/robot(src))
@@ -64,6 +64,8 @@
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
+			// monkestation edit start
+			/* original
 			mmi = new (src)
 			mmi.brain = new /obj/item/organ/internal/brain(mmi)
 			mmi.brain.organ_flags |= ORGAN_FROZEN
@@ -74,6 +76,9 @@
 			mmi.brainmob.real_name = src.real_name
 			mmi.brainmob.container = mmi
 			mmi.update_appearance()
+			*/
+			mmi = make_mmi()
+			// monkestation edit end
 		setup_default_name()
 
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
@@ -659,7 +664,7 @@
 	return ..()
 
 /mob/living/silicon/robot/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= -maxHealth) //die only once

@@ -11,7 +11,7 @@
 
 	examine_discovered = span_warning("It appears to heal those who touch it.")
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	///list of what we heal
 	var/list/damage_types = list(

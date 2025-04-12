@@ -1,6 +1,6 @@
 /mob/living/Initialize(mapload)
 	. = ..()
-	stamina = new(src)
+	stamina = new(src) // monkestation edit: stamina rework
 	if(current_size != RESIZE_DEFAULT_SIZE)
 		update_transform(current_size)
 	AddElement(/datum/element/movetype_handler)
@@ -103,7 +103,7 @@
 		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
-			for(var/datum/disease/advanced/V as anything in contact)
+			for(var/datum/disease/acute/V as anything in contact)
 				living.infect_disease(V, notes="(Skin Contact - (Bump), coming from [src])")
 
 	if(isliving(M))
@@ -112,7 +112,7 @@
 		if(length(living.diseases))
 			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 			if(length(contact) && !block)
-				for(var/datum/disease/advanced/V as anything in contact)
+				for(var/datum/disease/acute/V as anything in contact)
 					infect_disease(V, notes="(Skin Contact - (Bump), coming from [living])")
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
@@ -399,7 +399,7 @@
 				var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
 				var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 				if(length(contact) && !block)
-					for(var/datum/disease/advanced/V as anything in contact)
+					for(var/datum/disease/acute/V as anything in contact)
 						living.infect_disease(V, notes="(Skin Contact - (Grab), coming from [src])")
 
 			if(isliving(M))
@@ -408,7 +408,7 @@
 				if(length(living.diseases))
 					var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 					if(length(contact) && !block)
-						for(var/datum/disease/advanced/V as anything in contact)
+						for(var/datum/disease/acute/V as anything in contact)
 							infect_disease(V, notes="(Skin Contact - (Grab), coming from [living])")
 
 			if(iscarbon(L))
@@ -585,7 +585,8 @@
  * Argument:
  * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
  */
-/mob/living/proc/get_idcard(hand_first)
+/mob/living/proc/get_idcard(hand_first) as /obj/item/card/id
+	RETURN_TYPE(/obj/item/card/id)
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
 	//Check hands
@@ -768,7 +769,7 @@
 
 
 /mob/living/proc/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	set_health(maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss())
 	update_stat()
@@ -1382,7 +1383,7 @@
  * Returns a mob (what our mob turned into) or null (if we failed).
  */
 /mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
-	if(stat == DEAD || (GODMODE & status_flags) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+	if(stat == DEAD || HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
@@ -1421,7 +1422,7 @@
 	)
 
 	// If we weren't passed one, pick a default one
-	what_to_randomize ||= pick(possible_results)
+	what_to_randomize ||= pick(HAS_MIND_TRAIT(src, TRAIT_UNBORGABLE) ? (possible_results - WABBAJACK_ROBOT) : possible_results) // monkestation start: TRAIT_UNBORGABLE
 
 	switch(what_to_randomize)
 		if(WABBAJACK_MONKEY)
@@ -1915,13 +1916,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. += {"
 		<br><font size='1'>[VV_HREF_TARGETREF(refid, VV_HK_GIVE_DIRECT_CONTROL, "[ckey || "no ckey"]")] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
 		<br><font size='1'>
-			BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[getBruteLoss()]</a>
-			FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[getFireLoss()]</a>
-			TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[getToxLoss()]</a>
-			OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[getOxyLoss()]</a>
-			CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[getCloneLoss()]</a>
-			BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[get_organ_loss(ORGAN_SLOT_BRAIN)]</a>
-			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[stamina.loss]</a>
+			BRUTE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[getBruteLoss()]</a>
+			FIRE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[getFireLoss()]</a>
+			TOXIN:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[getToxLoss()]</a>
+			OXY:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[getOxyLoss()]</a>
+			CLONE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[getCloneLoss()]</a>
+			BRAIN:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[get_organ_loss(ORGAN_SLOT_BRAIN)]</a>
+			STAMINA:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[stamina.loss]</a>
 		</font>
 	"}
 

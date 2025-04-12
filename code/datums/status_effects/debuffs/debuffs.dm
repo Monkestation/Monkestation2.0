@@ -336,7 +336,8 @@
 		hammer_synced = new_hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
-	if(owner.mob_size >= MOB_SIZE_LARGE)
+	var/list/factions = list(FACTION_MINING, FACTION_BOSS) // MONKESTATION ADDITION
+	if(faction_check(owner.faction, factions)) //MONKESTATION EDIT, only marks mining mobs no longer large mobs
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
@@ -517,12 +518,12 @@
 
 /datum/status_effect/gonbola_pacify/on_apply()
 	. = ..()
-	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), CLOTHING_TRAIT)
+	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), REF(src))
 	owner.add_mood_event(type, /datum/mood_event/gondola)
 	to_chat(owner, span_notice("You suddenly feel at peace and feel no need to make any sudden or rash actions..."))
 
 /datum/status_effect/gonbola_pacify/on_remove()
-	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), CLOTHING_TRAIT)
+	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_MUTE), REF(src))
 	owner.clear_mood_event(type)
 	return ..()
 
@@ -548,7 +549,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
-	ADD_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
 	span_warning(pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")))
@@ -561,7 +562,7 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_status_effect(/datum/status_effect/dizziness)
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, span_warning("You snap out of your trance!"))
@@ -927,11 +928,11 @@
 	icon_state = "convulsing"
 
 /datum/status_effect/discoordinated/on_apply()
-	ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, "[type]")
+	ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/discoordinated/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, "[type]")
+	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 ///Maddly teleports the victim around all of space for 10 seconds

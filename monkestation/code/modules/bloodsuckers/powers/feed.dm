@@ -56,6 +56,7 @@
 	if(!QDELETED(feed_target))
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
 		to_chat(user, span_notice("You slowly release [feed_target]."))
+		to_chat(feed_target, span_warning("Huh? What just happened? You don't remember the last few moments"))
 		if(feed_target.stat == DEAD && !started_alive)
 			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 			bloodsuckerdatum_power.AddHumanityLost(10)
@@ -109,7 +110,7 @@
 
 	//check if we were seen
 	for(var/mob/living/watchers in oviewers(FEED_NOTICE_RANGE) - feed_target)
-		if(QDELETED(watchers.client))
+		if(QDELETED(watchers.client) || watchers.client?.is_afk())
 			continue
 		if(watchers.has_unlimited_silicon_privilege)
 			continue
@@ -117,7 +118,7 @@
 			continue
 		if(watchers.is_blind() || watchers.is_nearsighted_currently())
 			continue
-		if(IS_BLOODSUCKER(watchers) || IS_VASSAL(watchers) || HAS_MIND_TRAIT(watchers, TRAIT_OCCULTIST))
+		if(IS_BLOODSUCKER(watchers) || IS_VASSAL(watchers) || HAS_MIND_TRAIT(watchers, TRAIT_OCCULTIST) || HAS_TRAIT(watchers, TRAIT_GHOST_CRITTER))
 			continue
 		owner.balloon_alert(owner, "feed noticed!")
 		bloodsuckerdatum_power.give_masquerade_infraction()

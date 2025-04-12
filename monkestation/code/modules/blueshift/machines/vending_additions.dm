@@ -51,11 +51,6 @@
 	for (var/obj/item/clothing/item in premium)
 		if(premium[item] < MINIMUM_CLOTHING_STOCK && allow_increase(item))
 			premium[item] = MINIMUM_CLOTHING_STOCK
-
-	QDEL_NULL(products_monke)
-	QDEL_NULL(product_categories_monke)
-	QDEL_NULL(premium_monke)
-	QDEL_NULL(contraband_monke)
 	return ..()
 
 /// This proc checks for forbidden traits cause it'd be pretty bad to have 5 insuls available to assistants roundstart at the vendor!
@@ -136,7 +131,6 @@
 		/obj/item/clothing/mask/breath = 2,
 		/obj/item/reagent_containers/cup/bottle/morphine = 2,
 		/obj/item/reagent_containers/syringe = 2,
-		/obj/item/clothing/gloves/color/black = 2, // fire resistant, allows the robo to painlessly mold metal. also its down here because its a treatment item
 		/obj/item/bonesetter = 2, // for dislocations
 		/obj/item/stack/medical/gauze = 4, // for ALL wounds
 		/obj/item/healthanalyzer/simple = 2,
