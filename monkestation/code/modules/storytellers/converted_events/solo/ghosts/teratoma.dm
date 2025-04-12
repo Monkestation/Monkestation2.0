@@ -10,6 +10,7 @@
 	weight = 5
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_OUTSIDER_ANTAG, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/teratoma
 	minimum_required = 1
