@@ -16,8 +16,8 @@
 	var/datum/weakref/given_organ
 
 /datum/quirk/cybernetics_quirk/Destroy()
+	. = ..()
 	given_organ = null
-	return ..()
 
 /datum/quirk/cybernetics_quirk/add_unique(client/client_source)
 	if(!cybernetic_type)
@@ -28,13 +28,13 @@
 
 /datum/quirk/cybernetics_quirk/remove()
 	var/obj/item/organ/internal/quirk_organ = given_organ?.resolve()
-	if(QDELETED(quirk_organ))
+	if(isnull(quirk_organ))
 		return
 	var/original_type = get_original_type()
 	quirk_organ.Remove(quirk_holder, special = !isnull(original_type))
 	qdel(quirk_organ)
 	given_organ = null
-	if(original_type)
+	if(!QDELETED(quirk_holder) && original_type)
 		var/obj/item/organ/internal/original_organ = new original_type
 		original_organ.Insert(quirk_holder, special = TRUE, drop_if_replaced = FALSE)
 

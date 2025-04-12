@@ -166,3 +166,86 @@
   stonetear:
   - bugfix: jetpack signals now pass a user argument.  This fixes an error when automatically
       stowing a captain jetpack into your modsuit.
+2025-04-09:
+  Absolucy:
+  - rscdel: Removed the proto-kinetic grenade launcher.
+  - qol: The storyteller will no longer roll antags after the emergency shuttle is
+      past the point of no return.
+  - bugfix: Optimized some more stuff, reducing the potential for server-side lag
+      (time dilation) in some situations.
+  - bugfix: Chat messages now actually queue as intended.
+  - bugfix: Fixed improperly cleaning up memories when a mind is deleted.
+  - bugfix: Messages sent to MMIs in wiremod components now have a 1 second cooldown,
+      to prevent massive spam.
+  - code_imp: (mc-oofet) Basic mobs that delete on death now ghost before dying.
+  - bugfix: (SmArtKar, Kapu) Atmospheric tanks no longer fetch icons every tick
+  - bugfix: (tontyGH) Pubby's whiteship no longer breaks when it tries to dock.
+  - bugfix: (SmArtKar) Fixed a Honkerblast 5000 runtime.
+  - bugfix: (Melbert) Fixed an error from reading an ID card closely when you can't
+      read.
+  Gw0sty:
+  - rscadd: Chameleon hats now can be used inhand to set hairstyles in ones disguise
+  - balance: Medical mech equipment now is also locked behind Odysseus research
+  - balance: Research access is now needed to unlock nanite remotes.
+  - code_imp: Modularized some code
+  Shoddd:
+  - balance: flechette is now weak against armor
+  Tostah:
+  - rscadd: When something is implanted with a hive node, grant them the ability to
+      speak Xenocommon
+  - rscadd: New Traitor Misc. Gear; Xenomorph Hive Node Implanter for 5tc.
+  flleeppyy:
+  - rscadd: Observe verb
+  - rscdel: Replying to mentorhelps via Discord
+2025-04-11:
+  Absolucy:
+  - bugfix: Stabilized rainbow extracts now use signals to detect when the user enters
+      crit, preventing dumb things
+  Gw0sty:
+  - rscadd: Limb Grower has more designs
+  - rscadd: Limb Grower has a new sprite from TG.
+  - rscadd: Mechfab can print IPC Antennas.
+  - rscadd: Prosthesis feature manipulation
+  - bugfix: defib mounts with defibs inside them roundstart will no longer be invisible.
+  - bugfix: Printing digitgrade limbs section will no longer just, not work.
+  - bugfix: Captains now have places to spawn on Icebox
+  Kitsunemitsu:
+  - balance: AI now takes 15 hours of silicon to unlock instead of 3.
+  Loiosh42:
+  - image: Lilies and Geraniums now have different sprites
+  MomoBerri:
+  - bugfix: Mailing on Theseus now works properly.
+  Shoddd:
+  - balance: Oddity maints loot is rarer again
+  - balance: Trash piles only roll for oddity loot once
+  - admin: Better borer say logging
+  Singul0:
+  - rscadd: Adds scrap vehicles (Locker mechs, Ambulance and trash tank!)
+  - bugfix: Walls take armor penetration into account now
+  Ziiro:
+  - bugfix: IPC reboot surgery now displays the correct error/complete messages.
+  - balance: IPC reboot surgery now requires 5 iron in the step, not 15.
+  - bugfix: IPCs now use the correct wings when drinking a flight potion
+2025-04-12:
+  Absolucy:
+  - refactor: Cached generated preview icons for antags, hopefully increasing performance
+  - bugfix: The "Report Bugs" button is red once more.
+  - bugfix: 'Fixed some lighting-related code:'
+  - bugfix: The admin Break/Fix Lights buttons now don't take half an eternity to
+      complete.
+  - admin: 'Added some new Lua functions: SS13.ispath, SS13.typecacheof, SS13.is_type_in_typecache,
+      SS13.get_turf, and SS13.get_area'
+  - bugfix: Fixed a broken check in the SS13.register_signal Lua function.
+  - bugfix: Fixed the _winget SDQL2/Lua wrapper, so it actually returns the return
+      value of winget.
+  Absolucy, Gaxeer:
+  - refactor: replace bubble sort with timsort for cameralist, move global procs to
+      `cameranet` datum
+  Ice-Type:
+  - balance: Armour now affects the scarp, acarp, and tunnel arts martial arts.
+  - balance: Base damage is increased to compensate. Damage will be higher with no
+      armour, but still a little weaker with base sec armour.
+  - bugfix: Awakened dragon now ACTUALLY deflects all projectiles. Dual wielding and
+      shotguns won't work anymore!
+  flleeppyy:
+  - admin: You can now restart the MC/Failsafe from the discord with /restartcontroller

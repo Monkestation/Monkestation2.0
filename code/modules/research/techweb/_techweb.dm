@@ -332,10 +332,10 @@
 	return techweb_point_display_generic(research_points)
 
 /datum/techweb/proc/enqueue_node(id, mob/user)
-	var/mob/living/carbon/human/human_user = user
 	var/is_rd = FALSE
-	if(human_user.wear_id)
-		var/list/access = human_user.wear_id.GetAccess()
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/list/access = living_user.get_idcard(hand_first = TRUE)?.GetAccess()
 		if(ACCESS_RD in access)
 			is_rd = TRUE
 
@@ -412,7 +412,7 @@
 	// Avoid logging the same 300+ lines at the beginning of every round
 	if (MC_RUNNING())
 		log_research(log_message)
-	
+
 	// Dequeue
 	if(node.id in research_queue_nodes)
 		research_queue_nodes.Remove(node.id)
