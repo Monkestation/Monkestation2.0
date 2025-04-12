@@ -1,47 +1,38 @@
 //#define MM2_DEBUGGING
 
 #ifdef MM2_DEBUGGING
-#define MM2_DEBUG(x) message_admins(x)
+#define MM2_DEBUG(x) message_admins("\[MEDIA MANAGER 2 DEBUG\] " + x)
 #warn COMMENT OUT MM2_DEBUGGING BEFORE DEPLOYING!!!
 #else
 #define MM2_DEBUG(x)
 #endif
 
 #define MEDIA_WINDOW_ID "media2"
-#define MEDIA_CALL(name, args...) owner << output(list2params(list(##args)), is_browser ? (MEDIA_WINDOW_ID + ":" + name) : (MEDIA_WINDOW_ID + ".browser:" + name))
-#define WAIT_UNTIL_READY \
-	if(QDELETED(src)) { \
-		return; \
-	}; \
-	if(!ready) { \
-		var/__end_time = REALTIMEOFDAY + (5 SECONDS); \
-		while(!ready && (REALTIMEOFDAY < __end_time)) { \
-			stoplag(); \
-			if(QDELETED(src)) { \
-				return; \
-			}; \
-		}; \
-		if(!ready) { \
-			return; \
-		}; \
-	};
 
 /client
 	var/datum/media_manager2/media2
 
 /datum/media_manager2
-	var/client/owner
-	var/is_browser = FALSE
-	var/ready = FALSE
+	/// The client that this media manager is owned by.
+	VAR_FINAL/client/owner
+	/// Is our window a browser control?
+	VAR_FINAL/is_browser = FALSE
+	/// Is the media manager ready to do stuff yet?
+	VAR_FINAL/ready = FALSE
+	/// Callbacks to run when we get the "ready" message back fron the media manager.
+	VAR_PRIVATE/list/ready_callbacks
 	var/static/base_html
 
 /datum/media_manager2/New(client/owner)
 	src.owner = owner
+	if(!isnull(owner) && owner.media2 != src && !QDELETED(owner.media2))
+		CRASH("tried to initialize a second media2 for [key_name(owner)] when they already had a non-qdeleted media2!")
 	if(isnull(base_html))
 		init_base_html()
 	open()
 
 /datum/media_manager2/Destroy(force)
+	LAZYNULL(ready_callbacks)
 	close()
 	owner = null
 	return ..()
@@ -66,6 +57,29 @@
 	if(!isnull(owner))
 		owner << browse(null, "window=" + MEDIA_WINDOW_ID)
 
+/// Calls a JS function in the media manager.
+/// If the media manager isn't ready yet, then the call will be queued, and all queued calls will be invoked in order when it does become ready.
+/datum/media_manager2/proc/media_call(name, ...)
+	PRIVATE_PROC(TRUE)
+	if(QDELETED(src) || isnull(owner))
+		return
+	var/target = is_browser ? (MEDIA_WINDOW_ID + ":" + name) : (MEDIA_WINDOW_ID + ".browser:" + name)
+	var/params = list2params(args.Copy(2))
+	if(ready)
+		MM2_DEBUG("call: target=[target], params=[params]")
+		owner << output(params, target)
+	else
+		MM2_DEBUG("queueing ready callback: target=[target], params=[params]")
+		LAZYADD(ready_callbacks, CALLBACK(src, PROC_REF(__ready_callback), target, params))
+
+/// Wrapper proc for ready callbacks made by media_call - basically a stripped down version of media_call that won't create more ready callbacks.
+/// This should NEVER be called directly.
+/datum/media_manager2/proc/__ready_callback(target, params)
+	PRIVATE_PROC(TRUE)
+	if(!isnull(owner))
+		MM2_DEBUG("calling ready callback: target=[target], params=[params]")
+		owner << output(params, target)
+
 /datum/media_manager2/proc/init_base_html()
 	get_asset_datum(/datum/asset/simple/media_manager2) // ensure that asset datum is loaded
 	var/js = replacetextEx(file2text("monkestation/code/modules/media/assets/media_player.js"), "media_player.wasm", SSassets.transport.get_asset_url("media_player.wasm"))
@@ -74,32 +88,36 @@
 	base_html = replacetextEx(base_html, "<!-- media:main -->", "<script type='text/javascript'>[js]</script>")
 
 /datum/media_manager2/proc/set_url(url)
-	WAIT_UNTIL_READY
-	MEDIA_CALL("set_url", url)
+	media_call("set_url", url)
 
 /datum/media_manager2/proc/set_position(x = 0, y = 0)
-	WAIT_UNTIL_READY
-	MEDIA_CALL("set_position", x, y)
+	media_call("set_position", x, y)
 
 /datum/media_manager2/proc/set_time(time = 0)
-	WAIT_UNTIL_READY
-	MEDIA_CALL("set_time", time)
+	media_call("set_time", time)
 
 /datum/media_manager2/proc/set_volume(volume = 1)
-	WAIT_UNTIL_READY
-	MEDIA_CALL("set_volume", volume)
+	media_call("set_volume", volume)
 
 /datum/media_manager2/proc/play(url)
-	WAIT_UNTIL_READY
-	MEDIA_CALL("play", url)
+	media_call("play", url)
 
 /datum/media_manager2/proc/pause()
-	if(ready) // don't even bother waiting if we're not ready, bc that means there's nothing TO pause
-		MEDIA_CALL("pause")
+	media_call("pause")
 
 /datum/media_manager2/proc/stop()
-	if(ready) // don't even bother waiting if we're not ready, bc that means there's nothing TO stop
-		MEDIA_CALL("stop")
+	media_call("stop")
+
+/datum/media_manager2/proc/on_ready()
+	if(ready)
+		CRASH("readied twice")
+	if(QDELETED(src) || isnull(owner))
+		return
+	for(var/datum/callback/callback as anything in ready_callbacks)
+		callback?.Invoke()
+	ready = TRUE
+	LAZYNULL(ready_callbacks)
+	MM2_DEBUG("ready for [key_name(owner)]")
 
 /datum/media_manager2/Topic(href, list/href_list)
 	. = ..()
@@ -111,12 +129,11 @@
 		return
 	switch(message_type)
 		if("ready")
-			ready = TRUE
-			MM2_DEBUG("mm2 ready for [key_name(owner)]")
+			on_ready()
 		if("error")
-			MM2_DEBUG("mm2 error: [params["message"]]")
+			MM2_DEBUG("error: [params["message"]]")
 			stack_trace(params["message"])
-	MM2_DEBUG("mm2 topic: [json_encode(href_list, JSON_PRETTY_PRINT)]")
+	MM2_DEBUG("topic: [json_encode(href_list, JSON_PRETTY_PRINT)]")
 
 #ifdef MM2_DEBUGGING
 /client/verb/mm2_set_url()
@@ -126,28 +143,28 @@
 	var/url = trimtext(tgui_input_text(src, "Set URL", "Media Manager 2", default = "https://files.catbox.moe/29g5xp.mp3", encode = FALSE))
 	if(url)
 		media2.set_url(url)
-		MM2_DEBUG("mm2: url set to [url]")
+		MM2_DEBUG("url set to [url]")
 
 /client/verb/mm2_play()
 	set name = "MM2: Play"
 	set category = "MM2"
 
 	media2.play()
-	MM2_DEBUG("mm2: playing")
+	MM2_DEBUG("playing")
 
 /client/verb/mm2_pause()
 	set name = "MM2: Pause"
 	set category = "MM2"
 
 	media2.pause()
-	MM2_DEBUG("mm2: paused")
+	MM2_DEBUG("paused")
 
 /client/verb/mm2_stop()
 	set name = "MM2: Stop"
 	set category = "MM2"
 
 	media2.stop()
-	MM2_DEBUG("mm2: stopped")
+	MM2_DEBUG("stopped")
 
 /client/verb/mm2_set_position()
 	set name = "MM2: Set Position"
@@ -156,7 +173,7 @@
 	var/x = tgui_input_number(src, "Set X Value", "Media Manager 2", default = 0, min_value = -10, max_value = 10) || 0
 	var/y = tgui_input_number(src, "Set Y Value", "Media Manager 2", default = 0, min_value = -10, max_value = 10) || 0
 	media2.set_position(x, y)
-	MM2_DEBUG("mm2: set pos to [x],[y]")
+	MM2_DEBUG("set pos to [x],[y]")
 
 /client/verb/mm2_set_time()
 	set name = "MM2: Set Time"
@@ -164,14 +181,14 @@
 
 	var/time = tgui_input_number(src, "Set Time (Seconds)", "Media Manager 2", default = 0, min_value = 0, round_value = FALSE) || 0
 	media2.set_time(time)
-	MM2_DEBUG("mm2: set time to [time]")
+	MM2_DEBUG("set time to [time]")
 
 /client/verb/mm2_reload_all()
 	set name = "MM2: Reload Base HTML/JS"
 	set category = "MM2"
 
 	reload_all_mm2()
-	MM2_DEBUG("mm2: reloaded all")
+	MM2_DEBUG("reloaded all")
 
 /proc/reload_all_mm2()
 	var/did_re_init = FALSE
@@ -186,6 +203,4 @@
 		mm2.open()
 #endif
 
-#undef WAIT_UNTIL_READY
-#undef MEDIA_CALL
 #undef MEDIA_WINDOW_ID
