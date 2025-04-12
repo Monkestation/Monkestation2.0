@@ -398,13 +398,27 @@ SUBSYSTEM_DEF(plexora)
 
 	send_formatted_announcement(message, "From [from]")
 
-// // not ready yet
-// /datum/world_topic/plx_commandreport
-// 	keyword = "PLX_commandreport"
-// 	require_comms_key = TRUE
+/datum/world_topic/plx_restartcontroller
+	keyword = "PLX_restartcontroller"
+	require_comms_key = TRUE
 
-// /datum/world_topic/plx_commandreport/Run(list/input)
-// 	priority_announce(text = input["text"], title = input["title"], encode_title = FALSE, encode_text = FALSE, color_override)
+/datum/world_topic/plx_restartcontroller/Run(list/input)
+	var/controller = input["controller"]
+	var/username = input["username"]
+	var/userid = input["userid"]
+
+	if (!controller)
+		return
+
+	switch(LOWER_TEXT(controller))
+		if("master")
+			Recreate_MC()
+			SSblackbox.record_feedback("tally", "admin_verb", 1, "PLX: Restart Master Controller")
+		if("failsafe")
+			new /datum/controller/failsafe()
+			SSblackbox.record_feedback("tally", "admin_verb", 1, "PLX: Restart Failsafe Controller")
+	message_admins("PLEXORA: @[username] ([userid]) has restarted the [controller] controller from the Discord.")
+
 
 /datum/world_topic/plx_globalnarrate
 	keyword = "PLX_globalnarrate"
@@ -961,8 +975,7 @@ SUBSYSTEM_DEF(plexora)
 		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 		confidential = TRUE)
 
-
-	admin_ticket_log(recipient, "<font color='purple'>PM From [adminname]: [message]</font>", log_in_blackbox = FALSE)
+	ticket.AddInteraction(message, ckey=sender)
 
 	window_flash(recipient, ignorepref = TRUE)
 	// Nullcheck because we run a winset in window flash and I do not trust byond

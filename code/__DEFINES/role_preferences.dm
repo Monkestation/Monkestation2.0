@@ -48,6 +48,7 @@
 #define ROLE_FLORIDA_MAN "Florida Man"
 #define ROLE_SLASHER "Slasher"
 #define ROLE_MONSTERHUNTER "Monster Hunter"
+#define ROLE_TERATOMA "Teratoma"
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
@@ -167,6 +168,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SLASHER = 0,
 	ROLE_FLORIDA_MAN = 0,
 	ROLE_OPFOR_CANDIDATE = 0,
+	ROLE_TERATOMA = 0,
 //monkestation edit end
 
 	// Latejoin
