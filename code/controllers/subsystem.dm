@@ -197,20 +197,19 @@
 	var/queue_node_priority
 	var/queue_node_flags
 
-	/* var/iter_count = 0 */
+	var/iter_count = 0
 
 	/* enqueue_log.Cut() */
+	var/tick_usage_start = TICK_USAGE
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
-/*
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
+			var/tick_usage_delta = TICK_USAGE - tick_usage_start
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
-			SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			stack_trace("enqueue() entered an infinite loop, we're restarting the MC!")
+			SSplexora.mc_alert("SS:[queue_node] exceeded maximum iterations (tick_usage = [TICK_USAGE], delta = [tick_usage_delta])")
+			message_admins("SS:[queue_node] exceeded maximum iterations (tick_usage = [TICK_USAGE], delta = [tick_usage_delta])")
 			/* enqueue_log.Cut() */
-			Recreate_MC()
-			return
-*/
+			return FALSE
 
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
