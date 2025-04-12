@@ -197,17 +197,18 @@
 	var/queue_node_priority
 	var/queue_node_flags
 
-	var/iter_count = 0
+	//var/iter_count = 0
 
 	/* enqueue_log.Cut() */
 	var/tick_usage_start = TICK_USAGE
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
-		iter_count++
-		if(iter_count >= ENQUEUE_SANITY)
+		//iter_count++
+		var/total_ms = TICK_USAGE_TO_MS(tick_usage_start)
+		if(total_ms >= 1)
 			var/tick_usage_delta = TICK_USAGE - tick_usage_start
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
-			SSplexora.mc_alert("SS:[queue_node] exceeded maximum iterations (tick_usage = [TICK_USAGE], delta = [tick_usage_delta])")
-			message_admins("SS:[queue_node] exceeded maximum iterations (tick_usage = [TICK_USAGE], delta = [tick_usage_delta])")
+			SSplexora.mc_alert("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta])")
+			message_admins("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta])")
 			/* enqueue_log.Cut() */
 			return FALSE
 
@@ -216,8 +217,8 @@
 
 		if (queue_node.queue_next == queue_node || queue_node.queue_prev == queue_node)
 			// Log the error for debugging
-			SSplexora.mc_alert("SS:[queue_node] had self-reference in queue. Fixed")
-			message_admins("SS:[queue_node] had self-reference in queue. Fixed.")
+			SSplexora.mc_alert("[queue_node] subsystem had self-reference in queue. Fixed.")
+			message_admins("[queue_node] subsystem had self-reference in queue. Fixed.")
 			return FALSE
 
 		/* enqueue_log["[iter_count]"] = list(
