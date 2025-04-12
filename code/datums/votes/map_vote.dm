@@ -8,24 +8,13 @@
 
 /datum/vote/map_vote/New()
 	. = ..()
-
-	default_choices = list()
-
-	// Fill in our default choices with all of the maps in our map config, if they are votable and not blocked.
-	var/list/maps = shuffle(global.config.maplist)
-	for(var/map in maps)
-		var/datum/map_config/possible_config = config.maplist[map]
-		if(!possible_config.votable || (possible_config.map_name in SSpersistence.blocked_maps))
-			continue
-
-		default_choices += possible_config.map_name
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 
 /datum/vote/map_vote/create_vote()
 	. = ..()
 	if(!.)
 		return FALSE
 
-	choices -= get_choices_invalid_for_population()
 	if(length(choices) == 1) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
 		var/datum/map_config/change_me_out = global.config.maplist[choices[1]]
 		finalize_vote(choices[1])// voted by not voting, very sad.
@@ -50,39 +39,15 @@
 	if(. != VOTE_AVAILABLE)
 		return .
 
-	if(forced)
-		return VOTE_AVAILABLE
-
-	var/num_choices = length(default_choices - get_choices_invalid_for_population())
+	var/num_choices = length(default_choices)
 	if(num_choices <= 1)
 		return "There [num_choices == 1 ? "is only one map" : "are no maps"] to choose from."
 
-	if(SSmapping.map_vote_rocked)
-		return VOTE_AVAILABLE
-
-	if(SSmapping.map_voted)
-		return "The next map has already been selected."
+	if(SSmap_vote.next_map_config)
 	return VOTE_AVAILABLE
 
-/// Returns a list of all map options that are invalid for the current population.
-/datum/vote/map_vote/proc/get_choices_invalid_for_population()
-
-	var/filter_threshold = 0
-	if(SSticker.HasRoundStarted())
-		filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
-	else
-		filter_threshold = GLOB.clients.len
-
-	var/list/invalid_choices = list()
-	for(var/map in default_choices)
-		var/datum/map_config/possible_config = config.maplist[map]
-		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
-			invalid_choices += map
-
-		else if(possible_config.config_max_users > 0 && filter_threshold > possible_config.config_max_users)
-			invalid_choices += map
-
-	return invalid_choices
+/datum/vote/map_vote/get_result_text(list/all_winners, real_winner, list/non_voters)
+	return null
 
 /datum/vote/map_vote/get_vote_result(list/non_voters)
 	// Even if we have default no vote off,
@@ -103,11 +68,4 @@
 	return ..()
 
 /datum/vote/map_vote/finalize_vote(winning_option)
-	var/datum/map_config/winning_map = global.config.maplist[winning_option]
-	if(!istype(winning_map))
-		CRASH("[type] wasn't passed a valid winning map choice. (Got: [winning_option || "null"] - [winning_map || "null"])")
-
-	SSmapping.changemap(winning_map)
-	SSmapping.map_voted = TRUE
-	if(SSmapping.map_vote_rocked)
-		SSmapping.map_vote_rocked = FALSE
+	SSmap_vote.finalize_map_vote(src)
