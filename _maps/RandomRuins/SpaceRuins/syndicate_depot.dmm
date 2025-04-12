@@ -3,11 +3,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/small,
 /area/ruin/space/has_grav/syndicate_depot/infirmary)
-"ak" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "al" = (
 /obj/structure/fans/tiny/forcefield{
 	dir = 4
@@ -320,15 +315,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
-"cT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured_half,
-/area/ruin/space/has_grav/syndicate_depot/drydock)
 "db" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit{
@@ -577,6 +563,12 @@
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
+"fh" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "fm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -758,6 +750,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
+"gM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "gQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1681,13 +1680,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot)
-"oF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "oG" = (
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/turf_decal/delivery/white,
@@ -2195,11 +2187,6 @@
 /obj/structure/cable,
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_depot/drydock)
-"tn" = (
-/obj/machinery/washing_machine,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "to" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/directional/north,
@@ -2433,6 +2420,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
+"vY" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "vZ" = (
@@ -2865,12 +2861,6 @@
 /obj/item/paper/monitorkey,
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/syndicate_depot/control_room)
-"zG" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "zN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3035,6 +3025,12 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
+"Bw" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/space/has_grav/syndicate_depot/drydock)
 "Bx" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "syndicate_depot_airlock_windows";
@@ -3137,6 +3133,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
+"CA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/space/has_grav/syndicate_depot/drydock)
 "CD" = (
 /obj/machinery/computer/operating{
 	dir = 1
@@ -3386,11 +3391,6 @@
 /obj/item/wrench,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/syndicate_depot)
-"Fb" = (
-/obj/structure/closet/crate/trashcart/filled,
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Fc" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
@@ -3534,7 +3534,6 @@
 /turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
 "GB" = (
-/obj/machinery/shower/directional/west,
 /obj/structure/curtain{
 	desc = "Contains asbestos, which is surprisingly easy to get away with when you can just print new lungs.";
 	name = "syndicate shower curtain";
@@ -3542,6 +3541,7 @@
 	},
 /obj/item/soap/syndie,
 /obj/machinery/light_switch/directional/east,
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
 "GK" = (
@@ -3555,12 +3555,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/hallway)
-"Hh" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_half,
-/area/ruin/space/has_grav/syndicate_depot/drydock)
 "Hn" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -3986,12 +3980,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "KW" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/structure/table,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "KZ" = (
@@ -4018,6 +4007,11 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/syndicate_depot/drydock)
+"LB" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "LD" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
@@ -4123,10 +4117,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/syndicate_depot)
-"Mp" = (
-/obj/structure/table,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Mx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -4998,9 +4988,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "UZ" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
+/obj/machinery/washing_machine,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Vj" = (
@@ -5207,6 +5196,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/syndicate_depot)
+"WN" = (
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "WU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5334,6 +5328,12 @@
 /obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
+"XW" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "XX" = (
 /obj/effect/turf_decal/vg_decals/atmos/plasma{
 	dir = 8
@@ -7754,8 +7754,8 @@ aK
 tF
 DH
 tF
-tn
-tn
+UZ
+UZ
 Fc
 lH
 wP
@@ -7915,9 +7915,9 @@ mk
 yn
 Nu
 UW
-oF
-UZ
-ak
+gM
+XW
+WN
 Fc
 hq
 hq
@@ -7997,8 +7997,8 @@ cM
 AS
 wY
 dx
+vY
 KW
-Mp
 Fc
 hq
 hq
@@ -8078,7 +8078,7 @@ st
 Nu
 CL
 nt
-KW
+vY
 oG
 Fc
 hq
@@ -8238,7 +8238,7 @@ KL
 NO
 wN
 BW
-zG
+fh
 PU
 Nu
 OD
@@ -8565,7 +8565,7 @@ Nb
 BR
 hV
 sK
-Fb
+LB
 Fc
 hq
 hq
@@ -11301,7 +11301,7 @@ et
 et
 OC
 lx
-Hh
+Bw
 OC
 et
 et
@@ -11462,7 +11462,7 @@ ra
 MB
 QY
 bA
-cT
+CA
 La
 AL
 OC
