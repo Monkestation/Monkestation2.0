@@ -115,7 +115,7 @@ const LayerIconSection = (props) => {
       style={{
         transform: 'scale(2)',
         '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+        'image-rendering': 'pixelated',
       }}
     />
   );
