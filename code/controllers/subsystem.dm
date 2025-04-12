@@ -209,6 +209,7 @@
 			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
 			SSplexora.mc_alert("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
 			message_admins("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
+			stack_trace("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
 			/* enqueue_log.Cut() */
 			return FALSE
 
@@ -219,6 +220,7 @@
 			var/tick_usage_delta = TICK_USAGE - tick_usage_start
 			SSplexora.mc_alert("[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
 			message_admins("[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
+			stack_trace("[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
 			return FALSE
 
 		/* enqueue_log["[iter_count]"] = list(
