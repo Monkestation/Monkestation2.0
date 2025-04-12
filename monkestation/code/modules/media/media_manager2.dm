@@ -93,11 +93,6 @@
 	base_html = replacetextEx(base_html, "<!-- media:wasm -->", "<script type='text/javascript' src='[SSassets.transport.get_asset_url("media_player_wasm.js")]'></script>")
 	base_html = replacetextEx(base_html, "<!-- media:main -->", "<script type='text/javascript'>[js]</script>")
 
-/*
-/datum/media_manager2/proc/set_url(url)
-	media_call("set_url", url)
-*/
-
 /datum/media_manager2/proc/set_position(x = 0, y = 0)
 	media_call("set_position", x, y)
 
@@ -149,21 +144,14 @@
 	MM2_DEBUG("topic: [json_encode(href_list - "params", JSON_PRETTY_PRINT)]\nparams: [json_encode(params, JSON_PRETTY_PRINT)]")
 
 #ifdef MM2_DEBUGGING
-/client/verb/mm2_set_url()
-	set name = "MM2: Set URL"
-	set category = "MM2"
-
-	var/url = trimtext(tgui_input_text(src, "Set URL", "Media Manager 2", default = "https://files.catbox.moe/29g5xp.mp3", encode = FALSE))
-	if(url)
-		media2.set_url(url)
-		MM2_DEBUG("url set to [url]")
-
 /client/verb/mm2_play()
 	set name = "MM2: Play"
 	set category = "MM2"
 
-	media2.play()
-	MM2_DEBUG("playing")
+	var/url = trimtext(tgui_input_text(src, "What to play?", "Media Manager 2", default = "https://files.catbox.moe/29g5xp.mp3", encode = FALSE))
+	if(url)
+		media2.play(url)
+		MM2_DEBUG("playing")
 
 /client/verb/mm2_pause()
 	set name = "MM2: Pause"
