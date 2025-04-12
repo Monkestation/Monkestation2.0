@@ -1882,12 +1882,6 @@
 "rl" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/closet/crate{
-	icon_state = "syndicrate";
-	name = "surplus honkerative syndicrate";
-	desc = "A conspicuous crate with the Syndicate logo and a faint scent of lubricant on it. You do, in fact, know how to open it.";
-	delivery_icon = "syndicrate"
-	},
 /obj/item/bikehorn,
 /obj/item/mod/module/bikehorn,
 /obj/item/mod/module/waddle,
@@ -1898,6 +1892,11 @@
 /obj/item/toy/mecha/darkhonk,
 /obj/item/mod/skin_applier/honkerative,
 /obj/item/implanter/sad_trombone,
+/obj/structure/closet/crate/secure{
+	req_access = list("syndicate");
+	name = "surplus honkerative equipment crate";
+	desc = "You're not even sure how this got to the depot, but there's probably a reason you found it in emergency storage and not the main cargo bay."
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "rq" = (
@@ -2267,12 +2266,6 @@
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/circuit/red/anim,
 /area/ruin/space/has_grav/syndicate_depot/vault)
-"tP" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_half,
-/area/ruin/space/has_grav/syndicate_depot/drydock)
 "tQ" = (
 /obj/machinery/conveyor/inverted{
 	dir = 10;
@@ -3490,6 +3483,12 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
+"Gl" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/space/has_grav/syndicate_depot/drydock)
 "Gr" = (
 /obj/machinery/igniter{
 	id = "syndicate_depot_burn_ignition"
@@ -11252,7 +11251,7 @@ et
 et
 OC
 lx
-tP
+Gl
 OC
 et
 et
