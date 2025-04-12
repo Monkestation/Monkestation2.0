@@ -97,7 +97,7 @@
 	// The ticket our recipient is using
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
-	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
+	var/datum/admin_help/recipient_interactions = recipient_ticket?._interactions // MONKESTATION EDIT - tgui tickets
 	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
@@ -153,7 +153,7 @@
 				html = "[span_danger("<b>Message not sent:</b>")]<br>[message]",
 				confidential = TRUE)
 			if(recipient_ticket)
-				recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[message]")
+				recipient_ticket.AddInteraction("No client found, message not sent: [message]") // MONKESTATION EDIT - tgui tickets
 			return
 	cmd_admin_pm(whom, message)
 
@@ -293,7 +293,7 @@
 			html = "[span_danger("<b>Message not sent:</b>")]<br>[msg]",
 			confidential = TRUE)
 		if(recipient_ticket)
-			recipient_ticket.AddInteraction("<b>No client found, message not sent:</b><br>[msg]")
+			recipient_ticket.AddInteraction("No client found, message not sent: [msg]") // MONKESTATION EDIT - tgui tickets
 		return null
 	if(our_ticket)
 		our_ticket.MessageNoRecipient(msg)
@@ -362,8 +362,6 @@
 	var/their_name_with_link = key_name(recipient, TRUE, TRUE)
 	// Stores a bit of html with our ckey highlighted as a reply link
 	var/link_to_us = key_name(src, TRUE, FALSE)
-	// Stores a bit of html with outhe ckey of the recipientr highlighted as a reply link
-	var/link_to_their = key_name(recipient, TRUE, FALSE)
 	// Our ckey
 	var/our_ckey = ckey
 	// Recipient ckey
@@ -405,6 +403,10 @@
 			ticket_id = ticket?.id
 			recipient_ticket_id = recipient_ticket?.id
 			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
+		// MONKESTATION START
+		if(!recipient_ticket.handling_admin_ckey)
+			recipient_ticket.Administer(FALSE)
+		// MONKESTATION END
 
 		recipient.receive_ahelp(
 			link_to_us,
@@ -425,9 +427,9 @@
 			confidential = TRUE)
 
 		admin_ticket_log(recipient,
-			"<font color='purple'>PM From [name_key_with_link]: [keyword_parsed_msg]</font>",
-			log_in_blackbox = FALSE,
-			player_message = "<font color='purple'>PM From [link_to_us]: [send_message]</font>")
+			send_message,
+			for_admins = FALSE,
+			log_in_blackbox = FALSE) // MONKESTATION EDIT - tgui tickets
 
 		if(!already_logged) //Reply to an existing ticket
 			SSblackbox.LogAhelp(recipient_ticket_id, "Reply", send_message, recip_ckey, our_ckey)
@@ -488,17 +490,17 @@
 			confidential = TRUE)
 
 		//omg this is dumb, just fill in both their logs
-		var/interaction_message = "<font color='purple'>PM from-<b>[name_key_with_link]</b> to-<b>[their_name_with_link]</b>: [keyword_parsed_msg]</font>"
-		var/player_interaction_message = "<font color='purple'>PM from-<b>[link_to_us]</b> to-<b>[link_to_their]</b>: [send_message]</font>"
+		// MONKESTATION EDIT START - tgui tickets
 		admin_ticket_log(src,
-			interaction_message,
-			log_in_blackbox = FALSE,
-			player_message = player_interaction_message)
+			send_message,
+			for_admins = FALSE,
+			log_in_blackbox = FALSE)
 		if(recipient != src) //reeee
 			admin_ticket_log(recipient,
-				interaction_message,
-				log_in_blackbox = FALSE,
-				player_message = player_interaction_message)
+				send_message,
+				for_admins = FALSE,
+				log_in_blackbox = FALSE)
+		// MONKESTATION EDIT END
 
 		if (ticket || recipient_ticket) SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, src.ckey) // monkestation edit: PLEXORA
 
@@ -507,11 +509,10 @@
 
 	// This is us (a player) trying to talk to the recipient (an admin)
 	var/replymsg = "Reply PM from-<b>[name_key_with_link]</b>: [span_linkify(keyword_parsed_msg)]"
-	var/player_replymsg = "Reply PM from-<b>[link_to_us]</b>: [span_linkify(send_message)]"
 	admin_ticket_log(src,
-		"<font color='red'>[replymsg]</font>",
-		log_in_blackbox = FALSE,
-		player_message = player_replymsg)
+		send_message,
+		for_admins = FALSE,
+		log_in_blackbox = FALSE) // MONKESTATION EDIT - tgui tickets
 	to_chat(recipient,
 		type = MESSAGE_TYPE_ADMINPM,
 		html = span_danger("[replymsg]"),

@@ -275,7 +275,7 @@
 	winset(player, control_id, params)
 
 /proc/_winget(player, control_id, params)
-	winget(player, control_id, params)
+	return winget(player, control_id, params)
 
 /proc/_text2path(text)
 	return text2path(text)
