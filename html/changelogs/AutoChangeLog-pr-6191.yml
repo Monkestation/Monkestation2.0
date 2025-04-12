@@ -1,6 +1,0 @@
-author: "Ice-Type"
-delete-after: True
-changes:
-  - balance: "Armour now affects the scarp, acarp, and tunnel arts martial arts."
-  - balance: "Base damage is increased to compensate. Damage will be higher with no armour, but still a little weaker with base sec armour."
-  - bugfix: "Awakened dragon now ACTUALLY deflects all projectiles. Dual wielding and shotguns won't work anymore!"

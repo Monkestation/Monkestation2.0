@@ -230,6 +230,22 @@
   Absolucy:
   - refactor: Cached generated preview icons for antags, hopefully increasing performance
   - bugfix: The "Report Bugs" button is red once more.
+  - bugfix: 'Fixed some lighting-related code:'
+  - bugfix: The admin Break/Fix Lights buttons now don't take half an eternity to
+      complete.
+  - admin: 'Added some new Lua functions: SS13.ispath, SS13.typecacheof, SS13.is_type_in_typecache,
+      SS13.get_turf, and SS13.get_area'
+  - bugfix: Fixed a broken check in the SS13.register_signal Lua function.
+  - bugfix: Fixed the _winget SDQL2/Lua wrapper, so it actually returns the return
+      value of winget.
   Absolucy, Gaxeer:
   - refactor: replace bubble sort with timsort for cameralist, move global procs to
       `cameranet` datum
+  Ice-Type:
+  - balance: Armour now affects the scarp, acarp, and tunnel arts martial arts.
+  - balance: Base damage is increased to compensate. Damage will be higher with no
+      armour, but still a little weaker with base sec armour.
+  - bugfix: Awakened dragon now ACTUALLY deflects all projectiles. Dual wielding and
+      shotguns won't work anymore!
+  flleeppyy:
+  - admin: You can now restart the MC/Failsafe from the discord with /restartcontroller
