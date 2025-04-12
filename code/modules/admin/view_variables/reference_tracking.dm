@@ -75,6 +75,9 @@
 	if(usr?.client && !usr.client.running_find_references)
 		return
 
+	if(potential_container == SSdemo) // no.
+		continue
+
 	if(!recursive_limit)
 		log_reftracker("Recursion limit reached. [container_name]")
 		return
