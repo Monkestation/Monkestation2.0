@@ -302,11 +302,7 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 
 	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
 	if(byond_version >= 516)
-		media2.stop()
-		media2.set_volume(vol) // this makes it easier if we modify volume later on
-		media2.set_position(0, 0)
-		media2.play(T.url)
-		media2.set_volume(vol) // just to make 100% sure
+		media2.play(T.url, vol)
 	else
 		media.push_music(T.url, world.time, 1, force = TRUE)
 		media.update_volume(vol) // this makes it easier if we modify volume later on

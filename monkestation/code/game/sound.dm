@@ -77,7 +77,7 @@
 	if((channel == CHANNEL_LOBBYMUSIC) || (channel == CHANNEL_MASTER_VOLUME))
 		if(isnewplayer(user))
 			var/client/client = user.client
-			var/new_lobby_volume = 1
+			var/new_lobby_volume = 100
 			var/list/channels = client?.prefs?.channel_volume
 			if("[CHANNEL_LOBBYMUSIC]" in channels)
 				new_lobby_volume = channels["[CHANNEL_LOBBYMUSIC]"]

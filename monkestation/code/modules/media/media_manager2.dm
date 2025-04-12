@@ -2,12 +2,12 @@
 
 #ifdef MM2_DEBUGGING
 #define MM2_DEBUG(x) message_admins("\[MEDIA MANAGER 2 DEBUG\] " + x)
+#define MEDIA_WINDOW_ID "mm2"
 #warn COMMENT OUT MM2_DEBUGGING BEFORE DEPLOYING!!!
 #else
 #define MM2_DEBUG(x)
-#endif
-
 #define MEDIA_WINDOW_ID "outputwindow.mediapanel2"
+#endif
 
 /client
 	var/datum/media_manager2/media2
@@ -19,6 +19,8 @@
 	VAR_FINAL/is_browser = FALSE
 	/// Is the media manager ready to do stuff yet?
 	VAR_FINAL/ready = FALSE
+	/// Last state sent by the media player.
+	//VAR_FINAL/state
 	/// Callbacks to run when we get the "ready" message back fron the media manager.
 	VAR_PRIVATE/list/ready_callbacks
 	var/static/base_html
@@ -49,7 +51,11 @@
 #endif
 	var/html = replacetextEx(base_html, "media:href", REF(src))
 	close()
+#ifndef MM2_DEBUGGING
 	owner << browse(html, "window=" + MEDIA_WINDOW_ID)
+#else
+	owner << browse(html, "window=" + MEDIA_WINDOW_ID + ";size=100x100;can_minimize=0;can_close=0;")
+#endif
 	is_browser = winexists(owner, MEDIA_WINDOW_ID) == "BROWSER"
 
 /datum/media_manager2/proc/close()
@@ -87,8 +93,10 @@
 	base_html = replacetextEx(base_html, "<!-- media:wasm -->", "<script type='text/javascript' src='[SSassets.transport.get_asset_url("media_player_wasm.js")]'></script>")
 	base_html = replacetextEx(base_html, "<!-- media:main -->", "<script type='text/javascript'>[js]</script>")
 
+/*
 /datum/media_manager2/proc/set_url(url)
 	media_call("set_url", url)
+*/
 
 /datum/media_manager2/proc/set_position(x = 0, y = 0)
 	media_call("set_position", x, y)
@@ -96,11 +104,11 @@
 /datum/media_manager2/proc/set_time(time = 0)
 	media_call("set_time", time)
 
-/datum/media_manager2/proc/set_volume(volume = 1)
+/datum/media_manager2/proc/set_volume(volume = 100)
 	media_call("set_volume", volume)
 
-/datum/media_manager2/proc/play(url)
-	media_call("play", url)
+/datum/media_manager2/proc/play(url, volume)
+	media_call("play", url, volume)
 
 /datum/media_manager2/proc/pause()
 	media_call("pause")
@@ -129,11 +137,16 @@
 		return
 	switch(message_type)
 		if("ready")
+			//state = params["state"]
 			on_ready()
+/*
+		if("state")
+			state = params
+*/
 		if("error")
 			MM2_DEBUG("error: [params["message"]]")
 			stack_trace(params["message"])
-	MM2_DEBUG("topic: [json_encode(href_list, JSON_PRETTY_PRINT)]")
+	MM2_DEBUG("topic: [json_encode(href_list - "params", JSON_PRETTY_PRINT)]\nparams: [json_encode(params, JSON_PRETTY_PRINT)]")
 
 #ifdef MM2_DEBUGGING
 /client/verb/mm2_set_url()

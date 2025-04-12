@@ -215,7 +215,7 @@ let wasm_bindgen;
         wasm.closure35_externref_shim(arg0, arg1, arg2);
     }
 
-    function __wbg_adapter_111(arg0, arg1, arg2, arg3) {
+    function __wbg_adapter_113(arg0, arg1, arg2, arg3) {
         wasm.closure52_externref_shim(arg0, arg1, arg2, arg3);
     }
 
@@ -269,6 +269,18 @@ let wasm_bindgen;
             if (ret[1]) {
                 throw takeFromExternrefTable0(ret[0]);
             }
+        }
+        /**
+         * @param {number} distance
+         */
+        set_ref_distance(distance) {
+            wasm.spatialaudioplayer_set_ref_distance(this.__wbg_ptr, distance);
+        }
+        /**
+         * @param {number} distance
+         */
+        set_max_distance(distance) {
+            wasm.spatialaudioplayer_set_max_distance(this.__wbg_ptr, distance);
         }
         /**
          * @param {number} time
@@ -416,7 +428,7 @@ let wasm_bindgen;
                     const a = state0.a;
                     state0.a = 0;
                     try {
-                        return __wbg_adapter_111(a, state0.b, arg0, arg1);
+                        return __wbg_adapter_113(a, state0.b, arg0, arg1);
                     } finally {
                         state0.a = a;
                     }
@@ -431,7 +443,7 @@ let wasm_bindgen;
             const ret = new lAudioContext();
             return ret;
         }, arguments) };
-        imports.wbg.__wbg_new_5b93c80bef0009a8 = function() {
+        imports.wbg.__wbg_new_4c93671ed422bf54 = function() {
             const ret = new Error();
             return ret;
         };
@@ -512,7 +524,7 @@ let wasm_bindgen;
         imports.wbg.__wbg_setvolume_3895e06a030ca4f7 = function(arg0, arg1) {
             arg0.volume = arg1;
         };
-        imports.wbg.__wbg_stack_a64137d703f4c904 = function(arg0, arg1) {
+        imports.wbg.__wbg_stack_a4129fe91feba542 = function(arg0, arg1) {
             const ret = arg1.stack;
             const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
             const len1 = WASM_VECTOR_LEN;
@@ -555,7 +567,7 @@ let wasm_bindgen;
             const ret = false;
             return ret;
         };
-        imports.wbg.__wbindgen_closure_wrapper447 = function(arg0, arg1, arg2) {
+        imports.wbg.__wbindgen_closure_wrapper449 = function(arg0, arg1, arg2) {
             const ret = makeMutClosure(arg0, arg1, 36, __wbg_adapter_20);
             return ret;
         };
