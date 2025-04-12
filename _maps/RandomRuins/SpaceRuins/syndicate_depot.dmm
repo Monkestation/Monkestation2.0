@@ -2396,6 +2396,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_depot/hydroponics)
+"vR" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/space/has_grav/syndicate_depot/drydock)
 "vT" = (
 /obj/machinery/atmospherics/components/tank/carbon_dioxide{
 	dir = 4
@@ -3483,12 +3489,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
-"Gl" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_half,
-/area/ruin/space/has_grav/syndicate_depot/drydock)
 "Gr" = (
 /obj/machinery/igniter{
 	id = "syndicate_depot_burn_ignition"
@@ -9062,9 +9062,9 @@ sv
 sT
 Jt
 sR
-fS
+iD
 EC
-fS
+iD
 SX
 dZ
 SX
@@ -9308,10 +9308,10 @@ sR
 dH
 aO
 rw
-DQ
-DQ
-DQ
-DQ
+SX
+SX
+SX
+SX
 SN
 fy
 Ix
@@ -9392,7 +9392,7 @@ Uf
 YI
 LX
 pA
-DQ
+SX
 sS
 SX
 SX
@@ -9470,10 +9470,10 @@ hq
 fS
 ob
 Cf
-fS
+iD
 GB
 eG
-DQ
+SX
 zS
 eO
 SX
@@ -11251,7 +11251,7 @@ et
 et
 OC
 lx
-Gl
+vR
 OC
 et
 et
