@@ -76,7 +76,7 @@
 		return
 
 	if(potential_container == SSdemo) // no.
-		continue
+		return
 
 	if(!recursive_limit)
 		log_reftracker("Recursion limit reached. [container_name]")
