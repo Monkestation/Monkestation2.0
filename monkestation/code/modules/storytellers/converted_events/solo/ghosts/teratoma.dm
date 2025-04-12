@@ -7,6 +7,7 @@
 	typepath = /datum/round_event/ghost_role/teratoma
 	min_players = 35 // these are destructive
 	track = EVENT_TRACK_MAJOR
+	weight = 5
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_OUTSIDER_ANTAG, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
