@@ -76,6 +76,8 @@ export const setClientTheme = (name) => {
     'report-issue.text-color': themeColor.TEXT,
     'fullscreen-toggle.background-color': themeColor.BUTTON,
     'fullscreen-toggle.text-color': themeColor.TEXT,
+    'tickets.background-color': themeColor.BUTTON,
+    'tickets.text-color': themeColor.TEXT,
     // Status and verb tabs
     'output.background-color': themeColor.BG_BASE,
     'output.text-color': themeColor.TEXT,

@@ -172,10 +172,13 @@
 		ADD_TRAIT(mob, TRAIT_GODMODE, ADMIN_TRAIT)
 	to_chat(usr, span_adminnotice("Toggled [had_trait ? "OFF" : "ON"]"), confidential = TRUE)
 
-	log_admin("[key_name(usr)] has toggled [key_name(mob)]'s nodamage to [had_trait ? "Off" : "On"]")
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_msg = "[key_name(usr)] has toggled [key_name(mob)]'s nodamage to [had_trait ? "Off" : "On"]"
+	log_admin()
 	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(mob)]'s nodamage to [had_trait ? "Off" : "On"]"
 	message_admins(msg)
-	admin_ticket_log(mob, msg)
+	admin_ticket_log(mob, log_msg)
+	// MONKESTATION EDIT END
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[had_trait ? "Disabled" : "Enabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /*
@@ -215,7 +218,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 				var/msg = span_adminnotice("[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy monkey.")
 				message_admins(msg)
-				admin_ticket_log(new_monkey, msg)
+				admin_ticket_log(new_monkey, "[key_name(usr)] has respawned [new_monkey.key] as a filthy monkey.") // MONKESTATION EDIT - tgui tickets
 				return //all done. The ghost is auto-deleted
 
 
