@@ -363,7 +363,7 @@ ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 
 ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/victim)
 	//MONKE EDIT START
-	make_custom_virus(src, victim)
+	make_custom_virus(user, victim)
 	//TODO Figure out how to return the new infection to report it in the logs
 	log_admin("[key_name(user)] gave [key_name(victim)] a disease.")
 	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] a disease."))
