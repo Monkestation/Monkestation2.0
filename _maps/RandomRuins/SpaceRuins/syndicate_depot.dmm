@@ -193,12 +193,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
-"bF" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_half,
-/area/ruin/space/has_grav/syndicate_depot/drydock)
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/oven/range,
@@ -1675,9 +1669,11 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot)
 "oG" = (
-/obj/structure/cable,
-/turf/closed/mineral/random/stationside/asteroid,
-/area/ruin/space/has_grav/syndicate_depot)
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/space/has_grav/syndicate_depot/drydock)
 "oO" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
@@ -11251,7 +11247,7 @@ et
 et
 OC
 lx
-bF
+oG
 OC
 et
 et
@@ -11579,8 +11575,8 @@ dv
 Un
 OC
 hq
-oG
-oG
+hq
+hq
 RL
 RL
 RL
