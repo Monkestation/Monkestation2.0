@@ -3802,7 +3802,39 @@
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "Kg" = (
 /obj/effect/turf_decal/delivery/white,
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/closet/crate/secure/weapon{
+	req_access = list("syndicate");
+	name = "ammunition crate"
+	},
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = -9;
+	pixel_y = 0
+	},
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = -11;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/item/ammo_box/magazine/m9mm{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Kp" = (
@@ -4620,6 +4652,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "SC" = (
