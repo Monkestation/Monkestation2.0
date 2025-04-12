@@ -87,7 +87,6 @@
 		"Commanding Officer",
 		"Site Manager",
 		"Criminally Underpaid Babysitter",
-		"Princess",
 		"Head of Command",
 	)
 
