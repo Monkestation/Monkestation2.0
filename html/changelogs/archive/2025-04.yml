@@ -197,3 +197,39 @@
   flleeppyy:
   - rscadd: Observe verb
   - rscdel: Replying to mentorhelps via Discord
+2025-04-11:
+  Absolucy:
+  - bugfix: Stabilized rainbow extracts now use signals to detect when the user enters
+      crit, preventing dumb things
+  Gw0sty:
+  - rscadd: Limb Grower has more designs
+  - rscadd: Limb Grower has a new sprite from TG.
+  - rscadd: Mechfab can print IPC Antennas.
+  - rscadd: Prosthesis feature manipulation
+  - bugfix: defib mounts with defibs inside them roundstart will no longer be invisible.
+  - bugfix: Printing digitgrade limbs section will no longer just, not work.
+  - bugfix: Captains now have places to spawn on Icebox
+  Kitsunemitsu:
+  - balance: AI now takes 15 hours of silicon to unlock instead of 3.
+  Loiosh42:
+  - image: Lilies and Geraniums now have different sprites
+  MomoBerri:
+  - bugfix: Mailing on Theseus now works properly.
+  Shoddd:
+  - balance: Oddity maints loot is rarer again
+  - balance: Trash piles only roll for oddity loot once
+  - admin: Better borer say logging
+  Singul0:
+  - rscadd: Adds scrap vehicles (Locker mechs, Ambulance and trash tank!)
+  - bugfix: Walls take armor penetration into account now
+  Ziiro:
+  - bugfix: IPC reboot surgery now displays the correct error/complete messages.
+  - balance: IPC reboot surgery now requires 5 iron in the step, not 15.
+  - bugfix: IPCs now use the correct wings when drinking a flight potion
+2025-04-12:
+  Absolucy:
+  - refactor: Cached generated preview icons for antags, hopefully increasing performance
+  - bugfix: The "Report Bugs" button is red once more.
+  Absolucy, Gaxeer:
+  - refactor: replace bubble sort with timsort for cameralist, move global procs to
+      `cameranet` datum
