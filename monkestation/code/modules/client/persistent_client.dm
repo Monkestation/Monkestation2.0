@@ -14,5 +14,5 @@
 
 /datum/persistent_client/New(ckey, client)
 	. = ..()
-	patreon = new(src, ckey)
-	twitch = new(src, ckey)
+	patreon = new(ckey, src)
+	twitch = new(ckey, src)
