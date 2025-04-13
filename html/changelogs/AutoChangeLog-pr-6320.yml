@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some assorted minor bugs."
+  - bugfix: "Fixed R&D metaphorically exploding when the Cybernetic Revolution station trait rolled."

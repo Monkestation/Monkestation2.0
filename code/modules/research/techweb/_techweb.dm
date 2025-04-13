@@ -114,8 +114,8 @@
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(research_points[i] + pointlist[i], 0.1)
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -125,8 +125,8 @@
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] = max(0, research_points[i] - pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(max(0, research_points[i] - pointlist[i]), 0.1)
 
 /datum/techweb/proc/remove_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -136,8 +136,8 @@
 
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] != 0)
-			research_points[i] = max(0, research_points[i] + pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] != 0)
+			research_points[i] = FLOOR(max(0, research_points[i] + pointlist[i]), 0.1)
 
 /datum/techweb/proc/modify_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -177,19 +177,19 @@
 	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] += amount
 	return TRUE
 
 /datum/techweb/proc/modify_point_type(type, amount)
-	if(!SSresearch.point_types[type])
+	if(!(type in SSresearch.point_types))
 		return FALSE
 	research_points[type] = max(0, research_points[type] + amount)
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE

@@ -13,7 +13,7 @@
 		playsound(user.loc, 'sound/effects/blobattack.ogg', 50, 1)
 		user.spawn_gibs()
 		user.visible_message(span_danger("Something horrible bursts out of [user]'s chest!"), \
-								span_danger("Living teratoma bursts out of your chest!"), \
+								span_danger("A living teratoma bursts out of your chest!"), \
 								span_hear("You hear flesh tearing!"), COMBAT_MESSAGE_RANGE)
 	return FALSE		//create_teratoma() handles the chemicals anyway so there is no reason to take them again
 
@@ -23,10 +23,12 @@
 		return FALSE
 	ling.adjust_chemicals(-chemical_cost)
 	var/list/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as a living teratoma?",
+		question = "Do you want to play as a living teratoma?",
+		role = ROLE_TERATOMA,
 		poll_time = 7.5 SECONDS,
 		ignore_category = POLL_IGNORE_TERATOMA,
 		alert_pic = /datum/antagonist/teratoma,
+		jump_target = user,
 		role_name_text = "living teratoma",
 		chat_text_border_icon = /datum/antagonist/teratoma,
 	)
@@ -39,11 +41,12 @@
 		to_chat(user, span_warning("You fail at creating a tumor. Perhaps you should try again later?"))
 		ling.adjust_chemicals(chemical_cost)
 		return FALSE
+
+	var/datum/mind/goober_mind = new(candidate.key)
+	goober_mind.active = TRUE
 	var/mob/living/carbon/human/species/teratoma/goober = new(user.drop_location())
-	goober.key = candidate.key
-	if(!goober.mind)
-		goober.mind_initialize()
-	goober.mind.add_antag_datum(/datum/antagonist/teratoma)
+	goober_mind.transfer_to(goober)
+	goober_mind.add_antag_datum(/datum/antagonist/teratoma)
 	to_chat(goober, span_notice("You burst out from [user]'s chest!"))
 	SEND_SOUND(goober, sound('sound/effects/blobattack.ogg'))
 	return TRUE

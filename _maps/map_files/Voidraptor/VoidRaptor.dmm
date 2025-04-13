@@ -80050,8 +80050,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "wjk" = (
-/obj/machinery/drone_dispenser,
 /obj/effect/turf_decal/bot,
+/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/iron/textured,
 /area/station/science/robotics/mechbay)
 "wjq" = (

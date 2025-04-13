@@ -1,0 +1,9 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "(MTO, Lilah Novi) Say commands typed in the command bar now trigger typing indicators."
+  - qol: "(hry-gh) Under the chat settings, you can now press \"Adjust UI Sizes\" to drag around some of the panel sizes."
+  - bugfix: "(hry-gh) The input at the bottom right is no longer so teeny tiny on 516 if you use a window scaling that is greater than 100%"
+  - qol: "(hry-gh) There's a new UI preference called UI scale which allows people that use windows scaling to have their UIs original size with the contents zoomed out, instead of the default, which is the UIs being larger with the contents \"normal\" size."
+  - bugfix: "(hry-gh) Various UIs did not respect windows scaling, they now do."
+  - bugfix: "Fixed the white border around the tgui-say input on 516 when it was focused."

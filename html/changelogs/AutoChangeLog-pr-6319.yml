@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some antags still rolling after the emergency shuttle is past the point of no return."

@@ -1,0 +1,5 @@
+author: "Gw0sty"
+delete-after: True
+changes:
+  - bugfix: "Psyker Zombie no longer has round removing chasms."
+  - bugfix: "Psyker shuffle has more appriopate totally real crates and preopened ones."
