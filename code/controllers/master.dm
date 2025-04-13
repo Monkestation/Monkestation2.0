@@ -787,6 +787,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	queue_priority_count_bg = 0
 	log_world("MC: SoftReset: Finished.")
 	. = 1
+	for(var/datum/controller/subsystem/ss in subsystems) //this is incase a runlevel error occurs, we don't want random shit being left queued up since if a queue ends up half parsed.
+		ss.state = SS_IDLE
 
 /// Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.
 /datum/controller/master/proc/laggy_byond_map_update_incoming()
