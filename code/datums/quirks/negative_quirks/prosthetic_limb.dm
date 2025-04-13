@@ -33,7 +33,9 @@
 	if(!QDELETED(quirk_holder))
 		var/mob/living/carbon/human/human_holder = quirk_holder
 		human_holder.del_and_replace_bodypart(old_limb, special = TRUE)
-	clear_old_limb()
+		clear_old_limb()
+	else
+		qdel(old_limb)
 
 /datum/quirk/prosthetic_limb/proc/clear_old_limb()
 	SIGNAL_HANDLER
