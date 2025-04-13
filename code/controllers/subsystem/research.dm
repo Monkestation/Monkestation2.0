@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_nodes(clearall = FALSE)
 	if(islist(techweb_nodes) && clearall)
-		QDEL_LIST(techweb_nodes)
+		QDEL_LIST_ASSOC_VAL(techweb_nodes)
 	if(islist(techweb_nodes_starting && clearall))
 		techweb_nodes_starting.Cut()
 	var/list/returned = list()
@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
-		QDEL_LIST(techweb_designs)
+		QDEL_LIST_ASSOC_VAL(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
 		var/datum/design/DN = path
