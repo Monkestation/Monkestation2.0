@@ -249,11 +249,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set_right_click_menu_mode()
 
 	GLOB.ahelp_tickets.ClientLogin(src)
-	GLOB.interviews.client_login(src)
 	GLOB.requests.client_login(src)
-
-	if(src.ckey in GLOB.interviews.cooldown_ckeys)
-		qdel(src)
 
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
@@ -548,23 +544,76 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
-		interviewee = TRUE
-		register_for_interview()
-
-	if (!interviewee)
-		initialize_menus()
-
 	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	Master.UpdateTickRate()
+
+	var/polling_tripped = FALSE
+	var/show_form = TRUE
+	if (SSplexora.enabled && CONFIG_GET(flag/require_discord_verification))
+		var/list/plexora_poll_result = SSplexora.poll_ckey_for_verification(ckey)
+		src.discord_details = new /datum/discord_details(
+			plexora_poll_result["discord_id"],
+			plexora_poll_result["discord_username"],
+			plexora_poll_result["discord_displayname"],
+			plexora_poll_result["polling_response"]
+		)
+		switch(plexora_poll_result["polling_response"])
+			if (PLEXORA_DOWN)
+				message_admins("PLEXORA IS DOWN! PLEASE PING @FLLEEPPYY ON DISCORD! Players will freely flow in without verification if Plexora is down.")
+				// Just let people through.
+			if (PLEXORA_CKEYPOLL_FAILED)
+				if (SSplexora.failed_ckeys_count[ckey])
+					SSplexora.failed_ckeys_count[ckey]++
+				else
+					SSplexora.failed_ckeys_count[ckey] = 1
+					stack_trace("Ckey polling failed for [ckey]. [json_encode(plexora_poll_result)]")
+				if (SSplexora.failed_ckeys_count[ckey] > 5)
+					var/log = message_admins("Ckey polling failed for [key_name_admin(ckey)]. We've kicked them a total of five times, but Plexora is still failing. Please message @flleeppyy on Discord. This client will be allowed in without verification")
+					log_admin_private(log)
+					log_access(log)
+				else
+					stack_trace("Ckey polling failed for [ckey]. [json_encode(plexora_poll_result)]")
+					message_admins("Ckey polling failed for [key_name_admin(ckey)]. Kicking them from the server. Check runtimes")
+					var/log = "Ckey polling failed for [ckey]. Kicking them from the server. Check runtimes"
+					log_admin_private(log)
+					log_access(log)
+					to_chat_immediate(src, span_red("Ckey polling failed. We will retry 5 times total. If this issue persists, ping @flleeppyy on Discord"))
+					qdel(src)
+					return
+			if (PLEXORA_CKEYPOLL_NOTLINKED, PLEXORA_CKEYPOLL_RECORDNOTVALID)
+				polling_tripped = TRUE
+				to_chat_immediate(src, span_red(span_big(span_notice("Welcome to Monkestation! Your client is [span_bold("NOT verified")]! Please go to the OOC tab and click 'Verify Discord Account' to begin the verification process."))))
+			if (PLEXORA_CKEYPOLL_LINKED_ABSENT, PLEXORA_CKEYPOLL_LINKED_DELETED)
+				show_form = FALSE
+				polling_tripped = TRUE
+				to_chat_immediate(src, span_danger("Your current linked Discord account is not present in the Discord server! <a href='[CONFIG_GET(string/discordurl)]'>Please rejoin before you can play</a>."))
+				to_chat_immediate(src, span_danger("If your previous Discord account has been deleted, or lost, please open a ticket in the Discord."))
+			if (PLEXORA_CKEYPOLL_LINKED_BANNED)
+				polling_tripped = TRUE
+				message_admins(span_warning("</B>[key_name_admin(src)] is banned from the Discord! Kicking client. Discord ID: [plexora_poll_result["discord_id"]] Discord Username: [plexora_poll_result["username"]]"))
+				var/log = "Failed Login: [ckey] is banned from the Discord! Kicking client. Discord ID: [plexora_poll_result["discord_id"]] Discord Username: [plexora_poll_result["username"]]"
+				log_access(log)
+				log_suspicious_login(log)
+				kick_client(src, "You are banned from the Discord.", TRUE)
+				return
+
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 
 	if(!media)
 		media = new /datum/media_manager(src)
 	media.open()
 	media.update_music()
+
+	if (polling_tripped)
+		not_discord_verified = TRUE
+		register_for_verification(show_form)
+	else
+		not_discord_verified = FALSE
+
+	if (!not_discord_verified)
+		initialize_menus()
 
 	fully_created = TRUE
 
@@ -596,7 +645,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
-	GLOB.interviews.client_logout(src)
 	GLOB.requests.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
 	QDEL_LAZYLIST(credits)
@@ -672,28 +720,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/minutes = get_exp_living(pure_numeric = TRUE)
 
 		// Check to see if our client should be rejected.
-		// If interviews are on, we should let anyone through, ideally.
-		if(!CONFIG_GET(flag/panic_bunker_interview))
-			// If we don't have panic_bunker_living set and the client is not in the DB, reject them.
-			// Otherwise, if we do have a panic_bunker_living set, check if they have enough minutes played.
-			if((living_recs == 0 && !client_is_in_db) || living_recs >= minutes)
-				var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
-					[living_recs == 0 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
-				log_access(reject_message)
-				message_admins(span_adminnotice("[reject_message]"))
-				var/message = CONFIG_GET(string/panic_bunker_message)
-				message = replacetext(message, "%minutes%", living_recs)
-				to_chat_immediate(src, message)
-				var/list/connectiontopic_a = params2list(connectiontopic)
-				var/list/panic_addr = CONFIG_GET(string/panic_server_address)
-				if(panic_addr && !connectiontopic_a["redirect"])
-					var/panic_name = CONFIG_GET(string/panic_server_name)
-					to_chat_immediate(src, span_notice("Sending you to [panic_name ? panic_name : panic_addr]."))
-					winset(src, null, "command=.options")
-					src << link("[panic_addr]?redirect=1")
-				qdel(query_client_in_db)
-				qdel(src)
-				return
+		if((living_recs == 0 && !client_is_in_db) || living_recs >= minutes)
+			var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
+				[living_recs == 0 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
+			log_access(reject_message)
+			message_admins(span_adminnotice("[reject_message]"))
+			var/message = CONFIG_GET(string/panic_bunker_message)
+			message = replacetext(message, "%minutes%", living_recs)
+			to_chat_immediate(src, message)
+			var/list/connectiontopic_a = params2list(connectiontopic)
+			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
+			if(panic_addr && !connectiontopic_a["redirect"])
+				var/panic_name = CONFIG_GET(string/panic_server_name)
+				to_chat_immediate(src, span_notice("Sending you to [panic_name ? panic_name : panic_addr]."))
+				winset(src, null, "command=.options")
+				src << link("[panic_addr]?redirect=1")
+			qdel(query_client_in_db)
+			qdel(src)
+			return
 
 	if(!client_is_in_db)
 		new_player = 1
@@ -934,6 +978,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(ip_info)
 		if(ip_info.ip_proxy)
 			string += "Proxy IP"
+			failed = TRUE
 		if(ip_info.ip_hosting)
 			if(string)
 				string += ", "
@@ -943,12 +988,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				string += ", "
 			string += "Mobile Hostspot IP"
 
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor() && !is_admin(src))
+	if(failed)
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
-		interviewee = TRUE
-
-	if(ckey in GLOB.interviews.approved_ckeys)
-		return FALSE
+		if (is_mentor() || is_admin(src))
+			message_admins(span_adminnotice("Proxy Detection: Allowing [key_name_admin(src)] through since they are an admin or mentor."))
+		else
+			kick_client(src, "")
 
 	return failed
 
@@ -1031,7 +1076,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	..()
 
 /client/proc/add_verbs_from_config()
-	if (interviewee)
+	if (not_discord_verified)
 		return
 	if(CONFIG_GET(flag/see_own_notes))
 		add_verb(src, /client/proc/self_notes)

@@ -8,11 +8,6 @@ SUBSYSTEM_DEF(overwatch)
 	var/is_active = FALSE
 	var/error_counter = 0
 
-	///accounts younger than this in days are interviewed
-	var/minimum_player_age = 7
-	///max number of active non role bans to be considered for interview
-	var/max_ban_count = 2
-
 	var/list/tgui_panel_asn_data = list()
 	var/list/tgui_panel_wl_data = list()
 
@@ -29,8 +24,6 @@ SUBSYSTEM_DEF(overwatch)
 	max_error_count = SSoverwatch.max_error_count
 	is_active = SSoverwatch.is_active
 	error_counter = SSoverwatch.error_counter
-	minimum_player_age = SSoverwatch.minimum_player_age
-	max_ban_count = SSoverwatch.max_ban_count
 	tgui_panel_asn_data = deep_copy_list(SSoverwatch.tgui_panel_asn_data)
 	tgui_panel_wl_data = deep_copy_list(SSoverwatch.tgui_panel_wl_data)
 
@@ -169,14 +162,6 @@ SUBSYSTEM_DEF(overwatch)
 	if(C.ip_info.is_loaded)
 		if(!C.ip_info.ip_proxy && !C.ip_info.ip_hosting)
 			return TRUE
-		return FALSE
-
-	if(FetchPlayerAge(C) <= minimum_player_age)
-		log_access("[C.ckey]'s account is under the minimum player age, adding into the interview queue")
-		return FALSE
-
-	if(CheckActiveBans(C))
-		log_access("[C.ckey] has 2 or more active perma bans and has been added to the interview queue.")
 		return FALSE
 
 	log_access("Overwatch failed to load info for [C.ckey].")
@@ -398,6 +383,8 @@ SUBSYSTEM_DEF(overwatch)
 		qdel(C)
 		return
 
+// No place in the code uses this function anymore but it will be kept here for future use.
+// Would be nice to see this implemented in the player panel - Flleeppyy
 /datum/controller/subsystem/overwatch/proc/FetchPlayerAge(client/C, connection_data)
 	var/cached_player_age = C.set_client_age_from_db(connection_data) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1)
@@ -415,6 +402,9 @@ SUBSYSTEM_DEF(overwatch)
 			qdel(query_datediff)
 	return cached_player_age
 
+// I believe this code is still useful somewhere, but the code I've removed for discord verification doesn't use it now.
+// - Chen
+/*
 /datum/controller/subsystem/overwatch/proc/CheckActiveBans(client/C)
 	if(C.ckey in GLOB.interviews.approved_ckeys) // if these are already approved no point querying as they will be allowed regardless
 		return
@@ -449,6 +439,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(active_ban_count >= max_ban_count)
 		return TRUE
 	return FALSE
+*/
 
 /client/proc/Overwatch_toggle()
 	set category = "Server"

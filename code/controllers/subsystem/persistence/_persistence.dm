@@ -55,8 +55,6 @@ SUBSYSTEM_DEF(persistence)
 	save_delamination_counter()
 	if(SStramprocess.can_fire)
 		save_tram_counter()
-	if(GLOB.interviews)
-		save_keys(GLOB.interviews.approved_ckeys)
 
 ///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()
@@ -102,14 +100,6 @@ SUBSYSTEM_DEF(persistence)
 	file_data["data"] = saved_maps
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/persistence/proc/save_keys(list/approved_ckeys)
-	var/json_file = file("data/approved_keys.json")
-	var/list/keys = list()
-	if(fexists(json_file))
-		fdel(json_file)
-	keys = json_encode(approved_ckeys)
-	WRITE_FILE(json_file, keys)
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP

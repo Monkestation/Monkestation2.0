@@ -16,6 +16,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	/// Are we a Contributor?
 	var/is_contributor = FALSE
 	var/not_active = FALSE
+	var/from_file = FALSE
 
 /datum/mentors/New(ckey)
 	if(!ckey)

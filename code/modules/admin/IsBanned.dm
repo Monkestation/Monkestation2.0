@@ -36,7 +36,7 @@
 	if (raw_is_mentor(ckey))
 		mentor = TRUE
 
-	if(!real_bans_only && !admin && CONFIG_GET(flag/panic_bunker) && !CONFIG_GET(flag/panic_bunker_interview))
+	if(!real_bans_only && !admin && CONFIG_GET(flag/panic_bunker))
 		var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
 			"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
 			list("ckey" = ckey)

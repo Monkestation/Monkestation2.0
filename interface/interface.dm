@@ -58,8 +58,8 @@
 	if(!issue_key)
 		to_chat(src, span_danger("Issue Reporting is not properly configured."))
 		return
-	//Are we pre-interview or otherwise not allowed to do this?
-	if(interviewee || is_banned_from(ckey, "Bug Report"))
+	//Are we not allowed to do this?
+	if(not_discord_verified || is_banned_from(ckey, "Bug Report"))
 		to_chat(src, span_warning("You are not currently allowed to make a bug report through this system."))
 		return
 	var/message = "This will start reporting an issue, gathering some information from the server and your client, before submitting it to github."

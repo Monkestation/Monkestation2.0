@@ -16,4 +16,6 @@
 	if(confirmation != "Yes")
 		return
 
-	kick_client(to_kick)
+	var/reason = input(usr, "Kick reason? (Empty for none)", "Kicking [key_name(to_kick)]") as null|text
+
+	kick_client(to_kick, reason, TRUE)

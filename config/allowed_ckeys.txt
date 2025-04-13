@@ -1,0 +1,4 @@
+# Like mentors.txt but to allow ckeys to bypass discord verification
+# This means nothing to you if you are not a sysadmin for monkestation.
+# One ckey per line.
+
