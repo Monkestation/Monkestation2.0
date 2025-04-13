@@ -26,6 +26,8 @@ This adds alternate voices for VOX speech.
 ### Included files that are not contained in this module:
 
 - `monkestation/sound/announcer/vox_bms`
+- `monkestation/sound/announcer/vox_hl`
+- `monkestation/sound/announcer/vox_mil`
 
 ### Credits:
 
