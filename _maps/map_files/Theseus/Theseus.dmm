@@ -5407,16 +5407,12 @@
 /turf/open/floor/wood,
 /area/station/service/hydroponics/chicken)
 "bFb" = (
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "sci-solars"
-	},
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /turf/open/floor/plating,
-/area/station/maintenance/solars/port/aft)
+/area/station/maintenance/central)
 "bFd" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 1
@@ -21773,9 +21769,6 @@
 "gxh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Central Maintenance"
 	},
@@ -32421,7 +32414,6 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Central Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
@@ -33400,6 +33392,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"jQe" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "sci-solars"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/turf/open/floor/plating,
+/area/station/maintenance/solars/port/aft)
 "jQf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -77892,13 +77895,6 @@
 /obj/item/lipstick/random,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"wHd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/central)
 "wHi" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/camera/directional/south{
@@ -97504,7 +97500,7 @@ sJw
 lcu
 lcu
 sJw
-bFb
+jQe
 sJw
 lXw
 nhC
@@ -118244,7 +118240,7 @@ mMr
 mMr
 wnj
 vxI
-wHd
+bFb
 fTw
 smk
 smk
