@@ -5407,12 +5407,16 @@
 /turf/open/floor/wood,
 /area/station/service/hydroponics/chicken)
 "bFb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "sci-solars"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /turf/open/floor/plating,
-/area/station/maintenance/central)
+/area/station/maintenance/solars/port/aft)
 "bFd" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 1
@@ -24671,17 +24675,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"hnr" = (
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "sci-solars"
-	},
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
-/turf/open/floor/plating,
-/area/station/maintenance/solars/port/aft)
 "hnt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -32820,9 +32813,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "jHi" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Lesser Science Maintenance"
-	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Lesser Science Maintenance"
@@ -77902,6 +77892,13 @@
 /obj/item/lipstick/random,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"wHd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/central)
 "wHi" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/camera/directional/south{
@@ -97507,7 +97504,7 @@ sJw
 lcu
 lcu
 sJw
-hnr
+bFb
 sJw
 lXw
 nhC
@@ -118247,7 +118244,7 @@ mMr
 mMr
 wnj
 vxI
-bFb
+wHd
 fTw
 smk
 smk
