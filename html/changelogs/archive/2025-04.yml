@@ -238,6 +238,12 @@
   - bugfix: Fixed a broken check in the SS13.register_signal Lua function.
   - bugfix: Fixed the _winget SDQL2/Lua wrapper, so it actually returns the return
       value of winget.
+  - rscadd: Teratomas now have an antag preference.
+  - rscadd: Added an uncommon random event, where some teratomas (picked from ghosts)
+      somehow manage to crash a car or washing machine into the station.
+  - rscadd: Putting a teratoma's brain into a cyborg or AI may have... unforeseen
+      consequences.
+  - rscadd: Teratomas are now fundamentally evil.
   Absolucy, Gaxeer:
   - refactor: replace bubble sort with timsort for cameralist, move global procs to
       `cameranet` datum
@@ -247,5 +253,26 @@
       armour, but still a little weaker with base sec armour.
   - bugfix: Awakened dragon now ACTUALLY deflects all projectiles. Dual wielding and
       shotguns won't work anymore!
+  adamsong:
+  - rscadd: Added tgui ticket panel
   flleeppyy:
   - admin: You can now restart the MC/Failsafe from the discord with /restartcontroller
+2025-04-13:
+  DexeeXI:
+  - rscdel: Removal of unused assets
+  - rscdel: Cleanup of items on Centcom
+  Gw0sty:
+  - bugfix: IPC chests will no longer become dislocated
+  - qol: Heliostation distro has been slightly adjusted to create less unnecessary
+      snags. Actual distro is unaffected.
+  - balance: Maintenace drone's inbuilt tools are now considered Bulky storage, the
+      same as a normal bag. Normal -> Bulky
+  - balance: Cyborg RPED's have now received additional storage capacity. 50 parts
+      -> 200 Parts
+  - bugfix: All stations merged have a proper preloaded Maintenace drone spawner
+  - bugfix: DeltaStation Cargo now has a distro that is connected to the atmospherics
+      and can properly restore air.
+  - bugfix: Deltastation robotics airlock will no longer spawn with a oxygen tank
+  - bugfix: Deltratstation PTL now has a connected distro
+  - bugfix: Theseus AI sat now functional
+  - bugfix: Tramstation arrivals is now connected to distro

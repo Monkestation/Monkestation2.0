@@ -12720,12 +12720,12 @@
 /area/station/science/lab)
 "dMi" = (
 /obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "dMn" = (
@@ -13153,8 +13153,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "dSi" = (
-/obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "dSt" = (
@@ -25059,6 +25060,14 @@
 /obj/item/device/walkman,
 /turf/open/floor/carpet/green,
 /area/station/service/library/upper)
+"huW" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/computer/teleporter{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat/foyer)
 "huY" = (
 /turf/closed/wall/r_wall,
 /area/space)
@@ -43669,10 +43678,7 @@
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
 	},
-/obj/machinery/light/directional/north,
-/obj/machinery/camera/autoname/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "mMU" = (
@@ -45388,10 +45394,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "nlP" = (
-/obj/machinery/recharge_station,
-/obj/effect/landmark/start/cyborg,
 /obj/effect/turf_decal/bot,
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/teleport/station,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "nmg" = (
@@ -47304,6 +47308,12 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
+"nQR" = (
+/obj/structure/cable,
+/obj/machinery/teleport/hub,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat/foyer)
 "nQV" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/conveyor_switch/oneway{
@@ -53904,10 +53914,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "pSm" = (
-/obj/machinery/computer/teleporter,
-/obj/machinery/status_display/evac/directional/north,
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "pSw" = (
@@ -61589,9 +61599,11 @@
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "rXR" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/camera/autoname/directional/east,
-/obj/machinery/teleport/hub,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/recharge_station,
+/obj/effect/landmark/start/cyborg,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "rXS" = (
@@ -74637,7 +74649,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "vGU" = (
-/obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -80200,8 +80211,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "xoA" = (
-/obj/machinery/teleport/station,
-/obj/effect/turf_decal/bot,
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/camera/directional/east,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "xoK" = (
@@ -116580,7 +116592,7 @@ vZw
 jYh
 jgY
 dcR
-eID
+nQR
 jgm
 xrW
 lZm
@@ -116836,7 +116848,7 @@ adv
 xbR
 ven
 mMO
-qib
+pSm
 nlP
 jgm
 aWg
@@ -117092,9 +117104,9 @@ jMk
 qNE
 pVO
 ven
-pfJ
-vsq
-pfJ
+xoA
+dcR
+huW
 jgm
 tYq
 wVz
@@ -117349,9 +117361,9 @@ sxx
 pcx
 qdc
 ven
-pSm
-dcR
-xoA
+pfJ
+vsq
+pfJ
 jgm
 rwB
 vHf
