@@ -399,6 +399,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	GLOB.manifest.general -= crewfile
 
 	handle_objectives()
+	mob_occupant.cleanse_quirk_datums()
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)
