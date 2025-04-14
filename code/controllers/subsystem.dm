@@ -110,7 +110,9 @@
 	var/avg_iter_count = 0
 	var/avg_drift = 0
 */
-	/* var/list/enqueue_log = list() */
+#ifdef ENABLE_ENQUEUE_LOGGING
+	var/list/enqueue_log = list()
+#endif
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
@@ -197,21 +199,26 @@
 	var/queue_node_priority
 	var/queue_node_flags
 
-	//var/iter_count = 0
+	var/iter_count = 0
 
-	/* enqueue_log.Cut() */
+#ifdef ENABLE_ENQUEUE_LOGGING
+	enqueue_log.Cut()
+#endif
 	var/tick_usage_start = TICK_USAGE
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
-		//iter_count++
-		/* var/total_ms = TICK_USAGE_TO_MS(tick_usage_start)
-		if(total_ms >= 1)
+		iter_count++
+		if(iter_count >= ENQUEUE_SANITY)
+			var/total_ms = TICK_USAGE_TO_MS(tick_usage_start)
 			var/tick_usage_delta = TICK_USAGE - tick_usage_start
-			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
-			SSplexora.mc_alert("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
-			message_admins("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
-			stack_trace("[queue_node] subsystem enqueue took over 1ms (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
-			/* enqueue_log.Cut() */
-			return FALSE */
+			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])"
+			SSplexora.mc_alert(msg)
+			message_admins(msg)
+			stack_trace(msg)
+#ifdef ENABLE_ENQUEUE_LOGGING
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+			enqueue_log.Cut()
+#endif
+			return FALSE
 
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
@@ -219,17 +226,24 @@
 		if (queue_node.queue_next == queue_node || queue_node.queue_prev == queue_node)
 			var/total_ms = TICK_USAGE_TO_MS(tick_usage_start)
 			var/tick_usage_delta = TICK_USAGE - tick_usage_start
-			SSplexora.mc_alert("[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
-			message_admins("[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
-			stack_trace("[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])")
+			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])"
+			SSplexora.mc_alert(msg)
+			message_admins(msg)
+			stack_trace(msg)
+#ifdef ENABLE_ENQUEUE_LOGGING
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+			enqueue_log.Cut()
+#endif
 			return FALSE
 
-		/* enqueue_log["[iter_count]"] = list(
+#ifdef ENABLE_ENQUEUE_LOGGING
+		enqueue_log["[iter_count]"] = list(
 			"node" = "[queue_node]",
 			"next" = "[queue_node.queue_next || "(none)"]",
 			"priority" = queue_node_priority,
 			"flags" = queue_node_flags,
-		) */
+		)
+#endif
 
 		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
 			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)

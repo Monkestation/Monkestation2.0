@@ -168,3 +168,4 @@
 		#warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
 	#endif
 #endif
+#define ENABLE_ENQUEUE_LOGGING
