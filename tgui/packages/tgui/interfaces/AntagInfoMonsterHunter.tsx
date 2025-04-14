@@ -1,6 +1,15 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Icon } from '../components';
+import {
+  Box,
+  Button,
+  Section,
+  Stack,
+  Icon,
+  Flex,
+  DmIcon,
+  Dimmer,
+} from '../components';
 import { Window } from '../layouts';
 import { Objective } from './common/Objectives';
 
@@ -8,6 +17,8 @@ type HunterWeapon = {
   id: string;
   name: string;
   desc: string;
+  icon: string;
+  icon_state: string;
 };
 
 type Info = {
@@ -96,55 +107,71 @@ const HunterWeaponSelection = (props: { weapon: HunterWeapon }) => {
   const { weapon } = props;
   return (
     <Box className="candystripe" p={1} pb={2}>
-      <Stack align="baseline">
-        <Stack.Item grow bold>
-          {weapon.name}
-        </Stack.Item>
-        <Stack.Item>
+      <Flex justify="space-between" align="center">
+        <Flex.Item pr={1}>
+          <DmIcon
+            icon={weapon.icon}
+            icon_state={weapon.icon_state}
+            verticalAlign="middle"
+          />
+        </Flex.Item>
+        <Flex.Item grow>
+          <Flex direction="column">
+            <Flex.Item bold>{weapon.name}</Flex.Item>
+            <Flex.Item>{weapon.desc}</Flex.Item>
+          </Flex>
+        </Flex.Item>
+        <Flex.Item pl={0.5}>
           <Button
-            content="Claim"
+            height="3rem"
+            verticalAlignContent="middle"
+            bold
             disabled={weapon_claimed}
             onClick={() =>
               act('select', {
                 weapon: weapon.id,
               })
             }
-          />
-        </Stack.Item>
-      </Stack>
-      {weapon.desc}
+          >
+            Claim
+          </Button>
+        </Flex.Item>
+      </Flex>
     </Box>
   );
 };
 
 export const AntagInfoMonsterHunter = (props) => {
   const {
-    data: { weapons = [] },
+    data: { weapons = [], weapon_claimed },
   } = useBackend<Info>();
   return (
-    <Window width={670} height={400} theme="spookyconsole">
+    <Window width={650} height={600} theme="spookyconsole">
       <Window.Content scrollable>
-        <Section title="Hunter's Contract" />
-        {
-          <Stack vertical fill>
-            <Stack.Item fontSize="20px" textAlign="center">
-              Pick your Hunter tool
-            </Stack.Item>
-            <Stack.Item grow>
+        <Stack vertical fill>
+          <Stack.Item>
+            <HuntersGuide />
+          </Stack.Item>
+          <Stack.Item>
+            <Box>
+              <HunterObjectives />
+            </Box>
+          </Stack.Item>
+          <Stack.Item>
+            <Section title="Pick your Hunter tool">
+              {!!weapon_claimed && (
+                <Dimmer fontSize="18px" align="center">
+                  <Box bold textColor="red">
+                    You have already claimed a weapon.
+                  </Box>
+                </Dimmer>
+              )}
               {weapons.map((weapon) => (
                 <HunterWeaponSelection key={weapon.id} weapon={weapon} />
               ))}
-            </Stack.Item>
-            <Stack.Item>
-              <HuntersGuide />
-            </Stack.Item>
-            <Stack.Item>
-              <Box>
-                <HunterObjectives />
-              </Box>
-            </Stack.Item>
-          </Stack>
-        }
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

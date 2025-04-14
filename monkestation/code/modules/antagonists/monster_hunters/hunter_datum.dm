@@ -149,7 +149,7 @@
 			"name" = trick_weapon::name,
 			"desc" = trick_weapon::ui_desc,
 			"icon" = trick_weapon::icon,
-			"icon_state" = trick_weapon::icon_state,
+			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
 		))
 	return list(
 		"objectives" = get_objectives(),
@@ -262,15 +262,17 @@
 	SIGNAL_HANDLER
 
 	var/description
-	var/datum/objective/assassinate/hunter/obj
+	var/datum/objective/hunter/obj
 	var/list/unchecked_objectives
-	for(var/datum/objective/assassinate/hunter/goal in objectives)
+	for(var/datum/objective/hunter/goal in objectives)
 		if(!goal.discovered)
 			LAZYADD(unchecked_objectives, goal)
 	if(unchecked_objectives)
 		obj = pick(unchecked_objectives)
 	if(obj)
 		obj.uncover_target()
+		to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
+		update_static_data_for_all_viewers()
 		var/datum/antagonist/heretic/heretic_target = IS_HERETIC(obj.target.current)
 		if(heretic_target)
 			description = "Your target, [heretic_target.owner.current.real_name], follows the [heretic_target.heretic_path], dear hunter."
@@ -286,17 +288,40 @@
 	rabbits_spotted++
 	to_chat(owner.current, span_boldnotice("[description]"))
 
-/datum/objective/assassinate/hunter
-	///has our target been discovered?
+/datum/objective/hunter
+	name = "hunt monster"
+	explanation_text = "A monster target is aboard the station, identify and eliminate this threat."
+	admin_grantable = FALSE
+	/// Has our target been discovered?
 	var/discovered = FALSE
 
-/datum/objective/assassinate/hunter/proc/uncover_target()
+/datum/objective/hunter/proc/uncover_target()
 	if(discovered)
 		return
-	discovered = !discovered
-	src.update_explanation_text()
+	discovered = TRUE
+	update_explanation_text()
 	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
-	update_static_data_for_all_viewers()
+	var/datum/antagonist/monsterhunter/hunter_datum = owner.has_antag_datum(/datum/antagonist/monsterhunter)
+	hunter_datum?.update_static_data_for_all_viewers()
+
+/datum/objective/hunter/check_completion()
+	return completed || !considered_alive(target)
+
+/datum/objective/hunter/update_explanation_text()
+	if(!discovered)
+		explanation_text = initial(explanation_text)
+		return
+	var/target_name = target.name || target.current?.real_name || target.current?.real_name
+	var/datum/antagonist/bloodsucker/bloodsucker = target.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/heretic/heretic = target.has_antag_datum(/datum/antagonist/heretic)
+	if(bloodsucker)
+		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
+	else if(heretic)
+		explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path]."
+	else if(target.has_antag_datum(/datum/antagonist/changeling))
+		explanation_text = "Slay the monster known as [target_name], a changeling."
+	else
+		explanation_text = "Slay the monster known as [target_name]."
 
 /datum/antagonist/monsterhunter/proc/find_monster_targets()
 	var/list/possible_targets = get_all_monster_hunter_prey(include_dead = FALSE)
@@ -304,13 +329,12 @@
 	for(var/i in 1 to 3) //we get 3 targets
 		if(!length(possible_targets))
 			break
-		var/datum/objective/assassinate/hunter/kill_monster = new
+		var/datum/objective/hunter/kill_monster = new
 		kill_monster.owner = owner
 		var/datum/mind/target = pick_n_take(possible_targets)
 		kill_monster.target = target
 		prey += target
-		kill_monster.explanation_text = "A monster target is aboard the station, identify and eliminate this threat."
-		objectives += kill_monster
+		add_objective(kill_monster)
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"

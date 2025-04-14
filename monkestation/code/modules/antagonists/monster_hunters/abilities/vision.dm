@@ -40,7 +40,7 @@
 		if(HAS_TRAIT_FROM(viewer, TRAIT_ECHOLOCATION_RECEIVER, echo_group))
 			receivers[current_time] += viewer
 		var/remove_from_vision = TRUE
-		for(var/datum/objective/assassinate/hunter/goal in objectives_list) //take them out if they are not our prey
+		for(var/datum/objective/hunter/goal in objectives_list) //take them out if they are not our prey
 			if(goal.target == viewer.mind)
 				goal.uncover_target()
 				remove_from_vision = FALSE

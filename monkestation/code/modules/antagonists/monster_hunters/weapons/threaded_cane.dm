@@ -3,6 +3,7 @@
 	desc = "A blind man's whip."
 	ui_desc = "A cane made out of heavy metal, can transform into a whip to strike foes from afar."
 	icon_state = "threaded_cane"
+	icon_state_preview = "threaded_cane_active"
 	base_icon_state = "threaded_cane"
 	inhand_icon_state = "threaded_cane"
 	w_class = WEIGHT_CLASS_SMALL
