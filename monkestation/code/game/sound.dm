@@ -84,7 +84,7 @@
 			if("[CHANNEL_MASTER_VOLUME]" in channels)
 				new_lobby_volume *= (channels["[CHANNEL_MASTER_VOLUME]"] * 0.01)
 			if(client?.byond_version >= 516)
-				client?.media2?.set_volume(new_lobby_volume)
+				client?.media_player?.set_volume(new_lobby_volume)
 			else
 				client?.media?.update_volume(new_lobby_volume)
 

@@ -10,9 +10,9 @@
 #endif
 
 /client
-	var/datum/media_manager2/media2
+	var/datum/media_player/media_player
 
-/datum/media_manager2
+/datum/media_player
 	/// The client that this media manager is owned by.
 	VAR_FINAL/client/owner
 	/// Is our window a browser control?
@@ -25,21 +25,21 @@
 	VAR_PRIVATE/list/ready_callbacks
 	var/static/base_html
 
-/datum/media_manager2/New(client/owner)
+/datum/media_player/New(client/owner)
 	src.owner = owner
-	if(!isnull(owner) && owner.media2 != src && !QDELETED(owner.media2))
-		CRASH("tried to initialize a second media2 for [key_name(owner)] when they already had a non-qdeleted media2!")
+	if(!isnull(owner) && owner.media_player != src && !QDELETED(owner.media_player))
+		CRASH("tried to initialize a second media player for [key_name(owner)] when they already had a non-qdeleted media_player!")
 	if(isnull(base_html))
 		init_base_html()
 	open()
 
-/datum/media_manager2/Destroy(force)
+/datum/media_player/Destroy(force)
 	LAZYNULL(ready_callbacks)
 	close()
 	owner = null
 	return ..()
 
-/datum/media_manager2/proc/open()
+/datum/media_player/proc/open()
 	set waitfor = FALSE
 	var/html = replacetextEx(base_html, "media:href", REF(src))
 	close()
@@ -50,14 +50,14 @@
 #endif
 	is_browser = winexists(owner, MEDIA_WINDOW_ID) == "BROWSER"
 
-/datum/media_manager2/proc/close()
+/datum/media_player/proc/close()
 	ready = FALSE
 	if(!isnull(owner))
 		owner << browse(null, "window=" + MEDIA_WINDOW_ID)
 
 /// Calls a JS function in the media manager.
 /// If the media manager isn't ready yet, then the call will be queued, and all queued calls will be invoked in order when it does become ready.
-/datum/media_manager2/proc/media_call(name, ...)
+/datum/media_player/proc/media_call(name, ...)
 	PRIVATE_PROC(TRUE)
 	if(QDELETED(src) || isnull(owner))
 		return
@@ -72,36 +72,36 @@
 
 /// Wrapper proc for ready callbacks made by media_call - basically a stripped down version of media_call that won't create more ready callbacks.
 /// This should NEVER be called directly.
-/datum/media_manager2/proc/__ready_callback(target, params)
+/datum/media_player/proc/__ready_callback(target, params)
 	PRIVATE_PROC(TRUE)
 	if(!isnull(owner))
 		MM2_DEBUG("calling ready callback: target=[target], params=[params]")
 		owner << output(params, target)
 
-/datum/media_manager2/proc/init_base_html()
+/datum/media_player/proc/init_base_html()
 	var/js = file2text("monkestation/code/modules/media/assets/media_player.js")
 	base_html = file2text("monkestation/code/modules/media/assets/media_player.html")
 	base_html = replacetextEx(base_html, "<!-- media:inline-js -->", "<script type='text/javascript'>\n[js]\n</script>")
 
-/datum/media_manager2/proc/set_position(x = 0, y = 0, z = 0)
+/datum/media_player/proc/set_position(x = 0, y = 0, z = 0)
 	media_call("set_position", x, y, z)
 
-/datum/media_manager2/proc/set_time(time = 0)
+/datum/media_player/proc/set_time(time = 0)
 	media_call("set_time", time)
 
-/datum/media_manager2/proc/set_volume(volume = 100)
+/datum/media_player/proc/set_volume(volume = 100)
 	media_call("set_volume", volume)
 
-/datum/media_manager2/proc/play(url, volume)
+/datum/media_player/proc/play(url, volume)
 	media_call("play", url, volume)
 
-/datum/media_manager2/proc/pause()
+/datum/media_player/proc/pause()
 	media_call("pause")
 
-/datum/media_manager2/proc/stop()
+/datum/media_player/proc/stop()
 	media_call("stop")
 
-/datum/media_manager2/proc/on_ready()
+/datum/media_player/proc/on_ready()
 	if(ready)
 		CRASH("readied twice")
 	if(QDELETED(src) || isnull(owner))
@@ -112,7 +112,7 @@
 	LAZYNULL(ready_callbacks)
 	MM2_DEBUG("ready for [key_name(owner)]")
 
-/datum/media_manager2/Topic(href, list/href_list)
+/datum/media_player/Topic(href, list/href_list)
 	. = ..()
 	var/message_type = href_list["type"]
 	if(!message_type)
@@ -140,21 +140,21 @@
 
 	var/url = trimtext(tgui_input_text(src, "What to play?", "Media Manager 2", default = "https://files.catbox.moe/29g5xp.mp3", encode = FALSE))
 	if(url)
-		media2.play(url)
+		media_player.play(url)
 		MM2_DEBUG("playing")
 
 /client/verb/mm2_pause()
 	set name = "MM2: Pause"
 	set category = "MM2"
 
-	media2.pause()
+	media_player.pause()
 	MM2_DEBUG("paused")
 
 /client/verb/mm2_stop()
 	set name = "MM2: Stop"
 	set category = "MM2"
 
-	media2.stop()
+	media_player.stop()
 	MM2_DEBUG("stopped")
 
 /client/verb/mm2_set_position()
@@ -163,7 +163,7 @@
 
 	var/x = tgui_input_number(src, "Set X Value", "Media Manager 2", default = 0, min_value = -10, max_value = 10) || 0
 	var/y = tgui_input_number(src, "Set Y Value", "Media Manager 2", default = 0, min_value = -10, max_value = 10) || 0
-	media2.set_position(x, y)
+	media_player.set_position(x, y)
 	MM2_DEBUG("set pos to [x],[y]")
 
 /client/verb/mm2_set_time()
@@ -171,7 +171,7 @@
 	set category = "MM2"
 
 	var/time = tgui_input_number(src, "Set Time (Seconds)", "Media Manager 2", default = 0, min_value = 0, round_value = FALSE) || 0
-	media2.set_time(time)
+	media_player.set_time(time)
 	MM2_DEBUG("set time to [time]")
 
 /client/verb/mm2_reload_all()
@@ -184,7 +184,7 @@
 /proc/reload_all_mm2()
 	var/did_re_init = FALSE
 	for(var/client/client in GLOB.clients)
-		var/datum/media_manager2/mm2 = client?.media2
+		var/datum/media_player/mm2 = client?.media_player
 		if(QDELETED(mm2))
 			continue
 		if(!did_re_init)

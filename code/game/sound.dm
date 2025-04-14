@@ -279,8 +279,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		return
 
 	if(byond_version >= 516)
-		if(QDELETED(media2)) ///media is set on creation thats weird
-			media2 = new(src)
+		if(QDELETED(media_player)) ///media is set on creation thats weird
+			media_player = new(src)
 	else
 		if(!media) ///media is set on creation thats weird
 			media = new /datum/media_manager(src)
@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 
 	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
 	if(byond_version >= 516)
-		media2.play(T.url, vol)
+		media_player.play(T.url, vol)
 	else
 		media.push_music(T.url, world.time, 1, force = TRUE)
 		media.update_volume(vol) // this makes it easier if we modify volume later on

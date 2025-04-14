@@ -163,7 +163,7 @@
 				if(!stop_web_sounds)
 					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
 					if(C.byond_version >= 516)
-						C.media2?.stop()
+						C.media_player?.stop()
 					else
 						C.media?.stop_music()
 				else
