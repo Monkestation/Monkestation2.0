@@ -308,3 +308,22 @@
       first.
   flleeppyy:
   - bugfix: change discord verification code format
+2025-04-14:
+  Gw0sty:
+  - spellcheck: Fixed Interrogator gramma, thanks to TerryTehCoder
+  Killermankey:
+  - map: Lead Poisoning Station.
+  Snack-Max:
+  - rscadd: Added Fez
+  The-Hotline-System:
+  - bugfix: Logs now properly display ckeys in regards to fireman carries and piggyback
+      rides.
+  - admin: Bombers List now logs reagent explosions, explosive ammunition, etc.
+  destrucktoid:
+  - rscadd: Added new healing systems for bloodsuckers. They can now exceed their
+      blood capacity with their feed ability, doing so gives them minor instant healing
+      and a medium boost to their passive healing over time, their blood drain is
+      dramatically increased until they are back under capacity though.
+  flleeppyy:
+  - bugfix: Monkestation is killing modularization. Future PRs should not follow modularization
+      guidelines.

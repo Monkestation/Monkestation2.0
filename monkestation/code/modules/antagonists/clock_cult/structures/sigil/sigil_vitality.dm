@@ -61,7 +61,7 @@
 				to_chat(affected_mob.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 				message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace an AFK player.")
 				affected_mob.ghostize(FALSE)
-				affected_mob.key = chosen_one.key
+				affected_mob.PossessByPlayer(chosen_one.key)
 				revived = TRUE
 		if(revived)
 			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')

@@ -575,7 +575,7 @@
 		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
 
 		var/mob/dead/new_player/NP = new()
-		NP.ckey = M.ckey
+		NP.PossessByPlayer(M.ckey)
 		qdel(M)
 
 	else if(href_list["tdome1"])
