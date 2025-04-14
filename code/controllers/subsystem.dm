@@ -204,13 +204,10 @@
 #ifdef ENABLE_ENQUEUE_LOGGING
 	enqueue_log.Cut()
 #endif
-	var/tick_usage_start = TICK_USAGE
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
-			var/total_ms = TICK_USAGE_TO_MS(tick_usage_start)
-			var/tick_usage_delta = TICK_USAGE - tick_usage_start
-			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])"
+			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations (src = [src], node = [queue_node], next = [queue_node.queue_next || "(none)"])"
 			SSplexora.mc_alert(msg)
 			message_admins(msg)
 			stack_trace(msg)
@@ -224,9 +221,7 @@
 		queue_node_flags = queue_node.flags
 
 		if (queue_node.queue_next == queue_node || queue_node.queue_prev == queue_node)
-			var/total_ms = TICK_USAGE_TO_MS(tick_usage_start)
-			var/tick_usage_delta = TICK_USAGE - tick_usage_start
-			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now (tick_usage = [TICK_USAGE], delta = [tick_usage_delta], total_ms = [total_ms])"
+			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now (src = [src], node = [queue_node], next = [queue_node.queue_next || "(none)"])"
 			SSplexora.mc_alert(msg)
 			message_admins(msg)
 			stack_trace(msg)
