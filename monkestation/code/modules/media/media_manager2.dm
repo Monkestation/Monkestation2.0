@@ -41,14 +41,6 @@
 
 /datum/media_manager2/proc/open()
 	set waitfor = FALSE
-#ifdef MM2_DEBUGGING
-	if(get_asset_datum(/datum/asset/simple/media_manager2).send(owner))
-		to_chat(owner, span_notice("Assets were sent!"))
-	else
-		to_chat(owner, span_warning("Assets were NOT sent!"))
-#else
-	get_asset_datum(/datum/asset/simple/media_manager2).send(owner)
-#endif
 	var/html = replacetextEx(base_html, "media:href", REF(src))
 	close()
 #ifndef MM2_DEBUGGING
@@ -87,14 +79,12 @@
 		owner << output(params, target)
 
 /datum/media_manager2/proc/init_base_html()
-	get_asset_datum(/datum/asset/simple/media_manager2) // ensure that asset datum is loaded
-	var/js = replacetextEx(file2text("monkestation/code/modules/media/assets/media_player.js"), "media_player.wasm", SSassets.transport.get_asset_url("media_player.wasm"))
+	var/js = file2text("monkestation/code/modules/media/assets/media_player.js")
 	base_html = file2text("monkestation/code/modules/media/assets/media_player.html")
-	base_html = replacetextEx(base_html, "<!-- media:wasm -->", "<script type='text/javascript' src='[SSassets.transport.get_asset_url("media_player_wasm.js")]'></script>")
-	base_html = replacetextEx(base_html, "<!-- media:main -->", "<script type='text/javascript'>[js]</script>")
+	base_html = replacetextEx(base_html, "<!-- media:inline-js -->", "<script type='text/javascript'>\n[js]\n</script>")
 
-/datum/media_manager2/proc/set_position(x = 0, y = 0)
-	media_call("set_position", x, y)
+/datum/media_manager2/proc/set_position(x = 0, y = 0, z = 0)
+	media_call("set_position", x, y, z)
 
 /datum/media_manager2/proc/set_time(time = 0)
 	media_call("set_time", time)
