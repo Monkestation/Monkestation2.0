@@ -7,7 +7,19 @@
 	power_path = /datum/action/cooldown/spell/tongue_spike
 
 	energy_coeff = 1
-	synchronizer_coeff = 1
+//	synchronizer_coeff = 1 // MONKESTATION REMOVAL -- THIS LITERALLY DOES NOTHING
+// MONKESTATION ADDITION START
+	power_coeff = 1
+
+/datum/mutation/human/tongue_spike/modify()
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/action/cooldown/spell/tongue_spike/modified_power = .
+	modified_power.damage_multiplier = GET_MUTATION_POWER(src)
+
+// MONKESTATION ADDITION END
 
 /datum/action/cooldown/spell/tongue_spike
 	name = "Launch spike"
@@ -20,6 +32,7 @@
 
 	/// The type-path to what projectile we spawn to throw at someone.
 	var/spike_path = /obj/item/hardened_spike
+	var/damage_multiplier = 1// MONKESTATION ADDITION
 
 /datum/action/cooldown/spell/tongue_spike/is_valid_target(atom/cast_on)
 	return iscarbon(cast_on)
@@ -37,6 +50,7 @@
 
 	to_fire.Remove(cast_on, special = TRUE)
 	var/obj/item/hardened_spike/spike = new spike_path(get_turf(cast_on), cast_on)
+	spike.throwforce *= damage_multiplier // MONKESTATION ADDITION
 	to_fire.forceMove(spike)
 	spike.throw_at(get_edge_target_turf(cast_on, cast_on.dir), 14, 4, cast_on)
 
@@ -91,7 +105,7 @@
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/tongue_spike/chem
 	energy_coeff = 1
-	synchronizer_coeff = 1
+//	synchronizer_coeff = 1 // MONKESTATION REMOVAL -- THIS LITERALLY DOES NOTHING
 
 /datum/action/cooldown/spell/tongue_spike/chem
 	name = "Launch chem spike"

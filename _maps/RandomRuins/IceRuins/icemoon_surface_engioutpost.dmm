@@ -179,7 +179,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "ba" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -217,7 +216,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "bo" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -494,13 +492,7 @@
 /area/ruin/planetengi)
 "cD" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer4,
-/turf/open/floor/plating,
-/area/ruin/planetengi)
-"cE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "cF" = (
@@ -650,7 +642,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "dn" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -854,11 +845,11 @@ do
 do
 do
 do
-cE
-cE
+cG
+cG
 vD
-cE
-cE
+cG
+cG
 do
 do
 do
@@ -894,7 +885,7 @@ de
 do
 ao
 an
-cE
+cG
 bs
 bL
 cb
@@ -902,7 +893,7 @@ cb
 cb
 cb
 cZ
-cE
+cG
 dw
 tH
 do
@@ -978,7 +969,7 @@ de
 do
 aD
 aC
-cE
+cG
 bF
 bc
 yF
@@ -986,7 +977,7 @@ cU
 cx
 cR
 dh
-cE
+cG
 dz
 xA
 do
@@ -1021,13 +1012,13 @@ do
 do
 do
 do
-cE
+cG
 vD
 bz
 bz
 bz
 do
-cE
+cG
 do
 do
 do

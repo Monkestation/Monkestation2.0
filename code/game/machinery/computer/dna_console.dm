@@ -179,6 +179,7 @@
 		to_chat(user, span_notice("You insert [item]."))
 		return
 
+/* MONKESTATION REMOVAL -- Moved to monkestation/code/game/machinery/computer/dna_console.dm
 	// Recycle non-activator used injectors
 	// Turn activator used injectors (aka research injectors) to chromosomes
 	if(istype(item, /obj/item/dnainjector/activator))
@@ -203,6 +204,7 @@
 			qdel(item)
 			to_chat(user, span_notice("Recycled unused [item]."))
 			return
+*/
 	return ..()
 
 /obj/machinery/computer/scan_consolenew/multitool_act(mob/living/user, obj/item/multitool/tool)
