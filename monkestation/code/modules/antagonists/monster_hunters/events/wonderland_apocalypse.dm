@@ -131,6 +131,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	tick_interval = STATUS_EFFECT_NO_TICK
 	/// List of /datum/action instance that we've registered `COMSIG_ACTION_TRIGGER` on.
 	var/list/datum/action/registered_actions
+/* leaving this here for later planned changes ~Lucy
 	/// List of traits that will always be removed from affected monsters.
 	var/static/list/banned_traits = list(
 		TRAIT_ABATES_SHOCK,
@@ -140,6 +141,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 	)
+*/
 	/// Typecache of spells to NOT trigger the effect on.
 	var/static/list/spell_whitelist_typecache
 	/// Typecache of non-spell actions to trigger the effect on.
@@ -164,11 +166,13 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	. = ..()
 	if(FACTION_RABBITS in owner?.faction)
 		return FALSE
+/* leaving this here for later planned changes ~Lucy
 	if(is_monster_hunter_prey(owner))
 		ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
 		for(var/trait in banned_traits)
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(trait), PROC_REF(remove_banned_traits))
 		remove_banned_traits()
+*/
 	to_chat(owner, span_warning("You feel an ominous pressure fill the air around you..."))
 	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(owner, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(after_spell_cast))
@@ -180,17 +184,19 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 /datum/status_effect/wonderland_district/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_ENTER_AREA, COMSIG_MOB_AFTER_SPELL_CAST, COMSIG_MOB_GRANTED_ACTION, COMSIG_MOB_REMOVED_ACTION))
-	for(var/trait in banned_traits)
-		UnregisterSignal(owner, SIGNAL_ADDTRAIT(trait))
+	/* for(var/trait in banned_traits)
+		UnregisterSignal(owner, SIGNAL_ADDTRAIT(trait)) */
 	for(var/datum/action/action as anything in registered_actions)
 		UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
 	LAZYNULL(registered_actions)
 	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
 
+/* leaving this here for later planned changes ~Lucy
 /// Removes all banned traits from the victim.
 /datum/status_effect/wonderland_district/proc/remove_banned_traits()
 	SIGNAL_HANDLER
 	owner.remove_traits(banned_traits) // not passing a source removes them from ALL sources
+*/
 
 /datum/status_effect/wonderland_district/proc/on_enter_area(datum/source, area/centcom/new_area)
 	SIGNAL_HANDLER
