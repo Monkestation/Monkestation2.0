@@ -37,64 +37,88 @@ const HunterObjectives = (props) => {
     data: { objectives = [], all_completed, rabbits_remaining, apocalypse },
   } = useBackend<Info>();
   return (
-    <Stack vertical fill>
-      <Stack.Item grow>
-        <Section fill title="Objectives">
+    <Section fill title="Objectives">
+      <Stack vertical align="center">
+        <Stack.Item>
           {objectives.map((objective) => (
             <Box key={objective.explanation}>
               <Stack align="baseline">
+                <Stack.Item>
+                  <Icon
+                    name={objective.complete ? 'check' : 'times'}
+                    color={objective.complete ? 'good' : 'bad'}
+                    size={2}
+                    verticalAlign="middle"
+                  />
+                </Stack.Item>
                 <Stack.Item grow bold>
                   {objective.explanation}
                 </Stack.Item>
               </Stack>
-              <Icon
-                name={objective.complete ? 'check' : 'times'}
-                color={objective.complete ? 'good' : 'bad'}
-              />
             </Box>
           ))}
-          <Box>
-            <Button
-              fluid
-              textAlign="center"
-              align="center"
-              width={50}
-              content={'Commence Apocalypse'}
-              fontSize="200%"
-              disabled={!all_completed || rabbits_remaining > 0 || apocalypse}
-              onClick={() => act('reckoning')}
-            />
-          </Box>
-        </Section>
-      </Stack.Item>
-    </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            fluid
+            textAlign="center"
+            align="middle"
+            content={'Commence Apocalypse'}
+            fontSize="200%"
+            disabled={!all_completed || rabbits_remaining > 0 || apocalypse}
+            onClick={() => act('reckoning')}
+          />
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
 const HuntersGuide = () => {
-  const {
-    data: { rabbits_spotted },
-  } = useBackend<Info>();
-
   return (
     <Section fill title="Hunter's Guide">
-      <Stack vertical fill>
+      <Stack vertical textAlign="center">
         <Stack.Item>
-          <span>
-            Look for the white rabbits! Use their eyes to upgrade your
-            hunter&#39;s weapon, the red queen&#39;s card will guide you!{' '}
-            <span className={'color-red'}>
-              {' '}
-              YOU HAVE FOUND {rabbits_spotted}{' '}
-              {rabbits_spotted === 1 ? 'RABBIT' : 'RABBITS'}{' '}
-            </span>
-            Only once the contract is fullfilled and the rabbits are found will
-            you be able to bring upon the
-            <span className={'color-red'}> APOCALYPSE </span>!
-          </span>
-          <br />
+          Look for the white rabbits! Use their eyes to upgrade your
+          hunter&#39;s weapon, the red queen&#39;s card will guide you!
+        </Stack.Item>
+        <Stack.Item>
+          Only once the contract is fullfilled and the rabbits are found will
+          you be able to bring upon the{' '}
+          <Box inline color="red" bold>
+            APOCALYPSE
+          </Box>
+          !
         </Stack.Item>
       </Stack>
+    </Section>
+  );
+};
+
+const Rabbit = (props: { found?: boolean }) => {
+  return (
+    <DmIcon
+      icon="monkestation/icons/mob/rabbit.dmi"
+      icon_state={props.found ? 'dead_rabbit' : 'white_rabbit'}
+      width="64px"
+      height="64px"
+      mt={'-16px'}
+      opacity={props.found ? 0.25 : 1}
+    />
+  );
+};
+
+const Rabbits = () => {
+  const {
+    data: { rabbits_spotted, rabbits_remaining },
+  } = useBackend<Info>();
+  return (
+    <Section fill title="Rabbits">
+      <Rabbit />
+      <Rabbit />
+      <Rabbit found />
+      <Rabbit found />
+      <Rabbit found />
     </Section>
   );
 };
@@ -153,9 +177,10 @@ export const AntagInfoMonsterHunter = (props) => {
             <HuntersGuide />
           </Stack.Item>
           <Stack.Item>
-            <Box>
-              <HunterObjectives />
-            </Box>
+            <Rabbits />
+          </Stack.Item>
+          <Stack.Item>
+            <HunterObjectives />
           </Stack.Item>
           <Stack.Item>
             <Section title="Pick your Hunter tool">
