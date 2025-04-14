@@ -238,6 +238,7 @@
 
 #ifdef ENABLE_ENQUEUE_LOGGING
 		enqueue_log["[iter_count]"] = list(
+			"src" = "[src]",
 			"node" = "[queue_node]",
 			"next" = "[queue_node.queue_next || "(none)"]",
 			"priority" = queue_node_priority,
