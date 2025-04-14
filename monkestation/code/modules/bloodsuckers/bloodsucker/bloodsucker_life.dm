@@ -135,8 +135,6 @@
 		else if(overfireheal > 0 && heal_amount > 0)
 			heal_amount /= 1.5 // Burn should be more difficult to heal
 			user.adjustFireLoss(-heal_amount, forced=TRUE)
-		else
-			return
 
 /datum/antagonist/bloodsucker/proc/check_limbs(costMult = 1)
 	var/limb_regen_cost = 50 * -costMult
