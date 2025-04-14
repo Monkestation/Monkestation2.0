@@ -57,7 +57,7 @@
 		"clown_firing_pin",
 		"borg_upgrade_cringe",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/odysseus
 	id = "mecha_odysseus"
@@ -75,7 +75,7 @@
 		"odysseus_right_leg",
 		"odysseus_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 
 /datum/techweb_node/clarke
@@ -92,7 +92,7 @@
 		"clarke_right_arm",
 		"clarke_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/adv_mecha
 	id = "adv_mecha"
@@ -102,8 +102,8 @@
 	design_ids = list(
 		"mech_repair_droid",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/gygax
 	id = "mech_gygax"
@@ -123,8 +123,8 @@
 		"gygax_targ",
 		"gygax_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/durand
 	id = "mech_durand"
@@ -144,8 +144,8 @@
 		"durand_targ",
 		"durand_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 3500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/phazon
 	id = "mecha_phazon"
@@ -165,8 +165,8 @@
 		"phazon_targ",
 		"phazon_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/savannah_ivanov
 	id = "mecha_savannah_ivanov"
@@ -186,8 +186,8 @@
 		"savannah_ivanov_targ",
 		"savannah_ivanov_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/basic_plasma
 	id = "basic_plasma"
@@ -197,7 +197,7 @@
 	design_ids = list(
 		"mech_generator",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/adv_plasma
 	id = "adv_plasma"
@@ -207,7 +207,7 @@
 	design_ids = list(
 		"mech_plasma_cutter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/adv_mecha_tools
 	id = "adv_mecha_tools"
@@ -218,19 +218,19 @@
 		"mech_rcd",
 		"mech_thrusters",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/med_mech_tools
 	id = "med_mech_tools"
 	display_name = "Medical Exosuit Equipment"
 	description = "Tools for high level mech suits"
-	prereq_ids = list("adv_biotech")
+	prereq_ids = list("adv_biotech", "mecha_odysseus")
 	design_ids = list(
 		"mech_medi_beam",
 		"mech_sleeper",
 		"mech_syringe_gun",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_armor
 	id = "adv_mecha_armor"
@@ -241,9 +241,9 @@
 		"mech_ccw_armor",
 		"mech_proj_armor",
 	)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000,
-								/datum/experiment/scanning/random/mecha_damage_scan = 3000)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = TECHWEB_TIER_2_POINTS,
+								/datum/experiment/scanning/random/mecha_damage_scan = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/mech_scattershot
 	id = "mecha_tools"
@@ -254,7 +254,7 @@
 		"mech_scattershot",
 		"mech_scattershot_ammo",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_carbine
 	id = "mech_carbine"
@@ -265,7 +265,7 @@
 		"mech_carbine",
 		"mech_carbine_ammo",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_ion
 	id = "mmech_ion"
@@ -275,7 +275,7 @@
 	design_ids = list(
 		"mech_ion",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_tesla
 	id = "mech_tesla"
@@ -285,7 +285,7 @@
 	design_ids = list(
 		"mech_tesla",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_laser
 	id = "mech_laser"
@@ -295,7 +295,7 @@
 	design_ids = list(
 		"mech_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_laser_heavy
 	id = "mech_laser_heavy"
@@ -305,7 +305,7 @@
 	design_ids = list(
 		"mech_laser_heavy",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_disabler
 	id = "mech_disabler"
@@ -315,7 +315,7 @@
 	design_ids = list(
 		"mech_disabler",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_grenade_launcher
 	id = "mech_grenade_launcher"
@@ -326,7 +326,7 @@
 		"mech_grenade_launcher",
 		"mech_grenade_launcher_ammo",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_missile_rack
 	id = "mech_missile_rack"
@@ -337,7 +337,7 @@
 		"mech_missile_rack",
 		"mech_missile_rack_ammo",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/clusterbang_launcher
 	id = "clusterbang_launcher"
@@ -348,7 +348,7 @@
 		"clusterbang_launcher",
 		"clusterbang_launcher_ammo",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_teleporter
 	id = "mech_teleporter"
@@ -358,7 +358,7 @@
 	design_ids = list(
 		"mech_teleporter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_wormhole_gen
 	id = "mech_wormhole_gen"
@@ -368,7 +368,7 @@
 	design_ids = list(
 		"mech_wormhole_gen",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_lmg
 	id = "mech_lmg"
@@ -379,7 +379,7 @@
 		"mech_lmg",
 		"mech_lmg_ammo",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mech_diamond_drill
 	id = "mech_diamond_drill"
@@ -389,5 +389,5 @@
 	design_ids = list(
 		"mech_diamond_drill",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 

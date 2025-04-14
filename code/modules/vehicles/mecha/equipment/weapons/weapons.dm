@@ -184,22 +184,30 @@
 	icon_state = "mecha_honker"
 	energy_drain = 200
 	equip_cooldown = 150
+	projectiles_per_shot = 0
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
 	mech_flags = EXOSUIT_MODULE_HONK
+
+	//monkestation edit start
+	//Range of honk alarm
+	var/honk_range = 6
+	//message that blares on firing
+	var/tactile_message = "HONK"
+	//monkestation edit end
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
-	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
-	for(var/mob/living/carbon/M in ohearers(6, chassis))
+	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>[tactile_message]</font>") //monkestation edit
+	for(var/mob/living/carbon/M in ohearers(honk_range, chassis)) //monkestation edit
 		if(!M.can_hear())
 			continue
 		var/turf/turf_check = get_turf(M)
 		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
 			continue
-		to_chat(M, "<font color='red' size='7'>HONK</font>")
+		to_chat(M, "<font color='red' size='7'>[tactile_message]</font>") //monkestation edit
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
 		var/obj/item/organ/internal/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)

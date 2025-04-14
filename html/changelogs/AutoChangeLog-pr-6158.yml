@@ -1,4 +1,0 @@
-author: "Gw0sty"
-delete-after: True
-changes:
-  - rscadd: "Adds holiday checks for events that aren't too spammy in their nature"

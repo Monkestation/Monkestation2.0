@@ -219,6 +219,12 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
+/obj/item/storage/part_replacer/cyborg/Initialize(mapload)
+	. = ..()
+
+	atom_storage.max_slots = 200
+	atom_storage.max_total_storage = 400
+
 /obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
 	var/list/part_list = list()
 	//Assemble a list of current parts, then sort them by their rating!

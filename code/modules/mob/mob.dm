@@ -65,6 +65,17 @@
 	GenerateTag()
 	return ..()
 
+/// Assigns a (c)key to this mob.
+/mob/proc/PossessByPlayer(ckey)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(isnull(ckey))
+		return
+
+	if(!istext(ckey))
+		CRASH("Tried to assign a mob a non-text ckey, wtf?!")
+
+	src.ckey = ckey(ckey)
+
 /**
  * Intialize a mob
  *
@@ -808,7 +819,7 @@
 		qdel(M)
 		return
 
-	M.key = key
+	M.PossessByPlayer(key)
 
 
 /**
@@ -1497,7 +1508,7 @@
 	if(!canon_client)
 		return
 
-	for(var/datum/callback/callback as anything in canon_client.player_details?.post_logout_callbacks)
+	for(var/datum/callback/callback as anything in persistent_client?.post_logout_callbacks)
 		callback.Invoke()
 
 	if(canon_client?.movingmob)

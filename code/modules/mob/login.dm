@@ -30,6 +30,7 @@
 	if(!client)
 		return FALSE
 	canon_client = client
+	client.persistent_client.set_mob(src)
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
@@ -108,14 +109,19 @@
 		else
 			client.change_view(getScreenSize(client.prefs.read_preference(/datum/preference/toggle/widescreen)))
 
-		if(client.player_details.player_actions.len)
-			for(var/datum/action/A in client.player_details.player_actions)
-				A.Grant(src)
+		for(var/datum/action/A as anything in persistent_client.player_actions)
+			A.Grant(src)
 
-		for(var/foo in client.player_details.post_login_callbacks)
-			var/datum/callback/CB = foo
+		for(var/datum/callback/CB as anything in persistent_client.post_login_callbacks)
 			CB.Invoke()
-		log_played_names(client.ckey,name,real_name)
+
+		log_played_names(
+			client.ckey,
+			list(
+				"[name]" = tag,
+				"[real_name]" = tag,
+			),
+		)
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)

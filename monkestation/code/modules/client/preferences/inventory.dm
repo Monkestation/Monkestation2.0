@@ -43,7 +43,7 @@
 		max_round_coins -= amount
 
 	if(amount > 0 && donator_multiplier)
-		switch(parent.player_details.patreon.access_rank)
+		switch(parent.persistent_client.patreon.access_rank)
 			if(ACCESS_COMMAND_RANK)
 				amount *= 1.5
 			if(ACCESS_TRAITOR_RANK)

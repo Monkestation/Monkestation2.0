@@ -1409,13 +1409,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
-"adE" = (
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/structure/table/reinforced/plasmarglass,
-/obj/item/food/cake/trumpet,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/kitchen)
 "adF" = (
 /obj/structure/table/reinforced,
 /obj/item/syndicatedetonator{
@@ -3937,7 +3930,13 @@
 	},
 /area/centcom/central_command_areas/hall)
 "akJ" = (
-/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/chair/wood/wings{
+	pixel_x = 11;
+	pixel_y = -2
+	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "akK" = (
@@ -4047,7 +4046,6 @@
 	dir = 1
 	},
 /obj/structure/table/wood/fancy/purple,
-/obj/item/clothing/head/peaceflower,
 /turf/open/floor/iron/white/small,
 /area/centcom/central_command_areas/kitchen)
 "akX" = (
@@ -4479,16 +4477,6 @@
 	dir = 9
 	},
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/food/piedough,
-/obj/item/food/piedough,
-/obj/item/food/piedough,
-/obj/item/food/piedough,
-/obj/item/food/piedough,
-/obj/item/food/piedough,
-/obj/item/food/cakebatter,
-/obj/item/food/cakebatter,
-/obj/item/food/cakebatter,
-/obj/item/food/cakebatter,
 /turf/open/floor/iron/white/herringbone,
 /area/centcom/central_command_areas/kitchen)
 "amd" = (
@@ -7310,13 +7298,6 @@
 /obj/structure/flora/biolumi/flower,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
-"atK" = (
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/structure/table/reinforced/plasmarglass,
-/obj/item/food/cake/lemon,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/kitchen)
 "atL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -7787,7 +7768,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
 "auY" = (
-/obj/structure/table/wood/poker,
+/obj/structure/chair/wood/wings,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "auZ" = (
@@ -8522,7 +8503,9 @@
 /area/centcom/central_command_areas/admin)
 "awZ" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/table/wood,
+/obj/item/instrument/piano_synth/headphones,
+/obj/item/instrument/piano_synth/headphones,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "axb" = (
@@ -11462,7 +11445,6 @@
 	dir = 1
 	},
 /obj/structure/table/wood/fancy/purple,
-/obj/item/clothing/head/peaceflower,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "aER" = (
@@ -11831,6 +11813,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aFR" = (
@@ -11923,11 +11907,11 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "aGg" = (
-/obj/structure/table/wood/poker,
-/obj/item/flashlight/lamp/green{
-	pixel_y = 8;
-	pixel_x = 16
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
 	},
+/obj/structure/table/wood,
+/obj/structure/cassette_rack/prefilled,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aGh" = (
@@ -12908,7 +12892,6 @@
 "aIR" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood/fancy/purple,
-/obj/item/clothing/head/peaceflower,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "aIS" = (
@@ -12986,7 +12969,6 @@
 "aJg" = (
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/food/pie/asdfpie,
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "aJh" = (
@@ -14574,6 +14556,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/cassette/mailbox,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aNp" = (
@@ -19910,13 +19893,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
-"cdU" = (
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/structure/table/reinforced/plasmarglass,
-/obj/item/food/cake/birthday/energy,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/kitchen)
 "ceI" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8;
@@ -21301,13 +21277,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
-"fae" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/structure/signboard/holosign{
-	sign_text = "Piecake's Piecakery"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "fan" = (
 /obj/structure/sign{
 	name = "wall";
@@ -21768,10 +21737,6 @@
 "gcx" = (
 /obj/structure/table,
 /obj/item/toy/plush/admin/brad,
-/obj/item/toy/plush/admin/jace{
-	pixel_y = 12;
-	pixel_x = -10
-	},
 /obj/item/toy/plush/admin/tendsthefire{
 	pixel_x = 7;
 	pixel_y = 20
@@ -23525,6 +23490,14 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"iTY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/arcade)
 "iUK" = (
 /obj/machinery/button/door/directional/east{
 	name = "IPC Repair Shutters";
@@ -25271,6 +25244,31 @@
 /obj/structure/falsewall/wood,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
+"mPL" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/wood,
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/cassette_tape/blank{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/arcade)
 "mQh" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/red,
@@ -25340,13 +25338,6 @@
 /obj/effect/turf_decal/siding/dark,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/central_command_areas/adminroom)
-"mZX" = (
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/effect/turf_decal/tile/hot_pink/fourcorners,
-/obj/structure/table/reinforced/plasmarglass,
-/obj/item/toy/plush/admin/jace,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/kitchen)
 "nai" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/food/pie/berrytart,
@@ -29184,7 +29175,6 @@
 /obj/effect/turf_decal/tile/hot_pink/fourcorners,
 /obj/effect/turf_decal/tile/hot_pink/fourcorners,
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/food/cake/birthday,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/kitchen)
 "vvk" = (
@@ -66605,8 +66595,8 @@ aPq
 aEf
 aHv
 aYf
-aYf
-akR
+akJ
+iTY
 aFR
 aaa
 aaa
@@ -66861,9 +66851,9 @@ aZg
 ayL
 aPq
 aPq
-akJ
-aGg
-awZ
+aPq
+aPq
+mPL
 aFR
 aaa
 aaa
@@ -67118,7 +67108,7 @@ aKA
 ayL
 aPq
 aPq
-akJ
+aPq
 auY
 awZ
 aFR
@@ -67376,7 +67366,7 @@ asp
 asp
 asp
 aNo
-asp
+aGg
 aFQ
 aFR
 aaa
@@ -70893,7 +70883,7 @@ aIV
 aER
 aIV
 cuK
-atK
+vuG
 agr
 aAm
 aNt
@@ -71150,7 +71140,7 @@ aIV
 aJg
 aIV
 cuK
-adE
+vuG
 agr
 axT
 aNg
@@ -71407,7 +71397,7 @@ aIV
 aFv
 aIV
 aGX
-mZX
+vuG
 agr
 aZj
 aao
@@ -71417,7 +71407,7 @@ aAn
 avt
 aLT
 avt
-fae
+aAn
 aqT
 aBE
 ank
@@ -71921,7 +71911,7 @@ aIV
 atI
 aIV
 cuK
-cdU
+vuG
 agr
 aAm
 aNt
