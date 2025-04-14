@@ -79,8 +79,8 @@
 		owner << output(params, target)
 
 /datum/media_player/proc/init_base_html()
-	var/js = file2text("monkestation/code/modules/media/assets/media_player.js")
-	base_html = file2text("monkestation/code/modules/media/assets/media_player.html")
+	var/js = file2text("code/modules/media/assets/media_player.js")
+	base_html = file2text("code/modules/media/assets/media_player.html")
 	base_html = replacetextEx(base_html, "<!-- media:inline-js -->", "<script type='text/javascript'>\n[js]\n</script>")
 
 /datum/media_player/proc/set_position(x = 0, y = 0, z = 0)
