@@ -67,7 +67,7 @@
 
 		clone_victim = find_original()
 		new_human = duplicate_object(clone_victim, pick(possible_spawns))
-		new_human.ckey = candidate_ckey
+		new_human.PossessByPlayer(candidate_ckey)
 		new_human.mind.special_role = antag_flag
 		new_human.mind.restricted_roles = restricted_roles
 		setup_minds += new_human.mind

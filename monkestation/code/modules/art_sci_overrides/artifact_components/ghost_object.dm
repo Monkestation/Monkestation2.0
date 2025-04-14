@@ -83,7 +83,7 @@
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	bound_spirit = new(parent)
-	bound_spirit.ckey = chosen_spirit.ckey
+	bound_spirit.PossessByPlayer(chosen_spirit.ckey)
 	bound_spirit.fully_replace_character_name(null, "[parent]")
 	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
 	bound_spirit.update_atom_languages()

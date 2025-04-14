@@ -46,3 +46,10 @@
 	strip_delay = (8 SECONDS) // same as centcom cap
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+
+/obj/item/clothing/head/hats/fez
+	name = "Fez"
+	desc = "Made in Space Turkey."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "fez"
