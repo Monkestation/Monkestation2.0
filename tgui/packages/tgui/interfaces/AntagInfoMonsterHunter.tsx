@@ -75,6 +75,10 @@ const HunterObjectives = (props) => {
 };
 
 const HuntersGuide = () => {
+  const {
+    data: { rabbits_spotted, rabbits_remaining },
+  } = useBackend<Info>();
+  const total_rabbits = rabbits_remaining + rabbits_spotted;
   return (
     <Section fill title="Hunter's Guide">
       <Stack vertical textAlign="center">
@@ -90,11 +94,31 @@ const HuntersGuide = () => {
           </Box>
           !
         </Stack.Item>
+        <Stack.Item>
+          {rabbits_remaining < 1 ? (
+            <Box inline bold textColor="red">
+              YOU HAVE FOUND ALL THE WHITE RABBITS.
+            </Box>
+          ) : (
+            <Box inline>
+              {'You have found '}
+              <Box inline bold textColor="green">
+                {rabbits_spotted}
+              </Box>
+              {' out of '}
+              <Box inline bold textColor="red">
+                {total_rabbits}
+              </Box>
+              {' white rabbits.'}
+            </Box>
+          )}
+        </Stack.Item>
       </Stack>
     </Section>
   );
 };
 
+/*
 const Rabbit = (props: { found?: boolean }) => {
   return (
     <DmIcon
@@ -122,6 +146,7 @@ const Rabbits = () => {
     </Section>
   );
 };
+*/
 
 const HunterWeaponSelection = (props: { weapon: HunterWeapon }) => {
   const {
@@ -175,9 +200,6 @@ export const AntagInfoMonsterHunter = (props) => {
         <Stack vertical fill>
           <Stack.Item>
             <HuntersGuide />
-          </Stack.Item>
-          <Stack.Item>
-            <Rabbits />
           </Stack.Item>
           <Stack.Item>
             <HunterObjectives />

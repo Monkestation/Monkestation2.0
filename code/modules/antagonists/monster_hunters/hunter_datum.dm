@@ -173,7 +173,7 @@
 			purchase(weapon_type, user)
 		if("reckoning")
 			. = TRUE
-			if(apocalypse || length(rabbits))
+			if(apocalypse || length(rabbits) > 0)
 				return
 			for(var/datum/objective/objective as anything in objectives)
 				if(!objective.check_completion())
