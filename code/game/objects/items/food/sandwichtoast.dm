@@ -254,8 +254,8 @@
 
 ///Eat it right, or you die.
 /obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
-	/// Closest thing to a mullet we have
-	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
+	/// Closest thing to a mullet we have /// We now actually have a mullet so uh...yeah its mullet now :)
+	if(consumer.hairstyle == "Mullet" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/shorts/jeanshorts))///Changed from "cookshorts" to "jeanshorts" for better accuracy to the show.
 		return FOOD_LIKED
 	return FOOD_ALLERGIC
 

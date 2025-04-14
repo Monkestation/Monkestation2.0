@@ -681,3 +681,21 @@
 	icon_state = "traumatic_veteran_jacket"
 	worn_icon_state = "traumatic_veteran_jacket"
 	toggle_noun = "zipper"
+
+/obj/item/clothing/suit/hooded/wintercoat/strange_merchant
+	name = "strange merchant jacket"
+	desc = "It's an old worn down coat, it has a hood. \"Over here, stranger!- Got somethin' that might interest ya'!\""
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "strange_merchant"
+	worn_icon_state = "strange_merchant"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/strange_merchant
+
+/obj/item/clothing/head/hooded/winterhood/strange_merchant
+	name = "strange merchant jacket hood"
+	desc = "A hood attached to an old worn down coat."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "strange_merchant_hood"
+	worn_icon_state = "strange_merchant_hood"
+	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEEARS

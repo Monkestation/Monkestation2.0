@@ -17,6 +17,7 @@
 
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 /obj/machinery/rnd/Initialize(mapload)
 	. = ..()
@@ -134,3 +135,4 @@
 		use_power(min(active_power_usage, (amount_inserted / 100)))
 	add_overlay("protolathe_[stack_name]")
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "protolathe_[stack_name]"), 10)
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates

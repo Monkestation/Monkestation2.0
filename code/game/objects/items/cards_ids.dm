@@ -361,7 +361,8 @@
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
-	build_access_lists(new_access_list, normal_access, wildcard_access)
+	if(length(new_access_list))
+		build_access_lists(new_access_list, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
 	if(mode == ERROR_ON_FAIL)
@@ -755,10 +756,10 @@
 		break
 
 /obj/item/card/id/examine_more(mob/user)
+	. = ..()
 	if(!user.can_read(src))
 		return
 
-	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
@@ -791,6 +792,7 @@
 	return access.Copy()
 
 /obj/item/card/id/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	return src
 
 /obj/item/card/id/RemoveID()

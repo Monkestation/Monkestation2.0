@@ -1286,7 +1286,7 @@
 	},
 /area/station/commons/lounge)
 "YP" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron{
 	base_icon_state = "basalt5";
 	icon_state = "basalt5";

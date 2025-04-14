@@ -194,6 +194,10 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	item_path = /obj/item/clothing/neck/bowtie/rainbow
 	item_cost = 10000
 
+/datum/store_item/neck/modlink
+	name = "MODlink Scryer"
+	item_path = /obj/item/clothing/neck/link_scryer/loaded
+
 /// EVERYTHING NOVA RELATED
 
 /datum/store_item/neck/gags_cloak //BUYABLE

@@ -5,6 +5,22 @@
 	damage = 30
 	wound_bonus = 20 ///monke -10 -> 20
 	wound_falloff_tile = -10
+/// Monkestation edit start
+
+/obj/projectile/bullet/c45/rubber
+	name = ".45 bullet"
+	damage = 15
+	stamina = 45
+	weak_against_armour = TRUE
+	ricochets_max = 3
+	ricochet_incidence_leeway = 0
+	ricochet_chance = 130
+	ricochet_decay_damage = 1
+	shrapnel_type = null
+	sharpness = NONE
+	embedding = null
+
+/// Monkestation edit end
 
 /obj/projectile/bullet/c45/ap
 	name = ".45 armor-piercing bullet"

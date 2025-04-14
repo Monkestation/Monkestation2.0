@@ -68,7 +68,6 @@
   }
 
   .Button {
-    font: Inconsolata;
     color: #24e87e;
     text-shadow: 0 0 2px #24e87e;
   }
@@ -83,7 +82,8 @@
   body {
     //background-color: black;
     color: white;
-    font: 1.3rem Inconsolata;
+    font-family: Inconsolata;
+    letter-spacing: 1px;
     text-shadow: 0 0 2px #24e87e;
 
     //font: bold 12px Arial, 'Helvetica Neue', Helvetica, sans-serif;
