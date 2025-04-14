@@ -57,7 +57,7 @@
 	)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		friend.key = C.key
+		friend.PossessByPlayer(C.key)
 		friend_initialized = TRUE
 	else
 		qdel(src)
@@ -388,10 +388,8 @@
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), visual, group_clients(), 2.5 SECONDS)
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
-// monkestation edit start
-/* original
 /mob/camera/imaginary_friend/create_thinking_indicator()
-	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
+	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
 	add_image_to_clients(active_thinking_indicator, group_clients())
@@ -403,7 +401,7 @@
 	active_thinking_indicator = null
 
 /mob/camera/imaginary_friend/create_typing_indicator()
-	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
+	if(active_typing_indicator || active_thinking_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
 	add_image_to_clients(active_typing_indicator, group_clients())
@@ -415,16 +413,9 @@
 	active_typing_indicator = null
 
 /mob/camera/imaginary_friend/remove_all_indicators()
-	thinking_IC = FALSE
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
-*/
-/mob/camera/imaginary_friend/add_typing_overlay(image)
-	add_image_to_clients(image, group_clients())
-
-/mob/camera/imaginary_friend/remove_typing_overlay(image)
-	remove_image_from_clients(image, group_clients())
-// monkestation edit end
 
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)

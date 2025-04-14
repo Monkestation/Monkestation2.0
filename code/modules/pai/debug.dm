@@ -25,7 +25,7 @@
 	pai.name = chosen_name
 	pai.real_name = pai.name
 	pai.update_name_tag() // monkestation edit: name tags
-	pai.key = choice.key
+	pai.PossessByPlayer(choice.key)
 	card.set_personality(pai)
 	if(SSpai.candidates[key])
 		SSpai.candidates -= key
@@ -39,7 +39,7 @@
 /mob/proc/make_pai(delete_old)
 	var/obj/item/pai_card/card = new(src)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.key = key
+	pai.PossessByPlayer(key)
 	pai.name = name
 	card.set_personality(pai)
 	if(delete_old)

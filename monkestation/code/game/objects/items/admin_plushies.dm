@@ -88,6 +88,7 @@
 	item_path = /obj/item/toy/plush/admin/syndi_kate
 	item_cost = 7500
 
+/*
 /obj/item/toy/plush/admin/jace
 	name = "jace"
 	desc = "It's Jace!"
@@ -99,6 +100,7 @@
 	name = "Jace Plush"
 	item_path = /obj/item/toy/plush/admin/jace
 	item_cost = 7500
+*/ //comment removal until a permanent removal can be affected without killing peoples items.
 
 /obj/item/toy/plush/admin/lavender
 	name = "lavender"
