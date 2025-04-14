@@ -275,9 +275,8 @@
 	COOLDOWN_DECLARE(defib_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
-	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
-		return
-	try_heal() // Allows implant to work even on dead people
+	if(!QDELETED(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
+		try_heal() // Allows implant to work even on dead people
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
 	try_heal()
@@ -290,7 +289,6 @@
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
-		return
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
 		return
@@ -303,6 +301,8 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
+	if(QDELETED(owner))
+		return
 	if(COOLDOWN_FINISHED(src, defib_cooldown))
 		revive_dead()
 

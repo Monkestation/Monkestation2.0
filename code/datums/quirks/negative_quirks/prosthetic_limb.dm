@@ -22,12 +22,22 @@
 
 	medical_record_text = "Patient uses a low-budget prosthetic on the [slot_string]."
 	old_limb = human_holder.return_and_replace_bodypart(surplus, special = TRUE)
+	if(!isnull(old_limb))
+		RegisterSignal(old_limb, COMSIG_QDELETING, PROC_REF(clear_old_limb))
 
 /datum/quirk/prosthetic_limb/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 
 /datum/quirk/prosthetic_limb/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.del_and_replace_bodypart(old_limb, special = TRUE)
+	if(!QDELETED(quirk_holder))
+		var/mob/living/carbon/human/human_holder = quirk_holder
+		human_holder.del_and_replace_bodypart(old_limb, special = TRUE)
+		clear_old_limb()
+	else
+		qdel(old_limb)
+
+/datum/quirk/prosthetic_limb/proc/clear_old_limb()
+	SIGNAL_HANDLER
+	UnregisterSignal(old_limb, COMSIG_QDELETING)
 	old_limb = null

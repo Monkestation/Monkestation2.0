@@ -573,7 +573,6 @@
 /obj/item/borg/upgrade/modkit/chassis_mod/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 //monkestation edit start
 	if(is_type_in_list(KA, list(/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
-								/obj/item/gun/energy/recharge/kinetic_accelerator/m79,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/meme,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,

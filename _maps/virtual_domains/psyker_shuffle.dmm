@@ -72,7 +72,7 @@
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "s" = (
-/mob/living/basic/mimic/crate/crate,
+/mob/living/basic/mimic/crate,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "t" = (

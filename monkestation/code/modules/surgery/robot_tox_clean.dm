@@ -15,7 +15,7 @@
 	)
 
 /datum/surgery/robot_tox_clean/can_start(mob/user, mob/living/carbon/target)
-	if((target.dna.species.reagent_tag & PROCESS_SYNTHETIC) && target.stat == DEAD && (target.getToxLoss() > 0)) // This surgery is only available if you can't process most Toxin-clearing chems and you're not alive to process system cleaner.
+	if((target.has_dna()?.species?.reagent_tag & PROCESS_SYNTHETIC) && target.stat == DEAD && (target.getToxLoss() > 0)) // This surgery is only available if you can't process most Toxin-clearing chems and you're not alive to process system cleaner.
 		return TRUE
 	return FALSE
 
