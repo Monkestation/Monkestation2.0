@@ -29,15 +29,17 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "aaf" = (
-/obj/structure/chair/sofa/left{
-	color = "#ad96af"
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple{
-	dir = 9;
-	color = "#ad96af"
+/obj/structure/table/reinforced{
+	color = "#d5c9d6"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/item/clothing/head/costume/garland/lily,
+/obj/item/clothing/head/peaceflower{
+	pixel_y = 6
+	},
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "aag" = (
 /obj/structure/hive_exit,
@@ -2363,9 +2365,9 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
 "agr" = (
-/obj/structure/chair/comfy{
-	dir = 1;
-	color = "#e6a7b9"
+/obj/structure/chair/sofa/left{
+	color = "#e6a7b9";
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
 	color = "#e6a7b9"
@@ -3075,13 +3077,17 @@
 	},
 /area/awaymission/errorroom)
 "ail" = (
+/obj/structure/sink/directional/south,
+/obj/machinery/microwave/frontier_printed,
 /obj/effect/turf_decal/siding/purple{
-	dir = 10;
+	dir = 1;
 	color = "#e6a7b9"
 	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4;
+/obj/effect/turf_decal/siding/purple{
 	color = "#e6a7b9"
+	},
+/obj/structure/table/greyscale{
+	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/herringbone,
 /area/centcom/central_command_areas/kitchen)
@@ -7359,7 +7365,6 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "atI" = (
-/obj/machinery/griddle/frontier_tabletop,
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
 	color = "#e6a7b9"
 	},
@@ -7999,11 +8004,10 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
 "avt" = (
-/obj/item/kirbyplants/random{
-	icon = 'monkestation/icons/obj/plants.dmi';
-	icon_state = "plant-28"
-	},
-/turf/open/space/basic,
+/obj/structure/bed/double,
+/obj/item/bedsheet/wiz/double,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/engine/cult,
 /area/centcom/central_command_areas/adminroom)
 "avu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -8422,11 +8426,20 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "awC" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
-	dir = 9
+	dir = 1
 	},
-/obj/effect/turf_decal/siding/wood/corner,
-/turf/open/floor/wood/large,
+/obj/structure/hedge/opaque,
+/obj/structure/flora/bush/flowers_br/style_2,
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/flowers_yw,
+/obj/structure/railing/wood{
+	color = "#55342b"
+	},
+/turf/open/misc/grass,
 /area/centcom/central_command_areas/kitchen)
 "awE" = (
 /obj/structure/chair/sofa/left{
@@ -11544,6 +11557,10 @@
 /obj/structure/table/reinforced{
 	color = "#d5c9d6"
 	},
+/obj/item/reagent_containers/cup/glass/mug/coco{
+	pixel_x = 10;
+	pixel_y = 9
+	},
 /obj/item/clothing/head/costume/garland/lily,
 /obj/item/clothing/head/peaceflower{
 	pixel_y = 6
@@ -12315,13 +12332,16 @@
 /turf/open/floor/carpet,
 /area/centcom/central_command_areas/admin_hangout)
 "aGX" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/structure/chair/sofa/left{
+	color = "#ad96af";
+	dir = 1
 	},
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4;
+	color = "#ad96af"
 	},
-/turf/open/floor/wood/large,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/kitchen)
 "aGY" = (
 /obj/structure/table/wood/fancy/purple,
@@ -13085,12 +13105,14 @@
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "aJg" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple{
-	dir = 1;
-	color = "#ad96af"
+/obj/machinery/griddle/frontier_tabletop,
+/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
+	color = "#e6a7b9"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/structure/table/greyscale{
+	color = "#E6A7B9"
+	},
+/turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "aJh" = (
 /obj/effect/turf_decal/loading_area{
@@ -14734,10 +14756,10 @@
 /obj/machinery/light/directional/south,
 /obj/item/kirbyplants/organic/plant18,
 /obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood{
-	dir = 10
+	dir = 6
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
@@ -15148,13 +15170,16 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/firing_range)
 "aOx" = (
-/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
-	color = "#e6a7b9"
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/structure/chair/sofa/middle{
+	color = "#ad96af";
+	dir = 1
 	},
-/obj/structure/table/greyscale{
-	color = "#E6A7B9"
+/obj/effect/turf_decal/siding/purple{
+	dir = 9;
+	color = "#ad96af"
 	},
-/turf/open/floor/iron/white/diagonal,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/kitchen)
 "aOy" = (
 /obj/machinery/button/door/directional/east{
@@ -17303,15 +17328,10 @@
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
 "aUj" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
 /obj/structure/chair/sofa/right{
 	color = "#ad96af"
 	},
-/obj/effect/turf_decal/siding/purple{
-	dir = 5;
-	color = "#ad96af"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/turf/open/floor/glass/reinforced/plasma,
 /area/centcom/central_command_areas/kitchen)
 "aUk" = (
 /obj/effect/turf_decal/siding/dark{
@@ -18959,19 +18979,14 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
 "aYC" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
+	color = "#e6a7b9"
 	},
-/obj/structure/hedge/opaque,
-/obj/structure/flora/bush/flowers_br/style_2,
-/obj/structure/flora/bush/flowers_pp,
-/obj/structure/flora/bush/flowers_pp,
-/obj/structure/flora/bush/flowers_yw,
-/obj/structure/railing/wood{
-	color = "#55342b"
+/obj/item/food/cake/pineapple_cream_cake,
+/obj/structure/table/greyscale{
+	color = "#E6A7B9"
 	},
-/turf/open/misc/grass,
+/turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "aYD" = (
 /obj/machinery/light/floor/has_bulb,
@@ -19553,18 +19568,6 @@
 /obj/machinery/microwave,
 /turf/open/floor/iron/vaporwave,
 /area/centcom/central_command_areas/adminroom)
-"bhW" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/machinery/light/neon_lining{
-	icon_state = "base1";
-	light_color = "#e6a7b9";
-	nightshift_light_color = "#e6a7b9";
-	lining_color = "#e6a7b9";
-	color = "#e6a7b9"
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "bip" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/bot_white,
@@ -19585,9 +19588,13 @@
 /area/centcom/central_command_areas/admin)
 "bju" = (
 /obj/structure/chair/sofa/right{
-	color = "#ad96af"
+	color = "#e6a7b9";
+	dir = 1
 	},
-/turf/open/floor/glass/reinforced/plasma,
+/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
+	color = "#e6a7b9"
+	},
+/turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "bjH" = (
 /obj/effect/turf_decal/siding/white{
@@ -19656,6 +19663,54 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
+"bny" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/obj/structure/table/reinforced{
+	color = "#606060"
+	},
+/obj/item/clothing/head/costume/tiara{
+	pixel_x = 5;
+	pixel_y = -8
+	},
+/obj/item/perfume/vanilla{
+	icon_state = "perfume_cap";
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/perfume/rose{
+	icon_state = "perfume_cap";
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/perfume/jasmine{
+	icon_state = "perfume_cap";
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/obj/item/perfume/mint{
+	icon_state = "perfume_cap";
+	pixel_x = -10;
+	pixel_y = 2
+	},
+/obj/item/stack/spacecash/c500{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/clothing/head/costume/minicrown{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
+	color = "#665679"
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/adminroom)
 "bnI" = (
 /turf/open/floor/carpet/blue,
 /area/centcom/central_command_areas/admin)
@@ -19988,7 +20043,7 @@
 /area/centcom/central_command_areas/admin)
 "bVH" = (
 /obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple{
+/obj/effect/turf_decal/siding/purple/corner{
 	dir = 8;
 	color = "#ad96af"
 	},
@@ -20165,6 +20220,16 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"cug" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1;
+	color = "#e6a7b9"
+	},
+/obj/effect/turf_decal/siding/purple{
+	color = "#e6a7b9"
+	},
+/turf/open/floor/iron/white/herringbone,
+/area/centcom/central_command_areas/kitchen)
 "cuK" = (
 /obj/effect/turf_decal/siding/purple{
 	color = "#e6a7b9"
@@ -20762,6 +20827,16 @@
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"due" = (
+/obj/item/food/pie/asdfpie,
+/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
+	color = "#e6a7b9"
+	},
+/obj/structure/table/greyscale{
+	color = "#E6A7B9"
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/centcom/central_command_areas/kitchen)
 "duq" = (
 /obj/structure/railing/wood{
 	dir = 1
@@ -20835,14 +20910,10 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom)
 "dDR" = (
-/obj/item/food/pie/asdfpie,
-/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
-	color = "#e6a7b9"
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
 	},
-/obj/structure/table/greyscale{
-	color = "#E6A7B9"
-	},
-/turf/open/floor/iron/white/diagonal,
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "dEz" = (
 /turf/open/floor/carpet/lone/star,
@@ -21383,6 +21454,23 @@
 	},
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/adminroom)
+"eNt" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-3";
+	desc = "Effectively impervious to conventional methods of destruction.";
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
+	color = "#665679"
+	},
+/obj/structure/chair/comfy{
+	dir = 8;
+	color = "#665679"
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/adminroom)
 "eNY" = (
 /turf/open/floor/lowered/iron/pool/cobble/side{
 	dir = 8
@@ -21665,19 +21753,7 @@
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
 "frv" = (
-/obj/structure/sink/directional/south,
-/obj/machinery/microwave/frontier_printed,
-/obj/effect/turf_decal/siding/purple{
-	dir = 1;
-	color = "#e6a7b9"
-	},
-/obj/effect/turf_decal/siding/purple{
-	color = "#e6a7b9"
-	},
-/obj/structure/table/greyscale{
-	color = "#E6A7B9"
-	},
-/turf/open/floor/iron/white/herringbone,
+/turf/open/floor/glass/reinforced/plasma,
 /area/centcom/central_command_areas/kitchen)
 "ftb" = (
 /obj/effect/turf_decal/siding/wood{
@@ -21715,7 +21791,7 @@
 	dir = 4
 	},
 /mob/living/basic/chicken/cotton_candy,
-/turf/open/space/basic,
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "fxn" = (
 /obj/structure/table/wood,
@@ -21799,17 +21875,16 @@
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
 "fFh" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/structure/chair/sofa/right{
-	color = "#ad96af";
-	dir = 1
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = -32;
+	layer = 2.8
 	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 1;
-	color = "#ad96af"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/fakespace,
+/area/centcom/central_command_areas/adminroom)
 "fFk" = (
 /obj/structure/table/glass/plasmaglass,
 /obj/machinery/reagentgrinder{
@@ -21973,18 +22048,6 @@
 /obj/item/knife/butcher,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
-"gdw" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/structure/chair/sofa/left{
-	color = "#ad96af";
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4;
-	color = "#ad96af"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "gfj" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 8
@@ -22111,54 +22174,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
-"gnx" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = 32;
-	layer = 2.8
-	},
-/obj/structure/table/reinforced{
-	color = "#606060"
-	},
-/obj/item/clothing/head/costume/tiara{
-	pixel_x = 5;
-	pixel_y = -8
-	},
-/obj/item/perfume/vanilla{
-	icon_state = "perfume_cap";
-	pixel_x = -3;
-	pixel_y = 10
-	},
-/obj/item/perfume/rose{
-	icon_state = "perfume_cap";
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/item/perfume/jasmine{
-	icon_state = "perfume_cap";
-	pixel_x = -9;
-	pixel_y = 10
-	},
-/obj/item/perfume/mint{
-	icon_state = "perfume_cap";
-	pixel_x = -10;
-	pixel_y = 2
-	},
-/obj/item/stack/spacecash/c500{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/clothing/head/costume/minicrown{
-	pixel_x = 8;
-	pixel_y = 12
-	},
-/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
-	color = "#665679"
-	},
-/turf/open/floor/iron/dark/diagonal,
-/area/centcom/central_command_areas/adminroom)
 "gnB" = (
 /obj/structure/table/greyscale,
 /obj/item/paper_bin{
@@ -22748,79 +22763,8 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "hhM" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = 32;
-	layer = 2.8
-	},
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-10";
-	pixel_y = 32;
-	layer = 2.8;
-	pixel_x = 32
-	},
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-3";
-	desc = "Effectively impervious to conventional methods of destruction.";
-	pixel_x = 32
-	},
-/obj/structure/table/reinforced{
-	color = "#606060"
-	},
-/obj/item/clothing/head/costume/crown/fancy{
-	pixel_x = 14;
-	pixel_y = 11
-	},
-/obj/item/lipstick/white{
-	pixel_x = 3;
-	pixel_y = 11
-	},
-/obj/item/lipstick/jade{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/lipstick/purple{
-	pixel_x = -11;
-	pixel_y = 2
-	},
-/obj/item/lipstick{
-	pixel_x = -12;
-	pixel_y = 10
-	},
-/obj/item/lipstick/blue{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/lipstick/black{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/lipstick/quantum{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/hairbrush/tactical{
-	pixel_x = -13;
-	pixel_y = 8
-	},
-/obj/item/hairbrush/comb{
-	pixel_x = 16;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/costume/crown{
-	pixel_x = -2;
-	pixel_y = -8
-	},
-/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
-	color = "#665679"
-	},
-/turf/open/floor/iron/dark/diagonal,
+/obj/item/clothing/under/dress/sparkle,
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "hjV" = (
 /obj/effect/turf_decal/sand/plating,
@@ -23014,21 +22958,10 @@
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/prison)
 "hvm" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-3";
-	desc = "Effectively impervious to conventional methods of destruction.";
-	pixel_x = 32
+/obj/structure/bed/dogbed{
+	name = "Milos Bed"
 	},
-/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
-	color = "#665679"
-	},
-/obj/structure/chair/comfy{
-	dir = 8;
-	color = "#665679"
-	},
-/turf/open/floor/iron/dark/diagonal,
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "hxZ" = (
 /obj/effect/turf_decal/siding/white{
@@ -23038,6 +22971,15 @@
 /obj/structure/flora/bush/large/style_3,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
+"hyD" = (
+/obj/structure/closet/cardboard{
+	name = "HR Department";
+	desc = "Property of Ben Mothman, smells like lint."
+	},
+/obj/item/modular_computer/laptop/preset/security,
+/obj/item/toy/plush/admin/ben_mothman,
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "hzS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -23190,14 +23132,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/admin)
-"hHb" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 1;
-	color = "#ad96af"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "hHJ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
@@ -23228,10 +23162,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
 "hJW" = (
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 4
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/effect/turf_decal/siding/purple{
+	color = "#ad96af"
 	},
-/turf/open/floor/wood/large,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/kitchen)
 "hJX" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -23349,6 +23284,12 @@
 "hVj" = (
 /turf/open/floor/iron/stairs/right,
 /area/cruiser_dock)
+"hWh" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/kitchen)
 "hXg" = (
 /obj/structure/table,
 /obj/item/storage/box/coffeepack/robusta{
@@ -23619,6 +23560,20 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/admin)
+"izZ" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-10";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/item/kirbyplants/random{
+	icon = 'monkestation/icons/obj/plants.dmi';
+	icon_state = "plant-28"
+	},
+/turf/open/floor/fakespace,
+/area/centcom/central_command_areas/adminroom)
 "iAf" = (
 /obj/structure/fence{
 	dir = 4
@@ -23715,6 +23670,14 @@
 	},
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
+"iIw" = (
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4;
+	color = "#ad96af"
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/kitchen)
 "iIU" = (
 /obj/effect/turf_decal/raven/three,
 /obj/effect/turf_decal/raven,
@@ -23949,14 +23912,16 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/cruiser_dock)
 "jcU" = (
-/obj/structure/dresser{
-	dir = 8
+/obj/effect/turf_decal/siding/purple{
+	dir = 10;
+	color = "#e6a7b9"
 	},
-/obj/structure/railing/wood{
-	color = "#55342b"
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 4;
+	color = "#e6a7b9"
 	},
-/turf/open/floor/carpet/purple,
-/area/centcom/central_command_areas/adminroom)
+/turf/open/floor/iron/white/herringbone,
+/area/centcom/central_command_areas/kitchen)
 "jdY" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/structure/table/reinforced{
@@ -24239,6 +24204,22 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/admin)
+"jKY" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/obj/structure/fireplace{
+	fuel_added = 3000
+	},
+/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
+	color = "#665679"
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/adminroom)
 "jME" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 5
@@ -24502,7 +24483,7 @@
 "kmg" = (
 /obj/structure/bookcase/random/adult,
 /obj/machinery/light/floor/has_bulb,
-/turf/open/space/basic,
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "kmv" = (
 /obj/structure/wrestling_corner{
@@ -24532,16 +24513,13 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
 "koR" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/structure/chair/sofa/middle{
-	color = "#ad96af";
-	dir = 1
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
 	},
-/obj/effect/turf_decal/siding/purple{
-	dir = 9;
-	color = "#ad96af"
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "kpr" = (
 /obj/structure/rack,
@@ -24782,6 +24760,17 @@
 /obj/machinery/light/directional/north,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
+"kSn" = (
+/obj/structure/chair/sofa/left{
+	color = "#ad96af"
+	},
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/effect/turf_decal/siding/purple{
+	dir = 9;
+	color = "#ad96af"
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/kitchen)
 "kSK" = (
 /obj/structure/mineral_door/wood{
 	name = "TheProfit's Shithole";
@@ -25059,14 +25048,6 @@
 	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
-"lAT" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 4;
-	color = "#ad96af"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "lBd" = (
 /turf/open/floor/iron/smooth_corner,
 /area/cruiser_dock)
@@ -25088,12 +25069,6 @@
 	},
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
-"lDN" = (
-/obj/structure/bed/dogbed{
-	name = "Milos Bed"
-	},
-/turf/open/space/basic,
-/area/centcom/central_command_areas/adminroom)
 "lEm" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -25641,14 +25616,6 @@
 	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
-"mSU" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple/corner{
-	dir = 8;
-	color = "#ad96af"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "mTh" = (
 /obj/structure/sign{
 	name = "wall";
@@ -25778,6 +25745,13 @@
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
+"nip" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/kitchen)
 "niw" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -25910,10 +25884,6 @@
 	name = "deathwish beans"
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/centcom/central_command_areas/adminroom)
-"nAo" = (
-/obj/item/clothing/under/dress/sparkle,
-/turf/open/space/basic,
 /area/centcom/central_command_areas/adminroom)
 "nAJ" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -26061,8 +26031,8 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
 "nUl" = (
-/turf/open/floor/glass/reinforced/plasma,
-/area/centcom/central_command_areas/kitchen)
+/turf/open/floor/engine/cult,
+/area/centcom/central_command_areas/adminroom)
 "nUB" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
@@ -26087,7 +26057,7 @@
 	pixel_y = -14;
 	pixel_x = -18
 	},
-/turf/open/space/basic,
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "nVx" = (
 /obj/effect/turf_decal/siding/dark,
@@ -26345,16 +26315,19 @@
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/evacuation)
 "owC" = (
-/obj/machinery/light/directional/south,
-/obj/item/kirbyplants/organic/plant18,
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = 32;
+	layer = 2.8
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
+/obj/structure/bookcase/random/adult,
+/obj/structure/railing/wood{
+	color = "#55342b"
 	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/kitchen)
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/adminroom)
 "oxj" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -26446,15 +26419,16 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
 "oFY" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = -32;
-	layer = 2.8
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/structure/chair/sofa/right{
+	color = "#ad96af"
 	},
-/turf/open/floor/carpet/purple,
-/area/centcom/central_command_areas/adminroom)
+/obj/effect/turf_decal/siding/purple{
+	dir = 5;
+	color = "#ad96af"
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/kitchen)
 "oHu" = (
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/cruiser_dock)
@@ -26576,6 +26550,14 @@
 /obj/item/clothing/suit/space/hardsuit/juggernaut,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
+"oUE" = (
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1;
+	color = "#ad96af"
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/kitchen)
 "oVW" = (
 /obj/item/kirbyplants/organic/plant23,
 /turf/open/floor/carpet/red,
@@ -26765,13 +26747,6 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating/rust,
 /area/centcom/central_command_areas/adminroom)
-"puQ" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple/corner{
-	color = "#ad96af"
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "pvq" = (
 /obj/machinery/biomass_recycler,
 /obj/item/stack/biomass,
@@ -26894,11 +26869,10 @@
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin)
 "pHj" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/effect/turf_decal/siding/purple{
-	color = "#ad96af"
+/obj/effect/turf_decal/tile/hot_pink/opposingcorners{
+	color = "#e6a7b9"
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/turf/open/floor/iron/white/small,
 /area/centcom/central_command_areas/kitchen)
 "pIf" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -27214,21 +27188,35 @@
 	},
 /area/centcom/central_command_areas/evacuation)
 "qoQ" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-3";
+	desc = "Effectively impervious to conventional methods of destruction.";
+	pixel_x = -32
 	},
-/obj/structure/hedge/opaque,
-/obj/structure/flora/bush/flowers_br/style_2,
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-5";
+	pixel_y = -32;
+	layer = 2.8;
+	pixel_x = -32
+	},
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/obj/structure/hedge,
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/flowers_yw,
-/obj/structure/railing/wood{
-	color = "#55342b"
-	},
-/turf/open/misc/grass,
-/area/centcom/central_command_areas/kitchen)
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/fakespace,
+/area/centcom/central_command_areas/adminroom)
 "qpt" = (
 /obj/structure/flora/grass/jungle/b/style_2,
 /turf/open/misc/dirt/jungle/dark/arena,
@@ -27260,14 +27248,15 @@
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/admin)
 "qvg" = (
-/obj/effect/turf_decal/siding/purple{
-	dir = 1;
-	color = "#e6a7b9"
+/obj/machinery/light/directional/south,
+/obj/item/kirbyplants/organic/plant18,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
 	},
-/obj/effect/turf_decal/siding/purple{
-	color = "#e6a7b9"
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
 	},
-/turf/open/floor/iron/white/herringbone,
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "qvS" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -27667,14 +27656,19 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/adminroom)
 "rmu" = (
-/obj/structure/chair/sofa/right{
-	color = "#e6a7b9";
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
-	color = "#e6a7b9"
+/obj/structure/hedge/opaque,
+/obj/structure/flora/bush/flowers_br/style_2,
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/flowers_yw,
+/obj/structure/railing/wood{
+	color = "#55342b"
 	},
-/turf/open/floor/iron/white/diagonal,
+/turf/open/misc/grass,
 /area/centcom/central_command_areas/kitchen)
 "rmL" = (
 /obj/machinery/field/generator/anchored,
@@ -27820,20 +27814,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/small,
 /area/centcom/central_command_areas/medical)
-"rGY" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-10";
-	pixel_y = -32;
-	layer = 2.8
-	},
-/obj/item/kirbyplants/random{
-	icon = 'monkestation/icons/obj/plants.dmi';
-	icon_state = "plant-28"
-	},
-/turf/open/space/basic,
-/area/centcom/central_command_areas/adminroom)
 "rHE" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -27963,16 +27943,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/adminroom)
-"rRb" = (
-/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
-	color = "#e6a7b9"
-	},
-/obj/item/food/cake/pineapple_cream_cake,
-/obj/structure/table/greyscale{
-	color = "#E6A7B9"
-	},
-/turf/open/floor/iron/white/diagonal,
-/area/centcom/central_command_areas/kitchen)
 "rRY" = (
 /obj/item/clothing/head/soft/fishing_hat,
 /obj/structure/table/wood,
@@ -28112,14 +28082,12 @@
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
 "rYT" = (
-/obj/structure/chair/sofa/left{
-	color = "#e6a7b9";
-	dir = 1
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8;
+	color = "#ad96af"
 	},
-/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
-	color = "#e6a7b9"
-	},
-/turf/open/floor/iron/white/diagonal,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/kitchen)
 "rZO" = (
 /obj/structure/chair/wood{
@@ -28182,36 +28150,6 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/centcom/central_command_areas/adminroom)
-"sgf" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-3";
-	desc = "Effectively impervious to conventional methods of destruction.";
-	pixel_x = -32
-	},
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-5";
-	pixel_y = -32;
-	layer = 2.8;
-	pixel_x = -32
-	},
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = -32;
-	layer = 2.8
-	},
-/obj/structure/hedge,
-/obj/structure/flora/bush/flowers_pp,
-/obj/structure/flora/bush/flowers_pp,
-/obj/structure/flora/bush/flowers_yw,
-/obj/structure/flora/bush/flowers_br,
-/turf/open/space/basic,
 /area/centcom/central_command_areas/adminroom)
 "sgm" = (
 /obj/effect/turf_decal/siding/blue{
@@ -28303,7 +28241,8 @@
 /turf/open/floor/carpet/royalblack,
 /area/centcom/central_command_areas/adminroom)
 "sse" = (
-/turf/open/space/basic,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/centcom/central_command_areas/adminroom)
 "ssC" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -28489,20 +28428,13 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "sUG" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = 32;
-	layer = 2.8
+/obj/structure/dresser{
+	dir = 8
 	},
-/obj/structure/fireplace{
-	fuel_added = 3000
+/obj/structure/railing/wood{
+	color = "#55342b"
 	},
-/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
-	color = "#665679"
-	},
-/turf/open/floor/iron/dark/diagonal,
+/turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
 "sUM" = (
 /obj/structure/chair/plastic,
@@ -28575,19 +28507,17 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
 "tgv" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = 32;
-	layer = 2.8
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/machinery/light/neon_lining{
+	icon_state = "base1";
+	light_color = "#e6a7b9";
+	nightshift_light_color = "#e6a7b9";
+	lining_color = "#e6a7b9";
+	color = "#e6a7b9"
 	},
-/obj/structure/bookcase/random/adult,
-/obj/structure/railing/wood{
-	color = "#55342b"
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/centcom/central_command_areas/adminroom)
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/kitchen)
 "tiz" = (
 /obj/structure/sign{
 	name = "wall";
@@ -29274,15 +29204,6 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating/rust,
 /area/centcom/central_command_areas/adminroom)
-"uFD" = (
-/obj/structure/closet/cardboard{
-	name = "HR Department";
-	desc = "Property of Ben Mothman, smells like lint."
-	},
-/obj/item/modular_computer/laptop/preset/security,
-/obj/item/toy/plush/admin/ben_mothman,
-/turf/open/misc/grass,
-/area/centcom/central_command_areas/admin)
 "uGL" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/bot_white,
@@ -29307,6 +29228,13 @@
 	id = "donutstealthisid"
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/adminroom)
+"uIH" = (
+/obj/item/kirbyplants/random{
+	icon = 'monkestation/icons/obj/plants.dmi';
+	icon_state = "plant-28"
+	},
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "uLi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -29462,8 +29390,79 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
 "vee" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = 32;
+	layer = 2.8
+	},
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-10";
+	pixel_y = 32;
+	layer = 2.8;
+	pixel_x = 32
+	},
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-3";
+	desc = "Effectively impervious to conventional methods of destruction.";
+	pixel_x = 32
+	},
+/obj/structure/table/reinforced{
+	color = "#606060"
+	},
+/obj/item/clothing/head/costume/crown/fancy{
+	pixel_x = 14;
+	pixel_y = 11
+	},
+/obj/item/lipstick/white{
+	pixel_x = 3;
+	pixel_y = 11
+	},
+/obj/item/lipstick/jade{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/lipstick/purple{
+	pixel_x = -11;
+	pixel_y = 2
+	},
+/obj/item/lipstick{
+	pixel_x = -12;
+	pixel_y = 10
+	},
+/obj/item/lipstick/blue{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/lipstick/black{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/lipstick/quantum{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/hairbrush/tactical{
+	pixel_x = -13;
+	pixel_y = 8
+	},
+/obj/item/hairbrush/comb{
+	pixel_x = 16;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/costume/crown{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/obj/effect/turf_decal/tile/hot_pink/diagonal_centre{
+	color = "#665679"
+	},
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/adminroom)
 "veh" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -29900,7 +29899,7 @@
 	color = "#665679";
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "vUQ" = (
 /obj/structure/bed/dogbed{
@@ -30380,7 +30379,7 @@
 	pixel_y = -6;
 	pixel_x = 11
 	},
-/turf/open/space/basic,
+/turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "wLl" = (
 /obj/machinery/computer/operating{
@@ -30472,21 +30471,12 @@
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/adminroom)
 "wZv" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1;
+	color = "#ad96af"
 	},
-/obj/structure/table/reinforced{
-	color = "#d5c9d6"
-	},
-/obj/item/reagent_containers/cup/glass/mug/coco{
-	pixel_x = 10;
-	pixel_y = 9
-	},
-/obj/item/clothing/head/costume/garland/lily,
-/obj/item/clothing/head/peaceflower{
-	pixel_y = 6
-	},
-/turf/open/floor/wood/large,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/kitchen)
 "xbs" = (
 /obj/item/toy/plush/moth{
@@ -30521,13 +30511,21 @@
 	},
 /area/centcom/central_command_areas/prison)
 "xdB" = (
-/turf/open/floor/engine/cult,
+/obj/structure/sign{
+	name = "wall";
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood_wall-12";
+	pixel_y = -32;
+	layer = 2.8
+	},
+/turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
 "xdQ" = (
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 8
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/effect/turf_decal/siding/purple/corner{
+	color = "#ad96af"
 	},
-/turf/open/floor/wood/large,
+/turf/open/floor/mineral/titanium/tiled/white,
 /area/centcom/central_command_areas/kitchen)
 "xdU" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -30648,16 +30646,17 @@
 /turf/open/floor/iron/textured,
 /area/centcom/central_command_areas/admin)
 "xoy" = (
-/obj/structure/sign{
-	name = "wall";
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood_wall-12";
-	pixel_y = -32;
-	layer = 2.8
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/structure/chair/sofa/right{
+	color = "#ad96af";
+	dir = 1
 	},
-/obj/structure/bookcase/random/adult,
-/turf/open/space/basic,
-/area/centcom/central_command_areas/adminroom)
+/obj/effect/turf_decal/siding/purple/corner{
+	dir = 1;
+	color = "#ad96af"
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/kitchen)
 "xoZ" = (
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /obj/machinery/door/airlock/silver{
@@ -30999,17 +30998,15 @@
 /turf/open/floor/carpet/green,
 /area/centcom/central_command_areas/adminroom)
 "xVl" = (
-/obj/effect/turf_decal/tile/hot_pink/opposingcorners{
+/obj/structure/chair/comfy{
+	dir = 1;
 	color = "#e6a7b9"
 	},
-/turf/open/floor/iron/white/small,
+/obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
+	color = "#e6a7b9"
+	},
+/turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
-"xVU" = (
-/obj/structure/bed/double,
-/obj/item/bedsheet/wiz/double,
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/engine/cult,
-/area/centcom/central_command_areas/adminroom)
 "xWM" = (
 /obj/structure/closet/crate/cardboard/mothic,
 /obj/item/storage/box/mothic_rations,
@@ -54640,12 +54637,12 @@ aaa
 aaa
 aaa
 aaa
-vee
-vee
-vee
-vee
+sse
+sse
+sse
+sse
 kpH
-xVU
+avt
 tGA
 tGA
 kpH
@@ -54896,14 +54893,14 @@ aaa
 aaa
 aaa
 aaa
-vee
-vee
 sse
 sse
-rGY
+bUs
+bUs
+izZ
 kpH
 kpH
-xdB
+nUl
 bcU
 kpH
 wKb
@@ -55153,13 +55150,13 @@ aaa
 aaa
 aaa
 aaa
-vee
-nAo
 sse
-sse
-sse
+hhM
+bUs
+bUs
+bUs
 kmg
-sgf
+qoQ
 kpH
 kpH
 kpH
@@ -55410,13 +55407,13 @@ aaa
 aaa
 aaa
 aaa
-vee
 sse
-lDN
+bUs
+hvm
 vRI
-sse
-sse
-xoy
+bUs
+bUs
+fFh
 kpH
 iHt
 ojc
@@ -55667,13 +55664,13 @@ aaa
 aaa
 aaa
 aaa
-vee
-avt
 sse
+uIH
+bUs
 nVw
-sse
-sse
-xoy
+bUs
+bUs
+fFh
 kpH
 iLL
 mMx
@@ -55924,13 +55921,13 @@ aaa
 aaa
 aaa
 aaa
-vee
-vee
 sse
+sse
+bUs
 wKL
 fuN
 mEJ
-oFY
+xdB
 kpH
 oKS
 mMx
@@ -56182,8 +56179,8 @@ aaa
 aaa
 aaa
 aaa
-vee
-jcU
+sse
+sUG
 qmo
 qmo
 sZI
@@ -56440,11 +56437,11 @@ aaa
 aaa
 aaa
 kpH
-tgv
+owC
 bSf
 bSf
 mvP
-oFY
+xdB
 kpH
 kFG
 mMx
@@ -56697,7 +56694,7 @@ aaa
 aaa
 aaa
 kpH
-gnx
+bny
 gBW
 bBD
 mMx
@@ -56954,7 +56951,7 @@ aaa
 aaa
 aaa
 kpH
-sUG
+jKY
 ceP
 iDb
 mMx
@@ -57211,8 +57208,8 @@ aaa
 aaa
 aaa
 kpH
-hhM
-hvm
+vee
+eNt
 rIZ
 dXa
 tCB
@@ -58506,7 +58503,7 @@ aMR
 agn
 aOn
 aCO
-uFD
+hyD
 aJi
 aRZ
 ayw
@@ -70047,7 +70044,7 @@ amQ
 amQ
 amQ
 aOj
-bju
+aUj
 sci
 azP
 azu
@@ -70306,7 +70303,7 @@ axl
 aXg
 ays
 gOn
-koR
+aOx
 aAm
 aFq
 amQ
@@ -70558,12 +70555,12 @@ amQ
 atL
 aEp
 amp
-aYC
+rmu
 afS
 aJn
-aaf
+kSn
 amC
-fFh
+xoy
 aAm
 aZY
 aMF
@@ -70813,10 +70810,10 @@ aIV
 cuK
 aUN
 aao
-xVl
+pHj
 akW
-qoQ
-wZv
+awC
+aEP
 aJR
 aKG
 aAn
@@ -71062,7 +71059,7 @@ aOn
 aaa
 amQ
 amQ
-frv
+ail
 aIV
 aIV
 aIV
@@ -71072,7 +71069,7 @@ amQ
 aMO
 aIO
 aSK
-aYC
+rmu
 aAI
 aNg
 aAn
@@ -71324,18 +71321,18 @@ aIV
 aIV
 aER
 aIV
-qvg
+cug
 atK
-rYT
-aGX
-aNt
+agr
+koR
+qvg
 amQ
 aDO
-puQ
+xdQ
 tUh
 tUh
 tUh
-lAT
+iIw
 ain
 amQ
 asO
@@ -71579,20 +71576,20 @@ aaC
 aIV
 sig
 aIV
-atI
+aJg
 fZY
 cuK
 adE
-rmu
+bju
 aIV
-hJW
+dDR
 acE
 axD
-pHj
-nUl
-nUl
-nUl
-aJg
+hJW
+frv
+frv
+frv
+wZv
 aWr
 aBE
 auA
@@ -71837,18 +71834,18 @@ aIV
 aIV
 aIV
 aFv
-dDR
+due
 cuK
 mZX
-agr
+xVl
 aZj
 aIV
 acE
-bhW
-pHj
-nUl
+tgv
+hJW
+frv
 aLT
-nUl
+frv
 fae
 aqT
 aBE
@@ -72091,22 +72088,22 @@ aaa
 amQ
 aaC
 aIV
-aOx
-aIV
 atI
-rRb
+aIV
+aJg
+aYC
 cuK
 vuG
-rYT
+agr
 aIV
-xdQ
+hWh
 acE
 aAz
-pHj
-nUl
-nUl
-nUl
-aJg
+hJW
+frv
+frv
+frv
+wZv
 amk
 aBE
 azJ
@@ -72347,23 +72344,23 @@ aOn
 aaa
 amQ
 ahZ
-ail
+jcU
 aIV
 aIV
-aOx
+atI
 aIV
 cuK
 cdU
-rmu
-awC
-owC
+bju
+nip
+aNt
 amQ
 aDO
-mSU
 bVH
-bVH
-bVH
-hHb
+rYT
+rYT
+rYT
+oUE
 aDO
 amQ
 asO
@@ -72614,7 +72611,7 @@ amQ
 aMO
 aEp
 amp
-aYC
+rmu
 aIN
 aOl
 aAn
@@ -72862,17 +72859,17 @@ aaa
 aaa
 amQ
 aKp
-ail
+jcU
 aIV
 aIV
 aIV
 cuK
 aUN
 aao
-xVl
+pHj
 akW
-qoQ
-aEP
+awC
+aaf
 aJR
 aMg
 aAn
@@ -73128,12 +73125,12 @@ amQ
 aJw
 aIO
 aSK
-aYC
+rmu
 auy
 aJn
-aUj
+oFY
 oYE
-gdw
+aGX
 aAm
 aoG
 aMF
