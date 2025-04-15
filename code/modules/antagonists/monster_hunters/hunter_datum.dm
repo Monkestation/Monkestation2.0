@@ -184,6 +184,7 @@
 				return
 			apocalypse = TRUE
 			user.log_message("initiated the Wonderland Apocalypse.", LOG_GAME)
+			message_admins(span_adminnotice("[key_name_admin(user)] has initiated the Wonderland Apocalypse."))
 			force_event(/datum/round_event_control/wonderlandapocalypse, "a monster hunter turning into a beast")
 
 /datum/antagonist/monsterhunter/proc/purchase(obj/item/weapon_type, mob/living/user)
@@ -304,7 +305,7 @@
 	update_explanation_text()
 	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
 	owner.current?.log_message("identified one of their targets, [key_name(target.current)].", LOG_GAME)
-	target.current?.log_message("was identified by [key_name(owner.current)], a monster hunter.", LOG_GAME, log_globally = FALSE)
+	target.current?.log_message("was identified by [key_name(owner.current)], a Monster Hunter.", LOG_GAME, log_globally = FALSE)
 	var/datum/antagonist/monsterhunter/hunter_datum = owner.has_antag_datum(/datum/antagonist/monsterhunter)
 	hunter_datum?.update_static_data_for_all_viewers()
 
