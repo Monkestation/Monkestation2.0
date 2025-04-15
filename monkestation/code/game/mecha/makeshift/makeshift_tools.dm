@@ -66,6 +66,23 @@
 	ammo_type = MECHA_AMMO_PEASHOOTER
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
 
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
+	name = "peashooter minigun"
+	desc = "through the power of special syndicate glue,multiple peashooters have been strapped together and the fireate increased."
+	icon_state = "mecha_minipea"
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
+	projectiles = 120
+	projectiles_cache = 0
+	projectiles_cache_max = 600
+	projectiles_per_shot = 30
+	projectile_delay = 0.05 SECONDS
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PEASHOOTER
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
 /obj/item/mecha_parts/mecha_equipment/tankupgrade
 	name = "trash tank armor plating"
 	desc = "A jumble of whatever scrap that someone can scrounge up that is able to beef up a trash tank somewhat."
