@@ -433,7 +433,7 @@
 /obj/effect/turf_decal/siding/purple{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/herringbone,
@@ -1430,9 +1430,8 @@
 /obj/effect/turf_decal/tile/hot_pink/full{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
-	color = "#e6a7b9";
-	greyscale_colors = "#e6a7b9"
+/obj/structure/table{
+	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/kitchen)
@@ -4081,9 +4080,8 @@
 /obj/item/clothing/head/peaceflower{
 	pixel_y = 6
 	},
-/obj/structure/table/greyscale{
-	color = "#e6a7b9";
-	greyscale_colors = "#e6a7b9"
+/obj/structure/table{
+	color = "#E6A7B9"
 	},
 /turf/open/floor/glass/reinforced/plasma,
 /area/centcom/central_command_areas/kitchen)
@@ -4529,7 +4527,7 @@
 	dir = 2;
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/herringbone,
@@ -7371,9 +7369,8 @@
 /obj/effect/turf_decal/tile/hot_pink/full{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
-	color = "#e6a7b9";
-	greyscale_colors = "#e6a7b9"
+/obj/structure/table{
+	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/kitchen)
@@ -11563,7 +11560,7 @@
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/diagonal,
@@ -13035,7 +13032,7 @@
 	color = "#e6a7b9"
 	},
 /obj/item/food/cake/pineapple_cream_cake,
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/diagonal,
@@ -13097,7 +13094,7 @@
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/diagonal,
@@ -13583,7 +13580,7 @@
 	dir = 8;
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/herringbone,
@@ -15161,7 +15158,7 @@
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/diagonal,
@@ -20086,9 +20083,8 @@
 /obj/effect/turf_decal/tile/hot_pink/full{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
-	color = "#e6a7b9";
-	greyscale_colors = "#e6a7b9"
+/obj/structure/table{
+	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/kitchen)
@@ -21555,7 +21551,7 @@
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/diagonal,
@@ -21882,7 +21878,7 @@
 	color = "#e6a7b9"
 	},
 /obj/machinery/reagentgrinder,
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/diagonal,
@@ -24480,7 +24476,7 @@
 	color = "#e6a7b9"
 	},
 /obj/item/food/cake/plum,
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/diagonal,
@@ -25631,9 +25627,8 @@
 /obj/effect/turf_decal/tile/hot_pink/full{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
-	color = "#e6a7b9";
-	greyscale_colors = "#e6a7b9"
+/obj/structure/table{
+	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/kitchen)
@@ -26843,7 +26838,7 @@
 /obj/effect/turf_decal/siding/purple{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/herringbone,
@@ -29547,9 +29542,8 @@
 /obj/effect/turf_decal/tile/hot_pink/full{
 	color = "#e6a7b9"
 	},
-/obj/structure/table/greyscale{
-	color = "#e6a7b9";
-	greyscale_colors = "#e6a7b9"
+/obj/structure/table{
+	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/kitchen)
