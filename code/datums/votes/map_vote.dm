@@ -44,7 +44,7 @@
 		return "There [num_choices == 1 ? "is only one map" : "are no maps"] to choose from."
 
 	if(SSmap_vote.next_map_config)
-	return VOTE_AVAILABLE
+		return VOTE_AVAILABLE
 
 /datum/vote/map_vote/get_result_text(list/all_winners, real_winner, list/non_voters)
 	return null

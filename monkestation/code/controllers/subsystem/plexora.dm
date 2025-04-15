@@ -185,7 +185,7 @@ SUBSYSTEM_DEF(plexora)
 		"roundid" = GLOB.round_id,
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.current_map?.map_name,
-		"nextmap" = SSmapping.next_map_config?.map_name,
+		"nextmap" = SSmap_vote.next_map_config?.map_name,
 		"playercount" = length(GLOB.clients),
 		"playerstring" = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]",
 	))

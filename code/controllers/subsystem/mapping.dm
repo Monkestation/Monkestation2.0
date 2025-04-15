@@ -148,8 +148,8 @@ SUBSYSTEM_DEF(mapping)
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
-	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
-		load_all_away_missions()
+//	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
+//		load_all_away_missions() We don't use away missions, as of now at least
 
 	loading_ruins = TRUE
 	setup_ruins()
@@ -459,7 +459,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		shuffle_inplace(random_engine_templates)
 		for(var/ID in random_engine_templates)
 			engine_candidate = random_engine_templates[ID]
-			if(config.map_name != engine_candidate.station_name || engine_candidate.weight == 0 || engine_spawner.room_height != engine_candidate.template_height || engine_spawner.room_width != engine_candidate.template_width)
+			if(current_map.map_name != engine_candidate.station_name || engine_candidate.weight == 0 || engine_spawner.room_height != engine_candidate.template_height || engine_spawner.room_width != engine_candidate.template_width)
 				engine_candidate = null
 				continue
 			possible_engine_templates[engine_candidate] = engine_candidate.weight
@@ -481,7 +481,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		shuffle_inplace(random_bar_templates)
 		for(var/ID in random_bar_templates)
 			bar_candidate = random_bar_templates[ID]
-			if(config.map_name != bar_candidate.station_name || bar_candidate.weight == 0 || bar_spawner.room_height != bar_candidate.template_height || bar_spawner.room_width != bar_candidate.template_width)
+			if(current_map.map_name != bar_candidate.station_name || bar_candidate.weight == 0 || bar_spawner.room_height != bar_candidate.template_height || bar_spawner.room_width != bar_candidate.template_width)
 				bar_candidate = null
 				continue
 			possible_bar_templates[bar_candidate] = bar_candidate.weight
@@ -544,13 +544,13 @@ Used by the AI doomsday and the self-destruct nuke.
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
-	while (world.maxz < (5 - 1) && space_levels_so_far < config.space_ruin_levels)
+	while (world.maxz < (5 - 1) && space_levels_so_far < current_map.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	if(current_map.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if(config.minetype == "oshan")
+	else if(current_map.minetype == "oshan")
 		LoadGroup(FailedZs, "Trench", "map_files/Mining", "Oshan.dmm", default_traits = ZTRAITS_TRENCH)
 	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
