@@ -1083,7 +1083,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 #if (PRELOAD_RSC == 0)
 /client/proc/preload_vox()
-	for (var/file in GLOB.all_vox_sounds) // monkestation edit: alternate vox voices
+	for (var/file in GLOB.all_vox_sounds)
 		Export("##action=load_rsc", file)
 		stoplag()
 #endif
