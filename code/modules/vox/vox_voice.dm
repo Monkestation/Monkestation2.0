@@ -13,12 +13,17 @@ GLOBAL_LIST_INIT(vox_voices, initialize_vox_voices())
 	var/volume = 100
 	/// An associative list of words to their respective sound file.
 	var/list/sounds
+	/// A list of all the words this voice supports.
+	/// Automatically filled based on the `sounds` list during `New()`.
+	var/list/words
 
 /datum/vox_voice/New()
 	var/list/all_vox_sounds = GLOB.all_vox_sounds
+	LAZYINITLIST(words)
 	for(var/name in sounds)
 		var/file = sounds[name]
 		all_vox_sounds += file
+		words += name
 
 /datum/vox_voice/Destroy(force)
 	if(!force)
