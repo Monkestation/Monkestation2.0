@@ -184,7 +184,7 @@
 				return
 			apocalypse = TRUE
 			user.log_message("initiated the Wonderland Apocalypse.", LOG_GAME)
-			message_admins(span_adminnotice("[key_name_admin(user)] has initiated the Wonderland Apocalypse."))
+			message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has initiated the Wonderland Apocalypse."))
 			force_event(/datum/round_event_control/wonderlandapocalypse, "a monster hunter turning into a beast")
 
 /datum/antagonist/monsterhunter/proc/purchase(obj/item/weapon_type, mob/living/user)
