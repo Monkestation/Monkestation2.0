@@ -111,7 +111,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/40mm_cannon
 	name = "40mm tank cannon"
 	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling."
-	icon_state = "mecha_40mm_cannon"
+	icon_state = "mecha_light_tank_cannon"
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_MISSILE_LIGHTTANKSHELL
 	mech_flags = EXOSUIT_MODULE_DEVITT
