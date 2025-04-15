@@ -108,7 +108,7 @@
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/iedcasing/spawned, detonate)), det_time)
 
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/40mm_cannon
+/obj/item/mecha_parts/mecha_equipment/weapon/special/rocket/light_tank_cannon
 	name = "40mm tank cannon"
 	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling."
 	icon_state = "mecha_light_tank_cannon"
