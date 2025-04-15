@@ -16,7 +16,7 @@
 	wreckage = /obj/structure/closet/crate/trashcart
 	mech_type = EXOSUIT_MODULE_TRASHTANK
 	equip_by_category = list(
-		MECHA_L_ARM = null,
+		MECHA_L_ARM = /item/mecha_parts/mecha_equipment/weapon/ballistic/40mm_cannon
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),
