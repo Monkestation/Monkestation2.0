@@ -13,3 +13,4 @@
 		user.balloon_alert(user, "place weapon on table!")
 		return
 	eye.upgrade(tool, user)
+	user.log_message("upgraded their [tool] using a Rabbit Eye", LOG_GAME)

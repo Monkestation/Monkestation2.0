@@ -220,17 +220,19 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 		return
 	recoil(
 		span_warning("[owner] doubles over in pain, violently coughing up blood!"),
-		span_userdanger("An overwhelming pressure fills your body as you cast [spell.name || "magic"], filling you with excruciating pain down to the very core of your being!")
+		span_userdanger("An overwhelming pressure fills your body as you cast [spell.name || "magic"], filling you with excruciating pain down to the very core of your being!"),
+		spell.name || spell.type
 	)
 
 /datum/status_effect/wonderland_district/proc/on_action_triggered(datum/source, datum/action/action)
 	SIGNAL_HANDLER
 	recoil(
 		span_warning("[owner] doubles over in pain, violently coughing up blood!"),
-		span_userdanger("An overwhelming pressure fills your body as you use [action.name || "your ability"], filling you with excruciating pain down to the very core of your being!")
+		span_userdanger("An overwhelming pressure fills your body as you use [action.name || "your ability"], filling you with excruciating pain down to the very core of your being!"),
+		action.name || action.type
 	)
 
-/datum/status_effect/wonderland_district/proc/recoil(vis_msg, self_msg)
+/datum/status_effect/wonderland_district/proc/recoil(vis_msg, self_msg, logged_cause)
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living, emote), "scream")
 	if(vis_msg)
 		owner.visible_message(vis_msg, self_msg)
@@ -239,6 +241,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)
+	owner.log_message("suffered recoil from using [logged_cause] due to the effects of Wonderland.", LOG_VICTIM)
 
 /atom/movable/screen/alert/status_effect/wonderland_district
 	name = "Wonderland Manifestation"
