@@ -19,8 +19,8 @@
 	VAR_FINAL/is_browser = FALSE
 	/// Is the media manager ready to do stuff yet?
 	VAR_FINAL/ready = FALSE
-	/// Last state sent by the media player.
-	//VAR_FINAL/state
+	/// The current URL being played.
+	VAR_FINAL/current_url
 	/// Callbacks to run when we get the "ready" message back fron the media manager.
 	VAR_PRIVATE/list/ready_callbacks
 	var/static/base_html
@@ -92,8 +92,8 @@
 /datum/media_player/proc/set_volume(volume = 100)
 	media_call("set_volume", volume)
 
-/datum/media_player/proc/play(url, volume)
-	media_call("play", url, volume)
+/datum/media_player/proc/play(url, volume, x = 0, y = 0, z = 0)
+	media_call("play", url, volume, null, x, y, z)
 
 /datum/media_player/proc/pause()
 	media_call("pause")
@@ -122,12 +122,11 @@
 		return
 	switch(message_type)
 		if("ready")
-			//state = params["state"]
 			on_ready()
-/*
-		if("state")
-			state = params
-*/
+		if("clear")
+			current_url = null
+		if("playing")
+			current_url = params["url"]
 		if("error")
 			MM2_DEBUG("error: [params["message"]]")
 			stack_trace(params["message"])
