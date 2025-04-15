@@ -17826,7 +17826,7 @@
 	color = "#e6a7b9"
 	},
 /obj/machinery/coffeemaker/impressa,
-/obj/structure/table/greyscale{
+/obj/structure/table{
 	color = "#E6A7B9"
 	},
 /turf/open/floor/iron/white/herringbone,
