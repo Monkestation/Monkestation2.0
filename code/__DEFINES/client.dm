@@ -9,3 +9,9 @@
 		log_access("Client [key_name(target)] attempted to execute a verb before being fully initialized.");\
 		return\
 	}
+
+/// The minimum client BYOND build to disable screentip icons for.
+#define MIN_BYOND_BUILD_DISABLE_SCREENTIP_ICONS 1657
+/// The maximum client BYOND build to disable screentip icons for.
+/// Update this whenever https://www.byond.com/forum/post/2967731 is fixed.
+#define MAX_BYOND_BUILD_DISABLE_SCREENTIP_ICONS 1699
