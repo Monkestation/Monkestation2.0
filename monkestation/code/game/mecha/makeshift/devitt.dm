@@ -13,10 +13,10 @@
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 30 //Its old but no electronics
-	wreckage = /obj/structure/closet/crate/trashcart
+	wreckage = null
 	mech_type = EXOSUIT_MODULE_TRASHTANK
 	equip_by_category = list(
-		MECHA_L_ARM = /item/mecha_parts/mecha_equipment/weapon/ballistic/40mm_cannon
+		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),

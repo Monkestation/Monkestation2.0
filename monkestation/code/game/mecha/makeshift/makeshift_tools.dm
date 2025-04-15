@@ -116,7 +116,7 @@
 	projectile = /obj/projectile/bullet/rocket/lighttankshell
 	equip_cooldown = 8 SECONDS
 	projectiles = 1
-	projectiles_cache = 0
+	projectiles_cache = 10
 	projectiles_cache_max = 35
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_DEVITT
