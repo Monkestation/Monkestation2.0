@@ -113,10 +113,11 @@
 	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling."
 	icon_state = "mecha_light_tank_cannon"
 	harmful = TRUE
-	ammo_type = MECHA_AMMO_LIGHTTANKSHELL
+	ammo_type = MECHA_AMMO_MISSILE_LIGHTTANKSHELL
 	mech_flags = EXOSUIT_MODULE_DEVITT
 	equip_cooldown = 60
 	projectile = /obj/projectile/bullet/rocket/lighttankshell
+	equip_cooldown = 8 SECONDS
 	projectiles = 1
 	projectiles_cache = 5
 	projectiles_cache_max = 35
