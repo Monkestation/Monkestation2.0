@@ -26,4 +26,4 @@
 	desc = "An ancient box of 1.6in tank shells, for use with a small tank cannon."
 	icon_state = "light_tank_ammo"
 	rounds = 5
-	ammo_type = MECHA_AMMO_MISSILE_LIGHTTANKSHELL
+	ammo_type = MECHA_AMMO_LIGHTTANK
