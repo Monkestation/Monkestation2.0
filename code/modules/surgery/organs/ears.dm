@@ -130,7 +130,7 @@
 /obj/item/organ/internal/ears/cybernetic/upgraded
 	name = "cybernetic ears"
 	icon_state = "ears-c-u"
-	desc =  "An advanced cybernetic ear, surpassing the performance of organic ears."
+	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
 	damage_multiplier = 0.5
 
 /obj/item/organ/internal/ears/cybernetic/whisper
