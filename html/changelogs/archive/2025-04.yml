@@ -340,3 +340,15 @@
   flleeppyy:
   - bugfix: Monkestation is killing modularization. Future PRs should not follow modularization
       guidelines.
+2025-04-15:
+  Absolucy:
+  - balance: Monster Hunters no longer have a hunting contract, it is instead integrated
+      into their antagonist UI.
+  - refactor: Cleaned up monster hunter code a lot.
+  - qol: Improved the Monster Hunter UI a bit.
+  - qol: You can no longer activate Jack in the Bombs in Wonderland.
+  - qol: Reworded Monster Hunter objectives a bit to be more thematic.
+  - bugfix: Hopefully fixed orbiting ghosts sometimes being lost by a Monster Hunter
+      using Paradox Shift.
+  - bugfix: Fixed an exploit related to Monster Hunters.
+  - admin: Added logging to various Monster Hunter actions.

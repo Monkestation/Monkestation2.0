@@ -8,7 +8,10 @@
 	preview_outfit = /datum/outfit/monsterhunter
 	antag_moodlet = /datum/mood_event/monster_hunter
 	show_to_ghosts = TRUE
+	ui_name = "AntagInfoMonsterHunter"
 	var/list/datum/action/powers = list()
+	/// Have we chosen a weapon yet?
+	var/weapon_claimed = FALSE
 	var/give_objectives = TRUE
 	///how many rabbits have we found
 	var/rabbits_spotted = 0
@@ -24,13 +27,13 @@
 	var/static/list/granted_traits = list(
 		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
 		TRAIT_NOCRITDAMAGE,
-		TRAIT_NOSOFTCRIT
+		TRAIT_NOSOFTCRIT,
 	)
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
 		TRAIT_OCCULTIST,
 		TRAIT_UNCONVERTABLE,
-		TRAIT_MADNESS_IMMUNE // You merely adopted the madness. I was born in it, molded by it.
+		TRAIT_MADNESS_IMMUNE, // You merely adopted the madness. I was born in it, molded by it.
 	)
 	/// A typecache of ability types that will be revealed to the monster hunter when they gain insight.
 	var/static/list/monster_abilities = typecacheof(list(
@@ -56,6 +59,7 @@
 	UnregisterSignal(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_MOVED))
 
 /datum/antagonist/monsterhunter/on_gain()
+	owner.special_role = ROLE_MONSTERHUNTER
 	//Give Hunter Objective
 	if(give_objectives)
 		find_monster_targets()
@@ -70,12 +74,7 @@
 	if(!criminal.equip_in_one_of_slots(card, slots, qdel_on_fail = FALSE))
 		card.moveToNullspace()
 		grant_drop_ability(card)
-	var/obj/item/hunting_contract/contract = new(criminal.drop_location(), src)
-	if(!criminal.equip_in_one_of_slots(contract, slots, qdel_on_fail = FALSE))
-		contract.moveToNullspace()
-		grant_drop_ability(contract)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
-	RegisterSignal(src, COMSIG_BEASTIFY, PROC_REF(turn_beast))
 	for(var/i in 1 to 5)
 		var/turf/rabbit_hole = get_safe_random_station_turf_equal_weight()
 		rabbits += new /obj/effect/bnnuy(rabbit_hole, src)
@@ -86,12 +85,13 @@
 	return ..()
 
 /datum/antagonist/monsterhunter/on_removal()
-	UnregisterSignal(src, list(COMSIG_GAIN_INSIGHT, COMSIG_BEASTIFY))
+	UnregisterSignal(src, COMSIG_GAIN_INSIGHT)
 	owner.remove_traits(mind_traits, HUNTER_TRAIT)
 	QDEL_LIST(rabbits)
 	locator?.hunter = null
 	locator = null
 	to_chat(owner.current, span_userdanger("Your hunt has ended: You enter retirement once again, and are no longer a Monster Hunter."))
+	owner.special_role = null
 	return ..()
 
 /datum/antagonist/monsterhunter/proc/load_wonderland()
@@ -121,15 +121,85 @@
 			continue
 		bnnuy.update_mouse_opacity(source)
 
-/datum/antagonist/monsterhunter/proc/grant_drop_ability(obj/item/tool)
-	var/datum/action/droppod_item/summon_contract = new(tool)
-	summon_contract.Grant(owner.current)
-
 /datum/antagonist/monsterhunter/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
 	for(var/datum/action/all_powers as anything in powers)
 		all_powers.Remove(old_body)
 		all_powers.Grant(new_body)
+
+/datum/antagonist/monsterhunter/ui_data(mob/user)
+	var/completed = TRUE
+	for(var/datum/objective/objective as anything in objectives)
+		if(!objective.check_completion())
+			completed = FALSE
+			break
+	return list(
+		"weapon_claimed" = weapon_claimed,
+		"rabbits_spotted" = rabbits_spotted,
+		"rabbits_remaining" = length(rabbits),
+		"all_completed" = completed,
+		"apocalypse" = apocalypse,
+	)
+
+/datum/antagonist/monsterhunter/ui_static_data(mob/user)
+	var/list/weapons = list()
+	for(var/obj/item/melee/trick_weapon/trick_weapon as anything in subtypesof(/obj/item/melee/trick_weapon))
+		weapons += list(list(
+			"id" = trick_weapon,
+			"name" = trick_weapon::name,
+			"desc" = trick_weapon::ui_desc,
+			"icon" = trick_weapon::icon,
+			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
+		))
+	return list(
+		"objectives" = get_objectives(),
+		"weapons" = weapons,
+	)
+
+/datum/antagonist/monsterhunter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/user = ui.user
+	switch(action)
+		if("select")
+			. = TRUE
+			if(isnull(params["weapon"]) || weapon_claimed)
+				return
+			var/weapon_type = text2path(params["weapon"])
+			if(!ispath(weapon_type, /obj/item/melee/trick_weapon))
+				return
+			weapon_claimed = TRUE
+			purchase(weapon_type, user)
+		if("reckoning")
+			. = TRUE
+			if(apocalypse || length(rabbits) > 0)
+				return
+			for(var/datum/objective/objective as anything in objectives)
+				if(!objective.check_completion())
+					return
+			var/turf/current_turf = get_turf(user)
+			if(!is_station_level(current_turf.z))
+				to_chat(user, span_warning("The pull of the ice moon isn't strong enough here..."))
+				return
+			apocalypse = TRUE
+			user.log_message("initiated the Wonderland Apocalypse.", LOG_GAME)
+			message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has initiated the Wonderland Apocalypse."))
+			force_event(/datum/round_event_control/wonderlandapocalypse, "a monster hunter turning into a beast")
+
+/datum/antagonist/monsterhunter/proc/purchase(obj/item/weapon_type, mob/living/user)
+	user.log_message("claimed the [weapon_type::name] ([weapon_type]) as their Monster Hunter weapon.", LOG_GAME)
+	var/obj/item/melee/trick_weapon/weapon = new weapon_type
+
+	var/datum/action/cooldown/spell/summonitem/recall = new
+	recall.mark_item(weapon)
+	recall.Grant(user)
+
+	podspawn(list(
+		"target" = get_turf(user),
+		"style" = STYLE_SYNDICATE,
+		"spawn" = weapon
+	))
 
 /datum/antagonist/monsterhunter/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/hunter = new
@@ -161,20 +231,6 @@
 	suit =  /obj/item/clothing/suit/hooded/techpriest
 	head = /obj/item/clothing/head/hooded/techpriest
 	gloves = /obj/item/clothing/gloves/color/white
-
-/// Mind version
-/datum/mind/proc/make_monsterhunter()
-	var/datum/antagonist/monsterhunter/monsterhunterdatum = has_antag_datum(/datum/antagonist/monsterhunter)
-	if(!monsterhunterdatum)
-		monsterhunterdatum = add_antag_datum(/datum/antagonist/monsterhunter)
-		special_role = ROLE_MONSTERHUNTER
-	return monsterhunterdatum
-
-/datum/mind/proc/remove_monsterhunter()
-	var/datum/antagonist/monsterhunter/monsterhunterdatum = has_antag_datum(/datum/antagonist/monsterhunter)
-	if(monsterhunterdatum)
-		remove_antag_datum(/datum/antagonist/monsterhunter)
-		special_role = null
 
 /// Called when using admin tools to give antag status
 /datum/antagonist/monsterhunter/admin_add(datum/mind/new_owner, mob/admin)
@@ -209,15 +265,17 @@
 	SIGNAL_HANDLER
 
 	var/description
-	var/datum/objective/assassinate/hunter/obj
+	var/datum/objective/hunter/obj
 	var/list/unchecked_objectives
-	for(var/datum/objective/assassinate/hunter/goal in objectives)
+	for(var/datum/objective/hunter/goal in objectives)
 		if(!goal.discovered)
 			LAZYADD(unchecked_objectives, goal)
 	if(unchecked_objectives)
 		obj = pick(unchecked_objectives)
 	if(obj)
 		obj.uncover_target()
+		to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
+		update_static_data_for_all_viewers()
 		var/datum/antagonist/heretic/heretic_target = IS_HERETIC(obj.target.current)
 		if(heretic_target)
 			description = "Your target, [heretic_target.owner.current.real_name], follows the [heretic_target.heretic_path], dear hunter."
@@ -233,43 +291,55 @@
 	rabbits_spotted++
 	to_chat(owner.current, span_boldnotice("[description]"))
 
-/datum/objective/assassinate/hunter
-	///has our target been discovered?
+/datum/objective/hunter
+	name = "hunt monster"
+	explanation_text = "A monster target is aboard the station, identify and eliminate this threat."
+	admin_grantable = FALSE
+	/// Has our target been discovered?
 	var/discovered = FALSE
 
-/datum/objective/assassinate/hunter/proc/uncover_target()
+/datum/objective/hunter/proc/uncover_target()
 	if(discovered)
 		return
-	discovered = !discovered
-	src.update_explanation_text()
+	discovered = TRUE
+	update_explanation_text()
 	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
-	update_static_data_for_all_viewers()
+	owner.current?.log_message("identified one of their targets, [key_name(target.current)].", LOG_GAME)
+	target.current?.log_message("was identified by [key_name(owner.current)], a Monster Hunter.", LOG_GAME, log_globally = FALSE)
+	var/datum/antagonist/monsterhunter/hunter_datum = owner.has_antag_datum(/datum/antagonist/monsterhunter)
+	hunter_datum?.update_static_data_for_all_viewers()
+
+/datum/objective/hunter/check_completion()
+	return completed || !considered_alive(target)
+
+/datum/objective/hunter/update_explanation_text()
+	if(!discovered)
+		explanation_text = initial(explanation_text)
+		return
+	var/target_name = target.name || target.current?.real_name || target.current?.real_name
+	var/datum/antagonist/bloodsucker/bloodsucker = target.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/heretic/heretic = target.has_antag_datum(/datum/antagonist/heretic)
+	if(bloodsucker)
+		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
+	else if(heretic)
+		explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path]."
+	else if(target.has_antag_datum(/datum/antagonist/changeling))
+		explanation_text = "Slay the monster known as [target_name], a changeling."
+	else
+		explanation_text = "Slay the monster known as [target_name]."
 
 /datum/antagonist/monsterhunter/proc/find_monster_targets()
-	var/list/possible_targets = list()
-	for(var/datum/antagonist/victim as anything in GLOB.antagonists)
-		if(QDELETED(victim?.owner?.current) || victim.owner.current.stat == DEAD || victim.owner == owner)
-			continue
-		if(is_type_in_typecache(victim, GLOB.monster_hunter_prey_antags))
-			possible_targets += victim.owner
+	var/list/possible_targets = get_all_monster_hunter_prey(include_dead = FALSE)
 
 	for(var/i in 1 to 3) //we get 3 targets
 		if(!length(possible_targets))
 			break
-		var/datum/objective/assassinate/hunter/kill_monster = new
+		var/datum/objective/hunter/kill_monster = new
 		kill_monster.owner = owner
 		var/datum/mind/target = pick_n_take(possible_targets)
 		kill_monster.target = target
 		prey += target
-		kill_monster.explanation_text = "A monster target is aboard the station, identify and eliminate this threat."
-		objectives += kill_monster
-
-
-/datum/antagonist/monsterhunter/proc/turn_beast()
-	SIGNAL_HANDLER
-
-	apocalypse = TRUE
-	force_event(/datum/round_event_control/wonderlandapocalypse, "a monster hunter turning into a beast")
+		add_objective(kill_monster)
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"
@@ -304,6 +374,9 @@
 
 	return parts.Join("<br>")
 
+/datum/antagonist/monsterhunter/proc/grant_drop_ability(obj/item/tool)
+	var/datum/action/droppod_item/summon_tool = new(tool)
+	summon_tool.Grant(owner.current)
 
 /datum/action/droppod_item
 	name = "Summon Monster Hunter Tools"
@@ -329,75 +402,3 @@
 	qdel(src)
 	return TRUE
 
-/datum/action/cooldown/spell/track_monster
-	name = "Hunter Vision"
-	desc = "Detect monsters within vicinity"
-	button_icon_state = "blind"
-	cooldown_time = 5 SECONDS
-	spell_requirements = NONE
-
-/datum/action/cooldown/spell/track_monster/cast(mob/living/carbon/cast_on)
-	. = ..()
-	cast_on.AddComponent(/datum/component/echolocation/monsterhunter, echo_group = "hunter")
-	addtimer(CALLBACK(src, PROC_REF(remove_vision), cast_on), 3 SECONDS)
-
-/datum/action/cooldown/spell/track_monster/proc/remove_vision(mob/living/carbon/cast_on)
-	qdel(cast_on.GetComponent(/datum/component/echolocation))
-
-/datum/component/echolocation/monsterhunter
-
-/datum/component/echolocation/monsterhunter/echolocate() //code stolen from echolocation to make it ignore non-monster mobs
-	if(!COOLDOWN_FINISHED(src, cooldown_last))
-		return
-	COOLDOWN_START(src, cooldown_last, cooldown_time)
-	var/mob/living/echolocator = parent
-	var/datum/antagonist/monsterhunter/hunter = echolocator.mind.has_antag_datum(/datum/antagonist/monsterhunter)
-	var/real_echo_range = echo_range
-	if(HAS_TRAIT(echolocator, TRAIT_ECHOLOCATION_EXTRA_RANGE))
-		real_echo_range += 2
-	var/list/filtered = list()
-	var/list/seen = dview(real_echo_range, get_turf(echolocator.client?.eye || echolocator), invis_flags = echolocator.see_invisible)
-	for(var/atom/seen_atom as anything in seen)
-		if(!seen_atom.alpha)
-			continue
-		if(allowed_paths[seen_atom.type])
-			filtered += seen_atom
-	if(!length(filtered))
-		return
-	var/current_time = "[world.time]"
-	images[current_time] = list()
-	receivers[current_time] = list()
-	var/list/objectives_list = hunter.objectives
-	for(var/mob/living/viewer in filtered)
-		if(blocking_trait && HAS_TRAIT(viewer, blocking_trait))
-			continue
-		if(HAS_TRAIT_FROM(viewer, TRAIT_ECHOLOCATION_RECEIVER, echo_group))
-			receivers[current_time] += viewer
-		var/remove_from_vision = TRUE
-		for(var/datum/objective/assassinate/hunter/goal in objectives_list) //take them out if they are not our prey
-			if(goal.target == viewer.mind)
-				goal.uncover_target()
-				remove_from_vision = FALSE
-				break
-		if(remove_from_vision)
-			filtered -= viewer
-	for(var/atom/filtered_atom as anything in filtered)
-		show_image(saved_appearances["[filtered_atom.icon]-[filtered_atom.icon_state]"] || generate_appearance(filtered_atom), filtered_atom, current_time)
-	addtimer(CALLBACK(src, PROC_REF(fade_images), current_time), image_expiry_time)
-
-/datum/component/echolocation/monsterhunter/generate_appearance(atom/input)
-	var/mutable_appearance/copied_appearance = new /mutable_appearance()
-	copied_appearance.appearance = input
-	if(istype(input, /mob/living))
-		copied_appearance.cut_overlays()
-		copied_appearance.icon = 'monkestation/icons/mob/rabbit.dmi'
-		copied_appearance.icon_state = "white_rabbit"
-	copied_appearance.color = black_white_matrix
-	copied_appearance.filters += outline_filter(size = 1, color = COLOR_WHITE)
-	if(!images_are_static)
-		copied_appearance.pixel_x = 0
-		copied_appearance.pixel_y = 0
-		copied_appearance.transform = matrix()
-	if(!iscarbon(input))
-		saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
-	return copied_appearance
