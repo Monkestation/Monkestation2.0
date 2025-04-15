@@ -14,7 +14,7 @@
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 30 //Its old but no electronics
 	wreckage = null
-	mech_type = EXOSUIT_MODULE_TRASHTANK
+	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,

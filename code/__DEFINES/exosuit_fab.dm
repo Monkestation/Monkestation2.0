@@ -39,7 +39,7 @@
 // Module is compatbile with makeshift tank "mechs"
 #define EXOSUIT_MODULE_TRASHTANK (1<<13)
 // Module is compatbile with tank "mechs"
-#define EXOSUIT_MODULE_DEVITT (1<<14)
+#define EXOSUIT_MODULE_TANK (1<<14)
 //monkestation edit end
 
 

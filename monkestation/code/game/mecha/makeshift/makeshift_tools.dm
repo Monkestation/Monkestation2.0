@@ -136,4 +136,4 @@
 	projectiles_cache = 10
 	projectiles_cache_max = 35
 	ammo_type = MECHA_AMMO_LIGHTTANK
-	mech_flags = EXOSUIT_MODULE_DEVITT
+	mech_flags = EXOSUIT_MODULE_TANK
