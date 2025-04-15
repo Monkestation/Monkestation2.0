@@ -1915,7 +1915,7 @@ var $90a88a05e26750bd$export$b791fe48eec8032a;
 })();
 /*!
  *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
- *
+ *  
  *  howler.js v2.2.4
  *  howlerjs.com
  *
@@ -2466,33 +2466,55 @@ var $90a88a05e26750bd$export$b791fe48eec8032a;
 })();
 
 
-window.audio = null;
-window.play = (url, volume)=>{
+function $8b18deaf9ace6657$var$send_clear() {
+    if (cleared) return;
+    (0, $1d62c132ef7d1e19$export$b957c2b0fcc9ce3c)("clear");
+    cleared = true;
+}
+function $8b18deaf9ace6657$var$send_playing(url) {
+    cleared = false;
+    (0, $1d62c132ef7d1e19$export$b957c2b0fcc9ce3c)("playing", {
+        url: url
+    });
+}
+window.play = (url, volume, format, x = 0, y = 0, z = 0)=>{
     stop();
     const options = {
         src: [
             url
         ],
-        volume: volume / 100,
+        volume: volume,
         html5: true,
-        preload: "metadata"
+        preload: "metadata",
+        format: format,
+        onload: ()=>{
+            if (!audio) return;
+            audio.pos(x, y, z);
+            audio.play();
+        },
+        onplay: ()=>$8b18deaf9ace6657$var$send_playing(url),
+        onend: $8b18deaf9ace6657$var$send_clear,
+        onstop: $8b18deaf9ace6657$var$send_clear,
+        onloaderror: $8b18deaf9ace6657$var$send_clear,
+        onplayerror: $8b18deaf9ace6657$var$send_clear
     };
     try {
         const audio1 = window.audio = new (0, $90a88a05e26750bd$export$b791fe48eec8032a)(options);
-        console.log(audio1._sounds);
-        // biome-ignore lint/complexity/useOptionalChain: array
-        if (audio1._sounds && audio1._sounds[0]._node) {
-            const audioNode = audio1._sounds[0]._node;
-            audioNode.crossOrigin = "anonymous";
+        //console.log((audio as any)._sounds);
+        const sounds = audio1._sounds;
+        if (sounds) for (const sound of sounds){
+            const node = sound._node;
+            if (node) node.crossOrigin = "anonymous";
         }
         audio1.load();
-        audio1.play();
     } catch (error) {
+        $8b18deaf9ace6657$var$send_clear();
         stop();
         console.error("Failed to play audio", error);
     }
 };
 window.stop = ()=>{
+    $8b18deaf9ace6657$var$send_clear();
     if (!audio) return;
     try {
         audio.unload();
