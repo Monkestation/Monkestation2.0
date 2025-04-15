@@ -123,6 +123,7 @@ SUBSYSTEM_DEF(plexora)
 
 /datum/controller/subsystem/plexora/fire()
 	if(!is_plexora_alive()) return
+	send_mc_panic_alert_if_needed()
 	// Send current status to Plexora
 	var/datum/world_topic/status/status_handler = new()
 	var/list/status = status_handler.Run()

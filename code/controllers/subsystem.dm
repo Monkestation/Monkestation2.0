@@ -207,7 +207,7 @@
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
-			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations (src = [src], node = [queue_node], next = [queue_node.queue_next || "(none)"])"
+			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations"
 			SSplexora.mc_alert(msg)
 			message_admins(msg)
 			stack_trace(msg)
@@ -221,7 +221,7 @@
 		queue_node_flags = queue_node.flags
 
 		if (queue_node.queue_next == queue_node || queue_node.queue_prev == queue_node)
-			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now (src = [src], node = [queue_node], next = [queue_node.queue_next || "(none)"])"
+			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now"
 			SSplexora.mc_alert(msg)
 			message_admins(msg)
 			stack_trace(msg)

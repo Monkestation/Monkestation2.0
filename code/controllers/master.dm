@@ -136,6 +136,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 // -1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
+	GLOB.dying_mc_tick_usage = TICK_USAGE
 	if (world.time < Master.restart_timeout)
 		return 0
 	if (world.time < Master.restart_clear)
@@ -830,3 +831,14 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
 		SS.OnConfigLoad()
+
+/// This is set to TICK_USAGE during Recreate_MC, used so that the current tick usage can be logged when the MC explodes.
+GLOBAL_VAR(dying_mc_tick_usage)
+
+/proc/send_mc_panic_alert_if_needed()
+	if(isnull(GLOB.dying_mc_tick_usage))
+		return
+	var/dying_mc_tick_usage = GLOB.dying_mc_tick_usage
+	GLOB.dying_mc_tick_usage = null
+	SSplexora?.mc_alert("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")
+	message_admins(span_adminnotice("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting."))
