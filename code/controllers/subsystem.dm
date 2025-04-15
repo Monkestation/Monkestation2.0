@@ -213,12 +213,12 @@
 			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
 			enqueue_log.Cut()
 #endif
-			SSplexora.mc_alert(msg)
+			//SSplexora.mc_alert(msg)
 			CRASH(msg)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
 			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations"
-			SSplexora.mc_alert(msg)
+			//SSplexora.mc_alert(msg)
 			message_admins(msg)
 			stack_trace(msg)
 #ifdef ENABLE_ENQUEUE_LOGGING
@@ -232,7 +232,7 @@
 
 		if (queue_node.queue_next == queue_node || queue_node.queue_prev == queue_node)
 			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now"
-			SSplexora.mc_alert(msg)
+			//SSplexora.mc_alert(msg)
 			message_admins(msg)
 			stack_trace(msg)
 #ifdef ENABLE_ENQUEUE_LOGGING

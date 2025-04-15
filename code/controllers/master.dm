@@ -602,7 +602,7 @@ GLOBAL_VAR(force_mc_soft_reset)
 			. = FALSE
 			GLOB.force_mc_soft_reset = null
 			var/msg = "MC soft reset forced while [thing] was enqueued (tick_usage = [TICK_USAGE])"
-			SSplexora.mc_alert(msg)
+			//SSplexora.mc_alert(msg)
 			CRASH(msg)
 		if (!thing)
 			subsystemstocheck -= thing
@@ -846,6 +846,6 @@ GLOBAL_VAR(dying_mc_tick_usage)
 		return
 	var/dying_mc_tick_usage = GLOB.dying_mc_tick_usage
 	GLOB.dying_mc_tick_usage = null
-	SSplexora?.mc_alert("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")
+	//SSplexora?.mc_alert("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")
 	message_admins(span_adminnotice("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting."))
 	log_runtime("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")
