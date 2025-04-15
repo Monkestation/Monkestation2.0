@@ -6322,18 +6322,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
-"aqT" = (
-/obj/effect/turf_decal/tile/hot_pink/full,
-/obj/machinery/light/neon_lining{
-	icon_state = "base1";
-	light_color = "#e6a7b9";
-	nightshift_light_color = "#e6a7b9";
-	lining_color = "#e6a7b9";
-	color = "#e6a7b9"
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/centcom/central_command_areas/kitchen)
 "aqU" = (
 /obj/structure/fence,
 /turf/open/misc/asteroid/snow/airless,
@@ -24457,6 +24445,7 @@
 /area/centcom/central_command_areas/evacuation)
 "kmg" = (
 /obj/structure/bookcase/random/adult,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "kmv" = (
@@ -71836,7 +71825,7 @@ sMi
 aZj
 sig
 acE
-aqT
+jcU
 aYC
 vee
 aLT
