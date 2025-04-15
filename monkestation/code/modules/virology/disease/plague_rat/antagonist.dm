@@ -13,6 +13,9 @@
 	var/datum/disease/acute/bacteria/plague
 	var/turf/invasion
 
+/datum/antagonist/plague_rat/get_preview_icon()
+	return finish_preview_icon(icon('monkestation/code/modules/virology/icons/animal.dmi', "mouse_plague"))
+
 /datum/antagonist/plague_rat/on_gain()
 	if(!rats_rats_we_are_the_rats)
 		rats_rats_we_are_the_rats = new

@@ -57,7 +57,7 @@
 	)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		friend.key = C.key
+		friend.PossessByPlayer(C.key)
 		friend_initialized = TRUE
 	else
 		qdel(src)

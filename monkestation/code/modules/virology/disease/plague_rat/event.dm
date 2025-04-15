@@ -26,7 +26,7 @@
 	for(var/mob/dead/selected in candidates)
 		var/key = selected.key
 		var/mob/living/basic/mouse/plague/dragon = new
-		dragon.key = key
+		dragon.PossessByPlayer(key)
 		dragon.mind.special_role = ROLE_PLAGUERAT
 		dragon.mind.add_antag_datum(/datum/antagonist/plague_rat)
 		playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
