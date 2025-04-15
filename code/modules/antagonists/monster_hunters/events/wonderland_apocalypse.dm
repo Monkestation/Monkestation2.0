@@ -1,3 +1,5 @@
+GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
+
 /datum/dimension_theme/wonderland
 	icon = 'icons/mob/simple/rabbit.dmi'
 	icon_state = "rabbit_white"
@@ -35,6 +37,7 @@
 	)
 
 /datum/round_event/wonderlandapocalypse/start()
+	GLOB.wonderland_apocalypse = TRUE
 	SSshuttle.emergency_no_recall = TRUE
 	for(var/i = 1 to 16)
 		new /obj/effect/anomaly/dimensional/wonderland(get_safe_random_station_turf_equal_weight(), null, FALSE)
@@ -55,6 +58,7 @@
 			continue
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, apply_status_effect), /datum/status_effect/wonderland_district), rand(5 SECONDS, 10 SECONDS))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_CREATED, PROC_REF(apply_pressure_to_new_mob))
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WONDERLAND_APOCALYPSE)
 
 /datum/round_event/wonderlandapocalypse/proc/apply_pressure_to_new_mob(datum/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -127,6 +131,17 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 	/// List of /datum/action instance that we've registered `COMSIG_ACTION_TRIGGER` on.
 	var/list/datum/action/registered_actions
+/* leaving this here for later planned changes ~Lucy
+	/// List of traits that will always be removed from affected monsters.
+	var/static/list/banned_traits = list(
+		TRAIT_ABATES_SHOCK,
+		TRAIT_ANALGESIA,
+		TRAIT_HARDLY_WOUNDED,
+		TRAIT_NEVER_WOUNDED,
+		TRAIT_NO_PAIN_EFFECTS,
+		TRAIT_NO_SHOCK_BUILDUP,
+	)
+*/
 	/// Typecache of spells to NOT trigger the effect on.
 	var/static/list/spell_whitelist_typecache
 	/// Typecache of non-spell actions to trigger the effect on.
@@ -151,6 +166,13 @@
 	. = ..()
 	if(FACTION_RABBITS in owner?.faction)
 		return FALSE
+/* leaving this here for later planned changes ~Lucy
+	if(is_monster_hunter_prey(owner))
+		ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
+		for(var/trait in banned_traits)
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(trait), PROC_REF(remove_banned_traits))
+		remove_banned_traits()
+*/
 	to_chat(owner, span_warning("You feel an ominous pressure fill the air around you..."))
 	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
 	RegisterSignal(owner, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(after_spell_cast))
@@ -162,9 +184,19 @@
 /datum/status_effect/wonderland_district/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_ENTER_AREA, COMSIG_MOB_AFTER_SPELL_CAST, COMSIG_MOB_GRANTED_ACTION, COMSIG_MOB_REMOVED_ACTION))
+	/* for(var/trait in banned_traits)
+		UnregisterSignal(owner, SIGNAL_ADDTRAIT(trait)) */
 	for(var/datum/action/action as anything in registered_actions)
 		UnregisterSignal(action, COMSIG_ACTION_TRIGGER)
 	LAZYNULL(registered_actions)
+	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
+
+/* leaving this here for later planned changes ~Lucy
+/// Removes all banned traits from the victim.
+/datum/status_effect/wonderland_district/proc/remove_banned_traits()
+	SIGNAL_HANDLER
+	owner.remove_traits(banned_traits) // not passing a source removes them from ALL sources
+*/
 
 /datum/status_effect/wonderland_district/proc/on_enter_area(datum/source, area/centcom/new_area)
 	SIGNAL_HANDLER
@@ -188,17 +220,19 @@
 		return
 	recoil(
 		span_warning("[owner] doubles over in pain, violently coughing up blood!"),
-		span_userdanger("An overwhelming pressure fills your body as you cast [spell.name || "magic"], filling you with excruciating pain down to the very core of your being!")
+		span_userdanger("An overwhelming pressure fills your body as you cast [spell.name || "magic"], filling you with excruciating pain down to the very core of your being!"),
+		spell.name || spell.type
 	)
 
 /datum/status_effect/wonderland_district/proc/on_action_triggered(datum/source, datum/action/action)
 	SIGNAL_HANDLER
 	recoil(
 		span_warning("[owner] doubles over in pain, violently coughing up blood!"),
-		span_userdanger("An overwhelming pressure fills your body as you use [action.name || "your ability"], filling you with excruciating pain down to the very core of your being!")
+		span_userdanger("An overwhelming pressure fills your body as you use [action.name || "your ability"], filling you with excruciating pain down to the very core of your being!"),
+		action.name || action.type
 	)
 
-/datum/status_effect/wonderland_district/proc/recoil(vis_msg, self_msg)
+/datum/status_effect/wonderland_district/proc/recoil(vis_msg, self_msg, logged_cause)
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living, emote), "scream")
 	if(vis_msg)
 		owner.visible_message(vis_msg, self_msg)
@@ -207,6 +241,7 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)
+	owner.log_message("suffered recoil from using [logged_cause] due to the effects of Wonderland.", LOG_VICTIM)
 
 /atom/movable/screen/alert/status_effect/wonderland_district
 	name = "Wonderland Manifestation"
