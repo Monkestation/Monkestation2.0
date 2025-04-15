@@ -205,6 +205,16 @@
 	enqueue_log.Cut()
 #endif
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
+		if (!isnull(GLOB.force_mc_soft_reset))
+			. = FALSE
+			GLOB.force_mc_soft_reset = null
+			var/msg = "MC soft reset forced while [queue_node] was enqueued (tick_usage = [TICK_USAGE])"
+#ifdef ENABLE_ENQUEUE_LOGGING
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+			enqueue_log.Cut()
+#endif
+			SSplexora.mc_alert(msg)
+			CRASH(msg)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
 			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations"

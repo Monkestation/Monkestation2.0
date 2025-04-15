@@ -587,7 +587,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		sleep(world.tick_lag * (processing * sleep_delta))
 
 
-
+GLOBAL_VAR(force_mc_soft_reset)
 
 // This is what decides if something should run.
 /datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
@@ -598,6 +598,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/SS_flags
 
 	for (var/thing in subsystemstocheck)
+		if (!isnull(GLOB.force_mc_soft_reset))
+			. = FALSE
+			GLOB.force_mc_soft_reset = null
+			var/msg = "MC soft reset forced while [thing] was enqueued (tick_usage = [TICK_USAGE])"
+			SSplexora.mc_alert(msg)
+			CRASH(msg)
 		if (!thing)
 			subsystemstocheck -= thing
 		SS = thing
