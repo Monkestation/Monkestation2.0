@@ -116,7 +116,7 @@
 	ammo_type = MECHA_AMMO_MISSILE_40MM
 	mech_flags = EXOSUIT_MODULE_DEVITT
 	equip_cooldown = 60
-	projectile = /obj/projectile/bullet/rocket/40mm-shell
+	projectile = /obj/projectile/bullet/rocket/lighttankshell
 	equip_cooldown = 8 SECONDS
 	projectiles = 1
 	projectiles_cache = 5
