@@ -842,3 +842,4 @@ GLOBAL_VAR(dying_mc_tick_usage)
 	GLOB.dying_mc_tick_usage = null
 	SSplexora?.mc_alert("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")
 	message_admins(span_adminnotice("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting."))
+	log_runtime("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")
