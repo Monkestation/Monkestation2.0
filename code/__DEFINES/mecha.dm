@@ -58,5 +58,5 @@
 #define MECHA_AMMO_PIPEGUN "Improvised shell"
 #define MECHA_AMMO_PEASHOOTER "Peashooter bullet"
 #define MECHA_AMMO_ISG "IED grenades"
-#define MECHA_AMMO_40MM "40mm shell"
+#define MECHA_AMMO_MISSILE_LIGHTTANKSHELL "40mm shell"
 //monke edit end

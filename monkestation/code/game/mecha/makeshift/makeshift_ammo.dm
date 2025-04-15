@@ -21,9 +21,9 @@
 	rounds = 3
 	ammo_type = MECHA_AMMO_ISG
 
-/obj/item/mecha_ammo/makeshift/40mm
+/obj/item/mecha_ammo/makeshift/lighttankshell
 	name = "40mm tankshells"
 	desc = "An ancient box of 1.6in tank shells, for use with a small tank cannon."
 	icon_state = "40mm_ammo"
 	rounds = 5
-	ammo_type = MECHA_AMMO_MISSILE_40MM
+	ammo_type = MECHA_AMMO_MISSILE_LIGHTTANKSHELL
