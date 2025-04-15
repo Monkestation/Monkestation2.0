@@ -106,3 +106,18 @@
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_GAME)
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/iedcasing/spawned, detonate)), det_time)
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/40mm_cannon
+	name = "40mm tank cannon"
+	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling."
+	icon_state = "mecha_40mm_cannon"
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_MISSILE_40MM
+	mech_flags = EXOSUIT_MODULE_DEVITT
+	equip_cooldown = 60
+	projectile = /obj/projectile/bullet/rocket/40mm-shell
+	equip_cooldown = 8 SECONDS
+	projectiles = 1
+	projectiles_cache = 5
+	projectiles_cache_max = 35

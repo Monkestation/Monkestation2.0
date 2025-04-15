@@ -176,3 +176,14 @@
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_WIRECUTTER)
 	time = 0.5 SECONDS
+
+/datum/crafting_recipe/40mm_tank_ammo
+	name = "40mm Tank Shells"
+	result = /obj/item/mecha_ammo/makeshift/40mm
+	reqs = list(/datum/reagent/rdx = 50,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/assembly/igniter = 5
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WIRECUTTER)
+	time = 0.5 SECONDS

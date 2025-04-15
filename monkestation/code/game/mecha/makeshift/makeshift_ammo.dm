@@ -20,3 +20,10 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2,/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 	rounds = 3
 	ammo_type = MECHA_AMMO_ISG
+
+/obj/item/mecha_ammo/makeshift/40mm
+	name = "40mm tankshells"
+	desc = "An ancient box of 1.6in tank shells, for use with a small tank cannon."
+	icon_state = "40mm_ammo"
+	rounds = 5
+	ammo_type = MECHA_AMMO_MISSILE_40MM
