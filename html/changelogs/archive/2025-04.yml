@@ -258,6 +258,27 @@
   flleeppyy:
   - admin: You can now restart the MC/Failsafe from the discord with /restartcontroller
 2025-04-13:
+  Absolucy:
+  - bugfix: Fixed some assorted minor bugs.
+  - bugfix: Fixed R&D metaphorically exploding when the Cybernetic Revolution station
+      trait rolled.
+  - rscadd: (MTO, Lilah Novi) Say commands typed in the command bar now trigger typing
+      indicators.
+  - qol: (hry-gh) Under the chat settings, you can now press "Adjust UI Sizes" to
+      drag around some of the panel sizes.
+  - bugfix: (hry-gh) The input at the bottom right is no longer so teeny tiny on 516
+      if you use a window scaling that is greater than 100%
+  - qol: (hry-gh) There's a new UI preference called UI scale which allows people
+      that use windows scaling to have their UIs original size with the contents zoomed
+      out, instead of the default, which is the UIs being larger with the contents
+      "normal" size.
+  - bugfix: (hry-gh) Various UIs did not respect windows scaling, they now do.
+  - bugfix: Fixed the white border around the tgui-say input on 516 when it was focused.
+  - bugfix: Fixed a hard delete with the Prosthetic Limb quirk.
+  - bugfix: Fixed some antags still rolling after the emergency shuttle is past the
+      point of no return.
+  BingusSS13:
+  - admin: Using "Make Human" in the player panel will now apply quirks and loadout.
   DexeeXI:
   - rscdel: Removal of unused assets
   - rscdel: Cleanup of items on Centcom
@@ -276,3 +297,58 @@
   - bugfix: Deltratstation PTL now has a connected distro
   - bugfix: Theseus AI sat now functional
   - bugfix: Tramstation arrivals is now connected to distro
+  - bugfix: Assault operatives and Plague rats now have proper preference icons in
+      the player panel
+  - bugfix: Psyker Zombie no longer has round removing chasms.
+  - bugfix: Psyker shuffle has more appriopate totally real crates and preopened ones.
+  Ziiro:
+  - bugfix: IPCs now die without a brain
+  - bugfix: IPCs are no longer sent to null space in some revival circumstances
+  - bugfix: IPC death/revival screen manipulation now checks if they have a screen
+      first.
+  flleeppyy:
+  - bugfix: change discord verification code format
+2025-04-14:
+  Absolucy:
+  - bugfix: Bloodsuckers will no longer suffer a masquerade infraction when their
+      own holoparasite is watching them.
+  Addust:
+  - bugfix: the engineering outpost ruin no longer needs all its atmos room windows
+      dismantled in order to keep a PERPETUAL FIRE ALARM from occuring
+  Gboster-0:
+  - rscadd: Added many chromosome effects to a lot of mutations
+  - rscadd: Added A lotta lot of mutations from TG/Bee/Yog/Goon/Paradise, whole rainbow.
+      Gotta research em all! (note, some are only findable on certain species or need
+      to be combined)
+  - balance: You can only now get 3 chromosomes from a person using injectors and
+      2 chromosomes from using the DNA infuser
+  Gw0sty:
+  - spellcheck: Fixed Interrogator gramma, thanks to TerryTehCoder
+  Killermankey:
+  - map: Lead Poisoning Station.
+  Snack-Max:
+  - rscadd: Added Fez
+  The-Hotline-System:
+  - bugfix: Logs now properly display ckeys in regards to fireman carries and piggyback
+      rides.
+  - admin: Bombers List now logs reagent explosions, explosive ammunition, etc.
+  destrucktoid:
+  - rscadd: Added new healing systems for bloodsuckers. They can now exceed their
+      blood capacity with their feed ability, doing so gives them minor instant healing
+      and a medium boost to their passive healing over time, their blood drain is
+      dramatically increased until they are back under capacity though.
+  flleeppyy:
+  - bugfix: Monkestation is killing modularization. Future PRs should not follow modularization
+      guidelines.
+2025-04-15:
+  Absolucy:
+  - balance: Monster Hunters no longer have a hunting contract, it is instead integrated
+      into their antagonist UI.
+  - refactor: Cleaned up monster hunter code a lot.
+  - qol: Improved the Monster Hunter UI a bit.
+  - qol: You can no longer activate Jack in the Bombs in Wonderland.
+  - qol: Reworded Monster Hunter objectives a bit to be more thematic.
+  - bugfix: Hopefully fixed orbiting ghosts sometimes being lost by a Monster Hunter
+      using Paradox Shift.
+  - bugfix: Fixed an exploit related to Monster Hunters.
+  - admin: Added logging to various Monster Hunter actions.

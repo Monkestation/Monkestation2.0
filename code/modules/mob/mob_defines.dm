@@ -28,6 +28,8 @@
 	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
+	/// It's like a client, but persists! Persistent clients will stick to a mob until the client in question is logged into a different mob.
+	var/datum/persistent_client/persistent_client
 
 	/// Percentage of how much rgb to max the lighting plane at
 	/// This lets us brighten it without washing out color
@@ -211,5 +213,3 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
-	/// User is thinking in character. Used to revert to thinking state after stop_typing
-	var/thinking_IC = FALSE

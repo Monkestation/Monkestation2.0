@@ -2,6 +2,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_TARGETED, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/anomaly
 	track = EVENT_TRACK_MODERATE
@@ -12,6 +13,7 @@
 	track = EVENT_TRACK_ROLESET
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/aurora_caelus
 	track = EVENT_TRACK_MUNDANE
@@ -21,6 +23,7 @@
 	track = EVENT_TRACK_ROLESET
 	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/brain_trauma
 	track = EVENT_TRACK_MUNDANE
@@ -50,6 +53,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/communications_blackout
 	max_occurrences = 2
@@ -81,6 +85,7 @@
 /datum/round_event_control/fugitives
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/gravity_generator_blackout
 	track = EVENT_TRACK_MODERATE
@@ -129,11 +134,13 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/nightmare
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/obsessed
 	weight = 0 // use storyteller variants instead
@@ -165,6 +172,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_DESTRUCTIVE, TAG_SPOOKY, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/sandstorm
 	track = EVENT_TRACK_MODERATE
@@ -188,11 +196,13 @@
 /datum/round_event_control/sentience
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_COMMUNAL, TAG_SPOOKY, TAG_MAGICAL)
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/sentient_disease
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/shuttle_catastrophe
 	track = EVENT_TRACK_MODERATE
@@ -206,6 +216,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/space_dust
 	track = EVENT_TRACK_MUNDANE
@@ -215,11 +226,13 @@
 	track = EVENT_TRACK_ROLESET
 	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/space_ninja
 	track = EVENT_TRACK_ROLESET
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/spacevine
 	track = EVENT_TRACK_MAJOR
@@ -231,6 +244,7 @@
 	track = EVENT_TRACK_ROLESET
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/stray_cargo
 	track = EVENT_TRACK_MUNDANE

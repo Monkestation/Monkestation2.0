@@ -183,7 +183,7 @@
 	M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects
-	M.key = ckey
+	M.PossessByPlayer(ckey)
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()

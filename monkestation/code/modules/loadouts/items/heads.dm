@@ -302,6 +302,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Rainbow Propeller Hat"
 	item_path = /obj/item/clothing/head/soft/propeller_hat
 
+/datum/loadout_item/head/fez
+	name = "Fez"
+	item_path = /obj/item/clothing/head/hats/fez
+
+
+
 /*
 *	JOB-LOCKED
 */

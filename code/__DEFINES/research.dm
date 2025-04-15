@@ -10,14 +10,6 @@
 
 #define TECHWEB_POINT_TYPE_NANITES "Nanite Research"
 
-#define TECHWEB_POINT_TYPE_DEFAULT TECHWEB_POINT_TYPE_GENERIC
-
-//! Associative names for techweb point values, see: [all_nodes][code/modules/research/techweb/all_nodes.dm]
-#define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
-	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
-	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
-	)
-
 //!  Amount of points required to unlock nodes of corresponding tiers
 #define TECHWEB_TIER_1_POINTS 40
 #define TECHWEB_TIER_2_POINTS 80

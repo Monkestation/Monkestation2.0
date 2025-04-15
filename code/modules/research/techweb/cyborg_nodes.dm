@@ -130,7 +130,7 @@
 /datum/techweb_node/combat_cyber_implants/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_DISCOUNT_MINOR * 2.5)
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/adv_cyber_implants
 	id = "adv_cyber_implants"

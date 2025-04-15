@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(tails_list_avian)
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	mutantliver = /obj/item/organ/internal/liver/ornithid
 
-	inert_mutation = /datum/mutation/human/dwarfism
+	inert_mutation = /datum/mutation/human/wings
 	species_language_holder = /datum/language_holder/yangyu // doing this because yangyu is really just, mostly unused otherwise.
 	color_palette = /datum/color_palette/ornithids
 

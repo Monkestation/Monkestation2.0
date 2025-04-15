@@ -1409,6 +1409,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin_hangout)
+"adE" = (
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/food/cake/trumpet,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/kitchen)
 "adF" = (
 /obj/structure/table/reinforced,
 /obj/item/syndicatedetonator{
@@ -4046,6 +4053,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood/fancy/purple,
+/obj/item/clothing/head/peaceflower,
 /turf/open/floor/iron/white/small,
 /area/centcom/central_command_areas/kitchen)
 "akX" = (
@@ -4477,6 +4485,16 @@
 	dir = 9
 	},
 /obj/structure/table/reinforced/plasmarglass,
+/obj/item/food/piedough,
+/obj/item/food/piedough,
+/obj/item/food/piedough,
+/obj/item/food/piedough,
+/obj/item/food/piedough,
+/obj/item/food/piedough,
+/obj/item/food/cakebatter,
+/obj/item/food/cakebatter,
+/obj/item/food/cakebatter,
+/obj/item/food/cakebatter,
 /turf/open/floor/iron/white/herringbone,
 /area/centcom/central_command_areas/kitchen)
 "amd" = (
@@ -7298,6 +7316,13 @@
 /obj/structure/flora/biolumi/flower,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/retirement_yard)
+"atK" = (
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/food/cake/lemon,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/kitchen)
 "atL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -11445,6 +11470,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood/fancy/purple,
+/obj/item/clothing/head/peaceflower,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "aER" = (
@@ -12892,6 +12918,7 @@
 "aIR" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood/fancy/purple,
+/obj/item/clothing/head/peaceflower,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
 "aIS" = (
@@ -12969,6 +12996,7 @@
 "aJg" = (
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
+/obj/item/food/pie/asdfpie,
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
 "aJh" = (
@@ -19893,6 +19921,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
+"cdU" = (
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/food/cake/birthday/energy,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/kitchen)
 "ceI" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8;
@@ -21277,6 +21312,13 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"fae" = (
+/obj/effect/turf_decal/tile/hot_pink/full,
+/obj/structure/signboard/holosign{
+	sign_text = "Piecake's Piecakery"
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/kitchen)
 "fan" = (
 /obj/structure/sign{
 	name = "wall";
@@ -21737,6 +21779,10 @@
 "gcx" = (
 /obj/structure/table,
 /obj/item/toy/plush/admin/brad,
+/obj/item/toy/plush/admin/jace{
+	pixel_y = 12;
+	pixel_x = -10
+	},
 /obj/item/toy/plush/admin/tendsthefire{
 	pixel_x = 7;
 	pixel_y = 20
@@ -25338,6 +25384,13 @@
 /obj/effect/turf_decal/siding/dark,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/central_command_areas/adminroom)
+"mZX" = (
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/effect/turf_decal/tile/hot_pink/fourcorners,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/toy/plush/admin/jace,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/kitchen)
 "nai" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/food/pie/berrytart,
@@ -29175,6 +29228,7 @@
 /obj/effect/turf_decal/tile/hot_pink/fourcorners,
 /obj/effect/turf_decal/tile/hot_pink/fourcorners,
 /obj/structure/table/reinforced/plasmarglass,
+/obj/item/food/cake/birthday,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/kitchen)
 "vvk" = (
@@ -70883,7 +70937,7 @@ aIV
 aER
 aIV
 cuK
-vuG
+atK
 agr
 aAm
 aNt
@@ -71140,7 +71194,7 @@ aIV
 aJg
 aIV
 cuK
-vuG
+adE
 agr
 axT
 aNg
@@ -71397,7 +71451,7 @@ aIV
 aFv
 aIV
 aGX
-vuG
+mZX
 agr
 aZj
 aao
@@ -71407,7 +71461,7 @@ aAn
 avt
 aLT
 avt
-aAn
+fae
 aqT
 aBE
 ank
@@ -71911,7 +71965,7 @@ aIV
 atI
 aIV
 cuK
-vuG
+cdU
 agr
 aAm
 aNt
