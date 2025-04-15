@@ -27,6 +27,7 @@
 		TRAIT_ANTENNAE,
 		TRAIT_HAS_MARKINGS,
 	)
+	inert_mutation = /datum/mutation/human/wings
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	inherent_factions = list(FACTION_HIVE)
 

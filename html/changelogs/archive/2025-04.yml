@@ -309,6 +309,19 @@
   flleeppyy:
   - bugfix: change discord verification code format
 2025-04-14:
+  Absolucy:
+  - bugfix: Bloodsuckers will no longer suffer a masquerade infraction when their
+      own holoparasite is watching them.
+  Addust:
+  - bugfix: the engineering outpost ruin no longer needs all its atmos room windows
+      dismantled in order to keep a PERPETUAL FIRE ALARM from occuring
+  Gboster-0:
+  - rscadd: Added many chromosome effects to a lot of mutations
+  - rscadd: Added A lotta lot of mutations from TG/Bee/Yog/Goon/Paradise, whole rainbow.
+      Gotta research em all! (note, some are only findable on certain species or need
+      to be combined)
+  - balance: You can only now get 3 chromosomes from a person using injectors and
+      2 chromosomes from using the DNA infuser
   Gw0sty:
   - spellcheck: Fixed Interrogator gramma, thanks to TerryTehCoder
   Killermankey:

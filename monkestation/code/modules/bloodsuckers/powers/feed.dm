@@ -69,9 +69,8 @@
 	started_alive = TRUE
 	warning_target_bloodvol = BLOOD_VOLUME_MAX_LETHAL
 	blood_taken = 0
-	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, FEED_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_MUTE, FEED_TRAIT)
 	notified_overfeeding = initial(notified_overfeeding)
+	REMOVE_TRAITS_IN(user, FEED_TRAIT)
 	return ..()
 
 /datum/action/cooldown/bloodsucker/feed/ActivatePower(trigger_flags)
@@ -114,24 +113,38 @@
 			vision_distance = FEED_NOTICE_RANGE, ignored_mobs = feed_target)
 
 	//check if we were seen
-	for(var/mob/living/watchers in oviewers(FEED_NOTICE_RANGE) - feed_target)
-		if(QDELETED(watchers.client) || watchers.client?.is_afk())
-			continue
-		if(watchers.has_unlimited_silicon_privilege)
-			continue
-		if(watchers.stat >= DEAD)
-			continue
-		if(watchers.is_blind() || watchers.is_nearsighted_currently())
-			continue
-		if(IS_BLOODSUCKER(watchers) || IS_VASSAL(watchers) || HAS_MIND_TRAIT(watchers, TRAIT_OCCULTIST) || HAS_TRAIT(watchers, TRAIT_GHOST_CRITTER))
-			continue
-		owner.balloon_alert(owner, "feed noticed!")
-		bloodsuckerdatum_power.give_masquerade_infraction()
-		break
+	for(var/mob/living/viewer in oviewers(FEED_NOTICE_RANGE) - feed_target)
+		if(check_for_masquerade_infraction(viewer))
+			owner.balloon_alert(owner, "feed noticed!")
+			bloodsuckerdatum_power.give_masquerade_infraction()
+			break
 
-	ADD_TRAIT(owner, TRAIT_MUTE, FEED_TRAIT)
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, FEED_TRAIT)
+	owner.add_traits(list(TRAIT_MUTE, TRAIT_IMMOBILIZED), FEED_TRAIT)
 	return ..()
+
+/datum/action/cooldown/bloodsucker/feed/proc/check_for_masquerade_infraction(mob/living/viewer, recursed = FALSE)
+	if(QDELETED(viewer) || !viewer.ckey || QDELETED(viewer.client))
+		return FALSE
+	if(viewer.has_unlimited_silicon_privilege)
+		return FALSE
+	if(viewer.stat >= DEAD)
+		return FALSE
+	if(viewer.is_blind() || viewer.is_nearsighted_currently())
+		return FALSE
+	if(IS_BLOODSUCKER(viewer) || IS_VASSAL(viewer))
+		return FALSE
+	if(HAS_MIND_TRAIT(viewer, TRAIT_OCCULTIST) || HAS_TRAIT(viewer, TRAIT_GHOST_CRITTER))
+		return FALSE
+	if(isvampire(viewer)) // this checks for the species - i mean, they're not the same kind of vampire, but they're still a VAMPIRE, so, yeah
+		return FALSE
+	if(!recursed)
+		if(isguardian(viewer))
+			var/mob/living/basic/guardian/stando = viewer
+			return check_for_masquerade_infraction(stando.summoner, recursed = TRUE)
+		var/mob/living/master = viewer.mind?.enslaved_to?.resolve()
+		if(!isnull(master))
+			return check_for_masquerade_infraction(master, recursed = TRUE)
+	return TRUE
 
 /datum/action/cooldown/bloodsucker/feed/process(seconds_per_tick)
 	if(!active) //If we aren't active (running on SSfastprocess)

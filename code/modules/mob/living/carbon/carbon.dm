@@ -155,7 +155,8 @@
 	var/power_throw = 0
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
-	if(HAS_TRAIT(src, TRAIT_DWARF))
+//	if(HAS_TRAIT(src, TRAIT_DWARF)) // MONKESTATION EDIT OLD
+	if(HAS_TRAIT(src, TRAIT_DWARF) && !HAS_TRAIT(src, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
 		power_throw--
 	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 		power_throw++
