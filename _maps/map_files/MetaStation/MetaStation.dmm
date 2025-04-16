@@ -3247,7 +3247,6 @@
 	dir = 4
 	},
 /obj/machinery/bluespace_vendor/directional/north,
-/obj/item/mecha_ammo/makeshift/lighttankammo,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bcr" = (
@@ -25729,7 +25728,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/item/mecha_ammo/makeshift/lighttankammo,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "iXp" = (
@@ -29108,7 +29106,6 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/obj/item/mecha_ammo/makeshift/lighttankammo,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "kdA" = (
@@ -39317,7 +39314,6 @@
 	icon_state = "L7"
 	},
 /obj/structure/cable,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "nzg" = (
@@ -47645,6 +47641,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
+"quH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/vehicle/sealed/mecha/devitt,
+/turf/open/floor/iron,
+/area/station/command/teleporter)
 "quW" = (
 /obj/structure/sign/directions/evac,
 /obj/structure/sign/directions/medical{
@@ -47854,7 +47858,6 @@
 	dir = 4
 	},
 /obj/machinery/atm/directional/north,
-/obj/item/mecha_ammo/makeshift/peashooter,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "qyT" = (
@@ -47992,7 +47995,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/vehicle/sealed/mecha/devitt,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "qCj" = (
@@ -54762,7 +54764,6 @@
 	icon_state = "L11"
 	},
 /obj/structure/cable,
-/obj/item/mecha_ammo/makeshift/lighttankammo,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "sRm" = (
@@ -69800,19 +69801,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"ydq" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/mecha_ammo/makeshift/lighttankammo,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "ydr" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Auxiliary Tool Storage"
@@ -95578,7 +95566,7 @@ jVl
 mVW
 vnp
 vnp
-vnp
+quH
 exN
 eWo
 gqX
@@ -97637,7 +97625,7 @@ eQe
 fbI
 dvV
 oSo
-ydq
+cgF
 nyZ
 mYq
 htd

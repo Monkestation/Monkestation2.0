@@ -16,13 +16,12 @@
 	wreckage = null
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
-		MECHA_L_ARM = null,
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon,
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
-		MECHA_POWER = list(),
+		MECHA_POWER = /obj/item/mecha_parts/mecha_equipment/generator,
 		MECHA_ARMOR = list(),
 	)
-//	max_occupants = 2 driver+gunner, otherwise this thing would be gods OP  (commented out untill I do this.)
 	max_equip_by_category = list(
 		MECHA_UTILITY = 0,
 		MECHA_POWER = 1, // you can put an engine in it, wow!
@@ -37,9 +36,3 @@
 	bomb = 10
 	fire = 90
 	acid = 20
-
-
-
-
-
-
