@@ -123,3 +123,8 @@
 		if (SSmap_vote.set_next_map(virtual_map))
 			message_admins("[key_name_admin(usr)] has changed the map to [virtual_map.map_name]")
 			SSmap_vote.admin_override = TRUE
+
+/client/proc/admin_revert_map()
+	set category = "Server"
+	set name = "Revert Map Vote"
+	SSmap_vote.revert_next_map(user)
