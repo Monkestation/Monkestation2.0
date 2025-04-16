@@ -91,7 +91,7 @@
 	name = "green ungenerated turf"
 	desc = "If you see this jerma, and you're not a ghost, make a bug report with where and what" //MONKESTATION EDIT everything after comment pls don't yell at me org: "yell at coders"
 	icon = 'icons/turf/debug.dmi'
-	icon_state = "jerma"
+	icon_state = "genturf_green"
 
 // following two are currently used for edge cases in which you want a certain type of map generation intermingled with other genturfs
 /turf/open/genturf/blue
