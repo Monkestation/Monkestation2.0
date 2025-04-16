@@ -11,6 +11,7 @@
 	default_choices = SSmap_vote.get_valid_map_vote_choices()
 
 /datum/vote/map_vote/create_vote()
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -39,6 +40,10 @@
 	if(. != VOTE_AVAILABLE)
 		return .
 
+	if(SSmap_vote.next_map_config)
+		return "The next map has already been selected."
+
+	default_choices = SSmap_vote.get_valid_map_vote_choices()
 	var/num_choices = length(default_choices)
 	if(num_choices <= 1)
 		return "There [num_choices == 1 ? "is only one map" : "are no maps"] to choose from."

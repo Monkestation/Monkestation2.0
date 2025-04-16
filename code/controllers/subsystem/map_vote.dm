@@ -19,6 +19,9 @@ SUBSYSTEM_DEF(map_vote)
 	/// Stores the previous map vote cache, used when a map vote is reverted.
 	var/list/previous_cache
 
+	/// Stores the last amount of potential players to compare next time we're called
+	var/player_cache = -1
+
 	/// Stores a formatted html string of the tally counts
 	var/tally_printout = span_red("Loading...")
 
@@ -91,15 +94,6 @@ SUBSYSTEM_DEF(map_vote)
 
 /// Returns a list of all map options that are invalid for the current population.
 /datum/controller/subsystem/map_vote/proc/get_valid_map_vote_choices()
-	var/list/valid_maps = list()
-
-	// Fill in our default choices with all of the maps in our map config, if they are votable and not blocked.
-	var/list/maps = shuffle(global.config.maplist)
-	for(var/map in maps)
-		var/datum/map_config/possible_config = config.maplist[map]
-		if(!possible_config.votable || (possible_config.map_name in SSpersistence.blocked_maps))
-			continue
-		valid_maps += possible_config.map_name
 
 	var/filter_threshold = 0
 	if(SSticker.HasRoundStarted())
@@ -107,13 +101,22 @@ SUBSYSTEM_DEF(map_vote)
 	else
 		filter_threshold = length(GLOB.clients)
 
-	for(var/map in valid_maps)
-		var/datum/map_config/possible_config = config.maplist[map]
-		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
-			valid_maps -= map
+	if(filter_threshold == player_cache)
+		return
 
-		else if(possible_config.config_max_users > 0 && filter_threshold > possible_config.config_max_users)
-			valid_maps -= map
+	player_cache = filter_threshold
+	var/list/valid_maps = list()
+	// Fill in our default choices with all of the maps in our map config, if they are votable and not blocked.
+	var/list/maps = shuffle(global.config.maplist)
+	for(var/map in maps)
+		var/datum/map_config/possible_config = config.maplist[map]
+		if(!possible_config.votable || (possible_config.map_name in SSpersistence.blocked_maps))
+			continue
+		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
+			continue
+		if(possible_config.config_max_users > 0 && filter_threshold > possible_config.config_max_users)
+			continue
+		valid_maps += possible_config.map_name
 
 	return valid_maps
 
