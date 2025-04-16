@@ -151,7 +151,7 @@
 	projectile_delay = 0.1 SECONDS
 	equip_cooldown = 1 SECONDS
 	variance = 18
-	randomspread = 3
+	randomspread = 4
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 	mech_flags = EXOSUIT_MODULE_TANK

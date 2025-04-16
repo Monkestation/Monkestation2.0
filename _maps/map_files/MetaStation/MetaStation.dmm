@@ -37658,7 +37658,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/vehicle/sealed/mecha/devitt,
+/obj/vehicle/sealed/mecha/devitt{
+	pixel_x = -2
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "mYs" = (
