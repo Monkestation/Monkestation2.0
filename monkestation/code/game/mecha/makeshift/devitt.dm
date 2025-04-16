@@ -8,12 +8,15 @@
 	max_integrity = 500 // its a hunk of steel that didnt need to be limited by mecha legs
 	force = 50
 	movedelay = 1.2
+	step_energy_drain = 40
+	bumpsmash = TRUE
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 30 //Its old but no electronics
-	wreckage = null
+	wreckage = /obj/structure/mecha_wreckage/devitt
+//	max_occupants = 2 // gunner + Driver otherwise it would be OP
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
 		MECHA_L_ARM = null,
