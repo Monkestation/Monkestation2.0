@@ -112,3 +112,11 @@
 	desc = "A much more proffessional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
 	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	cost = 12
+
+
+
+/datum/uplink_item/dangerous/minipea
+	name = "5 peashooters strapped together"
+	desc = "For use in a trash tank, 5 small machineguns strapped together using syndicate technology. It burns through ammo like no other."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
+	cost = 8

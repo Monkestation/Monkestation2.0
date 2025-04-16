@@ -8,20 +8,24 @@
 	max_integrity = 500 // its a hunk of steel that didnt need to be limited by mecha legs
 	force = 50
 	movedelay = 1.2
+	step_energy_drain = 40
+	bumpsmash = TRUE
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 30 //Its old but no electronics
-	wreckage = null
+	wreckage = /obj/structure/mecha_wreckage/devitt
+//	max_occupants = 2 // gunner + Driver otherwise it would be OP
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon,
+		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
-		MECHA_POWER = /obj/item/mecha_parts/mecha_equipment/generator,
+		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
+	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP  (commented out untill I do this.)
 	max_equip_by_category = list(
 		MECHA_UTILITY = 0,
 		MECHA_POWER = 1, // you can put an engine in it, wow!
@@ -36,3 +40,18 @@
 	bomb = 10
 	fire = 90
 	acid = 20
+
+
+// trying to add multi crew 2, deisel boogaloo
+// yes I am just ripping this from the savannah ivanov how did you know?
+
+
+obj/vehicle/sealed/mecha/devitt/auto_assign_occupant_flags(mob/new_occupant)
+	if(driver_amount() < max_drivers) //movement
+		add_control_flags(new_occupant, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
+	else //weapons
+		add_control_flags(new_occupant, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
+
+/obj/vehicle/sealed/mecha/devitt/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
+	. = ..()
