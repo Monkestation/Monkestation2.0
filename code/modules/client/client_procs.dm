@@ -600,7 +600,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client.client = null
+	persistent_client?.client = null
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
