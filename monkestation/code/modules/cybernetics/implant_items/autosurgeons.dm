@@ -113,7 +113,7 @@
 
 	name = initial(name)
 
-	if(uses != INFINITE)
+	if(uses != INFINITY)
 		uses--
 
 	if(!uses)
@@ -156,10 +156,8 @@
 	I.play_tool_sound(src)
 	stored_skillchip = null
 
-	if(uses != INFINITE)
-		uses--
-
-	if(!uses)
+	uses--
+	if(uses <= 0)
 		desc = "[initial(desc)] Looks like it's been used up."
 
 	return TRUE
