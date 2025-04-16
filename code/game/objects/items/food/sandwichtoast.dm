@@ -241,6 +241,7 @@
 	)
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
 	bite_consumption = 100 //You either eat it right once or you die, this also prevents people from mass feeding others
+	food_quality = FOOD_QUALITY_TOP //If it can give you god like powers its gotta taste pretty godly!
 	foodtypes = GRAIN | MEAT
 	food_buffs = STATUS_EFFECT_DEATH_KWON_DO
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
