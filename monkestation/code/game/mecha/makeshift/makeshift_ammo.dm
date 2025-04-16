@@ -27,3 +27,10 @@
 	icon_state = "light_tank_ammo"
 	rounds = 5
 	ammo_type = MECHA_AMMO_LIGHTTANK
+
+/obj/item/mecha_ammo/makeshift/lighttankmg
+	name = "12.7mm ammo box"
+	icon_state = "lighttankmg_ammo"
+	rounds = 60
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+

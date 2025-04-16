@@ -59,7 +59,7 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/heap/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flame_range = 4, flash_range = 1, adminlog = FALSE)
 
-/// 40mm tank shell - tank on a space station wtf.
+/// 40mm tank shell - tank on a space station wtf, extremely good at anti tank, still explosive.
 /obj/projectile/bullet/rocket/lighttankshell
 	name = "\improper 40mm tank shell"
 	desc = "mechanized warfare in spess."
@@ -67,10 +67,10 @@ among other potential differences. This granularity is helpful for things like t
 	damage = 80
 	armour_penetration = 100
 	dismemberment = 100
-	anti_armour_damage = 200
+	anti_armour_damage = 350
 
 /obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
-	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flame_range = 4, flash_range = 1, adminlog = TRUE)
+	explosion(target, devastation_range = -1, heavy_impact_range = 2, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
 
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak

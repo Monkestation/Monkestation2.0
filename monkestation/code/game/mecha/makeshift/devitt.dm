@@ -7,7 +7,7 @@
 	max_integrity = 500 // its a hunk of steel that didnt need to be limited by mecha legs
 	force = 50
 	movedelay = 1.2
-	step_energy_drain = 40
+	step_energy_drain = 20
 	bumpsmash = TRUE
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
@@ -19,7 +19,7 @@
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon,
-		MECHA_R_ARM = null,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = /obj/item/mecha_parts/mecha_equipment/generator,
 		MECHA_ARMOR = list(),
@@ -44,6 +44,12 @@
 // trying to add multi crew 2, deisel boogaloo
 // yes I am just ripping this from the savannah ivanov how did you know?
 
+/obj/vehicle/sealed/mecha/devitt/get_mecha_occupancy_state()
+	var/driver_present = driver_amount() != 0
+	var/gunner_present = return_amount_of_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT) > 0
+	var/list/mob/drivers = return_drivers()
+	var/leap_state
+	return "[base_icon_state]_[gunner_present]_[driver_present]"
 
 obj/vehicle/sealed/mecha/devitt/auto_assign_occupant_flags(mob/new_occupant)
 	if(driver_amount() < max_drivers) //movement

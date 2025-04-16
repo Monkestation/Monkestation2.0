@@ -187,3 +187,14 @@
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WIRECUTTER)
 	time = 0.5 SECONDS
+
+
+
+/datum/crafting_recipe/lightankmg_ammo
+	name = "12.7x70mm ammunition belt"
+	result = /obj/item/mecha_ammo/makeshift/lighttankmg
+	reqs = list(/datum/reagent/gunpowder = 30,
+		/obj/item/stack/sheet/iron = 20,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 0.5 SECONDS

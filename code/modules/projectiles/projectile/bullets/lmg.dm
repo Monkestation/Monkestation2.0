@@ -77,3 +77,12 @@
 	ricochet_decay_chance = 0.9
 	speed = 0.6 //monke edit
 
+
+// 12.7x70mm (Malone / tank MG)
+
+/obj/projectile/bullet/mm127x70
+	name = "12.7x70mm bullet"
+	damage = 15
+	armour_penetration = 5
+	wound_bonus = -50
+	wound_falloff_tile = 0

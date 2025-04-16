@@ -137,3 +137,21 @@
 	projectiles_cache_max = 35
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
+	name = "12.7mm Malone hullmount"
+	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much."
+	icon_state = "mecha_light_tank_mg"
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/mm127x70
+	projectiles = 30
+	projectiles_cache = 60
+	projectiles_cache_max = 120
+	projectiles_per_shot = 5
+	projectile_delay = 0.1 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 3
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK
