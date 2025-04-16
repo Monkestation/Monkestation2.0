@@ -77,12 +77,19 @@
 	return (user?.mind == hunter_mind)
 
 /obj/effect/bnnuy/proc/spotted(mob/living/user)
+	var/list/extra_logs = list()
 	if(hunter_antag?.rabbits_spotted == 0) //our first bunny
 		user.put_in_hands(new /obj/item/clothing/mask/cursed_rabbit(drop_location()))
+		extra_logs += "the cursed rabbit mask"
 	user.put_in_hands(new /obj/item/rabbit_eye(drop_location()))
 	if(drop_gun)
 		give_gun(user)
+		extra_logs += "the hunter's revolver"
 	hunter_antag?.rabbits -= src
+	var/msg = "claimed a white rabbit at [AREACOORD(src)]"
+	if(length(extra_logs) > 0)
+		msg += ", which dropped [english_list(extra_logs)]"
+	user.log_message(msg, LOG_GAME)
 
 /obj/effect/bnnuy/proc/give_gun(mob/living/user)
 	user.put_in_hands(new /obj/item/gun/ballistic/revolver/hunter_revolver(drop_location()))

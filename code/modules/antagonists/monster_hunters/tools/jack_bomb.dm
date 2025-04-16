@@ -13,6 +13,9 @@
 	ex_flame = 2
 
 /obj/item/grenade/jack/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
+	if(istype(get_area(user), /area/ruin/space/has_grav/wonderland))
+		to_chat(user, span_warning("You feel that arming \the [src] here would be both a bad idea and a waste."))
+		return
 	log_grenade(user) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)

@@ -1,7 +1,9 @@
 /obj/item/melee/trick_weapon/darkmoon
 	name = "Darkmoon Greatsword"
 	desc = "Ahh my guiding moonlight, you were by my side all along."
+	ui_desc = "A heavy sword hilt that would knock anyone out cold, can transform into the darkmoonlight greatsword."
 	icon_state = "darkmoon"
+	icon_state_preview = "darkmoon_active"
 	base_icon_state = "darkmoon"
 	inhand_icon_state = "darkmoon"
 	w_class = WEIGHT_CLASS_SMALL
