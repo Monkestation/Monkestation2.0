@@ -89,17 +89,17 @@
 /// This turf doesn't actually do anything beyond provide contrast for mappers and be very visible when stuff breaks in game. The actual areas are what drive cave generation.
 /turf/open/genturf
 	name = "green ungenerated turf"
-	desc = "If you see this, and you're not a ghost, make a bug report with where and what" //MONKESTATION EDIT everything after comment pls don't yell at me org: "yell at coders"
+	desc = "If you see this jerma, and you're not a ghost, make a bug report with where and what" //MONKESTATION EDIT everything after comment pls don't yell at me org: "yell at coders"
 	icon = 'icons/turf/debug.dmi'
 	icon_state = "jerma"
 
 // following two are currently used for edge cases in which you want a certain type of map generation intermingled with other genturfs
 /turf/open/genturf/blue
 	name = "blue ungenerated turf"
-	icon_state = "jerma"
+	icon_state = "genturf_blue"
 
 /turf/open/genturf/orange
 	name = "orange ungenerated turf"
-	icon_state = "jerma"
+	icon_state = "genturf_orange"
 
 #undef BIOME_RANDOM_SQUARE_DRIFT
