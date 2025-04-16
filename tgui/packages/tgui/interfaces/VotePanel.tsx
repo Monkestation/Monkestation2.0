@@ -36,6 +36,7 @@ type ActiveVote = {
   vote: Vote;
   question: string | null;
   timeRemaining: number;
+  displayStatistics: boolean;
   choices: Option[];
   countMethod: number;
   canVote?: BooleanLike;
