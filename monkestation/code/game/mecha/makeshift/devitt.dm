@@ -2,9 +2,8 @@
 	desc = "A multi hundred year old tank. How the hell it is running and on a space station is the least of your worries."
 	name = "Devitt Mk3"
 	icon = 'monkestation/icons/mecha/tanks.dmi'
-	icon_state = "devitt"
+	icon_state = "devitt_0_0"
 	base_icon_state = "devitt"
-	silicon_icon_state = "null"
 	max_integrity = 500 // its a hunk of steel that didnt need to be limited by mecha legs
 	force = 50
 	movedelay = 1.2
@@ -19,10 +18,10 @@
 //	max_occupants = 2 // gunner + Driver otherwise it would be OP
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
-		MECHA_L_ARM = null,
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon,
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
-		MECHA_POWER = list(),
+		MECHA_POWER = /obj/item/mecha_parts/mecha_equipment/generator,
 		MECHA_ARMOR = list(),
 	)
 	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP  (commented out untill I do this.)
