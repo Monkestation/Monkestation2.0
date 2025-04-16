@@ -14,6 +14,15 @@
 	force = 10
 	mech_flags = EXOSUIT_MODULE_MAKESHIFT
 
+//sheet drill
+/obj/item/mecha_parts/mecha_equipment/drill/giantdrill
+	name = "Giant drill"
+	desc = "what looks to be a drill atleast the size of you, tears through anything like butter."
+	equip_cooldown = 25 // it is not slow as shit
+	force = 100 // its a supermassive drill, on a piece of shit chassis.
+	mech_flags = EXOSUIT_MODULE_DRILL
+	drill_delay = 15
+
 //ambulance
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
 	name = "mounted stretcher"
@@ -106,6 +115,7 @@
 	name = "infantry support gun breech"
 	desc = "an improvised mantlet fitted to launch IED's torwards enemies."
 	icon_state = "mecha_supportgun"
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_ISG
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
@@ -124,9 +134,11 @@
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/iedcasing/spawned, detonate)), det_time)
 
+//devitt
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
 	name = "40mm tank cannon"
-	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling."
+	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
 	icon_state = "mecha_light_tank_cannon"
 	harmful = TRUE
 	equip_cooldown = 60
@@ -138,10 +150,12 @@
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone hullmount"
-	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much."
+	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
 	icon_state = "mecha_light_tank_mg"
+	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/mm127x70
 	projectiles = 30

@@ -47,8 +47,6 @@
 /obj/vehicle/sealed/mecha/devitt/get_mecha_occupancy_state()
 	var/driver_present = driver_amount() != 0
 	var/gunner_present = return_amount_of_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT) > 0
-	var/list/mob/drivers = return_drivers()
-	var/leap_state
 	return "[base_icon_state]_[gunner_present]_[driver_present]"
 
 obj/vehicle/sealed/mecha/devitt/auto_assign_occupant_flags(mob/new_occupant)

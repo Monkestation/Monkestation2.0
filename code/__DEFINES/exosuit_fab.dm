@@ -40,6 +40,8 @@
 #define EXOSUIT_MODULE_TRASHTANK (1<<13)
 // Module is compatbile with tank "mechs"
 #define EXOSUIT_MODULE_TANK (1<<14)
+// Module is compatbile with drilling "mechs"
+#define EXOSUIT_MODULE_DRILL (1<<15)
 //monkestation edit end
 
 
