@@ -120,4 +120,3 @@
 	desc = "For use in a trash tank, 5 small machineguns strapped together using syndicate technology. It burns through ammo like no other."
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
 	cost = 8
-purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
