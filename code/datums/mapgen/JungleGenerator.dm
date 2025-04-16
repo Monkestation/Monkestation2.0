@@ -91,15 +91,15 @@
 	name = "green ungenerated turf"
 	desc = "If you see this, and you're not a ghost, make a bug report with where and what" //MONKESTATION EDIT everything after comment pls don't yell at me org: "yell at coders"
 	icon = 'icons/turf/debug.dmi'
-	icon_state = "genturf_green"
+	icon_state = "jerma"
 
 // following two are currently used for edge cases in which you want a certain type of map generation intermingled with other genturfs
 /turf/open/genturf/blue
 	name = "blue ungenerated turf"
-	icon_state = "genturf_blue"
+	icon_state = "jerma"
 
 /turf/open/genturf/orange
 	name = "orange ungenerated turf"
-	icon_state = "genturf_orange"
+	icon_state = "jerma"
 
 #undef BIOME_RANDOM_SQUARE_DRIFT
