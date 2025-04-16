@@ -201,7 +201,7 @@
 	var/mob/adminmob = mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.key = key
+	M.PossessByPlayer(key)
 	init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
@@ -228,7 +228,7 @@
 		return
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.ckey = newkey.key
+	M.PossessByPlayer(newkey.key)
 	M.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
@@ -511,10 +511,13 @@
 		return
 	M.revive(ADMIN_HEAL_ALL)
 
-	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_msg = "[key_name(usr)] healed / revived [key_name(M)]"
+	log_admin(log_msg)
 	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	admin_ticket_log(M, log_msg)
+	// MONKESTATION EDIT END
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvenate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)

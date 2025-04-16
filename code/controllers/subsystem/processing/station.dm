@@ -24,6 +24,11 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/processing/station/Recover()
+	station_traits = SSstation.station_traits.Copy()
+	selectable_traits_by_types = deep_copy_list(SSstation.selectable_traits_by_types)
+	announcer = SSstation.announcer
+
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
 	if (CONFIG_GET(flag/forbid_station_traits))

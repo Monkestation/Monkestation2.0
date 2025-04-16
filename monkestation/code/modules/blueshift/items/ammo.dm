@@ -685,8 +685,8 @@
 /obj/projectile/bullet/c585trappiste/incapacitator
 	name = ".585 Trappiste flathead bullet"
 	damage = 9
-	stamina = 40
-	wound_bonus = 10
+	stamina = 35
+	wound_bonus = -20
 
 	weak_against_armour = TRUE
 
@@ -1283,9 +1283,10 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "flechette"
 	damage = 6
-	wound_bonus = 8
-	bare_wound_bonus = 16
+	wound_bonus = 3
+	bare_wound_bonus = 14
 	sharpness = SHARP_EDGED //Did you knew flechettes fly sideways into people
+	weak_against_armour = TRUE // Specializes in ripping unarmored targets apart
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/flechette/Initialize(mapload)
 	. = ..()

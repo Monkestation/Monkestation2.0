@@ -2,7 +2,8 @@
 /obj/item/organ/external/wings/apid
 	name = "apid wings"
 	desc = "Spread your wings and FLOOOOAAAAAT!"
-
+	icon_state = "apid_wings"
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	preference = "feature_apid_wings"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/apid

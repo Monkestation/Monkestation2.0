@@ -4179,6 +4179,13 @@
 /obj/structure/ghost_critter_spawn,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"bpA" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/landmark/start/captain,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "bpD" = (
 /obj/machinery/newscaster/directional/south,
 /obj/structure/closet/firecloset,
@@ -10663,15 +10670,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "diR" = (
-/obj/structure/table/glass,
-/obj/item/book/manual/wiki/surgery{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/iv_drip,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "diT" = (
@@ -19955,7 +19958,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gnH" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/sign/painting/large/library{
 	dir = 1
 	},
@@ -27372,6 +27374,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "iLK" = (
@@ -33677,19 +33680,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "kKI" = (
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
-/obj/structure/table,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "kKL" = (
@@ -35172,8 +35166,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "liz" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "liI" = (
@@ -41381,6 +41375,9 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/structure/table/glass,
+/obj/item/stack/sticky_tape/surgical,
+/obj/item/stack/medical/bone_gel,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "niu" = (
@@ -41708,7 +41705,6 @@
 /turf/open/openspace,
 /area/station/science/ordnance/office)
 "nmC" = (
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -55460,6 +55456,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "rAZ" = (
@@ -55790,6 +55787,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table/glass,
+/obj/item/stack/sticky_tape/surgical,
+/obj/item/stack/medical/bone_gel,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "rGl" = (
@@ -55992,11 +55992,13 @@
 	pixel_x = 22
 	},
 /obj/machinery/vending/wallmed/directional/south,
-/obj/structure/cable,
-/obj/structure/table/glass,
-/obj/item/stack/sticky_tape/surgical,
-/obj/item/stack/medical/bone_gel,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table/glass,
+/obj/item/book/manual/wiki/surgery{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "rKZ" = (
@@ -57599,6 +57601,7 @@
 	pixel_x = 29;
 	pixel_y = 8
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "smL" = (
@@ -62278,6 +62281,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "tOO" = (
@@ -62830,10 +62834,8 @@
 /area/mine/eva/lower)
 "tYA" = (
 /obj/structure/cable,
-/obj/structure/table/glass,
-/obj/item/stack/sticky_tape/surgical,
-/obj/item/stack/medical/bone_gel,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "tYJ" = (
@@ -67501,15 +67503,16 @@
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "vzR" = (
-/obj/structure/closet/secure_closet/medical2,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/light/directional/east,
 /obj/machinery/button/door/directional/south{
 	id = "surgery";
 	name = "Surgery Shutter Control"
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "vzS" = (
@@ -70234,7 +70237,6 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "wuv" = (
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
@@ -74665,13 +74667,12 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "xMM" = (
-/obj/machinery/computer/operating{
-	dir = 8
-	},
-/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/closet/secure_closet/medical2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "xMQ" = (
@@ -239398,7 +239399,7 @@ tEd
 lpM
 eEC
 uEm
-iTd
+bpA
 iTd
 wwB
 mBX

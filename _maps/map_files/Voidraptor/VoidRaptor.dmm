@@ -12277,18 +12277,7 @@
 /area/station/medical/treatment_center)
 "dEb" = (
 /obj/effect/turf_decal/box,
-/obj/structure/closet/crate/science{
-	anchored = 1
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/robotics/lab)
 "dEu" = (
@@ -80061,8 +80050,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "wjk" = (
-/obj/machinery/drone_dispenser,
 /obj/effect/turf_decal/bot,
+/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/iron/textured,
 /area/station/science/robotics/mechbay)
 "wjq" = (

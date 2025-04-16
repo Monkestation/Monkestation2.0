@@ -81,8 +81,8 @@
 
 /datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force = FALSE)
 	if(istype(formerly_ridden) && istype(former_rider))
-		formerly_ridden.log_message("is no longer being ridden by [former_rider].", LOG_GAME, color="pink")
-		former_rider.log_message("is no longer riding [formerly_ridden].", LOG_GAME, color="pink")
+		formerly_ridden.log_message("is no longer being ridden by [key_name(former_rider)].", LOG_GAME, color="pink")
+		former_rider.log_message("is no longer riding [key_name(formerly_ridden)].", LOG_GAME, color="pink")
 	remove_abilities(former_rider)
 	if(!formerly_ridden.buckled_mobs.len)
 		REMOVE_TRAIT(formerly_ridden, TRAIT_AI_PAUSED, REF(src))
@@ -217,11 +217,11 @@
 		return
 
 	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
-		living_parent.log_message("started giving [rider] a piggyback ride.", LOG_GAME, color="pink")
-		rider.log_message("started piggyback riding [living_parent].", LOG_GAME, color="pink")
+		living_parent.log_message("started giving [key_name(rider)] a piggyback ride.", LOG_GAME, color="pink")
+		rider.log_message("started piggyback riding [key_name(living_parent)].", LOG_GAME, color="pink")
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
-		living_parent.log_message("started fireman carrying [rider].", LOG_GAME, color="pink")
-		rider.log_message("was fireman carried by [living_parent].", LOG_GAME, color="pink")
+		living_parent.log_message("started fireman carrying [key_name(rider)].", LOG_GAME, color="pink")
+		rider.log_message("was fireman carried by [key_name(living_parent)].", LOG_GAME, color="pink")
 
 /datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/former_rider, force = FALSE)
 	unequip_buckle_inhands(parent)

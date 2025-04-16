@@ -41,6 +41,8 @@
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
+	/// How long this MOD takes each part to seal.
+	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
@@ -184,6 +186,7 @@
 	slowdown_active = 1
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
+		/obj/item/extinguisher,
 		/obj/item/fireaxe/metal_h2_axe,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
@@ -304,7 +307,7 @@
 		the bare essentials, geared far more for environmental hazards than combat against fauna; however, \
 		this gives way to incredible protection against corrosives and thermal protection good enough for \
 		both casual backstroking through molten magma and romantic walks through arctic terrain. \
-		Instead, the suit is capable of using its' anomalous properties to attract and \
+		Instead, the suit is capable of using its anomalous properties to attract and \
 		carefully distribute layers of ash or ice across the surface; these layers are ablative, but incredibly strong. \
 		Lastly, the suit is capable of compressing and shrinking the mass of the wearer, as well as \
 		rearranging its own constitution, to allow them to fit upright in a sphere form that can \
@@ -1434,7 +1437,7 @@
 
 /datum/mod_theme/responsory
 	name = "responsory"
-	desc = "A high-speed rescue suit by Nanotrasen, intended for its' emergency response teams."
+	desc = "A high-speed rescue suit by Nanotrasen, intended for its emergency response teams."
 	extended_desc = "A streamlined suit of Nanotrasen design, these sleek black suits are only worn by \
 		elite emergency response personnel to help save the day. While the slim and nimble design of the suit \
 		cuts the ceramics and ablatives in it down, dropping the protection, \
@@ -1715,6 +1718,7 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	activation_step_time = 0.4 SECONDS
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -1774,6 +1778,7 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0
 	slowdown_active = 0
+	activation_step_time = 0.1 SECONDS
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)

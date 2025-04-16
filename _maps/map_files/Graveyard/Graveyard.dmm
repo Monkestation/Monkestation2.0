@@ -34333,20 +34333,9 @@
 /turf/closed/wall,
 /area/station/medical/morgue)
 "nlY" = (
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
-/obj/structure/closet/crate/science{
-	name = "MOD core crate"
-	},
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "nmb" = (

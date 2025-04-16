@@ -37498,18 +37498,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
 "hkK" = (
-/obj/structure/closet/crate/science{
-	anchored = 1
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/mineral/plastitanium,
 /area/station/science/robotics/lab)
 "hkN" = (

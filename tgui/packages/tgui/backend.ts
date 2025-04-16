@@ -275,6 +275,7 @@ export const backendMiddleware = (store) => {
         Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
+        Byond.sendMessage('visible');
         perf.mark('resume/finish');
         if (process.env.NODE_ENV !== 'production') {
           logger.log(
@@ -419,6 +420,7 @@ type BackendState<TData> = {
       size: [number, number];
       fancy: boolean;
       locked: boolean;
+      scale: boolean;
     };
     client: {
       ckey: string;
