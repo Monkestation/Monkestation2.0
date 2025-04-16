@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/mecha/makeshift_sheetmetal_drill
+/obj/vehicle/sealed/mecha/makeshift_drill
 	desc = "a square of rusted sheetmetal bolted to tracks and housing a comically large drill. This pile of junk looks especially fragile."
 	name = "Sheet metal drill"
 	icon = 'monkestation/icons/mecha/makeshift_mechs.dmi'

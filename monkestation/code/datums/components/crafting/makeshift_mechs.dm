@@ -37,7 +37,7 @@
 
 /datum/crafting_recipe/sheetmetaldrill
 	name = "Sheet metal drill"
-	result = /obj/vehicle/sealed/mecha/makeshift_sheew4t3tmetal_drill
+	result = /obj/vehicle/sealed/mecha/makeshift_drill
 	reqs = list(/obj/item/stack/cable_coil = 30,
 				/obj/item/stack/sheet/iron = 20,
 				/obj/item/storage/toolbox = 2,
