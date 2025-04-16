@@ -61,7 +61,7 @@
 	SIGNAL_HANDLER
 	if(isnull(target) || !(target in listeners))
 		return
-	var/datum/media_player/media_player = target?.client?.media_player
+	var/datum/media_player/media_player = target.client?.media_player
 	if(!isnull(current_track) && !QDELETED(media_player) && media_player.current_url == current_track.url)
 		media_player.stop()
 	UnregisterSignal(target, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
