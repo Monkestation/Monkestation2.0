@@ -25,7 +25,7 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
-//	max_occupants = 2 driver+gunner, otherwise this thing would be gods OP  (commented out untill I do this.)
+	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP  (commented out untill I do this.)
 	max_equip_by_category = list(
 		MECHA_UTILITY = 0,
 		MECHA_POWER = 1, // you can put an engine in it, wow!
@@ -42,7 +42,16 @@
 	acid = 20
 
 
+// trying to add multi crew 2, deisel boogaloo
+// yes I am just ripping this from the savannah ivanov how did you know?
 
 
+obj/vehicle/sealed/mecha/devitt/auto_assign_occupant_flags(mob/new_occupant)
+	if(driver_amount() < max_drivers) //movement
+		add_control_flags(new_occupant, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
+	else //weapons
+		add_control_flags(new_occupant, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 
-
+/obj/vehicle/sealed/mecha/devitt/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
+	. = ..()
