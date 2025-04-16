@@ -127,4 +127,4 @@
 /client/proc/admin_revert_map()
 	set category = "Server"
 	set name = "Revert Map Vote"
-	SSmap_vote.revert_next_map(user)
+	SSmap_vote.revert_next_map()
