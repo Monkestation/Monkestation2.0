@@ -21,7 +21,7 @@
 	var/previous_names = player.persistent_client?.get_played_names(sanitize = FALSE, seperator = ", ")
 	return list(
 		"name" = player.name || "No Character",
-		"old_name" = player_previous_names || "No Previous Characters",
+		"old_name" = previous_names || "No Previous Characters",
 		"job" = player.job || "No Job",
 		"ckey" = player.ckey || "No Ckey",
 		"is_antagonist" = is_special_character(player, allow_fake_antags = TRUE),
