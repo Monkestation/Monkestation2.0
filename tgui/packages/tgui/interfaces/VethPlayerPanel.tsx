@@ -136,7 +136,7 @@ export const VethPlayerPanel = (_props) => {
             />
           </Section>
 
-          <Section title={`Players (${filteredData.length})`}>
+          <Section title={`Players (${filteredData.length})`} scrollable fill>
             <Table>
               <Table.Row header>
                 <Table.Cell>Ckey</Table.Cell>
