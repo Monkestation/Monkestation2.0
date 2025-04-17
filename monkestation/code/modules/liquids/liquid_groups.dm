@@ -117,7 +117,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 ///GROUP CONTROLLING
 /datum/liquid_group/proc/add_to_group(turf/T)
-	if(QDELETED(T))
+	if(QDELETED(src) || !isopenturf(T))
 		return
 	if(QDELETED(T.liquids))
 		T.liquids = new(T, src)
