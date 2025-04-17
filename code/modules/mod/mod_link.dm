@@ -1,3 +1,9 @@
+GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
+	/area/station = MODLINK_FREQ_NANOTRASEN,
+	/area/ruin/space/ancientstation = MODLINK_FREQ_CHARLIE,
+	/area/ruin/space/has_grav/syndicate_depot = MODLINK_FREQ_SYNDICATE,
+)))
+
 /proc/make_link_visual_generic(datum/mod_link/mod_link, proc_path)
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
 	var/obj/effect/overlay/link_visual = new()
@@ -68,6 +74,22 @@
 		new_transform.Scale(0.65, 1)
 	other_visual.transform = new_transform
 
+/// Shared checks for if someone can be called via modlink.
+/proc/base_mod_link_checks(mob/living/link_caller)
+	// ensure it's a valid caller at all
+	if(QDELETED(link_caller) || QDELETED(link_caller.loc))
+		return FALSE
+	if(isdummy(link_caller))
+		return FALSE
+	// there's some checks we only care about if the round hasn't ended
+	if(SSticker.current_state != GAME_STATE_FINISHED)
+		if(istype(link_caller, /mob/living/carbon/human/ghost))
+			return FALSE
+		var/area/area = get_area(link_caller)
+		if(isnull(area) || (area.area_flags & GHOST_AREA))
+			return FALSE
+	return TRUE
+
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
 	mod_link = new(
@@ -106,7 +128,13 @@
 				balloon_alert(user, "frequency set")
 
 /obj/item/mod/control/proc/can_call()
-	return get_charge() && wearer && wearer.stat < DEAD
+	if(!base_mod_link_checks(wearer))
+		return FALSE
+	if(wearer.stat == DEAD)
+		return FALSE
+	if(!get_charge())
+		return FALSE
+	return TRUE
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -280,8 +308,11 @@
 	return istype(user) && user.wear_neck == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
-	var/mob/living/user = loc
-	return istype(user) && cell?.charge && user.stat < DEAD
+	if(!isliving(loc))
+		return FALSE
+	if(!cell?.charge)
+		return FALSE
+	return base_mod_link_checks(loc)
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
@@ -333,6 +364,19 @@
 
 /obj/item/clothing/neck/link_scryer/loaded/charlie
 	starting_frequency = MODLINK_FREQ_CHARLIE
+
+/// Scryer that automatically links based on area/Z-level
+/obj/item/clothing/neck/link_scryer/auto_link/Initialize(mapload)
+	. = ..()
+	var/turf/turf = get_turf(src)
+	if(isnull(turf))
+		return
+	if(is_station_level(turf.z))
+		mod_link.frequency = MODLINK_FREQ_NANOTRASEN
+		return
+	var/area/area = get_area(turf)
+	if(!isnull(GLOB.scryer_auto_link_freqs[area.type]))
+		mod_link.frequency = GLOB.scryer_auto_link_freqs[area.type]
 
 /// A MODlink datum, used to handle unique functions that will be used in the MODlink call.
 /datum/mod_link
