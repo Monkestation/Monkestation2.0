@@ -135,7 +135,7 @@
 		ui.open()
 
 /datum/player_panel_veth/ui_state(mob/user)
-	return GLOB.admin_state
+	return check_rights_for(user.client, NONE) ? UI_INTERACTIVE : UI_CLOSE
 
 
 /client //this is needed to hold the selected player ckey for moving to and from pp/vuap
