@@ -86,6 +86,7 @@
 	/// Traits that don't get removed by Masquerade
 	var/static/list/always_traits = list(
 		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
+		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(

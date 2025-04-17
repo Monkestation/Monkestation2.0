@@ -365,3 +365,8 @@
   - map: Modifies the centcom z level and modifies 2 admin offices
   Snack-Max:
   - rscadd: add Fezs to the shop
+2025-04-17:
+  Absolucy:
+  - bugfix: IPCs, androids, and bloodsuckers can no longer be cloned.
+  - bugfix: Bloodsuckers can no longer give changelings infinite free absorbs using
+      Veil of Many Faces.
