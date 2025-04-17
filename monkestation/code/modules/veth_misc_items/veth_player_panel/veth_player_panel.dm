@@ -7,7 +7,7 @@
 	set category = "Admin.Game"
 	set desc = "Updated Player Panel with TGUI. Currently in testing."
 
-	if (!check_rights(NONE))
+	if(!check_rights(R_ADMIN))
 		message_admins("[key_name(src)] attempted to use VUAP without sufficient rights.")
 		return
 	var/datum/player_panel_veth/tgui = new(usr)
@@ -16,16 +16,20 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "VUAP")
 
 /datum/player_panel_veth/proc/player_ui_data(mob/player)
+#ifndef TESTING
 	if(QDELETED(player) || !player.ckey)
+#else
+	if(QDELETED(player) || !player.mind) // if TESTING is enabled, this lets us test with a spawned debug crew
+#endif
 		return
 	var/previous_names = player.persistent_client?.get_played_names(sanitize = FALSE, seperator = ", ")
 	return list(
-		"name" = player.name || "No Character",
-		"old_name" = previous_names || "No Previous Characters",
-		"job" = player.job || "No Job",
-		"ckey" = player.ckey || "No Ckey",
+		"name" = player.name,
+		"old_name" = previous_names,
+		"job" = player.job,
+		"ckey" = player.ckey,
 		"is_antagonist" = is_special_character(player, allow_fake_antags = TRUE),
-		"last_ip" = player.lastKnownIP || "No Last Known IP",
+		"last_ip" = player.lastKnownIP,
 		"ref" = REF(player)
 	)
 
@@ -43,7 +47,7 @@
 /datum/player_panel_veth/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
-	if(!check_rights(NONE))
+	if(!check_rights(R_ADMIN))
 		return
 	var/mob/selected_mob = get_mob_by_ckey(params["selectedPlayerCkey"]) //gets the mob datum from the ckey in client datum which we've saved. if there's a better way to do this please let me know
 	switch(action) //switch for all the actions from the frontend - all of the Topic() calls check rights & log inside themselves.
@@ -109,8 +113,6 @@
 			))
 			return
 		if("notes") //i'm pretty sure this checks rights inside the proc but to be safe
-			if(!check_rights(NONE))
-				return
 			browse_messages(target_ckey = selected_mob.ckey)
 			return
 		if("vv") //logs/rightscheck inside the proc
@@ -135,8 +137,7 @@
 		ui.open()
 
 /datum/player_panel_veth/ui_state(mob/user)
-	return check_rights_for(user.client, NONE) ? UI_INTERACTIVE : UI_CLOSE
-
+	return GLOB.admin_state
 
 /client //this is needed to hold the selected player ckey for moving to and from pp/vuap
 	///This is used to hold the ckey of the selected player for moving to and from the player panel and vuap
@@ -147,7 +148,7 @@
 /datum/admins/proc/vuap_open_context(mob/r_clicked_mob in GLOB.mob_list) //this is the proc for the right click menu
 	set category = null
 	set name = "Open New Player Panel"
-	if(!check_rights(NONE))
+	if(!check_rights(R_ADMIN))
 		return
 	if(!length(r_clicked_mob.ckey) || r_clicked_mob.ckey[1] == "@")
 		var/mob/player = r_clicked_mob
@@ -286,7 +287,7 @@ love, veth
 /datum/vuap_personal/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
-	if(!check_rights(NONE))
+	if(!check_rights(R_ADMIN))
 		return
 	var/mob/selected_mob = get_mob_by_ckey(ui.user.client.selectedPlayerCkey)
 	if(!selected_mob)
@@ -350,8 +351,6 @@ love, veth
 			return
 		// Message Section
 		if("pm")
-			if (!check_rights(NONE))
-				return
 			usr.client.cmd_admin_pm(selected_mob.ckey)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "PM")
 			return
@@ -432,8 +431,6 @@ love, veth
 			))
 			return
 		if("notes")
-			if(!check_rights(NONE))
-				return
 			browse_messages(target_ckey = selected_mob.ckey)
 			return
 		// Transformation Section
@@ -478,13 +475,9 @@ love, veth
 			return
 		//health section
 		if("healthscan")
-			if(!check_rights(NONE))
-				return
 			healthscan(usr, selected_mob, advanced = TRUE, tochat = TRUE)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "HealthScan")
 		if("chemscan")
-			if(!check_rights(NONE))
-				return
 			chemscan(usr, selected_mob)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "ChemScan")
 		if("aheal")
@@ -495,8 +488,6 @@ love, veth
 			to_chat(usr, "Adminhealed  [selected_mob.ckey].", confidential = TRUE)
 			return
 		if("giveDisease")
-			if(!check_rights(NONE))
-				return
 			usr.client.give_disease(selected_mob)
 			SSblackbox.record_feedback("tally", "VUAP", 1, "GiveDisease")
 			return
@@ -614,11 +605,11 @@ love, veth
 			ui.send_update()
 			return
 
-/datum/vuap_personal/ui_status(mob/user, datum/ui_state/state)
-	return check_rights_for(user.client, NONE) ? UI_INTERACTIVE : UI_CLOSE
+/datum/vuap_personal/ui_state(mob/user)
+	return GLOB.admin_state
 
 /datum/admins/proc/vuap_open()
-	if(!check_rights(NONE))
+	if(!check_rights(R_ADMIN))
 		message_admins("[key_name(src)] attempted to use VUAP without sufficient rights.")
 		return
 	var/datum/vuap_personal/tgui = new(usr)
