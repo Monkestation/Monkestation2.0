@@ -80,6 +80,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	reagents = new(100000) // this is a random number used on creation it expands based on the turfs in the group
 	if(!QDELETED(created_liquid))
 		add_to_group(created_liquid.my_turf)
+		if(QDELETED(src)) // just in case some weird fucky wucky happens and we get deleted during add_to_group
+			return
 		cached_edge_turfs[created_liquid.my_turf] = list(NORTH, SOUTH, EAST, WEST)
 	SSliquids.active_groups |= src
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(removed_reagent))
