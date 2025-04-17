@@ -39,6 +39,8 @@
 	mech_flags = EXOSUIT_MODULE_AMBULANCE
 	honk_range = 1 //only directly besides, are affected
 	tactile_message = "HARM ALARM"
+	energy_drain = 400
+	equip_cooldown = 250
 
 //trashtank
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
