@@ -125,7 +125,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(!isnull(members))
 		list_clear_nulls(members)
-	if(!length(members))
+		if(!length(members))
+			QDEL_NULL(T.liquids)
+			return
+	else
 		QDEL_NULL(T.liquids)
 		return
 
