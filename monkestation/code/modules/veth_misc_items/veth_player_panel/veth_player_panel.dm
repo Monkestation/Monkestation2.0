@@ -614,11 +614,11 @@ love, veth
 			ui.send_update()
 			return
 
-/datum/vuap_personal/ui_state(mob/user)
-	return GLOB.admin_state
+/datum/vuap_personal/ui_status(mob/user, datum/ui_state/state)
+	return check_rights_for(user.client, NONE) ? UI_INTERACTIVE : UI_CLOSE
 
 /datum/admins/proc/vuap_open()
-	if (!check_rights(NONE))
+	if(!check_rights(NONE))
 		message_admins("[key_name(src)] attempted to use VUAP without sufficient rights.")
 		return
 	var/datum/vuap_personal/tgui = new(usr)
