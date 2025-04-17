@@ -15,21 +15,27 @@
 	to_chat(src, span_interface("VUAP has been opened!"), confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "VUAP")
 
+/datum/player_panel_veth/proc/player_ui_data(mob/player)
+	if(QDELETED(player) || !player.ckey)
+		return
+	var/previous_names = player.persistent_client?.get_played_names(sanitize = FALSE, seperator = ", ")
+	return list(
+		"name" = player.name || "No Character",
+		"old_name" = player_previous_names || "No Previous Characters",
+		"job" = player.job || "No Job",
+		"ckey" = player.ckey || "No Ckey",
+		"is_antagonist" = is_special_character(player, allow_fake_antags = TRUE),
+		"last_ip" = player.lastKnownIP || "No Last Known IP",
+		"ref" = REF(player)
+	)
+
 /datum/player_panel_veth/ui_data(mob/user)
 	var/list/players = list()
 	var/mobs = sort_mobs()
-	for (var/mob/mob_data in mobs)
-		if (mob_data.ckey)
-			var/player_previous_names = jointext(mob_data.persistent_client?.played_names, ", ")
-			players += list(list(
-				"name" = mob_data.name || "No Character",
-				"old_name" = player_previous_names || "No Previous Characters",
-				"job" = mob_data.job || "No Job",
-				"ckey" = mob_data.ckey || "No Ckey",
-				"is_antagonist" = is_special_character(mob_data, allow_fake_antags = TRUE),
-				"last_ip" = mob_data.lastKnownIP ||	 "No Last Known IP",
-				"ref" = REF(mob_data)
-			))
+	for(var/mob/mob as anything in mobs)
+		var/list/mob_data = player_ui_data(mob)
+		if(mob_data)
+			players += list(mob_data)
 	return list(
 		"Data" = players
 	)
