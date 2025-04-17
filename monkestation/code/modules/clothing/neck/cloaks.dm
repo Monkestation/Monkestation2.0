@@ -184,7 +184,7 @@
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
-		select_cloak_appearance.Remove(user)
+		select_cloak_appearance?.Remove(user)
 
 /obj/item/clothing/neck/mentorcloak/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
