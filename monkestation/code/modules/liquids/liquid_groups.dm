@@ -123,7 +123,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		T.liquids = new(T, src)
 		cached_edge_turfs[T] = list(NORTH, SOUTH, EAST, WEST)
 
-	if(!members)
+	if(!isnull(members))
+		list_clear_nulls(members)
+	if(!length(members))
 		QDEL_NULL(T.liquids)
 		return
 
