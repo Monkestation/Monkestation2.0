@@ -365,7 +365,7 @@
 				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
 
-	else if if(target_held_item && !HAS_TRAIT(target_held_item, TRAIT_NODROP))
+	else if(target_held_item && !HAS_TRAIT(target_held_item, TRAIT_NODROP))
 		target.dropItemToGround(target_held_item)
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
 		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
