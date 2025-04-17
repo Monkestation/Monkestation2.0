@@ -80,8 +80,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	reagents = new(100000) // this is a random number used on creation it expands based on the turfs in the group
 	if(!QDELETED(created_liquid))
 		add_to_group(created_liquid.my_turf)
-		if(QDELETED(src)) // just in case some weird fucky wucky happens and we get deleted during add_to_group
-			return
 		cached_edge_turfs[created_liquid.my_turf] = list(NORTH, SOUTH, EAST, WEST)
 	SSliquids.active_groups |= src
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(removed_reagent))
@@ -117,18 +115,13 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 ///GROUP CONTROLLING
 /datum/liquid_group/proc/add_to_group(turf/T)
-	if(QDELETED(src) || !isopenturf(T))
+	if(QDELETED(T))
 		return
 	if(QDELETED(T.liquids))
 		T.liquids = new(T, src)
 		cached_edge_turfs[T] = list(NORTH, SOUTH, EAST, WEST)
 
-	if(!isnull(members))
-		list_clear_nulls(members)
-		if(!length(members))
-			QDEL_NULL(T.liquids)
-			return
-	else
+	if(!members)
 		QDEL_NULL(T.liquids)
 		return
 
@@ -165,12 +158,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		process_group()
 
 /datum/liquid_group/proc/remove_all()
-	for(var/turf/member as anything in members)
-		if(!isnull(member?.liquids) && !QDELING(member.liquids))
-			QDEL_NULL(member.liquids)
+	for(var/turf/member in members)
+		QDEL_NULL(member.liquids)
 
 /datum/liquid_group/proc/merge_group(datum/liquid_group/otherg)
-	if(otherg == src || QDELETED(src) || QDELETED(otherg))
+	if(otherg == src)
 		return
 	if(!length(members) || !total_reagent_volume)
 		return
