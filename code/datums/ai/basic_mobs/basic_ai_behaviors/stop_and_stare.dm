@@ -4,8 +4,11 @@
 
 /datum/ai_behavior/stop_and_stare/setup(datum/ai_controller/controller, target_key)
 	. = ..()
+	/* uncomment this when/if we port blackboard targets being weakrefs
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/movable/target = weak_target?.resolve()
+	*/
+	var/atom/movable/target = controller.blackboard[target_key]
 	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
 
 /datum/ai_behavior/stop_and_stare/get_cooldown(datum/ai_controller/cooldown_for)
