@@ -6159,6 +6159,7 @@
 #include "monkestation\code\game\mecha\makeshift\locker_mech.dm"
 #include "monkestation\code\game\mecha\makeshift\makeshift_ambulance.dm"
 #include "monkestation\code\game\mecha\makeshift\makeshift_ammo.dm"
+#include "monkestation\code\game\mecha\makeshift\makeshift_drill.dm"
 #include "monkestation\code\game\mecha\makeshift\makeshift_tools.dm"
 #include "monkestation\code\game\mecha\makeshift\trash_tank.dm"
 #include "monkestation\code\game\objects\items.dm"
