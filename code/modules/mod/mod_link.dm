@@ -77,9 +77,13 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /// Shared checks for if someone can be called via modlink.
 /proc/base_mod_link_checks(mob/living/link_caller)
 	// ensure it's a valid caller at all
-	if(QDELETED(link_caller) || QDELETED(link_caller.loc))
+	if(!isliving(link_caller) || QDELING(link_caller))
+		return FALSE
+	if(QDELETED(link_caller.loc))
 		return FALSE
 	if(isdummy(link_caller))
+		return FALSE
+	if(link_caller.stat == DEAD)
 		return FALSE
 	// there's some checks we only care about if the round hasn't ended
 	if(SSticker.current_state != GAME_STATE_FINISHED)
@@ -128,13 +132,9 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 				balloon_alert(user, "frequency set")
 
 /obj/item/mod/control/proc/can_call()
-	if(!base_mod_link_checks(wearer))
-		return FALSE
-	if(wearer.stat == DEAD)
-		return FALSE
 	if(!get_charge())
 		return FALSE
-	return TRUE
+	return base_mod_link_checks(wearer)
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -308,8 +308,6 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	return istype(user) && user.wear_neck == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
-	if(!isliving(loc))
-		return FALSE
 	if(!cell?.charge)
 		return FALSE
 	return base_mod_link_checks(loc)
