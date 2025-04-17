@@ -9,7 +9,7 @@
 
 /datum/buildmode_mode/throwing/show_help(client/user)
 	to_chat(user, span_notice("***********************************************************"))
-	to_chat(user, span_notice("Left Mouse Button on obj/mob      = Select"))
+	to_chat(user, span_notice("Left Mouse Button on obj/mob           = Select"))
 	to_chat(user, span_notice("Right Mouse Button on turf/obj/mob     = Throw"))
 	to_chat(user, span_notice("***********************************************************"))
 
