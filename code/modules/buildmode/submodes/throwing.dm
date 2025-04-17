@@ -35,6 +35,7 @@
 	return TRUE
 
 /datum/buildmode_mode/throwing/proc/unset_target()
+	SIGNAL_HANDLER
 	if(isnull(throw_atom))
 		return
 	UnregisterSignal(throw_atom, COMSIG_QDELETING)
