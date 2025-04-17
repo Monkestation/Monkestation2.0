@@ -165,11 +165,12 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		process_group()
 
 /datum/liquid_group/proc/remove_all()
-	for(var/turf/member in members)
-		QDEL_NULL(member.liquids)
+	for(var/turf/member as anything in members)
+		if(!isnull(member?.liquids) && !QDELING(member.liquids))
+			QDEL_NULL(member.liquids)
 
 /datum/liquid_group/proc/merge_group(datum/liquid_group/otherg)
-	if(otherg == src)
+	if(otherg == src || QDELETED(src) || QDELETED(otherg))
 		return
 	if(!length(members) || !total_reagent_volume)
 		return
