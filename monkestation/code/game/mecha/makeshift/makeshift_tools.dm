@@ -17,11 +17,14 @@
 //sheet drill
 /obj/item/mecha_parts/mecha_equipment/drill/giantdrill
 	name = "Giant drill"
+	icon_state = "mecha_giantdrill"
 	desc = "what looks to be a drill atleast the size of you, tears through anything like butter."
-	equip_cooldown = 25 // it is not slow as shit
-	force = 100 // its a supermassive drill, on a piece of shit chassis.
+	equip_cooldown = 35 // it is not slow as shit
+	force = 15 // force low or it 1 taps.
 	mech_flags = EXOSUIT_MODULE_DRILL
-	drill_delay = 15
+	drill_level = DRILL_HARDENED
+	drill_delay = 2.5
+	toolspeed = 0.7
 
 //ambulance
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
