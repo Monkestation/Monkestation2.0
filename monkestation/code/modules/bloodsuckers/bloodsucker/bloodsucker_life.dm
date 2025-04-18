@@ -86,9 +86,12 @@
 		return FALSE
 	if(!in_torpor && (HAS_TRAIT(owner.current, TRAIT_MASQUERADE) || owner.current.has_status_effect(/datum/status_effect/bloodsucker_sol)))
 		return FALSE
+	var/in_coffin = istype(owner.current.loc, /obj/structure/closet/crate/coffin)
 	var/actual_regen = bloodsucker_regen_rate + additional_regen
 	owner.current.adjustCloneLoss(-1 * (actual_regen * 4) * mult)
 	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * mult) //adjustBrainLoss(-1 * (actual_regen * 4) * mult, 0)
+	if(in_coffin && in_torpor) // if we're in a coffin, in torpor, stabilize our body temperature.
+		owner.current.update_homeostasis_level(type, owner.current.standard_body_temperature, 10 KELVIN)
 	if(!iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		return
 	var/mob/living/carbon/user = owner.current
@@ -99,7 +102,7 @@
 	if (blood_over_cap > 0)
 		costMult += round(blood_over_cap / 1000, 0.1) // effectively 1 (normal) + 0.1 for every 100 blood you are over cap
 	if(in_torpor)
-		if(istype(user.loc, /obj/structure/closet/crate/coffin))
+		if(in_coffin)
 			if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && (COOLDOWN_FINISHED(src, bloodsucker_spam_healing)))
 				to_chat(user, span_alert("You do not heal while your Masquerade ability is active."))
 				COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_MASQUERADE)
