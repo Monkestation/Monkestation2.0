@@ -11,3 +11,17 @@
 					/obj/item/vacuum_pack)
 	crate_name = "xenobiology starter crate"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/chromosomes
+	name = "Genetic Chromosomes Crate"
+	desc = "Have you ever had issues with harvesting chromosomes from your local crew? This crate is exactly what you need. Contains 5 chromosomes that were nearest to our hands while packing this crate."
+	cost = CARGO_CRATE_VALUE * 5
+	access = ACCESS_GENETICS
+	contains = list()
+	crate_name = "surplus chromosome crate"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/chromosomes/fill(obj/structure/closet/crate/our_crate)
+	for(var/i in 1 to 5)
+		var/chromosome_path = generate_chromosome()
+		new chromosome_path(our_crate)

@@ -309,6 +309,19 @@
   flleeppyy:
   - bugfix: change discord verification code format
 2025-04-14:
+  Absolucy:
+  - bugfix: Bloodsuckers will no longer suffer a masquerade infraction when their
+      own holoparasite is watching them.
+  Addust:
+  - bugfix: the engineering outpost ruin no longer needs all its atmos room windows
+      dismantled in order to keep a PERPETUAL FIRE ALARM from occuring
+  Gboster-0:
+  - rscadd: Added many chromosome effects to a lot of mutations
+  - rscadd: Added A lotta lot of mutations from TG/Bee/Yog/Goon/Paradise, whole rainbow.
+      Gotta research em all! (note, some are only findable on certain species or need
+      to be combined)
+  - balance: You can only now get 3 chromosomes from a person using injectors and
+      2 chromosomes from using the DNA infuser
   Gw0sty:
   - spellcheck: Fixed Interrogator gramma, thanks to TerryTehCoder
   Killermankey:
@@ -327,3 +340,38 @@
   flleeppyy:
   - bugfix: Monkestation is killing modularization. Future PRs should not follow modularization
       guidelines.
+2025-04-15:
+  Absolucy:
+  - balance: Monster Hunters no longer have a hunting contract, it is instead integrated
+      into their antagonist UI.
+  - refactor: Cleaned up monster hunter code a lot.
+  - qol: Improved the Monster Hunter UI a bit.
+  - qol: You can no longer activate Jack in the Bombs in Wonderland.
+  - qol: Reworded Monster Hunter objectives a bit to be more thematic.
+  - bugfix: Hopefully fixed orbiting ghosts sometimes being lost by a Monster Hunter
+      using Paradox Shift.
+  - bugfix: Fixed an exploit related to Monster Hunters.
+  - admin: Added logging to various Monster Hunter actions.
+  - bugfix: Fixed the Monster Hunter UI always showing a red X next to objectives,
+      regardless of if they are actually completed or not.
+  Loiosh42:
+  - balance: Bogseo has been rechambered to .585 trappiste
+  - balance: The heavy weapons locker now has a riot helmet and SWAT mask
+  - balance: The heavy weapons locker now has kits instead of a loose pile of ammo
+      and guns
+  - balance: .585 trappiste non-lethal rounds mildly nerfed
+2025-04-16:
+  Draggeru:
+  - map: Modifies the centcom z level and modifies 2 admin offices
+  Snack-Max:
+  - rscadd: add Fezs to the shop
+2025-04-17:
+  Absolucy:
+  - bugfix: IPCs, androids, and bloodsuckers can no longer be cloned.
+  - bugfix: Bloodsuckers can no longer give changelings infinite free absorbs using
+      Veil of Many Faces.
+  - bugfix: Coffins now protect bloodsuckers from temperature and heat, preventing
+      a potential softlock from being stuck infinitely healing while being damaged,
+      if your coffin was in a superheated room or something.
+  - balance: Bloodsuckers in torpor while in a coffin will now have their body temperature
+      rapidly stabilized.
