@@ -42,13 +42,15 @@
 			/obj/item/organ/external/anime_head,
 			/obj/item/organ/external/anime_middle,
 			/obj/item/organ/external/floran_leaves,
+			/obj/item/organ/external/wings,
+			/obj/item/organ/external/wings/functional,
 			/obj/item/organ/internal/body_egg,
 			/obj/item/organ/internal/borer_body,
 			/obj/item/organ/internal/empowered_borer_egg,
-			// these are just for the parent types specifically, we allow subtypes of these, just like bioscramblers
-			/obj/item/organ/external/wings,
-			/obj/item/organ/external/wings/functional,
-		)) - subtypesof(/obj/item/organ/external/wings/functional) - typesof(/obj/item/organ/external/wings/moth)
+		))
+		// we only want to blacklist the "parent" wing types, which should not exist on their own - the bioscrambler blacklist does the same thing.
+		blacklisted_organs -= subtypesof(/obj/item/organ/external/wings/functional)
+		blacklisted_organs -= typesof(/obj/item/organ/external/wings/moth)
 
 	. = list()
 	if(!iscarbon(target))
