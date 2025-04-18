@@ -19,7 +19,6 @@
 #define MMI_COMPATIBLE (1<<10)
 /// Can click from any direction and perform stuff
 #define OMNIDIRECTIONAL_ATTACKS (1<<11)
-#define OMNIDIRECTIONAL_ATTACKS (1<<14)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)

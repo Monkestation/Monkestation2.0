@@ -9,6 +9,7 @@
 	movedelay = 1.2
 	step_energy_drain = 20
 	bumpsmash = TRUE
+	omnidirectional_attacks = TRUE
 	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
