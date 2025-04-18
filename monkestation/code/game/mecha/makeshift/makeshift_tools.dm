@@ -1,3 +1,10 @@
+
+// ripping code from the drills to let the drills go through rwalls
+
+#define DRILL_BASIC 1
+#define DRILL_HARDENED 2
+
+
 //locker mech
 /obj/item/mecha_parts/mecha_equipment/drill/makeshift
 	name = "Makeshift exosuit drill"
@@ -5,6 +12,7 @@
 	equip_cooldown = 60 //Its slow as shit
 	force = 10 //Its not very strong
 	mech_flags = EXOSUIT_MODULE_MAKESHIFT
+	drill_level = DRILL_BASIC
 	drill_delay = 15
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/makeshift
