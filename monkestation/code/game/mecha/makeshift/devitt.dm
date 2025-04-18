@@ -49,7 +49,7 @@
 	var/gunner_present = return_amount_of_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT) > 0
 	return "[base_icon_state]_[gunner_present]_[driver_present]"
 
-obj/vehicle/sealed/mecha/devitt/auto_assign_occupant_flags(mob/new_occupant)
+/obj/vehicle/sealed/mecha/devitt/auto_assign_occupant_flags(mob/new_occupant)
 	if(driver_amount() < max_drivers) //movement
 		add_control_flags(new_occupant, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 	else //weapons

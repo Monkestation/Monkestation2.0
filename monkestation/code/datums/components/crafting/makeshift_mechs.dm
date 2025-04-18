@@ -36,7 +36,7 @@
 	category = CAT_ROBOT
 
 
-datum/crafting_recipe/sheetmetaldrill
+/datum/crafting_recipe/sheetmetaldrill
 	name = "Sheet metal drill"
 	result = /obj/vehicle/sealed/mecha/makeshift_drill
 	reqs = list(/obj/item/stack/cable_coil = 30,
