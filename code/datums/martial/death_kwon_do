@@ -70,3 +70,13 @@
 	death_punch.Remove(consumer)
 	death_kick.Remove(consumer)
 	death_block.Remove(consumer)
+
+/datum/status_effect/food/death_kwon_do
+	id = "death_kwon_do"
+	var/datum/martial_art/death_kwon_do/deathkwondo
+
+/datum/status_effect/food/death_kwon_do/liked(mob/consumer)
+	.  = ..()
+	if(consumer.has.status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
+		deathkwondo.teach(consumer, TRUE)
+	return
