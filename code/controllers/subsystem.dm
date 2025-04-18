@@ -230,7 +230,7 @@
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
-		if (queue_node.queue_next == queue_node || queue_node.queue_prev == queue_node)
+		if (queue_node.queue_next == queue_node /* || queue_node.queue_prev == queue_node */)
 			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now"
 			//SSplexora.mc_alert(msg)
 			message_admins(msg)
