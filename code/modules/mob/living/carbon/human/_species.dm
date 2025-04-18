@@ -607,6 +607,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.remove_mutation(inert_mutation)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
+		// MONKESTATION EDIT START
+		if(islist(new_species.inert_mutation))
+			var/list/inert_mutations = new_species.inert_mutation
+			new_species.inert_mutation = pick(inert_mutations)
+		// MONKESTATION EDIT END
 		C.dna.mutation_index[location] = new_species.inert_mutation
 		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
@@ -757,12 +762,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 	if(mutant_bodyparts["ears"])
-		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
+		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || (source.head && (source.head.flags_inv & HIDEHAIR)) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
 
 // MONKESTATION ADDITION START
-	if(mutant_bodyparts["ipc_screen"]) 
-		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || source.head && (source.head.flags_inv & HIDEFACE) || (source.wear_mask && (source.head.flags_inv & HIDEFACE)) || !noggin) 
+	if(mutant_bodyparts["ipc_screen"])
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || (source.head && (source.head.flags_inv & HIDEFACE)) || (source.wear_mask && (source.head.flags_inv & HIDEFACE)) || !noggin)
 			bodyparts_to_add -= "ipc_screen"
 // MONKESTATION ADDITION END
 

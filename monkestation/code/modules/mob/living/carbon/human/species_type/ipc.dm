@@ -155,17 +155,16 @@
  * * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
  */
 /datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
+	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
+		return
 	saved_screen = change_screen // remember the old screen in case of revival
 	switch_to_screen(transformer, screen_name)
 	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
 
-
-/datum/species/ipc/on_species_loss(mob/living/carbon/C)
+/datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
-	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
-	if(change_screen)
-		change_screen.Remove(C)
-		UnregisterSignal(C, COMSIG_LIVING_DEATH)
+	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
+	change_screen?.Remove(target)
 
 /datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
@@ -185,51 +184,67 @@
 		return
 	if(!ishuman(owner))
 		return
-	var/mob/living/carbon/human/H = owner
-	H.dna.features["ipc_screen"] = screen_choice
-	H.eye_color_left = sanitize_hexcolor(color_choice)
-	H.update_body()
+	var/mob/living/carbon/human/screen_owner = owner
+	screen_owner.dna.features["ipc_screen"] = screen_choice
+	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
+	screen_owner.update_body()
 
-/datum/species/ipc/spec_revival(mob/living/carbon/human/H)
-	H.notify_ghost_cloning("You have been repaired!")
-	H.grab_ghost()
-	H.dna.features["ipc_screen"] = "BSOD"
-	H.update_body()
-	playsound(H, 'monkestation/sound/voice/dialup.ogg', 25)
-	H.say("Reactivating [pick("core systems", "central subroutines", "key functions")]...")
+/datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
+	revived_ipc.notify_ghost_cloning("You have been repaired!")
+	revived_ipc.grab_ghost()
+	revived_ipc.dna.features["ipc_screen"] = "BSOD"
+	revived_ipc.update_body()
+	playsound(revived_ipc, 'monkestation/sound/voice/dialup.ogg', 25)
+	revived_ipc.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
+	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), revived_ipc) //We have to hand this off to not stall the revive() on the sleep()s.
+
+/datum/species/ipc/proc/boot_sequence_fluff(mob/living/carbon/human/booting_ipc)
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
+	booting_ipc.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Finalizing setup...")
+	booting_ipc.say("Finalizing setup...")
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Unit [H.real_name] is fully functional. Have a nice day.")
-	switch_to_screen(H, "Console")
-	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), H, saved_screen), 5 SECONDS)
-	playsound(H.loc, 'sound/machines/chime.ogg', 50, TRUE)
-	H.visible_message(span_notice("[H]'s [change_screen ? "monitor lights up" : "eyes flicker to life"]!"), span_notice("All systems nominal. You're back online!"))
+	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
+	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
+		switch_to_screen(booting_ipc, "Console")
+		booting_ipc.visible_message(span_notice("[booting_ipc]'s [change_screen ? "monitor lights up" : "monitor flickers to life"]!"), span_notice("You're back online!"))
+	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
 
-/datum/species/ipc/replace_body(mob/living/carbon/C, datum/species/new_species)
-	..()
+/datum/species/ipc/replace_body(mob/living/carbon/target, datum/species/new_species)
+	. = ..()
+	update_chassis(target)
 
-	var/datum/sprite_accessory/ipc_chassis/chassis_of_choice = GLOB.ipc_chassis_list[C.dna.features["ipc_chassis"]]
+/datum/species/ipc/proc/update_chassis(mob/living/carbon/target)
+	if(!iscarbon(target) || QDELING(target))
+		return
+	var/list/features = target.dna?.features
+	if(!features)
+		return
+	var/datum/sprite_accessory/ipc_chassis/chassis_of_choice = GLOB.ipc_chassis_list[features["ipc_chassis"]]
 
 	if(!chassis_of_choice)
-		chassis_of_choice = GLOB.ipc_chassis_list[pick(GLOB.ipc_chassis_list)]
-		C.dna.features["ipc_chassis"] = pick(GLOB.ipc_chassis_list)
+		var/random_chassis = pick(GLOB.ipc_chassis_list)
+		chassis_of_choice = GLOB.ipc_chassis_list[random_chassis]
+		features["ipc_chassis"] = random_chassis
 
-	for(var/obj/item/bodypart/BP as() in C.bodyparts) //Override bodypart data as necessary
-		BP.limb_id = chassis_of_choice.icon_state
-		BP.name = "\improper[chassis_of_choice.name] [parse_zone(BP.body_zone)]"
-		BP.update_limb()
+	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts) //Override bodypart data as necessary
+		if(QDELETED(bodypart))
+			return
+		bodypart.limb_id = chassis_of_choice.icon_state
+		bodypart.name = "\improper[chassis_of_choice.name] [parse_zone(bodypart.body_zone)]"
+		bodypart.update_limb()
 		if(chassis_of_choice.palette_key == MUTANT_COLOR)
-			BP.should_draw_greyscale = TRUE
+			bodypart.should_draw_greyscale = TRUE
 
 /datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
 	SIGNAL_HANDLER

@@ -90,8 +90,10 @@
 #define COMSIG_CARBON_GAIN_ADDICTION "carbon_gain_addiction"
 ///Called when a carbon is no longer addicted (source = what addiction datum was lost, addicted_mind = mind of the freed carbon)
 #define COMSIG_CARBON_LOSE_ADDICTION "carbon_lose_addiction"
-///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added) - this is before on_gain()
+///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added, resilience = the resilience of the trauma given, if set differently from the default) - this is before on_gain()
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
+	/// Return if you want to prevent the carbon from gaining the brain trauma.
+	#define COMSIG_CARBON_BLOCK_TRAUMA (1 << 0)
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
@@ -118,6 +120,10 @@
 	#define COMSIG_CARBON_BLOCK_EAT (1 << 0)
 ///Called when a carbon vomits : (distance, force)
 #define COMSIG_CARBON_VOMITED "carbon_vomited"
+///Called from apply_overlay(cache_index, overlay)
+#define COMSIG_CARBON_APPLY_OVERLAY "carbon_apply_overlay"
+///Called from remove_overlay(cache_index, overlay)
+#define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 
 // /mob/living/carbon/human signals
 

@@ -336,7 +336,8 @@
 		hammer_synced = new_hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
-	if(owner.mob_size >= MOB_SIZE_LARGE)
+	var/list/factions = list(FACTION_MINING, FACTION_BOSS) // MONKESTATION ADDITION
+	if(faction_check(owner.faction, factions)) //MONKESTATION EDIT, only marks mining mobs no longer large mobs
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
@@ -589,20 +590,37 @@
 	id = "spasms"
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
+// MONKESTATION ADDITION START
+	var/mutation_synchronizer = 1
+	var/mutation_power = 1
+	var/mutation_energy = 1
+// MONKESTATION ADDITION END
 
 /datum/status_effect/spasms/tick()
 	if(owner.stat >= UNCONSCIOUS)
 		return
-	if(!prob(15))
+//	if(!prob(15)) // MONKESTATION EDIT OLD
+	if(!prob(15 * mutation_synchronizer / mutation_energy)) // MONKESTATION EDIT NEW
 		return
 	switch(rand(1,5))
 		if(1)
 			if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
 				to_chat(owner, span_warning("Your leg spasms!"))
 				step(owner, pick(GLOB.cardinals))
+				// MONKESTATION ADDITION START
+				if(mutation_power > 1)
+					var/obj/item/bodypart/leg = owner.get_bodypart("[prob(50) ? "l" : "r"]_leg")
+					leg.receive_damage(2 * mutation_power)
+				// MONKESTATION ADDITION END
 		if(2)
 			if(owner.incapacitated())
 				return
+			// MONKESTATION ADDITION START
+			if(mutation_power > 1)
+				var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+				var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+				arm.receive_damage(1 * mutation_power)
+			// MONKESTATION ADDITION END
 			var/obj/item/held_item = owner.get_active_held_item()
 			if(!held_item)
 				return
@@ -623,6 +641,12 @@
 				to_chat(owner, span_warning("Your arm spasms!"))
 				owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
 				owner.ClickOn(pick(targets))
+				// MONKESTATION ADDITION START
+				if(mutation_power > 1)
+					var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+					var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+					arm.receive_damage(2 * mutation_power)
+				// MONKESTATION ADDITION END
 			owner.set_combat_mode(FALSE)
 		if(4)
 			owner.set_combat_mode(TRUE)
@@ -630,6 +654,12 @@
 			owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
 			owner.ClickOn(owner)
 			owner.set_combat_mode(FALSE)
+			// MONKESTATION ADDITION START
+			if(mutation_power > 1)
+				var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+				var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+				arm.receive_damage(2 * mutation_power)
+			// MONKESTATION ADDITION END
 		if(5)
 			if(owner.incapacitated())
 				return
@@ -641,6 +671,12 @@
 				to_chat(owner, span_warning("Your arm spasms!"))
 				owner.log_message("threw [held_item] due to a Muscle Spasm", LOG_ATTACK)
 				owner.throw_item(pick(targets))
+			// MONKESTATION ADDITION START
+			if(mutation_power > 1)
+				var/active_arm_dir = owner.held_index_to_dir(owner.active_hand_index)
+				var/obj/item/bodypart/arm = owner.get_bodypart("[active_arm_dir]_arm")
+				arm.receive_damage(2 * mutation_power)
+			// MONKESTATION ADDITION END
 
 /datum/status_effect/convulsing
 	id = "convulsing"

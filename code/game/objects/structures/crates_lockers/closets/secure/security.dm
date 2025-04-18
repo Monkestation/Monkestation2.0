@@ -167,10 +167,12 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/detective/full(src)
+	new /obj/item/storage/belt/holster/detective/bis/full(src) // Monkestation edit : Adding some substance to the detective role
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 	new /obj/item/clothing/head/fedora/inspector_hat(src)
+	new /obj/item/card/id/advanced/undercover(src) // Monkestation edit : Adding some substance to the detective role
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
 
 /obj/structure/closet/secure_closet/injection
@@ -321,7 +323,7 @@
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
-	req_one_access = list("nt_rep","armory")
+	req_one_access = list("blueshield","armory")
 	icon_state = "tac"
 
 /obj/structure/closet/secure_closet/tac/PopulateContents()

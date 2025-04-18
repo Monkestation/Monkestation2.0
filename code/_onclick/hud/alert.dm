@@ -62,7 +62,7 @@
 		thealert.set_severity(severity)
 
 	alerts[category] = thealert
-	if(client && hud_used)
+	if(HAS_CONNECTED_PLAYER(src) && hud_used)
 		hud_used.reorganize_alerts()
 	if(!no_anim)
 		thealert.transform = matrix(32, 0, MATRIX_TRANSLATE)
@@ -639,7 +639,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/angle = 0
 	var/mob/living/basic/construct/Cviewer
 
-/atom/movable/screen/alert/bloodsense/Initialize(mapload)
+/atom/movable/screen/alert/bloodsense/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	narnar = new('icons/hud/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
@@ -766,7 +766,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged."
 	icon_state = "empty_cell"
 
-/atom/movable/screen/alert/emptycell/Initialize(mapload)
+/atom/movable/screen/alert/emptycell/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance(updates=UPDATE_DESC)
 
@@ -781,7 +781,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's power cell is running low."
 	icon_state = "low_cell"
 
-/atom/movable/screen/alert/lowcell/Initialize(mapload)
+/atom/movable/screen/alert/lowcell/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance(updates=UPDATE_DESC)
 

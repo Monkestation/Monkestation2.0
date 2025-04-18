@@ -35,6 +35,24 @@
 
 	var/list/dent_decals
 
+	//Monkestation edit start
+	max_integrity = 300
+	damage_deflection = 22 // big chunk of solid metal
+	uses_integrity = TRUE
+	armor_type = /datum/armor/wall
+
+/datum/armor/wall
+	melee = 60
+	bullet = 60
+	laser = 60
+	energy = 0
+	bomb = 0
+	bio = 0
+	acid = 50
+	wound = 0
+//Monkestation edit end
+
+
 /turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
 	..()
 	if(carbon_mob != user)
@@ -108,10 +126,6 @@
 	if(SSstation_coloring.wall_trims)
 		trim_color = SSstation_coloring.get_default_color()
 
-/turf/closed/wall/atom_destruction(damage_flag)
-	. = ..()
-	dismantle_wall(TRUE, FALSE)
-
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))
 		GLOB.station_turfs -= src
@@ -121,6 +135,37 @@
 /turf/closed/wall/examine(mob/user)
 	. += ..()
 	. += deconstruction_hints(user)
+
+//monkestation edit start
+/turf/closed/wall/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	. = ..()
+	if(.) // add a dent if it took damage
+		add_dent(WALL_DENT_HIT)
+
+/turf/closed/wall/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!uses_integrity)
+		CRASH("attacked_by() was called on an wall that doesn't use integrity!")
+
+	if(!attacking_item.force)
+		return
+
+	var/damage = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, TRUE, armour_penetration = attacking_item.armour_penetration)
+	//only witnesses close by and the victim see a hit message.
+	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "attacked", attacking_item)
+
+/turf/closed/wall/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+	if(damage_amount < damage_deflection && (damage_type in list(MELEE, BULLET, LASER, ENERGY)))
+		return 0 // absolutely no bypassing damage deflection by using projectiles
+	return ..()
+
+/turf/closed/wall/atom_destruction(damage_flag)
+	. = ..()
+	if(damage_flag == MELEE)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 50, TRUE) //Otherwise there's no sound for hitting the wall, since it's just dismantled
+	dismantle_wall(TRUE, TRUE)
+//monkestation edit end
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)
 	return span_notice("The outer plating is <b>welded</b> firmly in place.")
@@ -167,7 +212,7 @@
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
-		dismantle_wall(1,1)
+		dismantle_wall(TRUE, TRUE) //monkestation edit
 		return
 
 	switch(severity)
@@ -179,17 +224,16 @@
 		if(EXPLODE_HEAVY)
 			dismantle_wall(prob(50), TRUE)
 		if(EXPLODE_LIGHT)
-			if (prob(hardness))
-				dismantle_wall(0,1)
+			take_damage(150, BRUTE, BOMB) // less kaboom monkestation edit
 	if(!density)
 		..()
 
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
-	if(prob(50))
-		dismantle_wall()
-	else
-		add_dent(WALL_DENT_HIT)
+	//monkestation edit start
+	take_damage(400, BRUTE, MELEE, FALSE)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+	//monkestation edit end
 
 /turf/closed/wall/attack_paw(mob/living/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -202,19 +246,14 @@
 		return
 	if(arm.bodypart_disabled)
 		return
-	if(prob(hardness))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		hulk_recoil(arm, user)
-		dismantle_wall(1)
-
-	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		add_dent(WALL_DENT_HIT)
-		user.visible_message(span_danger("[user] smashes \the [src]!"), \
-					span_danger("You smash \the [src]!"), \
-					span_hear("You hear a booming smash!"))
+	//monkestation edit start
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
+	take_damage(400, BRUTE, MELEE, FALSE)
+	playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	to_chat(user, span_notice("You punch the wall."))
+	hulk_recoil(arm, user)
 	return TRUE
+	//monkestation edit end
 
 /**
  *Deals damage back to the hulk's arm.
@@ -243,7 +282,7 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/W, mob/user, params)
+/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, params) //monkestation edit
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
@@ -256,27 +295,34 @@
 	add_fingerprint(user)
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
+	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user)) //monkestation edit
 		return
 
-	return ..()
+	return ..() || (attacking_item.attack_atom(src, user))
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
-	if(((user.istate & ISTATE_HARM)) || !LAZYLEN(dent_decals))
+	if(!(user.istate & ISTATE_HARM)) //monkestation edit
 		return FALSE
 
+	//monkestation edit start
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
-			return FALSE
-
-		to_chat(user, span_notice("You begin fixing dents on the wall..."))
-		if(W.use_tool(src, user, 0, volume=100))
-			if(iswallturf(src) && LAZYLEN(dent_decals))
-				to_chat(user, span_notice("You fix some dents on the wall."))
-				cut_overlay(dent_decals)
-				dent_decals.Cut()
+		if(atom_integrity >= max_integrity)
+			to_chat(user, span_warning("[src] is intact!"))
 			return TRUE
 
+		if(!W.tool_start_check(user, amount=0))
+			to_chat(user, span_warning("You need more fuel to repair [src]!"))
+			return TRUE
+
+		to_chat(user, span_notice("You begin repairing [src]..."))
+		if(W.use_tool(src, user, 3 SECONDS, volume=100))
+			update_integrity(max_integrity)
+			to_chat(user, span_notice("You repair [src]."))
+			cut_overlay(dent_decals)
+			dent_decals.Cut()
+			return TRUE
+		return TRUE
+	//monkestation edit end
 	return FALSE
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
@@ -308,9 +354,15 @@
 	return FALSE
 
 /turf/closed/wall/singularity_pull(S, current_size)
-	..()
-	wall_singularity_pull(current_size)
+	. = ..()
+	//monkestation edit start
+	if(current_size >= STAGE_FIVE)
+		take_damage(300, armour_penetration=100) // LORD SINGULOTH CARES NOT FOR YOUR "ARMOR"
+	else if(current_size == STAGE_FOUR)
+		take_damage(150, armour_penetration=100)
+	//monkestation edit end
 
+/* //MONKESTATION REMOVAL: Deprecated, obselete old code proc
 /turf/closed/wall/proc/wall_singularity_pull(current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
@@ -319,6 +371,7 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+*/
 
 /turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()
@@ -358,7 +411,12 @@
 			return TRUE
 	return FALSE
 
-/turf/closed/wall/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
+//monkestation edit start
+/turf/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8)) // this only exists because turf code is terrible, monkestation
+	return
+
+/turf/closed/wall/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
+//monkestation edit end
 	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
 		return
 

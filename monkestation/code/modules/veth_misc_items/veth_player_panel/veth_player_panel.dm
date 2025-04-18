@@ -20,7 +20,7 @@
 	var/mobs = sort_mobs()
 	for (var/mob/mob_data in mobs)
 		if (mob_data.ckey)
-			var/player_previous_names = get_player_details(mob_data)?.played_names?.Join(", ")
+			var/player_previous_names = jointext(mob_data.persistent_client?.played_names, ", ")
 			players += list(list(
 				"name" = mob_data.name || "No Character",
 				"old_name" = player_previous_names || "No Previous Characters",

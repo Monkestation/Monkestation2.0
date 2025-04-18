@@ -65,6 +65,17 @@
 	GenerateTag()
 	return ..()
 
+/// Assigns a (c)key to this mob.
+/mob/proc/PossessByPlayer(ckey)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(isnull(ckey))
+		return
+
+	if(!istext(ckey))
+		CRASH("Tried to assign a mob a non-text ckey, wtf?!")
+
+	src.ckey = ckey(ckey)
+
 /**
  * Intialize a mob
  *
@@ -619,7 +630,7 @@
 	//you can only initiate exaimines if you have a hand, it's not disabled, and only as many examines as you have hands
 	/// our active hand, to check if it's disabled/detatched
 	var/obj/item/bodypart/active_hand = has_active_hand()? get_active_hand() : null
-	if(!active_hand || active_hand.bodypart_disabled || LAZYLEN(do_afters) >= usable_hands)
+	if(!active_hand || active_hand.bodypart_disabled || do_after_count() >= usable_hands)
 		to_chat(src, span_warning("You don't have a free hand to examine this!"))
 		return FALSE
 
@@ -808,7 +819,7 @@
 		qdel(M)
 		return
 
-	M.key = key
+	M.PossessByPlayer(key)
 
 
 /**
@@ -1497,7 +1508,7 @@
 	if(!canon_client)
 		return
 
-	for(var/datum/callback/callback as anything in canon_client.player_details?.post_logout_callbacks)
+	for(var/datum/callback/callback as anything in persistent_client?.post_logout_callbacks)
 		callback.Invoke()
 
 	if(canon_client?.movingmob)

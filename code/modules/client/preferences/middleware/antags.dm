@@ -119,11 +119,15 @@
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
 		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,
-		//monkestation antags
+		// monkestation start: non-dynamic antags
 		ROLE_CORTICAL_BORER = /datum/antagonist/cortical_borer,
 		ROLE_DRIFTING_CONTRACTOR = /datum/antagonist/traitor/contractor,
 		ROLE_SLASHER = /datum/antagonist/slasher,
-		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man
+		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man,
+		ROLE_TERATOMA = /datum/antagonist/teratoma,
+		ROLE_ASSAULT_OPERATIVE = /datum/antagonist/assault_operative,
+		ROLE_PLAGUERAT = /datum/antagonist/plague_rat,
+		// monkestation end
 	)
 
 	var/list/antagonists = non_ruleset_antagonists.Copy()

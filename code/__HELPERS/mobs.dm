@@ -388,8 +388,20 @@ GLOBAL_LIST_EMPTY(species_list)
 		progbar.end_progress()
 
 	if(interaction_key)
+		var/reduced_interaction_count = (LAZYACCESS(user.do_afters, interaction_key) || 0) - 1
+		if(reduced_interaction_count > 0) // Not done yet!
+			LAZYSET(user.do_afters, interaction_key, reduced_interaction_count)
+			return
+		// all out, let's clear er out fully
 		LAZYREMOVE(user.do_afters, interaction_key)
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_ENDED)
+
+/// Returns the total amount of do_afters this mob is taking part in
+/mob/proc/do_after_count()
+	var/count = 0
+	for(var/key in do_afters)
+		count += do_afters[key]
+	return count
 
 /proc/is_species(A, species_datum)
 	. = FALSE
@@ -679,8 +691,11 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
-	var/list/mobs = sort_mobs()
-	for(var/mob/mob in mobs)
+	var/mob/persistent_mob = GLOB.persistent_clients_by_ckey[key]?.mob
+	if(persistent_mob)
+		return persistent_mob
+	// hopefully the above will always handle it, but any time a coder thinks "no way this will happen", murphy's law guarantees it somehow will
+	for(var/mob/mob as anything in GLOB.mob_list)
 		if(mob.ckey == key)
 			return mob
 

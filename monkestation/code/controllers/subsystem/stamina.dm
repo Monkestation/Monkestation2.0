@@ -8,6 +8,9 @@ SUBSYSTEM_DEF(stamina)
 	var/list/processing = list()
 	var/list/currentrun = list()
 
+/datum/controller/subsystem/stamina/Recover()
+	processing = SSstamina.processing.Copy()
+
 /datum/controller/subsystem/stamina/stat_entry(msg)
 	msg = "P:[length(processing)]"
 	return ..()
@@ -18,9 +21,10 @@ SUBSYSTEM_DEF(stamina)
 	//cache for sanic speed (lists are references anyways)
 	var/list/current_run = currentrun
 
+	var/seconds_per_tick = world.tick_lag * wait * 0.1
 	while(length(current_run))
 		var/datum/stamina_container/thing = current_run[length(current_run)]
 		current_run.len--
-		thing.update(world.tick_lag * wait * 0.1)
+		thing.update(seconds_per_tick)
 		if (MC_TICK_CHECK)
 			return

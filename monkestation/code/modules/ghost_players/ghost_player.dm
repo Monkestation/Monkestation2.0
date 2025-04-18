@@ -38,12 +38,13 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	created_ability.Grant(src)
 
 /mob/living/carbon/human/ghost/Destroy()
-	if(dueling && linked_button)
-		addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
-
 	if(linked_button)
-		linked_button.remove_user(src)
-		linked_button = null
+		if(dueling)
+			addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
+		else
+			linked_button.remove_user(src)
+			linked_button = null
+
 	return ..()
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
@@ -57,7 +58,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 /mob/living/carbon/human/ghost/proc/dissolve_and_ghost()
 	var/mob/dead/observer/new_ghost = ghostize(can_reenter_corpse = FALSE)
 	if(!QDELETED(new_ghost))
-		new_ghost.key = old_key
+		new_ghost.PossessByPlayer(old_key)
 		new_ghost.mind = old_mind
 		new_ghost.can_reenter_corpse = old_reenter
 	old_human?.temporary_sleep = FALSE
@@ -141,7 +142,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	var/mob/living/carbon/human/ghost/new_existence = new(key, mind, can_reenter_corpse, brain)
 	our_client?.prefs.safe_transfer_prefs_to(new_existence, TRUE, FALSE)
 	new_existence.move_to_ghostspawn()
-	new_existence.key = key
+	new_existence.PossessByPlayer(key)
 	new_existence.equip_outfit_and_loadout(/datum/outfit/ghost_player, our_client.prefs)
 	for(var/datum/loadout_item/item as anything in loadout_list_to_datums(our_client?.prefs?.loadout_list))
 		if(length(item.restricted_roles))

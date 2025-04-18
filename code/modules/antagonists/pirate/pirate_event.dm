@@ -17,6 +17,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_COMMUNAL, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 //monkestation edit end
 
 /datum/round_event_control/pirates/preRunEvent()

@@ -62,7 +62,7 @@
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(brain_owner)
 		else
-			brain_owner.key = brainmob.key
+			brain_owner.PossessByPlayer(brainmob.key)
 
 		brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
@@ -473,7 +473,9 @@
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
-		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
+		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
+			qdel(actual_trauma)
+			return FALSE
 		actual_trauma.on_gain()
 	if(resilience)
 		actual_trauma.resilience = resilience

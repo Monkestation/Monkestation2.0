@@ -39,11 +39,15 @@
 /datum/component/symptom_genes/Destroy(force)
 	current_user = null
 	current_extrapolator = null
-	if(puzzle)
-		SStgui.close_uis(puzzle)
-		UnregisterSignal(puzzle, list(COMSIG_CRACKER_PUZZLE_FAILURE, COMSIG_CRACKER_PUZZLE_SUCCESS))
-		QDEL_NULL(puzzle)
+	cleanup_puzzle()
 	return ..()
+
+/datum/component/symptom_genes/proc/cleanup_puzzle()
+	if(QDELETED(puzzle))
+		return
+	SStgui.close_uis(puzzle)
+	UnregisterSignal(puzzle, list(COMSIG_CRACKER_PUZZLE_FAILURE, COMSIG_CRACKER_PUZZLE_SUCCESS))
+	QDEL_NULL(puzzle)
 
 /datum/component/symptom_genes/proc/add_symptoms(datum/species/host_species, symptom_count)
 
@@ -106,8 +110,8 @@
 
 	puzzle = new(difficulty = text2num(initial(current_choice.badness)) + 1, parent = src)
 
-	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_SUCCESS, PROC_REF(on_puzzle_success))
-	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_FAILURE, PROC_REF(on_puzzle_fail))
+	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_SUCCESS, PROC_REF(on_puzzle_success), override = TRUE)
+	RegisterSignal(src, COMSIG_CRACKER_PUZZLE_FAILURE, PROC_REF(on_puzzle_fail), override = TRUE)
 	puzzle.ui_interact(user)
 
 
@@ -116,9 +120,7 @@
 	current_choice = null
 	current_user = null
 	current_extrapolator = null
-	SStgui.close_uis(puzzle)
-	UnregisterSignal(src, list(COMSIG_CRACKER_PUZZLE_FAILURE, COMSIG_CRACKER_PUZZLE_SUCCESS))
-	QDEL_NULL(puzzle)
+	cleanup_puzzle()
 
 /datum/component/symptom_genes/proc/on_puzzle_success()
 	playsound(current_user, 'sound/machines/defib_success.ogg', 50, FALSE)
@@ -157,9 +159,7 @@
 //		current_extrapolator.generate_varient()
 	current_extrapolator = null
 
-	UnregisterSignal(src, list(COMSIG_CRACKER_PUZZLE_FAILURE, COMSIG_CRACKER_PUZZLE_SUCCESS))
-	SStgui.close_uis(puzzle)
-	qdel(puzzle)
+	cleanup_puzzle()
 
 /mob/living/carbon/human/Initialize(mapload)
 	. = ..()

@@ -3,7 +3,7 @@
 	trigger_chance = 3
 	visible_message = "reaches a catastrophic overload, cracks forming at its surface!"
 
-	research_value = 500 //nanotrasen always likes weapons IMO
+	research_value = TECHWEB_DISCOUNT_MINOR //nanotrasen always likes weapons IMO
 
 	weight = ARTIFACT_UNCOMMON
 

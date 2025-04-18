@@ -13,6 +13,10 @@ export const COMBINE_MAX_TIME_WINDOW = 5000;
 export const IMAGE_RETRY_DELAY = 250;
 export const IMAGE_RETRY_LIMIT = 10;
 export const IMAGE_RETRY_MESSAGE_AGE = 60000;
+export const RENDERER_RELOAD_WAIT = 1000;
+
+// Remove with 516
+export const RENDERER_RELOAD_WAIT_TRIDENT = 2500;
 
 // Default message type
 export const MESSAGE_TYPE_UNKNOWN = 'unknown';
@@ -24,6 +28,7 @@ export const MESSAGE_TYPE_INTERNAL = 'internal';
 export const MESSAGE_TYPE_SYSTEM = 'system';
 export const MESSAGE_TYPE_LOCALCHAT = 'localchat';
 export const MESSAGE_TYPE_RADIO = 'radio';
+export const MESSAGE_TYPE_ENTERTAINMENT = 'entertainment';
 export const MESSAGE_TYPE_INFO = 'info';
 export const MESSAGE_TYPE_WARNING = 'warning';
 export const MESSAGE_TYPE_DEADCHAT = 'deadchat';
@@ -62,7 +67,13 @@ export const MESSAGE_TYPES = [
     description: 'All departments of radio messages',
     selector:
       //      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .enteradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .newscaster, .resonate, .abductor, .alien, .changeling', MONKESTATION EDIT CHANGE OLD
-      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .enteradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .newscaster, .resonate, .abductor, .alien, .changeling, .radioradio .uncommonradio', // MONKESTATION EDIT CHANGE NEW
+      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling, .radioradio, .uncommonradio', // MONKESTATION EDIT CHANGE NEW
+  },
+  {
+    type: MESSAGE_TYPE_ENTERTAINMENT,
+    name: 'Entertainment',
+    description: 'Entertainment and newscaster broadcasts',
+    selector: '.enteradio, .newscaster',
   },
   {
     type: MESSAGE_TYPE_INFO,

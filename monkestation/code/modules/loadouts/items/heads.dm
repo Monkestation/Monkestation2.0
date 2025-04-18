@@ -202,6 +202,23 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/straw_hat
 	name = "Straw Hat"
 	item_path = /obj/item/clothing/head/costume/straw_hat
+
+/datum/loadout_item/head/flowery
+	name = "Perfumed Bow"
+	item_path = /obj/item/clothing/head/costume/flowery
+
+/datum/loadout_item/head/starry
+	name = "Star Speckled Bow"
+	item_path = /obj/item/clothing/head/costume/starry
+
+/datum/loadout_item/head/tiara
+	name = "Tiara"
+	item_path = /obj/item/clothing/head/costume/tiara
+
+/datum/loadout_item/head/fez
+	name = "Fez"
+	item_path = /obj/item/clothing/head/hats/fez
+
 /*
 *	CHRISTMAS
 */
@@ -288,6 +305,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/propeller_hat
 	name = "Rainbow Propeller Hat"
 	item_path = /obj/item/clothing/head/soft/propeller_hat
+
+/datum/loadout_item/head/fez
+	name = "Fez"
+	item_path = /obj/item/clothing/head/hats/fez
+
+
 
 /*
 *	JOB-LOCKED

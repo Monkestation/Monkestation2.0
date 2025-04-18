@@ -2,3 +2,4 @@
 #define span_italics(str) ("<span class='italics'>" + str + "</span>")
 #define span_velvet(str) ("<span class='velvet'>" + str + "</span>")
 #define span_progenitor(str) ("<span class='progenitor'>" + str + "</span>")
+#define span_kbity(str) ("<span class='kbity'>" + str + "</span>")

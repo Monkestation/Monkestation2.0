@@ -64,6 +64,7 @@
 /datum/round_event_control/antagonist
 	checks_antag_cap = TRUE
 	track = EVENT_TRACK_ROLESET
+	dont_spawn_near_roundend = TRUE
 	///list of required roles, needed for this to form
 	var/list/exclusive_roles
 	/// Protected roles from the antag roll. People will not get those roles if a config is enabled
@@ -122,11 +123,10 @@
 
 /datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
-	if(!check_required())
-		return FALSE
-
 	if(!.)
 		return
+	if(!check_required())
+		return FALSE
 
 /datum/round_event_control/antagonist/solo
 	typepath = /datum/round_event/antagonist/solo

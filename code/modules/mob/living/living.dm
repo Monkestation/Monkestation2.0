@@ -1,6 +1,6 @@
 /mob/living/Initialize(mapload)
 	. = ..()
-	stamina = new(src)
+	stamina = new(src) // monkestation edit: stamina rework
 	if(current_size != RESIZE_DEFAULT_SIZE)
 		update_transform(current_size)
 	AddElement(/datum/element/movetype_handler)
@@ -585,7 +585,8 @@
  * Argument:
  * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
  */
-/mob/living/proc/get_idcard(hand_first)
+/mob/living/proc/get_idcard(hand_first) as /obj/item/card/id
+	RETURN_TYPE(/obj/item/card/id)
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
 	//Check hands
@@ -1421,7 +1422,7 @@
 	)
 
 	// If we weren't passed one, pick a default one
-	what_to_randomize ||= pick(possible_results)
+	what_to_randomize ||= pick(HAS_MIND_TRAIT(src, TRAIT_UNBORGABLE) ? (possible_results - WABBAJACK_ROBOT) : possible_results) // monkestation start: TRAIT_UNBORGABLE
 
 	switch(what_to_randomize)
 		if(WABBAJACK_MONKEY)
@@ -1567,7 +1568,7 @@
 
 	// Well, no mmind, guess we should try to move a key over
 	else if(key)
-		new_mob.key = key
+		new_mob.PossessByPlayer(key)
 
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
@@ -2603,7 +2604,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		summoned_guardian.fully_replace_character_name(null, picked_name)
 	if(picked_color)
 		summoned_guardian.set_guardian_colour(picked_color)
-	summoned_guardian.key = guardian_client?.key
+	summoned_guardian.PossessByPlayer(guardian_client?.key)
 	guardian_client?.init_verbs()
 	if(del_mob)
 		qdel(old_mob)

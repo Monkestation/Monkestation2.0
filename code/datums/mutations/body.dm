@@ -8,9 +8,11 @@
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 	synchronizer_coeff = 1
 	power_coeff = 1
+	energy_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/epilepsy/on_life(seconds_per_tick, times_fired)
-	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
+//	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick)) // MONKESTATION EDIT OLD
+	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick)) // MONKESTATION EDIT NEW
 		trigger_seizure()
 
 /datum/mutation/human/epilepsy/proc/trigger_seizure()
@@ -83,9 +85,11 @@
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 	synchronizer_coeff = 1
 	power_coeff = 1
+	energy_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/cough/on_life(seconds_per_tick, times_fired)
-	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS)
+//	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS) // MONKESTATION EDIT OLD
+	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick) && owner.stat == CONSCIOUS) // MONKESTATION EDIT NEW
 		owner.drop_all_held_items()
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
@@ -154,14 +158,18 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
+	power_coeff = 1 // MONKESTATION ADDITION
+	energy_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/tourettes/on_life(seconds_per_tick, times_fired)
-	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun())
+//	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun()) // MONKESTATION EDIT OLD
+	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun()) // MONKESTATION EDIT NEW
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
 			if(2 to 3)
-				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "MROW", "ANIMES", "LIZZZARD", "HELP")]", forced=name)
+//				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "MROW", "ANIMES", "LIZZZARD", "HELP")]", forced=name) // MONKESTATION EDIT OLD
+				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "MROW", "ANIMES", "LIZZZARD", "HELP")][GET_MUTATION_POWER(src) > 1 ? "!!" : ""]", forced=name) // MONKESTATION EDIT NEW
 		var/x_offset_old = owner.pixel_x
 		var/y_offset_old = owner.pixel_y
 		var/x_offset = owner.pixel_x + rand(-2,2)
@@ -304,9 +312,11 @@
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
+	energy_coeff = 1 // MONKESTATION ADDITION -- Energizer increases how often fiery sweat happens
 
 /datum/mutation/human/fire/on_life(seconds_per_tick, times_fired)
-	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
+//	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick)) // MONKESTATION EDIT OLD
+	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick)) // MONKESTATION EDIT NEW
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.ignite_mob()
 
@@ -360,6 +370,7 @@
 	/// The cooldown for the warning message
 	COOLDOWN_DECLARE(msgcooldown)
 
+/* MONKESTATION REMOVAL -- Moved to the monkestation folder
 /datum/mutation/human/acidflesh/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(13, seconds_per_tick))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
@@ -369,6 +380,7 @@
 			owner.acid_act(rand(30, 50), 10)
 			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
 			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
+*/
 
 /datum/mutation/human/gigantism
 	name = "Gigantism"
@@ -433,6 +445,7 @@
 		return
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
+/* MONKESTATION REMOVAL -- Moved to the monkestation folder
 ///Triggers on moved(). Randomly makes the owner trip
 /datum/mutation/human/extrastun/proc/on_move()
 	SIGNAL_HANDLER
@@ -443,6 +456,7 @@
 		return //remove the 'edge' cases
 	to_chat(owner, span_danger("You trip over your own feet."))
 	owner.Knockdown(30)
+*/
 
 /datum/mutation/human/martyrdom
 	name = "Internal Martyrdom"
@@ -451,6 +465,8 @@
 	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
 	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
 	text_lose_indication = "<span class='notice'>Your internal organs feel at ease.</span>"
+	synchronizer_coeff = 1 // MONKESTATION ADDITION
+	power_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/martyrdom/on_acquiring()
 	. = ..()
@@ -474,7 +490,8 @@
 	for(var/obj/item/organ/I in organs)
 		qdel(I)
 
-	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
+//	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src) // MONKESTATION EDIT OLD
+	explosion(owner, light_impact_range = 2 * GET_MUTATION_POWER(src), adminlog = TRUE, explosion_cause = src) // MONKESTATION EDIT NEW
 	for(var/mob/living/carbon/human/splashed in view(2, owner))
 		var/obj/item/organ/internal/eyes/eyes = splashed.get_organ_slot(ORGAN_SLOT_EYES)
 		if(eyes)
@@ -488,6 +505,20 @@
 	for(var/mob/living/silicon/borgo in view(2, owner))
 		to_chat(borgo, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		borgo.Paralyze(6 SECONDS)
+	// MONKESTATION ADDITION START
+	// If we are synchronized, we instead of gibbing drop all our blood on the floor and remove the mutation
+	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
+		owner.investigate_log("had their brain deleted by the martyrdom mutation.", INVESTIGATE_DEATHS)
+		var/turf/blood_turf = get_turf(owner)
+
+		var/blood_amount = min(owner.blood_volume, initial(owner.blood_volume) * 5)
+		var/datum/blood_type/blood = owner.get_blood_type()
+
+		blood_turf.add_liquid(blood.reagent_type, blood_amount)
+		owner.blood_volume = 0
+		remove()
+		return
+	// MONKESTATION ADDITION END
 	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
 	owner.gib()
 

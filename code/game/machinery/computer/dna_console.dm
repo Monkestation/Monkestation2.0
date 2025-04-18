@@ -179,6 +179,7 @@
 		to_chat(user, span_notice("You insert [item]."))
 		return
 
+/* MONKESTATION REMOVAL -- Moved to monkestation/code/game/machinery/computer/dna_console.dm
 	// Recycle non-activator used injectors
 	// Turn activator used injectors (aka research injectors) to chromosomes
 	if(istype(item, /obj/item/dnainjector/activator))
@@ -203,6 +204,7 @@
 			qdel(item)
 			to_chat(user, span_notice("Recycled unused [item]."))
 			return
+*/
 	return ..()
 
 /obj/machinery/computer/scan_consolenew/multitool_act(mob/living/user, obj/item/multitool/tool)
@@ -875,6 +877,14 @@
 
 			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
 			stored_mutations += A
+
+			// monkestationn start: mark as discovered when saving from disk
+			var/datum/mutation/human/mutation_type = A.type
+			if(stored_research && !(mutation_type in stored_research.discovered_mutations))
+				stored_research.discovered_mutations += mutation_type
+				say("Successfully unlocked [A.name].")
+			// monkestationn end
+
 			to_chat(usr,span_notice("Mutation successfully stored."))
 			return
 
@@ -1763,7 +1773,7 @@
 	if(!scanner_operational())
 		return FALSE
 
-	if(!connected_scanner.occupant)
+	if(!isliving(connected_scanner.occupant) || QDELING(connected_scanner.occupant))
 		return FALSE
 
 	scanner_occupant = connected_scanner.occupant

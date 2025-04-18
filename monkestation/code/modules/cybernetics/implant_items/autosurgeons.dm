@@ -1,3 +1,9 @@
+/obj/item/autosurgeon/organ/syndicate
+	name = "suspicious autosurgeon"
+	icon_state = "autosurgeon_syndicate"
+	surgery_speed = 0.75
+	loaded_overlay = "autosurgeon_syndicate_loaded_overlay"
+
 /obj/item/autosurgeon/organ/syndicate/Initialize(mapload)
 	. = ..()
 	if(istype(stored_organ, /obj/item/organ/internal/cyberimp))
@@ -16,6 +22,11 @@
 
 /obj/item/autosurgeon/organ/mantis_blade/l
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/mantis/l
+
+
+/obj/item/autosurgeon/syndicate/organ/hivenode
+	starting_organ = /obj/item/organ/internal/alien/hivenode
+	uses = 1
 
 /obj/item/autosurgeon/organ/syndicate/syndie_mantis
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis
@@ -163,3 +174,8 @@
 /obj/item/autosurgeon/organ/chemvat
 	starting_organ = /obj/item/organ/internal/cyberimp/chest/chemvat
 
+/obj/item/autosurgeon/organ/syndicate/deepvien
+	starting_organ = /obj/item/organ/internal/cyberimp/leg/chemplant/drugs
+
+/obj/item/autosurgeon/organ/syndicate/deepvien/l
+	starting_organ = /obj/item/organ/internal/cyberimp/leg/chemplant/drugs/l

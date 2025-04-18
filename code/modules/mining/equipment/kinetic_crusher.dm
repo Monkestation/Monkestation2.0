@@ -19,6 +19,7 @@
 	attack_verb_continuous = list("smashes", "crushes", "cleaves", "chops", "pulps")
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
+	tool_behaviour = TOOL_MINING
 	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
 	light_system = OVERLAY_LIGHT
@@ -33,11 +34,12 @@
 	var/overrides_twohandrequired = FALSE //Do we have the fumble on one handed attack attempt?
 	var/override_markeffect = FALSE //Do we have the default affect on detonating a mark?
 	var/override_twohandedsprite = FALSE //ENABLE THIS FOR ALL NEW CRUSHER VARIENTS OR ELSE IT WILL BREAK
+	var/force_wielded = 20 // MONKESTATION ADDITION used by one handed crushers with wendigo claw
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
 	if(!overrides_main)
-		AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+		AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=force_wielded) //MONKESTATION EDIT force_wielded
 		AddComponent(/datum/component/butchering, \
 			speed = 6 SECONDS, \
 			effectiveness = 110, \
@@ -372,19 +374,19 @@
 /obj/item/crusher_trophy/demon_claws/effect_desc()
 	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>, with <b>5X</b> effect on mark detonation"
 
-/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/crusher, mob/living/user) //MONKESTATION EDIT /crusher, screw one letter vars
 	. = ..()
 	if(.)
-		H.force += bonus_value * 0.2
-		H.detonation_damage += bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
+		crusher.force += bonus_value * 0.2
+		crusher.detonation_damage += bonus_value * 0.8
+		AddComponent(/datum/component/two_handed, force_wielded=(crusher.force_wielded + bonus_value * 0.2)) //MONKESTATION EDIT force_wielded
 
-/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)  //MONKESTATION EDIT /crusher, screw one letter vars
 	. = ..()
 	if(.)
-		H.force -= bonus_value * 0.2
-		H.detonation_damage -= bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_wielded=20)
+		crusher.force -= bonus_value * 0.2
+		crusher.detonation_damage -= bonus_value * 0.8
+		AddComponent(/datum/component/two_handed, force_wielded=crusher.force_wielded) //MONKESTATION EDIT force_wielded
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)

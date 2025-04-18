@@ -1155,7 +1155,7 @@
 	color = "#555555"
 	overdose_threshold = 30
 	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE //monkestation edit
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustBruteLoss(-5 * REM * seconds_per_tick, FALSE) //A ton of healing - this is a 50 telecrystal investment.

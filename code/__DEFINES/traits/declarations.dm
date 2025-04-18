@@ -519,7 +519,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
 
 /// Trait that tracks if something has been renamed. Typically holds a REF() to the object itself (AKA src) for wide addition/removal.
-/* #define TRAIT_WAS_RENAMED "was_renamed" */
+#define TRAIT_WAS_RENAMED "was_renamed"
 
 /// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
 #define TRAIT_DOUBLE_TAP "double_tap"
@@ -564,7 +564,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MORBID "morbid"
 
 /// Whether or not the user is in a MODlink call, prevents making more calls
-/* #define TRAIT_IN_CALL "in_call" */
+#define TRAIT_IN_CALL "in_call"
 
 /// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
 #define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
@@ -1160,10 +1160,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RUNECHAT_HIDDEN "runechat_hidden"
 
 /// the object has a label applied
-/* #define TRAIT_HAS_LABEL "labeled" */
+#define TRAIT_HAS_LABEL "labeled"
 
 /// Trait given to a mob that is currently thinking (giving off the "thinking" icon), used in an IC context
-/* #define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC" */
+#define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC"
 
 ///without a human having this trait, they speak as if they have no tongue.
 #define TRAIT_SPEAKS_CLEARLY "speaks_clearly"

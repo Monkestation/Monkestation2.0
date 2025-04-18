@@ -17,6 +17,7 @@
 	hud_icon = 'monkestation/icons/mob/slasher.dmi'
 	preview_outfit = /datum/outfit/slasher
 	show_to_ghosts = TRUE
+	var/give_objectives = TRUE
 	objectives = list(/datum/objective/slasher/harvest_souls, /datum/objective/slasher/soulsteal, /datum/objective/slasher/trappem)
 	var/datum/action/cooldown/slasher/active_action = null
 	///the linked machette that the slasher can summon even if destroyed and is unique to them
@@ -83,7 +84,7 @@
 
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 	RegisterSignal(current_mob, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(item_pickup))
-	RegisterSignal(current_mob, COMSIG_MOB_DROPPING_ITEM, PROC_REF(item_drop))
+	RegisterSignal(current_mob, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_unequipped))
 	RegisterSignal(current_mob, COMSIG_MOB_ITEM_ATTACK, PROC_REF(check_attack))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	for(var/datum/quirk/quirk as anything in current_mob.quirks)
@@ -123,8 +124,18 @@
 		human.regenerate_icons()
 		reset_fear(human)
 
+/datum/antagonist/slasher/greet()
+	. = ..()
+	to_chat(owner.current, span_userdanger("The time is ripe to hunt for souls."))
+	to_chat(owner.current, span_announce("You are a vengeful spirit that feeds on fear. <b>Stick to maintenance, the darkness reveals us but is our greatest friend</b>."))
+	to_chat(owner.current, span_announce("Stalk targets to instill fear! You will gain their souls after stalking, turning them a pallid white."))
+	to_chat(owner.current, span_announce("Claim the souls of the fallen, the more souls you have, the sharper your blade."))
+	to_chat(owner.current, span_announce("Reject the light, it hides you but makes you vulnerable."))
+	owner.current.playsound_local(null, 'monkestation/sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
+	owner.announce_objectives()
 
 /datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
 
 	var/list/currently_beating = list()
 	var/list/current_statics = list()
@@ -152,12 +163,10 @@
 				human.clear_fullscreen("slasher_prox", 15)
 				mobs_with_fullscreens -= held
 
-		for(var/mob/living/carbon/human/mobs_in_view as anything in view(7, human))
+		for(var/mob/living/carbon/human/mobs_in_view in view(7, human))
 			var/datum/mind/mind_in_view = mobs_in_view.mind
 			if(!mind_in_view.has_antag_datum(/datum/antagonist/slasher))
 				reduce_fear(human, 2)
-			else
-				continue
 
 
 	for(var/datum/weakref/held_ref as anything in (heartbeats - currently_beating))
@@ -256,7 +265,7 @@
 	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
 	stalked_human.clear_alert("slashing_stalkee")
 	owner.current.clear_alert("slashing_stalker")
-	stalked_human.tracking_beacon.Destroy()
+	QDEL_NULL(stalked_human.tracking_beacon)
 	var/mob/living/carbon/human/human = owner.current
 	var/datum/component/team_monitor/owner_monitor = human.team_monitor
 	owner_monitor.hide_hud()
@@ -284,8 +293,8 @@
 	stalked_human.emote("scream")
 	stalked_human.say("AAAAAAHHHH!!!", forced = "soulsucked")
 	souls_sucked++
-	if(stalked_human && stalked_human.tracking_beacon)
-		stalked_human.tracking_beacon.Destroy()
+	if(stalked_human?.tracking_beacon)
+		QDEL_NULL(stalked_human.tracking_beacon)
 		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
 		owner_monitor?.hide_hud(owner)
 	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
@@ -300,7 +309,7 @@
 		linked_machette.force -= 5
 		linked_machette.throwforce -= 5
 	if(stalked_human && stalked_human.tracking_beacon)
-		stalked_human.tracking_beacon.Destroy()
+		QDEL_NULL(stalked_human.tracking_beacon)
 		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
 		owner_monitor.hide_hud(owner)
 		owner.current.clear_alert("slashing_stalking")
@@ -308,6 +317,7 @@
 	stalked_human = null
 
 /datum/antagonist/slasher/proc/check_attack(mob/living/attacking_person, mob/living/attacked_mob)
+	SIGNAL_HANDLER
 	var/obj/item/held_item = attacking_person.get_active_held_item()
 
 	var/held_force = 3
@@ -320,9 +330,11 @@
 		attacked_mob.blood_particles(2, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
 
 /datum/antagonist/slasher/proc/item_pickup(datum/input_source, obj/item/source)
+	SIGNAL_HANDLER
 	RegisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER, PROC_REF(damage_multiplier))
 
-/datum/antagonist/slasher/proc/item_drop(datum/input_source, obj/item/source)
+/datum/antagonist/slasher/proc/item_unequipped(datum/input_source, obj/item/source)
+	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER)
 
 /obj/item/var/last_multi = 1

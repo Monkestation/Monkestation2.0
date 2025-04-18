@@ -6,6 +6,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_UNREACHABLE_LIST_COOLDOWN = 3 MINUTES,
 		BB_SALUTE_MESSAGES = list(
 			"salutes",
 			"nods in appreciation towards",
@@ -51,7 +52,7 @@
 /datum/ai_planning_subtree/cleaning_subtree
 
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
-	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
+	if(controller.blackboard_key_exists(BB_CLEAN_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -68,13 +69,25 @@
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets, BB_CLEAN_TARGET, final_hunt_list)
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets
-	action_cooldown = 2 SECONDS //Monkestation edit
+	action_cooldown = 3 SECONDS
+	/// Whether to also consider anything with TRAIT_TRASH_ITEM (monkestation addition)
+	var/check_trash_trait = FALSE
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
-	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
+	var/list/found = oview(search_range, controller.pawn) // monkestation edit: don't pre-filter with typecache, so we can check for TRAIT_TRASH_ITEM
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/atom/found_item in found)
-		if(LAZYACCESS(ignore_list, found_item))
+	for(var/atom/found_item as anything in found)
+		// monkestation start: check for TRAIT_TRASH_ITEM
+		if(QDELETED(found_item))
+			continue
+		if(!is_type_in_typecache(found_item, locate_paths) && (!check_trash_trait || !HAS_TRAIT(found_item, TRAIT_TRASH_ITEM)))
+			continue
+		// monkestation end
+		if(LAZYACCESS(ignore_list, REF(found_item)))
+			continue
+		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
+		if(!length(path))
+			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(found_item), TRUE)
 			continue
 		return found_item
 
@@ -84,7 +97,7 @@
 	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
 	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
-	if(controller.reachable_key(BB_ACID_SPRAY_TARGET, BOT_CLEAN_PATH_LIMIT))
+	if(controller.blackboard_key_exists(BB_ACID_SPRAY_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -97,7 +110,7 @@
 /datum/ai_behavior/find_and_set/spray_target/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_list, human_target))
+		if(LAZYACCESS(ignore_list, REF(human_target)))
 			continue
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
@@ -128,16 +141,20 @@
 	. = ..()
 	controller.set_blackboard_key(BB_POST_CLEAN_COOLDOWN, POST_CLEAN_COOLDOWN + world.time)
 	var/atom/target = controller.blackboard[target_key]
+	if(!succeeded && !isnull(target))
+		controller.clear_blackboard_key(target_key)
+		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
+		return
 	if(QDELETED(target) || is_type_in_typecache(target, controller.blackboard[BB_HUNTABLE_TRASH]))
 		return
 	if(!iscarbon(target))
 		controller.clear_blackboard_key(target_key)
 		return
 	var/list/speech_list = controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]
-	if(!length(speech_list))
-		return
-	var/mob/living/living_pawn = controller.pawn
-	living_pawn.say(pick(controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]), forced = "ai controller")
+	if(length(speech_list))
+		var/mob/living/living_pawn = controller.pawn
+		if(!QDELETED(living_pawn)) // pawn can be null at this point
+			living_pawn.say(pick(speech_list), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_planning_subtree/use_mob_ability/foam_area
@@ -155,7 +172,7 @@
 /datum/ai_planning_subtree/befriend_janitors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are now evil. dont befriend the janitors
-	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_FRIENDLY_JANITOR))
 		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE)
@@ -198,12 +215,12 @@
 		return
 	if(isnull(parent.ai_controller))
 		return
-	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target))
+	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], REF(target)))
 		return
 	return ..()
 
 /datum/pet_command/point_targeting/clean/execute_action(datum/ai_controller/basic_controller/bot/controller)
-	if(controller.reachable_key(BB_CURRENT_PET_TARGET))
+	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CURRENT_PET_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 

@@ -22,6 +22,8 @@
 #define BLOODSUCKER_TRAIT "bloodsucker_trait"
 /// Source trait for bloodsuckers in torpor.
 #define TORPOR_TRAIT "torpor_trait"
+/// Source trait for stuff related to bloodsuckers in coffins.
+#define BLOODSUCKER_COFFIN_TRAIT "bloodsucker_coffin_trait"
 /// Source trait for bloodsuckers using fortitude.
 #define FORTITUDE_TRAIT "fortitude_trait"
 /// Source trait for bloodsucker mesmerization.

@@ -531,7 +531,7 @@
 	var/mob/living/mob_to_summon
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	summon_ritual_mob(user, loc, mob_to_summon)
+	return summon_ritual_mob(user, loc, mob_to_summon)
 
 /**
  * Creates the ritual mob and grabs a ghost for it
@@ -568,7 +568,7 @@
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = chosen_one.key
+	summoned.PossessByPlayer(chosen_one.key)
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
