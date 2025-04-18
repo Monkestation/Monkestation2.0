@@ -100,6 +100,11 @@
 		food_taste_reaction = FOOD_TOXIC
 	else if(foodtypes & disliked_foodtypes)
 		food_taste_reaction = FOOD_DISLIKED
+		// MONKESTATION ADDITION START
+		if(owner && HAS_TRAIT(owner, TRAIT_STABILIZED_EATER))
+			if(prob(50))
+				food_taste_reaction = FOOD_LIKED // This is actually fine
+		// MONKESTATION ADDITION END
 	else if(foodtypes & liked_foodtypes)
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction

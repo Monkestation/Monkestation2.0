@@ -203,9 +203,14 @@
 		if(!should_play_sound)
 			continue
 
-		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-//			SEND_SOUND(target, sound(sound_to_play)) MONKESTATION EDIT CHANGE OLD -- Volume mixer PR#7
-			SEND_SOUND(target, sound(sound_to_play, volume = target.client.prefs.channel_volume["[CHANNEL_VOX]"])) // MONKESTATION EDIT CHANGE NEW
+		if(target.client?.prefs?.read_preference(/datum/preference/toggle/sound_announcements))
+			// monkestation start: volume mixer
+			var/sound/mixed_sound = sound(sound_to_play)
+			if("[CHANNEL_VOX]" in target.client?.prefs?.channel_volume)
+				mixed_sound.volume = target.client?.prefs?.channel_volume["[CHANNEL_VOX]"]
+			if(!isnull(target.client))
+				SEND_SOUND(target, mixed_sound)
+			// monkestation end
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT

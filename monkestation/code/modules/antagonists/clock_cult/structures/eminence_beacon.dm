@@ -59,7 +59,7 @@
 
 	var/mob/living/eminence/new_mob = new /mob/living/eminence(get_turf(src))
 	if(isobserver(eminence))
-		new_mob.key = eminence.key
+		new_mob.PossessByPlayer(eminence.key)
 	else
 		var/datum/antagonist/clock_cultist/servant_datum = eminence.mind.has_antag_datum(/datum/antagonist/clock_cultist)
 		if(servant_datum)

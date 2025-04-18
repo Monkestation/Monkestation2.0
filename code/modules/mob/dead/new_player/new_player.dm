@@ -91,13 +91,14 @@
 	else
 		to_chat(src, span_notice("Teleporting failed. Ahelp an admin please"))
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
-	observer.key = key
+	observer.PossessByPlayer(key)
 	observer.client = client
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
 		observer.real_name = observer.client.prefs.read_preference(/datum/preference/name/real_name)
 		observer.name = observer.real_name
 		observer.client.init_verbs()
+		observer.persistent_client.time_of_death = world.time
 	observer.update_appearance()
 	observer.client.media.stop_music()
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)
@@ -199,15 +200,15 @@
 	SSjob.EquipRank(character, job, character.client)
 	job.after_latejoin_spawn(character)
 
-	var/datum/player_details/details = get_player_details(character)
-	if(details)
-		SSchallenges.apply_challenges(details)
+	var/datum/persistent_client/persistent_client = character.persistent_client
+	if(persistent_client)
+		SSchallenges.apply_challenges(persistent_client)
 		for(var/processing_reward_bitflags in SSticker.bitflags_to_reward)//you really should use department bitflags if possible
 			if(character.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				details.roundend_monkecoin_bonus += 425
+				persistent_client.roundend_monkecoin_bonus += 425
 		for(var/processing_reward_jobs in SSticker.jobs_to_reward)//just in case you really only want to reward a specific job
 			if(character.job == processing_reward_jobs)
-				details.roundend_monkecoin_bonus += 425
+				persistent_client.roundend_monkecoin_bonus += 425
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
@@ -301,6 +302,7 @@
 		preserved_mind.original_character_slot_index = client.prefs.default_slot
 		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
 		preserved_mind.set_original_character(spawning_mob)
+	LAZYADD(persistent_client.joined_as_slots, "[client.prefs.default_slot]")
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .
@@ -310,7 +312,7 @@
 	. = new_character
 	if(!.)
 		return
-	new_character.key = key //Manually transfer the key to log them in,
+	new_character.PossessByPlayer(key) //Manually transfer the key to log them in,
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	if(new_character?.client?.media)
 		new_character.client.media.lobby_music = FALSE

@@ -336,7 +336,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()
-	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
+	INVOKE_ASYNC(Tracy, TYPE_PROC_REF(/datum/tracy, flush)) // monkestation edit: byond-tracy
 
 	return TRUE
 
@@ -540,15 +540,15 @@ SUBSYSTEM_DEF(ticker)
 		splash.Fade(TRUE)
 		living.client?.init_verbs()
 	. = living
-	var/datum/player_details/details = get_player_details(living)
-	if(details)
-		SSchallenges.apply_challenges(details)
+	var/datum/persistent_client/persistent_client = living.persistent_client
+	if(persistent_client)
+		SSchallenges.apply_challenges(persistent_client)
 		for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
 			if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				details.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 150
 		for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
 			if(living.job == processing_reward_jobs)
-				details.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 150
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()

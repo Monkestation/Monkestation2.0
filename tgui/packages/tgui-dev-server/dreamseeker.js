@@ -19,7 +19,7 @@ export class DreamSeeker {
     this.pid = pid;
     this.addr = addr;
     this.client = axios.create({
-      baseURL: `http://${addr}/`,
+      baseURL: `http://${addr}`,
     });
   }
 
@@ -30,9 +30,9 @@ export class DreamSeeker {
         + '=' + encodeURIComponent(params[key]))
       .join('&');
     logger.log(
-      `topic call at ${this.client.defaults.baseURL + '/dummy?' + query}`,
+      `topic call at ${this.client.defaults.baseURL + '/dummy.htm?' + query}`,
     );
-    return this.client.get('/dummy?' + query);
+    return this.client.get('/dummy.htm?' + query);
   }
 }
 

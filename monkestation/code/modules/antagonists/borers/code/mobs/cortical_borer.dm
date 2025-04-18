@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		return
 	to_chat(user, span_warning("As a borer, you have the option to be friendly or not. Note that how you act will determine how a host responds!"))
 	to_chat(user, span_warning("You are a cortical borer! You can fear someone to make them stop moving, but make sure to inhabit them! You only grow/heal/talk when inside a host!"))
-	ckey = user.ckey
+	PossessByPlayer(user.ckey)
 	if(mind)
 		mind.add_antag_datum(antagonist_datum)
 
@@ -462,14 +462,12 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		for(var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, src)
 			to_chat(dead_mob, span_purple("[link] <b>Cortical Hivemind: [src] sings, \"[message]\"</b>"))
-		var/logging_textone = "[key_name(src)] spoke into the hivemind: [message]"
-		log_say(logging_textone)
+		src.log_talk("[key_name(src)] spoke into the Borer hivemind: [message]", LOG_SAY)
 		return
 
 	//this is when they speak normally
 	to_chat(human_host, span_purple("Cortical Link: [src] sings, \"[message]\""))
-	var/logging_texttwo = "[key_name(src)] spoke to [key_name(human_host)]: [message]"
-	log_say(logging_texttwo)
+	src.log_talk("[key_name(src)] spoke to [key_name(human_host)]: [message]", LOG_SAY)
 	to_chat(src, span_purple("Cortical Link: [src] sings, \"[message]\""))
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, src)

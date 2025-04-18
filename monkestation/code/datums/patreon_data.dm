@@ -1,6 +1,8 @@
 /datum/patreon_data
-	/// The details of the linked player.
-	var/datum/player_details/owner
+	/// The ckey of the linked player.
+	var/ckey
+	/// The persistent client of the linked player.
+	var/datum/persistent_client/owner
 	///the stored patreon client key for the information
 	var/client_key
 	///the stored patreon rank collected from the server
@@ -9,10 +11,10 @@
 	var/access_rank = ACCESS_NO_RANK
 
 
-/datum/patreon_data/New(datum/player_details/owner)
-	. = ..()
+/datum/patreon_data/New(ckey, datum/persistent_client/owner)
 	if(!owner)
 		return
+	src.ckey = ckey
 	src.owner = owner
 	if(!SSdbcore.IsConnected())
 		owned_rank = NUKIE_RANK ///this is a testing variable
@@ -22,7 +24,7 @@
 	access_rank = patreon_rank_to_key(owned_rank)
 
 /datum/patreon_data/proc/fetch_key_and_rank()
-	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key, patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = owner.ckey))
+	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_key, patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = ckey))
 	if(query_get_key.warn_execute())
 		if(query_get_key.NextRow())
 			client_key = query_get_key.item[1]
@@ -57,6 +59,9 @@
 			. = ACCESS_NO_RANK // Silly but some still have null returns so default to no access.
 
 /proc/get_patreon_rank(ckey, raw = FALSE)
+	var/datum/patreon_data/cached_patreon = GLOB.persistent_clients_by_ckey[ckey]?.patreon
+	if(!isnull(cached_patreon))
+		return raw ? cached_patreon.owned_rank : cached_patreon.access_rank
 	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = ckey))
 	var/owned_rank
 	var/access_rank
