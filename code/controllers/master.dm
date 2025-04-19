@@ -73,11 +73,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	/// The next REALTIMEOFDAY CheckQueue/enqueue should timeout.
 	/// This is updated at the beginning and end of RunQueue.
 	var/static/checkqueue_timeout
+	var/static/last_runqueue
 
 /datum/controller/master/New()
 	// Ensure usr is null, to prevent any potential weirdness resulting from the MC having a usr if it's manually restarted.
 	usr = null
 	checkqueue_timeout = null
+	last_runqueue = null
 
 	if(!config)
 		config = new
@@ -611,7 +613,7 @@ GLOBAL_VAR(force_mc_soft_reset)
 			CRASH(msg)
 		if(MC_IS_CHECKQUEUE_PROBABLY_BAD)
 			. = FALSE
-			var/time_without_runqueue = DisplayTimeText((REALTIMEOFDAY - checkqueue_timeout) + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE)
+			var/time_without_runqueue = DisplayTimeText(REALTIMEOFDAY - last_runqueue)
 			var/msg = "RunQueue has not run in [time_without_runqueue], something has likely gone horribly wrong!"
 			SSplexora.mc_alert("[msg] (source: CheckQueue)")
 			CRASH(msg)
@@ -643,7 +645,8 @@ GLOBAL_VAR(force_mc_soft_reset)
 /// Returns 0 if runtimed, a negitive number for logic errors, and a positive number if the operation completed without errors
 /datum/controller/master/proc/RunQueue()
 	. = 0
-	checkqueue_timeout = REALTIMEOFDAY + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE
+	last_runqueue = REALTIMEOFDAY
+	checkqueue_timeout = last_runqueue + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE
 	var/datum/controller/subsystem/queue_node
 	var/queue_node_flags
 	var/queue_node_priority
@@ -763,7 +766,8 @@ GLOBAL_VAR(force_mc_soft_reset)
 
 	if (. == 0)
 		. = 1
-	checkqueue_timeout = REALTIMEOFDAY + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE
+	last_runqueue = REALTIMEOFDAY
+	checkqueue_timeout = last_runqueue + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists
 // called if any mc's queue procs runtime or exit improperly.
