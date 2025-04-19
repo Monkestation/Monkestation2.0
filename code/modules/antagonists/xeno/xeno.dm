@@ -52,6 +52,11 @@
 	objective.owner = owner
 	objectives += objective
 
+//Related code for neutered xenomorphs
+/datum/antagonist/xeno/neutered
+	name = "\improper Neutered Xenomorph"
+
+
 /datum/antagonist/xeno/captive
 	name = "\improper Captive Xenomorph"
 	///Our associated antagonist team for captive xenomorphs
@@ -160,7 +165,6 @@
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)
 		else
 			mind.add_antag_datum(/datum/antagonist/xeno)
-
 		mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
 		mind.special_role = ROLE_ALIEN
 

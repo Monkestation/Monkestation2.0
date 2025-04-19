@@ -4800,6 +4800,7 @@
 #include "code\modules\mob\living\carbon\alien\adult\caste\hunter.dm"
 #include "code\modules\mob\living\carbon\alien\adult\caste\praetorian.dm"
 #include "code\modules\mob\living\carbon\alien\adult\caste\sentinel.dm"
+#include "code\modules\mob\living\carbon\alien\items\larva_spawner.dm"
 #include "code\modules\mob\living\carbon\alien\larva\death.dm"
 #include "code\modules\mob\living\carbon\alien\larva\inventory.dm"
 #include "code\modules\mob\living\carbon\alien\larva\larva.dm"

@@ -849,4 +849,3 @@
 	item = /obj/item/keycard/syndicate_fridge
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
-
