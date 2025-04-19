@@ -2260,7 +2260,7 @@
  * If this is NOT you, ensure you edit your can_astar_pass variable. Check __DEFINES/path.dm
  **/
 /atom/proc/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	if(pass_info.pass_flags & pass_flags_self)
+	if(pass_info?.pass_flags & pass_flags_self)
 		return TRUE
 	. = !density
 

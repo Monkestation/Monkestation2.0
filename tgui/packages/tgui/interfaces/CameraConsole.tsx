@@ -151,7 +151,7 @@ const CameraSelector = (props) => {
 
 const CameraControls = (props) => {
   const { act, data } = useBackend<Data>();
-  const { activeCamera, can_spy, mapRef } = data;
+  const { activeCamera, can_spy, mapRef, network } = data;
   const [searchText] = useLocalState('searchText', '');
 
   const cameras = selectCameras(data.cameras, searchText);
@@ -180,7 +180,24 @@ const CameraControls = (props) => {
                 />
               )}
             </Stack.Item>
-
+            <Stack.Item>
+              {network.includes('spesstv') && (
+                <>
+                  <Button
+                    icon="heart"
+                    tooltip="Follow"
+                    disabled={!activeCamera}
+                    onClick={() => act('follow')}
+                  />
+                  <Button
+                    icon="star"
+                    tooltip="Subscribe"
+                    disabled={!activeCamera}
+                    onClick={() => act('subscribe')}
+                  />
+                </>
+              )}
+            </Stack.Item>
             <Stack.Item>
               <Button
                 icon="chevron-left"

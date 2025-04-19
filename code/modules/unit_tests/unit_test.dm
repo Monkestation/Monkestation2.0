@@ -258,6 +258,19 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/effect/transmission_beam, // relies on the existence of a PTL
 		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
 		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
+		/obj/item/tome,
+		/obj/item/weapon/blood_tesseract,
+		/obj/item/restraints/handcuffs/cult,
+		/mob/living/basic/astral_projection,
+		/mob/living/simple_animal/hostile/hex,
+		/obj/item/melee/blood_dagger,
+		/obj/item/melee/soulblade,
+		/obj/effect/tracker/boomerang,
+		/obj/effect/new_rune,
+		/obj/vehicle/ridden/adminbus,
+		/obj/projectile/soulbullet,
+		/obj/projectile/blooddagger,
+		/obj/projectile/bloodslash,
 		// monkestation end
 	)
 	//Say it with me now, type template
@@ -336,6 +349,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
 	ignore += typesof(/mob/living/basic/aquatic)
 	ignore += typesof(/obj/machinery/station_map)
+	// monkestation start: blood cult stuff
+	ignore += typesof(/obj/effect/afterimage)
+	ignore += typesof(/obj/effect/bloodcult_jaunt)
+	ignore += typesof(/obj/effect/cult_ritual)
+	ignore += typesof(/obj/effect/cult_shortcut)
+	ignore += typesof(/obj/effect/rooting_trap)
+	ignore += typesof(/obj/effect/stun_indicator)
+	ignore += typesof(/obj/projectile/boomerang)
+	ignore += typesof(/obj/structure/cult)
+	ignore += typesof(/obj/abstract/mind_ui_element)
 	// monkestation end
 
 	return ignore

@@ -128,6 +128,9 @@
 	inhand_icon_state = "backpack"
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 
+/obj/item/storage/backpack/cultpack/get_cult_power()
+	return 30
+
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."
@@ -383,7 +386,7 @@
 	desc = "A satchel commonly worn during planetary surveys."
 	icon_state = "satchel-retro"
 	inhand_icon_state = "satchel-retro"
-	
+
 /obj/item/storage/backpack/satchel/eng
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."

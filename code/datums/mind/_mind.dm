@@ -107,6 +107,8 @@
 	var/list/book_titles_read
 	/// Variable that lets the event picker see if someones getting chosen or not
 	var/picking = FALSE
+	///list of our active mind uis
+	var/list/active_uis = list()
 
 /datum/mind/New(_key)
 	key = _key
@@ -122,6 +124,8 @@
 	QDEL_LIST(antag_datums)
 	QDEL_NULL(language_holder)
 	set_current(null)
+	RemoveAllUIs()
+	QDEL_LIST_ASSOC_VAL(active_uis)
 	return ..()
 
 /datum/mind/serialize_list(list/options, list/semvers)
@@ -222,6 +226,42 @@
 	SIGNAL_HANDLER
 
 	last_death = world.time
+
+
+/datum/mind/proc/ResendAllUIs() // Re-sends all mind uis to client.screen, called on mob/living/Login()
+	for (var/mind_ui in active_uis)
+		var/datum/mind_ui/ui = active_uis[mind_ui]
+		ui.SendToClient()
+
+/datum/mind/proc/RemoveAllUIs() // Removes all mind uis from client.screen, called on mob/Logout()
+	for (var/mind_ui in active_uis)
+		var/datum/mind_ui/ui = active_uis[mind_ui]
+		ui.RemoveFromClient()
+
+
+/datum/mind/proc/DisplayUI(ui_ID)
+	var/datum/mind_ui/ui
+	if (ui_ID in active_uis)
+		ui = active_uis[ui_ID]
+	else
+		if (!(ui_ID in GLOB.mind_ui_id_to_type))
+			return
+		var/ui_type = GLOB.mind_ui_id_to_type[ui_ID]
+		ui = new ui_type(src)
+	if(!ui.Valid())
+		ui.Hide()
+	else
+		ui.Display()
+
+/datum/mind/proc/HideUI(var/ui_ID)
+	if (ui_ID in active_uis)
+		var/datum/mind_ui/ui = active_uis[ui_ID]
+		ui.Hide()
+
+/datum/mind/proc/UpdateUIScreenLoc()
+	for (var/mind_ui in active_uis)
+		var/datum/mind_ui/ui = active_uis[mind_ui]
+		ui.UpdateUIScreenLoc()
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))

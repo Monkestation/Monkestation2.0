@@ -508,6 +508,7 @@
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 	var/stealthy = FALSE
+	var/conceal_cooldown = 0
 
 /obj/machinery/door/airlock/cult/Initialize(mapload)
 	. = ..()

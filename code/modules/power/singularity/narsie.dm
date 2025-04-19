@@ -78,9 +78,6 @@
 	for (var/_cult_team in all_cults)
 		var/datum/team/cult/cult_team = _cult_team
 		cult_team.set_blood_target(src, duration = INFINITY)
-		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
-		if(summon_objective)
-			summon_objective.summoned = TRUE
 
 	for (var/datum/mind/cult_mind as anything in get_antag_minds(/datum/antagonist/cult))
 		if (isliving(cult_mind.current))
@@ -106,13 +103,6 @@
 		if (!cultist.owner)
 			continue
 		all_cults |= cultist.cult_team
-
-	for(var/_cult_team in all_cults)
-		var/datum/team/cult/cult_team = _cult_team
-		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
-		if (summon_objective)
-			summon_objective.summoned = FALSE
-			summon_objective.killed = TRUE
 
 	if (GLOB.cult_narsie == src)
 		GLOB.cult_narsie = null

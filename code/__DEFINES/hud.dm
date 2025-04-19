@@ -35,10 +35,10 @@
 */
 
 //Monkestation EDIT: START - CYBERNETICS
-/proc/ui_hand_position(i,y_offset = 0,y_pixel_offset = 0) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
+/proc/ui_hand_position(i,y_offset = 0,y_pixel_offset = 0, x_pixel_offset = 0) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
 	var/x_off = -(!(i % 2))
 	var/y_off = round((i-1) / 2) + y_offset
-	return"CENTER+[x_off]:16,SOUTH+[y_off]:[5 + y_pixel_offset]"
+	return"CENTER+[x_off]:[16 + x_pixel_offset],SOUTH+[y_off]:[5 + y_pixel_offset]"
 //Monkestation EDIT: END - CYBERNETICS
 
 /proc/ui_equip_position(mob/M)
@@ -101,6 +101,7 @@
 #define ui_mood "EAST-1:28,CENTER:21"
 #define ui_spacesuit "EAST-1:28,CENTER-4:14"
 #define ui_stamina "EAST-1:28,CENTER-3:14"
+#define ui_more_under_health_and_to_the_left "EAST-2:14,CENTER-5:29"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

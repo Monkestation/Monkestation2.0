@@ -1184,6 +1184,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		M.update_damage_hud()
 	attempt_auto_fit_viewport()
 
+	if(mob)
+		mob.UpdateUIScreenLoc()
+
 /client/proc/generate_clickcatcher()
 	if(!void)
 		void = new()
