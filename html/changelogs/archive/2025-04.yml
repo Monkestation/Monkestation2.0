@@ -375,3 +375,54 @@
       if your coffin was in a superheated room or something.
   - balance: Bloodsuckers in torpor while in a coffin will now have their body temperature
       rapidly stabilized.
+2025-04-19:
+  Absolucy:
+  - bugfix: Reverted a previous change to tgui-panel/chat to see if it fixes chat
+      failing to load settings sometimes.
+  - bugfix: i fed some more bugs to my refrigerator.
+  - bugfix: Possibly fixed jukeboxes and lobby music not respecting their appropriate
+      preference / volume mixer options?
+  - admin: Massively fixed up and improved Veth's player panel UI.
+  - bugfix: Screentip images will no longer appear for players on BYOND versions suffering
+      from the bug that makes them way too big.
+  - bugfix: Fixed FOV checks improperly handling diagonal directions.
+  - bugfix: 'Fixed deers not stopping and staring at vehicles (like, well, a deer
+      in headlights) as intended.
+
+      fix (13spacemen) C4 notification jump works again.'
+  - bugfix: (timothymtorres) Fix air alarm helper to ignore gas when appropriate.
+  - bugfix: (timothymtorres) Fix air alarm not checking missing gases.
+  - bugfix: (thegrb93) Air alarms stuck in warning state when area alarms are cleared.
+  - bugfix: (Melbert) Mirror reflections should be more accurate now.
+  - bugfix: (Melbert) Becoming a vampire or Bloodsucker while standing in front of
+      a mirror correctly vanishes you (rather than waiting to exit and enter the mirror's
+      view)
+  - bugfix: (Melbert) "Mind Gate" does self brain damage as intended.
+  - bugfix: (Melbert) Fixed EMP'd / signaled microwaves not running as they should.
+  - bugfix: ' (SmArtKar) Fixed a qdel loop in hypnosis brain trauma.'
+  - bugfix: (ShizCalev) Fixed a minor runtime when renaming mechs that don't have
+      a camera attached to them.
+  - bugfix: The Cargo Budget station goal now actually works.
+  - bugfix: Fix the Teratoma Syndrome symptom not working.
+  Absolucy, GPeckman:
+  - rscadd: Added whisper-sensitive cybernetic ears, which make it much easier for
+      the user to hear whispers, at the cost of being more vulnerable to loud noises.
+  - rscadd: Added wall-penetrating cybernetic ears, which allow you to hear speech
+      through walls.
+  - balance: Basic cybernetic ears and upgraded cybernetic ears are now unlocked with
+      the other basic/normal cybernetics.
+  Absolucy, Melbert:
+  - qol: Examining a heretic influence gives you a sp00ky message rather than an empty
+      box
+  Addust:
+  - rscadd: An additional wheelchair marker has been added to the Nova arrivals shuttle
+      (used on Blueshift and Voidraptor)
+  CannibalHunter:
+  - image: resprited plunger sprites and added inhand sprites
+  Shoddd:
+  - rscdel: night vision quirk
+  TheColorCyan:
+  - balance: Void chill had it's slowdown reduced
+  - rscadd: Void chill stacks are now purged by holy water
+  - rscadd: Holy water reduces the cooling effect of void storm and void chill
+  - balance: Ascension ritual now requires bodies that at any point had a mind.

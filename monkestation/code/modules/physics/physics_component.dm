@@ -246,7 +246,7 @@
 	if(!spin_speed || visual_angle_velocity || visual_angle_friction)
 		return
 	moving_atom.SpinAnimation(speed = spin_speed, loops = spin_loops)
-	if(spin_loops == INFINITE)
+	if(spin_loops == INFINITY)
 		cached_transform = matrix(moving_atom.transform)
 
 /// Stops movement sequence, and deletes component if we have the MPHYSICS_QDEL_WHEN_NO_MOVEMENT flag

@@ -14,6 +14,6 @@
 /datum/station_goal/budget/check_completion()
 	if(..())
 		return TRUE
-	if(SSeconomy.get_dep_account(ACCOUNT_CAR) >= 50000)
+	if(SSeconomy.get_dep_account(ACCOUNT_CAR)?.account_balance >= 50000)
 		return TRUE
 	return FALSE
