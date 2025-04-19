@@ -38,6 +38,11 @@
 #define MC_LOOP_RTN_NEWSTAGES 1
 #define MC_LOOP_RTN_GRACEFUL_EXIT 2
 
+/// The maximum time without RunQueue running until CheckQueue will bail.
+#define MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE (5 SECONDS)
+/// Checks to see if the time has overrun MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE
+#define MC_IS_CHECKQUEUE_PROBABLY_BAD (!isnull(Master.checkqueue_timeout) && (Master.checkqueue_timeout >= REALTIMEOFDAY))
+
 //! SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
 /// subsystem does not initialize.
