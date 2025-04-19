@@ -366,7 +366,7 @@
 /datum/objective_item/steal/hdd_extraction
 	name = "the source code for Project Goon from the master R&D server mainframe"
 	targetitem = /obj/item/computer_disk/hdd_theft
-	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
+	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_XENOBIOLOGIST) //Monkestation edit: xenobiology
 	item_owner = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	exists_on_map = TRUE
 
@@ -507,7 +507,7 @@
 /datum/objective_item/steal/traitor/rpd
 	name = "rapid pipe dispenser"
 	targetitem = /obj/item/pipe_dispenser
-	excludefromjob = list(JOB_ATMOSPHERIC_TECHNICIAN, JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_SCIENTIST, JOB_RESEARCH_DIRECTOR, JOB_GENETICIST, JOB_ROBOTICIST)
+	excludefromjob = list(JOB_ATMOSPHERIC_TECHNICIAN, JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_SCIENTIST, JOB_RESEARCH_DIRECTOR, JOB_GENETICIST, JOB_ROBOTICIST, JOB_XENOBIOLOGIST) //Monkestation edit: xenobiology
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
 
