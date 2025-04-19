@@ -118,11 +118,12 @@
 /datum/techweb_node/artifact
 	id = "artifact_research"
 	display_name = "Artifact Research"
-	description = "Properly concuct research on the various artifacts found around."
+	description = "Properly conduct research on the various artifacts found around."
 	prereq_ids = list("base")
 	design_ids = list(
 		"artifact_heater",
 		"artifact_xray",
+		"artifact_zapper",
 		"disk_artifact",
 		"artifact_wand"
 	)

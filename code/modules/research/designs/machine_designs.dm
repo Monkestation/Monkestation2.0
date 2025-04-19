@@ -1157,6 +1157,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
+/datum/design/board/artifact_zapper
+	name = "Artifact Zapper Board"
+	desc = "The circuit board for a machine designed to induce electric current in artifacts"
+	id = "artifact_zapper"
+	build_path = /obj/item/circuitboard/machine/artifactzapper
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
+
 /datum/design/board/fishing_portal_generator
 	name = "Fishing Portal Generator Board"
 	desc = "The circuit board for the fishing portal generator"
