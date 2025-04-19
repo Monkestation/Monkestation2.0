@@ -1,10 +1,19 @@
-/datum/outfit/slasher
+/datum/outfit/slasher/slasher1
 	name = "Slasher Outfit"
 	suit = /obj/item/clothing/suit/apron/slasher
-	uniform = /obj/item/clothing/under/color/random/slasher
+	uniform = /obj/item/clothing/under/slasher
 	shoes = /obj/item/clothing/shoes/slasher_shoes
 	mask = /obj/item/clothing/mask/gas/slasher
 	belt = /obj/item/storage/belt/slasher
+
+/datum/outfit/slasher/slasher2
+	name = "Slasher Outfit"
+	suit = /obj/item/clothing/suit/apron/slasher2
+	uniform = /obj/item/clothing/under/slasher
+	shoes = /obj/item/clothing/shoes/admiral
+	mask = /obj/item/clothing/mask/gas/slasher2
+	belt = /obj/item/storage/belt/slasher
+	gloves = /obj/item/clothing/gloves/admiral
 
 /datum/antagonist/slasher
 	name = "\improper Slasher"
@@ -18,7 +27,6 @@
 	preview_outfit = /datum/outfit/slasher
 	show_to_ghosts = TRUE
 	var/give_objectives = TRUE
-	objectives = list(/datum/objective/slasher/harvest_souls, /datum/objective/slasher/soulsteal, /datum/objective/slasher/trappem)
 	var/datum/action/cooldown/slasher/active_action = null
 	///the linked machette that the slasher can summon even if destroyed and is unique to them
 	var/obj/item/slasher_machette/linked_machette
@@ -58,6 +66,34 @@
 	///this is the time counter for stalking
 	var/time_counter = 0
 
+/datum/antagonist/slasher/on_gain()
+	. = ..() // Call parent first
+
+	if(give_objectives)
+		forge_objectives()
+		if(owner && owner.current)
+			var/obj_count = 1
+			for(var/datum/objective/objective in objectives)
+				obj_count++
+			owner.announce_objectives()
+
+/datum/antagonist/slasher/forge_objectives()
+	if(!owner)
+		return
+
+	// Clear any existing objectives
+	objectives.Cut()
+
+	// Add all slasher objective subtypes
+	for(var/objective_type in subtypesof(/datum/objective/slasher))
+		var/datum/objective/new_objective = new objective_type
+		new_objective.owner = owner
+		objectives += new_objective
+
+	// Make sure these objectives are also in the mind's objectives list
+	if(owner)
+		for(var/datum/objective/O in objectives)
+			owner.objectives += O
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -87,6 +123,7 @@
 	RegisterSignal(current_mob, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_unequipped))
 	RegisterSignal(current_mob, COMSIG_MOB_ITEM_ATTACK, PROC_REF(check_attack))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
 	for(var/datum/quirk/quirk as anything in current_mob.quirks)
 		current_mob.remove_quirk(quirk)
 	///abilities galore
@@ -97,12 +134,17 @@
 
 	var/mob/living/carbon/human/human = current_mob
 	if(istype(human))
-		human.equipOutfit(/datum/outfit/slasher)
+		human.equipOutfit(/datum/outfit/slasher/slasher2)
 	cached_brute_mod = human.dna.species.brutemod
+	current_mob.alpha = 150
+	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/slasher/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
 	source.mind.remove_antag_datum(/datum/antagonist/slasher)
+	playsound(source, 'monkestation/sound/effects/tape_end.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
+	var/mob/living/carbon/human/source_human = source
+	source_human.delete_equipment()
 
 /datum/antagonist/slasher/on_removal()
 	. = ..()
@@ -265,7 +307,7 @@
 	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
 	stalked_human.clear_alert("slashing_stalkee")
 	owner.current.clear_alert("slashing_stalker")
-	QDEL_NULL(stalked_human.tracking_beacon)
+	stalked_human.tracking_beacon.Destroy()
 	var/mob/living/carbon/human/human = owner.current
 	var/datum/component/team_monitor/owner_monitor = human.team_monitor
 	owner_monitor.hide_hud()
@@ -294,7 +336,7 @@
 	stalked_human.say("AAAAAAHHHH!!!", forced = "soulsucked")
 	souls_sucked++
 	if(stalked_human?.tracking_beacon)
-		QDEL_NULL(stalked_human.tracking_beacon)
+		stalked_human.tracking_beacon.Destroy()
 		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
 		owner_monitor?.hide_hud(owner)
 	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
@@ -309,7 +351,7 @@
 		linked_machette.force -= 5
 		linked_machette.throwforce -= 5
 	if(stalked_human && stalked_human.tracking_beacon)
-		QDEL_NULL(stalked_human.tracking_beacon)
+		stalked_human.tracking_beacon.Destroy()
 		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
 		owner_monitor.hide_hud(owner)
 		owner.current.clear_alert("slashing_stalking")
@@ -340,16 +382,8 @@
 /obj/item/var/last_multi = 1
 
 /datum/antagonist/slasher/proc/damage_multiplier(obj/item/source, mob/living/attacked, def_zone)
-	var/turf/below_turf = get_turf(attacked)
-	var/turf_light_level = below_turf.get_lumcount()
-	var/area/ismaints = get_area(below_turf)
-	var/health_left = 1
-	if(istype(ismaints, /area/station/maintenance))
-		health_left = 1.1
-	else
-		health_left = max(clamp((1 - turf_light_level), 0, 1))
-	attacked.cause_pain(def_zone, source.force)
-	source.last_multi = health_left
+	//keeping this just in case we use it later, but the damage changing has been turned off
+	source.last_multi = 1
 
 	return TRUE
 

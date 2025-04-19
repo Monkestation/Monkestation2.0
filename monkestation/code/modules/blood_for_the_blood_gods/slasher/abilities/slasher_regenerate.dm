@@ -46,6 +46,7 @@
 	human_owner.adjustCloneLoss(-20)
 	human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -20)
 	human_owner.blood_volume = BLOOD_VOLUME_NORMAL
+	human_owner.cure_all_traumas()
 
 	if(human_owner.all_wounds)
 		var/datum/wound/picked_wound = pick(human_owner.all_wounds)

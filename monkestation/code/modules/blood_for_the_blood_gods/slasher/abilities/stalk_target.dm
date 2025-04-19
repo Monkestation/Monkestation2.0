@@ -26,12 +26,14 @@
 			continue
 		if(possible_target.ssd_indicator == TRUE) //ssd people can't be spooked.
 			continue
+		if(possible_target.name == "Unknown") //in the past the pointer has been really unreliable with people that are unknown, so removing them from the choice pool for now
+			continue
 		possible_targets += possible_target
 
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	slasherdatum.stalk_precent = 0
 	if(slasherdatum?.stalked_human)
-		QDEL_NULL(slasherdatum.stalked_human.tracking_beacon)
+		slasherdatum.stalked_human.tracking_beacon.Destroy()
 		var/datum/component/team_monitor/owner_monitor = owner.mind.current.team_monitor
 		owner_monitor.hide_hud()
 
