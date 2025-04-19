@@ -30,3 +30,9 @@
 	cost = 2
 	item = /obj/item/autosurgeon/syndicate/polyglot_voicebox
 	surplus = 25
+
+/datum/uplink_item/device_tools/autosurgeon
+	name = "Syndicate Autosurgeon"
+	desc = "A multi-use autosurgeon for implanting whatever you want into yourself. Rip that station apart and make it part of you."
+	item = /obj/item/autosurgeon/syndicate
+	cost = 5
