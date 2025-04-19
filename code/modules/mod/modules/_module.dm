@@ -92,6 +92,13 @@
 		on_use()
 	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED, src)
 
+/// Apply a cooldown until this item can be used again
+/obj/item/mod/module/proc/start_cooldown(applied_cooldown)
+	if (isnull(applied_cooldown))
+		applied_cooldown = cooldown_time
+	COOLDOWN_START(src, cooldown_timer, applied_cooldown)
+	SEND_SIGNAL(src, COMSIG_MODULE_COOLDOWN_STARTED, applied_cooldown)
+
 /// Called when the module is activated
 /obj/item/mod/module/proc/on_activation()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))

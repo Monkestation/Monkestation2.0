@@ -26,7 +26,6 @@
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
 #define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
-#define ROLE_CYBER_POLICE "Cyber Police"
 #define ROLE_FUGITIVE "Fugitive"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
@@ -118,6 +117,11 @@
 #define ROLE_SYNDICATE_DRONE "Syndicate Drone"
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
 
+// Virtual dom related
+#define ROLE_GLITCH "Glitch" // the parent type of all vdom roles
+#define ROLE_CYBER_POLICE "Cyber Police"
+#define ROLE_CYBER_TAC "Cyber Tac"
+#define ROLE_NETGUARDIAN "NetGuardian Prime"
 
 /// This defines the antagonists you can operate with in the settings.
 /// Keys are the antagonist, values are the number of days since the player's

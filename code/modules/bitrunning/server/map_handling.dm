@@ -58,6 +58,11 @@
 		return FALSE
 
 	is_ready = TRUE
+
+	var/spawn_chance = clamp((threat * glitch_chance), 5, threat_prob_max)
+	if(prob(spawn_chance))
+		setup_glitch()
+
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 	balloon_alert(user, "domain loaded.")
 	generated_domain.start_time = world.time

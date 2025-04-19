@@ -2127,6 +2127,11 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
+"xH" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/machinery/netpod,
+/turf/open/floor/plating,
+/area/station/construction)
 "yl" = (
 /obj/machinery/quantum_server,
 /turf/open/floor/iron,
@@ -2155,6 +2160,10 @@
 /obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"yP" = (
+/obj/machinery/netpod,
+/turf/open/floor/plating,
+/area/station/construction)
 "zo" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -2437,6 +2446,10 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/station/science)
+"Pq" = (
+/obj/machinery/computer/order_console/bitrunning,
+/turf/open/floor/plating,
+/area/station/construction)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -2476,6 +2489,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"Ru" = (
+/obj/machinery/quantum_server{
+	points = 100
+	},
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/floor/plating,
+/area/station/construction)
 "Rz" = (
 /obj/structure/centcom_item_spawner/gun_and_ammo_creator,
 /turf/open/floor/iron,
@@ -2511,6 +2531,10 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"Tu" = (
+/obj/machinery/byteforge,
+/turf/open/floor/plating,
+/area/station/construction)
 "TV" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2680,6 +2704,10 @@
 "ZP" = (
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"ZZ" = (
+/obj/machinery/computer/quantum_console,
+/turf/open/floor/plating,
+/area/station/construction)
 
 (1,1,1) = {"
 aa
@@ -6116,9 +6144,9 @@ ES
 rL
 cP
 cX
+ZZ
 dn
-dn
-dn
+yP
 dn
 dn
 dn
@@ -6208,9 +6236,9 @@ bE
 Mh
 TV
 EA
+Ru
 dn
-dn
-XE
+xH
 dn
 dn
 dn
@@ -6300,9 +6328,9 @@ bE
 bE
 ef
 EA
+Tu
 dn
-dn
-dn
+yP
 dn
 dn
 dn
@@ -6392,7 +6420,7 @@ bE
 bE
 cN
 BW
-dn
+Pq
 dn
 dn
 dn
