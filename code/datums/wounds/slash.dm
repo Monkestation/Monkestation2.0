@@ -110,7 +110,7 @@
 	return "<B>[msg.Join()]</B>"
 
 /datum/wound/slash/flesh/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if (!victim) // if we are dismembered, we can still take damage, its fine to check here
+	if (QDELETED(victim)) // if we are dismembered, we can still take damage, its fine to check here
 		return
 
 	if(victim.stat != DEAD && wound_bonus != CANT_WOUND && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
@@ -142,7 +142,7 @@
 
 /datum/wound/slash/flesh/handle_process(seconds_per_tick, times_fired)
 	. = ..()
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+	if (QDELETED(victim) || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own

@@ -1,5 +1,3 @@
-#define DONATOR_ROUNDEND_BONUS 25 //25 monkecoin for donators
-
 /datum/preferences/proc/load_inventory(ckey)
 	if(!ckey || !SSdbcore.IsConnected())
 		return
@@ -14,7 +12,6 @@
 		var/key = query_gear.item[1]
 		inventory += text2path(key)
 	qdel(query_gear)
-
 
 /datum/preferences/proc/load_metacoins(ckey)
 	if(!ckey || !SSdbcore.IsConnected())
@@ -32,31 +29,21 @@
 	qdel(query_get_metacoins)
 	metacoins = text2num(mc_count)
 
-
-/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces = TRUE, donator_multipler = TRUE, respects_roundcap = FALSE)
+/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces = TRUE, donator_multiplier = TRUE, respects_roundcap = FALSE)
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 
-	//RoundCap Checks
 	if(!max_round_coins && respects_roundcap)
 		to_chat(parent, "You've hit the Monkecoin limit for this shift, please try again next shift.")
 		return
+
 	if(respects_roundcap)
 		if(max_round_coins <= amount)
 			amount = max_round_coins
 		max_round_coins -= amount
 
-	//Patreon Flat Roundend Bonus
-	if((parent.player_details.patreon?.has_access(2)) && donator_multipler)
-		amount += DONATOR_ROUNDEND_BONUS
-
-	//Twitch Flat Roundend Bonus
-	if((parent.player_details.twitch?.has_access(1)) && donator_multipler)
-		amount += DONATOR_ROUNDEND_BONUS
-
-	//Donator Multiplier
-	if(amount > 0 && donator_multipler)
-		switch(parent.player_details.patreon.access_rank)
+	if(amount > 0 && donator_multiplier)
+		switch(parent.persistent_client.patreon.access_rank)
 			if(ACCESS_COMMAND_RANK)
 				amount *= 1.5
 			if(ACCESS_TRAITOR_RANK)

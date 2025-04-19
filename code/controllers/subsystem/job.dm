@@ -11,6 +11,8 @@ SUBSYSTEM_DEF(job)
 	var/list/name_occupations = list()
 	/// Dictionary of all jobs, keys are types.
 	var/list/datum/job/type_occupations = list()
+	/// List jobs failing the holiday check on enabled holiday jobs.
+	var/list/datum/job/holiday_restricted = list()
 
 	/// Dictionary of jobs indexed by the experience type they grant.
 	var/list/experience_jobs_map = list()
@@ -131,6 +133,7 @@ SUBSYSTEM_DEF(job)
 	var/list/new_joinable_departments = list()
 	var/list/new_joinable_departments_by_type = list()
 	var/list/new_experience_jobs_map = list()
+	var/list/new_holiday_restricted_occupation = list()
 
 	for(var/job_type in all_jobs)
 		var/datum/job/job = new job_type()
@@ -139,8 +142,16 @@ SUBSYSTEM_DEF(job)
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
 			log_job_debug("Removed [job.title] due to map config")
 			continue
-		if(!CONFIG_GET(flag/spooktober_enabled) && job.job_flags & JOB_SPOOKTOBER) //if spooktober's not enabled, don't load spooktober jobs
-			continue
+
+		//MONKESTATION EDIT START
+		if(length(job.job_holiday_flags)) // Check if this job is part of a holiday. Skip holiday checks if it isnt.
+			if(!job.special_config_check()) // Check the special config in case this job must not be loaded for some reason.
+				continue
+			else
+				if(isnull(check_holidays(job.job_holiday_flags))) // We are sure we have holiday flags. If it fails here then its restricted.
+					new_holiday_restricted_occupation += job
+		//MONKESTATION EDIT END
+
 		new_all_occupations += job
 		name_occupations[job.title] = job
 		type_occupations[job_type] = job
@@ -166,6 +177,7 @@ SUBSYSTEM_DEF(job)
 			continue
 		new_experience_jobs_map[job.exp_granted_type] += list(job)
 
+	sortTim(new_holiday_restricted_occupation, GLOBAL_PROC_REF(cmp_job_display_asc)) //MONKESTATION EDIT
 	sortTim(new_joinable_departments_by_type, GLOBAL_PROC_REF(cmp_department_display_asc), associative = TRUE)
 	for(var/department_type in new_joinable_departments_by_type)
 		var/datum/job_department/department = new_joinable_departments_by_type[department_type]
@@ -175,6 +187,7 @@ SUBSYSTEM_DEF(job)
 			new_experience_jobs_map[department.department_experience_type] = department.department_jobs.Copy()
 
 	all_occupations = new_all_occupations
+	holiday_restricted = new_holiday_restricted_occupation //MONKESTATION EDIT
 	joinable_occupations = sortTim(new_joinable_occupations, GLOBAL_PROC_REF(cmp_job_display_asc))
 	joinable_departments = new_joinable_departments
 	joinable_departments_by_type = new_joinable_departments_by_type
@@ -460,7 +473,7 @@ SUBSYSTEM_DEF(job)
 
 		// Loop through all unassigned players
 		for(var/mob/dead/new_player/player in unassigned)
-			if(!(get_player_details(player)?.patreon?.is_donator() || is_admin(player.client) || player.client?.is_mentor()) && PopcapReached())
+			if(!(player?.persistent_client?.patreon?.is_donator() || is_admin(player.client) || player.client?.is_mentor()) && PopcapReached())
 				RejectPlayer(player)
 
 			// Loop through all jobs
@@ -987,7 +1000,7 @@ SUBSYSTEM_DEF(job)
 /// Returns a list of minds of all heads of staff
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
-	for(var/datum/mind/head as anything in get_crewmember_minds())
+	for(var/datum/mind/head as anything in get_crewmember_minds(require_body = FALSE))
 		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			. += head
 
@@ -1004,7 +1017,7 @@ SUBSYSTEM_DEF(job)
 /// Returns a list of minds of all security members
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
-	for(var/datum/mind/sec as anything in get_crewmember_minds())
+	for(var/datum/mind/sec as anything in get_crewmember_minds(require_body = FALSE))
 		if(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 			. += sec
 
@@ -1116,6 +1129,22 @@ SUBSYSTEM_DEF(job)
 	if(required_playtime_remaining)
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
+
+	//MONKESTATION EDIT START
+	// Job is for donators of a specific level and fail if they did not meet the requirements.
+	if(((possible_job in holiday_restricted) || !isnull(possible_job.job_req_donor)) && (!is_admin(player.client) || !player.client?.is_mentor()))
+		if(player.persistent_client?.patreon?.is_donator()) // They are a donator so we can check if they can bypass the restrictions.
+			if(!isnull(possible_job.job_req_donor) && !player.persistent_client?.patreon?.has_access(possible_job.job_req_donor))
+				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+				return JOB_UNAVAILABLE_DONOR_RANK
+
+			if(!isnull(possible_job.job_donor_bypass) && !player.persistent_client?.patreon?.has_access(possible_job.job_donor_bypass))
+				JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+				return JOB_UNAVAILABLE_DONOR_RANK
+		else
+			JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_DONOR_RANK, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+			return JOB_UNAVAILABLE_DONOR_RANK
+	//MONKESTATION EDIT END
 
 	// Run the banned check last since it should be the rarest check to fail and can access the database.
 	if(is_banned_from(player.ckey, possible_job.title))

@@ -52,3 +52,39 @@
 	item = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
 	cost = 3
 	surplus = 5
+
+//april fools edition
+
+/obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota
+	name = "\improper Screaming-Hilux .45"
+	desc = "A three-way weapon design project by Rayne Corp, Toyota, and Johnson & Co Architecture, sold under the Toyne Group. Designed as a fully-automatic alternative to the Whispering Jester, it trades all forms of stealth for delivering a lethal punch to hearing first, targets second. Do not trust the onboard suppressor. Wear hearing protection."
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
+	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine/big_lmao
+	can_bayonet = FALSE
+	can_suppress = FALSE
+	can_unsuppress = TRUE
+	suppressed = FALSE
+	bolt_type = BOLT_TYPE_OPEN
+	bolt_wording = "firearm"
+	fire_delay = 0.1
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 150 //abraxis this is a bad idea
+	recoil = 5 //it's a pistol firing full-auto, fuck your wrist lmao
+	wield_recoil = 0.75
+	spread = 12.5
+
+/obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota/Initialize(mapload)
+	. = ..()
+
+	give_autofire()
+
+
+//why did i steal code from the qarad for this fucking thing
+/obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota/proc/give_autofire()
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/ammo_box/magazine/whispering_jester_45_magazine/big_lmao
+	name = "screaming hilux magazine"
+	desc = "Why oh god fucking why?"
+	max_ammo = 45

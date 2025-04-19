@@ -6,6 +6,7 @@ import {
   LabeledList,
   NoticeBox,
   Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -18,11 +19,13 @@ export const CivCargoHoldTerminal = (props) => {
   return (
     <Window width={580} height={375}>
       <Window.Content scrollable>
-        <Flex>
-          <Flex.Item>
+        <Stack vertical>
+          <Stack.Item>
             <NoticeBox color={!id_inserted ? 'default' : 'blue'}>
               {id_inserted ? in_text : out_text}
             </NoticeBox>
+          </Stack.Item>
+          <Stack.Item>
             <Section
               title="Cargo Pad"
               buttons={
@@ -65,9 +68,11 @@ export const CivCargoHoldTerminal = (props) => {
                 </LabeledList.Item>
               </LabeledList>
             </Section>
+          </Stack.Item>
+          <Stack.Item>
             {picking ? <BountyPickBox /> : <BountyTextBox />}
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

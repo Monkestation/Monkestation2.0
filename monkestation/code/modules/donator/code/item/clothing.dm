@@ -639,6 +639,7 @@
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
 	expected_colors = 2
+/obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
 
 /obj/item/clothing/neck/donatorwhitefurshawl
 	name = "white fur shawl"
@@ -662,3 +663,39 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "formal_overcoat"
 	worn_icon_state = "formal_overcoat"
+
+/obj/item/clothing/head/costume/traumatic_veteran_cap
+	name = "traumatic veteran cap"
+	desc = "An old war veteran's cap. It smells of heavily of tabaco and wet moss."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traumatic_veteran_cap"
+	worn_icon_state = "traumatic_veteran_cap"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/toggle/traumatic_veteran_jacket
+	name = "traumatic veteran jacket"
+	desc = "An old war veteran's coat. It smells of heavily of tabaco and wet moss."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traumatic_veteran_jacket"
+	worn_icon_state = "traumatic_veteran_jacket"
+	toggle_noun = "zipper"
+
+/obj/item/clothing/suit/hooded/wintercoat/strange_merchant
+	name = "strange merchant jacket"
+	desc = "It's an old worn down coat, it has a hood. \"Over here, stranger!- Got somethin' that might interest ya'!\""
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "strange_merchant"
+	worn_icon_state = "strange_merchant"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/strange_merchant
+
+/obj/item/clothing/head/hooded/winterhood/strange_merchant
+	name = "strange merchant jacket hood"
+	desc = "A hood attached to an old worn down coat."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "strange_merchant_hood"
+	worn_icon_state = "strange_merchant_hood"
+	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEEARS

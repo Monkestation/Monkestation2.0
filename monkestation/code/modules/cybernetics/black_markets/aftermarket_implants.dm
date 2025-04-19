@@ -78,7 +78,7 @@
 	name = "Strong-Arm empowered musculature implant"
 	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action."
 
-	item = /obj/item/organ/internal/cyberimp/arm/muscle
+	item = /obj/item/organ/internal/cyberimp/arm/strongarm
 	price_min = CARGO_CRATE_VALUE * 5
 	price_max = CARGO_CRATE_VALUE * 6
 	auction_weight = 3

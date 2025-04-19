@@ -208,13 +208,20 @@
 	if(!.)
 		return
 
-	if(!SSticker?.IsRoundInProgress())
-		to_chat(hud.mymob, span_boldwarning("The round is either not ready, or has already finished..."))
+	var/mob/dead/new_player/new_player = hud.mymob
+	if(isnull(new_player?.client))
+		return
+	if(!new_player.client?.fully_created)
+		to_chat(new_player, span_warning("Your client is still initializing, please wait a second..."))
 		return
 
-	if(hud.mymob.client?.check_overwatch())
-		to_chat(hud.mymob, span_warning("Kindly wait until your connection has been authenticated before joining"))
-		message_admins("[hud.mymob.key] tried to use the Join button but failed the overwatch check.")
+	if(!SSticker?.IsRoundInProgress())
+		to_chat(new_player, span_boldwarning("The round is either not ready, or has already finished..."))
+		return
+
+	if(new_player.client?.check_overwatch())
+		to_chat(new_player, span_warning("Please wait until your connection has been authenticated before joining."))
+		message_admins("[new_player.key] tried to use the Join button but failed the overwatch check.")
 		return
 
 	//Determines Relevent Population Cap
@@ -226,10 +233,8 @@
 	else
 		relevant_cap = max(hard_popcap, extreme_popcap)
 
-	var/mob/dead/new_player/new_player = hud.mymob
-
 	//Allow admins and Patreon supporters to bypass the cap/queue
-	if ((relevant_cap && living_player_count() >= relevant_cap) && (get_player_details(new_player)?.patreon?.is_donator() || is_admin(new_player.client) || new_player.client?.is_mentor()))
+	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || new_player.client?.is_mentor()))
 		to_chat(new_player, span_notice("The server is currently overcap, but you are a(n) patreon/mentor/admin!"))
 	else if (SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap))
 		to_chat(new_player, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
@@ -313,9 +318,9 @@
 
 /atom/movable/screen/lobby/button/intents/Click(location, control, params)
 	. = ..()
-	var/datum/player_details/details = get_player_details(hud.mymob)
-	details.challenge_menu ||= new(details)
-	details.challenge_menu.ui_interact(hud.mymob)
+	var/datum/persistent_client/persistent_client = hud.mymob.persistent_client
+	persistent_client.challenge_menu ||= new(persistent_client)
+	persistent_client.challenge_menu.ui_interact(hud.mymob)
 
 /atom/movable/screen/lobby/button/discord
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'

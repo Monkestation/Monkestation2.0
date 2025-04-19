@@ -15,6 +15,7 @@
 	var/stack_limit = 5
 	///icon for the overlay
 	var/mutable_appearance/stacks_overlay
+	COOLDOWN_DECLARE(chill_purge)
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
@@ -30,8 +31,6 @@
 /datum/status_effect/void_chill/on_apply()
 	if(issilicon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
-	owner.update_icon(UPDATE_OVERLAYS)
 	return TRUE
 
 /datum/status_effect/void_chill/on_remove()
@@ -41,7 +40,18 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_per_ticks)
-	owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_per_ticks)
+	if(owner.has_reagent(/datum/reagent/water/holywater))
+		//void chill is less effective
+		owner.adjust_bodytemperature(-3 KELVIN * stacks * seconds_per_ticks)
+		if(!COOLDOWN_FINISHED(src, chill_purge))
+			return FALSE
+		COOLDOWN_START(src, chill_purge, 2 SECONDS)
+		to_chat(owner, span_notice("You feel holy water warming you up."))
+		adjust_stacks(-1)
+	else
+		owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_per_ticks)
+	if (stacks == 0)
+		owner.remove_status_effect(/datum/status_effect/void_chill)
 
 /datum/status_effect/void_chill/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
@@ -84,7 +94,7 @@
 ///Updates the movespeed of owner based on the amount of stacks of the debuff
 /datum/status_effect/void_chill/proc/update_movespeed(stacks)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
-	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE, multiplicative_slowdown = (0.5 * stacks))
+	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE, multiplicative_slowdown = (0.3 * stacks))
 	linked_alert.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align:center'>[stacks]</span>")
 
 /datum/status_effect/void_chill/lasting

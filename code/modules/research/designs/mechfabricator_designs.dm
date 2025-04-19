@@ -76,6 +76,68 @@
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CHASSIS
 	)
 
+//Advanced Robotic Limbs
+
+/datum/design/advanced_l_arm
+	name = "Advanced Left Arm"
+	id = "advanced_l_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/bodypart/arm/left/robot/advanced
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
+	)
+	construction_time = 20 SECONDS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
+	)
+
+/datum/design/advanced_r_arm
+	name = "Advanced Right Arm"
+	id = "advanced_r_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/bodypart/arm/right/robot/advanced
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
+	)
+	construction_time = 20 SECONDS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
+	)
+
+/datum/design/advanced_l_leg
+	name = "Advanced Left Leg"
+	id = "advanced_l_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/bodypart/leg/left/robot/advanced
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
+	)
+	construction_time = 20 SECONDS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
+	)
+
+/datum/design/advanced_r_leg
+	name = "Advanced Right Leg"
+	id = "advanced_r_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/bodypart/leg/right/robot/advanced
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
+	)
+	construction_time = 20 SECONDS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
+	)
+
 //Ripley
 /datum/design/ripley_chassis
 	name = "Exosuit Chassis (APLU \"Ripley\")"
@@ -1502,6 +1564,18 @@
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
+	category = list(
+		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
+	)
+
+/datum/design/modlink_scryer
+	name = "MODlink Scryer"
+	desc = "A neck-worn piece of gear that can call with another MODlink-compatible device."
+	id = "modlink_scryer"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
+	construction_time = 5 SECONDS
+	build_path = /obj/item/clothing/neck/link_scryer/auto_link // monkestation edit: auto_link subtype
 	category = list(
 		RND_CATEGORY_MODSUITS + RND_SUBCATEGORY_MODSUITS_MISC
 	)

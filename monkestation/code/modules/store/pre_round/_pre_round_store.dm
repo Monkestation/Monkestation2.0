@@ -1,7 +1,18 @@
-GLOBAL_LIST_EMPTY(cached_preround_items)
+GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
+
+/proc/init_pre_round_items()
+	. = list()
+	for(var/datum/store_item/store_item_type as anything in (subtypesof(/datum/store_item) - /datum/store_item/roundstart))
+		if(!store_item_type::one_time_buy)
+			continue
+		.[store_item_type] = new store_item_type
 
 /client
 	var/datum/pre_round_store/readied_store
+
+/client/Destroy()
+	QDEL_NULL(readied_store)
+	return ..()
 
 /datum/pre_round_store
 	var/datum/store_item/bought_item
@@ -21,47 +32,41 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 /datum/pre_round_store/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/pre_round_store/ui_data(mob/user)
-	. = ..()
-
-	var/list/data = list(
-		"notices" = config.lobby_notices
-	)
-	var/list/buyables = list()
-
-	if(!length(GLOB.cached_preround_items))
-		for(var/datum/store_item/listed_item as anything in (subtypesof(/datum/store_item) - /datum/store_item/roundstart))
-			if(!initial(listed_item.one_time_buy))
-				continue
-			GLOB.cached_preround_items += listed_item
-
-	for(var/datum/store_item/listed_item as anything in GLOB.cached_preround_items)
-		var/datum/store_item/created_store_item = new listed_item
-		var/obj/item/created_item = new created_store_item.item_path
-		buyables += list(
+/datum/pre_round_store/ui_static_data(mob/user)
+	var/list/items = list()
+	for(var/datum/store_item/store_item_type as anything in GLOB.pre_round_items)
+		var/datum/store_item/store_item = GLOB.pre_round_items[store_item_type]
+		var/obj/item/item_path = store_item.item_path
+		if(isnull(item_path))
+			continue
+		items += list(
 			list(
-				"path" = created_store_item.type,
-				"name" = created_store_item.name,
-				"cost" = created_store_item.item_cost,
-				"image" = icon2base64(icon(created_item.icon, created_item.icon_state)),
+				"path" = store_item_type,
+				"name" = store_item.name,
+				"cost" = store_item.item_cost,
+				"icon" = item_path::icon,
+				"icon_state" = item_path::icon_state,
 			)
 		)
-		qdel(created_store_item)
-		qdel(created_item)
+	return list("items" = items)
 
-	if(!user.client.prefs.metacoins)
-		user.client.prefs.load_metacoins(user.client.ckey)
+/datum/pre_round_store/ui_data(mob/user)
+	. = list(
+		"notices" = config.lobby_notices,
+		"currently_owned" = null,
+		"balance" = 0,
+	)
+	var/datum/preferences/user_prefs = user?.client?.prefs
+	if(QDELETED(src) || QDELETED(user_prefs))
+		return
+	if(!user_prefs.metacoins)
+		user_prefs.load_metacoins(user.client.ckey)
 
-
-	if(bought_item)
-		data["balance"] = user.client.prefs.metacoins - initial(bought_item.item_cost)
+	if(!isnull(bought_item))
+		.["balance"] = user_prefs.metacoins - bought_item::item_cost
+		.["currently_owned"] = bought_item::name
 	else
-		data["balance"] = user.client.prefs.metacoins
-
-	data["items"] += buyables
-	data["currently_owned"] = initial(bought_item.name)
-
-	return data
+		.["balance"] = user_prefs.metacoins
 
 /datum/pre_round_store/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -73,36 +78,41 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 			return TRUE
 
 /datum/pre_round_store/proc/attempt_buy(list/params)
-	var/id = params["path"]
-	var/path = text2path(id)
-	var/datum/store_item/attempted_item = text2path(id)
-	if(!ispath(path, /datum/store_item))
-		message_admins("[usr] attempted an href exploit.")
+	var/store_item_type = text2path(params["path"])
+	if(isnull(store_item_type))
 		return
-	bought_item = new attempted_item
+	if(!ispath(store_item_type, /datum/store_item))
+		message_admins("[usr] attempted an href exploit - tried to buy pre-round item [store_item_type], which isn't a /datum/store_item")
+		CRASH("Attempted an href exploit - tried to buy pre-round item [store_item_type], which isn't a /datum/store_item")
+	var/datum/store_item/store_item = GLOB.pre_round_items[store_item_type]
+	if(isnull(store_item))
+		CRASH("[store_item_type] wasn't in GLOB.pre_round_items")
+	bought_item = store_item
 
 /datum/pre_round_store/proc/finalize_purchase_spawn(mob/new_player_mob, mob/new_player_mob_living)
-	var/datum/preferences/owners_prefs = new_player_mob.client.prefs
-	if(!owners_prefs.has_coins(initial(bought_item.item_cost)))
-		to_chat(new_player_mob, span_warning("It seems your lacking coins to complete this transaction."))
+	var/datum/preferences/owners_prefs = new_player_mob?.client?.prefs
+	if(isnull(bought_item) || QDELETED(src) || QDELETED(owners_prefs))
+		return
+	if(!owners_prefs.has_coins(bought_item::item_cost))
+		to_chat(new_player_mob, span_warning("It seems you're lacking coins to complete this transaction."))
 		return
 	var/obj/item/created_item = new bought_item.item_path
 
 	if(istype(created_item, /obj/item/effect_granter))
 		var/obj/item/effect_granter/granting_time = created_item
 		if(granting_time.human_only && iscarbon(new_player_mob_living))
-			spawn(4 SECONDS)
-				if(!granting_time.grant_effect(new_player_mob_living))
-					return
+			addtimer(CALLBACK(granting_time, TYPE_PROC_REF(/obj/item/effect_granter, grant_effect), new_player_mob_living), 4 SECONDS)
 		else
 			QDEL_NULL(new_player_mob.client.readied_store)
+			qdel(created_item)
 			return
 	else if(!new_player_mob.put_in_hands(created_item, FALSE))
 		var/obj/item/storage/backpack/backpack = new_player_mob_living.get_item_by_slot(ITEM_SLOT_BACK)
 		if(!backpack)
-			to_chat(new_player_mob, "There was an error spawning in your items, you will not be charged")
+			to_chat(new_player_mob, span_warning("There was an error spawning in your items, you will not be charged"))
+			qdel(created_item)
 			return
 		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
 
-	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, (-initial(bought_item.item_cost)), "Bought a [created_item] for [initial(bought_item.item_cost)] (Pre-round Store)", donator_multipler = FALSE)
+	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, -bought_item::item_cost, "Bought a [created_item] for [initial(bought_item.item_cost)] (Pre-round Store)", donator_multiplier = FALSE)
 	QDEL_NULL(new_player_mob.client.readied_store)

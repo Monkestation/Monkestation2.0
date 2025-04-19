@@ -420,9 +420,11 @@
 	. += "Health: [round((health / maxHealth) * 100)]%"
 
 /mob/living/simple_animal/proc/drop_loot()
-	if(loot.len)
-		for(var/i in loot)
-			new i(loc)
+	if (!length(loot))
+		return
+	for(var/i in loot)
+		new i(drop_location())
+	loot.Cut()
 
 /mob/living/simple_animal/death(gibbed)
 	drop_loot()
@@ -431,6 +433,7 @@
 		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0

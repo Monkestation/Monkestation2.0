@@ -26,6 +26,11 @@ const logger = createLogger('Window');
 const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
+  constructor(props) {
+    super(props);
+    this.lastScale = null;
+  }
+
   componentDidMount() {
     const { suspended } = useBackend();
     const { canClose = true } = this.props;
@@ -40,10 +45,15 @@ export class Window extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { suspended, config } = useBackend();
+    if (suspended) {
+      return;
+    }
     // prettier-ignore
     const shouldUpdateGeometry = (
       this.props.width !== prevProps.width
       || this.props.height !== prevProps.height
+      || config.window.scale !== this.lastScale
     );
     if (shouldUpdateGeometry) {
       this.updateGeometry();
@@ -59,6 +69,7 @@ export class Window extends Component {
     if (this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
     }
+    this.lastScale = options.scale;
     if (config.window?.key) {
       setWindowKey(config.window.key);
     }

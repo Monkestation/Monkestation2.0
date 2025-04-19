@@ -126,6 +126,10 @@
  * If it fails to meet that criteria, than it is incompatible and this proc returns FALSE. If it is compatibile returns TRUE
  */
 /obj/item/organ/internal/cyberimp/proc/check_compatibility()
+	if(QDELETED(owner))
+		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_BYPASS_CYBERLINK))
+		return TRUE
 	var/obj/item/organ/internal/cyberimp/cyberlink/link = owner.get_organ_slot(ORGAN_SLOT_LINK)
 
 	for(var/info in encode_info)
@@ -170,23 +174,28 @@
 /obj/item/organ/internal/cyberimp/cyberlink/nt_low
 	name = "NT Cyberlink 1.0"
 	encode_info = AUGMENT_NT_LOWLEVEL_LINK
+	implant_color = "#FFFF00"
 
 /obj/item/organ/internal/cyberimp/cyberlink/nt_high
 	name = "NT Cyberlink 2.0"
 	encode_info = AUGMENT_NT_HIGHLEVEL_LINK
+	implant_color = "#DE7E00"
 
 /obj/item/organ/internal/cyberimp/cyberlink/terragov
 	name = "Terran Cyberware System"
 	encode_info = AUGMENT_TG_LEVEL_LINK
+	implant_color = "#1044a5"
 
 /obj/item/organ/internal/cyberimp/cyberlink/syndicate
 	name = "Cybersun Cybernetics Access System"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL_LINK
+	implant_color = "#780606"
 
 /obj/item/organ/internal/cyberimp/cyberlink/admin
 	name = "G.O.D. Cybernetics System"
 	encode_info = AUGMENT_ADMIN_LEVEL_LINK
+	implant_color = "#f3f3f3"
 
 /obj/item/autosurgeon/organ/cyberlink_nt_low
 	starting_organ = /obj/item/organ/internal/cyberimp/cyberlink/nt_low
