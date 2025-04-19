@@ -67,6 +67,8 @@
 #define CALIBER_STRILKA310 ".310_strilka"
 /// The caliber used by the atlatl spear thrower
 #define CALIBER_SPEAR "throwing spear"
+//Peashooter ammo for mech and minigun
+#define CALIBER_22LR ".22 LR"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
