@@ -44,8 +44,3 @@
 	spawn_path = /obj/item/book/granter/crafting_recipe/maint_gun/explosive_lance
 	preview_path = /obj/item/spear/explosive
 
-/datum/bb_gear/granter/elance
-	name = "Devitt Mk3"
-	desc = "An ancient two man tank, comes with cannon and machinegun, but little ammo."
-	spawn_path = /obj/vehicle/sealed/mecha/devitt
-	preview_path = /obj/vehicle/sealed/mecha/devitt
