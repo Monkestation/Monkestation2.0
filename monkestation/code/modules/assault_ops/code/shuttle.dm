@@ -2,7 +2,7 @@
 	name = "goldeneye cruiser helm"
 	desc = "The terminal used to control the goldeneye cruiser."
 	shuttleId = "goldeneye_cruiser"
-	possible_destinations = "goldeneye_cruiser_custom;goldeneye_cruiser_dock;syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_cruiser_dock;whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;ferry_away"
+	possible_destinations = "goldeneye_cruiser_custom;goldeneye_cruiser_dock;syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_cruiser_dock;whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;ferry_away;syndicate_depot_dock"
 	circuit = /obj/item/circuitboard/computer/goldeneye_helm
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
