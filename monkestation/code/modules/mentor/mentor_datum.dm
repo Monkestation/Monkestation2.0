@@ -62,6 +62,11 @@ GLOBAL_PROTECT(mentor_href_token)
 	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
 
 /proc/load_mentors()
+	var/dbfail
+	if(!CONFIG_GET(flag/admin_legacy_system) && !SSdbcore.Connect())
+		message_admins("Failed to connect to database while loading mentors. Loading from backup.")
+		log_sql("Failed to connect to database while loading mentors. Loading from backup.")
+		dbfail = 1
 	GLOB.mentor_datums.Cut()
 	for(var/client/mentor_clients in GLOB.mentors)
 		mentor_clients.remove_mentor_verbs()
@@ -74,3 +79,20 @@ GLOBAL_PROTECT(mentor_href_token)
 		if(findtextEx(line, "#", 1, 2))
 			continue
 		new /datum/mentors(line)
+
+	if(!CONFIG_GET(flag/mentor_legacy_system) || dbfail)
+		var/datum/db_query/query_load_mentors = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("mentor")]")
+		if(!query_load_mentors.Execute())
+			message_admins("Error loading mentors from database. Loading from backup.")
+			log_sql("Error loading mentors from database. Loading from backup.")
+			dbfail = 1
+		else
+			while(query_load_mentors.NextRow())
+				var/mentor_ckey = ckey(query_load_mentors.item[1])
+				var/skip
+
+				if(GLOB.mentor_datums[mentor_ckey])
+					skip = 1
+				if(!skip)
+					new /datum/mentors(mentor_ckey)
+		qdel(query_load_mentors)
