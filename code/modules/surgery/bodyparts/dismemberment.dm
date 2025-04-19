@@ -34,7 +34,7 @@
 // MONKESTATION ADDITION START
 	if(isipc(owner))
 		owner.dna.features["ipc_screen"] = "Blank"
-		playsound(get_turf(owner), 'sound/vox_fem/swhitenoise.ogg', 60, TRUE)
+		playsound(get_turf(owner), 'sound/announcer/vox_fem/swhitenoise.ogg', 60, TRUE)
 // MONKESTATION ADDITION END
 
 	drop_limb()
