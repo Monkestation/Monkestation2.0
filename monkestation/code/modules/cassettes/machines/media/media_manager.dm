@@ -120,6 +120,12 @@
 	ASSERT(istype(C))
 	src.owner = C
 
+/datum/media_manager/proc/check_owner_prefs()
+	if(lobby_music)
+		return owner?.prefs?.read_preference(/datum/preference/toggle/sound_lobby)
+	else
+		return owner?.prefs?.read_preference(/datum/preference/toggle/sound_jukebox)
+
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
 	playerstyle = owner.byond_version >= 516 ? PLAYER_HTML5_HTML : PLAYER_WMP_HTML // i beg of ye, someone convert the html5 player to use a proper audio library with positional audio support
@@ -135,7 +141,7 @@
 		if(owner.prefs.channel_volume["[CHANNEL_JUKEBOX]"])
 			volume = (owner.prefs.channel_volume["[CHANNEL_JUKEBOX]"])
 
-	if(!owner.prefs.read_preference(/datum/preference/toggle/hear_music))
+	if(!check_owner_prefs())
 		owner << output(list2params(list("", (world.time - 0) / 10, volume * 1, 0)), "[WINDOW_ID]:SetMusic")
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 
@@ -167,7 +173,7 @@
 	var/targetVolume = 0
 	var/targetBalance = 0
 
-	if (forced || !owner || !owner.mob)
+	if (forced || !owner?.mob)
 		return
 
 	var/area/A = get_area(owner.mob)
@@ -176,7 +182,7 @@
 		stop_music()
 		return
 	var/obj/machinery/media/M = A.media_source
-	if(M && M.playing)
+	if(M?.playing)
 		var/dist = get_dist(owner.mob, M)
 		var/x_dist = (owner.mob.x - M.x) * 10
 
@@ -193,16 +199,13 @@
 		client.media.recalc_volume()
 
 /datum/media_manager/proc/recalc_volume(datum/source, direction, turf/new_loc)
-	if(!(owner.prefs))
-		return
-
-	if(!owner.prefs.read_preference(/datum/preference/toggle/hear_music))
+	if(!check_owner_prefs())
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 
 	var/targetVolume = 0
 	var/targetBalance = 0
 
-	if (forced || !owner || !owner.mob)
+	if (forced || !owner?.mob)
 		return
 
 	var/area/A = get_area(owner.mob)
@@ -212,7 +215,7 @@
 		return
 
 	var/obj/machinery/media/M = A.media_source
-	if(M && M.playing)
+	if(M?.playing)
 		var/dist = get_dist(new_loc, M)
 		var/x_dist = -(new_loc.x - M.x) * 10
 
