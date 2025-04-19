@@ -62,7 +62,7 @@
 	desc = "A wall covered in a thick sheet of ice."
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
-	canSmoothWith = null
+	canSmoothWith = SMOOTH_GROUP_WALLS //MONKESTATION EDIT: this is supposed to smooth. why did you never code it to smooth. tg you doofuses.
 	rcd_memory = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
