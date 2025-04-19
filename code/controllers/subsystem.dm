@@ -106,9 +106,13 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
+/*
 	var/avg_iter_count = 0
 	var/avg_drift = 0
-	/* var/list/enqueue_log = list() */
+*/
+#ifdef ENABLE_ENQUEUE_LOGGING
+	var/list/enqueue_log = list()
+#endif
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
@@ -197,27 +201,55 @@
 
 	var/iter_count = 0
 
-	/* enqueue_log.Cut() */
+#ifdef ENABLE_ENQUEUE_LOGGING
+	enqueue_log.Cut()
+#endif
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
+		if (!isnull(GLOB.force_mc_soft_reset))
+			. = FALSE
+			GLOB.force_mc_soft_reset = null
+			var/msg = "MC soft reset forced while [queue_node] was enqueued (tick_usage = [TICK_USAGE])"
+#ifdef ENABLE_ENQUEUE_LOGGING
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+			enqueue_log.Cut()
+#endif
+			//SSplexora.mc_alert(msg)
+			CRASH(msg)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
-			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
-			SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			stack_trace("enqueue() entered an infinite loop, we're restarting the MC!")
-			/* enqueue_log.Cut() */
-			Recreate_MC()
-			return
-
+			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations"
+			//SSplexora.mc_alert(msg)
+			message_admins(msg)
+			stack_trace(msg)
+#ifdef ENABLE_ENQUEUE_LOGGING
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+			enqueue_log.Cut()
+#endif
+			return FALSE
 
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
-		/* enqueue_log["[iter_count]"] = list(
+		if (queue_node.queue_next == queue_node /* || queue_node.queue_prev == queue_node */)
+			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now"
+			//SSplexora.mc_alert(msg)
+			message_admins(msg)
+			stack_trace(msg)
+#ifdef ENABLE_ENQUEUE_LOGGING
+			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+			enqueue_log.Cut()
+#endif
+			return FALSE
+
+#ifdef ENABLE_ENQUEUE_LOGGING
+		enqueue_log["[iter_count]"] = list(
+			"src" = "[src]",
 			"node" = "[queue_node]",
 			"next" = "[queue_node.queue_next || "(none)"]",
 			"priority" = queue_node_priority,
 			"flags" = queue_node_flags,
-		) */
+		)
+#endif
 
 		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
 			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
@@ -239,10 +271,12 @@
 			if (queue_node_priority < SS_priority)
 				break
 
+/*
 	if(iter_count > 0)
 		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
 		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
 		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift
+*/
 
 	queued_time = world.time
 	queued_priority = SS_priority
@@ -269,6 +303,7 @@
 		queue_node.queue_prev.queue_next = src
 		queue_prev = queue_node.queue_prev
 		queue_node.queue_prev = src
+	return TRUE
 
 
 /datum/controller/subsystem/proc/dequeue()
