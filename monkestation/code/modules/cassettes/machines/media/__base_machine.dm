@@ -11,16 +11,30 @@
 	var/media_url = ""			// URL of media I am playing
 	var/media_start_time = 0	// world.time when it started playing
 	var/volume = 1				// 0 - 1 for ease of coding.
+	var/datum/media_source/object/media_source
 
 	// ~Leshana - Transmitters unimplemented
 
+/obj/machinery/media/Initialize()
+	. = ..()
+	update_media_source()
+	media_source = new(volume = volume * 100, source = src)
+
+/obj/machinery/media/Destroy()
+	QDEL_NULL(media_source)
+	disconnect_media_source()
+	return ..()
+
 // Notify everyone in the area of new music.
 // YOU MUST SET MEDIA_URL AND MEDIA_START_TIME YOURSELF!
-/obj/machinery/media/proc/update_music()
+/obj/machinery/media/proc/update_music(m2 = TRUE)
 	update_media_source()
+	media_source.volume = volume * 100
+	if(m2)
+		media_source.update_for_all_listeners()
 	// Send update to clients.
 	for(var/mob/mob in range(15, get_turf(src))) //15 being the max volume of the radio
-		if(mob && mob.client)
+		if(mob?.client)
 			mob.update_music()
 
 /obj/machinery/media/proc/update_media_source()
@@ -29,7 +43,6 @@
 		if(area.media_source && area.media_source != src) // If it does, the new media source replaces it. basically, the last media source arrived gets played on top.
 			area.media_source.disconnect_media_source() // You can turn a media source off and on for it to come back on top.
 			area.media_source = src
-			return
 		else
 			area.media_source = src
 
@@ -39,27 +52,17 @@
 		area.media_source = null
 
 	// Clients
-	for(var/mob/mob as anything in range(15))
-		if(!istype(mob)) //might be possible to simply make this not be as() anything
-			continue
+	for(var/mob/mob in range(15))
 		mob.update_music()
 
 /obj/machinery/media/Move()
 	disconnect_media_source()
 	. = ..()
 	if(anchored)
-		update_music()
+		update_music(m2 = FALSE)
 
 /obj/machinery/media/forceMove(var/atom/destination)
 	disconnect_media_source()
 	. = ..()
 	if(anchored)
-		update_music()
-
-/obj/machinery/media/Initialize()
-	. = ..()
-	update_media_source()
-
-/obj/machinery/media/Destroy()
-	disconnect_media_source()
-	. = ..()
+		update_music(m2 = FALSE)

@@ -572,6 +572,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	media.open()
 	media.update_music()
 
+	if(byond_version >= 516)
+		media_player = new(src)
+
 	fully_created = TRUE
 
 //////////////
@@ -591,6 +594,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	return ..()
 
 /client/Destroy()
+	QDEL_NULL(media_player) // monkestation edit: destroy this first so we don't try to send anything during any part of del
 	if(mob)
 		var/stealth_admin = mob.client?.holder?.fakekey
 		var/announce_join = mob.client?.prefs?.read_preference(/datum/preference/toggle/broadcast_login_logout)
@@ -1360,6 +1364,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set desc = "Stop Current Sounds"
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
+	media_player?.stop()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
 /client/verb/toggle_fullscreen()

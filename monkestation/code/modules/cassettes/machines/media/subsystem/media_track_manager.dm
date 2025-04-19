@@ -22,6 +22,8 @@ SUBSYSTEM_DEF(media_tracks)
 	var/datum/media_track/current_lobby_track
 
 /datum/controller/subsystem/media_tracks/Initialize(timeofday)
+	if(CONFIG_GET(flag/disallow_title_music))
+		return SS_INIT_NO_NEED
 	load_tracks()
 	sort_tracks()
 	return SS_INIT_SUCCESS
