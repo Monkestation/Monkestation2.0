@@ -299,10 +299,12 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		text2file(SSmedia_tracks.current_lobby_track.url, "data/last_round_lobby_music.txt")
 		// monkestation edit end
 		SSmedia_tracks.first_lobby_play = FALSE
+		GLOB.lobby_media.current_track = SSmedia_tracks.current_lobby_track
+		GLOB.lobby_media.update_for_all_listeners()
 
 	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
 	if(byond_version >= 516)
-		media_player.play(T.url, vol)
+		GLOB.lobby_media.add_listener(mob)
 	else
 		media.push_music(T.url, world.time, 1, force = TRUE)
 		media.update_volume(vol) // this makes it easier if we modify volume later on

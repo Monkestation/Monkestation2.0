@@ -92,7 +92,7 @@
 /datum/media_player/proc/set_volume(volume = 100)
 	media_call("set_volume", volume)
 
-/datum/media_player/proc/play(url, volume, x = 0, y = 0, z = 0)
+/datum/media_player/proc/play(url, volume = 100, x = 0, y = 0, z = 0)
 	media_call("play", url, volume, null, x, y, z)
 
 /datum/media_player/proc/pause()

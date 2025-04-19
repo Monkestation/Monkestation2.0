@@ -2466,10 +2466,17 @@ var $90a88a05e26750bd$export$b791fe48eec8032a;
 })();
 
 
+audio = null;
+cleared = false;
 function $8b18deaf9ace6657$var$send_clear() {
     if (cleared) return;
     (0, $1d62c132ef7d1e19$export$b957c2b0fcc9ce3c)("clear");
     cleared = true;
+}
+function $8b18deaf9ace6657$var$full_clear(debug_msg) {
+    if (debug_msg) console.debug("full_clear:", debug_msg);
+    $8b18deaf9ace6657$var$send_clear();
+    audio = null;
 }
 function $8b18deaf9ace6657$var$send_playing(url) {
     cleared = false;
@@ -2478,25 +2485,26 @@ function $8b18deaf9ace6657$var$send_playing(url) {
     });
 }
 window.play = (url, volume, format, x = 0, y = 0, z = 0)=>{
-    stop();
+    if (audio) stop();
     const options = {
         src: [
             url
         ],
-        volume: volume,
+        volume: volume ? volume / 100 : 1,
         html5: true,
-        preload: "metadata",
+        preload: false,
         format: format,
         onload: ()=>{
+            console.debug("onload");
             if (!audio) return;
             audio.pos(x, y, z);
             audio.play();
         },
         onplay: ()=>$8b18deaf9ace6657$var$send_playing(url),
-        onend: $8b18deaf9ace6657$var$send_clear,
-        onstop: $8b18deaf9ace6657$var$send_clear,
-        onloaderror: $8b18deaf9ace6657$var$send_clear,
-        onplayerror: $8b18deaf9ace6657$var$send_clear
+        onstop: ()=>$8b18deaf9ace6657$var$full_clear("onstop"),
+        onend: ()=>$8b18deaf9ace6657$var$full_clear("onend"),
+        onloaderror: ()=>$8b18deaf9ace6657$var$full_clear("onloaderror"),
+        onplayerror: ()=>$8b18deaf9ace6657$var$full_clear("onplayerror")
     };
     try {
         const audio1 = window.audio = new (0, $90a88a05e26750bd$export$b791fe48eec8032a)(options);
@@ -2508,16 +2516,14 @@ window.play = (url, volume, format, x = 0, y = 0, z = 0)=>{
         }
         audio1.load();
     } catch (error) {
-        $8b18deaf9ace6657$var$send_clear();
-        stop();
         console.error("Failed to play audio", error);
+        stop();
     }
 };
 window.stop = ()=>{
     $8b18deaf9ace6657$var$send_clear();
-    if (!audio) return;
     try {
-        audio.unload();
+        audio?.unload();
     } catch (error) {
         console.error("Failed to stop audio", error);
     } finally{
