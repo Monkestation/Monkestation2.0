@@ -70,6 +70,11 @@
 		target.reagents.trans_to(owner.current, INGEST, 1) // Run transfer of 1 unit of reagent from them to me.
 	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', vol = 40, vary = TRUE) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 	total_blood_drank += blood_taken
+	if(target.mind) // Checks if the target has a mind
+		if(IS_VASSAL(target)) // Checks if the target is a vassal
+			blood_level_gain += blood_taken / 4
+		else
+			blood_level_gain += blood_taken
 	return blood_taken
 
 /**
