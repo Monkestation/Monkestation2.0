@@ -101,7 +101,7 @@
 		observer.persistent_client.time_of_death = world.time
 	observer.update_appearance()
 	if(observer.client?.byond_version >= 516)
-		observer.client?.media_player?.stop()
+		observer.update_media_source()
 	else
 		observer.client?.media?.stop_music()
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)
@@ -318,7 +318,7 @@
 	new_character.PossessByPlayer(key) //Manually transfer the key to log them in,
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	if(new_character.client?.byond_version >= 516)
-		new_character.client?.media_player?.stop()
+		new_character.update_media_source()
 	else if(new_character.client?.media)
 		new_character.client.media.lobby_music = FALSE
 		new_character.client.media.stop_music()

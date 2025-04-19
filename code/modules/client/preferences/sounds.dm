@@ -66,7 +66,7 @@
 	if (value)
 		client.playtitlemusic()
 	else if(client.byond_version >= 516)
-		client.media_player.stop()
+		client.mob.update_media_source()
 	else
 		client.media.stop_music()
 

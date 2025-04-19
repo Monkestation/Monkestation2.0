@@ -53,6 +53,8 @@
 
 /datum/media_source/proc/get_volume(mob/target)
 	. = volume
+	if(isnull(mixer_channel))
+		return volume
 	var/client/client = CLIENT_FROM_VAR(target)
 	var/list/channel_volume = client?.prefs?.channel_volume
 	if(mixer_channel in channel_volume)

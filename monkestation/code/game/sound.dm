@@ -84,9 +84,12 @@
 			if("[CHANNEL_MASTER_VOLUME]" in channels)
 				new_lobby_volume *= (channels["[CHANNEL_MASTER_VOLUME]"] * 0.01)
 			if(client?.byond_version >= 516)
-				client?.media_player?.set_volume(new_lobby_volume)
+				user.update_media_source()
 			else
 				client?.media?.update_volume(new_lobby_volume)
+
+	if(channel == CHANNEL_JUKEBOX && user.client?.byond_version >= 516)
+		user.update_media_source()
 
 	var/sound/S = sound(null, channel = channel, volume = vol)
 	S.status = SOUND_UPDATE
