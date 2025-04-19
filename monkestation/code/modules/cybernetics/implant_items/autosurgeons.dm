@@ -77,7 +77,7 @@
 	name = "[initial(name)] ([stored_skillchip.name])"
 
 /obj/item/autosurgeon/skillchip/attack_self(mob/living/carbon/user)//when the object it used...
-	if(!uses)
+	if(uses <= 0)
 		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate.") )
 		return
 
@@ -113,10 +113,8 @@
 
 	name = initial(name)
 
-	if(uses != INFINITE)
-		uses--
-
-	if(!uses)
+	uses--
+	if(uses <= 0)
 		desc = "[initial(desc)] The surgical tools look too blunt and worn to pierce a skull. Looks like it's all used up."
 
 /obj/item/autosurgeon/skillchip/attackby(obj/item/I, mob/user, params)
@@ -127,8 +125,8 @@
 		to_chat(user, span_alert("[src] already has a skillchip stored.") )
 		return
 
-	if(!uses)
-		to_chat(user, span_alert("[src] has already been used up.") )
+	if(uses <= 0)
+		to_chat(user, span_alert("[src] has already been used up."))
 		return
 
 	if(!user.transferItemToLoc(I, src))
@@ -156,10 +154,8 @@
 	I.play_tool_sound(src)
 	stored_skillchip = null
 
-	if(uses != INFINITE)
-		uses--
-
-	if(!uses)
+	uses--
+	if(uses <= 0)
 		desc = "[initial(desc)] Looks like it's been used up."
 
 	return TRUE

@@ -208,13 +208,20 @@
 	if(!.)
 		return
 
-	if(!SSticker?.IsRoundInProgress())
-		to_chat(hud.mymob, span_boldwarning("The round is either not ready, or has already finished..."))
+	var/mob/dead/new_player/new_player = hud.mymob
+	if(isnull(new_player?.client))
+		return
+	if(!new_player.client?.fully_created)
+		to_chat(new_player, span_warning("Your client is still initializing, please wait a second..."))
 		return
 
-	if(hud.mymob.client?.check_overwatch())
-		to_chat(hud.mymob, span_warning("Kindly wait until your connection has been authenticated before joining"))
-		message_admins("[hud.mymob.key] tried to use the Join button but failed the overwatch check.")
+	if(!SSticker?.IsRoundInProgress())
+		to_chat(new_player, span_boldwarning("The round is either not ready, or has already finished..."))
+		return
+
+	if(new_player.client?.check_overwatch())
+		to_chat(new_player, span_warning("Please wait until your connection has been authenticated before joining."))
+		message_admins("[new_player.key] tried to use the Join button but failed the overwatch check.")
 		return
 
 	//Determines Relevent Population Cap
@@ -225,8 +232,6 @@
 		relevant_cap = min(hard_popcap, extreme_popcap)
 	else
 		relevant_cap = max(hard_popcap, extreme_popcap)
-
-	var/mob/dead/new_player/new_player = hud.mymob
 
 	//Allow admins and Patreon supporters to bypass the cap/queue
 	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || new_player.client?.is_mentor()))

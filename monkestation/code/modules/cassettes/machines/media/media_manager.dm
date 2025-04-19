@@ -127,15 +127,29 @@
 	owner << browse(playerstyle, "window=[WINDOW_ID]")
 	send_update()
 
+/datum/media_manager/proc/get_channel()
+	if(lobby_music)
+		return "[CHANNEL_LOBBYMUSIC]"
+	else
+		return "[CHANNEL_JUKEBOX]"
+
+/datum/media_manager/proc/check_preference()
+	if(isnull(owner?.prefs))
+		return FALSE
+	if(lobby_music)
+		return owner?.prefs?.read_preference(/datum/preference/toggle/sound_lobby)
+	else
+		return owner?.prefs?.read_preference(/datum/preference/toggle/sound_jukebox)
+
 // Tell the player to play something via JS.
 /datum/media_manager/proc/send_update()
-	if(!(owner.prefs))
+	if(!owner?.prefs)
 		return
-	if(!lobby_music)
-		if(owner.prefs.channel_volume["[CHANNEL_JUKEBOX]"])
-			volume = (owner.prefs.channel_volume["[CHANNEL_JUKEBOX]"])
+	var/channel = get_channel()
+	if(channel in owner?.prefs?.channel_volume)
+		volume = owner.prefs.channel_volume[channel]
 
-	if(!owner.prefs.read_preference(/datum/preference/toggle/hear_music))
+	if(!check_preference())
 		owner << output(list2params(list("", (world.time - 0) / 10, volume * 1, 0)), "[WINDOW_ID]:SetMusic")
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 
@@ -167,7 +181,7 @@
 	var/targetVolume = 0
 	var/targetBalance = 0
 
-	if (forced || !owner || !owner.mob)
+	if (forced || !owner?.mob)
 		return
 
 	var/area/A = get_area(owner.mob)
@@ -193,16 +207,13 @@
 		client.media.recalc_volume()
 
 /datum/media_manager/proc/recalc_volume(datum/source, direction, turf/new_loc)
-	if(!(owner.prefs))
-		return
-
-	if(!owner.prefs.read_preference(/datum/preference/toggle/hear_music))
+	if(!check_preference())
 		return // Don't send anything other than a cancel to people with SOUND_STREAMING pref disabled
 
 	var/targetVolume = 0
 	var/targetBalance = 0
 
-	if (forced || !owner || !owner.mob)
+	if (forced || !owner?.mob)
 		return
 
 	var/area/A = get_area(owner.mob)

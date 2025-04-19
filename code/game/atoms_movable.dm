@@ -1255,13 +1255,14 @@
 /// Only moves the object if it's under no gravity
 /// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
 /atom/movable/proc/newtonian_move(direction, instant = FALSE, start_delay = 0)
-	if(!isturf(loc) || Process_Spacemove(direction, continuous_move = TRUE))
+	if(QDELETED(src) || !isturf(loc) || Process_Spacemove(direction, continuous_move = TRUE))
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction, start_delay) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
 
-	AddComponent(/datum/component/drift, direction, instant, start_delay)
+	if(!QDELETED(src))
+		AddComponent(/datum/component/drift, direction, instant, start_delay)
 
 	return TRUE
 
