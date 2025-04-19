@@ -216,6 +216,12 @@
 			//SSplexora.mc_alert(msg)
 			CRASH(msg)
 		iter_count++
+		if(MC_IS_CHECKQUEUE_PROBABLY_BAD)
+			. = FALSE
+			var/time_without_runqueue = DisplayTimeText((REALTIMEOFDAY - Master.checkqueue_timeout) + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE)
+			var/msg = "RunQueue has not run in [time_without_runqueue], something has likely gone horribly wrong!"
+			SSplexora.mc_alert("[msg] (source: enqueue)")
+			CRASH(msg)
 		if(iter_count >= ENQUEUE_SANITY)
 			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations"
 			//SSplexora.mc_alert(msg)
