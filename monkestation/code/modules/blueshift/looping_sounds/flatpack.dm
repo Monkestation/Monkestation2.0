@@ -1,6 +1,6 @@
 /datum/looping_sound/colony_fabricator_running
 	start_sound = 'monkestation/code/modules/blueshift/sounds/fabricator/fabricator_start.wav'
-	start_length = 1
+	start_length = 0.1 SECONDS
 	mid_sounds = list(
 		'monkestation/code/modules/blueshift/sounds/fabricator/fabricator_mid_1.wav' = 1,
 		'monkestation/code/modules/blueshift/sounds/fabricator/fabricator_mid_2.wav' = 1,
@@ -36,7 +36,7 @@
 
 /datum/looping_sound/ore_thumper_fan
 	start_sound = 'monkestation/code/modules/blueshift/sounds/thumper_fan/fan_start.wav'
-	start_length = 3
+	start_length = 0.3 SECONDS
 	mid_sounds = list(
 		'monkestation/code/modules/blueshift/sounds/thumper_fan/fan_mid_1.wav' = 1,
 		'monkestation/code/modules/blueshift/sounds/thumper_fan/fan_mid_2.wav' = 1,

@@ -2,7 +2,7 @@
  * A datum for sounds that need to loop, with a high amount of configurability.
  */
 /datum/looping_sound
-	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
+	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end. In a list, path must have also be assigned a value or it will be assigned 0 and not play.
 	var/mid_sounds
 	/// The length of time to wait between playing mid_sounds.
 	var/mid_length
@@ -188,7 +188,7 @@
 	if(!each_once)
 		. = play_from
 		while(!isfile(.) && !isnull(.))
-			. = pick_weight(fill_with_ones(.))
+			. = pick_weight_recursive(.)
 		return .
 
 
@@ -200,7 +200,7 @@
 		// Tree is a list of lists containign files
 		// If an entry in the tree goes to 0 length, we cut it from the list
 		tree += list(.)
-		. = pick_weight(fill_with_ones(.))
+		. = pick_weight_recursive(.)
 
 	if(!isfile(.))
 		return
