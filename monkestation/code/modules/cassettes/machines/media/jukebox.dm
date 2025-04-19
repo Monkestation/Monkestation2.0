@@ -52,7 +52,7 @@
 		playing = 0
 		return
 	// If the current track isn't finished playing, let it keep going
-	if(current_track && world.time < media_start_time + current_track.duration)
+	if(current_track && (REALTIMEOFDAY < (media_start_time + current_track.duration)))
 		return
 	// Oh... nothing in queue? Well then pick next according to our rules
 	var/list/tracks = getTracksList()
@@ -79,11 +79,15 @@
 /obj/machinery/media/jukebox/proc/start_stop_song()
 	if(current_track && playing)
 		media_url = current_track.url
-		media_start_time = world.time
+		media_start_time = REALTIMEOFDAY
+		media_source.current_track = current_track
+		media_source.start_time = media_start_time
 		audible_message("<span class='notice'>\The [src] begins to play [current_track.display()].</span>")
 	else
 		media_url = ""
 		media_start_time = 0
+		media_source.current_track = null
+		media_source.start_time = null
 	update_music()
 
 /obj/machinery/media/jukebox/proc/set_hacked(var/newhacked)
@@ -173,7 +177,7 @@
 		data["current_track_ref"] = "\ref[current_track]"  // Convenient shortcut
 		data["current_track"] = current_track.get_data()
 		data["current_genre"] = current_track.genre
-	data["percent"] = playing ? min(100, round(world.time - media_start_time) / current_track.duration) : 0;
+	data["percent"] = playing ? min(100, round(REALTIMEOFDAY - media_start_time) / current_track.duration) : 0;
 
 	var/list/tgui_tracks = list()
 	for(var/datum/media_track/T in getTracksList())

@@ -16,7 +16,7 @@
 	LAZYREMOVE(available_media_sources, media_source)
 	update_media_source()
 
-/mob/proc/update_media_source(force = FALSE)
+/mob/proc/update_media_source(force_update_time = FALSE)
 	var/datum/media_player/media_player = client?.media_player
 	if(!isnull(current_media_source) && (!LAZYLEN(available_media_sources) || QDELETED(src) || QDELING(current_media_source)))
 		media_player?.stop()
@@ -37,15 +37,14 @@
 		if(isnull(best_source) || priority > best_source_priority)
 			best_source = media_source
 			best_source_priority = priority
-	if(!force && best_source == current_media_source) // nothing's changed.
-		return
 	if(isnull(best_source))
 		media_player?.stop()
 		current_media_source = null
 		return
-0	current_media_source = best_source
+	var/should_update_time = force_update_time || (current_media_source != best_source)
+	current_media_source = best_source
 	if(!QDELETED(media_player))
-		best_source.play_for_listener(src, media_player)
+		best_source.play_for_listener(src, media_player, should_update_time)
 
 /mob/dead/new_player/Initialize(mapload)
 	. = ..()

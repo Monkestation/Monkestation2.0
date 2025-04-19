@@ -19,8 +19,20 @@
 	VAR_FINAL/is_browser = FALSE
 	/// Is the media manager ready to do stuff yet?
 	VAR_FINAL/ready = FALSE
+	/// The URL the media player attempting to load, if any.
+	VAR_FINAL/loading_url = FALSE
 	/// The current URL being played.
 	VAR_FINAL/current_url
+	/// The volume of the last update.
+	VAR_PRIVATE/last_volume
+	/// The relative X coordinate of the last update.
+	VAR_PRIVATE/last_x
+	/// The relative Y coordinate of the last update.
+	VAR_PRIVATE/last_y
+	/// The relative Z coordinate of the last update.
+	VAR_PRIVATE/last_z
+	/// The balance of the last update.
+	VAR_PRIVATE/last_balance
 	/// Callbacks to run when we get the "ready" message back fron the media manager.
 	VAR_PRIVATE/list/ready_callbacks
 	var/static/base_html
@@ -64,10 +76,10 @@
 	var/target = is_browser ? (MEDIA_WINDOW_ID + ":" + name) : (MEDIA_WINDOW_ID + ".browser:" + name)
 	var/params = list2params(args.Copy(2))
 	if(ready)
-		MM2_DEBUG("call: target=[target], params=[params]")
+		MM2_DEBUG("call: target=[target], params=[json_encode(args.Copy(2))]")
 		owner << output(params, target)
 	else
-		MM2_DEBUG("queueing ready callback: target=[target], params=[params]")
+		MM2_DEBUG("queueing ready callback: target=[target], params=[json_encode(args.Copy(2))]")
 		LAZYADD(ready_callbacks, CALLBACK(src, PROC_REF(__ready_callback), target, params))
 
 /// Wrapper proc for ready callbacks made by media_call - basically a stripped down version of media_call that won't create more ready callbacks.
@@ -84,33 +96,63 @@
 	base_html = replacetextEx(base_html, "<!-- media:inline-js -->", "<script type='text/javascript'>\n[js]\n</script>")
 
 /datum/media_player/proc/set_position(x = 0, y = 0, z = 0)
-	media_call("set_position", x, y, z)
+	if(last_x != x || last_y != y || last_z != z)
+		last_x = x
+		last_y = y
+		last_z = z
+		media_call("set_position", x, y, z)
+
+/datum/media_player/proc/set_panning(balance = 0)
+	if(last_balance != balance)
+		last_balance = balance
+		media_call("set_panning", balance)
 
 /datum/media_player/proc/set_time(time = 0)
 	media_call("set_time", time)
 
 /datum/media_player/proc/set_volume(volume = 100)
-	media_call("set_volume", volume)
+	if(last_volume != volume)
+		last_volume = volume
+		media_call("set_volume", volume)
 
-/datum/media_player/proc/play(url, volume = 100, x = 0, y = 0, z = 0)
-	media_call("play", url, volume, null, x, y, z)
+/datum/media_player/proc/play(url, volume = 100, x = 0, y = 0, z = 0, balance = 0)
+	if(url == loading_url)
+		return
+	loading_url = url
+	last_x = x
+	last_y = y
+	last_z = z
+	last_volume = volume
+	last_balance = balance
+	media_call("play", url, volume, null, x, y, z, balance)
 
 /datum/media_player/proc/pause()
 	media_call("pause")
 
 /datum/media_player/proc/stop()
-	media_call("stop")
+	if(isnull(loading_url) && !isnull(current_url))
+		media_call("stop")
 
 /datum/media_player/proc/on_ready()
 	if(ready)
 		CRASH("readied twice")
 	if(QDELETED(src) || isnull(owner))
 		return
+	on_clear()
+	ready = TRUE
+	MM2_DEBUG("ready for [key_name(owner)]")
 	for(var/datum/callback/callback as anything in ready_callbacks)
 		callback?.Invoke()
-	ready = TRUE
 	LAZYNULL(ready_callbacks)
-	MM2_DEBUG("ready for [key_name(owner)]")
+
+/datum/media_player/proc/on_clear()
+	current_url = null
+	loading_url = null
+	last_volume = null
+	last_x = null
+	last_y = null
+	last_z = null
+	last_balance = null
 
 /datum/media_player/Topic(href, list/href_list)
 	. = ..()
@@ -124,9 +166,10 @@
 		if("ready")
 			on_ready()
 		if("clear")
-			current_url = null
+			on_clear()
 		if("playing")
 			current_url = params["url"]
+			loading_url = null
 		if("error")
 			MM2_DEBUG("error: [params["message"]]")
 			stack_trace(params["message"])

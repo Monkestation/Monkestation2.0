@@ -2467,7 +2467,17 @@ var $90a88a05e26750bd$export$b791fe48eec8032a;
 
 
 audio = null;
+load_time = null;
+start_time = null;
+offset = 0;
 cleared = false;
+function $8b18deaf9ace6657$var$is_in_margin_of_error(new_time) {
+    if (!start_time || new_time <= 0 || offset <= 0) return false;
+    const elapsed = (Date.now() - start_time) / 1000;
+    const diff = Math.abs(elapsed - new_time);
+    console.debug(`load_time = ${load_time}\nstart_time = ${start_time}\nnew_time = ${new_time}\nelapsed = ${elapsed}\noffset = ${offset}\ndiff = ${diff}`);
+    return diff <= offset;
+}
 function $8b18deaf9ace6657$var$send_clear() {
     if (cleared) return;
     (0, $1d62c132ef7d1e19$export$b957c2b0fcc9ce3c)("clear");
@@ -2477,6 +2487,9 @@ function $8b18deaf9ace6657$var$full_clear(debug_msg) {
     if (debug_msg) console.debug("full_clear:", debug_msg);
     $8b18deaf9ace6657$var$send_clear();
     audio = null;
+    load_time = null;
+    start_time = null;
+    offset = 0;
 }
 function $8b18deaf9ace6657$var$send_playing(url) {
     cleared = false;
@@ -2484,7 +2497,7 @@ function $8b18deaf9ace6657$var$send_playing(url) {
         url: url
     });
 }
-window.play = (url, volume, format, x = 0, y = 0, z = 0)=>{
+window.play = (url, volume, format, x = 0, y = 0, z = 0, balance = 0)=>{
     if (audio) stop();
     const options = {
         src: [
@@ -2498,9 +2511,15 @@ window.play = (url, volume, format, x = 0, y = 0, z = 0)=>{
             console.debug("onload");
             if (!audio) return;
             audio.pos(x, y, z);
+            audio.stereo(balance);
             audio.play();
         },
-        onplay: ()=>$8b18deaf9ace6657$var$send_playing(url),
+        onplay: ()=>{
+            start_time = Date.now();
+            $8b18deaf9ace6657$var$send_playing(url);
+            if (load_time !== null) offset = Math.ceil((start_time - load_time) / 1000) * 2;
+            console.debug(`--- onplay ---\nstart_time=${start_time}\nload_time=${load_time}\noffset=${offset}`);
+        },
         onstop: ()=>$8b18deaf9ace6657$var$full_clear("onstop"),
         onend: ()=>$8b18deaf9ace6657$var$full_clear("onend"),
         onloaderror: ()=>$8b18deaf9ace6657$var$full_clear("onloaderror"),
@@ -2514,6 +2533,7 @@ window.play = (url, volume, format, x = 0, y = 0, z = 0)=>{
             const node = sound._node;
             if (node) node.crossOrigin = "anonymous";
         }
+        load_time = Date.now();
         audio1.load();
     } catch (error) {
         console.error("Failed to play audio", error);
@@ -2523,6 +2543,9 @@ window.play = (url, volume, format, x = 0, y = 0, z = 0)=>{
 window.stop = ()=>{
     $8b18deaf9ace6657$var$send_clear();
     try {
+        load_time = null;
+        start_time = null;
+        offset = 0;
         audio?.unload();
     } catch (error) {
         console.error("Failed to stop audio", error);
@@ -2536,8 +2559,9 @@ window.pause = ()=>{
 window.set_volume = (volume)=>{
     audio?.volume(volume / 100);
 };
-window.set_time = (seconds)=>{
-    audio?.seek(seconds);
+window.set_time = (seconds, force)=>{
+    // Avoid causing stuttering, when possible.
+    if (force || !$8b18deaf9ace6657$var$is_in_margin_of_error(seconds)) audio?.seek(seconds);
 };
 window.set_position = (x, y, z)=>{
     audio?.pos(x, y, z);
