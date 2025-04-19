@@ -6,7 +6,7 @@
 
 /mob/Login()
 	. = ..()
-	current_media_source?.play_for_listener(src, client?.media_player)
+	current_media_source?.play_for_listener(src, client?.media_player, update_time = TRUE)
 
 /mob/proc/add_media_source(datum/media_source/media_source)
 	LAZYOR(available_media_sources, media_source)
@@ -46,6 +46,6 @@
 	if(!QDELETED(media_player))
 		best_source.play_for_listener(src, media_player, should_update_time)
 
-/mob/dead/new_player/Initialize(mapload)
+/mob/dead/new_player/Login()
 	. = ..()
 	GLOB.lobby_media.add_listener(src)
