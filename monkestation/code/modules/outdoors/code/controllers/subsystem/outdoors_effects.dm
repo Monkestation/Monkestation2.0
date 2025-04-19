@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	if(CONFIG_GET(flag/disable_sunlight_visuals))
 		disable()
 		return SS_INIT_NO_NEED
-	if(SSmapping.config.map_name == "Oshan Station")
+	if(SSmapping.current_map.map_name == "Oshan Station")
 		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
 			qdel(listed_time)
 		time_cycle_steps = list(

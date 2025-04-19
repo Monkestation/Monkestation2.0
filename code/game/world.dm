@@ -401,8 +401,8 @@ GLOBAL_VAR(restart_counter)
 	new_status += "<br>Roleplay: \[<b>Medium-Rare</b>\]"
 
 	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
-	if(SSmapping.config)
-		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
+	if(SSmapping.current_map)
+		new_status += "<br>Map: <b>[SSmapping.current_map.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.current_map.map_name]</b>"
 	var/alert_text = SSsecurity_level.get_current_level_as_text()
 	if(alert_text)
 		new_status += "<br>Alert: <b>[capitalize(alert_text)]</b>"

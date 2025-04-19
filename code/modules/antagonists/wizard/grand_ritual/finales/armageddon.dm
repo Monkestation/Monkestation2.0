@@ -42,7 +42,7 @@
 	if (!length(doom_options))
 //		doom_options = list(DOOM_SINGULARITY, DOOM_TESLA) //monkestation removal
 		doom_options = list(DOOM_EVENTS, DOOM_ANTAGS, DOOM_ROD) //monkestation edit
-		if (!SSmapping.config.planetary)
+		if (!SSmapping.current_map.planetary)
 			doom_options += DOOM_METEORS
 
 	switch(pick(doom_options))

@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(particle_weather)
 		return SS_INIT_NO_NEED
 	for(var/particle_weather_type in subtypesof(/datum/particle_weather))
 		var/datum/particle_weather/particle_weather = new particle_weather_type
-		if(particle_weather.target_trait in SSmapping.config.particle_weathers)
+		if(particle_weather.target_trait in SSmapping.current_map.particle_weathers)
 			eligible_weathers[particle_weather_type] = particle_weather.probability
 
 		if(particle_weather.eclipse)
