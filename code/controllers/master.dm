@@ -70,14 +70,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	///used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
-	/// The next REALTIMEOFDAY CheckQueue/enqueue should timeout.
-	/// This is updated at the beginning and end of RunQueue.
-	var/static/checkqueue_timeout
-
 /datum/controller/master/New()
 	// Ensure usr is null, to prevent any potential weirdness resulting from the MC having a usr if it's manually restarted.
 	usr = null
-	checkqueue_timeout = null
 
 	if(!config)
 		config = new
@@ -436,7 +431,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			if(ss_runlevels & GLOB.bitflags[I])
 				while(runlevel_sorted_subsystems.len < I)
 					runlevel_sorted_subsystems += list(list())
-				runlevel_sorted_subsystems[I] += SS
+				runlevel_sorted_subsystems[I] |= SS
 				added_to_any = TRUE
 		if(!added_to_any)
 			WARNING("[SS.name] subsystem is not SS_NO_FIRE but also does not have any runlevels set!")
@@ -607,13 +602,7 @@ GLOBAL_VAR(force_mc_soft_reset)
 			. = FALSE
 			GLOB.force_mc_soft_reset = null
 			var/msg = "MC soft reset forced while [thing] was enqueued (tick_usage = [TICK_USAGE])"
-			SSplexora.mc_alert(msg)
-			CRASH(msg)
-		if(MC_IS_CHECKQUEUE_PROBABLY_BAD)
-			. = FALSE
-			var/time_without_runqueue = DisplayTimeText((REALTIMEOFDAY - checkqueue_timeout) + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE)
-			var/msg = "RunQueue has not run in [time_without_runqueue], something has likely gone horribly wrong!"
-			SSplexora.mc_alert("[msg] (source: CheckQueue)")
+			//SSplexora.mc_alert(msg)
 			CRASH(msg)
 		if (!thing)
 			subsystemstocheck -= thing
@@ -643,7 +632,6 @@ GLOBAL_VAR(force_mc_soft_reset)
 /// Returns 0 if runtimed, a negitive number for logic errors, and a positive number if the operation completed without errors
 /datum/controller/master/proc/RunQueue()
 	. = 0
-	checkqueue_timeout = REALTIMEOFDAY + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE
 	var/datum/controller/subsystem/queue_node
 	var/queue_node_flags
 	var/queue_node_priority
@@ -763,7 +751,6 @@ GLOBAL_VAR(force_mc_soft_reset)
 
 	if (. == 0)
 		. = 1
-	checkqueue_timeout = REALTIMEOFDAY + MC_MAXIMUM_TIME_WITHOUT_RUNQUEUE
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists
 // called if any mc's queue procs runtime or exit improperly.
