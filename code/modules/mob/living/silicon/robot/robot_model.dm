@@ -873,10 +873,12 @@
 	if(cyborg.client)
 		crafting.create_mob_button(cyborg, cyborg.client)
 
-/obj/item/robot_model/service/remove_module(obj/item/removed_module, delete_after)
-	..()
+/obj/item/robot_model/service/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
-	cyborg.RemoveComponentSource(/datum/component/personal_crafting/borg)
+	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
+	for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+		qdel(button)
+	return ..()
 
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
