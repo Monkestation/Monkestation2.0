@@ -6,7 +6,7 @@
 #define SYNTH_APC_MINIMUM_PERCENT 20
 
 /datum/species/ipc
-	name = "\improper Integrated Positronic Chassis"
+	name = "\improper Integrated Positronic Chassis" //Your day of recogning is soon approaching. Petition to chance IPC's into Protogens.
 	id = SPECIES_IPC
 	inherent_biotypes = MOB_ROBOTIC | MOB_HUMANOID
 	sexes = TRUE
