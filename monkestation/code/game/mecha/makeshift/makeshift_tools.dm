@@ -166,7 +166,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
-	name = "12.7mm Malone hullmount"
+	name = "12.7mm Malone Mk.1 Ratcatcher"
 	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
 	icon_state = "mecha_light_tank_mg"
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
