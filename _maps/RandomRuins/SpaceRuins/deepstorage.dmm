@@ -247,8 +247,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aP" = (
-/obj/effect/spawner/structure/electrified_grille,
-/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aQ" = (
 /turf/closed/wall/r_wall,
@@ -2666,6 +2665,10 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"kM" = (
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/chemical,
@@ -2721,6 +2724,13 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"nC" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "on" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s2"
@@ -3253,13 +3263,6 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"Nl" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/electrified_grille,
-/obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/deepstorage/crusher)
 "Nw" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s1"
@@ -4713,7 +4716,7 @@ Iy
 ab
 ab
 CA
-aP
+kM
 OD
 ah
 ao
@@ -4765,7 +4768,7 @@ aa
 ab
 ab
 CA
-aP
+kM
 OD
 ai
 ap
@@ -4817,7 +4820,7 @@ aa
 ab
 ab
 CA
-aP
+kM
 OD
 ai
 aq
@@ -4869,7 +4872,7 @@ ab
 ab
 ab
 CA
-aP
+kM
 OD
 ah
 ar
@@ -4921,7 +4924,7 @@ ab
 ab
 ab
 CA
-aP
+kM
 Ob
 Ob
 Ob
@@ -4973,7 +4976,7 @@ ab
 ab
 ab
 CA
-aP
+kM
 Ob
 sa
 as
@@ -5025,7 +5028,7 @@ aa
 ab
 ab
 CA
-aP
+kM
 Ob
 ak
 at
@@ -5077,12 +5080,12 @@ aa
 aa
 ab
 CA
-aP
+kM
 Ob
 al
 au
 De
-Ob
+aP
 bf
 bz
 cF
@@ -5129,8 +5132,8 @@ aa
 aa
 ab
 CA
-aP
-Nl
+kM
+nC
 am
 sQ
 aE
@@ -5181,7 +5184,7 @@ aa
 ab
 ab
 CA
-aP
+kM
 Ob
 AZ
 rz
@@ -5233,8 +5236,8 @@ aa
 ab
 ab
 CA
-aP
-aP
+kM
+kM
 Ob
 Ob
 Ob
@@ -5286,10 +5289,10 @@ ab
 ab
 CA
 CA
-aP
-aP
-aP
-aP
+kM
+kM
+kM
+kM
 aQ
 bj
 bC
