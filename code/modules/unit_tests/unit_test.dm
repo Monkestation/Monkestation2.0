@@ -258,6 +258,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/effect/transmission_beam, // relies on the existence of a PTL
 		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
 		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
+		// these two are just self-deleting animations
+		/obj/effect/wonderland_rabbit_enter,
+		/obj/effect/wonderland_rabbit_exit,
 		// monkestation end
 	)
 	//Say it with me now, type template

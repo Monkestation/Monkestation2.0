@@ -607,6 +607,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that determines whether our mob gains more strength from drinking during a fist fight
 /* #define TRAIT_DRUNKEN_BRAWLER "drunken brawler" */
 
+/// Prevents mobs from being chosen by the Random Human-level Intelligence event.
+#define TRAIT_NO_RANDOM_SENTIENCE "no random sentience"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic

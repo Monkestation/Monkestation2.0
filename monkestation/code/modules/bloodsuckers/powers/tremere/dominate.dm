@@ -165,7 +165,7 @@
 		target.mind.grab_ghost()
 		target.revive(ADMIN_HEAL_ALL)
 		return
-	if(IS_MONSTERHUNTER(target))
+	if(IS_MONSTERHUNTER(target) || HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
 		to_chat(target, span_notice("Their body refuses to react..."))
 		return
 	if(!bloodsuckerdatum_power.make_vassal(target))
