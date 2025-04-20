@@ -40,6 +40,7 @@
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
@@ -75,6 +76,9 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/sign/warning/explosives/alt/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "at" = (
@@ -112,6 +116,9 @@
 "aB" = (
 /obj/structure/table,
 /obj/item/folder/syndicate/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aC" = (
@@ -236,18 +243,12 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Self-Destruct"
 	},
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/highsecurity{
-	name = "Self-Destruct"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/iron,
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aQ" = (
 /turf/closed/wall/r_wall,
@@ -377,6 +378,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/turretid{
+	control_area = "/area/ruin/space/has_grav/deepstorage/crusher";
+	dir = 1;
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "self-destruct turret controls";
+	pixel_y = 30;
+	req_access = list("syndicate")
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "bg" = (
@@ -2475,7 +2485,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hb" = (
-/obj/machinery/blackbox_recorder,
+/obj/machinery/syndicate_blackbox_recorder,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hc" = (
@@ -2773,8 +2783,10 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "rz" = (
-/obj/structure/filingcabinet,
-/obj/item/folder/syndicate/mining,
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_red/left,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "rD" = (
@@ -2786,7 +2798,11 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "sa" = (
-/turf/closed/wall,
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "sx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -2808,6 +2824,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "tk" = (
@@ -3019,6 +3036,9 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "Bb" = (
+/obj/structure/filingcabinet,
+/obj/item/folder/syndicate/mining,
+/obj/effect/turf_decal/bot_white/right,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "Bw" = (
@@ -3233,6 +3253,13 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"Nl" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "Nw" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s1"
@@ -3494,7 +3521,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Ya" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "Yo" = (
 /obj/structure/table,
@@ -4685,8 +4712,8 @@ aa
 Iy
 ab
 ab
-ab
-ab
+CA
+aP
 OD
 ah
 ao
@@ -4737,8 +4764,8 @@ aa
 aa
 ab
 ab
-ab
-ab
+CA
+aP
 OD
 ai
 ap
@@ -4789,8 +4816,8 @@ aa
 aa
 ab
 ab
-ab
-ab
+CA
+aP
 OD
 ai
 aq
@@ -4841,8 +4868,8 @@ aa
 ab
 ab
 ab
-ab
-ab
+CA
+aP
 OD
 ah
 ar
@@ -4893,13 +4920,13 @@ aa
 ab
 ab
 ab
-ab
-ab
 CA
-sa
-sa
-sa
-sa
+aP
+Ob
+Ob
+Ob
+Ob
+Ob
 bd
 bx
 bO
@@ -4945,13 +4972,13 @@ aa
 ab
 ab
 ab
-ab
-ab
+CA
+aP
 Ob
 sa
 as
 aB
-sa
+Ob
 yQ
 yQ
 yQ
@@ -4997,8 +5024,8 @@ aa
 aa
 ab
 ab
-ab
-ab
+CA
+aP
 Ob
 ak
 at
@@ -5049,13 +5076,13 @@ Iy
 aa
 aa
 ab
-ab
-ab
+CA
+aP
 Ob
 al
 au
 De
-aP
+Ob
 bf
 bz
 cF
@@ -5101,9 +5128,9 @@ Iy
 aa
 aa
 ab
-ab
-ab
-Ob
+CA
+aP
+Nl
 am
 sQ
 aE
@@ -5151,10 +5178,10 @@ ab
 Iy
 wQ
 aa
-aa
 ab
 ab
-ab
+CA
+aP
 Ob
 AZ
 rz
@@ -5203,15 +5230,15 @@ ab
 ab
 aa
 aa
-aa
-aa
 ab
 ab
-ab
+CA
+aP
+aP
 Ob
 Ob
 Ob
-aQ
+Ya
 bi
 bC
 sL
@@ -5255,14 +5282,14 @@ ab
 ab
 aa
 aa
-aa
-aa
 ab
 ab
-ab
-ab
-ab
-ab
+CA
+CA
+aP
+aP
+aP
+aP
 aQ
 bj
 bC
@@ -5310,11 +5337,11 @@ aa
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+CA
+CA
+CA
+CA
+CA
 aQ
 FI
 bC
