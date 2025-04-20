@@ -2066,6 +2066,7 @@
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 6
 	},
+/obj/effect/turf_decal/bot_red/right,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "fR" = (
@@ -2109,6 +2110,7 @@
 "fV" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "fW" = (
@@ -2558,6 +2560,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "ho" = (
@@ -2665,10 +2668,6 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
-"kM" = (
-/obj/effect/spawner/structure/electrified_grille,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/deepstorage/crusher)
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/chemical,
@@ -2724,13 +2723,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"nC" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/electrified_grille,
-/obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/deepstorage/crusher)
 "on" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s2"
@@ -3051,6 +3043,10 @@
 /obj/effect/turf_decal/bot_white/right,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"Bg" = (
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "Bw" = (
 /mob/living/basic/carp/mega,
 /turf/open/misc/asteroid/airless,
@@ -3085,6 +3081,13 @@
 /obj/machinery/computer/slime_market,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"CY" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "CZ" = (
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "s1"
@@ -3536,8 +3539,9 @@
 "YY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/porta_turret/syndicate/energy{
-	dir = 8
+	dir = 9
 	},
+/obj/effect/turf_decal/bot_red/left,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "Zx" = (
@@ -4716,7 +4720,7 @@ Iy
 ab
 ab
 CA
-kM
+Bg
 OD
 ah
 ao
@@ -4768,7 +4772,7 @@ aa
 ab
 ab
 CA
-kM
+Bg
 OD
 ai
 ap
@@ -4820,7 +4824,7 @@ aa
 ab
 ab
 CA
-kM
+Bg
 OD
 ai
 aq
@@ -4872,7 +4876,7 @@ ab
 ab
 ab
 CA
-kM
+Bg
 OD
 ah
 ar
@@ -4924,7 +4928,7 @@ ab
 ab
 ab
 CA
-kM
+Bg
 Ob
 Ob
 Ob
@@ -4976,7 +4980,7 @@ ab
 ab
 ab
 CA
-kM
+Bg
 Ob
 sa
 as
@@ -5028,7 +5032,7 @@ aa
 ab
 ab
 CA
-kM
+Bg
 Ob
 ak
 at
@@ -5080,7 +5084,7 @@ aa
 aa
 ab
 CA
-kM
+Bg
 Ob
 al
 au
@@ -5132,8 +5136,8 @@ aa
 aa
 ab
 CA
-kM
-nC
+Bg
+CY
 am
 sQ
 aE
@@ -5184,7 +5188,7 @@ aa
 ab
 ab
 CA
-kM
+Bg
 Ob
 AZ
 rz
@@ -5236,8 +5240,8 @@ aa
 ab
 ab
 CA
-kM
-kM
+Bg
+Bg
 Ob
 Ob
 Ob
@@ -5289,10 +5293,10 @@ ab
 ab
 CA
 CA
-kM
-kM
-kM
-kM
+Bg
+Bg
+Bg
+Bg
 aQ
 bj
 bC
