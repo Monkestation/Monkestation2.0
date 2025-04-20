@@ -25,8 +25,8 @@
 
 	price_min = CARGO_CRATE_VALUE * 4
 	price_max = CARGO_CRATE_VALUE * 5
-	stock_max = 2
-	availability_prob = 40
+	stock_max = 1
+	availability_prob = 5
 
 /datum/market_item/weapon/smoothbore_recipe
 	name = "Old Tome"

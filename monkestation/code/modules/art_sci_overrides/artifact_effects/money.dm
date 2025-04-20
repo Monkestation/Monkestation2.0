@@ -5,7 +5,7 @@
 	weight = ARTIFACT_UNCOMMON
 
 	type_name = "Economical Aura Effect"
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 /datum/artifact_effect/lodedsamoney/setup()
 	discovered_credits *= ((potency+50)/75)

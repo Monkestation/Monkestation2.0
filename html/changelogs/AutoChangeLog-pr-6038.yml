@@ -1,0 +1,5 @@
+author: "Ziiro"
+delete-after: True
+changes:
+  - bugfix: "IPC reboot surgery now displays the correct error/complete messages."
+  - balance: "IPC reboot surgery now requires 5 iron in the step, not 15."

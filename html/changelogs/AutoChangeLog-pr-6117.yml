@@ -1,0 +1,5 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "Oddity maints loot is rarer again"
+  - balance: "Trash piles only roll for oddity loot once"

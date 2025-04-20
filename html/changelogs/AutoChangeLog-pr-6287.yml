@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Stabilized rainbow extracts now use signals to detect when the user enters crit, preventing dumb things"

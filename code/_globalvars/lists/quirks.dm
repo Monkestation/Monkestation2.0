@@ -6,6 +6,8 @@ GLOBAL_LIST_INIT(nearsighted_glasses, list(
 	"Circle" = /obj/item/clothing/glasses/regular/circle,
 	"Hipster" = /obj/item/clothing/glasses/regular/hipster,
 	"Thin" = /obj/item/clothing/glasses/regular/thin,
+	"Jamjar" = /obj/item/clothing/glasses/regular/jamjar,
+	"Binoclard" = /obj/item/clothing/glasses/regular/kim,
 ))
 
 ///Options for the prothetic limb quirk to choose from

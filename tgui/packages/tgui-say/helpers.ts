@@ -7,6 +7,9 @@ import { WINDOW_SIZES } from './constants';
  */
 export const windowOpen = (channel: Channel) => {
   setWindowVisibility(true);
+  Byond.winset('tgui_say.browser', {
+    focus: true,
+  });
   Byond.sendMessage('open', { channel });
 };
 

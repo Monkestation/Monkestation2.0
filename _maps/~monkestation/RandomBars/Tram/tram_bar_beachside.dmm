@@ -52,7 +52,7 @@
 /area/station/service/bar)
 "bX" = (
 /obj/effect/turf_decal/sand,
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /obj/machinery/newscaster/directional/south,
 /turf/open/misc/beach/sand,
 /area/station/commons/lounge)
@@ -472,7 +472,7 @@
 /obj/item/radio/intercom/directional/south{
 	name = "Common Channel"
 	},
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/misc/beach/sand,
 /area/station/commons/lounge)
 "oV" = (
@@ -653,7 +653,7 @@
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
 "tD" = (
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/misc/beach/sand,
 /area/station/commons/lounge)
 "tF" = (
@@ -683,7 +683,7 @@
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
 "uN" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "vb" = (

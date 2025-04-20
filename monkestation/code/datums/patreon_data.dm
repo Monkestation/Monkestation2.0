@@ -57,6 +57,9 @@
 			. = ACCESS_NO_RANK // Silly but some still have null returns so default to no access.
 
 /proc/get_patreon_rank(ckey, raw = FALSE)
+	var/datum/patreon_data/cached_patreon = GLOB.player_details[ckey]?.patreon
+	if(!isnull(cached_patreon))
+		return raw ? cached_patreon.owned_rank : cached_patreon.access_rank
 	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT patreon_rank FROM [format_table_name("player")] WHERE ckey = :ckey", list("ckey" = ckey))
 	var/owned_rank
 	var/access_rank
