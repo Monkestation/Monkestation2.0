@@ -13,7 +13,7 @@
 	/// Keeps track of who enters/exits the media source's range.
 	var/datum/cell_tracker/tracker
 
-/datum/media_source/object/New(datum/media_track/track, volume = 100, atom/movable/source, max_distance = 10, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = 3)
+/datum/media_source/object/New(datum/media_track/track, volume, mixer_channel, atom/movable/source, max_distance = 10, falloff_exponent = SOUND_FALLOFF_EXPONENT, falloff_distance = 3)
 	. = ..()
 	if(!ismovable(source))
 		CRASH("Attempted to add [type] to a non-movable source")

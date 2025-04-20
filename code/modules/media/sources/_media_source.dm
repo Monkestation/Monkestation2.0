@@ -16,6 +16,8 @@
 		src.volume = volume
 	if(!isnull(mixer_channel))
 		src.mixer_channel = "[mixer_channel]"
+	else if(!isnull(src.mixer_channel))
+		src.mixer_channel = "[src.mixer_channel]"
 
 /datum/media_source/Destroy(force)
 	for(var/mob/listener as anything in listeners)
@@ -57,8 +59,10 @@
 		return volume
 	var/client/client = CLIENT_FROM_VAR(target)
 	var/list/channel_volume = client?.prefs?.channel_volume
+	if("[CHANNEL_MASTER_VOLUME]" in channel_volume)
+		. *= (channel_volume["[CHANNEL_MASTER_VOLUME]"] / 100)
 	if(mixer_channel in channel_volume)
-		return volume * (channel_volume[mixer_channel] / 100)
+		. *= (channel_volume[mixer_channel] / 100)
 
 /datum/media_source/proc/get_balance(mob/target)
 	return 0

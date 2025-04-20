@@ -18,7 +18,7 @@
 /obj/machinery/media/Initialize()
 	. = ..()
 	update_media_source()
-	media_source = new(volume = volume * 100, source = src)
+	media_source = new(volume = volume * 100, mixer_channel = CHANNEL_JUKEBOX, source = src)
 
 /obj/machinery/media/Destroy()
 	QDEL_NULL(media_source)

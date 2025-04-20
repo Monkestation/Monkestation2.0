@@ -44,10 +44,11 @@
 	return list("channels" = channels)
 
 
-/datum/ui_module/volume_mixer/ui_act(action, list/params)
+/datum/ui_module/volume_mixer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 
+	var/mob/user = ui.user
 	. = TRUE
 	switch(action)
 		if("volume")
@@ -55,18 +56,22 @@
 			var/volume = text2num(params["volume"])
 			if(isnull(channel))
 				return FALSE
-			usr.client.prefs.channel_volume["[channel]"] = volume
-			usr.client.prefs.save_preferences()
-			var/list/instrument_channels = list(
+			var/datum/preferences/prefs = user.client?.prefs
+			if(QDELETED(prefs))
+				return FALSE
+			prefs.channel_volume["[channel]"] = volume
+			prefs.save_preferences()
+			var/static/list/instrument_channels = list(
 				CHANNEL_INSTRUMENTS,
-				CHANNEL_INSTRUMENTS_ROBOT,)
+				CHANNEL_INSTRUMENTS_ROBOT,
+			)
 			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
-				set_channel_volume(channel, volume, usr)
+				set_channel_volume(channel, volume, user)
 
 			else if((channel in instrument_channels))
 				var/datum/song/holder_song = new
 				for(var/used_channel in holder_song.channels_playing)
-					set_channel_volume(used_channel, volume, usr)
+					set_channel_volume(used_channel, volume, user)
 		else
 			return FALSE
 
@@ -74,22 +79,7 @@
 	return GLOB.always_state
 
 /datum/ui_module/volume_mixer/proc/set_channel_volume(channel, vol, mob/user)
-	if((channel == CHANNEL_LOBBYMUSIC) || (channel == CHANNEL_MASTER_VOLUME))
-		if(isnewplayer(user))
-			var/client/client = user.client
-			var/new_lobby_volume = 100
-			var/list/channels = client?.prefs?.channel_volume
-			if("[CHANNEL_LOBBYMUSIC]" in channels)
-				new_lobby_volume = channels["[CHANNEL_LOBBYMUSIC]"]
-			if("[CHANNEL_MASTER_VOLUME]" in channels)
-				new_lobby_volume *= (channels["[CHANNEL_MASTER_VOLUME]"] * 0.01)
-			if(client?.byond_version >= 516)
-				user.update_media_source()
-			else
-				client?.media?.update_volume(new_lobby_volume)
-
-	if(channel == CHANNEL_JUKEBOX && user.client?.byond_version >= 516)
-		user.update_media_source()
+	user.update_media_volume(channel)
 
 	var/sound/S = sound(null, channel = channel, volume = vol)
 	S.status = SOUND_UPDATE

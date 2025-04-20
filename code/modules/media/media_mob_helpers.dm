@@ -49,3 +49,11 @@
 /mob/dead/new_player/Login()
 	. = ..()
 	GLOB.lobby_media.add_listener(src)
+
+/mob/proc/update_media_volume(channel)
+	if(isnull(current_media_source))
+		return
+	if(channel != CHANNEL_MASTER_VOLUME && (isnull(current_media_source.mixer_channel) || current_media_source.mixer_channel != "[channel]"))
+		return
+	var/new_volume = current_media_source.get_volume(src)
+	client?.media_player?.set_volume(new_volume)
