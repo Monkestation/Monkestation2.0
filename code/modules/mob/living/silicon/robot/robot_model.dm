@@ -876,8 +876,9 @@
 /obj/item/robot_model/service/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
 	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
-	for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
-		qdel(button)
+	if(istype(cyborg, /mob/living/silicon/robot))
+		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+			qdel(button)
 	return ..()
 
 /obj/item/robot_model/syndicate
