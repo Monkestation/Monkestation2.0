@@ -9,8 +9,8 @@
 	movedelay = 1.2
 	step_energy_drain = 20
 	bumpsmash = TRUE
-	stepsound = 'monkestation/sound/mecha/tank_treads.ogg'
-	turnsound = 'monkestation/sound/mecha/tank_treads.ogg'
+	stepsound = 'sound/vehicles/driving-noise.ogg'
+	turnsound = 'sound/vehicles/driving-noise.ogg'
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS //can't strafe bruv & has 360 tank turret
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 30 //Its old but no electronics

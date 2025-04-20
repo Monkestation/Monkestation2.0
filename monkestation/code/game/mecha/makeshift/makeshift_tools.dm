@@ -153,6 +153,7 @@
 	name = "40mm tank cannon"
 	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
 	icon_state = "mecha_light_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
 	equip_cooldown = 60
 	projectile = /obj/projectile/bullet/rocket/lighttankshell
