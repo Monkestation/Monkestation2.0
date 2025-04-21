@@ -175,6 +175,15 @@
 			stack_trace(params["message"])
 	MM2_DEBUG("topic: [json_encode(href_list - "params", JSON_PRETTY_PRINT)]\nparams: [json_encode(params, JSON_PRETTY_PRINT)]")
 
+/client/verb/reload_mm2()
+	set name = "Force Reload Media Player"
+	set desc = "Forcefully reloads your client's media player (used for lobby and jukebox music)"
+	set category = "OOC"
+
+	if(!QDELETED(media_player))
+		QDEL_NULL(media_player)
+	media_player = new(src)
+
 #ifdef MM2_DEBUGGING
 /client/verb/mm2_play()
 	set name = "MM2: Play"

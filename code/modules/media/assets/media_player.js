@@ -2471,6 +2471,7 @@ load_time = null;
 start_time = null;
 offset = 0;
 cleared = false;
+sent_playing = false;
 function $8b18deaf9ace6657$var$is_in_margin_of_error(new_time) {
     if (!start_time || new_time <= 0 || offset <= 0) return false;
     const elapsed = (Date.now() - start_time) / 1000;
@@ -2487,15 +2488,19 @@ function $8b18deaf9ace6657$var$full_clear(debug_msg) {
     if (debug_msg) console.debug("full_clear:", debug_msg);
     $8b18deaf9ace6657$var$send_clear();
     audio = null;
+    sent_playing = false;
     load_time = null;
     start_time = null;
     offset = 0;
 }
 function $8b18deaf9ace6657$var$send_playing(url) {
     cleared = false;
-    (0, $1d62c132ef7d1e19$export$b957c2b0fcc9ce3c)("playing", {
-        url: url
-    });
+    if (!sent_playing) {
+        sent_playing = true;
+        (0, $1d62c132ef7d1e19$export$b957c2b0fcc9ce3c)("playing", {
+            url: url
+        });
+    }
 }
 window.play = (url, volume, format, x = 0, y = 0, z = 0, balance = 0)=>{
     if (audio) stop();
