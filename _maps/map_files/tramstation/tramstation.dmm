@@ -8367,9 +8367,6 @@
 /area/station/medical/pharmacy)
 "bzP" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/power/terminal{
 	dir = 4
 	},

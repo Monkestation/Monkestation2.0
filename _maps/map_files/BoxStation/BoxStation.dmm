@@ -66545,7 +66545,6 @@
 /area/station/maintenance/port/aft)
 "vxs" = (
 /obj/machinery/power/smes,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "vxD" = (
