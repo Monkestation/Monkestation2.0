@@ -158,7 +158,7 @@
 	item_type = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/sindano
 
 /obj/item/storage/toolbox/guncase/nova/pistol/opfor/sindano/PopulateContents()
-	new /obj/item/gun/ballistic/automatic/sol_smg/evil(src)
+	new /obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted(src)
 	new /obj/item/ammo_box/magazine/c35sol_pistol/stendo(src)
 	new /obj/item/ammo_box/magazine/c35sol_pistol/stendo(src)
 	new /obj/item/storage/box/syndie_kit/weapons_auth(src)
