@@ -123,6 +123,19 @@
 	recharge_sound = null
 	recharge_message = null
 
+// A dispenser that produces binoculars, for the MediSim shuttle.
+/obj/machinery/drone_dispenser/binoculars
+	name = "binoculars fabricator"
+	desc = "A hefty machine that periodically creates a pair of binoculars. Really, Nanotrasen? We're getting this lazy?"
+	dispense_type = list(/obj/item/binoculars)
+	starting_amount = SHEET_MATERIAL_AMOUNT * 2.5 //Redudant
+	maximum_idle = 1
+	cooldownTime = 5 SECONDS
+	iron_cost = 0
+	glass_cost = 0
+	power_used = 0
+	end_create_message = "dispenses a pair of binoculars."
+
 /obj/machinery/drone_dispenser/examine(mob/user)
 	. = ..()
 	var/material_requirement_string = "It needs "
