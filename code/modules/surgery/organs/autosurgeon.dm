@@ -156,7 +156,7 @@
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser
 
 /obj/item/autosurgeon/syndicate/thermal_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
+	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals/syndicate
 
 /obj/item/autosurgeon/syndicate/xray_eyes
 	starting_organ = /obj/item/organ/internal/eyes/robotic/xray/syndicate

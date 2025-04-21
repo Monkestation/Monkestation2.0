@@ -349,6 +349,11 @@
 	sight_flags = SEE_MOBS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
+/obj/item/organ/internal/eyes/robotic/thermals/syndicate
+	name = "syndicate thermal eyes"
+	desc = "An upgraded model of thermal vision eyes, courtesy of Cybersun. All the same vision, without the same vulnerability to overloading."
+	flash_protect = FLASH_PROTECTION_NONE
+
 /obj/item/organ/internal/eyes/robotic/flashlight
 	name = "flashlight eyes"
 	desc = "It's two flashlights rigged together with some wire. Why would you put these in someone's head?"
