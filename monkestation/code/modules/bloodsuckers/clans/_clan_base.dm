@@ -154,7 +154,7 @@
 		to_chat(bloodsuckerdatum.owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.
-		var/choice = tgui_input_list(bloodsuckerdatum.owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...", options)
+		var/choice = tgui_input_list(bloodsuckerdatum.owner.current, "You have the opportunity to grow more ancient.[blood_cost > 0 ? " Spend [round(blood_cost, 1)] blood to advance your rank" : ""]", "Your Blood Thickens...", options)
 		// Prevent Bloodsuckers from closing/reopning their coffin to spam Levels.
 		if(cost_rank && bloodsuckerdatum.bloodsucker_level_unspent <= 0)
 			return

@@ -55172,8 +55172,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Plasma to Pure";
-	piping_layer = 4
+	name = "Plasma to Pure"
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4

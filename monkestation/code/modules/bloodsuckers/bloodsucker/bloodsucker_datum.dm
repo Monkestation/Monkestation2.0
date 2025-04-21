@@ -67,6 +67,10 @@
 	var/obj/structure/closet/crate/coffin
 	var/total_blood_drank = 0
 
+	/// Used for Bloodsuckers gaining levels from drinking blood
+	var/blood_level_gain = 0
+	var/blood_level_gain_amount = 0
+
 	///Blood display HUD
 	var/atom/movable/screen/bloodsucker/blood_counter/blood_display
 	///Vampire level display HUD
