@@ -159,7 +159,7 @@
 	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
 
 /obj/item/autosurgeon/syndicate/xray_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/xray
+	starting_organ = /obj/item/organ/internal/eyes/robotic/xray/syndicate
 
 /obj/item/autosurgeon/syndicate/anti_stun //monkestation edit start: Syndicate cybernetics
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
