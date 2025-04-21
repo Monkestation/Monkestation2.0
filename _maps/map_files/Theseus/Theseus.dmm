@@ -188,6 +188,7 @@
 	id = "Engineering";
 	name = "Engineering Security Doors"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "adv" = (
@@ -3958,7 +3959,6 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/structure/closet/secure_closet/engineering_electrical,
 /obj/effect/turf_decal/delivery,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "bha" = (
@@ -5006,7 +5006,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7743,7 +7742,8 @@
 /area/station/command/bridge)
 "cnW" = (
 /obj/structure/cable,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/station/engineering/storage)
 "cob" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -20357,10 +20357,7 @@
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/mail_sorting/supply/disposals,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "gbI" = (
@@ -20499,6 +20496,7 @@
 	dir = 4;
 	invisibility = 101
 	},
+/obj/effect/landmark/start/detective,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "gdk" = (
@@ -23098,6 +23096,7 @@
 /area/station/security/processing)
 "gQC" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "gQK" = (
@@ -27863,7 +27862,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -32725,6 +32724,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
+/obj/effect/landmark/start/detective,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "jGH" = (
@@ -40609,6 +40609,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
+/obj/effect/landmark/start/detective,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "lPp" = (
@@ -42857,6 +42858,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/closet/firecloset/wall/directional/north,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mAg" = (
@@ -48532,6 +48536,7 @@
 "oju" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/structure/cable,
+/obj/effect/landmark/start/detective,
 /turf/open/floor/carpet,
 /area/station/service/cafeteria)
 "ojx" = (
@@ -54140,7 +54145,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/mail_sorting/supply/disposals,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pVG" = (
@@ -67130,7 +67138,6 @@
 "tBp" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "tBq" = (
@@ -120193,7 +120200,7 @@ jHx
 vgl
 htQ
 xqf
-xqf
+gQC
 opw
 iWC
 vDF
@@ -120450,7 +120457,7 @@ cnW
 oSj
 nJk
 pBc
-gQC
+utB
 adt
 utw
 utw
@@ -121731,8 +121738,8 @@ lmW
 nKK
 aqB
 sOE
-maq
 reV
+maq
 iRK
 mDn
 mDn
