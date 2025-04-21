@@ -1052,6 +1052,8 @@
 
 /obj/item/gun/ballistic/automatic/sol_smg/no_mag
 	spawnwithmagazine = FALSE
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 // Sindano (evil)
 
