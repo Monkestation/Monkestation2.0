@@ -81,6 +81,8 @@ GLOBAL_VAR(restart_counter)
 #endif
 	// monkestation end
 
+	load_rustg()
+
 	Profile(PROFILE_RESTART)
 	Profile(PROFILE_RESTART, type = "sendmaps")
 
