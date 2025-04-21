@@ -10855,11 +10855,6 @@
 /obj/structure/sign/poster/official/here_for_your_safety/directional/east,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"dmL" = (
-/obj/machinery/light_switch/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/station/maintenance/department/electrical)
 "dmR" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -65742,6 +65737,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "uXC" = (
@@ -254281,8 +254277,8 @@ kKL
 nwd
 epd
 oih
-dmL
-lUC
+glI
+fUc
 lUC
 dMH
 ait
