@@ -426,3 +426,15 @@
   - rscadd: Void chill stacks are now purged by holy water
   - rscadd: Holy water reduces the cooling effect of void storm and void chill
   - balance: Ascension ritual now requires bodies that at any point had a mind.
+2025-04-20:
+  Addust:
+  - bugfix: Whiteships can now land on lavaland without getting obliterated by regrowing
+      rocks.
+  JohnFulpWillard:
+  - bugfix: '[Theseus] Fixes a missing disposal tube at evac.'
+  Melbert:
+  - bugfix: You can't fax unfaxable things by putting them in faxable things
+2025-04-21:
+  RandomDudeFromTheRim:
+  - map: The "Plasma to Pure" pump is now on the right layer on IceBox station. Atmosians
+      rejoice!
