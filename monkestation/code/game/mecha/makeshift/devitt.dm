@@ -11,7 +11,7 @@
 	bumpsmash = TRUE
 	stepsound = 'sound/vehicles/driving-noise.ogg'
 	turnsound = 'sound/vehicles/driving-noise.ogg'
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS //can't strafe bruv & has 360 tank turret
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 30 //Its old but no electronics
 	wreckage = /obj/structure/mecha_wreckage/devitt

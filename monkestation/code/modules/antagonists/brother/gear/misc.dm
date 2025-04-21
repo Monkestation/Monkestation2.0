@@ -10,7 +10,7 @@
 	spawn_path = /obj/item/disk/design_disk/fss
 	preview_path = /obj/item/disk/design_disk/fss
 
-/datum/bb_gear/granter/devitt
+/datum/bb_gear/devitt
 	name = "Devitt Mk3"
 	desc = "An ancient two man tank, comes with cannon and machinegun, but little ammo."
 	spawn_path = /obj/vehicle/sealed/mecha/devitt
