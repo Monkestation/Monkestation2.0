@@ -2085,6 +2085,8 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/dark/corner,
 /area/station/hallway/primary/central)
 "avL" = (
@@ -3986,6 +3988,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "aOC" = (
@@ -11344,6 +11348,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"ciX" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "ciZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -21895,6 +21903,8 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "ejr" = (
@@ -29045,6 +29055,8 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "fAY" = (
@@ -33093,6 +33105,8 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "gsx" = (
@@ -47011,6 +47025,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "jfh" = (
@@ -54927,6 +54943,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "kCj" = (
@@ -86220,6 +86238,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "qJF" = (
@@ -159237,7 +159256,7 @@ hPQ
 cDQ
 mFy
 xQu
-mFy
+ciX
 jdg
 aMJ
 hLZ
