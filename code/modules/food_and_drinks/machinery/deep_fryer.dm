@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/his_grace,
 	/obj/item/bodybag/bluespace,
 	/obj/item/mod/control,
+	/obj/machinery/power/apc, //i cant believe im doing this
 )))
 
 /obj/machinery/deepfryer
