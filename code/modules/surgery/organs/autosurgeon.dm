@@ -156,7 +156,7 @@
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser
 
 /obj/item/autosurgeon/syndicate/thermal_eyes
-	desc = = "A single use autosurgeon that contains a pair of upgraded thermal eyes. A screwdriver can be used to remove it, but implants can't be placed back in."
+	desc = "A single use autosurgeon that contains a pair of upgraded thermal eyes. A screwdriver can be used to remove it, but implants can't be placed back in."
 	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals/syndicate
 	uses = 1
 
