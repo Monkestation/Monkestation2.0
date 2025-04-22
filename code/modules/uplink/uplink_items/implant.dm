@@ -52,9 +52,9 @@
 
 /datum/uplink_item/implants/thermals
 	name = "Thermal Eyes"
-	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
+	desc = "These cybernetic eyes will give you thermal vision. Comes with only a single-use autosurgeon, a corner cut to achieve a lower price point."
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes
-	cost = 6
+	cost = 5
 	surplus = 40 //monkestation edit: from 0 to 40
 
 /datum/uplink_item/implants/xray
