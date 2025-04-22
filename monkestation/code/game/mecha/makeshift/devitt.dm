@@ -7,7 +7,7 @@
 	max_integrity = 500 // its a hunk of steel that didnt need to be limited by mecha legs
 	force = 50
 	movedelay = 1.2
-	step_energy_drain = 20
+	step_energy_drain = 40
 	bumpsmash = TRUE
 	stepsound = 'sound/vehicles/driving-noise.ogg'
 	turnsound = 'sound/vehicles/driving-noise.ogg'
