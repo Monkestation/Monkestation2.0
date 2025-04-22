@@ -426,3 +426,45 @@
   - rscadd: Void chill stacks are now purged by holy water
   - rscadd: Holy water reduces the cooling effect of void storm and void chill
   - balance: Ascension ritual now requires bodies that at any point had a mind.
+2025-04-20:
+  Addust:
+  - bugfix: Whiteships can now land on lavaland without getting obliterated by regrowing
+      rocks.
+  JohnFulpWillard:
+  - bugfix: '[Theseus] Fixes a missing disposal tube at evac.'
+  Melbert:
+  - bugfix: You can't fax unfaxable things by putting them in faxable things
+2025-04-21:
+  Absolucy:
+  - bugfix: (high-speedspin-cycle) Layer manifold and pipe volumes are now consistent
+      with other pipes.
+  - bugfix: (FlufflesTheDog) Shuttle atmos volumes should no longer become negative.
+  - bugfix: (FlufflesTheDog) Shuttle atmos devices will no longer make illegal connections
+      during rotations.
+  - balance: The Teratoma Crash event can only occur at least 40 minutes into the
+      round now (up to 20 minutes)
+  Gw0sty:
+  - bugfix: Detectives now will spawn on Theseus stationside
+  MomoBerri:
+  - bugfix: Theseus mail delivery should now work through the disposal chute like
+      proper.
+  - bugfix: Theseus engineering wiring has been updated, and a new window has been
+      added to make accessing the powernet easier.
+  RandomDudeFromTheRim:
+  - map: The "Plasma to Pure" pump is now on the right layer on IceBox station. Atmosians
+      rejoice!
+  - bugfix: fixed a shuttle respawn exploit
+  - map: Added true chasms (no z level stuff), and modified the Medsim shuttle by
+      adding them to it.
+  - bugfix: To discourage mutated crew from eating APCs, NanoTrasen has coated all
+      APCs in the patented "Non-Tasty NanoPaint"!
+  Shoddd:
+  - rscadd: weeping kudzu trait
+  - bugfix: several helio station bugs
+  - bugfix: heliostation has a labor camp shuttle again
+  Veth-s:
+  - admin: Adds a headset message button to Veth's Player panel.
+  destrucktoid:
+  - rscadd: Added a new way for bloodsuckers to earn levels
+  - balance: Bloodsuckers can only rank up till level 3 via Sol. Any further levels
+      must be gained through other means.

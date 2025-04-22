@@ -360,6 +360,20 @@ love, veth
 				"admin_token" = usr.client.holder.href_token,
 			))
 			return
+		if("headsetmsg")
+			var/choice = tgui_input_list(usr, "Message As Whom?", "Headset Message", list("Centcom", "Syndicate"))
+			if(choice == "Centcom")
+				usr.client.holder.Topic(null, list(
+					"CentComReply" = REF(selected_mob),
+					"admin_token" = usr.client.holder.href_token,
+				))
+				return
+			if(choice == "Syndicate")
+				usr.client.holder.Topic(null, list(
+					"SyndicateReply" = REF(selected_mob),
+					"admin_token" = usr.client.holder.href_token,
+				))
+				return
 		if("narrate")
 			usr.client.holder.Topic(null, list(
 				"narrateto" = REF(selected_mob),
