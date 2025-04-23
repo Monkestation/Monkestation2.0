@@ -234,7 +234,7 @@
 
 	reagent_state = LIQUID
 	color = "#c22a44"
-	taste_description = "television static, and the gods wrath"
+	taste_description = "television static"
 	metabolization_rate = 0.65 * REAGENTS_METABOLISM
 	ph = 3
 	overdose_threshold = 15
