@@ -229,8 +229,8 @@
 	name = "TWitch"
 	description = "A drug originally developed by and for plutonians to assist them during raids. \
 		Does not see wide use due to the whole reality-disassociation and heart disease thing afterwards. \
-		Once upon a time, it allowed you to dodge bullets, but the gods thought it too powerful and reduced \
-		it to a lesser form.
+		However, the gods came to an agreement, and banished it from the realms. \
+		If the gods catch you using this, expect a swift and painful death."
 
 	reagent_state = LIQUID
 	color = "#c22a44"
@@ -342,6 +342,20 @@
 	new /obj/effect/temp_visual/decoy/twitch_afterimage(old_loc, our_guy)
 
 
+/// Tries to dodge incoming bullets if we aren't disabled for any reasons
+/datum/reagent/drug/twitch/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
+	SIGNAL_HANDLER
+
+	if(HAS_TRAIT(source, TRAIT_INCAPACITATED))
+		return NONE
+	source.visible_message(
+		span_danger("[source] effortlessly dodges [hitting_projectile]!"),
+		span_userdanger("You effortlessly evade [hitting_projectile]!"),
+	)
+	playsound(source, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	source.add_filter(TWITCH_BLUR_EFFECT, 2, gauss_blur_filter(5))
+	addtimer(CALLBACK(source, TYPE_PROC_REF(/datum, remove_filter), TWITCH_BLUR_EFFECT), 0.5 SECONDS)
+	return COMPONENT_BULLET_PIERCED
 
 
 /datum/reagent/drug/twitch/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
@@ -369,6 +383,8 @@
 
 /datum/reagent/drug/twitch/overdose_start(mob/living/our_guy)
 	. = ..()
+
+	RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
 
 	our_guy.next_move_modifier -= 0.2 // Overdosing makes you a liiitle faster but you know has some really bad consequences
 
