@@ -229,8 +229,8 @@
 	name = "TWitch"
 	description = "A drug originally developed by and for plutonians to assist them during raids. \
 		Does not see wide use due to the whole reality-disassociation and heart disease thing afterwards. \
-		However, the gods came to an agreement, and banished it from the realms. \
-		If the gods catch you using this, expect a swift and painful death."
+		Though it once granted bullet immunity, the gods have seen fit to remove that effect. \
+		Now it just makes you faster, and gives you a wee bit of a heart attack if you take too much."
 
 	reagent_state = LIQUID
 	color = "#c22a44"
