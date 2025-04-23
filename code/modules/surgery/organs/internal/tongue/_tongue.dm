@@ -714,3 +714,26 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/floran/get_laugh_sound()
 	return 'monkestation/sound/voice/laugh/lizard/lizard_laugh.ogg'
+
+/obj/item/organ/internal/tongue/floran/Initialize(mapload)
+	. = ..()
+	draw_length = rand(2, 6)
+	if(prob(10))
+		draw_length += 2
+
+/obj/item/organ/internal/tongue/floran/modify_speech(datum/source, list/speech_args)
+    var/static/regex/floran_hiss = new("s+", "g")
+    var/static/regex/floran_hiSS = new("S+", "g")
+    var/static/regex/floran_kss = new(@"(\w)x", "g")
+    var/static/regex/floran_kSS = new(@"(\w)X", "g")
+    var/static/regex/floran_ecks = new(@"\bx([\-|r|R]|\b)", "g")
+    var/static/regex/floran_eckS = new(@"\bX([\-|r|R]|\b)", "g")
+    var/message = speech_args[SPEECH_MESSAGE]
+    if(message[1] != "*")
+        message = floran_hiss.Replace(message, repeat_string(draw_length, "s"))
+        message = floran_hiSS.Replace(message, repeat_string(draw_length, "S"))
+        message = floran_kss.Replace(message, "$1k[repeat_string(max(draw_length - 1, 1), "s")]")
+        message = floran_kSS.Replace(message, "$1K[repeat_string(max(draw_length - 1, 1), "S")]")
+        message = floran_ecks.Replace(message, "eck[repeat_string(max(draw_length - 2, 1), "s")]$1")
+        message = floran_eckS.Replace(message, "ECK[repeat_string(max(draw_length - 2, 1), "S")]$1")
+    speech_args[SPEECH_MESSAGE] = message
