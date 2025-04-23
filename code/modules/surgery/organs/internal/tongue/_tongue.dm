@@ -697,8 +697,12 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "floran tongue"
 	desc = "A plant-like organ used for speaking and eating."
 	say_mod = "hisses"
+	modifies_speech = TRUE
 	liked_foodtypes =  GORE | MEAT | DAIRY | SEAFOOD | BUGS
 	disliked_foodtypes = VEGETABLES
+
+	/// How long is our hissssssss?
+	var/draw_length = 3
 
 /obj/item/organ/internal/tongue/floran/get_scream_sound()
 	return pick(
