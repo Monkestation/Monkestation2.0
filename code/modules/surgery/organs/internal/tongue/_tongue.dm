@@ -696,7 +696,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/floran
 	name = "floran tongue"
 	desc = "A plant-like organ used for speaking and eating."
-	say_mod = "whistles"
+	say_mod = "hisses"
 	liked_foodtypes =  GORE | MEAT | DAIRY | SEAFOOD | BUGS
 	disliked_foodtypes = VEGETABLES
 
