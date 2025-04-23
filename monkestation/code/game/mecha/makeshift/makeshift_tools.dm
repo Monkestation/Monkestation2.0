@@ -31,7 +31,7 @@
 	force = 15 // force low or it 1 taps.
 	mech_flags = EXOSUIT_MODULE_DRILL
 	drill_level = DRILL_HARDENED
-	drill_delay = 2.5
+	drill_delay = 1.5
 	toolspeed = 0.7
 
 //ambulance

@@ -40,14 +40,14 @@
 	name = "Sheet metal drill"
 	result = /obj/vehicle/sealed/mecha/makeshift_drill
 	reqs = list(/obj/item/stack/cable_coil = 30,
-				/obj/item/stack/sheet/iron = 20,
-				/obj/item/storage/toolbox = 2,
+				/obj/item/stack/sheet/iron = 10,
+				/obj/item/stock_parts/manipulator = 4,
 				/obj/item/tank/internals/oxygen = 4,
-				/obj/item/electronics/airlock = 1,
-				/obj/item/extinguisher = 1,
+				/obj/item/electronics/apc = 1,
+				/obj/item/extinguisher = 2,
 				/obj/item/paper = 10,
-				/obj/item/flashlight = 4,
-				/obj/item/stack/rods = 16,
+				/obj/item/flashlight = 2,
+				/obj/item/stack/rods = 25,
 				/obj/item/stack/conveyor = 2,
 				/obj/item/chair = 1)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
