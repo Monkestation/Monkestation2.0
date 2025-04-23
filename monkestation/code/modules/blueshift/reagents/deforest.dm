@@ -384,7 +384,7 @@
 /datum/reagent/drug/twitch/overdose_start(mob/living/our_guy)
 	. = ..()
 
-	RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
+	//RegisterSignal(our_guy, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets)) //This is the code that enables dodging bullets, it's disabled do to bullet immunity being extremely overpowered.
 
 	our_guy.next_move_modifier -= 0.2 // Overdosing makes you a liiitle faster but you know has some really bad consequences
 
