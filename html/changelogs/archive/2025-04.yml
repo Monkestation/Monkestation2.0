@@ -468,3 +468,6 @@
   - rscadd: Added a new way for bloodsuckers to earn levels
   - balance: Bloodsuckers can only rank up till level 3 via Sol. Any further levels
       must be gained through other means.
+2025-04-23:
+  Draggeru:
+  - bugfix: Removes the cotton candy chicken from centcom
