@@ -289,12 +289,12 @@
 		cig_position++
 
 /obj/item/storage/fancy/cigarettes/crafted
-	name = "\improper Box of Cigarettes"
-	desc = "A handmade box of cigarettes. The lack of branding makes it look unappealing."
+	name = "cigarette packet"
+	desc = "A handmade box of cigarettes. It lacks branding."
 	base_icon_state = "base"
 	icon_state = "base"
 	spawn_type = null
-	spawn_count = 0
+	spawn_count = 6
 	spawn_coupon = FALSE
 
 /obj/item/storage/fancy/cigarettes/dromedaryco
