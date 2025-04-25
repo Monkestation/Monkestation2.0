@@ -27,11 +27,11 @@
 	name = "Giant drill"
 	icon_state = "mecha_giantdrill"
 	desc = "what looks to be a drill atleast the size of you, tears through anything like butter."
-	equip_cooldown = 35 // it is not slow as shit
+	equip_cooldown = 10 // it is not slow as shit
 	force = 15 // force low or it 1 taps.
 	mech_flags = EXOSUIT_MODULE_DRILL
 	drill_level = DRILL_HARDENED
-	drill_delay = 1.5
+	drill_delay = 1.2
 	toolspeed = 0.7
 
 //ambulance
