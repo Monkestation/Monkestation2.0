@@ -64,13 +64,13 @@ among other potential differences. This granularity is helpful for things like t
 	name = "\improper 40mm tank shell"
 	desc = "mechanized warfare in spess."
 	icon_state = "LIGHTTANKSHELL"
-	damage = 80
+	damage = 50
 	armour_penetration = 100
-	dismemberment = 100
-	anti_armour_damage = 200
+	dismemberment = 10
+	anti_armour_damage = 150
 
 /obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
-	explosion(target, devastation_range = -1, heavy_impact_range = 2, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
+	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
 
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
