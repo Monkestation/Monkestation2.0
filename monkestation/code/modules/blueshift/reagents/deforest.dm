@@ -221,6 +221,7 @@
 		/datum/reagent/drug/methamphetamine = 30,
 		/datum/reagent/bluespace = 30 //Lots of speed chems for a bit of this stuff, will need a container larger than a large beaker to be mixed.
 	)
+	required_temp = 350
 	mob_react = FALSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
