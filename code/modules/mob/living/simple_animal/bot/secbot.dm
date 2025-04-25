@@ -5,9 +5,9 @@
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
-	// monkestation edit: slightly raise beepsky's health (25 -> 35)
-	health = 35
-	maxHealth = 35
+	//Perish
+	health = 41
+	maxHealth = 41
 	// monkestation end
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
