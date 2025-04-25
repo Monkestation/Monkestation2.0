@@ -25,6 +25,3 @@ SUBSYSTEM_DEF(challenges)
 		if(new_challenge.processes)
 			processing_challenges += processing_challenges
 		new_challenge.on_apply(owner)
-		LAZYADD(owner.applied_challenges, new_challenge)
-
-
