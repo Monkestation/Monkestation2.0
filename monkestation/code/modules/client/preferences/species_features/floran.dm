@@ -11,6 +11,14 @@
 		"floran_leaves",
 		list("ADJ"),
 	)
+/datum/preference/numeric/hiss_length
+	savefile_key = "hiss_length"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	priority = PREFERENCE_PRIORITY_NAMES
+	can_randomize = FALSE
+	minimum = 2
+	maximum = 6
 
 /datum/preference/choiced/floran_leaves/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["floran_leaves"] = value
