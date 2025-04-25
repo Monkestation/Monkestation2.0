@@ -7,7 +7,7 @@
 	if(!ui)
 		ui = new(user, src, "Mecha", name, ui_x, ui_y)
 		ui.open()
-		ui_view.display_to(user)
+		ui_view.display_to(user, ui.window)
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user)
 	if(contains(user))
@@ -254,7 +254,7 @@
 				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
 				return
 			name = userinput
-			chassis_camera.update_c_tag(src)
+			chassis_camera?.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
 			return

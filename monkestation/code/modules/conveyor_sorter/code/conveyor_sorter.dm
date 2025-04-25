@@ -146,7 +146,7 @@
 	build_path = /obj/item/conveyor_sorter
 	materials = list(/datum/material/iron = 500, /datum/material/plastic = 500)
 	category = list(
-		RND_CATEGORY_EQUIPMENT
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MISC
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
@@ -158,7 +158,7 @@
 	design_ids = list(
 		"conveysorter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /obj/item/conveyor_sorter/improved
 	name = "improved conveyor sorter lister"
@@ -198,4 +198,4 @@
 	design_ids = list(
 		"conveyor_sorter_improved",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

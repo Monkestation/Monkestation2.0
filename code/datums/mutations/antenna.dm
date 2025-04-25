@@ -37,8 +37,10 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
 
+/* Moved to 'monkestation/code/datums/mutations/antenna.dm'
 /datum/mutation/human/antenna/get_visual_indicator()
 	return visual_indicators[type][1]
+*/
 
 /datum/mutation/human/mindreader
 	name = "Mind Reader"
@@ -85,6 +87,11 @@
 	if(cast_on == owner)
 		to_chat(owner, span_warning("You plunge into your mind... Yep, it's your mind."))
 		return
+
+	if(HAS_TRAIT(cast_on, TRAIT_EVIL))
+		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
+			you feel the overwhelming emptiness within. A truly evil being. \
+			[HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone who is like-minded." : "What is wrong with this person?"]"))
 
 	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))
 	if(prob(20))

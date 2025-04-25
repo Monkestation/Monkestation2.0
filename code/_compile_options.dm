@@ -8,6 +8,11 @@
 #define USE_CUSTOM_ERROR_HANDLER
 #endif
 
+#if defined(OPENDREAM) && !defined(SPACEMAN_DMM) && !defined(CIBUILDING)
+// The code is being compiled for OpenDream, and not just for the CI linting.
+#define OPENDREAM_REAL
+#endif
+
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
@@ -83,6 +88,19 @@
 
 /// If this is uncommented, will profile mapload atom initializations
 // #define PROFILE_MAPLOAD_INIT_ATOM
+
+/// If this is uncommented, Dreamluau will be fully disabled.
+// #define DISABLE_DREAMLUAU
+
+/// If this is uncommented, /proc/icon_exists will attempt to load an initial cache from icon_exists_cache.json
+// #define PRELOAD_ICON_EXISTS_CACHE
+
+// OpenDream currently doesn't support byondapi, so automatically disable it on OD,
+// unless CIBUILDING is defined - we still want to lint dreamluau-related code.
+// Get rid of this whenever it does have support.
+#ifdef OPENDREAM_REAL
+#define DISABLE_DREAMLUAU
+#endif
 
 /// If this is uncommented, force our verb processing into just the 2% of a tick
 /// We normally reserve for it

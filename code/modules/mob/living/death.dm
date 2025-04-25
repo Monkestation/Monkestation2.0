@@ -36,6 +36,8 @@
 	return
 
 /mob/living/proc/spawn_gibs()
+	if(flags_1 & HOLOGRAM_1)
+		return
 	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /mob/living/proc/spill_organs()
@@ -120,5 +122,7 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
+
+	persistent_client?.time_of_death = timeofdeath
 
 	return TRUE

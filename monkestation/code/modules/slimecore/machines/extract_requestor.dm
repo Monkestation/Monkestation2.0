@@ -29,6 +29,12 @@
 			name_to_path |= list("[new_extract.name]" = new_extract.type)
 			qdel(new_extract)
 
+/obj/machinery/slime_extract_requestor/Destroy()
+	if(console?.request_pad == src)
+		console.request_pad = null
+	console = null
+	return ..()
+
 /obj/machinery/slime_extract_requestor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!console)
@@ -54,7 +60,7 @@
 	if(!multitool_check_buffer(user, tool))
 		return
 	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
+	multitool.set_buffer(src)
 	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

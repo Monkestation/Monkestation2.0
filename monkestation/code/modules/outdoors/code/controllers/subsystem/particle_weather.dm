@@ -40,6 +40,9 @@ SUBSYSTEM_DEF(particle_weather)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/particle_weather/Recover()
+	eligible_weathers = SSparticle_weather.eligible_weathers.Copy()
+	eligible_eclipse_weathers = SSparticle_weather.eligible_eclipse_weathers.Copy()
+
 	running_weather = SSparticle_weather.running_weather
 	running_eclipse_weather = SSparticle_weather.running_eclipse_weather
 
@@ -56,6 +59,8 @@ SUBSYSTEM_DEF(particle_weather)
 	particle_effect_eclipse = SSparticle_weather.particle_effect_eclipse
 	weather_special_effect_eclipse = SSparticle_weather.weather_special_effect_eclipse
 	weather_effect_eclipse = SSparticle_weather.weather_effect_eclipse
+
+	enabled = SSparticle_weather.enabled
 
 /datum/controller/subsystem/particle_weather/stat_entry(msg)
 	if(enabled)
@@ -142,7 +147,7 @@ SUBSYSTEM_DEF(particle_weather)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_CHANGE)
 		running_eclipse_weather = weather_datum_type
 		running_eclipse_weather.start()
-		weather_datum_type = null
+		next_hit_eclipse = null
 	else
 		if(!QDELETED(running_weather))
 			if(!force)
@@ -154,7 +159,7 @@ SUBSYSTEM_DEF(particle_weather)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_CHANGE)
 		running_weather = weather_datum_type
 		running_weather.start()
-		weather_datum_type = null
+		next_hit = null
 
 /datum/controller/subsystem/particle_weather/proc/make_eligible(datum/particle_weather/possible_weather, probability = 10)
 	eligible_weathers[possible_weather] = probability

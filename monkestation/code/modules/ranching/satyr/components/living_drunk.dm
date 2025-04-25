@@ -2,11 +2,11 @@
 /datum/component/living_drunk
 	var/current_drunkness = 100
 	var/max_drunkness = 100
-	var/min_drunkness = 0
 
 	COOLDOWN_DECLARE(drank_grace)
 	var/grace_period = 5 MINUTES
 	var/booze_per_drunkness = 1
+	var/min_drunkness = 0
 
 	var/drunk_state = 0
 
@@ -47,19 +47,21 @@
 /datum/component/living_drunk/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, drank_grace))
 		return
-	current_drunkness = min(min_drunkness, (current_drunkness -= 0.2))
+
+	current_drunkness = max(min_drunkness, (current_drunkness -= 0.15))
 	drunkness_change_effects()
 
 /datum/component/living_drunk/proc/drunkness_change_effects()
 	var/mob/living/living = parent
 	if((current_drunkness <= 10) && drunk_state != 2)
-		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 80)
+		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 71)
 		drunk_state = 2
 		return
-	if((current_drunkness <= 30) && drunk_state != 1 && drunk_state != 2)
+	if((current_drunkness <= 30) && (drunk_state != 1 && drunk_state != 2))
 		living.apply_status_effect(/datum/status_effect/inebriated/tipsy, 5)
 		drunk_state = 1
 		return
+
 	if(current_drunkness > 30)
 		drunk_state = 0
 		living.remove_status_effect(/datum/status_effect/inebriated/tipsy)

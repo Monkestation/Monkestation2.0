@@ -21,6 +21,7 @@
 	///Maximum size of a mob trying to enter the mech
 	var/maximum_mob_size = MOB_SIZE_SMALL
 	COOLDOWN_DECLARE(sound_cooldown)
+	explode_on_destruction = FALSE // monkestation edit: don't boom
 
 /datum/armor/car_vim
 	melee = 70

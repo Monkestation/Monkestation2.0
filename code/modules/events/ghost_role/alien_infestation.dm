@@ -3,7 +3,6 @@
 	typepath = /datum/round_event/antagonist/solo/ghost/alien_infestation
 	weight = 3
 	max_occurrences = 1
-
 	min_players = 35 //monkie edit: 10 to 35 (tg what the fuck)
 
 	earliest_start = 60 MINUTES //monkie edit: 20 to 90
@@ -104,7 +103,7 @@
 
 		var/obj/vent = pick_n_take(vents)
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.ckey = candidate_ckey
+		new_xeno.PossessByPlayer(candidate_ckey)
 		new_xeno.move_into_vent(vent)
 		selected_count++
 

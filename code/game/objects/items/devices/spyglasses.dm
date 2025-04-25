@@ -1,10 +1,10 @@
 //detective spyglasses. meant to be an example for map_popups.dm
-/obj/item/clothing/glasses/sunglasses/spy
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy /// Monkestation edit : Adding some substance to the detective role. A special sunglass with security HUD
 	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
 	actions_types = list(/datum/action/item_action/activate_remote_view)
 	var/obj/item/clothing/accessory/spy_bug/linked_bug
 
-/obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
 	var/client/cool_guy = user?.client
 	if(!cool_guy)
 		return
@@ -18,27 +18,27 @@
 
 	linked_bug.update_view()
 
-/obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
-	linked_bug.cam_screen.hide_from(source.mob)
+	linked_bug.cam_screen.hide_from_client(source)
 
-/obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/equipped(mob/user, slot)
 	. = ..()
 	if(!(slot & ITEM_SLOT_EYES))
 		user.client?.close_popup("spypopup")
 
-/obj/item/clothing/glasses/sunglasses/spy/dropped(mob/user)
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/dropped(mob/user)
 	. = ..()
 	user.client?.close_popup("spypopup")
 
-/obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/ui_action_click(mob/user)
 	show_to_user(user)
 
-/obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
 		return TRUE
 
-/obj/item/clothing/glasses/sunglasses/spy/Destroy()
+/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/Destroy()
 	if(linked_bug)
 		linked_bug.linked_glasses = null
 	. = ..()
@@ -52,7 +52,7 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
 	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
-	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
+	var/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/linked_glasses
 	var/atom/movable/screen/map_view/cam_screen
 	// Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
@@ -98,7 +98,7 @@ A shrill beep coming from your SpySpeks means that they can't connect to the inc
 
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
 	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
-	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
+	var/obj/item/clothing/glasses/hud/security/sunglasses/normal/spy/newglasses = new(src)
 	newbug.linked_glasses = newglasses
 	newglasses.linked_bug = newbug
 	new /obj/item/paper/fluff/nerddocs(src)

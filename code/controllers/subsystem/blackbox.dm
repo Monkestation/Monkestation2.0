@@ -85,8 +85,8 @@ SUBSYSTEM_DEF(blackbox)
 		if (MS.rc_msgs.len)
 			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
 
-	for(var/player_key in GLOB.player_details)
-		var/datum/player_details/PD = GLOB.player_details[player_key]
+	for(var/player_key in GLOB.persistent_clients_by_ckey)
+		var/datum/persistent_client/PD = GLOB.persistent_clients_by_ckey[player_key]
 		record_feedback("tally", "client_byond_version", 1, PD.full_byond_version())
 
 /datum/controller/subsystem/blackbox/Shutdown()
@@ -151,6 +151,8 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", 1, "centcom")
 		if(FREQ_AI_PRIVATE)
 			record_feedback("tally", "radio_usage", 1, "ai private")
+		if(FREQ_ENTERTAINMENT)
+			record_feedback("tally", "radio_usage", 1, "entertainment")
 		if(FREQ_CTF_RED)
 			record_feedback("tally", "radio_usage", 1, "CTF red team")
 		if(FREQ_CTF_BLUE)

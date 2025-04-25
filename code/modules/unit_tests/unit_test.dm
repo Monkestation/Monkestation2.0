@@ -220,6 +220,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
+	// The following are just generic, singular types.
 	var/list/ignore = list(
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
@@ -246,15 +247,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		// monkestation start
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,
-		///this instant starts a timer, and if its being instantly deleted it can cause issues
-		/obj/machinery/atm,
-		/datum/hotspot,
+		/obj/machinery/atm, // starts a timer, and if its being instantly deleted it can cause issues
 		/obj/machinery/ocean_elevator,
 		/atom/movable/outdoor_effect,
 		/turf/closed/mineral/random/regrowth,
-		/obj/effect/abstract/signboard_holder, // monkestation addition: shouldn't exist outside of signboards
+		/obj/effect/abstract/signboard_holder, // shouldn't exist outside of signboards
+		/obj/effect/transmission_beam, // relies on the existence of a PTL
+		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
+		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
+		// monkestation end
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -325,14 +329,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
 	///we generate mobs in these and create destroy does this in null space
 	ignore += typesof(/obj/item/loot_table_maker)
+
+	// monkestation start
 	///we need to use json_decode to run randoms properly
 	ignore += typesof(/obj/item/device/cassette_tape)
-	ignore += typesof(/datum/cassette/cassette_tape)
 	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
-	ignore += typesof(/datum/weather_event)
-	ignore += typesof(/datum/particle_weather)
 	ignore += typesof(/mob/living/basic/aquatic)
 	ignore += typesof(/obj/machinery/station_map)
+	// monkestation end
 
 	return ignore
 
@@ -348,13 +352,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
+	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 
+	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
+	SSticker.delay_end = TRUE
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
+	SSticker.delay_end = FALSE
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

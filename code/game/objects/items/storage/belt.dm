@@ -267,6 +267,7 @@
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
+		/obj/item/device/antibody_scanner //monkestation addition
 	))
 
 /obj/item/storage/belt/medical/paramedic
@@ -372,7 +373,7 @@
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = PAYCHECK_COMMAND * 3
+	custom_premium_price = PAYCHECK_COMMAND * 2 //monkestation edit: 3 to 2
 
 /obj/item/storage/belt/security/webbing/Initialize(mapload)
 	. = ..()
@@ -794,6 +795,7 @@
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
+	icon_state_preview = "sheath-sabre" // monkestation edit: add preview icon state
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY

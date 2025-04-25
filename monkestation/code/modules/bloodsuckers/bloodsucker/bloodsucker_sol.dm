@@ -21,8 +21,10 @@
 ///Ranks the Bloodsucker up, called by Sol.
 /datum/antagonist/bloodsucker/proc/sol_rank_up(atom/source)
 	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(src, PROC_REF(RankUp))
+	if(bloodsucker_level < 3)
+		INVOKE_ASYNC(src, PROC_REF(RankUp))
+	else
+		to_chat(owner.current, span_announce("You have already got as powerful as you can through surviving Sol."))
 
 ///Called when Sol is near starting.
 /datum/antagonist/bloodsucker/proc/sol_near_start(atom/source)
@@ -167,7 +169,7 @@
 	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
 	owner.set_pain_mod(id, 1.5)
-	owner.add_traits(sol_traits, id)
+	owner.add_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(id)
 	owner.add_filter(id, 2, drop_shadow_filter(x = 0, y = 0, size = 3, offset = 1.5, color = "#ee7440"))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
@@ -177,7 +179,11 @@
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology?.damage_resistance -= 50
 	for(var/datum/action/cooldown/bloodsucker/power in owner.actions)
-		if(power.sol_multiplier)
+		if(power.check_flags & BP_CANT_USE_DURING_SOL)
+			if(power.active && power.can_deactivate())
+				power.DeactivatePower()
+				to_chat(owner, span_danger("[power.name] has been deactivated due to the solar flares!"), type = MESSAGE_TYPE_INFO)
+		else if(power.sol_multiplier)
 			power.bloodcost *= power.sol_multiplier
 			power.constant_bloodcost *= power.sol_multiplier
 			if(power.active)
@@ -191,7 +197,7 @@
 	UnregisterSignal(SSsunlight, COMSIG_SOL_END)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	owner.unset_pain_mod(id)
-	owner.remove_traits(sol_traits, id)
+	owner.remove_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(id)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/bloodsucker_sol)

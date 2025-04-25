@@ -58,12 +58,22 @@
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
-	QDEL_LIST(bioware)
 	GLOB.human_list -= src
 
 	if (mob_mood)
 		QDEL_NULL(mob_mood)
 
+	return ..()
+
+/mob/living/carbon/human/ZImpactDamage(turf/T, levels)
+	if(stat != CONSCIOUS || levels > 1) // you're not The One
+		return ..()
+	var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
+	if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
+		visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
+						span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
+		Knockdown(levels * 40)
+		return
 	return ..()
 
 /mob/living/carbon/human/prepare_data_huds()
@@ -401,6 +411,14 @@
 	if(istype(head, /obj/item/clothing/head/wizard))
 		threatcount += 2
 
+	//MONKESTATION EDIT START
+	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
+		threatcount += 2
+
+	if(istype(wear_neck, /obj/item/clothing/neck/cloak/syndicate))
+		threatcount += 2
+	//MONKESTATION EDIT STOP
+
 	//Check for nonhuman scum
 	if(dna && dna.species.id && dna.species.id != SPECIES_HUMAN)
 		threatcount += 1
@@ -718,31 +736,13 @@
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
-		var/static/list/monkey_heights = list(
-			MONKEY_HEIGHT_DWARF,
-			MONKEY_HEIGHT_MEDIUM,
-		)
-		var/static/list/heights = list(
-			HUMAN_HEIGHT_SHORTEST,
-			HUMAN_HEIGHT_SHORT,
-			HUMAN_HEIGHT_MEDIUM,
-			HUMAN_HEIGHT_TALL,
-			HUMAN_HEIGHT_TALLER,
-			HUMAN_HEIGHT_TALLEST
-		)
-		if(ismonkey(src))
-			if(!(var_value in monkey_heights))
-				return
-		else if(!(var_value in heights))
-			return
-
-		. = set_mob_height(var_value)
-
-	if(!isnull(.))
-		datum_flags |= DF_VAR_EDITED
-		return
-
-	return ..()
+		// you wanna edit this one not that one
+		var_name = NAMEOF(src, base_mob_height)
+	. = ..()
+	if(!.)
+		return .
+	if(var_name == NAMEOF(src, base_mob_height))
+		update_mob_height()
 
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
@@ -809,7 +809,7 @@
 		var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 		if(result)
 			var/newtype = GLOB.species_list[result]
-			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")
+			admin_ticket_log("[key_name(usr)] has modified the bodyparts of [src] to [result]") // MONKESTATION EDIT - tgui tickets
 			set_species(newtype)
 
 /mob/living/carbon/human/limb_attack_self()

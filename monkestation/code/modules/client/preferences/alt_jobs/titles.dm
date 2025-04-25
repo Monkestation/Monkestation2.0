@@ -70,6 +70,26 @@
 		"Druid",
 	)
 
+/datum/job/blueshield
+	alt_titles = list(
+		"Blueshield",
+		"Corporate Henchman",
+		"Bodyguard",
+		"Revolutionary Repellent",
+		"Heavily Armed Butler",
+		"Honor Guard",
+	)
+
+/datum/job/blueshield
+	alt_titles = list(
+		"Blueshield",
+		"Corporate Henchman",
+		"Bodyguard",
+		"Revolutionary Repellent",
+		"Heavily Armed Butler",
+		"Honor Guard",
+	)
+
 /datum/job/brig_physician
 	alt_titles = list(
 		"Brig Physician",
@@ -88,6 +108,7 @@
 		"Site Manager",
 		"Criminally Underpaid Babysitter",
 		"Princess",
+		"Head of Command",
 	)
 
 /datum/job/cargo_technician
@@ -296,6 +317,7 @@
 		"Research Supervisor",
 		"Chief Science Officer",
 		"Chief Artificer",
+		"Head of Science",
 	)
 
 /datum/job/roboticist
@@ -313,8 +335,6 @@
 	alt_titles = list(
 		"Scientist",
 		"Circuitry Designer",
-		"Xenobiologist",
-		"Cytologist",
 		"Plasma Researcher",
 		"Anomalist",
 		"Lab Technician",
@@ -324,7 +344,6 @@
 		"Research Assistant",
 		"Graduate Student",
 		"Artificer",
-		"Cryptozoologist",
 	)
 
 /datum/job/security_officer
@@ -374,12 +393,9 @@
 		"Jailer",
 	)
 
-/datum/job/blueshield
+/datum/job/xenobiologist
 	alt_titles = list(
-		"Blueshield",
-		"Corporate Henchman",
-		"Bodyguard",
-		"Revolutionary Repellent",
-		"Heavily Armed Butler",
-		"Honor Guard",
+		"Xenobiologist",
+		"Cytologist",
+		"Cryptozoologist",
 	)

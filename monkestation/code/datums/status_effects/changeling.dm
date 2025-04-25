@@ -1,7 +1,7 @@
 /atom/movable/screen/alert/status_effect/changeling
 	icon = 'icons/mob/actions/actions_changeling.dmi'
 
-/atom/movable/screen/alert/status_effect/changeling/Initialize(mapload)
+/atom/movable/screen/alert/status_effect/changeling/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	underlays += mutable_appearance('icons/mob/actions/backgrounds.dmi', "bg_changeling")
 	add_overlay(mutable_appearance('icons/mob/actions/backgrounds.dmi', "bg_changeling_border"))
@@ -30,7 +30,7 @@
 /datum/status_effect/changeling_adrenaline/on_apply()
 	. = ..()
 	to_chat(owner, span_notice("Energy rushes through us."))
-	owner.add_traits(traits, REF(src))
+	owner.add_traits(traits, TRAIT_STATUS_EFFECT(id))
 
 	owner.SetAllImmobility(0)
 	owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
@@ -41,7 +41,7 @@
 /datum/status_effect/changeling_adrenaline/on_remove()
 	. = ..()
 	to_chat(owner, span_notice("Our energy fizzles out."))
-	owner.remove_traits(traits, REF(src))
+	owner.remove_traits(traits, TRAIT_STATUS_EFFECT(id))
 	remove_movespeed_modifier()
 
 /datum/status_effect/changeling_adrenaline/refresh(effect, ...)
@@ -88,12 +88,12 @@
 	. = ..()
 	to_chat(owner, span_notice("We cleanse impurities from our form."))
 	owner.immune_system?.AntibodyCure()
-	owner.add_traits(traits, REF(src))
+	owner.add_traits(traits, TRAIT_STATUS_EFFECT(id))
 	handle_extra_effects()
 
 /datum/status_effect/changeling_panacea/on_remove()
 	. = ..()
-	owner.remove_traits(traits, REF(src))
+	owner.remove_traits(traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/changeling_panacea/refresh(effect, ...)
 	duration = min(duration + initial(duration), world.time + initial(duration) * 2)

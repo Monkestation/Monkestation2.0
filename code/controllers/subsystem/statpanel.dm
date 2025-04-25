@@ -38,6 +38,15 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+
+		if(SSticker.reboot_timer)
+			var/reboot_time = timeleft(SSticker.reboot_timer)
+			if(reboot_time)
+				global_data += "Reboot: [DisplayTimeText(reboot_time, 1)]"
+		// admin must have delayed round end
+		else if(SSticker.ready_for_reboot)
+			global_data += "Reboot: DELAYED"
+
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
 
@@ -46,7 +55,7 @@ SUBSYSTEM_DEF(statpanels)
 		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
 
-		if(!target.stat_panel.is_ready())
+		if(!target?.stat_panel?.is_ready())
 			continue
 
 		if(target.stat_tab == "Status" && num_fires % status_wait == 0)
@@ -99,12 +108,10 @@ SUBSYSTEM_DEF(statpanels)
 			return
 
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
-	var/static/list/beta_notice = list("", "You are on the BYOND 516 beta, various UIs and such may be broken!", "Please report issues, and switch back to BYOND 515 if things are causing too many issues for you.")
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
-
 	target.stat_panel.send_message("update_stat", list(
-		"global_data" = (target.byond_version < 516) ? global_data : (global_data + beta_notice),
+		"global_data" = global_data,
 		"ping_str" = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
 		"other_str" = target.mob?.get_status_tab_items(),
 	))
@@ -259,10 +266,10 @@ SUBSYSTEM_DEF(statpanels)
 		tracy_dll = TRACY_DLL_PATH
 		tracy_present = fexists(tracy_dll)
 	if(tracy_present)
-		if(GLOB.tracy_initialized)
-			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [GLOB.tracy_init_reason || "N/A"])")))
-		else if(GLOB.tracy_init_error)
-			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([GLOB.tracy_init_error])")))
+		if(Tracy.enabled)
+			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [Tracy.init_reason || "N/A"])")))
+		else if(Tracy.error)
+			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([Tracy.error])")))
 		else if(fexists(TRACY_ENABLE_PATH))
 			mc_data.Insert(2, list(list("byond-tracy:", "Queued for next round")))
 		else

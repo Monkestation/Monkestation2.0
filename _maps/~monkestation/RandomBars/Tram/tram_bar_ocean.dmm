@@ -379,7 +379,7 @@
 /area/station/service/bar)
 "qO" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
@@ -475,7 +475,7 @@
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
 "wn" = (
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/fake_seafloor/spawning,
 /area/station/commons/lounge)
 "wE" = (
@@ -767,7 +767,7 @@
 "GX" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/fake_seafloor,
 /area/station/commons/lounge)
 "HW" = (
@@ -933,7 +933,6 @@
 /turf/open/floor/fake_seafloor/heavy,
 /area/station/service/theater)
 "Or" = (
-/obj/effect/mapping_helpers/airlock/access/all/service/theatre/east_offset,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/theater)
 "Pc" = (
@@ -1029,7 +1028,7 @@
 "Ty" = (
 /obj/structure/table/reinforced/rglass,
 /obj/effect/spawner/random/entertainment/musical_instrument,
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/fake_seafloor/heavy,
 /area/station/service/theater)
 "TF" = (
@@ -1055,7 +1054,7 @@
 "TJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/bar)
 "TZ" = (

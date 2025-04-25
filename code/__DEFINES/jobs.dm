@@ -6,6 +6,8 @@
 #define JOB_UNAVAILABLE_SLOTFULL 5
 /// Job unavailable due to incompatibility with an antag role.
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
+/// Job unavailable due to insufficient donor rank.
+#define JOB_UNAVAILABLE_DONOR_RANK 7 //MONKESTATION EDIT
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
@@ -82,6 +84,12 @@
 #define JOB_LAWYER "Lawyer"
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
+//Spring Donator Jobs
+#define JOB_NEWS_REPORTER "News Reporter"
+#define JOB_EASTER_BUNNY "Easter Bunny"
+#define JOB_FLORIST "Florist"
+#define JOB_SPRING_CLEANER "Spring Cleaner"
+#define JOB_BIRD_WATCHER "Bird Watcher"
 //Spooktober
 #define JOB_SPOOKTOBER_GHOST "Ghost"
 #define JOB_SPOOKTOBER_GODZILLA "Discount Godzilla"
@@ -134,6 +142,7 @@
 #define JOB_DISPLAY_ORDER_LAWYER 11
 #define JOB_DISPLAY_ORDER_CHAPLAIN 12
 #define JOB_DISPLAY_ORDER_PSYCHOLOGIST 13
+#define JOB_DISPLAY_ORDER_BARBER 13.5 //monkestation edit: Barber
 #define JOB_DISPLAY_ORDER_AI 14
 #define JOB_DISPLAY_ORDER_CYBORG 15
 #define JOB_DISPLAY_ORDER_CHIEF_ENGINEER 16
@@ -154,6 +163,7 @@
 #define JOB_DISPLAY_ORDER_SCIENTIST 29
 #define JOB_DISPLAY_ORDER_ROBOTICIST 30
 #define JOB_DISPLAY_ORDER_GENETICIST 31
+#define JOB_DISPLAY_ORDER_XENOBIOLOGIST 31.5
 #define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 32
 #define JOB_DISPLAY_ORDER_WARDEN 33
 #define JOB_DISPLAY_ORDER_BRIG_PHYSICIAN 34
@@ -187,6 +197,8 @@
 #define DEPARTMENT_CAPTAIN "Captain"
 #define DEPARTMENT_BITFLAG_SPOOKTOBER (1<<10)
 #define DEPARTMENT_SPOOKTOBER "Spooktober"
+#define DEPARTMENT_BITFLAG_SPRING (1<<11)
+#define DEPARTMENT_SPRING "Spring"
 
 #define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<11)
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command"

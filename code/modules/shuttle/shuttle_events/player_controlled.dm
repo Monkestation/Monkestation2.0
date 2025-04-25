@@ -28,7 +28,7 @@
 	if(candidate || spawn_anyway_if_no_player)
 		var/mob/living/new_mob = new spawn_type (get_turf(get_spawn_turf()))
 		if(candidate)
-			new_mob.ckey = candidate.ckey
+			new_mob.PossessByPlayer(candidate.ckey)
 		post_spawn(new_mob)
 
 ///BACK FOR REVENGE!!!

@@ -113,7 +113,7 @@
 	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange, syndie))
+	set_frequency(sanitize_frequency(frequency, freerange, syndie, radio_host))
 	set_on(on)
 	perform_update_icon = TRUE
 
@@ -155,6 +155,9 @@
 
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
+
+	if(!listening)
+		remove_radio_all(src)
 
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
@@ -285,9 +288,10 @@
 		return
 	if(!talking_movable.try_speak(message))
 		return
-
-	if(channel == FREQ_RADIO && !radio_host)
+	//MONKESTATION EDIT START
+	if(istype(get_area(src), /area/centcom/heretic_sacrifice))
 		return
+	//MONKESTATION EDIT STOP
 
 	if(use_command)
 		spans |= SPAN_COMMAND
@@ -315,6 +319,11 @@
 	else
 		freq = frequency
 		channel = null
+
+	// monkestation start: prevent non-radio mics from broadcasting over the radio channel
+	if(freq == FREQ_RADIO && !radio_host)
+		return
+	// monkestation end
 
 	// Nearby active jammers prevent the message from transmitting
 	if(is_within_radio_jammer_range(src) && !syndie)
@@ -411,7 +420,8 @@
 				return TRUE
 	return FALSE
 
-/obj/item/radio/proc/on_recieve_message()
+/obj/item/radio/proc/on_recieve_message(list/data)
+	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
@@ -462,7 +472,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange, syndie))
+				set_frequency(sanitize_frequency(tune, freerange, syndie, radio_host))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE
@@ -611,5 +621,66 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+// RADIOS USED BY BROADCASTING
+/obj/item/radio/entertainment
+	desc = "You should not hold this."
+	canhear_range = 7
+	freerange = TRUE
+	freqlock = RADIO_FREQENCY_LOCKED
+//	radio_noise = FALSE //to add when radio noises are ported
+
+/obj/item/radio/entertainment/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_ENTERTAINMENT)
+
+/obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
+	should_be_listening = TRUE
+	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment/speakers/proc/toggle_mute()
+	should_be_listening = !should_be_listening
+
+/obj/item/radio/entertainment/speakers/Initialize(mapload)
+	. = ..()
+	set_broadcasting(FALSE)
+	set_listening(TRUE)
+	wires?.cut(WIRE_TX)
+
+/* //to add when radio noises are ported
+/obj/item/radio/entertainment/speakers/on_receive_message(list/data)
+	playsound(source = src, soundin = SFX_MUFFLED_SPEECH, vol = 60, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
+
+	return ..()
+*/
+
+/obj/item/radio/entertainment/speakers/physical // Can be used as a physical item
+	name = "entertainment radio"
+	desc = "A portable one-way radio permamently tuned into entertainment frequency."
+	icon_state = "radio"
+	inhand_icon_state = "radio"
+	worn_icon_state = "radio"
+	overlay_speaker_idle = "radio_s_idle"
+	overlay_speaker_active = "radio_s_active"
+	overlay_mic_idle = "radio_m_idle"
+	overlay_mic_active = "radio_m_active"
+
+/obj/item/radio/entertainment/microphone // Used inside of a broadcast camera, not to be used as a actual item
+	should_be_listening = FALSE
+	should_be_broadcasting = TRUE
+
+/obj/item/radio/entertainment/microphone/Initialize(mapload)
+	. = ..()
+	set_broadcasting(TRUE)
+	set_listening(FALSE)
+	wires?.cut(WIRE_RX)
+
+/obj/item/radio/entertainment/microphone/physical // Can be used as a physical item
+	name = "microphone"
+	desc = "No comments."
+	icon = 'icons/obj/service/broadcast.dmi'
+	icon_state = "microphone"
+	inhand_icon_state = "microphone"
+	canhear_range = 3
 
 #undef FREQ_LISTENING

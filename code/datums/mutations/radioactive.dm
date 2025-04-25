@@ -14,8 +14,10 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER))
 
+/* Moved to 'monkestation/code/datums/mutations/radioactive.dm'
 /datum/mutation/human/radioactive/get_visual_indicator()
 	return visual_indicators[type][1]
+*/
 
 /datum/mutation/human/radioactive/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -24,7 +26,8 @@
 
 /datum/mutation/human/radioactive/modify()
 	. = ..()
-	make_radioactive(owner)
+	if(!QDELETED(owner))
+		make_radioactive(owner)
 
 /**
  * Makes the passed mob radioactive, or if they're already radioactive,

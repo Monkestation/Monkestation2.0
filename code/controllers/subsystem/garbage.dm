@@ -57,11 +57,12 @@ SUBSYSTEM_DEF(garbage)
 	#endif
 
 	// monkestation start: disabling hard deletes
+#if !defined(UNIT_TESTS) && !defined(REFERENCE_TRACKING)
 	/// Toggle for enabling/disabling hard deletes. Objects that don't explicitly request hard deletion with this disabled will leak.
 	var/enable_hard_deletes = FALSE
+#endif
 	var/list/failed_hard_deletes = list()
 	// monkestation end
-
 
 /datum/controller/subsystem/garbage/PreInit()
 	InitQueues()
@@ -290,9 +291,11 @@ SUBSYSTEM_DEF(garbage)
 	// monkestation start: disable hard deletes
 	if(!D)
 		return
+#if !defined(UNIT_TESTS) && !defined(REFERENCE_TRACKING)
 	if(!enable_hard_deletes && !override)
 		failed_hard_deletes |= D
 		return
+#endif
 	// monkestation end
 	++delslasttick
 	++totaldels
@@ -360,7 +363,15 @@ SUBSYSTEM_DEF(garbage)
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/to_delete, force = FALSE)
 	if(!istype(to_delete))
+		if(isnull(to_delete))
+			return
+		else if(islist(to_delete))
+			stack_trace("Lists should not be directly passed to qdel! You likely want either list.Cut(), QDEL_LIST(list), QDEL_LIST_ASSOC(list), or QDEL_LIST_ASSOC_VAL(list)")
+		else if(to_delete != world)
+			stack_trace("Tried to qdel possibly invalid value: [to_delete]")
+#ifndef DISABLE_DREAMLUAU
 		DREAMLUAU_CLEAR_REF_USERDATA(to_delete)
+#endif
 		del(to_delete)
 		return
 

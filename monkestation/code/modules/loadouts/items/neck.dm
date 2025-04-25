@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 /datum/loadout_item/neck/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK)
 		if(outfit.neck)
-			LAZYADD(outfit.backpack_contents, outfit.neck && !visuals_only)
+			spawn_in_backpack(outfit, outfit.neck && !visuals_only, equipper)
 		outfit.neck = item_path
 	else
 		outfit.neck = item_path
@@ -94,6 +94,10 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	name = "Ascot"
 	item_path = /obj/item/clothing/neck/ascot
 	requires_purchase = FALSE
+
+/datum/loadout_item/neck/large_scarf
+	name = "Large Scarf"
+	item_path = /obj/item/clothing/neck/large_scarf
 
 /*
 *	NECKTIES
@@ -198,6 +202,10 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 /datum/loadout_item/neck/rainbow_bowtie
 	name = "Rainbow Bow Tie"
 	item_path = /obj/item/clothing/neck/bowtie/rainbow
+
+/datum/loadout_item/neck/modlink
+	name = "MODlink Scryer"
+	item_path = /obj/item/clothing/neck/link_scryer/loaded
 
 /*
 *	DONATOR

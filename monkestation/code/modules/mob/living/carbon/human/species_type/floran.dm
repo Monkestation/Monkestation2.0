@@ -8,7 +8,8 @@
 		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_NO_JUMPSUIT,
-		TRAIT_EASYDISMEMBER
+		TRAIT_EASYDISMEMBER,
+		TRAIT_SPLEENLESS_METABOLISM,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
@@ -21,6 +22,7 @@
 	coldmod = 1.5 //Same as lizard people
 	meat = /obj/item/food/meat/slab/human/mutant/plant
 	exotic_bloodtype = /datum/blood_type/water
+	inert_mutation = list(/datum/mutation/human/spores, /datum/mutation/human/sapblood)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
 

@@ -17,7 +17,7 @@
 	mind_traits = list(TRAIT_NAIVE)
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+	display_order = JOB_DISPLAY_ORDER_CLOWN
 	departments_list = list(
 		/datum/job_department/spooktober,
 		)
@@ -33,9 +33,15 @@
 	family_heirlooms = list(/obj/item/bikehorn/golden)
 	rpg_title = "Tow-Colored Jester"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_SPOOKTOBER
+	job_holiday_flags = list(HALLOWEEN)
+	job_donor_bypass = ACCESS_COMMAND_RANK
 
 	job_tone = "honk"
 
+///This override checks specific config values as a final blocking check.
+//Used initially to check if spooktober events were enabled. Edit for your application.
+/datum/job/yellowclown/special_config_check()
+	return CONFIG_GET(flag/spooktober_enabled)
 
 /datum/job/yellowclown/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

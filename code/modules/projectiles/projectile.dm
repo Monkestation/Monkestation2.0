@@ -50,6 +50,13 @@
 	/// We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.
 	var/temporary_unstoppable_movement = FALSE
 
+	//monkestation edit start
+	/// Do we damage walls?
+	var/damage_walls = FALSE
+	/// demolition mod on walls
+	var/wall_dem_mod = 1
+	//monkestation edit end
+
 	/** PROJECTILE PIERCING
 	  * WARNING:
 	  * Projectile piercing MUST be done using these variables.
@@ -297,6 +304,10 @@
 		if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 			var/turf/closed/wall/target_wall = target_turf
 			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
+			//monkestation edit start
+			if(damage_walls)
+				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = armour_penetration)
+			//monkestation edit end
 
 		return BULLET_ACT_HIT
 

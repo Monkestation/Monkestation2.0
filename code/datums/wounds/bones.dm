@@ -206,7 +206,7 @@
 	return .
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)
-	if(victim.stat == DEAD || wounding_dmg < WOUND_MINIMUM_DAMAGE || wounding_type == WOUND_BURN)
+	if(QDELETED(victim) || victim.stat == DEAD || wounding_dmg < WOUND_MINIMUM_DAMAGE || wounding_type == WOUND_BURN)
 		return
 	if(limb.body_zone != BODY_ZONE_CHEST || !limb.can_bleed() || !prob(internal_bleeding_chance))
 		return
@@ -361,10 +361,8 @@
 		victim.visible_message(span_danger("[victim]'s dislocated [limb.plaintext_zone] pops back into place!"), span_userdanger("Your dislocated [limb.plaintext_zone] pops back into place! Ow!"))
 		remove_wound()
 
-/datum/wound/blunt/bone/moderate/try_handling(mob/living/user)
-	if(user.usable_hands <= 0 || user.pulling != victim)
-		return FALSE
-	if(!isnull(user.hud_used?.zone_select) && user.zone_selected != limb.body_zone)
+/datum/wound/blunt/bone/moderate/try_handling(mob/living/carbon/human/user)
+	if(user.pulling != victim || user.zone_selected != limb.body_zone)
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)

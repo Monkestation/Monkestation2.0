@@ -139,7 +139,7 @@
 	var/smoke_delay = 0 ///used to prevent spam with smoke reagent reaction on mob.
 
 	///what icon the mob uses for speechbubbles
-	var/bubble_icon = "default"
+	//var/bubble_icon = "default" //MONKESTATION REMOVAL
 	///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 	var/health_doll_icon
 
@@ -199,9 +199,6 @@
 	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
-
-	///If combat mode is on or not
-	var/combat_mode = FALSE
 
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE

@@ -67,19 +67,13 @@
 
 /obj/item/food/fishmeat/gunner_jellyfish
 	name = "filleted gunner jellyfish"
-	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic when raw."
+	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "jellyfish_fillet"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 4, //The halluginogen comes from the fish trait.
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/toxin/mindbreaker = 2,
 	)
-
-///Premade gunner jellyfish fillets from supply orders. Contains the halluginogen that'd be normally from the fish trait.
-/obj/item/food/fishmeat/gunner_jellyfish/supply
-
-/obj/item/food/fishmeat/gunner_jellyfish/supply/Initialize(mapload)
-	food_reagents[/datum/reagent/toxin/mindbreaker] = 2
-	return ..()
 
 /obj/item/food/fishmeat/armorfish
 	name = "cleaned armorfish"
@@ -861,6 +855,18 @@
 	. = ..()
 	if(prob(50))
 		icon_state = "fried_chicken2"
+
+/obj/item/food/lava_chicken
+	name = "lava chicken"
+	desc = "It's tasty as hell! But it's also a lava attack!"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "fried_chicken1"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/toxin/spore_burning = 50)
+	tastes = list("l-l-l-lava" = 40, "ch-ch-ch-chicken" = 40)
+	foodtypes = MEAT | FRIED
+	junkiness = 25
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/beef_stroganoff
 	name = "beef stroganoff"

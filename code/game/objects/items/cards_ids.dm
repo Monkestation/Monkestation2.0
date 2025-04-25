@@ -361,7 +361,8 @@
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
-	build_access_lists(new_access_list, normal_access, wildcard_access)
+	if(length(new_access_list))
+		build_access_lists(new_access_list, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
 	if(mode == ERROR_ON_FAIL)
@@ -755,10 +756,10 @@
 		break
 
 /obj/item/card/id/examine_more(mob/user)
+	. = ..()
 	if(!user.can_read(src))
 		return
 
-	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
@@ -791,6 +792,7 @@
 	return access.Copy()
 
 /obj/item/card/id/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	return src
 
 /obj/item/card/id/RemoveID()
@@ -836,6 +838,26 @@
 	icon_state = "retro"
 	registered_age = null
 
+/obj/item/card/id/away/scp1
+	name = "Senior Scientist ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp1
+
+/obj/item/card/id/away/scp2
+	name = "Facility Guard ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp2
+
+/obj/item/card/id/away/scp3
+	name = "MTF Sergeant ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp3
+
+/obj/item/card/id/away/scp4
+	name = "Facility Manager"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp4
+
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
@@ -852,27 +874,27 @@
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	trim = /datum/id_trim/away/old/sec
+	trim = /datum/id_trim/job/away/old/sec /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	trim = /datum/id_trim/away/old/sci
+	trim = /datum/id_trim/job/away/old/sci /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	trim = /datum/id_trim/away/old/eng
+	trim = /datum/id_trim/job/away/old/eng /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
-/obj/item/card/id/away/old/apc
-	name = "APC Access ID"
-	desc = "A special ID card that allows access to APC terminals."
-	trim = /datum/id_trim/away/old/apc
+/obj/item/card/id/away/old/equipment
+	name = "Engineering Equipment Access"
+	desc = "A special ID card that allows access to engineering equipment."
+	trim = /datum/id_trim/job/away/old/equipment /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/robo
 	name = "Delta Station Roboticist's ID card"
 	desc = "An ID card that allows access to bots maintenance protocols."
-	trim = /datum/id_trim/away/old/robo
+	trim = /datum/id_trim/job/away/old/robo /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"

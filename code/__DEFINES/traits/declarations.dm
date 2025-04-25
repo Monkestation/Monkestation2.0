@@ -26,6 +26,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESTRAINED "restrained"
 /// Apply this to make a mob not dense, and remove it when you want it to no longer make them undense, other sorces of undesity will still apply. Always define a unique source when adding a new instance of this!
 #define TRAIT_UNDENSE "undense"
+/// Makes the mob immune to damage and several other ailments.
+#define TRAIT_GODMODE "godmode"
 /// Expands our FOV by 30 degrees if restricted
 #define TRAIT_EXPANDED_FOV "expanded_fov"
 /// Doesn't miss attacks
@@ -116,6 +118,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STABLELIVER "stable_liver"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
+/// Trait for when you can no longer gain body heat
+#define TRAIT_HYPOTHERMIC "body_hypothermic"
 ///For when you've gotten a power from a dna vault
 #define TRAIT_USED_DNA_VAULT "used_dna_vault"
 /// For when you want to be able to touch hot things, but still want fire to be an issue.
@@ -174,6 +178,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBLOOD "noblood"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
+// This means the carbon does not have altered bloodloss from having or not having a spleen
+#define TRAIT_SPLEENLESS_METABOLISM "spleenless_metabolism"
 /// Humans with this trait cannot be affected by changeling transformation stings
 #define TRAIT_NO_TRANSFORMATION_STING "no_transformation_sting"
 /// This carbon can't be overdosed by chems
@@ -236,8 +242,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_NO_STAGGER "no_stagger" */
 /// Getting hit by thrown movables won't push you away
 /* #define TRAIT_NO_THROW_HITPUSH "no_throw_hitpush" */
-/// This mob likes to eat fish. Raw, uncut fish.
-#define TRAIT_FISH_EATER "fish_eater"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
@@ -251,9 +255,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This trait lets you evaluate someone's fitness level against your own
 /* #define TRAIT_EXAMINE_FITNESS "reveal_power_level" */
 /// These mobs have particularly hygienic tongues
-#define TRAIT_WOUND_LICKER "wound_licker"
+/* #define TRAIT_WOUND_LICKER "wound_licker" */
 /// Mobs with this trait are allowed to use silicon emotes
-/* #define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed" */
+#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
 
 /// This trait designate that the mob was originally a monkey
 /* #define TRAIT_BORN_MONKEY "born_as_a_monkey" */
@@ -319,9 +323,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 /// Makes whispers clearly heard from seven tiles away, the full hearing range
-/* #define TRAIT_GOOD_HEARING "good_hearing" */
+#define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
-/* #define TRAIT_XRAY_HEARING "xray_hearing" */
+#define TRAIT_XRAY_HEARING "xray_hearing"
 
 /// This mob can not enter or move on a shuttle
 /* #define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement" */
@@ -396,6 +400,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
 #define TRAIT_DWARF "dwarf"
+//Gets a mood buff while in maints (used for Goblins).
+#define TRAIT_MAINTENANCE_DWELLER "maintenance_dweller"
 /// Makes you way too tall. Like just too much, dude, it's kind of creepy. Humanoid only.
 /* #define TRAIT_TOO_TALL "too_tall" */
 /// makes your footsteps completely silent
@@ -513,7 +519,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
 
 /// Trait that tracks if something has been renamed. Typically holds a REF() to the object itself (AKA src) for wide addition/removal.
-/* #define TRAIT_WAS_RENAMED "was_renamed" */
+#define TRAIT_WAS_RENAMED "was_renamed"
 
 /// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
 #define TRAIT_DOUBLE_TAP "double_tap"
@@ -558,7 +564,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MORBID "morbid"
 
 /// Whether or not the user is in a MODlink call, prevents making more calls
-/* #define TRAIT_IN_CALL "in_call" */
+#define TRAIT_IN_CALL "in_call"
 
 /// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
 #define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
@@ -676,7 +682,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ASHSTORM_IMMUNE "ashstorm_immune"
 #define TRAIT_SNOWSTORM_IMMUNE "snowstorm_immune"
 #define TRAIT_RADSTORM_IMMUNE "radstorm_immune"
-#define TRAIT_VOIDSTORM_IMMUNE "voidstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
 /// Cannot be grabbed by goliath tentacles
@@ -764,8 +769,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOOD_GRILLED "food_grilled"
 /// If this item's been fried
 #define TRAIT_FOOD_FRIED "food_fried"
-/// If this item's been bbq grilled
-#define TRAIT_FOOD_BBQ_GRILLED "food_bbq_grilled"
 /// This is a silver slime created item
 #define TRAIT_FOOD_SILVER "food_silver"
 /// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
@@ -817,12 +820,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// An item that, if it has contents, will ignore its contents when scanning for contraband.
 /* #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker" */
 /// For edible items that cannot be composted inside hydro trays
-#define TRAIT_UNCOMPOSTABLE "uncompostable"
+/* #define TRAIT_UNCOMPOSTABLE "uncompostable" */
+/// Items with this trait will not have their worn icon overlayed.
+#define TRAIT_NO_WORN_ICON "no_worn_icon"
+/// Items with this trait will not appear when examined.
+#define TRAIT_EXAMINE_SKIP "examine_skip"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
 /* #define TRAIT_ANOSMIA "anosmia" */
-/* #define TRAIT_HEAVY_DRINKER "heavy_drinker" */
+#define TRAIT_HEAVY_DRINKER "heavy_drinker"
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"
 #define TRAIT_NIGHT_VISION "night_vision"
@@ -841,6 +848,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
 #define TRAIT_EMPATH "empath"
+#define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
@@ -854,11 +862,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
+#define TRAIT_CAFFEINE_DEPENDENCE "caffeine_dependence"
 /* #define TRAIT_STRONG_STOMACH "strong_stomach" */
-#define TRAIT_VEGETARIAN "trait_vegetarian"
 
 /// This mob always lands on their feet when they fall, for better or for worse.
-#define TRAIT_CATLIKE_GRACE "catlike_grace"
+/* #define TRAIT_CATLIKE_GRACE "catlike_grace" */
 
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
@@ -985,7 +993,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
-#define TRAIT_FISH_WELL_COOKED "fish_well_cooked"
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 ///It comes from a fish case. Relevant for bounties so far.
 /* #define TRAIT_FISH_FROM_CASE "fish_from_case" */
@@ -996,7 +1003,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANGELIC "angelic"
 
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
-/* #define TRAIT_DREAMING "currently_dreaming" */
+#define TRAIT_DREAMING "currently_dreaming"
 
 /// Whether bots will salute this mob.
 /* #define TRAIT_COMMISSIONED "commissioned" */
@@ -1153,10 +1160,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RUNECHAT_HIDDEN "runechat_hidden"
 
 /// the object has a label applied
-/* #define TRAIT_HAS_LABEL "labeled" */
+#define TRAIT_HAS_LABEL "labeled"
 
 /// Trait given to a mob that is currently thinking (giving off the "thinking" icon), used in an IC context
-/* #define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC" */
+#define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC"
 
 ///without a human having this trait, they speak as if they have no tongue.
 #define TRAIT_SPEAKS_CLEARLY "speaks_clearly"
@@ -1201,7 +1208,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
 ///trait given to food that can be baked by /datum/component/bakeable
-#define TRAIT_BAKEABLE "bakeable"
+/* #define TRAIT_BAKEABLE "bakeable" */
 
 /// Trait given to foam darts that have an insert in them
 /* #define TRAIT_DART_HAS_INSERT "dart_has_insert" */
@@ -1214,12 +1221,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
-
-///Trait granted by the miner skillchip, allows communication with minebots
-#define TRAIT_ROCK_STONER "rock_stoner"
-
-///Trait given by the regenerative shield component
-#define TRAIT_REGEN_SHIELD "regen_shield"
 
 ///Trait granted by the miner skillchip, allows communication with minebots
 /* #define TRAIT_ROCK_STONER "rock_stoner" */
@@ -1293,18 +1294,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
-
-/**
- *
- * This trait is used in some interactions very high in the interaction chain to allow
- * certain atoms to be skipped by said interactions if the user is in combat mode.
- *
- * Its primarily use case is for stuff like storage and tables, to allow things like emags to be bagged
- * (because in some contexts you might want to be emagging a bag, and in others you might want to be storing it.)
- *
- * This is only checked by certain items explicitly so you can't just add the trait and expect it to work.
- * (This may be changed later but I chose to do it this way to avoid messing up interactions which require combat mode)
- */
-#define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
 
 // END TRAIT DEFINES

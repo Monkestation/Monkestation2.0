@@ -353,3 +353,32 @@
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(prob(25))
 		holder.entangle(crosser)
+
+// MONKESTATION ADDITIONS
+
+/datum/spacevine_mutation/weeping
+	name = "Weeping"
+	hue = "#6b6b6b"
+	quality = NEGATIVE
+	severity = SEVERITY_AVERAGE // not that bad (on its own)
+
+/datum/spacevine_mutation/weeping/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/item, expected_damage)
+	var/scream = pick(
+		'sound/voice/human/malescream_1.ogg',
+		'sound/voice/human/femalescream_1.ogg',
+		'sound/voice/lizard/lizard_scream_2.ogg',
+		)
+	playsound(holder, scream, 90, TRUE, frequency = 1.5)
+	var/mob/living/victim = hitter
+
+	if(iscarbon(victim))
+		var/list/reflist = list(1)
+		SEND_SIGNAL(victim, COMSIG_CARBON_SOUNDBANG, reflist)
+		var/intensity = reflist[1]
+		var/ear_safety = victim.get_ear_protection()
+		var/effect_amount = intensity - ear_safety
+		if(effect_amount > 0)
+			victim.soundbang_act(1, 0, 4, 15)
+			victim.adjust_confusion(5 SECONDS)
+			to_chat(victim, span_danger("The vines let out a terrible screech, disorienting you."))
+		return expected_damage

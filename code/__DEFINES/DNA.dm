@@ -97,11 +97,14 @@
 #define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_HUD "eye_hud"
 #define ORGAN_SLOT_LIVER "liver"
+#define ORGAN_SLOT_SPLEEN "spleen" //monkestation addition
 #define ORGAN_SLOT_LUNGS "lungs"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 #define ORGAN_SLOT_MONSTER_CORE "monstercore"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device" //This one ignores alphabetical order cause the arms should be together
+#define ORGAN_SLOT_RIGHT_ARM_MUSCLE "r_arm_muscle"
+#define ORGAN_SLOT_LEFT_ARM_MUSCLE "l_arm_muscle" //same as above
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_STORAGE_CAVITY "storage_cavity" // monkestation edit
@@ -167,6 +170,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_APPENDIX,
 	ORGAN_SLOT_RIGHT_ARM_AUG,
 	ORGAN_SLOT_LEFT_ARM_AUG,
+	ORGAN_SLOT_LEFT_ARM_MUSCLE,
+	ORGAN_SLOT_RIGHT_ARM_MUSCLE,
 	ORGAN_SLOT_RIGHT_LEG_AUG,
 	ORGAN_SLOT_LEFT_LEG_AUG,
 	ORGAN_SLOT_STOMACH,
@@ -180,6 +185,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_THRUSTERS,
 	ORGAN_SLOT_HUD,
 	ORGAN_SLOT_LIVER,
+	ORGAN_SLOT_SPLEEN, //monkestation addition
 	ORGAN_SLOT_TONGUE,
 	ORGAN_SLOT_VOICE,
 	ORGAN_SLOT_ADAMANTINE_RESONATOR,

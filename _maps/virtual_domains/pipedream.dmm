@@ -816,7 +816,8 @@
 /area/space)
 "Bd" = (
 /obj/structure/closet/secure_closet/tac{
-	req_access = null
+	req_access = null;
+	req_one_access = null
 	},
 /obj/item/ammo_casing/shotgun/buckshot,
 /obj/item/ammo_casing/shotgun/buckshot,
@@ -1644,7 +1645,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "Ym" = (
-/mob/living/basic/pet/cat/space,
+/mob/living/simple_animal/pet/cat/space,
 /obj/structure/bed/dogbed{
 	name = "cat bed"
 	},

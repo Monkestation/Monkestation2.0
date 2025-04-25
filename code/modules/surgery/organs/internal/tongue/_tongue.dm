@@ -77,8 +77,11 @@
 
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
-	if(speech_args[SPEECH_LANGUAGE] in languages_native)
-		return FALSE //no changes
+
+	if(speech_args[SPEECH_LANGUAGE] in languages_native) // Speaking a native language?
+		return FALSE // Don't modify speech
+	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers - I hate this but I simply cannot get these to combine into one statement
+		return FALSE // Don't modify speech
 	modify_speech(source, speech_args)
 
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
@@ -97,6 +100,11 @@
 		food_taste_reaction = FOOD_TOXIC
 	else if(foodtypes & disliked_foodtypes)
 		food_taste_reaction = FOOD_DISLIKED
+		// MONKESTATION ADDITION START
+		if(owner && HAS_TRAIT(owner, TRAIT_STABILIZED_EATER))
+			if(prob(50))
+				food_taste_reaction = FOOD_LIKED // This is actually fine
+		// MONKESTATION ADDITION END
 	else if(foodtypes & liked_foodtypes)
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
@@ -536,6 +544,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 
 /obj/item/organ/internal/tongue/robot/get_scream_sound()
 	return 'monkestation/sound/voice/screams/silicon/scream_silicon.ogg'

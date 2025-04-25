@@ -323,8 +323,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		G.portal_visuals.display_to(user)
 		ui = new(user, src, "Gateway", name)
+		G.portal_visuals.display_to(user, ui.window)
 		ui.open()
 
 /obj/machinery/computer/gateway_control/ui_data(mob/user)
@@ -381,7 +381,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	/// Handles the background of the portal, ensures the effect well, works properly
 	var/atom/movable/screen/background/cam_background
 
-/atom/movable/screen/map_view/gateway_port/Initialize(mapload)
+/atom/movable/screen/map_view/gateway_port/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	cam_background = new
 	cam_background.del_on_map_removal = FALSE
@@ -400,7 +400,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	QDEL_NULL(cam_background)
 	return ..()
 
-/atom/movable/screen/map_view/gateway_port/display_to(mob/show_to)
+/atom/movable/screen/map_view/gateway_port/display_on_ui_visible(mob/show_to)
 	. = ..()
 	show_to.client.register_map_obj(cam_background)
 

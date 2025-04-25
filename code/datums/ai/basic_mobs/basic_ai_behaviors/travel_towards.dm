@@ -16,15 +16,18 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
-	set_movement_target(controller, target)
+	set_movement_target(controller, target, new_movement_type)
 
 /datum/ai_behavior/travel_towards/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	. = ..()
+	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/travel_towards/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	if (clear_target)
 		controller.clear_blackboard_key(target_key)
+	if(new_movement_type)
+		controller.change_ai_movement_type(initial(controller.ai_movement))
 
 /datum/ai_behavior/travel_towards/stop_on_arrival
 	clear_target = TRUE
@@ -45,4 +48,5 @@
 	set_movement_target(controller, target_atom)
 
 /datum/ai_behavior/travel_towards_atom/perform(seconds_per_tick, datum/ai_controller/controller, atom/target_atom)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	. = ..()
+	finish_action(controller, TRUE)

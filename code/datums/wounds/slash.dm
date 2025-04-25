@@ -110,7 +110,7 @@
 	return "<B>[msg.Join()]</B>"
 
 /datum/wound/slash/flesh/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if (!victim) // if we are dismembered, we can still take damage, its fine to check here
+	if (QDELETED(victim)) // if we are dismembered, we can still take damage, its fine to check here
 		return
 
 	if(victim.stat != DEAD && wound_bonus != CANT_WOUND && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
@@ -142,7 +142,7 @@
 
 /datum/wound/slash/flesh/handle_process(seconds_per_tick, times_fired)
 	. = ..()
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+	if (QDELETED(victim) || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
@@ -196,32 +196,26 @@
 	else if(istype(I, /obj/item/stack/medical/suture))
 		return suture(I, user)
 
-/datum/wound/slash/flesh/try_handling(mob/living/user)
-	if(user.pulling != victim || !HAS_TRAIT(user, TRAIT_WOUND_LICKER) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+/datum/wound/slash/flesh/try_handling(mob/living/carbon/human/user)
+	if(user.pulling != victim || user.zone_selected != limb.body_zone || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
-	if(!isnull(user.hud_used?.zone_select) && user.zone_selected != limb.body_zone)
-		return FALSE
-
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, span_warning("You're already interacting with [victim]!"))
 		return
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.is_mouth_covered())
-			to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
-			return
-		if(!carbon_user.get_organ_slot(ORGAN_SLOT_TONGUE))
-			to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
-			return
+	if(user.is_mouth_covered())
+		to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
+		return
+	if(!user.get_organ_slot(ORGAN_SLOT_TONGUE))
+		to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
+		return
 
-	lick_wounds(user)
 	return TRUE
 
 /// if a felinid is licking this cut to reduce bleeding
 /datum/wound/slash/flesh/proc/lick_wounds(mob/living/carbon/human/user)
 	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
 	for(var/i in victim.diseases)
-		var/datum/disease/advanced/iter_disease = i
+		var/datum/disease/acute/iter_disease = i
 		if(iter_disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 			continue
 		user.infect_disease(iter_disease, notes = "Spread via Licking (Blood)")
