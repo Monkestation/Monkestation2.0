@@ -38,12 +38,18 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_experimental = list()
 	///path = list(point type = value)
 	var/list/techweb_point_items = list(
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	)
 	var/list/errored_datums = list()
-	var/list/point_types = list() //typecache style type = TRUE list
+	///Associated list of all point types that techwebs will have and their respective 'abbreviated' name.
+	var/list/point_types = list(
+		TECHWEB_POINT_TYPE_GENERIC = "Gen. Res.",
+		TECHWEB_POINT_TYPE_NANITES = "Nanite Res."
+	)
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
+	var/list/single_server_income = list(
+		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME,
+	)
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
@@ -84,7 +90,6 @@ SUBSYSTEM_DEF(research)
 	)
 
 /datum/controller/subsystem/research/Initialize()
-	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	populate_ordnance_experiments()
@@ -171,7 +176,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_nodes(clearall = FALSE)
 	if(islist(techweb_nodes) && clearall)
-		QDEL_LIST(techweb_nodes)
+		QDEL_LIST_ASSOC_VAL(techweb_nodes)
 	if(islist(techweb_nodes_starting && clearall))
 		techweb_nodes_starting.Cut()
 	var/list/returned = list()
@@ -200,7 +205,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
-		QDEL_LIST(techweb_designs)
+		QDEL_LIST_ASSOC_VAL(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
 		var/datum/design/DN = path

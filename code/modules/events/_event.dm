@@ -58,6 +58,8 @@
 	var/can_run_post_roundstart = TRUE
 	/// If set then the type or list of types of storytellers we are restricted to being trigged by
 	var/list/allowed_storytellers
+	/// If TRUE, then this event will not roll if the emergency shuttle is past the point of no recall.
+	var/dont_spawn_near_roundend = FALSE
 	// monkestation end
 
 /datum/round_event_control/New()
@@ -99,6 +101,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 // monkestation start: event groups and storyteller stuff
 	if(SSgamemode.current_storyteller?.disable_distribution || SSgamemode.halted_storyteller)
+		return FALSE
+	if(dont_spawn_near_roundend && EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return FALSE
 	if(event_group && !GLOB.event_groups[event_group].can_run())
 		return FALSE

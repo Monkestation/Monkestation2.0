@@ -26,7 +26,7 @@
 		"mat_analyzer",
 		"pocket_heater", // monkestation edit
 	)//e a r l y    g a  m e)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/bitrunning
 	id = "bitrunning"
@@ -39,7 +39,7 @@
 		"netpod",
 		"bitrunning_order", //MONKESTATION ADDITION
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/adv_mining
 	id = "adv_mining"
@@ -52,5 +52,5 @@
 		"jackhammer",
 		"plasmacutter_adv",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = TECHWEB_TIER_2_POINTS)

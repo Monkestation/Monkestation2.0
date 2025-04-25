@@ -119,7 +119,7 @@ SUBSYSTEM_DEF(discord)
 
 /datum/controller/subsystem/discord/proc/get_or_generate_one_time_token_for_ckey(ckey)
 	// Is there an existing valid one time token
-	var/datum/discord_link_record/link = find_discord_link_by_ckey(ckey, timebound = TRUE)
+	var/datum/discord_link_record/link = find_discord_link_by_ckey(ckey)
 	if(link)
 		return link.one_time_token
 
@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(discord)
 	return generate_one_time_token(ckey)
 
 /**
- * Generate a timebound token for discord verification
+ * Generate a token for discord verification
  *
  * This uses the common word list to generate a six word random token, this token can then be fed to a discord bot that has access
  * to the same database, and it can use it to link a ckey to a discord id, with minimal user effort
@@ -156,9 +156,9 @@ SUBSYSTEM_DEF(discord)
 	// While there's a collision in the token, generate a new one (should rarely happen)
 	while(not_unique)
 		//Column is varchar 100, so we trim just in case someone does us the dirty later
-		one_time_token = trim("[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]-[pick(common_words)]", 100)
+		one_time_token = trim(uppertext("PLX-VERIFY-[trim(ckey_for, 5)]-[random_string(4, GLOB.hex_characters)]-[random_string(4, GLOB.hex_characters)]"), 100)
 
-		not_unique = find_discord_link_by_token(one_time_token, timebound = TRUE)
+		not_unique = find_discord_link_by_token(one_time_token)
 
 	// Insert into the table, null in the discord id, id and timestamp and valid fields so the db fills them out where needed
 	var/datum/db_query/query_insert_link_record = SSdbcore.NewQuery(
@@ -183,15 +183,11 @@ SUBSYSTEM_DEF(discord)
  *
  * Arguments:
  * * one_time_token the string of words representing the one time token
- * * timebound A boolean flag, that specifies if it should only look for entries within the last 4 hours, off by default
  *
  * Returns a [/datum/discord_link_record]
  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_token(one_time_token, timebound = FALSE)
-	var/timeboundsql = ""
-	if(timebound)
-		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE one_time_token = :one_time_token [timeboundsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+/datum/controller/subsystem/discord/proc/find_discord_link_by_token(one_time_token)
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE one_time_token = :one_time_token GROUP BY ckey, discord_id, one_time_token LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("one_time_token" = one_time_token)
@@ -215,19 +211,15 @@ SUBSYSTEM_DEF(discord)
  *
  * Arguments:
  * * ckey the users ckey as a string
- * * timebound should we search only in the last 4 hours
  *
  * Returns a [/datum/discord_link_record]
  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_ckey(ckey, timebound = FALSE, only_valid = FALSE)
-	var/timeboundsql = ""
-	if(timebound)
-		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
+/datum/controller/subsystem/discord/proc/find_discord_link_by_ckey(ckey, only_valid = FALSE)
 	var/validsql = ""
 	if(only_valid)
 		validsql = "AND valid = 1"
 
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [timeboundsql]  [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("ckey" = ckey)
@@ -253,19 +245,15 @@ SUBSYSTEM_DEF(discord)
  *
  * Arguments:
  * * discord_id The users discord id (string)
- * * timebound should we search only in the last 4 hours
  *
  * Returns a [/datum/discord_link_record]
  */
-/datum/controller/subsystem/discord/proc/find_discord_link_by_discord_id(discord_id, timebound = FALSE, only_valid = FALSE)
-	var/timeboundsql = ""
-	if(timebound)
-		timeboundsql = "AND timestamp >= Now() - INTERVAL 4 HOUR"
+/datum/controller/subsystem/discord/proc/find_discord_link_by_discord_id(discord_id, only_valid = FALSE)
 	var/validsql = ""
 	if(only_valid)
 		validsql = "AND valid = 1"
 
-	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [timeboundsql] [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
 	var/datum/db_query/query_get_discord_link_record = SSdbcore.NewQuery(
 		query,
 		list("discord_id" = discord_id)

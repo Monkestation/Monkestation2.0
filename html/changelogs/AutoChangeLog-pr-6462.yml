@@ -1,0 +1,6 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - rscadd: "Cigarette packs can now be crafted with cardboard (no coupons for you)"
+  - qol: "Better user feedback when putting things into smartfridges (includes drying racks)"
+  - qol: "Items that are dryable now have examine text for knowing if you can put it in a drying rack"

@@ -385,7 +385,7 @@
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [victim.real_name]"
 	soulstone_spirit.real_name = "Shade of [victim.real_name]"
-	soulstone_spirit.key = shade_controller.key
+	soulstone_spirit.PossessByPlayer(shade_controller.key)
 	soulstone_spirit.copy_languages(victim, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	if(user)
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)

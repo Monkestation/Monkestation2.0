@@ -10,16 +10,18 @@
 
 #define TECHWEB_POINT_TYPE_NANITES "Nanite Research"
 
-#define TECHWEB_POINT_TYPE_DEFAULT TECHWEB_POINT_TYPE_GENERIC
-
-//! Associative names for techweb point values, see: [all_nodes][code/modules/research/techweb/all_nodes.dm]
-#define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
-	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
-	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
-	)
+//!  Amount of points required to unlock nodes of corresponding tiers
+#define TECHWEB_TIER_1_POINTS 40
+#define TECHWEB_TIER_2_POINTS 80
+#define TECHWEB_TIER_3_POINTS 120
+#define TECHWEB_TIER_4_POINTS 160
+#define TECHWEB_TIER_5_POINTS 200
+#define TECHWEB_TIER_6_POINTS 240 // Monkestation Addition:
+#define TECHWEB_TIER_7_POINTS 320 // Monkestation Addition:
+#define TECHWEB_DISCOUNT_MINOR 10 // Monkestation Addition:
 
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
-#define TECHWEB_SINGLE_SERVER_INCOME 52.3
+#define TECHWEB_SINGLE_SERVER_INCOME 1
 
 //! Swab cell line types
 #define CELL_LINE_TABLE_SLUDGE "cell_line_sludge_table"

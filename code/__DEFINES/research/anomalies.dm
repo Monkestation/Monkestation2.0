@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(bioscrambler_limb_id_blacklist, list(
 ))
 
 /// Blacklist of organs which should not appear when bioscrambled.
-/// Either will look terrible outside of intended host, give you magical powers, are irreversible, or kill you
+/// Either will look terrible outside of intended host, give you magical powers, are irreversible, cause dumb errors, or kill you
 GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/external/pod_hair,
 	/obj/item/organ/external/spines,
@@ -69,6 +69,7 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/internal/tongue/gondola,
 	/obj/item/organ/internal/empowered_borer_egg,
 	/obj/item/organ/internal/butt/atomic,
+	/obj/item/organ/internal/borer_body,
 )) - subtypesof(/obj/item/organ/external/wings/functional) - typesof(/obj/item/organ/external/wings/moth))
 
 /// List of body parts we can apply to people
