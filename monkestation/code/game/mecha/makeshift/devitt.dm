@@ -24,7 +24,7 @@
 		MECHA_POWER = /obj/item/mecha_parts/mecha_equipment/generator,
 		MECHA_ARMOR = list(),
 	)
-	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP  (commented out untill I do this.)
+	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP
 	max_equip_by_category = list(
 		MECHA_UTILITY = 0,
 		MECHA_POWER = 1, // you can put an engine in it, wow!
@@ -32,14 +32,31 @@
 	)
 
 /datum/armor/devitt
-	melee = 10
+	melee = -20
 	bullet = 70
 	laser = 70
 	energy = 70
-	bomb = 10
+	bomb = -20
 	fire = 90
 	acid = 20
+// adds a better cell
 
+
+/obj/vehicle/sealed/mecha/devitt/add_cell(obj/item/stock_parts/cell/C=null)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+	cell = new /obj/item/stock_parts/cell/super(src)
+
+/obj/vehicle/sealed/mecha/marauder/add_cell()
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
+
+// and a better capacitor
+
+/obj/vehicle/sealed/mecha/devitt/add_capacitor()
+	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 
 // trying to add multi crew 2, deisel boogaloo
 // yes I am just ripping this from the savannah ivanov how did you know?
