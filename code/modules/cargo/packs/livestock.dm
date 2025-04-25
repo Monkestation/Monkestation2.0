@@ -33,7 +33,7 @@
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 4 //Cats are worth as much as corgis.
 	contains = list(
-		/mob/living/basic/pet/cat,
+		/mob/living/simple_animal/pet/cat,
 		/obj/item/clothing/neck/petcollar,
 		/obj/item/toy/cattoy,
 	)
@@ -51,7 +51,7 @@
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 4 //Cats are worth as much as corgis.
 	contains = list(
-		/mob/living/basic/pet/cat/tabby,
+		/mob/living/simple_animal/pet/cat/tabby,
 		/obj/item/clothing/neck/petcollar,
 		/obj/item/toy/cattoy,
 	)
@@ -61,18 +61,18 @@
 	. = ..()
 	if(!prob(50))
 		return
-	var/mob/living/basic/pet/cat/tabby/delete_cat = locate() in .
+	var/mob/living/simple_animal/pet/cat/tabby/delete_cat = locate() in .
 	if(isnull(delete_cat))
 		return
 	qdel(delete_cat)
-	new /mob/living/basic/pet/cat/tabbym(.)
+	new /mob/living/simple_animal/pet/cat/tabbym(.)
 
 /datum/supply_pack/critter/void
 	name = "Black Crate"
 	desc = "Apparently comes with the cutest darkness available"//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 4 //Cats are worth as much as corgis.
 	contains = list(
-		/mob/living/basic/pet/cat/void,
+		/mob/living/simple_animal/pet/cat/void,
 		/obj/item/clothing/neck/petcollar,
 		/obj/item/toy/cattoy,
 	)
@@ -82,18 +82,18 @@
 	. = ..()
 	if(!prob(50))
 		return
-	var/mob/living/basic/pet/cat/void/delete_cat = locate() in .
+	var/mob/living/simple_animal/pet/cat/void/delete_cat = locate() in .
 	if(isnull(delete_cat))
 		return
 	qdel(delete_cat)
-	new /mob/living/basic/pet/cat/voidm(.)
+	new /mob/living/simple_animal/pet/cat/voidm(.)
 
 /datum/supply_pack/critter/siamese
 	name = "Siamese Crate"
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 4 //Cats are worth as much as corgis.
 	contains = list(
-		/mob/living/basic/pet/cat/siamese,
+		/mob/living/simple_animal/pet/cat/siamese,
 		/obj/item/clothing/neck/petcollar,
 		/obj/item/toy/cattoy,
 	)
@@ -103,18 +103,18 @@
 	. = ..()
 	if(!prob(50))
 		return
-	var/mob/living/basic/pet/cat/siamese/delete_cat = locate() in .
+	var/mob/living/simple_animal/pet/cat/siamese/delete_cat = locate() in .
 	if(isnull(delete_cat))
 		return
 	qdel(delete_cat)
-	new /mob/living/basic/pet/cat/siamesem(.)
+	new /mob/living/simple_animal/pet/cat/siamesem(.)
 
 /datum/supply_pack/critter/white
 	name = "Snowball Crate"
 	desc = "They just keep calling it snowball, but is it really just a white cat."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 4 //Cats are worth as much as corgis.
 	contains = list(
-		/mob/living/basic/pet/cat/white,
+		/mob/living/simple_animal/pet/cat/white,
 		/obj/item/clothing/neck/petcollar,
 		/obj/item/toy/cattoy,
 	)
@@ -124,18 +124,18 @@
 	. = ..()
 	if(!prob(50))
 		return
-	var/mob/living/basic/pet/cat/white/delete_cat = locate() in .
+	var/mob/living/simple_animal/pet/cat/white/delete_cat = locate() in .
 	if(isnull(delete_cat))
 		return
 	qdel(delete_cat)
-	new /mob/living/basic/pet/cat/whitem(.)
+	new /mob/living/simple_animal/pet/cat/whitem(.)
 
 /datum/supply_pack/critter/rusblue
 	name = "Russian Blue Crate"
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 4 //Cats are worth as much as corgis.
 	contains = list(
-		/mob/living/basic/pet/cat/rusblue,
+		/mob/living/simple_animal/pet/cat/rusblue,
 		/obj/item/clothing/neck/petcollar,
 		/obj/item/toy/cattoy,
 	)
@@ -145,11 +145,11 @@
 	. = ..()
 	if(!prob(50))
 		return
-	var/mob/living/basic/pet/cat/rusblue/delete_cat = locate() in .
+	var/mob/living/simple_animal/pet/cat/rusblue/delete_cat = locate() in .
 	if(isnull(delete_cat))
 		return
 	qdel(delete_cat)
-	new /mob/living/basic/pet/cat/rusbluem(.)
+	new /mob/living/simple_animal/pet/cat/rusbluem(.)
 
 /datum/supply_pack/critter/chick
 	name = "Chicken Crate"

@@ -111,7 +111,7 @@
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
-	childtype = list(/mob/living/basic/pet/cat/kitten/tabby = 1)
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten/tabby = 1)
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/static/cats_deployed = 0

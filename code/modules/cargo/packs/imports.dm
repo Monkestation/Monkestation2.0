@@ -130,7 +130,7 @@
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
-		/mob/living/basic/pet/cat/syndicat_docile
+		/mob/living/simple_animal/pet/cat/syndicat_docile
 	)
 	crate_name = "battered crate"
 	crate_type = /obj/structure/closet/crate/syndicrate
