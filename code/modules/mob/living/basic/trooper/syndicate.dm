@@ -68,7 +68,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
-	armour_penetration = 35
+	armour_penetration = 75
 	projectile_deflect_chance = 50
 	light_outer_range = 2
 	light_power = 2.5

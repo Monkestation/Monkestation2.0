@@ -10,7 +10,7 @@
 	sharpness = SHARP_POINTY
 	wound_bonus = 10
 	bare_wound_bonus = 25
-	armour_penetration = 50 * (smithed_quality / 100)
+	armour_penetration = 75 * (smithed_quality / 100)
 	AddComponent(/datum/component/multi_hit, icon_state = "stab", height = 2)
 
 	attack_speed = CLICK_CD_LIGHT_WEAPON

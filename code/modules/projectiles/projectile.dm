@@ -209,6 +209,10 @@
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
+	///Stamina and damage dropoff over distance, for shotguns and the like
+	var/tile_dropoff = 0
+	var/tile_dropoff_s = 0
+
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -238,6 +242,12 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	if(damage > 0)
+		damage -= tile_dropoff
+	if(stamina > 0)
+		stamina -= tile_dropoff_s
+	if(damage < 0 && stamina < 0)
+		qdel(src)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()

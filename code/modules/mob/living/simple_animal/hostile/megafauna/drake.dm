@@ -46,7 +46,7 @@
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armour_penetration = 60
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5

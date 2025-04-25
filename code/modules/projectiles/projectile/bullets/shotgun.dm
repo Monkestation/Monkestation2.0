@@ -4,6 +4,8 @@
 	damage = 50
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
+	tile_dropoff = 0.5
+	tile_dropoff_s = 0.25
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
@@ -18,16 +20,16 @@
 /obj/projectile/bullet/shotgun_slug/apds
 	name = "tungsten sabot-slug"
 	icon_state = "gauss"
-	damage = 32 //18 less than slugs. Only better when bullet armor is 50+, primarily counters bulletproof armor.
+	damage = 30 //20 less than slugs. Only better when bullet armor is 50+, primarily counters bulletproof armor.
 	speed = 0.25 //sub-caliber + lighter = speed. (Smaller number = faster)
-	armour_penetration = 50 //Tis a solid-tungsten penetrator, what do you expect?
+	armour_penetration = 75 //Tis a solid-tungsten penetrator, what do you expect?
 	wound_bonus = -25
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
 	ricochet_chance = 50
 	ricochet_auto_aim_range = 0
 	ricochet_incidence_leeway = 50
 	embedding = null
-	demolition_mod = 3 //High-velocity tungsten > steel doors
+	demolition_mod = 2 //High-velocity tungsten > steel doors
 	projectile_piercing = PASSMOB
 
 
@@ -90,17 +92,8 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	var/tile_dropoff = 0.45
-	var/tile_dropoff_s = 0.25
-
-/obj/projectile/bullet/pellet/Range()
-	..()
-	if(damage > 0)
-		damage -= tile_dropoff
-	if(stamina > 0)
-		stamina -= tile_dropoff_s
-	if(damage < 0 && stamina < 0)
-		qdel(src)
+	tile_dropoff = 0.45
+	tile_dropoff_s = 0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"

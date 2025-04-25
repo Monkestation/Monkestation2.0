@@ -75,7 +75,7 @@
 	if(damage_flag)
 		armor_protection = get_armor_rating(damage_flag)
 	if(armor_protection) //Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = clamp(armor_protection - armour_penetration, min(armor_protection, 0), 100)
+		armor_protection = clamp(round((armor_protection * ((100 - armour_penetration) * 0.01)), 1) - armour_ignorance, min(armor_protection, 0), 100) //Armor penetration is now a percent reduction - I.E. 20 AP = armor is 20% *less* effective
 	return round(damage_amount * (100 - armor_protection) * 0.01, DAMAGE_PRECISION)
 
 ///the sound played when the atom is damaged.

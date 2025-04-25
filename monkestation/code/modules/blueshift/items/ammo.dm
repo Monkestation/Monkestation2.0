@@ -389,7 +389,7 @@
 	name = ".35 Sol Short armor piercing bullet"
 	damage = 13
 	bare_wound_bonus = -30
-	armour_penetration = 20
+	armour_penetration = 30
 
 /obj/item/ammo_box/c35sol/pierce
 	name = "ammo box (.35 Sol Short armor piercing)"
@@ -511,7 +511,7 @@
 	speed = 0.5
 
 	damage = 15
-	armour_penetration = 20
+	armour_penetration = 40
 
 	wound_bonus = -30
 	bare_wound_bonus = -10
@@ -633,7 +633,7 @@
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
 	damage = 45
-	armour_penetration = 50
+	armour_penetration = 60
 	wound_falloff_tile = -2
 	wound_bonus = -45
 	speed = 0.3
@@ -751,7 +751,7 @@
 /obj/projectile/bullet/c27_54cesarzowa
 	name = ".27-54 Cesarzowa piercing bullet"
 	damage = 15
-	armour_penetration = 15
+	armour_penetration = 30
 	wound_bonus = -10
 
 /obj/item/ammo_box/c27_54cesarzowa
@@ -875,7 +875,7 @@
 	icon_state = "gaussphase"
 	speed = 0.4
 	damage = 50
-	armour_penetration = 50
+	armour_penetration = 80
 	wound_bonus = 10
 	bare_wound_bonus = 10
 	demolition_mod = 1.8

@@ -106,7 +106,7 @@
 
 /obj/projectile/bullet/a223/ap
 	name = ".277 armor-piercing bullet"
-	armour_penetration = 60
+	armour_penetration = 75
 
 /*
 *	.34 ACP

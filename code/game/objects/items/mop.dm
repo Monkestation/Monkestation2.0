@@ -139,7 +139,8 @@
 	throw_speed = 4
 	demolition_mod = 0.75
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
-	armour_penetration = 10
+	armour_penetration = 20
+	armour_ignorance = 10
 	attack_verb_continuous = list("mops", "stabs", "shanks", "jousts")
 	attack_verb_simple = list("mop", "stab", "shank", "joust")
 	sharpness = SHARP_EDGED //spears aren't pointy either.  Just assume it's carved into a naginata-style blade

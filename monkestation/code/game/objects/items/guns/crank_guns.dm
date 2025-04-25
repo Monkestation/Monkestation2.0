@@ -34,7 +34,7 @@
 	damage = 30
 	stamina = 65
 	weak_against_armour = FALSE
-	armour_penetration = 25 //less powerful than armor piercing rounds
+	armour_penetration = 45 //less powerful than armor piercing rounds
 	wound_bonus = 10
 	debilitating = TRUE
 	debilitate_mult = 2

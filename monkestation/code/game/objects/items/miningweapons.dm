@@ -17,7 +17,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
-	armour_penetration = 10
+	armour_penetration = 0
+	armour_ignorance = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
@@ -61,7 +62,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 5
 	throw_speed = 4
-	armour_penetration = 15
+	armour_penetration = 20
+	armour_ignorance = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("pierces", "stabs", "impales", "pokes", "jabs")

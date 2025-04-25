@@ -13,7 +13,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 15
 	bare_wound_bonus = 25
-	armour_penetration = 25 * (smithed_quality / 100)
+	armour_penetration = 40 * (smithed_quality / 100)
 
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
 

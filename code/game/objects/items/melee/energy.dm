@@ -186,7 +186,8 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	armour_penetration = 35
+	armour_penetration = 75
+	armor_ignorance = 10
 	block_chance = 50
 	block_sound = 'sound/weapons/block_blade.ogg'
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
