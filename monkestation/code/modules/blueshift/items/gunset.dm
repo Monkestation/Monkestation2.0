@@ -283,7 +283,7 @@
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
-		/obj/item/ammo_casing/c585trappiste/incapacitator = 2,
+		/obj/item/ammo_box/c585trappiste/incapacitator = 2,
 		/obj/item/ammo_box/c585trappiste = 1,
 		/obj/item/ammo_box/magazine/c585trappiste_pistol/spawns_empty = 3,
 	), src)
