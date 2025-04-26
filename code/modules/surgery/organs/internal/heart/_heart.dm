@@ -264,12 +264,10 @@
 
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
-
-	// If the owner doesn't need a heart, we don't need to do anything with it.
-	if(!owner.needs_heart())
-		return
-
 	if(. & EMP_PROTECT_SELF)
+		return
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner?.needs_heart())
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.set_dizzy_if_lower(20 SECONDS)

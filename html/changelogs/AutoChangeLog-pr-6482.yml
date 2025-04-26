@@ -1,0 +1,4 @@
+author: "RealityOverseer"
+delete-after: True
+changes:
+  - bugfix: "Capitalized \"Tickets\" button in admin tab"

@@ -95,14 +95,16 @@
 	description = "Electronic implants that improve humans."
 	prereq_ids = list("adv_biotech", "datatheory")
 	design_ids = list(
+		"cybernetic_ears_whisper",
+		"cybernetic_ears_xray",
 		"ci-breather",
 		"ci-diaghud",
 		"ci-gloweyes",
 		"ci-medhud",
-		"ci-meson", // monkestation addition
+		"ci-meson",
 		"ci-nutriment",
-		"ci-pathohud", // monkestation addition
-		"ci-scihud", // monkestastion addition
+		"ci-pathohud",
+		"ci-scihud",
 		"ci-sechud",
 		"ci-welding",
 	)
@@ -157,7 +159,7 @@
 	description = "We have the technology to rebuild him."
 	prereq_ids = list("biotech")
 	design_ids = list(
-		"cybernetic_ears",
+		"cybernetic_ears_u",
 		"cybernetic_eyes_improved",
 		"cybernetic_heart_tier2",
 		"cybernetic_liver_tier2",

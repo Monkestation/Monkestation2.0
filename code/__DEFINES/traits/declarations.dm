@@ -323,9 +323,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 /// Makes whispers clearly heard from seven tiles away, the full hearing range
-/* #define TRAIT_GOOD_HEARING "good_hearing" */
+#define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
-/* #define TRAIT_XRAY_HEARING "xray_hearing" */
+#define TRAIT_XRAY_HEARING "xray_hearing"
 
 /// This mob can not enter or move on a shuttle
 /* #define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement" */

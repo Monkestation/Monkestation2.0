@@ -61,11 +61,12 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	new_mob?.persistent_client = src
 
 /// Writes all of the `played_names` into an HTML-escaped string.
-/datum/persistent_client/proc/get_played_names()
+/datum/persistent_client/proc/get_played_names(sanitize = TRUE, seperator = "; ")
 	var/list/previous_names = list()
 	for(var/previous_name in played_names)
-		previous_names += html_encode("[previous_name] ([played_names[previous_name]])")
-	return previous_names.Join("; ")
+		var/combined_name = "[previous_name] ([played_names[previous_name]])"
+		previous_names += sanitize ? html_encode(combined_name) : combined_name
+	return previous_names.Join(seperator)
 
 /// Returns the full version string (i.e 515.1642) of the BYOND version and build.
 /datum/persistent_client/proc/full_byond_version()

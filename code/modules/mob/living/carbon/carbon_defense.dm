@@ -317,7 +317,7 @@
 		log_combat(src, target, "kicks", "onto their side (paralyzing)")
 
 	var/directional_blocked = FALSE
-	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
+	var/can_hit_something = iscarbon(target) && (!target.is_shove_knockdown_blocked() && !target.buckled)
 
 	//Directional checks to make sure that we're not shoving through a windoor or something like that
 	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
@@ -336,10 +336,7 @@
 		//Don't hit people through windows, ok?
 		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
 			return
-		//MONKESTATION EDIT START
-		// if(directional_blocked || shove_blocked) - MONKESTATION EDIT ORIGINAL
 		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
-		//MONKESTATION EDIT END
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)

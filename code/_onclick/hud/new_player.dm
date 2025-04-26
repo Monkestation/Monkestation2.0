@@ -208,13 +208,20 @@
 	if(!.)
 		return
 
-	if(!SSticker?.IsRoundInProgress())
-		to_chat(hud.mymob, span_boldwarning("The round is either not ready, or has already finished..."))
+	var/mob/dead/new_player/new_player = hud.mymob
+	if(isnull(new_player?.client))
+		return
+	if(!new_player.client?.fully_created)
+		to_chat(new_player, span_warning("Your client is still initializing, please wait a second..."))
 		return
 
-	if(hud.mymob.client?.check_overwatch())
-		to_chat(hud.mymob, span_warning("Kindly wait until your connection has been authenticated before joining"))
-		message_admins("[hud.mymob.key] tried to use the Join button but failed the overwatch check.")
+	if(!SSticker?.IsRoundInProgress())
+		to_chat(new_player, span_boldwarning("The round is either not ready, or has already finished..."))
+		return
+
+	if(new_player.client?.check_overwatch())
+		to_chat(new_player, span_warning("Please wait until your connection has been authenticated before joining."))
+		message_admins("[new_player.key] tried to use the Join button but failed the overwatch check.")
 		return
 
 	//Determines Relevent Population Cap
@@ -225,8 +232,6 @@
 		relevant_cap = min(hard_popcap, extreme_popcap)
 	else
 		relevant_cap = max(hard_popcap, extreme_popcap)
-
-	var/mob/dead/new_player/new_player = hud.mymob
 
 	//Allow admins and Patreon supporters to bypass the cap/queue
 	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || new_player.client?.is_mentor()))
@@ -327,7 +332,7 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client << link("https://discord.gg/monkestation")
+	hud.mymob.client << link("https://discord.monkestation.com")
 
 /atom/movable/screen/lobby/button/twitch
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -478,11 +483,11 @@
 	var/port = world.port
 	switch(port)
 		if(HRP_PORT) //HRP
-			screen_loc = "TOP:-32,CENTER:+215"
+			screen_loc = "TOP:-39,CENTER:+215"
 		if(MRP_PORT) //MRP
-			screen_loc = "TOP:-65,CENTER:+215"
+			screen_loc = "TOP:-72,CENTER:+215"
 		if(MRP2_PORT) //MRP2
-			screen_loc = "TOP:-98,CENTER:+215"
+			screen_loc = "TOP:-105,CENTER:+215"
 		else     //Sticks it in the middle, "TOP:0,CENTER:+128" will point at the MonkeStation logo itself.
 			screen_loc = "TOP:0,CENTER:+128"
 
@@ -524,27 +529,32 @@
 		)
 		hud.mymob.client << link(server_link)
 
-//HRP MONKE
+//HRP MONKE - Monkeris
 /atom/movable/screen/lobby/button/server/hrp
-	base_icon_state = "hrp"
-	screen_loc = "TOP:-44,CENTER:+173"
-	server_name = "Well-Done Roleplay (HRP)"
+	icon = 'icons/hud/lobby/sister_server_buttons_large.dmi'
+	base_icon_state = "erisbutton_serverwip"
+	screen_loc = "TOP:-46,CENTER:+173"
+	server_name = "CEV-ERIS (HRP)"
 	server_port = HRP_PORT
 
 /atom/movable/screen/lobby/button/server/hrp/should_be_up(day, hour)
-	return day == SATURDAY && ISINRANGE(hour, 12, 18)
+	return FALSE
+
+/atom/movable/screen/lobby/button/server/hrp/update_icon_state(updates)
+	. = ..()
+	icon_state = base_icon_state
 
 //MAIN MONKE (MEDIUM RARE)
 /atom/movable/screen/lobby/button/server/mrp
 	base_icon_state = "mrp"
-	screen_loc = "TOP:-77,CENTER:+173"
+	screen_loc = "TOP:-84,CENTER:+173"
 	enabled = TRUE
 	server_name = "Medium-Rare Roleplay (MRP)"
 	server_port = MRP_PORT
 
 //MRP 2 MONKE (MEDIUM WELL)
 /atom/movable/screen/lobby/button/server/mrp2
-	screen_loc = "TOP:-110,CENTER:+173"
+	screen_loc = "TOP:-117,CENTER:+173"
 	base_icon_state = "mrp2"
 	server_name = "Medium-Well (MRP)"
 	server_port = MRP2_PORT
@@ -554,9 +564,10 @@
 /atom/movable/screen/lobby/button/server/vanderlin
 	icon = 'icons/hud/lobby/vanderlin_button.dmi'
 	base_icon_state = "vanderlin"
-	screen_loc = "TOP:-140,CENTER:+183"
+	screen_loc = "TOP:-147,CENTER:+179"
 	server_name = "Vanderlin"
 	server_port = VANDERLIN_PORT
+	layer = LOBBY_BACKGROUND_LAYER
 
 /atom/movable/screen/lobby/button/server/vanderlin/should_be_up(day, hour)
 	return TRUE

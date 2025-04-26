@@ -1,0 +1,6 @@
+author: "Gw0sty"
+delete-after: True
+changes:
+  - bugfix: "Helio xenobio is now accessible correctly again"
+  - bugfix: "Theseus no longer has excess airlocks in robotics"
+  - bugfix: "Heliostation xenobio will no longer have atmosphere problems"

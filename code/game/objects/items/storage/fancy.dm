@@ -288,6 +288,15 @@
 		. += "[use_icon_state]_[cig_position]"
 		cig_position++
 
+/obj/item/storage/fancy/cigarettes/crafted
+	name = "cigarette packet"
+	desc = "A handmade box of cigarettes. It lacks branding."
+	base_icon_state = "base"
+	icon_state = "base"
+	spawn_type = null
+	spawn_count = 6
+	spawn_coupon = FALSE
+
 /obj/item/storage/fancy/cigarettes/dromedaryco
 	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
