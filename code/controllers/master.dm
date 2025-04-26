@@ -136,7 +136,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 // -1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
-	GLOB.dying_mc_tick_usage = TICK_USAGE
 	if (world.time < Master.restart_timeout)
 		return 0
 	if (world.time < Master.restart_clear)
@@ -431,7 +430,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			if(ss_runlevels & GLOB.bitflags[I])
 				while(runlevel_sorted_subsystems.len < I)
 					runlevel_sorted_subsystems += list(list())
-				runlevel_sorted_subsystems[I] |= SS
+				runlevel_sorted_subsystems[I] += SS
 				added_to_any = TRUE
 		if(!added_to_any)
 			WARNING("[SS.name] subsystem is not SS_NO_FIRE but also does not have any runlevels set!")
@@ -587,7 +586,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		sleep(world.tick_lag * (processing * sleep_delta))
 
 
-GLOBAL_VAR(force_mc_soft_reset)
+
 
 // This is what decides if something should run.
 /datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
@@ -598,12 +597,6 @@ GLOBAL_VAR(force_mc_soft_reset)
 	var/SS_flags
 
 	for (var/thing in subsystemstocheck)
-		if (!isnull(GLOB.force_mc_soft_reset))
-			. = FALSE
-			GLOB.force_mc_soft_reset = null
-			var/msg = "MC soft reset forced while [thing] was enqueued (tick_usage = [TICK_USAGE])"
-			//SSplexora.mc_alert(msg)
-			CRASH(msg)
 		if (!thing)
 			subsystemstocheck -= thing
 		SS = thing
@@ -623,8 +616,7 @@ GLOBAL_VAR(force_mc_soft_reset)
 			SS.postponed_fires--
 			SS.update_nextfire()
 			continue
-		if(!SS.enqueue())
-			return FALSE
+		SS.enqueue()
 	. = 1
 
 
@@ -794,8 +786,6 @@ GLOBAL_VAR(force_mc_soft_reset)
 	queue_priority_count_bg = 0
 	log_world("MC: SoftReset: Finished.")
 	. = 1
-	for(var/datum/controller/subsystem/ss in subsystems) //this is incase a runlevel error occurs, we don't want random shit being left queued up since if a queue ends up half parsed.
-		ss.state = SS_IDLE
 
 /// Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.
 /datum/controller/master/proc/laggy_byond_map_update_incoming()
@@ -837,15 +827,3 @@ GLOBAL_VAR(force_mc_soft_reset)
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
 		SS.OnConfigLoad()
-
-/// This is set to TICK_USAGE during Recreate_MC, used so that the current tick usage can be logged when the MC explodes.
-GLOBAL_VAR(dying_mc_tick_usage)
-
-/proc/send_mc_panic_alert_if_needed()
-	if(isnull(GLOB.dying_mc_tick_usage))
-		return
-	var/dying_mc_tick_usage = GLOB.dying_mc_tick_usage
-	GLOB.dying_mc_tick_usage = null
-	//SSplexora?.mc_alert("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")
-	message_admins(span_adminnotice("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting."))
-	log_runtime("NOTICE: MC had a tick_usage of [dying_mc_tick_usage] before restarting.")

@@ -123,7 +123,6 @@ SUBSYSTEM_DEF(plexora)
 
 /datum/controller/subsystem/plexora/fire()
 	if(!is_plexora_alive()) return
-	send_mc_panic_alert_if_needed()
 	// Send current status to Plexora
 	var/datum/world_topic/status/status_handler = new()
 	var/list/status = status_handler.Run()
@@ -411,7 +410,6 @@ SUBSYSTEM_DEF(plexora)
 	if (!controller)
 		return
 
-	var/action_msg = "restarted the [controller] controller"
 	switch(LOWER_TEXT(controller))
 		if("master")
 			Recreate_MC()
@@ -419,12 +417,7 @@ SUBSYSTEM_DEF(plexora)
 		if("failsafe")
 			new /datum/controller/failsafe()
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "PLX: Restart Failsafe Controller")
-		if("softreset")
-			GLOB.force_mc_soft_reset = TRUE
-			action_msg = "forced the Master Controller to soft reset"
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "PLX: Force Master Controller Soft Reset")
-	log_admin("PLEXORA: @[username] ([userid]) has [action_msg] from the Discord.")
-	message_admins("PLEXORA: @[username] ([userid]) has [action_msg] from the Discord.")
+	message_admins("PLEXORA: @[username] ([userid]) has restarted the [controller] controller from the Discord.")
 
 
 /datum/world_topic/plx_globalnarrate

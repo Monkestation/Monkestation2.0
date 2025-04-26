@@ -46,7 +46,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 
 // Debug verbs.
-/client/proc/restart_controller(controller in list("Master", "Failsafe", "Force Soft Reset"))
+/client/proc/restart_controller(controller in list("Master", "Failsafe"))
 	set category = "Debug"
 	set name = "Restart Controller"
 	set desc = "Restart one of the various periodic loop controllers for the game (be careful!)"
@@ -60,10 +60,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		if("Failsafe")
 			new /datum/controller/failsafe()
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
-		if("Force Soft Reset")
-			GLOB.force_mc_soft_reset = TRUE
-			message_admins("Admin [key_name_admin(usr)] has forced a MC soft reset (hopefully)")
-			return
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 

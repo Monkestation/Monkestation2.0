@@ -110,6 +110,10 @@
 	var/avg_iter_count = 0
 	var/avg_drift = 0
 */
+
+	STATIC_COOLDOWN_DECLARE(plexora_alert_cooldown)
+	var/static/list/queued_plexora_alerts
+
 #ifdef ENABLE_ENQUEUE_LOGGING
 	var/list/enqueue_log = list()
 #endif
@@ -205,45 +209,42 @@
 	enqueue_log.Cut()
 #endif
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
-		if (!isnull(GLOB.force_mc_soft_reset))
-			. = FALSE
-			GLOB.force_mc_soft_reset = null
-			var/msg = "MC soft reset forced while [queue_node] was enqueued (tick_usage = [TICK_USAGE])"
-#ifdef ENABLE_ENQUEUE_LOGGING
-			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
-			enqueue_log.Cut()
-#endif
-			//SSplexora.mc_alert(msg)
-			CRASH(msg)
 		iter_count++
 		if(iter_count >= ENQUEUE_SANITY)
-			var/msg = "[queue_node] subsystem enqueue exceeded [ENQUEUE_SANITY] iterations"
-			//SSplexora.mc_alert(msg)
-			message_admins(msg)
-			stack_trace(msg)
 #ifdef ENABLE_ENQUEUE_LOGGING
 			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
+#endif
+			var/base_msg = "[src] (node = [queue_node], prev = [queue_node.queue_prev], next = [queue_node.queue_next])"
+			if(COOLDOWN_FINISHED(src, plexora_alert_cooldown))
+				var/list/lines = list()
+				if(LAZYLEN(queued_plexora_alerts))
+					lines += "[LAZYLEN(queued_plexora_alerts)] enqueue loops have occured within the past minute."
+					lines += "## Details"
+					lines += " - [base_msg]"
+					for(var/queued_msg in queued_plexora_alerts)
+						lines += " - [base_msg]"
+					LAZYNULL(queued_plexora_alerts)
+				else
+					lines += "MC restart triggered due to enqueue loop."
+					lines += "## Details"
+					lines += base_msg
+				SSplexora.mc_alert(jointext(lines, "\n"))
+				COOLDOWN_START(src, plexora_alert_cooldown, 1 MINUTES)
+			else
+				LAZYADD(queued_plexora_alerts, "[src] (node = [queue_node], prev = [queue_node.queue_prev], next = [queue_node.queue_next])")
+			stack_trace("MC restart triggered due to enqueue loop. Details: [base_msg]")
+#ifdef ENABLE_ENQUEUE_LOGGING
 			enqueue_log.Cut()
 #endif
-			return FALSE
+			Recreate_MC()
+			return
+
 
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
-		if (queue_node.queue_next == queue_node /* || queue_node.queue_prev == queue_node */)
-			var/msg = "[queue_node] subsystem had self-reference in queue, should be fixed now"
-			//SSplexora.mc_alert(msg)
-			message_admins(msg)
-			stack_trace(msg)
-#ifdef ENABLE_ENQUEUE_LOGGING
-			log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy()))
-			enqueue_log.Cut()
-#endif
-			return FALSE
-
 #ifdef ENABLE_ENQUEUE_LOGGING
 		enqueue_log["[iter_count]"] = list(
-			"src" = "[src]",
 			"node" = "[queue_node]",
 			"next" = "[queue_node.queue_next || "(none)"]",
 			"priority" = queue_node_priority,
@@ -303,7 +304,6 @@
 		queue_node.queue_prev.queue_next = src
 		queue_prev = queue_node.queue_prev
 		queue_node.queue_prev = src
-	return TRUE
 
 
 /datum/controller/subsystem/proc/dequeue()
