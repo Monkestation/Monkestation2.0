@@ -4,8 +4,8 @@
 	damage = 50
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
-	tile_dropoff = 0.05
-	tile_dropoff_s = 0.05
+	tile_dropoff = 0.025
+	tile_dropoff_s = 0.025
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
