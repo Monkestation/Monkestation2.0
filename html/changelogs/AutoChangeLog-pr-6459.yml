@@ -1,0 +1,4 @@
+author: "Loiosh42"
+delete-after: True
+changes:
+  - bugfix: "Blueshield Bogseo case now spawns with 2 ammoboxes instead of 2 loose rounds"

@@ -3771,11 +3771,11 @@
 	name = "Nanite Lab"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
 /turf/open/floor/iron/white,
 /area/station/science/circuits)
 "beu" = (
@@ -9760,6 +9760,7 @@
 	icon_state = "pink2_1"
 	},
 /obj/machinery/newscaster/directional/east,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/carpet,
 /area/station/science/breakroom)
 "cTf" = (
@@ -10824,8 +10825,9 @@
 /obj/machinery/button/door{
 	id = "xenosecure";
 	name = "Containment Control";
-	pixel_y = 4;
-	req_access = list("xenobiology")
+	pixel_y = 1;
+	req_access = list("xenobiology");
+	pixel_x = -5
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced,
@@ -10836,8 +10838,8 @@
 /obj/structure/cable,
 /obj/machinery/button/ignition{
 	id = "Xenobio";
-	pixel_x = 7;
-	pixel_y = -3
+	pixel_x = 6;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
@@ -22650,7 +22652,6 @@
 /area/station/medical/cryo)
 "gJX" = (
 /obj/structure/chair/sofa/corner/brown,
-/obj/effect/landmark/start/scientist,
 /obj/machinery/light/neon_lining{
 	dir = 4;
 	icon_state = "pink2_1"
@@ -22660,6 +22661,7 @@
 	icon_state = "pink2_1"
 	},
 /obj/structure/sign/poster/official/no_erp/directional/east,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/carpet,
 /area/station/science/breakroom)
 "gKe" = (
@@ -34945,6 +34947,11 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/cyborg,
+/obj/machinery/door/airlock/research{
+	autoclose = 0;
+	frequency = 1449;
+	name = "Xenobio and Nanite Zone"
+	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "knL" = (
@@ -35629,6 +35636,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron/white,
 /area/station/science/breakroom)
 "kzK" = (
@@ -39090,7 +39098,7 @@
 "ltY" = (
 /obj/structure/cable,
 /obj/structure/chair/office/light,
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology/hallway)
 "ltZ" = (
@@ -41578,6 +41586,7 @@
 	dir = 8;
 	icon_state = "pink2_1"
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/carpet,
 /area/station/science/breakroom)
 "mfB" = (
@@ -43932,6 +43941,7 @@
 /obj/effect/turf_decal/trimline/orange/corner{
 	dir = 1
 	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "mRh" = (
@@ -51037,7 +51047,7 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	invisibility = 101
@@ -58305,8 +58315,6 @@
 	mapping_id = "2"
 	},
 /obj/effect/landmark/start/hangover,
-/obj/effect/landmark/start/hangover,
-/obj/effect/landmark/start/hangover,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "rcu" = (
@@ -58918,6 +58926,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
+"rlj" = (
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "rlk" = (
 /obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 4
@@ -65434,6 +65446,11 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/recharge_station,
+/obj/machinery/door/airlock/research{
+	autoclose = 0;
+	frequency = 1449;
+	name = "Xenobio and Nanite Zone"
+	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "tfF" = (
@@ -105590,7 +105607,7 @@ pFC
 lav
 yiH
 vUc
-iZm
+rlj
 gbL
 iZm
 mhO
