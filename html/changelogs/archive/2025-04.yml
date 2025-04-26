@@ -487,3 +487,29 @@
   - sound: Slasher now has new SFX for jaunting.
   - image: Slasher now has all new icons for his outfit and jaunt.
   - code_imp: Cleaned up some of Slasher's code.
+2025-04-26:
+  Gw0sty:
+  - rscadd: Xenobiology and Cytology are now an independent subdepartment
+  - rscadd: Science will now hang out at break rooms.
+  - rscadd: Various slight improvements to various xenobiology on maps
+  - rscadd: Scientists start with a experiment scanner in their backpack.
+  - bugfix: Kidnapping and heirlooms will target recent jobs more.
+  - bugfix: Scientist jumpsuits now actually provide bomb protection as described.
+  - qol: New jobs can now use more departmental clothing from the monkestation store
+  Loiosh42:
+  - bugfix: Blueshield Bogseo case now spawns with 2 ammoboxes instead of 2 loose
+      rounds
+  PineappleMan929:
+  - rscadd: Adds lava chicken! If you throw fried chicken into lava, it becomes lava
+      chicken. (warning, it is really fucking spicy)
+  RandomDudeFromTheRim:
+  - bugfix: fixed wings working when they shouldn't
+  flleeppyy:
+  - rscadd: Eris WIP button
+  - bugfix: Vanderlin button irritating the people who pay close attention to it and
+      it being offcenter
+  - rscadd: Cigarette packs can now be crafted with cardboard (no coupons for you)
+  - qol: Better user feedback when putting things into smartfridges (includes drying
+      racks)
+  - qol: Items that are dryable now have examine text for knowing if you can put it
+      in a drying rack
