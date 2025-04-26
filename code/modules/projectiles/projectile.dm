@@ -161,6 +161,8 @@
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
+	///Flat armor ignorance, applied AFTER penetration has reduced the amount of armor by %
+	var/armour_ignorance = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
 	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
