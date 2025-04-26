@@ -21721,7 +21721,7 @@
 	color = "#55342b";
 	dir = 4
 	},
-/mob/living/basic/chicken/cotton_candy,
+/mob/living/basic/chicken/dreamsicle,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
 "fxn" = (
@@ -21802,7 +21802,7 @@
 /obj/structure/table/reinforced{
 	color = "#606060"
 	},
-/mob/living/basic/chicken/cotton_candy,
+/mob/living/basic/chicken/dreamsicle,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
 "fFh" = (

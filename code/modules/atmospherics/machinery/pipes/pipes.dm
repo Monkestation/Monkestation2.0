@@ -17,7 +17,8 @@
 
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
-	volume = 35 * device_type
+	if (!volume) // Pipes can have specific volumes or have it determined by their device_type.
+		volume = UNARY_PIPE_VOLUME * device_type
 	. = ..()
 
 ///I have no idea why there's a new and at this point I'm too afraid to ask
@@ -26,6 +27,14 @@
 
 	if(hide)
 		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+
+/obj/machinery/atmospherics/pipe/proc/set_volume(new_volume)
+	if(volume == new_volume)
+		return
+	var/datum/gas_mixture/gasmix = parent?.air
+	if(gasmix)
+		gasmix.volume = gasmix.volume + new_volume - volume
+	volume = new_volume
 
 /obj/machinery/atmospherics/pipe/nullify_node(i)
 	var/obj/machinery/atmospherics/old_node = nodes[i]
