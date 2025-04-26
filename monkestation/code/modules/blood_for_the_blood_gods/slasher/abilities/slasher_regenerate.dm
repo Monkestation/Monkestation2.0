@@ -37,7 +37,6 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	var/turf/below_turf = get_turf(human_owner) // the turf below the person throwing
 	human_owner.AdjustAllImmobility(-20 * seconds_per_tick)
 	human_owner.stamina.adjust(20, TRUE)
 	human_owner.adjustBruteLoss(-35)
