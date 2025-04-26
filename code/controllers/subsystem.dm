@@ -222,7 +222,7 @@
 					lines += "## Details"
 					lines += " - [base_msg]"
 					for(var/queued_msg in queued_plexora_alerts)
-						lines += " - [base_msg]"
+						lines += " - [queued_msg]"
 					LAZYNULL(queued_plexora_alerts)
 				else
 					lines += "MC restart triggered due to enqueue loop."
