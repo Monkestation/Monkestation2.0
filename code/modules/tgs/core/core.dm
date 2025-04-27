@@ -133,8 +133,8 @@
 	return list()
 
 /world/TgsEndProcess()
-	SSplexora.restart_type = PLEXORA_SHUTDOWN_KILLDD // monkestation edit: Plexora
-	SSplexora._Shutdown() // monkestation edit: Plexora
+	SSplexora.restart_type = PLEXORA_SHUTDOWN_KILLDD
+	SSplexora._Shutdown()
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
 		api.EndProcess()

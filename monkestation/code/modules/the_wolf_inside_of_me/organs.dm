@@ -5,12 +5,7 @@
 	icon_state = "kitty"
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
-
-/*
-/obj/item/organ/internal/ears/werewolf/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
 	organ_traits = list(TRAIT_GOOD_HEARING)
-*/
 
 /obj/item/organ/internal/eyes/werewolf
 	name = "wolf eyes"

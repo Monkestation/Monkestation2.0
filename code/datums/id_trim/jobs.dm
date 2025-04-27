@@ -920,11 +920,11 @@
 		ACCESS_ORDNANCE_STORAGE,
 		ACCESS_RESEARCH,
 		ACCESS_SCIENCE,
-		ACCESS_XENOBIOLOGY,
 		)
 	extra_access = list(
 		ACCESS_GENETICS,
 		ACCESS_ROBOTICS,
+		ACCESS_XENOBIOLOGY, //monkestation edit: Xenobio job
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,

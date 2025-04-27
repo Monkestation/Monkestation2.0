@@ -139,6 +139,7 @@
 		"rabbits_remaining" = length(rabbits),
 		"all_completed" = completed,
 		"apocalypse" = apocalypse,
+		"objectives" = get_objectives(full_checks = TRUE),
 	)
 
 /datum/antagonist/monsterhunter/ui_static_data(mob/user)
@@ -151,10 +152,7 @@
 			"icon" = trick_weapon::icon,
 			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
 		))
-	return list(
-		"objectives" = get_objectives(),
-		"weapons" = weapons,
-	)
+	return list("weapons" = weapons)
 
 /datum/antagonist/monsterhunter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
