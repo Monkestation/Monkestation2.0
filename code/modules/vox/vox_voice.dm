@@ -1,7 +1,7 @@
 #ifdef AI_VOX
 /// A list of all files of the sounds of all VOX voices.
 /// This list is populated by [/datum/vox_voice/New()]
-GLOBAL_LIST(all_vox_sounds)
+GLOBAL_LIST_EMPTY(all_vox_sounds)
 /// An associative list of voice names to /datum/vox_voice instances.
 GLOBAL_LIST_INIT(vox_voices, initialize_vox_voices())
 
@@ -19,8 +19,6 @@ GLOBAL_LIST_INIT(vox_voices, initialize_vox_voices())
 
 /datum/vox_voice/New()
 	var/list/all_vox_sounds = GLOB.all_vox_sounds
-	if(isnull(all_vox_sounds))
-		all_vox_sounds = GLOB.all_vox_sounds = list()
 	for(var/name in sounds)
 		var/file = sounds[name]
 		all_vox_sounds += file
