@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(vox_voices, initialize_vox_voices())
 /// Sends the sound for the given word.
 /// If `origin_turf` is set, only mobs on the same/linked z-level as the origin turf will hear it.
 /// If `only_listener`, only that mob will hear it. This will NOT do the usual checks for preferences, z-levels, and deafness.
-/// If `check_hearing` is TRUE (default), then deafened players will be skipped over.
+/// If `check_hearing` is TRUE (default), then deafened players will be skipped over. This argument is ignored if `only_listener` is set.
 /// Returns FALSE if the word doesn't exist, TRUE otherwise.
 /datum/vox_voice/proc/play_word(word, turf/origin_turf, mob/only_listener, check_hearing = TRUE)
 	word = lowertext(word)
