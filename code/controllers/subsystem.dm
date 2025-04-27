@@ -218,7 +218,7 @@
 			if(COOLDOWN_FINISHED(src, plexora_alert_cooldown))
 				var/list/lines = list()
 				if(LAZYLEN(queued_plexora_alerts))
-					lines += "[LAZYLEN(queued_plexora_alerts)] enqueue loops have occured within the past minute."
+					lines += "[LAZYLEN(queued_plexora_alerts) + 1] enqueue loops have occured within the past minute."
 					lines += "## Details"
 					lines += " - [base_msg]"
 					for(var/queued_msg in queued_plexora_alerts)
