@@ -34947,11 +34947,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/cyborg,
-/obj/machinery/door/airlock/research{
-	autoclose = 0;
-	frequency = 1449;
-	name = "Xenobio and Nanite Zone"
-	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "knL" = (
@@ -65446,11 +65441,6 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/recharge_station,
-/obj/machinery/door/airlock/research{
-	autoclose = 0;
-	frequency = 1449;
-	name = "Xenobio and Nanite Zone"
-	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "tfF" = (

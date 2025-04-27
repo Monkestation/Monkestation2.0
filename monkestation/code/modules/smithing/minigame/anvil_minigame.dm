@@ -159,6 +159,7 @@
 			continue
 		anvil_presses -= note
 		anvil_hud.delete_note(note)
+		failed_notes++
 		if(!length(anvil_presses))
 			if(!notes_left)
 				end_minigame()
