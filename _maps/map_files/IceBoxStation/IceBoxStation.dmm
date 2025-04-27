@@ -4137,6 +4137,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"boM" = (
+/obj/structure/chair/stool/directional/south,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "boO" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 8
@@ -10855,12 +10860,6 @@
 /obj/structure/sign/poster/official/here_for_your_safety/directional/east,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"dmL" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light_switch/directional/south,
-/turf/open/floor/iron,
-/area/station/maintenance/department/electrical)
 "dmR" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -22867,6 +22866,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"hkC" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
+/obj/machinery/light/directional/south,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "hkU" = (
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/chair/office{
@@ -31059,6 +31070,11 @@
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
+"jTM" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "jTV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -31405,6 +31421,13 @@
 /obj/machinery/nanite_chamber,
 /turf/open/floor/iron,
 /area/station/science/explab)
+"kao" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "kaw" = (
 /obj/machinery/photocopier,
 /obj/item/radio/intercom/directional/north,
@@ -34866,17 +34889,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
-"ldi" = (
-/obj/structure/table,
-/obj/item/wallframe/camera,
-/obj/item/wallframe/camera,
-/obj/item/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "ldk" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
@@ -37796,15 +37808,6 @@
 /obj/structure/statue/snow/snowman,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"max" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
-/obj/machinery/light/directional/south,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "maB" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/tile/neutral,
@@ -55181,22 +55184,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/medical/central)
-"rxf" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Atmospherics - East"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Plasma to Pure"
-	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "rxz" = (
 /obj/structure/girder,
 /turf/open/floor/plating/snowed/icemoon,
@@ -56263,11 +56250,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"rPu" = (
-/obj/machinery/power/smes,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "rPL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -58110,6 +58092,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"sul" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "sup" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/gas_mask,
@@ -60888,12 +60874,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/mining)
-"tsR" = (
-/obj/structure/cable,
-/obj/structure/chair/stool/directional/south,
-/obj/effect/decal/cleanable/oil/slippery,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "tta" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -65063,6 +65043,22 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"uKv" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Atmospherics - East"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Plasma to Pure"
+	},
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "uKx" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat{
@@ -65755,13 +65751,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/station/science/explab)
-"uXu" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "uXC" = (
 /obj/structure/table/reinforced,
 /obj/item/tank/internals/emergency_oxygen/engi{
@@ -71853,6 +71842,16 @@
 "wSs" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"wSv" = (
+/obj/structure/table,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
+/obj/item/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "wSw" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance"
@@ -73405,10 +73404,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
-"xrm" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "xry" = (
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
@@ -242020,7 +242015,7 @@ iXq
 hLS
 ifY
 sgJ
-rxf
+uKv
 sEF
 nom
 hHN
@@ -253268,8 +253263,8 @@ kKL
 lOU
 glI
 buY
-xrm
-uXu
+sul
+kao
 kKL
 pzV
 uZn
@@ -253526,7 +253521,7 @@ rGw
 fUc
 jaX
 glI
-rPu
+jTM
 kKL
 kKL
 mbG
@@ -253783,7 +253778,7 @@ mqO
 fUc
 sBi
 xYA
-ldi
+wSv
 lUC
 vhm
 oLG
@@ -254296,8 +254291,8 @@ kKL
 nwd
 epd
 oih
-dmL
-lUC
+glI
+fUc
 lUC
 dMH
 ait
@@ -254553,8 +254548,8 @@ kKL
 ihz
 pwd
 glI
-tsR
-rPu
+boM
+jTM
 lUC
 tXV
 kvX
@@ -254811,7 +254806,7 @@ pfP
 apD
 ugG
 tao
-max
+hkC
 lUC
 ccT
 nyC

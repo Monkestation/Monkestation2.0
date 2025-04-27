@@ -14394,6 +14394,10 @@
 "ejt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "ejx" = (
@@ -35534,10 +35538,6 @@
 	},
 /area/station/medical/medbay/lobby)
 "kxL" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/green/visible{
 	dir = 4
 	},
@@ -57759,7 +57759,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "qSI" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
 /obj/machinery/meter/layer4,
@@ -63539,7 +63538,6 @@
 /area/station/command/heads_quarters/nt_rep)
 "sCg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/chair/office{
 	dir = 1
 	},
