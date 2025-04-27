@@ -31,6 +31,42 @@ GLOBAL_LIST_INIT(vox_voices, initialize_vox_voices())
 		CRASH("Tried to delete a /datum/vox_voice, this should not happen!")
 	return ..()
 
+/// Sends the sound for the given word.
+/// If `origin_turf` is set, only mobs on the same/linked z-level as the origin turf will hear it.
+/// If `only_listener`, only that mob will hear it.
+/// Returns FALSE if the word doesn't exist, TRUE otherwise.
+/datum/vox_voice/proc/play_word(word, turf/origin_turf, mob/only_listener)
+	word = lowertext(word)
+
+	var/sound_file = sounds[word]
+	if(isnull(sound_file))
+		return FALSE
+	var/sound/voice = sound(sound_file, wait = TRUE, channel = CHANNEL_VOX, volume = volume)
+	voice.status = SOUND_STREAM
+
+	var/list/listeners
+	if(!isnull(only_listener))
+		listeners = list(only_listener)
+	else
+		LAZYINITLIST(listeners)
+		for(var/mob/player_mob as anything in GLOB.player_list)
+			if(player_mob.client && !player_mob.client?.prefs)
+				stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
+				continue
+			if(!player_mob.can_hear())
+				continue
+			if(!player_mob.client?.prefs?.read_preference(/datum/preference/toggle/sound_vox))
+				continue
+			if(!isnull(origin_turf))
+				var/turf/player_turf = get_turf(player_mob)
+				if(!is_valid_z_level(origin_turf, player_turf))
+					continue
+			listeners += player_mob
+	for(var/mob/listener as anything in listeners)
+		if(!QDELETED(listener))
+			SEND_SOUND(listener, voice)
+	return TRUE
+
 /proc/initialize_vox_voices()
 	. = list()
 	for(var/datum/vox_voice/voice_type as anything in subtypesof(/datum/vox_voice))
