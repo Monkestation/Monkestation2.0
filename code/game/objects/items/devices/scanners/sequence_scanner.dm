@@ -40,16 +40,14 @@
 
 /obj/item/sequence_scanner/afterattack(obj/object, mob/user, proximity)
 	. = ..()
-	if(!istype(object) || !proximity)
+	var/obj/machinery/computer/scan_consolenew/console = object
+	if(!istype(console) || !proximity)
 		return
-
-	if(istype(object, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = object
-		if(console.stored_research)
-			to_chat(user, span_notice("[name] linked to central research database."))
-			discovered = console.stored_research.discovered_mutations
-		else
-			to_chat(user,span_warning("No database to update from."))
+	if(console.stored_research)
+		to_chat(user, span_notice("[name] linked to central research database."))
+		discovered = console.stored_research.discovered_mutations
+	else
+		to_chat(user, span_warning("No database to update from."))
 
 /obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)
 	if(!iscarbon(target) || !target.has_dna())
@@ -63,13 +61,17 @@
 		LAZYOR(buffer, mutation.type)
 		active_mutations.Add(mutation.type)
 
-	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
+	var/list/lines = list()
+	lines += span_notice("Subject [span_name(target.name)]'s DNA sequence has been saved to buffer.")
+	lines += span_boldnotice("Genetic Stability: ") + "[target.dna.stability]%"
 	for(var/mutation in buffer)
 		//highlight activated mutations
 		if(LAZYFIND(active_mutations, mutation))
-			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
+			lines += span_boldnotice("[get_display_name(mutation)]")
 		else
-			to_chat(user, span_notice("[get_display_name(mutation)]"))
+			lines += span_notice("[get_display_name(mutation)]")
+	var/title = "<img class='icon bigicon' src='\ref[icon]?state=[url_encode(icon_state)]'> " + span_bold("Genetic Sequence Analysis")
+	to_chat(user, fieldset_block(title, jointext(lines, "<br>"), "boxed_message blue_box"), type = MESSAGE_TYPE_INFO)
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)
