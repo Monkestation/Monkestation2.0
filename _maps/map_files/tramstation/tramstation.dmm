@@ -7268,14 +7268,14 @@
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "bju" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 6
-	},
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/power/smes{
-	charge = 5e+006
+/obj/machinery/light/directional/east,
+/obj/structure/table,
+/obj/item/book/manual/wiki/engineering_guide{
+	pixel_x = -2
 	},
-/obj/structure/cable,
+/obj/item/radio/off,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "bjv" = (
@@ -8373,12 +8373,12 @@
 /area/station/medical/pharmacy)
 "bzP" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
@@ -14222,13 +14222,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "dsN" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 10
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/obj/structure/table,
+/obj/machinery/light/directional/west,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "dsZ" = (
@@ -26218,6 +26214,12 @@
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
+"hkm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/gravity_generator)
 "hkF" = (
 /obj/structure/table,
 /obj/item/aicard,
@@ -38451,7 +38453,10 @@
 /area/station/service/library/upper)
 "kWp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "kWq" = (
@@ -70173,7 +70178,6 @@
 "uPi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "uPv" = (
@@ -72576,7 +72580,11 @@
 /area/station/science/lobby)
 "vyD" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "vyF" = (
@@ -112941,7 +112949,7 @@ pcO
 iKr
 ofZ
 uKK
-ajF
+hkm
 kWp
 fal
 akK

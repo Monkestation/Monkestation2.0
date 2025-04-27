@@ -25796,7 +25796,6 @@
 /area/station/tcommsat/server)
 "inn" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
@@ -27869,7 +27868,6 @@
 "iVh" = (
 /obj/machinery/light/directional/south,
 /obj/structure/sign/poster/contraband/missing_gloves/directional/east,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -45292,6 +45290,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/upgraded,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "oDy" = (
@@ -49993,7 +49992,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "qed" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -54428,6 +54426,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "rDA" = (
 /obj/machinery/computer/mech_bay_power_console,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/maintenance/department/electrical)
 "rDD" = (
@@ -55239,7 +55238,6 @@
 /obj/item/multitool,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/east,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "rRm" = (
@@ -55247,6 +55245,7 @@
 /area/station/service/kitchen)
 "rRt" = (
 /obj/machinery/mech_bay_recharge_port,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rRU" = (
@@ -63434,7 +63433,6 @@
 	dir = 4
 	},
 /obj/machinery/light/built/directional/south,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "uAv" = (
@@ -66563,7 +66561,6 @@
 /area/station/maintenance/port/aft)
 "vxs" = (
 /obj/machinery/power/smes,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "vxD" = (
@@ -67419,6 +67416,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution)
+"vIq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/department/electrical)
 "vIv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
@@ -73640,6 +73642,7 @@
 "xJR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "xJY" = (
@@ -75117,10 +75120,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"yeV" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "yfi" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -124388,7 +124387,7 @@ jxy
 pTI
 nbF
 bYW
-yeV
+lzT
 uAu
 jxy
 uyw
@@ -124903,7 +124902,7 @@ sfm
 lzT
 kDe
 kMR
-yeV
+lzT
 jxy
 uyw
 iLB
@@ -125417,7 +125416,7 @@ rRt
 oDn
 pZV
 nbF
-yeV
+lzT
 jxy
 tzc
 iLB
@@ -125671,7 +125670,7 @@ aij
 jxy
 jxy
 xzw
-nbF
+vIq
 qed
 wFZ
 vxs

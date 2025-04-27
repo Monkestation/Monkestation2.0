@@ -1,0 +1,8 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - map: "Disconnected aux power SMES from Box grid at roundstart."
+  - bugfix: "(Maurukas) Removed a power loop on Icebox."
+  - map: "(Maurukas) Disconnected aux power SMES from Icebox grid at roundstart."
+  - map: "(Maurukas) Removed some power cables connecting Deltastation's aux power"
+  - bugfix: "(Maurukas) Fixed Tramstation's gravity generator SMES, now functions and charged at roundstart."

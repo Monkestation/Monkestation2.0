@@ -414,7 +414,7 @@ GLOBAL_PROTECT(href_token)
 	return combined_flags
 
 /datum/admins/proc/try_give_devtools()
-	if(isnull(owner) || !(rank_flags() & R_DEBUG) || owner.byond_version < 516)
+	if(isnull(owner) || !(rank_flags() & R_DEBUG))
 		return
 	winset(owner, null, list("browser-options" = "+devtools"))
 

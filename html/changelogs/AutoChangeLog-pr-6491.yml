@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - admin: "Added a warning for admins using the \"Shake\" VV when doing so might accidentally cause a bunch of lag."

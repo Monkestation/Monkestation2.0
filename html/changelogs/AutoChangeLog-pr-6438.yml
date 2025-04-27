@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - map: "Blueshift: Most major hallways, alongside dorms, have a fully charged 10k power cell in their APCs roundstart now."
+  - map: "Blueshift: Engineering spawns with an oxygen canister now."
+  - map: "Blueshift: Art Supply Storage's APC is now properly wired to the grid."
