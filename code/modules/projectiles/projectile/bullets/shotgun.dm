@@ -4,7 +4,7 @@
 	damage = 50
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
-	tile_dropoff = 0.05
+	tile_dropoff = 0.1
 	tile_dropoff_s = 0.05
 
 /obj/projectile/bullet/shotgun_slug/executioner
