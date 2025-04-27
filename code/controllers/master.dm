@@ -173,6 +173,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			msg += "\t [varname] = [varval]\n"
 	log_world(msg)
 
+/*
 	var/datum/controller/subsystem/BadBoy = Master.last_type_processed
 	var/FireHim = FALSE
 	if(istype(BadBoy))
@@ -188,10 +189,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if(msg)
 			to_chat(GLOB.admins, span_boldannounce("[msg]"))
 			log_world(msg)
+*/
 
 	if (istype(Master.subsystems))
+		/*
 		if(FireHim)
 			Master.subsystems += new BadBoy.type //NEW_SS_GLOBAL will remove the old one
+		*/
 		subsystems = Master.subsystems
 		current_runlevel = Master.current_runlevel
 		StartProcessing(10)
