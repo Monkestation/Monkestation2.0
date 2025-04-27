@@ -229,7 +229,7 @@
 
 //Monkestation addition
 
-/turf/open/floor/insulation
+/turf/open/floor/engine/insulation
 	name = "hyper-insulated floor"
 	desc = "Sturdy and completely heat-proof."
 	icon = 'monkestation/icons/turf/insulated_floor.dmi'
@@ -237,91 +237,28 @@
 	thermal_conductivity = 0
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/sheet/mineral/plastitanium
-	footstep = FOOTSTEP_PLATING
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	clawfootstep = FOOTSTEP_HARD_CLAW
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
-	rcd_proof = TRUE
 
+/turf/open/floor/engine/insulation/wrench_act(mob/living/user, obj/item/I)
+	return
 
-/turf/open/floor/insulation/examine(mob/user)
+/turf/open/floor/engine/insulation/examine(mob/user)
 	. += ..()
 	. += span_notice("The insulated plating is <b>screwed</b> firmly in place.")
 
-/turf/open/floor/insulation/airless
+/turf/open/floor/engine/insulation/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/insulation/break_tile()
-	return //unbreakable
-
-/turf/open/floor/insulation/burn_tile()
-	return //unburnable
-
-/turf/open/floor/insulation/make_plating(force = FALSE)
-	if(force)
-		return ..()
-	return //unplateable
-
-/turf/open/floor/insulation/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	return
-
-/turf/open/floor/insulation/crowbar_act(mob/living/user, obj/item/I)
-	return
-
-/turf/open/floor/insulation/screwdriver_act(mob/living/user, obj/item/I)
+/turf/open/floor/engine/insulation/screwdriver_act(mob/living/user, obj/item/I)
 	..()
 	to_chat(user, span_notice("You begin unscrewing the plating..."))
 	if(I.use_tool(src, user, 30, volume=80))
-		if(!istype(src, /turf/open/floor/insulation))
+		if(!istype(src, /turf/open/floor/engine/insulation))
 			return TRUE
 		if(floor_tile)
 			new floor_tile(src, 1)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/insulation/acid_act(acidpwr, acid_volume)
-	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
-	return ..()
 
-/turf/open/floor/insulation/ex_act(severity, target)
-	if(target == src)
-		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
-		return FALSE
 
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			if(prob(80))
-				if (!ispath(baseturf_at_depth(2), /turf/open/floor))
-					attempt_lattice_replacement()
-				else
-					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
-			else if(prob(50))
-				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
-			else
-				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-
-/turf/open/floor/insulation/singularity_pull(S, current_size)
-	..()
-	if(current_size >= STAGE_FIVE)
-		if(floor_tile)
-			if(prob(30))
-				new floor_tile(src)
-				make_plating(TRUE)
-		else if(prob(30))
-			attempt_lattice_replacement()
-
-/turf/open/floor/insulation/attack_paw(mob/user, list/modifiers)
-	return attack_hand(user, modifiers)
-
-/turf/open/floor/insulation/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	user.Move_Pulled(src)
 

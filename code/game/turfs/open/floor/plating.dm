@@ -85,8 +85,8 @@
 			else
 				to_chat(user, span_notice("You begin insulating the floor..."))
 				if(do_after(user, 30, target = src))
-					if (R.get_amount() >= 1 && !istype(src, /turf/open/floor/insulation))
-						PlaceOnTop(/turf/open/floor/insulation, flags = CHANGETURF_INHERIT_AIR)
+					if (R.get_amount() >= 1 && !istype(src, /turf/open/floor/engine/insulation))
+						PlaceOnTop(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 						R.use(1)
 						to_chat(user, span_notice("You insulate the floor."))
