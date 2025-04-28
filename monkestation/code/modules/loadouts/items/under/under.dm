@@ -752,7 +752,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/jumpsuit/utility_sci
 	name = "Science Utility Uniform"
 	item_path = /obj/item/clothing/under/rank/rnd/scientist/nova/utility
-	restricted_roles = list(JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_XENOBIOLOGIST)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_cargo

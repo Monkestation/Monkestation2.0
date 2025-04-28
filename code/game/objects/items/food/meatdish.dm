@@ -856,6 +856,18 @@
 	if(prob(50))
 		icon_state = "fried_chicken2"
 
+/obj/item/food/lava_chicken
+	name = "lava chicken"
+	desc = "It's tasty as hell! But it's also a lava attack!"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "lava_chicken1"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/toxin/spore_burning = 50)
+	tastes = list("l-l-l-lava" = 40, "ch-ch-ch-chicken" = 40)
+	foodtypes = MEAT | FRIED
+	junkiness = 25
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/beef_stroganoff
 	name = "beef stroganoff"
 	desc = "A russian dish that consists of beef and sauce. Really popular in japan, or at least that's what my animes would allude to."

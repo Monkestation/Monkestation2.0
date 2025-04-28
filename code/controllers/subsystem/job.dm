@@ -1000,7 +1000,7 @@ SUBSYSTEM_DEF(job)
 /// Returns a list of minds of all heads of staff
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
-	for(var/datum/mind/head as anything in get_crewmember_minds())
+	for(var/datum/mind/head as anything in get_crewmember_minds(require_body = FALSE))
 		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			. += head
 
@@ -1017,7 +1017,7 @@ SUBSYSTEM_DEF(job)
 /// Returns a list of minds of all security members
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
-	for(var/datum/mind/sec as anything in get_crewmember_minds())
+	for(var/datum/mind/sec as anything in get_crewmember_minds(require_body = FALSE))
 		if(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 			. += sec
 

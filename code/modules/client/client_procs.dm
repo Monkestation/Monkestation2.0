@@ -248,8 +248,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		persistent_client.byond_build = byond_build
 		persistent_client.byond_version = byond_version
 
-	if(byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -600,7 +599,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client.client = null
+	persistent_client?.client = null
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
@@ -1424,8 +1423,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /// This grabs the DPI of the user per their skin
 /client/proc/acquire_dpi()
-	if(byond_version < 516) // why won't you update
-		return
 	window_scaling = text2num(winget(src, null, "dpi"))
 
 	debug_admins("scalies: [window_scaling]")
