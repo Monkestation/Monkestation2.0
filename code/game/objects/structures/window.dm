@@ -424,17 +424,18 @@
 	if(QDELETED(src) || !fulltile)
 		return
 
+	var/ratio = atom_integrity / max_integrity
+	ratio = CEILING(ratio*4, 1) * 25
+
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
 
-	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
 	cut_overlay(crack_overlay)
 	if(ratio > 75)
 		return
 	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-	. += crack_overlay
+	add_overlay(crack_overlay)
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
