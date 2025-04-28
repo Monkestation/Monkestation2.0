@@ -61,7 +61,8 @@
 /obj/item/proc/GetAccess()
 	return list()
 
-/obj/item/proc/GetID()
+/obj/item/proc/GetID() as /obj/item/card/id
+	RETURN_TYPE(/obj/item/card/id)
 	return null
 
 /obj/item/proc/RemoveID()

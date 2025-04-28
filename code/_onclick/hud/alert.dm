@@ -62,7 +62,7 @@
 		thealert.set_severity(severity)
 
 	alerts[category] = thealert
-	if(client && hud_used)
+	if(HAS_CONNECTED_PLAYER(src) && hud_used)
 		hud_used.reorganize_alerts()
 	if(!no_anim)
 		thealert.transform = matrix(32, 0, MATRIX_TRANSLATE)

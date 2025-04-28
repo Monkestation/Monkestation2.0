@@ -4,7 +4,7 @@
 	discovered_credits = CARGO_CRATE_VALUE * 2 //ME A T
 	activation_message = "begins stealing meat!"
 	deactivation_message = "gets caught stealing meat!"
-	research_value = 500
+	research_value = TECHWEB_DISCOUNT_MINOR
 	type_name = "Meat Teleportation Effect"
 
 	COOLDOWN_DECLARE(meat_cd)

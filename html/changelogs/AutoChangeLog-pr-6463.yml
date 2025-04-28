@@ -1,0 +1,5 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - rscadd: "Eris WIP button"
+  - bugfix: "Vanderlin button irritating the people who pay close attention to it and it being offcenter"

@@ -203,18 +203,16 @@ All ShuttleMove procs go here
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	if(pipe_vision_img)
-		pipe_vision_img.loc = loc
-
 /obj/machinery/computer/auxiliary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	. = ..()
+	if(pipe_vision_img)
+		pipe_vision_img.loc = loc
+		
 	var/missing_nodes = FALSE
 	for(var/i in 1 to device_type)
 		if(nodes[i])

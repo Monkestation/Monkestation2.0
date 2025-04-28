@@ -21,7 +21,7 @@
 	- When creating a new mob which will be a new IC character (e.g. putting a shade in a construct or randomly selecting
 		a ghost to become a xeno during an event). Simply assign the key or ckey like you've always done.
 
-			new_mob.key = key
+			new_mob.PossessByPlayer(key)
 
 		The Login proc will handle making a new mind for that mobtype (including setting up stuff like mind.name). Simple!
 		However if you want that mind to have any special properties like being a traitor etc you will have to do that
@@ -117,7 +117,7 @@
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	QDEL_NULL(antag_hud)
-	QDEL_LIST(memories)
+	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
 	QDEL_NULL(language_holder)
@@ -206,7 +206,7 @@
 	transfer_martial_arts(new_character)
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
-		new_character.key = key //now transfer the key to link the client to our new body
+		new_character.PossessByPlayer(key) //now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs

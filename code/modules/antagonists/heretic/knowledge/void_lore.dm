@@ -268,7 +268,10 @@
 			close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
 			close_carbon.apply_status_effect(/datum/status_effect/void_chill, 1)
 			close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
-			close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			if(close_carbon.has_reagent(/datum/reagent/water/holywater))
+				close_carbon.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			else
+				close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
 
 		else if(istype(thing_in_range, /obj/machinery/door) || istype(thing_in_range, /obj/structure/door_assembly))
 			var/obj/affected_door = thing_in_range

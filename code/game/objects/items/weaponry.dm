@@ -785,7 +785,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/baseball_bat/multi_attack(mob/living/target_mob, mob/living/user, params, direction_traveled)
 	// we obtain the relative direction from the bat itself to the target
-	var/relative_direction = get_cardinal_dir(direction_traveled, target_mob)
+	var/relative_direction = get_cardinal_dir(src, target_mob)
 	var/atom/throw_target = get_edge_target_turf(target_mob, relative_direction)
 	. = ..()
 	if(iscarbon(target_mob))

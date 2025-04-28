@@ -3492,7 +3492,7 @@
 	id = "testlab";
 	name = "Test Chamber Blast Door"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/effect/mapping_helpers/airlock/access/any/science/research,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "bfB" = (
@@ -4101,7 +4101,7 @@
 	name = "Test Chamber"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/effect/mapping_helpers/airlock/access/any/science/research,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "bol" = (
@@ -4179,6 +4179,13 @@
 /obj/structure/ghost_critter_spawn,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"bpA" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/landmark/start/captain,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "bpD" = (
 /obj/machinery/newscaster/directional/south,
 /obj/structure/closet/firecloset,
@@ -21934,6 +21941,7 @@
 /obj/structure/table,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/item/radio/intercom/directional/east,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "gVn" = (
@@ -23607,6 +23615,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
+"hyr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/xenobiologist,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "hyt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24684,11 +24699,16 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
+/obj/machinery/light/directional/north,
 /obj/item/clothing/glasses/science{
 	pixel_x = 4;
-	pixel_y = -4
+	pixel_y = 8
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/button/ignition{
+	id = "Xenobio";
+	pixel_x = 6;
+	pixel_y = 0
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "hSq" = (
@@ -27367,6 +27387,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "iLK" = (
@@ -33222,6 +33243,7 @@
 	dir = 4;
 	pixel_x = -4
 	},
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "kCH" = (
@@ -33672,19 +33694,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "kKI" = (
-/obj/item/mod/core/standard{
-	pixel_x = -4
-	},
-/obj/item/mod/core/standard{
-	pixel_x = 4
-	},
-/obj/item/mod/core/standard{
-	pixel_y = 4
-	},
-/obj/structure/table,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/closet/crate/mod,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "kKL" = (
@@ -44810,7 +44823,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "ogy" = (
@@ -47044,6 +47057,7 @@
 /obj/structure/chair/sofa/corp/left{
 	dir = 8
 	},
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "oQp" = (
@@ -52641,6 +52655,9 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
+/obj/machinery/sparker/directional/north{
+	id = "Xenobio"
+	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qGg" = (
@@ -54958,7 +54975,7 @@
 "rtn" = (
 /obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "rtp" = (
@@ -55173,8 +55190,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Plasma to Pure";
-	piping_layer = 4
+	name = "Plasma to Pure"
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
@@ -55457,6 +55473,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "rAZ" = (
@@ -57601,6 +57618,7 @@
 	pixel_x = 29;
 	pixel_y = 8
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "smL" = (
@@ -62280,6 +62298,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
+/obj/effect/landmark/start/captain,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "tOO" = (
@@ -68177,8 +68196,8 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/effect/landmark/start/hangover,
 /obj/machinery/light_switch/directional/west,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "vJY" = (
@@ -68659,13 +68678,10 @@
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "vTJ" = (
-/obj/structure/table,
-/obj/item/toy/plush/slimeplushie{
-	name = "Gish"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "vTN" = (
@@ -71591,7 +71607,7 @@
 /obj/machinery/door/airlock/research{
 	name = "Circuit Testing Lab"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/effect/mapping_helpers/airlock/access/any/science/research,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "wPd" = (
@@ -72679,7 +72695,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/science/research,
+/obj/effect/mapping_helpers/airlock/access/any/science/research,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "xfM" = (
@@ -186221,7 +186237,7 @@ alM
 oxO
 ffe
 wCn
-vHq
+hyr
 aZk
 pMF
 pMF
@@ -239397,7 +239413,7 @@ tEd
 lpM
 eEC
 uEm
-iTd
+bpA
 iTd
 wwB
 mBX

@@ -40,6 +40,9 @@ SUBSYSTEM_DEF(particle_weather)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/particle_weather/Recover()
+	eligible_weathers = SSparticle_weather.eligible_weathers.Copy()
+	eligible_eclipse_weathers = SSparticle_weather.eligible_eclipse_weathers.Copy()
+
 	running_weather = SSparticle_weather.running_weather
 	running_eclipse_weather = SSparticle_weather.running_eclipse_weather
 
@@ -56,6 +59,8 @@ SUBSYSTEM_DEF(particle_weather)
 	particle_effect_eclipse = SSparticle_weather.particle_effect_eclipse
 	weather_special_effect_eclipse = SSparticle_weather.weather_special_effect_eclipse
 	weather_effect_eclipse = SSparticle_weather.weather_effect_eclipse
+
+	enabled = SSparticle_weather.enabled
 
 /datum/controller/subsystem/particle_weather/stat_entry(msg)
 	if(enabled)

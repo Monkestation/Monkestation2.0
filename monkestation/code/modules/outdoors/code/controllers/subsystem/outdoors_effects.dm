@@ -100,6 +100,18 @@ SUBSYSTEM_DEF(outdoor_effects)
 	var/current_color
 	var/enabled = TRUE // Micro-optimization to avoid having to check config or bitflags
 
+/datum/controller/subsystem/outdoor_effects/Recover()
+	sunlighting_planes = SSoutdoor_effects.sunlighting_planes.Copy()
+	current_step_datum = SSoutdoor_effects.current_step_datum
+	next_step_datum = SSoutdoor_effects.next_step_datum
+	weather_light_affecting_event = SSoutdoor_effects.weather_light_affecting_event
+	sunlight_overlays = SSoutdoor_effects.sunlight_overlays?.Copy()
+	weather_planes_need_vis = SSoutdoor_effects.weather_planes_need_vis
+	last_color = SSoutdoor_effects.last_color
+	next_day = SSoutdoor_effects.next_day
+	current_color = SSoutdoor_effects.current_color
+	enabled = SSoutdoor_effects.enabled
+
 /datum/controller/subsystem/outdoor_effects/stat_entry(msg)
 	msg = "W:[GLOB.SUNLIGHT_QUEUE_WORK.len]|U:[GLOB.SUNLIGHT_QUEUE_UPDATE.len]|C:[GLOB.SUNLIGHT_QUEUE_CORNER.len]"
 	return ..()
