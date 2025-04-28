@@ -21,7 +21,7 @@
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg,
 		MECHA_UTILITY = list(),
-		MECHA_POWER = list(),
+		MECHA_POWER = list(/obj/item/mecha_parts/mecha_equipment/generator),
 		MECHA_ARMOR = list(),
 	)
 	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP
@@ -40,7 +40,9 @@
 	fire = 90
 	acid = 0
 
-// a better capacitor, faster recharge cause smaller cell in general, but still crap autonomy
+// better parts since TC
+/obj/vehicle/sealed/mecha/marauder/add_cell()
+	cell = new /obj/item/stock_parts/cell/super(src)
 
 /obj/vehicle/sealed/mecha/devitt/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
