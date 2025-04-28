@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscdel: "Removed AFK kicking functionality, as it wasn't even enabled anyways, yet it was somehow randomly kicking players who were very much not AFK."
