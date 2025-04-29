@@ -26,12 +26,6 @@
 /datum/chemical_reaction/randomized/scichem/determination
 	results = list(/datum/reagent/determination = 2)
 
-//Toxin
-/datum/chemical_reaction/randomized/scichem/toxin
-	min_input_reagents = 3
-	max_input_reagents = 3
-	results = list(/datum/reagent/toxin)
-
 //Mint Toxin
 /datum/chemical_reaction/randomized/scichem/mint
 	min_input_reagents = 3
