@@ -78,6 +78,8 @@
 		var/obj/location_as_object = loc
 		location_as_object.handle_internal_lifeform(src, 0)
 
+	breath_airborne_diseases()
+
 /mob/living/carbon/proc/breathe(seconds_per_tick, times_fired, next_breath = 4)
 	var/datum/gas_mixture/environment = loc?.return_air()
 	var/datum/gas_mixture/breath
