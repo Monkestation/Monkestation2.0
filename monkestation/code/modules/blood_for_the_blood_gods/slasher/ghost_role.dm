@@ -22,7 +22,7 @@
 		alert_pic = /datum/antagonist/slasher,
 		role_name_text = "slasher"
 	)
-	var/turf/spawn_loc = find_safe_turf()//Used for the Drop Pod type of spawn
+	var/turf/spawn_loc = find_safe_turf_in_maintenance()//Used for the Drop Pod type of spawn for maints only
 
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS

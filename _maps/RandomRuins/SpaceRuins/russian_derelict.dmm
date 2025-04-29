@@ -407,10 +407,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/monke/engineering/aux_engine)
-"dj" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/monke/engineering/engine_hallway)
 "dn" = (
 /obj/structure/table,
 /obj/item/paper/crumpled,
@@ -1007,7 +1003,7 @@
 /obj/machinery/door/window/brigdoor/left/directional/south,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_gas_storage)
 "iu" = (
 /obj/machinery/power/solar_control{
@@ -6688,11 +6684,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/science/ordnance)
-"Nk" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/monke/engineering/engine_hallway)
 "Nl" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -7123,10 +7114,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
-"Pn" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/monke/engineering/engine_hallway)
 "Po" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/microwave{
@@ -13710,9 +13697,9 @@ QG
 QG
 QG
 QG
-dj
-Nk
-Pn
+Qg
+qd
+lF
 gD
 tB
 UQ

@@ -426,3 +426,133 @@
   - rscadd: Void chill stacks are now purged by holy water
   - rscadd: Holy water reduces the cooling effect of void storm and void chill
   - balance: Ascension ritual now requires bodies that at any point had a mind.
+2025-04-20:
+  Addust:
+  - bugfix: Whiteships can now land on lavaland without getting obliterated by regrowing
+      rocks.
+  JohnFulpWillard:
+  - bugfix: '[Theseus] Fixes a missing disposal tube at evac.'
+  Melbert:
+  - bugfix: You can't fax unfaxable things by putting them in faxable things
+2025-04-21:
+  Absolucy:
+  - bugfix: (high-speedspin-cycle) Layer manifold and pipe volumes are now consistent
+      with other pipes.
+  - bugfix: (FlufflesTheDog) Shuttle atmos volumes should no longer become negative.
+  - bugfix: (FlufflesTheDog) Shuttle atmos devices will no longer make illegal connections
+      during rotations.
+  - balance: The Teratoma Crash event can only occur at least 40 minutes into the
+      round now (up to 20 minutes)
+  Gw0sty:
+  - bugfix: Detectives now will spawn on Theseus stationside
+  MomoBerri:
+  - bugfix: Theseus mail delivery should now work through the disposal chute like
+      proper.
+  - bugfix: Theseus engineering wiring has been updated, and a new window has been
+      added to make accessing the powernet easier.
+  RandomDudeFromTheRim:
+  - map: The "Plasma to Pure" pump is now on the right layer on IceBox station. Atmosians
+      rejoice!
+  - bugfix: fixed a shuttle respawn exploit
+  - map: Added true chasms (no z level stuff), and modified the Medsim shuttle by
+      adding them to it.
+  - bugfix: To discourage mutated crew from eating APCs, NanoTrasen has coated all
+      APCs in the patented "Non-Tasty NanoPaint"!
+  Shoddd:
+  - rscadd: weeping kudzu trait
+  - bugfix: several helio station bugs
+  - bugfix: heliostation has a labor camp shuttle again
+  Veth-s:
+  - admin: Adds a headset message button to Veth's Player panel.
+  destrucktoid:
+  - rscadd: Added a new way for bloodsuckers to earn levels
+  - balance: Bloodsuckers can only rank up till level 3 via Sol. Any further levels
+      must be gained through other means.
+2025-04-23:
+  Draggeru:
+  - bugfix: Removes the cotton candy chicken from centcom
+2025-04-24:
+  RandomDudeFromTheRim:
+  - rscdel: Removed a poster referencing something inappropriate
+  Veth, Kaysee, ThePoobertDoobertson:
+  - rscadd: Slasher will now spawn in maints as spooky jesus intended.
+  - rscadd: Slasher now has a jaunt that goes through windows and doors but not walls.
+      It is a NON-MAGICAL jaunt - 4s duration, 2minute cooldown, and leaves a trail
+      of blood behind it.
+  - rscdel: Removed slasher's invisibility, he is now always just slightly invisible.
+  - rscdel: Removed slasher's machete damage and throw damage scaling on light level.
+  - bugfix: Hopefully fixed the Slasher's tracking circle (for the fifth time). Currently,
+      targets with unknown identity cannot be chosen as it was causing issues with
+      the slasher's tracker.
+  - sound: Slasher now has new SFX for jaunting.
+  - image: Slasher now has all new icons for his outfit and jaunt.
+  - code_imp: Cleaned up some of Slasher's code.
+2025-04-26:
+  Gw0sty:
+  - rscadd: Xenobiology and Cytology are now an independent subdepartment
+  - rscadd: Science will now hang out at break rooms.
+  - rscadd: Various slight improvements to various xenobiology on maps
+  - rscadd: Scientists start with a experiment scanner in their backpack.
+  - bugfix: Kidnapping and heirlooms will target recent jobs more.
+  - bugfix: Scientist jumpsuits now actually provide bomb protection as described.
+  - qol: New jobs can now use more departmental clothing from the monkestation store
+  - bugfix: Helio xenobio is now accessible correctly again
+  - bugfix: Theseus no longer has excess airlocks in robotics
+  - bugfix: Heliostation xenobio will no longer have atmosphere problems
+  Loiosh42:
+  - bugfix: Blueshield Bogseo case now spawns with 2 ammoboxes instead of 2 loose
+      rounds
+  PineappleMan929:
+  - rscadd: Adds lava chicken! If you throw fried chicken into lava, it becomes lava
+      chicken. (warning, it is really fucking spicy)
+  - image: Lava chicken looks extremely spicy now! (which it is)
+  QueenReduviidae:
+  - bugfix: Fixes smithing letting you make perfect items without doing anything.
+  RandomDudeFromTheRim:
+  - bugfix: fixed wings working when they shouldn't
+  RealityOverseer:
+  - bugfix: Capitalized "Tickets" button in admin tab
+  - bugfix: (distributivgesetz) Fixed a rare bug that let you spam bluespace bodybags
+      everywhere.
+  - bugfix: (Sealed101) Fixed bluespace bodybags consuming xenomorphs when folded.
+  flleeppyy:
+  - rscadd: Eris WIP button
+  - bugfix: Vanderlin button irritating the people who pay close attention to it and
+      it being offcenter
+  - rscadd: Cigarette packs can now be crafted with cardboard (no coupons for you)
+  - qol: Better user feedback when putting things into smartfridges (includes drying
+      racks)
+  - qol: Items that are dryable now have examine text for knowing if you can put it
+      in a drying rack
+2025-04-27:
+  Absolucy:
+  - admin: Added a warning for admins using the "Shake" VV when doing so might accidentally
+      cause a bunch of lag.
+  - map: Disconnected aux power SMES from Box grid at roundstart.
+  - bugfix: (Maurukas) Removed a power loop on Icebox.
+  - map: (Maurukas) Disconnected aux power SMES from Icebox grid at roundstart.
+  - map: (Maurukas) Removed some power cables connecting Deltastation's aux power
+  - bugfix: (Maurukas) Fixed Tramstation's gravity generator SMES, now functions and
+      charged at roundstart.
+  - map: 'Blueshift: Most major hallways, alongside dorms, have a fully charged 10k
+      power cell in their APCs roundstart now.'
+  - map: 'Blueshift: Engineering spawns with an oxygen canister now.'
+  - map: 'Blueshift: Art Supply Storage''s APC is now properly wired to the grid.'
+2025-04-28:
+  Absolucy:
+  - qol: Made the output of the genetic sequencer scanner look much better.
+  - qol: The genetic sequencer scanner now shows genetic stability.
+  - rscdel: Removed AFK kicking functionality, as it wasn't even enabled anyways,
+      yet it was somehow randomly kicking players who were very much not AFK.
+  - bugfix: Fixed malf AIs being able to overload/destroy indestructible machines.
+  - bugfix: Fix some jobs (assistant, cargo tech, nt rep, secass) not getting the
+      proper implants during cybernetic revolution.
+  Gw0sty:
+  - map: Kilo, Derelict russian, Unknown site 1,  Derelict Sulaco, icebox, engineering
+      outpost and snow arena has some of their roundstart atmospheric differences
+      fixed. Hopefully decreases some load times.
+  shodd, ZephyrTFA:
+  - refactor: Map Votes are now carried over between rounds. When a map vote is actually
+      a contest, the winning map will have its votes reset.
+  - refactor: a large amount of map vote and vote code changed
+  - rscdel: RTV gone

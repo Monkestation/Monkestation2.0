@@ -716,7 +716,7 @@
 /area/ruin/space)
 "vR" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/reinforced,
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "vW" = (
 /obj/structure/window/reinforced/spawner/directional/east,
