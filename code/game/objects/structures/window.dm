@@ -26,7 +26,6 @@
 	var/fulltile = FALSE
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
-	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/break_sound = SFX_SHATTER
 	var/knock_sound = 'sound/effects/glassknock.ogg'
@@ -420,22 +419,28 @@
 
 //merges adjacent full-tile windows into one
 /obj/structure/window/update_overlays(updates=ALL)
-	. = ..()
-	if(QDELETED(src) || !fulltile)
-		return
+    . = ..()
+    if(QDELETED(src) || !fulltile)
+        return
 
-	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
+    if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+        QUEUE_SMOOTH(src)
 
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
-		QUEUE_SMOOTH(src)
-
-
-	cut_overlay(crack_overlay)
-	if(ratio > 75)
-		return
-	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-	add_overlay(crack_overlay)
+    // this always rounds up - you can change CEILING to round if you want to round to the nearest 25.
+    var/ratio = CEILING((atom_integrity / max_integrity) * 100, 25)
+    if(ratio <= 75)
+        var/cracks_alpha = 100
+        // lighter colored windows need the alpha higher so it can be seen better
+        if(isnull(color) || !is_color_dark(color, 55))
+            cracks_alpha = 200
+        . += mutable_appearance(
+            icon = 'icons/obj/structures.dmi',
+            icon_state = "damage[ratio]",
+            layer = layer + 0.1,
+            offset_spokesman = src,
+            alpha = cracks_alpha,
+            appearance_flags = RESET_COLOR,
+        )
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
