@@ -426,11 +426,11 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
-    // this always rounds up - you can change CEILING to round if you want to round to the nearest 25.
+	// this always rounds up - you can change CEILING to round if you want to round to the nearest 25.
 	var/ratio = CEILING((atom_integrity / max_integrity) * 100, 25)
 	if(ratio <= 75)
 		var/cracks_alpha = 100
-        // lighter colored windows need the alpha higher so it can be seen better
+		// lighter colored windows need the alpha higher so it can be seen better
 		if(isnull(color) || !is_color_dark(color, 55))
 			cracks_alpha = 200
 		. += mutable_appearance(
@@ -440,7 +440,7 @@
 			offset_spokesman = src,
 			alpha = cracks_alpha,
 			appearance_flags = RESET_COLOR,
-        )
+		)
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
 
