@@ -419,29 +419,28 @@
 
 //merges adjacent full-tile windows into one
 /obj/structure/window/update_overlays(updates=ALL)
-    . = ..()
-    if(QDELETED(src) || !fulltile)
-        return
+	. = ..()
+	if(QDELETED(src) || !fulltile)
+    	return
 
-    if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
-        QUEUE_SMOOTH(src)
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+    	QUEUE_SMOOTH(src)
 
-    // this always rounds up - you can change CEILING to round if you want to round to the nearest 25.
-    var/ratio = CEILING((atom_integrity / max_integrity) * 100, 25)
-    if(ratio <= 75)
-        var/cracks_alpha = 100
-        // lighter colored windows need the alpha higher so it can be seen better
-        if(isnull(color) || !is_color_dark(color, 55))
+	// this always rounds up - you can change CEILING to round if you want to round to the nearest 25.
+	var/ratio = CEILING((atom_integrity / max_integrity) * 100, 25)
+	if(ratio <= 75)
+		var/cracks_alpha = 100
+		// lighter colored windows need the alpha higher so it can be seen better
+		if(isnull(color) || !is_color_dark(color, 55))
             cracks_alpha = 200
         . += mutable_appearance(
-            icon = 'icons/obj/structures.dmi',
-            icon_state = "damage[ratio]",
-            layer = layer + 0.1,
-            offset_spokesman = src,
-            alpha = cracks_alpha,
-            appearance_flags = RESET_COLOR,
-        )
-
+        	icon = 'icons/obj/structures.dmi',
+        	icon_state = "damage[ratio]",
+        	layer = layer + 0.1,
+        	offset_spokesman = src,
+        	alpha = cracks_alpha,
+        	appearance_flags = RESET_COLOR,
+		)
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
 
