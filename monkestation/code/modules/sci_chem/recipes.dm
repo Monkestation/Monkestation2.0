@@ -36,12 +36,3 @@
 		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 500
 	..()
-
-//Protofore
-/datum/chemical_reaction/protofore
-	results = list(/datum/reagent/protofore = 3)
-	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
-
-/datum/chemical_reaction/protofore/alt
-	results = list(/datum/reagent/protofore = 2)
-	required_reagents = list(/datum/reagent/medicine/omnizine/protozine = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
