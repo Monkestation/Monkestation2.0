@@ -75,7 +75,7 @@
 
 /datum/media_source/object/get_balance(mob/target)
 	var/turf/their_turf = get_turf(target)
-	if(isnull(their_turf) || isnull(source_turf))
+	if(isnull(their_turf) || isnull(source_turf) || their_turf == source_turf)
 		return 0
 	return clamp((source_turf.x - their_turf.x) / max_distance, -1, 1)
 

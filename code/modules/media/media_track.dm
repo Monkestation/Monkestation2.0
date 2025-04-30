@@ -36,5 +36,5 @@
 		"title" = title,
 		"artist" = artist,
 		"genre" = genre,
-		"duration" = duration
+		"duration" = duration,
 	)

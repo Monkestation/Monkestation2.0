@@ -30,6 +30,10 @@
 	/// The media source tied to this jukebox.
 	var/datum/media_source/object/media_source
 
+/obj/machinery/jukebox/Initialize(mapload)
+	. = ..()
+	media_source = new(volume = volume, mixer_channel = CHANNEL_JUKEBOX, source = src)
+
 /obj/machinery/jukebox/Destroy()
 	QDEL_NULL(media_source)
 	current_track = null
@@ -52,6 +56,11 @@
 /obj/machinery/jukebox/atom_break(damage_flag)
 	. = ..()
 	if(.)
+		stop_playing()
+
+/obj/machinery/jukebox/power_change()
+	. = ..()
+	if(machine_stat & NOPOWER)
 		stop_playing()
 
 /obj/machinery/jukebox/ui_interact(mob/user, datum/tgui/ui)
@@ -90,6 +99,8 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/jukebox/proc/stop_playing()
+	if(!playing)
+		return
 	playing = FALSE
 	current_track = null
 	media_start_time = 0
