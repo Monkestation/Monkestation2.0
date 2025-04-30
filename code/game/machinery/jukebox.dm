@@ -126,7 +126,7 @@
 /obj/machinery/jukebox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	balloon_alert(user, "DRM cracked")
+	balloon_alert(user, "extra songs unlocked")
 	obj_flags |= EMAGGED
 	update_static_data_for_all_viewers()
 	return TRUE
