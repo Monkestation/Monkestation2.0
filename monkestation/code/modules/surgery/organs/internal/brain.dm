@@ -66,7 +66,7 @@
 		/datum/quirk/item_quirk/musician,
 		/datum/quirk/item_quirk/poster_boy,
 		/datum/quirk/item_quirk/tagger,
-		//datum/quirk/item_quirk/signer, // Needs to "add component" on proc add not on_unique
+		/datum/quirk/item_quirk/signer,
 		/datum/quirk/phobia,
 		/datum/quirk/indebted,
 		/datum/quirk/item_quirk/allergic,
