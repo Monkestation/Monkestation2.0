@@ -35,26 +35,16 @@
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 
-	var/list/spawn_locs = list()
-
-	for(var/mob/living/L in GLOB.dead_mob_list) //look for any dead bodies
-		var/turf/T = get_turf(L)
-		if(T && is_station_level(T.z))
-			spawn_locs += T
-	if(!spawn_locs.len || spawn_locs.len < 15) //look for any morgue trays, crematoriums, ect if there weren't alot of dead bodies on the station to pick from
-		for(var/obj/structure/bodycontainer/bc in GLOB.bodycontainers)
-			var/turf/T = get_turf(bc)
-			if(T && is_station_level(T.z))
-				spawn_locs += T
-	if(!spawn_locs.len) //If we can't find any valid spawnpoints, try the carp spawns
-		spawn_locs += find_space_spawn()
-	if(!spawn_locs.len) //If we can't find either, just spawn the revenant at the player's location
+	// monkestation start: refactor to use shared find_possible_revenant_spawns proc
+	var/list/spawn_locs = find_possible_revenant_spawns()
+	if(!length(spawn_locs)) //If we can't find either, just spawn the revenant at the player's location
 		spawn_locs += get_turf(selected)
-	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
+	if(!length(spawn_locs)) //If we can't find THAT, then just give up and cry
 		return MAP_ERROR
+	// monkestation end
 
 	var/mob/living/basic/revenant/revvie = new(pick(spawn_locs))
-	revvie.key = selected.key
+	revvie.PossessByPlayer(selected.key)
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by an event.")
 	revvie.log_message("was spawned as a revenant by an event.", LOG_GAME)
 	spawned_mobs += revvie

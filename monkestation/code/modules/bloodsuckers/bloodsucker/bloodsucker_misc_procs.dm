@@ -1,3 +1,4 @@
+#define BLOOD_LEVEL_GAIN_MAX 0.9
 /datum/antagonist/bloodsucker/proc/on_examine(datum/source, mob/examiner, examine_text)
 	SIGNAL_HANDLER
 
@@ -140,6 +141,24 @@
 	//returnString += "\n"  Don't need spacers. Using . += "" in examine.dm does this on its own.
 	return returnIcon + returnString
 
+// Blood level gain is used to give Bloodsuckers more levels if they are being agressive and drinking from real, sentient people.
+// The maximum blood that counts towards this
+/datum/antagonist/bloodsucker/proc/blood_level_gain()
+	var/level_cost = get_level_cost()
+	if(blood_level_gain >= level_cost && bloodsucker_blood_volume >= level_cost) // Checks if we have drunk enough blood from the living to allow us to gain a level up as well as checking if we have enough blood to actually use on the level up
+		switch(tgui_alert(owner.current, "You have drunk enough blood from the living to thicken your blood, this will cost you [level_cost] blood and give you another level",  "Thicken your blood?.", list("Yes", "No"))) //asks user if they want to spend their blood on a level
+			if("Yes")
+				RankUp() // gives level
+				blood_level_gain -= level_cost // Subtracts the cost from the pool of drunk blood
+				AddBloodVolume(-level_cost) // Subtracts the cost from the bloodsucker's actual blood
+				blood_level_gain_amount += 1 // Increments the variable that makes future levels more expensive
+
+/datum/antagonist/bloodsucker/proc/get_level_cost()
+	var/level_cost = (0.3 + (0.05 * blood_level_gain_amount))
+	level_cost = min(level_cost, BLOOD_LEVEL_GAIN_MAX)
+	level_cost = max_blood_volume * level_cost
+	return level_cost
+
 /**
  * CARBON INTEGRATION
  *
@@ -170,3 +189,5 @@
 		if(!IS_ORGANIC_LIMB(chosen_bodypart))
 			continue
 		. += chosen_bodypart.burn_dam
+
+#undef BLOOD_LEVEL_GAIN_MAX

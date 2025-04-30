@@ -414,7 +414,7 @@ GLOBAL_PROTECT(href_token)
 	return combined_flags
 
 /datum/admins/proc/try_give_devtools()
-	if(isnull(owner) || !(rank_flags() & R_DEBUG) || owner.byond_version < 516)
+	if(isnull(owner) || !(rank_flags() & R_DEBUG))
 		return
 	winset(owner, null, list("browser-options" = "+devtools"))
 
@@ -433,6 +433,11 @@ GLOBAL_PROTECT(href_token)
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
+
+/datum/admins/can_vv_get(var_name)
+	if(var_name == NAMEOF(src, href_token))
+		return FALSE
+	return ..()
 
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)

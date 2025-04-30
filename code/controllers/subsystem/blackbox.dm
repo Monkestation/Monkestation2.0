@@ -85,8 +85,8 @@ SUBSYSTEM_DEF(blackbox)
 		if (MS.rc_msgs.len)
 			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
 
-	for(var/player_key in GLOB.player_details)
-		var/datum/player_details/PD = GLOB.player_details[player_key]
+	for(var/player_key in GLOB.persistent_clients_by_ckey)
+		var/datum/persistent_client/PD = GLOB.persistent_clients_by_ckey[player_key]
 		record_feedback("tally", "client_byond_version", 1, PD.full_byond_version())
 
 /datum/controller/subsystem/blackbox/Shutdown()
@@ -358,7 +358,7 @@ Versioning
 		"z_coord" = L.z,
 		"last_words" = L.last_words,
 		"suicide" = did_they_suicide,
-		"map" = SSmapping.config.map_name,
+		"map" = SSmapping.current_map.map_name,
 		"internet_address" = world.internet_address || "0",
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,

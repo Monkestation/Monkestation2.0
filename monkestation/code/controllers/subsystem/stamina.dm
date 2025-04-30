@@ -8,6 +8,9 @@ SUBSYSTEM_DEF(stamina)
 	var/list/processing = list()
 	var/list/currentrun = list()
 
+/datum/controller/subsystem/stamina/Recover()
+	processing = SSstamina.processing.Copy()
+
 /datum/controller/subsystem/stamina/stat_entry(msg)
 	msg = "P:[length(processing)]"
 	return ..()

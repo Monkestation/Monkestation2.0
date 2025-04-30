@@ -114,8 +114,8 @@
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(research_points[i] + pointlist[i], 0.1)
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -125,8 +125,8 @@
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] = max(0, research_points[i] - pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(max(0, research_points[i] - pointlist[i]), 0.1)
 
 /datum/techweb/proc/remove_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -136,8 +136,8 @@
 
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] != 0)
-			research_points[i] = max(0, research_points[i] + pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] != 0)
+			research_points[i] = FLOOR(max(0, research_points[i] + pointlist[i]), 0.1)
 
 /datum/techweb/proc/modify_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -177,19 +177,19 @@
 	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] += amount
 	return TRUE
 
 /datum/techweb/proc/modify_point_type(type, amount)
-	if(!SSresearch.point_types[type])
+	if(!(type in SSresearch.point_types))
 		return FALSE
 	research_points[type] = max(0, research_points[type] + amount)
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
@@ -332,10 +332,10 @@
 	return techweb_point_display_generic(research_points)
 
 /datum/techweb/proc/enqueue_node(id, mob/user)
-	var/mob/living/carbon/human/human_user = user
 	var/is_rd = FALSE
-	if(human_user.wear_id)
-		var/list/access = human_user.wear_id.GetAccess()
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/list/access = living_user.get_idcard(hand_first = TRUE)?.GetAccess()
 		if(ACCESS_RD in access)
 			is_rd = TRUE
 
@@ -412,7 +412,7 @@
 	// Avoid logging the same 300+ lines at the beginning of every round
 	if (MC_RUNNING())
 		log_research(log_message)
-	
+
 	// Dequeue
 	if(node.id in research_queue_nodes)
 		research_queue_nodes.Remove(node.id)

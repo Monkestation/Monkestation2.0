@@ -337,16 +337,16 @@ Security HUDs! Basic mode shows only the job.
 	var/image/holder = hud_list[WANTED_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
 	var/perp_name = get_face_name(get_id_name(""))
-	
+
 	crew_hud_set_crew_status()
-	
+
 	if(!perp_name || !GLOB.manifest)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
 		return
 
 	var/datum/record/crew/target = find_record(perp_name)
-	
+
 	if(!target || target.wanted_status == WANTED_NONE)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
@@ -495,7 +495,7 @@ Diagnostic HUDs!
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_camera()
 	var/image/holder = hud_list[DIAG_CAMERA_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
-	if(chassis_camera.is_emp_scrambled)
+	if(chassis_camera?.is_emp_scrambled)
 		holder.icon_state = "hudcamera_empd"
 		return
 	holder.icon_state = "hudcamera"
@@ -586,7 +586,7 @@ MONKE, crew hud for silicon.
 	var/image/holder = hud_list[CREW_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
 	var/crew_name = get_face_name(get_id_name(""))
-	
+
 	if(!crew_name || !GLOB.manifest || istype(wear_id?.GetID(), /obj/item/card/id/advanced/chameleon))
 		holder.icon_state = null
 		set_hud_image_inactive(CREW_HUD)

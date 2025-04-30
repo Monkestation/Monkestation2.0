@@ -38,6 +38,8 @@
 	var/list/cargo
 	/// How much things Ripley can carry in their Cargo Compartment
 	var/cargo_capacity = 15
+	/// Uses variable speed based on pressure or not
+	var/uses_variable_speed_pressure = TRUE //monkestation edit
 	/// How fast the mech is in low pressure
 	var/fast_pressure_step_in = 1.5
 	/// How fast the mech is in normal pressure
@@ -272,6 +274,11 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
  */
 /obj/vehicle/sealed/mecha/working/ripley/proc/update_pressure()
 	var/turf/T = get_turf(loc)
+
+	//monkestation edit start
+	if(!uses_variable_speed_pressure)
+		return
+	//monkestation edit end
 
 	if(lavaland_equipment_pressure_check(T))
 		movedelay = fast_pressure_step_in

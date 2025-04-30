@@ -22,9 +22,9 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
 		num_fires++
-		var/datum/map_config/cached = SSmapping.next_map_config
+		var/datum/map_config/cached = SSmap_vote.next_map_config
 		global_data = list(
-			"Map: [SSmapping.config?.map_name || "Loading..."]",
+			"Map: [SSmapping.current_map?.map_name || "Loading..."]",
 			cached ? "Next Map: [cached.map_name]" : null,
 			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.current_storyteller ? SSgamemode.current_storyteller.name : "Secret"]", //monkestation addition
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(statpanels)
 		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
 
-		if(!target.stat_panel.is_ready())
+		if(!target?.stat_panel?.is_ready())
 			continue
 
 		if(target.stat_tab == "Status" && num_fires % status_wait == 0)
@@ -266,10 +266,10 @@ SUBSYSTEM_DEF(statpanels)
 		tracy_dll = TRACY_DLL_PATH
 		tracy_present = fexists(tracy_dll)
 	if(tracy_present)
-		if(GLOB.tracy_initialized)
-			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [GLOB.tracy_init_reason || "N/A"])")))
-		else if(GLOB.tracy_init_error)
-			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([GLOB.tracy_init_error])")))
+		if(Tracy.enabled)
+			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [Tracy.init_reason || "N/A"])")))
+		else if(Tracy.error)
+			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([Tracy.error])")))
 		else if(fexists(TRACY_ENABLE_PATH))
 			mc_data.Insert(2, list(list("byond-tracy:", "Queued for next round")))
 		else

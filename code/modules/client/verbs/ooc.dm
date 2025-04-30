@@ -81,11 +81,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 
-	if(player_details.patreon.access_rank > 0)
+	if(persistent_client.patreon.access_rank > 0)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("patreon")][keyname]"
 
-	if(player_details.twitch.access_rank > 0)
+	if(persistent_client.twitch.access_rank > 0)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("twitch")][keyname]"
 
@@ -475,3 +475,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
+
+/client/verb/map_vote_tally_count()
+	set name = "Show Map Vote Tallies"
+	set desc = "View the current map vote tally counts."
+	set category = "Server"
+	to_chat(mob, SSmap_vote.tally_printout)

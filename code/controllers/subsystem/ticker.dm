@@ -129,12 +129,12 @@ SUBSYSTEM_DEF(ticker)
 		switch(L.len)
 			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
 				if(use_rare_music)
-					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+					if(L[1] == "rare" && L[2] == SSmapping.current_map.map_name)
 						music += S
-					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+					else if(L[2] == "rare" && L[1] == SSmapping.current_map.map_name)
 						music += S
 			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
-				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.current_map.map_name))
 					music += S
 			if(1) //sound.ogg -- common sound
 				if(L[1] == "exclude")
@@ -194,7 +194,7 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
-			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
+			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 			// MONKESTATION EDIT START - lobby notices
@@ -252,13 +252,7 @@ SUBSYSTEM_DEF(ticker)
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
-				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-//MONKESTATION ADDITION START
-				if(SSmapping.map_voted || SSmapping.map_force_chosen == TRUE)
-					return
-				SSmapping.mapvote()
-//MONKESTATION ADDITION END
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
@@ -336,7 +330,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()
-	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
+	INVOKE_ASYNC(Tracy, TYPE_PROC_REF(/datum/tracy, flush)) // monkestation edit: byond-tracy
 
 	return TRUE
 
@@ -540,15 +534,15 @@ SUBSYSTEM_DEF(ticker)
 		splash.Fade(TRUE)
 		living.client?.init_verbs()
 	. = living
-	var/datum/player_details/details = get_player_details(living)
-	if(details)
-		SSchallenges.apply_challenges(details)
+	var/datum/persistent_client/persistent_client = living.persistent_client
+	if(persistent_client)
+		SSchallenges.apply_challenges(persistent_client)
 		for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
 			if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				details.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 150
 		for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
 			if(living.job == processing_reward_jobs)
-				details.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 150
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
@@ -594,13 +588,6 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(next_in_line, span_danger("No response received. You have been removed from the line."))
 			queued_players -= next_in_line
 			queue_delay = 0
-
-/datum/controller/subsystem/ticker/proc/check_maprotate()
-	if(!CONFIG_GET(flag/maprotation))
-		return
-	if(world.time - SSticker.round_start_time < 10 MINUTES) //Not forcing map rotation for very short rounds.
-		return
-	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping/, maprotate))
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
