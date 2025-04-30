@@ -72,11 +72,12 @@
 		ui.open()
 
 /obj/machinery/jukebox/ui_data(mob/user)
+	var/position = (playing && current_track) ? round(REALTIMEOFDAY - media_start_time) : 0
 	return list(
 		"playing" = playing,
 		"loop_mode" = loop_mode,
 		"volume" = volume,
-		"progress" = (playing && current_track) ? min(round(REALTIMEOFDAY - media_start_time) / current_track.duration, 100) : 0,
+		"position" = position,
 		"current_track" = current_track?.get_data(),
 	)
 
