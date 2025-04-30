@@ -25,11 +25,12 @@
 	src.lobby = lobby
 
 /datum/media_track/proc/display()
+	SHOULD_BE_PURE(TRUE)
 	. = "\"[title]\""
 	if(artist)
 		. += " by [artist]"
 
-/datum/media_track/proc/get_data()
+/datum/media_track/proc/get_data() as /list
 	return list(
 		"ref" = REF(src),
 		"title" = title,
