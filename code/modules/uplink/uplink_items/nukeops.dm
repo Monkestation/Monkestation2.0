@@ -758,22 +758,6 @@
 	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/implants/thermals
-	name = "Thermal Eyes"
-	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/thermal_eyes
-	cost = 8
-	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/implants/xray
-	name = "X-ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/xray_eyes
-	cost = 10
-	surplus = 30 //monkestation edit: from 0 to 30
-	purchasable_from = UPLINK_NUKE_OPS
-
 /datum/uplink_item/implants/deathrattle
 	name = "Box of Deathrattle Implants"
 	desc = "A collection of implants (and one reusable implanter) that should be injected into the team. When one of the team \

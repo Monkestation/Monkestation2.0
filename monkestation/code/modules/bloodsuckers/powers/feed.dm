@@ -1,4 +1,4 @@
-#define FEED_NOTICE_RANGE 2
+#define FEED_NOTICE_RANGE 5
 #define FEED_DEFAULT_TIMER (10 SECONDS)
 
 /datum/action/cooldown/bloodsucker/feed
@@ -60,7 +60,7 @@
 	if(!QDELETED(feed_target))
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
 		to_chat(user, span_notice("You slowly release [feed_target]."))
-		to_chat(feed_target, span_warning("Huh? What just happened? You don't remember the last few moments"))
+		to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments")))
 		if(feed_target.stat == DEAD && !started_alive)
 			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 			bloodsuckerdatum_power.AddHumanityLost(10)
@@ -91,6 +91,7 @@
 
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
 	started_alive = (feed_target.stat < HARD_CRIT)
+	to_chat(feed_target, span_userdanger("[owner] begins slipping [owner.p_their()] fangs into you!"))
 	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE))
 		owner.balloon_alert(owner, "feed stopped")
 		DeactivatePower()
