@@ -52,7 +52,7 @@
 /obj/machinery/jukebox/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		update_appearance(UPDATE_ICON_STATE)
+		stop_playing()
 
 /obj/machinery/jukebox/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
