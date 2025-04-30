@@ -278,15 +278,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if(vol <= 0 || (prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
 
-	if(byond_version >= 516)
-		if(QDELETED(media_player)) ///media is set on creation thats weird
-			media_player = new(src)
-	else
-		if(!media) ///media is set on creation thats weird
-			media = new /datum/media_manager(src)
-			media.open()
-			media.update_music()
-		media.lobby_music = TRUE
+	if(QDELETED(media_player)) ///media is set on creation thats weird
+		media_player = new(src)
 
 	if(!length(SSmedia_tracks.lobby_tracks))
 		return
@@ -302,13 +295,9 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		GLOB.lobby_media.current_track = SSmedia_tracks.current_lobby_track
 		GLOB.lobby_media.update_for_all_listeners()
 
-	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
-	if(byond_version >= 516)
-		GLOB.lobby_media.add_listener(mob)
-	else
-		media.push_music(T.url, world.time, 1, force = TRUE)
-		media.update_volume(vol) // this makes it easier if we modify volume later on
-	to_chat(src, span_notice("Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>."))
+	GLOB.lobby_media.add_listener(mob)
+	var/datum/media_track/track = SSmedia_tracks.current_lobby_track
+	to_chat(src, span_notice("Lobby music: <b>[track.title]</b> by <b>[track.artist]</b>."))
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.

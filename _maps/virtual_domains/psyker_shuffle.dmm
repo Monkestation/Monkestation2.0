@@ -71,10 +71,6 @@
 /mob/living/basic/mimic/crate,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"s" = (
-/mob/living/basic/mimic/crate,
-/turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "t" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -881,7 +877,7 @@ Y
 Q
 Q
 Q
-s
+r
 M
 Q
 Q
@@ -919,7 +915,7 @@ Q
 F
 Q
 Y
-s
+r
 Q
 Q
 a
@@ -992,11 +988,11 @@ o
 Y
 a
 Q
-s
+r
 Y
 Y
 Y
-s
+r
 Q
 Q
 Q

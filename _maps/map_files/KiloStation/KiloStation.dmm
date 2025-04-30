@@ -6374,7 +6374,7 @@
 /area/station/service/kitchen)
 "bZt" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/trimline/dark/filled/line{
 	dir = 6
 	},
@@ -76872,7 +76872,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "yaO" = (
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)

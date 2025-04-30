@@ -566,13 +566,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 
-	if(!media)
-		media = new /datum/media_manager(src)
-	media.open()
-	media.update_music()
-
-	if(byond_version >= 516)
-		media_player = new(src)
+	media_player = new(src)
 
 	fully_created = TRUE
 

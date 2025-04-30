@@ -76,7 +76,6 @@ export const sound_achievement: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
-// monke edit start - AI vox announcement toggle
 export const sound_vox: FeatureToggle = {
   name: 'Enable AI VOX announcements',
   category: 'SOUND',
@@ -84,4 +83,11 @@ export const sound_vox: FeatureToggle = {
   description: 'When enabled, hear AI VOX (text-to-speech) announcements.',
   component: CheckboxInput,
 };
-// monke edit end
+
+export const hearmusic: FeatureToggle = {
+  name: 'Hear Radio Music',
+  category: 'SOUND',
+  description:
+    'When enabled, hear music played in-game by the cassette player.',
+  component: CheckboxInput,
+};

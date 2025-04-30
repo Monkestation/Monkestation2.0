@@ -65,10 +65,8 @@
 		return
 	if (value)
 		client.playtitlemusic()
-	else if(client.byond_version >= 516)
-		client.mob.update_media_source()
 	else
-		client.media.stop_music()
+		client.mob.update_media_source()
 
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi
@@ -81,3 +79,10 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ship_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/// Whether or not to hear curator music.
+/datum/preference/toggle/hear_music
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "hearmusic"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = TRUE
