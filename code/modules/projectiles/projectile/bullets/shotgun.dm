@@ -4,8 +4,6 @@
 	damage = 50
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
-	tile_dropoff = 0.1
-	tile_dropoff_s = 0.05
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
@@ -41,7 +39,7 @@
 
 			if(damage > 10) // Lets just be safe with this one
 				damage -= 7
-			armour_penetration -= 10
+			armour_penetration -= 25
 
 	return ..()
 //MONKE EDIT END
@@ -92,8 +90,8 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	tile_dropoff = 0.075
-	tile_dropoff_s = 0.075
+	tile_dropoff = 0.45
+	tile_dropoff_s = 0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
