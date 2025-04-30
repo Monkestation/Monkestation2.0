@@ -131,7 +131,13 @@
 	update_static_data_for_all_viewers()
 	return TRUE
 
+/obj/machinery/jukebox/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/jukebox/proc/start_playing(datum/media_track/track)
+	var/old_track = current_track
 	track ||= current_track
 	if(isnull(track))
 		stop_playing()
@@ -146,6 +152,8 @@
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance(UPDATE_ICON_STATE)
 	begin_processing()
+	if(old_track != current_track)
+		audible_message(span_notice("\The [src] begins to play [current_track.display()]"))
 
 /obj/machinery/jukebox/proc/stop_playing()
 	if(!playing)
@@ -202,6 +210,15 @@
 
 /obj/machinery/jukebox/unlocked/available_tracks()
 	return SSmedia_tracks.all_tracks
+
+/obj/machinery/media/jukebox
+	name = "THIS SHOULD NOT EXIST"
+
+/obj/machinery/media/jukebox/Initialize(mapload)
+	..()
+	stack_trace("[type] spawned, subtypes of /obj/machinery/jukebox should be used instead!")
+	new /obj/machinery/jukebox(loc)
+	return INITIALIZE_HINT_QDEL
 
 #undef JUKEMODE_PLAY_ONCE
 #undef JUKEMODE_REPEAT_SONG
