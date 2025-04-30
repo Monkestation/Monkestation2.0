@@ -212,7 +212,7 @@
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
 	///Stamina and damage dropoff over distance, for shotguns and the like
-	///It is a multiplier that is SUBTRACTED from damage, I.E 0.1 dropoff means the projectile looses 0.1 of it's damage per tile
+	///It is a flat value that is SUBTRACTED from damage for every tile it moves, I.E 5 dropoff means the projectile looses 5 damage for every tile it moves past the first tile
 	var/tile_dropoff = 0
 	var/tile_dropoff_s = 0
 
@@ -246,9 +246,9 @@
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
 	if(damage > 0)
-		damage -= round(damage * tile_dropoff, DAMAGE_PRECISION)
+		damage -= tile_dropoff
 	if(stamina > 0)
-		stamina -= round(stamina * tile_dropoff_s, DAMAGE_PRECISION)
+		stamina -= tile_dropoff_s
 	if(damage < 0 && stamina < 0)
 		qdel(src)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
