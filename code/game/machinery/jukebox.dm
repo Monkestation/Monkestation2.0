@@ -49,12 +49,23 @@
 		icon_state = base_icon_state
 	return ..()
 
+/obj/machinery/jukebox/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/jukebox/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MediaJukebox", "RetroBox - Space Style")
+		ui.open()
+
 /obj/machinery/jukebox/ui_data(mob/user)
 	return list(
 		"playing" = playing,
 		"loop_mode" = loop_mode,
 		"volume" = volume,
-		"progress" = (playing && current_track) ? min(100, round(REALTIMEOFDAY - media_start_time) / current_track.duration) : 0,
+		"progress" = (playing && current_track) ? min(round(REALTIMEOFDAY - media_start_time) / current_track.duration, 100) : 0,
 		"current_track" = current_track?.get_data(),
 	)
 
@@ -63,6 +74,30 @@
 	for(var/datum/media_track/track as anything in available_tracks())
 		tracks += list(track.get_data())
 	return list("tracks" = tracks)
+
+/obj/machinery/jukebox/proc/start_playing(datum/media_track/track)
+	if(isnull(track))
+		stop_playing()
+		return
+	current_track = track
+	playing = TRUE
+	media_start_time = REALTIMEOFDAY
+	media_source.current_track = current_track
+	media_source.volume = volume
+	media_source.update_for_all_listeners()
+	SStgui.update_uis(src)
+	update_use_power(ACTIVE_POWER_USE)
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/jukebox/proc/stop_playing()
+	playing = FALSE
+	current_track = null
+	media_start_time = 0
+	media_source.current_track = null
+	media_source.update_for_all_listeners()
+	SStgui.update_uis(src)
+	update_use_power(IDLE_POWER_USE)
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/jukebox/proc/available_tracks() as /list
 	RETURN_TYPE(/list/datum/media_track)
