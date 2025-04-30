@@ -9,6 +9,7 @@ import {
   ProgressBar,
   Section,
   Slider,
+  Stack,
 } from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
@@ -105,8 +106,9 @@ const Controls = () => {
       </LabeledList.Item>
       <LabeledList.Item label="Progress">
         <ProgressBar value={progress} maxValue={1} color="good">
-          {playing &&
-            `${formatTime(position)} / ${formatTime(current_track.duration)}`}
+          {playing
+            ? `${formatTime(position, 'short')} / ${formatTime(current_track.duration, 'short')}`
+            : 'N/A'}
         </ProgressBar>
       </LabeledList.Item>
       <LabeledList.Item label="Volume">
@@ -143,30 +145,36 @@ const AvailableTracks = () => {
 
   let true_genre = !!playing && (current_track?.genre || 'Uncategorized');
 
-  return Object.keys(genre_songs)
-    .sort()
-    .map((genre) => (
-      <Collapsible
-        title={genre}
-        key={genre}
-        color={true_genre === genre ? 'green' : 'default'}
-        child_mt={0}
-      >
-        <div style={{ 'margin-left': '1em' }}>
-          {genre_songs[genre].map((track) => (
-            <Button
-              fluid
-              icon="play"
-              key={track.ref}
-              selected={current_track?.ref === track.ref}
-              onClick={() => act('set_track', { ref: track.ref })}
+  return (
+    <Stack vertical fill>
+      {Object.keys(genre_songs)
+        .sort()
+        .map((genre) => (
+          <Stack.Item key={genre}>
+            <Collapsible
+              title={genre}
+              color={true_genre === genre ? 'green' : 'default'}
+              child_mt={0}
             >
-              {track.title}
-            </Button>
-          ))}
-        </div>
-      </Collapsible>
-    ));
+              <Stack vertical fill>
+                {genre_songs[genre].map((track) => (
+                  <Stack.Item key={track.ref} ml={'1em'}>
+                    <Button
+                      fluid
+                      icon="play"
+                      selected={current_track?.ref === track.ref}
+                      onClick={() => act('set_track', { ref: track.ref })}
+                    >
+                      {track.title}
+                    </Button>
+                  </Stack.Item>
+                ))}
+              </Stack>
+            </Collapsible>
+          </Stack.Item>
+        ))}
+    </Stack>
+  );
 };
 
 export const MediaJukebox = () => {
@@ -176,17 +184,23 @@ export const MediaJukebox = () => {
 
   return (
     <Window width={450} height={600} resizable>
-      <Window.Content scrollable>
-        <Section title="Currently Playing">
-          <Controls />
-        </Section>
-        <Section title="Available Tracks" scrollable>
-          {tracks.length ? (
-            <AvailableTracks />
-          ) : (
-            <Box color="bad">Error: No songs loaded.</Box>
-          )}
-        </Section>
+      <Window.Content>
+        <Stack vertical fill>
+          <Stack.Item>
+            <Section title="Currently Playing">
+              <Controls />
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section fill scrollable title="Available Tracks">
+              {tracks.length ? (
+                <AvailableTracks />
+              ) : (
+                <Box color="bad">Error: No songs loaded.</Box>
+              )}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

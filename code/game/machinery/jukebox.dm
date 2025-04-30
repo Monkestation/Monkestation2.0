@@ -137,6 +137,7 @@
 		stop_playing()
 		return
 	playing = TRUE
+	current_track = track
 	media_start_time = REALTIMEOFDAY
 	media_source.current_track = current_track
 	media_source.volume = volume

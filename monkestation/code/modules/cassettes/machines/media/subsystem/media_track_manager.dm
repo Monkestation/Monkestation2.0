@@ -42,8 +42,13 @@ SUBSYSTEM_DEF(media_tracks)
 			log_runtime("Failed to read tracks from [filename], json_decode failed.")
 			continue
 
-		var/is_json_obj = json_encode(json_data)[1] == "{"
-		var/is_json_arr = json_encode(json_data)[1] == "\["
+		var/is_json_obj = FALSE
+		var/is_json_arr = FALSE
+		switch(json_encode(json_data)[1])
+			if("{")
+				is_json_obj = TRUE
+			if("\[")
+				is_json_arr = TRUE
 		// Some files could be an object, since SSticker adds lobby tracks from jsons that aren't arrays
 		if(is_json_obj)
 			process_track(json_data, filename)
@@ -183,13 +188,13 @@ SUBSYSTEM_DEF(media_tracks)
 	if(!check_rights(R_DEBUG|R_FUN))
 		return
 
-	var/track = tgui_input_text(user, "Input track title or URL to remove (must be exact)", "Remove Track")
-	if(!track)
+	var/track_to_remove = tgui_input_text(user, "Input track title or URL to remove (must be exact)", "Remove Track")
+	if(!track_to_remove)
 		return
 
 	var/found_track = FALSE
 	for(var/datum/media_track/track as anything in all_tracks)
-		if(track.title != track && track.url != track)
+		if(track.title != track_to_remove && track.url != track_to_remove)
 			continue
 		all_tracks -= track
 		qdel(track)
