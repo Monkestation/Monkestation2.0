@@ -11,6 +11,14 @@
 	var/heat_transfer_rate = 0
 	///Maximum allowed transfer percentage
 	var/max_heat_transfer_rate = 100
+	//monkestation edit
+	var/target_temperature = TCMB
+	///Minimum allowed temperature
+	var/minimum_temperature = TCMB
+	///Maximum allowed temperature to be set
+	var/max_temperature = 1e12
+	// Input cooling / output heating smart mode
+	var/inverted = FALSE
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/Initialize(mapload)
 	. = ..()
@@ -38,6 +46,15 @@
 		update_appearance()
 	return ..()
 
+/obj/machinery/atmospherics/components/binary/temperature_pump/examine(mob/user)
+	. = ..()
+	. += "This device will transfer heat if the temperature of the gas in the [inverted ? "output is lower" : "input is higher"] than the temperature set in the interface."
+	if(inverted)
+		. += "The device settings can be restored if a multitool is used on it."
+	else
+		. += "The sensor's settings can be changed by using a multitool on the device."
+
+
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
 	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
@@ -55,7 +72,7 @@
 
 	var/coolant_temperature_delta = remove_input.temperature - remove_output.temperature
 
-	if(coolant_temperature_delta > 0)
+	if((coolant_temperature_delta > 0) && ((!inverted && (air_input.temperature>target_temperature)) || (inverted && (air_output.temperature<target_temperature))))
 		var/input_capacity = remove_input.heat_capacity()
 		var/output_capacity = remove_output.heat_capacity()
 
@@ -83,6 +100,9 @@
 	data["on"] = on
 	data["rate"] = round(heat_transfer_rate)
 	data["max_heat_transfer_rate"] = round(max_heat_transfer_rate)
+	data["temperature"] = round(target_temperature)
+	data["min_temperature"] = round(minimum_temperature)
+	data["max_temperature"] = round(max_temperature)
 	return data
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, params)
@@ -105,4 +125,25 @@
 			if(.)
 				heat_transfer_rate = clamp(rate, 0, max_heat_transfer_rate)
 				investigate_log("was set to [heat_transfer_rate]% by [key_name(usr)]", INVESTIGATE_ATMOS)
+		if("temperature")
+			var/temperature = params["temperature"]
+			if(temperature == "tmax")
+				temperature = max_temperature
+				. = TRUE
+			else if(text2num(temperature) != null)
+				temperature = text2num(temperature)
+				. = TRUE
+			if(.)
+				target_temperature = clamp(minimum_temperature, temperature, max_temperature)
+				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_appearance()
+
+/obj/machinery/atmospherics/components/binary/temperature_pump/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
+	if (istype(I))
+		inverted = !inverted
+		if(inverted)
+			to_chat(user, span_notice("You set the [src]'s sensors to transfer heat when the output temperature is lower than the setted one."))
+		else
+			to_chat(user, span_notice("You set the [src]'s sensors to transfer heat when the intput temperature is higher than the setted one."))
+	return TRUE
