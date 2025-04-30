@@ -538,3 +538,21 @@
       power cell in their APCs roundstart now.'
   - map: 'Blueshift: Engineering spawns with an oxygen canister now.'
   - map: 'Blueshift: Art Supply Storage''s APC is now properly wired to the grid.'
+2025-04-28:
+  Absolucy:
+  - qol: Made the output of the genetic sequencer scanner look much better.
+  - qol: The genetic sequencer scanner now shows genetic stability.
+  - rscdel: Removed AFK kicking functionality, as it wasn't even enabled anyways,
+      yet it was somehow randomly kicking players who were very much not AFK.
+  - bugfix: Fixed malf AIs being able to overload/destroy indestructible machines.
+  - bugfix: Fix some jobs (assistant, cargo tech, nt rep, secass) not getting the
+      proper implants during cybernetic revolution.
+  Gw0sty:
+  - map: Kilo, Derelict russian, Unknown site 1,  Derelict Sulaco, icebox, engineering
+      outpost and snow arena has some of their roundstart atmospheric differences
+      fixed. Hopefully decreases some load times.
+  shodd, ZephyrTFA:
+  - refactor: Map Votes are now carried over between rounds. When a map vote is actually
+      a contest, the winning map will have its votes reset.
+  - refactor: a large amount of map vote and vote code changed
+  - rscdel: RTV gone
