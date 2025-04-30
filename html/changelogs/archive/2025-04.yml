@@ -556,3 +556,11 @@
       a contest, the winning map will have its votes reset.
   - refactor: a large amount of map vote and vote code changed
   - rscdel: RTV gone
+2025-04-30:
+  Gw0sty:
+  - bugfix: Airborne diseases now work. Reminder to wear masks
+  Ice-Type:
+  - bugfix: Thanks to new advances in sorcery and the power of luck, windows now visually
+      crack again. Praise be. Said advances were then refined by Shion thanks Shion
+  Shoddd:
+  - bugfix: oozeling, floran, and plasma man damage mods work again
