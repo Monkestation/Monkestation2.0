@@ -50,6 +50,20 @@
 	surplus = 0
 	restricted = TRUE
 
+/datum/uplink_item/implants/thermals
+	name = "Thermal Eyes"
+	desc = "These cybernetic eyes will give you thermal vision. Comes with only a single-use autosurgeon, a corner cut to achieve a lower price point."
+	item = /obj/item/autosurgeon/syndicate/thermal_eyes
+	cost = 5
+	surplus = 40 //monkestation edit: from 0 to 40
+
+/datum/uplink_item/implants/xray
+	name = "X-ray Vision Implant"
+	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
+	item = /obj/item/autosurgeon/syndicate/xray_eyes
+	cost = 10
+	surplus = 30 //monkestation edit: from 0 to 30
+
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
 	uplink_box.name = "Uplink Implant Box"
