@@ -22,6 +22,8 @@
 #define MAX_OUTPUT_PRESSURE 4500
 //Monkestation edit / Maximum pressure passive devices max out at
 #define MAX_PASSIVE_OUTPUT_PRESSURE 1e12
+//Maximum temperature setting for devices
+#define MAX_TEMPERATURE_SETTING 1e12
 /// (L/s) Maximum speed powered equipment can work at.
 #define MAX_TRANSFER_RATE 200
 /// How many percent of the contents that an overclocked volume pumps leak into the air

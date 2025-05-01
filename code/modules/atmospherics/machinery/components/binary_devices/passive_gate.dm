@@ -20,7 +20,6 @@ Passive gate is similar to the regular pump except:
 	///Set the target pressure the component should arrive to
 	var/target_pressure = ONE_ATMOSPHERE
 
-
 /obj/machinery/atmospherics/components/binary/passive_gate/Initialize(mapload)
 	. = ..()
 	register_context()

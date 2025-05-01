@@ -11,7 +11,7 @@
 	///Minimum allowed temperature
 	var/minimum_temperature = TCMB
 	///Maximum allowed temperature to be set
-	var/max_temperature = 1e12
+	var/max_temperature = MAX_TEMPERATURE_SETTING
 	//Monkestation edit / Maximum recommended temperature
 	var/max_recommended_temperature = 4500
 	///Check if the sensor should let gas pass if temperature in the mix is less/higher than the target one
@@ -138,7 +138,7 @@
 	if (istype(I))
 		inverted = !inverted
 		if(inverted)
-			to_chat(user, span_notice("You set the [src]'s sensors to release gases when the temperature is higher than the setted one."))
+			to_chat(user, span_notice("You set [src]'s sensors to release gases when the temperature is higher than the setted one."))
 		else
-			to_chat(user, span_notice("You set the [src]'s sensors to the default settings."))
+			to_chat(user, span_notice("You set [src]'s sensors to the default settings."))
 	return TRUE
