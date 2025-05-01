@@ -303,14 +303,6 @@ window "outputwindow"
 		anchor2 = -1,-1
 		is-visible = false
 		saved-params = ""
-	elem "mediapanel2"
-		type = BROWSER
-		pos = 599,460
-		size = 1x1
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		is-visible = false
-		saved-params = ""
 
 window "output_selector"
 	elem "output_selector"

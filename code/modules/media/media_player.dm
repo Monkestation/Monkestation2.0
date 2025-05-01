@@ -6,7 +6,7 @@
 #warn COMMENT OUT MM2_DEBUGGING BEFORE DEPLOYING!!!
 #else
 #define MM2_DEBUG(x)
-#define MEDIA_WINDOW_ID "outputwindow.mediapanel2"
+#define MEDIA_WINDOW_ID "outputwindow.mediapanel"
 #endif
 
 /client
