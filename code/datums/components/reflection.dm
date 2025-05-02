@@ -167,7 +167,7 @@
 /// Handles updating the appearance of the reflection to match the target movable.
 /datum/component/reflection/proc/copy_appearance_to_reflection(obj/effect/abstract/reflection, atom/movable/target)
 	reflection.appearance = copy_appearance_filter_overlays(target.appearance)
-	reflection.vis_flags = VIS_INHERIT_ID
+	reflection.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE
 	reflection.transform = reflection_matrix || matrix()
 	// updating the dir so facing towards / away from it correctly faces the reflection away / towards it,
 	// while facing left / right will correctly face the reflection left / right

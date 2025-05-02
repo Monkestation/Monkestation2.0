@@ -1,0 +1,9 @@
+2025-05-02:
+  Absolucy:
+  - bugfix: Fixed oozelings duping translation gloves and prosthetic limbs when revived.
+  - bugfix: Fixed reflections clipping outside the sprite of mirrors.
+  Absolucy, JohnFulpWillard:
+  - bugfix: The DNA scanner's joker button no longer instantly activates itself when
+      the cooldown between uses is done.
+  Gw0sty:
+  - bugfix: Airborne virus's now will respect internals, because of course they would
