@@ -19,6 +19,8 @@
 	var/max_temperature = MAX_TEMPERATURE_SETTING
 	// Input cooling / output heating smart mode
 	var/inverted = FALSE
+	// Checks if heat is being transfered from input to output
+	var/is_heat_flowing = FALSE
 	//Monkestation edit end
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/Initialize(mapload)
@@ -57,7 +59,12 @@
 
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
-	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
+	if(on && is_operational && is_heat_flowing) //Monkestation edit start
+		icon_state = "tpump_flow-[set_overlay_offset(piping_layer)]"
+	else if(on && is_operational && !is_heat_flowing)
+		icon_state = "tpump_on-[set_overlay_offset(piping_layer)]"
+	else
+		icon_state = "tpump_off-[set_overlay_offset(piping_layer)]" //Monkestation edit end
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
 	if(!on || !is_operational)
@@ -66,7 +73,9 @@
 	var/datum/gas_mixture/air_input = airs[1]
 	var/datum/gas_mixture/air_output = airs[2]
 
-	if(!QUANTIZE(air_input.total_moles()) || !QUANTIZE(air_output.total_moles())) //Don't transfer if there's no gas
+	if(!QUANTIZE(air_input.total_moles()) || !QUANTIZE(air_output.total_moles()) || (heat_transfer_rate<=0)) //Monkestation edit start //Don't transfer if there's no gas or if the transfer rate is zero
+		is_heat_flowing = FALSE
+		update_icon_nopipes() //Monkestation edit end
 		return
 	var/datum/gas_mixture/remove_input = air_input.remove_ratio(0.9)
 	var/datum/gas_mixture/remove_output = air_output.remove_ratio(0.9)
@@ -76,11 +85,16 @@
 	if((coolant_temperature_delta > 0) && ((!inverted && (air_input.temperature>target_temperature)) || (inverted && (air_output.temperature<target_temperature)))) //Monkestation edit
 		var/input_capacity = remove_input.heat_capacity()
 		var/output_capacity = remove_output.heat_capacity()
+		is_heat_flowing = TRUE //Monkestation edit
 
 		var/cooling_heat_amount = (heat_transfer_rate * 0.01) * CALCULATE_CONDUCTION_ENERGY(coolant_temperature_delta, output_capacity, input_capacity)
 		remove_output.temperature = max(remove_output.temperature + (cooling_heat_amount / output_capacity), TCMB)
 		remove_input.temperature = max(remove_input.temperature - (cooling_heat_amount / input_capacity), TCMB)
 		update_parents()
+	else
+		is_heat_flowing = FALSE //Monkestation edit
+
+	update_icon_nopipes() //Monkestation edit
 
 	var/power_usage = 200
 
