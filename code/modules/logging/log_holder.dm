@@ -237,7 +237,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	if(fexists(file_path))
 		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
 		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
+	rustg_file_write("\[[HUMAN_READABLE_TIMESTAMP]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
 
 #undef LOG_CATEGORY_RESET_FILE_MARKER
 #undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
@@ -280,21 +280,6 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 /datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
 	return RUSTG_CALL(RUST_G, "unix_timestamp")()
-
-/datum/log_holder/proc/human_readable_timestamp(precision = 3)
-	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
-	// now we grab the millis from the rustg timestamp
-	var/rustg_stamp = unix_timestamp_string()
-	var/list/timestamp = splittext(rustg_stamp, ".")
-#ifdef UNIT_TESTS
-	if(length(timestamp) != 2)
-		stack_trace("rustg returned illegally formatted string '[rustg_stamp]'")
-		return start
-#endif
-	var/millis = timestamp[2]
-	if(length(millis) > precision)
-		millis = copytext(millis, 1, precision + 1)
-	return "[start].[millis]"
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
