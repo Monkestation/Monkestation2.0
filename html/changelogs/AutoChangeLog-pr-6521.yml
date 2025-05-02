@@ -1,0 +1,5 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "sabot AP reduced to 25"
+  - balance: "AP is now multiplicative when hitting armor higher than it"
