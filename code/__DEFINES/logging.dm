@@ -198,5 +198,4 @@
 var/static/__formatted_timestamp
 var/static/__unix_timestamp
 
-#define HUMAN_READABLE_TIMESTAMP call_ext(__formatted_timestamp)("%Y-%m-%d %H:%M:%S%.3f")
 #define UNIX_TIMESTAMP_STRING call_ext(__unix_timestamp)()

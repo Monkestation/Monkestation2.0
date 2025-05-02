@@ -121,7 +121,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		CRASH("Attempted to call init_logging twice!")
 
 	round_id = GLOB.round_id
-	logging_start_timestamp = UNIX_TIMESTAMP_STRING
+	logging_start_timestamp = unix_timestamp_string()
 	log_categories = list()
 	disabled_categories = list()
 
@@ -237,7 +237,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	if(fexists(file_path))
 		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
 		fcopy(file_path, get_recovery_file_for(file_path))
-	rustg_file_write("\[[HUMAN_READABLE_TIMESTAMP]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
+	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
 
 #undef LOG_CATEGORY_RESET_FILE_MARKER
 #undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
@@ -277,6 +277,12 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	category_instance.category_header = category_header
 	init_category_file(category_instance, category_header)
+
+/datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
+	return UNIX_TIMESTAMP_STRING
+
+/datum/log_holder/proc/human_readable_timestamp()
+	return call_ext(__formatted_timestamp)("%Y-%m-%d %H:%M:%S%.3f")
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
