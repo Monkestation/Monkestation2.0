@@ -195,4 +195,8 @@
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
-#define HUMAN_READABLE_TIMESTAMP RUSTG_CALL(RUST_G, "formatted_timestamp")("%Y-%m-%d %H:%M:%S%.3f")
+var/static/__formatted_timestamp
+var/static/__unix_timestamp
+
+#define HUMAN_READABLE_TIMESTAMP call_ext(__formatted_timestamp)("%Y-%m-%d %H:%M:%S%.3f")
+#define UNIX_TIMESTAMP_STRING call_ext(__unix_timestamp)()

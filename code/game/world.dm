@@ -79,6 +79,8 @@ GLOBAL_VAR(restart_counter)
 			Genesis(tracy_initialized = TRUE)
 			return
 #endif
+	__formatted_timestamp = load_ext(RUST_G, "formatted_timestamp")
+	__unix_timestamp = load_ext(RUST_G, "unix_timestamp")
 	// monkestation end
 
 	Profile(PROFILE_RESTART)
@@ -200,7 +202,7 @@ GLOBAL_VAR(restart_counter)
 	data["tick_usage"] = world.tick_usage
 	data["tick_lag"] = world.tick_lag
 	data["time"] = world.time
-	data["timestamp"] = logger.unix_timestamp_string()
+	data["timestamp"] = UNIX_TIMESTAMP_STRING
 	return data
 
 /world/proc/SetupLogs()
