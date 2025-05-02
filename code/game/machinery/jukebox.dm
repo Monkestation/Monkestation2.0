@@ -211,15 +211,6 @@
 /obj/machinery/jukebox/unlocked/available_tracks()
 	return SSmedia_tracks.all_tracks
 
-/obj/machinery/media/jukebox
-	name = "THIS SHOULD NOT EXIST"
-
-/obj/machinery/media/jukebox/Initialize(mapload)
-	..()
-	stack_trace("[type] spawned, subtypes of /obj/machinery/jukebox should be used instead!")
-	new /obj/machinery/jukebox(loc)
-	return INITIALIZE_HINT_QDEL
-
 #undef JUKEMODE_PLAY_ONCE
 #undef JUKEMODE_REPEAT_SONG
 #undef JUKEMODE_RANDOM
