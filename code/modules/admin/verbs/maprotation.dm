@@ -1,13 +1,3 @@
-/client/proc/forcerandomrotate()
-	set category = "Server"
-	set name = "Trigger Random Map Rotation"
-	var/rotate = tgui_alert(usr,"Force a random map rotation to trigger?", "Rotate map?", list("Yes", "Cancel"))
-	if (rotate != "Yes")
-		return
-	message_admins("[key_name_admin(usr)] is forcing a random map rotation.")
-	log_admin("[key_name(usr)] is forcing a random map rotation.")
-	SSmapping.maprotate()
-
 /client/proc/adminchangemap()
 	set category = "Server"
 	set name = "Change Map"
@@ -122,14 +112,19 @@
 			fdel(PATH_TO_NEXT_MAP_JSON)
 		text2file(json_encode(json_value), PATH_TO_NEXT_MAP_JSON)
 
-		if(SSmapping.changemap(virtual_map))
+		if(SSmap_vote.set_next_map(virtual_map))
 			message_admins("[key_name_admin(usr)] has changed the map to [virtual_map.map_name]")
-			SSmapping.map_force_chosen = TRUE
+			SSmap_vote.admin_override = TRUE
 		fdel("data/custom_map_json/[config_file]")
 	else
 		var/datum/map_config/virtual_map = maprotatechoices[chosenmap]
 		message_admins("[key_name_admin(usr)] is changing the map to [virtual_map.map_name]")
 		log_admin("[key_name(usr)] is changing the map to [virtual_map.map_name]")
-		if (SSmapping.changemap(virtual_map))
+		if (SSmap_vote.set_next_map(virtual_map))
 			message_admins("[key_name_admin(usr)] has changed the map to [virtual_map.map_name]")
-			SSmapping.map_force_chosen = TRUE
+			SSmap_vote.admin_override = TRUE
+
+/client/proc/admin_revert_map()
+	set category = "Server"
+	set name = "Revert Map Vote"
+	SSmap_vote.revert_next_map()

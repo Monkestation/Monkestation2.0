@@ -12077,7 +12077,7 @@
 /obj/structure/railing/wood{
 	dir = 8
 	},
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/structure/railing/wood{
 	dir = 4
 	},

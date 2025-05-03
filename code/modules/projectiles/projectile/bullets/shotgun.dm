@@ -21,6 +21,7 @@
 	damage = 30 //20 less than slugs. Only better when bullet armor is 50+, primarily counters bulletproof armor.
 	speed = 0.25 //sub-caliber + lighter = speed. (Smaller number = faster)
 	armour_penetration = 75 //Tis a solid-tungsten penetrator, what do you expect?
+
 	wound_bonus = -25
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
 	ricochet_chance = 50
