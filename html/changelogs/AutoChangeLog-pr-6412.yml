@@ -1,4 +1,0 @@
-author: "RandomDudeFromTheRim"
-delete-after: True
-changes:
-  - bugfix: "fixed being able to make infinite research through faulty artifact spawners"

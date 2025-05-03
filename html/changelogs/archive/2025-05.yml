@@ -7,3 +7,16 @@
       the cooldown between uses is done.
   Gw0sty:
   - bugfix: Airborne virus's now will respect internals, because of course they would
+2025-05-03:
+  Evalence0:
+  - code_imp: copied draw_length and other logic from lizard tongues to floran tongues
+  RandomDudeFromTheRim:
+  - bugfix: fixed being able to make infinite research through faulty artifact spawners
+  Shoddd:
+  - balance: sabot AP reduced to 25
+  - balance: AP is now multiplicative when hitting armor higher than it
+  SmArtKar:
+  - image: sprites relating to Slime Ranching have been updated
+  TheMrGlasses:
+  - balance: Changed the overall cooldown of the Joker function in genetics, as well
+      as replaced the needed matter bin with a capacitor instead.

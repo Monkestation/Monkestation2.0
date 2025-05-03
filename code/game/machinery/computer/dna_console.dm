@@ -5,9 +5,9 @@
 /// Timeout for DNA Scramble in DNA Consoles
 #define SCRAMBLE_TIMEOUT 600
 /// Timeout for using the Joker feature to solve a gene in DNA Console
-#define JOKER_TIMEOUT 12000
+#define JOKER_TIMEOUT (5 MINUTES)
 /// How much time DNA Scanner upgrade tiers remove from JOKER_TIMEOUT
-#define JOKER_UPGRADE 3000
+#define JOKER_UPGRADE (1 MINUTES)
 
 /// Maximum value for genetic damage strength when pulsing enzymes
 #define GENETIC_DAMAGE_STRENGTH_MAX 15
