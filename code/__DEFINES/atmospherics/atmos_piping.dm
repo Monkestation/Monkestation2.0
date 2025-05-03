@@ -20,7 +20,7 @@
 //Atmos pipe limits
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500
-//Monkestation edit / Maximum pressure passive devices max out at
+//Maximum pressure passive devices max out at
 #define MAX_PASSIVE_OUTPUT_PRESSURE 1e12
 //Maximum temperature setting for devices
 #define MAX_TEMPERATURE_SETTING 1e12
