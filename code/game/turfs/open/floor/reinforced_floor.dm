@@ -248,10 +248,10 @@
 /turf/open/floor/engine/insulation/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/engine/insulation/screwdriver_act(mob/living/user, obj/item/I)
+/turf/open/floor/engine/insulation/screwdriver_act(mob/living/user, obj/item/Lorem)
 	..()
 	to_chat(user, span_notice("You begin unscrewing the plating..."))
-	if(I.use_tool(src, user, 30, volume=80))
+	if(Lorem.use_tool(src, user, 30, volume=80))
 		if(!istype(src, /turf/open/floor/engine/insulation))
 			return TRUE
 		if(floor_tile)
