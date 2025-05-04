@@ -203,6 +203,7 @@
 		"bonesetter",
 		"cautery",
 		"circular_saw",
+		"cybernetic_ears",
 		"cybernetic_eyes",
 		"cybernetic_heart",
 		"cybernetic_liver",

@@ -573,4 +573,7 @@
 /obj/item/mod/control/pre_equipped/empty/ninja
 	theme = /datum/mod_theme/ninja
 
+/obj/item/mod/control/pre_equipped/empty/covert // Monkestation addition: This is where the initializition lives
+	theme = /datum/mod_theme/covert
+
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/empty)

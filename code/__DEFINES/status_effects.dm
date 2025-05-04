@@ -137,6 +137,9 @@
 #define set_dizzy(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness)
 #define set_dizzy_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness, TRUE)
 
+//#define adjust_staggered_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/staggered, up_to) // MONKESTATION EDIT OLD
+#define adjust_staggered_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/stagger, up_to) // MONKESTATION EDIT NEW
+
 #define adjust_jitter(duration) adjust_timed_status_effect(duration, /datum/status_effect/jitter)
 #define adjust_jitter_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/jitter, up_to)
 #define set_jitter(duration) set_timed_status_effect(duration, /datum/status_effect/jitter)

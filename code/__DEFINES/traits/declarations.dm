@@ -323,9 +323,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 /// Makes whispers clearly heard from seven tiles away, the full hearing range
-/* #define TRAIT_GOOD_HEARING "good_hearing" */
+#define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
-/* #define TRAIT_XRAY_HEARING "xray_hearing" */
+#define TRAIT_XRAY_HEARING "xray_hearing"
 
 /// This mob can not enter or move on a shuttle
 /* #define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement" */
@@ -1163,7 +1163,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAS_LABEL "labeled"
 
 /// Trait given to a mob that is currently thinking (giving off the "thinking" icon), used in an IC context
-/* #define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC" */
+#define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC"
 
 ///without a human having this trait, they speak as if they have no tongue.
 #define TRAIT_SPEAKS_CLEARLY "speaks_clearly"

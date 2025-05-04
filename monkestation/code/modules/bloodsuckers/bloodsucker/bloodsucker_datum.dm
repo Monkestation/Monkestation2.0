@@ -59,12 +59,17 @@
 	var/bloodsucker_level = 0
 	var/bloodsucker_level_unspent = 1
 	var/additional_regen
+	var/blood_over_cap = 0
 	var/bloodsucker_regen_rate = 0.3
 
 	// Used for Bloodsucker Objectives
 	var/area/bloodsucker_lair_area
 	var/obj/structure/closet/crate/coffin
 	var/total_blood_drank = 0
+
+	/// Used for Bloodsuckers gaining levels from drinking blood
+	var/blood_level_gain = 0
+	var/blood_level_gain_amount = 0
 
 	///Blood display HUD
 	var/atom/movable/screen/bloodsucker/blood_counter/blood_display
@@ -85,6 +90,7 @@
 	/// Traits that don't get removed by Masquerade
 	var/static/list/always_traits = list(
 		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
+		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
@@ -115,6 +121,13 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 	)
+	/// Traits applied while inside of a coffin.
+	var/static/list/coffin_traits = list(
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+	)
 	/// A typecache of organs we'll expel during Torpor.
 	var/static/list/yucky_organ_typecache = typecacheof(list(
 		/obj/item/organ/internal/body_egg,
@@ -132,6 +145,7 @@
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
@@ -157,7 +171,7 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
 	handle_clown_mutation(current_mob, removing = FALSE)
 
 	if(current_mob.hud_used)
@@ -531,3 +545,14 @@
 			gourmand_objective.owner = owner
 			gourmand_objective.objective_name = "Optional Objective"
 			objectives += gourmand_objective
+
+/datum/antagonist/bloodsucker/proc/on_moved(datum/source)
+	SIGNAL_HANDLER
+	var/mob/living/current = owner?.current
+	if(QDELETED(current))
+		return
+	if(istype(current.loc, /obj/structure/closet/crate/coffin))
+		current.add_traits(coffin_traits, BLOODSUCKER_COFFIN_TRAIT)
+	else
+		REMOVE_TRAITS_IN(current, BLOODSUCKER_COFFIN_TRAIT)
+

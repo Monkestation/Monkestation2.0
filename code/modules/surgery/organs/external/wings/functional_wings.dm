@@ -50,7 +50,7 @@
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(human.movement_type & ~FLYING)
+	if(!(human.movement_type & FLYING))
 		return FALSE
 	if(!can_fly(human))
 		toggle_flight(human)
@@ -115,6 +115,7 @@
 		passtable_off(human, SPECIES_TRAIT)
 		close_wings()
 	human.update_body_parts()
+	human.refresh_gravity()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()

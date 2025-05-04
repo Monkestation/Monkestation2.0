@@ -32,6 +32,7 @@
 				/obj/item/clothing/head/cowboy/white = 1,
 				/obj/item/clothing/head/cowboy/grey = 1,
 				/obj/item/clothing/head/costume/sombrero/green = 1,
+				/obj/item/clothing/head/hats/fez = 3, //MONKESTATION ADDITION
 			),
 		),
 

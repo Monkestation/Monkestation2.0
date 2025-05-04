@@ -111,7 +111,7 @@
 				'monkestation/code/modules/emotes/sound/claponce2.ogg')
 
 /datum/emote/living/clap1/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
-	if(user.usable_hands < 2)
+	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
 

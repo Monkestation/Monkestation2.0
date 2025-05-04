@@ -125,6 +125,14 @@ SUBSYSTEM_DEF(radiation)
 	if (HAS_TRAIT(target, TRAIT_IRRADIATED) && !HAS_TRAIT(target, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK))
 		return FALSE
 
+	// MONKESTATION ADDITION START -- Is this what they call "jank"?
+	var/mob/living/living_target = target
+	if(istype(living_target))
+		if(HAS_TRAIT(target, TRAIT_RADHEALING))
+			living_target.adjustBruteLoss(-5)
+			living_target.adjustFireLoss(-5)
+	// MONKESTATION ADDITION END
+
 	if (HAS_TRAIT(target, TRAIT_RADIMMUNE))
 		return FALSE
 

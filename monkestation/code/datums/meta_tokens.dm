@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	owner.prefs.save_preferences()
 
 /datum/meta_token_holder/proc/check_for_donator_token()
-	var/datum/patreon_data/patreon = owner?.player_details?.patreon
+	var/datum/patreon_data/patreon = owner?.persistent_client?.patreon
 
 	if(!patreon?.has_access(ACCESS_TRAITOR_RANK))
 		return FALSE
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/month_number = text2num(time2text(world.time, "MM"))
 	if(event_token_month != month_number)
 		event_token_month = month_number
-		event_tokens = GLOB.patreon_etoken_values[checked_client.player_details.patreon.owned_rank]
+		event_tokens = GLOB.patreon_etoken_values[checked_client.persistent_client.patreon.owned_rank]
 		convert_tokens_to_list()
 
 /datum/meta_token_holder/proc/approve_token_event()

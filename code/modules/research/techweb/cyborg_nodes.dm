@@ -95,14 +95,16 @@
 	description = "Electronic implants that improve humans."
 	prereq_ids = list("adv_biotech", "datatheory")
 	design_ids = list(
+		"cybernetic_ears_whisper",
+		"cybernetic_ears_xray",
 		"ci-breather",
 		"ci-diaghud",
 		"ci-gloweyes",
 		"ci-medhud",
-		"ci-meson", // monkestation addition
+		"ci-meson",
 		"ci-nutriment",
-		"ci-pathohud", // monkestation addition
-		"ci-scihud", // monkestastion addition
+		"ci-pathohud",
+		"ci-scihud",
 		"ci-sechud",
 		"ci-welding",
 	)
@@ -130,7 +132,7 @@
 /datum/techweb_node/combat_cyber_implants/New()
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		research_costs = list(TECHWEB_DISCOUNT_MINOR * 2.5)
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/adv_cyber_implants
 	id = "adv_cyber_implants"
@@ -157,7 +159,7 @@
 	description = "We have the technology to rebuild him."
 	prereq_ids = list("biotech")
 	design_ids = list(
-		"cybernetic_ears",
+		"cybernetic_ears_u",
 		"cybernetic_eyes_improved",
 		"cybernetic_heart_tier2",
 		"cybernetic_liver_tier2",

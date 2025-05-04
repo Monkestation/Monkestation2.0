@@ -69,6 +69,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "av" = (
@@ -243,8 +244,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "bh" = (
@@ -2574,13 +2573,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"Wx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/gravity_generator)
 "WK" = (
 /obj/structure/money_bot,
 /turf/open/floor/iron/dark,
@@ -7758,7 +7750,7 @@ aI
 AR
 ak
 at
-Wx
+bh
 bh
 bh
 br

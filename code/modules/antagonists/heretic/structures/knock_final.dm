@@ -1,7 +1,7 @@
 /obj/structure/knock_tear
 	name = "???"
 	desc = "It stares back. Theres no reason to remain. Run."
-	max_integrity = INFINITE
+	max_integrity = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "bhole3"
@@ -81,7 +81,7 @@
 			return FALSE
 	var/monster_type = pick(monster_types)
 	var/mob/living/monster = new monster_type(loc)
-	monster.key = user.key
+	monster.PossessByPlayer(user.key)
 	monster.set_name()
 	var/datum/antagonist/heretic_monster/woohoo_free_antag = new(src)
 	monster.mind.add_antag_datum(woohoo_free_antag)

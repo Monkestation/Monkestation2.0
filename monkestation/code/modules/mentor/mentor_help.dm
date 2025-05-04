@@ -29,34 +29,6 @@
 	)
 	return embed
 
-/proc/send2mentorchat_webhook(message_or_embed, urgent)
-	var/webhook = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-
-	if(!webhook)
-		return
-	var/list/webhook_info = list()
-	if(istext(message_or_embed))
-		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
-		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
-		webhook_info["content"] = message_content
-	else
-		var/datum/discord_embed/embed = message_or_embed
-		webhook_info["embeds"] = list(embed.convert_to_list())
-		if(embed.content)
-			webhook_info["content"] = embed.content
-	if(CONFIG_GET(string/mentorhelp_webhook_name))
-		webhook_info["username"] = CONFIG_GET(string/mentorhelp_webhook_name)
-	if(CONFIG_GET(string/mentorhelp_webhook_pfp))
-		webhook_info["avatar_url"] = CONFIG_GET(string/mentorhelp_webhook_pfp)
-	// Uncomment when servers are moved to TGS4
-	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
-	var/list/headers = list()
-	headers["Content-Type"] = "application/json"
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
-	request.begin_async()
-
-
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
 	set name = "Mentorhelp"
@@ -106,14 +78,7 @@
 
 	var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
 	if(request)
-		var/id = "[request.id]"
-		var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
 		SSplexora.mticket_new(request)
-		if(regular_webhook_url)
-			var/extra_message = CONFIG_GET(string/mhelp_message)
-			var/datum/discord_embed/embed = format_mhelp_embed(msg, id)
-			embed.content = extra_message
-			send2mentorchat_webhook(embed, key)
 	return
 
 /proc/key_name_mentor(whom, include_link = null, include_name = TRUE, include_follow = TRUE, char_name_only = TRUE)
