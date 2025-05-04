@@ -3,7 +3,7 @@
 /// This list is populated by [/datum/vox_voice/New()]
 GLOBAL_LIST_EMPTY(all_vox_sounds)
 /// An associative list of voice names to /datum/vox_voice instances.
-GLOBAL_LIST_INIT(vox_voices, initialize_vox_voices())
+GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 
 /// An voice used by the VOX speech system.
 /datum/vox_voice

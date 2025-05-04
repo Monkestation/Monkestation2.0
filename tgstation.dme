@@ -3282,6 +3282,7 @@
 #include "code\modules\asset_cache\assets\tutorial_advisors.dm"
 #include "code\modules\asset_cache\assets\uplink.dm"
 #include "code\modules\asset_cache\assets\vending.dm"
+#include "code\modules\asset_cache\assets\vox_voices.dm"
 #include "code\modules\asset_cache\assets\vv.dm"
 #include "code\modules\asset_cache\transports\asset_transport.dm"
 #include "code\modules\asset_cache\transports\webroot_transport.dm"
