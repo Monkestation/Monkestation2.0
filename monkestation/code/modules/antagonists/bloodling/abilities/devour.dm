@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/bloodling/devour
 	name = "Devour Limb"
-	desc = "Allows you to consume a creatures limb. Sets ALL your abilities on a 10 second cooldown"
+	desc = "Allows you to randomly consume a creatures limb. Sets ALL your abilities on a 10 second cooldown"
 	button_icon_state = "devour"
 	cooldown_time = 10 SECONDS
 
