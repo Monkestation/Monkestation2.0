@@ -57,6 +57,8 @@
 	var/turf/attempt_location = get_turf(get_step(user,user.dir))
 	if(attempt_location.density)
 		return
+	if(ISINRANGE(selected_mode, 2, 5))
+		return
 	visible_message(span_notice("[user] begins to summon an artifact using [src]!"),span_notice("You begin attempting to summon an artifact using [src]..."))
 	if(do_after(user,5 SECOND))
 		var/obj/new_artifact = spawn_artifact(attempt_location)

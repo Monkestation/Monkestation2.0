@@ -1128,7 +1128,9 @@
 	return
 
 /obj/machinery/proc/can_be_overridden()
-	. = 1
+	if(resistance_flags & INDESTRUCTIBLE)
+		return FALSE
+	return TRUE
 
 /obj/machinery/zap_act(power, zap_flags)
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))

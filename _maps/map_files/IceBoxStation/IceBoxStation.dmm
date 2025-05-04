@@ -9753,7 +9753,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/catwalk_floor/icebox,
 /area/icemoon/underground/explored)
 "cVa" = (
 /obj/machinery/camera/directional/north{

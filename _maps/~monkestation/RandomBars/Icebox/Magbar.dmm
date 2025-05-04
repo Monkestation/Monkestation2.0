@@ -1307,7 +1307,7 @@
 /area/station/service/bar/backroom)
 "ZX" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/jukebox{
+/obj/machinery/dance_machine{
 	pixel_x = -1;
 	pixel_y = -2
 	},
