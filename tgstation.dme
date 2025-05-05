@@ -7618,7 +7618,6 @@
 #include "monkestation\code\modules\loafing\code\loafer.dm"
 #include "monkestation\code\modules\logging\log_category.dm"
 #include "monkestation\code\modules\logging\log_holder.dm"
-#include "monkestation\code\modules\logging\categories\log_category_debug.dm"
 #include "monkestation\code\modules\logging\categories\log_category_game.dm"
 #include "monkestation\code\modules\map_gen_expansions\_basemapping.dm"
 #include "monkestation\code\modules\map_gen_expansions\areas.dm"
