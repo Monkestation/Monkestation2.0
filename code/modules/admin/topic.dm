@@ -1846,9 +1846,9 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.queued_token_event)
 			return
-		token_holder.approve_token_event()
 		message_admins("[key_name_admin(owner)] approved a [token_holder.queued_token_event.event_name] event token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been approved by [owner].")
+		token_holder.approve_token_event()
 
 	else if(href_list["reject_token_event"])
 		if(!check_rights(R_ADMIN))
@@ -1860,7 +1860,7 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.queued_token_event)
 			return
-		token_holder.reject_token_event()
 		message_admins("[key_name_admin(owner)] rejected a [token_holder.queued_token_event.event_name] event token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been rejected by [owner].")
+		token_holder.reject_token_event()
 //monkestation edit end

@@ -239,15 +239,9 @@
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/kindred/check_completion()
-	if(!owner.current)
-		return FALSE
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(!bloodsuckerdatum)
-		return FALSE
-
-	for(var/datum/mind/bloodsucker_minds as anything in get_antag_minds(/datum/antagonist/bloodsucker))
-		var/obj/item/book/kindred/the_book = locate() in bloodsucker_minds.current.get_all_contents()
-		if(the_book)
+	for(var/obj/item/book/kindred/archive as anything in GLOB.kindred_archives)
+		var/mob/living/holder = get(archive, /mob/living)
+		if(IS_BLOODSUCKER(holder) || IS_VASSAL(holder))
 			return TRUE
 	return FALSE
 
@@ -282,13 +276,10 @@
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/embrace/check_completion()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(!bloodsuckerdatum)
-		return FALSE
-	for(var/datum/antagonist/vassal/vassaldatum in bloodsuckerdatum.vassals)
-		if(IS_FAVORITE_VASSAL(vassaldatum.owner.current))
-			if(vassaldatum.owner.has_antag_datum(/datum/antagonist/bloodsucker))
-				return TRUE
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
+	for(var/datum/antagonist/vassal/favorite/vassal_datum in bloodsucker_datum?.vassals)
+		if(vassal_datum.owner.has_antag_datum(/datum/antagonist/bloodsucker))
+			return TRUE
 	return FALSE
 
 

@@ -1537,13 +1537,17 @@
 
 	// monkestation edit start: forced shake
 	if(href_list[VV_HK_SHAKE] && check_rights(R_FUN))
-		var/pixelshiftx = input(usr, "Choose amount of pixels to shift on X axis","Shake Atom") as null|num
-		var/pixelshifty = input(usr, "Choose amount of pixels to shift on Y axis","Shake Atom") as null|num
+		var/pixelshiftx = input(usr, "Choose amount of pixels to shift on X axis", "Shake Atom") as null|num
+		var/pixelshifty = input(usr, "Choose amount of pixels to shift on Y axis", "Shake Atom") as null|num
 		if(isnull(pixelshiftx) || isnull(pixelshifty))
 			return
 
-		var/duration = input(usr, "Duration? (In seconds)","Shake Atom") as null|num
-		var/shake_interval = input(usr, "Shake interval (In seconds) - Default: 0.02", "Shake Atom", 0.02) as null|num
+		var/duration = input(usr, "Duration? (in seconds)", "Shake Atom") as null|num
+		if(duration > 20)
+			var/confirmation = input(usr, "Durations longer than 20 seconds are HIGHLY LIKELY to cause lag! Are you REALLY sure?", "Shake Atom: LAG ALERT") in list("I'm sure!", "Nope.")
+			if(confirmation != "I'm sure!")
+				return
+		var/shake_interval = input(usr, "Shake interval (in seconds) - Default: 0.02", "Shake Atom", 0.02) as null|num
 		if(isnull(shake_interval) || isnull(duration))
 			return
 

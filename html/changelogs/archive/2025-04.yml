@@ -468,3 +468,116 @@
   - rscadd: Added a new way for bloodsuckers to earn levels
   - balance: Bloodsuckers can only rank up till level 3 via Sol. Any further levels
       must be gained through other means.
+2025-04-23:
+  Draggeru:
+  - bugfix: Removes the cotton candy chicken from centcom
+2025-04-24:
+  RandomDudeFromTheRim:
+  - rscdel: Removed a poster referencing something inappropriate
+  Veth, Kaysee, ThePoobertDoobertson:
+  - rscadd: Slasher will now spawn in maints as spooky jesus intended.
+  - rscadd: Slasher now has a jaunt that goes through windows and doors but not walls.
+      It is a NON-MAGICAL jaunt - 4s duration, 2minute cooldown, and leaves a trail
+      of blood behind it.
+  - rscdel: Removed slasher's invisibility, he is now always just slightly invisible.
+  - rscdel: Removed slasher's machete damage and throw damage scaling on light level.
+  - bugfix: Hopefully fixed the Slasher's tracking circle (for the fifth time). Currently,
+      targets with unknown identity cannot be chosen as it was causing issues with
+      the slasher's tracker.
+  - sound: Slasher now has new SFX for jaunting.
+  - image: Slasher now has all new icons for his outfit and jaunt.
+  - code_imp: Cleaned up some of Slasher's code.
+2025-04-26:
+  Gw0sty:
+  - rscadd: Xenobiology and Cytology are now an independent subdepartment
+  - rscadd: Science will now hang out at break rooms.
+  - rscadd: Various slight improvements to various xenobiology on maps
+  - rscadd: Scientists start with a experiment scanner in their backpack.
+  - bugfix: Kidnapping and heirlooms will target recent jobs more.
+  - bugfix: Scientist jumpsuits now actually provide bomb protection as described.
+  - qol: New jobs can now use more departmental clothing from the monkestation store
+  - bugfix: Helio xenobio is now accessible correctly again
+  - bugfix: Theseus no longer has excess airlocks in robotics
+  - bugfix: Heliostation xenobio will no longer have atmosphere problems
+  Loiosh42:
+  - bugfix: Blueshield Bogseo case now spawns with 2 ammoboxes instead of 2 loose
+      rounds
+  PineappleMan929:
+  - rscadd: Adds lava chicken! If you throw fried chicken into lava, it becomes lava
+      chicken. (warning, it is really fucking spicy)
+  - image: Lava chicken looks extremely spicy now! (which it is)
+  QueenReduviidae:
+  - bugfix: Fixes smithing letting you make perfect items without doing anything.
+  RandomDudeFromTheRim:
+  - bugfix: fixed wings working when they shouldn't
+  RealityOverseer:
+  - bugfix: Capitalized "Tickets" button in admin tab
+  - bugfix: (distributivgesetz) Fixed a rare bug that let you spam bluespace bodybags
+      everywhere.
+  - bugfix: (Sealed101) Fixed bluespace bodybags consuming xenomorphs when folded.
+  flleeppyy:
+  - rscadd: Eris WIP button
+  - bugfix: Vanderlin button irritating the people who pay close attention to it and
+      it being offcenter
+  - rscadd: Cigarette packs can now be crafted with cardboard (no coupons for you)
+  - qol: Better user feedback when putting things into smartfridges (includes drying
+      racks)
+  - qol: Items that are dryable now have examine text for knowing if you can put it
+      in a drying rack
+2025-04-27:
+  Absolucy:
+  - admin: Added a warning for admins using the "Shake" VV when doing so might accidentally
+      cause a bunch of lag.
+  - map: Disconnected aux power SMES from Box grid at roundstart.
+  - bugfix: (Maurukas) Removed a power loop on Icebox.
+  - map: (Maurukas) Disconnected aux power SMES from Icebox grid at roundstart.
+  - map: (Maurukas) Removed some power cables connecting Deltastation's aux power
+  - bugfix: (Maurukas) Fixed Tramstation's gravity generator SMES, now functions and
+      charged at roundstart.
+  - map: 'Blueshift: Most major hallways, alongside dorms, have a fully charged 10k
+      power cell in their APCs roundstart now.'
+  - map: 'Blueshift: Engineering spawns with an oxygen canister now.'
+  - map: 'Blueshift: Art Supply Storage''s APC is now properly wired to the grid.'
+2025-04-28:
+  Absolucy:
+  - qol: Made the output of the genetic sequencer scanner look much better.
+  - qol: The genetic sequencer scanner now shows genetic stability.
+  - rscdel: Removed AFK kicking functionality, as it wasn't even enabled anyways,
+      yet it was somehow randomly kicking players who were very much not AFK.
+  - bugfix: Fixed malf AIs being able to overload/destroy indestructible machines.
+  - bugfix: Fix some jobs (assistant, cargo tech, nt rep, secass) not getting the
+      proper implants during cybernetic revolution.
+  Gw0sty:
+  - map: Kilo, Derelict russian, Unknown site 1,  Derelict Sulaco, icebox, engineering
+      outpost and snow arena has some of their roundstart atmospheric differences
+      fixed. Hopefully decreases some load times.
+  shodd, ZephyrTFA:
+  - refactor: Map Votes are now carried over between rounds. When a map vote is actually
+      a contest, the winning map will have its votes reset.
+  - refactor: a large amount of map vote and vote code changed
+  - rscdel: RTV gone
+2025-04-30:
+  EssentialTomato:
+  - rscadd: Added the ability to research and print artifact zapper boards
+  - bugfix: Vatgrown queen bees can now be used in the apiary
+  Gw0sty:
+  - bugfix: Airborne diseases now work. Reminder to wear masks
+  Ice-Type:
+  - bugfix: Thanks to new advances in sorcery and the power of luck, windows now visually
+      crack again. Praise be. Said advances were then refined by Shion thanks Shion
+  - balance: Crew printable eyes now are severely flash weak, compared to being identical
+      to standard eyes before.
+  - balance: All uplinks can now purchase thermal and x-ray eyes. These are not flash
+      weak, unlike the crew versions.
+  - balance: Thermal eyes now only cost 5TC.
+  - balance: Thermal eyes now only come with a single use autosurgeon - if you want
+      a reusable one you're going to have to cough up x-ray TC.
+  Shoddd:
+  - bugfix: oozeling, floran, and plasma man damage mods work again
+  - bugfix: veil of many faces now works properly
+  - balance: veil of many faces now changes hud status
+  - balance: feed now has a message for the person being fed on, increased range people
+      can tell you are feeding
+  - balance: Go home power can no longer be used while dead
+  Tostah:
+  - rscadd: new misc gear to all uplinks; Syndicate Autosurgeon
