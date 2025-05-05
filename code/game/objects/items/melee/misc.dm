@@ -407,7 +407,7 @@
 	. = ..()
 	if(held_sausage)
 		//. += mutable_appearance(icon, "roastingstick_sausage")
-		var/mutable_appearance/roastableicon = new(mutable_appearance(held_sausage.icon,held_sausage.icon_state))
+		var/mutable_appearance/roastableicon = mutable_appearance(held_sausage.icon,held_sausage.icon_state)
 		roastableicon.transform = roastableicon.transform.Turn(45)
 		roastableicon.transform = roastableicon.transform.Translate(14, 14)
 		roastableicon.transform = roastableicon.transform.Scale(0.8, 0.8)
