@@ -335,13 +335,17 @@
 	var/obj/item/food/sausage/held_sausage
 	/// Static list of things our roasting stick can interact with.
 	var/static/list/ovens
+	// Static list of things we can put on our roasting stick
+	var/static/list/roastables
 	/// The beam that links to the oven we use
 	var/datum/beam/beam
 
 /obj/item/melee/roastingstick/Initialize(mapload)
 	. = ..()
 	if (!ovens)
-		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
+		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire, /obj/machinery/power/shuttle_engine/propulsion))
+	if (!roastables)
+		roastables = typecacheof(list(/obj/item/food/sausage, /obj/item/food/cakeslice/mothmallow))
 	AddComponent( \
 		/datum/component/transforming, \
 		hitsound_on = hitsound, \
@@ -379,7 +383,7 @@
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
-	if (istype(target, /obj/item/food/sausage))
+	if (is_type_in_typecache(target, roastables))
 		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
@@ -402,7 +406,13 @@
 /obj/item/melee/roastingstick/update_overlays()
 	. = ..()
 	if(held_sausage)
-		. += mutable_appearance(icon, "roastingstick_sausage")
+		//. += mutable_appearance(icon, "roastingstick_sausage")
+		var/mutable_appearance/roastableicon = new(mutable_appearance(held_sausage.icon,held_sausage.icon_state))
+		roastableicon.transform = roastableicon.transform.Turn(45)
+		roastableicon.transform = roastableicon.transform.Translate(14, 14)
+		roastableicon.transform = roastableicon.transform.Scale(0.8, 0.8)
+		roastableicon.color = held_sausage.color
+		. += roastableicon
 
 /obj/item/melee/roastingstick/handle_atom_del(atom/target)
 	if (target == held_sausage)
@@ -427,7 +437,7 @@
 	finish_roasting(user, target)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	if(do_after(user, 100, target = user))
+	if(do_after(user, 100, target = user) && held_sausage)
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
 		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
