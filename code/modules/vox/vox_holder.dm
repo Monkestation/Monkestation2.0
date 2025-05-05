@@ -1,9 +1,16 @@
 #ifdef AI_VOX
+/// Maximum amount of words to allow in a VOX message.
+#define MAX_WORDS 30
+
 /datum/vox_holder
 	/// The current [/datum/vox_voice] instance being used.
 	VAR_PRIVATE/datum/vox_voice/current_voice
 	/// The VOX word(s) that were previously inputed.
 	var/previous_words
+	/// The cooldown between VOX announcements.
+	var/cooldown = 1 MINUTES
+	/// Cooldown on making VOX announcements.
+	COOLDOWN_DECLARE(announcement_cooldown)
 
 /datum/vox_holder/New()
 	set_voice(/datum/vox_voice/normal)
@@ -24,15 +31,48 @@
 			if(isnull(new_voice))
 				return
 			set_voice(new_voice)
+		if("speak")
+			. = TRUE
+			var/message = params["message"]
+			if(!message)
+				return
+			speak(user, message)
 
 /datum/vox_holder/ui_data(mob/user)
 	return list(
 		"current_voice" = current_voice.name,
 		"previous_words" = previous_words,
+		"cooldown" = COOLDOWN_TIMELEFT(src, announcement_cooldown),
 	)
 
 /datum/vox_holder/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/json/vox_voices)) // this is an asset so we don't have to send a huge list each time
+
+/datum/vox_holder/proc/speak(mob/speaker, message, name_override)
+	if(!COOLDOWN_FINISHED(src, announcement_cooldown))
+		return FALSE
+	var/list/words = split_into_words(message)
+	if(!words)
+		return FALSE
+	if(length(words) > MAX_WORDS)
+		words.Cut(MAX_WORDS + 1)
+	var/list/incorrect_words = list()
+	for(var/word in words)
+		if(!(word in current_voice.words))
+			incorrect_words += word
+	if(incorrect_words)
+		to_chat(speaker, span_notice("These words are not available on the announcement system: [english_list(incorrect_words)]."))
+		return FALSE
+	COOLDOWN_START(src, announcement_cooldown, cooldown)
+	speaker.log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
+	speaker.log_talk(message, LOG_SAY, tag = "VOX Announcement")
+
+/datum/vox_holder/proc/split_into_words(message)
+	. = list()
+	for(var/word in splittext_char(trimtext(message), " "))
+		word = trimtext(lowertext(word))
+		if(word)
+			. += word
 
 /// Sets the VOX voice to the given [/datum/vox_voice].
 /// The `voice` argument can either be the name/ID of a voice, or a `/datum/vox_voice` typepath or instance.
@@ -49,4 +89,6 @@
 	if(!istype(new_voice, /datum/vox_voice))
 		CRASH("Invalid VOX voice instance: [new_voice || "null"]")
 	current_voice = new_voice
+
+#undef MAX_WORDS
 #endif
