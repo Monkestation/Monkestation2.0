@@ -49,3 +49,34 @@
   Shoddd:
   - bugfix: bloodsucker feed forget no longer happens early
   - balance: bloodsucker feed forget message accompied by a small stun
+2025-05-05:
+  Absolucy:
+  - qol: Playing games on a PDA is no longer louder than playing an actual full-sized
+      arcade machine.
+  - bugfix: Bloodsucker candelabrums properly emit light again.
+  - bugfix: Bloodsucker ability buttons now properly update the remaining cooldown,
+      and un-grey out when the cooldown is finished.
+  - bugfix: Bloodsuckers can no longer drink bloodbags at mach speed by repeatedly
+      clicking themselves with it.
+  - bugfix: Fixed some possible edge-cases where a bloodsucker or vassal could lose
+      the Blah-tongue language.
+  - bugfix: The Archive of the Kindred can no longer be carved out, as intended.
+  - bugfix: Fixed the small delay between becoming a bloodsucker and actually gaining
+      your abilities and such.
+  - bugfix: The Bloodsucker feed ability now properly prioritizes living mobs instead
+      of dead mobs when feeding without a grab.
+  - qol: The "Steal the Archive of the Kindred" objective now also succeeds if a vassal
+      is holding the Archive.
+  - qol: Made the bloodsucker info UI far less messy.
+  - qol: Using Brawn as a bloodsucker on a door or locker will now tell you if Brawn's
+      level is too low to do so.
+  - code_imp: Cleaned up some more bloodsucker code.
+  - bugfix: Fixed some weird edge cases with helmets/masks/etc that are supposed to
+      cover your eyes or mouth.
+  - bugfix: The Damned Rabbit Mask now actually blocks facehuggers like the examine
+      says it should.
+  Gw0sty:
+  - balance: Birth teratoma is reduced to 1 absorb needed to purchase
+  - balance: Birth teratoma can only be used once for each changeling absorption.
+  steelphoenix4:
+  - bugfix: Fixed the Recolorable Oversized Jacket not being recolorable on lizards.

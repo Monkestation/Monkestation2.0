@@ -13,19 +13,19 @@
 		if(!do_after(victim, 5 SECONDS, attacker))
 			return
 		attacker.visible_message(
-			span_notice("[attacker] forces [victim] to drink from the [src]."),
-			span_notice("You put the [src] up to [victim]'s mouth."))
+			span_notice("[attacker] forces [victim] to drink from \the [src]."),
+			span_notice("You put \the [src] up to [victim]'s mouth."))
 		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transfered_by = attacker, methods = INGEST)
-		playsound(victim.loc, 'sound/items/drink.ogg', 30, 1)
+		playsound(victim.loc, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
 		return TRUE
 
-	while(do_after(victim, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker)))
+	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker)))
 		victim.visible_message(
-			span_notice("[victim] puts the [src] up to their mouth."),
-			span_notice("You take a sip from the [src]."),
+			span_notice("[victim] puts \the [src] up to [victim.p_their()] mouth."),
+			span_notice("You take a sip from \the [src]."),
 		)
 		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transfered_by = attacker, methods = INGEST)
-		playsound(victim.loc, 'sound/items/drink.ogg', 30, 1)
+		playsound(victim.loc, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
 	return TRUE
 
 #undef BLOODBAG_GULP_SIZE
@@ -33,7 +33,7 @@
 /obj/item/reagent_containers/blood/proc/can_drink(mob/living/victim, mob/living/attacker)
 	if(!canconsume(victim, attacker))
 		return FALSE
-	if(!reagents || !reagents.total_volume)
+	if(!reagents?.total_volume)
 		to_chat(victim, span_warning("[src] is empty!"))
 		return FALSE
 	return TRUE
@@ -200,6 +200,10 @@
 	var/turf/current_turf = get_turf(src)
 	new /obj/item/book/kindred(current_turf)
 
+GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
+
+#define DOAFTER_SOURCE_KINDRED_ARCHIVE "doafter_source_kindred_archive"
+
 /**
  *	# Archives of the Kindred:
  *
@@ -219,28 +223,30 @@
 	lefthand_file = 'monkestation/icons/bloodsuckers/bs_leftinhand.dmi'
 	righthand_file = 'monkestation/icons/bloodsuckers/bs_rightinhand.dmi'
 	icon_state = "kindred_book"
+	inhand_icon_state = "kindred_book"
 	starting_author = "dozens of generations of Curators"
 	unique = TRUE
 	throw_speed = 1
 	throw_range = 10
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	///Boolean on whether the book is currently being used, so you can only use it on one person at a time.
-	var/in_use = FALSE
 
 /obj/item/book/kindred/Initialize()
 	. = ..()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
+	GLOB.kindred_archives += src
 
-/* NOT YET IMPLEMENTED
+/obj/item/book/kindred/Destroy(force)
+	GLOB.kindred_archives -= src
+	return ..()
+
 /obj/item/book/kindred/try_carve(obj/item/carving_item, mob/living/user, params)
-	to_chat(user, span_notice("You feel the gentle whispers of a Librarian telling you not to cut [starting_title]."))
+	to_chat(user, span_notice("You feel the gentle whispers of a Curator telling you not to cut [starting_title]."))
 	return FALSE
-*/
 
 ///Attacking someone with the book.
 /obj/item/book/kindred/afterattack(mob/living/target, mob/living/user, flag, params)
 	. = ..()
-	if(!user.can_read(src) || in_use || (target == user) || !ismob(target))
+	if(!user.can_read(src) || DOING_INTERACTION(user, DOAFTER_SOURCE_KINDRED_ARCHIVE) || (target == user) || !ismob(target))
 		return
 	if(!HAS_MIND_TRAIT(user, TRAIT_OCCULTIST))
 		if(IS_BLOODSUCKER(user))
@@ -250,13 +256,10 @@
 			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
 		return
 
-	in_use = TRUE
 	user.balloon_alert_to_viewers("reading book...", "looks at [target] and [src]")
-	if(!do_after(user, 3 SECONDS, target, timed_action_flags = NONE, progress = TRUE))
+	if(!do_after(user, 3 SECONDS, target, interaction_key = DOAFTER_SOURCE_KINDRED_ARCHIVE))
 		to_chat(user, span_notice("You quickly close [src]."))
-		in_use = FALSE
 		return
-	in_use = FALSE
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(target)
 	// Are we a Bloodsucker | Are we on Masquerade. If one is true, they will fail.
 	if(IS_BLOODSUCKER(target) && !HAS_TRAIT(target, TRAIT_MASQUERADE))
@@ -287,12 +290,13 @@
 		ui.open()
 
 /obj/item/book/kindred/ui_static_data(mob/user)
-	var/data = list()
+	var/list/clans = list()
+	for(var/datum/bloodsucker_clan/clan_type as anything in subtypesof(/datum/bloodsucker_clan))
+		clans += list(list(
+			"name" = clan_type::name,
+			"desc" = clan_type::description,
+		))
 
-	for(var/datum/bloodsucker_clan/clans as anything in subtypesof(/datum/bloodsucker_clan))
-		var/clan_data = list()
-		clan_data["clan_name"] = initial(clans.name)
-		clan_data["clan_desc"] = initial(clans.description)
-		data["clans"] += list(clan_data)
+	return list("clans" = clans)
 
-	return data
+#undef DOAFTER_SOURCE_KINDRED_ARCHIVE

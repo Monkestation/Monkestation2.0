@@ -149,6 +149,7 @@
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
+	current_mob.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 
 	if(current_mob.hud_used)
 		on_hud_created()
@@ -173,6 +174,7 @@
 	var/mob/living/current_mob = mob_override || owner.current
 	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
 	handle_clown_mutation(current_mob, removing = FALSE)
+	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
@@ -217,11 +219,11 @@
 
 ///Called when you get the antag datum, called only ONCE per antagonist.
 /datum/antagonist/bloodsucker/on_gain()
-	RegisterSignal(SSsunlight, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
-	RegisterSignal(SSsunlight, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
-	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
-	RegisterSignal(SSsunlight, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
-	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
+	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
+	RegisterSignal(SSsol, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
+	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
+	RegisterSignal(SSsol, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
+	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 
 	if(IS_FAVORITE_VASSAL(owner.current)) // Vassals shouldnt be getting the same benefits as Bloodsuckers.
 		bloodsucker_level_unspent = 0
@@ -243,7 +245,7 @@
 
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
-	UnregisterSignal(SSsunlight, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
+	UnregisterSignal(SSsol, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
 	owner.special_role = null
@@ -301,7 +303,8 @@
 	new_body.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 
 /datum/antagonist/bloodsucker/greet()
-	. = ..()
+	if(silent) // don't bother calling ..(), we don't need the duplicate "You are the Bloodsucker!" message
+		return
 	var/fullname = return_full_name()
 	to_chat(owner, span_userdanger("You are [fullname], a strain of vampire known as a Bloodsucker!"))
 	owner.announce_objectives()
@@ -335,32 +338,23 @@
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/bloodsucker/ui_static_data(mob/user)
-	var/list/data = list()
-	//we don't need to update this that much.
-	data["in_clan"] = !!my_clan
-	var/list/clan_data = list()
+	. = ..()
 	if(my_clan)
-		clan_data["clan_name"] = my_clan.name
-		clan_data["clan_description"] = my_clan.description
-		clan_data["clan_icon"] = my_clan.join_icon_state
+		.["clan"] = list(
+			"name" = my_clan.name,
+			"desc" = my_clan.description,
+			"icon" = my_clan.join_icon,
+			"icon_state" = my_clan.join_icon_state,
+		)
 
-	data["clan"] += list(clan_data)
-
+	.["powers"] = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
-		var/list/power_data = list()
-
-		power_data["power_name"] = power.name
-		power_data["power_explanation"] = power.power_explanation
-		power_data["power_icon"] = power.button_icon_state
-
-		data["power"] += list(power_data)
-
-	return data + ..()
-
-/datum/antagonist/bloodsucker/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/simple/bloodsucker_icons),
-	)
+		.["powers"] += list(list(
+			"name" = power.name,
+			"explanation" = power.html_power_explanation(),
+			"icon" = power.button_icon,
+			"icon_state" = power.button_icon_state,
+		))
 
 /datum/antagonist/bloodsucker/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -373,7 +367,7 @@
 				return
 			assign_clan_and_bane()
 			ui.send_full_update(force = TRUE)
-			return
+			return TRUE
 
 /datum/antagonist/bloodsucker/roundend_report()
 	var/list/report = list()
@@ -459,9 +453,6 @@
 	//No Skittish "People" allowed
 	if(HAS_TRAIT(owner.current, TRAIT_SKITTISH))
 		REMOVE_TRAIT(owner.current, TRAIT_SKITTISH, ROUNDSTART_TRAIT)
-	// Tongue & Language
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
-	owner.current.grant_language(/datum/language/vampiric)
 	/// Clear Disabilities & Organs
 	heal_vampire_organs()
 

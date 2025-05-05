@@ -6782,7 +6782,6 @@
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\components\see_as_something.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\components\team_monitor.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\slasher_outfit\slasher_clothing.dm"
-#include "monkestation\code\modules\bloodsuckers\bloodsucker_assets.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_conversion.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_datum.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_flaws.dm"
