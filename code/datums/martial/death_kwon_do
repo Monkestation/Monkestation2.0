@@ -22,7 +22,7 @@
 	name = "Death Punch"
 	desc = "Lands a devestating punch on your foes."
 	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
-	button_icon_state = ""
+	button_icon_state = "wrassle_throw"
 
 /datum/action/death_punch/Trigger(trigger_flags)
 	if(owner.incapacitated())
@@ -35,7 +35,7 @@
 	name = "Death Kick"
 	desc = "Lands a devestating flying kick on your foes."
 	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
-	button_icon_state = ""
+	button_icon_state = "wrassle_throw"
 
 /datum/action/death_kick/Trigger(trigger_flags)
 	if(owner.incapacitated())
@@ -48,7 +48,7 @@
 	name = "Death Block"
 	desc = "Use the power of the death sandwich to protect yourself from damage."
 	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
-	button_icon_state = ""
+	button_icon_state = "wrassle_throw"
 
 /datum/action/death_block/Trigger(trigger_flags)
 	if(owner.incapacitated())
@@ -77,6 +77,6 @@
 
 /datum/status_effect/food/death_kwon_do/liked(mob/consumer)
 	.  = ..()
-	if(consumer.has.status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
+	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
 		deathkwondo.teach(consumer, TRUE)
 	return
