@@ -27,14 +27,13 @@ SUBSYSTEM_DEF(twitch)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/twitch/stat_entry(msg)
-	msg += "Running Events:[running_events.len]"
+	msg += "Running Events:[length(running_events)]"
 	return ..()
 
 /datum/controller/subsystem/twitch/fire(resumed)
 	if(deferred_handlers && SSticker.current_state == GAME_STATE_PLAYING)
 		run_deferred()
-	if(!running_events.len)
-		return
+	var/list/running_events = src.running_events
 	for(var/listed_event in running_events)
 		if(running_events[listed_event] > world.time)
 			continue
@@ -63,34 +62,34 @@ SUBSYSTEM_DEF(twitch)
 		if((world.time < last_event_execution + 2 SECONDS) && last_executor == incoming[4])
 			return
 
-	switch(SSticker.current_state)
-		if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
-			deferred_handlers += incoming[3]
-			return
-		else
-			for(var/datum/twitch_event/listed_event as anything in running_events)
-				if(listed_event.type == chosen_one.type)
-					running_events[listed_event] = running_events[listed_event] + chosen_one.event_duration
-					minor_announce("[listed_event.event_name] has just been extended by [incoming[4]].", "The Observers")
-					return
-
-			chosen_one.run_event(incoming[4])
-			running_events[chosen_one] = world.time + chosen_one.event_duration
+	if(SSticker.HasRoundStarted())
+		for(var/datum/twitch_event/listed_event as anything in running_events)
+			if(listed_event.type == chosen_one.type)
+				running_events[listed_event] = running_events[listed_event] + chosen_one.event_duration
+				minor_announce("[listed_event.event_name] has just been extended by [incoming[4]].", "The Observers")
+				return
+		chosen_one.run_event(incoming[4])
+		running_events[chosen_one] = world.time + chosen_one.event_duration
+	else
+		add_to_queue(incoming[3], incoming[4])
 
 /datum/controller/subsystem/twitch/proc/run_deferred()
-	for(var/listed_item in deferred_handlers)
+	var/list/deferred_handlers = src.deferred_handlers
+	while(length(deferred_handlers) > 0)
+		var/list/event_params = deferred_handlers[length(deferred_handlers)]
+		deferred_handlers.len--
+		var/listed_item = event_params[1]
+		var/name = event_params[2]
 		var/datum/twitch_event/chosen_one
 		for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
 			if(listed_item != initial(listed_events.id_tag))
 				continue
 			chosen_one = twitch_events_by_type[listed_events]
-		if(!chosen_one)
-			return
-		chosen_one.run_event()
-		running_events[chosen_one] = world.time + chosen_one.event_duration
-		deferred_handlers -= listed_item
+		if(chosen_one)
+			chosen_one.run_event(name)
+			running_events[chosen_one] = world.time + chosen_one.event_duration
 
-/datum/controller/subsystem/twitch/proc/add_to_queue(choice_id)
-	deferred_handlers += choice_id
+/datum/controller/subsystem/twitch/proc/add_to_queue(choice_id, name)
+	deferred_handlers += list(list(choice_id, name))
 
 

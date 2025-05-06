@@ -117,7 +117,7 @@
 	///Whether the Bloodsucker should not be dusted when arriving Final Death
 	#define DONT_DUST (1<<0)
 ///Called when a Bloodsucker breaks the Masquerade
-#define COMSIG_BLOODSUCKER_BROKE_MASQUERADE "comsig_bloodsucker_broke_masquerade"
+#define COMSIG_BLOODSUCKER_BROKE_MASQUERADE "bloodsucker_broke_masquerade"
 ///Called when a Bloodsucker enters Frenzy
 #define BLOODSUCKER_ENTERS_FRENZY "bloodsucker_enters_frenzy"
 ///Called when a Bloodsucker exits Frenzy
@@ -126,14 +126,14 @@
 /**
  * Sol signals & Defines
  */
-#define COMSIG_SOL_RANKUP_BLOODSUCKERS "comsig_sol_rankup_bloodsuckers"
-#define COMSIG_SOL_RISE_TICK "comsig_sol_rise_tick"
-#define COMSIG_SOL_NEAR_START "comsig_sol_near_start"
-#define COMSIG_SOL_END "comsig_sol_end"
+#define COMSIG_SOL_RANKUP_BLOODSUCKERS "sol_rankup_bloodsuckers"
+#define COMSIG_SOL_RISE_TICK "sol_rise_tick"
+#define COMSIG_SOL_NEAR_START "sol_near_start"
+#define COMSIG_SOL_END "sol_end"
 ///Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)
-#define COMSIG_SOL_WARNING_GIVEN "comsig_sol_warning_given"
+#define COMSIG_SOL_WARNING_GIVEN "sol_warning_given"
 ///Called on a Bloodsucker's Lifetick.
-#define COMSIG_BLOODSUCKER_ON_LIFETICK "comsig_bloodsucker_on_lifetick"
+#define COMSIG_BLOODSUCKER_ON_LIFETICK "bloodsucker_on_lifetick"
 
 #define DANGER_LEVEL_FIRST_WARNING 1
 #define DANGER_LEVEL_SECOND_WARNING 2

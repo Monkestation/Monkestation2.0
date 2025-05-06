@@ -25,6 +25,20 @@
 #define CHANNEL_SILICON_EMOTES 1002
 // monkestation end
 
+/* Calculates the volume of a sound based on distance
+ *
+ * https://www.desmos.com/calculator/sqdfl8ipgf
+ *
+ * Arguments:
+ * * volume: The initial volume of the sound being played
+ * * distance: How far away the sound is in tiles from the source
+ * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
+ * Returns: The max distance of a sound based on audible volume range
+ */
+#define CALCULATE_SOUND_VOLUME(volume, distance, max_distance, falloff_distance, falloff_exponent)\
+	((max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
+
 ///Default range of a sound.
 #define SOUND_RANGE 17
 #define MEDIUM_RANGE_SOUND_EXTRARANGE -5

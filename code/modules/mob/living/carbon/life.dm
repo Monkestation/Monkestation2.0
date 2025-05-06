@@ -121,6 +121,7 @@
 	// Breathe from air
 	else
 		breath = get_breath_from_surroundings(environment, BREATH_VOLUME)
+		breath_airborne_diseases()
 
 	check_breath(breath, skip_breath)
 

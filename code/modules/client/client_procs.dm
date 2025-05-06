@@ -248,8 +248,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		persistent_client.byond_build = byond_build
 		persistent_client.byond_version = byond_version
 
-	if(byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -567,10 +566,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 
-	if(!media)
-		media = new /datum/media_manager(src)
-	media.open()
-	media.update_music()
+	media_player = new(src)
 
 	fully_created = TRUE
 
@@ -591,6 +587,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	return ..()
 
 /client/Destroy()
+	QDEL_NULL(media_player) // monkestation edit: destroy this first so we don't try to send anything during any part of del
 	if(mob)
 		var/stealth_admin = mob.client?.holder?.fakekey
 		var/announce_join = mob.client?.prefs?.read_preference(/datum/preference/toggle/broadcast_login_logout)
@@ -600,7 +597,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client.client = null
+	persistent_client?.client = null
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
@@ -1360,6 +1357,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set desc = "Stop Current Sounds"
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
+	media_player?.stop()
+	GLOB.lobby_media.remove_listener(mob)
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
 /client/verb/toggle_fullscreen()
@@ -1424,8 +1423,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /// This grabs the DPI of the user per their skin
 /client/proc/acquire_dpi()
-	if(byond_version < 516) // why won't you update
-		return
 	window_scaling = text2num(winget(src, null, "dpi"))
 
 	debug_admins("scalies: [window_scaling]")

@@ -85,6 +85,7 @@
 @include meta.load-css('./interfaces/NtosNotepad.scss');
 // MONKESTATION ADDITION START
 @include meta.load-css('./interfaces/ClockworkSlab.scss');
+@include meta.load-css('./interfaces/VethPlayerPanel.scss');
 // MONKESTATION ADDITION END
 
 // Layouts

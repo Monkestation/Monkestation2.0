@@ -205,6 +205,7 @@
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
 #include "slips.dm"
+#include "smes_connections.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_change_clothing.dm"
