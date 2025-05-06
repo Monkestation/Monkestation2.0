@@ -57,7 +57,7 @@
 		return
 	var/mob/living/carbon/human/jslash
 	var/obj/cuffs = jaunter.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
-	if(cuffs && jaunter.handcuffed == cuffs)
+	if(cuffs && jslash.handcuffed == cuffs)
 		if(!istype(cuffs))
 			return 0
 	if(jaunt_out_time > 0)
