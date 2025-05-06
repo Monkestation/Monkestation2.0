@@ -40,6 +40,7 @@
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
@@ -75,6 +76,9 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/sign/warning/explosives/alt/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "at" = (
@@ -112,6 +116,9 @@
 "aB" = (
 /obj/structure/table,
 /obj/item/folder/syndicate/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aC" = (
@@ -236,18 +243,11 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Self-Destruct"
 	},
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/highsecurity{
-	name = "Self-Destruct"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/iron,
+/turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aQ" = (
 /turf/closed/wall/r_wall,
@@ -377,6 +377,15 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/turretid{
+	control_area = "/area/ruin/space/has_grav/deepstorage/crusher";
+	dir = 1;
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "self-destruct turret controls";
+	pixel_y = 30;
+	req_access = list("syndicate")
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "bg" = (
@@ -2057,6 +2066,7 @@
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 6
 	},
+/obj/effect/turf_decal/bot_red/right,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "fR" = (
@@ -2100,6 +2110,7 @@
 "fV" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "fW" = (
@@ -2475,7 +2486,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hb" = (
-/obj/machinery/blackbox_recorder,
+/obj/machinery/syndicate_blackbox_recorder,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hc" = (
@@ -2549,6 +2560,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "ho" = (
@@ -2773,8 +2785,10 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "rz" = (
-/obj/structure/filingcabinet,
-/obj/item/folder/syndicate/mining,
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_red/left,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "rD" = (
@@ -2786,7 +2800,11 @@
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "sa" = (
-/turf/closed/wall,
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "sx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -2808,6 +2826,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "tk" = (
@@ -3019,7 +3038,14 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "Bb" = (
+/obj/structure/filingcabinet,
+/obj/item/folder/syndicate/mining,
+/obj/effect/turf_decal/bot_white/right,
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/deepstorage/crusher)
+"Bg" = (
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "Bw" = (
 /mob/living/basic/carp/mega,
@@ -3055,6 +3081,13 @@
 /obj/machinery/computer/slime_market,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"CY" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "CZ" = (
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "s1"
@@ -3494,7 +3527,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Ya" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "Yo" = (
 /obj/structure/table,
@@ -3506,8 +3539,9 @@
 "YY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/porta_turret/syndicate/energy{
-	dir = 8
+	dir = 9
 	},
+/obj/effect/turf_decal/bot_red/left,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "Zx" = (
@@ -4685,8 +4719,8 @@ aa
 Iy
 ab
 ab
-ab
-ab
+CA
+Bg
 OD
 ah
 ao
@@ -4737,8 +4771,8 @@ aa
 aa
 ab
 ab
-ab
-ab
+CA
+Bg
 OD
 ai
 ap
@@ -4789,8 +4823,8 @@ aa
 aa
 ab
 ab
-ab
-ab
+CA
+Bg
 OD
 ai
 aq
@@ -4841,8 +4875,8 @@ aa
 ab
 ab
 ab
-ab
-ab
+CA
+Bg
 OD
 ah
 ar
@@ -4893,13 +4927,13 @@ aa
 ab
 ab
 ab
-ab
-ab
 CA
-sa
-sa
-sa
-sa
+Bg
+Ob
+Ob
+Ob
+Ob
+Ob
 bd
 bx
 bO
@@ -4945,13 +4979,13 @@ aa
 ab
 ab
 ab
-ab
-ab
+CA
+Bg
 Ob
 sa
 as
 aB
-sa
+Ob
 yQ
 yQ
 yQ
@@ -4997,8 +5031,8 @@ aa
 aa
 ab
 ab
-ab
-ab
+CA
+Bg
 Ob
 ak
 at
@@ -5049,8 +5083,8 @@ Iy
 aa
 aa
 ab
-ab
-ab
+CA
+Bg
 Ob
 al
 au
@@ -5101,9 +5135,9 @@ Iy
 aa
 aa
 ab
-ab
-ab
-Ob
+CA
+Bg
+CY
 am
 sQ
 aE
@@ -5151,10 +5185,10 @@ ab
 Iy
 wQ
 aa
-aa
 ab
 ab
-ab
+CA
+Bg
 Ob
 AZ
 rz
@@ -5203,15 +5237,15 @@ ab
 ab
 aa
 aa
-aa
-aa
 ab
 ab
-ab
+CA
+Bg
+Bg
 Ob
 Ob
 Ob
-aQ
+Ya
 bi
 bC
 sL
@@ -5255,14 +5289,14 @@ ab
 ab
 aa
 aa
-aa
-aa
 ab
 ab
-ab
-ab
-ab
-ab
+CA
+CA
+Bg
+Bg
+Bg
+Bg
 aQ
 bj
 bC
@@ -5310,11 +5344,11 @@ aa
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+CA
+CA
+CA
+CA
+CA
 aQ
 FI
 bC

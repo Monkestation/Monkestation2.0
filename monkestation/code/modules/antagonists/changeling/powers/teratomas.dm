@@ -1,11 +1,12 @@
 /datum/action/changeling/teratoma
 	name = "Birth Teratoma"
 	desc = "Our form divides, creating an egg that will soon hatch into a living tumor, fixated on causing mayhem. Costs 60 chemicals."
-	helptext = "The tumor will not be loyal to us or our cause. Requires 3 changeling absorptions."
+	helptext = "The tumor will not be loyal to us or our cause. Requires an changeling absorption for each tumor created."
 	button_icon_state = "spread_infestation"
 	chemical_cost = 60
 	dna_cost = 2
-	req_absorbs = 3
+	req_absorbs = 1
+
 
 /datum/action/changeling/teratoma/sting_action(mob/living/user)
 	..()
@@ -20,6 +21,9 @@
 /datum/action/changeling/teratoma/proc/create_teratoma(mob/living/user)
 	var/datum/antagonist/changeling/ling = user?.mind?.has_antag_datum(/datum/antagonist/changeling)
 	if(!ling)
+		return FALSE
+	if(ling.births >= ling.true_absorbs)
+		to_chat(user, span_warning("You must absorb another creature to divide yourself further."))
 		return FALSE
 	ling.adjust_chemicals(-chemical_cost)
 	var/list/candidates = SSpolling.poll_ghost_candidates(
@@ -41,7 +45,7 @@
 		to_chat(user, span_warning("You fail at creating a tumor. Perhaps you should try again later?"))
 		ling.adjust_chemicals(chemical_cost)
 		return FALSE
-
+	ling.births++
 	var/datum/mind/goober_mind = new(candidate.key)
 	goober_mind.active = TRUE
 	var/mob/living/carbon/human/species/teratoma/goober = new(user.drop_location())

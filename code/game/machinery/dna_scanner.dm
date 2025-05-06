@@ -23,8 +23,8 @@
 	precision_coeff = 0
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		scan_level += scanning_module.tier
-	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		precision_coeff = matter_bin.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		precision_coeff = capacitor.tier
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		damage_coeff = micro_laser.tier
 

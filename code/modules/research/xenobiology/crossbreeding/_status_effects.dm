@@ -780,13 +780,17 @@
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
 	colour = "red"
+	var/static/list/affected_modifiers = list(
+		/datum/movespeed_modifier/equipment_speedmod,
+		/datum/movespeed_modifier/belt_satchel,
+	)
 
 /datum/status_effect/stabilized/red/on_apply()
 	. = ..()
-	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
+	owner.add_movespeed_mod_immunities(type, affected_modifiers)
 
 /datum/status_effect/stabilized/red/on_remove()
-	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
+	owner.remove_movespeed_mod_immunities(type, affected_modifiers)
 	return ..()
 
 /datum/status_effect/stabilized/green
