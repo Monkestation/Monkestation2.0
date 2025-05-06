@@ -66,6 +66,7 @@
 	if(cuffs && jslash.handcuffed == cuffs)
 		if(!istype(cuffs))
 			return 0
+		qdel(cuffs)
 /**
  * Creates the jaunt holder and moves the jaunter into it
  */
