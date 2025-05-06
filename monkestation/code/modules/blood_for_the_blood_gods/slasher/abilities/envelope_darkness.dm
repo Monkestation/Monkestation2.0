@@ -57,15 +57,15 @@
 		return
 	var/mob/living/carbon/human/jslash
 	var/obj/cuffs = jaunter.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
-	if(cuffs && jslash.handcuffed == cuffs)
-		if(!istype(cuffs))
-			return 0
+
 	if(jaunt_out_time > 0)
 		ADD_TRAIT(jaunter, TRAIT_IMMOBILIZED, REF(src))
 		addtimer(CALLBACK(src, PROC_REF(do_jaunt_out), jaunter, holder), jaunt_out_time)
 	else
 		start_jaunt(jaunter, holder)
-
+	if(cuffs && jslash.handcuffed == cuffs)
+		if(!istype(cuffs))
+			return 0
 /**
  * Creates the jaunt holder and moves the jaunter into it
  */
