@@ -61,7 +61,7 @@
 		addtimer(CALLBACK(src, PROC_REF(do_jaunt_out), jaunter, holder), jaunt_out_time)
 	else
 		start_jaunt(jaunter, holder)
-		jaunter.qdel(ITEM_SLOT_HANDCUFFED)
+		jaunter.del(ITEM_SLOT_HANDCUFFED)
 /**
  * Creates the jaunt holder and moves the jaunter into it
  */
