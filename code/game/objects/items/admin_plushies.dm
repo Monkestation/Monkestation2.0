@@ -377,7 +377,7 @@
 		if (do_after(user, hairbrush.brush_speed))
 			user.visible_message(span_notice("[user] brushes [src]'s hair!"), span_notice("You brush [src]'s hair."))
 			if (user?.ckey == plushckey)
-				brushed = brushed + 3
+				brushed = brushed + 4
 			else
 				brushed++
 			if (brushed > 50 && !GetComponent(/datum/component/particle_spewer/sparkle))
