@@ -46,7 +46,7 @@
 	name = "brad"
 	desc = "Woah.. they're BLUE, and they've also got a cane! How fancy dancy."
 	icon_state = "brad"
-	gender = NEUTRAL
+	gender = NEUTER
 /datum/loadout_item/plushies/brad
 	name = "Brad Plush"
 	item_path = /obj/item/toy/plush/admin/brad
