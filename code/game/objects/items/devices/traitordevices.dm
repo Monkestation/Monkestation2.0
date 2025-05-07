@@ -360,11 +360,12 @@ effective or pretty fucking useless.
 	disable_radios_on(target)
 
 /obj/item/jammer/proc/disable_radios_on(atom/target, ignore_syndie = FALSE)
-	for (var/obj/item/radio/radio in target.get_all_contents() + target)
+	var/list/target_contents = target.get_all_contents() + target
+	for (var/obj/item/radio/radio in target_contents)
 		if(ignore_syndie && radio.syndie)
 			continue
 		radio.set_broadcasting(FALSE)
-	for (var/obj/item/bodycam_upgrade/bodycamera in target.get_all_contents() + target)
+	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
 		bodycamera.turn_off()
 
 /obj/item/jammer/makeshift
