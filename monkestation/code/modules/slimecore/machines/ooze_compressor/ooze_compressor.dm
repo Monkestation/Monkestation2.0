@@ -11,7 +11,7 @@
 /datum/compressor_recipe/crossbreed/stabilized,\
 )
 /// The maximum amount of extracts that can be on a compressor's tile before it stops.
-#define MAX_EXTRACTS_ON_TILE 20
+#define MAX_EXTRACTS_ON_TILE 30
 
 /obj/machinery/plumbing/ooze_compressor
 	name = "ooze compressor"
@@ -250,7 +250,7 @@
 /obj/machinery/plumbing/ooze_compressor/proc/count_extracts_on_tile()
 	. = 0
 	for(var/thing in loc)
-		if(istype(thing, /obj/item/slime_extract) || istype(thing, /obj/item/slimecross))
+		if(istype(thing, /obj/item/slime_extract) || istype(thing, /obj/item/slimecross) || istype(thing, /obj/item/autoslime))
 			.++
 
 #undef MAX_EXTRACTS_ON_TILE
