@@ -212,7 +212,7 @@ const Testmerges = (_props) => {
         </h4>
       </Section>
       <Stack vertical>
-        {testmerges.toReversed().map((testmerge) => {
+        {testmerges.reverse().map((testmerge) => {
           const title = (
             <a href={testmerge.link}>
               #{testmerge.number}: &quot;{testmerge.title}&quot; by{' '}
