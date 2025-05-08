@@ -85,8 +85,7 @@ var/devitt = /datum/bb_gear/devitt
 	else
 		name = initial(name)
 		desc = initial(desc)
-	return ..()
-	if(team.chosen_gear = devitt)
+	if(team.chosen_gear == devitt)
 		priority_announce(
 		text = "A large Captain is condom is approaching",
 		title = "Central Command Meteorology Division",
