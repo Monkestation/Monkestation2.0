@@ -503,9 +503,17 @@
 /datum/status_effect/stabilized/purple/tick()
 	healed_last_tick = FALSE
 
-	healed_last_tick += owner.adjustBruteLoss(-heal_amount, updating_health = FALSE)
-	healed_last_tick += owner.adjustFireLoss(-heal_amount, updating_health = FALSE)
-	healed_last_tick += owner.adjustToxLoss(-heal_amount, updating_health = FALSE, forced = TRUE) // Forced, so slimepeople are healed as well.
+	if(owner.getBruteLoss() > 0)
+		owner.adjustBruteLoss(-heal_amount, updating_health = FALSE)
+		healed_last_tick = TRUE
+
+	if(owner.getFireLoss() > 0)
+		owner.adjustFireLoss(-heal_amount, updating_health = FALSE)
+		healed_last_tick = TRUE
+
+	if(owner.getToxLoss() > 0)
+		healed_last_tick += owner.adjustToxLoss(-heal_amount, updating_health = FALSE, forced = TRUE) // Forced, so slimepeople are healed as well.
+		healed_last_tick = TRUE
 
 	// Technically, "healed this tick" by now.
 	if(healed_last_tick)
