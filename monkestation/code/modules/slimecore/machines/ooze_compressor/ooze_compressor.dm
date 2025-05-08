@@ -176,6 +176,7 @@
 	if(count_extracts_on_tile() >= MAX_EXTRACTS_ON_TILE)
 		say("Too many extracts on output location, please move or clean some.")
 		current_recipe = null
+		repeat_recipe = FALSE
 	else if(!repeat_recipe)
 		current_recipe = null
 	update_power_usage()
