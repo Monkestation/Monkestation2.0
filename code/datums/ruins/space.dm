@@ -58,6 +58,14 @@
 	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three-man heavily fortified bunker into a giant unused asteroid. \
 	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
 
+/datum/map_template/ruin/space/deep_storage/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	var/list/undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
+
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
 	suffix = "bigderelict1.dmm"
@@ -183,6 +191,13 @@
 	name = "The Twin-Nexus Hotel"
 	description = "An actual working interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
 
+/datum/map_template/ruin/space/spacerealhotel/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	var/list/undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
+
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
 	suffix = "turretedoutpost.dmm"
@@ -208,6 +223,13 @@
 	description = "Until very recently this pirate radio station was used to harangue local space stations over a variety of perceived \"ethics violations\". \
 	It seems like someone finally got sick of it, but the equipment still works."
 
+/datum/map_template/ruin/space/djstation/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	var/list/undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
+
 /datum/map_template/ruin/space/thederelict
 	id = "thederelict"
 	suffix = "russian_derelict.dmm"
@@ -222,20 +244,7 @@
 		"listeningstation",
 		"syndicate_depot",
 	)
-	var/original_zLevel = zLevel
-	while(TRUE)
-		var/unwanted_zLevel = FALSE
-		for(var/undesirable in undesirable_ruins)
-			if(undesirable in placed_ruins && placed_ruins[undesirable] == zLevel)
-				unwanted_zLevel = TRUE
-				break
-		if(unwanted_zLevel)
-			z_levels -= zLevel
-			if(!length(z_levels))
-				return original_zLevel
-			zLevel = pick(z_levels)
-		else
-			return zLevel
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
 
 /datum/map_template/ruin/space/abandonedteleporter
 	id = "abandonedteleporter"
@@ -264,6 +273,13 @@
 	name = "Syndicate Listening Station"
 	description = "Listening stations form the backbone of the syndicate's information-gathering operations. \
 	Assignment to these stations is dreaded by most agents, as it entails long and lonely shifts listening to nearby stations chatter incessantly about the most meaningless things."
+
+/datum/map_template/ruin/space/listeningstation/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	var/list/undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
 
 /datum/map_template/ruin/space/old_ai_sat
 	id = "oldAIsat"
@@ -308,20 +324,7 @@
 		"listeningstation",
 		"syndicate_depot",
 	)
-	var/original_zLevel = zLevel
-	while(TRUE)
-		var/unwanted_zLevel = FALSE
-		for(var/undesirable in undesirable_ruins)
-			if(undesirable in placed_ruins && placed_ruins[undesirable] == zLevel)
-				unwanted_zLevel = TRUE
-				break
-		if(unwanted_zLevel)
-			z_levels -= zLevel
-			if(!length(z_levels))
-				return original_zLevel
-			zLevel = pick(z_levels)
-		else
-			return zLevel
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
 
 /datum/map_template/ruin/space/gondoland
 	id = "gondolaasteroid"
@@ -526,3 +529,9 @@
 	name = "Syndicate Depot"
 	description = "A small depot ran by the Syndicate sitting out in space, responsible for logistics across the vast reaches of space."
 
+/datum/map_template/ruin/space/syndicate_depot/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	var/list/undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
+	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
