@@ -161,8 +161,9 @@
 									break outer
 
 				var/list/output = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below,placed_ruins,z_levels,check_override)
-				placed_turf = output["central_turf"]
-				return_z = output["z"]
+				if(("central_turf" in output) && ("z" in output))
+					placed_turf = output["central_turf"]
+					return_z = output["z"]
 				if(!placed_turf)
 					placed_ruins[current_pick.id] = return_z
 					continue
