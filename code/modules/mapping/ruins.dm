@@ -4,7 +4,8 @@
 		return place_on_isolated_level(z)
 	if(!check_override)
 		var/forced_z = run_ruin_checks(z, placed_ruins, z_levels.Copy())
-		z = forced_z
+		if(forced_z)
+			z = forced_z
 	while(sanity > 0)
 		sanity--
 		var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(width / 2)
