@@ -37,7 +37,7 @@
 	..(path = mappath)
 
 //putting this here because this is repeated so many fucking times
-/datum/map_template/ruin/proc/avoid_ruin(zLevel, list/placed_ruins, list/z_levels, list/undesirable_ruins,)
+/datum/map_template/ruin/proc/avoid_ruin(zLevel, list/placed_ruins, list/z_levels, list/undesirable_ruins)
 	var/original_zLevel = zLevel
 	while(TRUE)
 		var/unwanted_zLevel = FALSE
