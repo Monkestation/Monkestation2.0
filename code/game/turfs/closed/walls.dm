@@ -312,9 +312,12 @@
 
 		if(atom_integrity >= max_integrity)
 			if(LAZYLEN(dent_decals))
-				to_chat(user, span_notice("You fix some dents on the wall."))
-				cut_overlay(dent_decals)
-				dent_decals.Cut()
+				to_chat(user, span_notice("You begin fixing dents on the wall..."))
+				if(W.use_tool(src, user, 0, volume=100))
+					if(iswallturf(src))
+						to_chat(user, span_notice("You fix some dents on the wall."))
+						cut_overlay(dent_decals)
+						dent_decals.Cut()
 			else
 				to_chat(user, span_warning("[src] is intact!"))
 			return TRUE
