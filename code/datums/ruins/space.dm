@@ -222,7 +222,7 @@
 		"listeningstation",
 		"syndicate_depot",
 	)
-	var/list/original_zLevel = zLevel
+	var/original_zLevel = zLevel
 	while(TRUE)
 		var/unwanted_zLevel = FALSE
 		for(var/undesirable in undesirable_ruins)
@@ -309,7 +309,7 @@
 		"listeningstation",
 		"syndicate_depot",
 	)
-	var/list/original_zLevel = zLevel
+	var/original_zLevel = zLevel
 	while(TRUE)
 		var/unwanted_zLevel = FALSE
 		for(var/undesirable in undesirable_ruins)
