@@ -36,3 +36,7 @@
 	mappath = prefix + suffix
 	..(path = mappath)
 
+//proc thats called when this map tries to load, fill with checks unique to this ruin or whatever the fuck
+//useful for relocating your ruin if certain conditions are not met
+/datum/map_template/ruin/proc/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	return zLevel

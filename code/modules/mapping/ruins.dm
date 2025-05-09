@@ -1,7 +1,10 @@
-/datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
+/datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below, list/placed_ruins, list/z_levels, check_override)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
 		return place_on_isolated_level(z)
+	if(!check_override)
+		var/forced_z = run_ruin_checks(z, placed_ruins, z_levels.Copy())
+		z = forced_z
 	while(sanity > 0)
 		sanity--
 		var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(width / 2)
@@ -48,7 +51,10 @@
 			T.turf_flags |= NO_RUINS
 
 		new /obj/effect/landmark/ruin(central_turf, src)
-		return central_turf
+		var/list/output = list()
+		output["central_turf"] = central_turf
+		output["z"] = z
+		return output
 
 /datum/map_template/ruin/proc/place_on_isolated_level(z)
 	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(width, height, 1, z) //Make the new level creation work with different traits.
@@ -86,6 +92,7 @@
 			return
 
 	var/list/ruins = potentialRuins.Copy()
+	var/list/placed_ruins = list()
 
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
@@ -132,13 +139,17 @@
 		var/failed_to_place = TRUE
 		var/target_z = 0
 		var/turf/placed_turf //Where the ruin ended up if we succeeded
+		var/return_z //final z level decided by ruin checks
+		var/check_override //do we skip this map template's unique checks?
 		outer:
 			while(placement_tries > 0)
 				placement_tries--
 				target_z = pick(z_levels)
 				if(forced_z)
 					target_z = forced_z
+					check_override = TRUE
 				if(current_pick.always_spawn_with) //If the ruin has part below, make sure that z exists.
+					check_override = TRUE
 					for(var/v in current_pick.always_spawn_with)
 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
 							var/turf/T = locate(1,1,target_z)
@@ -148,8 +159,11 @@
 								else
 									break outer
 
-				placed_turf = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below)
+				var/list/output = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below,placed_ruins,z_levels,check_override)
+				placed_turf = output["central_turf"]
+				return_z = output["z"]
 				if(!placed_turf)
+					placed_ruins[current_pick.id] = return_z
 					continue
 				else
 					failed_to_place = FALSE

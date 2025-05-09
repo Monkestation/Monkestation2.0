@@ -214,6 +214,30 @@
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
 
+/datum/map_template/ruin/space/thederelict/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	var/list/undesirable_ruins = list(
+		"djstation",
+		"spacerealhotel",
+		"deep-storage",
+		"listeningstation",
+		"syndicate_depot",
+	)
+	var/list/original_zLevel = zLevel
+	while(TRUE)
+		var/unwanted_zLevel = FALSE
+		for(var/undesirable in undesirable_ruins)
+			if(undesirable in placed_ruins)
+				if(placed_ruins[undesirable] == zLevel)
+					unwanted_zLevel = TRUE
+					break
+		if(unwanted_zLevel)
+			z_levels -= zLevel
+			if(!length(z_levels))
+				return original_zLevel
+			zLevel = pick(z_levels)
+		else
+			return zLevel
+
 /datum/map_template/ruin/space/abandonedteleporter
 	id = "abandonedteleporter"
 	suffix = "abandonedteleporter.dmm"
@@ -276,6 +300,30 @@
 	name = "Ancient Space Station"
 	description = "The crew of a space station awaken one hundred years after a crisis. Awaking to a derelict space station on the verge of collapse, and a hostile force of invading \
 	hivebots. Can the surviving crew overcome the odds and survive and rebuild, or will the cold embrace of the stars become their new home?"
+
+/datum/map_template/ruin/space/oldstation/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
+	var/list/undesirable_ruins = list(
+		"djstation",
+		"spacerealhotel",
+		"deep-storage",
+		"listeningstation",
+		"syndicate_depot",
+	)
+	var/list/original_zLevel = zLevel
+	while(TRUE)
+		var/unwanted_zLevel = FALSE
+		for(var/undesirable in undesirable_ruins)
+			if(undesirable in placed_ruins)
+				if(placed_ruins[undesirable] == zLevel)
+					unwanted_zLevel = TRUE
+					break
+		if(unwanted_zLevel)
+			z_levels -= zLevel
+			if(!length(z_levels))
+				return original_zLevel
+			zLevel = pick(z_levels)
+		else
+			return zLevel
 
 /datum/map_template/ruin/space/gondoland
 	id = "gondolaasteroid"
