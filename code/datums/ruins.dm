@@ -42,7 +42,7 @@
 	while(TRUE)
 		var/unwanted_zLevel = FALSE
 		for(var/undesirable in undesirable_ruins)
-			if(undesirable in placed_ruins && placed_ruins[undesirable] == zLevel)
+			if((undesirable in placed_ruins) && placed_ruins[undesirable] == zLevel)
 				unwanted_zLevel = TRUE
 				break
 		if(unwanted_zLevel)
