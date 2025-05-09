@@ -109,6 +109,7 @@
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
 		/obj/item/clothing/under/rank/medical/doctor = 4,
 		/obj/item/clothing/under/rank/medical/doctor/skirt = 4,
+		/obj/item/clothing/suit/toggle/labcoat/medical = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/blue = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/green = 4,
 		/obj/item/clothing/under/rank/medical/scrubs/purple = 4,
