@@ -64,7 +64,6 @@
 		"thederelict",
 	)
 	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
-	return avoid_ruin(zLevel, placed_ruins, z_levels, undesirable_ruins)
 
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
