@@ -168,3 +168,5 @@
 	surplus = 0
 	item = /obj/item/chromosome/energy
 	restricted_roles = list(JOB_GENETICIST)
+
+
