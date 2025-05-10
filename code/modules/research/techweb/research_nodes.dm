@@ -149,3 +149,6 @@
 		"bag_holding",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/xenomorph2)
+	discount_experiments = list(/datum/experiment/dissection/xenomorph = TECHWEB_TIER_3_POINTS)

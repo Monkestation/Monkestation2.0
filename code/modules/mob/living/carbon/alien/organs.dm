@@ -360,3 +360,23 @@
 		acid_reagents.my_atom = acid
 		acid_reagents.add_reagent(/datum/reagent/toxin/acid, 30)
 		acid.move_at(my_target, particle_delay, spit_range)
+/*
+/obj/item/organ/internal/alien/hivenode/artificial
+	name = "artificial hive node"
+	icon_state = "artificial_hivenode"
+
+/obj/item/organ/internal/alien/hivenode/artificial/on_insert(mob/living/carbon/organ_owner)
+	. = ..()
+	ADD_TRAIT(organ_owner, TRAIT_ARTIFICIAL_NODE, ORGAN_TRAIT)
+	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	organ_owner.grant_language(/datum/language/xenocommon, TRUE, TRUE, LANGUAGE_GLAND)
+	organ_owner.grant_language(/datum/language/common, TRUE, TRUE, LANGUAGE_GLAND) //they should understand it not speak it
+
+/obj/item/organ/internal/alien/hivenode/artificial/on_remove(mob/living/carbon/organ_owner, special = FALSE)
+	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	REMOVE_TRAIT(organ_owner, TRAIT_ARTIFICIAL_NODE, ORGAN_TRAIT)
+	if(!QDELING(organ_owner))
+		organ_owner.remove_language(/datum/language/xenocommon, TRUE, TRUE, LANGUAGE_GLAND)
+		organ_owner.grant_language(/datum/language/common, TRUE, TRUE, LANGUAGE_GLAND)
+	return ..()
+*/

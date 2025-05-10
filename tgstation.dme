@@ -6849,6 +6849,7 @@
 #include "monkestation\code\modules\blueshift\armaments\rayne.dm"
 #include "monkestation\code\modules\blueshift\armaments\sol.dm"
 #include "monkestation\code\modules\blueshift\armaments\vitezstvi.dm"
+#include "monkestation\code\modules\blueshift\benos\hivenode_hijacker.dm"
 #include "monkestation\code\modules\blueshift\benos\human_changes.dm"
 #include "monkestation\code\modules\blueshift\benos\human_defence.dm"
 #include "monkestation\code\modules\blueshift\benos\larva.dm"

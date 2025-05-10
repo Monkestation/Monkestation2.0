@@ -106,10 +106,14 @@ SUBSYSTEM_DEF(research)
 		if(!techweb_list.should_generate_points)
 			continue
 		var/list/bitcoins = list()
+		var/captive_xenos = 1
+		for(var/datum/antagonist/xeno/captive/captive_xeno in GLOB.antagonists)
+			var/datum/team/xeno/captive/captive_team
+			if(captive_team.check_captivity(captive_xeno) == "captive_xeno_failed") //xeno still within captivity area
+				captive_xenos += 1
 		for(var/obj/machinery/rnd/server/miner as anything in techweb_list.techweb_servers)
 			if(miner.working)
-				bitcoins = single_server_income.Copy()
-				break //Just need one to work.
+				bitcoins = single_server_income.Copy() * captive_xenos
 
 		if (techweb_list.nanite_bonus)
 			bitcoins[TECHWEB_POINT_TYPE_GENERIC] += techweb_list.nanite_bonus

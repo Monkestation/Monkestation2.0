@@ -333,3 +333,20 @@
 	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
 	possible_types = list(/obj/structure/mecha_wreckage)
 	total_requirement = 2
+
+/datum/experiment/scanning/xenomorph
+	name = "xenomorph lifecycle scan"
+	description = "We need additional information about the xenomorph lifecycle. Send us scans of an embryo and a queen."
+	exp_tag = "xeno_scan"
+	required_atoms = list(/obj/item/organ/internal/body_egg/alien_embryo = 1, /mob/living/carbon/alien/adult/nova/queen = 1)
+	var/list/required = list()
+
+
+/datum/experiment/scanning/xenomorph2
+	name = "xenomorph hivenode scan"
+	description = "The hive node seems to be the psionic link between the xenomorphs. Remove one from a subject and scan it. "
+	exp_tag = "xeno_scan2"
+	required_atoms = list(/obj/item/organ/internal/alien/hivenode = 1)
+	var/list/required = list()
+
+
