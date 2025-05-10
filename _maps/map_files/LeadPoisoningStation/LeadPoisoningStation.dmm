@@ -18989,7 +18989,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "jcd" = (
-/obj/machinery/jukebox/disco,
+/obj/machinery/dance_machine/disco,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties,

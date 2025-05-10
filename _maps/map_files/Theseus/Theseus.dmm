@@ -50792,7 +50792,7 @@
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/machinery/jukebox{
+/obj/machinery/dance_machine{
 	anchored = 0;
 	name = "jukebox on wheels"
 	},

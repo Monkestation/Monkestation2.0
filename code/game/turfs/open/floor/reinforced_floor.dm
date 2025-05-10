@@ -226,3 +226,39 @@
 
 /turf/open/floor/engine/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+//Monkestation addition
+
+/turf/open/floor/engine/insulation
+	name = "hyper-insulated floor"
+	desc = "Sturdy and completely heat-proof."
+	icon = 'monkestation/icons/turf/insulated_floor.dmi'
+	icon_state = "insulation"
+	thermal_conductivity = 0
+	heat_capacity = INFINITY
+	floor_tile = /obj/item/stack/sheet/mineral/plastitanium
+
+/turf/open/floor/engine/insulation/wrench_act(mob/living/user, obj/item/I)
+	return
+
+/turf/open/floor/engine/insulation/examine(mob/user)
+	. += ..()
+	. += span_notice("The insulated plating is <b>screwed</b> firmly in place.")
+
+/turf/open/floor/engine/insulation/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/engine/insulation/screwdriver_act(mob/living/user, obj/item/Lorem)
+	..()
+	to_chat(user, span_notice("You begin unscrewing the plating..."))
+	if(Lorem.use_tool(src, user, 30, volume=80))
+		if(!istype(src, /turf/open/floor/engine/insulation))
+			return TRUE
+		if(floor_tile)
+			new floor_tile(src, 1)
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
+
+
+
+
