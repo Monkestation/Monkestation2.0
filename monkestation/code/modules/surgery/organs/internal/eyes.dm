@@ -102,7 +102,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-
 /obj/item/organ/internal/eyes/robotic/meson
 	name = "meson eyes"
 	desc = "These cybernetic eye implants allow you to see the structural layout of your surroundings."
@@ -111,3 +110,10 @@
 	color_cutoffs = list(5, 15, 5)
 	sight_flags = SEE_TURFS
 	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+
+/obj/item/organ/internal/eyes/night_vision/ganymede
+	name = "ganymedian eyes"
+	desc = "The eyes of a Ganymedian, a legendary alien race."
+	low_light_cutoff = list(0, 15, 20)
+	medium_light_cutoff = list(0, 20, 35)
+	high_light_cutoff = list(0, 40, 50)
