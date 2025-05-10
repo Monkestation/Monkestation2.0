@@ -312,6 +312,11 @@
 		"Oozeling" = /datum/species/oozeling,
 		"IPC" = /datum/species/ipc,
 		"Monkey" = /datum/species/monkey,
+		"Plasmaman" = /datum/species/plasmaman,
+		"Goblin" = /datum/species/goblin,
+		"Apid" = /datum/species/apid,
+		"Ornithid" = /datum/species/ornithid,
+		"Satyr" = /datum/species/satyr,
 		"Zombie" = /datum/species/zombie,
 		"Shadow" = /datum/species/shadow,
 	)
