@@ -91,9 +91,12 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 
 #undef MANUAL_JSON_ENTRY
 
+/proc/_fexists(file)
+	return fexists(file)
+
 #define CHECK_AND_TRY_FILE_ERROR_RECOVERY(file) \
 	var/static/in_error_recovery = FALSE; \
-	if(!fexists(##file)) { \
+	if(!_fexists(##file)) { \
 		if(in_error_recovery) { \
 			in_error_recovery = FALSE; \
 			CRASH("Failed to error recover log file: [file]"); \
@@ -106,18 +109,21 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 	}; \
 	in_error_recovery = FALSE;
 
+/proc/_rustg_log_write(log, text, formatted)
+	return rustg_log_write(log, text, formatted)
+
 /// Writes the log entry to a file.
 /datum/log_entry/proc/write_entry_to_file(file)
 	CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
-	WRITE_LOG_NO_FORMAT(file, "[to_json_text()]\n")
+	_rustg_log_write(file, "[to_json_text()]\n", "false")
 
 /// Writes the log entry to a file as a human-readable string.
 /datum/log_entry/proc/write_readable_entry_to_file(file, format_internally = TRUE)
 	CHECK_AND_TRY_FILE_ERROR_RECOVERY(file)
 	// If it's being formatted internally we need to manually add a newline
 	if(format_internally)
-		WRITE_LOG_NO_FORMAT(file, "[to_readable_text(format = TRUE)]\n")
+		_rustg_log_write(file, "[to_readable_text(format = TRUE)]\n", "false")
 	else
-		WRITE_LOG(file, "[to_readable_text(format = FALSE)]")
+		_rustg_log_write(file, "[to_readable_text(format = FALSE)]", "true")
 
 #undef CHECK_AND_TRY_FILE_ERROR_RECOVERY
