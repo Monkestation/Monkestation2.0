@@ -125,13 +125,6 @@
 		/obj/item/healthanalyzer/simple = 2,
 	)
 
-/obj/machinery/vending/wardrobe/science_wardrobe
-	products_monke = list(
-		/obj/item/clothing/under/rank/rnd/scientist/hlscience = 3,
-		/obj/item/clothing/under/rank/rnd/scientist/utility = 3,
-		/obj/item/clothing/suit/toggle/jacket/sci = 3,
-	)
-
 /obj/machinery/vending/wardrobe/hydro_wardrobe
 	contraband_monke = list(
 		/obj/item/clothing/under/suit/nova/scarface = 2,
