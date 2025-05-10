@@ -225,4 +225,10 @@
 	network = list("mine", "auxbase", "vault")
 	circuit = null
 
+/obj/machinery/computer/security/old
+	name = "\improper worn camera console"
+	desc = "A security console with access to the station's camera network. The screen barley flickers to life."
+	network = list("Alpha", "Beta", "Charlie", "Delta",)
+	circuit = null
+
 #undef DEFAULT_MAP_SIZE

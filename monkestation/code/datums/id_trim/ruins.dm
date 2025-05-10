@@ -27,7 +27,7 @@
 		ACCESS_ENGINEERING,
 		ACCESS_ENGINE_EQUIP
 	)
-	assignment = "Charlie Station Chief Medical Officer"
+	assignment = "Beta Station Chief Medical Officer"
 	sechud_icon_state = SECHUD_CHIEF_MEDICAL_OFFICER_AWAY
 
 /datum/id_trim/job/away/old/chef
@@ -77,7 +77,7 @@
 		ACCESS_ENGINEERING,
 		ACCESS_ENGINE_EQUIP
 	)
-	assignment = "Charlie Station Explorer"
+	assignment = "Beta Station Explorer"
 	sechud_icon_state = SECHUD_EXPLORER_AWAY
 
 /datum/id_trim/job/away/old/sci

@@ -49,6 +49,10 @@
 /obj/machinery/camera/autoname
 	var/number = 0 //camera number in area
 
+/obj/machinery/camera/autoname/old
+	network = list("Alpha", "Beta", "Charlie", "Delta",)
+	status = 0
+
 //This camera type automatically sets it's name to whatever the area that it's in is called.
 /obj/machinery/camera/autoname/Initialize(mapload)
 	..()
