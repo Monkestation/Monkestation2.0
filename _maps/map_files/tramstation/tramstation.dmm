@@ -12478,7 +12478,9 @@
 	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
 	name = "funny slipper :)"
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/left)
 "cPx" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -21146,7 +21148,9 @@
 "fBK" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/effect/landmark/tram/tramstation/central,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "fBX" = (
 /obj/effect/landmark/event_spawn,
@@ -24987,7 +24991,9 @@
 	icon_state = "tram_window-3"
 	},
 /obj/machinery/computer/tram_controls/directional/west,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "gOF" = (
 /obj/structure/fluff/tram_rail/floor{
@@ -36223,7 +36229,9 @@
 /area/station/security/prison/garden)
 "kpb" = (
 /obj/structure/industrial_lift/tram/white,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "kpd" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
@@ -38482,7 +38490,9 @@
 	icon_state = "tram_window-3"
 	},
 /obj/machinery/computer/tram_controls/directional/east,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "kWN" = (
 /obj/structure/table,
@@ -39367,7 +39377,9 @@
 /area/station/security/prison/workout)
 "lkr" = (
 /obj/effect/landmark/tram/tramstation/west,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/left)
 "lkv" = (
 /obj/structure/table,
@@ -40194,7 +40206,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/left)
 "lxH" = (
 /obj/structure/cable,
@@ -47134,7 +47148,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "nJq" = (
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/left)
 "nJF" = (
 /obj/structure/bookcase/random/adult,
@@ -47688,7 +47704,9 @@
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "nRO" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -48948,7 +48966,9 @@
 /turf/closed/wall,
 /area/station/maintenance/department/security)
 "omp" = (
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "omu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
@@ -49691,7 +49711,9 @@
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "ozQ" = (
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/right)
 "ozR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53383,7 +53405,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "pHM" = (
 /obj/structure/lattice,
@@ -55891,7 +55915,9 @@
 "qvZ" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "qwl" = (
 /obj/structure/sign/warning/electric_shock/directional/south,
@@ -56040,7 +56066,9 @@
 /area/station/science/xenobiology)
 "qyI" = (
 /obj/effect/landmark/tram/tramstation/east,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/right)
 "qyK" = (
 /obj/effect/turf_decal/siding/thinplating,
@@ -56650,7 +56678,9 @@
 "qHk" = (
 /obj/structure/industrial_lift/tram,
 /obj/structure/sign/plaques/tram,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "qHl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59265,7 +59295,9 @@
 /area/station/hallway/secondary/construction/engineering)
 "rwa" = (
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/left)
 "rwb" = (
 /obj/structure/disposalpipe/segment{
@@ -62677,7 +62709,9 @@
 "sCG" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "sCO" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -63722,7 +63756,9 @@
 "sTn" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/effect/landmark/lift_id,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "sTq" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -65155,7 +65191,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/right)
 "toY" = (
 /obj/structure/table/wood,
@@ -72961,7 +72999,9 @@
 	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
 	name = "funny slipper :)"
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/center)
 "vDG" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -80681,7 +80721,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/floor/noslip/tram_plate{
+	dir = 4
+	},
 /area/station/hallway/primary/tram/right)
 "yfw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{

@@ -91,7 +91,7 @@
 
 /// The maximum temperature of Lavaland
 #define LAVALAND_MAX_TEMPERATURE CELCIUS_TO_KELVIN(76.85 CELCIUS)// 350 KELVIN
-#define ICEBOX_MIN_TEMPERATURE CELCIUS_TO_KELVIN(-93.15 CELCIUS)
+#define ICEBOX_MIN_TEMPERATURE CELCIUS_TO_KELVIN(-73.15 CELCIUS) //MONKESTATION EDIT: was 93.15 (i think), reduced both because frostpunk reference and to make crater more livable
 
 /// A temperature limit which is above the maximum lavaland temperature
 #define BODYTEMP_HEAT_LAVALAND_SAFE (LAVALAND_MAX_TEMPERATURE + 5 KELVIN)
