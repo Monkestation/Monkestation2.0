@@ -1,3 +1,10 @@
+
+// ripping code from the drills to let the drills go through rwalls
+
+#define DRILL_BASIC 1
+#define DRILL_HARDENED 2
+
+
 //locker mech
 /obj/item/mecha_parts/mecha_equipment/drill/makeshift
 	name = "Makeshift exosuit drill"
@@ -5,6 +12,7 @@
 	equip_cooldown = 60 //Its slow as shit
 	force = 10 //Its not very strong
 	mech_flags = EXOSUIT_MODULE_MAKESHIFT
+	drill_level = DRILL_BASIC
 	drill_delay = 15
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/makeshift
@@ -13,6 +21,18 @@
 	equip_cooldown = 25
 	force = 10
 	mech_flags = EXOSUIT_MODULE_MAKESHIFT
+
+//sheet drill
+/obj/item/mecha_parts/mecha_equipment/drill/giantdrill
+	name = "Giant drill"
+	icon_state = "mecha_giantdrill"
+	desc = "what looks to be a drill atleast the size of you, tears through anything like butter."
+	equip_cooldown = 10 // it is not slow as shit
+	force = 15 // force low or it 1 taps.
+	mech_flags = EXOSUIT_MODULE_DRILL
+	drill_level = DRILL_HARDENED
+	drill_delay = 1.2
+	toolspeed = 0.7
 
 //ambulance
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/makeshift
@@ -30,6 +50,8 @@
 	mech_flags = EXOSUIT_MODULE_AMBULANCE
 	honk_range = 1 //only directly besides, are affected
 	tactile_message = "HARM ALARM"
+	energy_drain = 400
+	equip_cooldown = 250
 
 //trashtank
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
@@ -66,6 +88,23 @@
 	ammo_type = MECHA_AMMO_PEASHOOTER
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
 
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
+	name = "peashooter minigun"
+	desc = "through the power of special syndicate glue,multiple peashooters have been strapped together and the fireate increased."
+	icon_state = "mecha_minipea"
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
+	projectiles = 120
+	projectiles_cache = 0
+	projectiles_cache_max = 600
+	projectiles_per_shot = 30
+	projectile_delay = 0.05 SECONDS
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PEASHOOTER
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
 /obj/item/mecha_parts/mecha_equipment/tankupgrade
 	name = "trash tank armor plating"
 	desc = "A jumble of whatever scrap that someone can scrounge up that is able to beef up a trash tank somewhat."
@@ -89,6 +128,7 @@
 	name = "infantry support gun breech"
 	desc = "an improvised mantlet fitted to launch IED's torwards enemies."
 	icon_state = "mecha_supportgun"
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_ISG
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
@@ -106,3 +146,40 @@
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_GAME)
 	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/iedcasing/spawned, detonate)), det_time)
+
+//devitt
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
+	name = "40mm tank cannon"
+	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	equip_cooldown = 60
+	projectile = /obj/projectile/bullet/rocket/lighttankshell
+	equip_cooldown = 8 SECONDS
+	projectiles = 1
+	projectiles_cache = 10
+	projectiles_cache_max = 35
+	ammo_type = MECHA_AMMO_LIGHTTANK
+	mech_flags = EXOSUIT_MODULE_TANK
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
+	name = "12.7mm Malone Mk.1 Ratcatcher"
+	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_mg"
+	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/mm127x70
+	projectiles = 30
+	projectiles_cache = 60
+	projectiles_cache_max = 120
+	projectiles_per_shot = 5
+	projectile_delay = 0.1 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 4
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK
