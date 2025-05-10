@@ -38,9 +38,6 @@
 /turf/open/floor/holofloor/pure_white,
 /area/ruin/space/has_grav/wonderland)
 "dC" = (
-/obj/effect/rune/narsie{
-	used = 1
-	},
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/wonderland)
 "dE" = (

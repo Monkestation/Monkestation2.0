@@ -4,18 +4,24 @@
 	var/list/moving_controllers = list()
 	///How many times a given controller can fail on their route before they just give up
 	var/max_pathing_attempts
+	///Does this ai require processing - LEGACY for non SSpathfinding paths?
+	var/requires_processing = FALSE
 
 //Override this to setup the moveloop you want to use
 /datum/ai_movement/proc/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	SHOULD_CALL_PARENT(TRUE)
 	controller.consecutive_pathing_attempts = 0
 	controller.set_blackboard_key(BB_CURRENT_MIN_MOVE_DISTANCE, min_distance)
+	if(!moving_controllers.len && requires_processing)
+		START_PROCESSING(SSprocessing_ai_movement, src)
 	moving_controllers[controller] = current_movement_target
 
 /datum/ai_movement/proc/stop_moving_towards(datum/ai_controller/controller)
 	controller.consecutive_pathing_attempts = 0
 	moving_controllers -= controller
 	// We got deleted as we finished an action
+	if(!moving_controllers.len && requires_processing)
+		STOP_PROCESSING(SSprocessing_ai_movement, src)
 	if(!QDELETED(controller.pawn))
 		SSmove_manager.stop_looping(controller.pawn, SSai_movement)
 

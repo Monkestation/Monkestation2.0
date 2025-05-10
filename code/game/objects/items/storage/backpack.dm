@@ -136,6 +136,9 @@
 	inhand_icon_state = "backpack"
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 
+/obj/item/storage/backpack/cultpack/get_cult_power()
+	return 30
+
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."

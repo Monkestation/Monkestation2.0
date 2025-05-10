@@ -15,3 +15,7 @@
 		log_access("Client [key_name(target)] attempted to execute a verb before being fully initialized.");\
 		return\
 	}
+
+/// Gets the client of the mob, allowing for mocking of the client.
+/// You only need to use this if you know you're going to be mocking clients somewhere else.
+#define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)

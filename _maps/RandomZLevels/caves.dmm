@@ -31,7 +31,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "ap" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -49,7 +49,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "au" = (
-/obj/structure/destructible/cult/item_dispenser/altar,
+/obj/structure/cult/altar,
 /obj/effect/decal/remains/human,
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
@@ -225,7 +225,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "ba" = (
-/obj/structure/destructible/cult/item_dispenser/altar,
+/obj/structure/cult/altar,
 /obj/item/book/granter/martial/plasma_fist/nobomb,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -289,7 +289,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "bE" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -1487,7 +1487,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "wT" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1704,7 +1704,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "HK" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

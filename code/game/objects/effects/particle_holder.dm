@@ -8,19 +8,17 @@
 	/// Holds info about how this particle emitter works
 	/// See \code\__DEFINES\particles.dm
 	var/particle_flags = NONE
+	var/atom/main_holder
 
 /obj/effect/abstract/particle_holder/Initialize(mapload, particle_path = /particles/smoke, particle_flags = NONE)
 	. = ..()
-	if(!loc)
-		stack_trace("particle holder was created with no loc!")
-		return INITIALIZE_HINT_QDEL
 	// We assert this isn't an /area
 
 	src.particle_flags = particle_flags
 	particles = new particle_path
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
 	var/atom/movable/lie_about_areas = loc
-	lie_about_areas.vis_contents += src
+	lie_about_areas?.vis_contents += src
 	if(!ismovable(loc))
 		RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(immovable_deleted))
 
@@ -30,6 +28,7 @@
 
 /obj/effect/abstract/particle_holder/Destroy(force)
 	QDEL_NULL(particles)
+	main_holder = null
 	return ..()
 
 /// Non movables don't delete contents on destroy, so we gotta do this

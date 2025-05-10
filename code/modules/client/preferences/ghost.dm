@@ -89,7 +89,9 @@
 	if (!client.is_content_unlocked())
 		return
 
-	ghost.update_icon(ALL, value)
+	if(!GLOB.eclipse?.eclipse_start_time)
+		ghost.icon = initial(ghost.icon)
+		ghost.update_icon(ALL, value)
 
 /datum/preference/choiced/ghost_form/compile_constant_data()
 	var/list/data = ..()

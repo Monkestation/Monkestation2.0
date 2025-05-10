@@ -25,6 +25,7 @@
 	/// When dried, this becomes the desc of the blood
 	var/dry_desc = "Looks like it's been here a while. Eew."
 
+	var/base_color
 	/// How long it takes to dry out
 	var/drying_time = 5 MINUTES
 	/// The process to drying out, recorded in deciseconds
@@ -44,8 +45,15 @@
 		START_PROCESSING(SSblood_drying, src)
 		// update_atom_colour() // this is already called by parent via add_atom_colour
 
+	var/datum/team/cult/cult_team = locate_team(/datum/team/cult)
+	if(cult_team)
+		cult_team.add_bloody_floor(get_turf(src))
+
 /obj/effect/decal/cleanable/blood/Destroy()
 	STOP_PROCESSING(SSblood_drying, src)
+	var/datum/team/cult/cult_team = locate_team(/datum/team/cult)
+	if(cult_team)
+		cult_team.remove_bloody_floor(get_turf(src))
 	return ..()
 
 /obj/effect/decal/cleanable/blood/on_entered(datum/source, atom/movable/AM)
@@ -58,6 +66,7 @@
 	. = ..()
 	// get a default color based on DNA if it ends up unset somehow
 	color ||= (GET_ATOM_BLOOD_DNA_LENGTH(src) ? get_blood_dna_color() : COLOR_BLOOD)
+	base_color = color
 	// stop existing drying animations
 	animate(src)
 	// ok let's make the dry color now
