@@ -7522,6 +7522,7 @@
 #include "monkestation\code\modules\hydroponics\botanical_lexicon.dm"
 #include "monkestation\code\modules\hydroponics\plant_genes.dm"
 #include "monkestation\code\modules\hydroponics\seeds.dm"
+#include "monkestation\code\modules\hydroponics\grown\citrus.dm"
 #include "monkestation\code\modules\hydroponics\grown\coconut.dm"
 #include "monkestation\code\modules\hydroponics\grown\honeydew.dm"
 #include "monkestation\code\modules\hydroponics\grown\random.dm"
