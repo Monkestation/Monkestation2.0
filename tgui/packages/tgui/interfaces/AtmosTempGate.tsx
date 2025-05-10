@@ -15,7 +15,7 @@ export const AtmosTempGate = (props) => {
   const { on, temperature, min_temperature, max_temperature } = data;
 
   return (
-    <Window width={335} height={115}>
+    <Window width={345} height={115}>
       <Window.Content>
         <Section>
           <LabeledList>

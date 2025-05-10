@@ -11,7 +11,9 @@
 	///Minimum allowed temperature
 	var/minimum_temperature = TCMB
 	///Maximum allowed temperature to be set
-	var/max_temperature = 4500
+	var/max_temperature = MAX_TEMPERATURE_SETTING
+	//Maximum recommended temperature
+	var/max_recommended_temperature = 4500
 	///Check if the sensor should let gas pass if temperature in the mix is less/higher than the target one
 	var/inverted = FALSE
 	///Check if the gas is moving from one pipenet to the other
@@ -24,7 +26,7 @@
 /obj/machinery/atmospherics/components/binary/temperature_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target temperature"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set to maximum recommended target temperature"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/CtrlClick(mob/user)
@@ -37,7 +39,7 @@
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/AltClick(mob/user)
 	if(can_interact(user))
-		target_temperature = max_temperature
+		target_temperature = max_recommended_temperature
 		investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 		balloon_alert(user, "target temperature set to [target_temperature] K")
 		update_appearance()
@@ -136,7 +138,7 @@
 	if (istype(I))
 		inverted = !inverted
 		if(inverted)
-			to_chat(user, span_notice("You set the [src]'s sensors to release gases when the temperature is higher than the setted one."))
+			to_chat(user, span_notice("You set [src]'s sensors to release gases when the temperature is higher than the setted one."))
 		else
-			to_chat(user, span_notice("You set the [src]'s sensors to the default settings."))
+			to_chat(user, span_notice("You set [src]'s sensors to the default settings."))
 	return TRUE
