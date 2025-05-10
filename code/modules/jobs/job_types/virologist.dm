@@ -62,6 +62,7 @@
 	belt = /obj/item/modular_computer/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	mask = /obj/item/clothing/mask/surgical
+	gloves = /obj/item/clothing/gloves/latex
 	shoes = /obj/item/clothing/shoes/sneakers/white
 
 	backpack = /obj/item/storage/backpack/virology

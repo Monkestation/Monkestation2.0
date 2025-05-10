@@ -226,7 +226,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/rank/engineering/chief_engineer,
 		/obj/item/clothing/under/rank/medical/chief_medical_officer,
 		/obj/item/clothing/under/rank/rnd/research_director,
-		/obj/item/clothing/under/rank/rnd/research_director/alt,
 		/obj/item/clothing/under/rank/rnd/research_director/turtleneck,
 		/obj/item/clothing/under/rank/security/head_of_security,
 		/obj/item/clothing/under/rank/security/head_of_security/alt,

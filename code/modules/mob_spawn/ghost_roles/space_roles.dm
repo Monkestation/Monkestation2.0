@@ -198,7 +198,7 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/white
+	suit = /obj/item/clothing/suit/toggle/labcoat
 	back = /obj/item/storage/backpack
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/syndicate/alt

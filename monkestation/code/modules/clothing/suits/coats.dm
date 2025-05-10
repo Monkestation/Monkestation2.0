@@ -105,11 +105,6 @@
 	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
 	icon_state = "heartcoat"
 
-/obj/item/clothing/suit/toggle/labcoat
-	alternative_screams = list(	'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci0.ogg',
-								'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci1.ogg',
-								'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci2.ogg')
-
 /obj/item/clothing/suit/armor/guardmanvest
 	name = "guardman's vest"
 	desc = "It keeps your guts intact, thats really all that matters"
