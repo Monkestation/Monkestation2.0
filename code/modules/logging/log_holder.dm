@@ -279,22 +279,10 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	init_category_file(category_instance, category_header)
 
 /datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
-	return RUSTG_CALL(RUST_G, "unix_timestamp")()
+	return UNIX_TIMESTAMP_STRING
 
-/datum/log_holder/proc/human_readable_timestamp(precision = 3)
-	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
-	// now we grab the millis from the rustg timestamp
-	var/rustg_stamp = unix_timestamp_string()
-	var/list/timestamp = splittext(rustg_stamp, ".")
-#ifdef UNIT_TESTS
-	if(length(timestamp) != 2)
-		stack_trace("rustg returned illegally formatted string '[rustg_stamp]'")
-		return start
-#endif
-	var/millis = timestamp[2]
-	if(length(millis) > precision)
-		millis = copytext(millis, 1, precision + 1)
-	return "[start].[millis]"
+/datum/log_holder/proc/human_readable_timestamp()
+	return call_ext(__formatted_timestamp)("%Y-%m-%d %H:%M:%S%.3f")
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
