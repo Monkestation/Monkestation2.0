@@ -1,7 +1,7 @@
 ///basically inverts how inebriated works
 /datum/component/living_drunk
 	var/current_drunkness = 100
-	var/max_drunkness = 100
+	var/max_drunkness = 125
 
 	COOLDOWN_DECLARE(drank_grace)
 	var/grace_period = 5 MINUTES
@@ -48,21 +48,25 @@
 	if(!COOLDOWN_FINISHED(src, drank_grace))
 		return
 
-	current_drunkness = max(min_drunkness, (current_drunkness -= 0.15))
+	current_drunkness = max(min_drunkness, (current_drunkness -= 0.1))
 	drunkness_change_effects()
 
 /datum/component/living_drunk/proc/drunkness_change_effects()
 	var/mob/living/living = parent
-	if((current_drunkness <= 10) && drunk_state != 2)
-		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 71)
+	if((current_drunkness <= 10) && drunk_state != 3)
+		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 71) //Third stage, Gain confusion and begin puking.
+		drunk_state = 3
+		return
+	if((current_drunkness <= 15) && (drunk_state != 2 && drunk_state != 3)) // Second stage, gain mood buff, slurring, jittering, ect.
+		living.apply_status_effect(/datum/status_effect/inebriated/drunk, 40)
 		drunk_state = 2
 		return
-	if((current_drunkness <= 30) && (drunk_state != 1 && drunk_state != 2))
+	if((current_drunkness <= 25) && (drunk_state != 1 && drunk_state != 2 && drunk_state != 3)) // First stage, no noticeable effects besides
 		living.apply_status_effect(/datum/status_effect/inebriated/tipsy, 5)
 		drunk_state = 1
 		return
 
-	if(current_drunkness > 30)
+	if(current_drunkness > 25) // Stage zero, returning to this is the only way to clear all effects.
 		drunk_state = 0
 		living.remove_status_effect(/datum/status_effect/inebriated/tipsy)
 		living.remove_status_effect(/datum/status_effect/inebriated/drunk)
