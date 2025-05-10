@@ -24,6 +24,10 @@ $brown: #a5673f !default;
 $grey: #767676 !default;
 $light-grey: #aaa !default;
 
+//monkestation addition:
+$amber: #b26800 !default;
+$crimson: #750b20 !default;
+
 $primary: #4972a1 !default;
 $good: #5baa27 !default;
 $average: #f08f11 !default;
@@ -60,6 +64,8 @@ $_gen_map: (
   'brown': $brown,
   'grey': $grey,
   'light-grey': $light-grey,
+  'amber': $amber,
+  'crimson': $crimson,
   'good': $good,
   'average': $average,
   'bad': $bad,
