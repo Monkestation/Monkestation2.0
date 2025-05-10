@@ -95,6 +95,7 @@
 	box = /obj/item/storage/box/survival/hug
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
+	skillchips = list(/obj/item/skillchip/job/clown)
 
 /datum/outfit/job/yellowclown/mod
 	name = "Clown (MODsuit)"

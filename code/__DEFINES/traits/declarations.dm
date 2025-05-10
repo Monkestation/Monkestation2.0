@@ -590,7 +590,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_HIGH_VALUE_RANSOM "high_value_ransom" */
 
 /// Makes the user handcuff others faster
-/* #define TRAIT_FAST_CUFFING "fast_cuffing" */
+#define TRAIT_FAST_CUFFING "fast_cuffing"
 
 ///Given by /obj/item/virgin_mary, mobs that used this can no longer use it again ever
 /* #define TRAIT_MAFIAINITIATE "mafiainitiate" */
@@ -660,7 +660,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Allows chef's to chefs kiss their food, to make them with love
 #define TRAIT_CHEF_KISS "chefs_kiss"
 /// Allows clowns to bend balloons into animals
-/* #define TRAIT_BALLOON_SUTRA "balloon_sutra" */
+#define TRAIT_BALLOON_SUTRA "balloon_sutra"
 /// Allows detectives to identify chemicals by taste
 /* #define TRAIT_DETECTIVES_TASTE "detectives_taste" */
 

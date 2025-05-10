@@ -14,6 +14,7 @@
 #define POLL_IGNORE_DRONE "drone"
 #define POLL_IGNORE_FIRE_SHARK "fire_shark"
 #define POLL_IGNORE_FUGITIVE "fugitive"
+#define POLL_IGNORE_GLITCH "glitch"
 #define POLL_IGNORE_GOLEM "golem"
 #define POLL_IGNORE_HERETIC_MONSTER "heretic_monster"
 #define POLL_IGNORE_HOLOPARASITE "holoparasite"
@@ -54,6 +55,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_DRONE = "Drone shells",
 	POLL_IGNORE_FIRE_SHARK = "Fire Shark",
 	POLL_IGNORE_FUGITIVE = "Fugitive Hunter",
+	POLL_IGNORE_GLITCH = "Glitch",
 	POLL_IGNORE_GOLEM = "Golems",
 	POLL_IGNORE_HERETIC_MONSTER = "Heretic Monster",
 	POLL_IGNORE_HOLOPARASITE = "Holoparasite",

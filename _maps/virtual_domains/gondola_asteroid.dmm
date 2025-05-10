@@ -18,6 +18,19 @@
 "h" = (
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"i" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
+"l" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "m" = (
 /obj/structure/closet/crate/secure/bitrunning/encrypted/gondola,
 /turf/open/floor/grass,
@@ -44,6 +57,9 @@
 "t" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"v" = (
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "w" = (
 /obj/structure/water_source/puddle,
 /turf/open/floor/grass,
@@ -104,6 +120,12 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"S" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "T" = (
 /obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
@@ -958,7 +980,7 @@ C
 C
 h
 C
-C
+S
 t
 t
 A
@@ -1003,7 +1025,7 @@ C
 C
 C
 C
-C
+i
 t
 t
 t
@@ -1048,7 +1070,7 @@ C
 C
 C
 C
-C
+l
 t
 t
 t
@@ -1761,7 +1783,7 @@ o
 o
 o
 o
-o
+v
 o
 o
 o

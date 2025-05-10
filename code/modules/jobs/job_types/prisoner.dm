@@ -33,7 +33,7 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(handle_prisoner_joining))
 
-/datum/job/prisoner/proc/handle_prisoner_joining(datum/source, mob/living/crewmember, rank)
+/datum/job/prisoner/proc/handle_prisoner_joining(datum/source, mob/living/carbon/human/crewmember, rank)
 	SIGNAL_HANDLER
 	if(rank != title)
 		return //not a prisoner
@@ -54,6 +54,9 @@
 	monkestation end */
 	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
 	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
+	var/perpname = crewmember.real_name
+	var/datum/record/crew/jailbird_record = find_record(perpname)
+	jailbird_record.wanted_status = WANTED_PRISONER
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
