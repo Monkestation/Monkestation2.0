@@ -1138,7 +1138,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Toggle CPU Controls"
 	set category = "Debug"
 	set desc = "Enables performance debug view"
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_DEBUG))
 		return
 
 	GLOB.cpu_tracker.toggle_cpu_debug(usr.client)
