@@ -94,3 +94,19 @@
   - rscadd: Added a new completely heat insulated floor
   flleeppyy:
   - rscadd: added shion plush
+2025-05-09:
+  Absolucy:
+  - qol: You can no longer use slime mutation syringes on slimes currently in the
+      process of splitting/mutating, to avoid wasting said syringe.
+  - qol: Stabilized dark blue extracts no longer extinguish lighters and cigarettes
+      in your hand.
+  - balance: Ooze compressors will refuse to make more extracts if there's 30+ extracts
+      on the same tile already.
+  - balance: Slimes transfer their friendship when splitting.
+  - bugfix: Reduced the effects of lag on stabilized extract effects.
+  - code_imp: Did some minor cleanup to some xenobio-related code.
+  - bugfix: The broadcast() function for NTSL now properly sanitizes frequencies.
+  Absolucy, Mothblocks:
+  - rscadd: You can now craft makeshift radio jammers.
+  - balance: Radio jammers have had their cost lowered from 5 TC to 1 TC.
+  - bugfix: Syndicate encryption keys properly protect against AoE radio jamming again.
