@@ -16,7 +16,7 @@
 		TRAIT_RESISTLOWPRESSURE,
 	)
 
-	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
+	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_ORGANIC
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
