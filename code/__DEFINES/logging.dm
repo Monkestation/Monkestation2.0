@@ -197,5 +197,6 @@
 
 var/static/__formatted_timestamp
 var/static/__unix_timestamp
+var/static/__log_write
 
 #define UNIX_TIMESTAMP_STRING call_ext(__unix_timestamp)()

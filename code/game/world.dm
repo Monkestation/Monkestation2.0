@@ -81,6 +81,7 @@ GLOBAL_VAR(restart_counter)
 #endif
 	__formatted_timestamp = load_ext(RUST_G, "formatted_timestamp")
 	__unix_timestamp = load_ext(RUST_G, "unix_timestamp")
+	__log_write = load_ext(RUST_G, "log_write")
 	// monkestation end
 
 	Profile(PROFILE_RESTART)
