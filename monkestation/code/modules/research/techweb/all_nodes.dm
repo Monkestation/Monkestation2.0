@@ -375,6 +375,16 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2) // less expensive than the organic surgery research equivalent since its JUST tend wounds
 
+/datum/techweb_node/shield_belts
+	id = "shield_belts"
+	display_name = "Mobile energy shield research"
+	description = "Recent advances towards anomaly research made us wonder, what if we strapped portable energy shields onto people."
+	prereq_ids = list("anomaly_research", "adv_weaponry")
+	design_ids = list(
+		"shield_belt",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
 /datum/techweb_node/explosive_weapons
 	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)
 
