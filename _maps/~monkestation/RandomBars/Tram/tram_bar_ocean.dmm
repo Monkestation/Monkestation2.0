@@ -180,6 +180,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
+"gB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/fake_seafloor,
+/area/station/commons/lounge)
 "gE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -260,6 +266,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
+"kj" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/fake_seafloor/spawning,
+/area/station/commons/lounge)
 "kP" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/start/assistant,
@@ -770,6 +783,12 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/fake_seafloor,
 /area/station/commons/lounge)
+"Hs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/fake_seafloor/spawning,
+/area/station/commons/lounge)
 "HW" = (
 /obj/structure/chair/stool/bar,
 /obj/effect/landmark/start/hangover,
@@ -982,6 +1001,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/fake_seafloor/spawning,
 /area/station/commons/lounge)
 "Rp" = (
@@ -1136,6 +1156,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/fake_seafloor/spawning,
 /area/station/commons/lounge)
 "Ys" = (
@@ -1221,7 +1242,7 @@ fE
 NY
 pR
 AF
-aw
+gB
 pR
 MN
 mG
@@ -1248,7 +1269,7 @@ mG
 za
 pR
 AF
-aw
+gB
 pR
 tV
 mG
@@ -1275,7 +1296,7 @@ aw
 aw
 aw
 aw
-aw
+gB
 aw
 aw
 aw
@@ -1302,7 +1323,7 @@ AF
 AF
 AF
 AF
-AF
+Hs
 AF
 AF
 AF
@@ -1329,7 +1350,7 @@ AF
 AF
 AF
 AF
-AF
+Hs
 AF
 Ir
 AF
@@ -1356,7 +1377,7 @@ AF
 AF
 AF
 AF
-AF
+Hs
 nM
 AF
 AF
@@ -1383,17 +1404,17 @@ zC
 zC
 zC
 zC
-zC
-zC
-zC
-zC
-zC
+kj
+kj
+kj
+kj
+kj
 Rj
 Rj
 Rj
 Rj
 Yn
-jT
+Hs
 Um
 lL
 lL
