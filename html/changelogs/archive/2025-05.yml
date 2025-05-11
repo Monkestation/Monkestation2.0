@@ -110,3 +110,6 @@
   - rscadd: You can now craft makeshift radio jammers.
   - balance: Radio jammers have had their cost lowered from 5 TC to 1 TC.
   - bugfix: Syndicate encryption keys properly protect against AoE radio jamming again.
+2025-05-11:
+  Aniantan:
+  - bugfix: Thrown eggs break on impact again
