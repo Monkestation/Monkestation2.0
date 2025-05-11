@@ -24,7 +24,13 @@
 		holder.dropItemToGround(src)
 
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer) // funny that we pass monkey init args to non-monkey mobs, that's totally a future issue
+
+	var/mob/living/bananas
+	if(spawned_mob == /mob/living/carbon/human/species/monkey)
+		bananas = new spawned_mob(drop_location(), TRUE, spammer)
+	else
+		bananas = new spawned_mob(drop_location())
+
 	if (!QDELETED(bananas))
 		if(faction)
 			bananas.faction = faction
@@ -42,7 +48,6 @@
 		visible_message(span_notice("[src] fails to expand!"))
 		return
 
-	animate(src, 0.4 SECONDS, alpha = 0, transform = transform.Scale(0), easing = QUAD_EASING|EASE_IN)
 	QDEL_IN(src, 0.5 SECONDS)
 
 /obj/item/food/monkeycube/suicide_act(mob/living/user)
