@@ -332,7 +332,7 @@
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
 	/// The sausage attatched to our stick.
-	var/obj/item/food/sausage/held_sausage
+	var/obj/item/held_sausage
 	/// Static list of things our roasting stick can interact with.
 	var/static/list/ovens
 	// Static list of things we can put on our roasting stick
@@ -345,7 +345,7 @@
 	if (!ovens)
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire, /obj/machinery/power/shuttle_engine/propulsion))
 	if (!roastables)
-		roastables = typecacheof(list(/obj/item/food/sausage, /obj/item/food/cakeslice/mothmallow))
+		roastables = typecacheof(list(/obj/item/food, /obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/toy/plush))
 	AddComponent( \
 		/datum/component/transforming, \
 		hitsound_on = hitsound, \
@@ -384,6 +384,9 @@
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
 	if (is_type_in_typecache(target, roastables))
+		if (HAS_TRAIT(target, TRAIT_NODROP) || (target.resistance_flags & INDESTRUCTIBLE))
+			to_chat(user, span_warning("You don't feel it would be wise to put [target] on [src]..."))
+			return
 		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
@@ -408,6 +411,7 @@
 	if(held_sausage)
 		//. += mutable_appearance(icon, "roastingstick_sausage")
 		var/mutable_appearance/roastableicon = mutable_appearance(held_sausage.icon,held_sausage.icon_state)
+		roastableicon.copy_overlays(held_sausage)
 		roastableicon.transform = roastableicon.transform.Turn(45)
 		roastableicon.transform = roastableicon.transform.Translate(14, 14)
 		roastableicon.transform = roastableicon.transform.Scale(0.8, 0.8)
@@ -436,8 +440,20 @@
 		return
 	finish_roasting(user, target)
 
-/obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
+/obj/item/melee/roastingstick/proc/finish_roasting(mob/user, atom/target)
 	if(do_after(user, 100, target = user) && held_sausage)
+		if(istype(held_sausage, /obj/item/gun))
+			var/obj/item/gun/roastedgun = held_sausage
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+				to_chat(user, span_warning("You feel like [roastedgun] on [src] might accidentally hurt someone and put it away."))
+				return
+			if(roastedgun.can_shoot())
+				to_chat(user, span_warning("\The [roastedgun] suddenly fires off a shot."))
+				INVOKE_ASYNC(roastedgun, TYPE_PROC_REF(/obj/item/gun, process_fire), user, user, FALSE, zone_override=BODY_ZONE_PRECISE_GROIN)
+		if(istype(held_sausage, /obj/item/food))
+			held_sausage.reagents?.add_reagent(/datum/reagent/consumable/char, 0.5)
+			held_sausage.reagents?.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
 		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
