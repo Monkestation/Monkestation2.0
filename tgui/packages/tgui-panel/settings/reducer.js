@@ -17,6 +17,7 @@ import {
 } from './actions';
 import { createDefaultHighlightSetting } from './model';
 import { SETTINGS_TABS, FONTS } from './constants';
+import { storage } from 'common/storage';
 
 const defaultHighlightSetting = createDefaultHighlightSetting();
 
@@ -45,6 +46,8 @@ const initialState = {
   initialized: false,
   websocketEnabled: false,
   websocketServer: '',
+  // Chat persistence setting - default is false, but use stored value if available
+  chatSaving: storage.get('chat-saving-enabled') === true,
 };
 
 export const settingsReducer = (state = initialState, action) => {

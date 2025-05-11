@@ -46,6 +46,7 @@ import {
 import { importChatSettings } from './settingsImExport';
 import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
 import { chatRenderer } from '../chat/renderer';
+import { storage } from 'common/storage';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -85,13 +86,23 @@ export const SettingsPanel = (props, context) => {
 };
 
 export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, fontSize, lineHeight } = useSelector(
+  const { theme, fontFamily, fontSize, lineHeight, chatSaving } = useSelector(
     context,
     selectSettings,
   );
   const dispatch = useDispatch(context);
   const [freeFont, setFreeFont] = useLocalState('freeFont', false);
   const [editingPanes, setEditingPanes] = useLocalState('freeFont', false);
+
+  const updateChatSaving = (value) => {
+    const boolValue = value === true;
+    dispatch(
+      updateSettings({
+        chatSaving: boolValue,
+      }),
+    );
+    storage.set('chat-saving-enabled', boolValue);
+  };
 
   return (
     <Section>
@@ -245,6 +256,14 @@ export const SettingsGeneral = (props, context) => {
           >
             Import settings
           </Button.File>
+        </Stack.Item>
+        <Stack.Item mt={0.15}>
+          <Button.Checkbox
+            checked={chatSaving === true}
+            content="Persistent Chat"
+            tooltip="Enable chat persistence"
+            onClick={() => updateChatSaving(!chatSaving)}
+          />
         </Stack.Item>
         <Stack.Item grow mt={0.15}>
           <Button
