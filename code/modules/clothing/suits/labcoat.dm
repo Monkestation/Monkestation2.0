@@ -55,6 +55,7 @@
 	desc = "A dark blue jacket for paramedics with reflective stripes."
 	icon_state = "labcoat_paramedic"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/toggle/labcoat/mad
 	name = "\proper The Mad's labcoat"
