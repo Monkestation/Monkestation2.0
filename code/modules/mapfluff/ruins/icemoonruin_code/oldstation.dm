@@ -15,7 +15,6 @@
 	name = "Cryo Awakening Alert"
 	default_raw_text = "<B>**WARNING**</B><BR><BR>Catastrophic damage sustained to outpost. Powernet exhausted to reawaken crew.<BR><BR>Immediate Objectives<br><br>1: Activate emergency power generator<br>2: Lift station lockdown on the bridge<br><br>Please locate the 'Damage Report' on the bridge for a detailed situation report."
 
-
 /obj/item/paper/fluff/ruins/oldstation/ice/damagereport
 	name = "Damage Report"
 	default_raw_text = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via thermoelectric generator. Reestablish station atmospherics system to restore air."

@@ -87,12 +87,6 @@
 	The whole department is running around in panic. I'll just pray that engineers won't let the engine delaminate.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
 	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
 
-/obj/item/paper/fluff/ruins/oldstation/biolab_note_emergency_ice
-	name = "Diary note - Emergency"
-	default_raw_text = "OH GOD, the outpost is still creaking from a heavy impact in the port direction. The power is down, coms not responding, the air supply pipe depressurized and I can feel the artificial gravity weakening. \
-	The whole department is running around in panic. I'll just pray that engineers get the TEG up and running.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
-	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
-
 /obj/item/paper/fluff/ruins/oldstation/apc_note
 	name = "DO NOT TOUCH!"
 	default_raw_text = "This is a spare pre-charged APC battery for emergencies ONLY. DO NOT use it for stun prods, Bob."
