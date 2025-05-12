@@ -1248,10 +1248,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
-"gI" = (
-/mob/living/basic/alien,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "gK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -1993,10 +1989,6 @@
 /obj/item/shovel/spade,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
-"kM" = (
-/mob/living/basic/alien/drone,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "kO" = (
 /obj/item/chair{
 	pixel_y = -8;
@@ -3157,7 +3149,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "rz" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/machinery/atmospherics/miner/n2o,
+/obj/machinery/atmospherics/miner/nitrogen,
 /turf/open/floor/engine/n2,
 /area/ruin/space/ancientstation/charlie/engie)
 "rA" = (
@@ -7084,10 +7076,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"Mo" = (
-/mob/living/basic/alien/drone,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "Mq" = (
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/sec)
@@ -7250,10 +7238,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/delta/hall)
-"NA" = (
-/mob/living/basic/alien,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "NB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -12670,7 +12654,7 @@ ye
 ye
 ye
 ye
-Mo
+JI
 JI
 JI
 ye
@@ -12719,7 +12703,7 @@ jO
 ye
 ye
 JI
-JI
+sn
 Cp
 JI
 ye
@@ -12765,7 +12749,7 @@ ye
 ye
 ye
 jO
-gI
+jO
 jO
 yF
 jO
@@ -12918,7 +12902,7 @@ ye
 ye
 ye
 JI
-kM
+jO
 JI
 Wv
 jO
@@ -13057,7 +13041,7 @@ lO
 lO
 JI
 JI
-JI
+sn
 JI
 JI
 JI
@@ -13076,7 +13060,7 @@ JI
 JI
 ye
 ye
-NA
+sn
 jO
 JI
 JI
@@ -13162,7 +13146,7 @@ ye
 ye
 ye
 JI
-Mo
+JI
 JI
 JI
 Jl
