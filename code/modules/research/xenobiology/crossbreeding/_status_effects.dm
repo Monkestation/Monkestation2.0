@@ -438,6 +438,7 @@
 /datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its' own.
 	id = "stabilizedbase"
 	duration = STATUS_EFFECT_PERMANENT
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
@@ -487,7 +488,6 @@
 /datum/status_effect/stabilized/orange/tick()
 	owner.update_homeostasis_level(id, owner.standard_body_temperature, 0.5 KELVIN)
 
-
 /datum/status_effect/stabilized/orange/on_remove()
 	. = ..()
 	owner.remove_homeostasis_level(id)
@@ -497,25 +497,27 @@
 	colour = "purple"
 	/// Whether we healed from our last tick
 	var/healed_last_tick = FALSE
+	/// How much damage is healed per tick.
+	var/heal_amount = 0.2
 
 /datum/status_effect/stabilized/purple/tick()
 	healed_last_tick = FALSE
 
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.2)
+		owner.adjustBruteLoss(-heal_amount, updating_health = FALSE)
 		healed_last_tick = TRUE
 
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.2)
+		owner.adjustFireLoss(-heal_amount, updating_health = FALSE)
 		healed_last_tick = TRUE
 
 	if(owner.getToxLoss() > 0)
-		// Forced, so slimepeople are healed as well.
-		owner.adjustToxLoss(-0.2, forced = TRUE)
+		healed_last_tick += owner.adjustToxLoss(-heal_amount, updating_health = FALSE, forced = TRUE) // Forced, so slimepeople are healed as well.
 		healed_last_tick = TRUE
 
 	// Technically, "healed this tick" by now.
 	if(healed_last_tick)
+		owner.updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(owner), "#FF0000")
 
 	return ..()
@@ -523,8 +525,6 @@
 /datum/status_effect/stabilized/purple/get_examine_text()
 	if(healed_last_tick)
 		return span_warning("[owner.p_they(TRUE)] [owner.p_are()] regenerating slowly, purplish goo filling in small injuries!")
-
-	return null
 
 /datum/status_effect/stabilized/blue
 	id = "stabilizedblue"
@@ -621,33 +621,43 @@
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
 	colour = "dark blue"
+	/// Typecache of items to ignore extingushing.
+	var/static/list/ignore_typecache
+
+/datum/status_effect/stabilized/darkblue/New(list/arguments)
+	if(isnull(ignore_typecache))
+		ignore_typecache = typecacheof(list(
+			/obj/item/lighter,
+			/obj/item/clothing/mask/cigarette,
+		))
+	return ..()
 
 /datum/status_effect/stabilized/darkblue/tick()
 	if(owner.fire_stacks > 0 && prob(80))
 		owner.adjust_wet_stacks(1)
 		if(owner.fire_stacks <= 0)
 			to_chat(owner, span_notice("[linked_extract] coats you in a watery goo, extinguishing the flames."))
-	var/obj/O = owner.get_active_held_item()
-	if(O)
-		O.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
-		O.wash(CLEAN_TYPE_ACID)
+	var/obj/held_item = owner.get_active_held_item()
+	if(QDELETED(held_item) || is_type_in_typecache(held_item, ignore_typecache))
+		return
+	held_item.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
+	held_item.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
-	if(istype(O, /obj/item/food/monkeycube))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It makes [O] expand!"))
-		var/obj/item/food/monkeycube/cube = O
+	if(istype(held_item, /obj/item/food/monkeycube))
+		var/obj/item/food/monkeycube/cube = held_item
+		to_chat(owner, span_warning("[linked_extract] kept your hands wet, making [held_item] expand!"))
 		cube.Expand()
-
 	// Dehydrated carp
-	else if(istype(O, /obj/item/toy/plush/carpplushie/dehy_carp))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It makes [O] expand!"))
-		var/obj/item/toy/plush/carpplushie/dehy_carp/dehy = O
-		dehy.Swell() // Makes a carp
-
-	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It wets [O]!"))
-		var/obj/item/stack/sheet/hairlesshide/HH = O
-		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
-		qdel(HH)
+	else if(istype(held_item, /obj/item/toy/plush/carpplushie/dehy_carp))
+		var/obj/item/toy/plush/carpplushie/dehy_carp/carp_friend = held_item
+		to_chat(owner, span_warning("[linked_extract] kept your hands wet, making [carp_friend] expand!"))
+		carp_friend.Swell() // Makes a carp
+	else if(istype(held_item, /obj/item/stack/sheet/hairlesshide))
+		var/obj/item/stack/sheet/hairlesshide/hide = held_item
+		to_chat(owner, span_warning("[linked_extract] kept your hands wet, hydrating [hide]!"))
+		new /obj/item/stack/sheet/wethide(hide.drop_location(), hide.amount)
+		qdel(hide)
+		owner.put_in_active_hand(hide)
 	..()
 
 /datum/status_effect/stabilized/silver

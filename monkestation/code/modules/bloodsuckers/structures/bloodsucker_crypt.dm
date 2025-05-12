@@ -551,6 +551,7 @@
 		set_light_on(FALSE)
 		STOP_PROCESSING(SSobj, src)
 	update_appearance(UPDATE_ICON | UPDATE_DESC)
+	update_light()
 
 /obj/structure/bloodsucker/candelabrum/process()
 	if(!lit)
