@@ -33,6 +33,15 @@
 	if(ispath(infusing_trait_path) && !slime.add_trait(infusing_trait_path))
 		return
 
+	if(slime.slime_flags & SPLITTING_SLIME)
+		user.balloon_alert(user, "slime currently splitting!")
+		to_chat(user, span_warning("[slime] is currently in the process of splitting!"))
+		return
+	else if(slime.slime_flags & MUTATING_SLIME)
+		user.balloon_alert(user, "slime currently mutating!")
+		to_chat(user, span_warning("[slime] is currently in the process of mutating!"))
+		return
+
 	uses--
 	update_icon_state()
 	user.balloon_alert_to_viewers("injected mutator")

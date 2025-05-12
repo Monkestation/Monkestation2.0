@@ -10,6 +10,10 @@
 	START_PROCESSING(SSprocessing, src)
 	corral_data_weakref = WEAKREF(parent)
 
+/datum/corral_upgrade/autofeeder/Destroy(force)
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
 /datum/corral_upgrade/autofeeder/process(seconds_per_tick)
 	var/datum/corral_data/corral_data = corral_data_weakref?.resolve()
 

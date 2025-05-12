@@ -370,6 +370,7 @@
 		data.copy_progress(new_slime)
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		new_slime.add_trait(trait.type)
+	SEND_SIGNAL(src, COMSIG_FRIENDSHIP_PASS_FRIENDSHIP, new_slime)
 	new_slime.recompile_ai_tree()
 
 /mob/living/basic/slime/proc/start_mutating(random = FALSE)
