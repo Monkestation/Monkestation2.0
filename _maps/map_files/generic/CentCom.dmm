@@ -22606,6 +22606,7 @@
 "gYp" = (
 /obj/item/storage/toolbox/syndicate,
 /obj/effect/decal/cleanable/oil/slippery,
+/obj/item/stack/cable_coil,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
 "gZl" = (
@@ -23425,6 +23426,10 @@
 	},
 /obj/item/gun/ballistic/automatic/plastikov{
 	pixel_y = -3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = -4;
+	pixel_y = 2
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
@@ -26582,11 +26587,9 @@
 /area/centcom/central_command_areas/kitchen)
 "oYI" = (
 /obj/machinery/light/small/directional/west,
-/obj/item/stack/cable_coil,
-/obj/item/tank/internals/emergency_oxygen/double{
-	pixel_x = -4;
-	pixel_y = 2
-	},
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/automatic/minigun22,
+/obj/item/ammo_box/magazine/minigun22,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
 "oZc" = (
