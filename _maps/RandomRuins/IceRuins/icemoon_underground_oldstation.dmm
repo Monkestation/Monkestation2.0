@@ -206,6 +206,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
+"bl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/hall)
 "bn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
@@ -13327,7 +13334,7 @@ eN
 uk
 Yi
 aj
-kC
+bl
 QA
 hC
 cB
