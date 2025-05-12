@@ -801,3 +801,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	name = "stamina"
 	icon_state = "stamina0"
 	screen_loc = ui_stamina
+
+/atom/movable/screen/vis_holder
+	icon = ""
+	invisibility = INVISIBILITY_MAXIMUM
