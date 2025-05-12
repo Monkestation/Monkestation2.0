@@ -6706,12 +6706,6 @@
 /obj/machinery/biogenerator,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
-"Kw" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/ruin/space/ancientstation/delta/hall)
 "Kx" = (
 /obj/machinery/door/airlock/highsecurity,
 /obj/structure/alien/weeds,
@@ -13141,7 +13135,7 @@ Jl
 gC
 Jl
 Jl
-Kw
+Av
 Av
 Jl
 Jl
