@@ -20,7 +20,7 @@
 	max_chance = 45
 	badness = EFFECT_DANGER_HELPFUL
 	severity = 0
-	
+
 	var/passive_message = span_notice("You feel an odd attraction to plasma.")
 	var/temp_rate = 1
 
@@ -79,7 +79,7 @@
 		return TRUE
 	return FALSE
 
-/datum/symptom/plasma_heal/proc/Heal(mob/living/carbon/M, actual_power)
+/datum/symptom/plasma_heal/proc/Heal(mob/living/M, actual_power)
 	var/heal_amt = BASE_HEAL_PLASMA_FIXATION * actual_power
 
 	if(prob(5))
@@ -95,17 +95,14 @@
 		if(prob(5))
 			to_chat(M, span_notice("You feel warmer."))
 
+
 	M.adjustToxLoss(-heal_amt)
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
-	if(!parts.len)
-		return
-	if(prob(5))
-		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-	return 1
+	if(M.getBruteLoss_nonProsthetic() > 0 || M.getFireLoss_nonProsthetic() > 0)
+		M.heal_overall_damage(brute = heal_amt, burn = heal_amt, required_bodytype = BODYTYPE_ORGANIC)
+		if(prob(5))
+			to_chat(M, span_notice("The pain from your wounds fades rapidly."))
+	return TRUE
 
 ///Plasma End
 #undef HEALING_PER_MOL

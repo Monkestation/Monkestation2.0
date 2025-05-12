@@ -20,11 +20,11 @@
 	surplus = 60
 
 /datum/uplink_item/suits/cybersun_juggernaut_suit
-	name = "Cybersun Juggernaut Suit Access Card"
+	name = "Cybersun Juggernaut Minigun Combo and Suit Access Card"
 	desc = "Developed by Cybersun for use in clearing heavy space bear infestations in asteroid belt operations.\
 	 It now has a new purpose as the heavy operation suit of the Syndicate. By purchasing this you get a special Authorization Key to the only suit in storage at Firebase Balthazord."
 	item = /obj/item/keycard/syndicate_suit_storage
-	cost = 20
+	cost = 35
 	purchasable_from = UPLINK_NUKE_OPS
 	limited_stock = 1
 

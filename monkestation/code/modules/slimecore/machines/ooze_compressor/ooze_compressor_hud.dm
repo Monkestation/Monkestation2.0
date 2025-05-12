@@ -49,7 +49,6 @@
 		hover_appearance = image(loc = src, layer = CHAT_LAYER)
 		hover_appearance.pixel_y = 18
 	SET_PLANE_EXPLICIT(hover_appearance, HUD_PLANE, src)
-	hover_appearance.plane = HUD_PLANE
 	hover_appearance.appearance_flags = RESET_COLOR
 
 	// now setup the actual hud

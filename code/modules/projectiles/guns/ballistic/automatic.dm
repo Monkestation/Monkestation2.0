@@ -355,3 +355,27 @@
 	actions_types = list()
 	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
+
+/obj/item/gun/ballistic/automatic/minigun22
+	name = "\improper Miniaturized Minigun"
+	desc = "A Miniaturized Multibarrel rotary gun that fires .22 LR \"peashooter\" ammunition"
+	icon = 'icons/obj/weapons/guns/minigun.dmi'
+	icon_state = "minigun_spin"
+	inhand_icon_state = "minigun"
+	slowdown = 1
+	fire_sound = 'sound/weapons/gun/minigun10burst.ogg'
+	fire_sound_volume = 60
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	accepted_magazine_type = /obj/item/ammo_box/magazine/minigun22
+	fire_delay = 0.4
+	can_suppress = FALSE
+	burst_size = 1
+	actions_types = list()
+	item_flags = SLOWS_WHILE_IN_HAND
+	recoil = 1.2
+	spread = 20
+
+/obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, TRUE, 0.1, 0.08, 5 SECONDS)

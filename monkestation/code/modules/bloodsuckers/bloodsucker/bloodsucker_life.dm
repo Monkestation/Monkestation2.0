@@ -300,7 +300,7 @@
 		COMSIG_LIVING_LIFE,
 		COMSIG_LIVING_DEATH,
 	))
-	UnregisterSignal(SSsunlight, list(
+	UnregisterSignal(SSsol, list(
 		COMSIG_SOL_RANKUP_BLOODSUCKERS,
 		COMSIG_SOL_NEAR_START,
 		COMSIG_SOL_END,
