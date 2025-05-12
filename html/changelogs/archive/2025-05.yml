@@ -117,3 +117,10 @@
   Absolucy:
   - bugfix: Possibly fixed false walls smoothing weirdly with other false walls and
       doors.
+  - bugfix: Fixed some errors related to slime friendship tracking.
+  notghosti:
+  - bugfix: '"They seem unresponsive" Time will now be much more accurate'
+  - qol: Alert levels now show on pda's
+  - bugfix: Hivelords Borers now can self reproduce as intended.
+  - bugfix: Stopped an edge case where borers would lose chemicals but produce no
+      eggs
