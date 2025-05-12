@@ -734,6 +734,19 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"eb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/item/stack/medical/bruise_pack,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/hall)
 "ec" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -1327,15 +1340,15 @@
 /area/ruin/space/ancientstation/beta/mining)
 "gZ" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/paper/fluff/ruins/oldstation/biolab_note_emergency{
-	pixel_x = 8;
-	pixel_y = 13
-	},
 /obj/effect/decal/remains/human{
 	pixel_x = 9
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
+	},
+/obj/item/paper/fluff/ruins/oldstation/ice/biolab_note_emergency{
+	pixel_x = 8;
+	pixel_y = 13
 	},
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
@@ -1962,6 +1975,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
+"kD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/autoname/directional/east{
+	status = 0
+	},
+/obj/item/paper/fluff/ruins/oldstation/ice/survivor_note,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/hall)
 "kJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
@@ -2225,15 +2247,12 @@
 /area/ruin/space/ancientstation/delta/biolab)
 "lU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paper/guides/jobs/engi/solars,
 /obj/structure/cable,
-/obj/machinery/power/solar_control{
-	dir = 1;
-	id = "aftport";
-	name = "Station Solar Control"
-	},
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
+	},
+/obj/machinery/computer/apc_control{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
@@ -2316,7 +2335,6 @@
 /area/ruin/space/ancientstation/delta/hall)
 "mq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plating/rust{
 	initial_gas_mix = "co2=6;o2=16;n2=82;TEMP=293.15"
 	},
@@ -2697,7 +2715,6 @@
 "ox" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/monitor,
-/obj/machinery/computer/monitor,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
@@ -2907,10 +2924,6 @@
 /obj/effect/decal/remains/human{
 	pixel_y = -4;
 	pixel_x = -4
-	},
-/obj/item/paper/fluff/ruins/oldstation/survivor_note{
-	pixel_x = 17;
-	pixel_y = 12
 	},
 /obj/item/organ/internal/cyberimp/arm/item_set/toolset{
 	pixel_x = 6;
@@ -7104,8 +7117,8 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
-/obj/item/paper/fluff/ruins/oldstation,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/paper/fluff/ruins/oldstation/ice,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "MF" = (
@@ -8110,6 +8123,8 @@
 "SH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/remains/human,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "SN" = (
@@ -8656,9 +8671,9 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "VD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paper/fluff/ruins/oldstation/damagereport,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/communications,
+/obj/item/paper/fluff/ruins/oldstation/ice/damagereport,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "VE" = (
@@ -8936,6 +8951,12 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
+"WZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/pickaxe,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/hall)
 "Xd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -13152,7 +13173,7 @@ JI
 Jl
 SH
 gk
-Jo
+WZ
 Jl
 QT
 eT
@@ -13199,8 +13220,8 @@ JI
 JI
 JI
 Jl
-dY
-gk
+kD
+eb
 jA
 fq
 mG
