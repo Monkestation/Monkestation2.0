@@ -18,3 +18,11 @@
 /obj/item/paper/fluff/ruins/oldstation/ice/damagereport
 	name = "Damage Report"
 	default_raw_text = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via thermoelectric generator. Reestablish station atmospherics system to restore air."
+
+/obj/item/paper/fluff/ruins/oldstation/ice/report
+	name = "Crew Reawakening Report"
+	default_raw_text = "Artificial Program's report to surviving crewmembers.<br><br>Crew were placed into cryostasis on March 10th, 2445.<br><br>Crew were awoken from cryostasis around June, 2557.<br><br> \
+	<b>SIGNIFICANT EVENTS OF NOTE</b><br>1: The primary radiation detectors were taken offline after 112 years due to power failure, secondary radiation detectors showed no residual \
+	radiation on the outpost. Deduction, primarily detector was malfunctioning and was producing a radiation signal when there was none.<br><br>2: A data burst from a nearby Nanotrasen Space \
+	Station was received, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: An unknown force has occupied Delta station. Additionally, a pack of wolves have \
+	taken refuge in the space surrounding all remaining stations, primarily Beta station."

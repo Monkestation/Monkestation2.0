@@ -7386,9 +7386,9 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "OF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paper/fluff/ruins/oldstation/report,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/modular_computer/preset/command/old,
+/obj/item/paper/fluff/ruins/oldstation/ice/report,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "OG" = (
