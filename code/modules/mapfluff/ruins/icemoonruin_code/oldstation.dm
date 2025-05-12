@@ -26,3 +26,38 @@
 	radiation on the outpost. Deduction, primarily detector was malfunctioning and was producing a radiation signal when there was none.<br><br>2: A data burst from a nearby Nanotrasen Space \
 	Station was received, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: An unknown force has occupied Delta station. Additionally, a pack of wolves have \
 	taken refuge in the space surrounding all remaining stations, primarily Beta station."
+
+/datum/outfit/oldcargo
+	name = "Alpha Station Cargo Technician"
+
+	backpack_contents = list(
+		/obj/item/boxcutter = 1,
+		/obj/item/universal_scanner = 1,
+	)
+
+	id = /obj/item/card/id/away/old/cargo
+	id_trim = /datum/id_trim/job/away/old/cargo
+	uniform = /obj/item/clothing/under/rank/cargo/tech
+	ears = /obj/item/radio/headset/headset_old
+	back = /obj/item/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	box = /obj/item/storage/box/survival
+
+/datum/outfit/oldcargo/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/radio/headset/R = H.ears
+	R.set_frequency(FREQ_UNCOMMON)
+	R.freqlock = RADIO_FREQENCY_LOCKED
+	R.independent = TRUE
+	var/obj/item/card/id/W = H.wear_id
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label()
+		W.update_icon()
+	..()
+
+/obj/effect/mob_spawn/corpse/human/oldstation/cargo
+	name = "Alpha Station Cargo Technician"
+	outfit = /datum/outfit/oldcargo

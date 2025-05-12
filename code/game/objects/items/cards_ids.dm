@@ -896,6 +896,11 @@
 	desc = "An ID card that allows access to bots maintenance protocols."
 	trim = /datum/id_trim/job/away/old/robo /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
+/obj/item/card/id/away/old/cargo
+	name = "Alpha Station Cargo Technician's ID card"
+	desc = "A faded Alpha Station ID card. You can make out the rank \"Cargo Technician\"."
+	trim = /datum/id_trim/job/away/old/cargo
+
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 

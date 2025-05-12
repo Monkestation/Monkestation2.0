@@ -6670,7 +6670,7 @@
 "Kj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/north,
-/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/oldstation/cargo,
 /obj/item/wallframe/apc,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/cable,
