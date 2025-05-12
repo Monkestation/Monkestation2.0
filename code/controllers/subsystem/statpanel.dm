@@ -250,6 +250,7 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
 		list("CPU:", world.cpu),
+		list("True CPU:", current_true_cpu()),
 		list("Instances:", "[num2text(world.contents.len, 10)]"),
 		list("World Time:", "[world.time]"),
 		list("Globals:", GLOB.stat_entry(), text_ref(GLOB)),
