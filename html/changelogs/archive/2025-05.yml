@@ -113,3 +113,7 @@
 2025-05-11:
   Aniantan:
   - bugfix: Thrown eggs break on impact again
+2025-05-12:
+  Absolucy:
+  - bugfix: Possibly fixed false walls smoothing weirdly with other false walls and
+      doors.
