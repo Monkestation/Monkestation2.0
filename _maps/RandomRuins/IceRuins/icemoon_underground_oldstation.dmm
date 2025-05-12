@@ -755,7 +755,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "es" = (
@@ -2497,11 +2497,11 @@
 /area/icemoon/surface/outdoors)
 "nu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "nw" = (
