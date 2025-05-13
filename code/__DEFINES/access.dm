@@ -549,7 +549,7 @@
 
 /// MONKESTATION ADDITION - Adds Charlie Station region, for the Charlie Station ID console.
 /// Name for the Charlie Station region.
-#define REGION_CHARLIE_STATION "Charlie Station"
+#define REGION_CHARLIE_STATION "Ancient Station"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all ACCESS_AWAY regional accesses.
 #define REGION_ACCESS_CHARLIE_STATION list( \
 	ACCESS_AWAY_GENERAL, \

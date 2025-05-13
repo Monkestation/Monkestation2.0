@@ -1,51 +1,54 @@
-/datum/job/godzilla
-	title = JOB_SPOOKTOBER_GODZILLA
-	description = "Film a monster movie. Blend in with the lizards. Get arrested for roaring at the crew."
+/datum/job/candysalesman
+	title = JOB_SPOOKTOBER_CANDYSALESMAN
+	description = "Sell candy to the crew. Get high on your own supply. Subject people to unsafe working conditions."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 0
 	supervisors = JOB_HEAD_OF_PERSONNEL
 	exp_granted_type = EXP_TYPE_CREW
 
-	outfit = /datum/outfit/job/godzilla
+	outfit = /datum/outfit/job/candysalesman
 	plasmaman_outfit = /datum/outfit/plasmaman
 
 	paycheck = PAYCHECK_LOWER
 	paycheck_department = ACCOUNT_CIV
 
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+	allow_overflow = FALSE
 
 	departments_list = list(
 		 /datum/job_department/spooktober,
 		)
 
-	family_heirlooms = list(/obj/item/megaphone, /obj/item/clothing/head/lizard, /obj/item/clothing/suit/hooded/dinojammies)
+	family_heirlooms = list(/obj/item/cane)
 
 	mail_goodies = list(
-		/obj/item/megaphone,
-		/obj/item/food/fried_blood_sausage,
-		/obj/item/food/bread/root,
-		/obj/item/food/lizard_fries
+		/obj/item/storage/spooky
 	)
 
-	rpg_title = "Lizardman"
+	rpg_title = "Purveyor of Sweets"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_SPOOKTOBER
 	job_holiday_flags = list(HALLOWEEN)
 	job_donor_bypass = ACCESS_COMMAND_RANK
 
 ///This override checks specific config values as a final blocking check.
 //Used initially to check if spooktober events were enabled. Edit for your application.
-/datum/job/godzilla/special_config_check()
+/datum/job/candysalesman/special_config_check()
 	return CONFIG_GET(flag/spooktober_enabled)
 
-/datum/outfit/job/godzilla
-	name = "Discount Godzilla"
-	jobtype = /datum/job/godzilla
+/datum/outfit/job/candysalesman
+	name = "Candy Salesman"
+	jobtype = /datum/job/candysalesman
 
-	head = /obj/item/clothing/head/lizard
-	r_pocket = /obj/item/megaphone
+	head = /obj/item/clothing/head/wonka
+	uniform = /obj/item/clothing/under/wonka
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
 
-/datum/outfit/job/godzilla/post_equip(mob/living/carbon/human/H, visualsOnly)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/dinojammies(H), ITEM_SLOT_OCLOTHING)
+	backpack_contents = list(
+		/obj/item/cane,
+		/obj/item/storage/pill_bottle/maintenance_pill/full,
+		/obj/item/storage/spooky,
+		/obj/item/storage/spooky,
+		/obj/item/storage/spooky
+	)
