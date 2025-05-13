@@ -9,6 +9,7 @@ $include interviews.txt
 $include lua.txt
 $include auxtools.txt
 $include plexora.txt
+$include map_vote.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -135,9 +136,6 @@ HOSTEDBY Yournamehere
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
-
-## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
-CHECK_RANDOMIZER
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net

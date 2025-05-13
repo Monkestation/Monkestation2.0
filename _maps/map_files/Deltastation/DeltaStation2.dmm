@@ -3857,7 +3857,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aQB" = (
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
@@ -34231,6 +34231,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hallway)
 "icf" = (

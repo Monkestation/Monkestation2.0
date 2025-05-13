@@ -154,10 +154,12 @@
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser
 
 /obj/item/autosurgeon/syndicate/thermal_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
+	desc = "A single use autosurgeon that contains a pair of upgraded thermal eyes. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals/syndicate
+	uses = 1
 
 /obj/item/autosurgeon/syndicate/xray_eyes
-	starting_organ = /obj/item/organ/internal/eyes/robotic/xray
+	starting_organ = /obj/item/organ/internal/eyes/robotic/xray/syndicate
 
 /obj/item/autosurgeon/syndicate/anti_stun //monkestation edit start: Syndicate cybernetics
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate

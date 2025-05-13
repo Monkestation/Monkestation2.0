@@ -17,7 +17,7 @@
 		return
 	podspawn(list(
 		"target" = get_turf(src),
-		"spawn" = list(/obj/item/wrench, /obj/machinery/media/jukebox),
+		"spawn" = list(/obj/item/wrench, /obj/machinery/jukebox),
 		"style" = STYLE_CENTCOM
 	))
 	qdel(src)

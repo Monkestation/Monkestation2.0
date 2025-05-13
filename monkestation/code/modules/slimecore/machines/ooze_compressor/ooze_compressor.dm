@@ -10,6 +10,8 @@
 /datum/compressor_recipe/crossbreed/selfsustaining,\
 /datum/compressor_recipe/crossbreed/stabilized,\
 )
+/// The maximum amount of extracts that can be on a compressor's tile before it stops.
+#define MAX_EXTRACTS_ON_TILE 30
 
 /obj/machinery/plumbing/ooze_compressor
 	name = "ooze compressor"
@@ -150,7 +152,7 @@
 /// Handles stopping the emptying process when the chamber empties.
 /obj/machinery/plumbing/ooze_compressor/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	if(holder.total_volume == 0 && !compressing) //we were emptying, but now we aren't
 		holder.flags |= NO_REACT
 	manage_hud_as_needed()
@@ -158,7 +160,7 @@
 
 /obj/machinery/plumbing/ooze_compressor/proc/compress_recipe()
 	compressing = TRUE
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	if(!repeat_recipe)
 		reagents_for_recipe = list()
 	manage_hud_as_needed()
@@ -169,9 +171,13 @@
 	for(var/i in 1 to current_recipe.created_amount)
 		new current_recipe.output_item(drop_location())
 	compressing = FALSE
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	reagents.clear_reagents()
-	if(!repeat_recipe)
+	if(count_extracts_on_tile() >= MAX_EXTRACTS_ON_TILE)
+		say("Too many extracts on output location, please move or clean some.")
+		current_recipe = null
+		repeat_recipe = FALSE
+	else if(!repeat_recipe)
 		current_recipe = null
 	update_power_usage()
 	manage_hud_as_needed()
@@ -190,6 +196,9 @@
 		return
 	if(!anchored)
 		balloon_alert(user, "unanchored!")
+		return TRUE
+	if(count_extracts_on_tile() >= MAX_EXTRACTS_ON_TILE)
+		balloon_alert(user, "too many extracts on tile, move or clean them up!")
 		return TRUE
 	if(change_recipe(user))
 		reagents.clear_reagents()
@@ -210,9 +219,8 @@
 			reagents.clear_reagents()
 		update_power_usage()
 		balloon_alert_to_viewers("cancelled recipe")
-	else
-		if(change_recipe(user, TRUE))
-			reagents.clear_reagents()
+	else if(change_recipe(user, TRUE))
+		reagents.clear_reagents()
 
 /obj/machinery/plumbing/ooze_compressor/CtrlClick(mob/user)
 	if(anchored && can_interact(user))
@@ -235,10 +243,16 @@
 		return
 
 	current_recipe = choice_to_datum[choice]
-	reagents_for_recipe = list()
-	reagents_for_recipe += current_recipe.required_oozes
+	reagents_for_recipe = current_recipe.required_oozes.Copy()
 	balloon_alert_to_viewers("set extract recipe")
 	manage_hud_as_needed()
 	update_power_usage()
 
+/obj/machinery/plumbing/ooze_compressor/proc/count_extracts_on_tile()
+	. = 0
+	for(var/thing in loc)
+		if(istype(thing, /obj/item/slime_extract) || istype(thing, /obj/item/slimecross) || istype(thing, /obj/item/autoslime))
+			.++
+
+#undef MAX_EXTRACTS_ON_TILE
 #undef CROSSBREED_BASE_PATHS

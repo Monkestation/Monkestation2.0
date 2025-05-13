@@ -83,7 +83,7 @@
 	client?.try_open_or_buy_lootbox()
 
 /datum/escape_menu/proc/open_map()
-	var/map_name = replacetext_char(trimtext(SSmapping.config.map_name), " ", "")
+	var/map_name = replacetext_char(trimtext(SSmapping.current_map.map_name), " ", "")
 	if(client)
 		client << link("https://maps.monkestation.com/Monke/[map_name]")
 

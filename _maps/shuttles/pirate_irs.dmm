@@ -1521,7 +1521,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/pirate)
 "NX" = (
-/obj/machinery/jukebox{
+/obj/machinery/dance_machine{
 	req_access = null
 	},
 /obj/effect/turf_decal/siding/dark_green,

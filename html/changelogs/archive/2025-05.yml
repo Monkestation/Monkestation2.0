@@ -1,0 +1,130 @@
+2025-05-02:
+  Absolucy:
+  - bugfix: Fixed oozelings duping translation gloves and prosthetic limbs when revived.
+  - bugfix: Fixed reflections clipping outside the sprite of mirrors.
+  Absolucy, JohnFulpWillard:
+  - bugfix: The DNA scanner's joker button no longer instantly activates itself when
+      the cooldown between uses is done.
+  Gw0sty:
+  - bugfix: Airborne virus's now will respect internals, because of course they would
+2025-05-03:
+  Absolucy:
+  - rscadd: Added a new music player implementation for BYOND 516 (used by jukeboxes
+      and lobby music)
+  Evalence0:
+  - code_imp: copied draw_length and other logic from lizard tongues to floran tongues
+  RandomDudeFromTheRim:
+  - bugfix: fixed being able to make infinite research through faulty artifact spawners
+  Shoddd:
+  - balance: sabot AP reduced to 25
+  - balance: AP is now multiplicative when hitting armor higher than it
+  SmArtKar:
+  - image: sprites relating to Slime Ranching have been updated
+  TheMrGlasses:
+  - balance: Changed the overall cooldown of the Joker function in genetics, as well
+      as replaced the needed matter bin with a capacitor instead.
+2025-05-04:
+  Absolucy:
+  - bugfix: Bags no longer have their slowdown reset whenever (un)equipped, so that
+      speed potions on dufflebags won't be undone whenever you take it off.
+  - bugfix: Token events now properly displays the name of who triggered it.
+  Absolucy, GoblinBackwards:
+  - bugfix: Fixed being unable to create keybinds to the spacebar.
+  - bugfix: Fixed Escape not removing keybinds.
+  Addust:
+  - qol: Johnson & Co Architecture has broken into CentCom yet again in the name of
+      upgrading it. Expect the ERT shuttle dock to look slightly more consistent with
+      the rest of CentCom.
+  - rscadd: Deep Storage has been reinforced by Johnson & Co Architecture's finest
+      engineers, and should now be slightly (keyword slightly) harder to cheese.
+  - bugfix: Deep Storage now has the correct type of blackbox, because I forgot to
+      give it a syndicate blackbox last time oopsies.
+  BingusSS13:
+  - rscadd: Added hydroponics equipment to service cyborg.
+  - rscadd: Added cooking equipment to service cyborg.
+  - qol: Cyborgs are now capable of interacting with kitchen machinery.
+  - qol: Service cyborgs and drones can now use the crafting menu.
+  Rengan:
+  - bugfix: fixes getting double monkecoins from challenges
+  Shoddd:
+  - bugfix: bloodsucker feed forget no longer happens early
+  - balance: bloodsucker feed forget message accompied by a small stun
+2025-05-05:
+  Absolucy:
+  - qol: Playing games on a PDA is no longer louder than playing an actual full-sized
+      arcade machine.
+  - bugfix: Bloodsucker candelabrums properly emit light again.
+  - bugfix: Bloodsucker ability buttons now properly update the remaining cooldown,
+      and un-grey out when the cooldown is finished.
+  - bugfix: Bloodsuckers can no longer drink bloodbags at mach speed by repeatedly
+      clicking themselves with it.
+  - bugfix: Fixed some possible edge-cases where a bloodsucker or vassal could lose
+      the Blah-tongue language.
+  - bugfix: The Archive of the Kindred can no longer be carved out, as intended.
+  - bugfix: Fixed the small delay between becoming a bloodsucker and actually gaining
+      your abilities and such.
+  - bugfix: The Bloodsucker feed ability now properly prioritizes living mobs instead
+      of dead mobs when feeding without a grab.
+  - qol: The "Steal the Archive of the Kindred" objective now also succeeds if a vassal
+      is holding the Archive.
+  - qol: Made the bloodsucker info UI far less messy.
+  - qol: Using Brawn as a bloodsucker on a door or locker will now tell you if Brawn's
+      level is too low to do so.
+  - code_imp: Cleaned up some more bloodsucker code.
+  - bugfix: Fixed some weird edge cases with helmets/masks/etc that are supposed to
+      cover your eyes or mouth.
+  - bugfix: The Damned Rabbit Mask now actually blocks facehuggers like the examine
+      says it should.
+  Gw0sty:
+  - balance: Birth teratoma is reduced to 1 absorb needed to purchase
+  - balance: Birth teratoma can only be used once for each changeling absorption.
+  Shoddd:
+  - rscadd: Pubbystation
+  ThePooba:
+  - rscadd: Added minigun to Cybersun suit storage at syndi base
+  - balance: Cybersun suit key bumped to 25 tc
+  - bugfix: a spelling mistake
+  steelphoenix4:
+  - bugfix: Fixed the Recolorable Oversized Jacket not being recolorable on lizards.
+2025-05-08:
+  Absolucy:
+  - bugfix: The pirate SMES are now magical instead of secretly infinite.
+  - bugfix: Fixed the Plasma Fixation symptom causing a lot of runtime errors in mice.
+  EssentialTomato:
+  - rscadd: Added a new completely heat insulated floor
+  flleeppyy:
+  - rscadd: added shion plush
+2025-05-09:
+  Absolucy:
+  - qol: You can no longer use slime mutation syringes on slimes currently in the
+      process of splitting/mutating, to avoid wasting said syringe.
+  - qol: Stabilized dark blue extracts no longer extinguish lighters and cigarettes
+      in your hand.
+  - balance: Ooze compressors will refuse to make more extracts if there's 30+ extracts
+      on the same tile already.
+  - balance: Slimes transfer their friendship when splitting.
+  - bugfix: Reduced the effects of lag on stabilized extract effects.
+  - code_imp: Did some minor cleanup to some xenobio-related code.
+  - bugfix: The broadcast() function for NTSL now properly sanitizes frequencies.
+  Absolucy, Mothblocks:
+  - rscadd: You can now craft makeshift radio jammers.
+  - balance: Radio jammers have had their cost lowered from 5 TC to 1 TC.
+  - bugfix: Syndicate encryption keys properly protect against AoE radio jamming again.
+2025-05-11:
+  Aniantan:
+  - bugfix: Thrown eggs break on impact again
+2025-05-12:
+  Absolucy:
+  - bugfix: Possibly fixed false walls smoothing weirdly with other false walls and
+      doors.
+  - bugfix: Fixed some errors related to slime friendship tracking.
+  notghosti:
+  - bugfix: '"They seem unresponsive" Time will now be much more accurate'
+  - qol: Alert levels now show on pda's
+  - bugfix: Hivelords Borers now can self reproduce as intended.
+  - bugfix: Stopped an edge case where borers would lose chemicals but produce no
+      eggs
+2025-05-13:
+  Absolucy, Comxy:
+  - rscadd: Added big slappy
+  - image: Added big slappy parts and big slappy sprites

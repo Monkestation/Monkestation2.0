@@ -4707,7 +4707,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/containment1)
 "rv" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedscpsite)
 "rw" = (
 /obj/structure/cable,
@@ -6621,7 +6621,7 @@
 /area/ruin/space/has_grav/abandonedscpsite/czmaintenance)
 "yN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedscpsite)
 "yQ" = (
 /obj/structure/filingcabinet,
@@ -8202,7 +8202,7 @@
 	pixel_y = -6;
 	pixel_x = 10
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedscpsite)
 "EW" = (
 /obj/structure/filingcabinet,
@@ -9513,7 +9513,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedscpsite)
 "JQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

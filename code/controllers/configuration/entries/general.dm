@@ -186,13 +186,13 @@
 
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
-	default = 6000
+	default = 10 MINUTES
 	integer = FALSE
 	min_val = 0
 
 /// length of voting period (deciseconds, default 1 minute)
 /datum/config_entry/number/vote_period
-	default = 600
+	default = 1 MINUTES
 	integer = FALSE
 	min_val = 0
 
@@ -430,8 +430,6 @@
 	min_val = 0
 
 /datum/config_entry/flag/irc_first_connection_alert // do we notify the irc channel when somebody is connecting for the first time?
-
-/datum/config_entry/flag/check_randomizer
 
 /datum/config_entry/string/ipintel_email
 
@@ -712,3 +710,27 @@
  */
 /datum/config_entry/number/tgui_max_chunk_count
 	default = 32
+
+/// The minimum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_minimum_tallies
+	default = 1
+	min_val = 0
+	max_val = 50
+
+/// The flat amount all maps get by default
+/datum/config_entry/number/map_vote_flat_bonus
+	default = 5
+	min_val = 0
+	max_val = INFINITY
+
+/// The maximum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_maximum_tallies
+	default = 200
+	min_val = 0
+	max_val = INFINITY
+
+/// The number of tallies that are carried over between rounds.
+/datum/config_entry/number/map_vote_tally_carryover_percentage
+	default = 100
+	min_val = 0
+	max_val = 100
