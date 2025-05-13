@@ -28,6 +28,8 @@
 	var/suffix = null
 	///What flavor or ruin is this? eg ZTRAIT_SPACE_RUINS
 	var/ruin_type = null
+	///ruins we want to avoid spawning near
+	var/list/undesirable_ruins = null
 
 /datum/map_template/ruin/New()
 	if(!name && id)
@@ -35,25 +37,3 @@
 
 	mappath = prefix + suffix
 	..(path = mappath)
-
-//putting this here because this is repeated so many fucking times
-/datum/map_template/ruin/proc/avoid_ruin(zLevel, list/placed_ruins, list/z_levels, list/undesirable_ruins)
-	var/original_zLevel = zLevel
-	while(TRUE)
-		var/unwanted_zLevel = FALSE
-		for(var/undesirable in undesirable_ruins)
-			if((undesirable in placed_ruins) && placed_ruins[undesirable] == zLevel)
-				unwanted_zLevel = TRUE
-				break
-		if(unwanted_zLevel)
-			z_levels -= zLevel
-			if(!length(z_levels))
-				return original_zLevel
-			zLevel = pick(z_levels)
-		else
-			return zLevel
-
-//proc thats called when this map tries to load, fill with checks unique to this ruin or whatever the fuck
-//useful for relocating your ruin if certain conditions are not met
-/datum/map_template/ruin/proc/run_ruin_checks(zLevel, list/placed_ruins, list/z_levels)
-	return zLevel

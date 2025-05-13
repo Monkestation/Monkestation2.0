@@ -1,11 +1,8 @@
-/datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below, list/placed_ruins, list/z_levels, check_override)
+
+/datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
 		return place_on_isolated_level(z)
-	if(!check_override)
-		var/forced_z = run_ruin_checks(z, placed_ruins, z_levels.Copy())
-		if(forced_z)
-			z = forced_z
 	while(sanity > 0)
 		sanity--
 		var/width_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(width / 2)
@@ -52,10 +49,7 @@
 			T.turf_flags |= NO_RUINS
 
 		new /obj/effect/landmark/ruin(central_turf, src)
-		var/list/output = list()
-		output["central_turf"] = central_turf
-		output["z"] = z
-		return output
+		return central_turf
 
 /datum/map_template/ruin/proc/place_on_isolated_level(z)
 	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(width, height, 1, z) //Make the new level creation work with different traits.
@@ -140,17 +134,13 @@
 		var/failed_to_place = TRUE
 		var/target_z = 0
 		var/turf/placed_turf //Where the ruin ended up if we succeeded
-		var/return_z //final z level decided by ruin checks
-		var/check_override //do we skip this map template's unique checks?
 		outer:
 			while(placement_tries > 0)
 				placement_tries--
 				target_z = pick(z_levels)
 				if(forced_z)
 					target_z = forced_z
-					check_override = TRUE
 				if(current_pick.always_spawn_with) //If the ruin has part below, make sure that z exists.
-					check_override = TRUE
 					for(var/v in current_pick.always_spawn_with)
 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
 							var/turf/T = locate(1,1,target_z)
@@ -159,13 +149,26 @@
 									continue outer
 								else
 									break outer
+				if(current_pick.undesirable_ruins && !forced_z)
+					var/original_zLevel = target_z
+					var/z_list = z_levels.Copy()
+					while(length(z_list))
+						var/unwanted_zLevel = FALSE
+						for(var/undesirable in current_pick.undesirable_ruins)
+							if((undesirable in placed_ruins) && placed_ruins[undesirable] == target_z)
+								unwanted_zLevel = TRUE
+								break
+						if(unwanted_zLevel)
+							z_list -= target_z
+							if(!length(z_list))
+								target_z = original_zLevel
+							else
+								target_z = pick(z_list)
+						else
+							break
 
-				var/list/output = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below,placed_ruins,z_levels,check_override)
-				if(("central_turf" in output) && ("z" in output))
-					placed_turf = output["central_turf"]
-					return_z = output["z"]
+				placed_turf = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below)
 				if(!placed_turf)
-					placed_ruins[current_pick.id] = return_z
 					continue
 				else
 					failed_to_place = FALSE
@@ -212,6 +215,7 @@
 									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
+			placed_ruins[current_pick.id] == target_z
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
