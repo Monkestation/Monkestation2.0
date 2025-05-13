@@ -877,13 +877,13 @@
 	trim = /datum/id_trim/job/away/old/sec /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/sci
-	name = "Charlie Station Scientist's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
+	name = "Delta Station Scientist's ID card"
+	desc = "A faded Delta Station ID card. You can make out the rank \"Scientist\"."
 	trim = /datum/id_trim/job/away/old/sci /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/eng
-	name = "Charlie Station Engineer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
+	name = "Beta Station Engineer's ID card"
+	desc = "A faded Beta Station ID card. You can make out the rank \"Station Engineer\"."
 	trim = /datum/id_trim/job/away/old/eng /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/equipment

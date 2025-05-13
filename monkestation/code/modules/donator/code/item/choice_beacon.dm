@@ -130,3 +130,13 @@
 	name = "tall baby pukeko"
 	default_name = "tall baby pukeko"
 	donator_pet = /mob/living/basic/pet/babypukeko/tall
+
+/obj/item/choice_beacon/pet/donator/eris_romch
+	name = "romch"
+	default_name = "romch"
+	donator_pet = /mob/living/basic/pet/eris_romch
+
+/obj/item/choice_beacon/pet/donator/theclown_clownpet
+	name = "short clown"
+	default_name = "short clown"
+	donator_pet = /mob/living/basic/pet/theclown_clownpet
