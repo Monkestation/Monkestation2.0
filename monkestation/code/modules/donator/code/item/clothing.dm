@@ -699,3 +699,35 @@
 	icon_state = "strange_merchant_hood"
 	worn_icon_state = "strange_merchant_hood"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEEARS
+
+/obj/item/clothing/head/costume/ironhammer_commander_hat
+	name = "ironhammer commander hat"
+	desc = "It's a cowboy hat that has the logo \"IH\" on the gold band. It smells like oranges and blood."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "ironhammer_commander_hat"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/ironhammer_commander_jacket
+	name = "ironhammer commander jacket"
+	desc = "A strange commander jacket made of A plastic and nylon to seem as if it were armored. It has a logo \"IH\" on a sleeve."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "ironhammer_commander_jacket"
+	worn_icon_state = "ironhammer_commander_jacket"
+
+/obj/item/clothing/head/costume/clown_king_crown
+	name = "grand clown king crown"
+	desc = "It's the Grand Clown King CROWN!! It smells like rubber."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing_32x48.dmi'
+	icon_state = "clown_king_crown"
+	inhand_icon_state = null
+
+/obj/item/clothing/neck/clown_king_cloak
+	name = "grand clown king cloak"
+	desc = "It's the CLOAK of the Grand Clown King! It smells like nylon."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "clown_king_cloak"
+	worn_icon_state = "clown_king_cloak"
