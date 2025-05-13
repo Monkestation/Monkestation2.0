@@ -941,6 +941,8 @@
 /obj/item/storage/backpack/duffelbag,
 /obj/effect/spawner/random/clothing/backpack,
 /obj/effect/spawner/random/clothing/backpack,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "fi" = (
@@ -1847,6 +1849,8 @@
 	},
 /obj/effect/spawner/random/clothing/backpack,
 /obj/effect/spawner/random/clothing/backpack,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "jO" = (
@@ -6370,6 +6374,8 @@
 /obj/machinery/camera/autoname/directional/south{
 	status = 0
 	},
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "Iw" = (
