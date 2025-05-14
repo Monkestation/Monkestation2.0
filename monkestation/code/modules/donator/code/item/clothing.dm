@@ -734,7 +734,7 @@
 
 /obj/item/clothing/suit/star_father_suit
 	name = "star father suit"
-	desc = "A slick and gold robe."
+	desc = "A slick black and gold robe."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "star_father_suit"
