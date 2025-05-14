@@ -873,10 +873,10 @@
 	item_path = /obj/item/choice_beacon/pet/donator/theclown_clownpet
 	donator_only = TRUE
 	requires_purchase = FALSE
-	ckeywhitelist = list("Mycah")
+	ckeywhitelist = list("Mrsmall_theclown")
 
-/datum/loadout_item/effects/eris_romch
-	ckeywhitelist = list("Mycah")
+/datum/loadout_item/effects/theclown_clownpet
+	ckeywhitelist = list("Mrsmall_theclown")
 	name = "Short Clown Transformation"
 	item_path = /obj/item/effect_granter/donator/theclown_clownpet
 	requires_purchase = FALSE
