@@ -9,22 +9,46 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
+	/// Whether we've been wetted and are expanding
+	var/expanding = FALSE
+
 
 /obj/item/food/monkeycube/proc/Expand()
+	if(expanding)
+		return
+
+	expanding = TRUE
+
+	if(ismob(loc))
+		var/mob/holder = loc
+		holder.dropItemToGround(src)
+
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/bananas 
+
+	var/mob/living/bananas
 	if(spawned_mob == /mob/living/carbon/human/species/monkey)
 		bananas = new spawned_mob(drop_location(), TRUE, spammer)
-	else 
+	else
 		bananas = new spawned_mob(drop_location())
-	if(faction)
-		bananas.faction = faction
+
 	if (!QDELETED(bananas))
+		if(faction)
+			bananas.faction = faction
+
 		visible_message(span_notice("[src] expands!"))
 		bananas.log_message("spawned via [src], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
+
+		var/alpha_to = bananas.alpha
+		var/matrix/scale_to = matrix(bananas.transform)
+		bananas.alpha = 0
+		bananas.transform = bananas.transform.Scale(0.1)
+		animate(bananas, 0.5 SECONDS, alpha = alpha_to, transform = scale_to, easing = QUAD_EASING|EASE_OUT)
+
 	else if (!spammer) // Visible message in case there are no fingerprints
 		visible_message(span_notice("[src] fails to expand!"))
-	qdel(src)
+		return
+
+	QDEL_IN(src, 0.5 SECONDS)
 
 /obj/item/food/monkeycube/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is putting [src] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))

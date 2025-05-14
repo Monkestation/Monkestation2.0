@@ -7891,7 +7891,7 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/port/fore)
 "aQb" = (
-/obj/machinery/jukebox,
+/obj/machinery/dance_machine,
 /turf/open/floor/eighties,
 /area/station/maintenance/port/fore)
 "aQc" = (
@@ -8433,7 +8433,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "aSi" = (
-/obj/machinery/jukebox/disco,
+/obj/machinery/dance_machine/disco,
 /turf/open/floor/eighties,
 /area/station/maintenance/port/fore)
 "aSj" = (

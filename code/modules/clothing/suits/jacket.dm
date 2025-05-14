@@ -33,6 +33,7 @@
 	icon_state = "jacket_oversized"
 	greyscale_config = /datum/greyscale_config/jacket_oversized
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized_worn
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 

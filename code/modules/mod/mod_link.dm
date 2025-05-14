@@ -43,8 +43,10 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	QDEL_NULL(mod_link.visual)
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
-	var/atom/other_visual = mod_link.get_other()?.visual
 	if(!newdir) //can sometimes be null or 0
+		return
+	var/atom/other_visual = mod_link.get_other()?.visual
+	if(QDELETED(other_visual))
 		return
 	other_visual.setDir(SOUTH)
 	other_visual.pixel_x = 0
