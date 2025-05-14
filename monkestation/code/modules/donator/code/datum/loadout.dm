@@ -882,7 +882,7 @@
 	requires_purchase = FALSE
 
 //Foxei
-/datum/loadout_item/suit/ironhammer_commander_jacket
+/datum/loadout_item/suit/star_father_suit
 	name = "Star Father Suit"
 	item_path = /obj/item/clothing/suit/star_father_suit
 	donator_only = TRUE
