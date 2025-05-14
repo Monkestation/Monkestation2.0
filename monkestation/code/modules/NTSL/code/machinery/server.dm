@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(tcomms_servers)
 	if(!reject_bad_ntsl_text(rawcode, require_pretty = FALSE, allow_newline = TRUE, allow_code = TRUE))
 		rawcode = null
 		return "Please use galactic common characters only."
-	//Check if it is over the character limit which is 16000 due to TGUI having a hard time handling bigger scripts
+	//Check if it is over the character limit which is 15000 due to TGUI having a hard time handling bigger scripts
 	if(code_length > max_characters)
 		rawcode = null
 		return "Over character limit: [code_length]/[max_characters]"
