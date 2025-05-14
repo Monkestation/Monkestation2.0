@@ -403,6 +403,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/plating/icemoon,
 /area/ruin/space/ancientstation/beta/storage)
 "cv" = (
