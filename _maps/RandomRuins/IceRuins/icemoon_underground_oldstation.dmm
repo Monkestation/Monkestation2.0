@@ -4106,12 +4106,6 @@
 /obj/effect/spawner/structure/window/hollow/middle,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/dorms)
-"wC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
 "wE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -4461,12 +4455,6 @@
 "yz" = (
 /turf/closed/wall,
 /area/ruin/space/ancientstation/beta/storage)
-"yB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
 "yC" = (
 /obj/machinery/shower/directional/west{
 	has_water_reclaimer = 0
@@ -7340,11 +7328,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
 /area/ruin/space/ancientstation/beta/storage)
-"OI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/rods,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
 "OK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7455,12 +7438,6 @@
 "Pt" = (
 /obj/structure/sign/poster/official/work_for_a_future,
 /turf/closed/wall/rust,
-/area/ruin/space/ancientstation/charlie/dorms)
-"Py" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/rods,
-/turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "PA" = (
 /obj/machinery/door/firedoor,
@@ -8234,14 +8211,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
-"Tz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard,
-/obj/item/stack/rods,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
 "TC" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/old,
@@ -8321,14 +8290,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
-"TU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shard{
-	icon_state = "small"
-	},
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
 "Uc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8746,16 +8707,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
-"Wi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/rods,
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
 "Wp" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/open/floor/iron/white/textured_large,
@@ -11995,8 +11946,8 @@ Pl
 bT
 bT
 bT
-TU
-wC
+bT
+bT
 bT
 bT
 Kr
@@ -12048,7 +11999,7 @@ bT
 Zg
 bT
 Ng
-Tz
+bT
 BD
 ye
 ye
@@ -12094,7 +12045,7 @@ bT
 bT
 bT
 bT
-Wi
+bT
 bT
 bT
 zn
@@ -12146,7 +12097,7 @@ GF
 zj
 bT
 zz
-OI
+zn
 BD
 ye
 ye
@@ -12191,11 +12142,11 @@ Vg
 bT
 Cm
 bT
-Py
 bT
 bT
 bT
-yB
+bT
+bT
 LG
 ye
 ye
@@ -12244,7 +12195,7 @@ bT
 zj
 bT
 NN
-wC
+bT
 BD
 ye
 ye
