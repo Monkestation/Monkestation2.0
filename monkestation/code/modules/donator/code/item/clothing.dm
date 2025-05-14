@@ -739,8 +739,8 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "star_father_suit"
 	worn_icon_state = "star_father_suit"
-	alternative_screams = list(	'monkestation/code/modules/donator/soundsstarfathersuit_scream_1.ogg',
-								'monkestation/code/modules/donator/soundsstarfathersuit_scream_2.ogg',
-								'monkestation/code/modules/donator/soundsstarfathersuit_scream_3.ogg',
-								'monkestation/code/modules/donator/soundsstarfathersuit_scream_4.ogg',
-								'monkestation/code/modules/donator/soundsstarfathersuit_scream_5.ogg',)
+	alternative_screams = list(	'monkestation/code/modules/donator/sounds/starfathersuit_scream_1.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_2.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_3.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_4.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_5.ogg',)
