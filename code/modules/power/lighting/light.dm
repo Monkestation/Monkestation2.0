@@ -83,7 +83,10 @@
 	var/fire_brightness = 4
 	///The Light colour to use when working in fire alarm status
 	var/fire_colour = COLOR_FIRE_LIGHT_RED
-
+	///The Light range to use when working in Delta alarm status
+	var/delta_brightness = 6
+	///The Light range to use when working in Delta alarm status
+	var/delta_colour = COLOR_MAROON
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
@@ -122,6 +125,7 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(alert_level_updated))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -198,6 +202,11 @@
 	SIGNAL_HANDLER
 	update(dont_burn_out = TRUE)
 
+/obj/machinery/light/proc/alert_level_updated()
+	SIGNAL_HANDLER
+
+	update()
+
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE, dont_burn_out = FALSE)
 	switch(status)
@@ -219,6 +228,9 @@
 		if (local_area?.fire)
 			color_set = fire_colour
 			brightness_set = fire_brightness
+		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA && is_station_level(z))
+			color_set = delta_colour
+			brightness_set = delta_brightness
 		else if (nightshift_enabled)
 			IR = nightshift_inner_range
 			brightness_set = nightshift_outer_range

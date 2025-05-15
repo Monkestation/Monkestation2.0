@@ -153,3 +153,12 @@
 		'sound/machines/terminal_button08.ogg' = 1,
 	)
 	mid_length = 0.3 SECONDS
+
+/datum/looping_sound/delta_alarm
+
+	mid_sounds = list('sound/machines/delta_alarm.ogg' = 1)
+	volume = 10
+	ignore_walls = FALSE
+	falloff_distance = 10
+	falloff_exponent = 5
+
