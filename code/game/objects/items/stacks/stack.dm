@@ -135,7 +135,7 @@
 /obj/item/stack/proc/update_custom_materials()
 	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
 
-/obj/item/stack/proc/find_other_stack(list/already_found)
+/obj/item/stack/proc/find_other_stack(alist/already_found)
 	if(QDELETED(src) || isnull(loc))
 		return
 	for(var/obj/item/stack/item_stack in loc)
@@ -153,15 +153,13 @@
 
 /// Tries to merge the stack with everything on the same tile.
 /obj/item/stack/proc/merge_with_loc()
-	var/list/already_found = list() // change to alist whenever dreamchecker and such finally supports that
+	var/alist/already_found = alist()
 	var/obj/item/other_stack = find_other_stack(already_found)
-	var/sanity = 100 // just in case
+	var/sanity = max_amount // just in case
 	while(other_stack && sanity > 0)
 		sanity--
 		if(merge(other_stack))
 			return FALSE
-		//other_stack = null // prevents hard deletes as a result of CHECK_TICK sleeping while we have a reference to a stack
-		//CHECK_TICK
 		other_stack = find_other_stack(already_found)
 	return TRUE
 
