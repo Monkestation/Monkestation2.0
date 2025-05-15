@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Possibly fixed false walls smoothing weirdly with other false walls and doors."
