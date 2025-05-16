@@ -228,7 +228,7 @@
 		if (local_area?.fire)
 			color_set = fire_colour
 			brightness_set = fire_brightness
-		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA && is_station_level(z))
+		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA && is_station_level(z) && is_station_area_or_adjacent(get_area(src)))
 			color_set = delta_colour
 			brightness_set = delta_brightness
 		else if (nightshift_enabled)
