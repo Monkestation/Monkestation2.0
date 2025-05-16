@@ -68,7 +68,7 @@
 /obj/projectile/beam/laser/microfusion/penetrator
 	name = "focused microfusion laser"
 	damage = 20
-	armour_penetration = 50
+	armour_penetration = 75
 
 /obj/projectile/beam/laser/microfusion/lance
 	name = "lance microfusion laser"

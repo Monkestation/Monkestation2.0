@@ -19,7 +19,8 @@
 	toolspeed = 0.375
 	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	armour_penetration = 35
+	armour_penetration = 60
+	armour_ignorance = 5
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
