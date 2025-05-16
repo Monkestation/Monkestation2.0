@@ -3,11 +3,13 @@
 	desc = "Will immediately create an offer a plushie to the ghosts"
 
 
-/obj/effect/spawner/random/loafer/Initialize()
-	plushies = typecacheof(/obj/item/toy/plush,ignore_root_path = TRUE)
-	var/obj/item/toy/plush/boi_path = pick(plushies)
-	var/obj/item/toy/plush/boi = new boi_path
-	boi.forceMove(our_artifact.holder.loc)
+/obj/effect/spawner/random/livingplush/Initialize(mapload)
+	loot = list(typecacheof(/obj/item/toy/plush,ignore_root_path = TRUE))
+	return ..()
+
+
+/obj/effect/spawner/random/livingplush/post_spawn(atom/movable/spawned_loot)
+	var/obj/item/toy/plush/boi = spawned_loot
 	boi.AddComponent(/datum/component/ghost_object_control,boi,TRUE)
 	var/datum/component/ghost_object_control/spiritholder = boi.GetComponent(/datum/component/ghost_object_control)
 	if(!(spiritholder.bound_spirit))
