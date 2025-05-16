@@ -1607,10 +1607,10 @@
 	if(isatom(appearance))
 		var/atom/atom = appearance
 		appearance = copy_appearance_filter_overlays(atom.appearance)
-	else if(isappearance_or_image(appearance))
+	else if(isappearance_or_image(appearance) || isicon(appearance))
 		appearance = copy_appearance_filter_overlays(appearance)
 	else
-		CRASH("Invalid appearance passed to ma2html - either a appearance, image, or atom must be passed!")
+		CRASH("Invalid appearance passed to ma2html - either a appearance, image, icon, or atom must be passed!")
 
 	if(IS_CLIENT_OR_MOCK(viewer))
 		var/datum/client_interface/client = viewer
