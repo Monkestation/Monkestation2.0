@@ -2,5 +2,5 @@
 MOVEMENT_SUBSYSTEM_DEF(hyperspace_drift)
 	name = "Hyperspace Drift"
 	priority = FIRE_PRIORITY_HYPERSPACE_DRIFT
-	flags = SS_NO_INIT|SS_TICKER
+	flags = SS_NO_INIT | SS_TICKER | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME

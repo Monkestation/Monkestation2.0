@@ -470,6 +470,7 @@ SUBSYSTEM_DEF(vote)
 /// Datum action given to mobs that allows players to vote on the current vote.
 /datum/action/vote
 	name = "Vote!"
+	button_icon = 'monkestation/icons/hud/actions.dmi'
 	button_icon_state = "vote"
 	show_to_observers = FALSE
 

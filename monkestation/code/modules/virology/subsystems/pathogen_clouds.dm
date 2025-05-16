@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	init_order = INIT_ORDER_PATHOGEN
 	priority = FIRE_PRIORITY_PATHOGEN
 	wait = 1 SECONDS
-	flags = SS_BACKGROUND | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/current_run_cores = list()
@@ -12,6 +12,14 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	var/list/clouds = list()
 	var/current_run_level = "clouds"
 
+/datum/controller/subsystem/pathogen_clouds/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, current_run_cores),
+		NAMEOF(src, current_run_clouds),
+		NAMEOF(src, cores),
+		NAMEOF(src, clouds),
+	)
 
 /datum/controller/subsystem/pathogen_clouds/stat_entry(msg)
 	msg += "Run Cores:[length(current_run_cores)]"
@@ -19,7 +27,6 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	msg += "Run Clouds:[length(current_run_clouds)]"
 	msg += "Clouds:[length(clouds)]"
 	return ..()
-
 
 /datum/controller/subsystem/pathogen_clouds/Recover()
 	cores = SSpathogen_clouds.cores.Copy()
