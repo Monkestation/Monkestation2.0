@@ -316,7 +316,10 @@
 	if(!(locate(/obj/item/mod/module/chameleon) in modules)) // monkestation edit: janky bugfix for chameleon modules
 		update_icon_state()
 	generate_suit_mask()
-	wearer.update_clothing(slot_flags)
+	var/updated_slots = slot_flags
+	for (var/slot_key in mod_parts)
+		updated_slots |= text2num(slot_key)
+	wearer.update_clothing(updated_slots)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()
