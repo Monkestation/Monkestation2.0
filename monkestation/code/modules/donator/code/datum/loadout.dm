@@ -880,3 +880,10 @@
 	name = "Short Clown Transformation"
 	item_path = /obj/item/effect_granter/donator/theclown_clownpet
 	requires_purchase = FALSE
+
+//Foxei
+/datum/loadout_item/suit/star_father_suit
+	name = "Star Father Suit"
+	item_path = /obj/item/clothing/suit/star_father_suit
+	donator_only = TRUE
+	requires_purchase = FALSE
