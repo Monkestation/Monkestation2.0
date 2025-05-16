@@ -12903,7 +12903,6 @@
 "gmE" = (
 /obj/structure/table/reinforced,
 /obj/item/surgery_tray,
-/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "gmL" = (
@@ -19224,8 +19223,13 @@
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
 "jgV" = (
-/obj/effect/spawner/random/trash/box,
-/turf/open/floor/plating,
+/obj/structure/rack,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/obj/structure/sign/poster/contraband/free_drone/directional/north,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/department/engine/atmos)
 "jhe" = (
 /obj/structure/disposalpipe/segment,
@@ -24304,6 +24308,16 @@
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"lFI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/drone_dispenser/preloaded,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/engine/atmos)
 "lFV" = (
 /turf/open/floor/iron/stairs/left,
 /area/station/hallway/primary/central/fore)
@@ -133104,7 +133118,7 @@ lVE
 lVE
 lAv
 nSe
-fpt
+lFI
 ixh
 jvn
 pRz

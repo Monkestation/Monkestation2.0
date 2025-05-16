@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Loafers can no longer create singularity, unless they're emagged."
+  - code_imp: "Cleaned up some code related to loafing."

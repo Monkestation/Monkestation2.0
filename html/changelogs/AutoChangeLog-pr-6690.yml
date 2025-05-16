@@ -1,0 +1,5 @@
+author: "Scrambledeggs00"
+delete-after: True
+changes:
+  - qol: "Broke NTSL invalid and max character checks into separate checks for easier troubleshooting"
+  - bugfix: "Lowered NTSL max characters to 15,000 due to TGUI limitations"

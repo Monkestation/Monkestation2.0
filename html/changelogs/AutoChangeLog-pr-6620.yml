@@ -1,0 +1,12 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "Added diagnostic huds to the roboticist outfit."
+  - rscadd: "Added health huds to the medical doctor outfit."
+  - rscadd: "Added science goggles to the scientist outfit"
+  - rscadd: "Added a medical labcoat for doctors."
+  - rscdel: "Removed the alternate whimsy RD outfit."
+  - rscdel: "Removed the nurse dress."
+  - rscdel: "Removed the imperial RD and CMO uniform."
+  - image: "Updated medsci sprites to fit each other and replaced old science uniforms with newer TG sprites."
+  - code_imp: "Moved some medsci/labcoat clothing files to the main module folder and removed/moved some Nova clothing code."

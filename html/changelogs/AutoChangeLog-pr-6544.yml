@@ -1,0 +1,5 @@
+author: "EssentialTomato"
+delete-after: True
+changes:
+  - qol: "Heat pumps now have a cut-off temperature setting and a heat flow indicator. You can switch between input cooling and output heating modes."
+  - balance: "Massively increased the maximum settings on passive atmospherics binary devices."
