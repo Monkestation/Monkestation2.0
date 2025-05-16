@@ -45990,9 +45990,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "nvb" = (
-/obj/structure/closet/secure_closet/tac{
-	req_access = list("captain")
-	},
+/obj/structure/closet/secure_closet/tac,
 /obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_y = 6;
 	pixel_x = 7

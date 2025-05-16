@@ -9,6 +9,8 @@
 /datum/security_level
 	/// The name of this security level.
 	var/name = "not set"
+	/// A three-letter shortform of the security level.
+	var/name_shortform = "not set"
 	/// The color of our announcement divider.
 	var/announcement_color = "default"
 	/// The numerical level of this security level, see defines for more information.
@@ -48,6 +50,7 @@
  */
 /datum/security_level/green
 	name = "green"
+	name_shortform = "GRN"
 	announcement_color = "green"
 	sound = 'sound/misc/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
@@ -62,6 +65,7 @@
  */
 /datum/security_level/blue
 	name = "blue"
+	name_shortform = "BLU"
 	announcement_color = "blue"
 	sound = 'sound/misc/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
@@ -77,6 +81,7 @@
  */
 /datum/security_level/red
 	name = "red"
+	name_shortform = "RED"
 	announcement_color = "red"
 	sound = 'sound/misc/notice3.ogg' // More angry alarm
 	number_level = SEC_LEVEL_RED
@@ -91,6 +96,7 @@
  */
 /datum/security_level/delta
 	name = "delta"
+	name_shortform = "Δ"
 	announcement_color = "purple"
 	sound = 'sound/misc/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
@@ -106,6 +112,7 @@
  */
 /datum/security_level/epsilon
 	name = "epsilon"
+	name_shortform = "ε"
 	announcement_color = "grey" //this was painful
 	number_level = SEC_LEVEL_EPSILON
 	sound = 'monkestation/sound/misc/epsilon.ogg'
@@ -120,6 +127,7 @@
  */
 /datum/security_level/yellow
 	name = "yellow"
+	name_shortform =  "Ylw"
 	announcement_color = "yellow"
 	number_level = SEC_LEVEL_YELLOW
 	sound = 'sound/misc/notice1.ogg' // Its just a more spesific blue alert
@@ -135,6 +143,7 @@
  */
 /datum/security_level/amber
 	name = "amber"
+	name_shortform = "Amb"
 	announcement_color = "amber" //I see now why adding grey was painful. WATER IN THE FIRE, WHY?! (Thank you Absolucy for helping add more colors)
 	number_level = SEC_LEVEL_AMBER
 	sound = 'sound/misc/notice1.ogg' // Its just a more spesific blue alert v2
@@ -150,6 +159,7 @@
  */
 /datum/security_level/gamma
 	name = "gamma"
+	name_shortform = "γ"
 	announcement_color = "pink" //Its like red, but diffrent.
 	number_level = SEC_LEVEL_GAMMA
 	sound = 'monkestation/sound/misc/gamma.ogg' // Its just the star wars death star alert, but pitched lower and slowed down ever so slightly.
@@ -165,6 +175,7 @@
  */
 /datum/security_level/lambda
 	name = "lambda"
+	name_shortform = "λ"
 	announcement_color = "crimson" //Thanking Absolucy for having a bigger brain than me in figuring out colors.
 	number_level = SEC_LEVEL_LAMBDA
 	sound = 'monkestation/sound/misc/lambda.ogg' // Ported over the current (as of this codes time) ss14 gamma alert, renamed because it fits better. Old gamma was better :(

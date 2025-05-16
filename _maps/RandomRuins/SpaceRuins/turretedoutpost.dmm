@@ -190,7 +190,7 @@
 "mf" = (
 /obj/structure/lattice,
 /obj/structure/girder,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "my" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -204,7 +204,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "nd" = (
 /obj/structure/girder/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "no" = (
 /obj/machinery/light/dim/directional/west,
@@ -447,6 +447,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
+"BG" = (
+/obj/structure/girder,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "BU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -511,6 +516,9 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/turretedoutpost)
+"Hu" = (
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "Hv" = (
 /obj/structure/tank_holder,
@@ -699,6 +707,10 @@
 /obj/machinery/porta_turret_construct,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
+"Vu" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/turretedoutpost)
 "Vx" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -718,7 +730,7 @@
 /obj/structure/girder/displaced,
 /obj/structure/grille/broken,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/turretedoutpost)
 "VO" = (
 /obj/machinery/porta_turret/syndicate/energy/ruin,
@@ -901,7 +913,7 @@ ro
 ro
 ro
 nd
-up
+Hu
 ro
 ro
 ro
@@ -928,12 +940,12 @@ jM
 jM
 ro
 ro
-ID
-cD
-ID
-ID
+BG
+Vu
+BG
+BG
 VB
-ID
+BG
 pO
 ro
 ro
@@ -958,8 +970,8 @@ Ci
 bU
 ro
 ro
-ID
-ID
+BG
+BG
 ro
 ro
 ro
@@ -988,8 +1000,8 @@ jM
 jM
 jM
 ro
-ID
-ID
+BG
+BG
 ro
 ro
 sy
@@ -1019,7 +1031,7 @@ jM
 jM
 jM
 ro
-ID
+BG
 ro
 ro
 hr
@@ -1050,7 +1062,7 @@ jM
 jM
 jM
 ro
-ID
+BG
 ro
 Pf
 aH
@@ -1081,7 +1093,7 @@ bU
 jM
 rK
 ro
-ID
+BG
 ro
 gn
 aH

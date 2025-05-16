@@ -49945,6 +49945,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Daisy's bed"
+	},
+/mob/living/basic/rabbit/daisy,
 /turf/open/floor/carpet,
 /area/station/service/library/printer)
 "jHQ" = (
@@ -51343,7 +51348,6 @@
 /area/station/security/brig)
 "jUQ" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/mob/living/basic/pet/poppy,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -58187,6 +58191,7 @@
 "llg" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lli" = (
@@ -64643,7 +64648,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/white/side,
 /area/station/security/checkpoint/medical)
 "mzP" = (
@@ -96559,11 +96564,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/mob/living/basic/rabbit/daisy,
-/obj/structure/bed/dogbed{
-	anchored = 1;
-	name = "Daisy's bed"
-	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/private)
 "sJP" = (

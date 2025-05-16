@@ -26,16 +26,17 @@
 	power.Remove(owner.current)
 
 ///When a Bloodsucker breaks the Masquerade, they get their HUD icon changed, and Malkavian Bloodsuckers get alerted.
-/datum/antagonist/bloodsucker/proc/break_masquerade(mob/admin)
+/datum/antagonist/bloodsucker/proc/break_masquerade(mob/admin, silent = FALSE)
 	if(broke_masquerade)
 		return
-	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
-	to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
-	to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
+	if(!silent)
+		owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
+		to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
+		to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
+		SEND_GLOBAL_SIGNAL(COMSIG_BLOODSUCKER_BROKE_MASQUERADE, src)
 	broke_masquerade = TRUE
 	antag_hud_name = "masquerade_broken"
 	add_team_hud(owner.current)
-	SEND_GLOBAL_SIGNAL(COMSIG_BLOODSUCKER_BROKE_MASQUERADE, src)
 
 ///This is admin-only of reverting a broken masquerade, sadly it doesn't remove the Malkavian objectives yet.
 /datum/antagonist/bloodsucker/proc/fix_masquerade(mob/admin)
