@@ -254,13 +254,12 @@
 /obj/structure/bloodsucker/vassalrack/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	. = ..()
 	if(!.)
-		return FALSE
+		return
 	visible_message(span_danger("[buckled_mob][buckled_mob.stat == DEAD ? "'s corpse" : ""] slides off of the rack."))
 	set_density(FALSE)
 	buckled_mob.Paralyze(2 SECONDS)
 	update_appearance(UPDATE_ICON)
 	reset_progress()
-	return TRUE
 
 /obj/structure/bloodsucker/vassalrack/attack_hand(mob/user, list/modifiers)
 	. = ..()

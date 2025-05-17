@@ -34,7 +34,7 @@
 /obj/item/clothing/mask/translator/equipped(mob/M, slot)
 	. = ..()
 	if ((slot == ITEM_SLOT_MASK || slot == ITEM_SLOT_NECK) && modifies_speech)
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech), override = TRUE)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 
