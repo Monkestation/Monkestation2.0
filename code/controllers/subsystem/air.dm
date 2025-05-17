@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(air)
 	init_order = INIT_ORDER_AIR
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
-	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
@@ -57,7 +56,6 @@ SUBSYSTEM_DEF(air)
 
 	var/list/reaction_handbook
 	var/list/gas_handbook
-
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"

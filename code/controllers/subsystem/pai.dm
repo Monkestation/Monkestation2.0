@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
-	flags = SS_NO_INIT|SS_NO_FIRE
+	flags = SS_NO_INIT | SS_NO_FIRE
 
 	/// List of pAI candidates, including those not submitted.
 	var/list/candidates = list()

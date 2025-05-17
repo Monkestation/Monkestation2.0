@@ -359,6 +359,23 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	to_chat(world, chat_message)
 	log_world(message)
 
+#ifndef OPENDREAM
+	var/static/no_memstat = FALSE
+	if(no_memstat)
+		return
+	try
+		if(!rustg_file_exists(MEMORYSTATS_DLL_PATH))
+			no_memstat = TRUE
+			return
+		var/memory_summary = trimtext(replacetext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")(), "Server mem usage:", ""))
+		if(memory_summary)
+			rustg_file_append("=== [subsystem.name] ===\n[memory_summary]\n", "[GLOB.log_directory]/profiler/memstat-init.txt")
+		else
+			no_memstat = TRUE
+	catch
+		no_memstat = TRUE
+#endif
+
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel
 	if(isnull(old_runlevel))
@@ -616,6 +633,17 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			SS.postponed_fires--
 			SS.update_nextfire()
 			continue
+		if(SS_flags & SS_HIBERNATE)
+			var/list/check_vars = SS.hibernate_checks
+			var/enter_queue
+			for(var/i in 1 to length(check_vars))
+				if(LAZYLEN(SS.vars[check_vars[i]]))
+					enter_queue = TRUE
+					break
+			if(!enter_queue)
+				SS.hibernating = TRUE
+				SS.update_nextfire()
+				continue
 		SS.enqueue()
 	. = 1
 

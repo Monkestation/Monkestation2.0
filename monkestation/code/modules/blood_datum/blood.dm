@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
  */
 PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	name = "Blood Drying"
-	flags = SS_NO_INIT | SS_BACKGROUND
+	flags = SS_NO_INIT | SS_BACKGROUND | SS_HIBERNATE
 	priority = 10
 	wait = 4 SECONDS
 
