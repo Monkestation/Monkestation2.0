@@ -86,7 +86,3 @@
 	armour_penetration = 5
 	wound_bonus = -50
 	wound_falloff_tile = 0
-
-
-
-
