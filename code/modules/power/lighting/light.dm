@@ -83,10 +83,6 @@
 	var/fire_brightness = 4
 	///The Light colour to use when working in fire alarm status
 	var/fire_colour = COLOR_FIRE_LIGHT_RED
-	///The Light range to use when working in Delta alarm status
-	var/delta_brightness = 6
-	///The Light range to use when working in Delta alarm status
-	var/delta_colour = COLOR_MAROON
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
@@ -205,7 +201,17 @@
 /obj/machinery/light/proc/alert_level_updated()
 	SIGNAL_HANDLER
 
-	update()
+	if(!is_station_level(z))
+		return
+	if(!is_station_area_or_adjacent(get_area(src)))
+		return
+	if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
+		set_major_emergency_light()
+	else
+		unset_major_emergency_light()
+
+
+
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE, dont_burn_out = FALSE)
@@ -228,9 +234,6 @@
 		if (local_area?.fire)
 			color_set = fire_colour
 			brightness_set = fire_brightness
-		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA && is_station_level(z) && is_station_area_or_adjacent(get_area(src)))
-			color_set = delta_colour
-			brightness_set = delta_brightness
 		else if (nightshift_enabled)
 			IR = nightshift_inner_range
 			brightness_set = nightshift_outer_range
