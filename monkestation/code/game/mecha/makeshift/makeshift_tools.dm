@@ -27,7 +27,7 @@
 	name = "Giant drill"
 	icon_state = "mecha_giantdrill"
 	desc = "what looks to be a drill atleast the size of you, tears through anything like butter."
-	equip_cooldown = 1 SECONDS // it is not slow as shit
+	equip_cooldown = 10 // it is not slow as shit
 	force = 15 // force low or it 1 taps.
 	mech_flags = EXOSUIT_MODULE_DRILL
 	drill_level = DRILL_HARDENED
@@ -51,7 +51,7 @@
 	honk_range = 1 //only directly besides, are affected
 	tactile_message = "HARM ALARM"
 	energy_drain = 400
-	equip_cooldown = 25 SECONDS
+	equip_cooldown = 250
 
 //trashtank
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
@@ -93,6 +93,7 @@
 	name = "peashooter minigun"
 	desc = "through the power of special syndicate glue,multiple peashooters have been strapped together and the fireate increased."
 	icon_state = "mecha_minipea"
+	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
 	projectiles = 120
 	projectiles_cache = 0
@@ -154,6 +155,7 @@
 	icon_state = "mecha_light_tank_cannon"
 	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
+	equip_cooldown = 60
 	projectile = /obj/projectile/bullet/rocket/lighttankshell
 	equip_cooldown = 8 SECONDS
 	projectiles = 1
@@ -168,6 +170,7 @@
 	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
 	icon_state = "mecha_light_tank_mg"
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/mm127x70
 	projectiles = 30
 	projectiles_cache = 60
