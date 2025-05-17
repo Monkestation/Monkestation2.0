@@ -84,3 +84,4 @@
 	else
 		name = initial(name)
 		desc = initial(desc)
+	return ..()
