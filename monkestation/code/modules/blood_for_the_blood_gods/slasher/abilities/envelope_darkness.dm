@@ -52,6 +52,7 @@
 /datum/action/cooldown/slasher/envelope_darkness/proc/do_jaunt(mob/living/jaunter)
 	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM,  REF(src))
 	var/obj/effect/dummy/phased_mob/slasher_jaunt/holder = enter_jaunt(jaunter)
+	var/obj/cuffs = jaunter.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	if(!holder)
 		return
@@ -61,7 +62,9 @@
 		addtimer(CALLBACK(src, PROC_REF(do_jaunt_out), jaunter, holder), jaunt_out_time)
 	else
 		start_jaunt(jaunter, holder)
-		jaunter.del(ITEM_SLOT_HANDCUFFED)
+		jaunter.visible_message("You see [jaunter] fade away into nothingness!)
+		if(HAS_TRAIT(jaunter, TRAIT_RESTRAINED))
+			qdel(cuffs)
 /**
  * Creates the jaunt holder and moves the jaunter into it
  */
