@@ -1853,7 +1853,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/medical)
 "aeL" = (
-/obj/structure/destructible/cult/item_dispenser/altar{
+/obj/structure/cult/altar{
 	desc = "An altar dedicated to the Wizard Federation."
 	},
 /obj/item/knife/ritual,
@@ -5772,7 +5772,6 @@
 /turf/open/ai_visible,
 /area/centcom/ai_multicam_room)
 "apv" = (
-/obj/effect/rune/narsie,
 /obj/structure/chair/comfy/carp{
 	dir = 1
 	},
@@ -10565,7 +10564,7 @@
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
 "aCf" = (
-/obj/structure/destructible/cult/item_dispenser/forge/engine,
+/obj/structure/cult/forge,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "aCg" = (
@@ -24089,7 +24088,6 @@
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/adminroom)
 "jCt" = (
-/obj/effect/rune/apocalypse,
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},

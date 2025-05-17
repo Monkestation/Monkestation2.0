@@ -50,7 +50,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(remove_overlay)),max_ticks_cooldown/2)
 
-	to_chat(owner,"<span class = 'notice'> You feel a sharp pain as the cocktail of chemicals is injected into your bloodstream!</span>")
+	to_chat(owner,span_notice(" You feel a sharp pain as the cocktail of chemicals is injected into your bloodstream!") )
 	return
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/proc/update_owner_overlay(atom/source, list/overlays)

@@ -218,6 +218,8 @@
 	var/parried = FALSE
 	///how long we paralyze for as this is a disorient
 	var/paralyze_timer = 0
+	///the angle we add when rotating via matrix (used by projectiles that are drawn diagonally)
+	var/extra_rotation = 0
 	/// If this projectile inflicts debilitating
 	var/debilitating = FALSE
 	/// How many stacks the projectile applies per hit. Default is 1, each stack adds 0.05, it stacks up to 2x stamina damage
@@ -816,7 +818,7 @@
 	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/matrix = new
-		matrix.Turn(Angle)
+		matrix.Turn(Angle + extra_rotation)
 		transform = matrix
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
@@ -837,7 +839,7 @@
 	Angle = new_angle
 	if(!nondirectional_sprite)
 		var/matrix/matrix = new
-		matrix.Turn(Angle)
+		matrix.Turn(Angle + extra_rotation)
 		transform = matrix
 	if(trajectory)
 		trajectory.set_angle(new_angle)
@@ -853,7 +855,7 @@
 	Angle = new_angle
 	if(!nondirectional_sprite)
 		var/matrix/matrix = new
-		matrix.Turn(Angle)
+		matrix.Turn(Angle + extra_rotation)
 		transform = matrix
 	if(trajectory)
 		trajectory.set_angle(new_angle)
@@ -934,7 +936,7 @@
 	last_projectile_move = world.time
 	if(!nondirectional_sprite && !hitscanning)
 		var/matrix/matrix = new
-		matrix.Turn(Angle)
+		matrix.Turn(Angle + extra_rotation)
 		transform = matrix
 	if(homing)
 		process_homing()
@@ -1122,7 +1124,7 @@
 		var/atom/movable/thing = new muzzle_type
 		p.move_atom_to_src(thing)
 		var/matrix/matrix = new
-		matrix.Turn(original_angle)
+		matrix.Turn(original_angle + extra_rotation)
 		thing.transform = matrix
 		thing.color = color
 		thing.set_light(l_outer_range = muzzle_flash_range, l_power = muzzle_flash_intensity, l_color = muzzle_flash_color_override? muzzle_flash_color_override : color)
@@ -1132,7 +1134,7 @@
 		var/atom/movable/thing = new impact_type
 		p.move_atom_to_src(thing)
 		var/matrix/matrix = new
-		matrix.Turn(Angle)
+		matrix.Turn(Angle + extra_rotation)
 		thing.transform = matrix
 		thing.color = color
 		thing.set_light(l_outer_range = impact_light_outer_range, l_power = impact_light_intensity, l_color = impact_light_color_override? impact_light_color_override : color)

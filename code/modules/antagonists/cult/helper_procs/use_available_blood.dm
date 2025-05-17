@@ -1,0 +1,268 @@
+/*	use_available_blood
+	user: the mob (generally a cultist) trying to spend blood
+	amount_needed: the amount of blood required
+	previous_result: the result of the previous call of this proc if any, to prevent the same flavor text from displaying every single call of this proc in a row
+	tribute: set to 1 when called by a contributor to Blood Communion
+
+	returns: a /list with information on the success/failure of the proc, and in the former case, information the blood that was used (color, type, dna)
+*/
+/proc/use_available_blood(var/mob/user, var/amount_needed = 0, var/previous_result = "", var/tribute = 0, var/feedback = TRUE)
+	//Blood Communion
+	var/communion = 0
+	var/communion_data = null
+	var/total_accumulated = 0
+	var/total_needed = amount_needed
+	if (!tribute && IS_CULTIST(user))
+		var/datum/antagonist/cult/mycultist = user.mind?.has_antag_datum(/datum/antagonist/cult)
+		if (mycultist.blood_pool && (mycultist in GLOB.blood_communion))
+			communion = 1
+			amount_needed = max(1, round(amount_needed * 4 / 5))//saving 20% blood
+			var/list/tributers = list()
+			for (var/datum/antagonist/cult/cultist in GLOB.blood_communion)
+				if (cultist.blood_pool && cultist.owner && cultist.owner.current && iscarbon(cultist.owner.current) && !cultist.owner.current.stat == DEAD)
+					var/mob/living/L = cultist.owner.current
+					if (istype(L) && L != user)
+						tributers.Add(L)
+			var/total_per_tribute = max(1, round(amount_needed/max(1, tributers.len+1)))
+			var/tributer_size = tributers.len
+			for (var/i = 1 to tributer_size)
+				var/mob/living/L = pick(tributers)//so it's not always the first one that pays the first blood unit.
+				tributers.Remove(L)
+				var/data = use_available_blood(L, total_per_tribute, "", 1)
+				if (data[BLOODCOST_RESULT] != BLOODCOST_FAILURE)
+					total_accumulated += data[BLOODCOST_TOTAL]
+				if (total_accumulated >= amount_needed - total_per_tribute)//could happen if the cost is less than 1 per tribute
+					communion_data = data//in which case, the blood will carry the data that paid for it
+					break
+
+	//Getting nearby blood sources
+	var/list/data = get_available_blood(user, amount_needed-total_accumulated)
+
+	var/datum/reagent/blood/blood
+
+	//Flavour text and blood data transfer
+	switch (data[BLOODCOST_RESULT])
+		if (BLOODCOST_TRIBUTE)//if the drop of blood was paid for through blood communion, let's get the reference to the blood they used because we can
+			blood = new()
+			if (communion_data && communion_data[BLOODCOST_RESULT])
+				switch(communion_data[BLOODCOST_RESULT])
+					if (BLOODCOST_TARGET_HANDS)
+						var/mob/living/carbon/human/HU = communion_data[BLOODCOST_USER]
+						blood.color = HU.get_blood_dna_color()
+						var/datum/blood_type/blood_type = HU.get_blood_type()
+						blood.data =blood_type.get_blood_data(HU)
+
+							//can't get virus data from bloody hands because it'd be a pain in the ass to code for minimal use
+					if (BLOODCOST_TARGET_SPLATTER)
+						var/obj/effect/decal/cleanable/blood/B = communion_data[BLOODCOST_TARGET_SPLATTER]
+						blood = new()
+						blood.color = B.color
+					if (BLOODCOST_TARGET_GRAB)
+						var/mob/living/carbon/CA = communion_data[BLOODCOST_TARGET_GRAB]
+						var/datum/blood_type/blood_type = CA.get_blood_type()
+						blood.data = blood_type.get_blood_data(CA)
+
+					if (BLOODCOST_TARGET_BLEEDER)
+						var/mob/living/carbon/CA = communion_data[BLOODCOST_TARGET_BLEEDER]
+						if (isliving(CA))
+							var/datum/blood_type/blood_type = CA.get_blood_type()
+							blood.data = blood_type.get_blood_data(CA)
+					if (BLOODCOST_TARGET_HELD)
+						var/obj/item/reagent_containers/G = communion_data[BLOODCOST_TARGET_HELD]
+						blood = locate() in G.reagents.reagent_list
+					if (BLOODCOST_TARGET_BLOODPACK)
+						var/obj/item/reagent_containers/blood/B = communion_data[BLOODCOST_TARGET_BLOODPACK]
+						blood = locate() in B.reagents.reagent_list
+					if (BLOODCOST_TARGET_CONTAINER)
+						var/obj/item/reagent_containers/G = communion_data[BLOODCOST_TARGET_CONTAINER]
+						blood = locate() in G.reagents.reagent_list
+					if (BLOODCOST_TARGET_USER)
+						var/mob/living/carbon/CA = communion_data[BLOODCOST_USER]
+						if (iscarbon(CA))
+							var/datum/blood_type/blood_type = CA.get_blood_type()
+							blood.data =blood_type.get_blood_data(CA)
+						if (isconstruct(CA))//constructs can't get the blood communion tattoo but just in case they do later
+							blood.data["blood_colour"] = "#CC0E00"
+			if (feedback && !tribute && previous_result != BLOODCOST_TRIBUTE)
+				user.visible_message(span_warning("Drips of blood seem to appear out of thin air around \the [user], and fall onto the floor!") ,
+									span_rose("An ally has lent you a drip of their blood for your ritual.") ,
+									span_warning("You hear a liquid flowing.") )
+		if (BLOODCOST_TARGET_HANDS)
+			var/mob/living/carbon/human/H = user
+			blood = new()
+			if (H.blood_in_hands > 0)
+				var/datum/blood_type/blood_type = H.get_blood_type()
+				blood.data =blood_type.get_blood_data(H)
+				//can't get virus data from bloody hands because it'd be a pain in the ass to code for minimal use
+			if (feedback && !tribute && previous_result != BLOODCOST_TARGET_HANDS)
+				user.visible_message(span_warning("The blood on \the [user]'s hands drips onto the floor!") ,
+									span_rose("You let the blood smeared on your hands join the pool of your summoning.") ,
+									span_warning("You hear a liquid flowing.") )
+		if (BLOODCOST_TARGET_SPLATTER)
+			var/obj/effect/decal/cleanable/blood/B = data[BLOODCOST_TARGET_SPLATTER]
+			blood = new()
+			blood.color = B.color
+			if (feedback && !tribute && previous_result != BLOODCOST_TARGET_SPLATTER)
+				user.visible_message(span_warning("The blood on the floor below \the [user] starts moving!") ,
+									span_rose("You redirect the flow of blood inside the splatters on the floor toward the pool of your summoning.") ,
+									span_warning("You hear a liquid flowing.") )
+		if (BLOODCOST_TARGET_GRAB)
+			var/mob/living/carbon/C = data[BLOODCOST_TARGET_GRAB]
+			if (iscarbon(C))
+				blood = new()
+				var/datum/blood_type/blood_type = C.get_blood_type()
+				blood.data =blood_type.get_blood_data(C)
+				if (feedback && !tribute && previous_result != BLOODCOST_TARGET_GRAB)
+					user.visible_message(span_warning("\The [user] stabs their nails inside \the [data[BLOODCOST_TARGET_GRAB]], drawing blood from them!") ,
+										span_rose("You stab your nails inside \the [data[BLOODCOST_TARGET_GRAB]] to draw some blood from them.") ,
+										span_warning("You hear a liquid flowing.") )
+
+		if (BLOODCOST_TARGET_BLEEDER)
+			var/mob/living/carbon/C = data[BLOODCOST_TARGET_BLEEDER]
+			if (iscarbon(C))
+				blood = new()
+				var/datum/blood_type/blood_type = C.get_blood_type()
+				blood.data =blood_type.get_blood_data(C)
+				if (feedback && !tribute && previous_result != BLOODCOST_TARGET_BLEEDER)
+					user.visible_message(span_warning("\The [user] dips their fingers inside \the [data[BLOODCOST_TARGET_BLEEDER]]'s wounds!") ,
+										span_rose("You dip your fingers inside \the [data[BLOODCOST_TARGET_BLEEDER]]'s wounds to draw some blood from them.") ,
+										span_warning("You hear a liquid flowing.") )
+		if (BLOODCOST_TARGET_HELD)
+			var/obj/item/reagent_containers/G = data[BLOODCOST_TARGET_HELD]
+			blood = locate() in G.reagents.reagent_list
+			if (!tribute && previous_result != BLOODCOST_TARGET_HELD)
+				user.visible_message(span_warning("\The [user] tips \the [data[BLOODCOST_TARGET_HELD]], pouring blood!") ,
+									span_rose("You tip \the [data[BLOODCOST_TARGET_HELD]] to pour the blood contained inside.") ,
+									span_warning("You hear a liquid flowing.") )
+		if (BLOODCOST_TARGET_BLOODPACK)
+			var/obj/item/reagent_containers/blood/B = data[BLOODCOST_TARGET_BLOODPACK]
+			blood = locate() in B.reagents.reagent_list
+			if (feedback && !tribute && previous_result != BLOODCOST_TARGET_BLOODPACK)
+				user.visible_message(span_warning("\The [user] squeezes \the [data[BLOODCOST_TARGET_BLOODPACK]], pouring blood!") ,
+									span_rose("You squeeze \the [data[BLOODCOST_TARGET_BLOODPACK]] to pour the blood contained inside.") ,
+									span_warning("You hear a liquid flowing.") )
+		if (BLOODCOST_TARGET_CONTAINER)
+			var/obj/item/reagent_containers/G = data[BLOODCOST_TARGET_CONTAINER]
+			blood = locate() in G.reagents.reagent_list
+			if (feedback && !tribute && previous_result != BLOODCOST_TARGET_CONTAINER)
+				user.visible_message(span_warning("\The [user] dips their fingers inside \the [data[BLOODCOST_TARGET_CONTAINER]], covering them in blood!") ,
+									span_rose("You dip your fingers inside \the [data[BLOODCOST_TARGET_CONTAINER]], covering them in blood.") ,
+									span_warning("You hear a liquid flowing.") )
+		if (BLOODCOST_TARGET_USER)
+			blood = new()
+			if (!tribute)
+				if (data[BLOODCOST_HOLES_BLOODPACK])
+					to_chat(user, span_warning("You must puncture \the [data[BLOODCOST_TARGET_BLOODPACK]] before you can squeeze blood from it!") )
+				else if (data[BLOODCOST_LID_HELD])
+					to_chat(user, span_warning("Remove \the [data[BLOODCOST_TARGET_HELD]]'s lid first!") )
+				else if (data[BLOODCOST_LID_CONTAINER])
+					to_chat(user, span_warning("Remove \the [data[BLOODCOST_TARGET_CONTAINER]]'s lid first!") )
+			if (iscarbon(user))
+				var/mob/living/carbon/C_user = user
+				var/datum/blood_type/blood_type = C_user.get_blood_type()
+				blood.data =blood_type.get_blood_data(C_user)
+
+			if (isconstruct(user))
+				blood.data["blood_colour"] = "#CC0E00"//not like constructs can write runes by themselves currently, but they might do at some point
+
+			if (feedback && !tribute && (previous_result != BLOODCOST_TARGET_USER))
+				if (iscarbon(user))//if the user is holding a sharp weapon, they get a custom message
+					var/obj/item/weapon/W = user.get_active_held_item()
+					if (W && W.sharpness == SHARP_POINTY)
+						to_chat(user, span_rose("You slice open your finger with \the [W] to let a bit of blood flow.") )
+					else
+						var/obj/item/weapon/W2 = user.get_inactive_held_item()
+						if (W2 && W2.sharpness == SHARP_POINTY)
+							to_chat(user, span_rose("You slice open your finger with \the [W] to let a bit of blood flow.") )
+						else
+							to_chat(user, span_rose("You bite your finger and let the blood pearl up.") )
+				else if (isconstruct(user))
+					to_chat(user, span_rose("Your shell's connection past the veil lets you perform the ritual without the need for a local source of blood.") )
+		if (BLOODCOST_FAILURE)
+			if (!tribute)
+				if (data[BLOODCOST_HOLES_BLOODPACK])
+					to_chat(user, span_danger("You must puncture \the [data[BLOODCOST_TARGET_BLOODPACK]] before you can squeeze blood from it!") )
+				else if (data[BLOODCOST_LID_HELD])
+					to_chat(user, span_danger("Remove \the [data[BLOODCOST_TARGET_HELD]]'s lid first!") )
+				else if (data[BLOODCOST_LID_CONTAINER])
+					to_chat(user, span_danger("Remove \the [data[BLOODCOST_TARGET_HELD]]'s lid first!") )
+				else
+					to_chat(user, span_danger("There is no blood available. Not even in your own body!") )
+
+	//Blood is only consumed if there is enough of it
+	if (!data[BLOODCOST_FAILURE])
+		if (data[BLOODCOST_TARGET_HANDS])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_HANDS]
+			var/mob/living/carbon/human/H = user
+			H.blood_in_hands = max(0, (H.blood_in_hands * 3) - data[BLOODCOST_AMOUNT_HANDS])
+			if (!H.blood_in_hands)
+				H.blood_in_hands= 0
+				H.update_worn_gloves()
+		if (data[BLOODCOST_TARGET_SPLATTER])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_SPLATTER]
+			var/obj/effect/decal/cleanable/blood/B = data[BLOODCOST_TARGET_SPLATTER]
+			B.count = max(0 , B.count * 5 - data[BLOODCOST_AMOUNT_SPLATTER])
+		if (data[BLOODCOST_TARGET_GRAB])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_GRAB]
+			if (ishuman(data[BLOODCOST_TARGET_GRAB]))
+				var/mob/living/carbon/human/H = data[BLOODCOST_TARGET_GRAB]
+				H.blood_volume -= data[BLOODCOST_AMOUNT_GRAB]
+				H.take_overall_damage(data[BLOODCOST_AMOUNT_GRAB] ? 0.1 : 0)
+		if (data[BLOODCOST_TARGET_BLEEDER])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_BLEEDER]
+			var/mob/living/carbon/human/H = data[BLOODCOST_TARGET_BLEEDER]
+			H.blood_volume -= data[BLOODCOST_AMOUNT_BLEEDER]
+			H.take_overall_damage(data[BLOODCOST_AMOUNT_BLEEDER] ? 0.1 : 0)
+		if (data[BLOODCOST_TARGET_HELD])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_HELD]
+			var/obj/item/reagent_containers/G = data[BLOODCOST_TARGET_HELD]
+			G.reagents.remove_reagent(/datum/reagent/blood, data[BLOODCOST_AMOUNT_HELD])
+		if (data[BLOODCOST_TARGET_BLOODPACK])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_BLOODPACK]
+			var/obj/item/reagent_containers/G = data[BLOODCOST_TARGET_BLOODPACK]
+			G.reagents.remove_reagent(/datum/reagent/blood, data[BLOODCOST_AMOUNT_BLOODPACK])
+		if (data[BLOODCOST_TARGET_CONTAINER])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_CONTAINER]
+			var/obj/item/reagent_containers/G = data[BLOODCOST_TARGET_CONTAINER]
+			G.reagents.remove_reagent(/datum/reagent/blood, data[BLOODCOST_AMOUNT_CONTAINER])
+		if (data[BLOODCOST_TARGET_USER])
+			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_USER]
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				var/blood_before = H.blood_volume
+				H.blood_volume -= data[BLOODCOST_AMOUNT_USER]
+				var/blood_after = H.blood_volume
+				if (blood_before > BLOOD_VOLUME_SAFE && blood_after < BLOOD_VOLUME_SAFE)
+					to_chat(user, span_cult("You start looking pale.") )
+				else if (blood_before > BLOOD_VOLUME_OKAY && blood_after < BLOOD_VOLUME_OKAY)
+					to_chat(user, span_cult("You are about to pass out from the lack of blood.") )
+				else if (blood_before > BLOOD_VOLUME_BAD && blood_after < BLOOD_VOLUME_BAD)
+					to_chat(user, span_cult("You have trouble focusing, things will go bad if you keep using your blood.") )
+				else if (blood_before > BLOOD_VOLUME_SURVIVE && blood_after < BLOOD_VOLUME_SURVIVE)
+					to_chat(user, span_cult("It will be all over soon.") )
+				H.take_overall_damage(data[BLOODCOST_AMOUNT_USER] ? 0.1 : 0)
+			else if (ismonkey(user) || isalien(user))
+				var/mob/living/carbon/C = user
+				var/blood_before = C.health
+				if (ismonkey(C))
+					C.adjustOxyLoss(data[BLOODCOST_AMOUNT_USER])
+				else if (isalien(C))
+					C.adjustBruteLoss(data[BLOODCOST_AMOUNT_USER])
+				C.updatehealth()
+				var/blood_after = C.health
+				if (blood_before > (C.maxHealth*5/6) && blood_after < (C.maxHealth*5/6))
+					to_chat(user, span_cult("You start looking pale.") )
+				else if (blood_before > (C.maxHealth*4/6) && blood_after < (C.maxHealth*4/6))
+					to_chat(user, span_cult("You feel weak from the lack of blood.") )
+				else if (blood_before > (C.maxHealth*3/6) && blood_after < (C.maxHealth*3/6))
+					to_chat(user, span_cult("You are about to pass out from the lack of blood.") )
+				else if (blood_before > (C.maxHealth*2/6) && blood_after < (C.maxHealth*2/6))
+					to_chat(user, span_cult("You have trouble focusing, things will go bad if you keep using your blood.") )
+				else if (blood_before > (C.maxHealth*1/6) && blood_after < (C.maxHealth*1/6))
+					to_chat(user, span_cult("It will be all over soon.") )
+
+
+	if (communion && data[BLOODCOST_TOTAL] + total_accumulated >= amount_needed)
+		data[BLOODCOST_TOTAL] = max(data[BLOODCOST_TOTAL], total_needed)
+	data["blood"] = blood
+	return data

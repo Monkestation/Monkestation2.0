@@ -19,13 +19,17 @@
  */
 /client/proc/Move_object(direct)
 	if(mob?.control_object)
-		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			if(!mob.control_object)
-				return
-			mob.control_object.setDir(direct)
+		if(istype(mob.control_object, /datum/control))
+			var/datum/control/control = mob.control_object
+			control.Move_object(direct)
 		else
-			mob.control_object.forceMove(get_step(mob.control_object,direct))
+			if(mob.control_object.density)
+				step(mob.control_object,direct)
+				if(!mob.control_object)
+					return
+				mob.control_object.setDir(direct)
+			else
+				mob.control_object.forceMove(get_step(mob.control_object,direct))
 
 /**
  * Move a client in a direction
