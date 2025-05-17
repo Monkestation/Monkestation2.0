@@ -62,7 +62,7 @@
 		addtimer(CALLBACK(src, PROC_REF(do_jaunt_out), jaunter, holder), jaunt_out_time)
 	else
 		start_jaunt(jaunter, holder)
-		jaunter.visible_message("You see [jaunter] fade away into nothingness!)
+		jaunter.visible_message("You see [jaunter] fade away into nothingness!")
 		if(HAS_TRAIT(jaunter, TRAIT_RESTRAINED))
 			qdel(cuffs)
 /**
