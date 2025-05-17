@@ -95,13 +95,15 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/storage/box/beanbag,
+/obj/item/reagent_containers/condiment/enzyme{
+	list_reagents = list(/datum/reagent/consumable/enzyme=500);
+	name = "universe-sized universal enyzyme";
+	volume = 500
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "be" = (
@@ -133,6 +135,20 @@
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk,
 /obj/machinery/light/directional/south,
+/obj/item/reagent_containers/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour=600);
+	name = "Premium All-Purpose Flour (16KG)";
+	volume = 600
+	},
+/obj/item/reagent_containers/condiment/rice{
+	list_reagents = list(/datum/reagent/consumable/rice=150);
+	name = "Basmati Rice Sack (4KG)";
+	volume = 150
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	name = "Premium Granulated Sugar (4KG)";
+	list_reagents = list(/datum/reagent/consumable/sugar = 150)
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/ruin/space/has_grav/hotel/bar)
 "bn" = (
@@ -2270,8 +2286,26 @@
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/vending_refill/hydronutrients,
 /obj/item/vending_refill/hydroseeds,
-/obj/item/circuitboard/machine/vending,
-/obj/item/circuitboard/machine/vending,
+/obj/item/circuitboard/machine/vendor,
+/obj/item/circuitboard/machine/vendor,
+/obj/item/circuitboard/machine/seed_extractor,
+/obj/item/circuitboard/machine/composters,
+/obj/item/storage/box/stockparts/basic,
+/obj/item/storage/box/stockparts/basic,
+/obj/item/storage/box/stockparts/basic,
+/obj/item/storage/box/stockparts/basic,
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/iron/ten,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/cable_coil/five,
+/obj/item/stack/cable_coil/five,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "xD" = (
