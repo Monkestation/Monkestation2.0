@@ -652,13 +652,13 @@ GLOBAL_LIST_INIT(the_lever, list())
 
 /turf/open/floor/plating/ocean/pit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(is_safe())
+	if(is_safe() || (arrived.movement_type & FLYING) || isprojectile(arrived))
 		return
-	if(arrived.movement_type & FLYING)
+
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	if(!length(mining_levels))
 		return
-	if(isprojectile(arrived))
-		return
-	var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
+	var/turf/turf = locate(src.x, src.y, mining_levels[1])
 	visible_message("[arrived] falls helplessly into \the [src]")
 	arrived.forceMove(turf)
 
