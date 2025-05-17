@@ -34,6 +34,9 @@
 	/// Made so we dont call addtimer() 40,000 times in on_techweb_update(). only allows addtimer() to be called on the first update.
 	var/techweb_updating = FALSE
 
+	/// Whether or not the fabricator links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
+	var/link_on_init = TRUE
+
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
 
@@ -41,7 +44,7 @@
 	materials = AddComponent(
 		/datum/component/remote_materials, \
 		"lathe", \
-		mapload, \
+		mapload && link_on_init, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)
 	AddComponent(
