@@ -1,6 +1,6 @@
-/*/datum/symptom/robotic_adaptation
+/datum/symptom/robotic_adaptation
 	name = "Biometallic Replication"
-	desc = "The virus can manipulate metal and silicate compounds, becoming able to infect robotic beings. The virus also provides a suitable substrate for nanites in otherwise inhospitable hosts"
+	desc = "The disease can manipulate metal and silicate compounds, becoming able to infect robotic beings. The virus also provides a suitable substrate for nanites in otherwise inhospitable hosts"
 	illness = "Robotic evolution"
 	stealth = 0
 	resistance = 1
@@ -16,39 +16,39 @@
 	var/replaceorgans = FALSE
 	var/replacebody = FALSE
 	var/robustbits = FALSE
+	var/biotypes = MOB_ROBOTIC
 	threshold_descs = list(
 		"Stage Speed 4" = "The virus will replace the host's organic organs with mundane, biometallic versions.",
 		"Resistance 4" = "The virus will eventually convert the host's entire body to biometallic materials, and maintain its cellular integrity.",
 		"Stage Speed 10" = "Biometallic mass created by the virus will be superior to typical organic mass."
 	)
-/datum/symptom/robotic_adaptation/OnAdd(datum/disease/advance/advanced_disease)
-	advanced_disease.infectable_biotypes |= MOB_ROBOTIC
+	max_multiplier = 12
+	max_chance = 24
 
-/datum/symptom/robotic_adaptation/Start(datum/disease/advance/advanced_disease)
+/datum/symptom/robotic_adaptation/first_activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
-	if(advanced_disease.totalStageSpeed() >= 4)
+
+	if(multiplier >= 6)
 		replaceorgans = TRUE
-	if(advanced_disease.totalResistance() >= 4)
+	if(chance <= 12)
 		replacebody = TRUE
-	if(advanced_disease.totalStageSpeed() >= 10)
+	if(disease.robustness == 100) //robust disease for robust parts
 		robustbits = TRUE //note that having this symptom means most healing symptoms won't work on you
 
-
-/datum/symptom/robotic_adaptation/Activate(datum/disease/advance/advanced_disease)
-	if(!..())
-		return
-	var/mob/living/carbon/human/Host = advanced_disease.affected_mob
-	switch(advanced_disease.stage)
-		if(3, 4)
+/datum/symptom/robotic_adaptation/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+	disease.infectable_biotypes |= biotypes
+	switch(disease.stage)
+		if(1, 2)
 			if(replaceorgans)
-				to_chat(Host, "<span class='warning'><b>[pick("You feel a grinding pain in your abdomen.", "You exhale a jet of steam.")]</span>")
-		if(5)
+				to_chat(mob, "<span class='warning'><b>[pick("You feel a grinding pain in your abdomen.", "You exhale a jet of steam.")]</span>")
+		if(3, 4)
 			if(replaceorgans || replacebody)
-				if(Replace(Host))
+				if(Replace(mob))
 					return
 				if(replacebody)
-					Host.adjustCloneLoss(-20) //repair mechanical integrity
+					mob.adjustCloneLoss(-20) //repair mechanical integrity
 	return
+
 
 /datum/symptom/robotic_adaptation/proc/Replace(mob/living/carbon/human/Host)
 	if(replaceorgans)
@@ -206,18 +206,13 @@
 					return TRUE
 	return FALSE
 
-/datum/symptom/robotic_adaptation/End(datum/disease/advance/advanced_disease)
-	if(!..())
-		return
-	var/mob/living/carbon/human/Host = advanced_disease.affected_mob
-	if(advanced_disease.stage >= 5 && (replaceorgans || replacebody)) //sorry. no disease quartets allowed
-		to_chat(Host, "<span class='userdanger'>You feel lighter and springier as your innards lose their clockwork facade.</span>")
-		Host.dna.species.regenerate_organs(Host, replace_current = TRUE)
-		for(var/obj/item/bodypart/Oldlimb in Host.bodyparts)
+/datum/symptom/robotic_adaptation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+	disease.infectable_biotypes &= ~(biotypes)
+	if(disease.stage >= 3 && (replaceorgans || replacebody)) //sorry. no disease quartets allowed
+		to_chat(mob, "<span class='userdanger'>You feel lighter and springier as your innards lose their clockwork facade.</span>")
+		mob.dna.species.regenerate_organs(mob, replace_current = TRUE)
+		for(var/obj/item/bodypart/Oldlimb in mob.bodyparts)
 			if(!IS_ORGANIC_LIMB(Oldlimb))
 				Oldlimb.burn_modifier = initial(Oldlimb.burn_modifier)
 				Oldlimb.brute_modifier = initial(Oldlimb.brute_modifier)
 
-/datum/symptom/robotic_adaptation/OnRemove(datum/disease/advance/advanced_disease)
-	advanced_disease.infectable_biotypes -= MOB_ROBOTIC
-*/
