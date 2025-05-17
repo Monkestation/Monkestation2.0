@@ -1536,7 +1536,8 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 
 /// Strips all underlays on a different plane from an appearance.
 /// Returns the stripped appearance.
-/proc/strip_appearance_underlays(mutable_appearance/appearance)
+/proc/strip_appearance_underlays(mutable_appearance/appearance) as /mutable_appearance
+	RETURN_TYPE(/mutable_appearance)
 	var/base_plane = PLANE_TO_TRUE(appearance.plane)
 	for(var/mutable_appearance/underlay as anything in appearance.underlays)
 		if(isnull(underlay))
@@ -1551,7 +1552,8 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
  * Filters out certain overlays from the copy, depending on their planes
  * Prevents stuff like lighting from being copied to the new appearance
  */
-/proc/copy_appearance_filter_overlays(appearance_to_copy)
+/proc/copy_appearance_filter_overlays(appearance_to_copy) as /mutable_appearance
+	RETURN_TYPE(/mutable_appearance)
 	var/mutable_appearance/copy = new(appearance_to_copy)
 	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
 

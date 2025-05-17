@@ -6,11 +6,11 @@
 	var/t_has = p_have()
 	var/t_is = p_are()
 
-	. = list("<span class='info'>This is [icon2html(src, user)] \a <EM>[src]</EM>!")
+	. = list("<span class='info'>This is [ma2html(src, user)] \a <EM>[src]</EM>!")
 	var/obscured = check_obscured_slots()
 
 	if (handcuffed)
-		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!")
+		. += span_warning("[t_He] [t_is] [ma2html(handcuffed, user)] handcuffed!")
 	if (head)
 		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head. "
 	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
@@ -45,13 +45,13 @@
 			var/stuck_or_embedded = "embedded in"
 			if(leftover.isEmbedHarmless())
 				stuck_or_embedded = "stuck to"
-			msg += "<b>[t_He] [t_has] [icon2html(leftover, user)] \a [leftover] [stuck_or_embedded] [t_his] [body_part.plaintext_zone]!</b>\n"
+			msg += "<b>[t_He] [t_has] [ma2html(leftover, user)] \a [leftover] [stuck_or_embedded] [t_his] [body_part.plaintext_zone]!</b>\n"
 
 		if(body_part.current_gauze)
 			var/gauze_href = body_part.current_gauze.name
 			if(adjacent && isliving(user)) // only shows the href if we're adjacent
 				gauze_href = "<a href='byond://?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
-			msg += span_notice("There is some [icon2html(body_part.current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].\n")
+			msg += span_notice("There is some [ma2html(body_part.current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].\n")
 
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
 			msg += "[iter_wound.get_examine_description(user)]\n"
