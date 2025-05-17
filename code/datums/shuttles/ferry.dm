@@ -38,3 +38,8 @@
 	suffix = "northstar"
 	name = "north star transport ferry"
 	description = "In the very depths of the frontier, you'll need a rugged shuttle capable of delivering crew, this is that."
+
+/datum/map_template/shuttle/ferry/crater
+	suffix = "crater"
+	name = "Crater Outpost transport ferry"
+	description = "A reinforced ferry designed for use on planetary outposts on the harsh Icemoon."
