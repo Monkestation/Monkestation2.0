@@ -51,18 +51,10 @@
 		var/mob/living/carbon/human/ghost/ghost_owner = owner
 		if(ghost_owner.dueling)
 			return FALSE
-	var/area/centcom/centcom_area = get_area(owner)
-	if(!istype(centcom_area) || !centcom_area.grace)
-		return FALSE
+	return !!astype(get_area(owner), /area/centcom)?.grace
 
 /datum/status_effect/centcom_grace/proc/give_traits()
-	if(QDELETED(owner))
-		qdel(src)
-	else
-		owner.add_traits(given_traits, TRAIT_STATUS_EFFECT(id))
+	owner?.add_traits(given_traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/centcom_grace/proc/take_traits()
-	if(QDELETED(owner))
-		qdel(src)
-	else
-		owner.remove_traits(given_traits, TRAIT_STATUS_EFFECT(id))
+	owner?.remove_traits(given_traits, TRAIT_STATUS_EFFECT(id))
