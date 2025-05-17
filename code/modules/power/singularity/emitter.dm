@@ -362,10 +362,13 @@
 /obj/machinery/power/emitter/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
-/obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/energy_gun, mob/user)
-	if(!istype(energy_gun, /obj/item/gun/energy))
+/obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/, mob/user)
+	if(!istype(, /obj/item/gun/energy))
 		return
-	if(!user.transferItemToLoc(energy_gun, src))
+	if(!user.transferItemToLoc(, src))
+		return
+	if(energy_gun.gun_flags & TURRET_INCOMPATIBLE)
+		user.balloon_alert(user, "[energy_gun] won't fit!")
 		return
 	gun = energy_gun
 	gun_properties = gun.get_turret_properties()
