@@ -32,3 +32,8 @@
 
 /// Call by name proc reference, checks if the proc is an existing global proc
 #define GLOBAL_PROC_REF(X) (/proc/##X)
+
+// opendream doesn't have alist yet, so let's just do this to satisfy linters for now.
+#ifdef OPENDREAM
+#define alist list
+#endif

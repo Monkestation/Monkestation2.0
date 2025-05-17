@@ -132,6 +132,7 @@
 			return TRUE
 		if("save_code")
 			storedcode = params["saved_code"]
+			compiler_output += "Code saved"
 			return TRUE
 		if("compile_code")
 			if(!user_name)

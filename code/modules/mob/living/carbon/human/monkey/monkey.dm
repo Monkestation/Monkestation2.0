@@ -8,10 +8,10 @@
 	if (cubespawned)
 		var/cap = CONFIG_GET(number/monkeycap)
 		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
-			if (spawner)
-				to_chat(spawner, span_warning("Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!"))
+			do_sparks(rand(3, 4), FALSE, src)
+			visible_message(span_warning("ERROR: Bluespace Disturbance Detected. More than [cap] entities will disturb bluespace harmonics. Entity eradicated."))
 			return INITIALIZE_HINT_QDEL
-		SSmobs.cubemonkeys += src
+		SSmobs.cubemonkeys |= src
 	return ..()
 
 /mob/living/carbon/human/species/monkey/Destroy()

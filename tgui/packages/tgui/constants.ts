@@ -63,6 +63,8 @@ export const CSS_COLORS = [
   'pink',
   'brown',
   'grey',
+  'amber',
+  'crimson',
   'good',
   'average',
   'bad',
