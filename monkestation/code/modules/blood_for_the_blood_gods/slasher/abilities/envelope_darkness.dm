@@ -54,8 +54,8 @@
 	var/obj/effect/dummy/phased_mob/slasher_jaunt/holder = enter_jaunt(jaunter)
 	var/obj/cuffs = jaunter.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 	jaunter.visible_message("You see [jaunter] fade away into nothingness!")
-		if(HAS_TRAIT(jaunter, TRAIT_RESTRAINED))
-			qdel(cuffs)
+	if(HAS_TRAIT(jaunter, TRAIT_RESTRAINED))
+		qdel(cuffs)
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	if(!holder)
 		return
