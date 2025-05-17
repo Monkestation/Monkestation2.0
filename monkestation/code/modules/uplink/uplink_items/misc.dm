@@ -85,3 +85,11 @@
 	desc = "A Xenomorph hive node. When implanted, allows connection to any Xenomorphs in nearby psionic networks."
 	cost = 5 //similar price to binary translator
 	item = /obj/item/autosurgeon/syndicate/organ/hivenode
+
+/datum/uplink_item/device_tools/xenomorph_reinforcements
+	name = "Xenomorph Reinforcements"
+	desc = "Contains a neutered xenomorph larva and a hive node autosurgeon wich you must implant into yourself, \
+			allowing instantaneous telepathic communication with your new xenomorph."
+	cost = 10
+	item = /obj/item/storage/box/syndie_kit/xenomorph_friend
+	purchasable_from = UPLINK_TRAITORS
