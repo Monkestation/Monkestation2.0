@@ -1389,6 +1389,10 @@
 	name = "Research and Development"
 	icon_state = "research"
 
+/area/station/science/xenobiology/cell
+	name = "\improper Xenobiology Containment Cell"
+	icon_state = "xenobio"
+
 /area/station/science/xenobiology
 	name = "\improper Xenobiology Lab"
 	icon_state = "xenobio"

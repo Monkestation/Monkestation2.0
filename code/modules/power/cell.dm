@@ -325,7 +325,7 @@
 	name = "X-01 multiphase energy gun power cell"
 	maxcharge = 1800 //monkestation edit
 
-/obj/item/stock_parts/cell/pulse //200 pulse shots
+/obj/item/stock_parts/cell/pulse //200 pulse shotscode/_globalvars/lists/maintenance_loot.dm
 	name = "pulse rifle power cell"
 	maxcharge = 40000
 	chargerate = 1500
