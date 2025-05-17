@@ -533,3 +533,38 @@
 	equip_cooldown = 60
 	det_time = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+
+//devitt (the literal fucking tank) weapons
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
+	name = "40mm tank cannon"
+	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/lighttankshell
+	equip_cooldown = 8 SECONDS
+	projectiles = 1
+	projectiles_cache = 10
+	projectiles_cache_max = 35
+	ammo_type = MECHA_AMMO_LIGHTTANK
+	mech_flags = EXOSUIT_MODULE_TANK
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
+	name = "12.7mm Malone Mk.1 Ratcatcher"
+	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_mg"
+	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	projectile = /obj/projectile/bullet/mm127x70
+	projectiles = 30
+	projectiles_cache = 60
+	projectiles_cache_max = 120
+	projectiles_per_shot = 5
+	projectile_delay = 0.1 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 4
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK
