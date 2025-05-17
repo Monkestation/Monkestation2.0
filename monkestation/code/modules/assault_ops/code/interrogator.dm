@@ -17,7 +17,7 @@
  */
 /obj/machinery/interrogator
 	name = "In-TERROR-gator"
-	desc = "A morraly corrupt piece of machinery used to extract the human mind into a GoldenEye authentication key. The process is said to be one of the most painful experiences someone can endure. Alt + Click to start the process."
+	desc = "A morraly corrupt piece of machinery used to extract specific information from a human mind. The process is said to be one of the most uncomfortable experiences someone can endure. Alt + Click to start the process."
 	icon = 'monkestation/code/modules/assault_ops/icons/goldeneye.dmi'
 	icon_state = "interrogator_open"
 	state_open = FALSE
@@ -57,7 +57,7 @@
 /obj/machinery/interrogator/examine(mob/user)
 	. = ..()
 	. += "It requies a direct link to a Nanotrasen defence network, stay near a Nanotrasen comms sat!"
-	. += span_info(span_italics("If a target has committed suicide, their body can still be used to instantly extract the keycard."))
+	. += span_info(span_italics("If a target has committed suicide, their body can still be used to instantly extract the data."))
 
 /obj/machinery/interrogator/AltClick(mob/user)
 	. = ..()
@@ -149,8 +149,8 @@
 /obj/machinery/interrogator/proc/handle_victim_suicide(mob/living/carbon/human/victim)
 	if(!HAS_TRAIT(victim, TRAIT_SUICIDED))
 		return FALSE
-	say("Extraction completed instantly due to target's mental state. A key is being sent aboard! Crew will shortly detect the keycard!")
-	send_keycard()
+	say("Extraction completed instantly due to target's mental state.")
+	SSgoldeneye.extract_mind(victim.mind)
 	addtimer(CALLBACK(src, PROC_REF(announce_creation)), ALERT_CREW_TIME)
 	return TRUE
 
@@ -191,15 +191,15 @@
 		say("Critical error! Aborting.")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100)
 		return
-	to_chat(human_occupant, span_userdanger("You feel something penetrating your brain, it feels as though your childhood memories are fading! Please, make it stop! After a moment of silence, you realize you can't remember what happened to you!"))
+	to_chat(human_occupant, span_userdanger("You feel something looking around your brain! A second later, you feel the thoughts being physically removed from your head!"))
 	human_occupant.emote("scream")
 	human_occupant.adjustBruteLoss(30)
 	human_occupant.set_jitter_if_lower(3 MINUTES)
 	human_occupant.Unconscious(1 MINUTES)
 	playsound(src, 'sound/effects/dismember.ogg', 100)
 	playsound(src, 'sound/machines/ping.ogg', 100)
-	say("Process complete! A key is being sent aboard! Crew will shortly detect the keycard!")
-	send_keycard()
+	say("Process complete!")
+	SSgoldeneye.extract_mind(human_occupant.mind)
 	processing = FALSE
 	locked = FALSE
 	update_appearance()
@@ -208,9 +208,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_creation)), ALERT_CREW_TIME)
 
 /obj/machinery/interrogator/proc/announce_creation()
-	priority_announce("CRITICAL SECURITY BREACH DETECTED! A GoldenEye authentication keycard has been illegally extracted and is being sent in somewhere on the station!", "GoldenEye Defence Network")
-	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
-		disk_pinpointers.switch_mode_to(TRACK_GOLDENEYE) //Pinpointer will track the newly created goldeneye key.
+	priority_announce("CRITICAL SECURITY BREACH DETECTED! Goldeneye security defense protocols initiated!", "GoldenEye Defence Network") //Pinpointer will track the newly created goldeneye key.
 
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/delaytime = 5 MINUTES
@@ -219,41 +217,6 @@
 		SSshuttle.emergency.setTimer(timer)
 		if(surplus > 0)
 			SSshuttle.block_recall(surplus)
-
-/obj/machinery/interrogator/proc/send_keycard()
-	var/turf/landingzone = find_drop_turf()
-	var/obj/item/goldeneye_key/new_key
-	if(!landingzone)
-		new_key = new(src)
-	else
-		new_key = new
-	new_key.extract_name = human_occupant.real_name
-	// Add them to the goldeneye extracted list. This list is capable of having nulls.
-	SSgoldeneye.extract_mind(human_occupant.mind)
-	var/obj/structure/closet/supplypod/pod = new
-	new /obj/effect/pod_landingzone(landingzone, pod, new_key)
-
-	notify_ghosts("GoldenEye key launched!",
-		source = new_key,
-		header = "Something's Interesting!",
-	)
-
-/obj/machinery/interrogator/proc/find_drop_turf()
-	var/list/possible_turfs = list()
-
-	var/obj/structure/test_structure = new() // This is apparently the most intuative way to check if a turf is able to support entering.
-
-	for(var/area/station/maintenance/maint_area in GLOB.areas)
-		for(var/turf/area_turf in maint_area)
-			if(!is_station_level(area_turf.z))
-				continue
-			if(area_turf.Enter(test_structure))
-				possible_turfs += area_turf
-	qdel(test_structure)
-
-	//Pick a turf to spawn at if we can
-	if(length(possible_turfs))
-		return pick(possible_turfs)
 
 ///This proc attempts to return the head of staff back to the station after the interrogator finishes
 /obj/machinery/interrogator/proc/return_victim()
