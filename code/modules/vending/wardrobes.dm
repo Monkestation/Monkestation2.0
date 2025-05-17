@@ -24,6 +24,7 @@
 		/obj/item/clothing/gloves/color/black = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
+		/obj/item/clothing/gloves/color/black/security = 3,
 		/obj/item/clothing/head/soft/sec/blue = 3, //monkestation edit
 		/obj/item/clothing/head/hats/security_peaked_cap = 3, //monkestation edit
 		/obj/item/clothing/head/hats/security_peaked_cap/blue = 3, //monkestation edit
@@ -40,6 +41,7 @@
 		/obj/item/clothing/head/helmet/blueshirt = 3, //monkestation edit
 		/obj/item/clothing/suit/armor/vest/buoyantrigvest = 3, //monkestation edit
 		/obj/item/clothing/suit/armor/vest/blueshirt = 3, //monkestation edit
+		/obj/item/clothing/gloves/color/black/security/blu = 3,
 		/obj/item/clothing/suit/armor/secduster = 3,
 		/obj/item/clothing/head/helmet/hat/cowboy = 3,
 		/obj/item/clothing/head/costume/constable = 3, //monkestation edit

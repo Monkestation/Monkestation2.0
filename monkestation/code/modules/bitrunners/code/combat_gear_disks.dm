@@ -117,3 +117,71 @@
 	name = "bitrunning gear: the stinger blade"
 	icon_state = "bee"
 	selectable_items = /obj/item/melee/beesword
+
+
+/datum/orderable_item/bitrunning_combat_gear/pka_mod
+	item_path = /obj/item/bitrunning_disk/item/monkestation_override/pka_mods
+	cost_per_order = 750
+	desc = "This disk contains a program that lets you equip modkits for the proto-kinetic accelerator. Proto-kinetic accelerator not included."
+
+///proto-kinetic accelerator mods, to be applied to pka's given inside domains
+/obj/item/bitrunning_disk/item/monkestation_override/pka_mods
+	name = "bitrunning gear: proto-kinetic accelerator mods"
+	icon_state = "pka"
+	selectable_items = list(
+		/obj/item/borg/upgrade/modkit/range,
+		/obj/item/borg/upgrade/modkit/damage,
+		/obj/item/borg/upgrade/modkit/cooldown,
+		/obj/item/borg/upgrade/modkit/aoe/mobs,
+	)
+
+/datum/orderable_item/bitrunning_combat_gear/pka_mod/premium
+	item_path = /obj/item/bitrunning_disk/item/monkestation_override/pka_mods/premium
+	cost_per_order = 1600
+	desc = "This disk contains a program that lets you equip stronger modkits for the proto-kinetic accelerator. Proto-kinetic accelerator not included."
+
+/obj/item/bitrunning_disk/item/monkestation_override/pka_mods/premium
+	name = "bitrunning gear: premium proto-kinetic accelerator mods"
+	icon_state = "pka+"
+	selectable_items = list(
+		/obj/item/borg/upgrade/modkit/cooldown/repeater,
+		/obj/item/borg/upgrade/modkit/lifesteal,
+		/obj/item/borg/upgrade/modkit/resonator_blasts,
+		/obj/item/borg/upgrade/modkit/bounty,
+		/obj/item/borg/upgrade/modkit/indoors,
+	)
+
+/datum/orderable_item/bitrunning_combat_gear/pka_mod/pkc_mod
+	item_path = /obj/item/bitrunning_disk/item/monkestation_override/pkc_mods
+	cost_per_order = 750
+	desc = "This disk contains a program that lets you equip trophies for the proto-kinetic crusher. Proto-kinetic crusher not included."
+
+///proto-kinetic crusher trophies, to be applied to pkc's given inside domains
+/obj/item/bitrunning_disk/item/monkestation_override/pkc_mods
+	name = "bitrunning gear: proto-kinetic crusher mods"
+	icon_state = "crusher"
+	selectable_items = list(
+		/obj/item/crusher_trophy/watcher_wing,
+		/obj/item/crusher_trophy/blaster_tubes/magma_wing,
+		/obj/item/crusher_trophy/legion_skull,
+		/obj/item/crusher_trophy/wolf_ear,
+	)
+
+/datum/orderable_item/bitrunning_combat_gear/pkc_mod/premium
+	item_path = /obj/item/bitrunning_disk/item/monkestation_override/pkc_mods/premium
+	cost_per_order = 1600
+	desc = "This disk contains a program that lets you equip stronger trophies for the proto-kinetic crusher. Proto-kinetic crusher not included."
+
+/obj/item/bitrunning_disk/item/monkestation_override/pkc_mods/premium
+	name = "bitrunning gear: premium proto-kinetic crusher mods"
+	icon_state = "crusher+"
+	selectable_items = list(
+		/obj/item/crusher_trophy/watcher_wing/ice_wing,
+		/obj/item/crusher_trophy/blaster_tubes,
+		/obj/item/crusher_trophy/miner_eye,
+		/obj/item/crusher_trophy/tail_spike,
+		/obj/item/crusher_trophy/demon_claws,
+		/obj/item/crusher_trophy/vortex_talisman,
+		/obj/item/crusher_trophy/ice_demon_cube,
+	)
+
