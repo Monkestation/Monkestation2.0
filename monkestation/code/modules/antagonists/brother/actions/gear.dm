@@ -76,6 +76,7 @@
 	team.update_action_icons()
 	for(var/datum/mind/brother as anything in team.members)
 		to_chat(brother.current, span_boldnotice("[owner.mind.name || owner.real_name] has chosen [chosen_gear.name] as your team's gear! You may drop-pod it in at any time using the Summon Gear action!"), type = MESSAGE_TYPE_INFO, avoid_highlighting = (brother == owner.mind))
+var/devitt = /datum/bb_gear/devitt
 
 /datum/action/bb/gear/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if(team.chosen_gear)
@@ -84,3 +85,13 @@
 	else
 		name = initial(name)
 		desc = initial(desc)
+	if(team.chosen_gear == devitt)
+		priority_announce(
+		text = "A large Captain is condom is approaching",
+		title = "Central Command Meteorology Division",
+		sound = 'sound/machines/alarm.ogg',
+		has_important_message = TRUE,
+		sender_override = "CentComm",
+		color_override = "red",
+		)
+	return ..()
