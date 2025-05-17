@@ -12,6 +12,9 @@
 		/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
+/mob/living/basic/bloodling/minion/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 
 /mob/living/basic/bloodling/minion/harvester
 	name = "harvester"
