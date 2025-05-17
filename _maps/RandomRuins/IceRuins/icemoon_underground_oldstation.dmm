@@ -9219,7 +9219,7 @@
 /area/template_noop)
 "Zq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/mecha_part_fabricator,
+/obj/machinery/mecha_part_fabricator/maint,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "Zt" = (
