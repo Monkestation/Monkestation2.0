@@ -51,7 +51,9 @@
 		var/mob/living/carbon/human/ghost/ghost_owner = owner
 		if(ghost_owner.dueling)
 			return FALSE
-	return !!astype(get_area(owner), /area/centcom)?.grace
+	var/area/centcom/centcom_area = get_area(owner)
+	if(!istype(centcom_area) || !centcom_area.grace)
+		return FALSE
 
 /datum/status_effect/centcom_grace/proc/give_traits()
 	owner?.add_traits(given_traits, TRAIT_STATUS_EFFECT(id))
