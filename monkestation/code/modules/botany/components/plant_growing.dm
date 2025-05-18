@@ -139,7 +139,7 @@
 
 /datum/component/plant_growing/proc/try_plant_seed(datum/source, obj/item/seeds/seed, mob/living/user)
 	SIGNAL_HANDLER
-	if(istype(seed, /obj/item/storage/bag/plants))
+	if(istype(seed, /obj/item/storage/bag/plants) && !istype(seed, /obj/item/seeds/sample))
 		for(var/id as anything in managed_seeds)
 			var/obj/item/seeds/harvest = managed_seeds[id]
 			if(!harvest)
