@@ -15,9 +15,6 @@
 			stack_trace("Null entry in suit sensors or nanite sensors list.")
 		return SENSOR_OFF
 
-	if(QDELING(tracked_mob)) // meh, this is fine, don't stack trace here.
-		return SENSOR_OFF
-
 	var/mob/living/tracked_living_mob = tracked_mob
 
 	// Check if z-level is correct
