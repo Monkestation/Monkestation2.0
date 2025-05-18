@@ -9,7 +9,7 @@
 		return NTNET_LOW_SIGNAL
 	return NTNET_NO_SIGNAL
 
-/datum/crewmonitor/proc/get_tracking_level(mob/tracked_mob, tracker_z, nt_net, validation=TRUE)
+/datum/crewmonitor/proc/get_tracking_level(tracked_mob, tracker_z, nt_net, validation=TRUE)
 	if(isnull(tracked_mob))
 		if(validation)
 			stack_trace("Null entry in suit sensors or nanite sensors list.")
