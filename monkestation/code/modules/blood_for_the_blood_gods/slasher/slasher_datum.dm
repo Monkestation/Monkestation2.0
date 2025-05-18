@@ -154,19 +154,19 @@
 		REMOVE_TRAITS_IN(owner.current, "slasher")
 		for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
 			listed_slasher.Remove(owner.current)
-	for(var/datum/weakref/held_ref as anything in heartbeats)
-		var/mob/living/carbon/human/human = held_ref.resolve()
-		human.stop_sound_channel(CHANNEL_HEARTBEAT)
-		heartbeats -= held_ref
-		human.regenerate_icons()
-		reset_fear(human)
 
-	for(var/datum/weakref/held_ref as anything in mobs_with_fullscreens)
-		var/mob/living/carbon/human/human = held_ref.resolve()
+	for(var/datum/weakref/held_ref as anything in heartbeats | mobs_with_fullscreens)
+		var/mob/living/carbon/human/human = held_ref?.resolve()
+		if(isnull(human))
+			continue
+		human.stop_sound_channel(CHANNEL_HEARTBEAT)
 		human.clear_fullscreen("slasher_prox", 15)
 		mobs_with_fullscreens -= held_ref
 		human.regenerate_icons()
 		reset_fear(human)
+
+	heartbeats.Cut()
+	mobs_with_fullscreens.Cut()
 	return ..()
 
 /datum/antagonist/slasher/greet()
