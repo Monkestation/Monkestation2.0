@@ -149,24 +149,24 @@
 	source_human.delete_equipment()
 
 /datum/antagonist/slasher/on_removal()
-	. = ..()
-	owner.current.clear_fullscreen("slasher_prox", 15)
-	owner.current.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_CLUMSY, TRAIT_NODEATH, TRAIT_DUMB, TRAIT_LIMBATTACHMENT), "slasher")
-	for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
-		listed_slasher.Remove(owner.current)
-	for(var/datum/weakref/held_ref as anything in heartbeats)
-		var/mob/living/carbon/human/human = held_ref.resolve()
+	if(!QDELETED(owner.current))
+		owner.current.clear_fullscreen("slasher_prox", 15)
+		REMOVE_TRAITS_IN(owner.current, "slasher")
+		for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
+			listed_slasher.Remove(owner.current)
+
+	for(var/datum/weakref/held_ref as anything in heartbeats | mobs_with_fullscreens)
+		var/mob/living/carbon/human/human = held_ref?.resolve()
+		if(isnull(human))
+			continue
 		human.stop_sound_channel(CHANNEL_HEARTBEAT)
-		heartbeats -= held_ref
+		human.clear_fullscreen("slasher_prox", 15)
 		human.regenerate_icons()
 		reset_fear(human)
 
-	for(var/datum/weakref/held_ref as anything in mobs_with_fullscreens)
-		var/mob/living/carbon/human/human = held_ref.resolve()
-		human.clear_fullscreen("slasher_prox", 15)
-		mobs_with_fullscreens -= held_ref
-		human.regenerate_icons()
-		reset_fear(human)
+	heartbeats.Cut()
+	mobs_with_fullscreens.Cut()
+	return ..()
 
 /datum/antagonist/slasher/greet()
 	. = ..()
@@ -317,7 +317,7 @@
 	owner_monitor.hide_hud()
 	reset_fear(stalked_human)
 	stalked_human = null
-	var/datum/action/cooldown/slasher/stalk_target/power = owner?.has_antag_datum(/datum/antagonist/slasher)
+	var/datum/action/cooldown/slasher/stalk_target/power = locate() in powers
 	power.StartCooldown(1)
 	to_chat(owner, span_notice("Your target is no longer spookable..."))
 

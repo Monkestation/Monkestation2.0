@@ -30219,6 +30219,18 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
+"iTT" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/requests_console/auto_name/directional/west,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "iTX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -45990,9 +46002,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "nvb" = (
-/obj/structure/closet/secure_closet/tac{
-	req_access = list("captain")
-	},
+/obj/structure/closet/secure_closet/tac,
 /obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_y = 6;
 	pixel_x = 7
@@ -104970,7 +104980,7 @@ nGj
 pyK
 gaO
 mKY
-mKY
+iTT
 vtr
 jfL
 iYa

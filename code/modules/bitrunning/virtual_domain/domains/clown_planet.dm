@@ -1,4 +1,3 @@
-/* Until slipping is fixed
 /datum/lazy_template/virtual_domain/clown_planet
 	name = "Clown Planet"
 	cost = BITRUNNER_COST_LOW
@@ -12,4 +11,3 @@
 	map_name = "clown_planet"
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/mine
-*/

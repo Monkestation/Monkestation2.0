@@ -44,6 +44,18 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/balloon_mallet
+	name = "Balloon Mallet"
+	result = /obj/item/balloon_mallet
+	reqs = list(
+		/obj/item/toy/balloon/long = 18,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/balloon_mallet/check_requirements(mob/user, list/collected_requirements)
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
+
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
@@ -151,3 +163,17 @@
 				/obj/item/shard = 1)
 	category = CAT_WEAPON_MELEE
 	tool_behaviors = list(TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/giant_wrench
+	name = "Big Slappy"
+	result = /obj/item/shovel/giant_wrench
+	tool_behaviors = list(TOOL_CROWBAR, TOOL_SCREWDRIVER, TOOL_WELDER)
+	reqs = list(
+		/obj/item/wrench = 4,
+		/obj/item/weaponcrafting/giant_wrench = 1,
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stack/rods = 10,
+		/obj/item/pickaxe/drill = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE

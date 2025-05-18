@@ -15,7 +15,7 @@
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 /// Until a condition is true, sleep
-#define UNTIL(X) while(!(X)) stoplag()
+#define UNTIL(X) while(!(X)) sleep(world.tick_lag)
 
 /// Sleep if we haven't been deleted
 /// Otherwise, return

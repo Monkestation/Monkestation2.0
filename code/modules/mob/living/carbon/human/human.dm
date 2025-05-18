@@ -407,17 +407,11 @@
 				if(WANTED_PAROLE)
 					threatcount += 2
 
-	//Check for dresscode violations
-	if(istype(head, /obj/item/clothing/head/wizard))
-		threatcount += 2
-
-	//MONKESTATION EDIT START
 	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
 		threatcount += 2
 
 	if(istype(wear_neck, /obj/item/clothing/neck/cloak/syndicate))
 		threatcount += 2
-	//MONKESTATION EDIT STOP
 
 	//Check for nonhuman scum
 	if(dna && dna.species.id && dna.species.id != SPECIES_HUMAN)
