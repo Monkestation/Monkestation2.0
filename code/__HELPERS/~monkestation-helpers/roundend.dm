@@ -4,7 +4,7 @@
 /datum/controller/subsystem/ticker/proc/calculate_rewards()
 	. = list()
 	for(var/client/client as anything in GLOB.clients)
-		distribute_rewards_to_client(client, .)
+		calculate_rewards_for_client(client, .)
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
@@ -24,7 +24,7 @@
 	if(client?.mob?.mind?.assigned_role)
 		add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
 
-/datum/controller/subsystem/ticker/proc/calculate_rewards_to_client(client/client, list/queue)
+/datum/controller/subsystem/ticker/proc/calculate_rewards_for_client(client/client, list/queue)
 	if(!istype(client) || QDELING(client))
 		return
 	var/ckey = client?.ckey
