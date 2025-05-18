@@ -215,7 +215,7 @@
 									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
-			placed_ruins[current_pick.id] == target_z
+			placed_ruins[current_pick.id] = target_z
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
