@@ -86,7 +86,7 @@
 /datum/vox_holder/proc/split_into_words(message)
 	. = list()
 	var/trimmed_message = trimtext(lowertext(message))
-	for(var/word in splittext_char(trimmed_message), " ")
+	for(var/word in splittext_char(trimmed_message, " "))
 		word = trimtext(word)
 		if(word)
 			. += word
