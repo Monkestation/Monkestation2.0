@@ -149,7 +149,6 @@
 	source_human.delete_equipment()
 
 /datum/antagonist/slasher/on_removal()
-	. = ..()
 	owner.current.clear_fullscreen("slasher_prox", 15)
 	owner.current.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_CLUMSY, TRAIT_NODEATH, TRAIT_DUMB, TRAIT_LIMBATTACHMENT), "slasher")
 	for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
@@ -167,6 +166,7 @@
 		mobs_with_fullscreens -= held_ref
 		human.regenerate_icons()
 		reset_fear(human)
+	return ..()
 
 /datum/antagonist/slasher/greet()
 	. = ..()
