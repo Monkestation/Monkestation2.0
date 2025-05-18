@@ -11,10 +11,11 @@
 
 /datum/crewmonitor/proc/get_tracking_level(tracked_mob, tracker_z, nt_net, validation=TRUE)
 	if(isnull(tracked_mob))
-		if(validation)
+		if (validation)
 			stack_trace("Null entry in suit sensors or nanite sensors list.")
 		return SENSOR_OFF
-	else if(QDELING(tracked_mob)) // meh, this is fine, don't stack trace here.
+
+	if(QDELING(tracked_mob)) // meh, this is fine, don't stack trace here.
 		return SENSOR_OFF
 
 	var/mob/living/tracked_living_mob = tracked_mob
@@ -24,7 +25,7 @@
 
 	// Is our target in nullspace for some reason?
 	if(isnull(pos))
-		if(validation)
+		if (validation)
 			stack_trace("Tracked mob has no loc and is likely in nullspace: [tracked_living_mob] ([tracked_living_mob.type])")
 		return SENSOR_OFF
 
@@ -44,22 +45,20 @@
 
 	// Check their humanity.
 	if(!ishuman(tracked_human))
-		if(validation)
+		if (validation)
 			stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
 		return SENSOR_OFF
 
 	// Check they have a uniform
 	var/obj/item/clothing/under/uniform = tracked_human.w_uniform
-	if(!istype(uniform))
-		if(validation)
+	if (!istype(uniform))
+		if (validation)
 			stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
-		return SENSOR_OFF
-	else if(QDELING(uniform)) // this is also fine.
 		return SENSOR_OFF
 
 	// Check if their uniform is in a compatible mode.
 	if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
-		if(validation)
+		if (validation)
 			stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
 		return SENSOR_OFF
 
