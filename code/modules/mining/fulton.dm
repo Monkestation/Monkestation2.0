@@ -169,8 +169,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/fulton_core/attack_self(mob/user)
 	if(istype(get_area(user), /area/misc/hilbertshotel))
-		to_chat(user, span_userdanger("Something about this place is interfering with the beacon. It is unsafe to deploy."))
-		return .
+		to_chat(user, span_userdanger("Something about this place is interfering with the beacon. The warning reads unsafe to deploy."))
+		return
 
 	if(do_after(user,15,target = user) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
