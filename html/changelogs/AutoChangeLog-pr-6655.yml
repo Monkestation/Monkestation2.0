@@ -1,0 +1,5 @@
+author: "BingusSS13"
+delete-after: True
+changes:
+  - rscadd: "Added an Ice Box adaptation of Charlie Station so ghosts have more things to do on long, boring shifts."
+  - balance: "Blast doors have been added to the windows of Charlie Station's prototype laboratory to discourage explorers from stealing everything."

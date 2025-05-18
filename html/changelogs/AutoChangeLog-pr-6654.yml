@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Refactored how icons are displayed for examines and such, so they should be far more performant now."

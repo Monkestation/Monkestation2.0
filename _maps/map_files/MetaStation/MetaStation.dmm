@@ -1606,7 +1606,7 @@
 	id = "shitbreaker"
 	},
 /obj/machinery/shipbreaker,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "aDA" = (
 /obj/machinery/light/small/directional/south,
@@ -12160,7 +12160,7 @@
 	dir = 6;
 	id = "shitbreaker"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "erF" = (
 /obj/structure/cable,
@@ -23110,7 +23110,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "iio" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -25966,7 +25966,7 @@
 /obj/machinery/conveyor{
 	id = "shitbreaker"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "jbR" = (
 /obj/effect/turf_decal/siding/wood{
@@ -39544,7 +39544,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "nDS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -53837,7 +53837,7 @@
 /area/station/security/warden)
 "szm" = (
 /obj/machinery/computer/shipbreaker,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "szp" = (
 /turf/closed/wall,
@@ -55044,7 +55044,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "sVc" = (
 /obj/effect/decal/cleanable/cobweb,

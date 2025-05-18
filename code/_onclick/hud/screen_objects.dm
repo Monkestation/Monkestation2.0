@@ -797,6 +797,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		add_overlay(intent_icon)
 	return ..()
 
+/atom/movable/screen/vis_holder
+	icon = ""
+	invisibility = INVISIBILITY_MAXIMUM
+
 /atom/movable/screen/stamina
 	name = "stamina"
 	icon_state = "stamina0"

@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - balance: "Reworked satyr's 'Living Drunk' to have an additional positive stage of effect between puking drunk, and regular tipsy."
