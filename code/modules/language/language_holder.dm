@@ -201,12 +201,12 @@ Key procs
 
 /// Gets the atom, since we some times need to check if the tongue has limitations.
 /datum/language_holder/proc/get_atom()
-	if(owner)
-		if(istype(owner, /datum/mind))
-			var/datum/mind/M = owner
-			return M.current
+	var/mob/owner = src.owner
+	if(istype(owner, /datum/mind))
+		var/datum/mind/owner_mind = owner
+		owner = owner_mind.current
+	if(!QDELETED(owner))
 		return owner
-	return FALSE
 
 /// Empties out the atom specific languages and updates them according to the supplied atoms language holder.
 /datum/language_holder/proc/update_atom_languages(atom/movable/thing)

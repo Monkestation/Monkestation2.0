@@ -12,6 +12,7 @@
 	icon_state = "datadisk0"
 	/// Name of the choice made
 	var/choice_made
+	w_class = WEIGHT_CLASS_TINY
 
 	var/monkeystation_override = FALSE // monkeystation change, override for disks with single powers/items
 

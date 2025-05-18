@@ -8,6 +8,8 @@
 	map_name = "None"
 	key = "Virtual Domain"
 
+	/// Whether to tell observers this map is being used
+	var/announce_to_ghosts = FALSE
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE
 	/// The description of the map
@@ -36,6 +38,17 @@
 	var/test_only = FALSE
 	/// The safehouse to load into the map
 	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/den
+
+	/**
+	 * Modularity
+	 */
+
+	/// Whether to display this as a modular map
+	var/is_modular = FALSE
+	/// Byond will look for modular mob segment landmarks then choose from here at random. You can make them unique also.
+	var/list/datum/modular_mob_segment/mob_modules = list()
+	/// Forces all mob modules to only load once
+	var/modular_unique_mobs = FALSE
 
 /// Sends a point to any loot signals on the map
 /datum/lazy_template/virtual_domain/proc/add_points(points_to_add)

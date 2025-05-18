@@ -30,6 +30,10 @@
 /obj/structure/marker_beacon/teal,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"k" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "l" = (
 /obj/structure/marker_beacon/bronze,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -48,8 +52,28 @@
 "v" = (
 /turf/closed/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
+"w" = (
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain/protected_space)
+"A" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"B" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "G" = (
 /obj/structure/marker_beacon/purple,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"I" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "J" = (
@@ -59,6 +83,12 @@
 /obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"O" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "P" = (
 /obj/structure/marker_beacon/fuchsia,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -821,8 +851,8 @@ a
 a
 a
 a
-a
-a
+k
+A
 c
 c
 c
@@ -869,8 +899,8 @@ a
 a
 a
 l
-a
-a
+B
+w
 c
 c
 c
@@ -917,8 +947,8 @@ a
 a
 a
 a
-a
-a
+B
+w
 c
 c
 c
@@ -965,8 +995,8 @@ a
 a
 a
 a
-a
-a
+B
+w
 c
 c
 c
@@ -1013,8 +1043,8 @@ a
 a
 a
 a
-a
-a
+O
+I
 c
 c
 c
