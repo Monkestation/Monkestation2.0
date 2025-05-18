@@ -5,6 +5,8 @@
 /datum/vox_holder
 	/// The current [/datum/vox_voice] instance being used.
 	VAR_PRIVATE/datum/vox_voice/current_voice
+	/// Whether this VOX holder checks to see if mobs can hear or not by default.
+	var/check_hearing = TRUE
 	/// The VOX word(s) that were previously inputed.
 	var/previous_words
 	/// The cooldown between VOX announcements.
@@ -26,17 +28,20 @@
 	var/mob/user = ui.user
 	switch(action)
 		if("set_voice")
-			. = TRUE
 			var/new_voice = params["voice"]
-			if(isnull(new_voice))
-				return
-			set_voice(new_voice)
+			if(!isnull(new_voice))
+				set_voice(new_voice)
+			return TRUE
 		if("speak")
-			. = TRUE
 			var/message = params["message"]
-			if(!message)
-				return
-			speak(user, message)
+			if(message)
+				speak(user, message)
+			return TRUE
+		if("test")
+			var/message = params["message"]
+			if(message)
+				speak(user, message, test = TRUE)
+			return TRUE
 
 /datum/vox_holder/ui_data(mob/user)
 	return list(
@@ -48,8 +53,8 @@
 /datum/vox_holder/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/json/vox_voices)) // this is an asset so we don't have to send a huge list each time
 
-/datum/vox_holder/proc/speak(mob/speaker, message, name_override)
-	if(!COOLDOWN_FINISHED(src, announcement_cooldown))
+/datum/vox_holder/proc/speak(mob/speaker, message, name_override, turf/origin_turf, test = FALSE, check_hearing)
+	if(!test && !COOLDOWN_FINISHED(src, announcement_cooldown))
 		return FALSE
 	var/list/words = split_into_words(message)
 	if(!words)
@@ -63,9 +68,20 @@
 	if(incorrect_words)
 		to_chat(speaker, span_notice("These words are not available on the announcement system: [english_list(incorrect_words)]."))
 		return FALSE
-	COOLDOWN_START(src, announcement_cooldown, cooldown)
-	speaker.log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
-	speaker.log_talk(message, LOG_SAY, tag = "VOX Announcement")
+	if(!test)
+		COOLDOWN_START(src, announcement_cooldown, cooldown)
+		speaker.log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
+		speaker.log_talk(message, LOG_SAY, tag = "VOX Announcement")
+		minor_announce(capitalize(message), "[name_override || speaker.real_name || speaker.name] announces:", should_play_sound = FALSE)
+	if(isnull(check_hearing))
+		check_hearing = src.check_hearing
+	for(var/word in words)
+		current_voice.play_word(
+			word,
+			origin_turf = origin_turf,
+			only_listener = test ? speaker : null,
+			check_hearing = check_hearing,
+		)
 
 /datum/vox_holder/proc/split_into_words(message)
 	. = list()
