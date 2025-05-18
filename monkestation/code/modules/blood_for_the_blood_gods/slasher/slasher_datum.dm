@@ -161,7 +161,6 @@
 			continue
 		human.stop_sound_channel(CHANNEL_HEARTBEAT)
 		human.clear_fullscreen("slasher_prox", 15)
-		mobs_with_fullscreens -= held_ref
 		human.regenerate_icons()
 		reset_fear(human)
 
