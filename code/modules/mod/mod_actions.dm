@@ -142,10 +142,10 @@
 	name = "Activate [capitalize(linked_module.name)]"
 	desc = "Quickly activate [linked_module]."
 	RegisterSignals(linked_module, list(COMSIG_MODULE_ACTIVATED, COMSIG_MODULE_DEACTIVATED, COMSIG_MODULE_USED), PROC_REF(module_interacted_with))
-	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(pinner_deleted))
+	RegisterSignal(user, COMSIG_MODULE_COOLDOWN_STARTED, PROC_REF(pinner_deleted))
 
 /datum/action/item_action/mod/pinned_module/Destroy()
-	UnregisterSignal(module, list(COMSIG_MODULE_ACTIVATED, COMSIG_MODULE_DEACTIVATED, COMSIG_MODULE_USED))
+	UnregisterSignal(module, list(COMSIG_MODULE_ACTIVATED, COMSIG_MODULE_DEACTIVATED, COMSIG_MODULE_COOLDOWN_STARTED, COMSIG_MODULE_USED))
 	module.pinned_to -= REF(pinner)
 	module = null
 	pinner = null

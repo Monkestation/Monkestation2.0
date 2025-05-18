@@ -211,3 +211,59 @@
   - rscadd: 2u sanguarite to atropens
   notghosti:
   - rscadd: Updated Nanite Species Sensor to include new/more common races
+2025-05-18:
+  Absolucy:
+  - map: Fixed some stacked lights in the KS13 ruin.
+  - map: Fixed some space tiles in the Anomaly Research ruin.
+  - refactor: Refactored how icons are displayed for examines and such, so they should
+      be far more performant now.
+  - bugfix: Fixed some various minor runtime errors.
+  BingusSS13:
+  - rscadd: Added an Ice Box adaptation of Charlie Station so ghosts have more things
+      to do on long, boring shifts.
+  - balance: Blast doors have been added to the windows of Charlie Station's prototype
+      laboratory to discourage explorers from stealing everything.
+  Killermankey:
+  - rscadd: Devitt Mk3 Light tank
+  - rscadd: minigun peashooter for trash tank
+  - rscadd: giant sheet metal drill vehicle
+  Pickle-Coding Xander3359:
+  - balance: Halon combustion releases 2.5 moles of pluoxium per mole of halon consumed.
+  - balance: Halon combustion no longer releases carbon dioxide.
+  - balance: Halon combustion releases resin foam.
+  - balance: Halon formation requirements changed to require electrolysing BZ instead
+      of N2O and CO2.
+  - balance: Halon formation changed to no longer slow down at higher pressures. It
+      instead accelerates at higher temperatures. It is much faster overall.
+  - balance: Halon formation releases 91.2321kJ of thermal energy per mole of halon
+      consumed.
+  - balance: Atmos resin can directly cool the floor.
+  - spellcheck: Improves gas monitor reaction information RP.
+  PineappleMan929:
+  - balance: TWitch no longer lets you dodge bullets.
+  - balance: TWitch is now feasibly makeable.
+  - admin: Removed warning for admins about TWitch letting you dodge bullets, as it
+      no longer does.
+  notghosti:
+  - rscadd: Replaced Cyber Police with Glitches
+  - rscadd: Bitrunning now works on a threat system, rather than storyteller for glitches.
+  - rscadd: Added security gloves
+  - rscadd: Added MOD restraint assist module
+  - rscadd: Added MOD bulwark module
+  - rscadd: The bitrunning server is now emagable, after which, the server and byteforge
+      won't act quite the same.
+  - rscadd: Requests consoles have been added to the entrance of Perma.
+  - rscadd: Jump jets have been ported.
+  - rscadd: MOD shock absorption module
+  - rscadd: Added the PKA and Crusher upgrade disks
+  - rscadd: Clowns can now make balloon animals.
+  - rscadd: Added four new bitrunning maps, Meta Central, Grasslands hunt, Abductor
+      ship, and Pizza party
+  - qol: Cyber police roles are now temporary, and you'll return to your old body
+      upon death.
+  - qol: The infiltrator modsuit has been updated with a newer sprite
+  - qol: Added more texture to bitrunning disks
+  - balance: The syndicate has established contacts with its agents inside the prison.
+  - balance: Reduced brain damage from dying in a bit avatar. (40 -> 20)
+  - balance: Reworked satyr's 'Living Drunk' to have an additional positive stage
+      of effect between puking drunk, and regular tipsy.
