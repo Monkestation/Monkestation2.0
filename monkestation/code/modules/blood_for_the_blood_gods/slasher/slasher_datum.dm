@@ -317,7 +317,7 @@
 	owner_monitor.hide_hud()
 	reset_fear(stalked_human)
 	stalked_human = null
-	var/datum/action/cooldown/slasher/stalk_target/power = owner?.has_antag_datum(/datum/antagonist/slasher)
+	var/datum/action/cooldown/slasher/stalk_target/power = locate() in powers
 	power.StartCooldown(1)
 	to_chat(owner, span_notice("Your target is no longer spookable..."))
 
