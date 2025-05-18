@@ -7264,7 +7264,6 @@
 #include "monkestation\code\modules\client\preferences\_preferences.dm"
 #include "monkestation\code\modules\client\preferences\admin.dm"
 #include "monkestation\code\modules\client\preferences\anime_implant.dm"
-#include "monkestation\code\modules\client\preferences\bloom.dm"
 #include "monkestation\code\modules\client\preferences\body.dm"
 #include "monkestation\code\modules\client\preferences\context_menu_requires_shift.dm"
 #include "monkestation\code\modules\client\preferences\face_cursor_combat_mode.dm"

@@ -68,7 +68,6 @@
 
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
-#define LIGHTING_PLANE_ADDITIVE 11
 
 ///Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 12
