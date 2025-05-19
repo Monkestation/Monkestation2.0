@@ -24,6 +24,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	harvest_organs()
 	return ..()
 
+// no reason for these to ever be hearing sensitive, it just wastes time on spatial grid stuff
+/mob/living/carbon/human/dummy/become_hearing_sensitive(trait_source)
+	return
+
 /*
 	MONKESTATION EDIT START
 	This causes a problem with tall players as some of their overlays will go outside of the 32x32 range which the mob's icon is restricted to
