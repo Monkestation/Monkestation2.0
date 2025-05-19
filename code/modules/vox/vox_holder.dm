@@ -24,7 +24,7 @@
 /datum/vox_holder/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "VOX", title)
+		ui = new(user, src, "VOX")
 		ui.open()
 
 /datum/vox_holder/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
