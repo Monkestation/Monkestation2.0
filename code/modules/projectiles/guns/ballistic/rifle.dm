@@ -383,14 +383,3 @@
 		It is also able to be suppressed....somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
 		Who knows what that might mean."
 	pin = /obj/item/firing_pin/implant/pindicate
-
-/obj/item/gun/ballistic/rifle/argenti
-	name = "\improper Argenti r.ii"
-	desc = "A relic of a rifle. The primary armament of the Colonial Legion, still in good condition despite the centuries of wear."
-	weapon_weight = WEAPON_HEAVY
-	icon_state = "argenti"
-	inhand_icon_state = "argenti"
-	slot_flags = ITEM_SLOT_BACK
-	accepted_magazine_type = /obj/item/ammo_box/magazine/argenti
-	can_bayonet = FALSE
-	can_be_sawn_off = FALSE

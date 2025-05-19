@@ -41,3 +41,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	caliber = CALIBER_22LR
 	max_ammo = 300
+
+/obj/item/ammo_box/magazine/malone
+	name = " Malone Drum (12.7x70mm)"
+	icon_state = "malone"
+	ammo_type = /obj/item/ammo_casing/mm127x70
+	caliber = CALIBER_127X70MM
+	max_ammo = 125

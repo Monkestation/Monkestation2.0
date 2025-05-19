@@ -376,6 +376,49 @@
 	recoil = 1.2
 	spread = 20
 
-/obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, TRUE, 0.1, 0.08, 5 SECONDS)
+/obj/item/gun/ballistic/automatic/argenti
+	name = "\improper Argenti r.ii"
+	desc = "A relic of a rifle. The primary bolt action rifle of the Colonial Legion, still in good condition despite the centuries of wear."
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	icon_state = "argenti"
+	inhand_icon_state = "argenti"
+	slot_flags = ITEM_SLOT_BACK
+	accepted_magazine_type = /obj/item/ammo_box/magazine/argenti
+	semi_auto = FALSE
+	bolt_type = BOLT_TYPE_STANDARD
+	burst_size = 1
+	fire_delay = 8
+
+/obj/item/gun/ballistic/automatic/hangman
+	name = "\improper Hangman 757"
+	desc = "An ancient revolving rifle from Caovia. This one uses .357 instead of the original .44, probably since its more common in space."
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	icon_state = "hangman"
+	inhand_icon_state = "hangman"
+	slot_flags = ITEM_SLOT_BACK
+	accepted_magazine_type = /obj/item/ammo_box/magazine/hangman
+	semi_auto = TRUE
+	bolt_type = BOLT_TYPE_STANDARD
+	burst_size = 1
+	fire_delay = 10
+
+/obj/item/gun/ballistic/automatic/malone
+	name = "\improper Malone Mk.2"
+	desc = "A cumbersome machinegun just bearly on the edge of man portability, fires a low power 12.7mm round at an excessive rate of fire."
+	icon = 'icons/obj/weapons/guns/guns56x.dmi'
+	icon_state = "malone"
+	SET_BASE_PIXEL(-8, 0)
+	inhand_icon_state = "malone"
+	w_class = WEIGHT_CLASS_HUGE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/malone
+	weapon_weight = WEAPON_HEAVY
+	actions_types = list()
+	fire_delay = 2
+	can_suppress = FALSE
+	burst_size = 1
+	recoil = 3
+	wield_recoil = 0.75
+	spread = 12.5
+
