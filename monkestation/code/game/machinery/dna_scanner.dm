@@ -51,11 +51,11 @@
 		var/weight = isnull(mutation::species_allowed) ? 2 : 3
 		switch(mutation::quality)
 			if(POSITIVE)
-				good |= mutation
+				good[mutation] = weight
 			if(MINOR_NEGATIVE)
-				neutral |= mutation
+				neutral[mutation] = weight
 			if(NEGATIVE)
-				bad |= mutation
+				bad[mutation] = weight
 	.[good] = POSITIVE_WEIGHT
 	.[neutral] = NEUTRAL_WEIGHT
 	.[bad] = NEGATIVE_WEIGHT
