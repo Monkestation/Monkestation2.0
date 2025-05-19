@@ -117,3 +117,9 @@
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25)
+
+/obj/item/ammo_box/argenti
+	name = "argenti magazine"
+	icon_state = "12 round 7.62 magazine"
+	ammo_type = /obj/item/ammo_casing/a762
+	max_ammo = 12
