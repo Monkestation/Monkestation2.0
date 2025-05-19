@@ -235,6 +235,21 @@
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
+/obj/machinery/deployable_turret/lamentum
+	name = "Lamentum mm.IV tripod machinegun"
+	desc = "A 12.7mm Machinegun used in the Colonial Legion, it is known for its exceptional accuracy for the sheer amount of bullets it puts out."
+	icon_state = "lamentum"
+	max_integrity = 175
+	projectile_type = /obj/projectile/bullet/manned_turret/lamentum
+	anchored = TRUE
+	number_of_shots = 3
+	cooldown_duration = 1 SECONDS
+	rate_of_fire = 3
+	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
+	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	can_be_undeployed = TRUE
+	spawned_on_undeploy = /obj/item/deployable_lamentum_folded
+
 /obj/item/gun_control
 	name = "turret controls"
 	icon = 'icons/obj/weapons/hand.dmi'

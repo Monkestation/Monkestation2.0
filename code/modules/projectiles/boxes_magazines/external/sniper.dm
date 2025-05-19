@@ -40,3 +40,11 @@
 	desc = "An extremely fast sniper round able to pretty much instantly shoot through something."
 	base_icon_state = "marksman"
 	ammo_type = /obj/item/ammo_casing/p50/marksman
+
+/obj/item/ammo_box/magazine/neville
+	name = "Neville magazine (20x160mm)"
+	icon_state = "neville"
+	base_icon_state = "eville"
+	ammo_type = /obj/item/ammo_casing/neville
+	max_ammo = 5
+	caliber = CALIBER_20X160MM

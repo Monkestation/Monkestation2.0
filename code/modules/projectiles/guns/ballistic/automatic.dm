@@ -375,10 +375,14 @@
 	item_flags = SLOWS_WHILE_IN_HAND
 	recoil = 1.2
 	spread = 20
+/obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, TRUE, 0.1, 0.08, 5 SECONDS)
 
 /obj/item/gun/ballistic/automatic/argenti
 	name = "\improper Argenti r.ii"
 	desc = "A relic of a rifle. The primary bolt action rifle of the Colonial Legion, still in good condition despite the centuries of wear."
+	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "argenti"
@@ -387,12 +391,12 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/argenti
 	semi_auto = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
-	burst_size = 1
 	fire_delay = 8
 
 /obj/item/gun/ballistic/automatic/hangman
 	name = "\improper Hangman 757"
 	desc = "An ancient revolving rifle from Caovia. This one uses .357 instead of the original .44, probably since its more common in space."
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "hangman"
@@ -401,7 +405,6 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/hangman
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_STANDARD
-	burst_size = 1
 	fire_delay = 10
 
 /obj/item/gun/ballistic/automatic/malone
@@ -410,15 +413,45 @@
 	icon = 'icons/obj/weapons/guns/guns56x.dmi'
 	icon_state = "malone"
 	SET_BASE_PIXEL(-8, 0)
-	inhand_icon_state = "malone"
 	w_class = WEIGHT_CLASS_HUGE
+	inhand_icon_state = "malone"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/malone
-	weapon_weight = WEAPON_HEAVY
-	actions_types = list()
-	fire_delay = 2
+	fire_delay = 0.8
 	can_suppress = FALSE
-	burst_size = 1
-	recoil = 3
-	wield_recoil = 0.75
-	spread = 12.5
+	burst_size = 2
+	actions_types = list()
+	slowdown = 1.5
+	item_flags = SLOWS_WHILE_IN_HAND
+	can_bayonet = FALSE
+	mag_display = TRUE
+	mag_display_ammo = FALSE
+	empty_indicator = FALSE
+/obj/item/gun/ballistic/automatic/malone/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
+/obj/item/gun/ballistic/automatic/neville
+	name = "\improper 20 Neville Anti-Tank Rifle"
+	desc = "A brick of steel vaugly gunshaped. Fires bullets designed to penetrate tank armor, good luck lugging this thing around."
+	icon = 'icons/obj/weapons/guns/guns56x.dmi'
+	icon_state = "neville"
+	SET_BASE_PIXEL(-8, 0)
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 110
+	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	icon_state = "neville"
+	inhand_icon_state = "neville"
+	slot_flags = ITEM_SLOT_BACK
+	burst_size = 0
+	accepted_magazine_type = /obj/item/ammo_box/magazine/neville
+	actions_types = list()
+	semi_auto = TRUE
+	item_flags = SLOWS_WHILE_IN_HAND
+	bolt_type = BOLT_TYPE_STANDARD
+	fire_delay = 25
+	recoil = 10
+	wield_recoil = 3.5
+	slowdown = 2

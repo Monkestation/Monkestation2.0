@@ -282,6 +282,23 @@
 	. = ..()
 	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, delete_on_use = TRUE)
 
+
+/obj/item/deployable_lamentum_folded
+	name = "packaged Lamentum mm.IV"
+	desc = "A Lamentum Machinegun with its tripod and ammo disconnected, heavy as hell."
+	icon = 'icons/obj/weapons/turrets.dmi'
+	icon_state = "folded_lamentum"
+	inhand_icon_state = "folded_lamentum"
+	max_integrity = 175
+	actions_types = list()
+	slowdown = 1.6
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+
+/obj/item/deployable_lamentum_folded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/deployable, 6 SECONDS, /obj/machinery/deployable_turret/lamentum, delete_on_use = TRUE)
+
 #undef SINGLE
 #undef VERTICAL
 #undef HORIZONTAL

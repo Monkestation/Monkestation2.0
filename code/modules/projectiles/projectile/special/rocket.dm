@@ -135,10 +135,10 @@ among other potential differences. This granularity is helpful for things like t
 	name = "\improper Ignifist rocket"
 	desc = "anti mechanized warfare in spess."
 	icon_state = "atrocket"
-	damage = 5
+	damage = 25
 	armour_penetration = 100
 	dismemberment = 10
 	anti_armour_damage = 125
 
-/obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
+/obj/projectile/bullet/rocket/ignifist/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = -1, flame_range = 1, flash_range = 1, adminlog = FALSE)
