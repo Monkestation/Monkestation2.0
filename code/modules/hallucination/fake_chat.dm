@@ -32,6 +32,8 @@
 		for(var/datum/mind/crew_mind in get_crewmember_minds())
 			if(crew_mind.current)
 				humans += crew_mind.current
+		if(!length(humans))
+			return FALSE
 		speaker = pick(humans)
 
 	// Time to generate a message.
