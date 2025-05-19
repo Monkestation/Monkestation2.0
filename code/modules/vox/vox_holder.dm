@@ -107,5 +107,17 @@
 		CRASH("Invalid VOX voice instance: [new_voice || "null"]")
 	current_voice = new_voice
 
+GLOBAL_DATUM(test_vox_holder, /datum/vox_holder)
+
+/mob/verb/aivox2()
+	set name = "VOX Test UI"
+	set desc = "vox refactor test ui"
+	set category = "!! VOX !!"
+
+	if(isnull(GLOB.test_vox_holder))
+		GLOB.test_vox_holder = new
+
+	GLOB.test_vox_holder.ui_interact(src)
+
 #undef MAX_WORDS
 #endif
