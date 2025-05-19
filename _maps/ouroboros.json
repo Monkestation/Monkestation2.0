@@ -4,6 +4,7 @@
 	"map_path": "map_files/Ouroboros",
 	"map_file": "Ouroboros.dmm",
 	"space_ruin_levels": 3,
+	"exclude_from_ci": true,
 	"shuttles": {
 		"emergency": "emergency_nova",
 		"ferry": "ferry_fancy",

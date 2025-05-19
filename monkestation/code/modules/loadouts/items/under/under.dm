@@ -599,22 +599,10 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	restricted_roles = list(JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
-/datum/loadout_item/under/jumpsuit/impcmo
-	name = "Chief Medical Officer's Naval Uniform"
-	item_path = /obj/item/clothing/under/rank/medical/chief_medical_officer/nova/imperial
-	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER)
-	requires_purchase = FALSE
-
 /datum/loadout_item/under/jumpsuit/impce
 	name = "Chief Engineer's Naval Uniform"
 	item_path = /obj/item/clothing/under/rank/engineering/chief_engineer/nova/imperial
 	restricted_roles = list(JOB_CHIEF_ENGINEER)
-	requires_purchase = FALSE
-
-/datum/loadout_item/under/jumpsuit/imprd
-	name = "Research Director's Naval Uniform"
-	item_path = /obj/item/clothing/under/rank/rnd/research_director/nova/imperial
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/impcommand
@@ -703,33 +691,9 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_CHEMIST, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/under/jumpsuit/paramed_light
-	name = "Light Paramedic Uniform"
-	item_path = /obj/item/clothing/under/rank/medical/paramedic/nova/light
-	restricted_roles = list(JOB_PARAMEDIC)
-	requires_purchase = FALSE
-
-/datum/loadout_item/under/jumpsuit/paramed_light_skirt
-	name = "Light Paramedic Skirt"
-	item_path = /obj/item/clothing/under/rank/medical/paramedic/nova/light/skirt
-	restricted_roles = list(JOB_PARAMEDIC)
-	requires_purchase = FALSE
-
-/datum/loadout_item/under/jumpsuit/chemist_formal
-	name = "Chemist's Formal Jumpsuit"
-	item_path = /obj/item/clothing/under/rank/medical/chemist/nova/formal
-	restricted_roles = list(JOB_CHEMIST)
-	requires_purchase = FALSE
-
-/datum/loadout_item/under/jumpsuit/chemist_formal_skirt
-	name = "Chemist's Formal Jumpskirt"
-	item_path = /obj/item/clothing/under/rank/medical/chemist/nova/formal/skirt
-	restricted_roles = list(JOB_CHEMIST)
-	requires_purchase = FALSE
-
 /datum/loadout_item/under/jumpsuit/hlscientist
 	name = "Ridiculous Scientist Outfit"
-	item_path = /obj/item/clothing/under/rank/rnd/scientist/nova/hlscience
+	item_path = /obj/item/clothing/under/rank/rnd/scientist/hlscience
 	restricted_roles = list(JOB_SCIENTIST)
 	requires_purchase = FALSE
 
@@ -745,13 +709,13 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 
 /datum/loadout_item/under/jumpsuit/utility_med
 	name = "Medical Utility Uniform"
-	item_path = /obj/item/clothing/under/rank/medical/doctor/nova/utility
+	item_path = /obj/item/clothing/under/rank/medical/doctor/utility
 	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHEMIST, JOB_VIROLOGIST, JOB_GENETICIST ,JOB_CHIEF_MEDICAL_OFFICER)
 	requires_purchase = FALSE
 
 /datum/loadout_item/under/jumpsuit/utility_sci
 	name = "Science Utility Uniform"
-	item_path = /obj/item/clothing/under/rank/rnd/scientist/nova/utility
+	item_path = /obj/item/clothing/under/rank/rnd/scientist/utility
 	restricted_roles = list(JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_XENOBIOLOGIST)
 	requires_purchase = FALSE
 
@@ -996,18 +960,6 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Classic Prisoner Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/prisoner/classic
 	restricted_roles = list(JOB_PRISONER)
-
-/datum/loadout_item/under/miscellaneous/redscrubs
-	name = "Red Scrubs"
-	item_path = /obj/item/clothing/under/rank/medical/scrubs/nova/red
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_GENETICIST ,JOB_CHIEF_MEDICAL_OFFICER)
-	requires_purchase = FALSE
-
-/datum/loadout_item/under/miscellaneous/whitescrubs
-	name = "White Scrubs"
-	item_path = /obj/item/clothing/under/rank/medical/scrubs/nova/white
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_GENETICIST ,JOB_CHIEF_MEDICAL_OFFICER)
-	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/taccas //BUYABLE
 	name = "Tacticasual Uniform"

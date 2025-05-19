@@ -1223,7 +1223,6 @@
 "kJ" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/closet/emcloset,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/space/nearstation)
 "kK" = (
@@ -4444,7 +4443,6 @@
 "Cd" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash/garbage,
-/obj/machinery/light/small/directional/north,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/monke/engineering/engine_hallway)

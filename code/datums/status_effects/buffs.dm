@@ -547,3 +547,16 @@
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
 	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
+
+/// Gives you a brief period of anti-gravity
+/datum/status_effect/jump_jet
+	id = "jump_jet"
+	alert_type = null
+	duration = 5 SECONDS
+
+/datum/status_effect/jump_jet/on_apply()
+	owner.AddElement(/datum/element/forced_gravity, 0)
+	return TRUE
+
+/datum/status_effect/jump_jet/on_remove()
+	owner.RemoveElement(/datum/element/forced_gravity, 0)

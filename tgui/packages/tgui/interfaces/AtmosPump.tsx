@@ -16,7 +16,7 @@ export const AtmosPump = (props) => {
   const { on, max_rate, max_pressure, rate, pressure } = data;
 
   return (
-    <Window width={335} height={115}>
+    <Window width={345} height={115}>
       <Window.Content>
         <Section>
           <LabeledList>

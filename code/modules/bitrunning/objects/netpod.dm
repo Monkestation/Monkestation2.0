@@ -1,4 +1,4 @@
-#define BASE_DISCONNECT_DAMAGE 40
+#define BASE_DISCONNECT_DAMAGE 20
 
 /obj/machinery/netpod
 	name = "netpod"

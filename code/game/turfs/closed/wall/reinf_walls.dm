@@ -207,10 +207,9 @@
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	return ..()
 
-/turf/closed/wall/r_wall/singularity_pull(current_size) //Monkestation edit
-	if(current_size >= STAGE_FIVE)
-		if(prob(30))
-			dismantle_wall()
+/turf/closed/wall/r_wall/singularity_pull(datum/component/singularity, current_size)
+	if(current_size >= STAGE_FIVE && prob(30))
+		dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.canRturf || the_rcd.construction_mode == RCD_WALLFRAME)
