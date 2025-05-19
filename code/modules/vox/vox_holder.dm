@@ -6,7 +6,7 @@
 	/// The current [/datum/vox_voice] instance being used.
 	VAR_PRIVATE/datum/vox_voice/current_voice
 	/// Whether this VOX holder checks to see if mobs can hear or not by default.
-	var/check_hearing = TRUE
+	var/check_hearing = FALSE
 	/// The VOX word(s) that were previously inputed.
 	var/previous_words
 	/// The cooldown between VOX announcements.
@@ -52,6 +52,9 @@
 
 /datum/vox_holder/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/json/vox_voices)) // this is an asset so we don't have to send a huge list each time
+
+/datum/vox_holder/ui_state(mob/user)
+	return GLOB.always_state
 
 /datum/vox_holder/proc/speak(mob/speaker, message, name_override, turf/origin_turf, test = FALSE, check_hearing)
 	if(!test && !COOLDOWN_FINISHED(src, announcement_cooldown))
