@@ -267,3 +267,23 @@
   - balance: Reduced brain damage from dying in a bit avatar. (40 -> 20)
   - balance: Reworked satyr's 'Living Drunk' to have an additional positive stage
       of effect between puking drunk, and regular tipsy.
+2025-05-19:
+  Addust:
+  - rscdel: Central Command's Asset Protection force has discovered the individual
+      responsible for loading pizza bombs onto the NTSS Shadow and ensured their disappearance.
+      Glory to Nanotrasen.
+  F-e-r-n:
+  - balance: Makes teratomas only able to ventcrawl while nude.
+  Siro:
+  - bugfix: Fulton beacons blocked from being placed in Hilbert Hotel to prevent getting
+      stuck in Hilbert Hotel Storage.
+  - bugfix: DNR quirk now prevents Ethereal crystal revival.
+  - bugfix: Seed Samples can no longer be planted in hydroponics trays.
+  - bugfix: Non-oozeling species with oozeling heads no longer are round removed when
+      their head is destroyed.
+  - bugfix: Super Kitty Ears and ornithid plumage no longer destroyed when oozeling
+      dies.
+  - bugfix: Low blood regeneration of oozeling heads now regenerates the eyes properly.
+  - qol: Adds examine text for oozeling cores that cannot be plasma revived and better
+      clarifies what type of plasma to use.
+  - balance: Oozeling heads dismember as easily as their limbs.

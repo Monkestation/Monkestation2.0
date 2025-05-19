@@ -385,14 +385,13 @@
 			stop_crystalization_process(victim)
 		return
 
-
 	if(QDELETED(victim) || HAS_TRAIT(victim, TRAIT_SUICIDED))
 		return //lol rip
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
+	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE) || HAS_TRAIT(victim, TRAIT_DEFIB_BLACKLISTED))
 		return // no reviving during mafia, or other inconvenient times.
 
 	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
