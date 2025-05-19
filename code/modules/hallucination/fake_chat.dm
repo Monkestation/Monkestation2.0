@@ -36,6 +36,9 @@
 			return FALSE
 		speaker = pick(humans)
 
+	if(!speaker)
+		return FALSE
+
 	// Time to generate a message.
 	// Spans of our message
 	var/spans = list(speaker.speech_span)
