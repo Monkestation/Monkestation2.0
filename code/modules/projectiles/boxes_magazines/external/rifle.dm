@@ -21,3 +21,11 @@
 /obj/item/ammo_box/magazine/m556/phasic
 	name = "toploader magazine (5.56mm Phasic)"
 	ammo_type = /obj/item/ammo_casing/a556/phasic
+
+/obj/item/ammo_box/magazine/argenti
+	name = "argenti magazine (7.62mm)"
+	icon_state = "7.62mm"
+	ammo_type = /obj/item/ammo_casing/a762
+	caliber = CALIBER_A762
+	max_ammo = 12
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
