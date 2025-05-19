@@ -288,7 +288,7 @@
 	desc = "A Lamentum Machinegun with its tripod and ammo disconnected, heavy as hell."
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "folded_lamentum"
-	inhand_icon_state = "folded_lamentum"
+	inhand_icon_state = "folded_hmg"
 	max_integrity = 175
 	actions_types = list()
 	slowdown = 1.6

@@ -436,13 +436,16 @@
 	icon = 'icons/obj/weapons/guns/guns56x.dmi'
 	icon_state = "neville"
 	SET_BASE_PIXEL(-8, 0)
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 110
 	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-	icon_state = "neville"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	inhand_icon_state = "neville"
 	slot_flags = ITEM_SLOT_BACK
 	burst_size = 0

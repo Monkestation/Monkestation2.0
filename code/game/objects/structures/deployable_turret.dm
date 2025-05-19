@@ -243,8 +243,8 @@
 	projectile_type = /obj/projectile/bullet/manned_turret/lamentum
 	anchored = TRUE
 	number_of_shots = 3
-	cooldown_duration = 1 SECONDS
-	rate_of_fire = 3
+	cooldown_duration = 0.6 SECONDS
+	rate_of_fire = 4
 	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
