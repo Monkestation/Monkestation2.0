@@ -250,7 +250,7 @@ See the examinemore module for information.
 #define VITEZSTVI_AMMO_NAME "Vitezstvi Ammo & Weapon Accessories"
 #define RAYNE_CORP_NAME "Rayne Corporation"
 #define KEMETEK_NAME "Kemetek Aerospace"
-#define BASSET_MOTOR_SOCIETY_NAME "Basset Motor Society: Antiques Division"
+#define BASSETT_MOTOR_SOCIETY_NAME "Bassett Motor Society: Antiques Division"
 
 #define COMPANY_INTEREST_GAIN_BIG 10
 #define COMPANY_INTEREST_GAIN_AVERAGE 5

@@ -1,5 +1,5 @@
 /datum/armament_entry/company_import/bms
-	category = BASSET_MOTOR_SOCIETY_NAME
+	category = BASSETT_MOTOR_SOCIETY_NAME
 	company_bitflag = CARGO_COMPANY_BMS
 
 
