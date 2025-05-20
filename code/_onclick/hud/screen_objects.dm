@@ -879,15 +879,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		add_overlay(intent_icon)
 	return ..()
 
-/atom/movable/screen/vis_holder
-	icon = ""
-	invisibility = INVISIBILITY_MAXIMUM
-
-/atom/movable/screen/stamina
-	name = "stamina"
-	icon_state = "stamina0"
-	screen_loc = ui_stamina
-
 #define HUNGER_STATE_FAT 5
 #define HUNGER_STATE_FULL 4
 #define HUNGER_STATE_FINE 3
@@ -1069,3 +1060,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 #undef HUNGER_STATE_HUNGRY
 #undef HUNGER_STATE_STARVING
 #undef HUNGER_STATE_VERY_HUNGRY
+
+/atom/movable/screen/vis_holder
+	icon = ""
+	invisibility = INVISIBILITY_MAXIMUM
+
+/atom/movable/screen/stamina
+	name = "stamina"
+	icon_state = "stamina0"
+	screen_loc = ui_stamina
