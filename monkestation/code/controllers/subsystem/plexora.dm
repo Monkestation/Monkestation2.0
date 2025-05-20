@@ -148,7 +148,7 @@ SUBSYSTEM_DEF(plexora)
 		"round_timer" = ROUND_TIME(),
 		"map" = SSmapping.current_map?.map_name,
 		"playercount" = length(GLOB.clients),
-		"restart_type" = restart_type_override || restart_type,
+		"restart_type" = isnull(restart_type_override) ? restart_type : restart_type_override,
 		"requestedby" = usr?.ckey,
 		"requestedby_stealthed" = usr?.client?.holder?.fakekey,
 	))
