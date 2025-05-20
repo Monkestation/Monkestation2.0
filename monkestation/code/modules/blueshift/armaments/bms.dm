@@ -46,12 +46,12 @@
 /datum/armament_entry/company_import/bms/magazines/argenti
 	item_type = /obj/item/ammo_box/magazine/argenti
 
-/datum/armament_entry/company_import/sol_defense/magazines/hangman
+/datum/armament_entry/company_import/bms/magazines/hangman
 	item_type = /obj/item/ammo_box/magazine/hangman
 
-/datum/armament_entry/company_import/sol_defense/magazines/neville
+/datum/armament_entry/company_import/bms/magazines/neville
 	item_type = /obj/item/ammo_box/magazine/neville
 	cost = PAYCHECK_COMMAND*4
 
-/datum/armament_entry/company_import/sol_defense/magazines/malone
+/datum/armament_entry/company_import/bms/magazines/malone
 	item_type = /obj/item/ammo_box/magazine/malone
