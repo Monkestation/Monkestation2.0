@@ -392,6 +392,7 @@
 	semi_auto = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
 	fire_delay = 8
+	recoil = 1.6
 
 /obj/item/gun/ballistic/automatic/hangman
 	name = "\improper Hangman 757"
@@ -406,6 +407,7 @@
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_STANDARD
 	fire_delay = 10
+	recoil = 1.6
 
 /obj/item/gun/ballistic/automatic/malone
 	name = "\improper Malone Mk.2"
@@ -426,6 +428,8 @@
 	mag_display = TRUE
 	mag_display_ammo = FALSE
 	empty_indicator = FALSE
+	recoil = 2.8
+	wield_recoil = 1.4
 /obj/item/gun/ballistic/automatic/malone/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)

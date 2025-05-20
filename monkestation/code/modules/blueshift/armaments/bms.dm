@@ -4,7 +4,7 @@
 
 
 
-/datum/armament_entry/company_import/sol_defense/light // unrestricted, but very very expensive
+/datum/armament_entry/company_import/bms/light // unrestricted, but very very expensive
 	subcategory = "Small Arms"
 
 /datum/armament_entry/company_import/bms/light/argenti
@@ -17,9 +17,10 @@
 
 /datum/armament_entry/company_import/bms/heavy // restricted, this shits scary
 	subcategory = "Support weapons"
+	restricted = TRUE
 
 /datum/armament_entry/company_import/bms/heavy/ignifist
-	item_type = /obj/item/gun/ballistic/automatic/ignifist
+	item_type = /obj/item/gun/ballistic/ignifist
 	cost = PAYCHECK_COMMAND * 8
 
 /datum/armament_entry/company_import/bms/heavy/malone
@@ -42,16 +43,15 @@
 	subcategory = "Magazines"
 	cost = PAYCHECK_CREW*3
 
-/datum/armament_entry/company_import/bms/magazines/argenti_mag
+/datum/armament_entry/company_import/bms/magazines/argenti
 	item_type = /obj/item/ammo_box/magazine/argenti
 
-/datum/armament_entry/company_import/sol_defense/magazines/hangman_mag
+/datum/armament_entry/company_import/sol_defense/magazines/hangman
 	item_type = /obj/item/ammo_box/magazine/hangman
 
-/datum/armament_entry/company_import/sol_defense/magazines/neville_mag
+/datum/armament_entry/company_import/sol_defense/magazines/neville
 	item_type = /obj/item/ammo_box/magazine/neville
 	cost = PAYCHECK_COMMAND*4
 
-/datum/armament_entry/company_import/sol_defense/magazines/malone_mag
+/datum/armament_entry/company_import/sol_defense/magazines/malone
 	item_type = /obj/item/ammo_box/magazine/malone
-	cost = PAYCHECK_COMMAND*4
