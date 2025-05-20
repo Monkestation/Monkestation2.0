@@ -21,15 +21,19 @@
 
 /datum/armament_entry/company_import/bms/heavy/ignifist
 	item_type = /obj/item/gun/ballistic/ignifist
-	cost = PAYCHECK_COMMAND * 8
+	cost = PAYCHECK_COMMAND * 11
 
 /datum/armament_entry/company_import/bms/heavy/malone
 	item_type = /obj/item/gun/ballistic/automatic/malone
-	cost = PAYCHECK_COMMAND * 32
+	cost = PAYCHECK_COMMAND * 36
 
 /datum/armament_entry/company_import/bms/heavy/neville
 	item_type = /obj/item/gun/ballistic/automatic/neville
-	cost = PAYCHECK_COMMAND * 38
+	cost = PAYCHECK_COMMAND * 44
+
+/datum/armament_entry/company_import/bms/heavy/lamentum
+	item_type = /obj/item/deployable_lamentum_folded
+	cost = PAYCHECK_COMMAND * 48
 
 /datum/armament_entry/company_import/bms/tanks // No shit that the tank is restricted
 	subcategory = "Armored Vehicles"
@@ -38,6 +42,10 @@
 /datum/armament_entry/company_import/bms/tanks/kingspire
 	item_type = /obj/vehicle/sealed/mecha/kingspire
 	cost = PAYCHECK_COMMAND * 260
+
+/datum/armament_entry/company_import/bms/tanks/ratcatcherbelt
+	item_type = /obj/item/mecha_ammo/makeshift/lighttankmg
+	cost = PAYCHECK_COMMAND * 3
 
 /datum/armament_entry/company_import/bms/magazines // feed the war machine
 	subcategory = "Magazines"
@@ -55,3 +63,4 @@
 
 /datum/armament_entry/company_import/bms/magazines/malone
 	item_type = /obj/item/ammo_box/magazine/malone
+	cost = PAYCHECK_COMMAND*4
