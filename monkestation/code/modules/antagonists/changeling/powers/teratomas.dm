@@ -3,7 +3,7 @@
 	desc = "Our form divides, creating an egg that will soon hatch into a living tumor, fixated on causing mayhem. Costs 50 chemicals."
 	helptext = "The tumor will not be loyal to us or our cause. Requires an changeling absorption for every two tumors created."
 	button_icon_state = "spread_infestation"
-	chemical_cost = 60
+	chemical_cost = 50
 	dna_cost = 2
 	req_absorbs = 1
 
