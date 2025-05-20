@@ -435,7 +435,7 @@
 	desc = "A brick of steel vaugly gunshaped. Fires bullets designed to penetrate tank armor, good luck lugging this thing around."
 	icon = 'icons/obj/weapons/guns/guns56x.dmi'
 	icon_state = "neville"
-	SET_BASE_PIXEL(-8, 0)
+	SET_BASE_PIXEL(-12, 0)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'

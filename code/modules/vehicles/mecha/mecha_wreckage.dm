@@ -244,6 +244,12 @@
 
 /obj/structure/mecha_wreckage/devitt
 	name = "\improper Devitt Mk3 Wreckage"
-	icon = 'monkestation/icons/mecha/tanks.dmi'
+	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "devitt-broken"
-	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods) //get it, it's a glass cannon
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+
+/obj/structure/mecha_wreckage/kingspire
+	name = "\improper Kingspire Mk1 Wreckage"
+	icon = 'icons/mecha/tanks.dmi'
+	icon_state = "kingspire-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
