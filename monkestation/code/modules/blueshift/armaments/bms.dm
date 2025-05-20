@@ -9,11 +9,11 @@
 
 /datum/armament_entry/company_import/bms/light/argenti
 	item_type = /obj/item/gun/ballistic/automatic/argenti
-	cost = PAYCHECK_COMMAND * 20
+	cost = PAYCHECK_COMMAND * 22
 
 /datum/armament_entry/company_import/bms/light/hangman
 	item_type = /obj/item/gun/ballistic/automatic/hangman
-	cost = PAYCHECK_COMMAND * 18
+	cost = PAYCHECK_COMMAND * 20
 
 /datum/armament_entry/company_import/bms/heavy // restricted, this shits scary
 	subcategory = "Support weapons"
@@ -21,7 +21,7 @@
 
 /datum/armament_entry/company_import/bms/heavy/ignifist
 	item_type = /obj/item/gun/ballistic/ignifist
-	cost = PAYCHECK_COMMAND * 11
+	cost = PAYCHECK_COMMAND * 12
 
 /datum/armament_entry/company_import/bms/heavy/malone
 	item_type = /obj/item/gun/ballistic/automatic/malone
@@ -41,11 +41,11 @@
 
 /datum/armament_entry/company_import/bms/tanks/kingspire
 	item_type = /obj/vehicle/sealed/mecha/kingspire
-	cost = PAYCHECK_COMMAND * 260
+	cost = PAYCHECK_COMMAND * 380
 
 /datum/armament_entry/company_import/bms/tanks/ratcatcherbelt
 	item_type = /obj/item/mecha_ammo/makeshift/lighttankmg
-	cost = PAYCHECK_COMMAND * 3
+	cost = PAYCHECK_COMMAND * 2
 
 /datum/armament_entry/company_import/bms/magazines // feed the war machine
 	subcategory = "Magazines"
