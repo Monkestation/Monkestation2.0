@@ -6887,6 +6887,7 @@
 #include "monkestation\code\modules\blueshift\areas\centcom.dm"
 #include "monkestation\code\modules\blueshift\areas\station.dm"
 #include "monkestation\code\modules\blueshift\armaments\akh_frontier.dm"
+#include "monkestation\code\modules\blueshift\armaments\bms.dm"
 #include "monkestation\code\modules\blueshift\armaments\deforest_medical.dm"
 #include "monkestation\code\modules\blueshift\armaments\donkco.dm"
 #include "monkestation\code\modules\blueshift\armaments\jarnsimiour.dm"
