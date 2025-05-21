@@ -138,6 +138,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/cascadier
 	burst_size = 3
-	fire_delay = .1 SECONDS
+	fire_delay = 0.1 SECONDS
 	spread = 16
 

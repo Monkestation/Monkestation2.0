@@ -416,7 +416,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	inhand_icon_state = "malone"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/malone
-	fire_delay = .08 SECONDS
+	fire_delay = 0.08 SECONDS
 	can_suppress = FALSE
 	burst_size = 2
 	actions_types = list()
