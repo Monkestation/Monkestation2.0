@@ -19522,6 +19522,21 @@
 	},
 /turf/open/floor/circuit/red/off,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"bcl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/pen{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "bcU" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/mask/hheart,
@@ -19704,22 +19719,6 @@
 "bpz" = (
 /turf/open/floor/material/meat,
 /area/centcom/central_command_areas/admin)
-"bqQ" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Trisk's Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	id = "trisk_shutters"
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "brG" = (
 /obj/structure/table/reinforced/plasmarglass,
 /obj/machinery/fax{
@@ -20869,6 +20868,22 @@
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"duo" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Trisk's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "trisk_shutters"
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "duq" = (
 /obj/structure/railing/wood{
 	dir = 1
@@ -21273,25 +21288,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
-"elr" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -8;
-	pixel_y = 2
-	},
-/obj/item/pen{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "emD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -24255,6 +24251,14 @@
 /obj/item/highfrequencyblade/wizard,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"jse" = (
+/obj/structure/chair/sofa/right/brown{
+	dir = 8;
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "jsm" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
@@ -26677,6 +26681,18 @@
 	},
 /turf/open/indestructible/light,
 /area/centcom/central_command_areas/adminroom)
+"otr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/vending/imported/tizirian{
+	name = "Wall-Mounted Tizirian Imported Delicacies";
+	density = 0;
+	pixel_y = 24;
+	desc = "A vendor serving a fine collection of what is very likely knock-offs of popular Tizirian brands. Some maniac seems to have bolted it into the wall."
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/centcom/central_command_areas/adminroom)
 "otT" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -26982,14 +26998,6 @@
 	},
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
-"oXJ" = (
-/obj/structure/chair/sofa/right/brown{
-	dir = 8;
-	pixel_x = 7;
-	pixel_y = 0
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "oYy" = (
 /obj/structure/mineral_door/wood{
 	color = "543e27"
@@ -28828,6 +28836,23 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet/royalblack,
 /area/centcom/central_command_areas/adminroom)
+"sqf" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/machinery/fax/messageadmins{
+	visible_to_network = 0;
+	fax_name = "Trisk's Spare Fax Machine";
+	name = "Trisk's Fax Machine";
+	syndicate_network = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "sse" = (
 /obj/effect/turf_decal/tile/hot_pink/opposingcorners{
 	color = "#e6a7b9"
@@ -30411,13 +30436,6 @@
 /obj/structure/fence,
 /turf/open/misc/sandy_dirt,
 /area/centcom/central_command_areas/admin)
-"vFb" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/structure/table/wood,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "vFm" = (
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/central_command_areas/adminroom)
@@ -50583,7 +50601,7 @@ aaa
 aaa
 kpH
 vCp
-vFb
+bcl
 qpl
 sLO
 psX
@@ -50839,11 +50857,11 @@ aaa
 aaa
 aaa
 apX
-elr
+sqf
 xwl
 pKn
 jeP
-oXJ
+jse
 gZV
 kpH
 nmQ
@@ -51359,7 +51377,7 @@ kpH
 jkS
 aID
 rdp
-bqQ
+duo
 aMc
 aMc
 aMc
@@ -51870,7 +51888,7 @@ ryJ
 vlG
 iIq
 kpH
-jFZ
+otr
 jFZ
 jFZ
 kpH
