@@ -157,9 +157,10 @@
 /datum/looping_sound/delta_alarm
 
 	mid_sounds = list('sound/machines/delta_alarm.ogg' = 1)
-	volume = 10
+	volume = 15
 	ignore_walls = FALSE
 	use_reverb = FALSE
 	falloff_distance = 5
 	falloff_exponent = 1
+	channel = CHANNEL_AMBIENCE
 
