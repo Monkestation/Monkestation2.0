@@ -10,8 +10,7 @@
 		TRAIT_QUICK_BUILD,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_NIGHT_VISION,
-		TRAIT_MAINTENANCE_DWELLER,
-		// TRAIT_pickpocketing?
+		TRAIT_MAINTENANCE_DWELLER
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
 	external_organs = list(
@@ -20,6 +19,8 @@
 		)
 	meat = /obj/item/food/meat/steak
 	mutanttongue = /obj/item/organ/internal/tongue/goblin
+	mutantliver = /obj/item/organ/internal/liver/goblin
+	mutantspleen = /obj/item/organ/internal/spleen/goblin
 	species_language_holder = /datum/language_holder/goblin
 	maxhealthmod = 0.75
 	stunmod = 1.2
@@ -37,7 +38,7 @@
     race = /datum/species/goblin
 
 /datum/species/goblin/get_species_description()
-	return "A species of small green humanoids. Reknown for their stealth, they are also primarily known for their skill in tinkering and construction, which is on the level of dwarves."
+	return "A species of short humanoids. Hailing from Gatosh, they live in cities built on the crumbling remains of the previous civilization, or travel nomadically through the desert that covers most of the planet."
 
 /datum/species/goblin/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -49,12 +50,6 @@
 			SPECIES_PERK_NAME = "Maintenance Native",
 			SPECIES_PERK_DESC = "As a creature of filth, you feel right at home in maintenance and can see better!", //Mood boost when in maint? How to do?
 		),
-		// list(
-		// 	SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		// 	SPECIES_PERK_ICON = "fist-raised",
-		// 	SPECIES_PERK_NAME = "Swift Hands",
-		// 	SPECIES_PERK_DESC = "Your small fingers allow you to pick pockets quieter than most.",		//I DON'T KNOW HOW TO DO THIS >:c
-		// ),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "skull",
@@ -133,3 +128,16 @@
 	name = "goblin tongue"
 	disliked_foodtypes = VEGETABLES
 	liked_foodtypes = GORE | MEAT | GROSS
+
+/obj/item/organ/internal/liver/goblin
+	name = "green liver"
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon_state = "goblin_liver"
+	toxTolerance = 9
+	desc = "Its green and pulsing..."
+
+/obj/item/organ/internal/spleen/goblin
+	name = "squeedily spooch"
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	icon_state = "goblin_spleen"
+	desc = "Eeeeeww...."

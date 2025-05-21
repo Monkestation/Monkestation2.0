@@ -186,10 +186,12 @@
 	item_path = /obj/item/toy/plush/admin/raziel
 	item_cost = 7500
 
+//Gabbie plush thingoes
 /obj/item/toy/plush/admin/gabbie
 	name = "gabbie"
-	desc = "It's Gabbie!"
+	desc = "She looks drunk. Kind of high too."
 	icon_state = "gabbie"
+	squeak_override = list('sound/effects/adminhelp.ogg'=1)
 	gender = FEMALE
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
@@ -198,6 +200,14 @@
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
 	item_cost = 7500
+
+/obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/food/deadmouse) || istype(attacking_item, /obj/item/reagent_containers/crack) || istype(attacking_item, /obj/item/reagent_containers/cocaine))
+		playsound(src.loc, 'sound/items/eatfood.ogg', 50)
+		to_chat(user, span_warning("Gabbie vacuums up the yummy food!"))
+		qdel(attacking_item)
+
+//End Gabbie plush thingoes
 
 /obj/item/toy/plush/admin/amunsethep
 	name = "amun set hep"
@@ -287,6 +297,47 @@
 /datum/store_item/plushies/fortune
 	name = "Fortune Plush"
 	item_path = /obj/item/toy/plush/admin/fortune
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/weegee
+	name = "weegee"
+	desc = "He's staring into your soul..."
+	icon_state = "weegee"
+	squeak_override = list('monkestation/sound/items/weegee.wav'=1)
+	gender = MALE
+/datum/loadout_item/plushies/weegee
+	name = "Weegee Plush"
+	item_path = /obj/item/toy/plush/admin/weegee
+/datum/store_item/plushies/weegee
+	name = "Weegee Plush"
+	item_path = /obj/item/toy/plush/admin/weegee
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/ropes
+	name = "learns-the-ropes"
+	desc = "A plushie depicting the most marketable weh."
+	icon_state = "ropes"
+	gender = MALE
+/datum/loadout_item/plushies/ropes
+	name = "Learns-The-Ropes Plush"
+	item_path = /obj/item/toy/plush/admin/ropes
+/datum/store_item/plushies/ropes
+	name = "Learns-The-Ropes Plush"
+	item_path = /obj/item/toy/plush/admin/ropes
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/hornsey
+	name = "QB"
+	desc = "Centcom...the horse is here."
+	icon_state = "hornsey"
+	squeak_override = list('monkestation/sound/items/subuluwa.wav'=1)
+	gender = FEMALE
+/datum/loadout_item/plushies/hornsey
+	name = "hornsey Plush"
+	item_path = /obj/item/toy/plush/admin/hornsey
+/datum/store_item/plushies/hornsey
+	name = "hornsey Plush"
+	item_path = /obj/item/toy/plush/admin/hornsey
 	item_cost = 7500
 
 /** SHION PLUSH START **/
