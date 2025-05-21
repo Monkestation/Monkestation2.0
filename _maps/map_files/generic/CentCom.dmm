@@ -14499,10 +14499,7 @@
 /turf/open/floor/glass/reinforced/plasma,
 /area/centcom/central_command_areas/adminroom)
 "aMJ" = (
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/wood/large{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plating/airless,
 /area/centcom/central_command_areas/admin)
 "aMK" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
@@ -19704,6 +19701,10 @@
 "bpz" = (
 /turf/open/floor/material/meat,
 /area/centcom/central_command_areas/admin)
+"bqQ" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating/airless,
+/area/centcom/central_command_areas/admin)
 "brG" = (
 /obj/structure/table/reinforced/plasmarglass,
 /obj/machinery/fax{
@@ -20182,6 +20183,10 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/adminroom)
+"chN" = (
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "cjJ" = (
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/circuit,
@@ -22568,22 +22573,6 @@
 /obj/structure/flora/bush/flowers_pp,
 /turf/open/floor/glass/plasma,
 /area/centcom/central_command_areas/adminroom)
-"gLl" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Trisk's Office"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/indestructible/preopen{
-	id = "trisk_shutters"
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "gMa" = (
 /obj/machinery/light/directional/east{
 	dir = 1
@@ -24214,6 +24203,21 @@
 "jmZ" = (
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/evacuation)
+"jnC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "jpy" = (
 /obj/effect/baseturf_helper/asteroid,
 /turf/closed/indestructible/syndicate,
@@ -26784,6 +26788,10 @@
 "oDK" = (
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/central_command_areas/adminroom)
+"oDV" = (
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/plating/airless,
+/area/centcom/central_command_areas/admin)
 "oEF" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 10
@@ -27972,6 +27980,22 @@
 "qLQ" = (
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/adminroom)
+"qMF" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Trisk's Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "trisk_shutters"
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "qNE" = (
 /obj/structure/fence/corner,
 /obj/effect/turf_decal/weather/dirt{
@@ -28849,14 +28873,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/water/arena,
 /area/centcom/central_command_areas/admin)
-"sty" = (
-/obj/structure/chair/sofa/right/brown{
-	dir = 8;
-	pixel_x = 7;
-	pixel_y = 0
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "suo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -30020,6 +30036,14 @@
 	color = "#55342b"
 	},
 /turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/adminroom)
+"uQp" = (
+/obj/structure/chair/sofa/right/brown{
+	dir = 8;
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
 "uQR" = (
 /obj/machinery/light/dim/directional/south,
@@ -31503,21 +31527,6 @@
 	layer = 2.8
 	},
 /turf/open/floor/iron/dark/diagonal,
-/area/centcom/central_command_areas/adminroom)
-"xuc" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -8;
-	pixel_y = 6
-	},
-/obj/item/pen{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
 "xwl" = (
 /obj/structure/chair/office/tactical{
@@ -49836,8 +49845,8 @@ bAF
 bHN
 kpH
 aOn
-aNy
-aNy
+aMJ
+aMJ
 xZe
 ayp
 aaa
@@ -50094,8 +50103,8 @@ qHo
 lJr
 aOn
 aNy
-aNy
-aNy
+bqQ
+aMJ
 ayp
 aaa
 aaa
@@ -50351,7 +50360,7 @@ kpH
 kpH
 kpH
 aNy
-aMJ
+aNy
 aNy
 aOn
 aaa
@@ -50601,14 +50610,14 @@ aaa
 aaa
 kpH
 vCp
-xuc
+jnC
 qpl
 sLO
 psX
 vsK
 kpH
 kcI
-kcI
+oDV
 kcI
 aOn
 aaa
@@ -50861,7 +50870,7 @@ sqf
 xwl
 pKn
 jeP
-sty
+uQp
 gZV
 kpH
 nmQ
@@ -51122,7 +51131,7 @@ xfe
 abK
 kpH
 ldC
-ldC
+chN
 ldC
 aOn
 aaa
@@ -51377,7 +51386,7 @@ kpH
 jkS
 aID
 rdp
-gLl
+qMF
 aMc
 aMc
 aMc
