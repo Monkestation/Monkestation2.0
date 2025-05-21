@@ -52,7 +52,7 @@
 	name = "rebar"
 	icon_state = "rebar"
 	damage = 30
-	speed = 0.4
+	speed = 2.5
 	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
 	armour_penetration = 10
 	wound_bonus = -20
@@ -67,13 +67,11 @@
 /obj/projectile/bullet/rebar/syndie
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 55
-	speed = 0.4
+	damage = 45
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
 	wound_bonus = 10
 	bare_wound_bonus = 20
-	embedding = list("embed_chance" = 80, "fall_chance" = 1, "jostle_chance" = 3, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.4, "pain_mult" = 3, "jostle_pain_mult" = 2, "rip_time" = 14)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/syndie
 
@@ -81,7 +79,7 @@
 	name = "zaukerite shard"
 	icon_state = "rebar_zaukerite"
 	damage = 60
-	speed = 0.6
+	speed = 1.6
 	dismemberment = 10
 	damage_type = TOX
 	eyeblur = 5
@@ -95,23 +93,36 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 40
-	speed = 0.6
+	damage = 35
+	speed = 1.6
+	projectile_piercing = PASSMOB|PASSVEHICLE
+	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
+	max_pierces = 3
+	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
 	armour_penetration = 30 //very pointy.
-	projectile_piercing = PASSMOB //felt this might have been a nice compromise for the lower damage for the difficulty of getting it
-	wound_bonus = -15
-	bare_wound_bonus = 10
+	wound_bonus = -100
+	bare_wound_bonus = 0
+	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	embedding = list("embed_chance" = 50, "fall_chance" = 2, "jostle_chance" = 3, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.6, "pain_mult" = 4, "jostle_pain_mult" = 2, "rip_time" =18)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
+	accurate_range = 205 //15 tiles before falloff starts to kick in
+
+/obj/projectile/bullet/rebar/hydrogen/impact(atom/A)
+	. = ..()
+	def_zone = ran_zone(def_zone, clamp(205-(7*get_dist(get_turf(A), starting)), 5, 100))
+
+/obj/projectile/bullet/rebar/hydrogen/on_hit(atom/target, blocked, pierce_hit)
+	if(isAI(target))
+		return BULLET_ACT_FORCE_PIERCE
+	return ..()
 
 /obj/projectile/bullet/rebar/healium
 	name = "healium bolt"
 	icon_state = "rebar_healium"
 	damage = 0
-	speed = 0.4
 	dismemberment = 0
 	damage_type = BRUTE
 	armour_penetration = 100
@@ -134,12 +145,10 @@
 
 	return BULLET_ACT_HIT
 
-
 /obj/projectile/bullet/rebar/supermatter
 	name = "supermatter bolt"
 	icon_state = "rebar_supermatter"
 	damage = 0
-	speed = 0.4
 	dismemberment = 0
 	damage_type = TOX
 	armour_penetration = 100
@@ -159,7 +168,6 @@
 
 	return BULLET_ACT_HIT
 
-
 /obj/projectile/bullet/rebar/supermatter/proc/dust_feedback(atom/target)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
 	visible_message(span_danger("[target] is hit by [src], turning [target.p_them()] to dust in a brilliant flash of light!"))
@@ -169,7 +177,6 @@
 	damage = 1 // It's a damn toy.
 	range = 10
 	shrapnel_type = null
-	embedding = null
 	name = "paper ball"
 	desc = "doink!"
 	damage_type = BRUTE
