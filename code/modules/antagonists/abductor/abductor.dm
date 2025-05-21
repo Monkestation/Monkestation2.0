@@ -68,8 +68,8 @@
 	if(isobserver(spender))
 		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
 		var/datum/mind/new_mind = new_mob.mind
-		new_mind.add_antag_datum(/datum/antagonist/abductor/scientist/onemanteam, team
-	
+		new_mind.add_antag_datum(/datum/antagonist/abductor/scientist/onemanteam, team)
+
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
 		return
