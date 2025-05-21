@@ -8,7 +8,7 @@
 
 /obj/item/ammo_box/magazine/ignifist
 	name = "Ignifist rocket"
-	icon_state = "ignifist_mag_100"
+	icon_state = "ignifist"
 	ammo_type = /obj/item/ammo_casing/caseless/ignifist
 	caliber = CALIBER_60MM
 	max_ammo = 1
