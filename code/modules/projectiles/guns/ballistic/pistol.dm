@@ -140,4 +140,4 @@
 	burst_size = 3
 	fire_delay = 0.1 SECONDS
 	spread = 16
-
+	projectile_damage_multiplier = 0.6 // tradeoffs for an experimental pistol
