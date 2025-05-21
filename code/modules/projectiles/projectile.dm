@@ -487,11 +487,12 @@
 				store_hitscan_collision(point_cache)
 			return TRUE
 
-	var/mob/living/who_is_shot = A
 	var/distance = decayedRange - range
 	var/hit_prob = clamp(accurate_range - (accuracy_falloff * distance), 5, 100)
-	if(who_is_shot.body_position == LYING_DOWN)
-		hit_prob *= 1.2
+	if(isliving(A))
+		var/mob/living/who_is_shot = A
+		if(who_is_shot.body_position == LYING_DOWN)
+			hit_prob *= 1.2
 	// melbert todo : make people more skilled with weapons have a lower miss chance // Consider nuking this TODO and update the projectile refactor
 	if(!prob(hit_prob))
 		def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(get_turf(A), starting)), 5, 100))
