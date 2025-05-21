@@ -2,7 +2,7 @@
 /obj/item/ammo_casing/caseless/arrow
 	name = "arrow"
 	desc = "Stabby Stabman!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow"
 	inhand_icon_state = "arrow"
 	projectile_type = /obj/projectile/bullet/reusable/arrow
@@ -20,7 +20,7 @@
 /obj/projectile/bullet/reusable/arrow
 	name = "arrow"
 	desc = "Ow! Get it out of me!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow_projectile"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
 	damage = 50
@@ -31,7 +31,7 @@
 /obj/projectile/bullet/arrow
 	name = "arrow"
 	desc = "Ow! Get it out of me!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow_projectile"
 	damage = 50
 	speed = 1
