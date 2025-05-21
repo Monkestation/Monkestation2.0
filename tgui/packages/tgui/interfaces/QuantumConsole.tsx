@@ -43,10 +43,12 @@ type Avatar = {
 };
 
 type Domain = {
+  announce_ghosts: BooleanLike;
   cost: number;
   desc: string;
   difficulty: number;
   id: string;
+  is_modular: BooleanLike;
   name: string;
   reward: number | string;
 };
@@ -176,7 +178,16 @@ const AccessView = (props) => {
 
 const DomainEntry = (props: DomainEntryProps) => {
   const {
-    domain: { cost, desc, difficulty, id, name, reward },
+    domain: {
+      announce_ghosts,
+      cost,
+      desc,
+      difficulty,
+      id,
+      is_modular,
+      name,
+      reward,
+    },
   } = props;
   const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
@@ -199,6 +210,8 @@ const DomainEntry = (props: DomainEntryProps) => {
     buttonName = 'Deploy';
   }
 
+  const canView = name !== '???';
+
   return (
     <Collapsible
       buttons={
@@ -215,13 +228,17 @@ const DomainEntry = (props: DomainEntryProps) => {
       title={
         <>
           {name}
+          {!!is_modular && canView && <Icon name="cubes" ml={1} />}
           {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
+          {!!announce_ghosts && canView && <Icon name="ghost" ml={1} />}
         </>
       }
     >
       <Stack height={5}>
         <Stack.Item color="label" grow={4}>
           {desc}
+          {!!is_modular && ' (Modular)'}
+          {!!announce_ghosts && ' (Ghost Interaction)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>

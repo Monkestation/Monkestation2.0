@@ -7,7 +7,7 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_LIPS | HEAD_DEBRAIN
-	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_ALWAYS = 0.8)
+	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
 
 	dmg_overlay_type = "monkey"
 
@@ -20,7 +20,7 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	acceptable_bodytype = BODYTYPE_CUSTOM
 	should_draw_greyscale = FALSE
-	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_ALWAYS = 0.8)
+	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
 
 	dmg_overlay_type = "monkey"
 
@@ -32,7 +32,7 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	should_draw_greyscale = FALSE
 	hand_traits = list(TRAIT_CHUNKYFINGERS)
-	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_ALWAYS = 0.8)
+	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
 
 	dmg_overlay_type = "monkey"
 
@@ -44,7 +44,7 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
 	should_draw_greyscale = FALSE
 	hand_traits = list(TRAIT_CHUNKYFINGERS)
-	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_ALWAYS = 0.8)
+	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
 
 	dmg_overlay_type = "monkey"
 
@@ -58,7 +58,7 @@
 	speed_modifier = -0.075
 	footprint_sprite = FOOTPRINT_SPRITE_PAWS
 	bodypart_traits = list(TRAIT_VAULTING)
-	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_ALWAYS = 0.8)
+	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
 
 /obj/item/bodypart/leg/right/teratoma
 	icon_static =  'monkestation/icons/mob/species/teratoma/bodyparts.dmi'
@@ -71,4 +71,4 @@
 	speed_modifier = -0.075
 	dmg_overlay_type = "monkey"
 	bodypart_traits = list(TRAIT_VAULTING)
-	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_ALWAYS = 0.8)
+	composition_effects = list(TRAIT_PASSTABLE = 0.5, TRAIT_VENTCRAWLER_NUDE = 0.8)
