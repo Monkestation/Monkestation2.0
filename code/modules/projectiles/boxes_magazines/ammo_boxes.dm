@@ -118,4 +118,26 @@
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25)
 
+/obj/item/ammo_box/argenti
+	name = "ammo box (7.62x54r)"
+	icon_state = "argenti_box"
+	ammo_type = /obj/item/ammo_casing/a762
+	max_ammo = 48
 
+/obj/item/ammo_box/hangman
+	name = "ammo box (.357)"
+	icon_state = "hangman_box"
+	ammo_type = /obj/item/ammo_casing/a357
+	max_ammo = 40
+
+/obj/item/ammo_box/neville
+	name = "ammo box (20x160mm)"
+	icon_state = "neville_box"
+	ammo_type = /obj/item/ammo_casing/neville
+	max_ammo = 20
+
+/obj/item/ammo_box/malone
+	name = "ammo box (12.7x70mm)"
+	icon_state = "malone_box"
+	ammo_type = /obj/item/ammo_casing/mm127x70
+	max_ammo = 200

@@ -7,6 +7,10 @@
 /datum/armament_entry/company_import/bms/light // unrestricted, but very very expensive
 	subcategory = "Small Arms"
 
+/datum/armament_entry/company_import/bms/light/cascadier
+	item_type = /obj/item/gun/ballistic/automatic/pistol/cascadier
+	cost = PAYCHECK_COMMAND * 9
+
 /datum/armament_entry/company_import/bms/light/argenti
 	item_type = /obj/item/gun/ballistic/automatic/argenti
 	cost = PAYCHECK_COMMAND * 22
@@ -50,6 +54,10 @@
 /datum/armament_entry/company_import/bms/magazines // feed the war machine
 	subcategory = "Magazines"
 	cost = PAYCHECK_CREW*3
+
+/datum/armament_entry/company_import/bms/magazines/cascadier
+	item_type = /obj/item/ammo_box/magazine/cascadier
+	cost = PAYCHECK_CREW*1.5
 
 /datum/armament_entry/company_import/bms/magazines/argenti
 	item_type = /obj/item/ammo_box/magazine/argenti

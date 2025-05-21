@@ -119,3 +119,11 @@
 /obj/item/ammo_box/magazine/r10mm/empty
 	icon_state = "r10mm-0"
 	start_empty = TRUE
+
+/obj/item/ammo_box/magazine/cascadier
+	name = "Cascadier 873 magazine (9mm)"
+	desc = "A 12 round magazine for the Cascadier 873 pistol. Uses 9mm."
+	icon_state = "cascadier"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = CALIBER_9MM
+	max_ammo = 12

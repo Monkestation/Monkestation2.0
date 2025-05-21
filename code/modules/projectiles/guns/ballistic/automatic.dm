@@ -381,7 +381,7 @@
 
 /obj/item/gun/ballistic/automatic/argenti
 	name = "\improper Argenti r.ii"
-	desc = "A relic of a rifle. The primary bolt action rifle of the Colonial Legion, still in good condition despite the centuries of wear."
+	desc = "A relic of a rifle. The primary bolt action rifle of the Colonial Legion, still in good condition despite the centuries of wear. Chambered in 7.62x54r"
 	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -411,7 +411,7 @@
 
 /obj/item/gun/ballistic/automatic/malone
 	name = "\improper Malone Mk.2"
-	desc = "A cumbersome machinegun just bearly on the edge of man portability, fires a low power 12.7mm round at an excessive rate of fire."
+	desc = "A cumbersome machinegun just bearly on the edge of man portability, fires the low powered 12.7x70mm round at an excessive rate of fire."
 	icon = 'icons/obj/weapons/guns/guns56x.dmi'
 	icon_state = "malone"
 	SET_BASE_PIXEL(-8, 0)
@@ -436,7 +436,7 @@
 
 /obj/item/gun/ballistic/automatic/neville
 	name = "\improper 20 Neville Anti-Tank Rifle"
-	desc = "A brick of steel vaugly gunshaped. Fires bullets designed to penetrate tank armor, good luck lugging this thing around."
+	desc = "A brick of steel vaugly gunshaped. Fires bullets designed to penetrate tank armor, good luck lugging this thing around. Chambered in 20x160mm"
 	icon = 'icons/obj/weapons/guns/guns56x.dmi'
 	icon_state = "neville"
 	SET_BASE_PIXEL(-12, 0)

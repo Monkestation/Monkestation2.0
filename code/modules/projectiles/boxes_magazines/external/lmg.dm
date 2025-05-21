@@ -44,6 +44,7 @@
 
 /obj/item/ammo_box/magazine/malone
 	name = " Malone Drum (12.7x70mm)"
+	desc = "A 125 round drum for the Malone Mk2 Machinegun. Uses 12.7x70mm."
 	icon_state = "malone"
 	ammo_type = /obj/item/ammo_casing/mm127x70
 	caliber = CALIBER_127X70MM
