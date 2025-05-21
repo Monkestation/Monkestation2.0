@@ -286,7 +286,7 @@
 	for(var/mob/living/recipient as anything in all_who_can_hear)
 		var/avoid_highlighting = (recipient == owner) || (recipient == linker_parent)
 		to_chat(recipient, formatted_message, type = MESSAGE_TYPE_RADIO, avoid_highlighting = avoid_highlighting)
-		if(linker.show_balloon_alert)
+		if(linker.show_balloon_alert && recipient != owner)
 			recipient.balloon_alert(recipient, "you hear a voice from your [linker.network_name]")
 
 	for(var/mob/recipient as anything in GLOB.dead_mob_list)
