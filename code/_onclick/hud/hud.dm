@@ -100,6 +100,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/list/atom/movable/screen/cybernetics/ammo_counter/cybernetics_ammo = list() //monkestation edit - CYBERNETICS
 
+	var/atom/movable/screen/vis_holder/vis_holder
+
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -143,6 +145,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(update_sightflags))
 	RegisterSignal(mymob, COMSIG_VIEWDATA_UPDATE, PROC_REF(on_viewdata_update))
 	update_sightflags(mymob, mymob.sight, NONE)
+
+	vis_holder = new(null, src)
 
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
@@ -236,6 +240,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(hotkeybuttons)
 	throw_icon = null
 	QDEL_LIST(infodisplay)
+	QDEL_NULL(vis_holder)
 
 	healths = null
 	stamina = null
@@ -384,6 +389,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen -= infodisplay
 			if(always_visible_inventory.len)
 				screenmob.client.screen += always_visible_inventory
+
+	if(vis_holder)
+		screenmob.client.screen += vis_holder
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
