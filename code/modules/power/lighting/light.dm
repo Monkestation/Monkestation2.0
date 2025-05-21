@@ -203,7 +203,7 @@
 
 	if(!is_station_level(z))
 		return
-	if(!is_station_area_or_adjacent(get_area(src)))
+	if(!is_station_area_or_adjacent(src))
 		return
 	if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
 		set_major_emergency_light()
