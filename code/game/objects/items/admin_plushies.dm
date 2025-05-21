@@ -8,13 +8,16 @@
 	icon_state = ""
 	/// A string of text that is optionaly added to the objects desc, it SHOULD be the admin's CKEY.
 	var/adminCKey = null
+	// Whether or not to append (A member of our beloved admin team) to the end of the description
+	var/appendNote = TRUE
 
 /obj/item/toy/plush/admin/Initialize(mapload)
 	. = ..()
-	if(adminCKey)
-		desc = "[desc]" + " " + "(A member of our beloved admin team- ''[adminCKey]'')"
-	else
-		desc = "[desc]" + " " + "(A member of our beloved admin team)"
+	if(appendNote)
+		if(adminCKey)
+			desc = "[desc]" + " " + "(A member of our beloved admin team- ''[adminCKey]'')"
+		else
+			desc = "[desc]" + " " + "(A member of our beloved admin team)"
 
 /obj/item/toy/plush/admin/ben_mothman
 	name = "ben mothman"
@@ -189,10 +192,11 @@
 //Gabbie plush thingoes
 /obj/item/toy/plush/admin/gabbie
 	name = "gabbie"
-	desc = "She looks drunk. Kind of high too."
+	desc = "She looks a bit angry."
 	icon_state = "gabbie"
-	squeak_override = list('sound/effects/adminhelp.ogg'=1)
+	squeak_override = list('monkestation/sound/items/gabnoise.ogg'=1)
 	gender = FEMALE
+	appendNote = FALSE
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -202,9 +206,15 @@
 	item_cost = 7500
 
 /obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/food/deadmouse) || istype(attacking_item, /obj/item/reagent_containers/crack) || istype(attacking_item, /obj/item/reagent_containers/cocaine))
+	if(istype(attacking_item, /obj/item/food/deadmouse))
 		playsound(src.loc, 'sound/items/eatfood.ogg', 50)
-		to_chat(user, span_warning("Gabbie vacuums up the yummy food!"))
+		to_chat(user, span_warning("Gabbie chomps up the rat!"))
+		src.desc = "She still looks angry, but less hungry."
+		qdel(attacking_item)
+	else if(istype(attacking_item, /obj/item/reagent_containers/cocaine))
+		playsound(src.loc, 'monkestation/sound/items/sniff.ogg', 50)
+		to_chat(user, span_warning("Gabbie inhales the powder!"))
+		src.desc = "She still looks angry, but more high."
 		qdel(attacking_item)
 
 //End Gabbie plush thingoes
@@ -303,7 +313,7 @@
 	name = "weegee"
 	desc = "He's staring into your soul..."
 	icon_state = "weegee"
-	squeak_override = list('monkestation/sound/items/weegee.wav'=1)
+	squeak_override = list('monkestation/sound/items/weegee.ogg'=1)
 	gender = MALE
 /datum/loadout_item/plushies/weegee
 	name = "Weegee Plush"
@@ -326,18 +336,30 @@
 	item_path = /obj/item/toy/plush/admin/ropes
 	item_cost = 7500
 
-/obj/item/toy/plush/admin/hornsey
+/obj/item/toy/plush/admin/horsey
 	name = "QB"
 	desc = "Centcom...the horse is here."
-	icon_state = "hornsey"
-	squeak_override = list('monkestation/sound/items/subuluwa.wav'=1)
+	icon_state = "horsey"
+	squeak_override = list('monkestation/sound/items/subuluwa.ogg'=1)
 	gender = FEMALE
-/datum/loadout_item/plushies/hornsey
-	name = "hornsey Plush"
-	item_path = /obj/item/toy/plush/admin/hornsey
+/datum/loadout_item/plushies/horsey
+	name = "QB Plush"
+	item_path = /obj/item/toy/plush/admin/horsey
 /datum/store_item/plushies/hornsey
-	name = "hornsey Plush"
-	item_path = /obj/item/toy/plush/admin/hornsey
+	name = "QB Plush"
+	item_path = /obj/item/toy/plush/admin/horsey
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/barnaby
+	name = "barnaby"
+	desc = "Time to cause some chaos."
+	icon_state = "barnaby"
+/datum/loadout_item/plushies/barnaby
+	name = "Barnaby Plush"
+	item_path = /obj/item/toy/plush/admin/barnaby
+/datum/store_item/plushies/hornsey
+	name = "Barnaby Plush"
+	item_path = /obj/item/toy/plush/admin/barnaby
 	item_cost = 7500
 
 /** SHION PLUSH START **/
