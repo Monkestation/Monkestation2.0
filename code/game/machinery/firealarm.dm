@@ -146,7 +146,7 @@
 /obj/machinery/firealarm/proc/set_status()
 	if(!(my_area.fire || LAZYLEN(my_area.active_firelocks)) || (obj_flags & EMAGGED))
 		soundloop.stop()
-	if(!SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
+	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		alarmloop.stop()
 	update_appearance()
 
