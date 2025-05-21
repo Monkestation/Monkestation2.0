@@ -110,7 +110,7 @@
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	accurate_range = 205 //15 tiles before falloff starts to kick in
 
-/obj/projectile/bullet/rebar/hydrogen/impact(atom/A)
+/obj/projectile/bullet/rebar/hydrogen/Impact(atom/A) // TODO projectile refactor
 	. = ..()
 	def_zone = ran_zone(def_zone, clamp(205-(7*get_dist(get_turf(A), starting)), 5, 100))
 
