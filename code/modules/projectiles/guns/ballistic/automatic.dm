@@ -390,7 +390,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/argenti
 	semi_auto = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
-	fire_delay = 8
+	fire_delay = 1.4 SECONDS
 	recoil = 1.6
 
 /obj/item/gun/ballistic/automatic/hangman
@@ -404,7 +404,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/hangman
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_STANDARD
-	fire_delay = 10
+	fire_delay = 2 SECONDS
 	recoil = 1.6
 
 /obj/item/gun/ballistic/automatic/malone
@@ -416,7 +416,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	inhand_icon_state = "malone"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/malone
-	fire_delay = 0.8
+	fire_delay = .08 SECONDS
 	can_suppress = FALSE
 	burst_size = 2
 	actions_types = list()
@@ -455,7 +455,7 @@
 	semi_auto = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND
 	bolt_type = BOLT_TYPE_STANDARD
-	fire_delay = 25
+	fire_delay = 3.5 SECONDS
 	recoil = 10
 	wield_recoil = 3.5
 	slowdown = 2
