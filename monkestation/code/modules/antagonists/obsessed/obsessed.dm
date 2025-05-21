@@ -94,7 +94,6 @@
 		if(!istype(C))
 			message_admins("Tokener isn't a carbon mob, aborting...")
 			CRASH("Obsessed antag token was spent on a noncarbon.")
-			return
 		if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
 			message_admins("Tokener doesn't have a brain for a brain trauma, aborting...")
 			CRASH("Couldn't find a brain trauma for obsessed antag token")

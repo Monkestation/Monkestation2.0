@@ -106,11 +106,14 @@
 			continue
 		spawn_locs += carp_spawn.loc
 	if(!spawn_locs.len)
-		message_admins("No valid spawn locations found, aborting...")
+		message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent a drifting contractor antag token")
 		CRASH("Failed to find valid spawn location for drifting contractor antag token")
 
 	//spawn the contractor and assign the candidate
 	var/mob/living/carbon/human/contractor = new(pick(spawn_locs))
 	contractor.PossessByPlayer(spender_key)
 	contractor.mind.add_antag_datum(/datum/antagonist/traitor/contractor)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(contractor)] has been made into a contractor by using an antag token.")
 
