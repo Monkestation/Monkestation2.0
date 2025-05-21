@@ -17,7 +17,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/junior_operative/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_LONE_OPERATIVE, alert_pic = /obj/item/clothing/head/helmet/space/syndicate, role_name_text = "Junior Lone Operative")
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_JUNIOR_LONE_OPERATIVE, alert_pic = /obj/item/clothing/head/helmet/space/syndicate, role_name_text = "Junior Lone Operative")
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
@@ -31,8 +31,8 @@
 	operative.randomize_human_appearance(~RANDOMIZE_SPECIES)
 	operative.dna.update_dna_identity()
 	var/datum/mind/Mind = new /datum/mind(selected.key)
-	Mind.set_assigned_role(SSjob.GetJobType(/datum/job/lone_operative))
-	Mind.special_role = ROLE_LONE_OPERATIVE
+	Mind.set_assigned_role(SSjob.GetJobType(/datum/job/lone_operative/junior))
+	Mind.special_role = ROLE_JUNIOR_LONE_OPERATIVE
 	Mind.active = TRUE
 	Mind.transfer_to(operative)
 	if(!operative.client?.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
