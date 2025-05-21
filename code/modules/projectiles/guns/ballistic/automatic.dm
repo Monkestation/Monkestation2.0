@@ -393,6 +393,7 @@
 	fire_delay = 1.4 SECONDS
 	burst_size = 0
 	recoil = 1.6
+	projectile_damage_multiplier = 0.81 // Carbineated, less damage to account for better capacity and firerate, just a sliver under the 50dmg mark
 
 /obj/item/gun/ballistic/automatic/hangman
 	name = "\improper Hangman 757"
@@ -408,6 +409,7 @@
 	fire_delay = 2 SECONDS
 	burst_size = 0
 	recoil = 1.6
+	projectile_damage_multiplier = 0.89 // 53.4 dmg a hit, I think this is fair since of the cancer fire rate
 
 /obj/item/gun/ballistic/automatic/malone
 	name = "\improper Malone Mk.2"
@@ -428,8 +430,8 @@
 	mag_display = TRUE
 	mag_display_ammo = FALSE
 	empty_indicator = FALSE
-	recoil = 2.8
-	wield_recoil = 1.4
+	recoil = 3.8
+	wield_recoil = 2.2
 /obj/item/gun/ballistic/automatic/malone/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
