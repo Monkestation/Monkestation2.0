@@ -449,7 +449,6 @@
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	inhand_icon_state = "neville"
-	slot_flags = ITEM_SLOT_BACK
 	burst_size = 0
 	accepted_magazine_type = /obj/item/ammo_box/magazine/neville
 	actions_types = list()
