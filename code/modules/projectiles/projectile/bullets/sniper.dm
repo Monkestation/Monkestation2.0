@@ -121,7 +121,7 @@
 	speed = 0.65
 	range = 100 // Its not accurate, its fucking powerful
 	damage = 35
-	paralyze = 100
+	paralyze = 30 // Its goin clean through, no spreading to really cause you to get KOed
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
 	armour_penetration = 100

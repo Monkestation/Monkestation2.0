@@ -391,6 +391,7 @@
 	semi_auto = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
 	fire_delay = 1.4 SECONDS
+	burst_size = 0
 	recoil = 1.6
 
 /obj/item/gun/ballistic/automatic/hangman
@@ -405,6 +406,7 @@
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_STANDARD
 	fire_delay = 2 SECONDS
+	burst_size = 0
 	recoil = 1.6
 
 /obj/item/gun/ballistic/automatic/malone
