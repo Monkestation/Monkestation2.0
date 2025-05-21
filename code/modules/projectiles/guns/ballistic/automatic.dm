@@ -387,7 +387,6 @@
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "argenti"
 	inhand_icon_state = "argenti"
-	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/argenti
 	semi_auto = FALSE
 	bolt_type = BOLT_TYPE_STANDARD
@@ -402,7 +401,6 @@
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "hangman"
 	inhand_icon_state = "hangman"
-	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/hangman
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_STANDARD
