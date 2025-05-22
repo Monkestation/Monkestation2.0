@@ -18,12 +18,6 @@
 	/// Basically, bodypart traits that ONLY apply when this arm is the active hand of the mob
 	var/list/hand_traits
 
-/obj/item/bodypart/arm/Destroy()
-	return ..()
-
-/obj/item/bodypart/arm/Destroy()
-	return ..()
-
 /obj/item/bodypart/arm/set_owner(new_owner)
 	. = ..()
 	if(. == FALSE)

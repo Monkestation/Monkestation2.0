@@ -1295,4 +1295,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
+/// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
+/// Can either be applied to the attacker or an individual limb.
+#define TRAIT_BORG_PUNCHER "borg_puncher"
+
 // END TRAIT DEFINES
