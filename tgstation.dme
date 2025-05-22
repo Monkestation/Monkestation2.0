@@ -6065,7 +6065,6 @@
 #include "monkestation\code\area\areas\direction_names.dm"
 #include "monkestation\code\area\areas\ruins.dm"
 #include "monkestation\code\area\areas\station.dm"
-#include "monkestation\code\controllers\master.dm"
 #include "monkestation\code\controllers\configuration\configuration.dm"
 #include "monkestation\code\controllers\subsystem\autotransfer.dm"
 #include "monkestation\code\controllers\subsystem\economy.dm"
