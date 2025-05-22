@@ -161,3 +161,41 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	faction = "MI13"
+
+/datum/outfit/syndicate/junior
+	name = "Syndicate Junior Operative"
+
+	glasses = /obj/item/clothing/glasses/night
+	back = /obj/item/storage/backpack/fireproof
+	head = /obj/item/clothing/head/helmet/space/syndicate
+	suit = /obj/item/clothing/suit/space/syndicate
+	suit_store = /obj/item/tank/jetpack/oxygen
+	belt = /obj/item/storage/belt/military
+	l_pocket = /obj/item/pinpointer/nuke
+	r_pocket = null
+	id = /obj/item/card/id/advanced/chameleon
+	backpack_contents = list(
+		/obj/item/gun/ballistic/automatic/pistol = 1,
+		/obj/item/ammo_box/magazine/m9mm = 1,
+		/obj/item/pen/edagger = 1,
+	)
+	tc = 10
+	uplink_type = /obj/item/uplink/old
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/syndicate/junior/post_equip(mob/living/carbon/human/nukie, visualsOnly)
+	..()
+	var/obj/item/clothing/suit/space/anti_freeze = nukie.wear_suit
+	anti_freeze.toggle_spacesuit(nukie)
+
+/datum/outfit/syndicate/junior/plasmaman
+	name = "Syndicate Junior Operative (Plasmaman)"
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_HANDS
+
+
+/datum/outfit/syndicate/junior/plasmaman/New()
+	backpack_contents += /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	return ..()
+

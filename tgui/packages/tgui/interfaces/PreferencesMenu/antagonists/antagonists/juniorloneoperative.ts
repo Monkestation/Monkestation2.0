@@ -7,9 +7,9 @@ const JuniorLoneOperative: Antagonist = {
   name: 'Junior Lone Operative',
   description: [
     multiline`
-      A solo nuclear operative cadet that has a higher chance of spawning the longer
-      the nuclear authentication disk stays in one place. Break past the 9% mission
-      success and prove your worth to the Syndicate.
+      A solo nuclear operative cadet that has a guranteed chance of spawning after
+      the nuclear authentication disk stays in one place for too long. Break past
+      the 9% mission success and prove your worth to the Syndicate.
     `,
 
     OPERATIVE_MECHANICAL_DESCRIPTION,
