@@ -197,6 +197,7 @@
 	squeak_override = list('monkestation/sound/items/gabnoise.ogg'=1)
 	gender = FEMALE
 	appendNote = FALSE
+
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -227,7 +228,7 @@
 /datum/loadout_item/plushies/amunsethep
 	name = "Amun Set Hep Plush"
 	item_path = /obj/item/toy/plush/admin/amunsethep
-/datum/store_item/plushies/gabbie
+/datum/store_item/plushies/amunsethep
 	name = "Amun Set Hep Plush"
 	item_path = /obj/item/toy/plush/admin/amunsethep
 	item_cost = 7500
@@ -357,9 +358,22 @@
 /datum/loadout_item/plushies/barnaby
 	name = "Barnaby Plush"
 	item_path = /obj/item/toy/plush/admin/barnaby
-/datum/store_item/plushies/hornsey
+/datum/store_item/plushies/barnaby
 	name = "Barnaby Plush"
 	item_path = /obj/item/toy/plush/admin/barnaby
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/jay
+	name = "jay kouri"
+	desc = "Doesn't seem to get a break. From making sure his underlings in the war dont die, to making sure the station's crew doesn't kill each other. Has beautiful blue eyes though, too bad he doesn't take off his sunglasses"
+	icon_state = "jay"
+	squeak_override = list('sound/weapons/gun/rifle/shot.ogg'=1)
+/datum/loadout_item/plushies/jay
+	name = "Jay Kouri Plush"
+	item_path = /obj/item/toy/plush/admin/jay
+/datum/store_item/plushies/jay
+	name = "Jay Kouri Plush"
+	item_path = /obj/item/toy/plush/admin/jay
 	item_cost = 7500
 
 /** SHION PLUSH START **/
