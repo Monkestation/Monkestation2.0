@@ -85,7 +85,7 @@
 	desc = "A 12 gauge buckshot shell."
 	icon_state = "gshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot
-	pellets = 8 //monkestation edit was 6
+	pellets = 6 //back to 6
 	variance = 25
 
 /obj/item/ammo_casing/shotgun/rubbershot
