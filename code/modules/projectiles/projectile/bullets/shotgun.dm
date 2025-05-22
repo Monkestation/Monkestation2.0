@@ -1,7 +1,7 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	icon_state = "pellet"
-	damage = 35
+	damage = 40
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
 
