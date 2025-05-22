@@ -282,7 +282,9 @@
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
 	if(!environment)
-		stack_trace("We tried to check a gas_mixture that doesn't exist for its firetype, what are you DOING")
+		var/a1 = !!(checked_turf.flags_1 & INITIALIZED_1)
+		var/a2 = SSatoms.initializing_something()
+		stack_trace("We tried to check a gas_mixture that doesn't exist for its firetype, what are you DOING (debug: a1=[a1], a2=[a2])")
 		return
 
 	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)

@@ -4,8 +4,8 @@
 /datum/opposing_force_equipment/medical/twitch
 	name = "TWitch Sensory Stimulant Injector"
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/twitch
-	description = "A special type of injector containing 10u of TWitch alongside some other chems. Overdosing on this can lead to heart implosion, but give you super speed and bullet immortality."
-	admin_note = "TWITCH IS VERY OVERPOWERED IF OD'D ON. Overdosing gives them a MASSIVE speed boost, with the ability to dodge 100% of ALL projectiles. OD limit is 15u."
+	description = "A special type of injector containing 10u of TWitch alongside some other chems. Overdosing on this can lead to heart implosion, but give you super speed."
+	admin_note = "TWitch no longer gives the user bullet immunity on OD, it just gives a speed boost."
 
 /datum/opposing_force_equipment/medical/demoneye
 	name = "DemonEye Steroid Injector"

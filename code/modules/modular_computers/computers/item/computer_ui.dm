@@ -112,6 +112,10 @@
 			"alert" = program.alert_pending,
 		))
 
+	data["alert_style"] = get_security_level_relevancy()
+	data["alert_color"] = SSsecurity_level?.current_security_level?.announcement_color
+	data["alert_name"] = SSsecurity_level?.current_security_level?.name_shortform
+
 	return data
 
 // Handles user's GUI input
@@ -128,15 +132,13 @@
 
 	switch(action)
 		if("PC_exit")
-			active_program.kill_program(usr)
+			active_program?.kill_program(usr)
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
 			return TRUE
 		if("PC_minimize")
-			if(!active_program)
-				return
-			active_program.background_program()
+			active_program?.background_program()
 			return TRUE
 
 		if("PC_killprogram")

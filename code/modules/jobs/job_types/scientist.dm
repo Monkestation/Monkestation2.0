@@ -44,6 +44,7 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
 	belt = /obj/item/modular_computer/pda/science
 	ears = /obj/item/radio/headset/headset_sci
+	glasses = /obj/item/clothing/glasses/science
 	shoes = /obj/item/clothing/shoes/sneakers/white
 
 	backpack = /obj/item/storage/backpack/science

@@ -17,7 +17,8 @@
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
-	. += span_notice("The reinforcement rods are <b>wrenched</b> firmly in place.")
+	if(!istype(src, /turf/open/floor/engine/insulation))
+		. += span_notice("The reinforcement rods are <b>wrenched</b> firmly in place.")
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS
