@@ -202,20 +202,6 @@ All ShuttleMove procs go here
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
 
-/obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
-	. = ..()
-	if(. & MOVE_AREA)
-		. |= MOVE_CONTENTS
-
-/obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
-	. = ..()
-	if(. & MOVE_AREA)
-		. |= MOVE_CONTENTS
-
-/obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
-	. = ..()
-	if(. & MOVE_AREA)
-		. |= MOVE_CONTENTS
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
@@ -240,7 +226,7 @@ All ShuttleMove procs go here
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
-		
+
 	var/missing_nodes = FALSE
 	for(var/i in 1 to device_type)
 		if(nodes[i])
