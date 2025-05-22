@@ -45,7 +45,7 @@
 	name = "Neville magazine (20x160mm)"
 	desc = "A 5 round magazine for the 20 Neville ATR. Uses 20x160mm."
 	icon_state = "neville"
-	base_icon_state = "eville"
+	base_icon_state = "neville"
 	ammo_type = /obj/item/ammo_casing/neville
 	max_ammo = 5
 	caliber = CALIBER_20X160MM

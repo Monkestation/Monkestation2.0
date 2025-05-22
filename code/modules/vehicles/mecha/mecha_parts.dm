@@ -332,6 +332,53 @@
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "savannah_ivanov_armor"
 
+// Kingspire Mk.1
+
+/obj/item/mecha_parts/chassis/kingspire
+	name = "\improper Kingspire Mk.1 Chassis"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_chass"
+	SET_BASE_PIXEL(-8, 0)
+	construct_type = /datum/component/construction/unordered/mecha_chassis/kingspire
+
+/obj/item/mecha_parts/part/kingspire_torso
+	name="\improper Kingspire Mk.1 drivers cupola"
+	desc="A cylindrical peice of metal designed to house the driver and his equipment. It was found to be easier to manufacture this peice seperate from the rest of the hull."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_harness"
+
+/obj/item/mecha_parts/part/kingspire_left_arm
+	name="\improper Kingspire Mk.1 Transmission"
+	desc="Linkages and a gearbox for a Kingspire Mk.1, emphasis was taken on reliability."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_l_arm"
+
+/obj/item/mecha_parts/part/kingspire_right_arm
+	name="\improper Kingspire Mk.1 Engine bay"
+	desc="The small (for a tank) engine fitted onto a Kingspire Mk.1 , the decision to have a self contained engine was abandoned in larger tanks due to problems with scale."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_r_arm"
+
+/obj/item/mecha_parts/part/kingspire_left_leg
+	name="\improper Kingspire Mk.1 left track"
+	desc="The Leftside track for a Kingspire Mk.1, Designed for simple maintence with little tools."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_l_leg"
+	SET_BASE_PIXEL(-8, 0)
+
+/obj/item/mecha_parts/part/kingspire_right_leg
+	name="\improper Kingspire Mk.1 right track"
+	desc="The Rightside track for a Kingspire Mk.1, Designed for simple maintence with little tools."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_r_leg"
+	SET_BASE_PIXEL(-8, 0)
+
+/obj/item/mecha_parts/part/kingspire_armor
+	name="\improper Kingspire Mk.1 Ratcatcher Turret"
+	desc="An armored turret containing Harvey Malone's First Designed Machinegun, also contains radio equipment and the large antenna."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_armor"
+
 ///////// Circuitboards
 
 /obj/item/circuitboard/mecha
@@ -431,3 +478,15 @@
 /obj/item/circuitboard/mecha/savannah_ivanov/main
 	name = "Savannah-Ivanov Combination Control Lock module (Exosuit Board)"
 	icon_state = "mainboard"
+
+/obj/item/circuitboard/mecha/kingspire/peripherals
+	name = "Kingspire Mk.1 Hydraulics (Exosuit Board)"
+	icon_state = "kingspire1"
+
+/obj/item/circuitboard/mecha/kingspire/targeting
+	name = "Kingspire Mk.1 Seats (Exosuit Board)"
+	icon_state = "kingspire2"
+
+/obj/item/circuitboard/mecha/kingspire/main
+	name = "Kingspire Mk.1 Radio Equipment (Exosuit Board)"
+	icon_state = "kingspire3"

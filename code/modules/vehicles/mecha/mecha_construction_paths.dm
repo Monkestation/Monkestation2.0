@@ -783,3 +783,28 @@
 
 	outer_plating = /obj/item/stack/sheet/plasteel
 	outer_plating_amount = 5
+
+//KINGSPIRE MK.1
+/datum/component/construction/unordered/mecha_chassis/kingspire
+	result = /datum/component/construction/mecha/kingspire
+	steps = list(
+		/obj/item/mecha_parts/part/kingspire_torso,
+		/obj/item/mecha_parts/part/kingspire_left_arm,
+		/obj/item/mecha_parts/part/kingspire_right_arm,
+		/obj/item/mecha_parts/part/kingspire_left_leg,
+		/obj/item/mecha_parts/part/kingspire_right_leg
+	)
+
+/datum/component/construction/mecha/kingspire
+	result = /obj/vehicle/sealed/mecha/kingspire
+	base_icon = "kingspire"
+
+	circuit_control = /obj/item/circuitboard/mecha/kingspire/main
+	circuit_periph = /obj/item/circuitboard/mecha/kingspire/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/kingspire/targeting
+
+	inner_plating = /obj/item/stack/sheet/iron
+	inner_plating_amount = 3
+
+	outer_plating = /obj/item/mecha_parts/part/kingspire_armor
+	outer_plating_amount = 1
