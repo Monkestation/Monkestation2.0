@@ -354,15 +354,12 @@
 		temp_gender = PLURAL
 	return ..()
 
-<<<<<<< HEAD
-=======
 /mob/living/carbon/human/p_themselves(temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 
 //clothing need special handling due to pairs of items, ie gloves vs a singular glove, shoes, ect.
 /obj/item/clothing/p_they(capitalized, temp_gender)
@@ -441,10 +438,8 @@
 	if(temp_gender != PLURAL)
 		. = "es"
 
-<<<<<<< HEAD
 /datum/mind/p_they(capitalized, temp_gender)
 	return current?.p_they(capitalized, temp_gender) || ..()
-=======
 /obj/item/clothing/p_themselves(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
@@ -460,7 +455,6 @@
 
 /datum/mind/p_they(temp_gender)
 	return current?.p_they(temp_gender) || ..()
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 
 /datum/mind/p_their(capitalized, temp_gender)
 	return current?.p_their(capitalized, temp_gender) || ..()
@@ -489,7 +483,6 @@
 /datum/mind/p_es(temp_gender)
 	return current?.p_es(temp_gender) || ..()
 
-<<<<<<< HEAD
 //MONKESTATION EDIT START
 // Genders for plushies
 /obj/item/toy/plush/p_they(capitalized, temp_gender)
@@ -534,7 +527,5 @@
 	if(temp_gender == PLURAL)
 		. = "are"
 //MONKESTATION EDIT END
-=======
 /datum/mind/p_themselves(temp_gender)
 	return current?.p_themselves(temp_gender) || ..()
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))

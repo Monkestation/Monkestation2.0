@@ -742,7 +742,6 @@
 	R.model.basic_modules += BR
 	R.model.add_module(BR, FALSE, TRUE)
 
-<<<<<<< HEAD
 /obj/item/borg/upgrade/broomer/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (!.)
@@ -750,7 +749,6 @@
 	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
 	if (BR)
 		R.model.remove_module(BR, TRUE)
-=======
 /obj/item/borg/upgrade/shuttle_blueprints
 	name = "Engineering Cyborg Shuttle Blueprint Database"
 	desc = "An upgrade to the engineering model cyborg allowing for the construction and expansion of shuttles."
@@ -761,7 +759,6 @@
 
 	items_to_add = list(/obj/item/shuttle_blueprints/borg)
 
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.

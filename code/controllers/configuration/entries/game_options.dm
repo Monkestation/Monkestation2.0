@@ -448,10 +448,8 @@
 
 /datum/config_entry/flag/give_tutorials_without_db
 
-<<<<<<< HEAD
 /datum/config_entry/string/metacurrency_name
 	config_entry_value = "Monkecoins"
-=======
 /datum/config_entry/string/new_player_alert_role_id
 
 /datum/config_entry/keyed_list/positive_station_traits
@@ -496,4 +494,3 @@
 
 /datum/config_entry/number/max_shuttle_size
 	default = 250
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))

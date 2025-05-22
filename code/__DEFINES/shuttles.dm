@@ -104,8 +104,6 @@
 #define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
 ///spawned stuff should hit the shuttle
 #define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
-<<<<<<< HEAD
-=======
 
 // Hijack stages
 
@@ -133,4 +131,3 @@
 
 #define CUSTOM_ENGINE_POWER_MULTIPLIER 25
 #define CUSTOM_ENGINE_POWER_TURF_COUNT_OFFSET 5
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))

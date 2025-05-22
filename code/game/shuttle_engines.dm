@@ -35,14 +35,11 @@
 	fire = 50
 	acid = 70
 
-<<<<<<< HEAD
-=======
 /obj/machinery/power/shuttle_engine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
 
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 /obj/machinery/power/shuttle_engine/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(!port)

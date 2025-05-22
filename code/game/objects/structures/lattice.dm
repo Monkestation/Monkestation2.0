@@ -68,7 +68,6 @@
 	if(the_rcd.mode == RCD_CATWALK)
 		return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 2)
 
-<<<<<<< HEAD
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(passed_mode == RCD_FLOORWALL)
 		to_chat(user, span_notice("You build a floor."))
@@ -76,7 +75,6 @@
 		if(isgroundlessturf(T))
 			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			qdel(src)
-=======
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
 		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
@@ -88,7 +86,6 @@
 				return TRUE
 		if(design_structure == /obj/structure/lattice/catwalk)
 			replace_with_catwalk()
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 			return TRUE
 	if(passed_mode == RCD_CATWALK)
 		to_chat(user, span_notice("You build a catwalk."))

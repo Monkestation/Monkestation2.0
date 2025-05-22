@@ -35,16 +35,13 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 			if(!checkT)
 				continue
 			checked_turfs[sourceT] |= dir
-<<<<<<< HEAD
 			checked_turfs[checkT] |= turn(dir, 180)
-=======
 			checked_turfs[checkT] |= REVERSE_DIR(dir)
 			switch(extra_check?.Invoke(checkT))
 				if(EXTRA_ROOM_CHECK_SKIP)
 					continue
 				if(EXTRA_ROOM_CHECK_FAIL)
 					return FALSE
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 			.[sourceT] |= dir
 			.[checkT] |= turn(dir, 180)
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
@@ -91,9 +88,6 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
 
-<<<<<<< HEAD
-/proc/create_area(mob/creator)
-=======
 /proc/set_turfs_to_area(list/turf/turfs, area/new_area, list/area/affected_areas = list())
 	for(var/turf/the_turf as anything in turfs)
 		var/area/old_area = the_turf.loc
@@ -117,7 +111,6 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
 
 /proc/create_area(mob/creator, new_area_type = /area)
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
 		/turf/open/space,
@@ -173,12 +166,8 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		newA = new area_choice
 		newA.AddComponent(/datum/component/custom_area)
 		newA.setup(str)
-<<<<<<< HEAD
-		newA.has_gravity = oldA.has_gravity
-=======
 		newA.default_gravity = oldA.default_gravity
 		GLOB.custom_areas[newA] = TRUE
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 		require_area_resort() //new area registered. resort the names
 	else
 		newA = area_choice

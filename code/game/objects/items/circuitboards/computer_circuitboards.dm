@@ -571,7 +571,6 @@
 	name = "Exploration Drone Control Console"
 	build_path = /obj/machinery/computer/exodrone_control_console
 
-<<<<<<< HEAD
 /obj/item/circuitboard/computer/service_orders
 	name = "Service Order"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
@@ -596,7 +595,6 @@
 	name = "Medical Order"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/computer/department_orders/medical
-=======
 /obj/item/circuitboard/computer/shuttle
 	var/shuttle_id
 
@@ -617,4 +615,3 @@
 /obj/item/circuitboard/computer/shuttle/docker
 	name = "Shuttle Navigation Computer (Computer Board)"
 	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))

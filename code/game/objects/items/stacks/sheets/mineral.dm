@@ -306,10 +306,8 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	. = ..()
 	. += GLOB.titanium_recipes
 
-<<<<<<< HEAD
 /obj/item/stack/sheet/mineral/titanium/twenty
 	amount = 20
-=======
 /obj/item/stack/sheet/mineral/titanium/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/rods))
@@ -329,7 +327,6 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 			to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
 		return
 	return ..()
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 
 /obj/item/stack/sheet/mineral/titanium/fifty
 	amount = 50

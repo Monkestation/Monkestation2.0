@@ -6,8 +6,6 @@
 #define CRAFTING_MACHINERY_USE 0
 ///If the structure is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
 #define CRAFTING_STRUCTURE_USE 0
-<<<<<<< HEAD
-=======
 ///If the ingredient is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
 #define CRAFTING_INGREDIENT_USE 0
 
@@ -81,4 +79,3 @@
 #define CAT_ENTERTAINMENT "Entertainment"
 #define CAT_TOOLS "Tools"
 #define CAT_CULT "Blood Cult"
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))

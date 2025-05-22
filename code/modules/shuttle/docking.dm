@@ -136,14 +136,11 @@
 
 		old_turfs[oldT] = move_mode
 
-<<<<<<< HEAD:code/modules/shuttle/docking.dm
 /obj/docking_port/mobile/proc/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
 	var/list/atoms_to_mark = list() // monkestation edit: replays
 	for(var/i in 1 to length(old_turfs))
-=======
 /obj/docking_port/mobile/proc/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/fallback_area)
 	for(var/i in 1 to old_turfs.len)
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493)):code/modules/shuttle/mobile_port/shuttle_move.dm
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
 		var/move_mode = old_turfs[oldT]
