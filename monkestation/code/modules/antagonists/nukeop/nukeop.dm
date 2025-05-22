@@ -128,6 +128,11 @@
 	else
 		H.equip_to_slot_or_del(nuke_code_paper, ITEM_SLOT_RPOCKET)
 	var/mob/living/datum_owner = owner.current
+
+	antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [code]<br>"
+	owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = code)
+	to_chat(owner, "The nuclear authorization code is: <B>[code]</B>")
+
 	to_chat(datum_owner, "<b>Code Phrases</b>: [span_blue(jointext(GLOB.syndicate_code_phrase, ", "))]")
 	to_chat(datum_owner, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
 	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
