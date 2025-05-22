@@ -158,7 +158,7 @@
 
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
-	if(owner.stat < HARD_CRIT && limb_id != SPECIES_OOZELING)
+	if(owner.stat < HARD_CRIT)
 		return FALSE
 	return ..()
 
