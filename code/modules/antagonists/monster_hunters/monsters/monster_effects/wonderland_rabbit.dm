@@ -37,13 +37,13 @@
 	exit.setDir(dir)
 	return ..()
 
-/mob/living/basic/wonderland_rabbit/examine(mob/user)
+/mob/living/basic/wonderland_rabbit/examine(mob/living/user)
 	. = ..()
 	if(!isliving(user) || IS_MONSTERHUNTER(user) || (FACTION_RABBITS in user.faction))
 		return
-	//var/mob/living/living_user = user
 	if(is_monster_hunter_prey(user) || IS_CULTIST(user) || IS_CLOCK(user) || IS_WIZARD(user))
 		. += span_warning("You feel sick as you look into its eyes...")
+		user.apply_status_effect(/datum/status_effect/rabbit_sickness)
 
 /obj/effect/wonderland_rabbit_enter
 	name = "rabbit?"
@@ -66,3 +66,46 @@
 /obj/effect/wonderland_rabbit_exit/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 8 SECONDS)
+
+/datum/status_effect/rabbit_sickness
+	id = "rabbit_sickness"
+	duration = 3 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+	COOLDOWN_DECLARE(message_cooldown)
+
+/datum/status_effect/rabbit_sickness/on_apply()
+	. = ..()
+	owner.set_pain_mod(id, 1.5)
+
+/datum/status_effect/rabbit_sickness/on_remove()
+	owner.unset_pain_mod(id)
+	return ..()
+
+/datum/status_effect/rabbit_sickness/tick(seconds_per_tick, times_fired)
+	owner.set_hallucinations_if_lower(1 MINUTES)
+
+	if(SPT_PROB(5, seconds_per_tick))
+		owner.adjust_disgust(rand(2, 5) * seconds_per_tick)
+
+	if(owner.mob_mood && SPT_PROB(5, seconds_per_tick))
+		var/amt_to_reduce = rand(5, 25) * seconds_per_tick
+		owner.mob_mood.set_sanity(owner.mob_mood.sanity - amt_to_reduce)
+
+	if(owner.stamina && SPT_PROB(3, seconds_per_tick))
+		var/amt_to_drain = owner.stamina.maximum * (rand(10, 20) / 100) * seconds_per_tick
+		owner.stamina.adjust(-amt_to_drain, forced = TRUE)
+
+	if(SPT_PROB(3, seconds_per_tick))
+		owner.adjust_confusion_up_to(rand(1 SECONDS, 2 SECONDS) * seconds_per_tick, 15 SECONDS)
+
+	if(SPT_PROB(3, seconds_per_tick))
+		owner.adjust_stutter_up_to(rand(2 SECONDS, 5 SECONDS) * seconds_per_tick, 1 MINUTES)
+
+	if(COOLDOWN_FINISHED(src, message_cooldown) && SPT_PROB(1, seconds_per_tick))
+		var/msg = pick(
+			"I glimpse a grassy nightmare reflected in the windows...",
+			"Am I merely prey, despite my power?",
+			"My body aches, as if I shared my breath with an <i>incompatible</i> presence..."
+		)
+		to_chat(owner, span_hypnophrase(msg), type = MESSAGE_TYPE_WARNING)
+		COOLDOWN_START(src, message_cooldown, 10 SECONDS)
