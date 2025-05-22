@@ -2841,7 +2841,7 @@
 		drinker.adjustFireLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustOxyLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(2 * REM * seconds_per_tick, FALSE)
-		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
+		drinker.fully_heal(HEAL_POSTIVE_DISEASES)
 	..()
 	return TRUE
 
