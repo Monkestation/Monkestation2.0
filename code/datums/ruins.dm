@@ -28,6 +28,8 @@
 	var/suffix = null
 	///What flavor or ruin is this? eg ZTRAIT_SPACE_RUINS
 	var/ruin_type = null
+	///ruins we want to avoid spawning near
+	var/list/undesirable_ruins = null
 
 /datum/map_template/ruin/New()
 	if(!name && id)
@@ -35,4 +37,3 @@
 
 	mappath = prefix + suffix
 	..(path = mappath)
-
