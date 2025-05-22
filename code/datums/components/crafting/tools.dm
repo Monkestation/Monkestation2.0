@@ -79,8 +79,8 @@
 		if(!crayon.check_empty(user, 10))
 			return TRUE
 
-<<<<<<< HEAD
-=======
+
+
 /datum/crafting_recipe/bone_hook
 	name = "Goliath Bone Hook"
 	result = /obj/item/fishing_hook/bone
@@ -110,10 +110,7 @@
 		if(!crayon.check_empty(user, 10))
 			return TRUE
 
-<<<<<<< HEAD
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
-=======
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
+
 /datum/crafting_recipe/shuttle_blueprints/on_craft_completion(mob/user, atom/result)
 	var/static/list/valid_types = list(/obj/item/toy/crayon/blue, /obj/item/toy/crayon/rainbow, /obj/item/toy/crayon/spraycan)
 	for(var/valid_type in valid_types)
