@@ -31,7 +31,7 @@
 	operative.randomize_human_appearance(~RANDOMIZE_SPECIES)
 	operative.dna.update_dna_identity()
 	var/datum/mind/Mind = new /datum/mind(selected.key)
-	Mind.set_assigned_role(SSjob.GetJobType(/datum/job/lone_operative/junior))
+	Mind.set_assigned_role(SSjob.GetJobType(/datum/job/junior_lone_operative))
 	Mind.special_role = ROLE_JUNIOR_LONE_OPERATIVE
 	Mind.active = TRUE
 	Mind.transfer_to(operative)
@@ -70,11 +70,19 @@
 	)
 	tc = 10
 	uplink_type = /obj/item/uplink/old
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/syndicate/junior/post_equip(mob/living/carbon/human/nukie, visualsOnly)
+	..()
+	var/obj/item/clothing/suit/space/anti_freeze = nukie.wear_suit
+	anti_freeze.toggle_spacesuit(nukie)
 
 /datum/outfit/syndicate/junior/plasmaman
 	name = "Syndicate Junior Operative (Plasmaman)"
 	uniform = /obj/item/clothing/under/plasmaman/syndicate
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+	internals_slot = ITEM_SLOT_HANDS
+
 
 /datum/outfit/syndicate/junior/plasmaman/New()
 	backpack_contents += /obj/item/clothing/head/helmet/space/plasmaman/syndie

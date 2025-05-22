@@ -1,5 +1,5 @@
 /datum/job/lone_operative
 	title = ROLE_LONE_OPERATIVE
 
-/datum/job/lone_operative/junior
+/datum/job/junior_lone_operative
 	title = ROLE_JUNIOR_LONE_OPERATIVE
