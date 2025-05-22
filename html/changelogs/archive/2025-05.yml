@@ -316,6 +316,13 @@
   - qol: Changed the Slime Link message color to a slightly brighter shade of blue.
   - qol: Slime Link messages now notify listeners with a balloon alert.
   - config: The webmap URL can now be set via the config.
+  - balance: Seed Meshes can no longer yield gatfruit or evil seedlings.
+  - bugfix: Fixed an error with the Anti-Glow gene.
+  Absolucy, EnterTheJake:
+  - bugfix: Space Phase now makes the Heretic Space proof.
+  Absolucy, EnterTheJake, OrcaCora:
+  - image: Resprited the rust, moon, blade, void, and ash path heretic blades.
+  - image: Blade Heretic Knives have been resprited into proper throwing knives.
   Absolucy, Melbert:
   - refactor: Food hunger bar has been refactored, and moved. Now it sits next to
       the moodlet face, and dynamically updates as you eat.
@@ -344,3 +351,4 @@
   Siro:
   - code_imp: Crit health check for oozling decapitations restored. Head decapitations
       match other species.
+  - code_imp: removed unremovable flag from obj/item/organ/internal/eyes/jelly types.
