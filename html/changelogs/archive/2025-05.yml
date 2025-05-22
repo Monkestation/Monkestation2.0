@@ -291,3 +291,10 @@
   Absolucy:
   - bugfix: Kicking someone now properly does 50% more damage than punching, as intended.
   - bugfix: Charlie/Delta Station on icebox are no longer considered station areas.
+2025-05-21:
+  Absolucy:
+  - bugfix: Monster Hunter objectives now properly update their explanation text when
+      their target chooses a clan/path.
+  - bugfix: Fixed old DNA data disks not rolling species-specific mutations.
+  - refactor: Refactored how roundend rewards are distributed. Hopefully this should
+      ensure everyone gets their roundend rewards, even if they die soon after roundend.
