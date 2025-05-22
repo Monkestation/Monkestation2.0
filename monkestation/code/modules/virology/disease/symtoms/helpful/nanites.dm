@@ -1,3 +1,4 @@
+/* codeblocked until functional. Not converted to datum/disease/acute yet
 /datum/symptom/nano_boost
 	name = "Nano-symbiosis"
 	desc = "The virus reacts to nanites in the host's bloodstream by enhancing their replication cycle."
@@ -69,3 +70,4 @@
 	if(reverse_boost && SEND_SIGNAL(M, COMSIG_HAS_NANITES))
 		if(prob(A.stage_prob))
 			A.stage = min(A.stage + 1,A.max_stages)
+*/

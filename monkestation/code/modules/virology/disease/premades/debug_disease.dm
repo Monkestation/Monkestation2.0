@@ -4,7 +4,7 @@
 	category = DISEASE_DEBUG
 
 	symptoms = list(
-		new /datum/symptom/sensory_restoration
+		new /datum/symptom/robotic_adaptation,
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_AIRBORNE
 	strength = 100
