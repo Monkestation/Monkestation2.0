@@ -939,6 +939,12 @@
 			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
 				disease.cure(FALSE)
 
+	if(heal_flags & HEAL_POSTIVE_DISEASES)
+		for(var/datum/disease/disease as anything in diseases)
+			if(disease.severity == DISEASE_SEVERITY_POSITIVE)
+				disease.cure(FALSE)
+		for(var/)
+
 	if(heal_flags & HEAL_WOUNDS)
 		for(var/datum/wound/wound as anything in all_wounds)
 			wound.remove_wound()
