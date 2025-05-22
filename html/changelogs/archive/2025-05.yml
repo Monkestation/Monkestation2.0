@@ -317,6 +317,7 @@
   - qol: Slime Link messages now notify listeners with a balloon alert.
   - config: The webmap URL can now be set via the config.
   - balance: Seed Meshes can no longer yield gatfruit or evil seedlings.
+  - bugfix: Fixed an error with the Anti-Glow gene.
   Absolucy, EnterTheJake:
   - bugfix: Space Phase now makes the Heretic Space proof.
   Absolucy, Melbert:
