@@ -808,3 +808,185 @@
 
 	outer_plating = /obj/item/mecha_parts/part/kingspire_armor
 	outer_plating_amount = 1
+
+/datum/component/construction/mecha/kingspire/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "The roadwheels are disconnected but can be attached to keep the hull of the ground with a <b>wrench</b>.",
+			"forward_message" = "Attached roadwheels",
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The track is still slack from the lack of return rollers, which can be attached with a <b>screwdriver</b>.",
+			"forward_message" = "attached return rollers",
+			"backward_message" = "removed roadwheels"
+		),
+		list(
+			"key" = /obj/item/stack/cable_coil,
+			"amount" = 5,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The tracks are now tensioned and ready for use, now the engine can be <b>wired</b>.",
+			"forward_message" = "added wiring",
+			"backward_message" = "removed return rollers"
+		),
+		list(
+			"key" = TOOL_WIRECUTTER,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>.",
+			"forward_message" = "adjusted wiring",
+			"backward_message" = "removed wiring"
+		),
+	)
+/datum/component/construction/mecha/kingspire/get_circuit_steps()
+	return list(
+		list(
+			"key" = circuit_control,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The engine is wired and the <b>Radio Equipment</b> can now be wired in and powered.",
+			"forward_message" = "added radio set",
+			"backward_message" = "disconnected wiring"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The radio is in but is sitting unsecured. it and can be <b>screwed</b> into place.",
+			"forward_message" = "secured radio set",
+			"backward_message" = "removed radio set"
+		),
+		list(
+			"key" = circuit_periph,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Radio is now secured, and the <b>hydraulic equipment</b> can be slotted in.",
+			"forward_message" = "added hydraulic equipment",
+			"backward_message" = "unsecured radio set"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The hydraulics are now installed, and the hoses can be <b>screwed</b> into place.",
+			"forward_message" = "secured hydraulic lines",
+			"backward_message" = "removed hydraulics"
+		)
+	)
+/datum/component/construction/mecha/kingspire/get_circuit_weapon_steps()
+	return list(
+				list(
+			"key" = circuit_weapon,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The <b>Seating</b> is still not in, do you want to crouch while driving?.",
+			"forward_message" = "added the seats",
+			"backward_message" = "disconnected hydraulic lines"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The seats are loose and your not stupid enough to leave it like that.",
+			"forward_message" = "secured seating",
+			"backward_message" = "removed seating"
+		),
+	)
+/datum/component/construction/mecha/kingspire/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the crew compartment parts are almost finished, you can add the <b>scanning_module</b> for the driver.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured seats"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"forward_message" = "added capacitor",
+			"backward_message" = "unscecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured capacitor",
+			"backward_message" = "removed capacitor"
+		),
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added.",
+			"forward_message" = "added power cell",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured power cell",
+			"backward_message" = "removed power cell"
+		),
+	)
+
+/datum/component/construction/mecha/kingspire/get_inner_plating_steps()
+	return list(
+		list(
+			"key" = inner_plating,
+			"amount" = inner_plating_amount,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The interior of the Kingspire is finished, you need to use [inner_plating_amount] sheets of [initial(inner_plating.name)] to make the headlight.",
+			"forward_message" = "installed headlight socket",
+			"backward_message" = "unsecured power cell"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The headlight socket is built, the bulb can be <b>screwed</b> into place.",
+			"forward_message" = "lightbulb added",
+			"backward_message" = "pried off headlight mount"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The hull is finished, you need to reinforce everything by welding it.",
+			"forward_message" = "welded tank hull",
+			"backward_message" = "removed lightbulb"
+		),
+	)
+/datum/component/construction/mecha/kingspire/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_WELDER,
+			"desc" = "the hull is welded, you now need to add the turret to the tank.",
+			"forward_message" = "installed turret",
+			"backward_message" = "cut welds on hull"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The turret is now on the Kingspire, you need to mount the antenna and machinegun into the turret",
+			"forward_message" = "gun and antenna added",
+			"backward_message" = "pried off turret"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The turret is assembled, the plates on it need to be welded shut for combat.",
+			"forward_message" = "welded turret",
+			"backward_message" = "removed turret parts"
+		),
+	)

@@ -538,7 +538,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
 	name = "40mm tank cannon"
-	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	desc = "A 40mm Deckard 21-C, a literally ancient cannon, it looks fine but the age worries you. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
 	icon_state = "mecha_light_tank_cannon"
 	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
@@ -553,7 +553,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone Mk.1 Ratcatcher"
-	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	desc = "Harvey Malone's first machinegun design. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
 	icon_state = "mecha_light_tank_mg"
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
 	projectile = /obj/projectile/bullet/mm127x70

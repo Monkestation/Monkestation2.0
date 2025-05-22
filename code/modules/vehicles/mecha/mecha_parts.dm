@@ -338,7 +338,6 @@
 	name = "\improper Kingspire Mk.1 Chassis"
 	icon = 'icons/mecha/tanks_construct.dmi'
 	icon_state = "kingspire_chass"
-	SET_BASE_PIXEL(-8, 0)
 	construct_type = /datum/component/construction/unordered/mecha_chassis/kingspire
 
 /obj/item/mecha_parts/part/kingspire_torso
@@ -480,13 +479,13 @@
 	icon_state = "mainboard"
 
 /obj/item/circuitboard/mecha/kingspire/peripherals
-	name = "Kingspire Mk.1 Hydraulics (Exosuit Board)"
+	name = "Kingspire Mk.1 Hydraulics (peripherals board)"
 	icon_state = "kingspire1"
 
 /obj/item/circuitboard/mecha/kingspire/targeting
-	name = "Kingspire Mk.1 Seats (Exosuit Board)"
+	name = "Kingspire Mk.1 Seats (Weapon & Targeting board)"
 	icon_state = "kingspire2"
 
 /obj/item/circuitboard/mecha/kingspire/main
-	name = "Kingspire Mk.1 Radio Equipment (Exosuit Board)"
+	name = "Kingspire Mk.1 Radio Equipment (Main board)"
 	icon_state = "kingspire3"
