@@ -390,6 +390,8 @@
 		return .
 
 	for(var/datum/reagent/bits as anything in belly.reagents.reagent_list)
+		if(!bits.metabolization_rate)
+			continue
 		// hack to get around stomachs having 5u stomach lining reagent ugugugu
 		var/effective_volume = bits.volume
 		if(belly.food_reagents[bits.type])
