@@ -44,8 +44,8 @@
 	restricted = TRUE
 
 /datum/armament_entry/company_import/bms/tanks/kingspire
-	item_type = /obj/vehicle/sealed/mecha/kingspire
-	cost = PAYCHECK_COMMAND * 380
+	item_type = /obj/item/mecha_parts/chassis/kingspire
+	cost = PAYCHECK_COMMAND * 200
 
 /datum/armament_entry/company_import/bms/tanks/ratcatcherbelt
 	item_type = /obj/item/mecha_ammo/makeshift/lighttankmg

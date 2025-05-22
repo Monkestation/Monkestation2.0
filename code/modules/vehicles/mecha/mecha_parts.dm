@@ -479,13 +479,16 @@
 	icon_state = "mainboard"
 
 /obj/item/circuitboard/mecha/kingspire/peripherals
-	name = "Kingspire Mk.1 Hydraulics (peripherals board)"
+	name = "Kingspire Mk.1 Hydraulics"
+	desc = "Hydaulic systems for the Kingspire Mk.1"
 	icon_state = "kingspire1"
 
 /obj/item/circuitboard/mecha/kingspire/targeting
-	name = "Kingspire Mk.1 Seats (Weapon & Targeting board)"
+	name = "Kingspire Mk.1 Seats"
+	desc = "Seats for the crew of a Kingspire Mk.1"
 	icon_state = "kingspire2"
 
 /obj/item/circuitboard/mecha/kingspire/main
-	name = "Kingspire Mk.1 Radio Equipment (Main board)"
+	name = "Kingspire Mk.1 Radio Equipment"
+	desc = "A Radioset for the Kingspire Mk.1"
 	icon_state = "kingspire3"
