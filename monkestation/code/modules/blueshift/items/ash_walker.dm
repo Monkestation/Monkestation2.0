@@ -60,7 +60,10 @@
 	icon = 'monkestation/code/modules/blueshift/icons/misc_tools.dmi'
 	icon_state = "mesh"
 	var/list/static/seeds_blacklist = list(
-		/obj/item/seeds/lavaland,
+		/obj/item/seeds/lavaland, // abstract type
+		/obj/item/seeds/spliced, // not supposed to exist on its own, as its "managed" by splicers
+		/obj/item/seeds/gatfruit,
+		/obj/item/seeds/seedling/evil,
 	)
 
 /obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, params)
