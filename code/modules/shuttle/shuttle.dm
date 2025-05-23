@@ -643,10 +643,6 @@
 		for(var/atom/individual_atoms in place)
 			individual_atoms.connect_to_shuttle(TRUE, src, dock)
 
-//this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
-/obj/docking_port/mobile/proc/canMove()
-	return TRUE
-
 //this is to check if this shuttle can physically dock at dock stationary_dock
 /obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/stationary_dock)
 	if(!istype(stationary_dock))
