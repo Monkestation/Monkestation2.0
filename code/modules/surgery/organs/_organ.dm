@@ -9,13 +9,18 @@
 	var/status = ORGAN_ORGANIC
 	///The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
-	///The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
+	/**
+	 * The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
+	 * Do NOT add slots with matching names to different zones - it will break the organs_slot list!
+	*/
 	var/slot
-	// DO NOT add slots with matching names to different zones - it will break organs_slot list!
+	/// Random flags that describe this organ
 	var/organ_flags = ORGAN_EDIBLE
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
-	/// Total damage this organ has sustained
-	/// Should only ever be modified by apply_organ_damage
+	/**
+	 * Total damage this organ has sustained.
+	 * Should only ever be modified by apply_organ_damage!
+	*/
 	var/damage = 0
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
 	var/healing_factor = 0 //fraction of maxhealth healed per on_life(), set to 0 for generic organs
@@ -416,29 +421,34 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
 /obj/item/organ/proc/get_status_text(advanced, add_tooltips)
-	if(organ_flags & ORGAN_FAILING)
-		. = "<font color='#cc3333'>Non-Functional</font>"
-		if(add_tooltips)
-			. = span_tooltip("Repair or replace surgically.", .)
-		return .
+	if(advanced && (organ_flags & ORGAN_HAZARDOUS))
+		return conditional_tooltip("<font color='#cc3333'>Harmful Foreign Body</font>", "Remove surgically.", add_tooltips)
 
+	if(organ_flags & ORGAN_SYNTHETIC_EMP)
+		return conditional_tooltip("<font color='#cc3333'>EMP-Derived Failure</font>", "Repair or replace surgically.", add_tooltips)
+
+	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
-		return "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged</font>"
+		tech_text = "[round((damage / maxHealth) * 100, 1)]% damaged"
+
+	if(organ_flags & ORGAN_FAILING)
+		return conditional_tooltip("<font color='#cc3333'>[tech_text || "Non-Functional"]</font>", "Repair or replace surgically.", add_tooltips)
+
 	if(damage > high_threshold)
-		. = "<font color='#ff9933'>Severely Damaged</font>"
-		if(add_tooltips && owner.stat != DEAD)
-			. = span_tooltip("[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", .)
-		return .
+		return conditional_tooltip("<font color='#ff9933'>[tech_text || "Severely Damaged"]</font>", "[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", add_tooltips && owner.stat != DEAD)
+
 	if(damage > low_threshold)
-		. = "<font color='#ffcc33'>Mildly Damaged</font>"
-		if(add_tooltips && owner.stat != DEAD)
-			. = span_tooltip("[healing_factor ? "Treat with rest." : "Use specialty medication."]", .)
-		return .
+		return conditional_tooltip("<font color='#ffcc33'>[tech_text || "Mildly Damaged"] </font>", "[healing_factor ? "Treat with rest." : "Use specialty medication."]", add_tooltips && owner.stat != DEAD)
+
+	if(tech_text)
+		return "<font color='#33cc33'>[tech_text]</font>"
+
+	return ""
 
 /// Determines if this organ is shown when a user has condensed scans enabled
 /obj/item/organ/proc/show_on_condensed_scans()
 	// We don't need to show *most* damaged organs as they have no effects associated
-	return (organ_flags & (ORGAN_FAILING|ORGAN_VITAL))
+	return (organ_flags & (ORGAN_PROMINENT|ORGAN_HAZARDOUS|ORGAN_FAILING|ORGAN_VITAL))
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
 /obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)

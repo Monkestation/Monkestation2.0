@@ -3,7 +3,7 @@
 	desc = "A nausea-inducing hunk of twisting flesh and metal."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
-	status = ORGAN_ROBOTIC
+	status = ORGAN_ROBOTIC | ORGAN_PROMINENT // weird?
 	organ_flags = NONE
 	beating = TRUE
 	/// Shows name of the gland as well as a description of what it does upon examination by abductor scientists and observers.

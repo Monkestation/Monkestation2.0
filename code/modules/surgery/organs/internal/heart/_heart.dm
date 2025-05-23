@@ -91,6 +91,15 @@
 
 	return round(base_amount * clamp(1.5 * ((maxHealth - damage) / maxHealth), 0.5, 1)) // heart damage puts a multiplier on it
 
+/obj/item/organ/internal/heart/get_status_text(advanced, add_tooltips)
+	if(!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD)
+		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
+	return ..()
+
+/obj/item/organ/internal/heart/show_on_condensed_scans()
+	// Always show if the guy needs a heart (so its status can be monitored)
+	return ..() || owner.needs_heart()
+
 /obj/item/organ/internal/heart/on_life(seconds_per_tick, times_fired)
 	..()
 
