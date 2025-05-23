@@ -37,7 +37,6 @@
 	if(active())
 		if(!last_active)
 			owner.SetAllImmobility(0)
-			owner.set_safe_hunger_level()
 			owner.extinguish_mob()
 		give_traits()
 		last_active = TRUE

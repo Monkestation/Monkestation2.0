@@ -1417,12 +1417,37 @@
 	H.open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
-/mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+/mob/proc/adjust_nutrition(change, forced = FALSE) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
+		return
+
 	nutrition = max(0, nutrition + change)
 
+/mob/living/adjust_nutrition(change, forced)
+	. = ..()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(change) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
+
 ///Force set the mob nutrition
-/mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
-	nutrition = max(0, change)
+/mob/proc/set_nutrition(set_to, forced = FALSE) //Seriously fuck you oldcoders.
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
+		return
+
+	nutrition = max(0, set_to)
+
+/mob/living/set_nutrition(set_to, forced)
+	var/old_nutrition = nutrition
+	. = ..()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(old_nutrition - nutrition) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
 
 ///Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()

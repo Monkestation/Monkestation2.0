@@ -95,8 +95,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll
+	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
+	var/atom/movable/screen/hunger/hunger
 
 	var/list/atom/movable/screen/cybernetics/ammo_counter/cybernetics_ammo = list() //monkestation edit - CYBERNETICS
 
@@ -246,6 +247,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	stamina = null
 	healthdoll = null
 	spacesuit = null
+	hunger = null
 	cybernetics_ammo = null //monkestation edit - CYBERNETICS
 	blobpwrdisplay = null
 	alien_plasma_display = null

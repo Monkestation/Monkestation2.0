@@ -519,6 +519,8 @@
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
+	if(QDELETED(mob_occupant))
+		return
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
 
