@@ -638,6 +638,12 @@
 	item = /obj/vehicle/sealed/mecha/talos
 	cost = 180
 
+/datum/uplink_item/support/supporttankammo
+	name = "75mm cannon ammo"
+	desc = "3 crated shells for use with the 85V-g Talos assault tank."
+	item = /obj/item/mecha_ammo/makeshift/supporttankammo
+	cost = 5
+
 /datum/uplink_item/support/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
