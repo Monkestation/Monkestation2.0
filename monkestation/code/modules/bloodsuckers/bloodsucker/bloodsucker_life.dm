@@ -320,7 +320,7 @@
 	user.remove_all_embedded_objects()
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
 
-	if(SEND_SIGNAL(src, BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
+	if(SEND_SIGNAL(src, COMSIG_BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
 		return
 
 	// Elders get dusted, Fledglings get gibbed.
