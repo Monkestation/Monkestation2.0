@@ -69,9 +69,6 @@ export const CSS_COLORS = [
   'average',
   'bad',
   'label',
-<<<<<<< HEAD
-];
-=======
   'olive',
   'orange',
   'pink',
@@ -100,7 +97,6 @@ export enum Direction {
 }
 
 export type CssColor = (typeof CSS_COLORS)[number];
->>>>>>> cbc3350224f (Custom Shuttles Redux: Allows for the construction of custom shuttles. (#88493))
 
 /* IF YOU CHANGE THIS KEEP IT IN SYNC WITH CHAT CSS */
 export const RADIO_CHANNELS = [
