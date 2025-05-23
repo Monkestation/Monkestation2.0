@@ -641,7 +641,7 @@
 /datum/uplink_item/support/supporttankammo
 	name = "75mm cannon ammo"
 	desc = "3 crated shells for use with the 85V-g Talos assault tank."
-	item = /obj/item/mecha_ammo/makeshift/supporttankammo
+	item = /obj/item/mecha_ammo/supporttankammo
 	cost = 5
 
 /datum/uplink_item/support/turretbox
