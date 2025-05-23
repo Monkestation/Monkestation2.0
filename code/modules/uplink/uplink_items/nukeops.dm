@@ -632,6 +632,12 @@
 	item = /obj/item/mecha_ammo/makeshift/lighttankmg
 	cost = 1
 
+/datum/uplink_item/support/talos
+	name = "85V-g Talos Assault tank"
+	desc = "A slow assault tank with an extremely large cannon, drains its battery fast. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/talos
+	cost = 180
+
 /datum/uplink_item/support/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."

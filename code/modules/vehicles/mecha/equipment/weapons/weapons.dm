@@ -568,3 +568,20 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 	mech_flags = EXOSUIT_MODULE_TANK
+
+//Talos (the huge fucker) weapons
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/support_tank_cannon
+	name = "75mm tank cannon"
+	desc = "A huge cannon designed to crack bunkers,. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
+	icon_state = "mecha_support_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/supporttankshell
+	equip_cooldown = 12 SECONDS
+	projectiles = 1
+	projectiles_cache = 16
+	projectiles_cache_max = 16
+	ammo_type = MECHA_AMMO_SUPPORTTANK
+	mech_flags = EXOSUIT_MODULE_SUPPORTTANK
