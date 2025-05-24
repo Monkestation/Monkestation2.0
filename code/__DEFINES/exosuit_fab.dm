@@ -42,8 +42,9 @@
 #define EXOSUIT_MODULE_TANK (1<<14)
 // Module is compatbile with drilling "mechs"
 #define EXOSUIT_MODULE_DRILL (1<<15)
+// Module is compatible with support tank "mechs"  (needed to seperate this otherwise we could have devitts with gibbing cannons)
+#define EXOSUIT_MODULE_SUPPORTTANK (1<<16)
 //monkestation edit end
-
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)

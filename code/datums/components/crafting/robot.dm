@@ -212,3 +212,128 @@
 		/obj/item/reagent_containers/syringe = 1,
 	)
 	category = CAT_ROBOT
+
+// Kingspire parts
+
+/datum/crafting_recipe/kingspire_engine
+	name = "Kingspire Mk.1 Engine"
+	result = /obj/item/mecha_parts/part/kingspire_right_arm
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH)
+	time = 30 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/cable_coil = 60,
+		/obj/item/stack/rods = 8,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/assembly/igniter = 6,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_cupola
+	name = "Kingspire Mk.1 Drivers cupola"
+	result = /obj/item/mecha_parts/part/kingspire_torso
+	tool_behaviors = list(TOOL_WELDER)
+	time = 15 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/plasteel = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_transmission
+	name = "Kingspire Mk.1 transmission"
+	result = /obj/item/mecha_parts/part/kingspire_left_arm
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 20 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/rods = 12,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_turret
+	name = "Kingspire Mk.1 Turret"
+	result = /obj/item/mecha_parts/part/kingspire_armor
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 30 SECONDS
+	reqs = list(
+		/obj/item/gun/ballistic/automatic/malone = 1,
+		/obj/item/stack/rods = 4,
+		/obj/item/pipe = 2,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_ltrack
+	name = "Kingspire Mk.1 <b>LEFT</b> Track"
+	result = /obj/item/mecha_parts/part/kingspire_left_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/rods = 16,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/conveyor = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_rtrack
+	name = "Kingspire Mk.1 <b>RIGHT</b> Track"
+	result = /obj/item/mecha_parts/part/kingspire_right_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/rods = 16,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/conveyor = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_hydraulics
+	name = "Kingspire Mk.1 Hydraulic equipment"
+	result = /obj/item/circuitboard/mecha/kingspire/peripherals
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 10 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 10,
+		/obj/item/stack/rods = 2,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stock_parts/manipulator = 2,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_seats
+	name = "Kingspire Mk.1 Seating"
+	result = /obj/item/circuitboard/mecha/kingspire/targeting
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/sheet/cloth = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_radio
+	name = "Kingspire Mk.1 Radio set"
+	result = /obj/item/circuitboard/mecha/kingspire/main
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/light/tube = 2,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/radio = 2,
+	)
+	category = CAT_ROBOT

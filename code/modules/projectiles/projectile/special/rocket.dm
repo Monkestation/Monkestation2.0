@@ -72,6 +72,20 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
 
+/// 75mm tank shell - Puts the HEAP rocket to fucking shame
+/obj/projectile/bullet/rocket/supporttankshell
+	name = "\improper 75mm tank shell"
+	desc = "Woe be to the man facing this."
+	icon_state = "SUPPORTTANKSHELL"
+	damage = 150
+	armour_penetration = 100
+	dismemberment = 100
+	anti_armour_damage = 350
+
+/obj/projectile/bullet/rocket/supporttankshell/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, flame_range = 6, flash_range = 4, adminlog = TRUE)
+
+
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
 	name = "low-yield rocket"
@@ -129,3 +143,16 @@ among other potential differences. This granularity is helpful for things like t
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
+
+/// Ignifist rocket launcher - AT only, nearly non effective on crew.
+/obj/projectile/bullet/rocket/ignifist
+	name = "\improper Ignifist rocket"
+	desc = "anti mechanized warfare in spess."
+	icon_state = "atrocket"
+	damage = 25
+	armour_penetration = 100
+	dismemberment = 10
+	anti_armour_damage = 125
+
+/obj/projectile/bullet/rocket/ignifist/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = -1, flame_range = 1, flash_range = 1, adminlog = FALSE)

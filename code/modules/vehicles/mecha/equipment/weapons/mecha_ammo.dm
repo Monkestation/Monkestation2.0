@@ -105,3 +105,10 @@
 	rounds = 3
 	direct_load = TRUE
 	ammo_type = MECHA_AMMO_CLUSTERBANG
+
+/obj/item/mecha_ammo/supporttankammo
+	name = "75mm Tank Shells"
+	desc = "A large crate of 3 giant tank shells. You can bearly lift this."
+	icon_state = "SUPPORTTANKSHELL"
+	rounds = 3
+	ammo_type = MECHA_AMMO_SUPPORTTANK

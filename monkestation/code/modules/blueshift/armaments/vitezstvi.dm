@@ -105,6 +105,22 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/trappiste585_hollowpoint
 	item_type = /obj/item/ammo_box/c585trappiste/hollowpoint
 
+/datum/armament_entry/company_import/vitezstvi/ammo_boxes/argenti
+	item_type = /obj/item/ammo_box/argenti
+	cost = PAYCHECK_COMMAND * 2
+
+/datum/armament_entry/company_import/vitezstvi/ammo_boxes/hangman
+	item_type = /obj/item/ammo_box/hangman
+	cost = PAYCHECK_COMMAND * 2
+
+/datum/armament_entry/company_import/vitezstvi/ammo_boxes/neville
+	item_type = /obj/item/ammo_box/neville
+	cost = PAYCHECK_COMMAND * 4
+
+/datum/armament_entry/company_import/vitezstvi/ammo_boxes/malone
+	item_type = /obj/item/ammo_box/malone
+	cost = PAYCHECK_COMMAND * 4
+
 // Revolver speedloaders
 
 /datum/armament_entry/company_import/vitezstvi/speedloader
