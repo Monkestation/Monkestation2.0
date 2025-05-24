@@ -30,8 +30,6 @@
 	name = "Beret With Fancy Badge (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/beret/beret_badge_fancy_worn.json'
 
-
-
 //COWBOY
 /datum/greyscale_config/cowboy_wide
 	name = "Wide Brimmed Hat"
@@ -97,18 +95,6 @@
 /datum/greyscale_config/mushcap/worn
 	name = "Mushroom Cap Worn"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/mush_cap/mushcap_worn.json'
-
-// FLATCAP
-
-/datum/greyscale_config/flatcap
-	name = "Flat Cap"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/hats.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/flatcap/flatcap.json'
-
-/datum/greyscale_config/flatcap/worn
-	name = "Flat Cap (Worn)"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/hats.dmi'
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/flatcap/flatcap_worn.json'
 
 // FLOWER PIN
 

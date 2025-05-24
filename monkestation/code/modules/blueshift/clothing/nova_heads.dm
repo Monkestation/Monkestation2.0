@@ -60,15 +60,6 @@
 	acid = 50
 	wound = 6
 
-/obj/item/clothing/head/colourable_flatcap
-	name = "colourable flat cap"
-	desc = "You in the computers son? You work the computers?"
-	icon_state = "flatcap"
-	greyscale_config = /datum/greyscale_config/flatcap
-	greyscale_config_worn = /datum/greyscale_config/flatcap/worn
-	greyscale_colors = "#79684c"
-	flags_1 = IS_PLAYER_COLORABLE_1
-
 /obj/item/clothing/head/hats/imperial
 	name = "grey naval officer cap"
 	desc = "A grey naval cap with a silver disk in the center."

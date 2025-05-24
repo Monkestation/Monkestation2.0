@@ -309,18 +309,22 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/buttondown/slacks
-	name = "buttondown shirt with slacks"
-	desc = "A fancy buttondown shirt with slacks."
-	icon_state = "buttondown_slacks"
+	name = "button-down shirt with slacks"
+	desc = "A fancy button-down shirt with slacks."
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/buttondown/slacks"
+	post_init_icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
 	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks_worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/costume/buttondown/shorts
-	name = "buttondown shirt with shorts"
-	desc = "A fancy buttondown shirt with shorts."
-	icon_state = "buttondown_shorts"
+	name = "button-down shirt with shorts"
+	desc = "A fancy button-down shirt with shorts."
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/buttondown/shorts"
+	post_init_icon_state = "buttondown_shorts"
 	greyscale_config = /datum/greyscale_config/buttondown_shorts
 	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts_worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
@@ -341,7 +345,9 @@
 
 /obj/item/clothing/under/costume/football_suit
 	name = "football uniform"
-	icon_state = "football_suit"
+	icon = 'icons/map_icons/clothing/under/costume.dmi'
+	icon_state = "/obj/item/clothing/under/costume/football_suit"
+	post_init_icon_state = "football_suit"
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/football_suit
 	greyscale_config_worn = /datum/greyscale_config/football_suit_worn

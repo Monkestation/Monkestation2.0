@@ -1,9 +1,10 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/deployable
-	icon = 'monkestation/code/modules/blueshift/icons/thermomachine.dmi'
 	name = "atmospheric temperature regulator"
 	desc = "A much more tame variant of the thermomachines commonly seen in station scale temperature control devices. \
 		Its upper and lower bounds for temperature are highly limited, though it has a higher than standard heat capacity \
 		and the benefit of being undeployable when you're done with it."
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/deployable"
+	post_init_icon_state = "thermo_base"
 	circuit = null
 	greyscale_config = /datum/greyscale_config/thermomachine/deployable
 	min_temperature = T0C

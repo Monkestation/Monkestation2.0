@@ -375,13 +375,14 @@
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
+	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	icon_state = "jumpsuit"
 	greyscale_colors = "#3f3f3f"
 	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
-	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
+	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
+	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
+
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
 	resistance_flags = NONE
@@ -829,7 +830,7 @@
 	inhand_icon_state = "sneakers_back"
 	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
-	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
+	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
 	desc = "A pair of black shoes."
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_chameleon

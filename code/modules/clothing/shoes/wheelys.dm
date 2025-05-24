@@ -1,15 +1,19 @@
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	worn_icon_state = "wheelys"
-	greyscale_colors = "#545454#ffffff"
-	icon_state = "sneakers"
-	greyscale_config = /datum/greyscale_config/sneakers_wheelys
-	inhand_icon_state = "sneakers_back"
-	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
+	icon = 'icons/map_icons/clothing/shoes.dmi'
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
-	// clothing_flags = LARGE_WORN_ICON MONKESTATION REMOVAL - Flag is no longer necessary
+	icon_state = "/obj/item/clothing/shoes/wheelys"
+	post_init_icon_state = "sneakers"
+	worn_icon_state = "wheelys"
+	inhand_icon_state = "sneakers_back"
+	greyscale_config = /datum/greyscale_config/sneakers_wheelys
+	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
+
+	greyscale_colors = "#545454#ffffff"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
 	actions_types = list(/datum/action/item_action/wheelys)
 	///False means wheels are not popped out
 	var/wheelToggle = FALSE
@@ -63,6 +67,7 @@
 /obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "rollerskates"
 	inhand_icon_state = null
 	greyscale_colors = null
@@ -78,6 +83,7 @@
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "skishoes"
 	inhand_icon_state = null
 	greyscale_colors = null

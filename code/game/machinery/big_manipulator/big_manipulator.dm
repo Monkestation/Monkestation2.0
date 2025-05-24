@@ -1,12 +1,14 @@
 /obj/machinery/big_manipulator
 	name = "big manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
-	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
-	icon_state = "core"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/big_manipulator"
+	post_init_icon_state = "core"
+	greyscale_config = /datum/greyscale_config/big_manipulator
+	greyscale_colors = "#d8ce13"
+
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/big_manipulator
-	greyscale_colors = "#d8ce13"
-	greyscale_config = /datum/greyscale_config/big_manipulator
 
 	/// Is the manipulator turned on?
 	var/on = FALSE

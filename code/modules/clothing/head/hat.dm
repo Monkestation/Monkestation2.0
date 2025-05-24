@@ -83,11 +83,17 @@
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
-	icon_state = "beret_flat"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/flatcap"
+	post_init_icon_state = "beret_flat"
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/flatcap/recolor
+	desc = "You in the computers son? You work the computers?"
+	flags_1 = IS_PLAYER_COLORABLE_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/head/cowboy
 	name = "bounty hunting hat"
@@ -179,11 +185,12 @@
 /obj/item/clothing/head/costume/jester
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_hat"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/jester"
+	post_init_icon_state = "jester_hat"
 	greyscale_config = /datum/greyscale_config/jester_hat
 	greyscale_config_worn = /datum/greyscale_config/jester_hat_worn
 	greyscale_colors = "#51E33F#FF1F1F#FFC130"
-	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/rice_hat
 	name = "rice hat"
