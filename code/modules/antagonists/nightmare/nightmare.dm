@@ -14,6 +14,10 @@
 	owner.announce_objectives()
 
 /datum/antagonist/nightmare/on_gain()
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
+	owner.special_role = ROLE_NIGHTMARE
+	var/mob/living/carbon/human/H = owner.current
+	H.set_species(/datum/species/shadow/nightmare)
 	forge_objectives()
 	. = ..()
 
@@ -45,3 +49,25 @@
 	var/datum/objective/nightmare_fluff/objective = new
 	objective.owner = owner
 	objectives += objective
+
+/datum/antagonist/nightmare/antag_token(datum/mind/hosts_mind, mob/spender)
+	var/spender_key = spender.key
+	if(!spender_key)
+		CRASH("wtf, spender had no key")
+	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE)
+	if(isnull(spawn_loc))
+		spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE) // Try again but with light. Not ideal but better than not spawning the token.
+		if(isnull(spawn_loc))
+			message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent a nightmare antag token")
+			CRASH("Failed to find valid spawn location for nightmare antag token")
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 1 SECOND)
+	var/mob/living/carbon/human/nightmare = new (spawn_loc)
+	nightmare.PossessByPlayer(spender_key)
+	nightmare.mind.add_antag_datum(/datum/antagonist/nightmare)
+	playsound(nightmare, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(nightmare)] has been made into a nightmare by using an antag token.")

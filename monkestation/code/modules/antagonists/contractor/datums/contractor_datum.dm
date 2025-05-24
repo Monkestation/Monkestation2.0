@@ -89,3 +89,31 @@
 
 /datum/job/drifting_contractor
 	title = ROLE_DRIFTING_CONTRACTOR
+
+/datum/antagonist/traitor/contractor/antag_token(datum/mind/hosts_mind, mob/spender)
+	var/spender_key = spender.key
+	if(!spender_key)
+		CRASH("wtf, spender had no key")
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 20)
+
+	var/list/spawn_locs = list()
+	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+		if(!isturf(carp_spawn.loc))
+			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
+			continue
+		spawn_locs += carp_spawn.loc
+	if(!spawn_locs.len)
+		message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent a drifting contractor antag token")
+		CRASH("Failed to find valid spawn location for drifting contractor antag token")
+
+	//spawn the contractor and assign the candidate
+	var/mob/living/carbon/human/contractor = new(pick(spawn_locs))
+	contractor.PossessByPlayer(spender_key)
+	contractor.mind.add_antag_datum(/datum/antagonist/traitor/contractor)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(contractor)] has been made into a contractor by using an antag token.")
+

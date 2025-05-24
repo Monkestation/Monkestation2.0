@@ -709,7 +709,6 @@ monkestation end */
 			if(ROLE_NIGHTMARE)
 				var/datum/antagonist/nightmare/antag_datum = new
 				assign_admin_objective_and_antag(player, antag_datum)
-				player.set_species(/datum/species/shadow/nightmare)
 
 	else if(isAI(player))
 		var/datum/antagonist/malf_ai/antag_datum = new

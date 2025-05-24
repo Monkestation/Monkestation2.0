@@ -87,3 +87,18 @@
 	else
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
 		explanation_text = "Free Objective"
+
+/datum/antagonist/obsessed/antag_token(datum/mind/hosts_mind, mob/spender)
+	if(isliving(spender) && hosts_mind)
+		var/mob/living/carbon/C = hosts_mind.current
+		if(!istype(C))
+			message_admins("Tokener isn't a carbon mob, aborting...")
+			CRASH("Obsessed antag token was spent on a noncarbon.")
+		if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
+			message_admins("Tokener doesn't have a brain for a brain trauma, aborting...")
+			CRASH("Couldn't find a brain trauma for obsessed antag token")
+		C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
+	if(isobserver(spender))
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
+		new_mob.equipOutfit(/datum/outfit/job/assistant)
+		new_mob.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
