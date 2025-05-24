@@ -152,7 +152,7 @@
 	heal_vampire_organs()
 	current.pain_controller?.remove_all_pain()
 	current.update_stat()
-	SEND_SIGNAL(src, BLOODSUCKER_EXIT_TORPOR)
+	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_EXIT_TORPOR)
 
 /datum/status_effect/bloodsucker_sol
 	id = "bloodsucker_sol"

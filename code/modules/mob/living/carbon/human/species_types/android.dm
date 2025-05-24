@@ -105,8 +105,3 @@
 	),
 	)
 	return to_add
-
-/datum/species/android/on_species_gain(mob/living/carbon/C)
-	. = ..()
-	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
-	C.set_safe_hunger_level()
