@@ -346,10 +346,11 @@ GLOBAL_VAR(restart_counter)
 			shutdown_logging() // See comment below.
 			QDEL_NULL(Tracy)
 			QDEL_NULL(Debugger)
+			SSplexora.notify_shutdown(PLEXORA_SHUTDOWN_KILLDD)
 			TgsEndProcess()
 			return ..()
 
-	SSplexora._Shutdown() // Monkestation edit: plexora
+	SSplexora.notify_shutdown()
 	log_world("World rebooted at [time_stamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
