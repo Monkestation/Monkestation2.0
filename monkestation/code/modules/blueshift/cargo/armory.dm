@@ -1,7 +1,7 @@
 /datum/supply_pack/security/armory/sindano
 	name = "Sindano Submachinegun Crate"
 	desc = "Three entirely proprietary Sindano kits, chambered in .35 Sol Short. Each kit contains three empty magazines and a box each of incapacitator and lethal rounds."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 12
 	contains = list(
 		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/sindano = 3,
 	)
@@ -10,7 +10,7 @@
 /datum/supply_pack/security/armory/renoster
 	name = "Renoster Riot Shotgun Crate"
 	desc = "Three Renoster 12ga riot shotguns, with matching bandoliers for each."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 17.5
 	contains = list(
 		/obj/item/gun/ballistic/shotgun/riot/sol = 3,
 		/obj/item/storage/belt/bandolier = 3,
