@@ -368,7 +368,11 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
-
+	for(var/obj/item/organ/internal/brain/slime/malpractice_vic in src.contents)
+		malpractice_vic.forceMove(src.drop_location())
+		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+		radio.talk_into(src, "Unidentified organic material detected in cryo-chamber. Flushing foreign body from system. Auto eject initiated.", radio_channel)
+		open_machine()
 	if(!on)
 		return
 
