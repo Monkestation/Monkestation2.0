@@ -2,8 +2,29 @@
 	category = BASSETT_MOTOR_SOCIETY_NAME
 	company_bitflag = CARGO_COMPANY_BMS
 
+/datum/armament_entry/company_import/bms/clothing // unrestricted, pricier then normal larp, the armor is expensive to others
+	subcategory = "Clothing"
+	cost = PAYCHECK_COMMAND * 2
+
+/datum/armament_entry/company_import/bms/clothing/battledress
+	item_type = /obj/item/clothing/under/costume/warden
+
+/datum/armament_entry/company_import/bms/clothing/legionfatigues
+	item_type = /obj/item/clothing/under/costume/colonial
+
+/datum/armament_entry/company_import/bms/clothing/Whelmet
+	item_type =/obj/item/clothing/head/helmet/warden
+
+/datum/armament_entry/company_import/bms/clothing/Chelmet
+	item_type =/obj/item/clothing/head/helmet/colonial
 
 
+/datum/armament_entry/company_import/bms/clothing/gunnerplate
+	item_type = /obj/item/clothing/suit/armor/foxhole_warden
+	cost = PAYCHECK_COMMAND * 4
+/datum/armament_entry/company_import/bms/clothing/gunnerplatehelmet
+	item_type = /obj/item/clothing/head/helmet/warden_heavy
+	cost = PAYCHECK_COMMAND * 2.5
 /datum/armament_entry/company_import/bms/light // unrestricted, but very very expensive
 	subcategory = "Small Arms"
 

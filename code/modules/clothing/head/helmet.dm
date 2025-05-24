@@ -580,3 +580,46 @@
 	fire = 100
 	acid = 40
 	wound = 15
+
+/obj/item/clothing/head/helmet/warden
+	name = "\improper Warden Helmet"
+	desc = "A blueish steel helmet with a circular crest on the front and a ridge on the back, used in the Caovish Wardens."
+	icon_state = "warden"
+	inhand_icon_state = null
+	armor_type = /datum/armor/helmet_warden
+
+/datum/armor/helmet_warden
+	melee = 10 // like they would have any good padding
+	bullet = 35
+	energy = 20
+	bomb = 20
+	fire = 5
+	acid = 50
+	wound = 15
+
+/obj/item/clothing/head/helmet/warden_heavy
+	name = "\improper Warden Assault Helmet"
+	desc = "A standard Warden helmet with steel plates and thick glass tacked on to provide extra protection."
+	icon_state = "warden_heavy"
+	inhand_icon_state = null
+	tint = 1
+	armor_type = /datum/armor/helmet_warden_heavy
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+
+
+/datum/armor/helmet_warden_heavy
+	melee = 30 // heavy helmet, probably a bit better at that
+	bullet = 40 // not exactly stronger, just covers the rest of your face
+	energy = 20
+	bomb = 40 // more steel stopping shrapnel
+	fire = 10
+	acid = 60
+	wound = 20
+
+/obj/item/clothing/head/helmet/colonial
+	name = "\improper Colonial Helmet"
+	desc = "A dark green steel helmet with not much notable about it, used in the Colonial Legion."
+	icon_state = "colonial"
+	inhand_icon_state = null
+	armor_type = /datum/armor/helmet_warden

@@ -366,3 +366,19 @@
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/warden
+	name = "Warden Infantry Battledress"
+	desc = "The Most common Warden infantry uniform, designed for general frontline warfare with ballistic weapons such as rifles and machine guns."
+	icon_state = "warden"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/colonial
+	name = "Colonial Legionary Fatigues"
+	desc = "The Standard issue infantry uniform for the Colonial Legion, designed for general frontline warfare with ballistic weapons such as rifles and machine guns."
+	icon_state = "colonial"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
