@@ -664,29 +664,42 @@
 		return span_bold("[desc]!")
 	return "[desc]."
 
+/**
+ * Prints the details about the wound for the wound scanner on simple mode
+ */
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\n\
-		Severity: [severity_text(simple = FALSE)]\n\
-		Description: [desc]\n\
+	return "Type: [name]<br>\
+		Severity: [severity_text()]<br>\
+		Description: [desc]<br>\
 		Recommended Treatment: [treat_text]"
 
+/**
+ * Prints the details about the wound for the wound scanner on complex mode
+ */
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\n\
-		Risk: [severity_text(simple = TRUE)]\n\
-		Description: [simple_desc ? simple_desc : desc]\n\
-		<i>Treatment Guide: [simple_treat_text]</i>\n\
+	var/severity_text_formatted = severity_text()
+	for(var/i in 1 to severity)
+		severity_text_formatted += "!"
+
+	return "[name] detected!<br>\
+		Risk: [severity_text_formatted]<br>\
+		Description: [simple_desc || desc]<br>\
+		<i>Treatment Guide: [simple_treat_text]</i><br>\
 		<i>Homemade Remedies: [homemade_treat_text]</i>"
 
-/datum/wound/proc/severity_text(simple = FALSE)
+/**
+ * Returns what text describes this wound
+ */
+/datum/wound/proc/severity_text()
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate" + (simple ? "!" : "")
+			return "Moderate"
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe" + (simple ? "!!" : "")
+			return "<b>Severe</b>"
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical" + (simple ? "!!!" : "")
+			return "<b>Critical</b>"
 
 /// Getter proc for our scar_keyword, in case we might have some custom scar gen logic.
 /datum/wound/proc/get_scar_keyword(obj/item/bodypart/scarred_limb, add_to_scars)

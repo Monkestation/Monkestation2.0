@@ -1,3 +1,8 @@
+/// Helper to figure out if an organ is organic
+#define IS_ORGANIC_ORGAN(organ) (organ.organ_flags & ORGAN_ORGANIC)
+/// Helper to figure out if an organ is robotic
+#define IS_ROBOTIC_ORGAN(organ) (organ.organ_flags & ORGAN_ROBOTIC)
+
 // Flags for the organ_flags var on /obj/item/organ
 ///Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal
 #define ORGAN_SYNTHETIC (1<<0)
@@ -19,6 +24,10 @@
 #define ORGAN_SYNTHETIC_FROM_SPECIES (1<<8)
 /// This organ has no impact on conversion via flash, such as revs or bbs. Doesn't affect hypnosis and whatnot, though. MONKESTATION EDIT
 #define ORGAN_DOESNT_PROTECT_AGAINST_CONVERSION (1<<9)
+/// ALWAYS show this when scanned by advanced scanners, even if it is totally healthy
+#define ORGAN_PROMINENT (1<<10)
+/// An organ that is ostensibly dangerous when inside a body
+#define ORGAN_HAZARDOUS (1<<11)
 
 // Flags for the bodypart_flags var on /obj/item/bodypart
 /// Bodypart cannot be dismembered or amputated
