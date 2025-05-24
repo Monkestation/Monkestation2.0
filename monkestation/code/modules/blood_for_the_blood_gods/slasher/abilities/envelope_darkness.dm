@@ -21,7 +21,7 @@
 	/// Sound played when exiting the jaunt
 	var/exit_sound = 'monkestation/sound/effects/slasher_jauntappear.ogg'
 	/// For how long are we jaunting?
-	var/jaunt_duration = 4 SECONDS
+	var/jaunt_duration = 8 SECONDS
 	/// For how long we become immobilized after exiting the jaunt
 	var/jaunt_in_time = 0.33 SECONDS
 	/// For how long we become immobilized when using this spell
@@ -50,8 +50,12 @@
  * Puts owner in the phased mob holder here.
  */
 /datum/action/cooldown/slasher/envelope_darkness/proc/do_jaunt(mob/living/jaunter)
-	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
+	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM,  REF(src))
 	var/obj/effect/dummy/phased_mob/slasher_jaunt/holder = enter_jaunt(jaunter)
+	var/obj/cuffs = jaunter.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+	jaunter.visible_message("You see [jaunter] fade away into nothingness!")
+	if(HAS_TRAIT(jaunter, TRAIT_RESTRAINED))
+		qdel(cuffs)
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
 	if(!holder)
 		return
