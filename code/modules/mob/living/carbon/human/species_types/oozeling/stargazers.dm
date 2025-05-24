@@ -7,6 +7,10 @@
 	/// Special "project thought" telepathy action for stargazers.
 	var/datum/action/innate/project_thought/project_action
 
+/datum/species/oozeling/stargazer/Destroy(force)
+	QDEL_NULL(project_action)
+	return ..()
+
 /datum/species/oozeling/stargazer/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
 	. = ..()
 	if(QDELETED(project_action))

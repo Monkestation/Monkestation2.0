@@ -48,9 +48,11 @@
 	var/datum/action/cooldown/spell/slime_hydrophobia/slime_hydrophobia
 	var/datum/action/innate/core_signal/core_signal
 
-/datum/species/oozeling/get_species_description()
-	return "A species of sentient semi-solids. \
-		They require nutriment in order to maintain their body mass."
+/datum/species/oozeling/Destroy(force)
+	QDEL_NULL(slime_washing)
+	QDEL_NULL(slime_hydrophobia)
+	QDEL_NULL(core_signal)
+	return ..()
 
 /datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
 	. = ..()
@@ -72,6 +74,10 @@
 	QDEL_NULL(core_signal)
 	. = ..()
 	former_slime.blood_volume = clamp(former_slime.blood_volume, BLOOD_VOLUME_SAFE, BLOOD_VOLUME_NORMAL)
+
+/datum/species/oozeling/get_species_description()
+	return "A species of sentient semi-solids. \
+		They require nutriment in order to maintain their body mass."
 
 /datum/species/oozeling/random_name(gender, unique, lastname, attempts)
 	. = "[pick(GLOB.oozeling_first_names)]"
