@@ -1130,6 +1130,10 @@ SUBSYSTEM_DEF(job)
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
 
+	if(!possible_job.conditions_met())
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_CONDITIONS_UNMET, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return  JOB_UNAVAILABLE_CONDITIONS_UNMET
+
 	//MONKESTATION EDIT START
 	// Job is for donators of a specific level and fail if they did not meet the requirements.
 	if(((possible_job in holiday_restricted) || !isnull(possible_job.job_req_donor)) && (!is_admin(player.client) || !player.client?.is_mentor()))

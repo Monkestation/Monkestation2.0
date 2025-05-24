@@ -8,6 +8,7 @@
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 /// Job unavailable due to insufficient donor rank.
 #define JOB_UNAVAILABLE_DONOR_RANK 7 //MONKESTATION EDIT
+#define JOB_UNAVAILABLE_CONDITIONS_UNMET 8
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
