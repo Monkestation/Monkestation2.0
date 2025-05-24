@@ -65,6 +65,8 @@
 		var/follow_link_target = FOLLOW_LINK(dead, recipient)
 		to_chat(dead, "[follow_link_user] [span_name("[telepath]")] [span_alertalien("Slime Telepathy --> ")] [follow_link_target] [span_name("[recipient]")] [span_noticealien("[msg]")]")
 
+#define DOAFTER_SOURCE_LINK_MINDS "doafter_link_minds"
+
 /datum/action/innate/link_minds
 	name = "Link Minds"
 	desc = "Link someone's mind to your Slime Link, allowing them to communicate telepathically with other linked minds."
@@ -74,8 +76,6 @@
 	overlay_icon_state = "bg_alien_border"
 	/// The species required to use this ability. Typepath.
 	var/req_species = /datum/species/oozeling/stargazer
-	/// Whether we're currently linking to someone.
-	var/currently_linking = FALSE
 
 /datum/action/innate/link_minds/New(Target)
 	. = ..()
@@ -89,7 +89,7 @@
 		return
 	if(!ishuman(owner) || !is_species(owner, req_species))
 		return FALSE
-	if(currently_linking)
+	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_LINK_MINDS))
 		return FALSE
 
 	return TRUE
@@ -106,15 +106,12 @@
 
 	to_chat(owner, span_notice("You begin linking [living_target]'s mind to yours..."))
 	to_chat(living_target, span_warning("You feel a foreign presence within your mind..."))
-	currently_linking = TRUE
 
-	if(!do_after(owner, 6 SECONDS, target = living_target, extra_checks = CALLBACK(src, PROC_REF(while_link_callback), living_target)))
+	if(!do_after(owner, 6 SECONDS, target = living_target, extra_checks = CALLBACK(src, PROC_REF(while_link_callback), living_target), interaction_key = DOAFTER_SOURCE_LINK_MINDS))
 		to_chat(owner, span_warning("You can't seem to link [living_target]'s mind."))
 		to_chat(living_target, span_warning("The foreign presence leaves your mind."))
-		currently_linking = FALSE
 		return
 
-	currently_linking = FALSE
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(living_target))
 		return
 
@@ -138,3 +135,5 @@
 		return FALSE
 
 	return TRUE
+
+#undef DOAFTER_SOURCE_LINK_MINDS
