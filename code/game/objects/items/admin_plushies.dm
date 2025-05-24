@@ -365,7 +365,7 @@
 
 /obj/item/toy/plush/admin/jay
 	name = "jay kouri"
-	desc = "Doesn't seem to get a break. From making sure his underlings in the war dont die, to making sure the station's crew doesn't kill each other. Has beautiful blue eyes though, too bad he doesn't take off his sunglasses"
+	desc = "Doesn't seem to get a break. From making sure his underlings in the war dont die, to making sure the station's crew doesn't kill each other. Has beautiful blue eyes though, too bad he doesn't take off his sunglasses."
 	icon_state = "jay"
 	squeak_override = list('sound/weapons/gun/rifle/shot.ogg'=1)
 /datum/loadout_item/plushies/jay
@@ -374,6 +374,40 @@
 /datum/store_item/plushies/jay
 	name = "Jay Kouri Plush"
 	item_path = /obj/item/toy/plush/admin/jay
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/azkare
+	name = "azkare uw"
+	desc = "You could swear the eyes behind the mask moved when you weren't looking."
+	icon_state = "azkare"
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	light_power = 0.5
+	light_color = "#B3D9FF"
+	light_on = TRUE
+/datum/loadout_item/plushies/azkare
+	name = "Azkare UW Plush"
+	item_path = /obj/item/toy/plush/admin/azkare
+/datum/store_item/plushies/azkare
+	name = "Azkare UW Plush"
+	item_path = /obj/item/toy/plush/admin/azkare
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/altjira
+	name = "altjira xc"
+	desc = "Tongue tied, slightly psychotic, and usually 'forgets' her medication."
+	icon_state = "altjira"
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	light_power = 0.5
+	light_color = "#3399ff"
+	light_on = TRUE
+/datum/loadout_item/plushies/altjira
+	name = "Altjira Plush"
+	item_path = /obj/item/toy/plush/admin/altjira
+/datum/store_item/plushies/altjira
+	name = "Altjira Plush"
+	item_path = /obj/item/toy/plush/admin/altjira
 	item_cost = 7500
 
 /** SHION PLUSH START **/
