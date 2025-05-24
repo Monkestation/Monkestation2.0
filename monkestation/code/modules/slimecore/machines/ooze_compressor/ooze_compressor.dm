@@ -31,6 +31,8 @@
 	buffer = 5000
 	reagent_flags = NO_REACT
 
+	subsystem_type = /datum/controller/subsystem/processing/xenobio
+
 	var/compressing = FALSE
 	var/repeat_recipe = FALSE
 

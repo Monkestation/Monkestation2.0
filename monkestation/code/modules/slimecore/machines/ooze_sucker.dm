@@ -21,6 +21,8 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	category = "Distribution"
 	reagent_flags = NO_REACT
 
+	subsystem_type = /datum/controller/subsystem/processing/xenobio
+
 	/// Pump is turned on by engineer, etc.
 	var/turned_on = FALSE
 

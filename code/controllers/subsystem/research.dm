@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(research)
 	name = "Research"
 	priority = FIRE_PRIORITY_RESEARCH
-	wait = 10
+	wait = 1 SECONDS
 	init_order = INIT_ORDER_RESEARCH
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum

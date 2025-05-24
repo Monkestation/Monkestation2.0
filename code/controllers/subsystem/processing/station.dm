@@ -1,7 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(station)
 	name = "Station"
 	init_order = INIT_ORDER_STATION
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 	wait = 5 SECONDS
 
