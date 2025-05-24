@@ -60,15 +60,19 @@
 	item_type = /obj/item/deployable_lamentum_folded
 	cost = PAYCHECK_COMMAND * 48
 
-/datum/armament_entry/company_import/bms/tanks // No shit that the tank is restricted
-	subcategory = "Armored Vehicles"
+/datum/armament_entry/company_import/bms/vehicles // No shit that the vics are restricted
+	subcategory = "Vehicles"
 	restricted = TRUE
 
-/datum/armament_entry/company_import/bms/tanks/kingspire
+/datum/armament_entry/company_import/bms/vehicles/argonaut
+	item_type = /obj/vehicle/ridded/argonaut
+	cost = PAYCHECK_COMMAND * 150
+
+/datum/armament_entry/company_import/bms/vehicles/kingspire
 	item_type = /obj/item/mecha_parts/chassis/kingspire
 	cost = PAYCHECK_COMMAND * 200
 
-/datum/armament_entry/company_import/bms/tanks/ratcatcherbelt
+/datum/armament_entry/company_import/bms/vehicles/ratcatcherbelt
 	item_type = /obj/item/mecha_ammo/makeshift/lighttankmg
 	cost = PAYCHECK_COMMAND * 2
 
