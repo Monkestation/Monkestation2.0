@@ -44,6 +44,8 @@
 	var/datum/looping_sound/firealarm/soundloop
 	///Are there ants in the alarm?
 	var/ants_remaining = 0
+	/// Delta Alarm Loop
+	var/datum/looping_sound/delta_alarm/alarmloop
 
 /datum/armor/machinery_firealarm
 	fire = 90
@@ -63,6 +65,7 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 	soundloop = new(src, FALSE)
+	alarmloop = new(src, FALSE)
 
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/firealarm,
@@ -89,6 +92,7 @@
 		LAZYREMOVE(my_area.firealarms, src)
 		my_area = null
 	QDEL_NULL(soundloop)
+	QDEL_NULL(alarmloop)
 	return ..()
 
 // Area sensitivity is traditionally tied directly to power use, as an optimization
@@ -142,6 +146,8 @@
 /obj/machinery/firealarm/proc/set_status()
 	if(!(my_area.fire || LAZYLEN(my_area.active_firelocks)) || (obj_flags & EMAGGED))
 		soundloop.stop()
+	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
+		alarmloop.stop()
 	update_appearance()
 
 /obj/machinery/firealarm/update_appearance(updates)
@@ -177,18 +183,36 @@
 	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
 			if(is_station_level(z))
-				var/current_level = SSsecurity_level.get_current_level_as_number()
-				. += mutable_appearance(icon, "fire_[current_level]")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
-				switch(current_level)
+				switch(SSsecurity_level.get_current_level_as_number())
 					if(SEC_LEVEL_GREEN)
 						set_light(l_color = LIGHT_COLOR_BLUEGREEN)
+						. += mutable_appearance(icon, "fire_green")
 					if(SEC_LEVEL_BLUE)
 						set_light(l_color = LIGHT_COLOR_ELECTRIC_CYAN)
+						. += mutable_appearance(icon, "fire_blue")
 					if(SEC_LEVEL_RED)
 						set_light(l_color = LIGHT_COLOR_FLARE)
+						. += mutable_appearance(icon, "fire_red")
 					if(SEC_LEVEL_DELTA)
 						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+						. += mutable_appearance(icon, "fire_delta")
+					if(SEC_LEVEL_AMBER)
+						set_light(l_color = LIGHT_COLOR_LAVA)
+						. += mutable_appearance(icon, "fire_amber")
+					if(SEC_LEVEL_YELLOW)
+						set_light(l_color =  LIGHT_COLOR_DIM_YELLOW)
+						. += mutable_appearance(icon, "fire_yellow")
+					if(SEC_LEVEL_LAMBDA)
+						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+						. += mutable_appearance(icon, "fire_lambda")
+					if(SEC_LEVEL_GAMMA)
+						set_light(l_color = LIGHT_COLOR_FLARE)
+						. += mutable_appearance(icon, "fire_red")
+					if(SEC_LEVEL_EPSILON)
+						set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
+						. += mutable_appearance(icon, "fire_offstation")
+
 			else
 				. += mutable_appearance(icon, "fire_offstation")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
@@ -239,8 +263,14 @@
 /obj/machinery/firealarm/proc/check_security_level(datum/source, new_level)
 	SIGNAL_HANDLER
 
-	if(is_station_level(z))
-		update_appearance()
+	if(!is_station_level(z))
+		return
+
+	if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
+		alarmloop.start()
+	else
+		alarmloop.stop()
+	update_appearance()
 
 /**
  * Sounds the fire alarm and closes all firelocks in the area. Also tells the area to color the lights red.
@@ -285,6 +315,7 @@
 		balloon_alert(user, "reset alarm")
 		user.log_message("reset a fire alarm.", LOG_GAME)
 	soundloop.stop()
+	alarmloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 	update_use_power(IDLE_POWER_USE)
 

@@ -45,6 +45,7 @@
 //makes it go on the wall when built
 /obj/machinery/status_display/Initialize(mapload, ndir, building)
 	. = ..()
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(update_security_level))
 	update_appearance()
 
 /obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
@@ -89,6 +90,32 @@
 		current_picture = state
 
 	update_appearance()
+
+/// If the display is displaying an alert level update it.
+/obj/machinery/status_display/proc/update_security_level()
+	SIGNAL_HANDLER
+
+	if(!(current_picture in GLOB.status_display_alert_level_pictures))
+		return
+	switch(SSsecurity_level.get_current_level_as_number())
+		if(SEC_LEVEL_DELTA)
+			set_picture("deltaalert")
+		if(SEC_LEVEL_RED)
+			set_picture("redalert")
+		if(SEC_LEVEL_BLUE)
+			set_picture("bluealert")
+		if(SEC_LEVEL_GREEN)
+			set_picture("greenalert")
+		if(SEC_LEVEL_AMBER)
+			set_picture("amberalert")
+		if(SEC_LEVEL_YELLOW)
+			set_picture("yellowalert")
+		if(SEC_LEVEL_LAMBDA)
+			set_picture("lambdaalert")
+		if(SEC_LEVEL_GAMMA)
+			set_picture("gammaalert")
+		if(SEC_LEVEL_EPSILON)
+			set_picture("epsilonalert")
 
 /// Immediately change the display to the given two lines.
 /obj/machinery/status_display/proc/set_messages(line1, line2)
@@ -506,6 +533,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 		"Red Alert" = "redalert",
 		"Blue Alert" = "bluealert",
 		"Green Alert" = "greenalert",
+		"Yellow Alert" = "yellowalert",
+		"Amber Alert" = "amberalert",
+		"Gamma Alert" = "gammaalert",
+		"Lambda Alert" = "lambdaalert",
+		"Epsilon Alert" = "epsilonalert",
 		"Biohazard" = "biohazard",
 		"Lockdown" = "lockdown",
 		"Radiation" = "radiation",
