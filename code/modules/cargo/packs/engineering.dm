@@ -101,7 +101,6 @@
 	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst/cargo)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-	special = TRUE
 
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"

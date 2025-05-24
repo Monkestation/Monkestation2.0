@@ -307,3 +307,35 @@
 	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
+
+/datum/supply_pack/goody/double_barrel
+	name = "Double-barreled Shotgun Single-Pack"
+	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun as long as you can pay the absurd fees."
+	cost = PAYCHECK_COMMAND * 18
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
+
+/datum/supply_pack/goody/experimental_medication
+	name = "Experimental Medication Single-Pack"
+	desc = "A single bottle of Interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease."
+	cost = PAYCHECK_CREW * 6.5
+	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)
+
+/datum/supply_pack/goody/pet_mouse
+	name = "Pet Mouse"
+	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
+	cost = PAYCHECK_CREW * 1.5
+	contains = list(/obj/item/pet_carrier/small/mouse)
+
+/datum/supply_pack/goody/shuttle_construction_kit
+	name = "Shuttle Construction Starter Kit"
+	desc = "Contains a set of shuttle blueprints, and the circuitboards necessary for constructing your own shuttle. \
+			Well at least the ones you can't source yourself without Science's help."
+	cost = PAYCHECK_COMMAND * 12 //You assistants with shipwrighting ambitions can do a couple bounties, can't you?
+	access_view = ACCESS_AUX_BASE //Engineers have it, QM can give it to whoever, and scientists can just research the tech.
+	contains = list(
+		/obj/item/shuttle_blueprints,
+		/obj/item/circuitboard/computer/shuttle/flight_control,
+		/obj/item/circuitboard/computer/shuttle/docker,
+		/obj/item/circuitboard/machine/engine/propulsion = 2,
+	)
