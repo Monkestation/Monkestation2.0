@@ -65,7 +65,7 @@
 	restricted = TRUE
 
 /datum/armament_entry/company_import/bms/vehicles/argonaut
-	item_type = /obj/vehicle/ridded/argonaut
+	item_type = /obj/vehicle/ridden/argonaut
 	cost = PAYCHECK_COMMAND * 150
 
 /datum/armament_entry/company_import/bms/vehicles/kingspire
