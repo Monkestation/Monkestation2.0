@@ -7,6 +7,7 @@
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targeting_strategy/basic/not_friends/can_attack(mob/living/living_mob, atom/target, vision_range)
+	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
 	if(attack_closed_turf && isclosedturf(target))
 		return TRUE
 
@@ -19,8 +20,9 @@
 
 	if (living_mob.see_invisible < target.invisibility)
 		return FALSE
-	if (isturf(target.loc) && living_mob.z != target.z) // z check will always fail if target is in a mech
-		return FALSE
+	if(!istype(our_controller.ai_movement, /datum/ai_movement/astar))
+		if (isturf(target.loc) && living_mob.z != target.z) // z check will always fail if target is in a mech
+			return FALSE
 	if (!living_mob.ai_controller) // How did you get here?
 		return FALSE
 

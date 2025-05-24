@@ -301,7 +301,7 @@
 /turf/open/floor/cult/broken_states()
 	return list("cultdamage","cultdamage2","cultdamage3","cultdamage4","cultdamage5","cultdamage6","cultdamage7")
 
-/turf/open/floor/cult/narsie_act()
+/turf/open/floor/cult/narsie_act(force, ignore_mobs, probability = 20)
 	return
 
 /turf/open/floor/cult/airless

@@ -16,7 +16,7 @@
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "bk" = (
-/obj/structure/destructible/cult/item_dispenser/altar,
+/obj/structure/cult/altar,
 /obj/item/toy/plush/narplush,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
@@ -338,7 +338,6 @@
 /turf/open/lava,
 /area/centcom/tdome/arena/actual)
 "NS" = (
-/obj/effect/rune/convert,
 /turf/open/floor/cult,
 /area/centcom/tdome/arena/actual)
 "NT" = (

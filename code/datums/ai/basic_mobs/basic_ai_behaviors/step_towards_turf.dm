@@ -20,8 +20,9 @@
 				return FALSE
 			controller.set_blackboard_key(turf_key, target_turf)
 
-		if (target_turf.z != controller.pawn.z)
-			return FALSE
+		if(!istype(controller.ai_movement, /datum/ai_movement/astar))
+			if (target_turf.z != controller.pawn.z)
+				return FALSE
 
 		var/turf/destination = plot_movement(controller, target_turf)
 		if (!destination)

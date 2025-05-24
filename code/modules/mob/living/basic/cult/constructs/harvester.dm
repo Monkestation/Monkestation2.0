@@ -74,10 +74,6 @@
 	var/datum/antagonist/cult/cult_status = owner.mind.has_antag_datum(/datum/antagonist/cult)
 	if(!cult_status)
 		return
-	var/datum/objective/eldergod/summon_objective = locate() in cult_status.cult_team.objectives
-
-	if(summon_objective.check_completion())
-		the_construct.master = cult_status.cult_team.blood_target
 
 	if(!the_construct.master)
 		to_chat(the_construct, span_cultitalic("You have no master to seek!"))

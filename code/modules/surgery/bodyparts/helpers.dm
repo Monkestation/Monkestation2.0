@@ -48,6 +48,17 @@
 	return get_bodypart(check_zone(which_hand))
 
 
+///Get the bodypart for whatever hand we have active, Only relevant for carbons
+/mob/proc/get_inactive_hand()
+	return FALSE
+
+/mob/living/carbon/get_inactive_hand()
+	var/which_hand = BODY_ZONE_PRECISE_L_HAND
+	if((active_hand_index % 2))
+		which_hand = BODY_ZONE_PRECISE_R_HAND
+	return get_bodypart(check_zone(which_hand))
+
+
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
 

@@ -68,8 +68,9 @@
 	if(!isturf(mob_loc))
 		return FALSE
 
-	if(isturf(target_loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
-		return FALSE
+	if(!istype(our_controller.ai_movement, /datum/ai_movement/astar))
+		if(isturf(target_loc) && living_mob.z != the_target.z) // z check will always fail if target is in a mech or pawn is shapeshifted or jaunting
+			return FALSE
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target

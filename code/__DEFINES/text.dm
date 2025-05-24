@@ -28,6 +28,7 @@
 /// Smallest size. (ie: whisper runechat) - Size options: 6pt 12pt 18pt.
 #define MAPTEXT_SPESSFONT(text) {"<span style='font-family: \"Spess Font\"; font-size: 6pt; line-height: 1.4; -dm-text-outline: 1px black'>[##text]</span>"}
 
+#define MAPTEXT_YOU_MURDERER(text) {"<span style='font-family: \"YouMurderer BB\"; font-size: 18px'>[##text]</span>"}
 /**
  * Prepares a text to be used for maptext, using a variable size font.
  *

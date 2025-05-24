@@ -1,3 +1,39 @@
+
+/datum/flowcache
+	var/lcount
+	var/run
+	var/free
+	var/list/flow
+
+/datum/flowcache/New(n)
+	. = ..()
+	lcount = n
+	run = 0
+	free = 1
+	flow = new/list(lcount)
+
+/datum/flowcache/proc/getfree(atom/M)
+	if(run < lcount)
+		run += 1
+		while(flow[free])
+			CHECK_TICK
+			free = (free % lcount) + 1
+		var/t = addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/flowcache, toolong), free), 150, TIMER_STOPPABLE)
+		flow[free] = t
+		flow[t] = M
+		return free
+	else
+		return 0
+
+/datum/flowcache/proc/toolong(l)
+	log_game("Pathfinder route took longer than 150 ticks, src bot [flow[flow[l]]]")
+	found(l)
+
+/datum/flowcache/proc/found(l)
+	deltimer(flow[l])
+	flow[l] = null
+	run -= 1
+
 /// Queues and manages JPS pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
@@ -12,9 +48,12 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/currentmaps = list()
 	/// Assoc list of target turf -> list(/datum/path_map) centered on the turf
 	var/list/source_to_maps = list()
+	///this is a legacy flowcache for aStar mobs
+	var/datum/flowcache/mobs
 	var/static/space_type_cache
 
 /datum/controller/subsystem/pathfinder/Initialize()
+	mobs = new(10)
 	space_type_cache = typecacheof(/turf/open/space)
 	return SS_INIT_SUCCESS
 

@@ -215,6 +215,8 @@
 			dissipate_delay = 10
 			time_since_last_dissipiation = 0
 			dissipate_strength = 1
+			if(chained)
+				overlays += image(icon = icon, icon_state = "chain_s1")
 		if(STAGE_TWO)
 			if(check_cardinals_range(1, TRUE))
 				current_size = STAGE_TWO
@@ -227,6 +229,8 @@
 				dissipate_delay = 5
 				time_since_last_dissipiation = 0
 				dissipate_strength = 5
+				if(chained)
+					overlays += image(icon = icon, icon_state = "chain_s3")
 		if(STAGE_THREE)
 			if(check_cardinals_range(2, TRUE))
 				current_size = STAGE_THREE
@@ -239,6 +243,8 @@
 				dissipate_delay = 4
 				time_since_last_dissipiation = 0
 				dissipate_strength = 20
+				if(chained)
+					overlays += image(icon = icon, icon_state = "chain_s5")
 		if(STAGE_FOUR)
 			if(check_cardinals_range(3, TRUE))
 				current_size = STAGE_FOUR
@@ -251,6 +257,8 @@
 				dissipate_delay = 10
 				time_since_last_dissipiation = 0
 				dissipate_strength = 10
+				if(chained)
+					overlays += image(icon = icon, icon_state = "chain_s7")
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
 			icon = 'icons/effects/288x288.dmi'
@@ -260,6 +268,8 @@
 			new_grav_pull = 10
 			new_consume_range = 4
 			dissipate = FALSE //It cant go smaller due to e loss
+			if(chained)
+				overlays += image(icon = icon, icon_state = "chain_s9")
 		if(STAGE_SIX) //This only happens if a stage 5 singulo consumes a supermatter shard.
 			current_size = STAGE_SIX
 			icon = 'icons/effects/352x352.dmi'
@@ -269,6 +279,7 @@
 			new_grav_pull = 15
 			new_consume_range = 5
 			dissipate = FALSE
+
 
 	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
 	if (!isnull(resolved_singularity))

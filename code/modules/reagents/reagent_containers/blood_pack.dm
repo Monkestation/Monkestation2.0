@@ -77,6 +77,9 @@
 /obj/item/reagent_containers/blood/snail
 	blood_type = /datum/blood_type/snail
 
+/obj/item/reagent_containers/blood/moth
+	blood_type = /datum/blood_type/crew/moth
+
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
 	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
