@@ -990,8 +990,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 #if (PRELOAD_RSC == 0)
 /client/proc/preload_vox()
-	for (var/name in GLOB.vox_sounds)
-		var/file = GLOB.vox_sounds[name]
+	for (var/file in GLOB.all_vox_sounds)
 		Export("##action=load_rsc", file)
 		stoplag()
 #endif
