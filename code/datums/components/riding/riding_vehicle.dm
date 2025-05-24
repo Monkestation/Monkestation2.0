@@ -91,7 +91,9 @@
 	if(!istype(next) || !istype(current))
 		return //not happening.
 	if(!turf_check(next, current))
-		to_chat(user, span_warning("\The [movable_parent] can not go onto [next]!"))
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			COOLDOWN_START(src, message_cooldown, 0.75 SECONDS)
+			to_chat(user, span_warning("\The [movable_parent] can not go onto [next]!"))
 		return
 	if(!Process_Spacemove(direction) || !isturf(movable_parent.loc))
 		return

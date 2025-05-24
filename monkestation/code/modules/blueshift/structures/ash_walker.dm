@@ -301,39 +301,28 @@
 
 /obj/vehicle/ridden/rail_cart/examine(mob/user)
 	. = ..()
-	. += span_notice("<br><b>Alt-Click</b> to attach a rail cart to this cart.")
-	. += span_notice("<br>Filling it with <b>10 sand</b> will allow it to be used as a planter!")
+	. += span_notice("<b>Alt-Click</b> to attach a rail cart to this cart.")
+	. += span_notice("Filling it with <b>10 sand</b> will allow it to be used as a planter!")
 
 /obj/vehicle/ridden/rail_cart/Initialize(mapload)
 	. = ..()
 	attach_trailer()
 	railoverlay = mutable_appearance(icon, "railoverlay", ABOVE_MOB_LAYER, src, ABOVE_GAME_PLANE)
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/rail_cart)
-
 	create_storage(max_total_storage = 21, max_slots = 21)
 
 /obj/vehicle/ridden/rail_cart/post_buckle_mob(mob/living/M)
 	. = ..()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/vehicle/ridden/rail_cart/post_unbuckle_mob(mob/living/M)
 	. = ..()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/vehicle/ridden/rail_cart/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
-		add_overlay(railoverlay)
-	else
-		cut_overlay(railoverlay)
-
-/obj/vehicle/ridden/rail_cart/relaymove(mob/living/user, direction)
-	var/obj/structure/railroad/locate_rail = locate() in get_step(src, direction)
-	if(!canmove || !locate_rail)
-		return FALSE
-	if(is_driver(user))
-		return relaydrive(user, direction)
-	return FALSE
+		. += railoverlay
 
 /obj/vehicle/ridden/rail_cart/AltClick(mob/user)
 	attach_trailer()
@@ -388,6 +377,11 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/vehicle/rail_cart/turf_check(turf/next, turf/current)
+	if(!(locate(/obj/structure/railroad) in next))
+		return FALSE
+	return ..()
 
 /obj/structure/plant_tank
 	name = "plant tank"
