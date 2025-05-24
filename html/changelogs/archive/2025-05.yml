@@ -352,3 +352,7 @@
   - code_imp: Crit health check for oozling decapitations restored. Head decapitations
       match other species.
   - code_imp: removed unremovable flag from obj/item/organ/internal/eyes/jelly types.
+2025-05-24:
+  Absolucy:
+  - refactor: Made some changes to how some item icons are displayed in tgui windows,
+      hopefully improving tgui load times.
