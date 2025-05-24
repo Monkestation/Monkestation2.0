@@ -8,13 +8,16 @@
 	icon_state = ""
 	/// A string of text that is optionaly added to the objects desc, it SHOULD be the admin's CKEY.
 	var/adminCKey = null
+	// Whether or not to append (A member of our beloved admin team) to the end of the description
+	var/appendNote = TRUE
 
 /obj/item/toy/plush/admin/Initialize(mapload)
 	. = ..()
-	if(adminCKey)
-		desc = "[desc]" + " " + "(A member of our beloved admin team- ''[adminCKey]'')"
-	else
-		desc = "[desc]" + " " + "(A member of our beloved admin team)"
+	if(appendNote)
+		if(adminCKey)
+			desc = "[desc]" + " " + "(A member of our beloved admin team- ''[adminCKey]'')"
+		else
+			desc = "[desc]" + " " + "(A member of our beloved admin team)"
 
 /obj/item/toy/plush/admin/ben_mothman
 	name = "ben mothman"
@@ -186,11 +189,15 @@
 	item_path = /obj/item/toy/plush/admin/raziel
 	item_cost = 7500
 
+//Gabbie plush thingoes
 /obj/item/toy/plush/admin/gabbie
 	name = "gabbie"
-	desc = "It's Gabbie!"
+	desc = "She looks a bit angry."
 	icon_state = "gabbie"
+	squeak_override = list('monkestation/sound/items/gabnoise.ogg'=1)
 	gender = FEMALE
+	appendNote = FALSE
+
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -198,6 +205,20 @@
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
 	item_cost = 7500
+
+/obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/food/deadmouse))
+		playsound(src.loc, 'sound/items/eatfood.ogg', 50)
+		to_chat(user, span_warning("Gabbie chomps up the rat!"))
+		src.desc = "She still looks angry, but less hungry."
+		qdel(attacking_item)
+	else if(istype(attacking_item, /obj/item/reagent_containers/cocaine))
+		playsound(src.loc, 'monkestation/sound/items/sniff.ogg', 50)
+		to_chat(user, span_warning("Gabbie inhales the powder!"))
+		src.desc = "She still looks angry, but more high."
+		qdel(attacking_item)
+
+//End Gabbie plush thingoes
 
 /obj/item/toy/plush/admin/amunsethep
 	name = "amun set hep"
@@ -207,7 +228,7 @@
 /datum/loadout_item/plushies/amunsethep
 	name = "Amun Set Hep Plush"
 	item_path = /obj/item/toy/plush/admin/amunsethep
-/datum/store_item/plushies/gabbie
+/datum/store_item/plushies/amunsethep
 	name = "Amun Set Hep Plush"
 	item_path = /obj/item/toy/plush/admin/amunsethep
 	item_cost = 7500
@@ -287,6 +308,106 @@
 /datum/store_item/plushies/fortune
 	name = "Fortune Plush"
 	item_path = /obj/item/toy/plush/admin/fortune
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/weegee
+	name = "weegee"
+	desc = "He's staring into your soul..."
+	icon_state = "weegee"
+	squeak_override = list('monkestation/sound/items/weegee.ogg'=1)
+	gender = MALE
+/datum/loadout_item/plushies/weegee
+	name = "Weegee Plush"
+	item_path = /obj/item/toy/plush/admin/weegee
+/datum/store_item/plushies/weegee
+	name = "Weegee Plush"
+	item_path = /obj/item/toy/plush/admin/weegee
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/ropes
+	name = "learns-the-ropes"
+	desc = "A plushie depicting the most marketable weh."
+	icon_state = "ropes"
+	gender = MALE
+/datum/loadout_item/plushies/ropes
+	name = "Learns-The-Ropes Plush"
+	item_path = /obj/item/toy/plush/admin/ropes
+/datum/store_item/plushies/ropes
+	name = "Learns-The-Ropes Plush"
+	item_path = /obj/item/toy/plush/admin/ropes
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/horsey
+	name = "QB"
+	desc = "Centcom...the horse is here."
+	icon_state = "horsey"
+	squeak_override = list('monkestation/sound/items/subuluwa.ogg'=1)
+	gender = FEMALE
+/datum/loadout_item/plushies/horsey
+	name = "QB Plush"
+	item_path = /obj/item/toy/plush/admin/horsey
+/datum/store_item/plushies/hornsey
+	name = "QB Plush"
+	item_path = /obj/item/toy/plush/admin/horsey
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/barnaby
+	name = "barnaby"
+	desc = "Time to cause some chaos."
+	icon_state = "barnaby"
+/datum/loadout_item/plushies/barnaby
+	name = "Barnaby Plush"
+	item_path = /obj/item/toy/plush/admin/barnaby
+/datum/store_item/plushies/barnaby
+	name = "Barnaby Plush"
+	item_path = /obj/item/toy/plush/admin/barnaby
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/jay
+	name = "jay kouri"
+	desc = "Doesn't seem to get a break. From making sure his underlings in the war dont die, to making sure the station's crew doesn't kill each other. Has beautiful blue eyes though, too bad he doesn't take off his sunglasses."
+	icon_state = "jay"
+	squeak_override = list('sound/weapons/gun/rifle/shot.ogg'=1)
+/datum/loadout_item/plushies/jay
+	name = "Jay Kouri Plush"
+	item_path = /obj/item/toy/plush/admin/jay
+/datum/store_item/plushies/jay
+	name = "Jay Kouri Plush"
+	item_path = /obj/item/toy/plush/admin/jay
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/azkare
+	name = "azkare uw"
+	desc = "You could swear the eyes behind the mask moved when you weren't looking."
+	icon_state = "azkare"
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	light_power = 0.5
+	light_color = "#B3D9FF"
+	light_on = TRUE
+/datum/loadout_item/plushies/azkare
+	name = "Azkare UW Plush"
+	item_path = /obj/item/toy/plush/admin/azkare
+/datum/store_item/plushies/azkare
+	name = "Azkare UW Plush"
+	item_path = /obj/item/toy/plush/admin/azkare
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/altjira
+	name = "altjira xc"
+	desc = "Tongue tied, slightly psychotic, and usually 'forgets' her medication."
+	icon_state = "altjira"
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	light_power = 0.5
+	light_color = "#3399ff"
+	light_on = TRUE
+/datum/loadout_item/plushies/altjira
+	name = "Altjira Plush"
+	item_path = /obj/item/toy/plush/admin/altjira
+/datum/store_item/plushies/altjira
+	name = "Altjira Plush"
+	item_path = /obj/item/toy/plush/admin/altjira
 	item_cost = 7500
 
 /** SHION PLUSH START **/
