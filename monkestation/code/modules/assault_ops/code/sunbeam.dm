@@ -5,6 +5,7 @@
 #define SUNBEAM_DEFAULT_SCALE_X 2
 #define SUNBEAM_DEFAULT_SCALE_Y 2
 #define SUNBEAM_OVERLAYS 16
+#define SUNBEAM_COUNT 10 //the number of sunbeans which destroy the station
 
 /obj/effect/sunbeam
 	name = "\improper ICARUS Sunbeam"
@@ -165,10 +166,19 @@
 	alert_sound_to_playing('monkestation/code/modules/assault_ops/sound/sunbeam_fire.ogg')
 
 /datum/round_event/icarus_sunbeam/start()
-	var/startside = pick(GLOB.cardinals)
-	var/turf/end_turf = get_edge_target_turf(get_safe_random_station_turf_equal_weight(), turn(startside, 180))
-	var/turf/start_turf = spaceDebrisStartLoc(startside, end_turf.z)
-	new /obj/effect/sunbeam(start_turf, end_turf)
+	if(SSgoldeneye.console_status) //if the console is destroyed before the event starts, don't fire
+		addtimer(CALLBACK(src, PROC_REF(victory)), 300 SECONDS) // if it fires the round ends in 5 minutes
+		var/turf/end_turf
+		var/turf/start_turf
+		for(var/count = 0; count < SUNBEAM_COUNT; count++)
+			var/startside = pick(GLOB.cardinals)
+			end_turf = get_edge_target_turf(get_safe_random_station_turf_equal_weight(), turn(startside, 180))
+			start_turf = spaceDebrisStartLoc(startside, end_turf.z)
+			new /obj/effect/sunbeam(start_turf, end_turf)
+
+/datum/round_event/icarus_sunbeam/proc/victory()
+	SSticker.news_report = ASSAULT_RESULT_WIN
+	SSticker.force_ending = FORCE_END_ROUND
 
 #undef SUNBEAM_OBLITERATION_RANGE_FIRE
 #undef SUNBEAM_OBLITERATION_RANGE_FLATTEN
@@ -176,7 +186,7 @@
 #undef SUNBEAM_MOVEMENT_COOLDOWN
 #undef SUNBEAM_DEFAULT_SCALE_X
 #undef SUNBEAM_DEFAULT_SCALE_Y
-
+#undef SUNBEAM_COUNT
 ///This is quite franlky the most important proc relating to global sounds, it uses area definition to play sounds depending on your location, and respects the players announcement volume. Generally if you're sending an announcement you want to use priority_announce.
 /proc/alert_sound_to_playing(soundin, vary = FALSE, frequency = 0, falloff = FALSE, channel = 0, pressure_affected = FALSE, sound/S, override_volume = FALSE, list/players)
 	if(!S)
