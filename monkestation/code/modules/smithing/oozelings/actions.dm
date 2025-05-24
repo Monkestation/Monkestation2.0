@@ -137,6 +137,7 @@
 	else
 		to_chat(owner, span_notice("You fine-tune the electromagnetic signals from your core to be picked up by GPS receivers upon it's rejection."))
 		core.gps_active = TRUE
+
 ///////
 /// MEMBRANE MURMUR SPELL
 /// Use your core to attempt to call out for help or attention.
