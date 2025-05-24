@@ -28,7 +28,7 @@
 	icon_state = "void_conduit"
 	anchored = TRUE
 	density = TRUE
-	max_integrity = 150
+	max_integrity = 75
 
 	///Overlay to apply to the tiles in range of the conduit
 	var/static/image/void_overlay = image(icon = 'icons/turf/overlays.dmi', icon_state = "voidtile")

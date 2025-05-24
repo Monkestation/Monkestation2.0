@@ -216,6 +216,8 @@
 	var/datum/weather/void_storm/storm
 	///The storm where there are actual effects
 	var/datum/proximity_monitor/advanced/void_storm/heavy_storm
+	COOLDOWN_DECLARE(block_cooldown)
+	var/deflect_cooldown = 2 SECONDS //monke edit start
 
 /datum/heretic_knowledge/ultimate/void_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
@@ -314,6 +316,8 @@
 		return FALSE
 	if(!isturf(ascended_heretic.loc))
 		return FALSE
+	if(!COOLDOWN_FINISHED(src, block_cooldown))
+		return FALSE
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/void_final/proc/hit_by_projectile(mob/living/ascended_heretic, obj/projectile/hitting_projectile, def_zone)
@@ -326,6 +330,7 @@
 		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]!"),
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
+	COOLDOWN_START(src, block_cooldown, deflect_cooldown)// monke edit start
 	playsound(ascended_heretic, pick('sound/magic/voiddeflect01.ogg', 'sound/magic/voiddeflect02.ogg', 'sound/magic/voiddeflect03.ogg'), 75, TRUE)
 	hitting_projectile.firer = ascended_heretic
 	if(prob(75))
