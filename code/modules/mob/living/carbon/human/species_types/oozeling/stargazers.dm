@@ -9,7 +9,7 @@
 
 /datum/species/oozeling/stargazer/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
 	. = ..()
-	if(!QDELETED(project_action))
+	if(QDELETED(project_action))
 		project_action = new(src)
 	project_action.Grant(slime)
 
