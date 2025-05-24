@@ -480,17 +480,17 @@
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
-/datum/status_effect/nest_sustenance/tick(seconds_per_tick, times_fired)
+/datum/status_effect/nest_sustenance/tick(seconds_between_ticks, times_fired)
 	. = ..()
 
 	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
 		qdel(src)
 		return
 
-	owner.adjustBruteLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustOxyLoss(-4 * seconds_per_tick, updating_health = FALSE)
-	owner.stamina.adjust(4 * seconds_per_tick)
+	owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	owner.stamina.adjust(4 * seconds_between_ticks)
 	owner.adjust_bodytemperature(INFINITY, max_temp = owner.standard_body_temperature) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 

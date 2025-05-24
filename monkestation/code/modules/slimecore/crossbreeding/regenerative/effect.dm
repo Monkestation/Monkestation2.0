@@ -39,8 +39,8 @@
 	owner.apply_status_effect(/datum/status_effect/slime_regen_cooldown, diminishing_multiplier, diminish_time)
 	owner.cause_pain(BODY_ZONE_CHEST, pain_amount, BRUTE)
 
-/datum/status_effect/regenerative_extract/tick(seconds_per_tick, times_fired)
-	var/heal_amt = base_healing_amt * seconds_per_tick * multiplier
+/datum/status_effect/regenerative_extract/tick(seconds_between_ticks, times_fired)
+	var/heal_amt = base_healing_amt * seconds_between_ticks * multiplier
 	heal_act(heal_amt)
 	owner.updatehealth()
 

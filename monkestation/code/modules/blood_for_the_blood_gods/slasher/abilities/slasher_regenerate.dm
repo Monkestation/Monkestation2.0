@@ -32,12 +32,12 @@
 	REMOVE_TRAIT(owner, TRAIT_CANT_STAMCRIT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
-/datum/status_effect/bloody_heal/tick(seconds_per_tick, times_fired)
+/datum/status_effect/bloody_heal/tick(seconds_between_ticks, times_fired)
 	. = ..()
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.AdjustAllImmobility(-20 * seconds_per_tick)
+	human_owner.AdjustAllImmobility(-20 * seconds_between_ticks)
 	human_owner.stamina.adjust(20, TRUE)
 	human_owner.adjustBruteLoss(-35)
 	human_owner.adjustFireLoss(-5, FALSE)
@@ -56,4 +56,4 @@
 
 	for(var/i in human_owner.all_wounds)
 		var/datum/wound/iter_wound = i
-		iter_wound.on_xadone(4 * REM * seconds_per_tick) // plasmamen use plasma to reform their bones or whatever
+		iter_wound.on_xadone(4 * REM * seconds_between_ticks) // plasmamen use plasma to reform their bones or whatever
