@@ -200,13 +200,13 @@
 			SPECIES_PERK_DESC = "[plural_form] will dissolve away when in contact with water.",
 		),
 		list(
-            SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-            SPECIES_PERK_ICON = "briefcase-medical",
-            SPECIES_PERK_NAME = "Oozeling Biology",
-            SPECIES_PERK_DESC = "[plural_form] take specialized medical knowledge to be \
-                treated. Do not expect speedy revival, if you are lucky enough to get \
-                one at all.",
-        ),
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "briefcase-medical",
+			SPECIES_PERK_NAME = "Oozeling Biology",
+			SPECIES_PERK_DESC = "[plural_form] take specialized medical knowledge to be \
+				treated. Do not expect speedy revival, if you are lucky enough to get \
+				one at all.",
+		),
 	)
 
 	return to_add
