@@ -595,7 +595,7 @@ Behavior that's still missing from this component that original food items had t
 	var/food_quality = get_recipe_complexity()
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
+		if(!isoozeling(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		food_quality += LIKED_FOOD_QUALITY_CHANGE
 

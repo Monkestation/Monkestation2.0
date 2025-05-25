@@ -1,60 +1,8 @@
-/datum/species/jelly
-	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
-	name = "\improper Jellyperson"
-	plural_form = "Jellypeople"
-	id = SPECIES_JELLYPERSON
-	inherent_traits = list(
-		TRAIT_MUTANT_COLORS,
-	)
-	mutanttongue = /obj/item/organ/internal/tongue/jelly
-	mutantlungs = /obj/item/organ/internal/lungs/slime
-	mutanteyes = /obj/item/organ/internal/eyes/jelly
-	mutantheart = /obj/item/organ/internal/heart/slime
-	mutantliver = /obj/item/organ/internal/liver/slime
-	mutantspleen = null
-	meat = /obj/item/food/meat/slab/human/mutant/slime
-	exotic_bloodtype = /datum/blood_type/slime
-	blood_deficiency_drain_rate = 1.5 + BLOOD_DEFICIENCY_MODIFIER
-	coldmod = 6   // = 3x cold damage
-	heatmod = 0.5 // = 1/4x heat damage
-	burnmod = 0.5 // = 1/2x generic burn damage
-	payday_modifier = 0.75
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	inherent_factions = list(FACTION_SLIME)
-	species_language_holder = /datum/language_holder/jelly
-	hair_color = "mutant_color"
-	hair_alpha = 150
-	facial_hair_alpha = 150
-
-	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/jelly,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/jelly,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/jelly,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/jelly,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/jelly,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
-	)
-
-// Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
-// They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
-/datum/species/jelly/create_pref_blood_perks()
-	var/list/to_add = list()
-
-	to_add += list(list(
-		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-		SPECIES_PERK_ICON = "tint",
-		SPECIES_PERK_NAME = "Jelly Blood",
-		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic-to-humans Jelly! \
-			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
-	))
-
-	return to_add
-
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
 
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
-/datum/species/jelly/slime
+/datum/species/oozeling/slime
 	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
@@ -79,7 +27,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
 	)
 
-/datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
+/datum/species/oozeling/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
 	if(swap_body)
@@ -90,7 +38,7 @@
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
-/datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/oozeling/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
 		slime_split = new
@@ -103,7 +51,7 @@
 		else
 			bodies |= C
 
-/datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
+/datum/species/oozeling/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
 		if(!H.mind || !H.mind.active)
 			return
@@ -119,10 +67,10 @@
 		swap_body.swap_to_dupe(H.mind, pick(available_bodies))
 
 //If you're cloned you get your body pool back
-/datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
+/datum/species/oozeling/slime/copy_properties_from(datum/species/oozeling/slime/old_species)
 	bodies = old_species.bodies
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/oozeling/slime/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(H, span_notice("You feel very bloated!"))
@@ -199,10 +147,10 @@
 	H.blood_volume *= 0.45
 	REMOVE_TRAIT(H, TRAIT_NO_TRANSFORM, REF(src))
 
-	var/datum/species/jelly/slime/origin_datum = H.dna.species
+	var/datum/species/oozeling/slime/origin_datum = H.dna.species
 	origin_datum.bodies |= spare
 
-	var/datum/species/jelly/slime/spare_datum = spare.dna.species
+	var/datum/species/oozeling/slime/spare_datum = spare.dna.species
 	spare_datum.bodies = origin_datum.bodies
 
 	H.transfer_quirk_datums(spare)
@@ -245,7 +193,7 @@
 	if(!isslimeperson(H))
 		return
 
-	var/datum/species/jelly/slime/SS = H.dna.species
+	var/datum/species/oozeling/slime/SS = H.dna.species
 
 	var/list/data = list()
 	data["bodies"] = list()
@@ -308,7 +256,7 @@
 		return
 	switch(action)
 		if("swap")
-			var/datum/species/jelly/slime/SS = H.dna.species
+			var/datum/species/oozeling/slime/SS = H.dna.species
 			var/mob/living/carbon/human/selected = locate(params["ref"]) in SS.bodies
 			if(!can_swap(selected))
 				return
@@ -319,7 +267,7 @@
 	var/mob/living/carbon/human/H = owner
 	if(!isslimeperson(H))
 		return FALSE
-	var/datum/species/jelly/slime/SS = H.dna.species
+	var/datum/species/oozeling/slime/SS = H.dna.species
 
 	if(QDELETED(dupe)) //Is there a body?
 		SS.bodies -= dupe
@@ -357,4 +305,3 @@
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
 		span_notice("...and move this one instead."))
-

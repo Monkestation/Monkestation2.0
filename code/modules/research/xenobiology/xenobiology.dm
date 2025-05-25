@@ -372,7 +372,7 @@
 			to_chat(user, span_warning("You feel yourself radically changing your slime type..."))
 			if(do_after(user, 120, target = user))
 				to_chat(user, span_warning("You feel different!"))
-				user.set_species(pick(/datum/species/jelly/slime, /datum/species/oozeling/stargazer))
+				user.set_species(pick(/datum/species/oozeling/slime, /datum/species/oozeling/stargazer))
 				return
 			to_chat(user, span_notice("You stop the transformation."))
 

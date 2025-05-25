@@ -993,11 +993,8 @@
 /mob/living/carbon/human/species/oozeling/stargazer
 	race = /datum/species/oozeling/stargazer
 
-/mob/living/carbon/human/species/jelly
-	race = /datum/species/jelly
-
-/mob/living/carbon/human/species/jelly/slime
-	race = /datum/species/jelly/slime
+/mob/living/carbon/human/species/oozeling/slime
+	race = /datum/species/oozeling/slime
 
 /mob/living/carbon/human/species/oozeling/luminescent
 	race = /datum/species/oozeling/luminescent

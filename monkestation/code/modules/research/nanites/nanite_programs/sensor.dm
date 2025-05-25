@@ -308,7 +308,6 @@
 		"Floran" = /datum/species/floran,
 		"Fly" = /datum/species/fly,
 		"Arachnid" = /datum/species/arachnid,
-		"Jelly" = /datum/species/jelly,
 		"Oozeling" = /datum/species/oozeling,
 		"IPC" = /datum/species/ipc,
 		"Monkey" = /datum/species/monkey,

@@ -328,7 +328,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(isjellyperson(affected_mob))
+	if(isoozeling(affected_mob))
 		shock_timer = 0 //immune to shocks
 		affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
 		affected_mob.stamina.adjust(2 * REM * seconds_per_tick, 0)
