@@ -47,6 +47,7 @@
 		to_chat(telepath, span_warning("As you reach into [recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return
 	log_directed_talk(telepath, recipient, msg, LOG_SAY, "slime telepathy")
+	recipient.balloon_alert(recipient, "you hear an alien voice in your head...")
 	to_chat(recipient, "[span_notice("You hear an alien voice in your head... ")]<font color=#008CA2>[msg]</font>")
 	to_chat(telepath, span_notice("You telepathically said: \"[msg]\" to [recipient]"))
 	for(var/dead in GLOB.dead_mob_list)
