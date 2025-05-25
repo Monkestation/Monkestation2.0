@@ -356,3 +356,16 @@
   Absolucy:
   - refactor: Made some changes to how some item icons are displayed in tgui windows,
       hopefully improving tgui load times.
+2025-05-25:
+  SirNightKnight:
+  - rscadd: added explorer eva kits to mining order consoles.
+  - rscadd: added advanced GPSs to mining order consoles.
+  - rscadd: added basic medkits to mining order consoles.
+  - balance: dropped the price of fire medkits to 600 points in the mining order console
+      for OCD reasons.
+  - bugfix: fixed a system glitch sending explorers to planetary stations.
+  Xander3359 Hatterhat:
+  - qol: Holosigns (engineering holobarriers, janitor holosigns, PENLITE holobarriers,
+      etc.) can now be projected onto doors.
+  - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
+      and grilles.
