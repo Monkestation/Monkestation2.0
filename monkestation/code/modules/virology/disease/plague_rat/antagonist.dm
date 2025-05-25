@@ -37,7 +37,7 @@
 
 /datum/antagonist/plague_rat/greet()
 	. = ..()
-	to_chat(owner.current, span_warning("<B>You are a [name]! Carrier of a dangerous Bacteria!</B><BR>Try and spread your contagion across the station!"))
+	to_chat(owner.current, span_warning("<B>You are a [name]! Carrier of a dangerous Bacteria!</B><BR>Try and spread your contagion across the station!</B><BR> Eating some food can help heal your wounds, always keep an eye out for cheese."))
 
 /datum/antagonist/plague_rat/get_team()
 	return rats_rats_we_are_the_rats

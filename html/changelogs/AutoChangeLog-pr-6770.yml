@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - qol: "Clarified in plague rat greet text what heals a rat."
+  - balance: "Eating normal food now heals a plague rat. albeit a much lesser amount and function than cheese"
