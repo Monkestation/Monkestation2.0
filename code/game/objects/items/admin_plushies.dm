@@ -9,11 +9,11 @@
 	/// A string of text that is optionaly added to the objects desc, it SHOULD be the admin's CKEY.
 	var/adminCKey = null
 	// Whether or not to append (A member of our beloved admin team) to the end of the description
-	var/appendNote = TRUE
+	var/append_note = TRUE
 
 /obj/item/toy/plush/admin/Initialize(mapload)
 	. = ..()
-	if(appendNote)
+	if(append_note)
 		if(adminCKey)
 			desc = "[desc]" + " " + "(A member of our beloved admin team- ''[adminCKey]'')"
 		else
@@ -196,8 +196,7 @@
 	icon_state = "gabbie"
 	squeak_override = list('monkestation/sound/items/gabnoise.ogg'=1)
 	gender = FEMALE
-	appendNote = FALSE
-
+	append_note = FALSE
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -409,6 +408,37 @@
 	name = "Altjira Plush"
 	item_path = /obj/item/toy/plush/admin/altjira
 	item_cost = 7500
+
+/obj/item/toy/plush/admin/autumn
+	name = "autumn hynes"
+	desc = "This voiceless friend is here to help! Feels like someone's watching, though…"
+	icon_state = "autumn"
+/datum/loadout_item/plushies/autumn
+	name = "Autumn Hynes Plush"
+	item_path = /obj/item/toy/plush/admin/autumn
+/datum/store_item/plushies/autumn
+	name = "Autumn Hynes Plush"
+	item_path = /obj/item/toy/plush/admin/autumn
+	item_cost = 7500
+
+/obj/item/toy/plush/admin/siro
+	name = "siro yamamuchi"
+	desc = "Our adorable staff coder slimegirl! We love you Siro!"
+	icon_state = "siro-mask"
+	append_note = FALSE
+/datum/loadout_item/plushies/siro
+	name = "Siro Yamamuchi Plush"
+	item_path = /obj/item/toy/plush/admin/siro
+/datum/store_item/plushies/siro
+	name = "Siro Yamamuchi Plush"
+	item_path = /obj/item/toy/plush/admin/siro
+	item_cost = 7500
+/obj/item/toy/plush/admin/siro/AltClick(mob/user)
+	if(icon_state == "siro")
+		icon_state = "siro-mask"
+	else
+		icon_state = "siro"
+
 
 /** SHION PLUSH START **/
 // A collective gift from @Flleeppyy/Chen, @Veth-s/Phatarsh, and Cannibal_Hunter
