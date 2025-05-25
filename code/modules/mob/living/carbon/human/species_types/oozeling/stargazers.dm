@@ -27,12 +27,12 @@
 
 /datum/action/innate/project_thought/Activate()
 	var/mob/living/carbon/human/telepath = owner
-	if(telepath.stat == DEAD)
-		return
-	if(!is_species(telepath, /datum/species/oozeling/stargazer))
+	if(telepath.stat == DEAD || !is_species(telepath, /datum/species/oozeling/stargazer))
 		return
 	var/list/recipient_options = list()
 	for(var/mob/living/recipient in oview(telepath))
+		if(!recipient.mind || !recipient.client)
+			continue
 		recipient_options += recipient
 	if(!length(recipient_options))
 		to_chat(telepath, span_warning("You don't see anyone to send your thought to."))
