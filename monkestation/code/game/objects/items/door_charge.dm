@@ -9,9 +9,9 @@
 /obj/item/traitor_machine_trapper/door_charge/attack_self(mob/user, modifiers)
 	exploding_taunt = tgui_input_text(user, "What should I say when I explode?", "Bad Manners_OS", exploding_taunt, MAX_MESSAGE_LEN)
 
-/obj/machinery/slime_market_pad/examine(mob/user)
+/obj/item/traitor_machine_trapper/door_charge/examine(mob/user)
 	. = ..()
-	. += span_notice("Use the door charge on yourself to record a message to play when it explodes.")
+	. += span_notice("Use the door charge in hand to record a message to play when it explodes.")
 
 /datum/component/interaction_booby_trap/door
 	explosion_heavy_range = 2
