@@ -106,6 +106,15 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 	CONSTRUCT_ARTIFICER = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "artificer")
 ))
 
+/// List of all species prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototypes())
+
+/proc/init_species_prototypes()
+	var/list/species_list = list()
+	for(var/species_type in subtypesof(/datum/species))
+		species_list[species_type] = new species_type()
+	return species_list
+
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	var/list/mob_types = list()
 	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed)
