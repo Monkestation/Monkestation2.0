@@ -4905,6 +4905,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\golem\uranium_golem.dm"
 #include "code\modules\mob\living\carbon\human\species_types\golem\wood_golem.dm"
 #include "code\modules\mob\living\carbon\human\species_types\oozeling\_oozelings.dm"
+#include "code\modules\mob\living\carbon\human\species_types\oozeling\luminescents.dm"
 #include "code\modules\mob\living\carbon\human\species_types\oozeling\stargazers.dm"
 #include "code\modules\mob\living\silicon\damage_procs.dm"
 #include "code\modules\mob\living\silicon\death.dm"

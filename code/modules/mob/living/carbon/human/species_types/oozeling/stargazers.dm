@@ -4,19 +4,10 @@
 	name = "\improper Stargazer"
 	plural_form = "Stargazers"
 	id = SPECIES_STARGAZER
-	/// Special "project thought" telepathy action for stargazers.
-	var/datum/action/innate/project_thought/project_action
-
-/datum/species/oozeling/stargazer/Destroy(force)
-	QDEL_NULL(project_action)
-	return ..()
+	extra_actions = list(/datum/action/innate/project_thought)
 
 /datum/species/oozeling/stargazer/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
 	. = ..()
-	if(QDELETED(project_action))
-		project_action = new(src)
-	project_action.Grant(slime)
-
 	slime.AddComponent( \
 		/datum/component/mind_linker/active_linking, \
 		network_name = "Slime Link", \
@@ -25,10 +16,6 @@
 		linker_action_path = /datum/action/innate/link_minds, \
 		show_balloon_alert = TRUE, \
 	)
-
-/datum/species/oozeling/stargazer/on_species_loss(mob/living/carbon/remove_from)
-	QDEL_NULL(project_action)
-	return ..()
 
 /datum/action/innate/project_thought
 	name = "Send Thought"

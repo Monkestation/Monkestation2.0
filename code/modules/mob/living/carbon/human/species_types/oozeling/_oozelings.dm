@@ -44,34 +44,30 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/oozeling,
 	)
 
-	var/datum/action/cooldown/spell/slime_washing/slime_washing
-	var/datum/action/cooldown/spell/slime_hydrophobia/slime_hydrophobia
-	var/datum/action/innate/core_signal/core_signal
+	/// Typepaths of the default oozeling actions to give.
+	var/static/list/default_actions = list(
+		/datum/action/cooldown/spell/slime_washing,
+		/datum/action/cooldown/spell/slime_hydrophobia,
+		/datum/action/innate/core_signal,
+	)
+	/// Typepaths of extra actions to give to all oozelings.
+	var/list/extra_actions = list()
+	/// Instances of all actions given to this oozeling.
+	var/list/actions_given = list()
 
 /datum/species/oozeling/Destroy(force)
-	QDEL_NULL(slime_washing)
-	QDEL_NULL(slime_hydrophobia)
-	QDEL_NULL(core_signal)
+	QDEL_LIST(actions_given)
 	return ..()
 
 /datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
 	. = ..()
-	if(QDELETED(slime_washing))
-		slime_washing = new(src)
-	slime_washing.Grant(slime)
-
-	if(QDELETED(slime_hydrophobia))
-		slime_hydrophobia = new(src)
-	slime_hydrophobia.Grant(slime)
-
-	if(QDELETED(core_signal))
-		core_signal = new(src)
-	core_signal.Grant(slime)
+	for(var/action_type in default_actions + extra_actions)
+		var/datum/action/action = new action_type(src)
+		action.Grant(slime)
+		actions_given += action
 
 /datum/species/oozeling/on_species_loss(mob/living/carbon/former_slime)
-	QDEL_NULL(slime_washing)
-	QDEL_NULL(slime_hydrophobia)
-	QDEL_NULL(core_signal)
+	QDEL_LIST(actions_given)
 	. = ..()
 	former_slime.blood_volume = clamp(former_slime.blood_volume, BLOOD_VOLUME_SAFE, BLOOD_VOLUME_NORMAL)
 
