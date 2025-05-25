@@ -682,7 +682,7 @@
 	r_pocket = /obj/item/grenade/syndieminibomb
 	implants = list(/obj/item/implant/explosive/macro)
 	backpack_contents = list(
-		/obj/item/assembly/signaler = 10,
+		/obj/item/assembly/signaler/low_range = 10,
 	)
 	plasmaman_outfit = /datum/outfit/plasmaman/science
 
