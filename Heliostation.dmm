@@ -1118,21 +1118,13 @@
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
 "afs" = (
-/obj/structure/cable,
-/obj/machinery/duct,
 /obj/machinery/corral_corner{
-	mapping_id = "5"
+	mapping_id = "2"
 	},
-/obj/machinery/slime_pen_controller{
-	mapping_id = "5"
+/obj/machinery/corral_corner{
+	mapping_id = "3"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/purple/anticorner{
-	dir = 1
-	},
-/turf/open/floor/engine,
+/turf/open/floor/iron/corner,
 /area/station/science/xenobiology)
 "aft" = (
 /obj/structure/closet{
@@ -7832,9 +7824,13 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "aPR" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -18254,12 +18250,17 @@
 /area/station/service/library)
 "bJs" = (
 /obj/structure/cable,
-/obj/machinery/duct,
+/obj/machinery/corral_corner{
+	mapping_id = "4"
+	},
+/obj/machinery/slime_pen_controller{
+	mapping_id = "4"
+	},
 /obj/effect/turf_decal/tile/purple/anticorner{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 9
+	dir = 10
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -18742,7 +18743,7 @@
 /obj/machinery/corral_corner{
 	mapping_id = "1"
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/corner,
 /area/station/science/xenobiology)
 "bOj" = (
 /obj/effect/turf_decal/tile/purple/anticorner{
@@ -19142,6 +19143,13 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
+"bRt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "bRu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -22327,6 +22335,9 @@
 /area/station/cargo/storage)
 "cwW" = (
 /obj/machinery/duct,
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "cxa" = (
@@ -25562,13 +25573,18 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/science/central)
 "cSC" = (
-/obj/machinery/corral_corner{
-	mapping_id = "2"
-	},
+/obj/structure/cable,
 /obj/machinery/corral_corner{
 	mapping_id = "3"
 	},
-/turf/open/floor/iron/corner,
+/obj/machinery/slime_pen_controller{
+	mapping_id = "3"
+	},
+/obj/effect/turf_decal/tile/purple/anticorner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
 /area/station/science/xenobiology)
 "cSE" = (
 /obj/effect/turf_decal/trimline/purple/filled/warning{
@@ -26108,7 +26124,7 @@
 /area/station/engineering/atmos/pumproom)
 "cVc" = (
 /obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -33381,10 +33397,10 @@
 /turf/open/floor/carpet,
 /area/station/service/abandoned_gambling_den)
 "fOD" = (
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "fOF" = (
@@ -45603,17 +45619,11 @@
 	},
 /area/station/engineering/storage)
 "kuI" = (
-/obj/structure/cable,
-/obj/machinery/corral_corner{
-	mapping_id = "3"
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "1";
+	dir = 1
 	},
-/obj/machinery/slime_pen_controller{
-	mapping_id = "3"
-	},
-/obj/effect/turf_decal/tile/purple/anticorner,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
+/obj/effect/turf_decal/box,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "kuL" = (
@@ -66884,18 +66894,10 @@
 /area/station/engineering/atmos/storage/gas)
 "sIi" = (
 /obj/structure/cable,
-/obj/machinery/corral_corner{
-	mapping_id = "4"
-	},
-/obj/machinery/slime_pen_controller{
-	mapping_id = "4"
-	},
-/obj/effect/turf_decal/tile/purple/anticorner{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 10
+	dir = 6
 	},
+/obj/effect/turf_decal/tile/purple/anticorner,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "sIq" = (
@@ -68766,10 +68768,12 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "tqG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/duct,
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "tqH" = (
@@ -70632,10 +70636,12 @@
 /area/station/engineering/hallway)
 "ubt" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
+/obj/effect/turf_decal/tile/purple/anticorner{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple/anticorner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "ubx" = (
@@ -74248,6 +74254,23 @@
 /obj/machinery/air_sensor/ordnance_burn_chamber,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/burnchamber)
+"vAr" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/corral_corner{
+	mapping_id = "5"
+	},
+/obj/machinery/slime_pen_controller{
+	mapping_id = "5"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/purple/anticorner{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "vAE" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -79775,13 +79798,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/security/upper)
 "xHI" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/purple/anticorner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "xHL" = (
@@ -123853,9 +123870,9 @@ xIW
 poN
 cnz
 cRO
-aPR
+kuI
 cpI
-cpA
+bMy
 nhu
 cGR
 cpI
@@ -124110,14 +124127,14 @@ xIW
 wzb
 cnz
 cpI
-cwW
+xHI
 cpI
-cpA
-cwW
+bMy
+xHI
 cpI
 cpI
 bMy
-cwW
+xHI
 cpI
 cpI
 cnz
@@ -124372,11 +124389,11 @@ lsm
 cTn
 cDq
 cVc
-ubt
-cSC
+sIi
+afs
 cDq
 cVc
-kuI
+cSC
 cnz
 jhD
 nrA
@@ -124632,7 +124649,7 @@ cVe
 cVB
 cED
 epe
-fGv
+tqG
 gXR
 ibG
 jjA
@@ -124877,7 +124894,7 @@ leU
 eAL
 vXP
 vMu
-tqG
+bRt
 woK
 cRu
 cRR
@@ -125398,13 +125415,13 @@ cnz
 cnz
 cnz
 cnz
-afs
+vAr
 fOD
-xHI
+ubt
 mNU
-bJs
+aPR
 fOD
-sIi
+bJs
 cnz
 ivO
 cJa
@@ -125659,7 +125676,7 @@ dkD
 unw
 cpI
 bMy
-cwW
+xHI
 unw
 cpI
 cnz
