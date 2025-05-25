@@ -23,7 +23,7 @@
 		MECHA_ARMOR = list(),
 	)
 	max_equip_by_category = list(
-		MECHA_UTILITY = 0,
+		MECHA_UTILITY = 1,
 		MECHA_POWER = 0,
 		MECHA_ARMOR = 0,
 	)

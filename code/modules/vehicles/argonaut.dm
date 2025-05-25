@@ -13,6 +13,8 @@
 	max_occupants = 4
 
 	var/crash_all = FALSE
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 
 /obj/vehicle/ridden/argonaut/Initialize(mapload)
 	. = ..()
