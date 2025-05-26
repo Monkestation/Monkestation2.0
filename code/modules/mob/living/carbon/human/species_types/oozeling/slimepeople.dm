@@ -104,8 +104,6 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		span_notice("You focus intently on moving your body while standing perfectly still..."),
 	)
 
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
-
 	if(do_after(owner, delay = 6 SECONDS, target = owner, timed_action_flags = IGNORE_HELD_ITEM))
 		if(user.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
@@ -114,7 +112,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	else
 		to_chat(user, span_warning("...but fail to stand perfectly still!"))
 
-	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
+	REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 
 /datum/action/innate/split_body/proc/make_dupe()
 	var/mob/living/carbon/human/user = owner
@@ -196,7 +194,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 /datum/slimeperson_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SlimeBodySwapper", name)
+		ui = new(user, src, "SlimeBodySwapper", "Split Body")
 		ui.open()
 
 /datum/slimeperson_manager/ui_state(mob/user)
