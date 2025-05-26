@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -30,6 +30,16 @@ export const BeakerPanel = (props) => {
   const { act, data } = useBackend<BeakerPanelData>();
   const { reagents, containers, chemstring } = data;
 
+  const [selectedContainersType, setContainerType] = useLocalState(
+    'beakerPanel_beakersType',
+    {},
+  );
+
+  const [reagentsMap, setReagentsMap] = useLocalState(
+    'beakerPanel_reagents',
+    {},
+  );
+
   const spawnGrenade = () => {
     act('spawngrenade', {});
   };
@@ -38,13 +48,10 @@ export const BeakerPanel = (props) => {
     act('spawncontainer');
   };
 
-  const removeReagent = (containerNum, index) => {};
-
   // Render container section inline to avoid component state conflicts
   const renderContainerSection = (containerNum) => {
-    const containerReagents = null;
-
-    // Ensure containerReagents is always an array
+    const containerReagents = reagentsMap[containerNum];
+    // Data for reagents, ensures containerReagents is always an array
     const safeContainerReagents = Array.isArray(containerReagents)
       ? containerReagents
       : [];
@@ -57,8 +64,14 @@ export const BeakerPanel = (props) => {
               <Dropdown
                 width="300px"
                 options={containers.map((container) => ({
-                  displayText: container.name + ' Volume: ' + container.volume,
-                  value: container.name,
+                  displayText: (
+                    <>
+                      {`Path: ${container.id}`}
+                      <br />
+                      {`Container Name: ${container.name} Volume: ${container.volume}`}
+                    </>
+                  ),
+                  value: container.id,
                 }))}
               />
             </LabeledList.Item>
@@ -88,7 +101,6 @@ export const BeakerPanel = (props) => {
                     minValue={0}
                     step={1}
                     stepPixelSize={10}
-                    onChange={(e, value) => 0}
                   />
                 </Flex.Item>
                 <Flex.Item>
