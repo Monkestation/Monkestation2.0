@@ -13,6 +13,7 @@
 	melee_damage_upper = 7
 	chooses_bodycolor = FALSE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB|PASSDOORS
+	hungry = TRUE
 
 /mob/living/basic/mouse/plague/Initialize(mapload, tame, new_body_color)
 	. = ..()
