@@ -60,6 +60,16 @@
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
+/obj/item/organ/internal/cyberimp/arm/strongarm/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
+	. = ..()
+	if(!QDELETED(hand))
+		ADD_TRAIT(hand, TRAIT_BORG_PUNCHER, REF(src))
+
+/obj/item/organ/internal/cyberimp/arm/strongarm/on_limb_detached(obj/item/bodypart/source)
+	if(!QDELETED(hand) && source == hand)
+		REMOVE_TRAIT(hand, TRAIT_BORG_PUNCHER, REF(src))
+	return ..()
+
 /obj/item/organ/internal/cyberimp/arm/strongarm/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 	owner.balloon_alert(owner, "your arm stops spasming!")

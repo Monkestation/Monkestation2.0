@@ -298,3 +298,79 @@
   - bugfix: Fixed old DNA data disks not rolling species-specific mutations.
   - refactor: Refactored how roundend rewards are distributed. Hopefully this should
       ensure everyone gets their roundend rewards, even if they die soon after roundend.
+2025-05-22:
+  Absolucy:
+  - bugfix: Revolutionary Raptors can no longer straight-up delete people.
+  - rscadd: You can now punch/kick borgs under certain conditions!
+  - rscadd: Robotic limbs can always punch borgs - metal can punch metal.
+  - rscadd: If your punches deal enough damage to knockdown normally, then you can
+      punch borgs.
+  - rscadd: Strong-Arm implants now allow you to punch borgs (with arms that have
+      the implant).
+  - rscadd: The Strength gene now allows you to punch borgs.
+  - refactor: Refactored how the Heavy Bleeder challenge works.
+  - bugfix: The Heavy Bleeder challenge should no longer instantly drain all of your
+      blood when wounded.
+  - bugfix: The Delightful Effect symptom now properly shows a message when it deactivates.
+  - balance: Radio jammers now also jam suit sensors within range.
+  - qol: Changed the Slime Link message color to a slightly brighter shade of blue.
+  - qol: Slime Link messages now notify listeners with a balloon alert.
+  - config: The webmap URL can now be set via the config.
+  - balance: Seed Meshes can no longer yield gatfruit or evil seedlings.
+  - bugfix: Fixed an error with the Anti-Glow gene.
+  Absolucy, EnterTheJake:
+  - bugfix: Space Phase now makes the Heretic Space proof.
+  Absolucy, EnterTheJake, OrcaCora:
+  - image: Resprited the rust, moon, blade, void, and ash path heretic blades.
+  - image: Blade Heretic Knives have been resprited into proper throwing knives.
+  Absolucy, Melbert:
+  - refactor: Food hunger bar has been refactored, and moved. Now it sits next to
+      the moodlet face, and dynamically updates as you eat.
+  - refactor: Food moodlets now update a lot more snappily. There is now a moodlet
+      tier between "being fat" and "being normal", to reduce accidentally gorging
+      yourself to "fatness" tier.
+  - qol: Adds a hunger tier between hungry and starving (for mood)
+  - rscdel: You can't hallucinate being hungry... for now.
+  - bugfix: All humans no longer have a baseline "75" ghost nutrition (which means
+      you can eat more)
+  - rscdel: Having any wounds no longer gives you an alert in the top right.
+  - qol: Having any wounds now make the corresponding bodypart on your health doll
+      (the lil dude on the right side of the screen) glow red.
+  - refactor: Refactored how the hud's health doll shows up for humans. Report any
+      oddities.
+  Aritepes:
+  - bugfix: UwUifcation speech now better applies capitalization
+  SirNightKnight:
+  - rscadd: added an antag preference for junior lone operatives.
+  - bugfix: fixed and made the junior lone operative role more distinct. it appears
+      on round end reports.
+  - bugfix: junior lone operatives now have their internals and thermal regulators
+      on when spawned.
+  - qol: junior lone operatives memorize their code and can safely(ish) ditch their
+      mission instructions now.
+  Siro:
+  - code_imp: Crit health check for oozling decapitations restored. Head decapitations
+      match other species.
+  - code_imp: removed unremovable flag from obj/item/organ/internal/eyes/jelly types.
+2025-05-24:
+  Absolucy:
+  - refactor: Made some changes to how some item icons are displayed in tgui windows,
+      hopefully improving tgui load times.
+2025-05-25:
+  SirNightKnight:
+  - rscadd: added explorer eva kits to mining order consoles.
+  - rscadd: added advanced GPSs to mining order consoles.
+  - rscadd: added basic medkits to mining order consoles.
+  - balance: dropped the price of fire medkits to 600 points in the mining order console
+      for OCD reasons.
+  - bugfix: fixed a system glitch sending explorers to planetary stations.
+  Xander3359 Hatterhat:
+  - qol: Holosigns (engineering holobarriers, janitor holosigns, PENLITE holobarriers,
+      etc.) can now be projected onto doors.
+  - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
+      and grilles.
+2025-05-26:
+  notghosti:
+  - qol: Clarified in plague rat greet text what heals a rat.
+  - balance: Eating normal food now heals a plague rat. albeit a much lesser amount
+      and function than cheese
