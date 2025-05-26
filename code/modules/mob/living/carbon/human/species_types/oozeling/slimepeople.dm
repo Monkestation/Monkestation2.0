@@ -69,6 +69,8 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	if(slime.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_notice("You feel very bloated!"))
+		var/datum/action/innate/split_body/split_body = locate() in actions_given
+		split_body?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	else if(slime.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		slime.blood_volume += 1.5 * seconds_per_tick
 		if(slime.blood_volume <= 550)
@@ -138,6 +140,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner_nanites, TRUE, TRUE) //The trues are to copy activation as well
 
 	user.blood_volume *= 0.45
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 
 	var/datum/species/oozeling/slime/origin_datum = user.dna.species
@@ -189,6 +192,12 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		owner = null
 	bodies.Cut()
 	return ..()
+
+/datum/slimeperson_manager/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SlimeBodySwapper", name)
+		ui.open()
 
 /datum/slimeperson_manager/ui_state(mob/user)
 	return GLOB.always_state
