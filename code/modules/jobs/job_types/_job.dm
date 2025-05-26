@@ -352,6 +352,10 @@
 	if(job_flags & JOB_CREW_MEMBER)
 		return "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>"
 
+//Checks if certain conditions are met making the job eligible.
+/datum/job/proc/conditions_met()
+	return TRUE
+
 /datum/outfit/job
 	name = "Standard Gear"
 

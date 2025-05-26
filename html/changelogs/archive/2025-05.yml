@@ -352,3 +352,25 @@
   - code_imp: Crit health check for oozling decapitations restored. Head decapitations
       match other species.
   - code_imp: removed unremovable flag from obj/item/organ/internal/eyes/jelly types.
+2025-05-24:
+  Absolucy:
+  - refactor: Made some changes to how some item icons are displayed in tgui windows,
+      hopefully improving tgui load times.
+2025-05-25:
+  SirNightKnight:
+  - rscadd: added explorer eva kits to mining order consoles.
+  - rscadd: added advanced GPSs to mining order consoles.
+  - rscadd: added basic medkits to mining order consoles.
+  - balance: dropped the price of fire medkits to 600 points in the mining order console
+      for OCD reasons.
+  - bugfix: fixed a system glitch sending explorers to planetary stations.
+  Xander3359 Hatterhat:
+  - qol: Holosigns (engineering holobarriers, janitor holosigns, PENLITE holobarriers,
+      etc.) can now be projected onto doors.
+  - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
+      and grilles.
+2025-05-26:
+  notghosti:
+  - qol: Clarified in plague rat greet text what heals a rat.
+  - balance: Eating normal food now heals a plague rat. albeit a much lesser amount
+      and function than cheese

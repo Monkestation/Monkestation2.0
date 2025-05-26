@@ -77,14 +77,14 @@
 
 		var/results = list(list(
 			"path" = created_seed,
-			"icon" = created_seed::icon,
+			"icon" = text_ref(created_seed::icon),
 			"icon_state" = created_seed::icon_state,
 		))
 		var/obj/item/product = created_seed::product
 		if(product && product::icon && product::icon_state)
 			results += list(list(
 				"path" = product,
-				"icon" = product::icon,
+				"icon" = text_ref(product::icon),
 				"icon_state" = product::icon_state,
 			))
 		details["results"] = results
