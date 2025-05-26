@@ -68,6 +68,7 @@
 	tgui.ui_interact(usr)
 
 /datum/beaker_panel
+	var/chemstring
 	var/mob/user
 
 /datum/beaker_panel/New(mob/target_user)
@@ -88,6 +89,11 @@
 	data["containers"] = beakersforbeakers()
 	return data
 
+/datum/beaker_panel/ui_data(mob/user)
+	var/list/data = list()
+	data["chemstring"] = chemstring
+	return data
+
 /datum/beaker_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -95,3 +101,4 @@
 	if(!user || !check_rights(R_ADMIN, 0, user))
 		return FALSE
 	to_chat(world, "UI is returning this information, the action is [action] and the params are, [jointext(params, ", ")]")
+	//var/denied_reason = tgui_input_text(user, "Denial Reason", "Enter a reason for denying this application:")
