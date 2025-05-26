@@ -23614,7 +23614,7 @@
 /mob/living/basic/slime,
 /obj/effect/turf_decal/box,
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
+	mapping_id = "2";
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -32785,7 +32785,7 @@
 "fBx" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
+	mapping_id = "3";
 	dir = 1
 	},
 /mob/living/basic/slime,
@@ -39137,6 +39137,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
+"hZE" = (
+/mob/living/basic/slime,
+/obj/effect/turf_decal/box,
+/obj/structure/cable,
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "4";
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "hZI" = (
 /obj/item/storage/box/bodybags,
 /obj/item/clothing/mask/surgical,
@@ -79172,16 +79182,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/small,
 /area/station/security/prison/safe)
-"xwu" = (
-/mob/living/basic/slime,
-/obj/effect/turf_decal/box,
-/obj/structure/cable,
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "xww" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/hangover,
@@ -125920,11 +125920,11 @@ cSI
 cTr
 cnz
 nhu
-xwu
+kvF
 cpI
 bMy
 nhu
-kvF
+hZE
 hIF
 cnz
 xjf
