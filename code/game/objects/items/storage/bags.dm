@@ -588,6 +588,7 @@
 	icon_state = "syndie_quiver_0"
 	worn_icon_state = "syndie_quiver_0"
 	inhand_icon_state = "holyquiver"
+	base_icon_state = "syndie_quiver"
 	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
 		Clearly a better design than a cut up oxygen tank..."
 	slot_flags = ITEM_SLOT_NECK
@@ -609,13 +610,13 @@
 	. = ..()
 	switch(contents.len)
 		if(0)
-			icon_state = "syndie_quiver_0"
+			icon_state = "[base_icon_state]" + "_0"
 		if(1 to 7)
-			icon_state = "syndie_quiver_1"
+			icon_state = "[base_icon_state]" + "_1"
 		if(8 to 13)
-			icon_state = "syndie_quiver_2"
+			icon_state = "[base_icon_state]" + "_2"
 		if(14 to 20)
-			icon_state = "syndie_quiver_3"
+			icon_state = "[base_icon_state]" + "_3"
 
 /obj/item/storage/bag/rebar_quiver/syndicate/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/reload_rebar))
@@ -626,7 +627,7 @@
 		user.balloon_alert(user, "no bolts left!")
 		return
 	var/obj/held_item = user.get_active_held_item()
-	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
+	if(!istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
 		user.balloon_alert(user, "no held crossbow!")
 		return
 	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item

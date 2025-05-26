@@ -169,6 +169,7 @@
 		   Very slow to reload - you can craft the crossbow with a crowbar to loosen the crossbar, but risk a misfire, or worse..."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
+	base_icon_state = "rebarxbow"
 	inhand_icon_state = "rebarxbow"
 	worn_icon_state = "rebarxbow"
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
@@ -231,9 +232,9 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/update_overlays()
 	. = ..()
 	if(!magazine)
-		. += "[initial(icon_state)]" + "_empty"
+		. += "[base_icon_state]" + "_empty"
 	if(!bolt_locked)
-		. += "[initial(icon_state)]" + "_bolt_locked"
+		. += "[base_icon_state]" + "_bolt_locked"
 
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
 	name = "stressed rebar crossbow"
