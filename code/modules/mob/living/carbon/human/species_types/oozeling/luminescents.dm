@@ -82,12 +82,11 @@
 	return ..()
 
 /datum/action/innate/integrate_extract/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
-	var/datum/species/oozeling/luminescent/species = target
-	if(!istype(species) || !species.current_extract)
+	var/datum/species/oozeling/luminescent/species = astype(target)
+	if(!species?.current_extract)
 		button_icon_state = "slimeconsume"
 	else
 		button_icon_state = "slimeeject"
-
 	return ..()
 
 /datum/action/innate/integrate_extract/Activate()
