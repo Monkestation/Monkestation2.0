@@ -45,7 +45,7 @@
 	seenby -= eye
 
 	var/client/client = eye.GetViewerClient()
-	if(client && eye.use_visibility)
+	if(client && eye.use_visibility && seenby.len == 0)
 		client.images -= active_static_images
 
 /// Called when a chunk has changed. I.E: A wall was deleted.
