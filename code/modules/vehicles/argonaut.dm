@@ -12,10 +12,20 @@
 	max_buckled_mobs = 4
 	max_occupants = 4
 	pass_flags_self = null
-
+	max_integrity = 200
+	armor_type = /datum/armor/argonaut
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+
+
+/datum/armor/argonaut
+	melee = 25
+	bullet = 10
+	laser = 15
+	energy = 15
+	fire = 20
+	acid = 30
 
 /obj/vehicle/ridden/argonaut/Initialize(mapload)
 	. = ..()
