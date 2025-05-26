@@ -23,12 +23,12 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/slime,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/slime,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/slime,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/slime,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/slime,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/oozeling/slime,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/oozeling/slime,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/oozeling/slime,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/oozeling/slime,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/oozeling/slime,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/oozeling/slime,
 	)
 
 	extra_actions = list(

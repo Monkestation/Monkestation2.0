@@ -8,14 +8,13 @@
 	id = SPECIES_LUMINESCENT
 	examine_limb_id = SPECIES_LUMINESCENT
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/luminescent,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/luminescent,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/luminescent,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/luminescent,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/luminescent,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/luminescent,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/oozeling/luminescent,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/oozeling/luminescent,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/oozeling/luminescent,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/oozeling/luminescent,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/oozeling/luminescent,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/oozeling/luminescent,
 	)
-	mutanteyes = /obj/item/organ/internal/eyes
 	extra_actions = list(
 		/datum/action/innate/integrate_extract,
 		/datum/action/innate/use_extract,
