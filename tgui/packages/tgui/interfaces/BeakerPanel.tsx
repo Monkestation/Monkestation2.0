@@ -42,6 +42,12 @@ export const BeakerPanel = (props) => {
           <Button icon="cog" onClick={() => spawnContainer(containerNum)}>
             Spawn Container
           </Button>
+          <Button icon="cog" onClick={() => null}>
+            Import
+          </Button>
+          <Button icon="cog" onClick={() => null}>
+            Export
+          </Button>
         </Stack.Item>
 
         <Stack.Item>
