@@ -11,6 +11,7 @@
 	pixel_x = -48
 	max_buckled_mobs = 4
 	max_occupants = 4
+	pass_flags_self = null
 
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
