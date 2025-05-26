@@ -123,12 +123,12 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(user.loc)
 
 	spare.underwear = "Nude"
-	user.dna.transfer_identity(spare, transfer_SE=1)
+	user.dna.transfer_identity(spare, transfer_SE = TRUE)
 	var/datum/color_palette/generic_colors/palette = spare.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
 	spare.real_name = spare.dna.real_name
 	spare.name = spare.dna.real_name
-	spare.updateappearance(mutcolor_update=1)
+	spare.updateappearance(mutcolor_update = TRUE)
 	spare.domutcheck()
 	spare.Move(get_step(user.loc, GLOB.cardinals))
 
