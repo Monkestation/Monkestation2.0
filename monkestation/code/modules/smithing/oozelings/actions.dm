@@ -9,7 +9,9 @@
 	button_icon_state = "activate_wash"
 
 	cooldown_time = 1 SECONDS
+	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = NONE
 
 /datum/action/cooldown/spell/slime_washing/cast(mob/living/carbon/human/user = usr)
 	. = ..()
@@ -68,7 +70,9 @@
 	button_icon_state = "nanite_shield"
 
 	cooldown_time = 1 MINUTES
+	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = NONE
 
 /datum/action/cooldown/spell/slime_hydrophobia/cast(mob/living/carbon/human/user = usr)
 	. = ..()
