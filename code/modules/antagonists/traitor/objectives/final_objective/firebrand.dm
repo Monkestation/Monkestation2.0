@@ -4,7 +4,7 @@
 	the flamethrower can melt walls, kill through firesuits, and make rooms uninhabitably. Warning: The tank is slow and dies to melee attacks very fast."
 
 	//this is a prototype so this progression is for all basic level kill objectives
- // stole rommerol code and modified it.
+	// stole rommerol code and modified it.
 	///area type the objective owner must be in to recieve the romerol
 	var/area/firebrand_spawnarea_type
 	///checker on whether we have sent the romerol yet.
