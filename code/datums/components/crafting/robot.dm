@@ -337,3 +337,112 @@
 		/obj/item/radio = 2,
 	)
 	category = CAT_ROBOT
+
+// T5 Percutio crafts
+
+/datum/crafting_recipe/percutio_engine
+	name = "T5 Percutio Engine"
+	result = /obj/item/mecha_parts/part/percutio_right_arm
+	tool_behaviors = list(TOOL_WELDER)
+	time = 15 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/cable_coil = 40,
+		/obj/item/stack/rods = 6,
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/plasteel = 8,
+		/obj/item/assembly/igniter = 6,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_lights
+	name = "T5 Percutio Headlights"
+	result = /obj/item/mecha_parts/part/percutio_left_arm
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/light/bulb = 2,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/sheet/iron = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_turret
+	name = "T5 Percutio Turret"
+	result = /obj/item/mecha_parts/part/percutio_armor
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 30 SECONDS
+	reqs = list(
+		/obj/item/gun/ballistic/automatic/neville = 1,
+		/obj/item/stack/rods = 6,
+		/obj/item/pipe = 2,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_wheels
+	name = "T5 Percutio Wheels"
+	result = /obj/item/mecha_parts/part/percutio_left_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/rods = 16,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 4,
+		/obj/item/stack/sheet/plastic = 20,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_transmission
+	name = "T5 Percutio transmission"
+	result = /obj/item/mecha_parts/part/percutio_right_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/rods = 20,
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/iron = 8,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_hydraulics
+	name = "T5 Percutio Hydraulic equipment"
+	result = /obj/item/circuitboard/mecha/percutio/peripherals
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 10 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/rods = 2,
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/iron = 12,
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stock_parts/manipulator = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_seats
+	name = "T5 Percutio Seating"
+	result = /obj/item/circuitboard/mecha/percutio/targeting
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/cloth = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_tank
+	name = "T5 Percutio Fuel tank"
+	result = /obj/item/circuitboard/mecha/percutio/main
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/light/tube = 1,
+		/obj/item/stack/sheet/glass = 1,
+	)
+	category = CAT_ROBOT

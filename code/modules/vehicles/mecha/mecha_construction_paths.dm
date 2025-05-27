@@ -990,3 +990,211 @@
 			"backward_message" = "removed turret parts"
 		),
 	)
+
+// t5 percutio
+/datum/component/construction/unordered/mecha_chassis/percutio
+	result = /datum/component/construction/mecha/percutio
+	steps = list(
+		/obj/item/mecha_parts/part/percutio_left_arm,
+		/obj/item/mecha_parts/part/percutio_right_arm,
+		/obj/item/mecha_parts/part/percutio_left_leg,
+		/obj/item/mecha_parts/part/percutio_right_leg
+	)
+
+
+/datum/component/construction/mecha/percutio
+	result = /obj/vehicle/sealed/mecha/percutio
+	base_icon = "percutio"
+
+	circuit_control = /obj/item/circuitboard/mecha/percutio/main
+	circuit_periph = /obj/item/circuitboard/mecha/percutio/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/percutio/targeting
+
+	inner_plating = /obj/item/stack/rods
+	inner_plating_amount = 16
+
+	outer_plating = /obj/item/mecha_parts/part/percutio_armor
+	outer_plating_amount = 1
+
+/datum/component/construction/mecha/percutio/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "The wheels are lying on the ground, you can put them on with a <b>wrench</b>.",
+			"forward_message" = "Attached wheels",
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The wheels are on the axle but the suspension is slack, you can set the suspension with a <b>screwdriver</b>.",
+			"forward_message" = "activated suspension",
+			"backward_message" = "removed wheels"
+		),
+		list(
+			"key" = /obj/item/stack/cable_coil,
+			"amount" = 5,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wheels are finished, you can now put the headlights in and <b>wire</b> them.",
+			"forward_message" = "added & wired headlights",
+			"backward_message" = "reset suspension"
+		),
+		list(
+			"key" = /obj/item/stack/cable_coil,
+			"amount" = 5,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The headlights are ready, now the engine needs some <b>wire</b>.",
+			"forward_message" = "added engine wiring",
+			"backward_message" = "removed wiring & headlights"
+		),
+	)
+/datum/component/construction/mecha/percutio/get_circuit_steps()
+	return list(
+		list(
+			"key" = circuit_control,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The engine is wired. You can go throw in the fuel tank.",
+			"forward_message" = "added fuel tank",
+			"backward_message" = "disconnected engine wiring"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The fuel is in but is sitting unsecured. it and can be <b>screwed</b> into place.",
+			"forward_message" = "secured fuel tank",
+			"backward_message" = "removed fuel tank"
+		),
+		list(
+			"key" = circuit_periph,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The fuel tank is now secured, and the <b>hydraulic equipment</b> can be slotted in.",
+			"forward_message" = "added hydraulic equipment",
+			"backward_message" = "unsecured fuel tank"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The hydraulics are now installed, and the hoses can be <b>screwed</b> into place.",
+			"forward_message" = "secured hydraulic lines",
+			"backward_message" = "removed hydraulics"
+		)
+	)
+/datum/component/construction/mecha/percutio/get_circuit_weapon_steps()
+	return list(
+				list(
+			"key" = circuit_weapon,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The <b>Seating</b> is still not in, do you want to crouch while driving?.",
+			"forward_message" = "added the seats",
+			"backward_message" = "disconnected hydraulic lines"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The seats are loose and your not stupid enough to leave it like that.",
+			"forward_message" = "secured seating",
+			"backward_message" = "removed seating"
+		),
+	)
+/datum/component/construction/mecha/percutio/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the crew compartment parts are almost finished, you can add the <b>scanning_module</b> for the driver.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured seats"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"forward_message" = "added capacitor",
+			"backward_message" = "unscecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured capacitor",
+			"backward_message" = "removed capacitor"
+		),
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added.",
+			"forward_message" = "added power cell",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured power cell",
+			"backward_message" = "removed power cell"
+		),
+	)
+
+/datum/component/construction/mecha/percutio/get_inner_plating_steps()
+	return list(
+		list(
+			"key" = inner_plating,
+			"amount" = inner_plating_amount,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The interior of the Percutio is finished, you need to use 16 iron rods to form the back wheels chains.",
+			"forward_message" = "installed traction chains",
+			"backward_message" = "unsecured power cell"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The chains are on but slacked, they can be adjusted with a <b>screwdriver</b>.",
+			"forward_message" = "chains tightened",
+			"backward_message" = "removed chains"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The hull is finished, you need to reinforce everything by welding it.",
+			"forward_message" = "welded car hull",
+			"backward_message" = "slackened chains"
+		),
+	)
+/datum/component/construction/mecha/percutio/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_WELDER,
+			"desc" = "the hull is welded, you now need to add the turret to the tank.",
+			"forward_message" = "installed turret",
+			"backward_message" = "cut welds on hull"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The turret is now on the percutio, but its ready to fall out at any movement, you need to <b> screw <b/> it in.",
+			"forward_message" = "gun and antenna added",
+			"backward_message" = "pushed off turret"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The turret is assembled, the plates on it need to be welded shut for combat.",
+			"forward_message" = "welded turret",
+			"backward_message" = "unsecured turret"
+		),
+	)

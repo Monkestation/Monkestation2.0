@@ -76,6 +76,14 @@
 	item_type = /obj/item/mecha_ammo/makeshift/lighttankmg
 	cost = PAYCHECK_COMMAND * 2
 
+/datum/armament_entry/company_import/bms/vehicles/percutio
+	item_type = /obj/item/mecha_parts/chassis/percutio
+	cost = PAYCHECK_COMMAND * 220
+
+/datum/armament_entry/company_import/bms/vehicles/typhonmag
+	item_type = /obj/item/mecha_ammo/antitankammo
+	cost = PAYCHECK_COMMAND * 3
+
 /datum/armament_entry/company_import/bms/magazines // feed the war machine
 	subcategory = "Magazines"
 	cost = PAYCHECK_CREW*3

@@ -378,6 +378,44 @@
 	icon = 'icons/mecha/tanks_construct.dmi'
 	icon_state = "kingspire_armor"
 
+// T5 Percutio
+
+/obj/item/mecha_parts/chassis/percutio
+	name = "\improper T5 Percutio Chassis"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_chass"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/percutio
+
+/obj/item/mecha_parts/part/percutio_left_arm
+	name="\improper T5 Percutio headlights"
+	desc="The headlights of a T5 Percutio armored car."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_l_arm"
+
+/obj/item/mecha_parts/part/percutio_right_arm
+	name="\improper T5 Percutio Engine bay"
+	desc="A modified truck engine compacted into an armored car, problems with overheating never arose in the frozen north they were designed to fight in.."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_r_arm"
+
+/obj/item/mecha_parts/part/percutio_left_leg
+	name="\improper T5 Percutio wheels"
+	desc="The wheels of a T5 Percutio, can have chains mounted on for grip."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_l_leg"
+
+/obj/item/mecha_parts/part/percutio_right_leg
+	name="\improper T5 Percutio Transmission"
+	desc="Linkages, gears, and axles required to transmit power from the engine of the armored car, to its 4 wheels."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_r_leg"
+
+/obj/item/mecha_parts/part/percutio_armor
+	name="\improper T5 Percutio Typhon Turret"
+	desc="A lightly armored and open topped turret containing a Typhon ra.XII anti tank rifle.."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_armor"
+
 ///////// Circuitboards
 
 /obj/item/circuitboard/mecha
@@ -492,3 +530,18 @@
 	name = "Kingspire Mk.1 Radio Equipment"
 	desc = "A Radioset for the Kingspire Mk.1"
 	icon_state = "kingspire3"
+
+/obj/item/circuitboard/mecha/percutio/peripherals
+	name = "T5 Percutio Hydraulics"
+	desc = "Hydaulic systems for the T5 Percutio"
+	icon_state = "percutio1"
+
+/obj/item/circuitboard/mecha/percutio/targeting
+	name = "T5 Percutio Seats"
+	desc = "Seats for the crew of a T5 Percutio"
+	icon_state = "percutio2"
+
+/obj/item/circuitboard/mecha/percutio/main
+	name = "T5 Percutio fuel tank"
+	desc = "The fuel tank of an armored car, repurposed for internal air storage, since batteries are so good now"
+	icon_state = "percutio3"
