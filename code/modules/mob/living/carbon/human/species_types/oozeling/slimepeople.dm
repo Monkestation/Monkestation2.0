@@ -75,7 +75,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		split_body?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	else if(slime.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		slime.blood_volume += 1.5 * seconds_per_tick
-		if(slime.blood_volume <= 550)
+		if(slime.blood_volume <= (BLOOD_VOLUME_NORMAL - 10))
 			slime.adjust_nutrition(-1.25 * seconds_per_tick)
 	return ..()
 
