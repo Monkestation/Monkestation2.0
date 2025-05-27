@@ -159,6 +159,8 @@
 		if (SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
 
+		return TRUE
+
 	return ..()
 
 /datum/species/oozeling/create_pref_unique_perks()
