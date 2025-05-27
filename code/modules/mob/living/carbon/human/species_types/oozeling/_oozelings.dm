@@ -155,7 +155,7 @@
 			return ..()
 
 		slime.blood_volume = max(slime.blood_volume - (3 * seconds_per_tick), 0)
-		slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
+		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
 
