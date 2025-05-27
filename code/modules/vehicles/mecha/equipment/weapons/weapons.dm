@@ -585,3 +585,22 @@
 	projectiles_cache_max = 16
 	ammo_type = MECHA_AMMO_SUPPORTTANK
 	mech_flags = EXOSUIT_MODULE_SUPPORTTANK
+
+// T5 Percutio (typhon can be a tripod weapon like the lamentum, but its being made here first)
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/typhon
+	name = "Typhon ra.XII"
+	desc = "A mounted anti tank rifle, designed for faster firing over free standing counterparts, while maintaining accuracy."
+	icon_state = "mecha_ATR"
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 10
+	projectiles_cache = 10
+	projectiles_cache_max = 30
+	projectiles_per_shot = 1
+	equip_cooldown = 1 SECONDS
+	randomspread = 1
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+	mech_flags = EXOSUIT_MODULE_TANK // not gonna make another flag, its about on the danger level of a devitt, and you cant build these guns either.

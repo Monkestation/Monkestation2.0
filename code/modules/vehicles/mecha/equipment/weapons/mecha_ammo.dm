@@ -112,3 +112,10 @@
 	icon_state = "SUPPORTTANKSHELL"
 	rounds = 3
 	ammo_type = MECHA_AMMO_SUPPORTTANK
+
+/obj/item/mecha_ammo/antitankammo
+	name = "20mm Typhon rounds"
+	desc = "A small crate with a magazine of anti tank bullets for a Typhon ATR."
+	icon_state = "tankatr"
+	rounds = 10
+	ammo_type = MECHA_AMMO_ATR

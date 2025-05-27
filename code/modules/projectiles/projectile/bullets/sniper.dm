@@ -119,13 +119,11 @@
 /obj/projectile/bullet/neville
 	name ="fukin 20mm bullet"
 	speed = 0.65
-	range = 100 // Its not accurate, its fucking powerful
+	range = 50 // Its not accurate, its fucking powerful
 	damage = 35
-	paralyze = 30 // Its goin clean through, no spreading to really cause you to get KOed
+	paralyze = 10 // Its goin clean through, no spreading to really cause you to get KOed
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
 	armour_penetration = 100
-	///Determines object damage.
 	var/object_damage = 80
-	///Determines how much additional damage the round does to mechs.
 	var/mecha_damage = 65

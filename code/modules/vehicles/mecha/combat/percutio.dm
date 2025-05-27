@@ -20,7 +20,7 @@
 	mech_type = EXOSUIT_MODULE_TANK
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/typhon,
-		MECHA_R_ARM = null
+		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(/obj/item/mecha_parts/mecha_equipment/generator),
 		MECHA_ARMOR = list(),
@@ -93,22 +93,15 @@
 	if(!A.density || !has_buckled_mobs())
 		return
 
-	if(crash_all)
-		if(ismovable(A))
-			var/atom/movable/AM = A
-			AM.throw_at(get_edge_target_turf(A, dir), 1, 1)
-		visible_message(span_danger("[src] crashes into [A]!"))
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 	if(!ishuman(A))
 		return
 	var/mob/living/carbon/human/rammed = A
 	rammed.Paralyze(30)
 	rammed.stamina.adjust(-30)
 	rammed.apply_damage(rand(10,25), BRUTE)
-	if(!crash_all)
-		rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
-		visible_message(span_danger("[src] crashes into [rammed]!"))
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
+	visible_message(span_danger("[src] crashes into [rammed]!"))
+	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/sealed/mecha/percutio/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()

@@ -262,7 +262,7 @@
 
 
 /obj/structure/mecha_wreckage/percutio
-	name = "\improper T5 Percutio Wreckage
+	name = "\improper T5 Percutio Wreckage"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "percutio-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)

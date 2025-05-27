@@ -61,4 +61,5 @@
 #define MECHA_AMMO_LIGHTTANK "40mm shell"
 #define MECHA_AMMO_LIGHTTANKMG "12.7x70mm malone"
 #define MECHA_AMMO_SUPPORTTANK "75mm shell"
+#define MECHA_AMMO_ATR "20mm 'typhon', its literally just a neville but larp"
 //monke edit end
