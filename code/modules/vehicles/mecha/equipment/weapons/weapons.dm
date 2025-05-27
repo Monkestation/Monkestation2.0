@@ -604,3 +604,22 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_ATR
 	mech_flags = EXOSUIT_MODULE_TANK // not gonna make another flag, its about on the danger level of a devitt, and you cant build these guns either.
+
+// Noble Firebrand Weapon
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamer
+	name = "Heavy Flamethrower"
+	desc = "A wide bore flamethrower that is able to spit out tens of pounds of fuel far enough to avoid close range weaponary. More a weapon of terror then of war."
+	icon_state = "mecha_flamer"
+	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
+	projectile = /obj/projectile/bullet/incendiary/fire/heavy
+	projectiles = 10000
+	projectiles_cache = 10000
+	projectiles_cache_max = 10000
+	projectiles_per_shot = 10
+	equip_cooldown = 0.7 SECONDS
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_FLAME
+	mech_flags = EXOSUIT_MODULE_FLAMETANK

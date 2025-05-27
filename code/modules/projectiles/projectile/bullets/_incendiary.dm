@@ -41,12 +41,40 @@
 	wound_falloff_tile = -4
 	fire_stacks = 3
 
+// made for the flame tank, needed it to go a bit further
+/obj/projectile/bullet/incendiary/fire/heavy
+	damage = 18
+	range = 10
+	alpha = 0
+	pass_flags = PASSTABLE | PASSMOB
+	sharpness = NONE
+	shrapnel_type = null
+	embedding = null
+	impact_effect_type = null
+	suppressed = SUPPRESSED_VERY
+	damage_type = BURN
+	armor_flag = BOMB
+	speed = 1.4
+	wound_bonus = 30
+	bare_wound_bonus = 45
+	wound_falloff_tile = -4
+	fire_stacks = 5
+	damage_walls = TRUE // it is a flamethrower built for burning bunkers down, needs alot of hits but can kill walls
+	wall_dem_mod = 1
+
 /obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/location = get_turf(target)
 	if(isopenturf(location))
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
+
+/obj/projectile/bullet/incendiary/fire/heavy/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	var/turf/location = get_turf(target)
+	if(isopenturf(location))
+		new /obj/effect/hotspot(location)
+		location.hotspot_expose(3000, 3000, 3)
 
 /// Used in [the backblast element][/datum/element/backblast]
 /obj/projectile/bullet/incendiary/fire/backblast

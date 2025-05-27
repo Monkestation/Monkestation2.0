@@ -254,12 +254,12 @@
 	icon_state = "kingspire-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(/obj/item/gun/ballistic/automatic/malone)
+
 /obj/structure/mecha_wreckage/talos
 	name = "\improper 85V-g Talos Wreckage"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "talos-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
-
 
 /obj/structure/mecha_wreckage/percutio
 	name = "\improper T5 Percutio Wreckage"
@@ -267,3 +267,10 @@
 	icon_state = "percutio-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(/obj/item/gun/ballistic/automatic/neville)
+
+/obj/structure/mecha_wreckage/firebrand
+	name = "\improper Noble Firebrand Mk.XVII Wreckage"
+	icon = 'icons/mecha/tanks.dmi'
+	icon_state = "firebrand-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+

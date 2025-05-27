@@ -44,6 +44,8 @@
 #define EXOSUIT_MODULE_DRILL (1<<15)
 // Module is compatible with support tank "mechs"  (needed to seperate this otherwise we could have devitts with gibbing cannons)
 #define EXOSUIT_MODULE_SUPPORTTANK (1<<16)
+// Module is compatible with flame tank "mechs"
+#define EXOSUIT_MODULE_FLAMETANK (1<<17)
 //monkestation edit end
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
