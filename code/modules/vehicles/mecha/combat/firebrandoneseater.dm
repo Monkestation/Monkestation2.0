@@ -2,8 +2,8 @@
 	desc = "A modification of the Noble Widow, it was built to counter Colonial Legion advances by laying waste to any defense, will turn anything to ash with proper escort. Built with syndicate technology to make only 1 crewmember needed"
 	name = "Noble Firebrand Mk.XVII"
 	icon = 'icons/mecha/tanks.dmi'
-	icon_state = "firebrand"
-	base_icon_state = "firebrand"
+	icon_state = "onefirebrand"
+	base_icon_state = "onefirebrand"
 	SET_BASE_PIXEL(-12, 0)
 	max_integrity = 300 // relatively weak, armor saves it
 	force = 15 // too slow to really hurt, why isnt it flaming?
