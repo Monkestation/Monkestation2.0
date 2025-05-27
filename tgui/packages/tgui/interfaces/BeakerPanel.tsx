@@ -30,10 +30,19 @@ export const BeakerPanel = (props) => {
   const { act, data } = useBackend<BeakerPanelData>();
   const { reagents, containers, chemstring } = data;
 
-  const [selectedContainersType, setContainerType] = useLocalState(
+  const [selectedContainersType, setContainersType] = useLocalState(
     'beakerPanel_beakersType',
     {},
   );
+
+  // Handler to update selected container type
+  const handleContainerTypeChange = (index: number, data) => {
+    const newMap = {
+      ...selectedContainersType,
+      [index]: data,
+    };
+    setContainersType(newMap);
+  };
 
   const [reagentsMap, setReagentsMap] = useLocalState(
     'beakerPanel_reagents',
@@ -49,7 +58,7 @@ export const BeakerPanel = (props) => {
   };
 
   // Render container section inline to avoid component state conflicts
-  const renderContainerSection = (containerNum) => {
+  const renderContainerSection = (containerNum: number) => {
     const containerReagents = reagentsMap[containerNum];
     // Data for reagents, ensures containerReagents is always an array
     const safeContainerReagents = Array.isArray(containerReagents)
@@ -73,7 +82,22 @@ export const BeakerPanel = (props) => {
                   ),
                   value: container.id,
                 }))}
+                selected={selectedContainersType[containerNum]?.id}
+                onSelected={(value) => {
+                  // Find the selected container
+                  const selectedContainer = containers.find(
+                    (container) => container.id === value,
+                  );
+                  handleContainerTypeChange(containerNum, selectedContainer);
+                }}
               />
+              Container Selected:{' '}
+              {selectedContainersType[containerNum]?.name || 'None'}
+              <br />
+              Volume:{' '}
+              {selectedContainersType[containerNum]?.volume
+                ? `${selectedContainersType[containerNum].volume}u`
+                : 'None'}
             </LabeledList.Item>
           </LabeledList>
           <Button icon="cog" onClick={() => spawnContainer(containerNum)}>
