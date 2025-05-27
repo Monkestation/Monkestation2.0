@@ -592,7 +592,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/typhon
 	name = "Typhon ra.XII"
 	desc = "A mounted anti tank rifle, designed for faster firing over free standing counterparts, while maintaining accuracy."
-	icon_state = "mecha_ATR"
+	icon_state = "mecha_atr"
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	projectile = /obj/projectile/bullet/neville
 	projectiles = 10
