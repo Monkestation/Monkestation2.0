@@ -369,3 +369,11 @@
       etc.) can now be projected onto doors.
   - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
       and grilles.
+2025-05-26:
+  notghosti:
+  - qol: Clarified in plague rat greet text what heals a rat.
+  - balance: Eating normal food now heals a plague rat. albeit a much lesser amount
+      and function than cheese
+2025-05-27:
+  Siro:
+  - rscadd: Heart emitter unique effect
