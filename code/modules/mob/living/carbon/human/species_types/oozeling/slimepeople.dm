@@ -66,6 +66,8 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	manager = old_species.manager
 
 /datum/species/oozeling/slime/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
+	if(IS_BLOODSUCKER(slime))
+		return ..()
 	if(slime.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_notice("You feel very bloated!"))
