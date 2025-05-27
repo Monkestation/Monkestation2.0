@@ -126,3 +126,10 @@
 	item = /obj/vehicle/sealed/mecha/devitt
 	cost = 40
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/dangerous/firebrand
+	name = "Noble Firebrand Mk.XVII"
+	desc = "A Flamethrower tank that can melt walls and humans alike, not recommened unless you want to try and kill all the crew. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/firebrand
+	cost = 52
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

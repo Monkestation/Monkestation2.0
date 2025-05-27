@@ -644,6 +644,18 @@
 	item = /obj/item/mecha_ammo/supporttankammo
 	cost = 5
 
+/datum/uplink_item/support/firebrand
+	name = "Noble Firebrand Mk.XVII"
+	desc = "A very slow flamethrower tank to cause terror in the crew, the flames can melt walls and kill through the best firesuits. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/firebrand
+	cost = 160
+
+/datum/uplink_item/support/argonaut
+	name = "UV-05a Argonaut"
+	desc = "A speedy 4 seater light utility vehicle. Can crash into people to stun them, perfect for a snatch and grab."
+	item = /obj/vehicle/ridden/argonaut
+	cost = 75
+
 /datum/uplink_item/support/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
