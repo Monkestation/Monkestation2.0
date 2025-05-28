@@ -69,7 +69,7 @@
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
 
-/obj/projectile/bullet/incendiary/heavy/Move()
+/obj/projectile/bullet/incendiary/heavy/Move() // it needs to leave areas uninhabitiable since it doesnt cause a plasma fire
 	. = ..()
 
 	if(!leaves_fire_trail)
@@ -77,14 +77,14 @@
 	var/turf/location = get_turf(src)
 	if(location)
 		new /obj/effect/hotspot(location)
-		location.hotspot_expose(3000, 3000, 1)
+		location.hotspot_expose(30000, 3000, 1)
 
 /obj/projectile/bullet/incendiary/fire/heavy/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/location = get_turf(target)
 	if(isopenturf(location))
 		new /obj/effect/hotspot(location)
-		location.hotspot_expose(3000, 3000, 3)
+		location.hotspot_expose(30000, 3000, 3)
 
 /// Used in [the backblast element][/datum/element/backblast]
 /obj/projectile/bullet/incendiary/fire/backblast
