@@ -4,7 +4,7 @@ import {
   Button,
   Dropdown,
   Flex,
-  //  Input,
+  Input,
   LabeledList,
   NumberInput,
   Section,
@@ -49,20 +49,32 @@ export const BeakerPanel = (props) => {
     {},
   );
 
+  // Handler to update selected reagents type
+  const handleRragentsChange = (index: number, data) => {};
+
   const spawnGrenade = () => {
     act('spawngrenade', {});
   };
 
-  const spawnContainer = (containerNum) => {
-    act('spawncontainer');
-  };
+  // const spawnContainer = (containerNum) => {
+  // const containerpayload = selectedContainersType[containerNum];
+  //  act('spawncontainer', { somedata: containerpayload });
+  // };
 
   // Render container section inline to avoid component state conflicts
   const renderContainerSection = (containerNum: number) => {
-    const containerReagents = reagentsMap[containerNum];
-    // Data for reagents, ensures containerReagents is always an array
-    const safeContainerReagents = Array.isArray(containerReagents)
-      ? containerReagents
+    // Safe reagent search with type checking
+    const safeReagentSearch = '';
+    const filteredReagents = reagents.filter(
+      (reagent) =>
+        reagent.name &&
+        typeof reagent.name === 'string' &&
+        typeof safeReagentSearch === 'string' &&
+        reagent.name.toLowerCase().includes(safeReagentSearch.toLowerCase()),
+    );
+    // Ensure containerReagents is always an array
+    const safeContainerReagents = Array.isArray(reagentsMap[containerNum])
+      ? reagentsMap[containerNum]
       : [];
 
     return (
@@ -100,7 +112,7 @@ export const BeakerPanel = (props) => {
                 : 'None'}
             </LabeledList.Item>
           </LabeledList>
-          <Button icon="cog" onClick={() => spawnContainer(containerNum)}>
+          <Button icon="cog" onClick={() => null}>
             Spawn Container
           </Button>
           <Button icon="cog" onClick={() => null}>
@@ -113,11 +125,15 @@ export const BeakerPanel = (props) => {
 
         <Stack.Item>
           <Box bold>Reagents:</Box>
-          {safeContainerReagents.map((reagent, index) => {
-            const reagentData = reagents.find((r) => r.name === '');
+          {safeContainerReagents.map((reagent, index: number) => {
+            const currentreagentData = reagents.find(
+              (r) => r.id === reagent.id,
+            );
             return (
               <Flex key={index} align="center" mb={1}>
-                <Flex.Item grow>{'Unknown Reagent'}</Flex.Item>
+                <Flex.Item grow>
+                  {currentreagentData?.name || 'Unknown Reagent ' + reagent.id}
+                </Flex.Item>
                 <Flex.Item>
                   <NumberInput
                     width="80px"
@@ -161,6 +177,13 @@ export const BeakerPanel = (props) => {
 
         <Stack.Item>
           <Box bold>Search Reagent:</Box>
+          <Input
+            placeholder="Search reagents..."
+            value={safeReagentSearch}
+            mb={1}
+          />
+          <Section fill scrollable height="200px" />
+          {filteredReagents}
         </Stack.Item>
       </Section>
     );

@@ -45,7 +45,7 @@
 		var/container_name = initial(C.name)
 		var/container_volume = initial(C.volume)
 		// Skip containers with no name or volume, abstract base types, or any container already filled.
-		if(!container_name || !container_volume || findtext(container_name, "base" || length(initial(C.list_reagents))))
+		if(!container_name || !container_volume || findtext(container_name, "base"))
 			continue
 		// Skip containers that are likely abstract or not meant for spawning
 		// You can add specific exclusions here if needed, for example:
