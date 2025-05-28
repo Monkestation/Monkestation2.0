@@ -407,7 +407,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	. = FALSE
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.dna && istype(H.dna.species, species_datum))
+		if(istype(H.dna?.species, species_datum))
 			. = TRUE
 
 /// Returns if the given target is a human. Like, a REAL human.
