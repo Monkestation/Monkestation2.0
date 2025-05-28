@@ -701,6 +701,88 @@
 	screen_loc = ui_living_healthdoll
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
+/atom/movable/screen/healthdoll/human
+	/// Tracks components of our doll, each limb is a separate atom in our vis_contents
+	VAR_PRIVATE/list/atom/movable/screen/limbs
+	/// Lazylist, tracks all body zones that are wounded currently
+	/// Used so we can sync animations should the list be updated
+	VAR_PRIVATE/list/animated_zones
+
+/atom/movable/screen/healthdoll/human/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	limbs = list()
+	for(var/i in BODY_ZONES_ALL)
+		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
+		// layer chest above other limbs, it's the center after all
+		limb.layer = i == BODY_ZONE_CHEST ? layer + 0.05 : layer
+		limbs[i] = limb
+		// why viscontents? why not overlays? - because i want to animate filters
+		vis_contents += limb
+	update_appearance()
+
+/atom/movable/screen/healthdoll/human/Destroy()
+	QDEL_LIST_ASSOC_VAL(limbs)
+	vis_contents.Cut()
+	return ..()
+
+/atom/movable/screen/healthdoll/human/update_icon_state()
+	. = ..()
+	var/mob/living/carbon/human/owner = hud?.mymob
+	if(isnull(owner))
+		return
+	if(owner.stat == DEAD)
+		for(var/limb in limbs)
+			limbs[limb].icon_state = "[limb]DEAD"
+		return
+
+	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
+
+	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
+		var/icon_key = 0
+		var/part_zone = body_part.body_zone
+
+		var/list/overridable_key = list(icon_key)
+		if(body_part.bodypart_disabled)
+			icon_key = 7
+		else if(owner.stat == DEAD)
+			icon_key = "DEAD"
+		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
+			icon_key = overridable_key[1] // thanks i hate it
+		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+			var/damage = body_part.get_damage() / body_part.max_damage
+			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
+			icon_key = clamp(ceil(damage * 5), 0, 5)
+
+		if(length(body_part.wounds))
+			LAZYSET(animated_zones, part_zone, TRUE)
+		else
+			LAZYREMOVE(animated_zones, part_zone)
+		limbs[part_zone].icon_state = "[part_zone][icon_key]"
+	// handle leftovers
+	for(var/missing_zone in owner.get_missing_limbs())
+		limbs[missing_zone].icon_state = "[missing_zone]6"
+		LAZYREMOVE(animated_zones, missing_zone)
+	// time to re-sync animations, something changed
+	if(animated_zones ~! current_animated)
+		for(var/animated_zone in animated_zones)
+			var/atom/wounded_zone = limbs[animated_zone]
+			var/existing_filter = wounded_zone.get_filter("wound_outline")
+			if(existing_filter)
+				animate(existing_filter) // stop animation so we can resync
+			else
+				wounded_zone.add_filter("wound_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 0, "size" = 1.2))
+				existing_filter = wounded_zone.get_filter("wound_outline")
+			animate(existing_filter, alpha = 200, time = 1.5 SECONDS, loop = -1)
+			animate(alpha = 0, time = 1.5 SECONDS)
+		if(LAZYLEN(current_animated)) // avoid null - list() runtimes please
+			for(var/lost_zone in current_animated - animated_zones)
+				limbs[lost_zone].remove_filter("wound_outline")
+
+// Basically just holds an icon we can put a filter on
+/atom/movable/screen/healthdoll_limb
+	screen_loc = ui_living_healthdoll
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE
+
 /atom/movable/screen/mood
 	name = "mood"
 	icon_state = "mood5"
@@ -796,6 +878,188 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
 		add_overlay(intent_icon)
 	return ..()
+
+#define HUNGER_STATE_FAT 5
+#define HUNGER_STATE_FULL 4
+#define HUNGER_STATE_FINE 3
+#define HUNGER_STATE_HUNGRY 2
+#define HUNGER_STATE_VERY_HUNGRY 1
+#define HUNGER_STATE_STARVING 0
+
+/atom/movable/screen/hunger
+	name = "hunger"
+	icon_state = "hungerbar"
+	screen_loc = ui_hunger
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	/// What state of hunger are we in?
+	VAR_PRIVATE/state
+	/// What was the last fullness we recorded?
+	VAR_PRIVATE/fullness
+	/// What food icon do we show by the bar
+	var/food_icon = 'icons/obj/food/burgerbread.dmi'
+	/// What food icon state do we show by the bar
+	var/food_icon_state = "hburger"
+	/// The image shown by the bar.
+	VAR_PRIVATE/image/food_image
+	/// The actual bar
+	VAR_PRIVATE/atom/movable/screen/hunger_bar/hunger_bar
+
+/atom/movable/screen/hunger/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	var/mob/living/hungry = hud_owner?.mymob
+	if(!istype(hungry))
+		return
+
+	if(!ishuman(hungry) || CONFIG_GET(flag/disable_human_mood))
+		screen_loc = ui_mood // Slot in where mood normally is if mood is disabled
+
+	// Burger next to the bar
+	food_image = image(icon = food_icon, icon_state = food_icon_state, pixel_x = -5)
+	food_image.plane = plane
+	food_image.appearance_flags |= KEEP_APART // To be unaffected by filters applied to src
+	food_image.add_filter("simple_outline", 2, outline_filter(1, COLOR_BLACK, OUTLINE_SHARP))
+	underlays += food_image // To be below filters applied to src
+
+	// The actual bar
+	hunger_bar = new(src, null)
+	vis_contents += hunger_bar
+
+	update_hunger_bar(instant = TRUE)
+
+/atom/movable/screen/hunger/proc/update_hunger_state()
+	var/mob/living/hungry = hud?.mymob
+	if(!istype(hungry))
+		return
+
+	if(HAS_TRAIT(hungry, TRAIT_NOHUNGER) || !hungry.get_organ_slot(ORGAN_SLOT_STOMACH))
+		fullness = NUTRITION_LEVEL_FED
+		state = HUNGER_STATE_FINE
+		return
+	if(HAS_TRAIT(hungry, TRAIT_FAT))
+		fullness = NUTRITION_LEVEL_FAT
+		state = HUNGER_STATE_FAT
+		return
+
+/*
+	if(HAS_TRAIT(hungry, TRAIT_GLUTTON))
+		fullness = NUTRITION_LEVEL_VERY_HUNGRY
+		state = HUNGER_STATE_HUNGRY // Can't get enough
+		return
+*/
+
+	fullness = round(hungry.get_fullness(only_consumable = TRUE), 0.05)
+	switch(fullness)
+		if(1 + NUTRITION_LEVEL_FULL to INFINITY)
+			state = HUNGER_STATE_FULL
+		if(1 + NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
+			state = HUNGER_STATE_FINE
+		if(1 + NUTRITION_LEVEL_VERY_HUNGRY to NUTRITION_LEVEL_HUNGRY)
+			state = HUNGER_STATE_FINE
+		if(1 + NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_VERY_HUNGRY)
+			state = HUNGER_STATE_HUNGRY
+		if(0 to NUTRITION_LEVEL_STARVING)
+			state = HUNGER_STATE_STARVING
+
+/atom/movable/screen/hunger/update_appearance(updates)
+	update_hunger_bar()
+	return ..()
+
+/// Updates the hunger bar's appearance.
+/// If `instant` is TRUE, the bar will update immediately rather than animating.
+/atom/movable/screen/hunger/proc/update_hunger_bar(instant = FALSE)
+	var/old_state = state
+	var/old_fullness = fullness
+	update_hunger_state()
+	if(old_state != state || old_fullness != fullness)
+		// Fades out if we ARE "fine" AND if our stomach has no food digesting
+		var/mob/living/hungry = hud?.mymob
+		if(alpha == 255 && (state == HUNGER_STATE_FINE && abs(fullness - hungry.nutrition) < 1))
+			if(instant)
+				alpha = 0
+			else
+				animate(src, alpha = 0, time = 1 SECONDS)
+		// Fades in if we WERE "fine" OR if our stomach has food digesting
+		else if(alpha == 0 && (state != HUNGER_STATE_FINE || abs(fullness - hungry.nutrition) >= 1))
+			if(instant)
+				alpha = 255
+			else
+				animate(src, alpha = 255, time = 1 SECONDS)
+
+	if(old_state != state)
+		// Update filter around the bar
+		if(state == HUNGER_STATE_STARVING)
+			if(!get_filter("hunger_outline"))
+				add_filter("hunger_outline", 1, list("type" = "outline", "color" = "#FF0033", "alpha" = 0, "size" = 2))
+				animate(get_filter("hunger_outline"), alpha = 200, time = 1.5 SECONDS, loop = -1)
+				animate(alpha = 0, time = 1.5 SECONDS)
+
+		else if(old_state == HUNGER_STATE_STARVING)
+			remove_filter("hunger_outline")
+
+		// Update color of the food
+		if((state == HUNGER_STATE_FAT) != (old_state == HUNGER_STATE_FAT))
+			underlays -= food_image
+			food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
+			underlays += food_image
+
+	// Update hunger bar
+	if(old_fullness != fullness)
+		// instant if invisible OR if instant is set
+		hunger_bar.update_fullness(fullness, alpha == 0 || instant)
+
+/atom/movable/screen/hunger_bar
+	icon_state = "hungerbar_bar"
+	screen_loc = ui_hunger
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE
+	/// Mask
+	VAR_PRIVATE/static/icon/bar_mask
+	/// Gradient used to color the bar
+	VAR_PRIVATE/static/list/hunger_gradient = list(
+		0.0, "#FF0000",
+		0.2, "#FF8000",
+		0.4, "#f0f000",
+		0.6, "#00FF00",
+		0.8, "#46daff",
+		1.0, "#2A72AA",
+		1.2, "#494949",
+	)
+	/// Offset of the mask
+	VAR_PRIVATE/bar_offset
+	/// Last "fullness" value (rounded) we used to update the bar
+	VAR_PRIVATE/last_fullness_band = -1
+
+/atom/movable/screen/hunger_bar/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	var/atom/movable/movable_loc = ismovable(loc) ? loc : null
+	screen_loc = movable_loc?.screen_loc
+	bar_mask ||= icon(icon, "hungerbar_mask")
+
+/atom/movable/screen/hunger_bar/proc/update_fullness(new_fullness, instant)
+	new_fullness = round(new_fullness / NUTRITION_LEVEL_FULL, 0.05)
+	if(new_fullness == last_fullness_band)
+		return
+	last_fullness_band = new_fullness
+	// Update color
+	var/new_color = gradient(hunger_gradient, clamp(new_fullness, 0, 1.2))
+	if(instant)
+		color = new_color
+	else
+		animate(src, color = new_color, 0.5 SECONDS)
+	// Update mask
+	var/old_bar_offset = bar_offset
+	bar_offset = clamp(-20 + (20 * new_fullness), -20, 0)
+	if(old_bar_offset != bar_offset)
+		if(instant || isnull(old_bar_offset))
+			add_filter("hunger_bar_mask", 1, alpha_mask_filter(0, bar_offset, bar_mask))
+		else
+			transition_filter("hunger_bar_mask", alpha_mask_filter(0, bar_offset), 0.5 SECONDS)
+
+#undef HUNGER_STATE_FAT
+#undef HUNGER_STATE_FINE
+#undef HUNGER_STATE_FULL
+#undef HUNGER_STATE_HUNGRY
+#undef HUNGER_STATE_STARVING
+#undef HUNGER_STATE_VERY_HUNGRY
 
 /atom/movable/screen/vis_holder
 	icon = ""
