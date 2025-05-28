@@ -93,11 +93,9 @@
 	is_dimorphic = FALSE
 
 /obj/item/bodypart/chest/oozeling/slime
-
 	limb_id = SPECIES_SLIMEPERSON
 
 /obj/item/bodypart/arm/left/oozeling/slime
-
 	limb_id = SPECIES_SLIMEPERSON
 
 /obj/item/bodypart/arm/right/oozeling/slime
@@ -117,7 +115,6 @@
 	limb_id = SPECIES_LUMINESCENT
 
 /obj/item/bodypart/arm/left/oozeling/luminescent
-
 	limb_id = SPECIES_LUMINESCENT
 
 /obj/item/bodypart/arm/right/oozeling/luminescent
