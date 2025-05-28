@@ -31,6 +31,11 @@
 	damage = 15
 	fire_stacks = 2
 
+/obj/projectile/bullet/c45/hp
+	name = ".45 hollow-point bullet"
+	damage = 40
+	weak_against_armour = TRUE
+
 // 4.6x30mm (Autorifles)
 
 /obj/projectile/bullet/c46x30mm
