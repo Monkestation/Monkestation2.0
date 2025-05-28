@@ -46,8 +46,8 @@
 
 	/// Typepaths of the default oozeling actions to give.
 	var/static/list/default_actions = list(
-		/datum/action/cooldown/spell/slime_washing,
-		/datum/action/cooldown/spell/slime_hydrophobia,
+		/datum/action/cooldown/slime_washing,
+		/datum/action/cooldown/slime_hydrophobia,
 		/datum/action/innate/core_signal,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
