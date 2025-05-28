@@ -64,7 +64,7 @@
 	var/audio_cooldown = 2 SECONDS
 	/// The falloff exponent for audible emotes.
 	var/falloff_exponent = SOUND_FALLOFF_EXPONENT
-	/// The extra range for audible emites.
+	/// The extra range for audible emotes.
 	var/extra_range = 0
 
 /datum/emote/New()
