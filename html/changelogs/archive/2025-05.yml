@@ -377,3 +377,20 @@
 2025-05-27:
   Siro:
   - rscadd: Heart emitter unique effect
+2025-05-28:
+  Absolucy:
+  - bugfix: Fixed some stacked atmos pipes on some icebox/tram bars and and a space
+      ruin.
+  - bugfix: Firelocks now skip checking uninitialized turfs, which caused errors with
+      the holodeck.
+  - map: Added liquid barriers to the doors in Pubby Station's xenobiology.
+  Absolucy, Melbert:
+  - code_imp: Updated some status effect tick code to be more clear of how long is
+      elapsing between ticks. Some effects that were inadvertently weakened are now
+      stronger as a result (fire and some heretic effects).
+  Helixsix:
+  - bugfix: Fixed xenobio doors not autoclosing on Theseus.
+  - map: Renovated Heliostation Xenobiology
+  Xander3359:
+  - bugfix: Void ascension storm now respects antimagic
+  - bugfix: Void chill can no longer be applied to people with antimagic
