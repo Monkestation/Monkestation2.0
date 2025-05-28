@@ -361,21 +361,19 @@
 
 	//we have the plasma. we can rebuild them.
 	brainmob?.mind?.grab_ghost()
-	// stupid snowflake check, too lazy to refactor this
-	if(!istype(stored_dna?.species, /datum/species/oozeling/slime))
-		if(isnull(brainmob))
-			user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
-			return null
-		if(isnull(brainmob.stored_dna))
-			user?.balloon_alert(user, "This brain does not contain any dna!")
-			return null
-		if(isnull(brainmob.client))
-			user?.balloon_alert(user, "This brain does not contain a mind!")
-			return null
-	var/mob/living/carbon/human/new_body = new(drop_location())
+	if(isnull(brainmob))
+		user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
+		return null
+	if(isnull(brainmob.stored_dna))
+		user?.balloon_alert(user, "This brain does not contain any dna!")
+		return null
+	if(isnull(brainmob.client))
+		user?.balloon_alert(user, "This brain does not contain a mind!")
+		return null
+	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
 	rebuilt = TRUE
-	brainmob?.client?.prefs?.safe_transfer_prefs_to(new_body)
+	brainmob.client?.prefs?.safe_transfer_prefs_to(new_body)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
