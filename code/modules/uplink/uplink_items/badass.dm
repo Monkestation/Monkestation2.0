@@ -111,6 +111,6 @@
 
 /datum/uplink_item/badass/callahan
 	name = "Callahan Class Battleship"
-	desc = "A literal fucking battleship, shrunk with bluespace technology and mechanized to require only 1 man. God has damned all who opose you.
+	desc = "A literal fucking battleship, shrunk with bluespace technology and mechanized to require only 1 man. God has damned all who opose you."
 	item = /obj/vehicle/sealed/mecha/callahan
 	cost = 250
