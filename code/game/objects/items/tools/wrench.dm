@@ -132,6 +132,12 @@
 	SIGNAL_HANDLER
 	LAZYADD(extra_data[DETSCAN_CATEGORY_ILLEGAL], "Hard-light generator detected.")
 
+/obj/item/wrench/combat/proc/is_active()
+	if(tool_behaviour)
+		return TRUE
+	else
+		return FALSE
+
 /obj/item/wrench/bolter
 	name = "bolter wrench"
 	desc = "A wrench designed to grab into airlock's bolting system and raise it regardless of the airlock's power status."

@@ -1,7 +1,7 @@
 
 /obj/machinery/nuclearbomb/commando
 	name = "old nuclear fission explosive"
-	desc = "You probably shouldn't stick around to see if this is armed. The '1' key seems very worn... <i>the password can't possibly be 1111?</i>"
+	desc = "You probably shouldn't stick around to see if this is armed. The '1' key seems very worn... <i>the password can't possibly be 11111?</i>"
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "old_nuclearbomb_base"
 	anchored = FALSE
@@ -27,9 +27,9 @@
 	COOLDOWN_DECLARE(arm_cooldown)
 
 /datum/armor/commando_nuke
-	bullet = 70
-	laser = 70
-	energy = 70
+	bullet = 60
+	laser = 50
+	energy = 50
 	bomb = 80
 
 /obj/machinery/nuclearbomb/commando/Initialize(mapload)
@@ -44,6 +44,10 @@
 		do_sparks(rand(1,2), FALSE, src)
 	else if(atom_integrity <= 250 && (prob(10)))
 		do_sparks(1, FALSE, src)
+	if(!timing)
+		return
+	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_DELTA && get_time_left() < 120)
+		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 
 /obj/machinery/nuclearbomb/commando/proc/update_damage()
 	if(atom_integrity <= 100)
@@ -71,15 +75,15 @@
 
 		balloon_alert(user, "repairing...")
 		while(atom_integrity != max_integrity)
-			if(!weapon.use_tool(src, user, 2 SECONDS, volume = 20))
+			if(!weapon.use_tool(src, user, 2 SECONDS, volume = 20, extra_checks = CALLBACK(weapon, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 				return
-
 			repair_damage(10)
 			update_damage()
 
 		balloon_alert(user, "repaired!")
 	else
 		return ..()
+
 
 /obj/machinery/nuclearbomb/commando/disk_check(obj/item/disk/nuclear/inserted_disk)
 	if(istype(inserted_disk, /obj/item/disk/nuclear/nukie))
@@ -142,13 +146,14 @@
 		return "[base_icon_state]_exploding"
 	if(timing)
 		return "[base_icon_state]_timing"
-	if(!safety)
+	if(!safety && yes_code)
 		return "[base_icon_state]_await_arm"
 	if(!yes_code && auth)
 		return "[base_icon_state]_unlocked"
-	if(auth)
-		return "[base_icon_state]_await_code"
+	if(yes_code)
+		return "[base_icon_state]_code_entered"
 	return "[base_icon_state]_base"
+
 
 /obj/machinery/nuclearbomb/commando/update_overlays()
 	. = ..()
@@ -324,6 +329,15 @@
 	countdown.start()
 	SSsecurity_level.set_level(SEC_LEVEL_RED)
 	SSshuttle.registerHostileEnvironment(src)
+	var/area/our_area = get_area(src)
+	priority_announce(
+		text = "An unauthorized nuclear device is currently being decrypted for detonation in the [our_area.get_original_area_name()]. Crew are advised to halt the decryption through immediate rapid deconstruction of the device.",
+		title = "Priority Alert",
+		sound = 'sound/machines/alarm.ogg',
+		has_important_message = TRUE,
+		sender_override = "Nanotrasen Security Division",
+		color_override = "red",
+	)
 	notify_ghosts(
 		"A nuclear device has been armed in [get_area_name(src)]!",
 		source = src,

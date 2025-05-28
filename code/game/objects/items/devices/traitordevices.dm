@@ -456,9 +456,12 @@ effective or pretty fucking useless.
 	if(!attacking_item.toolspeed)
 		return
 
+	if(!weapon.toolspeed)
+			return
+
 	if((user.istate & ISTATE_HARM))
 		balloon_alert(user, "deconstructing...")
-		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
+		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20, extra_checks = CALLBACK(weapon, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 			return
 
 		deconstruct(TRUE)
@@ -472,7 +475,7 @@ effective or pretty fucking useless.
 
 		balloon_alert(user, "repairing...")
 		while(atom_integrity != max_integrity)
-			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
+			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20, extra_checks = CALLBACK(weapon, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 				return
 
 			repair_damage(10)

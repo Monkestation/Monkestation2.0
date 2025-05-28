@@ -14,6 +14,7 @@
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
+#define ROLE_COMMANDO_OPERATIVE "Commando Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit

@@ -513,9 +513,9 @@ GLOBAL_VAR(station_nuke_source)
 	detonation_timer = null
 	SSsecurity_level.set_level(previous_level)
 
-	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
-		nuke_pointer.switch_mode_to(initial(nuke_pointer.mode))
-		nuke_pointer.alert = FALSE
+	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
+		disk_pinpointers.switch_mode_to(TRACK_NUKE_DISK)
+		disk_pinpointers.alert = FALSE
 
 	countdown.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
