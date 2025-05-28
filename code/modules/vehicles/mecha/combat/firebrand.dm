@@ -4,7 +4,7 @@
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "firebrand_0_0"
 	base_icon_state = "firebrand"
-	SET_BASE_PIXEL(-12, 0)
+	SET_BASE_PIXEL(-14, 0)
 	max_integrity = 300 // relatively weak, armor saves it
 	force = 15 // too slow to really hurt, why isnt it flaming?
 	movedelay = 4.5

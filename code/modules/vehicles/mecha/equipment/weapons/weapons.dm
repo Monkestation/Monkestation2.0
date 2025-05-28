@@ -623,3 +623,41 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_FLAME
 	mech_flags = EXOSUIT_MODULE_FLAMETANK
+
+// Callahan's armaments
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/callahan150s
+	name = "6x 150mm Huber Exalts Navalized "
+	desc = "Six large artillery guns for a Callahan Class, though since it was shrunk down they act much more like 40mms"
+	icon_state = "mecha_bblargo"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/lighttankshell
+	equip_cooldown = 5 SECONDS
+	projectile_delay = 0.03 SECONDS
+	projectiles = 600
+	projectiles_cache = 600
+	projectiles_cache_max = 600
+	projectiles_per_shot = 6
+	variance = 24
+	randomspread = 15
+	ammo_type = MECHA_AMMO_BBLARGE
+	mech_flags = EXOSUIT_MODULE_BATTLESHIP
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/callahansecondary
+	name = "Assorted Secondary Weapons"
+	desc = "120mm guns, 30mm torpedo-boat guns, and machineguns, all made into a concophony of 20mm effectively"
+	icon_state = "mecha_bbsmall"
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 1200
+	projectiles_cache = 1200
+	projectiles_cache_max = 1200
+	projectiles_per_shot = 20
+	equip_cooldown = 5 SECONDS
+	projectile_delay = 0.01 SECONDS
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_BBSMALL
+	mech_flags = EXOSUIT_MODULE_BATTLESHIP

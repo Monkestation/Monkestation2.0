@@ -84,6 +84,10 @@
 	item_type = /obj/item/mecha_ammo/antitankammo
 	cost = PAYCHECK_COMMAND * 3
 
+/datum/armament_entry/company_import/bms/vehicles/callahanmeme
+	item_type = /obj/vehicle/sealed/mecha/callahan
+	cost = PAYCHECK_COMMAND * 1000000
+
 /datum/armament_entry/company_import/bms/magazines // feed the war machine
 	subcategory = "Magazines"
 	cost = PAYCHECK_CREW*3

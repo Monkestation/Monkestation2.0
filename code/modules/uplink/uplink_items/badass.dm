@@ -108,3 +108,9 @@
 		Contains enough special solution to spray a single super-size seditious symbol, subjecting station staff to slippery suffering."
 	item = /obj/item/traitor_spraycan
 	cost = 1
+
+/datum/uplink_item/badass/callahan
+	name = "Callahan Class Battleship"
+	desc = "A literal fucking battleship, shrunk with bluespace technology and mechanized to require only 1 man. God has damned all who opose you.
+	item = /obj/vehicle/sealed/mecha/callahan
+	cost = 250

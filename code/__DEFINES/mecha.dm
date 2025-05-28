@@ -63,4 +63,6 @@
 #define MECHA_AMMO_SUPPORTTANK "75mm shell"
 #define MECHA_AMMO_ATR "20mm 'typhon', its literally just a neville but larp"
 #define MECHA_AMMO_FLAME "flamefuel"
+#define MECHA_AMMO_BBLARGE "BB main guns"
+#define MECHA_AMMO_BBSMALL "BB secondary"
 //monke edit end

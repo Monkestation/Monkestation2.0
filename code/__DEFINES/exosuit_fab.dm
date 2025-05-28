@@ -46,6 +46,8 @@
 #define EXOSUIT_MODULE_SUPPORTTANK (1<<16)
 // Module is compatible with flame tank "mechs"
 #define EXOSUIT_MODULE_FLAMETANK (1<<17)
+// Module is compatible with fucking battleship "mechs" do I need to explain?
+#define EXOSUIT_MODULE_BATTLESHIP (1<<18)
 //monkestation edit end
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
