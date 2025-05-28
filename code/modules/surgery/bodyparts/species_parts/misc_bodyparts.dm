@@ -90,6 +90,7 @@
 ///SLIME
 /obj/item/bodypart/head/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
+	is_dimorphic = FALSE
 
 /obj/item/bodypart/chest/oozeling/slime
 
