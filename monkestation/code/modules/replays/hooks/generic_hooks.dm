@@ -13,12 +13,12 @@
 	return ..()
 
 /client/New()
-	SSdemo.write_event_line("login [ckey]")
+	SSdemo?.write_event_line("login [ckey]")
 	return ..()
 
 /client/Destroy()
 	. = ..()
-	SSdemo.write_event_line("logout [ckey]")
+	SSdemo?.write_event_line("logout [ckey]")
 
 /turf/setDir()
 	. = ..()

@@ -1,4 +1,0 @@
-author: "Helixsix"
-delete-after: True
-changes:
-  - bugfix: "Fixed xenobio doors not autoclosing on Theseus."
