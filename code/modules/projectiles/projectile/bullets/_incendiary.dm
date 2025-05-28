@@ -43,7 +43,7 @@
 
 // made for the flame tank, needed it to go a bit further
 /obj/projectile/bullet/incendiary/fire/heavy
-	damage = 18
+	damage = 8
 	range = 10
 	alpha = 0
 	pass_flags = PASSTABLE | PASSMOB
@@ -60,7 +60,7 @@
 	wound_falloff_tile = -4
 	fire_stacks = 5
 	damage_walls = TRUE // it is a flamethrower built for burning bunkers down, needs alot of hits but can kill walls
-	wall_dem_mod = 1
+	wall_dem_mod = 2.5
 
 /obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -68,6 +68,16 @@
 	if(isopenturf(location))
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
+
+/obj/projectile/bullet/incendiary/heavy/Move()
+	. = ..()
+
+	if(!leaves_fire_trail)
+		return
+	var/turf/location = get_turf(src)
+	if(location)
+		new /obj/effect/hotspot(location)
+		location.hotspot_expose(3000, 3000, 1)
 
 /obj/projectile/bullet/incendiary/fire/heavy/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
