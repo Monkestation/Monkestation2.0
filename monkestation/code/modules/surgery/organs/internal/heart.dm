@@ -171,8 +171,7 @@
 	for(var/zone as anything in possible_limbs)
 		var/obj/item/bodypart/limb = user.get_bodypart(zone)
 		if(!isnull(limb))
-			retractable_limbs[limb] = image(getFlatIcon(limb))
-
+			retractable_limbs[limb] = limb.appearance
 	if(!length(retractable_limbs))
 		return
 	var/obj/item/bodypart/selected_limb = show_radial_menu(user, user, retractable_limbs)
