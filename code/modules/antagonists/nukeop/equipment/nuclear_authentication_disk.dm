@@ -160,3 +160,11 @@
 /obj/item/disk/nuclear/fake/obvious
 	name = "cheap plastic imitation of the nuclear authentication disk"
 	desc = "How anyone could mistake this for the real thing is beyond you."
+
+/obj/item/disk/nuclear/nukie
+	name = "improvised nuclear authentication disk"
+	desc = "Better keep this safeish."
+	icon_state = "nukiedisk"
+	max_integrity = 250
+	armor_type = /datum/armor/disk_nuclear
+	fake = TRUE
