@@ -167,6 +167,10 @@
 		return
 	var/mob/living/carbon/human/user = owner
 	var/list/possible_limbs = list(BODY_ZONE_HEAD, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	if(!isnull(user.handcuffed))
+		possible_limbs -= list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	if(!isnull(user.legcuffed))
+		possible_limbs -= list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/retractable_limbs = list()
 	for(var/zone as anything in possible_limbs)
 		var/obj/item/bodypart/limb = user.get_bodypart(zone)
