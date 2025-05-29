@@ -283,6 +283,6 @@
 	SET_BASE_PIXEL(-141, 0)
 	move_resist = INFINITY
 	welder_salvage = list()
-/obj/structure/mecha_wreckage/callahan/Initialize()
+/obj/structure/mecha_wreckage/callahan/Initialize(mapload)
 	. = ..()
 	playsound(loc, 'sound/effects/explosion3.ogg', 250)
