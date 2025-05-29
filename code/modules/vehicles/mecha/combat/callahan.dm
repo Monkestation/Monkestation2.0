@@ -15,7 +15,7 @@
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS //can't strafe bruv
 	armor_type = /datum/armor/callahan //its neigh on immune to bullets, but explosives and melee will ruin it. rivetts mean even more melee vun
 	internal_damage_threshold = 35 //Its old but no electronics
-	wreckage = null
+	wreckage = /obj/structure/mecha_wreckage/callahan
 	move_resist = INFINITY
 	mech_type = EXOSUIT_MODULE_BATTLESHIP
 	equip_by_category = list(
@@ -42,6 +42,8 @@
 /obj/vehicle/sealed/mecha/callahan/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_zoom)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_horn)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_reinforce)
 
 // better parts since TC
 /obj/vehicle/sealed/mecha/callahan/add_cell()
@@ -52,6 +54,14 @@
 
 /datum/action/vehicle/sealed/mecha/mech_zoom
 	name = "Zoom"
+	button_icon_state = "mech_zoom_off"
+
+/datum/action/vehicle/sealed/mecha/mech_horn
+	name = "Sound the Horn"
+	button_icon_state = "mech_zoom_off"
+
+/datum/action/vehicle/sealed/mecha/mech_reinforce
+	name = "Reinforcements have arrived"
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags) // stolen from the marauder, give the tank a tank sight.
@@ -67,3 +77,8 @@
 	else
 		owner.client.view_size.resetToDefault()
 	build_all_button_icons()
+
+/datum/action/vehicle/sealed/mecha/mech_horn/Trigger(trigger_flags) // ear rape. But lets people know theyre dead
+	playsound(chassis, 'sound/vehicles/dreadnaughthorn.ogg', 250)
+/datum/action/vehicle/sealed/mecha/mech_reinforce/Trigger(trigger_flags)
+		playsound(chassis, 'sound/vehicles/wearebeingreinforced.ogg', 175)
