@@ -31,7 +31,7 @@
 	. = ..()
 	animate_pulse()
 
-/obj/item/organ/internal/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	var/was_failing = organ_flags & ORGAN_FAILING
 	. = ..()
 	if (was_failing != (organ_flags & ORGAN_FAILING))

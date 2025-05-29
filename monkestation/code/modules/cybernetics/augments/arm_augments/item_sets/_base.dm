@@ -80,7 +80,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/item_set/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF || status == ORGAN_ROBOTIC)
+	if(. & EMP_PROTECT_SELF || IS_ROBOTIC_ORGAN(src))
 		return
 	if(prob(15/severity) && owner)
 		to_chat(owner, span_warning("The electromagnetic pulse causes [src] to malfunction!"))

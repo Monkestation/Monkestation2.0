@@ -116,7 +116,7 @@ If you have > 135 toxin damage and dont have spleenless/liverless metabolism you
 	name = "basic cybernetic spleen"
 	icon_state = "spleen-c"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
@@ -131,7 +131,7 @@ If you have > 135 toxin damage and dont have spleenless/liverless metabolism you
 	name = "cybernetic spleen"
 	icon_state = "spleen-c-u"
 	desc = "An electronic device designed to mimic the functions of a human spleen. Handles blood and emergency toxins slightly better than an organic spleen."
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD
 	emp_vulnerability = 40 //Chance of permanent effects if emp-ed.
 
@@ -146,7 +146,7 @@ If you have > 135 toxin damage and dont have spleenless/liverless metabolism you
 	name = "upgraded cybernetic spleen"
 	icon_state = "spleen-c-u2"
 	desc = "An upgraded version of the cybernetic spleen designed to mimic hematopoiesis of bone marrow while being able to in emergencies sacrifice its durability to cleans toxins. Stores 50 units of blood for emergency release in case of hypervolemic shock. "
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*1.5
 	emp_vulnerability = 20 //Chance of permanent effects if emp-ed.
 
@@ -165,5 +165,5 @@ If you have > 135 toxin damage and dont have spleenless/liverless metabolism you
 		owner.adjustToxLoss(10)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 

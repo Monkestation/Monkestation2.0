@@ -3,8 +3,7 @@
 	desc = "A utilitarian bellows which serves to pump oxygen into an automaton's body."
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "lungs-clock"
-	organ_flags = ORGAN_SYNTHETIC
-	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/lungs/slime
 	zone = BODY_ZONE_CHEST
@@ -34,7 +33,7 @@
 /obj/item/organ/internal/lungs/synth/emp_act(severity)
 	. = ..()
 
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
