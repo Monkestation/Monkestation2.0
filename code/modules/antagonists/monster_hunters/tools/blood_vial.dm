@@ -82,15 +82,15 @@
 /datum/status_effect/cursed_blood/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 
-/datum/status_effect/cursed_blood/tick(seconds_per_tick, times_fired)
+/datum/status_effect/cursed_blood/tick(seconds_between_ticks, times_fired)
 	var/needs_update = FALSE
 	if(ISINRANGE(owner.health, 0, 90))
-		needs_update += owner.adjustBruteLoss(-2 * seconds_per_tick, updating_health = FALSE)
-		needs_update += owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
-		needs_update += owner.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-		needs_update += owner.adjustOxyLoss(-1 * seconds_per_tick, updating_health = FALSE)
-	owner.AdjustAllImmobility((-6 SECONDS) * seconds_per_tick)
-	owner.stamina.adjust(7 * seconds_per_tick, forced = TRUE)
+		needs_update += owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+		needs_update += owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+		needs_update += owner.adjustToxLoss(-1 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+		needs_update += owner.adjustOxyLoss(-1 * seconds_between_ticks, updating_health = FALSE)
+	owner.AdjustAllImmobility((-6 SECONDS) * seconds_between_ticks)
+	owner.stamina.adjust(7 * seconds_between_ticks, forced = TRUE)
 	if(needs_update)
 		owner.updatehealth()
 
