@@ -81,4 +81,4 @@
 /datum/action/vehicle/sealed/mecha/mech_horn/Trigger(trigger_flags) // ear rape. But lets people know theyre dead
 	playsound(chassis, 'sound/vehicles/dreadnaughthorn.ogg', 250)
 /datum/action/vehicle/sealed/mecha/mech_reinforce/Trigger(trigger_flags)
-		playsound(chassis, 'sound/vehicles/wearebeingreinforced.ogg', 175)
+	playsound(chassis, 'sound/vehicles/wearebeingreinforced.ogg', 175)
