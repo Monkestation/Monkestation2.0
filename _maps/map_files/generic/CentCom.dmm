@@ -27064,7 +27064,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
 	name = "Beverly's Fax Machine";
-	visible_to_network = 0;
 	desc = "The fax machine for Centcom Commander Beverly Valon, Head of Artificial Intelligence and Silicon Studies. Faxes sent to this machine may not be responded to in a timely basis. Misuse of the fax system will result in actions taken against the sender. Glory to Nanotrasen.";
 	fax_name = "Beverly Valon's Fax Machine"
 	},
