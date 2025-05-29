@@ -388,9 +388,25 @@
   - code_imp: Updated some status effect tick code to be more clear of how long is
       elapsing between ticks. Some effects that were inadvertently weakened are now
       stronger as a result (fire and some heretic effects).
+  Addust:
+  - map: A Johnson & Co Architecture construction team has been sent into Central
+      Command to manifest a new office into existence, at the request of Glasser Trisk.
+  - map: A second team was also sent in to build an office for Giacomo Affinito.
   Helixsix:
   - bugfix: Fixed xenobio doors not autoclosing on Theseus.
   - map: Renovated Heliostation Xenobiology
+  SirNightKnight:
+  - rscadd: added new alarms to the station to signify a Delta alert.
+  - rscadd: added more status displays for the new alert levels.
+  - qol: status displays set to an alert level display will update to the current
+      alert level if it changes.
+  - bugfix: ' fixed fire alarms not displaying the correct alert level light.'
+  TheMrGlasses:
+  - balance: Buff to the Slasher's jaunt.
   Xander3359:
   - bugfix: Void ascension storm now respects antimagic
   - bugfix: Void chill can no longer be applied to people with antimagic
+  notghosti:
+  - rscadd: Robotic limbs can now be adjusted to fit satyrs and orthinid's by using
+      a wrench on the limbs
+  - bugfix: All of satyrs and orthinids limbs will now fit, a satyr or orthinid
