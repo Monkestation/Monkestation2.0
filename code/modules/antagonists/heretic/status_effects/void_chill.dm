@@ -40,7 +40,6 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_per_ticks)
-	var/protected = FALSE
 	if(owner.has_reagent(/datum/reagent/water/holywater))
 		//void chill is less effective
 		owner.adjust_bodytemperature(-3 KELVIN * stacks * seconds_per_ticks)
@@ -49,11 +48,6 @@
 		COOLDOWN_START(src, chill_purge, 2 SECONDS)
 		to_chat(owner, span_notice("You feel holy water warming you up."))
 		adjust_stacks(-1)
-		protected = TRUE
-	if(owner.can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 0))
-		to_chat(owner, span_notice("The cold still bites, but you can feel the dread lift for a moment."))
-		protected = TRUE
-	if(!protected)
 		owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_per_ticks)
 	if (stacks == 0)
 		owner.remove_status_effect(/datum/status_effect/void_chill)
