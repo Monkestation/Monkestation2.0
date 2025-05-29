@@ -37,6 +37,7 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
+	action_slots = ALL
 
 	///all stuff used by RCD for construction
 	var/static/list/root_categories = list(

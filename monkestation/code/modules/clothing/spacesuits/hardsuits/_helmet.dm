@@ -39,10 +39,6 @@
 	if(suit)
 		suit.RemoveHelmet()
 
-/obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_HEAD)
-		return 1
-
 /obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(slot != ITEM_SLOT_HEAD)

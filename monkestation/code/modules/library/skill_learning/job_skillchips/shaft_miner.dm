@@ -228,9 +228,6 @@
 		point_handler(holding_brain.owner, null, callouts=miner_callouts[/obj/item/pickaxe])
 	toggle_action.update_state(disabled)
 
-/obj/item/skillchip/drg_callout/item_action_slot_check(slot, mob/user)
-	return user == holding_brain.owner
-
 /datum/action/item_action/hands_free/drg_callout
 	name = "Toggle D.R.G.R.A.S Skillchip"
 	button_icon = 'icons/obj/mining.dmi'
