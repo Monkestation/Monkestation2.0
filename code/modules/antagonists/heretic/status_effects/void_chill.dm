@@ -48,6 +48,7 @@
 		COOLDOWN_START(src, chill_purge, 2 SECONDS)
 		to_chat(owner, span_notice("You feel holy water warming you up."))
 		adjust_stacks(-1)
+	else
 		owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_per_ticks)
 	if (stacks == 0)
 		owner.remove_status_effect(/datum/status_effect/void_chill)
