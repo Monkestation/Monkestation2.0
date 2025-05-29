@@ -285,4 +285,4 @@
 	welder_salvage = list()
 /obj/structure/mecha_wreckage/callahan/Initialize()
 	. = ..()
-	playsound(chassis, 'sound/effects/explosion3.ogg', 250)
+	playsound(loc, 'sound/effects/explosion3.ogg', 250)
