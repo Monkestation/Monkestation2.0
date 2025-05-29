@@ -28884,8 +28884,9 @@
 "tIp" = (
 /obj/machinery/door/airlock/cult/glass/friendly{
 	name = "John Intern's Cell";
-	desc = "Upon closer examination, it's still dirt."use_power=0;
-	req_access = null
+	desc = "Upon closer examination, it's still dirt.";
+	req_access = null;
+	use_power = 0
 	},
 /turf/open/misc/dirt,
 /area/centcom/central_command_areas/admin)
