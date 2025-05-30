@@ -267,6 +267,17 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
+/datum/techweb_node/mech_flamethrower
+	id = "mech_flamethrower"
+	display_name = "Exosuit Weapon (FNX-100 \"Conflagorator\" Flamethrower)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("exotic_ammo")
+	design_ids = list(
+		"mech_flamethrower",
+		"mech_flamethrower_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
 /datum/techweb_node/mech_ion
 	id = "mmech_ion"
 	display_name = "Exosuit Weapon (MKIV Ion Heavy Cannon)"

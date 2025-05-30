@@ -119,3 +119,10 @@
 	icon_state = "tankatr"
 	rounds = 10
 	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_ammo/flamer
+	name = "Flamethrower Fuel Tank"
+	desc = "A man portable fuel tank of flamable liquids. For use with the FNX-100."
+	icon_state = "flamer"
+	rounds = 60
+	ammo_type = MECHA_AMMO_FLAME

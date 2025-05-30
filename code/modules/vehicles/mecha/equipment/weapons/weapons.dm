@@ -661,3 +661,19 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_BBSMALL
 	mech_flags = EXOSUIT_MODULE_BATTLESHIP
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	name = "\improper FNX-100 \"Conflagorator\" Flamethrower"
+	desc = "A modification of the FNX-99 Hades carbine, This weapon has traded incendary bullets to be a full flamethrower."
+	icon_state = "mecha_flamethrower"
+	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
+	projectile = /obj/projectile/bullet/incendiary/fire/heavy
+	projectiles = 120
+	projectiles_cache = 40
+	projectiles_cache_max = 120
+	projectiles_per_shot = 4
+	equip_cooldown = 0.7 SECONDS
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_FLAME
