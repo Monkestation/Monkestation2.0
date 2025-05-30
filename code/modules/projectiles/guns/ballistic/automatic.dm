@@ -136,6 +136,41 @@
 	empty_indicator = TRUE
 	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
 
+/obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
+	name = "\improper refurbished PP-95 SMG"
+	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished for better performance."
+	spread = 10
+	burst_size = 2
+	icon_state = "plastikov_refurbished"
+	inhand_icon_state = "plastikov_refurbished"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov10mm
+	projectile_damage_multiplier = 0.75
+	can_suppress = TRUE
+	suppressor_x_offset = 4
+
+/obj/item/gun/ballistic/automatic/rostokov
+	name = "\improper Rostokov Autorifle"
+	desc = "Cool gun. Nuff said."
+	icon_state = "rostokov"
+	w_class = WEIGHT_CLASS_BULKY
+	inhand_icon_state = "rostokov"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/rostokov10mm
+	fire_delay = 1
+	can_suppress = FALSE
+	burst_size = 1
+	slot_flags = 0
+	worn_icon_state = "rostokov"
+	actions_types = list()
+	mag_display = TRUE
+	empty_indicator = TRUE
+	projectile_damage_multiplier = 0.75
+	spread = 5
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
+
+/obj/item/gun/ballistic/automatic/rostokov/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."

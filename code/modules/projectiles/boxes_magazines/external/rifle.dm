@@ -21,3 +21,15 @@
 /obj/item/ammo_box/magazine/m556/phasic
 	name = "toploader magazine (5.56mm Phasic)"
 	ammo_type = /obj/item/ammo_casing/a556/phasic
+
+/obj/item/ammo_box/magazine/rostokov10mm
+	name = "Rostokov magazine (10mm)"
+	icon_state = "rostokov-1"
+	base_icon_state = "rostokov"
+	ammo_type = /obj/item/ammo_casing/c10mm
+	caliber = CALIBER_10MM
+	max_ammo = 32
+
+/obj/item/ammo_box/magazine/rostokov10mm/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[ammo_count() ? 1 : 0]"
