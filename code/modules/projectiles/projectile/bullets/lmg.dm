@@ -34,7 +34,7 @@
 
 /obj/projectile/bullet/mm712x82
 	name = "7.12x82mm bullet"
-	damage = 30
+	damage = 45
 	armour_penetration = 5
 	wound_bonus = -50
 	wound_falloff_tile = 0

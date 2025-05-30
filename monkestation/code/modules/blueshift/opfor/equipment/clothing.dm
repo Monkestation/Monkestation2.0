@@ -17,7 +17,7 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/engineer
 	name = "Syndicate Engineer"
@@ -35,7 +35,7 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 	new /obj/item/clothing/glasses/meson/night(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/spy
 	name = "Syndicate Spy"
@@ -54,7 +54,7 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/maid
 	name = "Syndicate Maid"
@@ -84,7 +84,7 @@
 	new /obj/item/storage/belt/military/assault(src)
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 
 /datum/opposing_force_equipment/clothing_syndicate/cybersun_hacker
 	name = "Cybersun Hacker"
@@ -245,7 +245,7 @@
 		FIRE = 100,
 		ACID = 100,
 	)))
-	new /obj/item/storage/box/syndie_kit/space_suit(src)
+	new /obj/item/storage/box/syndie_kit/space(src)
 	new /obj/item/clothing/gloves/latex/nitrile/heister(src)
 	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/under/suit/black/skirt(src)
