@@ -329,7 +329,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 
-/datum/design/mech_flamethrower
+/datum/design/mech_heavy
 	name = "Executor Mech Rifle"
 	desc = "Allows for the construction of Executor Mech Rifle."
 	id = "mech_heavy"
