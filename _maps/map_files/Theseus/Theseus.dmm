@@ -14923,7 +14923,6 @@
 "erC" = (
 /obj/effect/turf_decal/trimline/purple/filled,
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	id_tag = "xeno_airlock_exterior";
 	name = "Xenobiology Lab"
@@ -38751,7 +38750,6 @@
 /area/station/medical/medbay/central)
 "lpg" = (
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	id_tag = "xeno_airlock_exterior";
 	name = "Xenobiology Lab"
@@ -44394,7 +44392,6 @@
 /area/station/science/lower)
 "mWM" = (
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	name = "Xenobio and Nanite Zone"
 	},
@@ -58680,7 +58677,6 @@
 /area/station/commons/vacant_room/commissary)
 "rhQ" = (
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	id_tag = "xeno_airlock_exterior";
 	name = "Xenobiology Lab"
