@@ -288,6 +288,37 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_INCENDIARY
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	name = "Executor Mech Rifle"
+	desc = "A large bore rifle designed to fire armor peircing rounds, will bring down men and mech alike."
+	icon_state = "mecha_heavy"
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 10
+	projectiles_cache = 10
+	projectiles_cache_max = 20
+	projectiles_per_shot = 1
+	equip_cooldown = 1.6 SECONDS
+	randomspread = 1
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	name = "\improper FNX-100 \"Conflagorator\" Flamethrower"
+	desc = "A modification of the FNX-99 Hades carbine, This weapon has traded incendary bullets to be a full flamethrower."
+	icon_state = "mecha_flamethrower"
+	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
+	projectile = /obj/projectile/bullet/incendiary/fire/heavy
+	projectiles = 120
+	projectiles_cache = 40
+	projectiles_cache_max = 120
+	projectiles_per_shot = 4
+	equip_cooldown = 0.7 SECONDS
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_FLAME
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
@@ -661,19 +692,3 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_BBSMALL
 	mech_flags = EXOSUIT_MODULE_BATTLESHIP
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
-	name = "\improper FNX-100 \"Conflagorator\" Flamethrower"
-	desc = "A modification of the FNX-99 Hades carbine, This weapon has traded incendary bullets to be a full flamethrower."
-	icon_state = "mecha_flamethrower"
-	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
-	projectile = /obj/projectile/bullet/incendiary/fire/heavy
-	projectiles = 120
-	projectiles_cache = 40
-	projectiles_cache_max = 120
-	projectiles_per_shot = 4
-	equip_cooldown = 0.7 SECONDS
-	variance = 24
-	randomspread = 15
-	harmful = TRUE
-	ammo_type = MECHA_AMMO_FLAME

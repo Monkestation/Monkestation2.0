@@ -126,3 +126,10 @@
 	icon_state = "flamer"
 	rounds = 60
 	ammo_type = MECHA_AMMO_FLAME
+
+/obj/item/mecha_ammo/heavyammo
+	name = "20mm Ammo Box"
+	desc = "A box of large caliber rifle rounds. Used with the Executor Mech Rifle"
+	icon_state = "heavy"
+	rounds = 20
+	ammo_type = MECHA_AMMO_ATR

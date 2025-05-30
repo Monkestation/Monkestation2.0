@@ -328,6 +328,43 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+
+/datum/design/mech_flamethrower
+	name = "Executor Mech Rifle"
+	desc = "Allows for the construction of Executor Mech Rifle."
+	id = "mech_heavy"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/titanium=SHEET_MATERIAL_AMOUNT*8)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_heavy_ammo
+	name = "Executor ammunition"
+	desc = "Ammunition for the Executor Mech Rifle."
+	id = "mech_heavy_ammo"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_ammo/heavy
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
+	construction_time = 20
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/mech_ion
 	name = "MKIV Ion Heavy Cannon"
 	desc = "Allows for the construction of MKIV Ion Heavy Cannon."

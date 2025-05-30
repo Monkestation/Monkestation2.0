@@ -392,6 +392,17 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
+/datum/techweb_node/mech_heavy
+	id = "mech_heavy"
+	display_name = "Exosuit Weapon (\"Executor\" Mech Rifle)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("adv_mecha")
+	design_ids = list(
+		"mech_heavy",
+		"mech_heavy_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
 /datum/techweb_node/mech_diamond_drill
 	id = "mech_diamond_drill"
 	display_name = "Exosuit Diamond Drill"
