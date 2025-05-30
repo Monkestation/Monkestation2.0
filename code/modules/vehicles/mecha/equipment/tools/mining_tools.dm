@@ -176,7 +176,7 @@
 		if(!LAZYLEN(mecha.occupants))
 			return
 		scanning_time = world.time + equip_cooldown
-		mineral_scan_pulse(get_turf(src))
+		mineral_scan_pulse(get_turf(src), scanner = src)
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED
