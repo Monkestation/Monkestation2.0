@@ -144,7 +144,7 @@
 		active = FALSE
 	return ..()
 
-/datum/status_effect/cosmic_beam/tick(seconds_per_tick, times_fired)
+/datum/status_effect/cosmic_beam/tick(seconds_between_ticks, times_fired)
 	if(!current_target)
 		lose_target()
 		return

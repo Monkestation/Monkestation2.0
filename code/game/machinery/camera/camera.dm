@@ -99,7 +99,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 
 	LAZYADD(myarea.cameras, src)
 
-	if(mapload && is_station_level(z) && prob(3) && !start_active)
+	if(mapload && should_break_roundstart())
 		toggle_cam()
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_appearance()
@@ -123,6 +123,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 /obj/machinery/camera/proc/set_area_motion(area/A)
 	area_motion = A
 	create_prox_monitor()
+
+/obj/machinery/camera/proc/should_break_roundstart()
+	if(start_active)
+		return FALSE
+	if(!prob(3)) // only 3% chance to break roundstart
+		return FALSE
+	if(!is_station_level(z))
+		return FALSE
+	if(istype(get_area(src), /area/ruin))
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/Destroy()
 	if(can_use())
@@ -487,9 +498,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	var/change_msg = "deactivates"
 	if(status)
 		change_msg = "reactivates"
-		triggerCameraAlarm()
-		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
+		if(!QDELETED(alarm_manager))
+			triggerCameraAlarm()
+			if(!QDELETED(src)) //We'll be doing it anyway in destroy
+				addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 	if(displaymessage)
 		if(user)
 			visible_message(span_danger("[user] [change_msg] [src]!"))

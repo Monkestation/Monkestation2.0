@@ -1,6 +1,4 @@
-import { Component, InfernoNode } from 'inferno';
-import { resolveAsset } from '../assets';
-import { fetchRetry } from '../http';
+import { InfernoNode } from 'inferno';
 import { BoxProps } from './Box';
 import { Image } from './Image';
 
@@ -32,58 +30,21 @@ type DmIconProps = {
 }> &
   BoxProps;
 
-type DmIconState = {
-  iconRef: string;
+export const DmIcon = (props: DmIconProps) => {
+  const {
+    className,
+    direction = Direction.SOUTH,
+    fallback,
+    frame = 1,
+    icon,
+    icon_state,
+    movement = false,
+    ...rest
+  } = props;
+
+  const query = `${icon}?state=${icon_state}&dir=${direction}&movement=${!!movement}&frame=${frame}`;
+
+  if (!icon) return fallback || null;
+
+  return <Image fixErrors src={query} {...rest} />;
 };
-
-let refMap: Record<string, string> | undefined;
-
-export class DmIcon extends Component<DmIconProps, DmIconState> {
-  state: DmIconState = {
-    iconRef: '',
-  };
-
-  async fetchRefMap() {
-    const response = await fetchRetry(resolveAsset('icon_ref_map.json'));
-    const data = await response.json();
-    refMap = data;
-    this.setState({ iconRef: data[this.props.icon] });
-  }
-
-  componentDidMount() {
-    this.updateOrFetchRefMap();
-  }
-
-  componentDidUpdate(prevProps: DmIconProps) {
-    if (prevProps.icon !== this.props.icon) {
-      this.updateOrFetchRefMap();
-    }
-  }
-
-  updateOrFetchRefMap() {
-    if (refMap) {
-      this.setState({ iconRef: refMap[this.props.icon] });
-    } else {
-      this.fetchRefMap();
-    }
-  }
-
-  render() {
-    const {
-      className,
-      direction = Direction.SOUTH,
-      fallback,
-      frame = 1,
-      icon_state,
-      movement = false,
-      ...rest
-    } = this.props;
-    const { iconRef } = this.state;
-
-    const query = `${iconRef}?state=${icon_state}&dir=${direction}&movement=${!!movement}&frame=${frame}`;
-
-    if (!iconRef) return fallback || null;
-
-    return <Image fixErrors src={query} {...rest} />;
-  }
-}

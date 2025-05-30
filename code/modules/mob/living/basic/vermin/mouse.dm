@@ -43,6 +43,9 @@
 
 	var/chooses_bodycolor = TRUE
 
+	///can they heal for eating non-cheese
+	var/hungry = FALSE
+
 //MONKESTATION EDIT START
 /mob/living/basic/mouse/get_scream_sound()
 	return 'sound/effects/mousesqueek.ogg'
@@ -171,6 +174,8 @@
 			return //mice savour cheese differently
 		var/datum/component/edible/edible = attack_target.GetComponent(/datum/component/edible)
 		edible.UseByMouse(edible, src)
+		if(hungry && prob(90))
+			adjust_health(-4)
 
 		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
 			if(istype(target_reagent, /datum/reagent/toxin))
