@@ -1147,7 +1147,7 @@
 			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
 			&& !initial(printed.color) \
 		)
-			static_record["icon"] = initial(printed.icon)
+			static_record["icon"] = text_ref(initial(printed.icon))
 			static_record["icon_state"] = initial(printed.icon_state)
 
 		var/list/category = record.category || default_category

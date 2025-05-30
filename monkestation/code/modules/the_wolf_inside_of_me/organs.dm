@@ -1,16 +1,11 @@
 /obj/item/organ/internal/ears/werewolf
 	name = "wolf ears"
+	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "kitty"
-	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
-
-/*
-/obj/item/organ/internal/ears/werewolf/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
 	organ_traits = list(TRAIT_GOOD_HEARING)
-*/
 
 /obj/item/organ/internal/eyes/werewolf
 	name = "wolf eyes"
@@ -24,12 +19,12 @@
 	icon_state = "heart-on"
 	base_icon_state = "heart"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+
 /obj/item/organ/internal/heart/wolf/Initialize(mapload)
 	. = ..()
 	transform = transform.Scale(1.5)
 
 /obj/item/organ/internal/liver/werewolf
-
 	name = "Beastly liver"
 	desc = "A large monstrous liver."
 	icon_state = "liver"

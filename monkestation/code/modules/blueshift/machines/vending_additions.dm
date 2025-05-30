@@ -51,11 +51,6 @@
 	for (var/obj/item/clothing/item in premium)
 		if(premium[item] < MINIMUM_CLOTHING_STOCK && allow_increase(item))
 			premium[item] = MINIMUM_CLOTHING_STOCK
-
-	QDEL_NULL(products_monke)
-	QDEL_NULL(product_categories_monke)
-	QDEL_NULL(premium_monke)
-	QDEL_NULL(contraband_monke)
 	return ..()
 
 /// This proc checks for forbidden traits cause it'd be pretty bad to have 5 insuls available to assistants roundstart at the vendor!
@@ -80,17 +75,6 @@
 	return TRUE
 
 #undef MINIMUM_CLOTHING_STOCK
-
-
-/obj/machinery/vending/wardrobe/medi_wardrobe
-	products_monke = list(
-		/obj/item/radio/headset/headset_med = 3,
-		/obj/item/clothing/gloves/latex/nitrile = 2,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem/emt = 2,
-		/obj/item/clothing/under/rank/medical/scrubs/nova/red = 4,
-		/obj/item/clothing/under/rank/medical/scrubs/nova/white = 4,
-		/obj/item/clothing/under/rank/medical/doctor/nova/utility = 4,
-	)
 
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	products_monke = list(
@@ -141,13 +125,6 @@
 		/obj/item/healthanalyzer/simple = 2,
 	)
 
-/obj/machinery/vending/wardrobe/science_wardrobe
-	products_monke = list(
-		/obj/item/clothing/under/rank/rnd/scientist/nova/hlscience = 3,
-		/obj/item/clothing/under/rank/rnd/scientist/nova/utility = 3,
-		/obj/item/clothing/suit/toggle/jacket/sci = 3,
-	)
-
 /obj/machinery/vending/wardrobe/hydro_wardrobe
 	contraband_monke = list(
 		/obj/item/clothing/under/suit/nova/scarface = 2,
@@ -172,12 +149,6 @@
 /obj/machinery/vending/cart
 	products_monke = list(
 		/obj/item/radio/headset/headset_srv = 3,
-	)
-
-/obj/machinery/vending/wardrobe/chem_wardrobe
-	products_monke = list(
-		/obj/item/clothing/under/rank/medical/chemist/nova/formal = 2,
-		/obj/item/clothing/under/rank/medical/chemist/nova/formal/skirt = 2,
 	)
 
 /obj/machinery/vending/wardrobe/viro_wardrobe

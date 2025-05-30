@@ -135,7 +135,7 @@
 	},
 /obj/structure/closet/cabinet,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "hM" = (
 /obj/structure/closet/crate/goldcrate,
 /turf/open/misc/dirt/jungle,
@@ -179,7 +179,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "jz" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/wood{
@@ -191,7 +191,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/jukebox,
+/obj/machinery/dance_machine,
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
@@ -316,7 +316,7 @@
 /obj/item/gun/energy/laser/retro,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "qx" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -477,6 +477,11 @@
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"zU" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "Ax" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/turf_decal/weather/dirt,
@@ -529,6 +534,10 @@
 /obj/structure/flora/bush/sunny,
 /turf/open/misc/grass,
 /area/virtual_domain/powered)
+"EB" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "ED" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/weather/sand{
@@ -629,7 +638,11 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
+"JJ" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "JT" = (
 /obj/effect/decal/cleanable/ants,
 /turf/open/misc/grass,
@@ -676,7 +689,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "KQ" = (
 /obj/structure/flora/rock/style_2,
 /turf/open/water/beach,
@@ -713,7 +726,7 @@
 /area/virtual_domain/powered)
 "Nk" = (
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "Nz" = (
 /obj/structure/flora/bush/jungle,
 /turf/open/misc/grass,
@@ -767,6 +780,9 @@
 	},
 /turf/open/water/beach,
 /area/virtual_domain/powered)
+"Qg" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/lavaland/surface/outdoors/virtual_domain/fullbright/protected_space)
 "Rr" = (
 /obj/structure/bed/maint{
 	pixel_x = -5;
@@ -1346,7 +1362,7 @@ VF
 VF
 VF
 VF
-dp
+Qg
 cx
 cx
 cx
@@ -1390,9 +1406,9 @@ VF
 VF
 VF
 VF
-dp
+Qg
 KG
-pq
+EB
 cx
 cx
 cx
@@ -1434,10 +1450,10 @@ VF
 VF
 VF
 wb
-dp
+Qg
 jl
-pq
-BC
+EB
+zU
 ub
 ub
 ub
@@ -1478,7 +1494,7 @@ VF
 VF
 VF
 cl
-dp
+Qg
 hH
 Nk
 qm
@@ -1522,8 +1538,8 @@ VF
 VF
 VF
 VF
-dp
-dp
+Qg
+Qg
 Nk
 Jv
 ub
@@ -1569,7 +1585,7 @@ VF
 VF
 VF
 VF
-me
+JJ
 ub
 ub
 ub

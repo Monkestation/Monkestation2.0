@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 26 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 27 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -349,6 +349,16 @@
 /// Approval voting. Any number of selections per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_MULTI 2
 
+/// The choice with the most votes wins. Ties are broken by the first choice to reach that number of votes.
+#define VOTE_WINNER_METHOD_SIMPLE "Simple"
+/// The winning choice is selected randomly based on the number of votes each choice has.
+#define VOTE_WINNER_METHOD_WEIGHTED_RANDOM "Weighted Random"
+/// There is no winner for this vote.
+#define VOTE_WINNER_METHOD_NONE "None"
+
+/// Returned by [/datum/vote/proc/can_be_initiated] to denote the vote is valid and can be initiated.
+#define VOTE_AVAILABLE "Vote Available"
+
 ///liquid defines
 #define SSLIQUIDS_RUN_TYPE_TURFS 1
 #define SSLIQUIDS_RUN_TYPE_GROUPS 2
@@ -358,5 +368,3 @@
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
 #define SSLIQUIDS_RUN_TYPE_TEMPERATURE 7
 #define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 8
-
-#define ENQUEUE_SANITY 10000

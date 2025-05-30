@@ -54,3 +54,10 @@
 #define MECHA_AMMO_MISSILE_PEP "PEP missile"
 #define MECHA_AMMO_FLASHBANG "Flashbang"
 #define MECHA_AMMO_CLUSTERBANG "Clusterbang"
+//monke edit start
+#define MECHA_AMMO_PIPEGUN "Improvised shell"
+#define MECHA_AMMO_PEASHOOTER "Peashooter bullet"
+#define MECHA_AMMO_ISG "IED grenades"
+#define MECHA_AMMO_LIGHTTANK "40mm shell"
+#define MECHA_AMMO_LIGHTTANKMG "12.7x70mm malone"
+//monke edit end

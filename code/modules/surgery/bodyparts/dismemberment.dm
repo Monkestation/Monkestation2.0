@@ -31,6 +31,12 @@
 		playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
+// MONKESTATION ADDITION START
+	if(isipc(owner))
+		owner.dna.features["ipc_screen"] = "Blank"
+		playsound(get_turf(owner), 'sound/vox_fem/swhitenoise.ogg', 60, TRUE)
+// MONKESTATION ADDITION END
+
 	drop_limb()
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
@@ -152,6 +158,9 @@
 							continue
 						var/obj/item/bodypart/head/oozeling/oozhead = src
 						oozhead.eyes = null // Need this otherwise qdel on head deletes the eyes.
+					if(istype(lmbimplant, /obj/item/organ/internal/brain)) // Go figure rare interactions give humans oozling heads. This stops rr's for head dismemeberment.
+						var/obj/item/bodypart/head/oozeling/oozhead = src
+						oozhead.brain = null // Similar to eyes
 					to_chat(phantom_owner, span_notice("Something small falls out the [src]."))
 		qdel(src)
 		return
@@ -498,6 +507,10 @@
 
 		//Copied from /datum/species/proc/on_species_gain()
 		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
+			// monkestation edit start
+			if (!should_external_organ_apply_to(organ_path, src))
+				continue
+			// monkestation edit end
 			//Load a persons preferences from DNA
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)

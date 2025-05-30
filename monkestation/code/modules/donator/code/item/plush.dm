@@ -162,3 +162,21 @@
 	desc = "A plushie of XSI. It's a robot!"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "xsi"
+
+/obj/item/toy/plush/jill_plushie
+	name = "jill plush"
+	desc = "A plushie of Jill! It's handmade too!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "jill_plushie"
+
+/obj/item/toy/plush/kaiser_roach
+	name = "kaiser roach plush"
+	desc = "A plushie of a kaiser roach."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "kaiser_roach"
+
+/obj/item/toy/plush/clown_king
+	name = "clown king plush"
+	desc = "A plushie of a clown king!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "clown_king"

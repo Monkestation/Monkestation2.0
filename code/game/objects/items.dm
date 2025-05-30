@@ -96,7 +96,7 @@
 	///How large is the object, used for stuff like whether it can fit in backpacks or not
 	var/w_class = WEIGHT_CLASS_NORMAL
 	///This is used to determine on which slots an item can fit.
-	var/slot_flags = 0
+	var/slot_flags = NONE
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	/// This var exists as a weird proxy "owner" ref
@@ -308,13 +308,15 @@
 
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_QDELETING, PROC_REF(on_action_deleted))
-	if(ismob(loc))
-		// We're being held or are equipped by someone while adding an action?
-		// Then they should also probably be granted the action, given it's in a correct slot
-		var/mob/holder = loc
-		give_item_action(action, holder, holder.get_slot_by_item(src))
-
+	grant_action_to_bearer(action)
 	return action
+
+/// Grant the action to anyone who has this item equipped to an appropriate slot
+/obj/item/proc/grant_action_to_bearer(datum/action/action)
+	if(!ismob(loc))
+		return
+	var/mob/holder = loc
+	give_item_action(action, holder, holder.get_slot_by_item(src))
 
 /// Removes an instance of an action from our list of item actions.
 /obj/item/proc/remove_item_action(datum/action/action)
@@ -535,13 +537,11 @@
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !user || anchored)
 		return
-	if(!user)
-		return
-	if(anchored)
-		return
+	return attempt_pickup(user)
 
+/obj/item/proc/attempt_pickup(mob/user)
 	. = TRUE
 
 	if(resistance_flags & ON_FIRE)
@@ -577,14 +577,23 @@
 
 
 	//If the item is in a storage item, take it out
-	if(loc.atom_storage && !loc.atom_storage.remove_single(user, src, user.loc, silent = TRUE))
+	var/outside_storage = !loc.atom_storage
+	var/turf/storage_turf
+	if(loc.atom_storage)
+		//We want the pickup animation to play even if we're moving the item between movables. Unless the mob is not located on a turf.
+		if(isturf(user.loc))
+			storage_turf = get_turf(loc)
+		if(!loc.atom_storage.remove_single(user, src, user, silent = TRUE))
+			return
+	if(QDELETED(src)) //moving it out of the storage destroyed it.
 		return
-	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
-		return
+
+	if(storage_turf)
+		do_pickup_animation(user, storage_turf)
 
 	if(throwing)
 		throwing.finalize(FALSE)
-	if(loc == user)
+	if(loc == user && outside_storage)
 		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
@@ -593,7 +602,7 @@
 		return FALSE
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
+	if(!user.put_in_active_hand(src, ignore_animation = !outside_storage))
 		user.dropItemToGround(src)
 		return TRUE
 
@@ -602,38 +611,9 @@
 
 /obj/item/attack_paw(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !user || anchored)
 		return
-	if(!user)
-		return
-	if(anchored)
-		return
-
-	. = TRUE
-
-	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
-		return
-
-	//If the item is in a storage item, take it out
-	if(loc.atom_storage && !loc.atom_storage.remove_single(user, src, user.loc, silent = TRUE))
-		return
-	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
-		return
-
-	if(throwing)
-		throwing.finalize(FALSE)
-	if(loc == user)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
-			return
-
-	. = FALSE
-	if(cant_grab)
-		return FALSE
-	pickup(user)
-	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
-		user.dropItemToGround(src)
-		return TRUE
+	return attempt_pickup(user)
 
 /obj/item/attack_alien(mob/user, list/modifiers)
 	var/mob/living/carbon/alien/ayy = user
@@ -917,31 +897,7 @@
 	if(!ismob(loc))
 		return
 	var/mob/owner = loc
-	var/flags = slot_flags
-	if(flags & ITEM_SLOT_OCLOTHING)
-		owner.update_worn_oversuit()
-	if(flags & ITEM_SLOT_ICLOTHING)
-		owner.update_worn_undersuit()
-	if(flags & ITEM_SLOT_GLOVES)
-		owner.update_worn_gloves()
-	if(flags & ITEM_SLOT_EYES)
-		owner.update_worn_glasses()
-	if(flags & ITEM_SLOT_EARS)
-		owner.update_inv_ears()
-	if(flags & ITEM_SLOT_MASK)
-		owner.update_worn_mask()
-	if(flags & ITEM_SLOT_HEAD)
-		owner.update_worn_head()
-	if(flags & ITEM_SLOT_FEET)
-		owner.update_worn_shoes()
-	if(flags & ITEM_SLOT_ID)
-		owner.update_worn_id()
-	if(flags & ITEM_SLOT_BELT)
-		owner.update_worn_belt()
-	if(flags & ITEM_SLOT_BACK)
-		owner.update_worn_back()
-	if(flags & ITEM_SLOT_NECK)
-		owner.update_worn_neck()
+	owner.update_clothing(slot_flags | owner.get_slot_by_item(src))
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
@@ -1500,16 +1456,17 @@
 /obj/item/proc/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return TRUE
 
-/obj/item/proc/do_pickup_animation(atom/target)
-	if(!istype(loc, /turf))
-		return
-	var/image/pickup_animation = image(icon = src, loc = loc, layer = layer + 0.1)
-	SET_PLANE(pickup_animation, GAME_PLANE, loc)
+/obj/item/proc/do_pickup_animation(atom/target, turf/source)
+	if(!source)
+		if(!istype(loc, /turf))
+			return
+		source = loc
+	var/image/pickup_animation = image(icon = src)
+	SET_PLANE(pickup_animation, GAME_PLANE, source)
 	pickup_animation.transform.Scale(0.75)
 	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
-	var/turf/current_turf = get_turf(src)
-	var/direction = get_dir(current_turf, target)
+	var/direction = get_dir(source, target)
 	var/to_x = target.base_pixel_x
 	var/to_y = target.base_pixel_y
 
@@ -1525,13 +1482,13 @@
 		to_y += 10
 		pickup_animation.pixel_x += 6 * (prob(50) ? 1 : -1) //6 to the right or left, helps break up the straight upward move
 
-	flick_overlay_global(pickup_animation, GLOB.clients, 4)
-	var/matrix/animation_matrix = new(pickup_animation.transform)
+	var/atom/movable/flick_visual/pickup = source.flick_overlay_view(pickup_animation, 0.4 SECONDS)
+	var/matrix/animation_matrix = new(pickup.transform)
 	animation_matrix.Turn(pick(-30, 30))
 	animation_matrix.Scale(0.65)
 
-	animate(pickup_animation, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = animation_matrix, easing = CUBIC_EASING)
-	animate(alpha = 0, transform = matrix().Scale(0.7), time = 1)
+	animate(pickup, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 0.3 SECONDS, transform = animation_matrix, easing = CUBIC_EASING)
+	animate(alpha = 0, transform = matrix().Scale(0.7), time = 0.1 SECONDS)
 
 /obj/item/proc/do_drop_animation(atom/moving_from)
 	if(!istype(loc, /turf))
@@ -1578,9 +1535,9 @@
 /atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item)
 	var/image/attack_image
 	if(visual_effect_icon)
-		attack_image = image('icons/effects/effects.dmi', attacked_atom, visual_effect_icon, attacked_atom.layer + 0.1)
+		attack_image = image(icon = 'icons/effects/effects.dmi', icon_state = visual_effect_icon)
 	else if(used_item)
-		attack_image = image(icon = used_item, loc = attacked_atom, layer = attacked_atom.layer + 0.1)
+		attack_image = image(icon = used_item)
 		attack_image.plane = attacked_atom.plane + 1
 
 		// Scale the icon.
@@ -1607,12 +1564,12 @@
 	if(!attack_image)
 		return
 
-	flick_overlay_global(attack_image, GLOB.clients, 10)
+	var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
 	var/matrix/copy_transform = new(transform)
 	// And animate the attack!
-	animate(attack_image, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
-	animate(time = 1)
-	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
+	animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 0.3 SECONDS)
+	animate(time = 0.1 SECONDS)
+	animate(alpha = 0, time = 0.3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
 
 /// Common proc used by painting tools like spraycans and palettes that can access the entire 24 bits color space.
 /obj/item/proc/pick_painting_tool_color(mob/user, default_color)

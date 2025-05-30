@@ -16,6 +16,10 @@ PROCESSING_SUBSYSTEM_DEF(ai_behaviors)
 	SetupTargetingStrats()
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/processing/ai_behaviors/Recover()
+	SetupAIBehaviors()
+	SetupTargetingStrats()
+
 /datum/controller/subsystem/processing/ai_behaviors/proc/SetupAIBehaviors()
 	ai_behaviors = list()
 	for(var/behavior_type in subtypesof(/datum/ai_behavior))

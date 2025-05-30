@@ -7,6 +7,7 @@
 	key = "beach_bar"
 	map_name = "beach_bar"
 	safehouse_path = /datum/map_template/safehouse/mine
+	announce_to_ghosts = TRUE
 
 /datum/lazy_template/virtual_domain/beach_bar/setup_domain(list/created_atoms)
 	. = ..()

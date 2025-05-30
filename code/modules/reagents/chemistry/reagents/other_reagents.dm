@@ -171,7 +171,7 @@
 		cached_data = list()
 	else
 		cached_data = data
-	cached_data |= "[/datum/disease/tuberculosis]"
+	cached_data |= "[/datum/disease/acute/premade/fungal_tb]"
 	src.data = cached_data
 
 /datum/reagent/water
@@ -1506,8 +1506,7 @@
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_FUNGUS, TRUE, "[ROUND_TIME()] Tubercle Bacillus Cosmosis Microbes Infections [key_name(exposed_mob)]")  //Monkestation Edit: TB Patho
 
 /datum/reagent/snail
 	name = "Agent-S"
@@ -3034,12 +3033,14 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
+/datum/reagent/hauntium/expose_obj(obj/exposed_obj, reac_volume) //gives 20 seconds of haunting effect for every unit of it that touches an object
 	. = ..()
+	if(!isitem(exposed_obj))
+		return
 	if(HAS_TRAIT_FROM(exposed_obj, TRAIT_HAUNTED, HAUNTIUM_REAGENT_TRAIT))
 		return
 	exposed_obj.make_haunted(HAUNTIUM_REAGENT_TRAIT, "#f8f8ff")
-	addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), volume * 20 SECONDS)
+	addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), reac_volume * 20 SECONDS)
 
 /datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

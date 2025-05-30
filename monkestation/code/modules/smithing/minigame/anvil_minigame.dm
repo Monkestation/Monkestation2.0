@@ -99,6 +99,8 @@
 		anvil_hud.add_notes(new_notes)
 
 /datum/anvil_challenge/proc/check_click(datum/source, atom/target, atom/location, control, params, mob/user)
+	if(!length(anvil_presses))
+		return
 	var/atom/movable/screen/hud_note/choice = anvil_presses[1]
 	if(user.client)
 		average_ping = user.client.avgping * 0.01
@@ -157,6 +159,7 @@
 			continue
 		anvil_presses -= note
 		anvil_hud.delete_note(note)
+		failed_notes++
 		if(!length(anvil_presses))
 			if(!notes_left)
 				end_minigame()
@@ -166,7 +169,7 @@
 /datum/anvil_challenge/proc/end_minigame()
 	//Success == quality, takes highest of Smithing level * 5 || 100 minus a number based on how 'accurate' you were plus (smithlevel *5)-15.
 	//So missing nothing, a level 3 smith will make a qual 100 item.
-	var smithlevel = user.mind.get_skill_level(/datum/skill/smithing)
+	var/smithlevel = user.mind.get_skill_level(/datum/skill/smithing)
 	success = max(smithlevel * 5, round(success - ((100 * (failed_notes / total_notes)) + 1 * (off_time * 2)) +((smithlevel * 5) - 15)))
 	UnregisterSignal(user.client, COMSIG_CLIENT_CLICK_DIRTY)
 	STOP_PROCESSING(SSfishing, src)

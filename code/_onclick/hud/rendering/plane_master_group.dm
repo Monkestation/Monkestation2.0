@@ -15,7 +15,7 @@
 	var/map = ""
 	/// Controls the screen_loc that owned plane masters will use when generating relays. Due to a Byond bug, relays using the CENTER positional loc
 	/// Will be improperly offset
-	var/relay_loc = "CENTER"
+	var/relay_loc = "1,1"
 
 /datum/plane_master_group/New(key, map = "")
 	. = ..()
@@ -24,9 +24,25 @@
 	build_plane_masters(0, SSmapping.max_plane_offset)
 
 /datum/plane_master_group/Destroy()
-	orphan_hud()
+	set_hud(null)
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	return ..()
+
+/datum/plane_master_group/proc/set_hud(datum/hud/new_hud)
+	if(new_hud == our_hud)
+		return
+	if(our_hud)
+		our_hud.master_groups -= key
+		hide_hud()
+	our_hud = new_hud
+	if(new_hud)
+		our_hud.master_groups[key] = src
+		show_hud()
+		// MONKESTATION EDIT START: tgstation/tgstation#84184 hasn't been ported
+		//build_planes_offset(our_hud, active_offset) //MONKESTATION EDIT ORIGINAL
+		transform_lower_turfs(our_hud, active_offset)
+		//MONKESTATION EDIT END
+	SEND_SIGNAL(src, COMSIG_GROUP_HUD_CHANGED, our_hud)
 
 /// Display a plane master group to some viewer, so show all our planes to it
 /datum/plane_master_group/proc/attach_to(datum/hud/viewing_hud)
@@ -34,25 +50,10 @@
 		stack_trace("Hey brother, our key [key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob]. Ya fucked up, why are there dupes")
 		return
 
-#if MIN_COMPILER_VERSION > 516
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-
-	if(viewing_hud.mymob?.client?.byond_version > 515)
-		relay_loc = "1,1"
-		rebuild_plane_masters()
-
-	our_hud = viewing_hud
+	set_hud(viewing_hud)
 	our_hud.master_groups[key] = src
 	show_hud()
 	transform_lower_turfs(our_hud, active_offset)
-
-/// Hide the plane master from its current hud, fully clear it out
-/datum/plane_master_group/proc/orphan_hud()
-	if(our_hud)
-		our_hud.master_groups -= key
-		hide_hud()
-		our_hud = null
 
 /// Well, refresh our group, mostly useful for plane specific updates
 /datum/plane_master_group/proc/refresh_hud()
@@ -64,6 +65,7 @@
 	hide_hud()
 	rebuild_plane_masters()
 	show_hud()
+	our_hud.update_parallax_pref()
 	transform_lower_turfs(our_hud, active_offset)
 
 /// Regenerate our plane masters, this is useful if we don't have a mob but still want to rebuild. Such in the case of changing the screen_loc of relays
@@ -99,7 +101,7 @@
 		for(var/plane_offset in starting_offset to ending_offset)
 			if(plane_offset != 0 && !initial(mytype.allows_offsetting))
 				continue
-			var/atom/movable/screen/plane_master/instance = new mytype(null, src, plane_offset)
+			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset)
 			plane_masters["[instance.plane]"] = instance
 			prep_plane_instance(instance)
 
@@ -184,20 +186,6 @@
 /// This is because it's annoying to get turfs to position inside it correctly
 /// If you wanna try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
-
-/// This is janky as hell but since something changed with CENTER positioning after build 1614 we have to switch to the bandaid LEFT,TOP positioning
-/// using LEFT,TOP *at* or *before* 1614 will result in another broken offset for cameras
-#define MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS 1614
-
-/datum/plane_master_group/popup/attach_to(datum/hud/viewing_hud)
-	// If we're about to display this group to a mob who's client is more recent than the last known version with working CENTER, then we need to remake the relays
-	// with the correct screen_loc using the relay override
-	if(viewing_hud.mymob?.client?.byond_build > MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS)
-		relay_loc = "LEFT,TOP"
-		rebuild_plane_masters()
-	return ..()
-
-#undef MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS
 
 /datum/plane_master_group/popup/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
 	return ..(source, new_offset, FALSE)

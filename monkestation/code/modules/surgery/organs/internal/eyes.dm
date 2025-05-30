@@ -57,7 +57,6 @@
 /obj/item/organ/internal/eyes/jelly
 	name = "photosensitive eyespots"
 	zone = BODY_ZONE_CHEST
-	organ_flags = ORGAN_UNREMOVABLE
 
 /obj/item/organ/internal/eyes/roundstartslime
 	name = "photosensitive eyespots"
@@ -98,7 +97,16 @@
 	)
 	build_path = /obj/item/organ/internal/eyes/synth
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
+
+/obj/item/organ/internal/eyes/robotic/meson
+	name = "meson eyes"
+	desc = "These cybernetic eye implants allow you to see the structural layout of your surroundings."
+	eye_color_left = "0c4"
+	eye_color_right = "0c4"
+	color_cutoffs = list(5, 15, 5)
+	sight_flags = SEE_TURFS
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM

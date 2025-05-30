@@ -302,3 +302,47 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("TheSpecialSnowflake")
+
+/mob/living/basic/pet/babypukeko
+	name = "baby pukeko"
+	desc = "DAMN!!!!!!!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	icon_living = "babypukeko"
+	icon_dead = "babypukeko-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/mob/living/basic/pet/babypukeko/tall
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	icon_living = "tallbabypukeko"
+	icon_dead = "tallbabypukeko-dead"
+	pixel_x = -96
+
+/mob/living/basic/pet/eris_romch
+	name = "romch"
+	desc = "romch ."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "romch"
+	icon_living = "romch"
+	icon_dead = "romch-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mycah")
+
+/mob/living/basic/pet/theclown_clownpet
+	name = "short clown"
+	desc = "He's just a funny little guy."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "theclown_clownpet"
+	icon_living = "theclown_clownpet"
+	icon_dead = "theclown_clownpet-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mrsmall_theclown")
+

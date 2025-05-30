@@ -64,6 +64,10 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "White Dress"
 	item_path = /obj/item/clothing/suit/costume/whitedress
 
+/datum/loadout_item/suit/flowery
+	name = "Perfumed Dress Cover"
+	item_path = /obj/item/clothing/suit/jacket/gown
+
 /*
 *	LABCOATS
 */
@@ -144,6 +148,14 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/gothcoat
 	name = "Gothic Coat"
 	item_path = /obj/item/clothing/suit/costume/gothcoat
+
+/datum/loadout_item/suit/butler
+	name = "Butler Coat"
+	item_path = /obj/item/clothing/suit/toggle/jacket/butler
+
+/datum/loadout_item/suit/silk
+	name = "Silk Coat"
+	item_path = /obj/item/clothing/suit/jacket/silk
 
 /*
 *	COSTUMES
@@ -255,7 +267,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/coat_sci
 	name = "Science Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/science
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST) // Reserved for the Science Departement
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_XENOBIOLOGIST) // Reserved for the Science Departement
 
 /datum/loadout_item/suit/coat_eng
 	name = "Engineering Winter Coat"
@@ -705,7 +717,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/sci_jacket
 	name = "Science Jacket"
 	item_path = /obj/item/clothing/suit/toggle/jacket/sci
-	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_XENOBIOLOGIST)
 	requires_purchase = FALSE
 
 /datum/loadout_item/suit/med_jacket

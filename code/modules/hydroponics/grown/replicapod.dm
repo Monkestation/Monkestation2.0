@@ -134,7 +134,7 @@
 						make_podman = TRUE
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
+					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED) && !HAS_TRAIT(M, TRAIT_MIND_TEMPORARILY_GONE))
 						make_podman = TRUE
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
@@ -186,9 +186,9 @@
 		podman.real_name = "Pod Person ([rand(1,999)])"
 	mind.transfer_to(podman)
 	if(ckey)
-		podman.ckey = ckey
+		podman.PossessByPlayer(ckey)
 	else
-		podman.ckey = ckey_holder
+		podman.PossessByPlayer(ckey_holder)
 	podman.gender = blood_gender
 	podman.faction |= factions
 	var/datum/color_palette/generic_colors/palette = podman.dna.color_palettes[/datum/color_palette/generic_colors]

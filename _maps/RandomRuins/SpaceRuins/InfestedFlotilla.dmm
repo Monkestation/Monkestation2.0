@@ -1146,7 +1146,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/infested_flotilla)
 "gC" = (
-/obj/machinery/jukebox/disco,
+/obj/machinery/dance_machine/disco,
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/eighties,
 /area/ruin/space/has_grav/infested_flotilla)

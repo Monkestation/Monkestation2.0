@@ -24,6 +24,11 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/processing/station/Recover()
+	station_traits = SSstation.station_traits.Copy()
+	selectable_traits_by_types = deep_copy_list(SSstation.selectable_traits_by_types)
+	announcer = SSstation.announcer
+
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
 	if (CONFIG_GET(flag/forbid_station_traits))
@@ -76,7 +81,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	for(var/iterator in 1 to amount)
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
 		selectable_traits_by_types[trait_sign] -= trait_type
-		if(istype(trait_type, /datum/station_trait/late_arrivals) && SSmapping.config.map_name == "Oshan Station")
+		if(istype(trait_type, /datum/station_trait/late_arrivals) && SSmapping.current_map.map_name == "Oshan Station")
 			amount++
 			continue
 		setup_trait(trait_type)

@@ -270,18 +270,16 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music_done) //wait for SSticker init to set the login music // monkestation edit: fix-lobby-music
 	UNTIL(fully_created)
-	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
-		if(prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] != 0)
-			vol = prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"]
-			vol *= prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
-	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
+	var/list/channel_volume = prefs?.channel_volume
+	if("[CHANNEL_LOBBYMUSIC]" in channel_volume)
+		vol = channel_volume["[CHANNEL_LOBBYMUSIC]"]
+	if("[CHANNEL_MASTER_VOLUME]" in channel_volume)
+		vol *= channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
+	if(vol <= 0 || (prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
 
-	if(!media) ///media is set on creation thats weird
-		media = new /datum/media_manager(src)
-		media.open()
-		media.update_music()
-	media.lobby_music = TRUE
+	if(QDELETED(media_player)) ///media is set on creation thats weird
+		media_player = new(src)
 
 	if(!length(SSmedia_tracks.lobby_tracks))
 		return
@@ -294,11 +292,12 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		text2file(SSmedia_tracks.current_lobby_track.url, "data/last_round_lobby_music.txt")
 		// monkestation edit end
 		SSmedia_tracks.first_lobby_play = FALSE
+		GLOB.lobby_media.current_track = SSmedia_tracks.current_lobby_track
+		GLOB.lobby_media.update_for_all_listeners()
 
-	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
-	media.push_music(T.url, world.time, 1)
-	media.update_volume(vol) // this makes it easier if we modify volume later on
-	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
+	GLOB.lobby_media.add_listener(mob)
+	var/datum/media_track/track = SSmedia_tracks.current_lobby_track
+	to_chat(src, span_notice("Lobby music: <b>[track.title]</b> by <b>[track.artist]</b>."))
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
@@ -555,5 +554,18 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 				soundin = 'monkestation/sound/effects/hl2/button-fail.ogg'
 			if(SFX_LIGHTSWITCH)
 				soundin = 'monkestation/sound/effects/hl2/lightswitch.ogg'
+			if(SFX_MEOW)
+				if(prob(98))
+					soundin = pick(
+						'monkestation/sound/voice/feline/meow1.ogg',
+						'monkestation/sound/voice/feline/meow2.ogg',
+						'monkestation/sound/voice/feline/meow3.ogg',
+						'monkestation/sound/voice/feline/meow4.ogg',
+					)
+				else
+					soundin = pick(
+						'monkestation/sound/voice/feline/mggaow.ogg',
+						'monkestation/sound/voice/feline/funnymeow.ogg',
+					)
 			// monkestation end
 	return soundin

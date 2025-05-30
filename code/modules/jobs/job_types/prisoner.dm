@@ -33,7 +33,7 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(handle_prisoner_joining))
 
-/datum/job/prisoner/proc/handle_prisoner_joining(datum/source, mob/living/crewmember, rank)
+/datum/job/prisoner/proc/handle_prisoner_joining(datum/source, mob/living/carbon/human/crewmember, rank)
 	SIGNAL_HANDLER
 	if(rank != title)
 		return //not a prisoner
@@ -68,7 +68,7 @@
 
 /datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(prob(1)) // D BOYYYYSSSSS
+	if(prob(1) || check_holidays(APRIL_FOOLS)) // D BOYYYYSSSSS
 		head = /obj/item/clothing/head/beanie/black/dboy
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)

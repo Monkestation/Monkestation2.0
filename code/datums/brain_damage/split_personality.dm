@@ -51,7 +51,7 @@
 		qdel(src)
 		return
 
-	stranger_backseat.key = ghost.key
+	stranger_backseat.PossessByPlayer(ghost.key)
 	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
@@ -99,7 +99,7 @@
 	owner.computer_id = null
 	owner.lastKnownIP = null
 
-	new_backseat.ckey = owner.ckey
+	new_backseat.PossessByPlayer(owner.ckey)
 
 	new_backseat.name = owner.name
 
@@ -122,7 +122,7 @@
 	current_backseat.computer_id = null
 	current_backseat.lastKnownIP = null
 
-	owner.ckey = current_backseat.ckey
+	owner.PossessByPlayer(current_backseat.ckey)
 	owner.mind = current_backseat.mind
 
 	if(!owner.computer_id)
@@ -215,7 +215,7 @@
 	set waitfor = FALSE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
 	if(chosen_one)
-		stranger_backseat.key = chosen_one.key
+		stranger_backseat.PossessByPlayer(chosen_one.key)
 	else
 		qdel(src)
 

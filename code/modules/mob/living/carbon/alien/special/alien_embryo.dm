@@ -23,7 +23,7 @@
 	else
 		to_chat(finder, span_notice("It's grown quite large, and writhes slightly as you look at it."))
 		if(prob(10))
-			attempt_grow(gib_on_success = FALSE)
+			attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -80,12 +80,12 @@
 				continue
 			if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
 				continue
-			attempt_grow(gib_on_success = FALSE)
+			attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
 			return
 		attempt_grow()
 
 ///Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
-/obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
+/obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
 	if(!owner || bursting)
 		return
 
@@ -114,10 +114,11 @@
 
 	var/mutable_appearance/overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, cut_overlay), overlay), 0.7 SECONDS) // monkestation edit: just use a timer to always ensure the overlay is removed
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-	new_xeno.key = ghost.key
+	new_xeno.PossessByPlayer(ghost.key)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
@@ -132,15 +133,12 @@
 		new_xeno.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
 		new_xeno.invisibility = 0
 
-	if(gib_on_success)
-		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
-		owner.apply_damage(150, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30, sharpness = SHARP_POINTY) //You aren't getting gibbed but you aren't going to be having fun
-		owner.spawn_gibs()
-	else
-		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
-		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
-		owner.apply_damage(150, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30, sharpness = SHARP_POINTY) //You aren't getting gibbed but you aren't going to be having fun
-		owner.spawn_gibs()
+	// monkestation start: don't gib the victim, just do 150 brute + spawn some gibs
+	new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner]!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
+	owner.log_message("had an alien larva within them burst.", LOG_ATTACK, log_globally = FALSE)
+	owner.apply_damage(150, BRUTE, BODY_ZONE_CHEST, wound_bonus = 30, sharpness = SHARP_POINTY) //You aren't getting gibbed but you aren't going to be having fun
+	owner.spawn_gibs()
+	// monkestation end
 	qdel(src)
 
 

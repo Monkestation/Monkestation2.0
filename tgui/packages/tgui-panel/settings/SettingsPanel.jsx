@@ -17,29 +17,35 @@ import {
   Icon,
   Input,
   LabeledList,
-  NumberInput,
   Section,
   Stack,
   Tabs,
   TextArea,
+  Slider,
+  NoticeBox,
 } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import {
   changeSettingsTab,
+  exportSettings,
   updateSettings,
   addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
 } from './actions';
 import { SETTINGS_TABS, FONTS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
+import { setEditPaneSplitters } from './scaling';
 import {
   selectActiveTab,
   selectSettings,
   selectHighlightSettings,
   selectHighlightSettingById,
 } from './selectors';
+import { importChatSettings } from './settingsImExport';
+import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
+import { chatRenderer } from '../chat/renderer';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -71,6 +77,8 @@ export const SettingsPanel = (props, context) => {
         {activeTab === 'general' && <SettingsGeneral />}
         {activeTab === 'chatPage' && <ChatPageSettings />}
         {activeTab === 'textHighlight' && <TextHighlightSettings />}
+        {activeTab === 'statPanel' && <SettingsStatPanel />}
+        {activeTab === 'experimental' && <ExperimentalSettings />}
       </Stack.Item>
     </Stack>
   );
@@ -82,7 +90,9 @@ export const SettingsGeneral = (props, context) => {
     selectSettings,
   );
   const dispatch = useDispatch(context);
-  const [freeFont, setFreeFont] = useLocalState(context, 'freeFont', false);
+  const [freeFont, setFreeFont] = useLocalState('freeFont', false);
+  const [editingPanes, setEditingPanes] = useLocalState('freeFont', false);
+
   return (
     <Section>
       <LabeledList>
@@ -102,6 +112,20 @@ export const SettingsGeneral = (props, context) => {
               }
             />
           ))}
+        </LabeledList.Item>
+        <LabeledList.Item label="UI sizes">
+          <Button
+            onClick={() =>
+              setEditingPanes((val) => {
+                setEditPaneSplitters(!val);
+                return !val;
+              })
+            }
+            color={editingPanes ? 'red' : undefined}
+            icon={editingPanes ? 'save' : undefined}
+          >
+            {editingPanes ? 'Save' : 'Adjust UI Sizes'}
+          </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Font style">
           <Stack.Item>
@@ -163,28 +187,28 @@ export const SettingsGeneral = (props, context) => {
             )}
           </Stack.Item>
         </LabeledList.Item>
-        <LabeledList.Item label="Font size">
-          <NumberInput
-            width="4.2em"
-            step={1}
-            stepPixelSize={10}
-            minValue={8}
-            maxValue={32}
-            value={fontSize}
-            unit="px"
-            format={(value) => toFixed(value)}
-            onChange={(e, value) =>
-              dispatch(
-                updateSettings({
-                  fontSize: value,
-                }),
-              )
-            }
-          />
+        <LabeledList.Item label="Font size" verticalAlign="middle">
+          <Stack textAlign="center">
+            <Stack.Item grow>
+              <Slider
+                width="100%"
+                step={1}
+                stepPixelSize={20}
+                minValue={8}
+                maxValue={32}
+                value={fontSize}
+                unit="px"
+                format={(value) => toFixed(value)}
+                onChange={(e, value) =>
+                  dispatch(updateSettings({ fontSize: value }))
+                }
+              />
+            </Stack.Item>
+          </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Line height">
-          <NumberInput
-            width="4.2em"
+          <Slider
+            width="100%"
             step={0.01}
             stepPixelSize={2}
             minValue={0.8}
@@ -203,6 +227,25 @@ export const SettingsGeneral = (props, context) => {
       </LabeledList>
       <Divider />
       <Stack fill>
+        <Stack.Item mt={0.15}>
+          <Button
+            icon="compact-disc"
+            tooltip="Export chat settings"
+            onClick={() => dispatch(exportSettings())}
+          >
+            Export settings
+          </Button>
+        </Stack.Item>
+        <Stack.Item mt={0.15}>
+          <Button.File
+            accept=".json"
+            tooltip="Import chat settings"
+            icon="arrow-up-from-bracket"
+            onSelectFiles={(files) => importChatSettings(dispatch, files)}
+          >
+            Import settings
+          </Button.File>
+        </Stack.Item>
         <Stack.Item grow mt={0.15}>
           <Button
             content="Save chat log"
@@ -379,6 +422,7 @@ const TextHighlightSetting = (props, context) => {
       </Stack>
       <TextArea
         height="3em"
+        resize="vertical"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
         onChange={(e, value) =>
@@ -391,5 +435,165 @@ const TextHighlightSetting = (props, context) => {
         }
       />
     </Stack.Item>
+  );
+};
+
+const ExperimentalSettings = (props, context) => {
+  const { websocketEnabled, websocketServer } = useSelector(
+    context,
+    selectSettings,
+  );
+  const dispatch = useDispatch(context);
+
+  return (
+    <Section>
+      <Stack vertical>
+        <Stack.Item>
+          <LabeledList>
+            <LabeledList.Item label="Websocket Client">
+              <Button.Checkbox
+                content={'Enabled'}
+                checked={websocketEnabled}
+                color="transparent"
+                onClick={() =>
+                  dispatch(
+                    updateSettings({
+                      websocketEnabled: !websocketEnabled,
+                    }),
+                  )
+                }
+              />
+              <Button
+                icon={'question'}
+                onClick={() => {
+                  chatRenderer.processBatch([
+                    {
+                      html:
+                        '<div class="boxed_message"><b>Websocket Information</b><br><span class="notice">' +
+                        'Quick rundown. This connects to the specified websocket server, and ' +
+                        'forwards all data/payloads from the server, to the websocket. Allowing ' +
+                        'you to have in-game actions reflect in other services, or the real ' +
+                        'world, (ex. Reactive RGB, haptics, play effects/animations in vtubing ' +
+                        'software, etc). You can find more information ' +
+                        '<a href="https://github.com/Monkestation/Monkestation2.0/pull/5744">here in the pull request.</a></span></div>',
+                    },
+                  ]);
+                }}
+              />
+            </LabeledList.Item>
+            <LabeledList.Item label="Websocket Server">
+              <Stack.Item>
+                <Stack>
+                  <Input
+                    width={'100%'}
+                    value={websocketServer}
+                    placeholder="localhost:1990"
+                    onChange={(e, value) =>
+                      dispatch(
+                        updateSettings({
+                          websocketServer: value,
+                        }),
+                      )
+                    }
+                  />
+                </Stack>
+              </Stack.Item>
+            </LabeledList.Item>
+            <LabeledList.Item label="Websocket Controls">
+              <Button
+                ml={0.5}
+                content="Force Reconnect"
+                icon={'globe'}
+                color={'good'}
+                onClick={() => {
+                  dispatch(reconnectWebsocket({}));
+                }}
+              />
+              <Button
+                ml={0.5}
+                content="Force Disconnect"
+                icon={'globe'}
+                color={'bad'}
+                onClick={() => {
+                  dispatch(disconnectWebsocket({}));
+                }}
+              />
+            </LabeledList.Item>
+          </LabeledList>
+        </Stack.Item>
+      </Stack>
+    </Section>
+  );
+};
+
+const TabsViews = ['default', 'classic', 'scrollable'];
+const LinkedToChat = () => (
+  <NoticeBox color="red">Unlink Stat Panel from chat!</NoticeBox>
+);
+
+const SettingsStatPanel = (props, context) => {
+  const { statLinked, statFontSize, statTabsStyle } = useSelector(
+    context,
+    selectSettings,
+  );
+  const dispatch = useDispatch(context);
+
+  return (
+    <Section fill>
+      <Stack fill vertical>
+        <Stack.Item>
+          <LabeledList>
+            <LabeledList.Item label="Tabs" verticalAlign="middle">
+              {TabsViews.map((view) => (
+                <Button
+                  key={view}
+                  color="transparent"
+                  selected={statTabsStyle === view}
+                  onClick={() =>
+                    dispatch(updateSettings({ statTabsStyle: view }))
+                  }
+                >
+                  {capitalize(view)}
+                </Button>
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Font size">
+              <Stack.Item grow>
+                {statLinked ? (
+                  <LinkedToChat />
+                ) : (
+                  <Slider
+                    width="100%"
+                    step={1}
+                    stepPixelSize={20}
+                    minValue={8}
+                    maxValue={32}
+                    value={statFontSize}
+                    unit="px"
+                    format={(value) => toFixed(value)}
+                    onChange={(e, value) =>
+                      dispatch(updateSettings({ statFontSize: value }))
+                    }
+                  />
+                )}
+              </Stack.Item>
+            </LabeledList.Item>
+          </LabeledList>
+        </Stack.Item>
+        <Stack.Divider mt={2.5} />
+        <Stack.Item textAlign="center">
+          <Button
+            fluid
+            icon={statLinked ? 'unlink' : 'link'}
+            color={statLinked ? 'bad' : 'good'}
+            onClick={() =>
+              dispatch(updateSettings({ statLinked: !statLinked }))
+            }
+          >
+            {statLinked ? 'Unlink from chat' : 'Link to chat'}
+          </Button>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };

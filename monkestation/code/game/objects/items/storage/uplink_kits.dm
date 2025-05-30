@@ -225,6 +225,37 @@
 	new /obj/item/book/granter/martial/the_tunnel_arts(src)
 	new /obj/item/clothing/suit/jacket/det_suit/khan(src)
 
+/obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/razorwire/l(src)
+
+/obj/item/storage/box/syndie_kit/esword/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/esword(src)
+
+/obj/item/storage/box/syndie_kit/deepvien/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/cyberlink_syndicate(src)
+	new /obj/item/autosurgeon/organ/syndicate/deepvien(src)
+	new /obj/item/autosurgeon/organ/syndicate/deepvien/l(src)
+
+/obj/item/storage/box/syndie_kit/xray
+	name = "X-Ray Mutation Kit"
+	desc = "A box with a singular syndicate-grade X-Ray mutator and 3 oculine medipens."
+
+/obj/item/storage/box/syndie_kit/xray/PopulateContents()
+	new /obj/item/dnainjector/syndicate_xray(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate(src)
+
+/obj/item/storage/box/syndie_kit/laser_eyes
+	name = "Laser Eyes Mutation Kit"
+	desc = "A box with a singular syndicate-grade laser eyes mutator and 3 oculine medipens."
+
+/obj/item/storage/box/syndie_kit/laser_eyes/PopulateContents()
+	new /obj/item/dnainjector/syndicate_laser_eyes(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate(src)
+
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS
 #undef KIT_ITEM_CATEGORY_MISC

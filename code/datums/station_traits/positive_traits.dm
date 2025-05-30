@@ -207,71 +207,85 @@
 	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
 	/// List of all job types with the cybernetics they should receive.
 	var/static/list/job_to_cybernetic = list(
-		/datum/job/assistant = /obj/item/organ/internal/cyberimp/leg/table_glider, /obj/item/organ/internal/cyberimp/leg/table_glider/l,// monkestation edit: The greytide begins...
-		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics, // monkestation edit: cybernetics overhaul (useful job stuff)
+		/datum/job/assistant = list(/obj/item/organ/internal/cyberimp/leg/table_glider, /obj/item/organ/internal/cyberimp/leg/table_glider/l),
+		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics,
+		/datum/job/barber = /obj/item/organ/internal/cyberimp/arm/item_set/barber,
 		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/bitrunner = /obj/item/organ/internal/eyes/robotic/thermals,
-		/datum/job/blueshield = /obj/item/organ/internal/cyberimp/arm/ammo_counter, // monkestation edit: cybernetics for recently added job
-		/datum/job/brig_physician = /obj/item/organ/internal/cyberimp/arm/item_set/surgery, // monkestation edit: Same as med docs.
-		/datum/job/botanist = /obj/item/organ/internal/cyberimp/arm/item_set/botany, // monkestation edit: cybernetics overhaul (useful job stuff)
-		/datum/job/candysalesman =  /obj/item/organ/internal/cyberimp/chest/nutriment/plus, // monkestation edit:
+		/datum/job/blueshield = /obj/item/organ/internal/cyberimp/arm/ammo_counter,
+		/datum/job/brig_physician = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
+		/datum/job/botanist = /obj/item/organ/internal/cyberimp/arm/item_set/botany,
+		/datum/job/candysalesman =  /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
 		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
-		/datum/job/cargo_technician = /obj/item/organ/internal/cyberimp/leg/sprinter, /obj/item/organ/internal/cyberimp/leg/sprinter/l, //monkestation edit: For all the running they do
+		/datum/job/cargo_technician = list(/obj/item/organ/internal/cyberimp/leg/sprinter, /obj/item/organ/internal/cyberimp/leg/sprinter/l),
 		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
 		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
-		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt, // monkestation edit: cybernetics overhaul (couldn't think of anything else that was good for cmo)
-		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: cybernetics overhaul (honk!!! it's the clown mech fist shrunken down after all)
-		/datum/job/cook = /obj/item/organ/internal/cyberimp/arm/item_set/cook, // monkestatoin edit: Give the toolarm some use, plus they should be cooking evenways!
+		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt,
+		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout,
+		/datum/job/cook = /obj/item/organ/internal/cyberimp/arm/item_set/cook,
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
-		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
-		/datum/job/godzilla = /obj/item/organ/internal/cyberimp/brain/anti_stun, //monkestation edit: Hard to keep gozilla down.
+		/datum/job/detective = /obj/item/organ/internal/cyberimp/arm/item_set/detective,
+		/datum/job/explorer = /obj/item/organ/internal/eyes/robotic/meson,
+		/datum/job/godzilla = /obj/item/organ/internal/cyberimp/brain/anti_stun,
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
-		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
-		/datum/job/gorilla = /obj/item/organ/internal/cyberimp/arm/muscle, // monkestation edit: monke strong
-		/datum/job/head_of_personnel = /obj/item/organ/internal/cyberimp/eyes/hud/security, // monkestation edit:
-		/datum/job/head_of_security = /obj/item/organ/internal/cyberimp/arm/item_set/combat, // monkestation edit: cybernetics overhaul (no more validhunt eyes, instead you get a shoddy stunprod in your arm)
-		/datum/job/janitor = /obj/item/organ/internal/cyberimp/arm/item_set/janitor, // monkestation edit: cybernetics overhaul (useful job stuff)
+		/datum/job/geneticist = /obj/item/organ/internal/fly,
+		/datum/job/gorilla = /obj/item/organ/internal/cyberimp/arm/strongarm,
+		/datum/job/head_of_personnel = /obj/item/organ/internal/cyberimp/eyes/hud/security,
+		/datum/job/head_of_security = /obj/item/organ/internal/cyberimp/arm/item_set/combat,
+		/datum/job/janitor = /obj/item/organ/internal/cyberimp/arm/item_set/janitor,
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
-		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
-		/datum/job/nanotrasen_representative = /obj/item/organ/internal/cyberimp/leg/shove_resist, /obj/item/organ/internal/cyberimp/leg/shove_resist/l, // monkestation edit: NT kneels to noone.
-		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/arm/item_set/paramedic, // monkestation edit: cybernetics overhaul (on-site healing / assistance)
+		/datum/job/mime = /obj/item/organ/internal/tongue/robot,
+		/datum/job/nanotrasen_representative = list(/obj/item/organ/internal/cyberimp/leg/shove_resist, /obj/item/organ/internal/cyberimp/leg/shove_resist/l),
+		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/arm/item_set/paramedic,
 		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
-		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/upgraded,
+		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
-		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/arm/item_set/connector, // monkestation edit: cybernetics overhaul (useful job stuff)
-		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
-		/datum/job/security_assistant = /obj/item/organ/internal/cyberimp/leg/accelerator, /obj/item/organ/internal/cyberimp/leg/accelerator/l, // monkestation edit: cybernetics for recently added job
+		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/arm/item_set/connector,
+		/datum/job/scientist = /obj/item/organ/internal/cyberimp/eyes/fakehud/science,
+		/datum/job/security_assistant = list(/obj/item/organ/internal/cyberimp/leg/accelerator, /obj/item/organ/internal/cyberimp/leg/accelerator/l),
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
-		/datum/job/shaft_miner = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/diamond, // monkestation edit: cybernetics overhaul (useful job stuff)
-		/datum/job/signal_technician = /obj/item/organ/internal/cyberimp/arm/heater, // monkestation edit: Tcomms is cold
+		/datum/job/shaft_miner = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/diamond,
+		/datum/job/signal_technician = /obj/item/organ/internal/cyberimp/arm/heater,
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/item_set/toolset,
-		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
+		/datum/job/virologist = /obj/item/organ/internal/cyberimp/eyes/hud/pathology,
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
-		/datum/job/yellowclown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: double trouble
+		/datum/job/yellowclown = /obj/item/organ/internal/cyberimp/chest/knockout,
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-/* monkestation edit: replaced in [monkestation\code\datums\station_traits\positive_traits.dm]
 /datum/station_trait/cybernetic_revolution/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
-
-	var/datum/quirk/body_purist/body_purist = /datum/quirk/body_purist
-	if(initial(body_purist.name) in player_client.prefs.all_quirks)
+	if(/datum/quirk/body_purist::name in player_client.prefs?.all_quirks)
 		return
-	var/cybernetic_type = job_to_cybernetic[job.type]
-	if(!cybernetic_type)
+	var/list/cybernetics_to_give = job_to_cybernetic[job.type]
+	if(!cybernetics_to_give)
 		if(isAI(spawned))
 			var/mob/living/silicon/ai/ai = spawned
 			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
 		return
-	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
-	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
-monkestation end */
+	if(!islist(cybernetics_to_give))
+		cybernetics_to_give = list(cybernetics_to_give)
+	for(var/cybernetic_type in cybernetics_to_give)
+		var/obj/item/organ/internal/cybernetic = new cybernetic_type
+		if(istype(cybernetic, /obj/item/organ/internal/cyberimp))
+			var/obj/item/organ/internal/cyberimp/implant = cybernetic
+			var/obj/item/organ/internal/cyberimp/cyberlink/cyberlink = spawned.get_organ_slot(ORGAN_SLOT_LINK)
+			if(QDELETED(cyberlink))
+				cyberlink = new /obj/item/organ/internal/cyberimp/cyberlink/nt_low
+				cyberlink.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+			for(var/info in implant.encode_info)
+				if(implant.encode_info[info] == NO_PROTOCOL)
+					continue
+				//Not a += because we want to avoid having duplicate entries in either encode_info
+				implant.encode_info[info] |= cyberlink.encode_info[info]
+
+		cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+
 
 /datum/station_trait/luxury_escape_pods
 	name = "Luxury Escape Pods"

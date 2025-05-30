@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	var/list/all_selected_paths = list()
 	for(var/path in owner?.prefs?.loadout_list)
 		all_selected_paths += path
-	data["user_is_donator"] = !!(owner.player_details.patreon.is_donator() || owner.player_details.twitch.is_donator() || is_admin(owner))
+	data["user_is_donator"] = !!(owner.persistent_client.patreon.is_donator() || owner.persistent_client.twitch.is_donator() || is_admin(owner))
 	data["owned_items"] = user.client.prefs.inventory
 	data["total_coins"] = user.client.prefs.metacoins
 
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 			"job_restricted" = null,
 		)
 		if((item_type::icon_preview && item_type::icon_state_preview) || !(item_type::greyscale_config && item_type::greyscale_colors))
-			formatted_item["icon"] = item_type::icon_preview || item_type::icon
+			formatted_item["icon"] = text_ref(item_type::icon_preview || item_type::icon)
 			formatted_item["icon_state"] = item_type::icon_state_preview || item_type::icon_state
 		else
 			formatted_item["icon"] = sanitize_css_class_name("[item_type]")

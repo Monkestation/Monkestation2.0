@@ -264,12 +264,10 @@
 
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
-
-	// If the owner doesn't need a heart, we don't need to do anything with it.
-	if(!owner.needs_heart())
-		return
-
 	if(. & EMP_PROTECT_SELF)
+		return
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner?.needs_heart())
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.set_dizzy_if_lower(20 SECONDS)
@@ -387,14 +385,13 @@
 			stop_crystalization_process(victim)
 		return
 
-
 	if(QDELETED(victim) || HAS_TRAIT(victim, TRAIT_SUICIDED))
 		return //lol rip
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
+	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE) || HAS_TRAIT(victim, TRAIT_DEFIB_BLACKLISTED))
 		return // no reviving during mafia, or other inconvenient times.
 
 	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
@@ -428,7 +425,7 @@
 		return //Should probably not happen, but lets be safe.
 
 	//Monkestation Edit Begin
-	if(IS_BLOODSUCKER(ethereal) && SSsunlight.sunlight_active)
+	if(IS_BLOODSUCKER(ethereal) && SSsol.sunlight_active)
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization as Sol has halted your attempt to crystallize."))
 		stop_crystalization_process(ethereal, FALSE)
 		return

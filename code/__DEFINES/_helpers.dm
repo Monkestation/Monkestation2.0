@@ -15,7 +15,7 @@
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 /// Until a condition is true, sleep
-#define UNTIL(X) while(!(X)) stoplag()
+#define UNTIL(X) while(!(X)) sleep(world.tick_lag)
 
 /// Sleep if we haven't been deleted
 /// Otherwise, return
@@ -28,6 +28,14 @@
 /// Takes a datum as input, returns its ref string
 #define text_ref(datum) ref(datum)
 
+// Refs contain a type id within their string that can be used to identify byond types.
+// Custom types that we define don't get a unique id, but this is useful for identifying
+// types that don't normally have a way to run istype() on them.
+#define TYPEID(thing) copytext(REF(thing), 4, 6)
+
 /// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
 /// Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.
 #define EMPTY_BLOCK_GUARD ;
+
+/// Abstraction over using mob.client to just check if there's a connected player.
+#define HAS_CONNECTED_PLAYER(mob) (mob.client)

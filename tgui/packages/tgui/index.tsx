@@ -27,6 +27,7 @@ import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 // MONKESTATION ADDITION START
 import './styles/themes/clockwork.scss';
+import './styles/themes/admintickets.scss';
 // MONKESTATION ADDITION END
 
 import './styles/themes/chicken_book.scss';
@@ -42,7 +43,6 @@ import { setupGlobalEvents } from './events';
 import { setupHotKeys } from './hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
 import { setGlobalStore } from './backend';
-import { loadIconRefMap } from './icons';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -51,7 +51,6 @@ const store = configureStore();
 
 const renderApp = createRenderer(() => {
   setGlobalStore(store);
-  loadIconRefMap();
 
   const { getRoutedComponent } = require('./routes');
   const Component = getRoutedComponent(store);

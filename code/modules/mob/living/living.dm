@@ -1,6 +1,6 @@
 /mob/living/Initialize(mapload)
 	. = ..()
-	stamina = new(src)
+	stamina = new(src) // monkestation edit: stamina rework
 	if(current_size != RESIZE_DEFAULT_SIZE)
 		update_transform(current_size)
 	AddElement(/datum/element/movetype_handler)
@@ -585,7 +585,8 @@
  * Argument:
  * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
  */
-/mob/living/proc/get_idcard(hand_first)
+/mob/living/proc/get_idcard(hand_first) as /obj/item/card/id
+	RETURN_TYPE(/obj/item/card/id)
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
 	//Check hands
@@ -926,6 +927,8 @@
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
+	overeatduration = 0
+	satiety = 0
 
 	// These should be tracked by status effects
 	losebreath = 0
@@ -1421,7 +1424,7 @@
 	)
 
 	// If we weren't passed one, pick a default one
-	what_to_randomize ||= pick(possible_results)
+	what_to_randomize ||= pick(HAS_MIND_TRAIT(src, TRAIT_UNBORGABLE) ? (possible_results - WABBAJACK_ROBOT) : possible_results) // monkestation start: TRAIT_UNBORGABLE
 
 	switch(what_to_randomize)
 		if(WABBAJACK_MONKEY)
@@ -1567,7 +1570,7 @@
 
 	// Well, no mmind, guess we should try to move a key over
 	else if(key)
-		new_mob.key = key
+		new_mob.PossessByPlayer(key)
 
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
@@ -1915,13 +1918,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. += {"
 		<br><font size='1'>[VV_HREF_TARGETREF(refid, VV_HK_GIVE_DIRECT_CONTROL, "[ckey || "no ckey"]")] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
 		<br><font size='1'>
-			BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[getBruteLoss()]</a>
-			FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[getFireLoss()]</a>
-			TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[getToxLoss()]</a>
-			OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[getOxyLoss()]</a>
-			CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[getCloneLoss()]</a>
-			BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[get_organ_loss(ORGAN_SLOT_BRAIN)]</a>
-			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[stamina.loss]</a>
+			BRUTE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[getBruteLoss()]</a>
+			FIRE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[getFireLoss()]</a>
+			TOXIN:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[getToxLoss()]</a>
+			OXY:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[getOxyLoss()]</a>
+			CLONE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[getCloneLoss()]</a>
+			BRAIN:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[get_organ_loss(ORGAN_SLOT_BRAIN)]</a>
+			STAMINA:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[stamina.loss]</a>
 		</font>
 	"}
 
@@ -2285,28 +2288,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/carbon/human/will_escape_storage()
 	return TRUE
 
-/// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
-/mob/living/proc/set_safe_hunger_level()
-	// Nutrition reset and alert clearing.
-	nutrition = NUTRITION_LEVEL_FED
-	clear_alert(ALERT_NUTRITION)
-	satiety = 0
-
-	// Trait removal if obese
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
-		if(overeatduration >= (200 SECONDS))
-			to_chat(src, span_notice("Your transformation restores your body's natural fitness!"))
-
-		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
-		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		update_worn_undersuit()
-		update_worn_oversuit()
-
-	// Reset overeat duration.
-	overeatduration = 0
-
-
-/// Changes the value of the [living/body_position] variable.
+/// Changes the value of the [living/body_position] variable. Call this before set_lying_angle()
 /mob/living/proc/set_body_position(new_value)
 	if(body_position == new_value)
 		return
@@ -2603,7 +2585,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		summoned_guardian.fully_replace_character_name(null, picked_name)
 	if(picked_color)
 		summoned_guardian.set_guardian_colour(picked_color)
-	summoned_guardian.key = guardian_client?.key
+	summoned_guardian.PossessByPlayer(guardian_client?.key)
 	guardian_client?.init_verbs()
 	if(del_mob)
 		qdel(old_mob)

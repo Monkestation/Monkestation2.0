@@ -59,11 +59,17 @@
 	desc = "A little mesh that, when paired with sand, has the possibility of filtering out large seeds."
 	icon = 'monkestation/code/modules/blueshift/icons/misc_tools.dmi'
 	icon_state = "mesh"
-	var/list/static/seeds_blacklist = list(
-		/obj/item/seeds/lavaland,
+	var/static/list/seeds_blacklist = list(
+		/obj/item/seeds/lavaland, // abstract type
+		/obj/item/seeds/spliced, // not supposed to exist on its own, as its "managed" by splicers
+		/obj/item/seeds/gatfruit,
+		/obj/item/seeds/seedling/evil,
 	)
 
 /obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, params)
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_SEED_MESH))
+		balloon_alert(user, "already filtering seeds!")
+		return
 	if(istype(attacking_item, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/ore_item = attacking_item
 		if(ore_item.points == 0)
@@ -73,7 +79,7 @@
 		var/ore_usage = 5
 		while(ore_item.amount >= ore_usage)
 			var/skill_modifier = user.mind.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
-			if(!do_after(user, 5 SECONDS * skill_modifier, src))
+			if(!do_after(user, 5 SECONDS * skill_modifier, src, interaction_key = DOAFTER_SOURCE_SEED_MESH))
 				user.balloon_alert(user, "have to stand still!")
 				return
 

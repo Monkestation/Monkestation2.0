@@ -51,10 +51,11 @@
 
 	//log/message
 	to_chat(usr, "Put [src] in cryopod.")
-	log_admin("[key_name(usr)] has put [key_name(src)] into a cryopod.")
+	var/log_msg = "[key_name(usr)] has put [key_name(src)] into a cryopod."
+	log_admin(log_msg)
 	var/msg = span_notice("[key_name_admin(usr)] has put [key_name(src)] into a cryopod from [ADMIN_VERBOSEJMP(src)].")
 	message_admins(msg)
-	admin_ticket_log(src, msg)
+	admin_ticket_log(src, log_msg)
 
 	send_notice = send_notice == "Yes"
 	send_to_cryo(send_notice)

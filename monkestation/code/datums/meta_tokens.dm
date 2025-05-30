@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	owner.prefs.save_preferences()
 
 /datum/meta_token_holder/proc/check_for_donator_token()
-	var/datum/patreon_data/patreon = owner?.player_details?.patreon
+	var/datum/patreon_data/patreon = owner?.persistent_client?.patreon
 
 	if(!patreon?.has_access(ACCESS_TRAITOR_RANK))
 		return FALSE
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	if(token_month != month_number)
 		if(patreon.has_access(ACCESS_NUKIE_RANK))    ///if nukie rank, get coins AND token
-			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations.", TRUE, FALSE, FALSE)
+			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations", donator_multiplier = FALSE)
 
 		donator_token++
 		token_month = month_number  ///update per-person month counter
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/month_number = text2num(time2text(world.time, "MM"))
 	if(event_token_month != month_number)
 		event_token_month = month_number
-		event_tokens = GLOB.patreon_etoken_values[checked_client.player_details.patreon.owned_rank]
+		event_tokens = GLOB.patreon_etoken_values[checked_client.persistent_client.patreon.owned_rank]
 		convert_tokens_to_list()
 
 /datum/meta_token_holder/proc/approve_token_event()
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	to_chat(owner, span_boldnicegreen("Your request to trigger [queued_token_event] has been approved."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been approved.")
 	adjust_event_tokens(-queued_token_event.token_cost)
-	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
+	SStwitch.add_to_queue(initial(queued_token_event.id_tag), owner.key)
 	queued_token_event = null
 	if(event_timeout)
 		deltimer(event_timeout)

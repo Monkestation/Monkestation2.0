@@ -21,6 +21,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	else if(copytext(E.name, 1, 18) == "Out of resources!")//18 == length() of that string + 1
 		log_world("BYOND out of memory. Restarting ([E?.file]:[E?.line])")
+		SSplexora.notify_shutdown(PLEXORA_SHUTDOWN_KILLDD)
 		TgsEndProcess()
 		. = ..()
 		Reboot(reason = 1)
@@ -148,6 +149,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]", file = E.file, line = E.line)
 #endif
 
+	if(Debugger?.enabled)
+		to_chat(world, span_alertwarning("[main_line]"), type = MESSAGE_TYPE_DEBUG)
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
 	// monkestation start: structured runtime logging

@@ -54,7 +54,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
 	var/obj/item/multitool/M = I
-	M.buffer = src
+	M.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
@@ -71,7 +71,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
 	var/obj/item/multitool/M = I
-	M.buffer = src
+	M.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
@@ -94,11 +94,11 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		if(istype(M.buffer, /obj/machinery/bsa/back))
 			back_ref = WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.buffer = null
+			M.set_buffer(null)
 		else if(istype(M.buffer, /obj/machinery/bsa/front))
 			front_ref = WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.buffer = null
+			M.set_buffer(null)
 	else
 		to_chat(user, span_warning("[I]'s data buffer is empty!"))
 	return TRUE
@@ -331,7 +331,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return
 	var/list/gps_locators = list()
 	for(var/datum/component/gps/G in GLOB.GPS_list) //nulls on the list somehow
-		if(G.tracking)
+		if(G.tracking && G.bsa_targetable) // monkestation edit: bsa_targetable
 			gps_locators[G.gpstag] = G
 
 	var/list/options = gps_locators
@@ -360,6 +360,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return pick(get_area_turfs(target))
 	else if(istype(target, /datum/component/gps))
 		var/datum/component/gps/G = target
+		// monkestation start: bsa_targetable sanity check
+		if(!G.bsa_targetable)
+			CRASH("BSA tried to fire at [G.gpstag] ([G.parent]), despite bsa_targetable being set to false")
+		// monkestation end
 		return get_turf(G.parent)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)

@@ -50,7 +50,7 @@
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(human.movement_type & ~FLYING)
+	if(!(human.movement_type & FLYING))
 		return FALSE
 	if(!can_fly(human))
 		toggle_flight(human)
@@ -102,6 +102,8 @@
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
+	if(QDELETED(human))
+		return
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
 		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
@@ -115,6 +117,7 @@
 		passtable_off(human, SPECIES_TRAIT)
 		close_wings()
 	human.update_body_parts()
+	human.refresh_gravity()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()

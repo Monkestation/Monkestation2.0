@@ -17,8 +17,7 @@ SUBSYSTEM_DEF(challenges)
 	for(var/datum/challenge/listed as anything in processing_challenges)
 		listed.on_process()
 
-/datum/controller/subsystem/challenges/proc/apply_challenges(datum/player_details/owner)
-	owner = get_player_details(owner)
+/datum/controller/subsystem/challenges/proc/apply_challenges(datum/persistent_client/owner)
 	if(!owner)
 		CRASH("Attempted to apply challenges to invalid owner")
 	for(var/datum/challenge/listed as anything in owner.active_challenges)
@@ -26,6 +25,3 @@ SUBSYSTEM_DEF(challenges)
 		if(new_challenge.processes)
 			processing_challenges += processing_challenges
 		new_challenge.on_apply(owner)
-		LAZYADD(owner.applied_challenges, new_challenge)
-
-

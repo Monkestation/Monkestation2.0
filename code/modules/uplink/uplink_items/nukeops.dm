@@ -614,6 +614,24 @@
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 140
 
+/datum/uplink_item/support/devitt
+	name = "Devitt Mk3 Light Tank"
+	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/devitt
+	cost = 80
+
+/datum/uplink_item/support/lighttankammo
+	name = "40mm cannon ammo"
+	desc = "5 crated shells for use with the Devitt Mk3 light tank."
+	item = /obj/item/mecha_ammo/makeshift/lighttankammo
+	cost = 2
+
+/datum/uplink_item/support/lighttankmgammo
+	name = "12.7x70mm tank mg ammo"
+	desc = "60 rounds of 12.7x70mm for use with the Devitt Mk3 light tank."
+	item = /obj/item/mecha_ammo/makeshift/lighttankmg
+	cost = 1
+
 /datum/uplink_item/support/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
@@ -755,22 +773,6 @@
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/storage/box/syndie_kit/reviver
 	cost = 8
-	surplus = 30 //monkestation edit: from 0 to 30
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/implants/thermals
-	name = "Thermal Eyes"
-	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/thermal_eyes
-	cost = 8
-	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/implants/xray
-	name = "X-ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/xray_eyes
-	cost = 10
 	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = UPLINK_NUKE_OPS
 

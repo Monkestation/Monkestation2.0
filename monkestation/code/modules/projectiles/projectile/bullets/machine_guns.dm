@@ -109,4 +109,8 @@
 	if(location)
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
-		
+
+/obj/projectile/bullet/peashooter
+	name = ".22 LR \"peashooter\" round"
+	damage = 4
+	wound_bonus = -10

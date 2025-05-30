@@ -102,8 +102,21 @@ effective or pretty fucking useless.
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
+/* MONKESTATION EDIT START
 	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
+*/
+	if(QDELETED(M) || !ishuman(M))
+		return
+
+	if(HAS_TRAIT(M, TRAIT_RADHEALING))
+		M.adjustBruteLoss(-round(passed_intensity/0.075))
+		M.adjustFireLoss(-round(passed_intensity/0.075))
+
+	if(HAS_TRAIT(M, TRAIT_RADIMMUNE))
+		return
+
+// MONKESTATION EDIT END
 
 	if(passed_intensity >= 5)
 		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
@@ -287,7 +300,13 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/device.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
+	/// The range of devices to disable while active
 	var/range = 12
+
+	/// The range of the disruptor wave, disabling radios
+	var/disruptor_range = 7
+
+	/// The delay between using the disruptor wave
 	var/jam_cooldown_duration = 15 SECONDS
 	COOLDOWN_DECLARE(jam_cooldown)
 
@@ -308,8 +327,8 @@ effective or pretty fucking useless.
 
 	user.balloon_alert(user, "distruptor wave released!")
 	to_chat(user, span_notice("You release a distruptor wave, disabling all nearby radio devices."))
-	for (var/atom/potential_owner in view(7, user))
-		disable_radios_on(potential_owner)
+	for (var/atom/potential_owner in view(disruptor_range, user))
+		disable_radios_on(potential_owner, ignore_syndie = TRUE)
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
 
 /obj/item/jammer/attack_self_secondary(mob/user, modifiers)
@@ -332,7 +351,7 @@ effective or pretty fucking useless.
 	if(.)
 		return
 
-	if (!(target in view(7, user)))
+	if (!(target in view(disruptor_range, user)))
 		user.balloon_alert(user, "out of reach!")
 		return
 
@@ -340,12 +359,20 @@ effective or pretty fucking useless.
 	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [target]."))
 	disable_radios_on(target)
 
-/obj/item/jammer/proc/disable_radios_on(atom/target)
-	for (var/obj/item/radio/radio in target.get_all_contents() + target)
+/obj/item/jammer/proc/disable_radios_on(atom/target, ignore_syndie = FALSE)
+	var/list/target_contents = target.get_all_contents() + target
+	for (var/obj/item/radio/radio in target_contents)
+		if(ignore_syndie && radio.syndie)
+			continue
 		radio.set_broadcasting(FALSE)
-	// MONKESTATION EDIT: Radio jammers turn body cameras off too.
-	for(var/obj/item/bodycam_upgrade/bodycamera in target.get_all_contents() + target)
+	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
 		bodycamera.turn_off()
+
+/obj/item/jammer/makeshift
+	name = "makeshift radio jammer"
+	desc = "A jury-rigged device that disrupts nearby radio communication. Its crude construction provides a significantly smaller area of effect compared to its Syndicate counterpart."
+	range = 5
+	disruptor_range = 3
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
