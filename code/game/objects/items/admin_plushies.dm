@@ -427,9 +427,9 @@
 	icon_state = "siro-mask"
 	append_note = FALSE
 	attack_verb_continuous = list("bloops", "blurbles", "glomps")
-    attack_verb_simple = list("bloop", "blurble", "glomp")
-    squeak_override = list('sound/effects/footstep/slime1.ogg' = 1)
-    gender = FEMALE
+	attack_verb_simple = list("bloop", "blurble", "glomp")
+	squeak_override = list('sound/effects/footstep/slime1.ogg' = 1)
+	gender = FEMALE
 /datum/loadout_item/plushies/siro
 	name = "Siro Yamamuchi Plush"
 	item_path = /obj/item/toy/plush/admin/siro
