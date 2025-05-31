@@ -74,19 +74,21 @@
 	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	return .
 
-/obj/item/organ/internal/heart/slime/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
+/obj/item/organ/internal/heart/slime/proc/Cannibalize_Body(mob/living/carbon/human/body)
+	if(HAS_TRAIT(body, TRAIT_OOZELING_NO_CANNIBALIZE))
+		return
+	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - body.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
 	if(!length(limbs_to_consume))
-		H.losebreath++
+		body.losebreath++
 		return
-	if(H.num_legs) //Legs go before arms
+	if(body.num_legs) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
+	consumed_limb = body.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
+	to_chat(body, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
-	H.blood_volume += 20
+	body.blood_volume += 20
 
 /// REGENERATE LIMBS
 /datum/action/innate/regenerate_limbs
