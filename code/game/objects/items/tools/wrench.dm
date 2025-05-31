@@ -100,6 +100,7 @@
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
 	bare_wound_bonus = 10
+	item_flags = NO_BLOOD_ON_ITEM
 
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
