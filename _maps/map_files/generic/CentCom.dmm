@@ -19535,6 +19535,14 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/admin)
+"beN" = (
+/obj/structure/bed/maint{
+	desc = "An old grubby mattress. It appears to have had coffee spilled all over it."
+	},
+/obj/structure/closet/secure_closet/personal/wall/directional/north,
+/obj/item/clothing/under/rank/centcom/intern,
+/turf/open/misc/dirt,
+/area/centcom/central_command_areas/admin)
 "bfA" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/large/style_3,
@@ -21027,6 +21035,10 @@
 /obj/effect/turf_decal/raven/seven,
 /turf/open/floor/circuit/green,
 /area/centcom/central_command_areas/adminroom)
+"dPt" = (
+/obj/item/reagent_containers/cup/bucket/wooden,
+/turf/open/misc/dirt,
+/area/centcom/central_command_areas/admin)
 "dPS" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
@@ -23062,7 +23074,9 @@
 /area/centcom/central_command_areas/admin)
 "hrv" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/paper,
+/obj/item/paper{
+	text = "FUUUUUUUUUUU-"
+	},
 /obj/item/paper{
 	pixel_x = 5;
 	pixel_y = 7
@@ -25180,6 +25194,12 @@
 	},
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/admin)
+"ljM" = (
+/obj/machinery/light/cold/dim/directional/west{
+	use_power = 0
+	},
+/turf/open/misc/dirt,
+/area/centcom/central_command_areas/admin)
 "lki" = (
 /obj/effect/turf_decal/trimline/dark_blue/line,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
@@ -27043,7 +27063,8 @@
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
 	name = "Beverly's Fax Machine";
-	visible_to_network = 0
+	desc = "The fax machine for Centcom Commander Beverly Valon, Head of Artificial Intelligence and Silicon Studies. Faxes sent to this machine may not be responded to in a timely basis. Misuse of the fax system will result in actions taken against the sender. Glory to Nanotrasen.";
+	fax_name = "Beverly Valon's Fax Machine"
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
@@ -27087,6 +27108,15 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
+"piU" = (
+/obj/machinery/door/airlock/cult/glass/friendly{
+	desc = "Upon closer examination, it's still dirt.";
+	name = "John Intern's Cell";
+	req_access = null;
+	use_power = 0
+	},
+/turf/open/misc/dirt,
+/area/centcom/central_command_areas/admin)
 "pkc" = (
 /obj/structure/flora/bush/stalky/style_3,
 /turf/open/floor/sandy_dirt,
@@ -30631,6 +30661,16 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/adminroom)
+"vRs" = (
+/obj/item/paper{
+	text = "FUUUUUUUUUUU-"
+	},
+/obj/effect/temp_visual/cult/rune_spawn/rune4{
+	color = "#880808";
+	desc = "A strange symbol, it seems to be slightly glowing."
+	},
+/turf/open/misc/dirt,
+/area/centcom/central_command_areas/admin)
 "vRz" = (
 /obj/effect/landmark/ctf,
 /turf/open/space/basic,
@@ -74441,9 +74481,9 @@ aOn
 aeB
 aeB
 aeB
-aeB
-aeB
-aeB
+vRs
+ljM
+piU
 exa
 aeB
 aeB
@@ -74698,8 +74738,8 @@ aOn
 aeB
 aeB
 aeB
-aeB
-aeB
+beN
+dPt
 aeB
 exa
 exa
