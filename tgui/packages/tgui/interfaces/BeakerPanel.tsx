@@ -35,7 +35,6 @@ export const BeakerPanel = (props) => {
     {},
   );
 
-  // Handler to update selected container type
   const handleContainerTypeChange = (index: number, data) => {
     const newMap = {
       ...selectedContainersType,
@@ -49,22 +48,66 @@ export const BeakerPanel = (props) => {
     {},
   );
 
-  // Handler to update selected reagents type
+  const [searchTerms, setSearchTerms] = useLocalState(
+    'beakerPanel_searchTerms',
+    {},
+  );
+
+  const [selectedReagents, setSelectedReagents] = useLocalState(
+    'beakerPanel_selectedReagents',
+    {},
+  );
+
   const handleRragentsChange = (index: number, data) => {};
+
+  const handleSearchChange = (containerNum: number, searchTerm: string) => {
+    const newSearchTerms = {
+      ...searchTerms,
+      [containerNum]: searchTerm,
+    };
+    setSearchTerms(newSearchTerms);
+  };
+
+  const handleReagentSelect = (containerNum: number, reagent) => {
+    const newSelectedReagents = {
+      ...selectedReagents,
+      [containerNum]: reagent,
+    };
+    setSelectedReagents(newSelectedReagents);
+  };
+
+  const addReagentToContainer = (containerNum: number) => {
+    const selectedReagent = selectedReagents[containerNum];
+    if (!selectedReagent) return;
+
+    const currentReagents = reagentsMap[containerNum] || [];
+    const newReagents = [
+      ...currentReagents,
+      {
+        id: selectedReagent.id,
+        amount: 1,
+      },
+    ];
+
+    const newReagentsMap = {
+      ...reagentsMap,
+      [containerNum]: newReagents,
+    };
+    setReagentsMap(newReagentsMap);
+
+    const newSelectedReagents = {
+      ...selectedReagents,
+      [containerNum]: null,
+    };
+    setSelectedReagents(newSelectedReagents);
+  };
 
   const spawnGrenade = () => {
     act('spawngrenade', {});
   };
 
-  // const spawnContainer = (containerNum) => {
-  // const containerpayload = selectedContainersType[containerNum];
-  //  act('spawncontainer', { somedata: containerpayload });
-  // };
-
-  // Render container section inline to avoid component state conflicts
   const renderContainerSection = (containerNum: number) => {
-    // Safe reagent search with type checking
-    const safeReagentSearch = '';
+    const safeReagentSearch = searchTerms[containerNum] || '';
     const filteredReagents = reagents.filter(
       (reagent) =>
         reagent.name &&
@@ -72,7 +115,7 @@ export const BeakerPanel = (props) => {
         typeof safeReagentSearch === 'string' &&
         reagent.name.toLowerCase().includes(safeReagentSearch.toLowerCase()),
     );
-    // Ensure containerReagents is always an array
+
     const safeContainerReagents = Array.isArray(reagentsMap[containerNum])
       ? reagentsMap[containerNum]
       : [];
@@ -96,7 +139,6 @@ export const BeakerPanel = (props) => {
                 }))}
                 selected={selectedContainersType[containerNum]?.id}
                 onSelected={(value) => {
-                  // Find the selected container
                   const selectedContainer = containers.find(
                     (container) => container.id === value,
                   );
@@ -137,7 +179,7 @@ export const BeakerPanel = (props) => {
                 <Flex.Item>
                   <NumberInput
                     width="80px"
-                    value={1}
+                    value={reagent.amount || 1}
                     minValue={0}
                     step={1}
                     stepPixelSize={10}
@@ -164,11 +206,15 @@ export const BeakerPanel = (props) => {
                   backgroundColor: 1 ? '#2a2a2a' : '#1a1a1a',
                 }}
               >
-                {'No reagent selected'}
+                {selectedReagents[containerNum]?.name || 'No reagent selected'}
               </Box>
             </Flex.Item>
             <Flex.Item>
-              <Button icon="plus" onClick={() => {}}>
+              <Button
+                icon="plus"
+                onClick={() => addReagentToContainer(containerNum)}
+                disabled={!selectedReagents[containerNum]}
+              >
                 Add
               </Button>
             </Flex.Item>
@@ -180,10 +226,24 @@ export const BeakerPanel = (props) => {
           <Input
             placeholder="Search reagents..."
             value={safeReagentSearch}
+            onChange={(e, value) => handleSearchChange(containerNum, value)}
             mb={1}
           />
-          <Section fill scrollable height="200px" />
-          {filteredReagents}
+          <Section fill scrollable height="200px">
+            {filteredReagents.map((reagent, index) => (
+              <Button
+                key={index}
+                fluid
+                mb={1}
+                color={reagent.dangerous === 'TRUE' ? 'bad' : 'default'}
+                onClick={() => handleReagentSelect(containerNum, reagent)}
+                selected={selectedReagents[containerNum]?.id === reagent.id}
+              >
+                {reagent.name}
+                {reagent.dangerous === 'TRUE' && ' (Dangerous)'}
+              </Button>
+            ))}
+          </Section>
         </Stack.Item>
       </Section>
     );
