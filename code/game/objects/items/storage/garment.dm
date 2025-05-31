@@ -65,6 +65,7 @@
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/head/nanner_crown(src)
+	new /obj/item/clothing/head/caphat/beret(src)
 
 /obj/item/storage/bag/garment/hop/PopulateContents()
 	new /obj/item/clothing/under/rank/civilian/head_of_personnel(src)
