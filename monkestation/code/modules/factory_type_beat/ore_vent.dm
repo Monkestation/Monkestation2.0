@@ -33,6 +33,7 @@
 		MEDIUM_VENT_TYPE = 5,
 		SMALL_VENT_TYPE = 7,
 	)
+	var/wave_timer = WAVE_DURATION_SMALL
 
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
@@ -153,11 +154,6 @@
 		spawn_distance_exclude = 3, \
 	)
 
-	var/wave_timer = 60 SECONDS
-	if(boulder_size == BOULDER_SIZE_MEDIUM)
-		wave_timer = 90 SECONDS
-	else if(boulder_size == BOULDER_SIZE_LARGE)
-		wave_timer = 150 SECONDS
 	vent_timer = addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer, TIMER_STOPPABLE)
 	spawning_mobs = TRUE
 	icon_state = icon_state_tapped
@@ -332,18 +328,22 @@
 	switch(string_boulder_size)
 		if(LARGE_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_LARGE
+			wave_timer = WAVE_DURATION_LARGE
 			if(mapload)
 				SSore_generation.ore_vent_sizes["large"] += 1
 		if(MEDIUM_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_MEDIUM
+			wave_timer = WAVE_DURATION_MEDIUM
 			if(mapload)
 				SSore_generation.ore_vent_sizes["medium"] += 1
 		if(SMALL_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_SMALL
+			wave_timer = WAVE_DURATION_SMALL
 			if(mapload)
 				SSore_generation.ore_vent_sizes["small"] += 1
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
+			wave_timer = WAVE_DURATION_SMALL
 			name = initial(name)
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox

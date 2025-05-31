@@ -41,7 +41,7 @@
 
 	/// What status do we currently track for icon purposes?
 	var/flying_state = NEUTRAL_STATE
-	/// Weakref to the vent the drone is currently attached to.
+	/// Weakref to the vent the drone is currently attached to. < Is this actually a weakref?
 	var/obj/structure/ore_vent/attached_vent = null
 	/// Set when the drone is begining to leave lavaland after the vent is secured.
 	var/escaping = FALSE
@@ -75,20 +75,21 @@
 	if(flying_state == FLY_IN_STATE || flying_state == FLY_OUT_STATE)
 		icon_state = "mining_node_flying"
 
-/*
+/mob/living/basic/node_drone/Life()
+	. = ..()
+
+	if(!isnull(attached_vent))
+		update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
+
 /mob/living/basic/node_drone/update_overlays()
 	. = ..()
+
 	if(attached_vent)
-		var/time_remaining = COOLDOWN_TIMELEFT(attached_vent, wave_cooldown)
-		var/wave_timers
-		switch(attached_vent?.boulder_size)
-			if(BOULDER_SIZE_SMALL)
-				wave_timers = WAVE_DURATION_SMALL
-			if(BOULDER_SIZE_MEDIUM)
-				wave_timers = WAVE_DURATION_MEDIUM
-			if(BOULDER_SIZE_LARGE)
-				wave_timers = WAVE_DURATION_LARGE
-		var/remaining_fraction = (time_remaining / wave_timers)
+		var/time_remaining = attached_vent?.wave_time_remaining()
+		var/wave_timers = attached_vent?.wave_timer
+		if(isnull(time_remaining) || isnull(wave_timers) || wave_timers == 0)
+			return
+		var/remaining_fraction = (time_remaining != 0) ? (time_remaining / wave_timers) : 0
 		if(remaining_fraction <= 0.3)
 			. += "node_progress_4"
 			return
@@ -100,7 +101,7 @@
 			return
 		. += "node_progress_1"
 		return
-*/
+
 
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
@@ -131,6 +132,7 @@
 /mob/living/basic/node_drone/proc/pre_escape()
 	if(attached_vent)
 		attached_vent = null
+		update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 	src.ai_controller?.set_ai_status(AI_STATUS_OFF) // Turns off Ai if it has one.
 	if(src.buckled)
 		src.buckled.unbuckle_mob(src) // Unbuckle us from whatever it is. Prevents runtimes.
@@ -179,6 +181,11 @@
 // node drone behavior for buckling down on a vent.
 /datum/ai_behavior/hunt_target/latch_onto/node_drone
 	hunt_cooldown = 5 SECONDS
+
+/datum/ai_behavior/hunt_target/latch_onto/node_drone/target_caught(mob/living/hunter, obj/hunted)
+	. = ..()
+	if(.)
+		hunter.update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
 // Evasion behavior.
 /datum/ai_planning_subtree/flee_target/node_drone
