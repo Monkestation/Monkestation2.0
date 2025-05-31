@@ -172,13 +172,15 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	// but overall try to pump the same volume regardless of number of affected tiles
 	var/turf/local_turf = get_turf(src)
 	var/list/turf/candidate_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
-	candidate_turfs += local_turf
-
 	var/list/turf/affected_turfs = list()
 
-	for(var/turf/candidate as anything in candidate_turfs)
-		if(isturf(candidate))
-			affected_turfs += candidate
+	for(var/turf/candidate in local_turf.get_atmos_adjacent_turfs(alldir = TRUE) + local_turf)
+		// don't bother considering turfs that don't even have slime ooze
+		if(!candidate.liquids?.liquid_group?.total_reagent_volume)
+			continue
+		if(!candidate.liquids.liquid_group.reagents?.has_reagent(/datum/reagent/slime_ooze, check_subtypes = TRUE))
+			continue
+		affected_turfs += candidate
 
 	if(!length(affected_turfs))
 		return
