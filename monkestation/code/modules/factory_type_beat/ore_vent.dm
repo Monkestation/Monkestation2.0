@@ -57,8 +57,9 @@
 	var/boulder_icon_state = "boulder"
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
-	/// We use a cooldown to prevent the wave defense from being started multiple times.
-	COOLDOWN_DECLARE(wave_cooldown)
+	/// We use a timer id or time left to prevent the wave defense from being started multiple times.
+	//vent_timer will be null, timer id, "tr=<time remaining>" or "starting" if that somehow happens.
+	var/vent_timer = null
 
 /obj/structure/ore_vent/Initialize(mapload)
 	if(mapload)
@@ -80,6 +81,8 @@
 	return ..()
 
 /obj/structure/ore_vent/Destroy()
+	if(!isnull(vent_timer))
+		deltimer(vent_timer) // Will return false on an invalid id and not have issues with the prefix.
 	SSore_generation.possible_vents -= src
 	node = null
 	if(tapped)
@@ -155,8 +158,7 @@
 		wave_timer = 90 SECONDS
 	else if(boulder_size == BOULDER_SIZE_LARGE)
 		wave_timer = 150 SECONDS
-	COOLDOWN_START(src, wave_cooldown, wave_timer)
-	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
+	vent_timer = addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer, TIMER_STOPPABLE)
 	spawning_mobs = TRUE
 	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
@@ -171,9 +173,13 @@
  */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
 	SEND_SIGNAL(src, COMSIG_SPAWNER_STOP_SPAWNING)
-	COOLDOWN_RESET(src, wave_cooldown)
+	var/remaining_time = null // Support for time out failure later
+	if(!isnull(vent_timer))
+		remaining_time = src.wave_time_remaining()
+		deltimer(vent_timer)
+		vent_timer = null // Needed if the wave ends early.
 	remove_shared_particles(/particles/smoke/ash)
-	if(!QDELETED(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
+	if((!QDELETED(node) || istype(src, /obj/structure/ore_vent/boss)) && isnull(remaining_time)) ///The Node Drone has survived the wave defense long enough, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
 		balloon_alert_to_viewers("vent tapped!")
@@ -199,6 +205,28 @@
 	add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
 /**
+ * Called when the vent needs to pause or resume the wave progress. Usually called by the node drone.
+ */
+/obj/structure/ore_vent/proc/pause_resume_wave()
+	if(!isnull(vent_timer))
+		if(findtext(vent_timer, "tl=", 1, 4))
+			return // setup for later
+
+/**
+ * Returns time remaining of the current wave defense.
+ * Will return the current active timer or a saved recorded time from a previous timer using the tl= prefix.
+ */
+/obj/structure/ore_vent/proc/wave_time_remaining()
+	var/timeleft = null
+	if(!isnull(vent_timer))
+		if(findtext(vent_timer, "tl=", 1, 4))
+			timeleft = text2num(copytext(vent_timer, 4))
+		else
+			timeleft = timeleft(vent_timer)
+
+	return timeleft
+
+/**
  * Called when the ore vent is tapped by a scanning device.
  * Gives a readout of the ores available in the vent that gets added to the description,
  * then asks the user if they want to start wave defense if it's already been discovered.
@@ -209,7 +237,7 @@
 	if(tapped)
 		balloon_alert_to_viewers("vent already tapped!")
 		return
-	if(!COOLDOWN_FINISHED(src, wave_cooldown))
+	if(!isnull(vent_timer))
 		balloon_alert_to_viewers("protect the node drone!")
 		return
 	if(!discovered)
@@ -234,8 +262,9 @@
 		return
 	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
-	if(!COOLDOWN_FINISHED(src, wave_cooldown))
+	if(!isnull(vent_timer))
 		return
+	vent_timer = "starting" // Early variable setting to prevent multiple calls with tgui-stacking open windows.
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
@@ -398,7 +427,7 @@
 		var/mob/living/simple_animal/hostile/megafauna/wendigo/noportal = boss
 		noportal.make_portal = FALSE
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
-	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever
+	vent_timer = "boss" //Basically forever
 	//boss.say(boss.summon_line) //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
 
 /obj/structure/ore_vent/boss/icebox
