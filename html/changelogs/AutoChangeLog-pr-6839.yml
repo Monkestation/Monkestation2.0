@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - sound: "Reduced the range of the audio of some emotes that had higher-pitched audio, such as speen and wawa."

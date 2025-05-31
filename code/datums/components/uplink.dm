@@ -241,7 +241,7 @@
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
-			"icon" = actual_item.icon,
+			"icon" = text_ref(actual_item.icon),
 			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,

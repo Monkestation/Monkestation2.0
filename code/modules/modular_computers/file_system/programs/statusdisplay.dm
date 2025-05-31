@@ -68,6 +68,17 @@
 					post_status("alert", "bluealert")
 				if(SEC_LEVEL_GREEN)
 					post_status("alert", "greenalert")
+				if(SEC_LEVEL_AMBER)
+					post_status("alert", "amberalert")
+				if(SEC_LEVEL_YELLOW)
+					post_status("alert", "yellowalert")
+				if(SEC_LEVEL_LAMBDA)
+					post_status("alert", "lambdaalert")
+				if(SEC_LEVEL_GAMMA)
+					post_status("alert", "gammaalert")
+				if(SEC_LEVEL_EPSILON)
+					post_status("alert", "epsilonalert")
+
 		else
 			post_status("alert", picture)
 
