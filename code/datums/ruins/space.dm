@@ -230,7 +230,6 @@
 		"spacerealhotel",
 		"deep-storage",
 		"listeningstation",
-		"syndicate_depot",
 	)
 
 /datum/map_template/ruin/space/abandonedteleporter
@@ -304,7 +303,6 @@
 		"spacerealhotel",
 		"deep-storage",
 		"listeningstation",
-		"syndicate_depot",
 	)
 
 /datum/map_template/ruin/space/gondoland
@@ -509,7 +507,3 @@
 	suffix = "syndicate_depot.dmm"
 	name = "Syndicate Depot"
 	description = "A small depot ran by the Syndicate sitting out in space, responsible for logistics across the vast reaches of space."
-	undesirable_ruins = list(
-		"oldstation",
-		"thederelict",
-	)
