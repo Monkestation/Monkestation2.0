@@ -23,3 +23,15 @@
 /obj/item/radio/headset/heads/headset_old
 	name =  "\proper old commander headset"
 	desc =  "A authoritative headset years past its prime. Dust cakes its old design."
+
+/obj/item/radio/headset/headset_independent
+	name = "independent radio headset"
+	desc = "A headset fitted with frequencies not used by any of the major corporations operating in known space."
+	keyslot = /obj/item/encryptionkey/headset_uncommon
+	freqlock = TRUE
+	frequency = FREQ_INDEPENDENT
+
+/obj/item/radio/headset/headset_independent/captain
+	name = "independent captain radio headset"
+	desc = "A headset fitted with frequencies not used by any of the major corporations operating in known space. This one has been fitted with a voice amplifier."
+	command = TRUE

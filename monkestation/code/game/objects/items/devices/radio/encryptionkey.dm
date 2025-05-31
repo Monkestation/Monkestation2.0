@@ -15,3 +15,7 @@
 	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_centcom
 	greyscale_colors = "#1d2657#dca01b"
+
+/obj/item/encryptionkey/headset_independent
+	name = "independent encryption key"
+	channels = list(RADIO_CHANNEL_INDEPENDENT = 1)
