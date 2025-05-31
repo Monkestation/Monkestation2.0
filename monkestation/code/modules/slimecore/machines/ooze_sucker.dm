@@ -213,9 +213,9 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	if(QDELETED(targeted_group))
 		return
 
-	var/target_value = seconds_per_tick * (drain_flat + (targeted_group.total_reagent_volume * drain_percent)) * multiplier
+	var/target_value = round(seconds_per_tick * (drain_flat + (targeted_group.total_reagent_volume * drain_percent)) * multiplier, CHEMICAL_VOLUME_ROUNDING)
 	//Free space handling
-	var/free_space = reagents.maximum_volume - reagents.total_volume
+	var/free_space = round(reagents.maximum_volume - reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
 	if(target_value > free_space && (SUCKER_UPGRADE_DISPOSER in upgrades))
 		if (SUCKER_UPGRADE_BALANCER in upgrades)
 			reagents.remove_reagent(reagents.get_master_reagent_id(), target_value - free_space)
