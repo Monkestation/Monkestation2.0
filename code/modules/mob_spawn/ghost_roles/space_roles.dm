@@ -217,17 +217,6 @@
 	prompt_name = "a free miner"
 
 
-/obj/effect/mob_spawn/ghost_role/human/free_miner/check_allowed(mob/M)
-	var/area/A = get_area(src)
-	if(A)
-		var/obj/effect/mob_spawn/ghost_role/human/free_miner/captain/cap = locate(/obj/effect/mob_spawn/human/free_miner/captain) in A
-		if(cap)
-			if(alert("The ship needs a captain before it can have a crew. Would you like to play as the captain instead?",,"Yes","No") == "Yes")
-				cap.attack_ghost(M)
-			return FALSE
-	return TRUE
-
-
 /datum/outfit/freeminer
 	name = "Free Miner"
 	uniform = /obj/item/clothing/under/rank/cargo/miner
@@ -292,9 +281,6 @@
 	important_text = "Avoid getting in trouble with the corporate powers and the local government. Mine ore and keep the ship afloat."
 	outfit = /datum/outfit/freeminer/captain
 	prompt_name = "a free miner captain"
-
-/obj/effect/mob_spawn/ghost_role/human/free_miner/captain/check_allowed(mob/M)
-	return TRUE //What could possibly go wrong?
 
 /datum/outfit/freeminer/captain
 	name = "Free Miner Captain"
