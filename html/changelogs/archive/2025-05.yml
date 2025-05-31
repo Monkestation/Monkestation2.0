@@ -416,3 +416,9 @@
   - qol: The space hotel now has actual parts to build hydroponics with.
   - qol: The space hotel now has a seed extractor board and a composter board for
       hydroponics.
+2025-05-31:
+  notghosti:
+  - bugfix: Slimes now ignore drones.
+  sprungleio:
+  - rscadd: The hole.
+  - rscadd: More flavor to Beverly's fax machine.
