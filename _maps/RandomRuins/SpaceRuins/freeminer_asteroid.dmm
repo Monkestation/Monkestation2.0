@@ -6,37 +6,37 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav)
 "d" = (
-/turf/closed/wall,
-/area/ruin/space/has_grav)
-"C" = (
 /mob/living/basic/mining/hivelord,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav)
-"H" = (
+"g" = (
 /mob/living/basic/mining/basilisk,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav)
+"p" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"u" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav)
+"x" = (
+/obj/item/gps/computer/beacon,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav)
 "L" = (
 /obj/docking_port/stationary{
 	dir = 2;
-	dwidth = 15;
+	dwidth = 17;
 	height = 17;
 	shuttle_id = "freeminer_asteroid";
 	name = "Asteroid Cluster";
-	width = 28
+	width = 32
 	},
 /turf/template_noop,
 /area/template_noop)
 "Q" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/space/has_grav)
-"T" = (
-/obj/item/gps/computer/beacon,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space/has_grav)
-"Y" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 
 (1,1,1) = {"
@@ -659,12 +659,12 @@ Q
 Q
 b
 b
-C
+d
 Q
 b
 Q
 b
-H
+g
 b
 b
 b
@@ -716,16 +716,16 @@ b
 Q
 Q
 Q
-C
-Q
-Q
-Q
-Q
-Q
-Q
-T
-b
 d
+Q
+Q
+Q
+Q
+Q
+Q
+x
+b
+u
 a
 a
 a
@@ -772,7 +772,7 @@ Q
 Q
 b
 b
-Y
+p
 a
 a
 a
@@ -819,7 +819,7 @@ Q
 Q
 b
 b
-Y
+p
 L
 a
 a
@@ -866,7 +866,7 @@ Q
 Q
 b
 b
-Y
+p
 a
 a
 a
@@ -913,7 +913,7 @@ Q
 Q
 Q
 b
-d
+u
 a
 a
 a
