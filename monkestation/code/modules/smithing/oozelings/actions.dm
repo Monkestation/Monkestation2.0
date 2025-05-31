@@ -51,7 +51,7 @@
 	if(istype(open_turf))
 		open_turf.wash(CLEAN_WASH)
 		return TRUE
-	if (SPT_PROB(5, seconds_per_tick))
+	if(SPT_PROB(5, seconds_per_tick))
 		slime.adjust_nutrition(rand(5,25))
 
 /datum/status_effect/slime_washing/get_examine_text()
