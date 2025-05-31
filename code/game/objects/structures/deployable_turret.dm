@@ -242,10 +242,10 @@
 	max_integrity = 175
 	projectile_type = /obj/projectile/bullet/manned_turret/lamentum
 	anchored = TRUE
-	number_of_shots = 3
-	cooldown_duration = 0.6 SECONDS
-	rate_of_fire = 4
-	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
+	number_of_shots = 1
+	cooldown_duration = 0.15 SECONDS
+	rate_of_fire = 8
+	firesound = 'sound/weapons/gun/hmg/lamentum.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_lamentum_folded

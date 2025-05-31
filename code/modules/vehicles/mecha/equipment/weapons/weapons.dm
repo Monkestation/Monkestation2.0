@@ -586,7 +586,7 @@
 	name = "12.7mm Malone Mk.1 Ratcatcher"
 	desc = "Harvey Malone's first machinegun design. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
 	icon_state = "mecha_light_tank_mg"
-	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	fire_sound = 'sound/weapons/gun/general/malone.ogg'
 	projectile = /obj/projectile/bullet/mm127x70
 	projectiles = 30
 	projectiles_cache = 60
@@ -607,7 +607,7 @@
 	name = "75mm tank cannon"
 	desc = "A huge cannon designed to crack bunkers,. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
 	icon_state = "mecha_support_tank_cannon"
-	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	fire_sound = 'sound/weapons/gun/general/heavycannon.ogg'
 	harmful = TRUE
 	projectile = /obj/projectile/bullet/rocket/supporttankshell
 	equip_cooldown = 12 SECONDS
@@ -624,7 +624,7 @@
 	name = "Typhon ra.XII"
 	desc = "A mounted anti tank rifle, designed for faster firing over free standing counterparts, while maintaining accuracy."
 	icon_state = "mecha_atr"
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/weapons/gun/sniper/neville.ogg'
 	projectile = /obj/projectile/bullet/neville
 	projectiles = 10
 	projectiles_cache = 10

@@ -415,6 +415,8 @@
 	name = "\improper Malone Mk.2"
 	desc = "A cumbersome machinegun just bearly on the edge of man portability, fires the low powered 12.7x70mm round at an excessive rate of fire."
 	icon = 'icons/obj/weapons/guns/guns56x.dmi'
+	fire_sound = 'sound/weapons/gun/general/malone.ogg'
+	rack_sound = 'sound/weapons/gun/general/malonerack.ogg'
 	icon_state = "malone"
 	SET_BASE_PIXEL(-8, 0)
 	w_class = WEIGHT_CLASS_HUGE
@@ -444,9 +446,9 @@
 	SET_BASE_PIXEL(-12, 0)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/weapons/gun/sniper/neville.ogg'
 	fire_sound_volume = 110
-	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
+	load_sound = 'sound/weapons/gun/sniper/nevillemag.ogg'
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
