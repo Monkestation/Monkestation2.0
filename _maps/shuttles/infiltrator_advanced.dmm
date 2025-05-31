@@ -48,11 +48,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "ah" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/alt,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "ai" = (
@@ -64,8 +64,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "aj" = (
-/obj/machinery/computer/shuttle/syndicate,
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/shuttle/syndicate/alt,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "ak" = (
@@ -518,9 +518,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "bi" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "bj" = (
@@ -819,8 +822,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "bS" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/north{
 	area = "/area/shuttle/syndicate/eva"
@@ -828,6 +829,11 @@
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "bT" = (
@@ -1037,10 +1043,6 @@
 /obj/machinery/firealarm/directional/east,
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/tank/internals/oxygen/yellow,
-/obj/item/clothing/mask/gas{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
@@ -1089,11 +1091,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
-"cx" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating,
-/area/shuttle/syndicate/medical)
 "cy" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
@@ -1148,11 +1145,6 @@
 /obj/machinery/power/shuttle_engine/heater,
 /turf/closed/wall/r_wall/syndicate/hull,
 /area/shuttle/syndicate/armory)
-"cH" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating,
-/area/shuttle/syndicate/armory)
 "cI" = (
 /obj/machinery/power/shuttle_engine/large,
 /obj/effect/turf_decal/stripes/line,
@@ -1177,11 +1169,6 @@
 "cM" = (
 /obj/machinery/power/shuttle_engine/heater,
 /turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/hallway)
-"cN" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "cO" = (
 /obj/machinery/power/shuttle_engine/propulsion,
@@ -1218,13 +1205,9 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
 /obj/machinery/firealarm/directional/west,
-/obj/item/clothing/suit/space/syndicate/black/red,
+/obj/item/clothing/suit/space/syndicate,
 /obj/item/tank/internals/oxygen/yellow,
-/obj/item/clothing/mask/gas{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "cV" = (
@@ -1238,7 +1221,6 @@
 	id = "infiltrator_starboardblast";
 	name = "Infiltrator Starboard Hatch"
 	},
-/obj/docking_port/mobile/infiltrator,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/box,
 /obj/machinery/button/door/directional/north{
@@ -1246,6 +1228,7 @@
 	name = "Infiltrator Starboard Hatch Control";
 	req_access = list("syndicate")
 	},
+/obj/docking_port/mobile/infiltrator/alt,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/airlock)
 "cX" = (
@@ -1648,12 +1631,15 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "dP" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/evac{
 	pixel_y = -32
 	},
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "dQ" = (
@@ -1690,6 +1676,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/defibrillator_mount/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "dW" = (
@@ -1776,9 +1763,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "ee" = (
-/obj/machinery/nuclearbomb/syndicate{
-	anchored = 1
-	},
 /obj/machinery/door/window{
 	dir = 1
 	},
@@ -1787,6 +1771,7 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
+/obj/machinery/nuclearbomb/commando,
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/hallway)
 "ef" = (
@@ -1985,10 +1970,13 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "ss" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/obj/effect/turf_decal/box,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "xQ" = (
@@ -2223,7 +2211,7 @@ dr
 bV
 dE
 dU
-cx
+bn
 cA
 cL
 "}
@@ -2246,7 +2234,7 @@ bN
 bW
 ex
 eM
-cx
+bn
 cB
 cP
 "}
@@ -2337,7 +2325,7 @@ aQ
 bR
 dB
 cl
-cN
+cM
 cX
 cE
 ad
@@ -2383,7 +2371,7 @@ aQ
 bT
 dC
 cl
-cN
+cM
 cX
 cI
 ad
@@ -2476,7 +2464,7 @@ ef
 dN
 dQ
 dW
-cH
+cG
 cQ
 cS
 "}
@@ -2499,7 +2487,7 @@ eg
 ei
 et
 dX
-cH
+cG
 cR
 cT
 "}

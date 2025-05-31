@@ -235,7 +235,7 @@
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
 /obj/machinery/nuclearbomb/commando/proc/process_code(mob/user)
-	if(isinspace())
+	if(isinspace() || ispath(get_area(src), /area/shuttle))
 		to_chat(user, span_warning("Location too unstable!"))
 		return
 	yes_code = TRUE
@@ -327,17 +327,18 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
 
 	countdown.start()
-	SSsecurity_level.set_level(SEC_LEVEL_RED)
-	SSshuttle.registerHostileEnvironment(src)
 	var/area/our_area = get_area(src)
-	priority_announce(
-		text = "An unauthorized nuclear device is currently being decrypted for detonation in the [our_area.get_original_area_name()]. Crew are advised to halt the decryption through immediate rapid deconstruction of the device.",
-		title = "Priority Alert",
-		sound = 'sound/machines/alarm.ogg',
-		has_important_message = TRUE,
-		sender_override = "Nanotrasen Security Division",
-		color_override = "red",
-	)
+	if(is_station_area_or_adjacent(our_area))
+		SSsecurity_level.set_level(SEC_LEVEL_RED)
+		SSshuttle.registerHostileEnvironment(src)
+		priority_announce(
+			text = "An unauthorized nuclear device is currently being decrypted for detonation in the [our_area.get_original_area_name()]. Crew are advised to halt the decryption through immediate rapid deconstruction of the device.",
+			title = "Priority Alert",
+			sound = 'sound/machines/alarm.ogg',
+			has_important_message = TRUE,
+			sender_override = "Nanotrasen Security Division",
+			color_override = "red",
+		)
 	notify_ghosts(
 		"A nuclear device has been armed in [get_area_name(src)]!",
 		source = src,
