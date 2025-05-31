@@ -1,12 +1,13 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox } from '../components';
+import { Button, Box, Section, NoticeBox, DmIcon } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
   server_connected: BooleanLike;
   loaded_item: string;
   item_icon: string;
+  item_icon_state: string;
   indestructible: BooleanLike;
   already_deconstructed: BooleanLike;
   recoverable_points: string;
@@ -27,6 +28,7 @@ export const DestructiveAnalyzer = (props) => {
     indestructible,
     loaded_item,
     item_icon,
+    item_icon_state,
     already_deconstructed,
     recoverable_points,
     research_point_id,
@@ -74,15 +76,12 @@ export const DestructiveAnalyzer = (props) => {
             />
           }
         >
-          <Box
-            as="img"
-            src={`data:image/jpeg;base64,${item_icon}`}
-            height="64px"
+          <DmIcon
+            icon={item_icon}
+            icon_state={item_icon_state}
             width="64px"
-            style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'vertical-align': 'middle',
-            }}
+            height="64px"
+            verticalAlign="middle"
           />
         </Section>
         <Section title="Deconstruction Methods">

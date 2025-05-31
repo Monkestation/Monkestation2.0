@@ -59,7 +59,8 @@
 	data["server_connected"] = !!stored_research
 	data["node_data"] = list()
 	if(loaded_item)
-		data["item_icon"] = icon2base64(getFlatIcon(image(icon = loaded_item.icon, icon_state = loaded_item.icon_state), no_anim = TRUE))
+		data["item_icon"] = text_ref(loaded_item.icon)
+		data["item_icon_state"] = loaded_item.icon_state
 		data["indestructible"] = !(loaded_item.resistance_flags & INDESTRUCTIBLE)
 		data["loaded_item"] = loaded_item
 		data["already_deconstructed"] = !!stored_research.deconstructed_items[loaded_item.type]
