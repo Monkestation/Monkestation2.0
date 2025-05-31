@@ -171,7 +171,6 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	// Determine what tiles should be pumped. We grab from a 3x3 area,
 	// but overall try to pump the same volume regardless of number of affected tiles
 	var/turf/local_turf = get_turf(src)
-	var/list/turf/candidate_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
 	var/list/turf/affected_turfs = list()
 
 	for(var/turf/candidate in local_turf.get_atmos_adjacent_turfs(alldir = TRUE) + local_turf)
