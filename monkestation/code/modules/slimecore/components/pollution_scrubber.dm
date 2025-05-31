@@ -21,5 +21,5 @@
 	if(astype(parent, /mob/living)?.stat == DEAD)
 		return
 	var/turf/open/turf = get_turf(parent)
-	if(!isnull(turf))
+	if(isopenturf(turf))
 		turf.pollution?.scrub_amount(scrubbing_amount * seconds_per_tick)
