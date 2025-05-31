@@ -47,7 +47,7 @@
 		return FALSE
 	return ..()
 
-/datum/status_effect/streamer/tick(seconds_per_tick, times_fired)
+/datum/status_effect/streamer/tick(seconds_between_ticks, times_fired)
 	if(extra_checks && !extra_checks.Invoke(src))
 		qdel(src)
 		return

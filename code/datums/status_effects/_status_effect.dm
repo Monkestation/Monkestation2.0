@@ -8,10 +8,14 @@
 	/// -1 = infinite duration.
 	var/duration = STATUS_EFFECT_PERMANENT
 	/// When set initially / in on_creation, this is how long between [proc/tick] calls in deciseconds.
+	/// Note that this cannot be faster than the processing subsystem you choose to fire the effect on. (See: [var/processing_speed])
 	/// While processing, this becomes the world.time when the next tick will occur.
-	/// -1 = will stop processing, if duration is also unlimited (-1).
-	/// 0 = passes processing straight to tick(), generally not that bad of an idea.
+	/// -1 = will prevent ticks, and if duration is also unlimited (-1), stop processing wholesale.
 	var/tick_interval = 1 SECONDS
+	///If our tick intervals are set to be a dynamic value within a range, the lowerbound of said range
+	var/tick_interval_lowerbound
+	///If our tick intervals are set to be a dynamic value within a range, the upperbound of said range
+	var/tick_interval_upperbound
 	/// The mob affected by the status effect.
 	VAR_FINAL/mob/living/owner
 	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
@@ -50,9 +54,14 @@
 		LAZYADD(owner.status_effects, src)
 		RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_effect_on_heal))
 
-	if(duration != -1)
+	if(duration == INFINITY)
+		// we will optionally allow INFINITY, because i imagine it'll be convenient in some places,
+		// but we'll still set it to -1 / STATUS_EFFECT_PERMANENT for proper unified handling
+		duration = STATUS_EFFECT_PERMANENT
+	if(duration != STATUS_EFFECT_PERMANENT)
 		duration = world.time + duration
-	tick_interval = world.time + tick_interval
+	if(tick_interval != STATUS_EFFECT_NO_TICK)
+		tick_interval = world.time + tick_interval
 
 	if(alert_type)
 		var/atom/movable/screen/alert/status_effect/new_alert = owner.throw_alert(id, alert_type)
@@ -60,16 +69,14 @@
 		linked_alert = new_alert //so we can reference the alert, if we need to
 		update_shown_duration()
 
-	if(duration > 0 || initial(tick_interval) >= 0) // don't process if we don't care | MONKESTATION EDIT
+	if(duration > world.time || tick_interval > world.time) //don't process if we don't care
 		switch(processing_speed)
 			if(STATUS_EFFECT_FAST_PROCESS)
 				START_PROCESSING(SSfastprocess, src)
 			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
-			// monkestation start: SSpriority_effects
 			if(STATUS_EFFECT_PRIORITY)
 				START_PROCESSING(SSpriority_effects, src)
-			// monkestation end
 
 	update_particles()
 
@@ -81,10 +88,8 @@
 			STOP_PROCESSING(SSfastprocess, src)
 		if(STATUS_EFFECT_NORMAL_PROCESS)
 			STOP_PROCESSING(SSprocessing, src)
-		// monkestation start: SSpriority_effects
 		if(STATUS_EFFECT_PRIORITY)
 			STOP_PROCESSING(SSpriority_effects, src)
-		// monkestation end
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
@@ -107,16 +112,25 @@
 // Status effect process. Handles adjusting its duration and ticks.
 // If you're adding processed effects, put them in [proc/tick]
 // instead of extending / overriding the process() proc.
-/datum/status_effect/process(seconds_per_tick, times_fired)
+/datum/status_effect/process(seconds_per_tick)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(QDELETED(owner))
 		qdel(src)
 		return
-	if(tick_interval < world.time)
-		tick(seconds_per_tick, times_fired)
-		tick_interval = world.time + initial(tick_interval)
-	if(duration != -1)
+
+	if(tick_interval == STATUS_EFFECT_AUTO_TICK)
+		tick(seconds_per_tick)
+	else if(tick_interval != STATUS_EFFECT_NO_TICK && tick_interval < world.time)
+		var/tick_length = (tick_interval_upperbound && tick_interval_lowerbound) ? rand(tick_interval_lowerbound, tick_interval_upperbound) : initial(tick_interval)
+		tick(tick_length / (1 SECONDS))
+		tick_interval = world.time + tick_length
+
+	if(QDELING(src))
+		// tick deleted us, no need to continue
+		return
+
+	if(duration != STATUS_EFFECT_PERMANENT)
 		if(duration < world.time)
 			qdel(src)
 			return
@@ -132,8 +146,17 @@
 /datum/status_effect/proc/get_examine_text()
 	return null
 
-/// Called every tick from process().
-/datum/status_effect/proc/tick(seconds_per_tick, times_fired)
+/**
+ * Called every tick from process().
+ * This is only called of tick_interval is not -1.
+ *
+ * Note that every tick =/= every processing cycle.
+ *
+ * * seconds_between_ticks = This is how many SECONDS that elapse between ticks.
+ * This is a constant value based upon the initial tick interval set on the status effect.
+ * It is similar to seconds_per_tick, from processing itself, but adjusted to the status effect's tick interval.
+ */
+/datum/status_effect/proc/tick(seconds_between_ticks)
 	return
 
 /// Called whenever the buff expires or is removed (qdeleted)
@@ -162,7 +185,7 @@
 /// has its duration refreshed in apply_status_effect - is passed New() args
 /datum/status_effect/proc/refresh(effect, ...)
 	var/original_duration = initial(duration)
-	if(original_duration == -1)
+	if(original_duration == STATUS_EFFECT_PERMANENT)
 		return
 	duration = world.time + original_duration
 
@@ -186,7 +209,7 @@
 
 /// Remove [seconds] of duration from the status effect, qdeling / ending if we eclipse the current world time.
 /datum/status_effect/proc/remove_duration(seconds)
-	if(duration == -1) // Infinite duration
+	if(duration == STATUS_EFFECT_PERMANENT) // Infinite duration
 		return FALSE
 
 	duration -= seconds
@@ -204,6 +227,18 @@
 /datum/status_effect/proc/update_particles()
 	SHOULD_CALL_PARENT(FALSE)
 	return
+
+/datum/status_effect/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	if(var_name == NAMEOF(src, duration))
+		if(var_value == INFINITY)
+			duration = STATUS_EFFECT_PERMANENT
+		update_shown_duration()
+
+	if(var_name == NAMEOF(src, show_duration))
+		update_shown_duration()
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

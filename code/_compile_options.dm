@@ -95,6 +95,10 @@
 /// If this is uncommented, /proc/icon_exists will attempt to load an initial cache from icon_exists_cache.json
 // #define PRELOAD_ICON_EXISTS_CACHE
 
+/// If this is uncommented, additional logging (such as more in-depth tgui logging) will be enabled.alist
+/// These logs prolly don't matter during production.
+// #define EXTENDED_DEBUG_LOGGING
+
 // OpenDream currently doesn't support byondapi, so automatically disable it on OD,
 // unless CIBUILDING is defined - we still want to lint dreamluau-related code.
 // Get rid of this whenever it does have support.

@@ -100,8 +100,10 @@ SUBSYSTEM_DEF(tgui)
 			window_found = TRUE
 			break
 	if(!window_found)
+#ifdef EXTENDED_DEBUG_LOGGING
 		log_tgui(user, "Error: Pool exhausted",
 			context = "SStgui/request_pooled_window")
+#endif
 		return null
 	return window
 
@@ -113,7 +115,9 @@ SUBSYSTEM_DEF(tgui)
  * required user mob
  */
 /datum/controller/subsystem/tgui/proc/force_close_all_windows(mob/user)
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(user, context = "SStgui/force_close_all_windows")
+#endif
 	if(user.client)
 		user.client.tgui_windows = list()
 		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
@@ -129,7 +133,9 @@ SUBSYSTEM_DEF(tgui)
  * required window_id string
  */
 /datum/controller/subsystem/tgui/proc/force_close_window(mob/user, window_id)
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(user, context = "SStgui/force_close_window")
+#endif
 	// Close all tgui datums based on window_id.
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)
