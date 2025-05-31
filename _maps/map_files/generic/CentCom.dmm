@@ -29220,7 +29220,6 @@
 /area/centcom/central_command_areas/evacuation)
 "rPn" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
 /obj/structure/shipping_container/interdyne,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/firebase_trident)
