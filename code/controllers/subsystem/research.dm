@@ -78,6 +78,8 @@ SUBSYSTEM_DEF(research)
 	var/list/scientific_partners = list()
 
 	var/list/slime_core_prices = list()
+	// the amount of captive xenos for bonus research point generation
+	var/xeno_count
 
 	var/static/list/default_core_prices = list(
 		SLIME_VALUE_TIER_1,
@@ -113,12 +115,11 @@ SUBSYSTEM_DEF(research)
 
 		if (techweb_list.nanite_bonus)
 			bitcoins[TECHWEB_POINT_TYPE_GENERIC] += techweb_list.nanite_bonus
-
 		if(!isnull(techweb_list.last_income))
 			var/income_time_difference = world.time - techweb_list.last_income
 			techweb_list.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 			for(var/i in bitcoins)
-				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier
+				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier * checkxenos() //multiplier check. If captive xenos and if the research server is intact.
 			techweb_list.add_point_list(bitcoins)
 
 		techweb_list.last_income = world.time
@@ -130,13 +131,11 @@ SUBSYSTEM_DEF(research)
 				var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
 				if(node.is_free(techweb_list)) // Automatically research all free nodes in queue if any
 					techweb_list.research_node(node)
-
 	for(var/core_type in slime_core_prices)
 		var/obj/item/slime_extract/core = core_type
 		var/price_mod = rand(SLIME_RANDOM_MODIFIER_MIN * 1000000, SLIME_RANDOM_MODIFIER_MAX * 1000000) / 1000000
 		var/price_limiter = 1 - ((default_core_prices[initial(core.tier)] * SLIME_SELL_MINIMUM_MODIFIER) / slime_core_prices[core_type])
 		slime_core_prices[core_type] = (1 + price_mod * price_limiter) * slime_core_prices[core_type]
-
 /datum/controller/subsystem/research/proc/initialize_slime_prices()
 	for(var/core_type in subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/core = core_type
@@ -352,3 +351,20 @@ SUBSYSTEM_DEF(research)
 			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
 				partner.accepted_experiments += ordnance_experiment.type
 		scientific_partners += partner
+
+/datum/controller/subsystem/research/proc/checkxenos()
+	xeno_count = 1
+	//var/datum/antagonist/xeno/alien in GLOB.antagonists
+	var/datum/team/xeno/xeno_team = locate(/datum/team/xeno) in GLOB.antagonist_teams
+	if(xeno_team)
+		for(var/datum/mind/alien in xeno_team.members)
+			if(istype(get_area(alien.current), /area/station/science/xenobiology/cell)  && alien.current.stat != DEAD)
+				xeno_count++
+				if(!alien.has_antag_datum(/datum/antagonist/xeno/captive))
+					alien.add_antag_datum(/datum/antagonist/xeno/captive)
+			else //make sure if they arent in xenobiology that they dont have the captive datum
+				if(alien.has_antag_datum(/datum/antagonist/xeno/captive))
+					alien.remove_antag_datum(/datum/antagonist/xeno/captive)
+			xeno_team.add_member(alien) //ensure the alien remains a part of the xeno team
+
+	return xeno_count
