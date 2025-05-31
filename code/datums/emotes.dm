@@ -62,6 +62,10 @@
 	var/can_message_change = FALSE
 	/// How long is the cooldown on the audio of the emote, if it has one?
 	var/audio_cooldown = 2 SECONDS
+	/// The falloff exponent for audible emotes.
+	var/falloff_exponent = SOUND_FALLOFF_EXPONENT
+	/// The extra range for audible emotes.
+	var/extra_range = 0
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -110,11 +114,16 @@
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
-		//MONKESTATION EDIT START - Allows sounds to vary based on their calling conditions.
-		//playsound(user, tmp_sound, 50, vary, mixer_channel = CHANNEL_MOB_SOUNDS) //MONKESTATION EDIT ORIGINAL
 		var/tmp_vary = should_vary(user)
-		playsound(user, tmp_sound, 50, tmp_vary, mixer_channel = get_mixer_channel(user, params, type_override, intentional))
-		//MONKESTATION EDIT END
+		playsound(
+			source = user,
+			soundin = tmp_sound,
+			vol = 50,
+			vary = tmp_vary,
+			extrarange = extra_range,
+			falloff_exponent = falloff_exponent,
+			mixer_channel = get_mixer_channel(user, params, type_override, intentional)
+		)
 
 	var/user_turf = get_turf(user)
 	if (user.client)
