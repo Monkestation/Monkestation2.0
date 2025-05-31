@@ -42,9 +42,7 @@
 
 /datum/status_effect/slime_washing/tick(seconds_between_ticks, seconds_per_tick)
 	var/mob/living/carbon/human/slime = owner
-	for(var/obj/item/slime_items in slime.get_equipped_items(include_pockets = FALSE))
-		slime_items.wash(CLEAN_WASH)
-		slime.wash(CLEAN_WASH)
+	slime.wash(CLEAN_WASH)
 	if((slime.wear_suit?.body_parts_covered | slime.w_uniform?.body_parts_covered | slime.shoes?.body_parts_covered) & FEET)
 		return
 	var/turf/open/open_turf = get_turf(slime)
