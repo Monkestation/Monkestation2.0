@@ -111,7 +111,7 @@
 	REMOVE_TRAIT(owner, TRAIT_SLIME_HYDROPHOBIA, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/slime_hydrophobia/get_examine_text()
-	return span_notice("[owner.p_They()] is oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
+	return span_notice("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
 
 /**
  * Toggle Death Signal simply adds and removes the trait required for slimepeople to transmit a GPS signal upon core ejection.
