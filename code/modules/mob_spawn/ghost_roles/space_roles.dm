@@ -306,11 +306,6 @@
 	r_pocket = /obj/item/flashlight
 	belt = null
 	ears = /obj/item/radio/headset/headset_independent/captain
-	backpack_contents = list(
-		/obj/item/storage/box/emergency_eva/explorer = 1,
-		/obj/item/grenade/chem_grenade/smart_metal_foam = 3,
-		/obj/item/inducer = 1,
-	)
 	id_trim = /datum/id_trim/job/away/old/freeminer/captain
 
 /datum/id_trim/job/away/old/freeminer/captain
