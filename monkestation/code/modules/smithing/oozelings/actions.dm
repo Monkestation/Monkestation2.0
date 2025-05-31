@@ -96,8 +96,9 @@
 
 /datum/status_effect/slime_hydrophobia
 	id = "slime_hydrophobia"
-	alert_type = null
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
 
 /datum/status_effect/slime_hydrophobia/on_apply()
 	. = ..()
