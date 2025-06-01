@@ -158,7 +158,7 @@
 	fire_delay = 1
 	can_suppress = FALSE
 	burst_size = 1
-	slot_flags = 0
+	slot_flags = ITEM_SLOT_BACK
 	worn_icon_state = "rostokov"
 	actions_types = list()
 	mag_display = TRUE
@@ -414,3 +414,25 @@
 /obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, TRUE, 0.1, 0.08, 5 SECONDS)
+
+/**
+ * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
+/obj/item/gun/ballistic/automatic/mini_uzi/chimpgun
+	name = "\improper MONK-10"
+	desc = "Developed by Syndicate monkeys, for syndicate Monkeys. Despite the name, this weapon resembles an Uzi significantly more than a MAC-10. Uses 9mm rounds. There's a label on the other side of the gun that says \"Do what comes natural.\""
+	projectile_damage_multiplier = 0.4
+	projectile_wound_bonus = -25
+	pin = /obj/item/firing_pin/monkey
+
+/**
+ * Weak tommygun for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
+/obj/item/gun/ballistic/automatic/tommygun/chimpgun
+	name = "\improper Typewriter"
+	desc = "It was the best of times, it was the BLURST of times!? You stupid monkeys!"
+	projectile_damage_multiplier = 0.4
+	projectile_wound_bonus = -25
+	pin = /obj/item/firing_pin/monkey

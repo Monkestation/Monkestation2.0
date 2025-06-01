@@ -112,7 +112,7 @@
 		to_chat(admin, span_danger("No valid nuke found!"))
 
 /datum/antagonist/nukeop/commando/leader
-	name = "Nuclear Commando Operative Leader"
+	name = "Commando Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
 	always_new_team = TRUE
 	/// Randomly chosen honorific, for distinction
