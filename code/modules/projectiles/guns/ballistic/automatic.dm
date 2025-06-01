@@ -158,7 +158,7 @@
 	fire_delay = 1
 	can_suppress = FALSE
 	burst_size = 1
-	slot_flags = ITEM_SLOT_BACK
+	slot_flags = null
 	worn_icon_state = "rostokov"
 	actions_types = list()
 	mag_display = TRUE
