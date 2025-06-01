@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/talos
-	desc = "A Velian modification of the 85k tank, fitted with the largest cannon feasable at the time. Can bearly move anymore."
+	desc = "A Velian modification of the 85k tank, fitted with the largest cannon feasable at the time. Can barely move anymore."
 	name = "85V-g Talos"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "talos_0_0"
