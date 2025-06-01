@@ -11,7 +11,7 @@
 		"cargoexpress",
 	//	"b_smelter",
 	//	"b_refinery",
-	//	"brm",
+		"brm",
 		"cooldownmod",
 		"damagemod",
 		"drill",
