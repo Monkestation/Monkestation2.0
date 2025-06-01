@@ -64,7 +64,6 @@
 #define RADIO_KEY_UNCOMMON "f"
 #define RADIO_TOKEN_UNCOMMON ":f"
 
-#define RADIO_KEY_INDEPENDENT "i"
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
 
