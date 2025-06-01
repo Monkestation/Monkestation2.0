@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Slimes now properly copy nanites when splitting again."
+  - qol: "Nanites now also copy cloud ID and safety thresholds when \"syncing\" with a full overwrite."

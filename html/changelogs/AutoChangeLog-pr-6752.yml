@@ -1,0 +1,5 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "Express console can now be unlocked by cargo access"
+  - rscadd: "Fab-o-vend and command clothing vender restocking units in cargo"

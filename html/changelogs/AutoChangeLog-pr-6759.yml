@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - balance: "True husks now allow for two teratomas spawned."
+  - balance: "Birth Teratoma now costs 50 chemicals. (From 60)"
