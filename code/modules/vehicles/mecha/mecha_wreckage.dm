@@ -243,7 +243,7 @@
 			/obj/item/mecha_parts/part/odysseus_right_leg)
 
 /obj/structure/mecha_wreckage/devitt
-	name = "\improper Devitt Mk3 Wreckage"
+	name = "\improper Devitt Mk.III Wreckage"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "devitt-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
@@ -286,3 +286,9 @@
 /obj/structure/mecha_wreckage/callahan/Initialize(mapload)
 	. = ..()
 	playsound(loc, 'sound/effects/explosion3.ogg', 250)
+
+/obj/structure/mecha_wreckage/devittcaine
+	name = "\improper Devitt-Caine Mk.IV MMR Wreckage"
+	icon = 'icons/mecha/tanks.dmi'
+	icon_state = "devittcaine-broken"
+	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)

@@ -121,9 +121,16 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/dangerous/devitt
-	name = "Devitt Mk3 Light Tank"
+	name = "Devitt Mk.III Light Tank"
 	desc = "An ancient tank teleported in for your machinations, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
 	item = /obj/vehicle/sealed/mecha/devitt
+	cost = 40
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/dangerous/devittcaine
+	name = "Devitt-Caine Mk.IV MMR Mortar Tank"
+	desc = "A modified Devitt with a mortar turret for indirect fire, this comes at the cost of speed, health, and the direct fire capability. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/devitt/caine
 	cost = 40
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 

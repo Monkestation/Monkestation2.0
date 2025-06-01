@@ -615,7 +615,7 @@
 	cost = 140
 
 /datum/uplink_item/support/devitt
-	name = "Devitt Mk3 Light Tank"
+	name = "Devitt Mk.III Light Tank"
 	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
 	item = /obj/vehicle/sealed/mecha/devitt
 	cost = 80
@@ -631,6 +631,12 @@
 	desc = "60 rounds of 12.7x70mm for use with the Devitt Mk3 light tank."
 	item = /obj/item/mecha_ammo/makeshift/lighttankmg
 	cost = 1
+
+/datum/uplink_item/support/devittcaine
+	name = "Devitt-Caine Mk.IV MMR Mortar Tank"
+	desc = "Trade the main cannon, a bit of speed, and a chunk of health to have indirect fire on a tank. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/devitt/caine
+	cost = 80
 
 /datum/uplink_item/support/talos
 	name = "85V-g Talos Assault tank"
