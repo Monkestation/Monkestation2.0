@@ -9,7 +9,7 @@
 	///Name of the mechpad in a mechpad console
 	var/display_name = "Orbital Pad"
 	///Can we carry mobs or just mechs?
-	var/mech_only = FALSE
+	var/mech_only = TRUE
 
 /obj/machinery/mechpad/Initialize(mapload)
 	. = ..()

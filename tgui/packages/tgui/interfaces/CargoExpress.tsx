@@ -30,7 +30,7 @@ export const CargoExpress = (props) => {
   return (
     <Window width={600} height={700}>
       <Window.Content scrollable>
-        <InterfaceLockNoticeBox accessText="a QM-level ID card" />
+        <InterfaceLockNoticeBox accessText="an ID with cargo access" />
         {!locked && <CargoExpressContent />}
       </Window.Content>
     </Window>

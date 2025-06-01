@@ -90,6 +90,7 @@
 	description = "State of the art lawsets to be used for AI research."
 	prereq_ids = list("ai_basic")
 	design_ids = list(
+		"ai_power_upgrade",
 		"asimovpp_module",
 		"paladin_devotion_module",
 		"dungeon_master_module",
