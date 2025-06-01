@@ -58,7 +58,7 @@ export const BeakerPanel = (props) => {
     {},
   );
 
-  const handleRragentsChange = (index: number, data) => {};
+  const handleReagentChange = (index: number, data) => {};
 
   const handleSearchChange = (containerNum: number, searchTerm: string) => {
     const newSearchTerms = {
@@ -76,7 +76,7 @@ export const BeakerPanel = (props) => {
     setSelectedReagents(newSelectedReagents);
   };
 
-  const addReagentToContainer = (containerNum: number) => {
+  const addReagentToContainer = (containerNum: number, volume: number) => {
     const selectedReagent = selectedReagents[containerNum];
     if (!selectedReagent) return;
 
@@ -85,7 +85,7 @@ export const BeakerPanel = (props) => {
       ...currentReagents,
       {
         id: selectedReagent.id,
-        amount: 1,
+        amount: volume,
       },
     ];
 
@@ -102,8 +102,31 @@ export const BeakerPanel = (props) => {
     setSelectedReagents(newSelectedReagents);
   };
 
+  const removeReagentfromContainer = (
+    containerNum: number,
+    reagent: number,
+  ) => {
+    const currentReagents = reagentsMap[containerNum] || [];
+    const newReagents = currentReagents.filter((_, i) => i !== reagent);
+    if (!newReagents) return;
+    reagentsMap[containerNum] = newReagents;
+    setReagentsMap(reagentsMap);
+  };
+
+  const updateReagentVolume = (
+    containerNum: number,
+    reagent: number,
+    volume: number,
+  ) => {};
+
   const spawnGrenade = () => {
     act('spawngrenade', {});
+  };
+
+  const spawnContainer = (containerNum) => {
+    const containerpayload = selectedContainersType[containerNum];
+    const reagents = reagentsMap[containerNum];
+    act('spawncontainer', { containers: containerpayload, reagents: reagents });
   };
 
   const renderContainerSection = (containerNum: number) => {
@@ -154,7 +177,7 @@ export const BeakerPanel = (props) => {
                 : 'None'}
             </LabeledList.Item>
           </LabeledList>
-          <Button icon="cog" onClick={() => null}>
+          <Button icon="cog" onClick={() => spawnContainer(containerNum)}>
             Spawn Container
           </Button>
           <Button icon="cog" onClick={() => null}>
@@ -179,14 +202,14 @@ export const BeakerPanel = (props) => {
                 <Flex.Item>
                   <NumberInput
                     width="80px"
-                    value={reagent.amount || 1}
+                    value={1}
                     minValue={0}
                     step={1}
                     stepPixelSize={10}
                   />
                 </Flex.Item>
                 <Flex.Item>
-                  <Button icon="trash" color="bad" onClick={() => 0}>
+                  <Button icon="trash" color="bad">
                     Remove
                   </Button>
                 </Flex.Item>
@@ -212,7 +235,7 @@ export const BeakerPanel = (props) => {
             <Flex.Item>
               <Button
                 icon="plus"
-                onClick={() => addReagentToContainer(containerNum)}
+                onClick={() => addReagentToContainer(containerNum, 1)}
                 disabled={!selectedReagents[containerNum]}
               >
                 Add
