@@ -4,9 +4,15 @@
 SUBSYSTEM_DEF(asset_loading)
 	name = "Asset Loading"
 	priority = FIRE_PRIORITY_ASSETS
-	flags = SS_NO_INIT
+	flags = SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	var/list/datum/asset/generate_queue = list()
+
+/datum/controller/subsystem/asset_loading/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, generate_queue),
+	)
 
 /datum/controller/subsystem/asset_loading/fire(resumed)
 	while(length(generate_queue))
