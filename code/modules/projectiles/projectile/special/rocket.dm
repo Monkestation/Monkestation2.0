@@ -85,6 +85,19 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/supporttankshell/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, flame_range = 6, flash_range = 4, adminlog = TRUE)
 
+/// 21in torpedo, roughly
+/obj/projectile/bullet/rocket/torpenis
+	name = "\improper 21in torpedo"
+	desc = "A nearly 2 foot wide torpedo carrying hundreds of pounds of explosives, why did NT make bluespace tech to let it swim on station tiles?"
+	icon = 'icons/obj/weapons/guns/tallprojectiles.dmi'
+	icon_state = "torpenis"
+	damage = 10
+	dismemberment = -100
+	anti_armour_damage = 350
+
+/obj/projectile/bullet/rocket/torpenis/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 10, flame_range = 12, flash_range = 16, adminlog = TRUE)
+
 
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak

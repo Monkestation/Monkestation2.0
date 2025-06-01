@@ -65,4 +65,5 @@
 #define MECHA_AMMO_FLAME "flamefuel"
 #define MECHA_AMMO_BBLARGE "BB main guns"
 #define MECHA_AMMO_BBSMALL "BB secondary"
+#define MECHA_AMMO_TORPENIS "fucking torpedos"
 //monke edit end

@@ -5868,6 +5868,7 @@
 #include "code\modules\vehicles\mecha\combat\honker.dm"
 #include "code\modules\vehicles\mecha\combat\kingspire.dm"
 #include "code\modules\vehicles\mecha\combat\marauder.dm"
+#include "code\modules\vehicles\mecha\combat\nakki.dm"
 #include "code\modules\vehicles\mecha\combat\percutio.dm"
 #include "code\modules\vehicles\mecha\combat\phazon.dm"
 #include "code\modules\vehicles\mecha\combat\reticence.dm"

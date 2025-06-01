@@ -692,3 +692,16 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_BBSMALL
 	mech_flags = EXOSUIT_MODULE_BATTLESHIP
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/torpedos
+	name = "Torpedo Launchers"
+	desc = "2 torpedo tubes, ready to ruin the day of whoever they're fired at."
+	icon_state = "mecha_torpenis"
+	projectile = /obj/projectile/bullet/rocket/torpenis
+	projectiles = 2
+	projectiles_cache = 12
+	projectiles_cache_max = 12
+	equip_cooldown = 4 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_TORPENIS
+	mech_flags = EXOSUIT_MODULE_BATTLESHIP

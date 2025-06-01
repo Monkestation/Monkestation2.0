@@ -1,26 +1,27 @@
-/obj/vehicle/sealed/mecha/callahan
-	desc = "The pride of the Caovish navy, named after the first archon of the Warden empire. For some unknown reason, NT has used ultra advanced bluespace tech to shrink it to station size, and roboticized it to need only 1 crew. Doom incarnate, makes heretic worms look like earth worms."
-	name = "Callahan class Battleship"
+/obj/vehicle/sealed/mecha/nakki
+	desc = "The Nakki is armed with Moray Torpedeos, combined with her top secret new invention, sonar, she can rip apart any legion fleets. For some unknown reason, NT has used ultra advanced bluespace tech to shrink it to station size, and roboticized it to need only 1 crew. A torpedo wins the elder god matchup."
+	name = "Nakki Class Submarine"
 	icon = 'icons/mecha/callahan.dmi'
-	icon_state = "callahan"
-	base_icon_state = "callahan"
-	SET_BASE_PIXEL(-141, 0)
-	max_integrity = 7000 // doom incarnate.
+	icon_state = "nakki"
+	base_icon_state = "nakki"
+	SET_BASE_PIXEL(-125, 0)
+	max_integrity = 1200 // still a ship.
 	force = 100 // ship
-	movedelay = 3.5
+	movedelay = 2.7
+	phasing_energy_drain = 5
 	step_energy_drain = 5 // .5x normal drain
-	bumpsmash = TRUE
+	phase_state = "nakki-dived"
 	stepsound = null
 	turnsound = null
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS //can't strafe bruv
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/callahan //its neigh on immune to bullets, but explosives and melee will ruin it. rivetts mean even more melee vun
 	internal_damage_threshold = 35 //Its old but no electronics
 	wreckage = /obj/structure/mecha_wreckage/callahan
 	move_resist = INFINITY
 	mech_type = EXOSUIT_MODULE_BATTLESHIP
 	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/callahan150s,
-		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/callahansecondary,
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/torpedos,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
@@ -39,30 +40,31 @@
 	fire = 90
 	acid = 100 // they wash the poop deck regularly
 
-/obj/vehicle/sealed/mecha/callahan/generate_actions()
+/obj/vehicle/sealed/mecha/nakki/generate_actions()
 	. = ..()
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_zoom)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_horn)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_sonar)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_reinforce)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_dive)
 
 // better parts since TC
-/obj/vehicle/sealed/mecha/callahan/add_cell()
+/obj/vehicle/sealed/mecha/nakki/add_cell()
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
 
-/obj/vehicle/sealed/mecha/callahan/add_capacitor()
+/obj/vehicle/sealed/mecha/nakki/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 
 /datum/action/vehicle/sealed/mecha/mech_zoom
 	name = "Zoom"
 	button_icon_state = "mech_zoom_off"
 
-/datum/action/vehicle/sealed/mecha/mech_horn
-	name = "Sound the Horn"
+/datum/action/vehicle/sealed/mecha/mech_sonar
+	name = "Ping the Sonar"
 	button_icon_state = "mech_zoom_off"
 
-/datum/action/vehicle/sealed/mecha/mech_reinforce
-	name = "Reinforcements have arrived"
+/datum/action/vehicle/sealed/mecha/mech_dive
+	name = "Dive Submarine"
 	button_icon_state = "mech_zoom_off"
+
 
 /datum/action/vehicle/sealed/mecha/mech_zoom/Trigger(trigger_flags) // stolen from the marauder, give the tank a tank sight.
 	if(!owner?.client || !chassis || !(owner in chassis.occupants))
@@ -76,9 +78,26 @@
 		SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg', volume=50))
 	else
 		owner.client.view_size.resetToDefault()
-	build_all_button_icons()
+
 
 /datum/action/vehicle/sealed/mecha/mech_horn/Trigger(trigger_flags) // ear rape. But lets people know theyre dead
 	playsound(chassis, 'sound/vehicles/dreadnaughthorn.ogg', 250)
 /datum/action/vehicle/sealed/mecha/mech_reinforce/Trigger(trigger_flags)
-	playsound(chassis, 'sound/vehicles/wearebeingreinforced.ogg', 175)
+	playsound(chassis, 'sound/vehicles/wearebeingreinforced.ogg', 250)
+
+
+// the diving
+
+/datum/action/vehicle/sealed/mecha/mech_dive/Trigger(trigger_flags)
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+	chassis.phasing = chassis.phasing ? "" : "phasing"
+	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
+	chassis.balloon_alert(owner, "[chassis.phasing ? "enabled" : "disabled"] diving")
+	if(chassis.phasing == "phasing")
+		chassis.icon_state = "nakki_dived"
+		chassis.movedelay = 3.7
+	else
+		chassis.icon_state = "nakki"
+		chassis.movedelay = 2.7
+	build_all_button_icons()
