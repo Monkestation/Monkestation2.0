@@ -64,10 +64,7 @@
 #define RADIO_KEY_UNCOMMON "f"
 #define RADIO_TOKEN_UNCOMMON ":f"
 
-#define RADIO_CHANNEL_INDEPENDENT "Independent"
 #define RADIO_KEY_INDEPENDENT "i"
-#define RADIO_TOKEN_INDEPENDENT ":i"
-
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
 
@@ -88,8 +85,6 @@
 #define FREQ_ENTERTAINMENT 1415 // Used by entertainment monitors, cyan
 #define FREQ_RADIO 1361 //monkestation edit
 #define FREQ_UNCOMMON 1363 //monkestation addition, Light gray
-#define FREQ_INDEPENDENT 1339 //monkestation addition, Light gray
-
 #define FREQ_HOLOGRID_SOLUTION 1433
 #define FREQ_STATUS_DISPLAYS 1435
 

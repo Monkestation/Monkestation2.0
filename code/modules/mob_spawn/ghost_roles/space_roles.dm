@@ -227,7 +227,6 @@
 	r_pocket = /obj/item/storage/bag/ore
 	belt = /obj/item/pickaxe
 	id = /obj/item/card/id/advanced/old
-	ears = /obj/item/radio/headset/headset_independent
 	id_trim = /datum/id_trim/job/away/old/freeminer
 	box = /obj/item/storage/box/survival/engineer
 
@@ -291,8 +290,8 @@
 	l_pocket = /obj/item/tank/internals/emergency_oxygen/double
 	r_pocket = /obj/item/flashlight
 	belt = null
-	ears = /obj/item/radio/headset/headset_independent/captain
 	id_trim = /datum/id_trim/job/away/old/freeminer/captain
+	r_hand = /obj/item/megaphone/command
 
 /datum/id_trim/job/away/old/freeminer/captain
 	minimal_access = list(
