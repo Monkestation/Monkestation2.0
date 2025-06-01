@@ -300,7 +300,6 @@
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		var/turf/our_turf = get_turf(src)
 		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
-	. = ..()
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
