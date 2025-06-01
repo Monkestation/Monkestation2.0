@@ -9,3 +9,11 @@
 	if(multicam_on)
 		end_multicam()
 	view_core()
+	INVOKE_ASYNC(src, PROC_REF(preload_vox_voices))
+
+/// Preloads the `vox_voices.json` asset
+/mob/living/silicon/ai/proc/preload_vox_voices()
+	set waitfor = FALSE
+	var/datum/asset/json/vox_voices/asset = get_asset_datum(/datum/asset/json/vox_voices)
+	if(client)
+		asset.send(client)
