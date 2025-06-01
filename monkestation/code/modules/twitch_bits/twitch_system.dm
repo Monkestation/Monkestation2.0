@@ -4,7 +4,7 @@
 SUBSYSTEM_DEF(twitch)
 	name = "Twitch Events"
 	wait = 0.5 SECONDS
-	flags = SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	priority = FIRE_PRIORITY_TWITCH
 	init_order = INIT_ORDER_TWITCH
@@ -20,6 +20,13 @@ SUBSYSTEM_DEF(twitch)
 	var/datum/twitch_event/last_event
 	var/last_event_execution = 0
 	var/last_executor
+
+/datum/controller/subsystem/twitch/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, running_events),
+		NAMEOF(src, deferred_handlers),
+	)
 
 /datum/controller/subsystem/twitch/Initialize()
 	for(var/event as anything in subtypesof(/datum/twitch_event))

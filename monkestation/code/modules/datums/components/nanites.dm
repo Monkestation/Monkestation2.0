@@ -144,8 +144,10 @@
 				SNP.copy_programming(NP, copy_activation)
 				break
 	if(full_overwrite)
-		for(var/X in programs_to_remove)
-			qdel(X)
+		QDEL_LIST(programs_to_remove)
+		cloud_id = source.cloud_id
+		cloud_active = source.cloud_active
+		safety_threshold = source.safety_threshold
 	for(var/X in programs_to_add)
 		var/datum/nanite_program/SNP = X
 		add_program(null, SNP.copy())

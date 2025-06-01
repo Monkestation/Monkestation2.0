@@ -320,6 +320,9 @@
   - bugfix: Fixed an error with the Anti-Glow gene.
   Absolucy, EnterTheJake:
   - bugfix: Space Phase now makes the Heretic Space proof.
+  Absolucy, EnterTheJake, OrcaCora:
+  - image: Resprited the rust, moon, blade, void, and ash path heretic blades.
+  - image: Blade Heretic Knives have been resprited into proper throwing knives.
   Absolucy, Melbert:
   - refactor: Food hunger bar has been refactored, and moved. Now it sits next to
       the moodlet face, and dynamically updates as you eat.
@@ -348,3 +351,74 @@
   Siro:
   - code_imp: Crit health check for oozling decapitations restored. Head decapitations
       match other species.
+  - code_imp: removed unremovable flag from obj/item/organ/internal/eyes/jelly types.
+2025-05-24:
+  Absolucy:
+  - refactor: Made some changes to how some item icons are displayed in tgui windows,
+      hopefully improving tgui load times.
+2025-05-25:
+  SirNightKnight:
+  - rscadd: added explorer eva kits to mining order consoles.
+  - rscadd: added advanced GPSs to mining order consoles.
+  - rscadd: added basic medkits to mining order consoles.
+  - balance: dropped the price of fire medkits to 600 points in the mining order console
+      for OCD reasons.
+  - bugfix: fixed a system glitch sending explorers to planetary stations.
+  Xander3359 Hatterhat:
+  - qol: Holosigns (engineering holobarriers, janitor holosigns, PENLITE holobarriers,
+      etc.) can now be projected onto doors.
+  - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
+      and grilles.
+2025-05-26:
+  notghosti:
+  - qol: Clarified in plague rat greet text what heals a rat.
+  - balance: Eating normal food now heals a plague rat. albeit a much lesser amount
+      and function than cheese
+2025-05-27:
+  Siro:
+  - rscadd: Heart emitter unique effect
+2025-05-28:
+  Absolucy:
+  - bugfix: Fixed some stacked atmos pipes on some icebox/tram bars and and a space
+      ruin.
+  - bugfix: Firelocks now skip checking uninitialized turfs, which caused errors with
+      the holodeck.
+  - map: Added liquid barriers to the doors in Pubby Station's xenobiology.
+  Absolucy, Melbert:
+  - code_imp: Updated some status effect tick code to be more clear of how long is
+      elapsing between ticks. Some effects that were inadvertently weakened are now
+      stronger as a result (fire and some heretic effects).
+  Addust:
+  - map: A Johnson & Co Architecture construction team has been sent into Central
+      Command to manifest a new office into existence, at the request of Glasser Trisk.
+  - map: A second team was also sent in to build an office for Giacomo Affinito.
+  Helixsix:
+  - bugfix: Fixed xenobio doors not autoclosing on Theseus.
+  - map: Renovated Heliostation Xenobiology
+  SirNightKnight:
+  - rscadd: added new alarms to the station to signify a Delta alert.
+  - rscadd: added more status displays for the new alert levels.
+  - qol: status displays set to an alert level display will update to the current
+      alert level if it changes.
+  - bugfix: ' fixed fire alarms not displaying the correct alert level light.'
+  TheMrGlasses:
+  - balance: Buff to the Slasher's jaunt.
+  Xander3359:
+  - bugfix: Void ascension storm now respects antimagic
+  - bugfix: Void chill can no longer be applied to people with antimagic
+  notghosti:
+  - rscadd: Robotic limbs can now be adjusted to fit satyrs and orthinid's by using
+      a wrench on the limbs
+  - bugfix: All of satyrs and orthinids limbs will now fit, a satyr or orthinid
+2025-05-30:
+  BingusSS13:
+  - qol: The space hotel now has more universal enzyme, flour, sugar, and rice.
+  - qol: The space hotel now has actual parts to build hydroponics with.
+  - qol: The space hotel now has a seed extractor board and a composter board for
+      hydroponics.
+2025-05-31:
+  notghosti:
+  - bugfix: Slimes now ignore drones.
+  sprungleio:
+  - rscadd: The hole.
+  - rscadd: More flavor to Beverly's fax machine.

@@ -322,8 +322,33 @@ GLOBAL_LIST_INIT(status_display_approved_pictures, list(
 	"bluealert",
 	"redalert",
 	"deltaalert",
+	"amberalert",
+	"yellowalert",
+	"lambdaalert",
+	"gammaalert",
+	"epsilonalert",
 	"radiation",
 	"currentalert", //For automatic set of status display on current level
+))
+
+// All possible alert level displays
+GLOBAL_LIST_INIT(status_display_alert_level_pictures, list(
+	"greenalert",
+	"bluealert",
+	"redalert",
+	"deltaalert",
+	"amberalert",
+	"yellowalert",
+	"lambdaalert",
+	"gammaalert",
+	"epsilonalert",
+))
+
+// Alert level names on the same level
+GLOBAL_LIST_INIT(same_level_alert_levels, list(
+	"blue",
+	"yellow",
+	"amber",
 ))
 
 // Members of status_display_approved_pictures that are actually states and not alert values

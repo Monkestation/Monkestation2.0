@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(statpanels)
 	name = "Stat Panels"
-	wait = 4
+	wait = 0.4 SECONDS
 	init_order = INIT_ORDER_STATPANELS
 	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_STATPANEL

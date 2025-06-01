@@ -278,6 +278,9 @@
 			log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
 		if("toggle_port")
 			if(internal_tank.connected_port)
+				if(!internal_tank)
+					to_chat(occupants, "[icon2html(src, occupants)][span_notice("No internal tank detected on exosuit.")]")
+					return
 				if(internal_tank.disconnect())
 					to_chat(occupants, "[icon2html(src, occupants)][span_notice("Disconnected from the air system port.")]")
 					log_message("Disconnected from gas port.", LOG_MECHA)
