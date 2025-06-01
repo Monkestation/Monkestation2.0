@@ -5,17 +5,18 @@
 "A" = (
 /obj/docking_port/stationary{
 	dir = 2;
-	dwidth = 17;
-	height = 17;
+	dwidth = 14;
+	height = 18;
 	shuttle_id = "freeminer_away";
 	name = "Empty Space";
 	roundstart_template = /datum/map_template/shuttle/ruin/freeminer;
-	width = 32
+	width = 31
 	},
 /turf/template_noop,
 /area/template_noop)
 
 (1,1,1) = {"
+a
 a
 a
 a
@@ -52,8 +53,10 @@ a
 a
 a
 a
+a
 "}
 (3,1,1) = {"
+a
 a
 a
 a
@@ -90,8 +93,10 @@ a
 a
 a
 a
+a
 "}
 (5,1,1) = {"
+a
 a
 a
 a
@@ -128,8 +133,10 @@ a
 a
 a
 a
+a
 "}
 (7,1,1) = {"
+a
 a
 a
 a
@@ -166,8 +173,10 @@ a
 a
 a
 a
+a
 "}
 (9,1,1) = {"
+a
 a
 a
 a
@@ -204,8 +213,10 @@ a
 a
 a
 a
+a
 "}
 (11,1,1) = {"
+a
 a
 a
 a
@@ -242,8 +253,10 @@ a
 a
 a
 a
+a
 "}
 (13,1,1) = {"
+a
 a
 a
 a
@@ -280,8 +293,10 @@ a
 a
 a
 a
+a
 "}
 (15,1,1) = {"
+a
 a
 a
 a
@@ -318,9 +333,11 @@ a
 a
 a
 a
+a
 "}
 (17,1,1) = {"
-A
+a
+a
 a
 a
 a
@@ -339,6 +356,7 @@ a
 a
 "}
 (18,1,1) = {"
+A
 a
 a
 a
@@ -375,8 +393,10 @@ a
 a
 a
 a
+a
 "}
 (20,1,1) = {"
+a
 a
 a
 a
@@ -413,8 +433,10 @@ a
 a
 a
 a
+a
 "}
 (22,1,1) = {"
+a
 a
 a
 a
@@ -451,8 +473,10 @@ a
 a
 a
 a
+a
 "}
 (24,1,1) = {"
+a
 a
 a
 a
@@ -489,8 +513,10 @@ a
 a
 a
 a
+a
 "}
 (26,1,1) = {"
+a
 a
 a
 a
@@ -527,8 +553,10 @@ a
 a
 a
 a
+a
 "}
 (28,1,1) = {"
+a
 a
 a
 a
@@ -565,8 +593,10 @@ a
 a
 a
 a
+a
 "}
 (30,1,1) = {"
+a
 a
 a
 a
@@ -603,8 +633,10 @@ a
 a
 a
 a
+a
 "}
 (32,1,1) = {"
+a
 a
 a
 a
