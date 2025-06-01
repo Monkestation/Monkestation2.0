@@ -313,6 +313,12 @@
 
 	var/mob/living/living_target = target
 
+	if((target.buckled != null) && (target.buckled.cover_amount != 0)
+		if(prob(target.buckled.cover_amount))
+			target.buckled.take_damage(damage, damage_type, armor_flag, armour_penetration = armour_penetration)
+			do_sparks(round((damage / 20)), FALSE, living_target)
+			return BULLET_ACT_HIT
+
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)
 		if (damage)
