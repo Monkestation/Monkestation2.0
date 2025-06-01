@@ -68,32 +68,68 @@
 	alert_type = /atom/movable/screen/alert/status_effect/cursed_blood
 	show_duration = TRUE
 	processing_speed = STATUS_EFFECT_PRIORITY
-
-/atom/movable/screen/alert/status_effect/cursed_blood
-	name = "Cursed Blood"
-	desc = "Something foreign is coursing through your veins!"
-	icon_state = "blooddrunk"
+	/// The base amount of damage to heal each tick.
+	var/static/base_healing = 2
 
 /datum/status_effect/cursed_blood/on_apply()
 	to_chat(owner, span_warning("You feel a great power surging through you!"))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 	owner.fully_heal(HEAL_NEGATIVE_DISEASES)
+	owner.set_pain_mod(id, 0.5)
+
+	var/datum/physiology/physiology = astype(owner, /mob/living/carbon/human)?.physiology
+	if(physiology)
+		physiology.bleed_mod *= 0.5
+		physiology.stun_mod *= 0.75
 	return TRUE
 
 /datum/status_effect/cursed_blood/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
+	owner.unset_pain_mod(id)
+	var/datum/physiology/physiology = astype(owner, /mob/living/carbon/human)?.physiology
+	if(physiology)
+		physiology.bleed_mod /= 0.5
+		physiology.stun_mod /= 0.75
 
 /datum/status_effect/cursed_blood/tick(seconds_between_ticks, times_fired)
 	var/needs_update = FALSE
-	if(ISINRANGE(owner.health, 0, 90))
-		needs_update += owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-		needs_update += owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-		needs_update += owner.adjustToxLoss(-1 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-		needs_update += owner.adjustOxyLoss(-1 * seconds_between_ticks, updating_health = FALSE)
+	var/healing_amount = base_healing * seconds_between_ticks
+	if(owner.health <= owner.crit_threshold)
+		healing_amount *= 2
 	owner.AdjustAllImmobility((-6 SECONDS) * seconds_between_ticks)
 	owner.stamina.adjust(7 * seconds_between_ticks, forced = TRUE)
+	adjust_all_damages(healing_amount)
+	adjust_bleed_wounds(healing_amount)
 	if(needs_update)
 		owner.updatehealth()
+
+/datum/status_effect/cursed_blood/proc/adjust_all_damages(amount)
+	var/needs_update = FALSE
+	needs_update += owner.adjustBruteLoss(-amount, updating_health = FALSE)
+	needs_update += owner.adjustFireLoss(-amount, updating_health = FALSE)
+	needs_update += owner.adjustToxLoss(-(amount / 2), updating_health = FALSE, forced = TRUE)
+	needs_update += owner.adjustOxyLoss(-(amount / 2), updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
+
+/datum/status_effect/cursed_blood/proc/adjust_bleed_wounds(amount)
+	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || !iscarbon(owner))
+		return
+
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+		owner.blood_volume = min(owner.blood_volume + amount, BLOOD_VOLUME_NORMAL)
+
+	var/mob/living/carbon/carbon_owner = owner
+	var/datum/wound/bloodiest_wound
+	for(var/datum/wound/iter_wound as anything in carbon_owner.all_wounds)
+		if(iter_wound.blood_flow && (iter_wound.blood_flow > bloodiest_wound?.blood_flow))
+			bloodiest_wound = iter_wound
+	bloodiest_wound?.adjust_blood_flow(-0.5)
+
+/atom/movable/screen/alert/status_effect/cursed_blood
+	name = "Cursed Blood"
+	desc = "Something foreign is coursing through your veins!"
+	icon_state = "blooddrunk"
 
 /datum/movespeed_modifier/cursed_blood
 	multiplicative_slowdown = -0.6
