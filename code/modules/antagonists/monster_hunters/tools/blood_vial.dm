@@ -76,6 +76,7 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 	owner.fully_heal(HEAL_NEGATIVE_DISEASES)
 	owner.set_pain_mod(id, 0.5)
+	owner.add_homeostasis_level(id, owner.standard_body_temperature, 0.5 KELVIN)
 
 	var/datum/physiology/physiology = astype(owner, /mob/living/carbon/human)?.physiology
 	if(physiology)
@@ -86,6 +87,7 @@
 /datum/status_effect/cursed_blood/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/cursed_blood)
 	owner.unset_pain_mod(id)
+	owner.remove_homeostasis_level(id)
 	var/datum/physiology/physiology = astype(owner, /mob/living/carbon/human)?.physiology
 	if(physiology)
 		physiology.bleed_mod /= 0.5
