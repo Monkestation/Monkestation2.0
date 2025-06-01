@@ -74,18 +74,6 @@
 	new /obj/item/ammo_box/advanced/s12gauge/buckshot(src)
 	new /obj/item/ammo_box/advanced/s12gauge/buckshot(src)
 
-/*
-/datum/opposing_force_equipment/ranged/rebar_crossbow
-	name = "Syndicate Rebar Crossbow"
-	description = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
-	item_type = /obj/item/storage/toolbox/guncase/nova/opfor/rebar_crossbow
-
-/obj/item/storage/toolbox/guncase/nova/opfor/rebar_crossbow/PopulateContents()
-	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
-	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
-*/
-
 //laser
 /datum/opposing_force_equipment/ranged/ion
 	name = "ion carbine"

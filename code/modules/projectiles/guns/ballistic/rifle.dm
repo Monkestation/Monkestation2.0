@@ -16,6 +16,8 @@
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 	gun_flags = GUN_SMOKE_PARTICLES
+	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
+	var/need_bolt_lock_to_interact = TRUE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
@@ -33,7 +35,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
-	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
+	if(need_bolt_lock_to_interact && !bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
 		balloon_alert(user, "[bolt_wording] is closed!")
 		return
 	return ..()
@@ -191,6 +193,7 @@
 	tac_reloads = FALSE
 	var/draw_time = 3 SECONDS
 	SET_BASE_PIXEL(0, 0)
+	need_bolt_lock_to_interact = FALSE
 
 /obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
 	if (bolt_locked)
@@ -249,6 +252,7 @@
 	name = "syndicate rebar crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
 			Holds three shots without a chance of exploding, and features a built in scope. Compatible with all known crossbow ammunition."
+	base_icon_state = "rebarxbowsyndie"
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
