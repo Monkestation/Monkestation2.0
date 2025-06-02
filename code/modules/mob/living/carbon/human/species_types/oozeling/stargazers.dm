@@ -87,11 +87,11 @@
 	return TRUE
 
 /datum/action/innate/link_minds/Activate()
-	if(!isliving(owner.pulling) || (owner.grab_state < GRAB_AGGRESSIVE && (status_flags & CANPUSH) && !HAS_TRAIT(src, TRAIT_PUSHIMMUNE)))
+	var/mob/living/living_target = owner.pulling
+	if(!isliving(living_target) || (living_target.grab_state < GRAB_AGGRESSIVE && (living_target.status_flags & CANPUSH) && !HAS_TRAIT(living_target, TRAIT_PUSHIMMUNE)))
 		to_chat(owner, span_warning("You need to aggressively grab someone to link minds!"))
 		return
 
-	var/mob/living/living_target = owner.pulling
 	if(living_target.stat == DEAD)
 		to_chat(owner, span_warning("They're dead!"))
 		return
