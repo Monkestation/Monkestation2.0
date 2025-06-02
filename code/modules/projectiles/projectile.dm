@@ -313,11 +313,14 @@
 
 	var/mob/living/living_target = target
 
-	if((target.buckled != null) && (target.buckled.cover_amount != 0)
-		if(prob(target.buckled.cover_amount))
-			target.buckled.take_damage(damage, damage_type, armor_flag, armour_penetration = armour_penetration)
-			do_sparks(round((damage / 20)), FALSE, living_target)
-			return BULLET_ACT_HIT
+	if(living_target.buckled)
+		var/obj/buck_source = living_target.buckled
+		if(buck_source.cover_amount != 0)
+			if(prob(buck_source.cover_amount))
+				buck_source.take_damage(damage, damage_type, armor_flag, armour_penetration = armour_penetration)
+				visible_message(span_notice("The [generic_name || src] hits the [buck_source]!"))
+				do_sparks(round((damage / 10)), FALSE, living_target)
+				return BULLET_ACT_HIT
 
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)

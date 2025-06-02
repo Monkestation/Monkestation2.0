@@ -35,7 +35,6 @@
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
-	var/cover_amount = 0 ///Chance for a projectile to hit the vehicle instead of the occupant
 
 /datum/armor/obj_vehicle
 	melee = 30

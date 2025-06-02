@@ -17,7 +17,7 @@
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	cover_amount = 35
+	cover_amount = 50
 
 
 /datum/armor/argonaut
