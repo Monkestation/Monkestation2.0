@@ -36,7 +36,11 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		/datum/action/innate/split_body,
 	)
 
+	/// The manager instance used to link all of someone's slimeperson bodies.
 	var/datum/slimeperson_manager/manager
+	/// If TRUE, then the next `spec_life` will ensure that the slime body is added to the manager, if there is one.
+	/// Mostly a simple workaround for ensuring cloned/recreated bodies are properly linked.
+	var/needs_manager_update = FALSE
 
 /datum/species/oozeling/slime/Destroy(force)
 	manager = null
@@ -64,10 +68,14 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 //If you're cloned you get your body pool back
 /datum/species/oozeling/slime/copy_properties_from(datum/species/oozeling/slime/old_species)
 	manager = old_species.manager
+	needs_manager_update = TRUE
 
 /datum/species/oozeling/slime/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	if(IS_BLOODSUCKER(slime))
 		return ..()
+	if(needs_manager_update && manager)
+		manager.add_body(slime)
+		needs_manager_update = FALSE
 	if(slime.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_notice("You feel very bloated!"))
@@ -313,6 +321,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		slime.manager.remove_body(new_body)
 	RegisterSignals(new_body, list(COMSIG_QDELETING, COMSIG_SPECIES_LOSS), PROC_REF(remove_body))
 	bodies += new_body
+	slime.needs_manager_update = FALSE
 	slime.manager = src
 	SStgui.update_uis(src)
 	return TRUE
@@ -324,8 +333,10 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	bodies -= body
 	UnregisterSignal(body, list(COMSIG_QDELETING, COMSIG_SPECIES_LOSS))
 	var/datum/species/oozeling/slime/slime = astype(body.dna?.species)
-	if(slime?.manager == src)
-		slime.manager = null
+	if(slime)
+		if(slime.manager == src)
+			slime.manager = null
+		slime.needs_manager_update = FALSE
 	SStgui.update_uis(src)
 
 /datum/slimeperson_manager/proc/get_available_bodies()
