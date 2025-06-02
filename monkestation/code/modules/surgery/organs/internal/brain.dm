@@ -1,6 +1,6 @@
 /obj/item/organ/internal/brain/clockwork
 	name = "enigmatic gearbox"
-	desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'"
+	desc = "An engineer would call this inconcievable wonder of gears and metal a 'black box'"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-clock"
 	status = ORGAN_ROBOTIC
@@ -130,7 +130,7 @@
 
 	if(!do_after(user, 30 SECONDS, src))
 		user.visible_message(
-			span_warning("[user]'s hand slips out of the core before they can cause any harm!'"),
+			span_warning("[user]'s hand slips out of the core before they can cause any harm!"),
 			gps_active ? span_notice("Your hand slips out of the goopy core before you can find it's densest point.") : span_notice("Your hand slips out of the goopy core before you can find any dense points."),
 			span_notice("You hear a resounding plop.")
 		)
