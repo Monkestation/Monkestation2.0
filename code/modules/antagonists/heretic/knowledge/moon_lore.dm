@@ -74,7 +74,6 @@
 	desc = "Grants you Smile of the moon, a ranged spell muting, blinding, deafening and knocking down the target for a\
 		duration based on their sanity."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
 		/datum/heretic_knowledge/medallion,
@@ -128,7 +127,6 @@
 			if the item is used on someone with low sanity they go berserk attacking everyone \
 			, if their sanity isnt low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/moon,
 		/datum/heretic_knowledge/reroll_targets,

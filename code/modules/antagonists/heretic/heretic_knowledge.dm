@@ -33,8 +33,6 @@
 	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
 	var/cost = 0
-	/// If true, adds side path points according to value. Only main branch powers that split into sidepaths should have this.
-	var/adds_sidepath_points = 0
 	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
 	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
 	var/priority = 0
@@ -65,8 +63,6 @@
 
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
-	// Usually zero
-	our_heretic.side_path_points += adds_sidepath_points
 	on_gain(user, our_heretic)
 
 /**
