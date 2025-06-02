@@ -6,7 +6,7 @@
 
 /obj/item/storage/box/syndie_kit/mini_kit
 	name = "Syndicate Mini-Kit"
-	desc = "A compact, unassuming box. Contains a starter set of basic tools."
+	desc = "A tiny, suspicious-looking box. Contains a starter set of basic tools."
 	icon_state = "mini_syndiebox"
 	illustration = null
 
