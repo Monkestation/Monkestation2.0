@@ -5,12 +5,12 @@
 "A" = (
 /obj/docking_port/stationary{
 	dir = 2;
-	dwidth = 14;
-	height = 18;
+	dwidth = 17;
+	height = 20;
 	shuttle_id = "freeminer_away";
 	name = "Empty Space";
 	roundstart_template = /datum/map_template/shuttle/ruin/freeminer;
-	width = 31
+	width = 34
 	},
 /turf/template_noop,
 /area/template_noop)

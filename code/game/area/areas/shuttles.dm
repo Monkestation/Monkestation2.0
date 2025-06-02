@@ -317,3 +317,4 @@
 
 /area/shuttle/ruin/free_miner
 	name = "Free Miner Ship"
+	requires_power = TRUE

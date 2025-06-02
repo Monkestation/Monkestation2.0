@@ -30,8 +30,7 @@
 /area/shuttle/ruin/free_miner)
 "cj" = (
 /obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/bot,
-/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/arrows,
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "cN" = (
@@ -132,6 +131,9 @@
 /turf/open/floor/carpet/grimey,
 /area/shuttle/ruin/free_miner)
 "fM" = (
+/obj/machinery/mass_driver{
+	id = "freeminer_driver"
+	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
@@ -213,7 +215,6 @@
 /obj/item/clothing/suit/jacket/frontier_colonist,
 /obj/item/storage/belt/sabre/cargo,
 /obj/item/clothing/under/rank/cargo/qm/nova/formal,
-/obj/item/megaphone,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/gun/energy/e_gun/mini,
 /obj/item/radio,
@@ -235,6 +236,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
 /area/shuttle/ruin/free_miner)
+"ig" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/multitool,
+/obj/item/electronics/airlock/old,
+/obj/item/electronics/airlock/old,
+/obj/item/electronics/airlock/old,
+/obj/item/electronics/apc,
+/obj/item/electronics/apc,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/turf/open/floor/iron/shuttle/exploration/flat,
+/area/shuttle/ruin/free_miner)
 "jA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/north,
@@ -246,6 +266,8 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/structure/filingcabinet,
+/obj/item/card/id/advanced/old,
+/obj/item/card/id/advanced/old,
 /turf/open/floor/wood/parquet,
 /area/shuttle/ruin/free_miner)
 "jP" = (
@@ -282,6 +304,9 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/six,
+/obj/item/mod/construction/broken_core,
+/obj/item/mod/construction/broken_core,
+/obj/item/mod/construction/broken_core,
 /turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 "kl" = (
@@ -438,12 +463,12 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/ruin/free_miner)
 "ol" = (
-/obj/effect/mapping_helpers/airlock/access/all/away/general,
-/obj/machinery/door/airlock/external/glass,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/closet/crate/engineering,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 "ot" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/general/visible{
@@ -687,12 +712,11 @@
 /turf/open/floor/iron/white/textured,
 /area/shuttle/ruin/free_miner)
 "uR" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/mining/eva{
-	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
+/obj/machinery/door/poddoor{
+	id = "freeminer_driver"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/large,
+/obj/structure/fans/tiny/forcefield,
+/turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "uZ" = (
 /obj/structure/dresser,
@@ -761,6 +785,17 @@
 "wR" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/shuttle/ruin/free_miner)
+"xM" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/structure/closet/crate/large/import,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 "xR" = (
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
@@ -833,14 +868,15 @@
 /area/shuttle/ruin/free_miner)
 "zy" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/suit_storage_unit/mining/eva{
-	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/mining/eva{
+	suit_type = /obj/item/clothing/suit/space/hardsuit/mining;
+	mod_type = null
+	},
 /turf/open/floor/iron/large,
 /area/shuttle/ruin/free_miner)
 "zG" = (
@@ -908,7 +944,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/button/massdriver{
+	pixel_x = -22;
+	pixel_y = 8;
+	id = "freeminer_driver"
+	},
+/turf/open/floor/iron,
 /area/shuttle/ruin/free_miner)
 "AD" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
@@ -958,15 +1002,12 @@
 "Cc" = (
 /obj/docking_port/mobile{
 	callTime = 250;
-	can_move_docking_ports = 1;
 	dir = 2;
 	shuttle_id = "freeminer";
-	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Free Miner Ship";
 	port_direction = 8;
-	preferred_direction = 4;
-	area_type = /area/shuttle/free_miner
+	preferred_direction = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
 /obj/machinery/door/airlock/external/glass,
@@ -1028,11 +1069,11 @@
 /area/shuttle/ruin/free_miner)
 "Dg" = (
 /obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/mining/eva{
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining;
 	mod_type = null
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/large,
 /area/shuttle/ruin/free_miner)
 "Dn" = (
@@ -1347,7 +1388,13 @@
 	dir = 1
 	},
 /obj/structure/closet/emcloset/wall/directional/west,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/shuttle/ruin/free_miner)
 "LF" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/layer2{
@@ -1467,7 +1514,7 @@
 	pixel_y = 4
 	},
 /obj/item/pen{
-	pixel_x = 2;
+	pixel_x = 4;
 	pixel_y = 5
 	},
 /obj/item/pen/fountain/captain{
@@ -1494,6 +1541,7 @@
 /obj/item/book/manual/ripley_build_and_repair,
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/cell_charger_multi/wall_mounted/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/ruin/free_miner)
 "Pa" = (
@@ -1546,11 +1594,20 @@
 /area/shuttle/ruin/free_miner)
 "Qy" = (
 /obj/machinery/computer/order_console/mining/golem{
-	name = "free miner equipment import vendor"
+	name = "free miner equipment import vendor";
+	desc = "An equipment shop for miners, points collected at an ore redemption machine can be spent here. This one seems to have been donated by the Free Golems."
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/large,
+/area/shuttle/ruin/free_miner)
+"QU" = (
+/obj/structure/closet/toolcloset,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/multitool,
+/turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "Ro" = (
 /obj/structure/table/reinforced/rglass,
@@ -1842,11 +1899,13 @@
 /area/shuttle/ruin/free_miner)
 "Zh" = (
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
-/obj/machinery/door/airlock/external/glass,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/glass{
+	name = "Mass Driver Bay"
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron,
 /area/shuttle/ruin/free_miner)
 "Zi" = (
 /obj/machinery/button/door/directional/north{
@@ -1897,6 +1956,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron/shuttle/cargo,
+/area/shuttle/ruin/free_miner)
+"ZZ" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 
 (1,1,1) = {"
@@ -1977,7 +2041,7 @@ CJ
 "}
 (5,1,1) = {"
 CJ
-cN
+QU
 fu
 lG
 Ig
@@ -2113,7 +2177,7 @@ Xw
 nm
 kg
 vh
-vh
+xM
 Fu
 WI
 nV
@@ -2121,8 +2185,8 @@ wb
 Tj
 CJ
 jA
-vh
-vh
+ZZ
+ig
 jP
 qz
 wK
@@ -2131,7 +2195,7 @@ wK
 Xw
 qz
 vh
-vh
+ol
 vh
 Fu
 Sr
@@ -2169,7 +2233,7 @@ CJ
 CJ
 Dg
 zy
-uR
+Dg
 Qy
 JP
 CJ
@@ -2220,7 +2284,7 @@ yQ
 Zh
 LE
 AA
-ol
+KJ
 "}
 (18,1,1) = {"
 KJ
@@ -2239,7 +2303,7 @@ aI
 KJ
 fM
 cj
-KJ
+uR
 "}
 (19,1,1) = {"
 CJ
@@ -2285,7 +2349,7 @@ Uf
 IU
 CX
 Xb
-lL
+Je
 TR
 sz
 CJ
@@ -2304,7 +2368,7 @@ uB
 pD
 ND
 Xb
-Je
+lL
 TR
 Rw
 CJ

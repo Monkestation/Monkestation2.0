@@ -28,10 +28,10 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 17;
-	height = 18;
+	height = 20;
 	shuttle_id = "freeminer_asteroid";
 	name = "Asteroid Cluster";
-	width = 31
+	width = 34
 	},
 /turf/template_noop,
 /area/template_noop)
