@@ -8,7 +8,7 @@
 SUBSYSTEM_DEF(wardrobe)
 	name = "Wardrobe"
 	wait = 10 // This is more like a queue then anything else
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // We're going to fill up our cache while players sit in the lobby
 	/// How much to cache outfit items
 	/// Multiplier, 2 would mean cache enough items to stock 1 of each preloaded order twice, etc
@@ -37,6 +37,13 @@ SUBSYSTEM_DEF(wardrobe)
 	var/stock_hit = 0
 	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
+
+/datum/controller/subsystem/wardrobe/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, order_list),
+		NAMEOF(src, canon_minimum),
+	)
 
 /datum/controller/subsystem/wardrobe/Initialize()
 	setup_callbacks()

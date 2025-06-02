@@ -2839,6 +2839,7 @@
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.cause_pain(BODY_ZONES_ALL, -5 * REM * seconds_per_tick) // MONKESTATION ADDITION
+		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
 	else
@@ -2847,6 +2848,7 @@
 		drinker.adjustFireLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustOxyLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(2 * REM * seconds_per_tick, FALSE)
+		drinker.fully_heal(HEAL_POSTIVE_DISEASES)
 	..()
 	return TRUE
 
