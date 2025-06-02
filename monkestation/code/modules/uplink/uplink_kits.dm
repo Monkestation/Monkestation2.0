@@ -53,6 +53,7 @@
 			new /obj/item/restraints/handcuffs(src)
 			new /obj/item/stack/sticky_tape(src)
 			new /obj/item/clothing/glasses/blindfold(src)
+			new /obj/item/clothing/glasses/thermal(src)
 
 		if(KIT_INTERN_INFILTRATOR)
 			new /obj/item/storage/toolbox/syndicate(src)
@@ -63,11 +64,13 @@
 
 		if(KIT_BEGINNER_BOMBER)
 			new /obj/item/grenade/syndieminibomb(src)
-			new /obj/item/grenade/chem_grenade/teargas(src)
-			new /obj/item/grenade/smokebomb(src)
+			new /obj/item/grenade/c4/x4(src)
+			new /obj/item/grenade/c4/x4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/c4(src)
+			new /obj/item/grenade/c4(src)
 			new /obj/item/grenade/frag(src)
 			new /obj/item/grenade/frag(src)
-			new /obj/item/traitor_machine_trapper/door_charge(src)
 
 		if(KIT_STARTER_SABOTEUR)
 			new /obj/item/card/emag(src)
@@ -82,6 +85,8 @@
 			new /obj/item/ammo_box/magazine/c35sol_pistol(src)
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
+			new /obj/item/clothing/suit/armor/vest(src)
+			new /obj/item/ammo_box/c35sol(src)
 
 	return
 

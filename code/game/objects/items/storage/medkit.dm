@@ -641,9 +641,11 @@
 
 /obj/item/storage/pill_bottle/syndicate/poison/PopulateContents()
 	. = ..()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 2)
 		new /obj/item/reagent_containers/pill/cyanide(src)
 		new /obj/item/reagent_containers/pill/tox(src)
+		new /obj/item/reagent_containers/pill/spewium(src)
+	new /obj/item/reagent_containers/pill/amanitin(src)
 
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
