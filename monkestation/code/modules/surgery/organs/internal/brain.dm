@@ -56,6 +56,8 @@
 		/obj/item/organ/internal/eyes/robotic/glow,
 		/obj/item/organ/external/plumage,
 		/obj/item/organ/internal/ears/cat/super,
+		/obj/item/organ/internal/tongue/polyglot_voicebox,
+		/obj/item/organ/internal/alien/hivenode,
 	))
 	//Quirks that roll unique effects or gives items to each new body should be saved between bodies.
 	var/static/list/saved_quirks = typecacheof(list(
