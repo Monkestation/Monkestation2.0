@@ -397,7 +397,7 @@
 
 /obj/item/gun/ballistic/automatic/hangman
 	name = "\improper Hangman 757"
-	desc = "An ancient revolving rifle from Caovia. This one uses .357 instead of the original .44, probably since its more common in space."
+	desc = "An ancient revolving rifle from Caoiva. This one uses .357 instead of the original .44, probably since its more common in space."
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
