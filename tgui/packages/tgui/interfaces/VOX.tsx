@@ -137,7 +137,7 @@ const AnnouncementTab = () => {
             disabled={message.length === 0}
             onClick={() => act('test', { message })}
           >
-            Test Text
+            Preview
           </Button>
         </Stack.Item>
       </Stack>
