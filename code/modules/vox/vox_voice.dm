@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 	var/list/sounds
 	/// A list of all the words this voice supports.
 	/// Automatically filled based on the `sounds` list during `New()`.
-	var/list/words
+	var/list/words = list()
 
 /datum/vox_voice/New()
 	var/list/all_vox_sounds = GLOB.all_vox_sounds
