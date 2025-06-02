@@ -10,12 +10,11 @@
 	icon_state = "mini_syndiebox"
 	illustration = null
 
-/obj/item/paper/mini_kit_guide
+/obj/item/paper/selfdestruct/mini_kit_guide
 	name = "Syndicate Field Note (Mini-Kit)"
 	desc = "A hastily written note. Seems important though, that's why it's red."
 	color = "#b94030"
-	can_be_folded = FALSE
-	var/has_been_read = FALSE
+	armed = TRUE
 	default_raw_text ={"
 <br><B>Syndicate Operative Field Note</B>
 <br>
@@ -32,53 +31,12 @@
 <br><I>Failure is not an option. Succeed or die trying.</I>
 	"}
 
-/obj/item/paper/mini_kit_guide/Initialize(mapload)
+/obj/item/paper/selfdestruct/mini_kit_guide/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
-/obj/item/paper/mini_kit_guide/examine(mob/user)
-	. = ..()
-
-	if(!has_been_read)
-		return
-
-	. += span_warning("This feels warm to the touch.")
-
-
-/obj/item/paper/mini_kit_guide/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
-
-	if(ui && !has_been_read)
-		playsound(user, 'sound/machines/click.ogg', 25)
-		to_chat(user, span_warning("You hear a faint click as you open the note. It feels strangely warm."))
-
-		has_been_read = TRUE
-
-		addtimer(CALLBACK(src, PROC_REF(combust_now)), 20 SECONDS, TIMER_UNIQUE)
-	return
-
-/obj/item/paper/mini_kit_guide/proc/combust_now(mob/user_who_initiated)
-	if(!src || QDELETED(src))
-		return
-
-	SStgui.close_uis(src)
-
-	var/mob/living/holder = null
-	if(ismob(loc))
-		holder = loc
-
-	if(holder)
-		to_chat(holder, span_warning("[src] suddenly bursts into flames in your hands!"))
-	else if(get_turf(src))
-		var/atom/turf_location = get_turf(src)
-		turf_location.visible_message(span_warning("[src] suddenly bursts into flames on the ground!"))
-	else if(loc)
-		loc.visible_message(span_warning("[src] suddenly bursts into flames!"))
-
-	fire_act(100)
-
 /obj/item/storage/box/syndie_kit/mini_kit/PopulateContents()
-	new /obj/item/paper/mini_kit_guide(src)
+	new /obj/item/paper/selfdestruct/mini_kit_guide(src)
 	switch (pick_weight(list(
 		KIT_AMATEUR_ASSASSIN = 3,
 		KIT_INTERN_INFILTRATOR = 3,
