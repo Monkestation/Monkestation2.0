@@ -74,7 +74,7 @@
 	for(var/word in words)
 		if(!(word in current_voice.words))
 			incorrect_words += word
-	if(incorrect_words)
+	if(length(incorrect_words))
 		to_chat(speaker, span_notice("These words are not available on the announcement system: [english_list(incorrect_words)]."))
 		return FALSE
 	if(!test)

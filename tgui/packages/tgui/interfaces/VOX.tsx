@@ -13,12 +13,18 @@ import { Window } from '../layouts';
 import { Component } from 'inferno';
 import { fetchRetry } from '../http';
 import { resolveAsset } from '../assets';
+import { formatTime } from '../format';
 
 type Data = {
   current_voice: string;
   previous_words: string;
   cooldown: number;
 };
+
+enum Tab {
+  Announcement,
+  Word,
+}
 
 // Cache response so it's only sent once
 // this is in the format of {"voice name": ["mrrp", "mrow", "nya"]}
@@ -36,7 +42,7 @@ export class VOX extends Component {
 
   render() {
     return (
-      <Window title="VOX Announcement" width={700} height={300}>
+      <Window title="VOX Announcement" fixed width={700} height={300}>
         <Window.Content>
           <Stack fill>
             <Stack.Item width="100%">
@@ -53,24 +59,17 @@ export class VOX extends Component {
 }
 
 const TextAreaSection = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { previous_words } = data;
+  const [message, setMessage] = useLocalState('message', '');
 
   return (
     <Section fill>
       <Stack vertical fill>
-        <Stack.Item />
         <Stack.Item height="100%">
           <TextArea
             scrollbar
             height="100%"
-            value={previous_words}
-            // Attempt to save the text when user types
-            onInput={(e, value) =>
-              act('save_text', {
-                message: value,
-              })
-            }
+            value={message}
+            onInput={(_, value) => setMessage(value)}
           />
         </Stack.Item>
       </Stack>
@@ -78,8 +77,11 @@ const TextAreaSection = (props) => {
   );
 };
 
-const SideMenu = (props) => {
-  const [tabIndex, setTabIndex] = useLocalState('tabIndex', 1);
+const SideMenu = () => {
+  const [tabIndex, setTabIndex] = useLocalState<Tab>(
+    'tabIndex',
+    Tab.Announcement,
+  );
 
   return (
     <Section fill>
@@ -87,60 +89,53 @@ const SideMenu = (props) => {
         <Tabs.Tab
           icon="bullhorn"
           width="50%"
-          selected={tabIndex === 1}
-          onClick={() => setTabIndex(1)}
+          selected={tabIndex === Tab.Announcement}
+          onClick={() => setTabIndex(Tab.Announcement)}
         >
-          Announcement Tab
+          Announcement
         </Tabs.Tab>
         <Tabs.Tab
           icon="info"
           width="50%"
-          selected={tabIndex === 2}
-          onClick={() => setTabIndex(2)}
+          selected={tabIndex === Tab.Word}
+          onClick={() => setTabIndex(Tab.Word)}
         >
-          Word Tab
+          Words
         </Tabs.Tab>
       </Tabs>
       <Divider />
-      {tabIndex === 1 && <AnnouncementTab />}
-      {tabIndex === 2 && <WordTab />}
+      {tabIndex === Tab.Announcement && <AnnouncementTab />}
+      {tabIndex === Tab.Word && <WordTab />}
     </Section>
   );
 };
 
-const AnnouncementTab = (_props) => {
+const AnnouncementTab = () => {
   const { act, data } = useBackend<Data>();
-  const { cooldown, previous_words, current_voice } = data;
+  const { cooldown, current_voice } = data;
+  const [message] = useLocalState('message', '');
 
   let voice_names = voices ? Object.keys(voices) : [];
 
   return (
     <Section>
       <Stack>
-        <Stack.Item width="100%">
-          {/* Disable announcement button if the cooldown is not finished */}
+        <Stack.Item width="50%">
           <Button
             align="center"
             width="100%"
-            disabled={cooldown > 0}
-            onClick={() =>
-              act('speak', {
-                message: previous_words,
-              })
-            }
+            disabled={cooldown > 0 || message.length === 0}
+            onClick={() => act('speak', { message })}
           >
             Announce
           </Button>
         </Stack.Item>
-        <Stack.Item width="100%">
+        <Stack.Item width="50%">
           <Button
             align="center"
             width="100%"
-            onClick={() =>
-              act('test', {
-                message: previous_words,
-              })
-            }
+            disabled={message.length === 0}
+            onClick={() => act('test', { message })}
           >
             Test Text
           </Button>
@@ -153,35 +148,52 @@ const AnnouncementTab = (_props) => {
         width="100%"
         displayText={current_voice}
         options={voice_names}
-        // Attempt to set selected option as new voice
-        onSelected={(e) =>
-          act('set_voice', {
-            voice: e,
-          })
-        }
+        onSelected={(voice) => act('set_voice', { voice })}
       />
     </Section>
   );
 };
 
-const CooldownItem = (props) => {
-  const { data } = useBackend<Data>();
-  const { cooldown } = data;
-
-  // If the cooldown is not finished, show the remaining time
-  if (cooldown > 0) {
-    return <Section align="Center">Cooldown Time: {cooldown}</Section>;
-  } else {
-    return <Section align="Center">Cooldown Finished</Section>;
-  }
-};
-
-const WordTab = (props) => {
-  const { data } = useBackend<Data>();
+const CooldownItem = () => {
+  const {
+    data: { cooldown },
+  } = useBackend<Data>();
 
   return (
-    <Section fill scrollable>
-      List of words goes here
+    <Section align="center">
+      {cooldown > 0
+        ? `Cooldown Time: ${formatTime(cooldown, 'short')}`
+        : 'Cooldown Finished'}
+    </Section>
+  );
+};
+
+const WordTab = () => {
+  const { data } = useBackend<Data>();
+
+  if (!voices) {
+    return (
+      <Section fill scrollable>
+        Please wait for the voice data to load...
+      </Section>
+    );
+  }
+  const words: string[] = voices[data.current_voice];
+  const [message, setMessage] = useLocalState('message', '');
+
+  return (
+    <Section fill height="85%" scrollable>
+      {words.map((word) => {
+        return (
+          <Button
+            key={word}
+            content={word}
+            onClick={() => {
+              setMessage([message.trim(), word].join(' ').trim());
+            }}
+          />
+        );
+      })}
     </Section>
   );
 };
