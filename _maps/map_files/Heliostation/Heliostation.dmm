@@ -23084,7 +23084,6 @@
 /area/station/science/xenobiology)
 "cDq" = (
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 4
 	},
@@ -23616,7 +23615,7 @@
 /obj/effect/turf_decal/box,
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "2";
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -25914,7 +25913,6 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cUh" = (
@@ -26071,10 +26069,12 @@
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 4
 	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "cVe" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cVf" = (
@@ -26154,6 +26154,7 @@
 /obj/machinery/corral_corner{
 	mapping_id = "5"
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/corner,
 /area/station/science/xenobiology)
 "cVB" = (
@@ -29629,7 +29630,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "epl" = (
@@ -30522,6 +30522,11 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/science)
+"eFq" = (
+/obj/machinery/duct,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "eFu" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
@@ -32473,7 +32478,6 @@
 /area/station/commons/dorms)
 "fvJ" = (
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 1
 	},
@@ -32789,7 +32793,7 @@
 /obj/effect/turf_decal/box,
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "3";
-	dir = 1
+	dir = 4
 	},
 /mob/living/basic/slime,
 /turf/open/floor/engine,
@@ -33348,6 +33352,7 @@
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 8
 	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "fOF" = (
@@ -35687,7 +35692,7 @@
 "gMK" = (
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "1";
-	dir = 1
+	dir = 4
 	},
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
@@ -37640,6 +37645,7 @@
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 8
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "hwR" = (
@@ -39146,7 +39152,7 @@
 /obj/structure/cable,
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "4";
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -45706,7 +45712,7 @@
 /obj/structure/cable,
 /obj/machinery/plumbing/ooze_sucker{
 	mapping_id = "5";
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -52523,11 +52529,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet,
 /area/station/service/bar)
-"nhu" = (
-/obj/machinery/light/small/directional/north,
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "nhM" = (
 /obj/machinery/door/airlock/mining{
 	name = "Drone Bay"
@@ -62732,12 +62733,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/small,
 /area/station/science/robotics/lab)
-"qZc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron/white/smooth_large,
-/area/station/science/xenobiology)
 "qZn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -65684,7 +65679,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sjW" = (
@@ -67482,6 +67476,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sSU" = (
@@ -71996,6 +71991,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
+"uEE" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "uFh" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
 /turf/open/floor/iron/dark/textured_large,
@@ -72394,7 +72395,6 @@
 /area/station/science/research)
 "uMt" = (
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/machinery/corral_corner{
 	mapping_id = "5"
 	},
@@ -123870,11 +123870,11 @@ cRO
 gMK
 cpI
 bMy
-nhu
+cpI
 cGR
 cpI
 bMy
-nhu
+cpI
 fBx
 gBh
 cnz
@@ -124127,12 +124127,12 @@ cpI
 wPm
 cpI
 bMy
-wPm
 cpI
+eFq
 cpI
 bMy
-wPm
 cpI
+eFq
 cpI
 cnz
 nZh
@@ -124903,7 +124903,7 @@ cVf
 cDo
 cSG
 cTq
-qZc
+cSG
 tPm
 idi
 cJR
@@ -125159,8 +125159,8 @@ sjU
 sSN
 pzG
 oRq
-tvT
 ntX
+tvT
 mnj
 cnz
 jlj
@@ -125669,12 +125669,12 @@ xII
 uTa
 eKv
 cnz
-wPm
-unw
+cpI
+uEE
 cpI
 bMy
-wPm
-unw
+cpI
+uEE
 cpI
 cnz
 jwI
@@ -125926,11 +125926,11 @@ cRS
 cSI
 cTr
 cnz
-nhu
+cpI
 kvF
 cpI
 bMy
-nhu
+cpI
 hZE
 hIF
 cnz
