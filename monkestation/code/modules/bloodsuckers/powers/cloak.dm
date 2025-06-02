@@ -38,7 +38,7 @@
 	was_running = ((user.m_intent == MOVE_INTENT_RUN) || user.m_intent == MOVE_INTENT_SPRINT)
 	if(was_running)
 		user.set_move_intent(MOVE_INTENT_WALK)
-	ADD_TRAIT(user, TRAIT_NO_SPRINT, BLOODSUCKER_TRAIT)
+	user.add_traits(list(TRAIT_NO_SPRINT, TRAIT_UNKNOWN), REF(src))
 	user.AddElement(/datum/element/digitalcamo)
 	user.balloon_alert(user, "cloak turned on.")
 
@@ -74,5 +74,5 @@
 	if(was_running && user.m_intent == MOVE_INTENT_WALK)
 		user.set_move_intent(MOVE_INTENT_RUN)
 	user.balloon_alert(user, "cloak turned off.")
-	REMOVE_TRAIT(user, TRAIT_NO_SPRINT, BLOODSUCKER_TRAIT)
+	user.remove_traits(list(TRAIT_NO_SPRINT, TRAIT_UNKNOWN), REF(src))
 	return ..()
