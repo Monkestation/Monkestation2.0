@@ -87,7 +87,7 @@
 	return TRUE
 
 /datum/action/innate/link_minds/Activate()
-	if(!isliving(owner.pulling) || owner.grab_state < GRAB_AGGRESSIVE)
+	if(!isliving(owner.pulling) || (owner.grab_state < GRAB_AGGRESSIVE && (status_flags & CANPUSH) && !HAS_TRAIT(src, TRAIT_PUSHIMMUNE)))
 		to_chat(owner, span_warning("You need to aggressively grab someone to link minds!"))
 		return
 
