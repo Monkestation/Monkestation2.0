@@ -144,6 +144,7 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering"
 	},
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/ruin/free_miner)
 "gk" = (
@@ -157,6 +158,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/iron/shuttle/cargo,
 /area/shuttle/ruin/free_miner)
 "gu" = (
@@ -234,26 +236,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/wood/large,
-/area/shuttle/ruin/free_miner)
-"ig" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/structure/closet/crate/engineering/electrical,
-/obj/item/multitool,
-/obj/item/electronics/airlock/old,
-/obj/item/electronics/airlock/old,
-/obj/item/electronics/airlock/old,
-/obj/item/electronics/apc,
-/obj/item/electronics/apc,
-/obj/item/electronics/firealarm,
-/obj/item/electronics/firealarm,
-/obj/item/electronics/firealarm,
-/obj/item/electronics/firealarm,
-/obj/item/electronics/firealarm,
-/obj/item/electronics/firelock,
-/obj/item/electronics/firelock,
-/obj/item/electronics/firelock,
-/turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 "jA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -360,6 +344,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/free_miner)
 "lx" = (
@@ -389,6 +374,10 @@
 	pixel_y = 10
 	},
 /turf/open/floor/wood/large,
+/area/shuttle/ruin/free_miner)
+"lM" = (
+/obj/machinery/duct,
+/turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "lY" = (
 /obj/machinery/light/directional/east,
@@ -464,10 +453,13 @@
 /area/shuttle/ruin/free_miner)
 "ol" = (
 /obj/effect/turf_decal/delivery/white,
-/obj/structure/closet/crate/engineering,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/electrical,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/structure/closet/crate/large/import,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 "ot" = (
@@ -499,6 +491,7 @@
 	name = "Manufacturing"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/ruin/free_miner)
 "pb" = (
@@ -524,6 +517,7 @@
 /area/shuttle/ruin/free_miner)
 "pD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/ruin/free_miner)
 "pR" = (
@@ -531,6 +525,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/black,
+/area/shuttle/ruin/free_miner)
+"pT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/ruin/free_miner)
 "qx" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -550,10 +551,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
+"qW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/shuttle/ruin/free_miner)
 "re" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/duct,
 /turf/open/floor/iron/shuttle/cargo,
 /area/shuttle/ruin/free_miner)
 "rG" = (
@@ -562,6 +570,13 @@
 /obj/structure/closet/firecloset/wall/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
+/area/shuttle/ruin/free_miner)
+"rH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor/iron,
 /area/shuttle/ruin/free_miner)
 "rK" = (
 /obj/machinery/light/small/directional/west,
@@ -666,6 +681,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/ruin/free_miner)
 "ue" = (
@@ -712,11 +728,11 @@
 /turf/open/floor/iron/white/textured,
 /area/shuttle/ruin/free_miner)
 "uR" = (
-/obj/machinery/door/poddoor{
-	id = "freeminer_driver"
-	},
-/obj/structure/fans/tiny/forcefield,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor/iron,
 /area/shuttle/ruin/free_miner)
 "uZ" = (
 /obj/structure/dresser,
@@ -755,6 +771,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/free_miner)
 "wK" = (
@@ -786,16 +803,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
-"xM" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/item/gun/energy/recharge/kinetic_accelerator,
-/obj/item/gun/energy/recharge/kinetic_accelerator,
-/obj/structure/closet/crate/large/import,
-/obj/item/storage/bag/ore,
-/obj/item/storage/bag/ore,
-/obj/item/storage/bag/ore,
-/obj/item/storage/bag/ore,
-/turf/open/floor/iron/shuttle/exploration/flat,
+"xQ" = (
+/obj/structure/chair/stool/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/wood/large,
 /area/shuttle/ruin/free_miner)
 "xR" = (
 /obj/effect/mapping_helpers/airlock/access/all/away/general,
@@ -844,6 +858,7 @@
 /area/shuttle/ruin/free_miner)
 "yM" = (
 /obj/machinery/vending/hydronutrients/wall/directional/west,
+/obj/machinery/duct,
 /turf/open/floor/iron/shuttle/cargo,
 /area/shuttle/ruin/free_miner)
 "yQ" = (
@@ -884,11 +899,20 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/ruin/free_miner)
 "zQ" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet/black,
+/area/shuttle/ruin/free_miner)
+"zZ" = (
+/obj/structure/closet/toolcloset,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/multitool,
+/turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "Ad" = (
 /obj/machinery/light/directional/north,
@@ -967,6 +991,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/wood/large,
 /area/shuttle/ruin/free_miner)
 "BD" = (
@@ -1038,6 +1063,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/ruin/free_miner)
 "CY" = (
@@ -1077,6 +1103,7 @@
 /turf/open/floor/iron/large,
 /area/shuttle/ruin/free_miner)
 "Dn" = (
+/obj/structure/sink/kitchen/directional/north,
 /turf/open/floor/iron/shuttle/cargo,
 /area/shuttle/ruin/free_miner)
 "Du" = (
@@ -1222,6 +1249,10 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/wood/large,
 /area/shuttle/ruin/free_miner)
+"Gm" = (
+/obj/machinery/duct,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/ruin/free_miner)
 "GB" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/ruin/free_miner)
@@ -1284,6 +1315,7 @@
 /area/shuttle/ruin/free_miner)
 "IU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/duct,
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/ruin/free_miner)
 "IV" = (
@@ -1310,6 +1342,20 @@
 	pixel_y = 10
 	},
 /turf/open/floor/wood/large,
+/area/shuttle/ruin/free_miner)
+"Jk" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/shuttle/ruin/free_miner)
+"Jp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/ruin/free_miner)
 "JM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1582,6 +1628,12 @@
 /obj/machinery/recharger,
 /turf/open/floor/carpet/grimey,
 /area/shuttle/ruin/free_miner)
+"PX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/shuttle/cargo,
+/area/shuttle/ruin/free_miner)
 "PY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /turf/open/floor/plating,
@@ -1600,14 +1652,6 @@
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/large,
-/area/shuttle/ruin/free_miner)
-"QU" = (
-/obj/structure/closet/toolcloset,
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/multitool,
-/turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "Ro" = (
 /obj/structure/table/reinforced/rglass,
@@ -1670,6 +1714,25 @@
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/ruin/free_miner)
+"SX" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/multitool,
+/obj/item/electronics/airlock/old,
+/obj/item/electronics/airlock/old,
+/obj/item/electronics/airlock/old,
+/obj/item/electronics/apc,
+/obj/item/electronics/apc,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firealarm,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/turf/open/floor/iron/shuttle/exploration/flat,
+/area/shuttle/ruin/free_miner)
 "SY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -1680,6 +1743,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/stock_parts/manipulator,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/ruin/free_miner)
 "Tj" = (
@@ -1761,6 +1825,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
+"Vn" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/closet/crate/engineering,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron/shuttle/exploration/flat,
+/area/shuttle/ruin/free_miner)
 "Vx" = (
 /obj/machinery/door/airlock{
 	name = "Room 1"
@@ -1772,6 +1844,11 @@
 /area/shuttle/ruin/free_miner)
 "VH" = (
 /turf/open/floor/carpet/black,
+/area/shuttle/ruin/free_miner)
+"VR" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 "VT" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1785,6 +1862,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
+/area/shuttle/ruin/free_miner)
+"VX" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "Wj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1832,6 +1914,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/stock_parts/matter_bin,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/ruin/free_miner)
 "Xb" = (
@@ -1844,6 +1927,12 @@
 "Xd" = (
 /obj/machinery/computer/shuttle/freeminer,
 /turf/open/floor/carpet/grimey,
+/area/shuttle/ruin/free_miner)
+"Xe" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/kitchen/small,
 /area/shuttle/ruin/free_miner)
 "Xm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -1860,6 +1949,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
+"XT" = (
+/obj/machinery/door/poddoor{
+	id = "freeminer_driver"
+	},
+/obj/structure/fans/tiny/forcefield,
+/turf/open/floor/plating,
+/area/shuttle/ruin/free_miner)
 "XY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -1870,6 +1966,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
 /turf/open/floor/wood/large,
 /area/shuttle/ruin/free_miner)
 "Yl" = (
@@ -1934,6 +2031,7 @@
 "Zw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/ruin/free_miner)
 "ZA" = (
@@ -1956,11 +2054,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/shuttle/cargo,
-/area/shuttle/ruin/free_miner)
-"ZZ" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/structure/closet/crate/solarpanel_small,
-/turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 
 (1,1,1) = {"
@@ -2041,12 +2134,12 @@ CJ
 "}
 (5,1,1) = {"
 CJ
-QU
+zZ
 fu
 lG
 Ig
 Zm
-wR
+VX
 Zp
 Im
 SY
@@ -2065,8 +2158,8 @@ CJ
 CJ
 CJ
 rG
-Sm
-Fj
+Jk
+lM
 MV
 Sx
 Tz
@@ -2085,7 +2178,7 @@ tY
 CJ
 Lq
 Sm
-Fj
+lM
 md
 UE
 PY
@@ -2104,8 +2197,8 @@ dy
 CJ
 wR
 Fj
-Fj
-md
+lM
+qW
 et
 ID
 Nn
@@ -2143,7 +2236,7 @@ Ny
 gu
 CJ
 ZS
-Np
+Jp
 hf
 CJ
 nm
@@ -2162,7 +2255,7 @@ yQ
 FE
 CJ
 SC
-Np
+Jp
 Wr
 CJ
 nR
@@ -2177,16 +2270,16 @@ Xw
 nm
 kg
 vh
-xM
+ol
 Fu
 WI
 nV
-wb
+pT
 Tj
 CJ
 jA
-ZZ
-ig
+VR
+SX
 jP
 qz
 wK
@@ -2195,12 +2288,12 @@ wK
 Xw
 qz
 vh
-ol
+Vn
 vh
 Fu
 Sr
 tq
-wb
+pT
 ue
 DP
 nR
@@ -2276,7 +2369,7 @@ IY
 JP
 JP
 ud
-IY
+uR
 IV
 Pa
 yQ
@@ -2294,7 +2387,7 @@ KJ
 Ky
 VT
 ni
-sz
+rH
 Fp
 Yq
 Db
@@ -2303,7 +2396,7 @@ aI
 KJ
 fM
 cj
-uR
+XT
 "}
 (19,1,1) = {"
 CJ
@@ -2332,10 +2425,10 @@ Zw
 if
 AT
 Yi
-sz
+rH
 ln
 wu
-CJ
+Gm
 wM
 uZ
 CJ
@@ -2348,13 +2441,13 @@ KJ
 Uf
 IU
 CX
-Xb
+xQ
 Je
 TR
 sz
 CJ
 kv
-CJ
+Gm
 fy
 kY
 CJ
@@ -2384,7 +2477,7 @@ CJ
 (23,1,1) = {"
 CJ
 sA
-Zw
+Xe
 Gb
 Yl
 Gc
@@ -2422,7 +2515,7 @@ un
 (25,1,1) = {"
 KJ
 Pn
-ZA
+PX
 yM
 vB
 CJ
