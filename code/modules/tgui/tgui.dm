@@ -55,9 +55,11 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(user,
 		"new [interface] fancy [user?.client?.prefs.read_preference(/datum/preference/toggle/tgui_fancy)]",
 		src_object = src_object)
+#endif
 	src.user = user
 	src.src_object = src_object
 	src.window_key = "[REF(src_object)]-main"
@@ -289,9 +291,11 @@
 		return
 	// Validate ping
 	if(!initialized && world.time - opened_at > TGUI_PING_TIMEOUT)
+#ifdef EXTENDED_DEBUG_LOGGING
 		log_tgui(user, "Error: Zombie window detected, closing.",
 			window = window,
 			src_object = src_object)
+#endif
 		close(can_be_suspended = FALSE)
 		return
 	// Update through a normal call to ui_interact
