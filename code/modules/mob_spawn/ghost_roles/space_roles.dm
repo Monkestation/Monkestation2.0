@@ -212,9 +212,14 @@
 /obj/effect/mob_spawn/ghost_role/human/free_miner
 	name = "Free Miner"
 	you_are_text = "You are an independent miner, making a living off salvage and selling materials mined out of the asteroids left behind when Nanotrasen moved their mining operations planetside."
+	flavour_text = "You recently came out of bluespace jump into a relatively mineral-rich system, with a large Nanotrasen station nearby - Space Station 13."
 	important_text = "Listen to your captain, and try not to get into trouble with corporate forces."
 	outfit = /datum/outfit/freeminer
 	prompt_name = "a free miner"
+	spawner_job_path = /datum/job/free_miner
+
+/datum/job/free_miner
+	title = ROLE_FREE_MINER //so you can track hours
 
 
 /datum/outfit/freeminer
@@ -277,6 +282,7 @@
 /obj/effect/mob_spawn/ghost_role/human/free_miner/captain
 	name = "Free Miner Captain"
 	you_are_text = "You are the Captain of a small ship operating independently from the major powers in the region - that being Nanotrasen and the Syndicate - trying to make ends meet by pulling out the minerals located in the asteroids Nanotrasen left behind."
+	flavour_text = "You recently charted a bluespace jump into a mineral-rich system. Though Nanotrasen has major influence here, beyond their station there are very few who will take notice."
 	important_text = "Avoid getting in trouble with the corporate powers and the local government. Mine ore and keep the ship afloat."
 	outfit = /datum/outfit/freeminer/captain
 	prompt_name = "a free miner captain"
@@ -288,7 +294,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/satchel/leather
 	l_pocket = /obj/item/tank/internals/emergency_oxygen/double
-	r_pocket = /obj/item/flashlight
+	r_pocket = /obj/item/melee/baton/telescopic
 	belt = null
 	id_trim = /datum/id_trim/job/away/old/freeminer/captain
 	r_hand = /obj/item/megaphone/command
@@ -303,7 +309,7 @@
 		ACCESS_ENGINE_EQUIP,
 		ACCESS_RESEARCH
 	)
-	assignment = "Independent Captain"
+	assignment = "Skipper" //SKIPPER INNIT (old name for captain)
 	sechud_icon_state = SECHUD_CAPTAIN //todo: make it have a grey background like the others. should be fine with just regular cappie though for now, the mindshield can distinguish it lmao
 
 /obj/machinery/computer/shuttle/freeminer
