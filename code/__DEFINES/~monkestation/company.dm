@@ -33,6 +33,11 @@
 
 #define COMPANY_MURAMASA "It has <b>[span_blue("Muramasa Munitions")]</b> stamped onto it."
 
+#define COMPANY_WARDEN "It has <b>[span_blue("Caoiva Royal Armory")]</b> stamped onto it, along with a <b>White]</b> and <b>[span_blue("Blue")]</b> Crest painted on."
+#define COMPANY_COLONIAL "It has <b>[span_green("Colonial Legionary Arms")]</b> printed onto it, a <b>[span_green("green dagger")]</b> in a <b>White hand</b> next to it."
+#define COMPANY_CNC "In letters taller then you <b>Caoivish Naval Command</b> is painted on the side."
+
+
 #define span_emote(str) ("<span class='emote'>" + str + "</span>")
 #define span_maptext(str) ("<span class='maptext'>" + str + "</span>")
 #define span_mentor(str) ("<span class='mentor'>" + str + "</span>")

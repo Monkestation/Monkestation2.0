@@ -263,3 +263,23 @@
 
 /obj/item/gun/ballistic/bow/can_trigger_gun(mob/living/user, akimbo_usage)
 	return TRUE
+
+// Arms of Mesea and Caovia
+
+/obj/item/gun/ballistic/automatic/argenti/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_COLONIAL)
+
+/obj/item/gun/ballistic/automatic/pistol/cascadier/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_WARDEN)
+
+/obj/item/gun/ballistic/automatic/hangman/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_WARDEN)
+
+/obj/item/gun/ballistic/automatic/neville/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_WARDEN)
+
+/obj/item/gun/ballistic/automatic/malone/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_WARDEN)
+
+/obj/item/gun/ballistic/ignifist/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_COLONIAL)

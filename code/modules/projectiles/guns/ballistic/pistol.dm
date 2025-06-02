@@ -133,7 +133,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/cascadier
 	name = "\improper Cascadier 873"
-	desc = "An old Caovian design. It attempts to compact a burst fire mechanism into a pistol. The tradeoff being extreme innacuracy. Rechambered in 9mm bullets instead of its original 8mm."
+	desc = "An old Caoivish design. It attempts to compact a burst fire mechanism into a pistol. The tradeoff being extreme innacuracy. Rechambered in 9mm bullets instead of its original 8mm."
 	icon_state = "cascadier"
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/cascadier
