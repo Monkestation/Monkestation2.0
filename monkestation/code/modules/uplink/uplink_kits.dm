@@ -101,6 +101,7 @@
 			new /obj/item/storage/box/syndie_kit/chameleon(src)
 			new /obj/item/encryptionkey/syndicate(src)
 			new /obj/item/card/id/advanced/chameleon(src)
+			new /obj/item/implanter/uplink(src)
 
 		if(KIT_BEGINNER_BOMBER)
 			new /obj/item/grenade/syndieminibomb(src)
