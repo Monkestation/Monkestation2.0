@@ -91,7 +91,7 @@
 			new /obj/item/pen/sleepy(src)
 			new /obj/item/clothing/gloves/latex/nitrile(src)
 			new /obj/item/soap/syndie(src)
-			new /obj/item/pen/edagger(src)
+			new /obj/item/switchblade(src)
 			new /obj/item/restraints/handcuffs(src)
 			new /obj/item/stack/sticky_tape(src)
 			new /obj/item/clothing/glasses/blindfold(src)
@@ -101,7 +101,6 @@
 			new /obj/item/storage/box/syndie_kit/chameleon(src)
 			new /obj/item/encryptionkey/syndicate(src)
 			new /obj/item/card/id/advanced/chameleon(src)
-			new /obj/item/reagent_containers/syringe/mulligan(src)
 
 		if(KIT_BEGINNER_BOMBER)
 			new /obj/item/grenade/syndieminibomb(src)
@@ -122,7 +121,6 @@
 			new /obj/item/gun/ballistic/automatic/pistol/sol/evil(src)
 			new /obj/item/storage/box/syndie_kit/weapons_auth(src)
 			new /obj/item/ammo_box/magazine/c35sol_pistol(src)
-			new /obj/item/switchblade(src)
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
 
