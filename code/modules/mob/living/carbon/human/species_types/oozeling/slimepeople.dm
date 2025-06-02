@@ -332,12 +332,13 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		return
 	bodies -= body
 	UnregisterSignal(body, list(COMSIG_QDELETING, COMSIG_SPECIES_LOSS))
-	var/datum/species/oozeling/slime/slime = astype(body.dna?.species)
-	if(slime)
-		if(slime.manager == src)
-			slime.manager = null
-		slime.needs_manager_update = FALSE
 	SStgui.update_uis(src)
+	var/datum/species/oozeling/slime/slime = astype(body.dna?.species)
+	if(!slime)
+		return
+	if(slime.manager == src)
+		slime.manager = null
+	slime.needs_manager_update = FALSE
 
 /datum/slimeperson_manager/proc/get_available_bodies()
 	. = list()
