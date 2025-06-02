@@ -212,8 +212,213 @@
   notghosti:
   - rscadd: Updated Nanite Species Sensor to include new/more common races
 2025-05-18:
+  Absolucy:
+  - map: Fixed some stacked lights in the KS13 ruin.
+  - map: Fixed some space tiles in the Anomaly Research ruin.
+  - refactor: Refactored how icons are displayed for examines and such, so they should
+      be far more performant now.
+  - bugfix: Fixed some various minor runtime errors.
+  BingusSS13:
+  - rscadd: Added an Ice Box adaptation of Charlie Station so ghosts have more things
+      to do on long, boring shifts.
+  - balance: Blast doors have been added to the windows of Charlie Station's prototype
+      laboratory to discourage explorers from stealing everything.
+  Killermankey:
+  - rscadd: Devitt Mk3 Light tank
+  - rscadd: minigun peashooter for trash tank
+  - rscadd: giant sheet metal drill vehicle
+  Pickle-Coding Xander3359:
+  - balance: Halon combustion releases 2.5 moles of pluoxium per mole of halon consumed.
+  - balance: Halon combustion no longer releases carbon dioxide.
+  - balance: Halon combustion releases resin foam.
+  - balance: Halon formation requirements changed to require electrolysing BZ instead
+      of N2O and CO2.
+  - balance: Halon formation changed to no longer slow down at higher pressures. It
+      instead accelerates at higher temperatures. It is much faster overall.
+  - balance: Halon formation releases 91.2321kJ of thermal energy per mole of halon
+      consumed.
+  - balance: Atmos resin can directly cool the floor.
+  - spellcheck: Improves gas monitor reaction information RP.
   PineappleMan929:
   - balance: TWitch no longer lets you dodge bullets.
   - balance: TWitch is now feasibly makeable.
   - admin: Removed warning for admins about TWitch letting you dodge bullets, as it
       no longer does.
+  notghosti:
+  - rscadd: Replaced Cyber Police with Glitches
+  - rscadd: Bitrunning now works on a threat system, rather than storyteller for glitches.
+  - rscadd: Added security gloves
+  - rscadd: Added MOD restraint assist module
+  - rscadd: Added MOD bulwark module
+  - rscadd: The bitrunning server is now emagable, after which, the server and byteforge
+      won't act quite the same.
+  - rscadd: Requests consoles have been added to the entrance of Perma.
+  - rscadd: Jump jets have been ported.
+  - rscadd: MOD shock absorption module
+  - rscadd: Added the PKA and Crusher upgrade disks
+  - rscadd: Clowns can now make balloon animals.
+  - rscadd: Added four new bitrunning maps, Meta Central, Grasslands hunt, Abductor
+      ship, and Pizza party
+  - qol: Cyber police roles are now temporary, and you'll return to your old body
+      upon death.
+  - qol: The infiltrator modsuit has been updated with a newer sprite
+  - qol: Added more texture to bitrunning disks
+  - balance: The syndicate has established contacts with its agents inside the prison.
+  - balance: Reduced brain damage from dying in a bit avatar. (40 -> 20)
+  - balance: Reworked satyr's 'Living Drunk' to have an additional positive stage
+      of effect between puking drunk, and regular tipsy.
+2025-05-19:
+  Addust:
+  - rscdel: Central Command's Asset Protection force has discovered the individual
+      responsible for loading pizza bombs onto the NTSS Shadow and ensured their disappearance.
+      Glory to Nanotrasen.
+  F-e-r-n:
+  - balance: Makes teratomas only able to ventcrawl while nude.
+  Siro:
+  - bugfix: Fulton beacons blocked from being placed in Hilbert Hotel to prevent getting
+      stuck in Hilbert Hotel Storage.
+  - bugfix: DNR quirk now prevents Ethereal crystal revival.
+  - bugfix: Seed Samples can no longer be planted in hydroponics trays.
+  - bugfix: Non-oozeling species with oozeling heads no longer are round removed when
+      their head is destroyed.
+  - bugfix: Super Kitty Ears and ornithid plumage no longer destroyed when oozeling
+      dies.
+  - bugfix: Low blood regeneration of oozeling heads now regenerates the eyes properly.
+  - qol: Adds examine text for oozeling cores that cannot be plasma revived and better
+      clarifies what type of plasma to use.
+  - balance: Oozeling heads dismember as easily as their limbs.
+2025-05-20:
+  Absolucy:
+  - bugfix: Kicking someone now properly does 50% more damage than punching, as intended.
+  - bugfix: Charlie/Delta Station on icebox are no longer considered station areas.
+2025-05-21:
+  Absolucy:
+  - bugfix: Monster Hunter objectives now properly update their explanation text when
+      their target chooses a clan/path.
+  - bugfix: Fixed old DNA data disks not rolling species-specific mutations.
+  - refactor: Refactored how roundend rewards are distributed. Hopefully this should
+      ensure everyone gets their roundend rewards, even if they die soon after roundend.
+2025-05-22:
+  Absolucy:
+  - bugfix: Revolutionary Raptors can no longer straight-up delete people.
+  - rscadd: You can now punch/kick borgs under certain conditions!
+  - rscadd: Robotic limbs can always punch borgs - metal can punch metal.
+  - rscadd: If your punches deal enough damage to knockdown normally, then you can
+      punch borgs.
+  - rscadd: Strong-Arm implants now allow you to punch borgs (with arms that have
+      the implant).
+  - rscadd: The Strength gene now allows you to punch borgs.
+  - refactor: Refactored how the Heavy Bleeder challenge works.
+  - bugfix: The Heavy Bleeder challenge should no longer instantly drain all of your
+      blood when wounded.
+  - bugfix: The Delightful Effect symptom now properly shows a message when it deactivates.
+  - balance: Radio jammers now also jam suit sensors within range.
+  - qol: Changed the Slime Link message color to a slightly brighter shade of blue.
+  - qol: Slime Link messages now notify listeners with a balloon alert.
+  - config: The webmap URL can now be set via the config.
+  - balance: Seed Meshes can no longer yield gatfruit or evil seedlings.
+  - bugfix: Fixed an error with the Anti-Glow gene.
+  Absolucy, EnterTheJake:
+  - bugfix: Space Phase now makes the Heretic Space proof.
+  Absolucy, EnterTheJake, OrcaCora:
+  - image: Resprited the rust, moon, blade, void, and ash path heretic blades.
+  - image: Blade Heretic Knives have been resprited into proper throwing knives.
+  Absolucy, Melbert:
+  - refactor: Food hunger bar has been refactored, and moved. Now it sits next to
+      the moodlet face, and dynamically updates as you eat.
+  - refactor: Food moodlets now update a lot more snappily. There is now a moodlet
+      tier between "being fat" and "being normal", to reduce accidentally gorging
+      yourself to "fatness" tier.
+  - qol: Adds a hunger tier between hungry and starving (for mood)
+  - rscdel: You can't hallucinate being hungry... for now.
+  - bugfix: All humans no longer have a baseline "75" ghost nutrition (which means
+      you can eat more)
+  - rscdel: Having any wounds no longer gives you an alert in the top right.
+  - qol: Having any wounds now make the corresponding bodypart on your health doll
+      (the lil dude on the right side of the screen) glow red.
+  - refactor: Refactored how the hud's health doll shows up for humans. Report any
+      oddities.
+  Aritepes:
+  - bugfix: UwUifcation speech now better applies capitalization
+  SirNightKnight:
+  - rscadd: added an antag preference for junior lone operatives.
+  - bugfix: fixed and made the junior lone operative role more distinct. it appears
+      on round end reports.
+  - bugfix: junior lone operatives now have their internals and thermal regulators
+      on when spawned.
+  - qol: junior lone operatives memorize their code and can safely(ish) ditch their
+      mission instructions now.
+  Siro:
+  - code_imp: Crit health check for oozling decapitations restored. Head decapitations
+      match other species.
+  - code_imp: removed unremovable flag from obj/item/organ/internal/eyes/jelly types.
+2025-05-24:
+  Absolucy:
+  - refactor: Made some changes to how some item icons are displayed in tgui windows,
+      hopefully improving tgui load times.
+2025-05-25:
+  SirNightKnight:
+  - rscadd: added explorer eva kits to mining order consoles.
+  - rscadd: added advanced GPSs to mining order consoles.
+  - rscadd: added basic medkits to mining order consoles.
+  - balance: dropped the price of fire medkits to 600 points in the mining order console
+      for OCD reasons.
+  - bugfix: fixed a system glitch sending explorers to planetary stations.
+  Xander3359 Hatterhat:
+  - qol: Holosigns (engineering holobarriers, janitor holosigns, PENLITE holobarriers,
+      etc.) can now be projected onto doors.
+  - qol: Holofans from ATMOS holoprojectors can now be projected onto doors, windows,
+      and grilles.
+2025-05-26:
+  notghosti:
+  - qol: Clarified in plague rat greet text what heals a rat.
+  - balance: Eating normal food now heals a plague rat. albeit a much lesser amount
+      and function than cheese
+2025-05-27:
+  Siro:
+  - rscadd: Heart emitter unique effect
+2025-05-28:
+  Absolucy:
+  - bugfix: Fixed some stacked atmos pipes on some icebox/tram bars and and a space
+      ruin.
+  - bugfix: Firelocks now skip checking uninitialized turfs, which caused errors with
+      the holodeck.
+  - map: Added liquid barriers to the doors in Pubby Station's xenobiology.
+  Absolucy, Melbert:
+  - code_imp: Updated some status effect tick code to be more clear of how long is
+      elapsing between ticks. Some effects that were inadvertently weakened are now
+      stronger as a result (fire and some heretic effects).
+  Addust:
+  - map: A Johnson & Co Architecture construction team has been sent into Central
+      Command to manifest a new office into existence, at the request of Glasser Trisk.
+  - map: A second team was also sent in to build an office for Giacomo Affinito.
+  Helixsix:
+  - bugfix: Fixed xenobio doors not autoclosing on Theseus.
+  - map: Renovated Heliostation Xenobiology
+  SirNightKnight:
+  - rscadd: added new alarms to the station to signify a Delta alert.
+  - rscadd: added more status displays for the new alert levels.
+  - qol: status displays set to an alert level display will update to the current
+      alert level if it changes.
+  - bugfix: ' fixed fire alarms not displaying the correct alert level light.'
+  TheMrGlasses:
+  - balance: Buff to the Slasher's jaunt.
+  Xander3359:
+  - bugfix: Void ascension storm now respects antimagic
+  - bugfix: Void chill can no longer be applied to people with antimagic
+  notghosti:
+  - rscadd: Robotic limbs can now be adjusted to fit satyrs and orthinid's by using
+      a wrench on the limbs
+  - bugfix: All of satyrs and orthinids limbs will now fit, a satyr or orthinid
+2025-05-30:
+  BingusSS13:
+  - qol: The space hotel now has more universal enzyme, flour, sugar, and rice.
+  - qol: The space hotel now has actual parts to build hydroponics with.
+  - qol: The space hotel now has a seed extractor board and a composter board for
+      hydroponics.
+2025-05-31:
+  notghosti:
+  - bugfix: Slimes now ignore drones.
+  sprungleio:
+  - rscadd: The hole.
+  - rscadd: More flavor to Beverly's fax machine.

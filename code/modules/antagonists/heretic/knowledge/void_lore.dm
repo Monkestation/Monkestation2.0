@@ -265,6 +265,8 @@
 			if(IS_HERETIC_OR_MONSTER(close_carbon))
 				close_carbon.apply_status_effect(/datum/status_effect/void_conduit)
 				continue
+			if(close_carbon.can_block_magic())
+				continue
 			close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
 			close_carbon.apply_status_effect(/datum/status_effect/void_chill, 1)
 			close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))

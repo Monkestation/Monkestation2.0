@@ -53,6 +53,8 @@
 		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/spines,
 		/obj/item/organ/internal/eyes/robotic/glow,
+		/obj/item/organ/external/plumage,
+		/obj/item/organ/internal/ears/cat/super,
 	))
 	//Quirks that roll unique effects or gives items to each new body should be saved between bodies.
 	var/static/list/saved_quirks = typecacheof(list(
@@ -109,7 +111,10 @@
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
 		. += span_red("You could probably snuff that out.")
 	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
-		. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
+		if(isnull(stored_dna))
+			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
+		else
+			. += span_hypnophrase("You remember that pouring a big beaker of ground plasma on it, if it's non-embodied, would make it regrow one.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	user.visible_message(
@@ -190,7 +195,7 @@
 			continue
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		stored_quirks |= quirk
-
+	victim.drop_all_held_items()
 	process_items(victim) // Start moving items before anything else can touch them.
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)

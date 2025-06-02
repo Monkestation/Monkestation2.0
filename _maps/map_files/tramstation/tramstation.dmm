@@ -666,6 +666,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "acm" = (
@@ -29942,7 +29943,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "iuh" = (
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
@@ -29950,6 +29950,8 @@
 	c_tag = "Security - Prison Main North-West";
 	network = list("ss13","Security","prison")
 	},
+/obj/machinery/requests_console/auto_name/directional/north,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "iuj" = (
@@ -50675,7 +50677,6 @@
 /turf/open/floor/grass,
 /area/station/asteroid/tram/security)
 "oSj" = (
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
@@ -57501,6 +57502,7 @@
 	dir = 1
 	},
 /obj/machinery/status_display/ai/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "qVr" = (

@@ -3095,6 +3095,9 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "li" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/machinery/door/poddoor{
+	id = "proto"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/proto)
 "lk" = (

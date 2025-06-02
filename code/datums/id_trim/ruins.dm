@@ -85,6 +85,14 @@
 		ACCESS_ROBOTICS,
 		ACCESS_ORDNANCE
 	)
+
+/// trim for the cargo tech corpse in the remains of alpha station on ice box oldstation
+/datum/id_trim/job/away/old/cargo
+	minimal_access = list(
+		ACCESS_AWAY_GENERAL,
+		ACCESS_AWAY_SUPPLY,
+	)
+	assignment = "Alpha Station Cargo Technician"
 ///END OF EDIT
 
 /// Trim for the cat surgeon ruin.
