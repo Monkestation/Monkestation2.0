@@ -57,6 +57,9 @@
 	/// Default raw text to fill this paper with on init.
 	var/default_raw_text
 
+	/// Checks to see if the paper can be folded
+	var/can_be_folded = TRUE
+
 	/// The number of input fields
 	var/input_field_count = 0
 
