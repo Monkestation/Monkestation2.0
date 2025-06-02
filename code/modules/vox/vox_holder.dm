@@ -116,6 +116,7 @@
 		CRASH("Invalid VOX voice instance: [new_voice || "null"]")
 	current_voice = new_voice
 
+#ifdef TESTING
 GLOBAL_DATUM(test_vox_holder, /datum/vox_holder)
 
 /mob/verb/aivox2()
@@ -127,6 +128,7 @@ GLOBAL_DATUM(test_vox_holder, /datum/vox_holder)
 		GLOB.test_vox_holder = new
 
 	GLOB.test_vox_holder.ui_interact(src)
+#endif
 
 #undef MAX_WORDS
 #endif
