@@ -1,3 +1,4 @@
+
 /datum/map_template/ruin/proc/try_to_place(z, list/allowed_areas_typecache, turf/forced_turf, clear_below)
 	var/sanity = forced_turf ? 1 : PLACEMENT_TRIES
 	if(SSmapping.level_trait(z,ZTRAIT_ISOLATED_RUINS))
@@ -86,6 +87,7 @@
 			return
 
 	var/list/ruins = potentialRuins.Copy()
+	var/list/placed_ruins = list()
 
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
@@ -147,6 +149,23 @@
 									continue outer
 								else
 									break outer
+				if(current_pick.undesirable_ruins && !forced_z)
+					var/original_zLevel = target_z
+					var/z_list = z_levels.Copy()
+					while(length(z_list))
+						var/unwanted_zLevel = FALSE
+						for(var/undesirable in current_pick.undesirable_ruins)
+							if((undesirable in placed_ruins) && placed_ruins[undesirable] == target_z)
+								unwanted_zLevel = TRUE
+								break
+						if(unwanted_zLevel)
+							z_list -= target_z
+							if(!length(z_list))
+								target_z = original_zLevel
+							else
+								target_z = pick(z_list)
+						else
+							break
 
 				placed_turf = current_pick.try_to_place(target_z,whitelist_typecache,forced_turf,clear_below)
 				if(!placed_turf)
@@ -196,6 +215,7 @@
 									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
+			placed_ruins[current_pick.id] = target_z
 
 		//Update the available list
 		for(var/datum/map_template/ruin/R in ruins_available)
