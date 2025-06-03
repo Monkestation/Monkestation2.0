@@ -644,6 +644,13 @@
 	item = /obj/vehicle/sealed/mecha/talos
 	cost = 180
 
+/datum/uplink_item/support/stockade
+	name = "Balfour Stockade 75mm"
+	desc = "Want a giant cannon but too poor to pay for an entire tank? Look no further! The Balfour Stockade has the same cannon as the Talos, but without an engine, internals, \
+	you can even be grabbed off the gun! You need to deploy the thing with a wrench to get it into a firing position, and again with a wrench to undeploy it, only needs 1 crewmember!."
+	item = /obj/vehicle/ridden/stockade
+	cost = 90
+
 /datum/uplink_item/support/supporttankammo
 	name = "75mm cannon ammo"
 	desc = "3 crated shells for use with the 85V-g Talos assault tank."
