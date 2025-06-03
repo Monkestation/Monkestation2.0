@@ -216,7 +216,7 @@
 
 	for(var/thing in patient.diseases) //Disease Information
 		var/datum/disease/D = thing
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
+		if(!(D.visibility_flags & HIDDEN_SCANNER) && !(D.disease_flags & DISEASE_DORMANT))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.get_spread_string()].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
