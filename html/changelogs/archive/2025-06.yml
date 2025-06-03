@@ -57,3 +57,33 @@
   - bugfix: Making someone into an abductor will no longer smuggle their previous
       items into the ship.
   - code_imp: Moved some nightmare code from the event into the antagonist datum.
+2025-06-03:
+  Absolucy:
+  - bugfix: Fixed nanite cloud IDs getting reset to 0.
+  - map: Swapped the position of the biomass recycler and the intergalactic market
+      pad in xenobio on HelioStation, allowing the pad to automatically link to the
+      market roundstart.
+  - map: Added liquid barriers to all the entrances to xenobio on HelioStation.
+  - map: Removed the floating lightbulbs in xenobio on HelioStation.
+  - map: Fixed the weird fluid duct positioning in xenobio on HelioStation, also fixing
+      the top left ooze sucker not being connected at all.
+  Absolucy, Ghommie:
+  - bugfix: Fixed active conveyor belts not moving movables spawned on top of them.
+  Aniantan, FlufflesTheDog:
+  - bugfix: Species without blood and species that don't breathe can no longer be
+      blood deficient.
+  BingusSS13:
+  - balance: thederelict (KS13) and oldstation (Charlie Station) are now less likely
+      to spawn near telecommunication relays.
+  - bugfix: You can now repair bullet holes in walls easily again.
+  Glyphee:
+  - rscadd: Added plushies for QB, Giacomo and Mr.Glasses
+  - rscadd: Goblin liver and spleen
+  ghosti, SirNightKnight:
+  - rscadd: Penlight Holobarriers now have a separate sprite for when biometrics are
+      disabled.
+  - qol: Medical Kiosks no longer tell you if your sick with a dormant disease
+  notghosti:
+  - bugfix: Revivers will no longer spam chat that they are attempting to revive you.
+  - bugfix: Revivers... Will actually revive you now.
+  - bugfix: Nightmares are now nightmares. Instead of the actual scariest thing, Man.
