@@ -321,6 +321,8 @@
 				src.Impact(buck_source)
 				blocked = 100 ///Brute force time
 				damage = 0
+				wound_bonus = CANT_WOUND
+				embedding = list("embed_chance" = 0)
 				qdel(src)
 				return BULLET_ACT_HIT
 
