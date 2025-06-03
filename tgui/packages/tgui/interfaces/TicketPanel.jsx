@@ -3,8 +3,8 @@ import { Section, Button, Box, Flex, TextArea } from '../components';
 import { Window } from '../layouts';
 import { KEY_ENTER } from 'common/keycodes';
 
-export const TicketPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const TicketPanel = (props) => {
+  const { act, data } = useBackend();
 
   const buttons = [
     [
@@ -170,11 +170,11 @@ export const TicketPanel = (props, context) => {
   );
 };
 
-export const TicketMessages = (props, context) => {
+export const TicketMessages = (props) => {
   const { ticket, title } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
 
-  const [message, setMessage] = useLocalState(context, '');
+  const [message, setMessage] = useLocalState('message', '');
 
   return (
     <Section lineHeight={1.25} title={title}>

@@ -149,6 +149,9 @@ SUBSYSTEM_DEF(demo)
 	// last_queued = SSdemo.last_queued
 	// last_completed = SSdemo.last_completed
 
+/datum/controller/subsystem/demo/Shutdown()
+	disabled = TRUE
+
 /datum/controller/subsystem/demo/fire()
 	var/list/marked_new = src.marked_new
 	var/list/marked_dirty = src.marked_dirty
@@ -438,6 +441,8 @@ SUBSYSTEM_DEF(demo)
 	last_written_time = new_time
 
 /datum/controller/subsystem/demo/proc/write_event_line(line)
+	if(disabled)
+		return
 	write_time()
 	if(initialized)
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "[line]\n")

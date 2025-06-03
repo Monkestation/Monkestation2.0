@@ -46745,6 +46745,11 @@
 	dir = 8
 	},
 /area/station/command/heads_quarters/ce)
+"paJ" = (
+/obj/machinery/requests_console/auto_name/directional/south,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/turf/open/floor/iron/dark,
+/area/station/security/prison)
 "paO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -60584,6 +60589,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/textured,
 /area/station/science/xenobiology)
 "tCM" = (
@@ -99940,7 +99946,7 @@ cru
 eZP
 qgq
 lMT
-qgq
+paJ
 pSA
 pSA
 pSA
@@ -117928,7 +117934,7 @@ hNt
 xoG
 ogZ
 fck
-qbm
+dQL
 hNt
 xoG
 ogZ
@@ -119984,7 +119990,7 @@ hNt
 xoG
 ogZ
 fck
-dQL
+qbm
 hNt
 xoG
 ogZ

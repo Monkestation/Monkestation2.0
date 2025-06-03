@@ -84,6 +84,10 @@
 /obj/structure/bed/medical/anchored
 	anchored = TRUE
 
+/obj/structure/bed/medical/anchored/Initialize(mapload) //loaded subtype for mapping use
+	. = ..()
+	update_appearance()
+
 /obj/structure/bed/medical/emergency
 	name = "emergency medical bed"
 	desc = "A compact medical bed. This emergency version can be folded and carried for quick transport."

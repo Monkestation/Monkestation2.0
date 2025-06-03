@@ -35,6 +35,36 @@
 	time = 5 SECONDS
 	category = CAT_ROBOT
 
+
+/datum/crafting_recipe/sheetmetaldrill
+	name = "Sheet metal drill"
+	result = /obj/vehicle/sealed/mecha/makeshift_drill
+	reqs = list(/obj/item/stack/cable_coil = 30,
+				/obj/item/stack/sheet/iron = 10,
+				/obj/item/stock_parts/manipulator = 4,
+				/obj/item/tank/internals/oxygen = 4,
+				/obj/item/electronics/apc = 1,
+				/obj/item/extinguisher = 2,
+				/obj/item/paper = 10,
+				/obj/item/flashlight = 2,
+				/obj/item/stack/rods = 25,
+				/obj/item/stack/conveyor = 2,
+				/obj/item/chair = 1)
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 20 SECONDS
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/giantdrill
+	name = "Giant drill"
+	result = /obj/item/mecha_parts/mecha_equipment/drill/giantdrill
+	reqs = list(/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/sheet/plasteel = 20,
+				/obj/item/stock_parts/manipulator = 4,)
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH)
+	time = 30 SECONDS
+	category = CAT_ROBOT
+
+
 /datum/crafting_recipe/ambulance
 	name = "Porta Potty Ambulance"
 	result = /obj/vehicle/sealed/mecha/makeshift_ambulance
@@ -175,4 +205,26 @@
 		/obj/item/grenade/iedcasing = 3
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_WIRECUTTER)
+	time = 0.5 SECONDS
+
+/datum/crafting_recipe/light_tank_ammo
+	name = "40mm Tank Shells"
+	result = /obj/item/mecha_ammo/makeshift/lighttankammo
+	reqs = list(/datum/reagent/rdx = 50,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/assembly/igniter = 5
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WIRECUTTER)
+	time = 0.5 SECONDS
+
+
+
+/datum/crafting_recipe/lightankmg_ammo
+	name = "12.7x70mm ammunition belt"
+	result = /obj/item/mecha_ammo/makeshift/lighttankmg
+	reqs = list(/datum/reagent/gunpowder = 30,
+		/obj/item/stack/sheet/iron = 20,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 0.5 SECONDS

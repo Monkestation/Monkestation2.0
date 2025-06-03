@@ -1523,8 +1523,6 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/suit/syndicate/interdyne_jacket,
-/obj/item/clothing/suit/toggle/labcoat/interdyne,
 /obj/item/clothing/head/hats/hos/beret/syndicate,
 /obj/item/clothing/neck/large_scarf/syndie,
 /turf/open/floor/wood,

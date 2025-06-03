@@ -18,8 +18,18 @@
 /obj/structure/marker_beacon/teal,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"j" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "p" = (
 /turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"q" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "r" = (
 /obj/structure/marker_beacon/fuchsia,
@@ -46,6 +56,10 @@
 /mob/living/simple_animal/hostile/megafauna/bubblegum,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"E" = (
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain/protected_space)
 "F" = (
 /turf/open/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
@@ -57,8 +71,18 @@
 /obj/structure/marker_beacon/bronze,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"L" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "M" = (
 /obj/structure/marker_beacon/indigo,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"N" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "R" = (
@@ -72,6 +96,12 @@
 /obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"U" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "W" = (
 /obj/structure/marker_beacon/cerulean,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -1637,8 +1667,8 @@ a
 a
 a
 a
-a
-a
+j
+U
 S
 S
 S
@@ -1695,8 +1725,8 @@ a
 a
 a
 a
-a
-a
+L
+E
 S
 S
 S
@@ -1753,8 +1783,8 @@ a
 a
 a
 X
-a
-a
+L
+E
 S
 S
 S
@@ -1811,8 +1841,8 @@ a
 a
 a
 a
-a
-a
+L
+E
 S
 S
 S
@@ -1869,8 +1899,8 @@ a
 a
 a
 a
-a
-a
+q
+N
 S
 S
 S

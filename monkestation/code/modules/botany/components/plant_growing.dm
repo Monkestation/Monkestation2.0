@@ -139,10 +139,12 @@
 
 /datum/component/plant_growing/proc/try_plant_seed(datum/source, obj/item/seeds/seed, mob/living/user)
 	SIGNAL_HANDLER
+	if(istype(seed, /obj/item/seeds/sample))
+		return FALSE
 	if(istype(seed, /obj/item/storage/bag/plants))
 		for(var/id as anything in managed_seeds)
 			var/obj/item/seeds/harvest = managed_seeds[id]
-			if(!harvest)
+			if(!harvest || istype(seed, /obj/item/seeds/sample))
 				continue
 			SEND_SIGNAL(harvest, COMSIG_PLANT_TRY_HARVEST, user)
 

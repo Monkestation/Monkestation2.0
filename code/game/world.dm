@@ -560,7 +560,7 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	data["tick_usage"] = world.tick_usage
 	data["tick_lag"] = world.tick_lag
 	data["time"] = world.time
-	data["timestamp"] = logger.unix_timestamp_string()
+	data["timestamp"] = rustg_unix_timestamp()
 	return data
 
 /world/proc/SetupLogs()
@@ -707,10 +707,11 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 			world.cleanup_external_cpu()
 			QDEL_NULL(Tracy)
 			QDEL_NULL(Debugger)
+			SSplexora.notify_shutdown(PLEXORA_SHUTDOWN_KILLDD)
 			TgsEndProcess()
 			return ..()
 
-	SSplexora._Shutdown() // Monkestation edit: plexora
+	SSplexora.notify_shutdown()
 	log_world("World rebooted at [time_stamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
