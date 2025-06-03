@@ -11,6 +11,7 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
 "bz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/shuttle/ruin/free_miner)
 "bZ" = (
@@ -79,6 +80,9 @@
 /obj/machinery/vending/wallmed/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured,
 /area/shuttle/ruin/free_miner)
 "ef" = (
@@ -625,6 +629,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/shuttle/cargo,
 /area/shuttle/ruin/free_miner)
+"rj" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/shuttle/ruin/free_miner)
 "rG" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -840,6 +849,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_smooth,
+/area/shuttle/ruin/free_miner)
+"wq" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
 /area/shuttle/ruin/free_miner)
 "wu" = (
 /obj/machinery/button/door/directional/south{
@@ -2341,7 +2355,7 @@ CJ
 CJ
 rG
 Sm
-hK
+wq
 MV
 Sx
 Tz
@@ -2379,7 +2393,7 @@ dy
 CJ
 gu
 bz
-hK
+rj
 rV
 et
 ID
