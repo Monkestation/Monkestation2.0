@@ -570,14 +570,13 @@
 	var/chassis_icon = "kineticgun_u"
 	var/chassis_name = "super-kinetic accelerator"
 
-/obj/item/borg/upgrade/modkit/chassis_mod/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
+/obj/item/borg/upgrade/modkit/chassis_mod/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user) //NEED TO RE-ADD THE SHOTGUN TO THIS BLACKLIST WHEN ITS REWORKED
 //monkestation edit start
 	if(is_type_in_list(KA, list(/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/meme,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
 								/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,
-								/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave,
-								/obj/item/gun/energy/recharge/kinetic_accelerator/shotgun)))
+								/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave,)))
 		to_chat(user, span_warning("[src] is not compatible with [KA]."))
 		return FALSE
 //monkestation edit end
