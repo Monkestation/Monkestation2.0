@@ -100,5 +100,3 @@
 		return
 	if(!user || !check_rights(R_ADMIN, 0, user))
 		return FALSE
-	to_chat(world, "UI is returning this information, the action is [action] and the params are, [jointext(params, ", ")]")
-	//var/denied_reason = tgui_input_text(user, "Denial Reason", "Enter a reason for denying this application:")

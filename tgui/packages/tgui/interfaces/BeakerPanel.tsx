@@ -58,8 +58,6 @@ export const BeakerPanel = (props) => {
     {},
   );
 
-  const handleReagentChange = (index: number, data) => {};
-
   const handleSearchChange = (containerNum: number, searchTerm: string) => {
     const newSearchTerms = {
       ...searchTerms,
@@ -117,7 +115,17 @@ export const BeakerPanel = (props) => {
     containerNum: number,
     reagent: number,
     volume: number,
-  ) => {};
+  ) => {
+    const currentReagents = reagentsMap[containerNum];
+    if (!currentReagents) {
+      return;
+    } else {
+      const newReagentsMap = { ...reagentsMap };
+      currentReagents[reagent].amount = volume;
+      newReagentsMap[containerNum] = currentReagents;
+      setReagentsMap(newReagentsMap);
+    }
+  };
 
   const spawnGrenade = () => {
     act('spawngrenade', {});
@@ -202,10 +210,17 @@ export const BeakerPanel = (props) => {
                 <Flex.Item>
                   <NumberInput
                     width="80px"
-                    value={1}
+                    value={reagent.amount}
                     minValue={0}
                     step={1}
                     stepPixelSize={10}
+                    onChange={(e, value) => {
+                      if (value === 0) {
+                        removeReagentfromContainer(containerNum, index);
+                      } else {
+                        updateReagentVolume(containerNum, index, value);
+                      }
+                    }}
                   />
                 </Flex.Item>
                 <Flex.Item>
