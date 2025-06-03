@@ -250,7 +250,6 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
 		list("CPU:", world.cpu),
-		list("True CPU:", current_true_cpu()),
 		list("Instances:", "[num2text(world.contents.len, 10)]"),
 		list("World Time:", "[world.time]"),
 		list("Globals:", GLOB.stat_entry(), text_ref(GLOB)),
@@ -268,15 +267,15 @@ SUBSYSTEM_DEF(statpanels)
 		tracy_present = fexists(tracy_dll)
 	if(tracy_present)
 		if(Tracy.enabled)
-			mc_data.Insert(3, list(list("byond-tracy:", "Active (reason: [Tracy.init_reason || "N/A"])")))
+			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [Tracy.init_reason || "N/A"])")))
 		else if(Tracy.error)
-			mc_data.Insert(3, list(list("byond-tracy:", "Errored ([Tracy.error])")))
+			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([Tracy.error])")))
 		else if(fexists(TRACY_ENABLE_PATH))
-			mc_data.Insert(3, list(list("byond-tracy:", "Queued for next round")))
+			mc_data.Insert(2, list(list("byond-tracy:", "Queued for next round")))
 		else
-			mc_data.Insert(3, list(list("byond-tracy:", "Inactive")))
+			mc_data.Insert(2, list(list("byond-tracy:", "Inactive")))
 	else
-		mc_data.Insert(3, list(list("byond-tracy:", "[tracy_dll] not present")))
+		mc_data.Insert(2, list(list("byond-tracy:", "[tracy_dll] not present")))
 	// monkestation end
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), text_ref(sub_system))
