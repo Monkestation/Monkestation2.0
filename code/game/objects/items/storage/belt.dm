@@ -612,7 +612,7 @@
 	. = ..()
 	atom_storage.max_slots = 30
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.max_total_storage = 60
+	atom_storage.max_total_storage = 300
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
@@ -623,6 +623,8 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
+		/obj/item/ammo_casing/a40mm,
+		/obj/item/assembly/signaler,
 	))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()

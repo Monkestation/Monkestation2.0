@@ -139,14 +139,18 @@
 /obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
 	name = "\improper refurbished PP-95 SMG"
 	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished for better performance."
-	spread = 10
+	spread = 5
 	burst_size = 2
 	icon_state = "plastikov_refurbished"
 	inhand_icon_state = "plastikov_refurbished"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov10mm
-	projectile_damage_multiplier = 0.75
+	projectile_damage_multiplier = 0.625
 	can_suppress = TRUE
 	suppressor_x_offset = 4
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/automatic/plastikov/refurbished/unrestricted
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/rostokov
 	name = "\improper Rostokov Autorifle"
@@ -161,15 +165,18 @@
 	slot_flags = null
 	worn_icon_state = "rostokov"
 	actions_types = list()
+	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
 	projectile_damage_multiplier = 0.75
-	spread = 5
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 
 /obj/item/gun/ballistic/automatic/rostokov/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+
+/obj/item/gun/ballistic/automatic/rostokov/unrestricted
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"

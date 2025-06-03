@@ -356,7 +356,7 @@
 	else
 		spawned_mob.forceMove(locate(1,1,1))
 
-	antag_datum = new()
+	op_mind.add_antag_datum(antag_datum)
 
 	if(ishuman(spawned_mob))
 		var/mob/living/carbon/human/human_mob = spawned_mob

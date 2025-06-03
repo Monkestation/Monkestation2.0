@@ -366,7 +366,7 @@
 	list_reagents = list(/datum/reagent/medicine/stimulants = 100)
 	var/stripe_style = null
 
-/obj/item/reagent_containers/hypospray/medipen/advanced/Initialize()
+/obj/item/reagent_containers/hypospray/medipen/advanced/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
