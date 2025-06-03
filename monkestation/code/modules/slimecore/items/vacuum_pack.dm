@@ -71,12 +71,12 @@
 	modified = !modified
 	to_chat(user, span_notice("You turn the safety switch on [src] [modified ? "off" : "on"]."))
 
-/obj/item/vacuum_pack/process(delta_time)
+/obj/item/vacuum_pack/process(seconds_per_tick)
 	if(!(VACUUM_PACK_UPGRADE_HEALING in upgrades))
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 	for(var/mob/living/basic/animal in stored)
-		animal.adjustBruteLoss(-5 * delta_time)
+		animal.adjustBruteLoss(-5 * seconds_per_tick)
 
 /obj/item/vacuum_pack/examine(mob/user)
 	. = ..()

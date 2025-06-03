@@ -1,0 +1,89 @@
+2025-06-01:
+  Absolucy:
+  - sound: Reduced the range of the audio of some emotes that had higher-pitched audio,
+      such as speen and wawa.
+  - bugfix: Fixed ooze suckers being weird with pumping adjacent turfs.
+  - bugfix: Slimes now properly copy nanites when splitting again.
+  - qol: Nanites now also copy cloud ID and safety thresholds when "syncing" with
+      a full overwrite.
+  - refactor: (Melbert) Refactor of connections.js. Yeah that's it.
+  - qol: (nikothedude) Character preferences now have descriptions as tooltips - hover
+      over their names to see them.
+  - refactor: (JohnFulpWillard) Destructive Analyzers now have a TGUI menu.
+  - code_imp: Improved rail cart code a bit.
+  Absolucy, Kapu1178:
+  - server: The Master Controller now allocates tick time based on the work required
+      for the tick.
+  Absolucy, Melbert:
+  - bugfix: Anti-magic visual effects will no longer trigger overtop one another
+  Anonymous Clock Cultist:
+  - balance: Ratvar plush is no longer chaplain restricted in loadout menu.
+  Shoddd:
+  - balance: Express console can now be unlocked by cargo access
+  - rscadd: Fab-o-vend and command clothing vender restocking units in cargo
+  Siro:
+  - bugfix: Oozlings don,t delete items in hand when dying or get round removed when
+      dying in cryo.
+  - bugfix: Borg surgeries that require hands can now be completed. (Cavity implant/Stomach
+      Pump)
+  - bugfix: Siman Wizards are no longer attacked by their own casted monkeys.
+  - bugfix: 'Fixed pipe and wire connecting Theseus Southwest Solar maintence APC
+      back to the system.
+
+      fix. Mech internal tank UI runtime fixed and user dialog when no internal tank
+      is present.'
+  - bugfix: Insealed condifential Biscuit now acts like a normal biscuit when sealed.
+      (No longer resealable.)
+  - code_imp: Mechpad lieform restriction defaults to off.
+  - qol: NIFSoft menu now scrolls so long descriptions don't hide options.
+  - qol: Ports tgstation#85379 movement fixes for mobs moving in the same direction
+      at same speed.
+  Xander3359:
+  - rscadd: Oozelings can now selectively retract their limbs whenever they want
+  notghosti:
+  - rscadd: Chemical kits now come with a new chemical vial. Changeling Immunoglobulin,
+      harvested from its namesake, a powerful antipathogen that can instantly cure
+      most diseases.
+  - balance: Heretic Eldritch Flask now cleanses heretics of negative diseases and
+      heathens of any positive ones. Reinfection is still possible in both cases.
+  - balance: Monster Hunter blood flask now cures the drinker of any negative diseases
+      upon consumption. Reinfection is still possible.
+  - balance: True husks now allow for two teratomas spawned.
+  - balance: Birth Teratoma now costs 50 chemicals. (From 60)
+  - rscadd: Added the remote power AI disk
+  - code_imp: made it possible to easily add new AI upgrade disks
+  - rscadd: Adds the functionality for obsessed, drifting contractors, solo abductors,
+      nightmares, and slashers
+  - bugfix: Making someone into an abductor will no longer smuggle their previous
+      items into the ship.
+  - code_imp: Moved some nightmare code from the event into the antagonist datum.
+2025-06-03:
+  Absolucy:
+  - bugfix: Fixed nanite cloud IDs getting reset to 0.
+  - map: Swapped the position of the biomass recycler and the intergalactic market
+      pad in xenobio on HelioStation, allowing the pad to automatically link to the
+      market roundstart.
+  - map: Added liquid barriers to all the entrances to xenobio on HelioStation.
+  - map: Removed the floating lightbulbs in xenobio on HelioStation.
+  - map: Fixed the weird fluid duct positioning in xenobio on HelioStation, also fixing
+      the top left ooze sucker not being connected at all.
+  Absolucy, Ghommie:
+  - bugfix: Fixed active conveyor belts not moving movables spawned on top of them.
+  Aniantan, FlufflesTheDog:
+  - bugfix: Species without blood and species that don't breathe can no longer be
+      blood deficient.
+  BingusSS13:
+  - balance: thederelict (KS13) and oldstation (Charlie Station) are now less likely
+      to spawn near telecommunication relays.
+  - bugfix: You can now repair bullet holes in walls easily again.
+  Glyphee:
+  - rscadd: Added plushies for QB, Giacomo and Mr.Glasses
+  - rscadd: Goblin liver and spleen
+  ghosti, SirNightKnight:
+  - rscadd: Penlight Holobarriers now have a separate sprite for when biometrics are
+      disabled.
+  - qol: Medical Kiosks no longer tell you if your sick with a dormant disease
+  notghosti:
+  - bugfix: Revivers will no longer spam chat that they are attempting to revive you.
+  - bugfix: Revivers... Will actually revive you now.
+  - bugfix: Nightmares are now nightmares. Instead of the actual scariest thing, Man.
