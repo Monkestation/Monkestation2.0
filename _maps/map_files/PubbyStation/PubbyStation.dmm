@@ -6651,6 +6651,9 @@
 /obj/machinery/recharger,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/key/odyssey{
+	pixel_x = 9
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "axU" = (
@@ -36641,6 +36644,13 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
+"jyc" = (
+/obj/vehicle/ridden/odyssey,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/captain)
 "jyJ" = (
 /obj/structure/closet/secure_closet/medical1{
 	pixel_x = -3
@@ -82842,7 +82852,7 @@ aqF
 aqF
 avM
 awR
-aza
+jyc
 aza
 aza
 aBl

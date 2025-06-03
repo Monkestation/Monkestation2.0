@@ -19451,8 +19451,12 @@
 /area/station/hallway/primary/starboard)
 "eDe" = (
 /obj/machinery/light_switch/directional/north,
-/obj/machinery/photocopier,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/key/odyssey,
+/turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "eDp" = (
 /obj/structure/cable,
@@ -24258,8 +24262,11 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "fIU" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/fax{
+	fax_name = "Captain's Office";
+	name = "Captain's Fax Machine"
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "fIX" = (
@@ -30674,7 +30681,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "hjf" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -37102,6 +37112,13 @@
 "iKC" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
+/obj/item/camera{
+	pixel_x = 10
+	},
+/obj/item/storage/photo_album{
+	pixel_x = -13;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "iKD" = (
@@ -38742,7 +38759,8 @@
 	pixel_x = -32;
 	pixel_y = 32
 	},
-/turf/open/floor/wood,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "jeM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -40541,8 +40559,7 @@
 /area/station/medical/psychology)
 "jzT" = (
 /obj/structure/table/wood,
-/obj/item/storage/photo_album,
-/obj/item/camera,
+/obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "jzU" = (
@@ -55695,12 +55712,17 @@
 "nce" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/west,
-/obj/item/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -5
+	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Bridge - Captain's Office";
 	name = "command camera"
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/paper_bin{
+	pixel_x = 6
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "ncu" = (
@@ -77880,12 +77902,8 @@
 /turf/open/floor/iron/dark/side,
 /area/station/security/checkpoint/medical/medsci)
 "swj" = (
-/obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
-/turf/open/floor/wood,
+/obj/vehicle/ridden/odyssey,
+/turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "swn" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{

@@ -21525,6 +21525,9 @@
 	pixel_x = -14;
 	pixel_y = 11
 	},
+/obj/item/key/odyssey{
+	pixel_x = 9
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "gsZ" = (
@@ -36048,9 +36051,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/central)
 "kFJ" = (
-/obj/machinery/suit_storage_unit/captain,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
+/obj/vehicle/ridden/odyssey,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "kFL" = (
@@ -69711,6 +69714,7 @@
 	dir = 8
 	},
 /obj/machinery/light/warm/directional/east,
+/obj/machinery/suit_storage_unit/captain,
 /turf/open/floor/eighties/red,
 /area/station/command/heads_quarters/captain/private)
 "unU" = (

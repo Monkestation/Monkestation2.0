@@ -87,3 +87,8 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/whip.ogg'
 	slot_flags = ITEM_SLOT_BELT
+
+/obj/item/key/odyssey
+	name = "Captain's car key"
+	desc = "A steel key with a golden handle for using the captains car."
+	icon_state = "keyodyssey"

@@ -53110,6 +53110,10 @@
 /obj/item/disk/nuclear,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/cable,
+/obj/item/assembly/flash/handheld{
+	pixel_x = 10;
+	pixel_y = 1
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "nqU" = (
@@ -59298,10 +59302,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "pHF" = (
-/obj/structure/table/wood,
-/obj/item/hand_tele,
-/obj/item/melee/chainofcommand,
 /obj/machinery/airalarm/directional/north,
+/obj/vehicle/ridden/odyssey,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "pHT" = (
@@ -67470,6 +67472,24 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/aft/lesser)
+"sSE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/wood,
+/obj/item/hand_tele,
+/obj/item/melee/chainofcommand{
+	pixel_x = 6
+	},
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/restraints/handcuffs{
+	pixel_y = 10;
+	pixel_x = 8
+	},
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "sSN" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
@@ -68543,15 +68563,11 @@
 /area/station/engineering/atmos)
 "tlM" = (
 /obj/structure/table/wood,
-/obj/machinery/recharger{
-	pixel_x = -5;
-	pixel_y = 4
+/obj/item/key/odyssey,
+/obj/item/weldingtool{
+	pixel_x = -7;
+	pixel_y = 7
 	},
-/obj/item/assembly/flash/handheld{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/restraints/handcuffs,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "tlZ" = (
@@ -123004,7 +123020,7 @@ uIt
 aAd
 pHF
 hfo
-gKb
+sSE
 xNV
 aAc
 oMs

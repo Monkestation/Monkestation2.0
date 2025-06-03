@@ -37327,7 +37327,13 @@
 "lBj" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -11
+	},
+/obj/item/key/odyssey{
+	pixel_x = 10
+	},
+/obj/machinery/recharger,
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/captain)
 "lBk" = (
@@ -67950,6 +67956,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/item/crowbar/red,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "vrq" = (
@@ -77085,10 +77092,11 @@
 /area/station/hallway/primary/central/fore)
 "yeA" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/table/wood,
-/obj/item/crowbar/red,
-/obj/machinery/recharger,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/vehicle/ridden/odyssey,
+/obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,

@@ -274,10 +274,9 @@
 	icon_state = "firebrand-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
-
 /obj/structure/mecha_wreckage/callahan
 	name = "\improper Sinking Callahan Class Battleship"
-	desc = "Worship whoever has just killed this, they have preformed a miracale"
+	desc = "Worship whoever has just killed this, they have preformed a miracle"
 	icon = 'icons/mecha/callahan.dmi'
 	icon_state = "callahan-broken"
 	SET_BASE_PIXEL(-141, 0)
@@ -292,3 +291,15 @@
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "devittcaine-broken"
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+
+/obj/structure/mecha_wreckage/nakki
+	name = "\improper Sinking Nakki Class Submarine"
+	desc = "Worship whoever has just killed this, they have preformed a miracle"
+	icon = 'icons/mecha/callahan.dmi'
+	icon_state = "nakki-broken"
+	SET_BASE_PIXEL(-141, 0)
+	move_resist = INFINITY
+	welder_salvage = list()
+/obj/structure/mecha_wreckage/callahan/Initialize(mapload)
+	. = ..()
+	playsound(loc, 'sound/effects/explosion3.ogg', 250)

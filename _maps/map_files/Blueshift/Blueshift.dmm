@@ -46057,7 +46057,6 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -69249,11 +69248,8 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "nwo" = (
-/obj/effect/turf_decal/weather/sand,
-/obj/structure/flora/bush/fullgrass,
-/obj/structure/flora/bush/flowers_yw,
-/obj/structure/hedge,
-/turf/open/floor/grass,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/smooth_edge,
 /area/station/command/heads_quarters/captain)
 "nws" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -69936,6 +69932,12 @@
 /obj/structure/ore_box,
 /turf/open/floor/iron,
 /area/station/security/prison/upper)
+"nCM" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/station/command/heads_quarters/captain)
 "nCP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 9
@@ -78304,11 +78306,15 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness)
 "phS" = (
-/obj/effect/turf_decal/weather/sand,
-/obj/structure/flora/bush/fullgrass,
-/obj/structure/flora/bush/lavendergrass,
-/obj/structure/hedge,
-/turf/open/floor/grass,
+/obj/item/storage/toolbox/mechanical,
+/obj/structure/table/reinforced,
+/obj/item/key/odyssey{
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/smooth_corner{
+	dir = 1
+	},
 /area/station/command/heads_quarters/captain)
 "phX" = (
 /obj/effect/turf_decal/bot,
@@ -92806,6 +92812,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"rXL" = (
+/obj/machinery/light/directional/east,
+/obj/structure/reagent_dispensers/fueltank{
+	pixel_y = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/station/command/heads_quarters/captain)
 "rXM" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8
@@ -110831,10 +110847,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "vtp" = (
-/obj/effect/turf_decal/weather/sand,
-/obj/structure/flora/bush/fullgrass,
-/obj/structure/hedge,
-/turf/open/floor/grass,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
 /area/station/command/heads_quarters/captain)
 "vts" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -125105,6 +125121,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/abandon_arcade)
+"yeo" = (
+/obj/vehicle/ridden/odyssey,
+/obj/effect/turf_decal/stripes/box,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/smooth_corner,
+/area/station/command/heads_quarters/captain)
 "yer" = (
 /obj/structure/cable,
 /obj/machinery/duct,
@@ -227558,7 +227580,7 @@ pqO
 wrs
 fFU
 usj
-vtt
+yeo
 vtp
 blS
 blS
@@ -227815,7 +227837,7 @@ pTH
 oLd
 kEw
 bTN
-vtt
+nCM
 nwo
 blS
 blS
@@ -228072,7 +228094,7 @@ pqO
 nDz
 uPC
 iVB
-vtt
+rXL
 phS
 blS
 blS

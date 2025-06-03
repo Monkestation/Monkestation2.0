@@ -13,7 +13,7 @@
 	stepsound = null
 	turnsound = null
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS //can't strafe bruv
-	armor_type = /datum/armor/callahan //its neigh on immune to bullets, but explosives and melee will ruin it. rivetts mean even more melee vun
+	armor_type = /datum/armor/callahan //its nigh on immune to bullets, but explosives and melee will ruin it. rivetts mean even more melee vun
 	internal_damage_threshold = 35 //Its old but no electronics
 	wreckage = /obj/structure/mecha_wreckage/callahan
 	move_resist = INFINITY
