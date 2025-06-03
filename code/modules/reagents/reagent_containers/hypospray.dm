@@ -423,13 +423,23 @@
 	stripe_style = "sal"
 	inhand_icon_state = "salpen"
 
+/obj/item/reagent_containers/hypospray/medipen/advanced/penacid
+	name = "advanced pentetic autoinjector"
+	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins. Has a two use system."
+	volume = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10)
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 20)
+	stripe_style = "acid"
+	inhand_icon_state = "penacid"
+
 /obj/item/reagent_containers/hypospray/medipen/advanced/epinephrine
 	name = "advanced epinephrine autoinjector"
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body, and stop the production of histamine during an allergic reaction. Has a two use system."
-	volume = 60
-	amount_per_transfer_from_this = 30
-	possible_transfer_amounts = list(22)
-	list_reagents = list(/datum/reagent/medicine/epinephrine = 20, /datum/reagent/toxin/formaldehyde = 10, /datum/reagent/medicine/atropine = 20, /datum/reagent/medicine/coagulant = 10)
+	volume = 50
+	amount_per_transfer_from_this = 25
+	possible_transfer_amounts = list(25)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 20, /datum/reagent/toxin/formaldehyde = 5, /datum/reagent/medicine/atropine = 20, /datum/reagent/medicine/coagulant = 5)
 	stripe_style = "epi"
 	inhand_icon_state = "medipen"
 

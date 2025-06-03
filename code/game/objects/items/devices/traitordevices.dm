@@ -420,6 +420,8 @@ effective or pretty fucking useless.
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
+	//type of turret we spawn
+	var/turret_type = /obj/machinery/porta_turret/syndicate/toolbox
 
 /obj/item/storage/toolbox/emergency/turret/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -448,7 +450,7 @@ effective or pretty fucking useless.
 		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
 
 	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
+	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
@@ -456,19 +458,22 @@ effective or pretty fucking useless.
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")
 
+/obj/item/storage/toolbox/emergency/turret/nukie
+	turret_type = /obj/machinery/porta_turret/syndicate/toolbox/nukie
+
 /obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list(ROLE_SYNDICATE)
+
+/obj/item/storage/toolbox/emergency/turret/nukie/explosives/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/c4/x4(src)
 
 /obj/machinery/porta_turret/syndicate/toolbox
 	icon_state = "toolbox_off"
 	base_icon_state = "toolbox"
-
-/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
-	. = ..()
-	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
-
-/obj/machinery/porta_turret/syndicate/toolbox
 	integrity_failure = 0
+	//render the frame underneath?
+	var/frame = TRUE
 	max_integrity = 100
 	shot_delay = 0.5 SECONDS
 	stun_projectile = /obj/projectile/bullet/toolbox_turret
@@ -477,6 +482,11 @@ effective or pretty fucking useless.
 	ignore_faction = TRUE
 	/// The toolbox we store.
 	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+	. = ..()
+	if(frame)
+		underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
@@ -556,3 +566,15 @@ effective or pretty fucking useless.
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
 	speed = 0.6
+
+/obj/machinery/porta_turret/syndicate/toolbox/nukie
+	name = "10mm turret"
+	icon_state = "syndie_off"
+	base_icon_state = "syndie"
+	integrity_failure = 0
+	//render the frame underneath?
+	frame = FALSE
+	max_integrity = 100
+	shot_delay = 1.75 SECONDS
+	stun_projectile = /obj/projectile/bullet/c10mm
+	lethal_projectile = /obj/projectile/bullet/c10mm
