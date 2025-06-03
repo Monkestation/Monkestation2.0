@@ -57,6 +57,19 @@
 
 /// Generates the icon for the search object. This is the expensive part.
 /datum/search_object/proc/generate_icon(client/owner)
+	var/should_push_appearance = TRUE
+	// clothing seems to cause buggy rendering at the moment, so we'll use the old slower method for mobs with clothing
+	if(isliving(item))
+		var/mob/living/living_target = item
+		if(length(living_target.get_equipped_items()))
+			should_push_appearance = FALSE
+	if(should_push_appearance)
+		var/mutable_appearance/filtered_appearance = copy_appearance_filter_overlays(item.appearance)
+		//filtered_appearance.dir = SOUTH
+		var/atom/movable/screen/container = owner.mob?.send_appearance(filtered_appearance)
+		if(container)
+			icon = "\ref[container]"
+			return
 	icon = costly_icon2html(item, owner, sourceonly = TRUE)
 
 /// Parent item has been altered, search object no longer valid
