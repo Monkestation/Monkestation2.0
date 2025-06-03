@@ -58,7 +58,7 @@
 
 /obj/projectile/kinetic/shotgun/sniperslug //ALSO NEEDS SKILLBASEDWEAPON = FALSE WHEN THE SMG GETS ADDED
 	name = ".50 BMG Kinetic"
-	speed = 2
+	speed = 0.4
 	damage = 150
 	range = 10
 	icon_state = "gaussstrong"
