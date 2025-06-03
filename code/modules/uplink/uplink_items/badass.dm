@@ -114,9 +114,11 @@
 	desc = "A literal fucking battleship, shrunk with bluespace technology and mechanized to require only 1 man. God has damned all who opose you."
 	item = /obj/vehicle/sealed/mecha/callahan
 	cost = 250
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/badass/nakki
 	name = "Nakki Class Submarine"
 	desc = "A submarine in spess, special technology lets it dive into bluespace tiles like water. Comes stocked with torpedoes that easily win the narsie fight."
 	item = /obj/vehicle/sealed/mecha/nakki
 	cost = 250
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

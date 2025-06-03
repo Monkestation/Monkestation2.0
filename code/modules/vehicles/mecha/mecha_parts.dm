@@ -416,6 +416,39 @@
 	icon = 'icons/mecha/tanks_construct.dmi'
 	icon_state = "percutio_armor"
 
+// Balfour Stockade
+
+/obj/item/mecha_parts/chassis/stockade
+	name = "\improper Balfour Stockade Carriage"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_chass"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/stockade
+
+
+/obj/item/mecha_parts/part/stockade_left_arm
+	name="\improper Balfour Stockade Gunshield"
+	desc="A fucking yuge gunshield for the Balfour Stockade, your wondering how you'll lift this."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_l_arm"
+
+/obj/item/mecha_parts/part/stockade_right_arm
+	name="\improper Balfour Stockade Syndicate Ammo maker"
+	desc="A box? That with special technology makes more ammo for the stockade, You were told to not stick your hand it, or ask questions."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_r_arm"
+
+/obj/item/mecha_parts/part/stockade_left_leg
+	name="\improper Balfour Stockade Wheels"
+	desc="2 giant wooden wheels with a massive band of metal for reinforcement and traction."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_l_leg"
+
+/obj/item/mecha_parts/part/stockade_armor
+	name="\improper Balfour Stockade Cannon"
+	desc="A massive fucking cannon, meant for a Stockade field gun."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_armor"
+
 ///////// Circuitboards
 
 /obj/item/circuitboard/mecha

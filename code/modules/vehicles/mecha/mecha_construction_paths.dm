@@ -1198,3 +1198,126 @@
 			"backward_message" = "unsecured turret"
 		),
 	)
+
+// Balfour Stockade (the chimera mech non mech)
+
+/datum/component/construction/unordered/mecha_chassis/stockade
+	result = /datum/component/construction/mecha/stockade
+	steps = list(
+		/obj/item/mecha_parts/part/stockade_left_arm,
+		/obj/item/mecha_parts/part/stockade_right_arm,
+		/obj/item/mecha_parts/part/stockade_left_leg,
+	)
+
+
+/datum/component/construction/mecha/stockade
+	result = /obj/vehicle/ridden/stockade // yep, mech building for a non mech
+	base_icon = "stockade"
+
+	outer_plating = /obj/item/mecha_parts/part/stockade_armor
+	outer_plating_amount = 1
+
+/datum/component/construction/mecha/stockade/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "The wheels arent attached to the carriage, you can <b>wrench</b> the first bolts on.",
+			"forward_message" = "Attached wheels",
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The wheels are on the axle but the thing has like 20 screws per wheel also, better get busy with a <b>screwdriver</b>.",
+			"forward_message" = "screwed screws",
+			"backward_message" = "removed wheels"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wheels are on the carriage, now the gunshield, you might be able to lever it up with a <b>crowbar</b>.",
+			"forward_message" = "set gunshield",
+			"backward_message" = "unscrewed wheels"
+		),
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The gunshield bent your crowbar slightly, but its set in its position, you can use a <b>wrench</b> to secure it.",
+			"forward_message" = "secured gunshield",
+			"backward_message" = "unset gunshield"
+		),
+	)
+/datum/component/construction/mecha/stockade/get_circuit_steps()
+	return list(
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The gunshield needs to be <b>welded</b> so it can protect you.",
+			"forward_message" = "welded gunshield",
+			"backward_message" = "unsecured gunshield"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_WELDER,
+			"desc" = "The slot for the box of more ammo is exposed now, you can <b>pry</b> it into its slot.",
+			"forward_message" = "inserted box of infinity ammo",
+			"backward_message" = "broke welds"
+		),
+	)
+/datum/component/construction/mecha/stockade/get_circuit_weapon_steps()
+	return list(
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "You need to <b>screw</b> the box in, otherwise it might tip over and it said dont do that.",
+			"forward_message" = "unset syndicate doom box",
+			"backward_message" = "secured violation of thermodynamics"
+		),
+	)
+/datum/component/construction/mecha/stockade/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the gunsight needs to be made, put a <b>scanning_module</b> in.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured blackbox of boom"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+	)
+
+/datum/component/construction/mecha/stockade/get_inner_plating_steps()
+	return list(
+	)
+/datum/component/construction/mecha/stockade/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the gun needs to be put in get ready to heave.",
+			"forward_message" = "gun lifted into place",
+			"backward_message" = "unsecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Your arms dont want to work much anymore, but the gun is in its mounting, now you need to <b> screw </b> it in.",
+			"forward_message" = "gun affixed",
+			"backward_message" = "pushed off gun"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The uhh, thing looks compressed? Smack the funny box the syndicate made with a <b> Crowbar </b> and maybe that fixes it.",
+			"forward_message" = "space time distortion dispersed",
+			"backward_message" = "unsecured gun"
+		),
+	)

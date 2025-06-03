@@ -446,3 +446,75 @@
 		/obj/item/stack/sheet/glass = 1,
 	)
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_chassis
+	name = "Balfour Stockade Carriage"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/chassis/stockade
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/rods = 20,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/cloth = 2,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_larm
+	name = "Balfour Stockade Gunshield"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_left_arm
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/rods = 5,
+		/obj/item/pipe = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_rarm
+	name = "Balfour Stockade Ammo fabrication device"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_right_arm
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/plastitanium = 10,
+		/obj/item/stock_parts/manipulator = 6,
+		/obj/item/pipe = 4,
+		/datum/reagent/fuel/oil = 20,
+		/datum/reagent/gunpowder = 100,
+		/obj/item/stack/sheet/bluespace_crystal = 5,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_lleg
+	name = "Balfour Stockade Wheels"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_left_leg
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 20,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/pipe = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_armor
+	name = "Balfour Stockade 75mm Cannon"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_armor
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/plastitanium = 10,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/pipe = 8,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/assembly/igniter = 1,
+	)
+	category = CAT_ROBOT

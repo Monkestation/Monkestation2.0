@@ -614,61 +614,6 @@
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 140
 
-/datum/uplink_item/support/devitt
-	name = "Devitt Mk.III Light Tank"
-	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
-	item = /obj/vehicle/sealed/mecha/devitt
-	cost = 80
-
-/datum/uplink_item/support/lighttankammo
-	name = "40mm cannon ammo"
-	desc = "5 crated shells for use with the Devitt Mk3 light tank."
-	item = /obj/item/mecha_ammo/makeshift/lighttankammo
-	cost = 2
-
-/datum/uplink_item/support/lighttankmgammo
-	name = "12.7x70mm tank mg ammo"
-	desc = "60 rounds of 12.7x70mm for use with the Devitt Mk3 light tank."
-	item = /obj/item/mecha_ammo/makeshift/lighttankmg
-	cost = 1
-
-/datum/uplink_item/support/devittcaine
-	name = "Devitt-Caine Mk.IV MMR Mortar Tank"
-	desc = "Trade the main cannon, a bit of speed, and a chunk of health to have indirect fire on a tank. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
-	item = /obj/vehicle/sealed/mecha/devitt/caine
-	cost = 80
-
-/datum/uplink_item/support/talos
-	name = "85V-g Talos Assault tank"
-	desc = "A slow assault tank with an extremely large cannon, drains its battery fast. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
-	item = /obj/vehicle/sealed/mecha/talos
-	cost = 180
-
-/datum/uplink_item/support/stockade
-	name = "Balfour Stockade 75mm"
-	desc = "Want a giant cannon but too poor to pay for an entire tank? Look no further! The Balfour Stockade has the same cannon as the Talos, but without an engine, internals, \
-	you can even be grabbed off the gun! You need to deploy the thing with a wrench to get it into a firing position, and again with a wrench to undeploy it, only needs 1 crewmember!."
-	item = /obj/vehicle/ridden/stockade
-	cost = 90
-
-/datum/uplink_item/support/supporttankammo
-	name = "75mm cannon ammo"
-	desc = "3 crated shells for use with the 85V-g Talos assault tank."
-	item = /obj/item/mecha_ammo/supporttankammo
-	cost = 5
-
-/datum/uplink_item/support/firebrand
-	name = "Noble Firebrand Mk.XVII"
-	desc = "A very slow flamethrower tank to cause terror in the crew, the flames can melt walls and kill through the best firesuits. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
-	item = /obj/vehicle/sealed/mecha/firebrand
-	cost = 160
-
-/datum/uplink_item/support/argonaut
-	name = "UV-05a Argonaut"
-	desc = "A speedy 4 seater light utility vehicle. Can crash into people to stun them, perfect for a snatch and grab."
-	item = /obj/vehicle/ridden/argonaut
-	cost = 75
-
 /datum/uplink_item/support/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
