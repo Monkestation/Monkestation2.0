@@ -262,6 +262,20 @@
 	for(var/i in GLOB.cardinals)
 		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
+/datum/component/riding/vehicle/stockade
+	vehicle_move_delay = 8.5
+
+/datum/component/riding/vehicle/stockade/handle_specials()
+	. = ..()
+	set_riding_offsets(1, list(TEXT_NORTH = list(-9, 0), TEXT_SOUTH = list(9, 0), TEXT_EAST = list(-6, 0), TEXT_WEST = list(4, 0)))
+	set_vehicle_dir_offsets(NORTH, -24, 0)
+	set_vehicle_dir_offsets(SOUTH, -24, 0)
+	set_vehicle_dir_offsets(EAST, -24, 0)
+	set_vehicle_dir_offsets(WEST, -24, 0)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
+
 /datum/component/riding/vehicle/wheelchair
 	vehicle_move_delay = 0
 	ride_check_flags = RIDER_NEEDS_ARMS

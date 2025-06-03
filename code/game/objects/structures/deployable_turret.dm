@@ -250,6 +250,83 @@
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_lamentum_folded
 
+/obj/machinery/deployable_turret/stockade
+	name = "Balfour Stockade"
+	desc = "A 75mm Cannon used for annihalating bunkers, thin space station walls are not feet of concrete."
+	icon = 'icons/mecha/largetanks.dmi'
+	icon_state = "stockadedeployed"
+	max_integrity = 375
+	armor_type = /datum/armor/stockade
+	SET_BASE_PIXEL(-24, 0)
+	projectile_type = /obj/projectile/bullet/rocket/supporttankshell
+	anchored = TRUE
+	number_of_shots = 1
+	cooldown_duration = 8 SECONDS
+	firesound = 'sound/weapons/gun/general/heavycannon.ogg'
+	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	can_be_undeployed = TRUE
+	spawned_on_undeploy = /obj/vehicle/ridden/stockade
+	cover_amount = 100 // its has a giant gunshield
+/datum/armor/stockade
+	melee = -10
+	bullet = 65
+	laser = 65
+	energy = 65
+	bomb = -10
+	fire = 10  // incendaries can cook it for balance
+	acid = 10  // same with acid
+
+/obj/machinery/deployable_turret/stockade/direction_track(mob/user, atom/targeted)
+	if(user.incapacitated())
+		return
+	setDir(get_dir(src,targeted))
+	user.setDir(dir)
+	switch(dir)
+		if(NORTH)
+			layer = BELOW_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE)
+			user.pixel_x = -9
+			user.pixel_y = 0
+		if(NORTHEAST)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			user.pixel_x = -6
+			user.pixel_y = 0
+		if(EAST)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			user.pixel_x = -6
+			user.pixel_y = 0
+		if(SOUTHEAST)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			plane = GAME_PLANE_UPPER
+			user.pixel_x = 9
+			user.pixel_y = 0
+		if(SOUTH)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			plane = GAME_PLANE_UPPER
+			user.pixel_x = 9
+			user.pixel_y = 0
+		if(SOUTHWEST)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			user.pixel_x = 4
+			user.pixel_y = 0
+		if(WEST)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			user.pixel_x = 4
+			user.pixel_y = 0
+		if(NORTHWEST)
+			layer = BELOW_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE)
+			user.pixel_x = -9
+			user.pixel_y = 0
+
+
+
 /obj/item/gun_control
 	name = "turret controls"
 	icon = 'icons/obj/weapons/hand.dmi'
