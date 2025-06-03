@@ -209,7 +209,13 @@ export const BeakerPanel = (props) => {
                   />
                 </Flex.Item>
                 <Flex.Item>
-                  <Button icon="trash" color="bad">
+                  <Button
+                    icon="trash"
+                    color="bad"
+                    onClick={() =>
+                      removeReagentfromContainer(containerNum, index)
+                    }
+                  >
                     Remove
                   </Button>
                 </Flex.Item>
