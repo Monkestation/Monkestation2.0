@@ -860,7 +860,6 @@
 /obj/item/storage/backpack/chameleon
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
-	action_slots = ALL
 
 // MONKESTATION ADDITION START
 /obj/item/storage/backpack/chameleon/attackby(obj/item/W, mob/user, params)
@@ -905,7 +904,6 @@
 	name = "toolbelt"
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
-	action_slots = ALL
 
 // MONKESTATION ADDITION START
 /obj/item/storage/belt/chameleon/attackby(obj/item/W, mob/user, params)
@@ -1132,7 +1130,6 @@
 
 /obj/item/gun/energy/laser/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
-	action_slots = ALL
 
 	ammo_type = list(/obj/item/ammo_casing/energy/chameleon)
 	pin = /obj/item/firing_pin

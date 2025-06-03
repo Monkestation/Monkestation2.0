@@ -145,7 +145,6 @@
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/datum/action/item_action/chameleon/change/chameleon_action
-	action_slots = ALL
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()

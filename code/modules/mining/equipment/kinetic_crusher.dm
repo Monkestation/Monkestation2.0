@@ -21,6 +21,7 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_MINING
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	obj_flags = UNIQUE_RENAME
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 5

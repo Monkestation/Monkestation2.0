@@ -10,7 +10,7 @@
 	throw_range = 7
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll)
-	action_slots = ALL
+	action_slots = ITEM_SLOT_HANDS
 	/// Number of uses the scroll gets.
 	var/uses = 4
 
