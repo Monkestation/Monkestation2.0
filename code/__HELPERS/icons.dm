@@ -1549,8 +1549,8 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 /**
  * Copies the passed /appearance, returns a /mutable_appearance
  *
- * Filters out certain overlays from the copy, depending on their planes
- * Prevents stuff like lighting from being copied to the new appearance
+ * Filters out certain overlays from the copy, depending on their planes.
+ * Prevents stuff like lighting from being copied to the new appearance.
  */
 /proc/copy_appearance_filter_overlays(appearance_to_copy, recursion = 0) as /mutable_appearance
 	RETURN_TYPE(/mutable_appearance)

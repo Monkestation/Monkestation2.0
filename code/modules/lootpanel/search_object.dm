@@ -36,10 +36,12 @@
 	// Icon generation conditions //////////////
 	// Condition 1: Icon is complex
 	if(ismob(item) || length(item.overlays) > 2)
+		try_generate_container(owner)
 		return
 
 	// Condition 2: Can't get icon path
 	if(!isfile(item.icon) || !length("[item.icon]"))
+		try_generate_container(owner)
 		return
 
 	// Condition 3: Using opendream
@@ -55,14 +57,17 @@
 	icon = null
 	return ..()
 
-/// Generates the icon for the search object. This is the expensive part.
-/datum/search_object/proc/generate_icon(client/owner)
+/datum/search_object/proc/try_generate_container(client/owner)
+#if !defined(OPENDREAM) && !defined(UNIT_TESTS)
 	var/mutable_appearance/filtered_appearance = copy_appearance_filter_overlays(item.appearance, recursion = 1)
 	var/atom/movable/screen/container = owner.mob?.send_appearance(filtered_appearance)
 	if(container)
 		icon = "\ref[container]"
-	else
-		icon = costly_icon2html(item, owner, sourceonly = TRUE)
+#endif
+
+/// Generates the icon for the search object. This is the expensive part.
+/datum/search_object/proc/generate_icon(client/owner)
+	icon = costly_icon2html(item, owner, sourceonly = TRUE)
 
 /// Parent item has been altered, search object no longer valid
 /datum/search_object/proc/on_item_moved(atom/source)
