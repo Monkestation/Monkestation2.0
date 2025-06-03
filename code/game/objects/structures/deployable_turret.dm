@@ -266,7 +266,7 @@
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/vehicle/ridden/stockade
-
+	cover_amount = 100 // its has a giant gunshield
 /datum/armor/stockade
 	melee = -10
 	bullet = 65
