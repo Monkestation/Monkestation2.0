@@ -17,14 +17,15 @@ type Data = {
 type LootPanelState = {
   grouping: boolean;
   searchText: string;
+  contentsByPathName: Record<string, SearchItem[]>;
 };
 
 export class LootPanel extends Component<{}, LootPanelState> {
   state = {
     grouping: true,
     searchText: '',
+    contentsByPathName: {},
   };
-  contentsByPathName: Record<string, SearchItem[]> = {};
   lastContents?: SearchItem[];
 
   componentDidMount() {
@@ -57,8 +58,8 @@ export class LootPanel extends Component<{}, LootPanelState> {
         acc[item.ref] = [item];
       }
     }
-    this.contentsByPathName = acc;
     this.lastContents = contents;
+    this.setState({ contentsByPathName: acc });
   }
 
   render() {
@@ -72,7 +73,7 @@ export class LootPanel extends Component<{}, LootPanelState> {
       headerHeight +
         (!this.state.grouping
           ? contents.length
-          : Object.keys(this.contentsByPathName).length) *
+          : Object.keys(this.state.contentsByPathName).length) *
           itemHeight,
       minHeight,
       maxHeight,
@@ -120,7 +121,7 @@ export class LootPanel extends Component<{}, LootPanelState> {
           <Section>
             {this.state.grouping ? (
               <GroupedContents
-                contents={this.contentsByPathName}
+                contents={this.state.contentsByPathName}
                 searchText={this.state.searchText}
               />
             ) : (
