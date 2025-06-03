@@ -74,6 +74,22 @@
 /datum/beaker_panel/New(mob/target_user)
 	user = target_user
 
+/datum/beaker_panel/proc/beaker_panel_create_container(list/containerdata, list/reagent_data, turf/location)
+	var/containertype = text2path(containerdata["id"])
+	if(isnull(containertype))
+		return null
+	var/obj/item/reagent_containers/container = new containertype(location)
+	var/datum/reagents/reagents = container.reagents
+	for(var/datum/reagent/R in reagents.reagent_list) // clear the container of reagents
+		reagents.remove_reagent(R.type,R.volume)
+	for (var/list/item in reagent_data)
+		var/datum/reagent/reagenttype = text2path(item["id"])
+		var/amount = text2num(item["amount"])
+		if ((reagents.total_volume + amount) > reagents.maximum_volume)
+			reagents.maximum_volume = reagents.total_volume + amount
+		reagents.add_reagent(reagenttype, amount)
+	return container
+
 /datum/beaker_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -100,3 +116,12 @@
 		return
 	if(!user || !check_rights(R_ADMIN, 0, user))
 		return FALSE
+	if(!action || !params)
+		return
+	switch(action)
+		if("spawncontainer")
+			var/list/container_data = json_decode(params["container"])
+			var/list/reagents_data = json_decode(params["reagents"])
+			var/obj/item/reagent_containers/container = beaker_panel_create_container(container_data, reagents_data, get_turf(usr))
+			if(istype(container))
+				usr.log_message("spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]", LOG_GAME)

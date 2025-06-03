@@ -132,9 +132,12 @@ export const BeakerPanel = (props) => {
   };
 
   const spawnContainer = (containerNum) => {
-    const containerpayload = selectedContainersType[containerNum];
-    const reagents = reagentsMap[containerNum];
-    act('spawncontainer', { containers: containerpayload, reagents: reagents });
+    const containerpayload = selectedContainersType[containerNum] || [];
+    const reagentspayload = reagentsMap[containerNum] || [];
+    act('spawncontainer', {
+      container: JSON.stringify(containerpayload),
+      reagents: JSON.stringify(reagentspayload),
+    });
   };
 
   const renderContainerSection = (containerNum: number) => {
