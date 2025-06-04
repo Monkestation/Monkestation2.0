@@ -37,6 +37,8 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
+	var/can_deconstruct = 1
+	var/floorsonly = 0
 
 	///all stuff used by RCD for construction
 	var/static/list/root_categories = list(
@@ -316,7 +318,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 				balloon_alert(user, "something is on the girder!")
 				return FALSE
-
+		//Floors only check - I hate this too
+		else if(floorsonly == 1 && (!istype(target_turf, /turf/open/) || istype(target_turf, /turf/open/floor)))
+			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+			balloon_alert(user, "this device can only make floors!")
+			return FALSE
 		//check if turf is blocked in for dense structures
 		else
 			//structures which are small enough to fit on turfs containing directional windows.
@@ -602,6 +608,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	//proximity check for normal rcd & range check for arcd
+	if(can_deconstruct == 0)
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		balloon_alert(user, "this device can not deconstruct!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -702,6 +712,18 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		0.0, 0.0, 0.0, 1.0,
 		0.0, 0.0, 0.0, 0.0,
 	)
+
+/obj/item/construction/rcd/mining
+	name = "HEAT-D"
+	desc = "A stripped down model of a standard RCD, the Hazardous Environment Area Traversal Device (HEAT-D) is adept at bridging both lava and chasms on Lavaland's fiery surface. Fits more compressed matter, as a bonus."
+	matter = 320
+	max_matter = 320
+	can_deconstruct = 0
+	floorsonly = 1
+
+/obj/item/construction/rcd/mining/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with a [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return MANUAL_SUICIDE
 
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
 
