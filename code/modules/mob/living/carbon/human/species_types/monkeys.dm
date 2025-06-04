@@ -254,8 +254,10 @@
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE
 
-/datum/species/monkey/combat //like a regular monkey but evil with combat training
+/datum/species/monkey/trained //like a regular monkey but evil with combat training
 	name = "Trained Monkey"
+	id = SPECIES_TRAINED_MONKEY
+	examine_limb_id = SPECIES_MONKEY
 	mutantbrain = /obj/item/organ/internal/brain/primate
 	mutanttongue = /obj/item/organ/internal/tongue/monkey/hindered
 	species_language_holder = /datum/language_holder/monkey/smart
@@ -277,7 +279,7 @@
 	no_equip_flags = ITEM_SLOT_GLOVES | ITEM_SLOT_FEET
 	var/datum/component/sign_language/signer
 
-/datum/species/monkey/combat/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/monkey/trained/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 	if(!human_who_gained_species.GetComponent(/datum/component/sign_language)) // if they're already capable of signing, don't clobber that
 		signer = human_who_gained_species.AddComponent(/datum/component/sign_language)
@@ -287,8 +289,9 @@
 	for(var/datum/mutation/human/mutation as anything in human_who_gained_species.dna.mutations)
 		mutation.mutadone_proof = TRUE
 		mutation.instability = 0
+	human_who_gained_species.dna.species.name = "Monkey"
 
-/datum/species/monkey/combat/on_species_loss(mob/living/carbon/human/C)
+/datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	if(!QDELETED(signer))
 		QDEL_NULL(signer)

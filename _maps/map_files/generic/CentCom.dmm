@@ -20208,8 +20208,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/closet/syndicate/personal,
-/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/firebase_trident)
 "cdN" = (
@@ -20308,6 +20307,11 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
+"crc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
 "crx" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -24875,7 +24879,6 @@
 "jQt" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/medical,
-/obj/item/storage/box/medipens,
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/fire,
 /obj/item/storage/medkit/o2,
@@ -28061,8 +28064,8 @@
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "pKk" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/engivend,
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north,
+/obj/machinery/vending/donkweaponry,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/firebase_trident)
 "pKm" = (
@@ -29929,6 +29932,12 @@
 /obj/machinery/computer/shuttle/syndicate/alt/recall,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/firebase_trident)
+"tet" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
 "tez" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Raziel's Theatre"
@@ -29973,8 +29982,8 @@
 /area/centcom/central_command_areas/evacuation)
 "tmd" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/engivend,
 /obj/machinery/light/warm/dim/directional/north,
+/obj/machinery/vending/donkweaponry,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/firebase_trident)
 "tmF" = (
@@ -30367,6 +30376,13 @@
 	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
+"tNu" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
 "tOn" = (
 /obj/machinery/light/directional/east{
 	dir = 2
@@ -32635,7 +32651,7 @@
 /area/centcom/central_command_areas/adminroom)
 "xPq" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/engivend,
+/obj/machinery/vending/donkweaponry,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/firebase_trident)
 "xPB" = (
@@ -75891,7 +75907,7 @@ kWm
 kWm
 nwp
 vEi
-lYR
+crc
 pcH
 pcH
 naG
@@ -76149,10 +76165,10 @@ kjL
 wGY
 wJq
 cdJ
+tet
 cdJ
 cdJ
-cdJ
-cdJ
+tNu
 cHM
 vfT
 vfT
@@ -76412,7 +76428,7 @@ kWm
 kWm
 gYr
 kjL
-kjL
+qVg
 vfT
 vfT
 vfT

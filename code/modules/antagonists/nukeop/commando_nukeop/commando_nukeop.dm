@@ -11,11 +11,12 @@
 	var/datum/team/nuclear/commando/commando_nuke_team
 
 	/// The DEFAULT outfit we will give to players granted this datum
-	nukeop_outfit = /datum/outfit/syndicate
+	nukeop_outfit = /datum/outfit/syndicate/commando
 
-	preview_outfit = /datum/outfit/nuclear_operative_elite
+	//preview_outfit = /datum/outfit/commando_operative_leader
 
-	preview_outfit_behind = /datum/outfit/nuclear_operative
+	//preview_outfit_behind = /datum/outfit/syndicate/junior
+
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
 
 
@@ -113,7 +114,7 @@
 
 /datum/antagonist/nukeop/commando/leader
 	name = "Commando Operative Leader"
-	nukeop_outfit = /datum/outfit/syndicate/leader
+	nukeop_outfit = /datum/outfit/syndicate/commando/leader
 	always_new_team = TRUE
 	/// Randomly chosen honorific, for distinction
 	var/title

@@ -375,7 +375,7 @@
 	desc = "A single-use beacon designed to launch a specially-trained simian agent to the field for emergency support."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	species_type = /datum/species/monkey/combat
+	species_type = /datum/species/monkey/trained
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
 	poll_role_check = ROLE_TRAITOR
@@ -408,3 +408,56 @@
 /datum/outfit/syndicate_monkey/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	H.faction |= ROLE_SYNDICATE
+
+/obj/item/antag_spawner/loadout/monkey_man/ricky
+	name = "Ricky's agent beacon"
+	desc = "A single-use beacon designed to launch Ricky down with his trusty Mauler for support."
+	icon = 'icons/obj/devices/remote.dmi'
+	icon_state = "designator_syndicate"
+	outfit = /datum/outfit/syndicate_monkey/ricky
+	fail_text = "Unable to connect to the Syndicate Banana Department. Please wait and try again later."
+
+/obj/item/antag_spawner/loadout/monkey_man/ricky/spawn_antag(client/our_client, turf/T, mob/user)
+	var/mob/living/spawned_mob = new spawn_type()
+	var/obj/structure/closet/supplypod/pod = setup_pod()
+	our_client.prefs.safe_transfer_prefs_to(spawned_mob, is_antag = TRUE)
+	spawned_mob.ckey = our_client.key
+	var/datum/mind/op_mind = spawned_mob.mind
+	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the spawned_mob) is in nullspace, so just move the spawned_mob somewhere safe
+		spawned_mob.forceMove(pick(GLOB.newplayer_start))
+	else
+		spawned_mob.forceMove(locate(1,1,1))
+
+	op_mind.add_antag_datum(antag_datum)
+
+	if(ishuman(spawned_mob))
+		var/mob/living/carbon/human/human_mob = spawned_mob
+		human_mob.set_species(species_type)
+		human_mob.equipOutfit(outfit)
+
+	op_mind.special_role = role_to_play
+
+	do_special_things(spawned_mob, user)
+
+	spawned_mob.forceMove(pod)
+	var/turf/spawn_turf = get_turf(src)
+	do_sparks(5, FALSE, spawn_turf)
+	new /obj/vehicle/sealed/mecha/marauder/mauler/ricky(spawn_turf)
+	new /obj/effect/pod_landingzone(spawn_turf, pod)
+
+/obj/item/antag_spawner/loadout/monkey_man/ricky/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
+
+	monkey_man.fully_replace_character_name(monkey_man.real_name, "Ricky")
+
+	monkey_man.mind.enslave_mind_to_creator(user)
+
+/datum/outfit/syndicate_monkey/ricky
+	name = "Syndicate Monkey Agent Ricky"
+
+	head = /obj/item/clothing/head/utility/welding
+	uniform = /obj/item/clothing/under/rank/rnd/roboticist
+	belt = /obj/item/weldingtool/experimental
+	glasses = /obj/item/clothing/glasses/hud/diagnostic
+	id = /obj/item/card/id/advanced/chameleon/black
+	id_trim = /datum/id_trim/chameleon/operative
+	l_hand = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler

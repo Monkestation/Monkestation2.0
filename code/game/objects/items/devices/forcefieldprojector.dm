@@ -143,8 +143,8 @@
 	name = "combat forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance that can be shot through."
 	icon_state = "signmaker_forcefield_syndicate"
-	max_shield_integrity = 500
-	shield_integrity = 500
+	max_shield_integrity = 300
+	shield_integrity = 300
 	max_fields = 6
 	field_type = /obj/structure/projected_forcefield/combat
 
