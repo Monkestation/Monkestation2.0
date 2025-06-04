@@ -62,6 +62,12 @@
 /datum/vox_holder/ui_state(mob/user)
 	return GLOB.always_state
 
+/datum/vox_holder/proc/default_name(mob/speaker)
+	return "[speaker.real_name || speaker.name]"
+
+/datum/vox_holder/proc/default_origin_turf(mob/speaker)
+	return
+
 /datum/vox_holder/proc/speak(mob/speaker, message, name_override, turf/origin_turf, test = FALSE, check_hearing)
 	if(!test && !COOLDOWN_FINISHED(src, announcement_cooldown))
 		return FALSE
@@ -81,9 +87,11 @@
 		COOLDOWN_START(src, announcement_cooldown, cooldown)
 		speaker.log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 		speaker.log_talk(message, LOG_SAY, tag = "VOX Announcement")
-		minor_announce(capitalize(message), "[name_override || speaker.real_name || speaker.name] announces:", should_play_sound = FALSE)
+		minor_announce(capitalize(message), "[name_override || default_name(speaker)] announces:", should_play_sound = FALSE)
 	if(isnull(check_hearing))
 		check_hearing = src.check_hearing
+	if(isnull(origin_turf))
+		origin_turf = default_origin_turf(speaker)
 	for(var/word in words)
 		current_voice.play_word(
 			word,
@@ -91,6 +99,7 @@
 			only_listener = test ? speaker : null,
 			check_hearing = check_hearing,
 		)
+	return TRUE
 
 /datum/vox_holder/proc/split_into_words(message)
 	. = list()
