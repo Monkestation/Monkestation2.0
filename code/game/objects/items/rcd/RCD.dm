@@ -716,11 +716,13 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/mining
 	name = "HEAT-D"
 	desc = "A stripped down model of a standard RCD, the Hazardous Environment Area Traversal Device (HEAT-D) is adept at bridging both lava and chasms on Lavaland's fiery surface. Fits more compressed matter, as a bonus."
+	matter = 320
 	max_matter = 320
 	can_deconstruct = 0
 	floorsonly = 1
 	icon_state = "rcd-m"
 	inhand_icon_state = "rcd-m"
+	actions_types = null
 
 /obj/item/construction/rcd/mining/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with a [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
