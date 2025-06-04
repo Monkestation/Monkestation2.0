@@ -36,6 +36,7 @@
 		return MAP_ERROR
 
 	var/mob/living/carbon/human/S = new (spawn_loc)
+	player_mind.add_antag_datum(/datum/antagonist/nightmare)
 	player_mind.transfer_to(S)
 	player_mind.add_antag_datum(/datum/antagonist/nightmare)
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)

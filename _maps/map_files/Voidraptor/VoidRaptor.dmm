@@ -21748,6 +21748,8 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/closet/secure_closet/cytology,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -32418,11 +32420,6 @@
 "jjg" = (
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/bridge)
-"jji" = (
-/obj/structure/sign/poster/contraband/crocin_pool/directional/south,
-/obj/effect/spawner/liquids_spawner,
-/turf/open/floor/lowered/iron/pool,
-/area/station/common/pool)
 "jjw" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/candle_box{
@@ -124434,7 +124431,7 @@ eWh
 eWh
 eWh
 eWh
-jji
+eWh
 aCq
 vHX
 vHX
