@@ -11,8 +11,7 @@
 
 /datum/antagonist/syndicate_monkey/on_gain()
 	monky_master = owner.enslaved_to?.resolve()
-	if(monky_master)
-		forge_objectives(monky_master)
+	forge_objectives(monky_master)
 	return ..()
 
 /datum/antagonist/syndicate_monkey/Destroy()
@@ -30,8 +29,15 @@
 	return monky_master.stat != DEAD
 
 /datum/antagonist/syndicate_monkey/forge_objectives(mob/monky_master)
-	var/datum/objective/syndicate_monkey/objective = new
-	objective.monky_master = monky_master
-	objective.explanation_text = "You are a badass monkey syndicate agent. Protect and obey all of your master [monky_master]'s orders!"
-	objective.owner = owner
-	objectives += objective
+	if(monky_master)
+		var/datum/objective/syndicate_monkey/objective = new
+		objective.monky_master = monky_master
+		objective.explanation_text = "You are a badass monkey syndicate agent. Protect and obey all of your master [monky_master]'s orders!"
+		objective.owner = owner
+		objectives += objective
+	else
+		var/datum/objective/syndicate_monkey/objective = new
+		objective.monky_master = monky_master
+		objective.explanation_text = "Sabotage the efforts of Nanotrasen."
+		objective.owner = owner
+		objectives += objective

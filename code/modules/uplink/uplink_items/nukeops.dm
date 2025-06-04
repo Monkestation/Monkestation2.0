@@ -428,16 +428,16 @@
 
 /datum/uplink_item/ammo/mech/bag
 	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
+	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer. Contains a Bluespace Comprression kit for easier logistics."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/mauler/bag
 	name = "Mauler Ammo Bag"
-	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile laucher that are equipped on a standard Mauler exosuit."
+	desc = "A duffel bag containing ammo for three full reloads of the LMG and SRM-8 missile laucher that are equipped on a standard Mauler exosuit. Contains two Bluespace Comprression kits for easier logistics."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
-	cost = 6
+	cost = 8
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/explosives/bombanana

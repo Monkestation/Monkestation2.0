@@ -14,6 +14,7 @@
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3
+	var/regen_rate = 2
 	var/list/current_fields
 	var/field_distance_limit = 7
 	/// Time it takes to materialize a forcefield.
@@ -87,7 +88,7 @@
 
 /obj/item/forcefield_projector/process(seconds_per_tick)
 	if(!LAZYLEN(current_fields))
-		shield_integrity = min(shield_integrity + seconds_per_tick * 2, max_shield_integrity)
+		shield_integrity = min(shield_integrity + seconds_per_tick * regen_rate, max_shield_integrity)
 	else
 		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * seconds_per_tick * 0.5, 0) //fields degrade slowly over time
 	for(var/obj/structure/projected_forcefield/F in current_fields)
@@ -146,6 +147,7 @@
 	max_shield_integrity = 300
 	shield_integrity = 300
 	max_fields = 6
+	regen_rate = 5
 	field_type = /obj/structure/projected_forcefield/combat
 
 /obj/structure/projected_forcefield/combat
