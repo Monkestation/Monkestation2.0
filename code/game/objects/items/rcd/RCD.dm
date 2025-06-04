@@ -720,6 +720,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	max_matter = 320
 	can_deconstruct = 0
 	floorsonly = 1
+	icon_state = "rcd-m"
+	inhand_icon_state = "rcd-m"
 
 /obj/item/construction/rcd/mining/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with a [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

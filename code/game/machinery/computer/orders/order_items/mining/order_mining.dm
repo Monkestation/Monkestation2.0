@@ -122,6 +122,6 @@
 	item_path = /obj/item/style_meter
 	cost_per_order = 1500
 
-/datum/orderable_item/mining/rcd-mining
+/datum/orderable_item/mining/rcdm
 	item_path = /obj/item/construction/rcd/mining
 	cost_per_order = 1500
