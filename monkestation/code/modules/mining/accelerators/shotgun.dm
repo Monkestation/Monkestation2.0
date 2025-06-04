@@ -9,14 +9,21 @@
 	inhand_icon_state = "shotgun_db"
 	worn_icon_state = ""
 	recoil = 4
+	force = 20
+	armour_penetration = 5
 	pin = /obj/item/firing_pin/wastes //yes this is required, do NOT remove it
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/shotgun_heavy.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/dual/kinetic
 	unique_reskin = list()
 	can_be_sawn_off = FALSE
+	sharpness = SHARP_EDGED
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
+	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
+	pb_knockback = 0 // :3
 
 /obj/item/ammo_box/magazine/internal/shot/dual/kinetic
 	name = "kinetic double barrel shotgun internal magazine"
@@ -107,9 +114,9 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 20
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/shotgun/kinetic/shotgun/sniperslug,
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug,
 	))
 
 /obj/item/storage/box/kinetic/shotgun/PopulateContents()
 	for(var/i in 1 to 10)
-		new /obj/item/ammo_casing/shotgun/kinetic/shotgun/sniperslug(src)
+		new /obj/item/ammo_casing/shotgun/kinetic/sniperslug(src)
