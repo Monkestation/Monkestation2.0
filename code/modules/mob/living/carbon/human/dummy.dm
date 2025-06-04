@@ -242,9 +242,8 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 /mob/living/carbon/human/dummy/extra_tall
 	bound_height = 64
-
 	var/list/extra_bodyparts = list()
 
 /mob/living/carbon/human/dummy/extra_tall/Destroy()
-	. = ..()
-	extra_bodyparts = null
+	extra_bodyparts.Cut()
+	return ..()
