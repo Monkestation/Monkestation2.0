@@ -30,14 +30,22 @@
 	AddElement(/datum/element/attack_equip)
 
 /obj/item/storage/backpack/equipped(mob/user, slot, initial)
-	if(slot == ITEM_SLOT_BACK)
-		if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
-			slowdown++
 	. = ..()
+	check_belt_satchel(user)
 
 /obj/item/storage/backpack/dropped(mob/user, silent)
 	. = ..()
-	slowdown = initial(slowdown)
+	check_belt_satchel(user)
+
+/obj/item/storage/backpack/proc/check_belt_satchel(mob/user)
+	if(QDELETED(user))
+		return
+	var/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
+	var/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
+	if(istype(back_item, /obj/item/storage/backpack) && istype(belt_item, /obj/item/storage/backpack/satchel))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/belt_satchel)
+	else
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/belt_satchel)
 
 /*
  * Backpack Types
@@ -326,22 +334,6 @@
 	. = ..()
 	atom_storage.max_total_storage = 18
 
-/obj/item/storage/backpack/satchel/equipped(mob/user, slot, initial)
-	. = ..()
-	if(slot == ITEM_SLOT_BELT)
-		ADD_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
-		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
-			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
-			selected_bag.slowdown++
-
-/obj/item/storage/backpack/satchel/dropped(mob/user, silent)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
-		REMOVE_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
-		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
-			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
-			selected_bag.slowdown = initial(selected_bag.slowdown)
-
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
@@ -383,7 +375,7 @@
 	desc = "A satchel commonly worn during planetary surveys."
 	icon_state = "satchel-retro"
 	inhand_icon_state = "satchel-retro"
-	
+
 /obj/item/storage/backpack/satchel/eng
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."

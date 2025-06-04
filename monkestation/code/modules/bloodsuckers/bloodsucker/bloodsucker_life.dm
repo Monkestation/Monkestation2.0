@@ -19,9 +19,10 @@
 			to_chat(owner.current, span_notice("The power of your blood begins knitting your wounds..."))
 			COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_HEALING)
 	// Standard Updates
+
+	update_blood()
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_ON_LIFETICK)
 	INVOKE_ASYNC(src, PROC_REF(HandleStarving))
-	INVOKE_ASYNC(src, PROC_REF(update_blood))
 	INVOKE_ASYNC(src, PROC_REF(update_hud))
 
 /datum/antagonist/bloodsucker/proc/on_death(mob/living/source, gibbed)
@@ -300,7 +301,7 @@
 		COMSIG_LIVING_LIFE,
 		COMSIG_LIVING_DEATH,
 	))
-	UnregisterSignal(SSsunlight, list(
+	UnregisterSignal(SSsol, list(
 		COMSIG_SOL_RANKUP_BLOODSUCKERS,
 		COMSIG_SOL_NEAR_START,
 		COMSIG_SOL_END,
@@ -319,7 +320,7 @@
 	user.remove_all_embedded_objects()
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
 
-	if(SEND_SIGNAL(src, BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
+	if(SEND_SIGNAL(src, COMSIG_BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
 		return
 
 	// Elders get dusted, Fledglings get gibbed.

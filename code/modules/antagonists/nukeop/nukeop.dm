@@ -8,6 +8,7 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
+	remove_from_manifest = TRUE
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -325,6 +326,79 @@
 		else
 			stack_trace("Station self-destruct not found during lone op team creation.")
 			nuke_team.memorized_code = null
+
+/datum/antagonist/nukeop/lone/junior
+	name = "Junior Lone Operative"
+	nukeop_outfit = /datum/outfit/syndicate/junior
+	preview_outfit = /datum/outfit/syndicate/junior
+
+/datum/antagonist/nukeop/lone/junior/memorize_code()
+	if(nuke_team && nuke_team.tracked_nuke)
+		antag_memory += "<B>[nuke_team.tracked_nuke]</B>"
+	var/code
+	var/obj/item/paper/fluff/nuke_code/nuke_code_paper = new
+	if(nuke_team?.memorized_code)
+		var/scrambled = FALSE
+		var/scramble_attempts = 0
+		code = "[nuke_team.memorized_code]"
+		while(!scrambled)
+			var/random_number = rand(0,9)
+			scramble_attempts++
+			if(findtext(code, "[random_number]"))
+				code = replacetext(code, "[random_number]", "#")
+				scrambled = TRUE
+			if(scramble_attempts >= 10)
+				scrambled = TRUE
+	else
+		code = "ERROR"
+	nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[code]</b>")
+	var/mob/living/carbon/human/H = owner.current
+	if(!istype(H))
+		nuke_code_paper.forceMove(get_turf(H))
+	else
+		H.equip_to_slot_or_del(nuke_code_paper, ITEM_SLOT_RPOCKET)
+	var/mob/living/datum_owner = owner.current
+
+	antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [code]<br>"
+	owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = code)
+	to_chat(owner, "The nuclear authorization code is: <B>[code]</B>")
+
+	to_chat(datum_owner, "<b>Code Phrases</b>: [span_blue(jointext(GLOB.syndicate_code_phrase, ", "))]")
+	to_chat(datum_owner, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.add_mob_memory(/datum/memory/key/codewords)
+	datum_owner.add_mob_memory(/datum/memory/key/codewords/responses)
+
+//might be best to move this to it's own file but not sure where that would make sense
+/obj/item/paper/fluff/nuke_code
+	name = "ATTENTION: Mission Instructions."
+	color = "#b94030"
+	desc = "Seems important."
+	default_raw_text = {"
+Greetings operative.
+
+<br>Your mission is to destroy the targeted Nanotrasen facility using it's own self destruct mechanism.
+<br>
+<br>Nanotrasen building codes usually place the self destruct terminal in the facility's high security vault.
+You will need a Nanotrasen nuclear authentication disk to get through the first security barrier of the terminal.
+The disk can be found on the captain or acting captain of the facility as they are are required to keep the disk on
+their person at all times.
+<B>Your pinpointer is set to track the disk to further aid in locating it.<B>
+<br>
+<br>The steps for activating the self destruct via the terminal are as follows:
+<br>
+<br> 1. Insert the nuclear authentication disk into the terminal.
+<br>
+<br> 2. Enter the five digit nuclear authorization code.
+<br>
+<br> 5. Set the timer by entering a time between 90 and 3600 seconds.
+<br>
+<br> 4. Arm the self destruct. Remove and take the disk to prevent disarmament of the self destruct mechanism.
+<br>
+<br> <B>THE FOLLOWING CODE MAY BE INCOMPLETE DUE TO INEFFECTIVE SECTOR SURVEILLANCE. AN OVERALL DIGIT MAY BE OMITTED.<B>
+<br>
+	"}
 
 /datum/antagonist/nukeop/reinforcement
 	show_in_antagpanel = FALSE

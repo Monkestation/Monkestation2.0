@@ -18,12 +18,17 @@
 	name = "slime heart"
 
 	heart_bloodtype = /datum/blood_type/slime
+	/// Ability given to the owner of the organ
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	/// Ability given to the owner of the organ
+	var/datum/action/innate/retract_limb/retract_limb
 
 /obj/item/organ/internal/heart/slime/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	regenerate_limbs = new
 	regenerate_limbs.Grant(receiver)
+	retract_limb = new
+	retract_limb.Grant(receiver)
 	RegisterSignal(receiver, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
 
 /obj/item/organ/internal/heart/slime/Remove(mob/living/carbon/heartless, special)
@@ -31,6 +36,9 @@
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(heartless)
 		qdel(regenerate_limbs)
+	if(retract_limb)
+		retract_limb.Remove(heartless)
+		qdel(retract_limb)
 	UnregisterSignal(heartless, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
 /obj/item/organ/internal/heart/slime/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
@@ -110,7 +118,7 @@
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		if((BODY_ZONE_HEAD in limbs_to_heal) && H.get_bodypart(BODY_ZONE_HEAD)) // We have a head now so we should make eyes.
+		if((BODY_ZONE_HEAD in limbs_to_heal) && istype(H.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/oozeling)) // We have a head now so we should make eyes.
 			new_organ = H.dna.species.get_mutant_organ_type_for_slot(ORGAN_SLOT_EYES)
 			new_organ = SSwardrobe.provide_type(new_organ)
 			new_organ.Insert(H)
@@ -121,7 +129,7 @@
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
-			if(H.regenerate_limb(healed_limb) && istype(healed_limb, /obj/item/bodypart/head)) // We have a head now so we should make eyes.
+			if(istype(H.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/oozeling)) // We have a head now so we should make eyes.
 				new_organ = H.dna.species.get_mutant_organ_type_for_slot(ORGAN_SLOT_EYES)
 				new_organ = SSwardrobe.provide_type(new_organ)
 				new_organ.Insert(H)
@@ -130,6 +138,53 @@
 		to_chat(H, span_warning("...but there is not enough of you to fix everything! You must attain more mass to heal completely!"))
 		return
 	to_chat(H, span_warning("...but there is not enough of you to go around! You must attain more mass to heal!"))
+
+/**
+ * Allows oozelings to selectively retract a limb.
+ */
+/datum/action/innate/retract_limb
+	name = "Retract Limb"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "retract_limb"
+	button_icon = SLIME_ACTIONS_ICON_FILE
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/retract_limb/IsAvailable(feedback)
+	. = ..()
+	if(!.)
+		return
+	if(!isoozeling(owner))
+		return
+	var/mob/living/carbon/human/user = owner
+	var/list/limbs = list(user.get_bodypart(BODY_ZONE_R_ARM), user.get_bodypart(BODY_ZONE_L_ARM), user.get_bodypart(BODY_ZONE_R_LEG), user.get_bodypart(BODY_ZONE_L_LEG))
+	if(!length(limbs))
+		return FALSE // What are you gonna eat if there's nothing left?
+	return TRUE
+
+/datum/action/innate/retract_limb/Activate()
+	. = ..()
+	if(!isoozeling(owner))
+		return
+	var/mob/living/carbon/human/user = owner
+	var/list/possible_limbs = list(BODY_ZONE_HEAD, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	if(!isnull(user.handcuffed))
+		possible_limbs -= list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	if(!isnull(user.legcuffed))
+		possible_limbs -= list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/list/retractable_limbs = list()
+	for(var/zone as anything in possible_limbs)
+		var/obj/item/bodypart/limb = user.get_bodypart(zone)
+		if(!isnull(limb))
+			retractable_limbs[limb] = limb.appearance
+	if(!length(retractable_limbs))
+		return
+	var/obj/item/bodypart/selected_limb = show_radial_menu(user, user, retractable_limbs)
+	if(isnull(selected_limb))
+		return
+	selected_limb.drop_limb()
+	qdel(selected_limb)
+	user.blood_volume += 20
+	playsound(user, 'sound/items/eatfood.ogg', 20, TRUE)
 
 #undef JELLY_REGEN_RATE
 #undef JELLY_REGEN_RATE_EMPTY

@@ -61,10 +61,12 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)
-	if (value && isnewplayer(client.mob))
+	if(!isnewplayer(client?.mob))
+		return
+	if (value)
 		client.playtitlemusic()
 	else
-		client.media.stop_music()
+		client.mob.update_media_source()
 
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi
@@ -77,3 +79,10 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ship_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/// Whether or not to hear curator music.
+/datum/preference/toggle/hear_music
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "hearmusic"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = TRUE

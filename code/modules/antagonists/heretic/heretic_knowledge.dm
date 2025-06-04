@@ -280,6 +280,7 @@
 	. = ..()
 	our_heretic.heretic_path = route
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
+	SEND_SIGNAL(our_heretic.owner, COMSIG_HERETIC_PATH_CHOSEN, our_heretic, route) // monkestation edit: modularization is dead but i'm marking this so that future ports don't nuke this by accident
 
 /**
  * A knowledge subtype for heretic knowledge

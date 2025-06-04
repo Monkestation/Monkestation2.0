@@ -27,7 +27,7 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set to maximum recommended target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
@@ -76,7 +76,7 @@ Passive gate is similar to the regular pump except:
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
-	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	data["max_pressure"] = round(MAX_PASSIVE_OUTPUT_PRESSURE)
 	return data
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_act(action, params)
@@ -91,13 +91,13 @@ Passive gate is similar to the regular pump except:
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
+				pressure = MAX_PASSIVE_OUTPUT_PRESSURE
 				. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = clamp(pressure, 0, ONE_ATMOSPHERE*100)
+				target_pressure = clamp(pressure, 0, MAX_PASSIVE_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_appearance()
 

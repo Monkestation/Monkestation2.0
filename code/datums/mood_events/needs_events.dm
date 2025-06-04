@@ -3,6 +3,10 @@
 	description = "<B>I'm so fat...</B>" //muh fatshaming
 	mood_change = -6
 
+/datum/mood_event/too_wellfed
+	description = "I think I've eaten too much."
+	mood_change = 0
+
 /datum/mood_event/wellfed
 	description = "I'm stuffed!"
 	mood_change = 8
@@ -13,6 +17,10 @@
 
 /datum/mood_event/hungry
 	description = "I'm getting a bit hungry."
+	mood_change = -3
+
+/datum/mood_event/hungry_very
+	description = "I'm hungry!"
 	mood_change = -6
 
 /datum/mood_event/starving

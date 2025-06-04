@@ -53,6 +53,8 @@
 	var/list/innate_powers = list()
 	/// Associated list of all powers we have evolved / bought from the emporium. [path] = [instance of path]
 	var/list/purchased_powers = list()
+	/// The amount of offspring spawned from the changling. To prevent refreshing the amount by buying the power again.
+	var/births = 0
 
 	/// The voice we're mimicing via the changeling voice ability.
 	var/mimicing = ""

@@ -6374,7 +6374,7 @@
 /area/station/service/kitchen)
 "bZt" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/trimline/dark/filled/line{
 	dir = 6
 	},
@@ -13239,6 +13239,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination/common/bitrunner,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/bitden)
 "ege" = (
@@ -52149,6 +52150,8 @@
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 5
 	},
+/obj/machinery/requests_console/auto_name/directional/east,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison)
 "qpp" = (
@@ -76872,7 +76875,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "yaO" = (
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)

@@ -3857,7 +3857,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aQB" = (
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
