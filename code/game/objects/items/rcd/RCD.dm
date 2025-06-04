@@ -724,7 +724,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/rcd/mining/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with a [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return MANUAL_SUICIDE
+	return BRUTELOSS
 
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
 
