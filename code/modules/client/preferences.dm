@@ -397,10 +397,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
-
 	body = new
-	// this prevents the top of tall characters from being cut off.
-	body.appearance_flags &= ~TILE_BOUND
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
