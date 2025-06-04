@@ -130,7 +130,7 @@
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
 
-/obj/item/clothing/shoes/workboots/independent //this is why we can't have nice things
+/obj/item/clothing/shoes/workboots/independent //nanotrasen does not make all work boots in existence
 	desc = "A pair of lace-up work boots for the especially blue-collar."
 
 /datum/armor/shoes_workboots
