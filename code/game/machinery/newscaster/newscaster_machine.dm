@@ -138,9 +138,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	else if(isliving(user))
 		var/mob/living/living_user = user
 		card = living_user.get_idcard(hand_first = TRUE)
-		newscaster_username = card?.registered_account.account_holder
+		newscaster_username = card?.registered_account?.account_holder
 
-	if(card)
+	if(card?.registered_account)
 		current_user = card.registered_account
 		data["user"] = list()
 		data["user"]["name"] = card.registered_account.account_holder

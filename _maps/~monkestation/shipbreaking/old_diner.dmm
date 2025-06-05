@@ -38,7 +38,7 @@
 /turf/open/floor/iron/kitchen/small,
 /area/template_noop)
 "j" = (
-/obj/machinery/jukebox,
+/obj/machinery/dance_machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/kitchen/small,
 /area/template_noop)

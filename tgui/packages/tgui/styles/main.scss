@@ -40,6 +40,7 @@
 @include meta.load-css('./components/NumberInput.scss');
 @include meta.load-css('./components/ProgressBar.scss');
 @include meta.load-css('./components/RoundGauge.scss');
+@include meta.load-css('./components/SearchItem.scss');
 @include meta.load-css('./components/Section.scss');
 @include meta.load-css('./components/Slider.scss');
 @include meta.load-css('./components/Stack.scss');
@@ -85,6 +86,7 @@
 @include meta.load-css('./interfaces/NtosNotepad.scss');
 // MONKESTATION ADDITION START
 @include meta.load-css('./interfaces/ClockworkSlab.scss');
+@include meta.load-css('./interfaces/VethPlayerPanel.scss');
 // MONKESTATION ADDITION END
 
 // Layouts
@@ -103,4 +105,9 @@
   background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+// A default, in case someone uses the vp() function outside of a <Window>
+:root {
+  --scaling-amount: 1;
 }

@@ -15,7 +15,7 @@
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 /// Until a condition is true, sleep
-#define UNTIL(X) while(!(X)) stoplag()
+#define UNTIL(X) while(!(X)) sleep(world.tick_lag)
 
 /// Sleep if we haven't been deleted
 /// Otherwise, return
@@ -36,3 +36,6 @@
 /// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
 /// Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.
 #define EMPTY_BLOCK_GUARD ;
+
+/// Abstraction over using mob.client to just check if there's a connected player.
+#define HAS_CONNECTED_PLAYER(mob) (mob.client)

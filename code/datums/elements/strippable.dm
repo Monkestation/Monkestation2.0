@@ -348,7 +348,8 @@
 
 		LAZYINITLIST(result)
 
-		result["icon"] = icon2base64(icon(item.icon, item.icon_state))
+		result["icon"] = ref(item.icon)
+		result["icon_state"] = item.icon_state
 		result["name"] = item.name
 		result["alternate"] = item_data.get_alternate_action(owner, user)
 

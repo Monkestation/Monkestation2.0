@@ -198,10 +198,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 */
 	if(istype(attacking_item, /obj/item/stack/monkecoin))
 		var/obj/item/stack/monkecoin/attacked_coins = attacking_item
-		if(!user.client.prefs.adjust_metacoins(user.client.ckey, attacked_coins.amount, "Deposited coins to an ATM", donator_multiplier = FALSE))
-			say("Error accepting coins, please try again later.")
+		var/coin_amount = attacked_coins.amount
+		if(QDELETED(attacked_coins) || !user.temporarilyRemoveItemFromInventory(attacked_coins, force = TRUE))
 			return
+		if(attacked_coins.amount != coin_amount)
+			stack_trace("Monkecoin stack amount somehow changed while removing from inventory (from [coin_amount] to [attacked_coins.amount])")
 		qdel(attacked_coins)
+		var/ckey = user.client?.ckey
+		if(!user.client?.prefs?.adjust_metacoins(ckey, coin_amount, "Deposited coins to an ATM", donator_multiplier = FALSE))
+			say("Error accepting coins, please try again later.")
+			user.put_in_hands(new /obj/item/stack/monkecoin(drop_location(), coin_amount, FALSE), merge_stacks = FALSE)
+			return
 		say("Coins deposited to your account, have a nice day.")
 
 	else if(istype(attacking_item, /obj/item/stack/spacecash))

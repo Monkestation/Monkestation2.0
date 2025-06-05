@@ -34,13 +34,14 @@
 /datum/outfit/assaultops_preview
 	name = "Assault Ops - Preview ONLY"
 
+	back = /obj/item/mod/control/pre_equipped/empty/covert
+
+/datum/outfit/assaultops_preview_background
+	name = "Assault Ops - Background Dudes - Preview ONLY"
+
 	uniform = /obj/item/clothing/under/syndicate/sniper
 	shoes = /obj/item/clothing/shoes/jackboots
 	gloves =  /obj/item/clothing/gloves/combat
 	ears = /obj/item/radio/headset/syndicate/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
-
-/datum/outfit/assaultops_preview/background
-	name = "Assault Ops - Background Dudes - Preview ONLY"
-
 	mask = /obj/item/clothing/mask/gas/sechailer/syndicate

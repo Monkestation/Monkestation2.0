@@ -519,6 +519,8 @@
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
+	if(QDELETED(mob_occupant))
+		return
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
 
@@ -538,6 +540,10 @@
 
 	if(isbrain(mob_occupant))
 		dna = B.stored_dna
+	if((mob_occupant.mob_biotypes & MOB_ROBOTIC) || (dna?.species?.inherent_biotypes & MOB_ROBOTIC))
+		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
 	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)

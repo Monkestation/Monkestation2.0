@@ -62,9 +62,10 @@
 	)
 
 /datum/quirk/item_quirk/junkie/remove()
-	if(quirk_holder && reagent_instance)
-		for(var/addiction_type in subtypesof(/datum/addiction))
-			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
+	if(!reagent_instance || QDELETED(quirk_holder) || QDELETED(quirk_holder.mind))
+		return
+	for(var/addiction_type in subtypesof(/datum/addiction))
+		quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, next_process))

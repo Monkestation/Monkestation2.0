@@ -67,6 +67,8 @@ SUBSYSTEM_DEF(economy)
 	/// Tracks a temporary sum of all money in the system
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
+	/// The mail crate we last generated.
+	var/obj/structure/closet/crate/mail/economy/mail_crate
 
 /datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
@@ -119,7 +121,8 @@ SUBSYSTEM_DEF(economy)
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
  */
-/datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
+/datum/controller/subsystem/economy/proc/get_dep_account(dep_id) as /datum/bank_account/department
+	RETURN_TYPE(/datum/bank_account/department)
 	for(var/datum/bank_account/department/D in generated_accounts)
 		if(D.department_id == dep_id)
 			return D

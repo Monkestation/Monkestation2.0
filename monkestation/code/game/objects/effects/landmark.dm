@@ -144,3 +144,7 @@
 /obj/effect/landmark/start/blueshield
 	name = "Blueshield"
 	icon_state = "Blueshield"
+
+/obj/effect/landmark/start/xenobiologist
+	name = "Xenobiologist"
+	icon_state = "Xenobiologist"

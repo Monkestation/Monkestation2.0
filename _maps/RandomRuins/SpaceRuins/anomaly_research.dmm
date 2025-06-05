@@ -99,9 +99,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
-"dz" = (
-/turf/open/space/basic,
-/area/misc/anomaly_research)
 "dD" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/spawner/random/environmentally_safe_anomaly,
@@ -611,7 +608,7 @@
 /turf/open/floor/iron/white,
 /area/misc/anomaly_research)
 "pk" = (
-/obj/machinery/jukebox,
+/obj/machinery/dance_machine,
 /turf/open/floor/iron/dark/textured,
 /area/misc/anomaly_research)
 "pl" = (
@@ -3480,7 +3477,7 @@ Ya
 RT
 RT
 Ya
-dz
+Ya
 Ya
 AV
 hq
@@ -3517,8 +3514,8 @@ Ya
 (43,1,1) = {"
 RT
 RT
-dz
-dz
+Ya
+Ya
 Ya
 AV
 uN
@@ -3555,7 +3552,7 @@ Ya
 (44,1,1) = {"
 RT
 Ya
-dz
+Ya
 Ya
 Ya
 AV
@@ -3593,7 +3590,7 @@ RT
 (45,1,1) = {"
 RT
 Ya
-dz
+Ya
 Ya
 Ya
 AV

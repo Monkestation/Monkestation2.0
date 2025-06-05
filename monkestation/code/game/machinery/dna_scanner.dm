@@ -42,17 +42,23 @@
 /obj/item/disk/data/random/proc/initialize_mutation_weights() as /list
 	RETURN_TYPE(/list)
 	. = list()
-	.[get_non_random_locked_mutations(GLOB.good_mutations)] = POSITIVE_WEIGHT
-	.[get_non_random_locked_mutations(GLOB.not_good_mutations)] = NEUTRAL_WEIGHT
-	.[get_non_random_locked_mutations(GLOB.bad_mutations)] = NEGATIVE_WEIGHT
-
-/// Returns a list of the typepaths of mutations in the given list without the random_locked var enabled.
-/obj/item/disk/data/random/proc/get_non_random_locked_mutations(list/mutations) as /list
-	RETURN_TYPE(/list)
-	. = list()
-	for(var/datum/mutation/human/mutation as anything in mutations)
-		if(!mutation.random_locked)
-			.[mutation.type] = isnull(mutation.species_allowed) ? 2 : 3
+	var/list/good = list()
+	var/list/neutral = list()
+	var/list/bad = list()
+	for(var/datum/mutation/human/mutation as anything in GLOB.all_mutations)
+		if(mutation::random_locked)
+			continue
+		var/weight = isnull(mutation::species_allowed) ? 2 : 3
+		switch(mutation::quality)
+			if(POSITIVE)
+				good[mutation] = weight
+			if(MINOR_NEGATIVE)
+				neutral[mutation] = weight
+			if(NEGATIVE)
+				bad[mutation] = weight
+	.[good] = POSITIVE_WEIGHT
+	.[neutral] = NEUTRAL_WEIGHT
+	.[bad] = NEGATIVE_WEIGHT
 
 #undef STABILIZER_PROB
 #undef CHROMOSOME_PROB

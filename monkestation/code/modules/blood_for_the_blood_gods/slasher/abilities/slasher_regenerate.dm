@@ -1,10 +1,10 @@
 /datum/action/cooldown/slasher/regenerate
 	name = "Regenerate"
-	desc = "Quickly regenerate your being, restoring most if not all lost health, repairing wounds, and removing all stuns."
+	desc = "Quickly regenerate your being, restoring most if not all lost health, repairing wounds, and removing all stuns. Works much better in maintenance areas."
 
 	button_icon_state = "regenerate"
 
-	cooldown_time = 75 SECONDS
+	cooldown_time = 80 SECONDS
 
 
 /datum/action/cooldown/slasher/regenerate/Activate(atom/target)
@@ -32,21 +32,21 @@
 	REMOVE_TRAIT(owner, TRAIT_CANT_STAMCRIT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
-/datum/status_effect/bloody_heal/tick(seconds_per_tick, times_fired)
+/datum/status_effect/bloody_heal/tick(seconds_between_ticks, times_fired)
 	. = ..()
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.AdjustAllImmobility(-20 * seconds_per_tick)
+	human_owner.AdjustAllImmobility(-20 * seconds_between_ticks)
 	human_owner.stamina.adjust(20, TRUE)
 	human_owner.adjustBruteLoss(-35)
-	human_owner.adjustFireLoss(-20, FALSE)
-	human_owner.adjustOxyLoss(-20)
-	human_owner.adjustToxLoss(-20)
+	human_owner.adjustFireLoss(-5, FALSE)
+	human_owner.adjustOxyLoss(-10)
+	human_owner.adjustToxLoss(-10)
 	human_owner.adjustCloneLoss(-20)
 	human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -20)
-	human_owner.blood_volume = BLOOD_VOLUME_NORMAL
-
+	if(human_owner.blood_volume < BLOOD_VOLUME_NORMAL)
+		human_owner.blood_volume += 20
 	if(human_owner.all_wounds)
 		var/datum/wound/picked_wound = pick(human_owner.all_wounds)
 		picked_wound.remove_wound(replaced = TRUE)
@@ -54,7 +54,6 @@
 			var/datum/wound/picked_wound_2 = pick(human_owner.all_wounds)
 			picked_wound_2.remove_wound(replaced = TRUE)
 
-
 	for(var/i in human_owner.all_wounds)
 		var/datum/wound/iter_wound = i
-		iter_wound.on_xadone(4 * REM * seconds_per_tick) // plasmamen use plasma to reform their bones or whatever
+		iter_wound.on_xadone(4 * REM * seconds_between_ticks) // plasmamen use plasma to reform their bones or whatever

@@ -42,7 +42,7 @@
 		ACCESS_AWAY_GENERAL,
 		ACCESS_AWAY_SCIENCE
 	)
-	assignment = "Charlie Station Scientist"
+	assignment = "Delta Station Scientist"
 
 /// Trim for the oldstation ruin/Charlie station
 /datum/id_trim/job/away/old/eng
@@ -67,7 +67,7 @@
 		ACCESS_ENGINEERING,
 		ACCESS_ENGINE_EQUIP
 	)
-	assignment = "Charlie Station Engineer"
+	assignment = "Beta Station Engineer"
 
 /// Trim for the oldstation ruin/Charlie station to access APCs and other equipment
 /datum/id_trim/job/away/old/equipment
@@ -85,6 +85,14 @@
 		ACCESS_ROBOTICS,
 		ACCESS_ORDNANCE
 	)
+
+/// trim for the cargo tech corpse in the remains of alpha station on ice box oldstation
+/datum/id_trim/job/away/old/cargo
+	minimal_access = list(
+		ACCESS_AWAY_GENERAL,
+		ACCESS_AWAY_SUPPLY,
+	)
+	assignment = "Alpha Station Cargo Technician"
 ///END OF EDIT
 
 /// Trim for the cat surgeon ruin.

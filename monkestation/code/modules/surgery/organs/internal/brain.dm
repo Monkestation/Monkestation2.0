@@ -52,7 +52,9 @@
 		/obj/item/organ/external/snout,
 		/obj/item/organ/external/antennae,
 		/obj/item/organ/external/spines,
-		/obj/item/organ/internal/eyes/robotic/glow
+		/obj/item/organ/internal/eyes/robotic/glow,
+		/obj/item/organ/external/plumage,
+		/obj/item/organ/internal/ears/cat/super,
 	))
 	//Quirks that roll unique effects or gives items to each new body should be saved between bodies.
 	var/static/list/saved_quirks = typecacheof(list(
@@ -66,12 +68,18 @@
 		/datum/quirk/item_quirk/musician,
 		/datum/quirk/item_quirk/poster_boy,
 		/datum/quirk/item_quirk/tagger,
-		//datum/quirk/item_quirk/signer, // Needs to "add component" on proc add not on_unique
+		/datum/quirk/item_quirk/signer,
 		/datum/quirk/phobia,
 		/datum/quirk/indebted,
 		/datum/quirk/item_quirk/allergic,
 		/datum/quirk/item_quirk/brainproblems,
 		/datum/quirk/item_quirk/junkie,
+	))
+	/// Quirks that should just be completely skipped.
+	var/static/list/skip_quirks = typecacheof(list(
+		/datum/quirk/drg_callout, // skillchips are in the brain anyways
+		/datum/quirk/prosthetic_limb,
+		/datum/quirk/quadruple_amputee,
 	))
 
 	var/rebuilt = TRUE
@@ -103,7 +111,10 @@
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
 		. += span_red("You could probably snuff that out.")
 	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
-		. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
+		if(isnull(stored_dna))
+			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
+		else
+			. += span_hypnophrase("You remember that pouring a big beaker of ground plasma on it, if it's non-embodied, would make it regrow one.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	user.visible_message(
@@ -180,10 +191,11 @@
 	var/mob/living/basic/mining/legion/legionbody = victim.loc
 
 	for(var/datum/quirk/quirk in victim.quirks) // Store certain quirks safe to transfer between bodies.
-		if(is_type_in_typecache(quirk, saved_quirks))
-			quirk.remove_from_current_holder(quirk_transfer = TRUE)
-			stored_quirks |= quirk
-
+		if(!is_type_in_typecache(quirk, saved_quirks) || is_type_in_typecache(quirk, skip_quirks))
+			continue
+		quirk.remove_from_current_holder(quirk_transfer = TRUE)
+		stored_quirks |= quirk
+	victim.drop_all_held_items()
 	process_items(victim) // Start moving items before anything else can touch them.
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
@@ -380,7 +392,7 @@
 			for(var/datum/quirk/quirk in stored_quirks)
 				quirk.add_to_holder(new_body, quirk_transfer = TRUE) // Return their old quirk to them.
 			stored_quirks.Cut()
-		SSquirks.AssignQuirks(new_body, brainmob.client) // Still need to copy over the rest of their quirks.
+		SSquirks.AssignQuirks(new_body, brainmob.client, blacklist = assoc_to_keys(skip_quirks)) // Still need to copy over the rest of their quirks.
 	var/obj/item/organ/internal/brain/new_body_brain = new_body.get_organ_slot(ORGAN_SLOT_BRAIN)
 	qdel(new_body_brain)
 	forceMove(new_body)
@@ -421,9 +433,9 @@
 	name = "compact positronic brain"
 	slot = ORGAN_SLOT_BRAIN
 	zone = BODY_ZONE_CHEST
-	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
+	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_VITAL
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It has an IPC serial number engraved on the top. It is usually slotted into the chest of synthetic crewmembers."
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It has an IPC serial number engraved on the top. It is usually slotted into the chest of synthetic crewmembers. It is not compatible with standard Posibrain/MMI interfaces, and must be placed into an MMI to be made compatible." // to inform the user that this is, in fact, not a real posibrain, but is an organ posibrain.
 	icon = 'monkestation/code/modules/smithing/icons/ipc_organ.dmi'
 	icon_state = "posibrain-ipc"
 	/// The last time (in ticks) a message about brain damage was sent. Don't touch.

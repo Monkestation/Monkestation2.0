@@ -121,10 +121,9 @@
 		return
 
 	if(to_value < owner.standard_body_temperature)
-		owner.adjust_bodytemperature(-delta_change, min_temp = to_value)
-
+		owner.adjust_bodytemperature(-delta_change * seconds_between_ticks, min_temp = to_value)
 	else
-		owner.adjust_bodytemperature(delta_change, max_temp = to_value)
+		owner.adjust_bodytemperature(delta_change * seconds_between_ticks, max_temp = to_value)
 
 /datum/status_effect/homeostasis_level/proc/species_update(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER

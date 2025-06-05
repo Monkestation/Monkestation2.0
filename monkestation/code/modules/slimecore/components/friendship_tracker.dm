@@ -36,32 +36,32 @@
 
 /datum/component/friendship_container/proc/change_friendship(mob/living/source, atom/target, amount)
 	for(var/datum/weakref/ref as anything in weakrefed_friends)
-		if(ref.resolve() == target)
+		if(!IS_WEAKREF_OF(target, ref))
+			continue
+		///handles registering pet commands and other things that use BEFRIEND
+		if(amount < 0)
+			if((friendship_levels[befriend_level] > weakrefed_friends[ref]) && (ref in befriended_refs))
+				SEND_SIGNAL(parent, COMSIG_LIVING_UNFRIENDED, ref.resolve())
+				befriended_refs -= ref
+				source.ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, target)
 
-			///handles registering pet commands and other things that use BEFRIEND
-			if(amount < 0)
-				if((friendship_levels[befriend_level] > weakrefed_friends[ref]) && (ref in befriended_refs))
-					SEND_SIGNAL(parent, COMSIG_LIVING_UNFRIENDED, ref.resolve())
-					befriended_refs -= ref
-					source.ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, target)
+		else if((friendship_levels[befriend_level] <= weakrefed_friends[ref]) && !(ref in befriended_refs))
+			SEND_SIGNAL(parent, COMSIG_LIVING_BEFRIENDED, ref.resolve())
+			befriended_refs += ref
+			source.ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, target)
 
-			else if((friendship_levels[befriend_level] <= weakrefed_friends[ref]) && !(ref in befriended_refs))
-				SEND_SIGNAL(parent, COMSIG_LIVING_BEFRIENDED, ref.resolve())
-				befriended_refs += ref
-				source.ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, target)
-
-			weakrefed_friends[ref] += amount
-			return TRUE
+		weakrefed_friends[ref] += amount
+		return TRUE
 	weakrefed_friends += list(WEAKREF(target) = amount)
 	return TRUE
 
 ///Returns {TRUE} if friendship is above a certain threshold else returns {FALSE}
 /datum/component/friendship_container/proc/check_friendship_level(mob/living/source, atom/target, friendship_level)
 	for(var/datum/weakref/ref as anything in weakrefed_friends)
-		if(isnull(ref) || QDELETED(ref))
+		if(QDELETED(ref))
 			weakrefed_friends -= ref
 			continue
-		if(ref.resolve() == target)
+		if(IS_WEAKREF_OF(target, ref))
 			if(friendship_levels[friendship_level] <= weakrefed_friends[ref])
 				return TRUE
 			return FALSE
@@ -73,7 +73,7 @@
 		target.AddComponent(/datum/component/friendship_container, friendship_levels, befriend_level)
 
 	for(var/datum/weakref/ref as anything in weakrefed_friends)
-		if(isnull(ref) || QDELETED(ref))
+		if(QDELETED(ref))
 			weakrefed_friends -= ref
 			continue
 		var/amount = weakrefed_friends[ref]
@@ -87,10 +87,10 @@
 	var/max_level = friendship_levels[length(friendship_levels)]
 	var/max_level_value = friendship_levels[max_level]
 	for(var/datum/weakref/ref as anything in weakrefed_friends)
-		if(isnull(ref) || QDELETED(ref))
+		if(QDELETED(ref))
 			weakrefed_friends -= ref
 			continue
-		if(ref.resolve() != clicker)
+		if(!IS_WEAKREF_OF(clicker, ref))
 			continue
 
 		var/list/offset_to_add = get_icon_dimensions(source.icon)

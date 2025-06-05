@@ -186,12 +186,12 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/toggleAI,
 // Client procs
 	/client/proc/adminchangemap,
+	/client/proc/admin_revert_map,
 	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_force_del_all,
 	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/everyone_random,
-	/client/proc/forcerandomrotate,
 	/client/proc/generate_job_config,
 	/client/proc/panicbunker,
 	/client/proc/toggle_cdn,

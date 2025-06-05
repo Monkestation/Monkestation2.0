@@ -162,6 +162,7 @@
 			if(C.prefs.read_preference(/datum/preference/toggle/sound_midi))
 				if(!stop_web_sounds)
 					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+					C.media_player?.stop()
 				else
 					C.tgui_panel?.stop_music()
 

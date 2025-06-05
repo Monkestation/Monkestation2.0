@@ -60,7 +60,7 @@
 	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
-	/// Lazylist of all images (hopefully attached to us) to update when we change z levels
+	/// Lazylist of all images (or atoms, I'm sorry) (hopefully attached to us) to update when we change z levels
 	/// You will need to manage adding/removing from this yourself, but I'll do the updating for you
 	var/list/image/update_on_z
 
@@ -719,7 +719,7 @@
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[ma2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /**
  * Returns an extended list of examine strings for any contained ID cards.
@@ -1537,13 +1537,17 @@
 
 	// monkestation edit start: forced shake
 	if(href_list[VV_HK_SHAKE] && check_rights(R_FUN))
-		var/pixelshiftx = input(usr, "Choose amount of pixels to shift on X axis","Shake Atom") as null|num
-		var/pixelshifty = input(usr, "Choose amount of pixels to shift on Y axis","Shake Atom") as null|num
+		var/pixelshiftx = input(usr, "Choose amount of pixels to shift on X axis", "Shake Atom") as null|num
+		var/pixelshifty = input(usr, "Choose amount of pixels to shift on Y axis", "Shake Atom") as null|num
 		if(isnull(pixelshiftx) || isnull(pixelshifty))
 			return
 
-		var/duration = input(usr, "Duration? (In seconds)","Shake Atom") as null|num
-		var/shake_interval = input(usr, "Shake interval (In seconds) - Default: 0.02", "Shake Atom", 0.02) as null|num
+		var/duration = input(usr, "Duration? (in seconds)", "Shake Atom") as null|num
+		if(duration > 20)
+			var/confirmation = input(usr, "Durations longer than 20 seconds are HIGHLY LIKELY to cause lag! Are you REALLY sure?", "Shake Atom: LAG ALERT") in list("I'm sure!", "Nope.")
+			if(confirmation != "I'm sure!")
+				return
+		var/shake_interval = input(usr, "Shake interval (in seconds) - Default: 0.02", "Shake Atom", 0.02) as null|num
 		if(isnull(shake_interval) || isnull(duration))
 			return
 
@@ -2162,6 +2166,9 @@
 
 			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
 				var/screentip_images = active_hud.screentip_images
+				// Disable screentip images for clients affected by https://www.byond.com/forum/post/2967731
+				if(ISINRANGE(client?.byond_build, MIN_BYOND_BUILD_DISABLE_SCREENTIP_ICONS, MAX_BYOND_BUILD_DISABLE_SCREENTIP_ICONS))
+					screentip_images = FALSE
 				// LMB and RMB on one line...
 				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
 				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)

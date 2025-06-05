@@ -4,7 +4,6 @@
 /// General related skillchip category
 #define SKILLCHIP_CATEGORY_GENERAL "general"
 
-
 /obj/item/skillchip
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
@@ -42,7 +41,9 @@
 	var/cooldown = 5 MINUTES
 	/// Cooldown for chip actions.
 	COOLDOWN_DECLARE(chip_cooldown)
-	/// Used to determine if this is an abstract type or not. If this is meant to be an abstract type, set it to the type's path. Will be overridden by subsequent abstract parents. See /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	/// Used to determine if this is an abstract type or not.
+	/// If this is meant to be an abstract type, set it to the type's path.
+	/// Will be overridden by subsequent abstract parents.
 	var/abstract_parent_type = /obj/item/skillchip
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
@@ -52,6 +53,10 @@
 /obj/item/skillchip/Initialize(mapload, is_removable = TRUE)
 	. = ..()
 	removable = is_removable
+
+///We don't grant actions outside of being activated when implanted
+/obj/item/skillchip/item_action_slot_check(slot, mob/user, datum/action/action)
+	return FALSE
 
 /**
  * Activates the skillchip, if possible.
@@ -98,25 +103,28 @@
  * Arguments:
  * * silent - Boolean. Whether or not an activation message should be shown to the user.
  * * force - Boolean. Whether or not to just force de-activation if it would be prevented for any reason.
+ * * brain_owner - the owner var of the brain is set to null on organ/on_mob_remove(), so we need this if owner is null.
  */
-/obj/item/skillchip/proc/try_deactivate_skillchip(silent = FALSE, force = FALSE)
+/obj/item/skillchip/proc/try_deactivate_skillchip(silent = FALSE, force = FALSE, mob/living/brain_owner)
 	if(!active)
 		return "Skillchip is not active."
 
 	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
-	if(QDELETED(holding_brain))
-		stack_trace("Skillchip's owner is null or qdeleted brain.")
+	if(!holding_brain)
+		stack_trace("Skillchip doesn't have a holding brain.")
 		return "Skillchip cannot detect viable brain."
 
+	if(!brain_owner)
+		brain_owner = holding_brain.owner
 	// Also should not happen. We're somehow deactivating skillchips in a bodyless brain.
-	if(QDELETED(holding_brain.owner))
+	if(QDELETED(brain_owner))
 		active = FALSE
 		stack_trace("Skillchip's brain has no owner, owner is null or owner qdeleted.")
 		return "Skillchip cannot detect viable body."
 
 	// We have a holding brain, the holding brain has an owner. If we're forcing this, do it hard and fast.
 	if(force)
-		on_deactivate(holding_brain.owner, silent)
+		on_deactivate(brain_owner, silent)
 		return
 
 	// Is the chip still experiencing a cooldown period?
@@ -124,7 +132,7 @@
 		return "Skillchip is still recharging for [COOLDOWN_TIMELEFT(src, chip_cooldown) * 0.1]s"
 
 	// We're good to go. Deactive this chip.
-	on_deactivate(holding_brain.owner, silent)
+	on_deactivate(brain_owner, silent)
 
 /**
  * Called when a skillchip is inserted in a user's brain.
@@ -133,10 +141,12 @@
  * * owner_brain - The brain that this skillchip was implanted in to.
  */
 /obj/item/skillchip/proc/on_implant(obj/item/organ/internal/brain/owner_brain)
+	SHOULD_CALL_PARENT(TRUE)
 	if(holding_brain)
 		CRASH("Skillchip is trying to be implanted into [owner_brain], but it's already implanted in [holding_brain]")
 
 	holding_brain = owner_brain
+	SEND_SIGNAL(src, COMSIG_SKILLCHIP_IMPLANTED, holding_brain)
 
 /**
  * Called when a skillchip is activated.
@@ -146,6 +156,7 @@
  * * silent - Boolean. Whether or not an activation message should be shown to the user.
  */
 /obj/item/skillchip/proc/on_activate(mob/living/carbon/user, silent=FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
@@ -153,6 +164,9 @@
 		user.add_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = TRUE
+
+	for(var/datum/action/action as anything in actions)
+		action.Grant(user)
 
 	COOLDOWN_START(src, chip_cooldown, cooldown)
 
@@ -169,7 +183,7 @@
 		try_deactivate_skillchip(silent, TRUE)
 
 	COOLDOWN_RESET(src, chip_cooldown)
-
+	SEND_SIGNAL(src, COMSIG_SKILLCHIP_REMOVED, holding_brain)
 	holding_brain = null
 
 /**
@@ -180,6 +194,7 @@
  * * silent - Boolean. Whether or not a deactivation message should be shown to the user.
  */
 /obj/item/skillchip/proc/on_deactivate(mob/living/carbon/user, silent=FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
@@ -187,6 +202,9 @@
 		user.remove_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = FALSE
+
+	for(var/datum/action/action as anything in actions)
+		action.Remove(user)
 
 	COOLDOWN_START(src, chip_cooldown, cooldown)
 

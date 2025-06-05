@@ -101,7 +101,7 @@
 		chat_text_border_icon = preview,
 	)
 	if(chosen_one)
-		clonee.key = chosen_one.key
+		clonee.PossessByPlayer(chosen_one.key)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonee.grab_ghost()

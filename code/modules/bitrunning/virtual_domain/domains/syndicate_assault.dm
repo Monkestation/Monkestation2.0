@@ -11,3 +11,4 @@
 	map_name = "syndicate_assault"
 	reward_points = BITRUNNER_REWARD_MEDIUM
 	safehouse_path = /datum/map_template/safehouse/shuttle
+	announce_to_ghosts = TRUE

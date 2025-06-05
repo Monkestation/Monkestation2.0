@@ -280,6 +280,7 @@
 	. = ..()
 	our_heretic.heretic_path = route
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
+	SEND_SIGNAL(our_heretic.owner, COMSIG_HERETIC_PATH_CHOSEN, our_heretic, route) // monkestation edit: modularization is dead but i'm marking this so that future ports don't nuke this by accident
 
 /**
  * A knowledge subtype for heretic knowledge
@@ -568,7 +569,7 @@
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = chosen_one.key
+	summoned.PossessByPlayer(chosen_one.key)
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
@@ -737,7 +738,7 @@
  * Checks if the passed human is a valid sacrifice for our ritual.
  */
 /datum/heretic_knowledge/ultimate/proc/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
+	return ((sacrifice.stat == DEAD) && sacrifice.last_mind)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)

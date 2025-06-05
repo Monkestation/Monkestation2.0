@@ -1,7 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "Teratomas now have an antag preference."
-  - rscadd: "Added an uncommon random event, where some teratomas (picked from ghosts) somehow manage to crash a car or washing machine into the station."
-  - rscadd: "Putting a teratoma's brain into a cyborg or AI may have... unforeseen consequences."
-  - rscadd: "Teratomas are now fundamentally evil."

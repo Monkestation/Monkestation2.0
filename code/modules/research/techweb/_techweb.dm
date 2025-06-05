@@ -26,7 +26,7 @@
 	var/list/boosted_nodes = list()
 	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
-	/// Items already deconstructed for a generic point boost, path = list(point_type = points)
+	/// List of items already deconstructed for research points, preventing infinite research point generation.
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
 	var/list/research_points = list()
@@ -114,8 +114,8 @@
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(research_points[i] + pointlist[i], 0.1)
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -125,8 +125,8 @@
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] = max(0, research_points[i] - pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(max(0, research_points[i] - pointlist[i]), 0.1)
 
 /datum/techweb/proc/remove_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -136,8 +136,8 @@
 
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] != 0)
-			research_points[i] = max(0, research_points[i] + pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] != 0)
+			research_points[i] = FLOOR(max(0, research_points[i] + pointlist[i]), 0.1)
 
 /datum/techweb/proc/modify_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -177,19 +177,19 @@
 	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] += amount
 	return TRUE
 
 /datum/techweb/proc/modify_point_type(type, amount)
-	if(!SSresearch.point_types[type])
+	if(!(type in SSresearch.point_types))
 		return FALSE
 	research_points[type] = max(0, research_points[type] + amount)
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
@@ -434,17 +434,15 @@
 	LAZYINITLIST(boosted_nodes[node.id])
 	for(var/point_type in pointlist)
 		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
-	if(node.autounlock_by_boost)
-		hidden_nodes -= node.id
+	unhide_node(node)
 	update_node_status(node)
 	return TRUE
 
-/// Boosts a techweb node by using items.
-/datum/techweb/proc/boost_with_item(datum/techweb_node/node, itempath)
-	if(!istype(node) || !ispath(itempath))
+///Removes a node from the hidden_nodes list, making it viewable and researchable (if no experiments are required).
+/datum/techweb/proc/unhide_node(datum/techweb_node/node)
+	if(!istype(node))
 		return FALSE
-	var/list/boost_amount = node.boost_item_paths[itempath]
-	boost_techweb_node(node, boost_amount)
+	hidden_nodes -= node.id
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)

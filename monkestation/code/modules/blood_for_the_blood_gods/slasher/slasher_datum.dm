@@ -1,10 +1,19 @@
-/datum/outfit/slasher
+/datum/outfit/slasher/slasher1
 	name = "Slasher Outfit"
 	suit = /obj/item/clothing/suit/apron/slasher
-	uniform = /obj/item/clothing/under/color/random/slasher
+	uniform = /obj/item/clothing/under/slasher
 	shoes = /obj/item/clothing/shoes/slasher_shoes
 	mask = /obj/item/clothing/mask/gas/slasher
 	belt = /obj/item/storage/belt/slasher
+
+/datum/outfit/slasher/slasher2
+	name = "Slasher Outfit"
+	suit = /obj/item/clothing/suit/apron/slasher2
+	uniform = /obj/item/clothing/under/slasher
+	shoes = /obj/item/clothing/shoes/admiral
+	mask = /obj/item/clothing/mask/gas/slasher2
+	belt = /obj/item/storage/belt/slasher
+	gloves = /obj/item/clothing/gloves/admiral
 
 /datum/antagonist/slasher
 	name = "\improper Slasher"
@@ -15,10 +24,9 @@
 	antag_hud_name = "slasher"
 	show_name_in_check_antagonists = TRUE
 	hud_icon = 'monkestation/icons/mob/slasher.dmi'
-	preview_outfit = /datum/outfit/slasher
+	preview_outfit = /datum/outfit/slasher/slasher2
 	show_to_ghosts = TRUE
 	var/give_objectives = TRUE
-	objectives = list(/datum/objective/slasher/harvest_souls, /datum/objective/slasher/soulsteal, /datum/objective/slasher/trappem)
 	var/datum/action/cooldown/slasher/active_action = null
 	///the linked machette that the slasher can summon even if destroyed and is unique to them
 	var/obj/item/slasher_machette/linked_machette
@@ -58,6 +66,32 @@
 	///this is the time counter for stalking
 	var/time_counter = 0
 
+/datum/antagonist/slasher/on_gain()
+	. = ..() // Call parent first
+
+	if(give_objectives)
+		forge_objectives()
+		if(owner?.current)
+			for(var/datum/objective/objective in objectives)
+				owner.announce_objectives()
+
+/datum/antagonist/slasher/forge_objectives()
+	if(!owner)
+		return
+
+	// Clear any existing objectives
+	objectives.Cut()
+
+	// Add all slasher objective subtypes
+	for(var/objective_type in subtypesof(/datum/objective/slasher))
+		var/datum/objective/new_objective = new objective_type
+		new_objective.owner = owner
+		objectives += new_objective
+
+	// Make sure these objectives are also in the mind's objectives list
+	if(owner)
+		for(var/datum/objective/O in objectives)
+			owner.objectives += O
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -77,6 +111,10 @@
 	ADD_TRAIT(current_mob, TRAIT_SLASHER, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_NO_PAIN_EFFECTS, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_VIRUSIMMUNE, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_RESISTHEAT, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_RESISTCOLD, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_RESISTLOWPRESSURE, "slasher")
+	ADD_TRAIT(current_mob, TRAIT_RESISTHIGHPRESSURE, "slasher")
 
 	var/mob/living/carbon/carbon = current_mob
 	var/obj/item/organ/internal/eyes/shadow/shadow = new
@@ -87,6 +125,7 @@
 	RegisterSignal(current_mob, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_unequipped))
 	RegisterSignal(current_mob, COMSIG_MOB_ITEM_ATTACK, PROC_REF(check_attack))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
 	for(var/datum/quirk/quirk as anything in current_mob.quirks)
 		current_mob.remove_quirk(quirk)
 	///abilities galore
@@ -97,32 +136,37 @@
 
 	var/mob/living/carbon/human/human = current_mob
 	if(istype(human))
-		human.equipOutfit(/datum/outfit/slasher)
+		human.equipOutfit(/datum/outfit/slasher/slasher2)
 	cached_brute_mod = human.dna.species.brutemod
+	current_mob.alpha = 150
+	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/slasher/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
 	source.mind.remove_antag_datum(/datum/antagonist/slasher)
+	playsound(source, 'monkestation/sound/effects/tape_end.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
+	var/mob/living/carbon/human/source_human = source
+	source_human.delete_equipment()
 
 /datum/antagonist/slasher/on_removal()
-	. = ..()
-	owner.current.clear_fullscreen("slasher_prox", 15)
-	owner.current.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_CLUMSY, TRAIT_NODEATH, TRAIT_DUMB, TRAIT_LIMBATTACHMENT), "slasher")
-	for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
-		listed_slasher.Remove(owner.current)
-	for(var/datum/weakref/held_ref as anything in heartbeats)
-		var/mob/living/carbon/human/human = held_ref.resolve()
+	if(!QDELETED(owner.current))
+		owner.current.clear_fullscreen("slasher_prox", 15)
+		REMOVE_TRAITS_IN(owner.current, "slasher")
+		for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
+			listed_slasher.Remove(owner.current)
+
+	for(var/datum/weakref/held_ref as anything in heartbeats | mobs_with_fullscreens)
+		var/mob/living/carbon/human/human = held_ref?.resolve()
+		if(isnull(human))
+			continue
 		human.stop_sound_channel(CHANNEL_HEARTBEAT)
-		heartbeats -= held_ref
+		human.clear_fullscreen("slasher_prox", 15)
 		human.regenerate_icons()
 		reset_fear(human)
 
-	for(var/datum/weakref/held_ref as anything in mobs_with_fullscreens)
-		var/mob/living/carbon/human/human = held_ref.resolve()
-		human.clear_fullscreen("slasher_prox", 15)
-		mobs_with_fullscreens -= held_ref
-		human.regenerate_icons()
-		reset_fear(human)
+	heartbeats.Cut()
+	mobs_with_fullscreens.Cut()
+	return ..()
 
 /datum/antagonist/slasher/greet()
 	. = ..()
@@ -134,7 +178,7 @@
 	owner.current.playsound_local(null, 'monkestation/sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
-/datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
+/datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_between_ticks, times_fired)
 	SIGNAL_HANDLER
 
 	var/list/currently_beating = list()
@@ -165,6 +209,8 @@
 
 		for(var/mob/living/carbon/human/mobs_in_view in view(7, human))
 			var/datum/mind/mind_in_view = mobs_in_view.mind
+			if(!mind_in_view)
+				continue
 			if(!mind_in_view.has_antag_datum(/datum/antagonist/slasher))
 				reduce_fear(human, 2)
 
@@ -206,7 +252,7 @@
 	. = ..()
 
 
-/datum/status_effect/slasher/stalking/tick(seconds_per_tick, times_fired)
+/datum/status_effect/slasher/stalking/tick(seconds_between_ticks, times_fired)
 	if(slasherdatum.stalked_human)
 		for(var/mob/living/mob in view(7, owner))
 			if(mob == owner)
@@ -240,9 +286,9 @@
 		return FALSE
 	slasherdatum = set_slasherdatum
 
-/datum/status_effect/slasher/stalker/on_apply(mob/living/source)
+/datum/status_effect/slasher/stalker/on_apply()
 	. = ..()
-	var/datum/antagonist/slasher/slasherdatum = source.mind.has_antag_datum(/datum/antagonist/slasher)
+	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	to_chat(owner, span_notice("You begin stalking your target, [slasherdatum.stalked_human], who is a [slasherdatum.stalked_human.job]"))
 
 /atom/movable/screen/alert/status_effect/slasher/stalker
@@ -271,7 +317,7 @@
 	owner_monitor.hide_hud()
 	reset_fear(stalked_human)
 	stalked_human = null
-	var/datum/action/cooldown/slasher/stalk_target/power = owner?.has_antag_datum(/datum/antagonist/slasher)
+	var/datum/action/cooldown/slasher/stalk_target/power = locate() in powers
 	power.StartCooldown(1)
 	to_chat(owner, span_notice("Your target is no longer spookable..."))
 
@@ -340,16 +386,8 @@
 /obj/item/var/last_multi = 1
 
 /datum/antagonist/slasher/proc/damage_multiplier(obj/item/source, mob/living/attacked, def_zone)
-	var/turf/below_turf = get_turf(attacked)
-	var/turf_light_level = below_turf.get_lumcount()
-	var/area/ismaints = get_area(below_turf)
-	var/health_left = 1
-	if(istype(ismaints, /area/station/maintenance))
-		health_left = 1.1
-	else
-		health_left = max(clamp((1 - turf_light_level), 0, 1))
-	attacked.cause_pain(def_zone, source.force)
-	source.last_multi = health_left
+	//keeping this just in case we use it later, but the damage changing has been turned off
+	source.last_multi = 1
 
 	return TRUE
 
@@ -508,3 +546,22 @@
 	explanation_text = "Use your traps to slow down your victims."
 	admin_grantable = TRUE
 
+
+/datum/antagonist/slasher/antag_token(datum/mind/hosts_mind, mob/spender)
+	var/spender_key = spender.key
+	if(!spender_key)
+		CRASH("wtf, spender had no key")
+	var/turf/spawn_loc = find_safe_turf_in_maintenance()//Used for the Drop Pod type of spawn for maints only
+	if(isnull(spawn_loc))
+		message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent a slasher antag token")
+		CRASH("Failed to find valid spawn location for slasher antag token")
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 1 SECOND)
+	var/mob/living/carbon/human/slasher = new (spawn_loc)
+	slasher.PossessByPlayer(spender_key)
+	slasher.mind.add_antag_datum(/datum/antagonist/slasher)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(slasher)] has been made into a slasher by using an antag token.")
