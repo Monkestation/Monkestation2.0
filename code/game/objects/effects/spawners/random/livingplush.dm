@@ -5,9 +5,7 @@
 	loot = list()
 
 
-/obj/effect/spawner/random/livingplush/post_spawn(atom/movable/spawned_loot)
-	var/obj/item/toy/plush/boi = spawned_loot
-	boi.AddComponent(/datum/component/ghost_object_control,boi,TRUE)
-	var/datum/component/ghost_object_control/spiritholder = boi.GetComponent(/datum/component/ghost_object_control)
+/obj/effect/spawner/random/livingplush/post_spawn(obj/item/toy/plush/boi)
+	var/datum/component/ghost_object_control/spiritholder = boi.AddComponent(/datum/component/ghost_object_control, boi, TRUE)
 	if(!(spiritholder.bound_spirit))
 		spiritholder.request_control(0.6)
