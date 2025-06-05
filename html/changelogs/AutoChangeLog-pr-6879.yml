@@ -1,5 +1,0 @@
-author: "Absolucy, jlsnow301, Bisar, MTandi"
-delete-after: True
-changes:
-  - rscadd: "Added a loot window for alt-clicking tiles."
-  - rscdel: "Removed the item browser from the stat panel."

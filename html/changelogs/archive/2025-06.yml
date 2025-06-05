@@ -100,8 +100,21 @@
   - bugfix: NIGHTMARES. Will work. You will be evil and not some dude, actually this
       time
 2025-06-05:
+  Absolucy:
+  - bugfix: Homeostasis levels (i.e stabilized orange extracts, sub-dermal cooler/heater
+      implants, leporazine, fevers, gaseous holoparasites) now account for the seconds
+      between ticks, meaning they should be more "accurate" in adjusting body temperature.
+  Absolucy, PowerfulBacon:
+  - bugfix: Fixes movement keys being stuck.
+  Absolucy, jlsnow301, Bisar, MTandi:
+  - rscadd: Added a loot window for alt-clicking tiles.
+  - rscdel: Removed the item browser from the stat panel.
   Salted-Zen:
   - rscadd: Cableknit and Keyhole sweater purchasable in monkecoin shop to roundstart
       with.
+  Xander3359:
+  - rscadd: A Syndicate Rebar Quiver has been added to the uplink
+  - qol: Left clicking with a rebar crossbow will now draw/undraw the string.
   notghosti:
   - map: Meta station Artsci is now accessible without xenobio access
+  - rscadd: Made the captains beret actually in the game
