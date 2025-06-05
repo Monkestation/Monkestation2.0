@@ -15,7 +15,6 @@
 	return ..()
 
 /datum/xp_menu/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "XpMenu", "[owner.ckey]'s Job XP")
