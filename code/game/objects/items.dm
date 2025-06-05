@@ -1709,3 +1709,8 @@
 	if (!isnull(tool_behaviour))
 		return list(tool_behaviour)
 	return null
+
+/obj/item/dump_harddel_info()
+	var/list/wardrobe_stock = SSwardrobe?.preloaded_stock?[type]
+	if(wardrobe_stock && (src in wardrobe_stock[WARDROBE_STOCK_CONTENTS]))
+		return "Stocked in SSwardrobe"
