@@ -621,6 +621,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
+	QDEL_NULL(xp_menu)
 	seen_messages = null
 	Master.UpdateTickRate()
 	if(cam_screen)
