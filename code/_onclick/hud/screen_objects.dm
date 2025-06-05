@@ -373,6 +373,10 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/interaction_mode/intents3/intents
 
+/atom/movable/screen/act_intent3/Destroy()
+	intents = null
+	return ..()
+
 /atom/movable/screen/act_intent3/Click(location, control, params)
 	var/list/paramlist = params2list(params)
 	var/_x = text2num(paramlist["icon-x"])
