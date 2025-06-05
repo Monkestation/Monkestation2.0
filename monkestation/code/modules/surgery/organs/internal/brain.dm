@@ -15,6 +15,9 @@
 	if(prob(5) && !robust)
 		SEND_SOUND(owner, sound('sound/ambience/ambiruin3.ogg', volume = 25))
 
+/// A global list of dead/ejected oozeling cores.
+GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slime)
+
 /obj/item/organ/internal/brain/slime
 	name = "core"
 	desc = "The center core of a slimeperson, technically their 'extract.' Where the cytoplasm, membrane, and organelles come from; perhaps this is also a mitochondria?"
@@ -97,6 +100,7 @@
 	transform.Scale(2, 2)
 
 /obj/item/organ/internal/brain/slime/Destroy(force)
+	GLOB.dead_oozeling_cores -= src
 	QDEL_NULL(membrane_mur)
 	QDEL_NULL(stored_dna)
 	QDEL_LIST(stored_quirks)
@@ -159,6 +163,7 @@
 		return
 	colorize()
 	core_ejected = FALSE
+	GLOB.dead_oozeling_cores -= src
 	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
@@ -199,6 +204,7 @@
 			stored_dna = new
 		victim.dna.copy_dna(stored_dna)
 
+	GLOB.dead_oozeling_cores |= src
 	core_ejected = TRUE
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
@@ -365,7 +371,9 @@
 	RETURN_TYPE(/mob/living/carbon/human)
 	if(rebuilt)
 		return owner
-	set_organ_damage(-maxHealth) // heals the brain fully
+
+	GLOB.dead_oozeling_cores -= src
+	set_organ_damage(0) // heals the brain fully
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
 		gps_active = FALSE
@@ -443,6 +451,24 @@
 
 	drop_items_to_ground(new_body.drop_location())
 	return new_body
+
+/client/proc/cmd_admin_heal_oozeling(obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
+	set category = "Debug"
+	set name = "Heal Oozeling Core"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(QDELETED(core))
+		return
+	var/mob/living/carbon/human/new_body = core.rebuild_body(nugget = FALSE)
+
+	var/log_msg = "[key_name(usr)] healed / revived [key_name(new_body)]"
+	log_admin(log_msg)
+	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(new_body)]!")
+	message_admins(msg)
+	admin_ticket_log(new_body, log_msg)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Heal Oozeling Core") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/item/organ/internal/brain/synth
 	name = "compact positronic brain"
