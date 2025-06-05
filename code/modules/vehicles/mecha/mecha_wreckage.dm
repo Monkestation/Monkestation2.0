@@ -246,12 +246,14 @@
 	name = "\improper Devitt Mk.III Wreckage"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "devitt-broken"
+	SET_BASE_PIXEL(-12, 0)
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/kingspire
 	name = "\improper Kingspire Mk1 Wreckage"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "kingspire-broken"
+	SET_BASE_PIXEL(-12, 0)
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(/obj/item/gun/ballistic/automatic/malone)
 
@@ -259,18 +261,21 @@
 	name = "\improper 85V-g Talos Wreckage"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "talos-broken"
+	SET_BASE_PIXEL(-24, 0)
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/spatha
 	name = "\improper 85K-a Spatha Wreckage"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "spatha-broken"
+	SET_BASE_PIXEL(-24, 0)
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/percutio
 	name = "\improper T5 Percutio Wreckage"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "percutio-broken"
+	SET_BASE_PIXEL(-12, 0)
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(/obj/item/gun/ballistic/automatic/neville)
 
@@ -278,6 +283,7 @@
 	name = "\improper Noble Firebrand Mk.XVII Wreckage"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "firebrand-broken"
+	SET_BASE_PIXEL(-12, 0)
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/callahan
@@ -296,6 +302,7 @@
 	name = "\improper Devitt-Caine Mk.IV MMR Wreckage"
 	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "devittcaine-broken"
+	SET_BASE_PIXEL(-12, 0)
 	welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/nakki

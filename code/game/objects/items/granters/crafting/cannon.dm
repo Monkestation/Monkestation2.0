@@ -20,7 +20,7 @@
 
 /obj/item/book/granter/crafting_recipe/stockade
 	name = "Old Caoivish blueprints"
-	desc = "Hundreds of years old, its blueprints to make a stockade?"
+	desc = "Hundreds of years old, its blueprints to make a... stockade?"
 	crafting_recipe_types = list(
 		/datum/crafting_recipe/stockade_chassis,
 		/datum/crafting_recipe/stockade_larm,
