@@ -45,9 +45,11 @@
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching atoms")
 
-	var/to_skip = SSgarbage // something something local vars faster to access
+	// something something local vars faster to access
+	var/skipme_1 = SSgarbage
+	var/skipme_2 = SSdemo
 	for(var/datum/thing) //datums
-		if(thing != to_skip)
+		if(thing != skipme_1 && thing != skipme_2)
 			DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching datums")
 
