@@ -4,7 +4,8 @@
  * @license MIT
  */
 
-import { clamp01, scale } from 'common/math';
+import { clamp01, scale } from 'tgui-core/math';
+
 import { pingFail, pingSuccess } from './actions';
 import {
   PING_MAX_FAILS,

@@ -1,23 +1,24 @@
-import { useBackend } from '../backend';
 import {
-  Stack,
-  Section,
-  Icon,
-  Dimmer,
   Box,
-  Tooltip,
   Button,
-} from '../components';
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
-import { classes } from 'common/react';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
-  const { fabName, onHold, designs, busy } = data;
+  const { fabName, onHold, designs, busy, SHEET_MATERIAL_AMOUNT } = data;
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -35,17 +36,20 @@ export const Fabricator = (props) => {
               busy={!!busy}
               designs={Object.values(designs)}
               availableMaterials={availableMaterials}
-              buildRecipeElement={(
-                design,
-                availableMaterials,
-                onPrintDesign,
-              ) => <Recipe design={design} available={availableMaterials} />}
+              buildRecipeElement={(design, availableMaterials) => (
+                <Recipe
+                  design={design}
+                  available={availableMaterials}
+                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                />
+              )}
             />
           </Stack.Item>
           <Stack.Item>
             <Section>
               <MaterialAccessBar
                 availableMaterials={data.materials ?? []}
+                SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                 onEjectRequested={(material, amount) =>
                   act('remove_mat', { ref: material.ref, amount })
                 }
@@ -54,7 +58,7 @@ export const Fabricator = (props) => {
           </Stack.Item>
         </Stack>
         {!!onHold && (
-          <Dimmer style={{ 'font-size': '2em', 'text-align': 'center' }}>
+          <Dimmer style={{ fontSize: '2em', textAlign: 'center' }}>
             Mineral access is on hold, please contact the quartermaster.
           </Dimmer>
         )}
@@ -66,12 +70,13 @@ export const Fabricator = (props) => {
 type PrintButtonProps = {
   design: Design;
   quantity: number;
+  SHEET_MATERIAL_AMOUNT: number;
   available: MaterialMap;
 };
 
 const PrintButton = (props: PrintButtonProps) => {
-  const { act, data } = useBackend<FabricatorData>();
-  const { design, quantity, available } = props;
+  const { act } = useBackend<FabricatorData>();
+  const { design, quantity, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -84,6 +89,7 @@ const PrintButton = (props: PrintButtonProps) => {
         <MaterialCostSequence
           design={design}
           amount={quantity}
+          SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
           available={available}
         />
       }
@@ -110,10 +116,14 @@ type CustomPrintProps = {
 const CustomPrint = (props: CustomPrintProps) => {
   const { act } = useBackend();
   const { design, available } = props;
-  const canPrint = !Object.entries(design.cost).some(
-    ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0),
+  let maxMult = Object.entries(design.cost).reduce(
+    (accumulator: number, [material, required]) => {
+      return Math.min(accumulator, (available[material] || 0) / required);
+    },
+    Infinity,
   );
+  maxMult = Math.min(Math.floor(maxMult), 50);
+  const canPrint = maxMult > 0;
 
   return (
     <div
@@ -123,10 +133,9 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
-        content={'[Max: ' + design.maxmult + ']'}
-        color={'transparent'}
-        maxValue={design.maxmult}
-        onCommit={(_e, value: string) =>
+        buttonText={`[Max: ${maxMult}]`}
+        color="transparent"
+        onCommit={(value) =>
           act('build', {
             ref: design.id,
             amount: value,
@@ -137,9 +146,15 @@ const CustomPrint = (props: CustomPrintProps) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }) => {
-  const { act, data } = useBackend<FabricatorData>();
-  const { design, available } = props;
+type RecipeProps = {
+  design: Design;
+  available: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Recipe = (props: RecipeProps) => {
+  const { act } = useBackend<FabricatorData>();
+  const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -164,6 +179,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
           <MaterialCostSequence
             design={design}
             amount={1}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
         }
@@ -173,7 +189,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { ref: design.id, amount: 1 })}
+          onClick={() =>
+            canPrint && act('build', { ref: design.id, amount: 1 })
+          }
         >
           <div className="FabricatorRecipe__Icon">
             <Box
@@ -185,8 +203,18 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
           <div className="FabricatorRecipe__Label">{design.name}</div>
         </div>
       </Tooltip>
-      <PrintButton design={design} quantity={5} available={available} />
-      <PrintButton design={design} quantity={10} available={available} />
+      <PrintButton
+        design={design}
+        quantity={5}
+        available={available}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+      />
+      <PrintButton
+        design={design}
+        quantity={10}
+        available={available}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+      />
       <CustomPrint design={design} available={available} />
     </div>
   );

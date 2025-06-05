@@ -1,5 +1,4 @@
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -12,8 +11,11 @@ import {
   Table,
   TextArea,
   Tooltip,
-} from 'tgui/components';
-import { Window } from 'tgui/layouts';
+} from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 type HoloPayData = {
   available_logos: string[];
@@ -27,22 +29,17 @@ type HoloPayData = {
   user: { name: string; balance: number };
 };
 
-const COPYRIGHT_SCROLLER = `Nanotrasen (c) 2525-2562. All sales final.
-Use of departmental funds is prohibited. For more information, visit
-the Head of Personnel. All rights reserved. All trademarks are property
-of their respective owners.`;
-
 export const HoloPay = (props) => {
   const { data } = useBackend<HoloPayData>();
   const { owner } = data;
-  const [setupMode, setSetupMode] = useLocalState('setupMode', false);
+  const [setupMode, setSetupMode] = useState(false);
   // User clicked the "Setup" or "Done" button.
   const onClick = () => {
     setSetupMode(!setupMode);
   };
 
   return (
-    <Window height="300" width="250" title="Holo Pay">
+    <Window height={300} width={250} title="Holo Pay">
       <Window.Content>
         {!owner ? (
           <NoticeBox>Error! Swipe an ID first.</NoticeBox>
@@ -77,7 +74,7 @@ const AccountDisplay = (props) => {
 
   return (
     <Section>
-      <Table fill>
+      <Table>
         <Table.Row>
           <Table.Cell>
             <Box color="label">
@@ -121,7 +118,7 @@ const TerminalDisplay = (props) => {
       title="Terminal"
     >
       <Stack fill vertical>
-        <Stack.Item align="center">
+        <Stack.Item align="center" mt={3}>
           <Icon color="good" name={shop_logo} size={5} />
         </Stack.Item>
         <Stack.Item grow textAlign="center">
@@ -164,15 +161,6 @@ const TerminalDisplay = (props) => {
             />
           )}
         </Stack.Item>
-        <Stack.Item>
-          {/* @ts-ignore */}
-          <marquee scrollamount="2">
-            <Box color="darkgray" fontSize="8px">
-              {COPYRIGHT_SCROLLER}
-            </Box>
-            {/* @ts-ignore */}
-          </marquee>
-        </Stack.Item>
       </Stack>
     </Section>
   );
@@ -185,6 +173,8 @@ const SetupDisplay = (props) => {
   const { act, data } = useBackend<HoloPayData>();
   const { available_logos = [], force_fee, max_fee, name, shop_logo } = data;
   const { onClick } = props;
+
+  const [isValid, setIsValid] = useState(true);
 
   return (
     <Section
@@ -223,7 +213,7 @@ const SetupDisplay = (props) => {
             fluid
             height="3rem"
             maxLength={42}
-            onChange={(_, value) => {
+            onBlur={(value) => {
               value?.length > 3 && act('rename', { name: value });
             }}
             placeholder={decodeHtmlEntities(name)}
@@ -237,7 +227,8 @@ const SetupDisplay = (props) => {
             <RestrictedInput
               fluid
               maxValue={max_fee}
-              onChange={(_, value) => act('fee', { amount: value })}
+              onEnter={(value) => isValid && act('fee', { amount: value })}
+              onValidationChange={setIsValid}
               value={force_fee}
             />
           </Tooltip>

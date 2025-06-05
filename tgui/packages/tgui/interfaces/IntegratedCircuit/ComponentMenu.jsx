@@ -1,17 +1,25 @@
-import { Section, Button, Dropdown, Stack, Input } from '../../components';
-import { Component } from 'inferno';
-import { shallowDiffers } from 'common/react';
-import { fetchRetry } from '../../http';
+import { Component } from 'react';
+import {
+  Button,
+  Dropdown,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { fetchRetry } from 'tgui-core/http';
+import { shallowDiffers } from 'tgui-core/react';
+
 import { resolveAsset } from '../../assets';
-import { DisplayComponent } from './DisplayComponent';
 import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
+import { DisplayComponent } from './DisplayComponent';
 
 // Cache response so it's only sent once
 let fetchServerData;
 
 export class ComponentMenu extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       selectedTab: 'All',
       currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
@@ -87,7 +95,6 @@ export class ComponentMenu extends Component {
     // Limit the maximum amount of shown components to prevent a lagspike
     // when you open the menu
     shownComponents.length = currentLimit;
-
     return (
       <Section
         title="Component Menu"
@@ -113,7 +120,8 @@ export class ComponentMenu extends Component {
                   currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
                 })
               }
-              displayText={`Category: ${selectedTab}`}
+              selected={selectedTab}
+              placeholder="Category"
               color="transparent"
               className="IntegratedCircuit__BlueBorder"
             />
@@ -123,7 +131,7 @@ export class ComponentMenu extends Component {
               placeholder="Search.."
               value={currentSearch}
               fluid
-              onInput={(e, val) =>
+              onChange={(val) =>
                 this.setState({
                   currentSearch: val,
                   selectedTab: 'All',
@@ -134,6 +142,15 @@ export class ComponentMenu extends Component {
           </Stack.Item>
           <Stack.Item>
             <Stack vertical fill>
+              {trueLength === 0 && (
+                <Stack.Item mt={1} fontSize={1}>
+                  <NoticeBox info>
+                    You can hit this integrated circuit onto a component printer
+                    to link it so that you&apos;re able to remotely create and
+                    add components to this circuit.
+                  </NoticeBox>
+                </Stack.Item>
+              )}
               {shownComponents.map((val) => (
                 <Stack.Item
                   key={val.type}

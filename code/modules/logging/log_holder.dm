@@ -48,7 +48,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		ui.open()
 
 /datum/log_holder/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN | R_DEBUG)
 
 /datum/log_holder/ui_static_data(mob/user)
 	var/list/data = list(

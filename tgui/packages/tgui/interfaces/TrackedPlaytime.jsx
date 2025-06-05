@@ -1,12 +1,20 @@
 import { sortBy } from 'common/collections';
+import {
+  Box,
+  Button,
+  Flex,
+  ProgressBar,
+  Section,
+  Table,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, ProgressBar, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 const JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED = 1;
 const JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS = 2;
 
-const sortByPlaytime = sortBy(([_, playtime]) => -playtime);
+const sortByPlaytime = (array) => sortBy(array, ([_, playtime]) => -playtime);
 
 const PlaytimeSection = (props) => {
   const { playtimes } = props;
@@ -30,7 +38,7 @@ const PlaytimeSection = (props) => {
               collapsing
               p={0.5}
               style={{
-                'vertical-align': 'middle',
+                verticalAlign: 'middle',
               }}
             >
               <Box align="right">{jobName}</Box>

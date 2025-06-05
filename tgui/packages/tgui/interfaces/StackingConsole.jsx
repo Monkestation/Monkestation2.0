@@ -1,5 +1,12 @@
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const StackingConsole = (props) => {
@@ -47,9 +54,7 @@ export const StackingConsoleContent = (props) => {
               />
             }
           >
-            <Box style={{ 'text-transform': 'capitalize' }}>
-              {input_direction}
-            </Box>
+            <Box style={{ textTransform: 'capitalize' }}>{input_direction}</Box>
           </LabeledList.Item>
           <LabeledList.Item
             label="Output"
@@ -65,7 +70,7 @@ export const StackingConsoleContent = (props) => {
               />
             }
           >
-            <Box style={{ 'text-transform': 'capitalize' }}>
+            <Box style={{ textTransform: 'capitalize' }}>
               {output_direction}
             </Box>
           </LabeledList.Item>

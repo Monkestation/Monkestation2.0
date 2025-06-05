@@ -18,7 +18,7 @@
 		ui.open()
 
 /datum/fishing_calculator/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/fishing_calculator/ui_close(mob/user)
 	qdel(src)

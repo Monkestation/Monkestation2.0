@@ -30,7 +30,7 @@
 		ui.open()
 
 /datum/admin_pda_panel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/admin_pda_panel/ui_static_data(mob/user)
 	var/list/data = list()

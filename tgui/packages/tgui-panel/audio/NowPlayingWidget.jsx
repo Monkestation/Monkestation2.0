@@ -4,16 +4,17 @@
  * @license MIT
  */
 
-import { toFixed } from 'common/math';
-import { useDispatch, useSelector } from 'common/redux';
-import { Button, Collapsible, Flex, Knob, Section } from 'tgui/components';
+import { useDispatch, useSelector } from 'tgui/backend';
+import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
 
-export const NowPlayingWidget = (props, context) => {
-  const audio = useSelector(context, selectAudio),
-    dispatch = useDispatch(context),
-    settings = useSettings(context),
+export const NowPlayingWidget = (props) => {
+  const audio = useSelector(selectAudio),
+    dispatch = useDispatch(),
+    settings = useSettings(),
     title = audio.meta?.title,
     URL = audio.meta?.link,
     Artist = audio.meta?.artist || 'Unknown Artist',
@@ -35,9 +36,9 @@ export const NowPlayingWidget = (props, context) => {
           mx={0.5}
           grow={1}
           style={{
-            'white-space': 'nowrap',
+            whiteSpace: 'nowrap',
             overflow: 'hidden',
-            'text-overflow': 'ellipsis',
+            textOverflow: 'ellipsis',
           }}
         >
           {
@@ -45,7 +46,7 @@ export const NowPlayingWidget = (props, context) => {
               <Section>
                 {URL !== 'Song Link Hidden' && (
                   <Flex.Item grow={1} color="label">
-                    Url: {URL}
+                    URL: {URL}
                   </Flex.Item>
                 )}
                 <Flex.Item grow={1} color="label">

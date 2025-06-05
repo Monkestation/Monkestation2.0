@@ -1,17 +1,18 @@
 import { filter, map, sortBy, uniq } from 'common/collections';
-import { flow } from 'common/fp';
-import { createSearch } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
   Icon,
+  Image,
   Input,
   Section,
   Stack,
   Tabs,
-  Dropdown,
-} from '../components';
+} from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 // here's an important mental define:
@@ -28,10 +29,10 @@ export const SelectEquipment = (props) => {
 
   const isFavorited = (entry) => favorites?.includes(entry.path);
 
-  const outfits = map((entry) => ({
+  const outfits = map([...data.outfits, ...data.custom_outfits], (entry) => ({
     ...entry,
     favorite: isFavorited(entry),
-  }))([...data.outfits, ...data.custom_outfits]);
+  }));
 
   // even if no custom outfits were sent, we still want to make sure there's
   // at least a 'Custom' tab so the button to create a new one pops up
@@ -41,21 +42,21 @@ export const SelectEquipment = (props) => {
   ]);
   const [tab] = useOutfitTabs(categories);
 
-  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [searchText, setSearchText] = useState('');
   const searchFilter = createSearch(
     searchText,
     (entry) => entry.name + entry.path,
   );
 
-  const visibleOutfits = flow([
-    filter((entry) => entry.category === tab),
-    filter(searchFilter),
-    sortBy(
-      (entry) => !entry.favorite,
-      (entry) => !entry.priority,
-      (entry) => entry.name,
+  const visibleOutfits = sortBy(
+    filter(
+      filter(outfits, (entry) => entry.category === tab),
+      searchFilter,
     ),
-  ])(outfits);
+    (entry) => !entry.favorite,
+    (entry) => !entry.priority,
+    (entry) => entry.name,
+  );
 
   const getOutfitEntry = (current_outfit) =>
     outfits.find((outfit) => getOutfitKey(outfit) === current_outfit);
@@ -63,7 +64,7 @@ export const SelectEquipment = (props) => {
   const currentOutfitEntry = getOutfitEntry(current_outfit);
 
   return (
-    <Window width={750} height={415} theme="admin">
+    <Window width={650} height={415} theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item>
@@ -74,13 +75,13 @@ export const SelectEquipment = (props) => {
                   autoFocus
                   placeholder="Search"
                   value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
+                  onChange={setSearchText}
                 />
               </Stack.Item>
               <Stack.Item>
                 <DisplayTabs categories={categories} />
               </Stack.Item>
-              <Stack.Item mt={0} grow={1} basis={0}>
+              <Stack.Item grow={1} basis={0}>
                 <OutfitDisplay entries={visibleOutfits} currentTab={tab} />
               </Stack.Item>
             </Stack>
@@ -94,21 +95,11 @@ export const SelectEquipment = (props) => {
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section fill title={name} textAlign="center">
-                  <Box
-                    as="img"
+                  <Image
                     m={0}
                     src={`data:image/jpeg;base64,${icon64}`}
                     height="100%"
-                    style={{
-                      '-ms-interpolation-mode': 'nearest-neighbor',
-                      'image-rendering': 'pixelated',
-                    }}
                   />
-                </Section>
-              </Stack.Item>
-              <Stack.Item>
-                <Section>
-                  <ConfirmationBox />
                 </Section>
               </Stack.Item>
             </Stack>
@@ -158,7 +149,7 @@ const OutfitDisplay = (props) => {
               path: getOutfitKey(entry),
             })
           }
-          onDblClick={() =>
+          onDoubleClick={() =>
             act('applyoutfit', {
               path: getOutfitKey(entry),
             })
@@ -180,7 +171,8 @@ const OutfitDisplay = (props) => {
 };
 
 const CurrentlySelectedDisplay = (props) => {
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { current_outfit } = data;
   const { entry } = props;
   return (
     <Stack align="center">
@@ -205,58 +197,21 @@ const CurrentlySelectedDisplay = (props) => {
           title={entry?.path}
           style={{
             overflow: 'hidden',
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
           }}
         >
           {entry?.name}
         </Box>
       </Stack.Item>
-    </Stack>
-  );
-};
-
-const ConfirmationBox = (props) => {
-  const { act, data } = useBackend();
-  const { current_outfit } = data;
-  const [effectState, setEffectState] = useLocalState('effectState', 'None');
-  const [applyQuirks, setApplyQuirks] = useLocalState(
-    'applyQuirks',
-    'No Quirks',
-  );
-
-  return (
-    <Stack>
-      <Stack.Item grow={2}>
-        <Dropdown
-          options={[
-            'No Quirks',
-            'All Quirks',
-            'Positive Quirks Only',
-            'Negative Quirks Only',
-            'Neutral Quirks Only',
-          ]}
-          selected={applyQuirks}
-          onSelected={(value) => setApplyQuirks(value)}
-          width="100%"
-        />
-      </Stack.Item>
-      <Stack.Item grow={1}>
-        <Dropdown
-          options={['None', 'Holy', 'Unholy']}
-          selected={effectState}
-          onSelected={(value) => setEffectState(value)}
-          width="100%"
-        />
-      </Stack.Item>
       <Stack.Item>
         <Button
+          mr={0.8}
+          lineHeight={2}
           color="green"
           onClick={() =>
             act('applyoutfit', {
               path: current_outfit,
-              effectState: effectState, // Pass the state directly
-              applyQuirks,
             })
           }
         >

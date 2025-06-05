@@ -1,16 +1,18 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
-  Section,
   Box,
-  Dropdown,
   Button,
-  Input,
-  TextArea,
   Divider,
-  NumberInput,
-  Tooltip,
+  Dropdown,
+  Input,
   Knob,
-} from '../components';
+  NumberInput,
+  Section,
+  TextArea,
+  Tooltip,
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const AdminFax = (props) => {
@@ -26,20 +28,20 @@ export const AdminFax = (props) => {
 export const FaxMainPanel = (props) => {
   const { act, data } = useBackend();
 
-  const [fax, setFax] = useLocalState('fax', '');
-  const [saved, setSaved] = useLocalState('saved', false);
-  const [paperName, setPaperName] = useLocalState('paperName', '');
-  const [fromWho, setFromWho] = useLocalState('fromWho', '');
-  const [rawText, setRawText] = useLocalState('rawText', '');
-  const [stamp, setStamp] = useLocalState('stampType', '');
-  const [stampCoordX, setStampCoordX] = useLocalState('stampCoordX', 0);
-  const [stampCoordY, setStampCoordY] = useLocalState('stampCoordY', 0);
-  const [stampAngle, setStampAngle] = useLocalState('stampAngle', 0);
+  const [fax, setFax] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [paperName, setPaperName] = useState('');
+  const [fromWho, setFromWho] = useState('');
+  const [rawText, setRawText] = useState('');
+  const [stamp, setStamp] = useState('');
+  const [stampCoordX, setStampCoordX] = useState(0);
+  const [stampCoordY, setStampCoordY] = useState(0);
+  const [stampAngle, setStampAngle] = useState(0);
   if (stamp && data.stamps[0] !== 'None') {
     data.stamps.unshift('None');
   }
   return (
-    <div class="faxmenu">
+    <div className="faxmenu">
       <Section
         title="Fax Menu"
         buttons={
@@ -61,10 +63,9 @@ export const FaxMainPanel = (props) => {
         <Box fontSize="13px">
           <Dropdown
             textAlign="center"
-            selected="Choose fax machine..."
+            placeholder="Choose fax machine..."
             width="100%"
-            nochevron
-            nowrap
+            selected={fax}
             options={data.faxes}
             onSelected={(value) => setFax(value)}
           />
@@ -91,14 +92,14 @@ export const FaxMainPanel = (props) => {
             mb="5px"
             placeholder="Paper name..."
             value={paperName}
-            width="100%"
-            onChange={(_, v) => setPaperName(v)}
+            fluid
+            onChange={setPaperName}
           />
           <Button
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setPaperName('Nanotrasen Offical Report')}
+            onClick={() => setPaperName('Nanotrasen Official Report')}
           >
             Nanotrasen
           </Button>
@@ -118,8 +119,8 @@ export const FaxMainPanel = (props) => {
               placeholder="From who..."
               tooltip="Name what be user in fax history"
               value={fromWho}
-              width="100%"
-              onChange={(_, v) => setFromWho(v)}
+              fluid
+              onChange={setFromWho}
             />
           </Tooltip>
           <Button
@@ -140,9 +141,7 @@ export const FaxMainPanel = (props) => {
             placeholder="Your message here..."
             height="200px"
             value={rawText}
-            onInput={(e, value) => {
-              setRawText(value);
-            }}
+            onChange={setRawText}
           />
         </Box>
         <Divider />
@@ -169,7 +168,7 @@ export const FaxMainPanel = (props) => {
                   minValue={0}
                   maxValue={300}
                   value={stampCoordX}
-                  onChange={(_, v) => setStampCoordX(v)}
+                  onChange={(v) => setStampCoordX(v)}
                 />
               </h4>
 
@@ -179,7 +178,7 @@ export const FaxMainPanel = (props) => {
                   width="45px"
                   minValue={0}
                   value={stampCoordY}
-                  onChange={(_, v) => setStampCoordY(v)}
+                  onChange={(v) => setStampCoordY(v)}
                 />
               </h4>
 
@@ -191,7 +190,7 @@ export const FaxMainPanel = (props) => {
                   minValue={0}
                   maxValue={360}
                   animated={false}
-                  onChange={(_, v) => setStampAngle(v)}
+                  onChange={setStampAngle}
                 />
               </Box>
             </Box>

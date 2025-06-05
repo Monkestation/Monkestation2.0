@@ -8,18 +8,16 @@ export const THEMES = ['light', 'dark'];
 
 const COLORS = {
   DARK: {
-    BG_BASE: '#212020',
-    BG_SECOND: '#161515',
-    BUTTON: '#414040',
+    BG_BASE: '#202020',
+    BG_SECOND: '#151515',
+    BUTTON: '#404040',
     TEXT: '#A6A6A6',
-    BG_REPORT_ISSUES: '#492020', // monkestation edit: make "Report Bugs" button red
   },
   LIGHT: {
-    BG_BASE: '#EFEEEE',
+    BG_BASE: '#EEEEEE',
     BG_SECOND: '#FFFFFF',
-    BUTTON: '#FFFEFE',
+    BUTTON: '#FFFFFF',
     TEXT: '#000000',
-    BG_REPORT_ISSUES: '#492020', // monkestation edit: make "Report Bugs" button red
   },
 };
 
@@ -75,12 +73,10 @@ export const setClientTheme = (name) => {
     'forum.text-color': themeColor.TEXT,
     'github.background-color': themeColor.BUTTON,
     'github.text-color': themeColor.TEXT,
-    'report-issue.background-color': themeColor.BG_REPORT_ISSUES, // monkestation edit: make "Report Bugs" button red
+    'report-issue.background-color': themeColor.BUTTON,
     'report-issue.text-color': themeColor.TEXT,
     'fullscreen-toggle.background-color': themeColor.BUTTON,
     'fullscreen-toggle.text-color': themeColor.TEXT,
-    'tickets.background-color': themeColor.BUTTON,
-    'tickets.text-color': themeColor.TEXT,
     // Status and verb tabs
     'output.background-color': themeColor.BG_BASE,
     'output.text-color': themeColor.TEXT,

@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import {
   Box,
   Button,
-  Icon,
   LabeledList,
   NoticeBox,
   NumberInput,
@@ -10,10 +10,10 @@ import {
   Stack,
   Table,
   Tabs,
-} from '../components';
-import { BooleanLike } from 'common/react';
-import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -44,12 +44,11 @@ type Design = {
   name: string;
 };
 
-export const Biogenerator = () => {
+export function Biogenerator(props) {
   const { data } = useBackend<Data>();
   const { beaker, beakerCurrentVolume, beakerMaxVolume, categories } = data;
 
-  const [selectedCategory, setSelectedCategory] = useLocalState(
-    'category',
+  const [selectedCategory, setSelectedCategory] = useState(
     data.categories[0]?.name,
   );
 
@@ -60,7 +59,7 @@ export const Biogenerator = () => {
   const space = beaker ? beakerMaxVolume - beakerCurrentVolume : 1;
 
   return (
-    <Window width={400} height={530}>
+    <Window width={400} height={500}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -80,7 +79,7 @@ export const Biogenerator = () => {
               ))}
             </Tabs>
           </Stack.Item>
-          <Stack.Item grow mt="2px">
+          <Stack.Item grow>
             <Section fill scrollable>
               <Table>
                 {items.map((item) => (
@@ -93,9 +92,9 @@ export const Biogenerator = () => {
       </Window.Content>
     </Window>
   );
-};
+}
 
-const Controls = () => {
+function Controls() {
   const { act, data } = useBackend<Data>();
   const {
     beaker,
@@ -109,7 +108,7 @@ const Controls = () => {
   } = data;
 
   return (
-    <Section fill minHeight="80px">
+    <Section fill>
       <LabeledList>
         <LabeledList.Item
           label="Biomass"
@@ -117,9 +116,8 @@ const Controls = () => {
             <Button
               width={7}
               lineHeight={2}
-              align="center"
               icon="cog"
-              iconSpin={processing ? 1 : 0}
+              iconSpin={processing}
               disabled={!can_process || processing}
               onClick={() => act('activate')}
             >
@@ -136,7 +134,7 @@ const Controls = () => {
             <Box
               lineHeight={1.9}
               style={{
-                'text-shadow': '1px 1px 0 black',
+                textShadow: '1px 1px 0 black',
               }}
             >
               {`${parseFloat(biomass.toFixed(2))} units`}
@@ -168,7 +166,7 @@ const Controls = () => {
               <Box
                 lineHeight={1.9}
                 style={{
-                  'text-shadow': '1px 1px 0 black',
+                  textShadow: '1px 1px 0 black',
                 }}
               >
                 {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
@@ -186,14 +184,14 @@ const Controls = () => {
       </LabeledList>
     </Section>
   );
-};
+}
 
 type Props = {
   item: Design;
   space: number;
 };
 
-const Item = (props: Props) => {
+function Item(props: Props) {
   const { item, space } = props;
   const { cost, id, is_reagent, name } = item;
 
@@ -202,15 +200,15 @@ const Item = (props: Props) => {
 
   const minAmount = is_reagent ? Math.min(Math.max(space, 1), 10) : 1;
 
-  const [amount, setAmount] = useLocalState('amount-' + id, minAmount);
+  const [amount, setAmount] = useState(minAmount);
 
   const disabled =
     processing ||
     (is_reagent && !beaker) ||
     (is_reagent && space < amount) ||
-    biomass < Math.ceil(cost * amount);
+    biomass < Math.ceil((cost * amount) / efficiency);
 
-  const maxPossible = Math.floor(biomass / cost);
+  const maxPossible = Math.floor((efficiency * biomass) / cost);
 
   const maxCapacity = is_reagent ? space : max_output;
   const maxAmount = Math.max(1, Math.min(maxCapacity, maxPossible));
@@ -221,7 +219,7 @@ const Item = (props: Props) => {
         <span
           className={classes(['design32x32', id])}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />{' '}
         <b>{name}</b>
@@ -233,14 +231,15 @@ const Item = (props: Props) => {
           width="40px"
           minValue={1}
           maxValue={maxAmount}
-          onChange={(_, value) => setAmount(value)}
+          onChange={(value) => setAmount(value)}
         />
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
-          align="right"
           width={5}
-          pr={0}
+          icon="leaf"
+          iconPosition="right"
+          textAlign="right"
           disabled={disabled}
           onClick={() =>
             act('create', {
@@ -249,10 +248,9 @@ const Item = (props: Props) => {
             })
           }
         >
-          {parseFloat((cost * amount).toFixed(2)).toLocaleString()}{' '}
-          <Icon name="leaf" />
+          {parseFloat((cost * amount).toFixed(2))}
         </Button>
       </Table.Cell>
     </Table.Row>
   );
-};
+}

@@ -1,22 +1,24 @@
-import { BooleanLike, classes } from 'common/react';
-import { createSearch } from 'common/string';
-import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
-  Divider,
-  Button,
-  Section,
-  Tabs,
-  Stack,
   Box,
-  Input,
+  Button,
+  Divider,
   Icon,
-  Tooltip,
+  Input,
   NoticeBox,
-} from '../components';
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
+  VirtualList,
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Food } from './PreferencesMenu/data';
+import { Food } from './PreferencesMenu/types';
 
 const TYPE_ICONS = {
   'Can Make': 'utensils',
@@ -37,6 +39,7 @@ const TYPE_ICONS = {
   [Food.Pineapple]: 'apple-alt',
   [Food.Raw]: 'drumstick-bite',
   [Food.Seafood]: 'fish',
+  [Food.Stone]: 'gem',
   [Food.Sugar]: 'candy-cane',
   [Food.Toxic]: 'biohazard',
   [Food.Vegetables]: 'carrot',
@@ -102,10 +105,15 @@ enum TABS {
 type AtomData = {
   name: string;
   is_reagent: BooleanLike;
+  icon: string;
 };
 
 type Atoms = {
   [key: number]: number;
+};
+
+type Icons = {
+  [key: number]: string;
 };
 
 type Material = {
@@ -115,7 +123,7 @@ type Material = {
 
 type Recipe = {
   ref: string;
-  result: number;
+  id: number;
   name: string;
   desc: string;
   category: string;
@@ -129,6 +137,7 @@ type Recipe = {
   structures: string[];
   steps: string[];
   foodtypes: string[];
+  has_food_effect: BooleanLike;
 };
 
 type Diet = {
@@ -148,37 +157,21 @@ type Data = {
   // Static
   diet: Diet;
   atom_data: AtomData[];
+  icon_data: Icons;
   recipes: Recipe[];
   categories: string[];
   material_occurences: Material[];
   foodtypes: string[];
-  nutriments: number;
+  complexity: number;
 };
 
-interface Item {
-  name: string;
-  desc?: string;
-  reqs?: Record<string, number>;
-  chem_catalysts?: Record<string, number>;
-  tool_paths?: string[];
-  tool_behaviors?: string[];
-  machinery?: string[];
-  structures?: string[];
-  steps?: string[];
-  result: string;
-  non_craftable?: boolean;
-  nutriments?: number;
-  foodtypes?: string[];
-  ref: string;
-}
-
-interface RecipeContentProps {
-  item: Item;
-  craftable: boolean;
-  busy: boolean;
-  mode: any;
-  diet: any;
-}
+const findIcon = (atom_id: number, data: Data): string => {
+  let icon: string = data.icon_data[atom_id];
+  if (!icon) {
+    icon = (data.mode ? 'cooking32x32' : 'crafting32x32') + ' a' + atom_id;
+  }
+  return icon;
+};
 
 export const PersonalCrafting = (props) => {
   const { act, data } = useBackend<Data>();
@@ -191,62 +184,58 @@ export const PersonalCrafting = (props) => {
     craftability,
     diet,
   } = data;
-  const [searchText, setSearchText] = useLocalState('searchText', '');
-  const [pages, setPages] = useLocalState('pages', 1);
+  const [searchText, setSearchText] = useState('');
+  const [pages, setPages] = useState(1);
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
-  const [activeCategory, setCategory] = useLocalState<string>(
-    'category',
+  const [activeCategory, setCategory] = useState(
     Object.keys(craftability).length
       ? 'Can Make'
       : mode === MODE.cooking
         ? DEFAULT_CAT_COOKING
         : DEFAULT_CAT_CRAFTING,
   );
-  const [activeType, setFoodType] = useLocalState(
-    'foodtype',
+  const [activeType, setFoodType] = useState(
     Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
-  const material_occurences = flow([
-    sortBy<Material>((material) => -material.occurences),
-  ])(data.material_occurences);
-  const [activeMaterial, setMaterial] = useLocalState(
-    'material',
+  const material_occurences = sortBy(
+    data.material_occurences,
+    (material) => -material.occurences,
+  );
+  const [activeMaterial, setMaterial] = useState(
     material_occurences[0].atom_id,
   );
-  const [tabMode, setTabMode] = useLocalState('tabMode', 0);
+  const [tabMode, setTabMode] = useState(0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
-  let recipes = flow([
-    filter<Recipe>(
-      (recipe) =>
-        // If craftable only is selected, then filter by craftability
-        (!display_craftable_only || Boolean(craftability[recipe.ref])) &&
-        // Ignore categories and types when searching
-        (searchText.length > 0 ||
-          // Is foodtype mode and the active type matches
-          (tabMode === TABS.foodtype &&
-            mode === MODE.cooking &&
-            ((activeType === 'Can Make' && Boolean(craftability[recipe.ref])) ||
-              recipe.foodtypes?.includes(activeType))) ||
-          // Is material mode and the active material or catalysts match
-          (tabMode === TABS.material &&
-            recipe.reqs &&
-            Object.keys(recipe.reqs).includes(activeMaterial)) ||
-          // Or with Optional Chaining
-          // (tabMode === TABS.material && Object.keys(recipe.reqs ?? {}).includes(activeMaterial)) ||
-          // Is category mode and the active category matches
-          (tabMode === TABS.category &&
-            ((activeCategory === 'Can Make' &&
-              Boolean(craftability[recipe.ref])) ||
-              recipe.category === activeCategory))),
-    ),
-    sortBy<Recipe>((recipe) => [
-      -Number(craftability[recipe.ref]),
-      recipe.name.toLowerCase(),
-    ]),
-  ])(data.recipes);
+  let recipes = filter(
+    data.recipes,
+    (recipe) =>
+      // If craftable only is selected, then filter by craftability
+      (!display_craftable_only || Boolean(craftability[recipe.ref])) &&
+      // Ignore categories and types when searching
+      (searchText.length > 0 ||
+        // Is foodtype mode and the active type matches
+        (tabMode === TABS.foodtype &&
+          mode === MODE.cooking &&
+          ((activeType === 'Can Make' && Boolean(craftability[recipe.ref])) ||
+            recipe.foodtypes?.includes(activeType))) ||
+        // Is material mode and the active material or catalysts match
+        (tabMode === TABS.material &&
+          Object.keys(recipe.reqs).includes(activeMaterial)) ||
+        // Is category mode and the active categroy matches
+        (tabMode === TABS.category &&
+          ((activeCategory === 'Can Make' &&
+            Boolean(craftability[recipe.ref])) ||
+            recipe.category === activeCategory))),
+  );
+  recipes = sortBy(recipes, (recipe) => [
+    activeCategory === 'Can Make'
+      ? 99 - Object.keys(recipe.reqs).length
+      : Number(craftability[recipe.ref]),
+    recipe.name.toLowerCase(),
+  ]);
   if (searchText.length > 0) {
-    recipes = recipes.filter(searchName);
+    recipes = filter(recipes, searchName);
   }
   const canMake = ['Can Make'];
   const categories = canMake
@@ -275,13 +264,14 @@ export const PersonalCrafting = (props) => {
                 <Stack.Item>
                   <Input
                     autoFocus
+                    expensive
                     placeholder={
                       'Search in ' +
                       data.recipes.length +
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
-                    onInput={(e, value) => {
+                    onChange={(value) => {
                       setPages(1);
                       setSearchText(value);
                     }}
@@ -341,7 +331,7 @@ export const PersonalCrafting = (props) => {
                     </Tabs.Tab>
                   </Tabs>
                 </Stack.Item>
-                <Stack.Item grow m={-1} style={{ 'overflow-y': 'auto' }}>
+                <Stack.Item grow m={-1} style={{ overflowY: 'auto' }}>
                   <Box height={'100%'} p={1}>
                     <Tabs vertical>
                       {tabMode === TABS.foodtype &&
@@ -516,40 +506,43 @@ export const PersonalCrafting = (props) => {
           </Stack.Item>
           <Stack.Item grow my={-1}>
             <Box
-              id="content"
-              height={'100%'}
+              height="100%"
               pr={1}
               pt={1}
               mr={-1}
-              style={{ 'overflow-y': 'auto' }}
+              style={{ overflowY: 'auto' }}
             >
               {recipes.length > 0 ? (
-                recipes
-                  .slice(0, displayLimit)
-                  .map((item) =>
-                    display_compact ? (
-                      <RecipeContentCompact
-                        key={item.ref}
-                        item={item}
-                        craftable={
-                          !item.non_craftable && Boolean(craftability[item.ref])
-                        }
-                        busy={busy}
-                        mode={mode}
-                      />
-                    ) : (
-                      <RecipeContent
-                        key={item.ref}
-                        item={item}
-                        craftable={
-                          !item.non_craftable && Boolean(craftability[item.ref])
-                        }
-                        busy={busy}
-                        mode={mode}
-                        diet={diet}
-                      />
-                    ),
-                  )
+                <VirtualList>
+                  {recipes
+                    .slice(0, displayLimit)
+                    .map((item) =>
+                      display_compact ? (
+                        <RecipeContentCompact
+                          key={item.ref}
+                          item={item}
+                          craftable={
+                            !item.non_craftable &&
+                            Boolean(craftability[item.ref])
+                          }
+                          busy={busy}
+                          mode={mode}
+                        />
+                      ) : (
+                        <RecipeContent
+                          key={item.ref}
+                          item={item}
+                          craftable={
+                            !item.non_craftable &&
+                            Boolean(craftability[item.ref])
+                          }
+                          busy={busy}
+                          mode={mode}
+                          diet={diet}
+                        />
+                      ),
+                    )}
+                </VirtualList>
               ) : (
                 <NoticeBox m={1} p={1}>
                   No recipes found.
@@ -557,7 +550,7 @@ export const PersonalCrafting = (props) => {
               )}
               {recipes.length > displayLimit && (
                 <Section
-                  mb={2}
+                  mb={1}
                   textAlign="center"
                   style={{ cursor: 'pointer' }}
                   onClick={() => setPages(pages + 1)}
@@ -575,10 +568,12 @@ export const PersonalCrafting = (props) => {
 };
 
 const MaterialContent = (props) => {
-  const { atom_id, occurences } = props;
   const { data } = useBackend<Data>();
+
+  const { atom_id, occurences } = props;
   const name = data.atom_data[atom_id - 1].name;
-  const mode = data.mode;
+  const icon = findIcon(atom_id, data);
+
   return (
     <Stack>
       <Stack.Item>
@@ -587,10 +582,7 @@ const MaterialContent = (props) => {
           inline
           ml={-1.5}
           mr={-0.5}
-          className={classes([
-            mode ? 'cooking32x32' : 'crafting32x32',
-            'a' + atom_id,
-          ])}
+          className={icon}
         />
       </Stack.Item>
       <Stack.Item
@@ -598,10 +590,10 @@ const MaterialContent = (props) => {
         lineHeight="32px"
         grow
         style={{
-          'text-transform': 'capitalize',
+          textTransform: 'capitalize',
           overflow: 'hidden',
-          'text-overflow': 'ellipsis',
-          'white-space': 'nowrap',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         }}
       >
         {name}
@@ -637,7 +629,7 @@ const FoodtypeContent = (props) => {
       <Stack.Item width="14px" textAlign="center">
         <Icon name={TYPE_ICONS[type] || 'circle'} />
       </Stack.Item>
-      <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
+      <Stack.Item grow style={{ textTransform: 'capitalize' }}>
         {type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
@@ -651,86 +643,40 @@ const FoodtypeContent = (props) => {
 
 const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
   const { act, data } = useBackend<Data>();
-
-  // Function to handle pushing steps (unchanged)
-  const specialSteps = [
-    'Optional Steps',
-    'End Optional Steps',
-    'Exclusive Optional Steps',
-    'End Exclusive Optional Steps',
-    'Optional Step',
-    'End Optional Step',
-  ];
-
-  const groupedSteps: string[] = [];
-  let previousStep = '';
-  let duplicateCount = 0;
-
-  const pushStep = (step: string, count: number) => {
-    const stepText = count > 1 ? `${step} x${count}` : step;
-    groupedSteps.push(stepText);
-  };
-
-  item.steps?.forEach((step) => {
-    const trimmedStep = step.trim();
-    if (trimmedStep === previousStep) {
-      duplicateCount++;
-    } else {
-      if (duplicateCount > 0) {
-        pushStep(previousStep, duplicateCount);
-      }
-      previousStep = trimmedStep;
-      duplicateCount = 1;
-    }
-  });
-
-  if (duplicateCount > 0) {
-    pushStep(previousStep, duplicateCount);
-  }
-
   return (
     <Section>
       <Stack my={-0.75}>
         <Stack.Item>
-          <Box
-            className={classes([
-              mode ? 'cooking32x32' : 'crafting32x32',
-              'a' + item.result,
-            ])}
-          />
+          <Box className={findIcon(item.id, data)} />
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
+              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
-              <Box style={{ 'text-transform': 'capitalize' }} color={'gray'}>
-                {Array.isArray(item.reqs) &&
-                  Object.keys(item.reqs).length > 0 &&
-                  Object.keys(item.reqs)
-                    .map((atom_id) => {
-                      const name = data.atom_data?.[(atom_id as any) - 1]?.name;
-                      const is_reagent =
-                        data.atom_data?.[(atom_id as any) - 1]?.is_reagent;
-                      const amount = item.reqs[atom_id];
-                      return is_reagent
-                        ? `${name}\xa0${amount}u`
-                        : amount > 1
-                          ? `${name}\xa0${amount}x`
-                          : name;
-                    })
-                    .join(', ')}
+              <Box style={{ textTransform: 'capitalize' }} color={'gray'}>
+                {Array.from(
+                  Object.keys(item.reqs).map((atom_id) => {
+                    const name = data.atom_data[(atom_id as any) - 1]?.name;
+                    const is_reagent =
+                      data.atom_data[(atom_id as any) - 1]?.is_reagent;
+                    const amount = item.reqs[atom_id];
+                    return is_reagent
+                      ? `${name}\xa0${amount}u`
+                      : amount > 1
+                        ? `${name}\xa0${amount}x`
+                        : name;
+                  }),
+                ).join(', ')}
 
                 {item.chem_catalysts &&
-                  Object.keys(item.chem_catalysts).length > 0 &&
                   ', ' +
                     Object.keys(item.chem_catalysts)
                       .map((atom_id) => {
-                        const name =
-                          data.atom_data?.[(atom_id as any) - 1]?.name;
+                        const name = data.atom_data[(atom_id as any) - 1]?.name;
                         const is_reagent =
-                          data.atom_data?.[(atom_id as any) - 1]?.is_reagent;
+                          data.atom_data[(atom_id as any) - 1]?.is_reagent;
                         const amount = item.chem_catalysts[atom_id];
                         return is_reagent
                           ? `${name}\xa0${amount}u`
@@ -741,24 +687,19 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                       .join(', ')}
 
                 {item.tool_paths &&
-                  item.tool_paths.length > 0 &&
                   ', ' +
                     item.tool_paths
-                      .map((item) => data.atom_data?.[(item as any) - 1]?.name)
+                      .map((item) => data.atom_data[(item as any) - 1]?.name)
                       .join(', ')}
-
                 {item.machinery &&
-                  item.machinery.length > 0 &&
                   ', ' +
                     item.machinery
-                      .map((item) => data.atom_data?.[(item as any) - 1]?.name)
+                      .map((item) => data.atom_data[(item as any) - 1]?.name)
                       .join(', ')}
-
                 {item.structures &&
-                  item.structures.length > 0 &&
                   ', ' +
                     item.structures
-                      .map((item) => data.atom_data?.[(item as any) - 1]?.name)
+                      .map((item) => data.atom_data[(item as any) - 1]?.name)
                       .join(', ')}
               </Box>
             </Stack.Item>
@@ -785,19 +726,39 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                           ? 'utensils'
                           : 'hammer'
                     }
-                    iconSpin={busy ? 1 : 0}
+                    iconSpin={!!busy}
                     onClick={() =>
                       act('make', {
                         recipe: item.ref,
                       })
                     }
                   />
+                  {!!item.mass_craftable && (
+                    <Button
+                      my={0.3}
+                      lineHeight={2.5}
+                      width={'32px'}
+                      align="center"
+                      tooltip={
+                        'Repeat this craft until you run out of ingredients.'
+                      }
+                      tooltipPosition={'top'}
+                      disabled={!craftable || busy}
+                      icon={'repeat'}
+                      iconSpin={!!busy}
+                      onClick={() =>
+                        act('make_mass', {
+                          recipe: item.ref,
+                        })
+                      }
+                    />
+                  )}
                 </Box>
               ) : (
                 item.steps && (
                   <Tooltip
-                    content={groupedSteps.map((step, index) => (
-                      <Box key={index}>{step}</Box>
+                    content={item.steps.map((step) => (
+                      <Box key={step}>{step}</Box>
                     ))}
                   >
                     <Box fontSize={1.5} p={1}>
@@ -815,155 +776,35 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
 };
 
 const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
-  const { act } = useBackend<Data>();
-
-  const specialSteps = [
-    'Optional Steps',
-    'End Optional Steps',
-    'Exclusive Optional Steps',
-    'End Exclusive Optional Steps',
-    'Optional Step',
-    'End Optional Step',
-  ];
-
-  interface StepGroup {
-    label: string;
-    steps: string[];
-  }
-
-  type GroupedStep = string | StepGroup;
-
-  const isValidGroup = (group: StepGroup | null): group is StepGroup => {
-    return group !== null;
-  };
-
-  const groupedSteps: string[] = [];
-  const groupStack: StepGroup[] = [];
-  let currentGroup: StepGroup | null = null;
-  let groupKey = 0;
-
-  // Function to push step to groupedSteps or currentGroup
-  const pushStep = (step: string, count: number) => {
-    const stepText = count > 1 ? `${step} x${count}` : step;
-    if (currentGroup) {
-      currentGroup.steps.push(stepText);
-    } else {
-      groupedSteps.push(<li key={groupKey++}>{stepText}</li>);
-    }
-  };
-
-  let previousStep = '';
-  let duplicateCount = 0;
-
-  item.steps?.forEach((step, index) => {
-    const trimmedStep = step.trim();
-
-    if (specialSteps.includes(trimmedStep)) {
-      // Push previous duplicate steps if any
-      if (duplicateCount > 0) {
-        pushStep(previousStep, duplicateCount);
-        duplicateCount = 0;
-      }
-
-      if (trimmedStep.includes('End')) {
-        // Close the current group if it exists and has steps
-        if (currentGroup) {
-          if (currentGroup.steps.length > 0) {
-            groupedSteps.push(
-              <Box
-                key={`group-${groupKey++}`}
-                style={{
-                  padding: '10px',
-                  border: '1px solid gray',
-                  margin: '10px 0',
-                }}
-              >
-                <strong>{currentGroup.label}</strong>
-                <ul>
-                  {currentGroup.steps.map((groupStep, groupIndex) => (
-                    <li key={groupIndex}>{groupStep}</li>
-                  ))}
-                </ul>
-              </Box>,
-            );
-          }
-          currentGroup = null; // Reset the group
-        }
-
-        // Pop the previous group from the stack
-        if (groupStack.length > 0) {
-          currentGroup = groupStack.pop() || null;
-        }
-      } else {
-        // Handle starting a new group
-        if (currentGroup && currentGroup.steps.length > 0) {
-          // If there's an ongoing group, push it to the stack
-          groupStack.push(currentGroup);
-        }
-        // Start a new group
-        currentGroup = { label: trimmedStep, steps: [] };
-      }
-    } else if (trimmedStep === previousStep) {
-      duplicateCount++;
-    } else {
-      // Push previous duplicate steps if any
-      if (duplicateCount > 0) {
-        pushStep(previousStep, duplicateCount);
-      }
-      previousStep = trimmedStep;
-      duplicateCount = 1;
-    }
-  });
-
-  // Push the last duplicate steps if any
-  if (duplicateCount > 0) {
-    pushStep(previousStep, duplicateCount);
-  }
-
-  // Handle any leftover group that didn't get closed
-  if (currentGroup && (currentGroup as any).steps.length > 0) {
-    groupedSteps.push(
-      <Box
-        key={`leftover-group-${groupKey}`}
-        style={{ padding: '10px', border: '1px solid gray', margin: '10px 0' }}
-      >
-        <strong>{(currentGroup as any).label}</strong>
-        <ul>
-          {(currentGroup as any).steps.map((groupStep, groupIndex) => (
-            <li key={groupIndex}>{groupStep}</li>
-          ))}
-        </ul>
-      </Box>,
-    );
-  }
-
+  const { act, data } = useBackend<Data>();
   return (
     <Section>
       <Stack>
         <Stack.Item>
           <Box width={'64px'} height={'64px'} mr={1}>
             <Box
-              width={'32px'}
-              height={'32px'}
               style={{
-                transform: 'scale(2)',
+                transform: 'scale(1.5)',
               }}
               m={'16px'}
-              className={classes([
-                mode ? 'cooking32x32' : 'crafting32x32',
-                'a' + item.result,
-              ])}
+              className={findIcon(item.id, data)}
             />
           </Box>
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
-            <Stack.Item grow>
-              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
+            <Stack.Item grow={5}>
+              <Box mb={1} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
               {item.desc && <Box color={'gray'}>{item.desc}</Box>}
-              <Box style={{ 'text-transform': 'capitalize' }}>
+              {!!item.has_food_effect && (
+                <Box my={2} color={'pink'}>
+                  <Icon name="wand-magic-sparkles" mr={1} />
+                  Special effect on consumption.
+                </Box>
+              )}
+              <Box style={{ textTransform: 'capitalize' }}>
                 {item.reqs && (
                   <Box>
                     <GroupTitle
@@ -1025,50 +866,85 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
               {!!item.steps?.length && (
                 <Box>
                   <GroupTitle title="Steps" />
-                  <ul>{groupedSteps}</ul>
+                  <ul style={{ paddingLeft: '20px' }}>
+                    {item.steps.map((step) => (
+                      <li key={step}>{step}</li>
+                    ))}
+                  </ul>
                 </Box>
               )}
             </Stack.Item>
-            <Stack.Item pl={1}>
-              {!item.non_craftable && (
-                <Button
-                  width="104px"
-                  lineHeight={2.5}
-                  align="center"
-                  content="Make"
-                  disabled={!craftable || busy}
-                  icon={
-                    busy
-                      ? 'circle-notch'
-                      : mode === MODE.cooking
-                        ? 'utensils'
-                        : 'hammer'
-                  }
-                  iconSpin={busy ? 1 : 0}
-                  onClick={() =>
-                    act('make', {
-                      recipe: item.ref,
-                    })
-                  }
-                />
-              )}
-              {item.nutriments > 0 && (
-                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
-                  Nutrition: {item.nutriments}
-                  <Divider />
-                </Box>
-              )}
-              {item.foodtypes?.length > 0 && (
-                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
-                  {item.foodtypes.map((foodtype) => (
-                    <FoodtypeContent
-                      key={item.ref}
-                      type={foodtype}
-                      diet={diet}
-                    />
-                  ))}
-                </Box>
-              )}
+            <Stack.Item pl={1} grow={2}>
+              <Stack vertical>
+                <Stack.Item>
+                  {!item.non_craftable && (
+                    <Stack>
+                      <Stack.Item grow>
+                        <Button
+                          lineHeight={2.5}
+                          align="center"
+                          content="Make"
+                          fluid
+                          disabled={!craftable || busy}
+                          icon={
+                            busy
+                              ? 'circle-notch'
+                              : mode === MODE.cooking
+                                ? 'utensils'
+                                : 'hammer'
+                          }
+                          iconSpin={!!busy}
+                          onClick={() =>
+                            act('make', {
+                              recipe: item.ref,
+                            })
+                          }
+                        />
+                      </Stack.Item>
+                      <Stack.Item>
+                        {!!item.mass_craftable && (
+                          <Button
+                            minWidth="30px"
+                            lineHeight={2.5}
+                            align="center"
+                            tooltip={
+                              'Repeat this craft until you run out of ingredients.'
+                            }
+                            tooltipPosition={'top'}
+                            disabled={!craftable || busy}
+                            icon={'repeat'}
+                            iconSpin={!!busy}
+                            onClick={() =>
+                              act('make_mass', {
+                                recipe: item.ref,
+                              })
+                            }
+                          />
+                        )}
+                      </Stack.Item>
+                    </Stack>
+                  )}
+                </Stack.Item>
+                <Stack.Item>
+                  {!!item.complexity && (
+                    <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                      Complexity: {item.complexity}
+                    </Box>
+                  )}
+                  {item.foodtypes?.length > 0 && (
+                    <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                      <Divider />
+                      {item.foodtypes.map((foodtype) => (
+                        <FoodtypeContent
+                          key={item.ref}
+                          type={foodtype}
+                          diet={diet}
+                        />
+                      ))}
+                    </Box>
+                  )}
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -1079,9 +955,8 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
 
 const AtomContent = ({ atom_id, amount }) => {
   const { data } = useBackend<Data>();
-  const name = data.atom_data[atom_id - 1]?.name;
-  const is_reagent = data.atom_data[atom_id - 1]?.is_reagent;
-  const mode = data.mode;
+  const atom: AtomData = data.atom_data[atom_id - 1];
+
   return (
     <Box my={1}>
       <Box
@@ -1089,14 +964,11 @@ const AtomContent = ({ atom_id, amount }) => {
         inline
         my={-1}
         mr={0.5}
-        className={classes([
-          mode ? 'cooking32x32' : 'crafting32x32',
-          'a' + atom_id,
-        ])}
+        className={findIcon(atom_id, data)}
       />
       <Box inline verticalAlign="middle">
-        {name}
-        {is_reagent ? `\xa0${amount}u` : amount > 1 && `\xa0${amount}x`}
+        {atom.name}
+        {atom.is_reagent ? `\xa0${amount}u` : amount > 1 && `\xa0${amount}x`}
       </Box>
     </Box>
   ) as any;
@@ -1110,7 +982,7 @@ const ToolContent = ({ tool }) => {
         inline
         my={-1}
         mr={0.5}
-        className={classes(['crafting32x32', tool])}
+        className={classes(['crafting32x32', tool.replace(/ /g, '')])}
       />
       <Box inline verticalAlign="middle">
         {tool}

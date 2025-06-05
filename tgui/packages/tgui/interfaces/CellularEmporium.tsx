@@ -1,22 +1,23 @@
-import { BooleanLike } from '../../common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
+  Box,
   Button,
-  Section,
   Icon,
   Input,
-  Stack,
   LabeledList,
-  Box,
   NoticeBox,
-} from '../components';
+  Section,
+  Stack,
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type typePath = string;
 
 type CellularEmporiumContext = {
   abilities: Ability[];
-  can_readapt: BooleanLike;
+  can_readapt: number;
   genetic_points_count: number;
   owned_abilities: typePath[];
   absorb_count: number;
@@ -35,12 +36,13 @@ type Ability = {
 
 export const CellularEmporium = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
-  const [searchAbilities, setSearchAbilities] = useLocalState(
-    'searchAbilities',
-    '',
-  );
+  const [searchAbilities, setSearchAbilities] = useState('');
 
   const { can_readapt, genetic_points_count } = data;
+  const readaptTracker = (can_readapt: number): string => {
+    let firstPart = 'Readapt(';
+    return firstPart.concat(can_readapt.toString(), ')');
+  };
   return (
     <Window width={900} height={480}>
       <Window.Content>
@@ -51,13 +53,11 @@ export const CellularEmporium = (props) => {
           buttons={
             <Stack>
               <Stack.Item fontSize="16px">
-                {genetic_points_count && genetic_points_count}{' '}
-                <Icon name="dna" color="#DD66DD" />
+                {genetic_points_count} <Icon name="dna" color="#DD66DD" />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon="undo"
-                  content="Readapt"
                   color="good"
                   disabled={!can_readapt}
                   tooltip={
@@ -67,12 +67,14 @@ export const CellularEmporium = (props) => {
                       : 'We cannot readapt until we absorb more DNA.'
                   }
                   onClick={() => act('readapt')}
-                />
+                >
+                  {readaptTracker(can_readapt)}
+                </Button>
               </Stack.Item>
               <Stack.Item>
                 <Input
                   width="200px"
-                  onInput={(event) => setSearchAbilities(event.target.value)}
+                  onChange={setSearchAbilities}
                   placeholder="Search Abilities..."
                   value={searchAbilities}
                 />
@@ -80,16 +82,16 @@ export const CellularEmporium = (props) => {
             </Stack>
           }
         >
-          <AbilityList />
+          <AbilityList searchAbilities={searchAbilities} />
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
-const AbilityList = (props) => {
+const AbilityList = (props: { searchAbilities: string }) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
-  const [searchAbilities] = useLocalState('searchAbilities', '');
+  const { searchAbilities } = props;
   const {
     abilities,
     owned_abilities,
@@ -124,51 +126,49 @@ const AbilityList = (props) => {
           : 'No abilities found.'}
       </NoticeBox>
     );
-  } else {
-    return (
-      <LabeledList>
-        {filteredAbilities.map((ability) => (
-          <LabeledList.Item
-            key={ability.name}
-            className="candystripe"
-            label={ability.name}
-            buttons={
-              <Stack>
-                <Stack.Item>{ability.genetic_point_required}</Stack.Item>
-                <Stack.Item>
-                  <Icon
-                    name="dna"
-                    color={
-                      owned_abilities.includes(ability.path)
-                        ? '#DD66DD'
-                        : 'gray'
-                    }
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    content={'Evolve'}
-                    disabled={
-                      owned_abilities.includes(ability.path) ||
-                      ability.genetic_point_required > genetic_points_count ||
-                      ability.absorbs_required > absorb_count ||
-                      ability.dna_required > dna_count
-                    }
-                    onClick={() =>
-                      act('evolve', {
-                        path: ability.path,
-                      })
-                    }
-                  />
-                </Stack.Item>
-              </Stack>
-            }
-          >
-            {ability.desc}
-            <Box color="good">{ability.helptext}</Box>
-          </LabeledList.Item>
-        ))}
-      </LabeledList>
-    );
   }
+
+  return (
+    <LabeledList>
+      {filteredAbilities.map((ability) => (
+        <LabeledList.Item
+          key={ability.name}
+          className="candystripe"
+          label={ability.name}
+          buttons={
+            <Stack>
+              <Stack.Item>{ability.genetic_point_required}</Stack.Item>
+              <Stack.Item>
+                <Icon
+                  name="dna"
+                  color={
+                    owned_abilities.includes(ability.path) ? '#DD66DD' : 'gray'
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  content={'Evolve'}
+                  disabled={
+                    owned_abilities.includes(ability.path) ||
+                    ability.genetic_point_required > genetic_points_count ||
+                    ability.absorbs_required > absorb_count ||
+                    ability.dna_required > dna_count
+                  }
+                  onClick={() =>
+                    act('evolve', {
+                      path: ability.path,
+                    })
+                  }
+                />
+              </Stack.Item>
+            </Stack>
+          }
+        >
+          {ability.desc}
+          <Box color="good">{ability.helptext}</Box>
+        </LabeledList.Item>
+      ))}
+    </LabeledList>
+  );
 };

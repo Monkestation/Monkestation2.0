@@ -4,10 +4,11 @@
  * @license MIT
  */
 
+import { storage } from 'common/storage';
 import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'common/vector';
+import { BooleanLike } from 'tgui-core/react';
 
 import { createLogger } from './logging';
-import { storage } from 'common/storage';
 
 const logger = createLogger('drag');
 const pixelRatio = window.devicePixelRatio ?? 1;
@@ -39,7 +40,7 @@ export const getWindowSize = (): [number, number] => [
 ];
 
 // Set window position
-const setWindowPosition = (vec: [number, number]) => {
+export const setWindowPosition = (vec: [number, number]) => {
   const byondPos = vecAdd(vec, screenOffset);
   return Byond.winset(Byond.windowId, {
     pos: byondPos[0] + ',' + byondPos[1],
@@ -116,11 +117,11 @@ const storeWindowGeometry = async () => {
 // Recall window geometry from local storage and apply it
 export const recallWindowGeometry = async (
   options: {
-    fancy?: boolean;
+    fancy?: BooleanLike;
     pos?: [number, number];
     size?: [number, number];
-    locked?: boolean;
-    scale?: boolean;
+    locked?: BooleanLike;
+    scale?: BooleanLike;
   } = {},
 ) => {
   const geometry = options.fancy && (await storage.get(windowKey));
@@ -131,23 +132,19 @@ export const recallWindowGeometry = async (
   let pos = geometry?.pos || options.pos;
   let size = options.size;
   // Convert size from css-pixels to display-pixels
-  if ((options.scale || Byond.TRIDENT) && size) {
+  if (options.scale && size) {
     size = [size[0] * pixelRatio, size[1] * pixelRatio];
   }
 
-  if (!Byond.TRIDENT) {
-    if (!options.scale) {
-      // @ts-expect-error
-      document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
-      document.documentElement.style.setProperty(
-        '--scaling-amount',
-        window.devicePixelRatio.toString(),
-      );
-    } else {
-      // @ts-expect-error
-      document.body.style.zoom = '';
-      document.documentElement.style.setProperty('--scaling-amount', null);
-    }
+  if (!options.scale) {
+    document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
+    document.documentElement.style.setProperty(
+      '--scaling-amount',
+      window.devicePixelRatio.toString(),
+    );
+  } else {
+    document.body.style.zoom = '';
+    document.documentElement.style.setProperty('--scaling-amount', null);
   }
 
   // Wait until screen offset gets resolved
@@ -220,13 +217,13 @@ const constraintPosition = (
 };
 
 // Start dragging the window
-export const dragStartHandler = (event: MouseEvent) => {
+export const dragStartHandler = (event) => {
   logger.log('drag start');
   dragging = true;
   dragPointOffset = vecSubtract(
     [event.screenX * pixelRatio, event.screenY * pixelRatio],
     getWindowPosition(),
-  );
+  ) as [number, number];
   // Focus click target
   (event.target as HTMLElement)?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
@@ -235,7 +232,7 @@ export const dragStartHandler = (event: MouseEvent) => {
 };
 
 // End dragging the window
-const dragEndHandler = (event: MouseEvent) => {
+const dragEndHandler = (event) => {
   logger.log('drag end');
   dragMoveHandler(event);
   document.removeEventListener('mousemove', dragMoveHandler);
@@ -267,7 +264,7 @@ export const resizeStartHandler =
     dragPointOffset = vecSubtract(
       [event.screenX * pixelRatio, event.screenY * pixelRatio],
       getWindowPosition(),
-    );
+    ) as [number, number];
     initialSize = getWindowSize();
     // Focus click target
     (event.target as HTMLElement)?.focus();
@@ -298,7 +295,10 @@ const resizeMoveHandler = (event: MouseEvent) => {
   );
   const delta = vecSubtract(currentOffset, dragPointOffset);
   // Extra 1x1 area is added to ensure the browser can see the cursor
-  size = vecAdd(initialSize, vecMultiply(resizeMatrix, delta), [1, 1]);
+  size = vecAdd(initialSize, vecMultiply(resizeMatrix, delta), [1, 1]) as [
+    number,
+    number,
+  ];
   // Sane window size values
   size[0] = Math.max(size[0], 150 * pixelRatio);
   size[1] = Math.max(size[1], 50 * pixelRatio);

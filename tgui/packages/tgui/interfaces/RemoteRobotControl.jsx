@@ -1,6 +1,13 @@
-import { decodeHtmlEntities } from 'common/string';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
+
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 export const RemoteRobotControl = (props) => {

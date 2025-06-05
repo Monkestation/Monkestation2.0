@@ -1,4 +1,3 @@
-import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -9,7 +8,9 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 const ALIGNMENT2COLOR = {
@@ -22,6 +23,7 @@ export const ReligiousTool = (props) => {
   const { act, data } = useBackend();
   const [tab, setTab] = useSharedState('tab', 1);
   const { sects, alignment, toolname } = data;
+
   return (
     <Window title={toolname} width={560} height={500}>
       <Window.Content scrollable>
@@ -102,8 +104,10 @@ const SectSelectTab = (props) => {
         {sects.map((sect) => (
           <>
             <Collapsible
+              mb={-1}
+              childStyles={{ paddingTop: '0.5rem' }}
               title={
-                <Stack mt={-3.3} ml={3}>
+                <Stack mt={-3.3} ml={4}>
                   <Stack.Item>
                     <Icon
                       name={sect.icon}
@@ -134,7 +138,7 @@ const SectSelectTab = (props) => {
                 </Button>
               </Stack.Item>
             </Collapsible>
-            <Stack.Divider mt={-0.5} mb={0.5} />
+            <Stack.Divider />
           </>
         ))}
       </Stack>

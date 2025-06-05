@@ -1,5 +1,4 @@
-import { InfernoNode } from 'inferno';
-import { useBackend, useLocalState } from '../../backend';
+import { ReactNode, useState } from 'react';
 import {
   Box,
   Button,
@@ -9,7 +8,9 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../../backend';
 
 /**
  * This describes something that influences a particular reaction
@@ -46,7 +47,7 @@ type Gas = {
 };
 
 const GasSearchBar = (props: {
-  title: InfernoNode;
+  title: ReactNode;
   onChange: (inputValue: string) => void;
   activeInput: boolean;
   setActiveInput: (toggle: boolean) => void;
@@ -58,7 +59,7 @@ const GasSearchBar = (props: {
         {activeInput ? (
           <Input
             fluid
-            onChange={(e, value) => {
+            onBlur={(value) => {
               setActiveInput(false);
               onChange(value);
             }}
@@ -82,10 +83,7 @@ const GasHandbook = (props) => {
     'activeReactionId',
     '',
   );
-  const [gasActiveInput, setGasActiveInput] = useLocalState(
-    'gasActiveInput',
-    false,
-  );
+  const [gasActiveInput, setGasActiveInput] = useState(false);
   const relevantGas = gasInfo.find((gas) => gas.id === activeGasId);
   return (
     <Section
@@ -128,17 +126,14 @@ const GasHandbook = (props) => {
 };
 
 const ReactionHandbook = (props) => {
-  const { act, data } = useBackend<{ reactionInfo: Reaction[] }>();
+  const { data } = useBackend<{ reactionInfo: Reaction[] }>();
   const { reactionInfo } = data;
   const [activeGasId, setActiveGasId] = useLocalState('activeGasId', '');
   const [activeReactionId, setActiveReactionId] = useLocalState(
     'activeReactionId',
     '',
   );
-  const [reactionActiveInput, setReactionActiveInput] = useLocalState(
-    'reactionActiveInput',
-    false,
-  );
+  const [reactionActiveInput, setReactionActiveInput] = useState(false);
   const relevantReaction = reactionInfo?.find(
     (reaction) => reaction.id === activeReactionId,
   );
@@ -181,7 +176,7 @@ const ReactionHandbook = (props) => {
                     <Tooltip content={factor.tooltip} position="top">
                       <Flex>
                         <Flex.Item
-                          style={{ 'border-bottom': 'dotted 2px' }}
+                          style={{ borderBottom: 'dotted 2px' }}
                           shrink
                         >
                           {factor.factor_name + ':'}

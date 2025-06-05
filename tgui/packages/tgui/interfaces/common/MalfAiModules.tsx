@@ -12,7 +12,7 @@ type Data = {
 };
 
 /** Common ui for selecting malf ai modules */
-export const MalfAiModules = (props) => {
+export function MalfAiModules(props) {
   const { act, data } = useBackend<Data>();
   const { processingTime, categories = [] } = data;
 
@@ -29,12 +29,13 @@ export const MalfAiModules = (props) => {
         category: category.name,
         cost: `${item.cost} PT`,
         desc: item.desc,
-        disabled: !!item.cost && processingTime < item.cost,
+        disabled: processingTime < item.cost,
         icon_state: item.icon_state,
         icon: item.icon,
         id: item.name,
         name: item.name,
-        is_locked: false,
+        population_tooltip: '',
+        insufficient_population: false,
       });
     }
   }
@@ -47,4 +48,4 @@ export const MalfAiModules = (props) => {
       handleBuy={(item) => act('buy', { name: item.name })}
     />
   );
-};
+}

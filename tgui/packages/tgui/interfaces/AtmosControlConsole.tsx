@@ -1,13 +1,15 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
+  Dropdown,
   LabeledList,
   NumberInput,
-  Dropdown,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import {
   AtmosHandbookContent,
@@ -32,7 +34,7 @@ export const AtmosControlConsole = (props) => {
     control: boolean;
   }>();
   const chambers = data.chambers || [];
-  const [chamberId, setChamberId] = useLocalState('chamberId', chambers[0]?.id);
+  const [chamberId, setChamberId] = useState(chambers[0]?.id);
   const selectedChamber =
     chambers.length === 1
       ? chambers[0]
@@ -106,15 +108,13 @@ export const AtmosControlConsole = (props) => {
                     </LabeledList.Item>
                     <LabeledList.Item label="Input Rate">
                       <NumberInput
+                        step={1}
                         value={Number(selectedChamber.input_info.amount)}
                         unit="L/s"
                         width="63px"
                         minValue={0}
                         maxValue={data.maxInput}
-                        // This takes an exceptionally long time to update
-                        // due to being an async signal
-                        suppressFlicker={2000}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_input', {
                             chamber: selectedChamber.id,
                             rate: value,
@@ -156,10 +156,7 @@ export const AtmosControlConsole = (props) => {
                         minValue={0}
                         maxValue={data.maxOutput}
                         step={10}
-                        // This takes an exceptionally long time to update
-                        // due to being an async signal
-                        suppressFlicker={2000}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_output', {
                             chamber: selectedChamber.id,
                             rate: value,

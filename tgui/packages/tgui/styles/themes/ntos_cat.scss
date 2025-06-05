@@ -3,146 +3,50 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-//@use 'sass:map';
-
-//palette
-$cyan: #5edba5;
-$pink: #ed12f5;
-$orange: #ff9900;
-$purple: #463191;
-
-$light-gray: #c3c3c3;
-$dark-gray: #858585;
-$scrollbar-color-multiplier: 0.5;
-
-@use '../colors.scss' with (
-  $primary: black,
-  $label: rgb(255, 132, 153),
-  $good: pink,
-
-  $bad: red,
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
-);
-
-@use '../base.scss' with (
-    $color-bg: orange,
-    $color-bg-grad-spread: 12%,
-    //$border-radius: 0,
-  );
-
 .theme-ntos_cat {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss', $with: ());
+  &:root {
+    --color-kitty: hsl(300, 100%, 85%);
+    --color-cuttie: hsl(5, 100%, 75%);
 
-  // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': pink,
-      'color-transparent-text': rgba(227, 240, 255, 0.75),
-      'color-disabled': #363636,
-      'color-selected': #465899,
-      'color-caution': #be6209
-    )
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('color-default-fill': rgb(255, 132, 153, 0.75))
-  );
-  @include meta.load-css(
-    '../components/Section.scss',
-    $with: ('background-color': rgba(124, 62, 34, 0.75))
-  );
-  @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': rgba(255, 153, 0, 0.75))
-  );
+    // Base
+    --color-base: hsl(35, 100%, 50%);
+    --color-primary: var(--color-kitty);
+    --color-secondary: var(--color-cuttie);
+    --color-section: hsl(from var(--color-base) h s calc(l - 42.5) / 0.33);
+    --color-text: hsl(from var(--color-kitty) h s calc(l + 10));
+    --color-text-translucent: hsl(from var(--color-kitty) h s l / 0.75);
+    --color-label: hsl(
+      from var(--color-kitty) calc(h + 40) calc(s - 50) calc(l - 20)
+    );
+    --color-good: var(--color-kitty);
+    --color-action: var(--color-kitty);
+    --base-gradient-spread: 12;
 
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': rgb(255, 132, 153, 0.75))
-  );
+    // Components
+    --button-background-default: hsl(from var(--color-kitty) h s 66);
+    --button-background-selected: hsl(227.5, 37.5%, 45%);
+    --button-background-caution: hsl(30, 87.5%, 340%);
+    --input-background: hsl(0, 0%, 100%);
+    --input-color: hsl(from var(--color-kitty) h s calc(l - 10));
+    --tooltip-background-lightness: 50;
+
+    .Layout__content {
+      background-image: url('../../assets/bg-cat.svg');
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
+  }
 
   .Section {
-    color: black;
-    outline: base.em(2px) inset rgb(255, 132, 153);
+    outline: var(--border-thickness-small) solid var(--color-cuttie);
   }
+
   .Button {
-    color: rgb(255, 132, 153);
-    background-color: rgb(255, 255, 255);
+    background-color: hsl(0, 0%, 100%);
+    color: var(--color-cuttie);
   }
 
-  .ProgressBar {
-    color: black;
-  }
-
-  .Layout__content {
-    background-image: url('../../assets/bg-cat.svg');
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-  .Layout,
-  .Layout * {
-    // Fancy scrollbar
-    scrollbar-base-color: color.scale(
-      #454255,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-face-color: color.scale(
-      #454255,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
-
-    scrollbar-3dlight-color: color.scale(
-      orange,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-highlight-color: color.scale(
-      orange,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-track-color: color.scale(
-      #ba753a,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-arrow-color: color.scale(
-      orange,
-      $lightness: 50% * $scrollbar-color-multiplier
-    );
-    scrollbar-shadow-color: color.scale(
-      #454255,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
-  }
-  .Tab {
-    color: rgb(255, 132, 153);
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-  .Tab--selected {
-    color: black;
-    background-color: rgb(255, 132, 153);
-  }
-  .Box {
-    outline: base.em(3px) outset #c0c0c0;
-  }
-  .Tooltip {
-    color: black;
-  }
-  .Input {
-    background-color: white;
-    outline: base.em(2px) inset rgb(255, 132, 153);
-  }
   .NtosWindow__header {
-    background-color: #454255;
-  }
-  .Flex {
-    color: white;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: hsl(248, 17%, 27%);
   }
 }

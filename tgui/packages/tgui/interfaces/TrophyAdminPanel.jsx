@@ -1,6 +1,7 @@
-import { decodeHtmlEntities } from 'common/string';
+import { Button, Table } from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
+
 import { useBackend } from '../backend';
-import { Button, Table } from '../components';
 import { Window } from '../layouts';
 
 export const TrophyAdminPanel = (props) => {
@@ -23,8 +24,8 @@ export const TrophyAdminPanel = (props) => {
               <Table.Row key={trophy.ref} className="candystripe">
                 <Table.Cell
                   style={{
-                    'word-break': 'break-all',
-                    'word-wrap': 'break-word',
+                    wordBreak: 'break-all',
+                    wordWrap: 'break-word',
                     color: !trophy.is_valid
                       ? 'rgba(255, 0, 0, 0.5)'
                       : 'inherit',
@@ -42,8 +43,8 @@ export const TrophyAdminPanel = (props) => {
                 </Table.Cell>
                 <Table.Cell
                   style={{
-                    'word-break': 'break-all',
-                    'word-wrap': 'break-word',
+                    wordBreak: 'break-all',
+                    wordWrap: 'break-word',
                   }}
                 >
                   {decodeHtmlEntities(trophy.message)}
@@ -58,8 +59,8 @@ export const TrophyAdminPanel = (props) => {
                 </Table.Cell>
                 <Table.Cell
                   style={{
-                    'word-break': 'break-all',
-                    'word-wrap': 'break-word',
+                    wordBreak: 'break-all',
+                    wordWrap: 'break-word',
                   }}
                 >
                   {decodeHtmlEntities(trophy.placer_key)}

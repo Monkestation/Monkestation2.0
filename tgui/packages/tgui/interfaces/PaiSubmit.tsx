@@ -1,7 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, Section, Stack } from '../components';
+import { useState } from 'react';
+import { Box, Button, Input, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 type Data = {
   comments: string;
@@ -21,12 +22,11 @@ alert pAI cards of your candidacy.`;
 export const PaiSubmit = (props) => {
   const { data } = useBackend<Data>();
   const { comments, description, name } = data;
-  const [input, setInput] = useLocalState<Data>('input', {
+  const [input, setInput] = useState({
     comments,
     description,
     name,
   });
-  logger.log(input);
 
   return (
     <Window width={400} height={460} title="pAI Candidacy Menu">
@@ -77,7 +77,7 @@ const InputDisplay = (props) => {
             fluid
             maxLength={41}
             value={name}
-            onChange={(e, value) => setInput({ ...input, name: value })}
+            onChange={(value) => setInput({ ...input, name: value })}
           />
         </Stack.Item>
         <Stack.Item>
@@ -88,7 +88,7 @@ const InputDisplay = (props) => {
             fluid
             maxLength={100}
             value={description}
-            onChange={(e, value) => setInput({ ...input, description: value })}
+            onChange={(value) => setInput({ ...input, description: value })}
           />
         </Stack.Item>
         <Stack.Item>
@@ -99,7 +99,7 @@ const InputDisplay = (props) => {
             fluid
             maxLength={100}
             value={comments}
-            onChange={(e, value) => setInput({ ...input, comments: value })}
+            onChange={(value) => setInput({ ...input, comments: value })}
           />
         </Stack.Item>
       </Stack>

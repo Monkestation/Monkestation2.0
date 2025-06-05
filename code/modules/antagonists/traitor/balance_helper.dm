@@ -96,7 +96,7 @@
 	return data
 
 /datum/traitor_objective_debug/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/traitor_objective_debug/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

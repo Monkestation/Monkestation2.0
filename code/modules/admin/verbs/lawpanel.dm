@@ -20,7 +20,7 @@
 		ui.open()
 
 /datum/law_panel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/law_panel/ui_close(mob/user)
 	qdel(src)

@@ -1,4 +1,5 @@
-import { BlockQuote, LabeledList, Section, Stack } from '../components';
+import { BlockQuote, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { Window } from '../layouts';
 
 const tipstyle = {
@@ -11,7 +12,7 @@ const noticestyle = {
 
 export const AntagInfoNightmare = (props) => {
   return (
-    <Window width={620} height={470}>
+    <Window width={620} height={380}>
       <Window.Content backgroundColor="#0d0d0d">
         <Stack fill>
           <Stack.Item width="46.2%">
@@ -42,14 +43,6 @@ export const AntagInfoNightmare = (props) => {
                   <span style={tipstyle}>Tip #3:&ensp;</span>
                   Fully destroy APCs when possible. Instead of hunting lights
                   that can be fixed, hunt the APCs which are harder to repair.
-                  Additionally, breaking APCs will dim lighting, which your
-                  light eater can automatically snuff out for you.
-                  <br />
-                  <span style={tipstyle}>Tip #4:&ensp;</span>
-                  Since your light eater automatically snuffs out nearby lights,
-                  you don&apos;t have to worry about things like the green glow
-                  of APCs. This works even while jaunting, allowing you to black
-                  out entire rooms in seconds if the power is off.
                 </Stack.Item>
               </Stack>
             </Section>
@@ -59,14 +52,11 @@ export const AntagInfoNightmare = (props) => {
               <LabeledList>
                 <LabeledList.Item label="Shadow Dance">
                   Whilst in the shadows, you are immune to all ranged attacks,
-                  whilst also rapidly regenerating health and slowly recovering
-                  from wounds. However, lasers will bypass this, as they produce
-                  a lot of light.
+                  whilst also rapidly regenerating health.
                 </LabeledList.Item>
                 <LabeledList.Item label="Shadow Walk">
                   You are allowed unlimited, unrestricted movement in the dark.
-                  While jaunting, your natural healing is amplified. Light will
-                  pull you out of this.
+                  Light will pull you out of this.
                 </LabeledList.Item>
                 <LabeledList.Item label="Heart of Darkness">
                   Your heart invites the shadows. If you die in the darkness,
@@ -74,9 +64,8 @@ export const AntagInfoNightmare = (props) => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Light Eater">
                   Your twisted appendage. It will consume the light of what it
-                  touches, be it victim or object. When unobstructed by bright
-                  light, it&apos;ll lash out at anything dim in your vicinity,
-                  completely hiding you in the shadows.
+                  touches, be it victim or object. After 7 seconds of being in
+                  jaunt, stabbing a foe will stun them or do extra damage.
                 </LabeledList.Item>
               </LabeledList>
             </Section>

@@ -1,20 +1,21 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Button, NoticeBox, Section, TextArea } from '../../components';
+import { useState } from 'react';
+import { Button, NoticeBox, Section, TextArea } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { authentication_data, is_admin_ghost_ai } = data;
-  const [messageText, setMessageText] = useLocalState('messageText', '');
+  const [messageText, setMessageText] = useState('');
   return (
     <Section>
       <TextArea
         fluid
         height={20}
         maxLength={1025}
-        multiline
         value={messageText}
-        onChange={(_, value) => setMessageText(value)}
+        onChange={setMessageText}
         placeholder="Type your announcement..."
       />
       <Section>
@@ -60,9 +61,7 @@ const AuthenticationNoticeBox = (props) => {
   const { authentication_data, is_admin_ghost_ai } = data;
   return (
     (!authentication_data.announcement_authenticated && !is_admin_ghost_ai && (
-      <NoticeBox warning>
-        {'Swipe your card to authenticate yourself'}
-      </NoticeBox>
-    )) || <NoticeBox info>{'Succesfully authenticated'}</NoticeBox>
+      <NoticeBox>Swipe your card to authenticate yourself</NoticeBox>
+    )) || <NoticeBox info>Successfully authenticated</NoticeBox>
   );
 };

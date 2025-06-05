@@ -1,17 +1,18 @@
-import { BooleanLike } from 'common/react';
 import {
   Box,
-  Icon,
-  Stack,
   Button,
-  Dimmer,
-  Section,
-  NoticeBox,
-  LabeledList,
   Collapsible,
-} from '../components';
-import { Window } from '../layouts';
+  Dimmer,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 enum VoteConfig {
   None = -1,
@@ -29,7 +30,6 @@ type Vote = {
 type Option = {
   name: string;
   votes: number;
-  desc: string;
 };
 
 type ActiveVote = {
@@ -39,11 +39,11 @@ type ActiveVote = {
   displayStatistics: boolean;
   choices: Option[];
   countMethod: number;
-  canVote?: BooleanLike;
 };
 
 type UserData = {
   ckey: string;
+  isGhost: BooleanLike;
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
   singleSelection: string | null;
@@ -82,19 +82,31 @@ export const VotePanel = (props) => {
   }
 
   return (
-    <Window resizable title={windowTitle} width={400} height={500}>
+    <Window title={windowTitle} width={400} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Section
             title="Create Vote"
             buttons={
               !!user.isLowerAdmin && (
-                <Button
-                  icon="refresh"
-                  content="Reset Cooldown"
-                  disabled={LastVoteTime + VoteCD <= 0}
-                  onClick={() => act('resetCooldown')}
-                />
+                <Stack>
+                  <Stack.Item>
+                    <Button
+                      icon="refresh"
+                      content="Reset Cooldown"
+                      disabled={LastVoteTime + VoteCD <= 0}
+                      onClick={() => act('resetCooldown')}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="skull"
+                      content="Toggle dead vote"
+                      disabled={!user.isUpperAdmin}
+                      onClick={() => act('toggleDeadVote')}
+                    />
+                  </Stack.Item>
+                </Stack>
               )
             }
           >
@@ -243,10 +255,11 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      tooltip={choice.desc}
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
                       disabled={
-                        !currentVote.canVote ||
-                        user.singleSelection === choice.name
+                        user.singleSelection === choice.name || user.isGhost
                       }
                       onClick={() => {
                         act('voteSingle', { voteOption: choice.name });
@@ -259,7 +272,7 @@ const ChoicesPanel = (props) => {
                   {user.singleSelection &&
                     choice.name === user.singleSelection && (
                       <Icon
-                        alignSelf="right"
+                        align="right"
                         mr={2}
                         color="green"
                         name="vote-yea"
@@ -288,8 +301,10 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      tooltip={choice.desc}
-                      disabled={!currentVote.canVote}
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
+                      disabled={user.isGhost}
                       onClick={() => {
                         act('voteMulti', { voteOption: choice.name });
                       }}
@@ -300,12 +315,7 @@ const ChoicesPanel = (props) => {
                 >
                   {user.multiSelection &&
                   user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
-                    <Icon
-                      alignSelf="right"
-                      mr={2}
-                      color="blue"
-                      name="vote-yea"
-                    />
+                    <Icon align="right" mr={2} color="blue" name="vote-yea" />
                   ) : null}
                   {choice.votes} Votes
                 </LabeledList.Item>

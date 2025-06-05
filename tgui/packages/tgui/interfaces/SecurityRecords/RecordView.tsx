@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
@@ -8,13 +9,14 @@ import {
   Section,
   Stack,
   Table,
-} from 'tgui/components';
+} from 'tgui-core/components';
+
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
-import { CrimeWatcher } from './CrimeWatcher';
-import { RecordPrint } from './RecordPrint';
 import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
+import { CrimeWatcher } from './CrimeWatcher';
 import { getSecurityRecord } from './helpers';
+import { RecordPrint } from './RecordPrint';
 import { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
@@ -65,7 +67,10 @@ const RecordInfo = (props) => {
     rank,
     species,
     wanted_status,
+    voice,
   } = foundRecord;
+
+  const [isValid, setIsValid] = useState(true);
 
   const hasValidCrimes = !!crimes.find((crime) => !!crime.valid);
 
@@ -87,11 +92,12 @@ const RecordInfo = (props) => {
               </Stack.Item>
               <Stack.Item>
                 <Button.Confirm
-                  content="Delete"
                   icon="trash"
                   onClick={() => act('delete_record', { crew_ref: crew_ref })}
                   tooltip="Delete record data."
-                />
+                >
+                  Delete
+                </Button.Confirm>
               </Stack.Item>
             </Stack>
           }
@@ -101,7 +107,6 @@ const RecordInfo = (props) => {
               {name}
             </Table.Cell>
           }
-          wrap
         >
           <LabeledList>
             <LabeledList.Item
@@ -149,13 +154,15 @@ const RecordInfo = (props) => {
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_age}
-                onEnter={(event, value) =>
+                onEnter={(value) =>
+                  isValid &&
                   act('edit_field', {
                     crew_ref: crew_ref,
                     field: 'age',
                     value: value,
                   })
                 }
+                onValidationChange={setIsValid}
                 value={age}
               />
             </LabeledList.Item>
@@ -180,6 +187,9 @@ const RecordInfo = (props) => {
                 target_ref={crew_ref}
                 text={fingerprint}
               />
+            </LabeledList.Item>
+            <LabeledList.Item label="Voice">
+              <EditableText field="voice" target_ref={crew_ref} text={voice} />
             </LabeledList.Item>
             <LabeledList.Item label="Note">
               <EditableText

@@ -1,15 +1,16 @@
-import { clamp } from 'common/math';
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
 import {
-  Box,
   Blink,
+  Box,
   Button,
   Dimmer,
   Icon,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type FloorData = {
@@ -78,10 +79,8 @@ export const ElevatorPanel = (props) => {
                 {all_floor_data.map((floor, index) => (
                   <Stack.Item key={index}>
                     <Button
-                      style={{
-                        'font-weight': 'bold',
-                        'font-size': '14px',
-                      }}
+                      fontWeight="bold"
+                      fontSize="14px"
                       fluid
                       ellipsis
                       textAlign="left"
@@ -165,9 +164,9 @@ const FloorPanel = (props) => {
   const { current_floor, currently_moving, currently_moving_to_floor } = data;
 
   return (
-    <Stack width="50%" backgroundColor="black">
+    <Stack width="50%" backgroundColor="black" align="center">
       <Stack.Item ml={2} mr={1} mt={1} mb={1}>
-        <Stack vertical align="center">
+        <Stack vertical>
           <Stack.Item>
             <ArrowIcon
               icon="arrow-up"
@@ -190,13 +189,13 @@ const FloorPanel = (props) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      <Stack.Item mt={1}>
+      <Stack.Item>
         <Box
           textColor="white"
           style={{
-            'font-family': 'Monospace',
-            'font-size': '50px',
-            'font-weight': 'bold',
+            fontFamily: 'Monospace',
+            fontSize: '50px',
+            fontWeight: 'bold',
           }}
         >
           {current_floor - 1}

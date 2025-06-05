@@ -1,18 +1,19 @@
+import { Component, createRef, RefObject } from 'react';
 import {
-  Stack,
-  Section,
-  Button,
   Box,
+  Button,
+  Icon,
+  Image,
   Input,
   Modal,
+  Section,
+  Stack,
   Tooltip,
-  Icon,
-} from '../../components';
-import { Component, RefObject, createRef, Inferno } from 'inferno';
-import { NtMessage, NtMessenger, NtPicture } from './types';
-import { BooleanLike } from 'common/react';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../../backend';
-import { decodeHtmlEntities } from 'common/string';
+import { NtMessage, NtMessenger, NtPicture } from './types';
 
 type ChatScreenProps = {
   canReply: BooleanLike;
@@ -38,7 +39,7 @@ const SEND_COOLDOWN_MS = 1000;
 
 export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   readUnreadsTimeout: NodeJS.Timeout | null = null;
-  scrollRef: RefObject<HTMLDivElement>;
+  scrollRef: RefObject<HTMLDivElement | null>;
 
   state: ChatScreenState = {
     message: '',
@@ -156,7 +157,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     setTimeout(() => this.setState({ canSend: true }), SEND_COOLDOWN_MS);
   }
 
-  handleMessageInput(_: any, val: string) {
+  handleMessageInput(val: string) {
     this.setState({ message: val });
   }
 
@@ -174,7 +175,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     } = this.props;
     const { message, canSend, previewingImage, selectingPhoto } = this.state;
 
-    let filteredMessages: Element[] = [];
+    let filteredMessages: React.JSX.Element[] = [];
 
     for (let index = 0; index < messages.length; index++) {
       const message = messages[index];
@@ -205,7 +206,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       );
     }
 
-    let sendingBar: Element;
+    let sendingBar: React.JSX.Element;
 
     if (!canReply) {
       sendingBar = (
@@ -226,7 +227,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
               this.setState({ selectingPhoto: false });
             }}
           >
-            <Box as="img" src={photo.path} maxHeight={10} />
+            <Image src={photo.path} maxHeight={10} />
           </Button>
         </Stack.Item>
       ));
@@ -289,26 +290,23 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                   pt={1}
                   onClick={() => act('PDA_clearPhoto')}
                   tooltip="Remove attachment"
-                  tooltipPosition="auto-end"
                 >
-                  <Box as="img" src={selectedPhoto} />
+                  <Image src={selectedPhoto} />
                 </Button>
               </Stack.Item>
             )}
             <Stack.Item>
               <Stack fill align="center">
-                <Stack.Item grow={1}>
+                <Stack.Item grow>
                   <Input
                     placeholder={`Send message to ${recipient.name}...`}
                     fluid
                     autoFocus
-                    width="100%"
-                    justify
-                    id="input"
                     value={message}
                     maxLength={1024}
-                    onInput={this.handleMessageInput}
+                    onChange={this.handleMessageInput}
                     onEnter={this.handleSendMessage}
+                    selfClear
                   />
                 </Stack.Item>
                 {buttons}
@@ -349,7 +347,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             fill
             fitted
             title={`${recipient.name} (${recipient.job})`}
-            scrollableRef={this.scrollRef}
+            ref={this.scrollRef}
           >
             <Stack vertical className="NtosChatLog">
               {!!(messages.length > 0 && canReply) && (
@@ -380,7 +378,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                 />
               }
             >
-              <Box as="img" src={previewingImage} />
+              <Image src={previewingImage} />
             </Section>
           </Modal>
         )}
@@ -402,12 +400,14 @@ const ChatMessage = (props: ChatMessageProps) => {
   const { message, everyone, outgoing, photoPath, timestamp, onPreviewImage } =
     props;
 
-  const displayMessage = decodeHtmlEntities(message);
+  const messageHTML = {
+    __html: `${message}`,
+  };
 
   return (
     <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
       <Box className="NtosChatMessage__content">
-        <Box as="span">{displayMessage}</Box>
+        <Box as="span" dangerouslySetInnerHTML={messageHTML} />
         <Tooltip content={timestamp} position={outgoing ? 'left' : 'right'}>
           <Icon
             className="NtosChatMessage__timestamp"
@@ -419,21 +419,21 @@ const ChatMessage = (props: ChatMessageProps) => {
       {!!everyone && (
         <Box className="NtosChatMessage__everyone">Sent to everyone</Box>
       )}
-      {photoPath !== null && (
+      {!!photoPath && (
         <Button
           tooltip="View image"
           className="NtosChatMessage__image"
           color="transparent"
           onClick={onPreviewImage}
         >
-          <Box as="img" src={photoPath} mt={1} />
+          <Image src={photoPath} mt={1} />
         </Button>
       )}
     </Box>
   );
 };
 
-const ChatDivider: Inferno.SFC<{ mt: number }> = (props) => {
+const ChatDivider = (props: { mt: number }) => {
   return (
     <Box className="UnreadDivider" m={0} mt={props.mt}>
       <div />

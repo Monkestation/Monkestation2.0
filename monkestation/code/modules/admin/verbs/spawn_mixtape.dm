@@ -18,7 +18,7 @@
 		holder = user_mob.client //if its a mob, assign the mob's client to holder
 
 /datum/mixtape_spawner/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/mixtape_spawner/ui_close()
 	qdel(src)

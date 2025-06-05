@@ -4,8 +4,12 @@
  * @license MIT
  */
 
-import { EventEmitter } from 'common/events';
+import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
+import { Tooltip } from 'tgui-core/components';
+import { EventEmitter } from 'tgui-core/events';
+import { classes } from 'tgui-core/react';
+
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
@@ -15,14 +19,12 @@ import {
   MAX_PERSISTED_MESSAGES,
   MAX_VISIBLE_MESSAGES,
   MESSAGE_PRUNE_INTERVAL,
-  MESSAGE_TYPES,
   MESSAGE_TYPE_INTERNAL,
   MESSAGE_TYPE_UNKNOWN,
+  MESSAGE_TYPES,
 } from './constants';
-import { render } from 'inferno';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
-import { Tooltip } from '../../tgui/components';
 
 const logger = createLogger('chatRenderer');
 
@@ -108,7 +110,10 @@ const updateMessageBadge = (message) => {
   const foundBadge = node.querySelector('.Chat__badge');
   const badge = foundBadge || document.createElement('div');
   badge.textContent = times;
-  badge.className = 'Chat__badge';
+  badge.className = classes(['Chat__badge', 'Chat__badge--animate']);
+  requestAnimationFrame(() => {
+    badge.className = 'Chat__badge';
+  });
   if (!foundBadge) {
     node.appendChild(badge);
   }
@@ -168,6 +173,12 @@ class ChatRenderer {
     else {
       this.rootNode = node;
     }
+    // Find scrollable parent
+    this.scrollNode = findNearestScrollableParent(this.rootNode);
+    this.scrollNode.addEventListener('scroll', this.handleScroll);
+    setTimeout(() => {
+      this.scrollToBottom();
+    });
     // Flush the queue
     this.tryFlushQueue();
   }
@@ -181,7 +192,6 @@ class ChatRenderer {
     if (this.isReady() && this.queue.length > 0) {
       this.processBatch(this.queue);
       this.queue = [];
-      this.scrollToBottom();
     }
   }
 
@@ -203,7 +213,6 @@ class ChatRenderer {
       const highlightWholeMessage = setting.highlightWholeMessage;
       const matchWord = setting.matchWord;
       const matchCase = setting.matchCase;
-      const enabled = setting.enabled;
       const allowedRegex = /^[a-zа-яё0-9_\-$/^[\s\]\\]+$/gi;
       const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
       const lines = String(text)
@@ -271,7 +280,6 @@ class ChatRenderer {
         this.highlightParsers = [];
       }
       this.highlightParsers.push({
-        enabled,
         highlightWords,
         highlightRegex,
         highlightColor,
@@ -281,7 +289,6 @@ class ChatRenderer {
   }
 
   scrollToBottom() {
-    this.tryFindScrollable();
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
     this.scrollNode.scrollTop = this.scrollNode.scrollHeight;
@@ -313,7 +320,11 @@ class ChatRenderer {
     }
   }
 
-  getCombinableMessage(predicate, now, from, to) {
+  getCombinableMessage(predicate) {
+    const now = Date.now();
+    const len = this.visibleMessages.length;
+    const from = len - 1;
+    const to = Math.max(0, len - COMBINE_MAX_MESSAGES);
     for (let i = from; i >= to; i--) {
       const message = this.visibleMessages[i];
 
@@ -329,17 +340,6 @@ class ChatRenderer {
       }
     }
     return null;
-  }
-
-  tryFindScrollable() {
-    // Find scrollable parent
-    if (this.rootNode) {
-      if (!this.scrollNode || this.scrollNode.scrollHeight === undefined) {
-        this.scrollNode = findNearestScrollableParent(this.rootNode);
-        this.scrollNode.addEventListener('scroll', this.handleScroll);
-        logger.debug(`reset scrollNode to ${this.scrollNode}`);
-      }
-    }
   }
 
   processBatch(batch, options = {}) {
@@ -362,14 +362,10 @@ class ChatRenderer {
     const fragment = document.createDocumentFragment();
     const countByType = {};
     let node;
-
-    const len = this.visibleMessages.length;
-    const from = len - 1;
-    const to = Math.max(0, len - COMBINE_MAX_MESSAGES);
     for (let payload of batch) {
       const message = createMessage(payload);
       // Combine messages
-      const combinable = this.getCombinableMessage(message, now, from, to);
+      const combinable = this.getCombinableMessage(message);
       if (combinable) {
         combinable.times = (combinable.times || 1) + 1;
         updateMessageBadge(combinable);
@@ -430,31 +426,31 @@ class ChatRenderer {
             childNode.removeChild(childNode.firstChild);
           }
           const Element = TGUI_CHAT_COMPONENTS[targetName];
+
+          const reactRoot = createRoot(childNode);
+
           /* eslint-disable react/no-danger */
-          render(
+          reactRoot.render(
             <Element {...outputProps}>
               <span dangerouslySetInnerHTML={oldHtml} />
             </Element>,
             childNode,
           );
-          /* eslint-enable react/no-danger */
         }
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
-          this.highlightParsers
-            .filter((parser) => parser.enabled)
-            .map((parser) => {
-              const highlighted = highlightNode(
-                node,
-                parser.highlightRegex,
-                parser.highlightWords,
-                (text) => createHighlightNode(text, parser.highlightColor),
-              );
-              if (highlighted && parser.highlightWholeMessage) {
-                node.className += ' ChatMessage--highlighted';
-              }
-            });
+          this.highlightParsers.map((parser) => {
+            const highlighted = highlightNode(
+              node,
+              parser.highlightRegex,
+              parser.highlightWords,
+              (text) => createHighlightNode(text, parser.highlightColor),
+            );
+            if (highlighted && parser.highlightWholeMessage) {
+              node.className += ' ChatMessage--highlighted';
+            }
+          });
         }
         // Linkify text
         const linkifyNodes = node.querySelectorAll('.linkify');
@@ -474,15 +470,9 @@ class ChatRenderer {
       message.node = node;
       // Query all possible selectors to find out the message type
       if (!message.type) {
-        // IE8: Does not support querySelector on elements that
-        // are not yet in the document.
-
-        const typeDef =
-          !Byond.IS_LTE_IE8 &&
-          MESSAGE_TYPES.find(
-            (typeDef) =>
-              typeDef.selector && node.querySelector(typeDef.selector),
-          );
+        const typeDef = MESSAGE_TYPES.find(
+          (typeDef) => typeDef.selector && node.querySelector(typeDef.selector),
+        );
         message.type = typeDef?.type || MESSAGE_TYPE_UNKNOWN;
       }
       updateMessageBadge(message);
@@ -605,10 +595,6 @@ class ChatRenderer {
   }
 
   saveToDisk() {
-    // Allow only on IE11
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     // Compile currently loaded stylesheets as CSS text
     let cssText = '';
     const styleSheets = document.styleSheets;

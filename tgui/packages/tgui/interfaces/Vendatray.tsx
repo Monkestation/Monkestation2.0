@@ -1,6 +1,7 @@
-import { BooleanLike } from 'common/react';
+import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -26,7 +27,7 @@ export const Vendatray = (props) => {
           </Stack.Item>
         </Stack>
         {registered ? (
-          <Section italics>Pays to the account of {owner_name}.</Section>
+          <Section italic>Pays to the account of {owner_name}.</Section>
         ) : (
           <>
             <Section>Tray is unregistered.</Section>
@@ -85,16 +86,13 @@ const VendingImage = (props) => {
 
   return (
     <Section height="100%">
-      <Box
-        as="img"
+      <Image
         m={1}
         src={`data:image/jpeg;base64,${product_icon}`}
         height="96px"
         width="96px"
         style={{
-          '-ms-interpolation-mode': 'nearest-neighbor',
-          'image-rendering': 'pixelated',
-          'vertical-align': 'middle',
+          verticalAlign: 'middle',
         }}
       />
     </Section>

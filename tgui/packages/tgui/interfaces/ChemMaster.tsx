@@ -1,68 +1,26 @@
-import { BooleanLike } from 'common/react';
-import { capitalize } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   AnimatedNumber,
   Box,
   Button,
+  ColorBox,
+  Divider,
   DmIcon,
   Icon,
-  Section,
-  Table,
-  NumberInput,
-  Tooltip,
   LabeledList,
-  ColorBox,
+  NumberInput,
   ProgressBar,
+  Section,
   Stack,
-  Divider,
-} from '../components';
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-
-type Data = {
-  reagentAnalysisMode: BooleanLike;
-  analysisData: Analysis;
-  isPrinting: BooleanLike;
-  printingProgress: number;
-  printingTotal: number;
-  transferMode: BooleanLike;
-  hasBeaker: BooleanLike;
-  beakerCurrentVolume: number;
-  beakerMaxVolume: number;
-  beakerContents: Reagent[];
-  bufferContents: Reagent[];
-  bufferCurrentVolume: number;
-  bufferMaxVolume: number;
-  categories: Category[];
-  selectedContainerRef: string;
-  selectedContainerVolume: number;
-  hasContainerSuggestion: BooleanLike;
-  doSuggestContainer: BooleanLike;
-  suggestedContainer: string;
-};
-
-type Analysis = {
-  name: string;
-  state: string;
-  pH: number;
-  color: string;
-  description: string;
-  purity: number;
-  metaRate: number;
-  overdose: number;
-  addictionTypes: string[];
-};
-
-type Category = {
-  name: string;
-  containers: Container[];
-};
-
-type Reagent = {
-  ref: string;
-  name: string;
-  volume: number;
-};
+import type { Beaker, BeakerReagent } from './common/BeakerDisplay';
 
 type Container = {
   icon: string;
@@ -72,180 +30,237 @@ type Container = {
   volume: number;
 };
 
+type Category = {
+  name: string;
+  containers: Container[];
+};
+
+type AnalyzableReagent = BeakerReagent & {
+  ref: string;
+  pH: number;
+  color: string;
+  description: string;
+  purity: number;
+  metaRate: number;
+  overdose: number;
+  addictionTypes: string[];
+};
+
+type AnalyzableBeaker = {
+  contents: AnalyzableReagent[];
+} & Beaker;
+
+type Data = {
+  categories: Category[];
+  isPrinting: BooleanLike;
+  printingProgress: number;
+  printingTotal: number;
+  selectedPillDuration: number;
+  maxPrintable: number;
+  maxPillDuration: number;
+  beaker: AnalyzableBeaker;
+  buffer: AnalyzableBeaker;
+  isTransfering: BooleanLike;
+  suggestedContainerRef: string;
+  selectedContainerRef: string;
+  selectedContainerVolume: number;
+  selectedContainerCategory?: string;
+};
+
 export const ChemMaster = (props) => {
-  const { data } = useBackend<Data>();
-  const { reagentAnalysisMode } = data;
+  const [analyzedReagent, setAnalyzedReagent] = useState<AnalyzableReagent>();
+
   return (
-    <Window width={400} height={620}>
+    <Window width={450} height={620}>
       <Window.Content scrollable>
-        {reagentAnalysisMode ? <AnalysisResults /> : <ChemMasterContent />}
+        {analyzedReagent ? (
+          <AnalysisResults
+            analysisData={analyzedReagent}
+            onExit={() => setAnalyzedReagent(undefined)}
+          />
+        ) : (
+          <ChemMasterContent
+            analyze={(chemical: AnalyzableReagent) =>
+              setAnalyzedReagent(chemical)
+            }
+          />
+        )}
       </Window.Content>
     </Window>
   );
 };
 
-const ChemMasterContent = (props) => {
+const ChemMasterContent = (props: {
+  analyze: (chemical: AnalyzableReagent) => void;
+}) => {
   const { act, data } = useBackend<Data>();
   const {
     isPrinting,
     printingProgress,
     printingTotal,
-    transferMode,
-    hasBeaker,
-    beakerCurrentVolume,
-    beakerMaxVolume,
-    beakerContents,
-    bufferContents,
-    bufferCurrentVolume,
-    bufferMaxVolume,
+    selectedPillDuration,
+    maxPrintable,
+    maxPillDuration,
+    isTransfering,
+    beaker,
+    buffer,
     categories,
     selectedContainerVolume,
-    hasContainerSuggestion,
-    doSuggestContainer,
-    suggestedContainer,
+    selectedContainerCategory,
   } = data;
 
-  const [itemCount, setItemCount] = useLocalState('itemCount', 1);
+  const [itemCount, setItemCount] = useState<number>(1);
+  const [showPreferredContainer, setShowPreferredContainer] =
+    useState<BooleanLike>(false);
+  const buffer_contents = buffer.contents;
 
   return (
     <Box>
       <Section
         title="Beaker"
         buttons={
-          !!hasBeaker && (
+          beaker && (
             <Box>
               <Box inline color="label" mr={2}>
-                <AnimatedNumber value={beakerCurrentVolume} initial={0} />
-                {` / ${beakerMaxVolume} units`}
+                <AnimatedNumber value={beaker.currentVolume} initial={0} />
+                {` / ${beaker.maxVolume} units`}
               </Box>
-              <Button
-                icon="eject"
-                content="Eject"
-                onClick={() => act('eject')}
-              />
+              <Button icon="eject" onClick={() => act('eject')}>
+                Eject
+              </Button>
             </Box>
           )
         }
       >
-        {!hasBeaker && (
+        {!beaker ? (
           <Box color="label" my={'4px'}>
             No beaker loaded.
           </Box>
-        )}
-        {!!hasBeaker && beakerCurrentVolume === 0 && (
+        ) : beaker.currentVolume === 0 ? (
           <Box color="label" my={'4px'}>
             Beaker is empty.
           </Box>
+        ) : (
+          <Table>
+            {beaker.contents.map((chemical) => (
+              <ReagentEntry
+                key={chemical.ref}
+                chemical={chemical}
+                transferTo="buffer"
+                analyze={props.analyze}
+              />
+            ))}
+          </Table>
         )}
-        <Table>
-          {beakerContents.map((chemical) => (
-            <ReagentEntry
-              key={chemical.ref}
-              chemical={chemical}
-              transferTo="buffer"
-            />
-          ))}
-        </Table>
       </Section>
       <Section
         title="Buffer"
         buttons={
           <>
             <Box inline color="label" mr={1}>
-              <AnimatedNumber value={bufferCurrentVolume} initial={0} />
-              {` / ${bufferMaxVolume} units`}
+              <AnimatedNumber value={buffer.currentVolume} initial={0} />
+              {` / ${buffer.maxVolume} units`}
             </Box>
             <Button
-              color={transferMode ? 'good' : 'bad'}
-              icon={transferMode ? 'exchange-alt' : 'trash'}
-              content={transferMode ? 'Moving reagents' : 'Destroying reagents'}
+              color={isTransfering ? 'good' : 'bad'}
+              icon={isTransfering ? 'exchange-alt' : 'trash'}
               onClick={() => act('toggleTransferMode')}
-            />
+            >
+              {isTransfering ? 'Moving reagents' : 'Destroying reagents'}
+            </Button>
           </>
         }
       >
-        {bufferContents.length === 0 && (
+        {buffer_contents.length === 0 ? (
           <Box color="label" my={'4px'}>
             Buffer is empty.
           </Box>
+        ) : (
+          <Table>
+            {buffer_contents.map((chemical) => (
+              <ReagentEntry
+                key={chemical.ref}
+                chemical={chemical}
+                transferTo="beaker"
+                analyze={props.analyze}
+              />
+            ))}
+          </Table>
         )}
-        <Table>
-          {bufferContents.map((chemical) => (
-            <ReagentEntry
-              key={chemical.ref}
-              chemical={chemical}
-              transferTo="beaker"
-            />
-          ))}
-        </Table>
       </Section>
       {!isPrinting && (
         <Section
           title="Packaging"
           buttons={
-            bufferContents.length !== 0 &&
-            (!isPrinting ? (
+            buffer_contents.length !== 0 && (
               <Box>
+                <Button.Checkbox
+                  checked={showPreferredContainer}
+                  onClick={() =>
+                    setShowPreferredContainer((currentValue) => !currentValue)
+                  }
+                >
+                  Suggest
+                </Button.Checkbox>
                 <NumberInput
                   unit={'items'}
                   step={1}
                   value={itemCount}
                   minValue={1}
-                  maxValue={50}
-                  onChange={(e, value) => {
+                  maxValue={maxPrintable}
+                  onChange={(value) => {
                     setItemCount(value);
                   }}
                 />
+                {selectedContainerCategory === 'pills' && (
+                  <NumberInput
+                    unit="s"
+                    step={1}
+                    value={selectedPillDuration}
+                    minValue={0}
+                    maxValue={maxPillDuration}
+                    onChange={(value) => {
+                      act('setPillDuration', {
+                        duration: value,
+                      });
+                    }}
+                  />
+                )}
                 <Box inline mx={1}>
                   {`${
                     Math.round(
                       Math.min(
                         selectedContainerVolume,
-                        bufferCurrentVolume / itemCount,
+                        buffer.currentVolume / itemCount,
                       ) * 100,
                     ) / 100
                   } u. each`}
                 </Box>
                 <Button
-                  content="Print"
                   icon="flask"
                   onClick={() =>
                     act('create', {
                       itemCount: itemCount,
                     })
                   }
-                />
+                >
+                  Print
+                </Button>
               </Box>
-            ) : (
-              <Button content="Printing..." icon="gear" iconSpin disabled />
-            ))
+            )
           }
         >
-          {!!hasContainerSuggestion && (
-            <Button.Checkbox
-              onClick={() => act('toggleContainerSuggestion')}
-              checked={doSuggestContainer}
-              mb={1}
-            >
-              Guess container by main reagent in the buffer
-            </Button.Checkbox>
-          )}
           {categories.map((category) => (
             <Box key={category.name}>
               <GroupTitle title={category.name} />
-              {category.containers.map(
-                (container) =>
-                  (!hasContainerSuggestion || // Doesn't have suggestion
-                    (!!hasContainerSuggestion && !doSuggestContainer) || // Has sugestion and it's disabled
-                    (!!doSuggestContainer &&
-                      container.ref === suggestedContainer)) && ( // Suggestion enabled and container matches
-                    <ContainerButton
-                      key={container.ref}
-                      category={category}
-                      container={container}
-                    />
-                  ),
-              )}
+              {category.containers.map((container) => (
+                <ContainerButton
+                  key={container.ref}
+                  category={category}
+                  container={container}
+                  showPreferredContainer={showPreferredContainer}
+                />
+              ))}
             </Box>
           ))}
         </Section>
@@ -257,9 +272,10 @@ const ChemMasterContent = (props) => {
             <Button
               color="bad"
               icon="times"
-              content="Stop"
               onClick={() => act('stopPrinting')}
-            />
+            >
+              Stop
+            </Button>
           }
         >
           <ProgressBar
@@ -271,7 +287,7 @@ const ChemMasterContent = (props) => {
             <Box
               lineHeight={1.9}
               style={{
-                'text-shadow': '1px 1px 0 black',
+                textShadow: '1px 1px 0 black',
               }}
             >
               {`Printing ${printingProgress} out of ${printingTotal}`}
@@ -283,20 +299,25 @@ const ChemMasterContent = (props) => {
   );
 };
 
-const ReagentEntry = (props) => {
+type ReagentProps = {
+  chemical: AnalyzableReagent;
+  transferTo: string;
+  analyze: (chemical: AnalyzableReagent) => void;
+};
+
+const ReagentEntry = (props: ReagentProps) => {
   const { data, act } = useBackend<Data>();
-  const { chemical, transferTo } = props;
+  const { chemical, transferTo, analyze } = props;
   const { isPrinting } = data;
   return (
     <Table.Row key={chemical.ref}>
       <Table.Cell color="label">
         {`${chemical.name} `}
         <AnimatedNumber value={chemical.volume} initial={0} />
-        {`u`}
+        {'u'}
       </Table.Cell>
       <Table.Cell collapsing>
         <Button
-          content="1"
           disabled={isPrinting}
           onClick={() => {
             act('transfer', {
@@ -305,9 +326,10 @@ const ReagentEntry = (props) => {
               target: transferTo,
             });
           }}
-        />
+        >
+          1
+        </Button>
         <Button
-          content="5"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -316,9 +338,10 @@ const ReagentEntry = (props) => {
               target: transferTo,
             })
           }
-        />
+        >
+          5
+        </Button>
         <Button
-          content="10"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -327,9 +350,10 @@ const ReagentEntry = (props) => {
               target: transferTo,
             })
           }
-        />
+        >
+          10
+        </Button>
         <Button
-          content="All"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -338,10 +362,12 @@ const ReagentEntry = (props) => {
               target: transferTo,
             })
           }
-        />
+        >
+          All
+        </Button>
         <Button
           icon="ellipsis-h"
-          title="Custom amount"
+          tooltip="Custom amount"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -353,24 +379,28 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="question"
-          title="Analyze"
-          onClick={() =>
-            act('analyze', {
-              reagentRef: chemical.ref,
-            })
-          }
+          tooltip="Analyze"
+          onClick={() => analyze(chemical)}
         />
       </Table.Cell>
     </Table.Row>
   );
 };
 
-const ContainerButton = ({ container, category }) => {
+type CategoryButtonProps = {
+  category: Category;
+  container: Container;
+  showPreferredContainer: BooleanLike;
+};
+
+const ContainerButton = (props: CategoryButtonProps) => {
   const { act, data } = useBackend<Data>();
-  const { isPrinting, selectedContainerRef } = data;
+  const { isPrinting, selectedContainerRef, suggestedContainerRef } = data;
+  const { category, container, showPreferredContainer } = props;
   const isPillPatch = ['pills', 'patches'].includes(category.name);
   const fallback = <Icon m="18px" name="spinner" spin />;
   const fallbackPillPatch = <Icon m="10px" name="spinner" spin />;
+
   return (
     <Tooltip
       key={container.ref}
@@ -378,7 +408,14 @@ const ContainerButton = ({ container, category }) => {
     >
       <Button
         overflow="hidden"
-        color="transparent"
+        color={'transparent'}
+        backgroundColor={
+          showPreferredContainer &&
+          selectedContainerRef !== suggestedContainerRef && // if we selected the same container as the suggested then don't override color
+          container.ref === suggestedContainerRef
+            ? 'blue'
+            : 'transparent'
+        }
         width={isPillPatch ? '32px' : '48px'}
         height={isPillPatch ? '32px' : '48px'}
         selected={container.ref === selectedContainerRef}
@@ -400,14 +437,15 @@ const ContainerButton = ({ container, category }) => {
         />
       </Button>
     </Tooltip>
-  ) as any;
+  );
 };
 
-const AnalysisResults = (props) => {
-  const { act, data } = useBackend<Data>();
+const AnalysisResults = (props: {
+  analysisData: AnalyzableReagent;
+  onExit: () => void;
+}) => {
   const {
     name,
-    state,
     pH,
     color,
     description,
@@ -415,18 +453,18 @@ const AnalysisResults = (props) => {
     metaRate,
     overdose,
     addictionTypes,
-  } = data.analysisData;
+  } = props.analysisData;
+
   const purityLevel =
     purity <= 0.5 ? 'bad' : purity <= 0.75 ? 'average' : 'good'; // Color names
+
   return (
     <Section
       title="Analysis Results"
       buttons={
-        <Button
-          icon="arrow-left"
-          content="Back"
-          onClick={() => act('stopAnalysis')}
-        />
+        <Button icon="arrow-left" onClick={() => props.onExit()}>
+          Back
+        </Button>
       }
     >
       <LabeledList>
@@ -434,7 +472,7 @@ const AnalysisResults = (props) => {
         <LabeledList.Item label="Purity">
           <Box
             style={{
-              'text-transform': 'capitalize',
+              textTransform: 'capitalize',
             }}
             color={purityLevel}
           >
@@ -442,7 +480,6 @@ const AnalysisResults = (props) => {
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="pH">{pH}</LabeledList.Item>
-        <LabeledList.Item label="State">{state}</LabeledList.Item>
         <LabeledList.Item label="Color">
           <ColorBox color={color} mr={1} />
           {color}
@@ -470,7 +507,7 @@ const GroupTitle = ({ title }) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          'text-transform': 'capitalize',
+          textTransform: 'capitalize',
         }}
         color={'gray'}
       >
@@ -480,5 +517,5 @@ const GroupTitle = ({ title }) => {
         <Divider />
       </Stack.Item>
     </Stack>
-  ) as any;
+  );
 };

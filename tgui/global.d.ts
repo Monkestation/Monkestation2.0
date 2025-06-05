@@ -47,34 +47,9 @@ type ByondType = {
   IS_BYOND: boolean;
 
   /**
-   * Version of Trident engine of Internet Explorer. Null if N/A.
-   */
-  TRIDENT: number | null;
-
-  /**
    * Version of Blink engine of WebView2. Null if N/A.
    */
   BLINK: number | null;
-
-  /**
-   * True if browser is IE8 or lower.
-   */
-  IS_LTE_IE8: boolean;
-
-  /**
-   * True if browser is IE9 or lower.
-   */
-  IS_LTE_IE9: boolean;
-
-  /**
-   * True if browser is IE10 or lower.
-   */
-  IS_LTE_IE10: boolean;
-
-  /**
-   * True if browser is IE11 or lower.
-   */
-  IS_LTE_IE11: boolean;
 
   /**
    * If `true`, unhandled errors and common mistakes result in a blue screen
@@ -120,14 +95,14 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string | null): Promise<object>;
+  winget(id: string | null): Promise<Record<string, any>>;
 
   /**
    * Retrieves all properties of the BYOND skin element.
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string | null, propName: '*'): Promise<object>;
+  winget(id: string | null, propName: '*'): Promise<Record<string, any>>;
 
   /**
    * Retrieves an exactly one property of the BYOND skin element,
@@ -143,7 +118,7 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing listed properties.
    */
-  winget(id: string | null, propNames: string[]): Promise<object>;
+  winget(id: string | null, propNames: string[]): Promise<Record<string, any>>;
 
   /**
    * Assigns properties to BYOND skin elements in bulk.
@@ -166,11 +141,6 @@ type ByondType = {
    * Uses a special encoding to preserve `Infinity` and `NaN`.
    */
   parseJson(text: string): any;
-
-  /**
-   * Downloads a blob, platform-agnostic
-   */
-  saveBlob(blob: Blob, filename: string, ext: string): void;
 
   /**
    * Sends a message to `/datum/tgui_window` which hosts this window instance.
@@ -203,6 +173,11 @@ type ByondType = {
    * Maps icons to their ref
    */
   iconRefMap: Record<string, string>;
+
+  /**
+   * Downloads a blob, platform-agnostic
+   */
+  saveBlob(blob: Blob, filename: string, ext: string): void;
 };
 
 /**

@@ -1,15 +1,16 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
 import {
-  Tooltip,
   Box,
-  Slider,
-  ProgressBar,
-  NoticeBox,
   Button,
   LabeledList,
+  NoticeBox,
+  ProgressBar,
   Section,
-} from '../components';
+  Slider,
+  Tooltip,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type IVDripData = {
@@ -43,8 +44,6 @@ export const IVDrip = (props) => {
     canRemoveContainer,
     mode,
     canDraw,
-    injectFromPlumbing,
-    canAdjustTransfer,
     hasInternalStorage,
     transferRate,
     transferStep,
@@ -61,60 +60,52 @@ export const IVDrip = (props) => {
       <Window.Content>
         <Section fill>
           <LabeledList>
-            {mode === MODE.injecting && injectFromPlumbing ? ( // Plumbing drip injects with the rate from network
-              <LabeledList.Item label="Flow Rate">
-                Controlled by the plumbing network
-              </LabeledList.Item>
-            ) : (
-              !!canAdjustTransfer && (
-                <LabeledList.Item
-                  label="Flow Rate"
-                  buttons={
-                    <Box>
-                      <Button
-                        width={4}
-                        lineHeight={2}
-                        align="center"
-                        icon="angles-left"
-                        onClick={() =>
-                          act('changeRate', {
-                            rate: minTransferRate,
-                          })
-                        }
-                      />
-                      <Button
-                        width={4}
-                        lineHeight={2}
-                        align="center"
-                        icon="angles-right"
-                        onClick={() =>
-                          act('changeRate', {
-                            rate: maxTransferRate,
-                          })
-                        }
-                      />
-                    </Box>
-                  }
-                >
-                  <Slider
-                    step={transferStep}
-                    my={1}
-                    value={transferRate}
-                    minValue={minTransferRate}
-                    maxValue={maxTransferRate}
-                    unit="units/sec."
-                    onDrag={(e, value) =>
+            <LabeledList.Item
+              label="Flow Rate"
+              buttons={
+                <Box>
+                  <Button
+                    width={4}
+                    lineHeight={2}
+                    align="center"
+                    icon="angles-left"
+                    onClick={() =>
                       act('changeRate', {
-                        rate: value,
+                        rate: minTransferRate,
                       })
                     }
                   />
-                </LabeledList.Item>
-              )
-            )}
+                  <Button
+                    width={4}
+                    lineHeight={2}
+                    align="center"
+                    icon="angles-right"
+                    onClick={() =>
+                      act('changeRate', {
+                        rate: maxTransferRate,
+                      })
+                    }
+                  />
+                </Box>
+              }
+            >
+              <Slider
+                step={transferStep}
+                my={1}
+                value={transferRate}
+                minValue={minTransferRate}
+                maxValue={maxTransferRate}
+                unit="units/sec."
+                onDrag={(e, value) =>
+                  act('changeRate', {
+                    rate: value,
+                  })
+                }
+              />
+            </LabeledList.Item>
             <LabeledList.Item
               label="Direction"
-              color={!mode && 'bad'}
+              color={!mode ? 'bad' : ''}
               buttons={
                 <Button
                   my={1}
@@ -154,7 +145,6 @@ export const IVDrip = (props) => {
                 }
               >
                 <ProgressBar
-                  py={0.3}
                   value={containerCurrentVolume}
                   minValue={0}
                   maxValue={containerMaxVolume}
@@ -162,7 +152,7 @@ export const IVDrip = (props) => {
                 >
                   <span
                     style={{
-                      'text-shadow': '1px 1px 0 black',
+                      textShadow: '1px 1px 0 black',
                     }}
                   >
                     {`${containerCurrentVolume} of ${containerMaxVolume} units`}

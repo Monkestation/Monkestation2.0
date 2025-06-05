@@ -1,17 +1,19 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
   ColorBox,
+  Divider,
   Flex,
-  Stack,
   Icon,
+  Image,
   Input,
   LabeledList,
   Section,
+  Stack,
   Table,
-  Divider,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type ColorEntry = {
@@ -75,7 +77,7 @@ const ConfigDisplay = (props) => {
           <Button icon="cogs" onClick={() => act('select_config')} />
           <Input
             value={data.greyscale_config}
-            onChange={(_, value) =>
+            onBlur={(value) =>
               act('load_config_from_string', { config_string: value })
             }
           />
@@ -99,7 +101,7 @@ const ColorDisplay = (props) => {
           />
           <Input
             value={colors.map((item) => item.value).join('')}
-            onChange={(_, value) =>
+            onBlur={(value) =>
               act('recolor_from_string', { color_string: value })
             }
           />
@@ -124,7 +126,7 @@ const ColorDisplay = (props) => {
             <Input
               value={item.value}
               width={7}
-              onChange={(_, value) =>
+              onBlur={(value) =>
                 act('recolor', { color_index: item.index, new_color: value })
               }
             />
@@ -214,30 +216,12 @@ const PreviewDisplay = (props) => {
           </Table.Cell>
           {data.sprites?.finished ? (
             <Table.Cell>
-              <Box
-                as="img"
-                src={data.sprites.finished}
-                m={0}
-                width="75%"
-                mx="10%"
-                style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                  'image-rendering': 'pixelated',
-                }}
-              />
+              <Image m={0} mx="10%" src={data.sprites.finished} width="75%" />
             </Table.Cell>
           ) : (
             <Table.Cell>
-              <Box grow>
-                <Icon
-                  name="image"
-                  ml="25%"
-                  size={5}
-                  style={{
-                    '-ms-interpolation-mode': 'nearest-neighbor',
-                    'image-rendering': 'pixelated',
-                  }}
-                />
+              <Box>
+                <Icon name="image" ml="25%" size={5} />
               </Box>
             </Table.Cell>
           )}
@@ -283,17 +267,7 @@ const PreviewDisplay = (props) => {
 
 const SingleSprite = (props) => {
   const { source } = props;
-  return (
-    <Box
-      as="img"
-      src={source}
-      width="100%"
-      style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'image-rendering': 'pixelated',
-      }}
-    />
-  );
+  return <Image src={source} />;
 };
 
 const LoadingAnimation = () => {

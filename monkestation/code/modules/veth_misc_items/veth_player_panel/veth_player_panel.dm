@@ -137,7 +137,7 @@
 		ui.open()
 
 /datum/player_panel_veth/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /client //this is needed to hold the selected player ckey for moving to and from pp/vuap
 	///This is used to hold the ckey of the selected player for moving to and from the player panel and vuap
@@ -620,7 +620,7 @@ love, veth
 			return
 
 /datum/vuap_personal/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/admins/proc/vuap_open()
 	if(!check_rights(R_ADMIN))
