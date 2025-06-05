@@ -99,7 +99,7 @@
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-blue"
 	set_items = list(
-		/obj/item/storage/box/syndie_kit/,
+		/obj/item/storage/box/syndie_kit/infiltrator,
 		)
 
 /obj/item/storage/box/syndie_kit/infiltrator/PopulateContents()
@@ -167,10 +167,10 @@
 /obj/item/storage/belt/grenade/grenadier/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/grenade/chem_grenade/facid = 1,
-		/obj/item/grenade/empgrenade = 4,
-		/obj/item/grenade/frag = 4,
-		/obj/item/grenade/flashbang = 4,
-		/obj/item/grenade/gluon = 4,
+		/obj/item/grenade/empgrenade = 5,
+		/obj/item/grenade/frag = 6,
+		/obj/item/grenade/flashbang = 6,
+		/obj/item/grenade/gluon = 5,
 		/obj/item/grenade/smokebomb = 5,
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/multitool = 1,
@@ -205,7 +205,6 @@
 		/obj/item/gun/medbeam = 1,
 		/obj/item/autosurgeon/syndicate/hacked_linked_surgery =1,
 		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
-		/obj/item/book/granter/perfect_surgeon = 1,
 		/obj/item/clothing/gloves/latex/nitrile = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	),src)
@@ -258,7 +257,7 @@
 		/obj/item/storage/medkit/combat = 1,
 		/obj/item/book/granter/martial/cqc = 1,
 		/obj/item/book/granter/gun_mastery = 1,
-		/obj/item/language_manual/codespeak_manual = 1,
+		/obj/item/language_manual/codespeak_manual/unlimited = 1,
 		/obj/item/clothing/glasses/thermal = 1,
 		/obj/item/clothing/glasses/hud/health/night = 1,
 	),src)

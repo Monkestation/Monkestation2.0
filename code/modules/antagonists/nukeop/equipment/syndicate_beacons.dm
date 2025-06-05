@@ -12,7 +12,7 @@
 	)
 	return selectable_assets
 
-/obj/item/choice_beacon/commando_supoort/spawn_option(obj/choice_path, mob/living/user)
+/obj/item/choice_beacon/commando_support/spawn_option(obj/choice_path, mob/living/user)
 	podspawn(list(
 		"target" = get_turf(src),
 		"style" = STYLE_SYNDICATE,

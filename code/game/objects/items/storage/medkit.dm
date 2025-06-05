@@ -604,7 +604,7 @@
 
 /obj/item/storage/pill_bottle/modafinil_patch
 	name = "bottle of modafinil patches (WARNING)"
-	desc = "Contains aiuri patches which help quickly wake up patients and cure dizziness. Easy to overdose, apply one patch and wait for it to finish applying before applying another."
+	desc = "Contains modafinil patches which help quickly wake up patients and cure dizziness. Easy to overdose, apply one patch and wait for it to finish applying before applying another."
 
 /obj/item/storage/pill_bottle/modafinil_patch/PopulateContents()
 	for(var/i in 1 to 7)

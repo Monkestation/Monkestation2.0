@@ -1,11 +1,8 @@
 /datum/antagonist/nukeop/commando
 	name = ROLE_COMMANDO_OPERATIVE
 	job_rank =  ROLE_COMMANDO_OPERATIVE
-	antag_hud_name = "synd"
-	antag_moodlet = /datum/mood_event/badass_antag
 	show_to_ghosts = TRUE
 	hijack_speed = 3 //If you can't take out the station, take the shuttle instead.
-	suicide_cry = "FOR THE SYNDICATE!!"
 	remove_from_manifest = TRUE
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/commando/commando_nuke_team
@@ -13,12 +10,12 @@
 	/// The DEFAULT outfit we will give to players granted this datum
 	nukeop_outfit = /datum/outfit/syndicate/commando
 
-	//preview_outfit = /datum/outfit/commando_operative_leader
+	preview_outfit = /datum/outfit/commando_operative
 
-	//preview_outfit_behind = /datum/outfit/syndicate/junior
+	preview_outfit_behind = /datum/outfit/syndicate/junior
 
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
-
+	nuke_icon_state = "old_nuclearbomb_base"
 
 /datum/antagonist/nukeop/commando/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
@@ -36,7 +33,7 @@
 			commando_nuke_team.memorized_code = nuke.r_code
 		else
 			stack_trace("Syndicate nuke not found during nuke team creation.")
-			nuke_team.memorized_code = null
+			commando_nuke_team.memorized_code = null
 
 /datum/antagonist/nukeop/commando/give_alias()
 	if(commando_nuke_team?.syndicate_name)
@@ -49,6 +46,14 @@
 			var/number = 1
 			number = commando_nuke_team.members.Find(owner)
 			owner.current.real_name = "[commando_nuke_team.syndicate_name] Operative #[number]"
+
+/datum/antagonist/nukeop/commando/memorize_code()
+	if(commando_nuke_team.memorized_code)
+		antag_memory += "<B>[commando_nuke_team.tracked_nuke] Code</B>: [commando_nuke_team.memorized_code]<br>"
+		owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = commando_nuke_team.memorized_code)
+		to_chat(owner, "The nuclear authorization code is: <B>[commando_nuke_team.memorized_code]</B>")
+	else
+		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
 
 /datum/antagonist/nukeop/commando/forge_objectives()
 	if(commando_nuke_team)
@@ -92,7 +97,7 @@
 	nuke_team = new_team
 
 /datum/antagonist/nukeop/commando/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/commando_nuclear_operative))
+	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/commando_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
@@ -121,7 +126,7 @@
 
 /datum/antagonist/nukeop/commando/leader/memorize_code()
 	..()
-	if(nuke_team?.memorized_code)
+	if(commando_nuke_team?.memorized_code)
 		var/obj/item/paper/nuke_code_paper = new
 		nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[commando_nuke_team.memorized_code]</b>")
 		nuke_code_paper.name = "nuclear bomb code"
@@ -160,6 +165,17 @@
 			newname = randomname
 
 	return capitalize(newname)
+
+/datum/outfit/commando_operative
+	name = "Commando Operative (Preview only)"
+
+	glasses = /obj/item/clothing/glasses/night
+	back = /obj/item/storage/backpack/fireproof
+	head = /obj/item/clothing/head/helmet/space/syndicate/black/red
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/syndicate/black/red
+	suit_store = /obj/item/tank/jetpack/harness
+	belt = /obj/item/storage/belt/military
 
 /datum/team/nuclear/commando
 
@@ -259,6 +275,12 @@
 		else
 			parts += "<span class='neutraltext big'>Neutral Victory</span>"
 			parts += "<B>Mission aborted!</B>"
+
+	var/text = "<br><span class='header'>The syndicate operatives were:</span>"
+	text += printplayerlist(members)
+	text += "<br>"
+
+	parts += text
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 

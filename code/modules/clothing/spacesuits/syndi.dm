@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black-green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/green
-	name = "black space helmet"
+	name = "black and green space helmet"
 	icon_state = "syndicate-helm-black-green"
 	inhand_icon_state = "syndicate-helm-black-green"
 
@@ -165,12 +165,12 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black medical syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "black space helmet"
+	name = "black medical space helmet"
 	icon_state = "syndicate-helm-black-med"
 	inhand_icon_state = "syndicate-helm-black"
 
 /obj/item/clothing/suit/space/syndicate/black/med
-	name = "green space suit"
+	name = "black medical space suit"
 	icon_state = "syndicate-black-med"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/med
@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black-orange syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/orange
-	name = "black space helmet"
+	name = "black and orange space helmet"
 	icon_state = "syndicate-helm-black-orange"
 	inhand_icon_state = "syndicate-helm-black"
 	armor_type = /datum/armor/space_syndicate_fire
@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black-red syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/red
-	name = "black space helmet"
+	name = "black and red space helmet"
 	icon_state = "syndicate-helm-black-red"
 	inhand_icon_state = "syndicate-helm-black-red"
 
@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "black space helmet"
+	name = "black engineering space helmet"
 	icon_state = "syndicate-helm-black-engie"
 	inhand_icon_state = "syndicate-helm-black"
 	resistance_flags = FIRE_PROOF

@@ -34,6 +34,7 @@
 #define ROLE_NINJA "Space Ninja"
 #define ROLE_OBSESSED "Obsessed"
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
+#define ROLE_COMMANDO_OPERATIVE_MIDROUND "Commando Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SENTIENT_DISEASE "Sentient Disease"
@@ -137,6 +138,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_HERETIC = 0,
 	ROLE_MALF = 0,
 	ROLE_OPERATIVE = 14,
+	ROLE_COMMANDO_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
@@ -158,6 +160,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
 	ROLE_OPERATIVE_MIDROUND = 14,
+	ROLE_COMMANDO_OPERATIVE_MIDROUND = 14,
 	ROLE_PARADOX_CLONE = 0,
 	ROLE_REVENANT = 0,
 	ROLE_SENTIENT_DISEASE = 0,

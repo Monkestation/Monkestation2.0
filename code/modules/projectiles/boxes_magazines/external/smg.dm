@@ -53,7 +53,7 @@
 	base_icon_state = "9x19-red"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = CALIBER_10MM
-	max_ammo = 32
+	max_ammo = 40
 
 /obj/item/ammo_box/magazine/plastikov10mm/update_icon_state()
 	. = ..()
