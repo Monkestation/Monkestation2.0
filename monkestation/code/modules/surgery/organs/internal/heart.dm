@@ -30,10 +30,10 @@
 
 /obj/item/organ/internal/heart/slime/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	if(!QDELETED(regenerate_limbs))
+	if(QDELETED(regenerate_limbs))
 		regenerate_limbs = new
 	regenerate_limbs.Grant(receiver)
-	if(!QDELETED(retract_limb))
+	if(QDELETED(retract_limb))
 		retract_limb = new
 	retract_limb.Grant(receiver)
 	RegisterSignal(receiver, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
