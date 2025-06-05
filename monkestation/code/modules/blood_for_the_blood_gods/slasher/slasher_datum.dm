@@ -149,24 +149,24 @@
 	source_human.delete_equipment()
 
 /datum/antagonist/slasher/on_removal()
-	. = ..()
-	owner.current.clear_fullscreen("slasher_prox", 15)
-	owner.current.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_CLUMSY, TRAIT_NODEATH, TRAIT_DUMB, TRAIT_LIMBATTACHMENT), "slasher")
-	for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
-		listed_slasher.Remove(owner.current)
-	for(var/datum/weakref/held_ref as anything in heartbeats)
-		var/mob/living/carbon/human/human = held_ref.resolve()
+	if(!QDELETED(owner.current))
+		owner.current.clear_fullscreen("slasher_prox", 15)
+		REMOVE_TRAITS_IN(owner.current, "slasher")
+		for(var/datum/action/cooldown/slasher/listed_slasher as anything in powers)
+			listed_slasher.Remove(owner.current)
+
+	for(var/datum/weakref/held_ref as anything in heartbeats | mobs_with_fullscreens)
+		var/mob/living/carbon/human/human = held_ref?.resolve()
+		if(isnull(human))
+			continue
 		human.stop_sound_channel(CHANNEL_HEARTBEAT)
-		heartbeats -= held_ref
+		human.clear_fullscreen("slasher_prox", 15)
 		human.regenerate_icons()
 		reset_fear(human)
 
-	for(var/datum/weakref/held_ref as anything in mobs_with_fullscreens)
-		var/mob/living/carbon/human/human = held_ref.resolve()
-		human.clear_fullscreen("slasher_prox", 15)
-		mobs_with_fullscreens -= held_ref
-		human.regenerate_icons()
-		reset_fear(human)
+	heartbeats.Cut()
+	mobs_with_fullscreens.Cut()
+	return ..()
 
 /datum/antagonist/slasher/greet()
 	. = ..()
@@ -178,7 +178,7 @@
 	owner.current.playsound_local(null, 'monkestation/sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
-/datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
+/datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_between_ticks, times_fired)
 	SIGNAL_HANDLER
 
 	var/list/currently_beating = list()
@@ -252,7 +252,7 @@
 	. = ..()
 
 
-/datum/status_effect/slasher/stalking/tick(seconds_per_tick, times_fired)
+/datum/status_effect/slasher/stalking/tick(seconds_between_ticks, times_fired)
 	if(slasherdatum.stalked_human)
 		for(var/mob/living/mob in view(7, owner))
 			if(mob == owner)
@@ -317,7 +317,7 @@
 	owner_monitor.hide_hud()
 	reset_fear(stalked_human)
 	stalked_human = null
-	var/datum/action/cooldown/slasher/stalk_target/power = owner?.has_antag_datum(/datum/antagonist/slasher)
+	var/datum/action/cooldown/slasher/stalk_target/power = locate() in powers
 	power.StartCooldown(1)
 	to_chat(owner, span_notice("Your target is no longer spookable..."))
 
@@ -546,3 +546,22 @@
 	explanation_text = "Use your traps to slow down your victims."
 	admin_grantable = TRUE
 
+
+/datum/antagonist/slasher/antag_token(datum/mind/hosts_mind, mob/spender)
+	var/spender_key = spender.key
+	if(!spender_key)
+		CRASH("wtf, spender had no key")
+	var/turf/spawn_loc = find_safe_turf_in_maintenance()//Used for the Drop Pod type of spawn for maints only
+	if(isnull(spawn_loc))
+		message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent a slasher antag token")
+		CRASH("Failed to find valid spawn location for slasher antag token")
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 1 SECOND)
+	var/mob/living/carbon/human/slasher = new (spawn_loc)
+	slasher.PossessByPlayer(spender_key)
+	slasher.mind.add_antag_datum(/datum/antagonist/slasher)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(slasher)] has been made into a slasher by using an antag token.")

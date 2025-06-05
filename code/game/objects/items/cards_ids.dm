@@ -896,6 +896,11 @@
 	desc = "An ID card that allows access to bots maintenance protocols."
 	trim = /datum/id_trim/job/away/old/robo /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
+/obj/item/card/id/away/old/cargo
+	name = "Alpha Station Cargo Technician's ID card"
+	desc = "A faded Alpha Station ID card. You can make out the rank \"Cargo Technician\"."
+	trim = /datum/id_trim/job/away/old/cargo
+
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
@@ -1368,6 +1373,7 @@
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+	action_slots = ALL
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE

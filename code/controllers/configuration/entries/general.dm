@@ -734,3 +734,6 @@
 	default = 100
 	min_val = 0
 	max_val = 100
+
+/datum/config_entry/string/webmap_url
+	default = "https://maps.monkestation.com/maps/Monkestation/$map"

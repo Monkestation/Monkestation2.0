@@ -15610,6 +15610,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible,
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "bkQ" = (
@@ -16861,6 +16862,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
 "bqV" = (
@@ -18040,6 +18042,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "bwq" = (
@@ -44261,6 +44264,7 @@
 	name = "Test Chamber Blast Door"
 	},
 /obj/structure/cable,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "pWo" = (
@@ -49898,6 +49902,7 @@
 	cycle_id = "sci-gene-passthrough"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "umh" = (
@@ -50864,6 +50869,7 @@
 	cycle_id = "sci-maint-passthrough"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "uXL" = (
@@ -51076,6 +51082,7 @@
 	cycle_id = "sci-maint-passthrough"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "vgR" = (

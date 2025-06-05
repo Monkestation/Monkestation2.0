@@ -722,7 +722,7 @@
 	buckle_lying = 90
 	climbable = FALSE
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
-	var/mob/living/carbon/patient = null
+	var/mob/living/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
 /obj/structure/table/optable/Initialize(mapload)
