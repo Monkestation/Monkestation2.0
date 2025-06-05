@@ -227,13 +227,15 @@ SUBSYSTEM_DEF(garbage)
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
-				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
-				message = "[message] (ref count of [refcount(D)])"
-				log_world(message)
-
 				var/detail = D.dump_harddel_info()
 				if(detail)
 					LAZYADD(I.extra_details, detail)
+
+				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
+				message = "[message] (ref count of [refcount(D)])"
+				if(detail)
+					message = "[message] | [detail]"
+				log_world(message)
 
 				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
