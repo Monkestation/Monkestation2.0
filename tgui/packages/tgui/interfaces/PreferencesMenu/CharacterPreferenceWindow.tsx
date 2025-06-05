@@ -85,7 +85,7 @@ export const CharacterPreferenceWindow = (props) => {
   return (
     <Window
       title="Character Preferences"
-      width={1200}
+      width={1300}
       height={800}
       theme="generic"
     >

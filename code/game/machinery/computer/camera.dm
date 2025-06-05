@@ -88,15 +88,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	var/list/cameras = get_camera_list(network)
-	data["cameras"] = list()
-	for(var/i in cameras)
-		var/obj/machinery/camera/C = cameras[i]
-		data["cameras"] += list(list(
-			name = C.c_tag,
-			ref = REF(C),
-		))
-
+	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
 /obj/machinery/computer/security/ui_act(action, params)
@@ -231,6 +223,12 @@
 	name = "\improper Quartermaster's camera console"
 	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
+	circuit = null
+
+/obj/machinery/computer/security/old
+	name = "\improper worn camera console"
+	desc = "A security console with access to the station's camera network. The screen barley flickers to life."
+	network = list("Alpha", "Beta", "Charlie", "Delta",)
 	circuit = null
 
 #undef DEFAULT_MAP_SIZE

@@ -44,7 +44,7 @@
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else
-				new_mob.key = affected_mob.key
+				new_mob.PossessByPlayer(affected_mob.key)
 		if(transformed_antag_datum && !QDELETED(new_mob.mind))
 			var/datum/antagonist/given_antag = new_mob.mind.has_antag_datum(transformed_antag_datum) || new_mob.mind.add_antag_datum(transformed_antag_datum)
 			given_antag?.antag_flags |= FLAG_ANTAG_CAP_IGNORE // ensure they don't count against storyteller cap
@@ -63,12 +63,11 @@
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
-			new_mob.key = null
 		return
 	to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 	affected_mob.ghostize(FALSE)
-	affected_mob.key = chosen_one.key
+	affected_mob.PossessByPlayer(chosen_one.key)
 
 
 /datum/symptom/transformation/robot

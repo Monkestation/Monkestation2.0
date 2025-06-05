@@ -149,7 +149,7 @@
 	if(!attacking_item.force)
 		return
 
-	var/damage = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, 1)
+	var/damage = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, TRUE, armour_penetration = attacking_item.armour_penetration)
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
@@ -306,12 +306,20 @@
 
 	//monkestation edit start
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is intact!"))
-			return TRUE
-
 		if(!W.tool_start_check(user, amount=0))
 			to_chat(user, span_warning("You need more fuel to repair [src]!"))
+			return TRUE
+
+		if(atom_integrity >= max_integrity)
+			if(LAZYLEN(dent_decals))
+				to_chat(user, span_notice("You begin fixing dents on the wall..."))
+				if(W.use_tool(src, user, 0, volume=100))
+					if(iswallturf(src))
+						to_chat(user, span_notice("You fix some dents on the wall."))
+						cut_overlay(dent_decals)
+						dent_decals.Cut()
+			else
+				to_chat(user, span_warning("[src] is intact!"))
 			return TRUE
 
 		to_chat(user, span_notice("You begin repairing [src]..."))

@@ -319,11 +319,12 @@
 		owner.emote("scream")
 
 /obj/item/organ/internal/eyes/robotic/xray
-	name = "\improper X-ray eyes"
-	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
+	name = "prototype X-ray eyes"
+	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile. Caution - Extremely vulnerable to sudden flashes."
 	eye_color_left = "000"
 	eye_color_right = "000"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 
 /obj/item/organ/internal/eyes/robotic/xray/on_insert(mob/living/carbon/eye_owner)
 	. = ..()
@@ -332,6 +333,11 @@
 /obj/item/organ/internal/eyes/robotic/xray/on_remove(mob/living/carbon/eye_owner)
 	. = ..()
 	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
+
+/obj/item/organ/internal/eyes/robotic/xray/syndicate
+	name = "syndicate X-ray eyes"
+	desc = "An upgraded model of X-ray vision eyes, courtesy of Cybersun. All the vision, none of the drawbacks."
+	flash_protect = FLASH_PROTECTION_NONE
 
 /obj/item/organ/internal/eyes/robotic/thermals
 	name = "thermal eyes"
@@ -342,6 +348,11 @@
 	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/thermals/syndicate
+	name = "syndicate thermal eyes"
+	desc = "An upgraded model of thermal vision eyes, courtesy of Cybersun. All the same vision, without the same vulnerability to overloading."
+	flash_protect = FLASH_PROTECTION_NONE
 
 /obj/item/organ/internal/eyes/robotic/flashlight
 	name = "flashlight eyes"

@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
 		log_game("[key_name(chosen_one)] has taken control of ([key_name(owner)]) to replace antagonist banned player.")
 		owner.current.ghostize(FALSE)
-		owner.current.key = chosen_one.key
+		owner.current.PossessByPlayer(chosen_one.key)
 	else
 		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)]).")
 
@@ -447,13 +447,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
 
+GLOBAL_LIST_EMPTY(cached_antag_previews)
+
 /// Creates an icon from the preview outfit.
 /// Custom implementors of `get_preview_icon` should use this, as the
 /// result of `get_preview_icon` is expected to be the completed version.
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
-	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
+	if(!isnull(GLOB.cached_antag_previews[outfit]))
+		return icon(GLOB.cached_antag_previews[outfit])
+	dummy ||= new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	var/icon = getFlatIcon(dummy)
+	GLOB.cached_antag_previews[outfit] = icon(icon)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
 	SSatoms.prepare_deletion(dummy)
@@ -520,20 +525,23 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SET_PLANE_EXPLICIT(hud, ABOVE_GAME_PLANE, hud_loc)
 	return hud
 
-///generic helper to send objectives as data through tgui.
-/datum/antagonist/proc/get_objectives()
+/// Generic helper to send objectives as data through tgui.
+///
+/// If the `full_checks` argument is true,
+/// then it will use the objective's `check_completion` proc instead of the `completed` var
+/// to check to see if the objective is complete.
+/datum/antagonist/proc/get_objectives(full_checks = FALSE)
+	. = list()
 	var/objective_count = 1
-	var/list/objective_data = list()
 	//all obj
 	for(var/datum/objective/objective in objectives)
-		objective_data += list(list(
+		. += list(list(
 			"count" = objective_count,
 			"name" = objective.objective_name,
 			"explanation" = objective.explanation_text,
-			"complete" = objective.completed,
+			"complete" = full_checks ? objective.check_completion() : objective.completed,
 		))
 		objective_count++
-	return objective_data
 
 /// Used to create objectives for the antagonist.
 /datum/antagonist/proc/forge_objectives()

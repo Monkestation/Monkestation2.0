@@ -47,7 +47,7 @@
 		/datum/job/janitor,
 		/datum/job/lawyer,
 		/datum/job/mime,
-		// monkestation addition: barbers and spooktober
+		// barbers and spooktober
 		/datum/job/barber,
 		/datum/job/yellowclown,
 		/datum/job/skeleton,
@@ -76,11 +76,13 @@
 		/datum/job/shaft_miner,
 		// Medical
 		/datum/job/paramedic,
+		// Science
+		/datum/job/xenobiologist,
 		// Service
 		/datum/job/cook,
-		// Monkestation addition: Security
+		// Security
 		/datum/job/security_assistant,
-		// Monkestation addition: Engineering
+		// Engineering
 		/datum/job/signal_technician,
 	)
 	alive_bonus = 4
@@ -96,11 +98,11 @@
 		/datum/job/chief_medical_officer,
 		/datum/job/head_of_personnel,
 		/datum/job/research_director,
+		/datum/job/nanotrasen_representative,
 		// Security
 		/datum/job/detective,
 		/datum/job/security_officer,
 		/datum/job/warden,
-		// Monkestation edit: brig docs
 		/datum/job/brig_physician,
 	)
 	alive_bonus = 5
@@ -113,7 +115,6 @@
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
-		// Monkestation edit: Blueshields
 		/datum/job/blueshield,
 	)
 	alive_bonus = 6
@@ -289,7 +290,7 @@
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
-	sent_mob.reagents?.add_reagent(/datum/reagent/medicine/omnizine, 20) //if people end up going with contractors too often(I doubt they will) we can port skyrats wounding stuff
+	sent_mob.apply_status_effect(/datum/status_effect/contractor_healing)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
 		so it's only a matter of time before we ship you back...\"</i>")))
@@ -342,5 +343,31 @@
 	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
 		belongings += internal_bag.contents
 	return belongings
+
+/datum/status_effect/contractor_healing
+	id = "contractor_healing"
+	duration = 15 SECONDS
+	alert_type = null
+
+/datum/status_effect/contractor_healing/on_apply()
+	. = ..()
+	owner.add_homeostasis_level(id, owner.standard_body_temperature, 2.5 KELVIN)
+	owner.losebreath = 0
+
+/datum/status_effect/contractor_healing/on_remove()
+	. = ..()
+	owner.remove_homeostasis_level(id)
+
+/datum/status_effect/contractor_healing/tick(seconds_between_ticks)
+	var/needs_update = FALSE
+	var/base_healing = 1
+	if(owner.health <= owner.crit_threshold)
+		base_healing *= 2
+	needs_update += owner.adjustBruteLoss(-base_healing * seconds_between_ticks, updating_health = FALSE)
+	needs_update += owner.adjustFireLoss(-base_healing * seconds_between_ticks, updating_health = FALSE)
+	needs_update += owner.adjustToxLoss(-base_healing * seconds_between_ticks, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	needs_update += owner.adjustOxyLoss(-base_healing * seconds_between_ticks, updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
 
 #undef CONTRACTOR_RANSOM_CUT

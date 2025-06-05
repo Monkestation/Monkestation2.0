@@ -60,3 +60,8 @@
 /obj/item/modular_computer/pda/heads/ntrep
 	name = "Nanotransen Representative's PDA"
 	inserted_item = /obj/item/pen/fountain
+
+/obj/item/modular_computer/pda/xenobiologist
+	name = "xenobiologist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#FAFAFA#000099#FF66CC"

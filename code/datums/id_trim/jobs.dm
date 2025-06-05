@@ -27,7 +27,7 @@
 		job = SSjob.GetJobType(job)
 
 	if(isnull(job_changes))
-		job_changes = SSmapping.config.job_changes
+		job_changes = SSmapping.current_map.job_changes
 
 	if(!length(job_changes))
 		refresh_trim_access()
@@ -920,11 +920,11 @@
 		ACCESS_ORDNANCE_STORAGE,
 		ACCESS_RESEARCH,
 		ACCESS_SCIENCE,
-		ACCESS_XENOBIOLOGY,
 		)
 	extra_access = list(
 		ACCESS_GENETICS,
 		ACCESS_ROBOTICS,
+		ACCESS_XENOBIOLOGY, //monkestation edit: Xenobio job
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,

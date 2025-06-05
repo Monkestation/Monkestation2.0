@@ -36,7 +36,7 @@
 	var/msg = "Ticket [TicketHref("#[id]")] told to mentorhelp by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
-	AddInteraction("Told to mentorhelp by [key_name].")
+	AddInteraction("Told to mentorhelp by [key_name].", "Sent to mentor help")
 	Close(silent = TRUE)
 
 #undef CHECK_AHELP_ACTIVE

@@ -83,6 +83,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/ipc_part_atennae
+	name = "IPC Replacement Antennae"
+	id = "ipc_antennae"
+	build_type = MECHFAB
+	construction_time = 15 SECONDS
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/organ/external/antennae/ipc
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/power_cord
 	name = "Power Cord Implant"
 	desc = "An internal power cord hooked up to a battery. Useful if you run on volts."

@@ -189,18 +189,25 @@
 	kickback = FALSE
 	mech_flags = EXOSUIT_MODULE_HONK
 
+	//monkestation edit start
+	//Range of honk alarm
+	var/honk_range = 6
+	//message that blares on firing
+	var/tactile_message = "HONK"
+	//monkestation edit end
+
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
-	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
-	for(var/mob/living/carbon/M in ohearers(6, chassis))
+	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>[tactile_message]</font>") //monkestation edit
+	for(var/mob/living/carbon/M in ohearers(honk_range, chassis)) //monkestation edit
 		if(!M.can_hear())
 			continue
 		var/turf/turf_check = get_turf(M)
 		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
 			continue
-		to_chat(M, "<font color='red' size='7'>HONK</font>")
+		to_chat(M, "<font color='red' size='7'>[tactile_message]</font>") //monkestation edit
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
 		var/obj/item/organ/internal/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
@@ -526,3 +533,38 @@
 	equip_cooldown = 60
 	det_time = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+
+//devitt (the literal fucking tank) weapons
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
+	name = "40mm tank cannon"
+	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/lighttankshell
+	equip_cooldown = 8 SECONDS
+	projectiles = 1
+	projectiles_cache = 10
+	projectiles_cache_max = 35
+	ammo_type = MECHA_AMMO_LIGHTTANK
+	mech_flags = EXOSUIT_MODULE_TANK
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
+	name = "12.7mm Malone Mk.1 Ratcatcher"
+	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	icon_state = "mecha_light_tank_mg"
+	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	projectile = /obj/projectile/bullet/mm127x70
+	projectiles = 30
+	projectiles_cache = 60
+	projectiles_cache_max = 120
+	projectiles_per_shot = 5
+	projectile_delay = 0.1 SECONDS
+	equip_cooldown = 1 SECONDS
+	variance = 18
+	randomspread = 4
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK

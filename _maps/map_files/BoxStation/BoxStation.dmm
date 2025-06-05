@@ -13550,8 +13550,14 @@
 /obj/machinery/button/door{
 	id = "testlab";
 	name = "Xenobiology Secure Chamber Blast Doors";
-	pixel_y = 5;
-	req_access = list("xenobiology")
+	pixel_y = 0;
+	req_access = list("xenobiology");
+	pixel_x = 5
+	},
+/obj/machinery/button/ignition{
+	id = "Xenobio";
+	pixel_x = -6;
+	pixel_y = -1
 	},
 /obj/machinery/button/ignition{
 	id = "Xenobio";
@@ -23198,7 +23204,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "huJ" = (
@@ -25790,7 +25796,6 @@
 /area/station/tcommsat/server)
 "inn" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
@@ -27863,7 +27868,6 @@
 "iVh" = (
 /obj/machinery/light/directional/south,
 /obj/structure/sign/poster/contraband/missing_gloves/directional/east,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
@@ -29619,6 +29623,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "jBr" = (
@@ -30502,6 +30507,7 @@
 /area/station/science/xenobiology)
 "jNL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "jNT" = (
@@ -39025,7 +39031,7 @@
 /obj/machinery/door/airlock/research/glass{
 	name = "Nanite Lab"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/research,
 /turf/open/floor/iron/white/textured,
 /area/station/science/auxlab)
 "mzC" = (
@@ -42428,6 +42434,7 @@
 /area/station/security/prison/shower)
 "nGs" = (
 /obj/machinery/duct,
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "nGw" = (
@@ -45283,6 +45290,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/upgraded,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "oDy" = (
@@ -46737,6 +46745,11 @@
 	dir = 8
 	},
 /area/station/command/heads_quarters/ce)
+"paJ" = (
+/obj/machinery/requests_console/auto_name/directional/south,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/turf/open/floor/iron/dark,
+/area/station/security/prison)
 "paO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -49984,7 +49997,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "qed" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -52228,7 +52240,7 @@
 /obj/machinery/door/airlock/research/glass{
 	name = "Circuit Lab"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/research,
 /turf/open/floor/iron/white/textured,
 /area/station/science/circuits)
 "qTm" = (
@@ -54419,6 +54431,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "rDA" = (
 /obj/machinery/computer/mech_bay_power_console,
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/maintenance/department/electrical)
 "rDD" = (
@@ -55230,7 +55243,6 @@
 /obj/item/multitool,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/east,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "rRm" = (
@@ -55238,6 +55250,7 @@
 /area/station/service/kitchen)
 "rRt" = (
 /obj/machinery/mech_bay_recharge_port,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "rRU" = (
@@ -57398,6 +57411,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "sGk" = (
@@ -59372,6 +59386,12 @@
 /obj/item/pai_card,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"tms" = (
+/obj/machinery/sparker/directional/north{
+	id = "Xenobio"
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "tmt" = (
 /obj/machinery/firealarm/directional/east{
 	pixel_y = -5
@@ -60569,6 +60589,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/textured,
 /area/station/science/xenobiology)
 "tCM" = (
@@ -60630,7 +60651,7 @@
 /obj/structure/chair/sofa/corp/left{
 	dir = 8
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "tEP" = (
@@ -63418,7 +63439,6 @@
 	dir = 4
 	},
 /obj/machinery/light/built/directional/south,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "uAv" = (
@@ -66547,7 +66567,6 @@
 /area/station/maintenance/port/aft)
 "vxs" = (
 /obj/machinery/power/smes,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "vxD" = (
@@ -67176,6 +67195,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "vFa" = (
@@ -67402,6 +67422,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution)
+"vIq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/maintenance/department/electrical)
 "vIv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
@@ -73623,6 +73648,7 @@
 "xJR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "xJY" = (
@@ -75100,10 +75126,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"yeV" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/department/electrical)
 "yfi" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -99924,7 +99946,7 @@ cru
 eZP
 qgq
 lMT
-qgq
+paJ
 pSA
 pSA
 pSA
@@ -117912,7 +117934,7 @@ hNt
 xoG
 ogZ
 fck
-qbm
+dQL
 hNt
 xoG
 ogZ
@@ -119968,7 +119990,7 @@ hNt
 xoG
 ogZ
 fck
-dQL
+qbm
 hNt
 xoG
 ogZ
@@ -123581,7 +123603,7 @@ uoo
 fJl
 fJl
 fJl
-fck
+tms
 wiL
 fck
 fJl
@@ -124371,7 +124393,7 @@ jxy
 pTI
 nbF
 bYW
-yeV
+lzT
 uAu
 jxy
 uyw
@@ -124886,7 +124908,7 @@ sfm
 lzT
 kDe
 kMR
-yeV
+lzT
 jxy
 uyw
 iLB
@@ -125400,7 +125422,7 @@ rRt
 oDn
 pZV
 nbF
-yeV
+lzT
 jxy
 tzc
 iLB
@@ -125654,7 +125676,7 @@ aij
 jxy
 jxy
 xzw
-nbF
+vIq
 qed
 wFZ
 vxs

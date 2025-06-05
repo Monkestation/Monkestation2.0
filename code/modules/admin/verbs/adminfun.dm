@@ -196,7 +196,9 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN | R_FUN, "Smite", "Smite a play
 	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)
-	var/msg = "[key_name_admin(src)] punished [key_name_admin(whom)] with [punishment]."
-	message_admins(msg)
+	// MONKESTATION EDIT START - tgui tickets
+	var/msg = "[key_name(src)] punished [key_name(whom)] with [punishment]."
+	message_admins("[key_name_admin(src)] punished [key_name_admin(whom)] with [punishment].")
+	log_admin(msg)
 	admin_ticket_log(whom, msg)
-	log_admin("[key_name(src)] punished [key_name(whom)] with [punishment].")
+	// MONKESTATION EDIT END

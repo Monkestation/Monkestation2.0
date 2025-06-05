@@ -14,7 +14,7 @@
 		new /obj/effect/holy(hosts_mind.current.loc)
 		QDEL_IN(hosts_mind.current, 1 SECOND)
 	var/mob/living/basic/revenant/revenant = new(spawn_loc)
-	revenant.key = spender_key
+	revenant.PossessByPlayer(spender_key)
 	if(isobserver(spender))
 		qdel(spender)
 	message_admins("[ADMIN_LOOKUPFLW(revenant)] has been made into a revenant by using an antag token.")

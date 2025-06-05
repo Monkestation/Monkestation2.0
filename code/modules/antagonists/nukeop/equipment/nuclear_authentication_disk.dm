@@ -148,7 +148,10 @@
 		GLOB.nuke_disk_list -= src
 	return ..()
 /obj/item/disk/nuclear/proc/spawn_op()
-	force_event(/datum/round_event_control/junior_lone_operative, "the nuke disk being unsecured for [round(unsecured_time/60, 1)] minutes")
+	if(prob(50))
+		force_event(/datum/round_event_control/junior_lone_operative, "the nuke disk being unsecured for [round(unsecured_time/60, 1)] minutes")
+	else
+		force_event(/datum/round_event_control/operative, "the nuke disk being unsecured for [round(unsecured_time/60, 1)] minutes")
 //MONKESTATION EDIT STOP
 
 /obj/item/disk/nuclear/fake

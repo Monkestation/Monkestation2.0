@@ -12,12 +12,14 @@
 	src.dry_result = dry_result
 
 	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(finish_drying))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	ADD_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 
 /datum/element/dryable/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
+	UnregisterSignal(target, COMSIG_ATOM_EXAMINE)
 	REMOVE_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 /datum/element/dryable/proc/finish_drying(atom/source)
@@ -42,3 +44,10 @@
 		ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT(type))
 		qdel(source)
 
+/datum/element/dryable/proc/on_examined(atom/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+
+	if (HAS_TRAIT(source, TRAIT_DRIED))
+		examine_text += span_notice("It's been dried out.")
+	else
+		examine_text += span_notice("It can be dried out on a drying rack.")

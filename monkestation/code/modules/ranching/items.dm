@@ -140,6 +140,10 @@
 	///number of food inserted
 	var/food_inserted = 0
 
+/obj/machinery/feed_machine/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
+
 /obj/machinery/feed_machine/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(!typesof(I, /obj/item/food) || !typesof(I, /obj/item/reagent_containers)) ///if not a food or reagent type early return

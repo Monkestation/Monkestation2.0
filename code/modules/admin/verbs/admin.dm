@@ -155,9 +155,9 @@ ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTIO
 			qdel(W)
 			dropee.regenerate_icons()
 
-	log_admin("[key_name(user)] made [key_name(dropee)] drop everything!")
-	var/msg = "[key_name_admin(user)] made [ADMIN_LOOKUPFLW(dropee)] drop everything!"
-	message_admins(msg)
+	var/msg = "[key_name(user)] made [key_name(dropee)] drop everything!"
+	log_admin(msg)
+	message_admins("[key_name_admin(user)] made [ADMIN_LOOKUPFLW(dropee)] drop everything!")
 	admin_ticket_log(dropee, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Drop Everything")
 

@@ -65,7 +65,7 @@
 	var/mob/dead/observer/picked_candidate = pick(candidates)
 
 	var/mob/living/basic/cortical_borer/neutered/new_mob = new(drop_location())
-	new_mob.ckey = picked_candidate.ckey
+	new_mob.PossessByPlayer(picked_candidate.ckey)
 
 	var/datum/antagonist/cortical_borer/borer_antagonist_datum = new
 

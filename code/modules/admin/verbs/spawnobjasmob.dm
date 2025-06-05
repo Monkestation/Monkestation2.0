@@ -98,7 +98,7 @@ ADMIN_VERB(spawn_obj_as_mob, R_SPAWN, "Spawn Object-Mob", "Spawn an object as if
 			basemob.name = basemob.real_name = html_decode(mainsettings["name"]["value"])
 
 		if (mainsettings["ckey"]["value"] != "none")
-			basemob.ckey = mainsettings["ckey"]["value"]
+			basemob.PossessByPlayer(mainsettings["ckey"]["value"])
 
 
 		log_admin("[key_name(user.mob)] spawned a sentient object-mob [basemob] from [chosen_obj] at [AREACOORD(user.mob)]")

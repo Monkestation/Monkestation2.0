@@ -1,3 +1,9 @@
+GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
+	/area/station = MODLINK_FREQ_NANOTRASEN,
+	/area/ruin/space/ancientstation = MODLINK_FREQ_CHARLIE,
+	/area/ruin/space/has_grav/syndicate_depot = MODLINK_FREQ_SYNDICATE,
+)))
+
 /proc/make_link_visual_generic(datum/mod_link/mod_link, proc_path)
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
 	var/obj/effect/overlay/link_visual = new()
@@ -37,8 +43,10 @@
 	QDEL_NULL(mod_link.visual)
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
-	var/atom/other_visual = mod_link.get_other().visual
 	if(!newdir) //can sometimes be null or 0
+		return
+	var/atom/other_visual = mod_link.get_other()?.visual
+	if(QDELETED(other_visual))
 		return
 	other_visual.setDir(SOUTH)
 	other_visual.pixel_x = 0
@@ -67,6 +75,26 @@
 		new_transform.Shear(-0.5, 0)
 		new_transform.Scale(0.65, 1)
 	other_visual.transform = new_transform
+
+/// Shared checks for if someone can be called via modlink.
+/proc/base_mod_link_checks(mob/living/link_caller)
+	// ensure it's a valid caller at all
+	if(!isliving(link_caller) || QDELING(link_caller))
+		return FALSE
+	if(QDELETED(link_caller.loc))
+		return FALSE
+	if(isdummy(link_caller))
+		return FALSE
+	if(link_caller.stat == DEAD)
+		return FALSE
+	// there's some checks we only care about if the round hasn't ended
+	if(SSticker.current_state != GAME_STATE_FINISHED)
+		if(istype(link_caller, /mob/living/carbon/human/ghost))
+			return FALSE
+		var/area/area = get_area(link_caller)
+		if(isnull(area) || (area.area_flags & GHOST_AREA))
+			return FALSE
+	return TRUE
 
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
@@ -106,7 +134,9 @@
 				balloon_alert(user, "frequency set")
 
 /obj/item/mod/control/proc/can_call()
-	return get_charge() && wearer && wearer.stat < DEAD
+	if(!get_charge())
+		return FALSE
+	return base_mod_link_checks(wearer)
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -121,12 +151,10 @@
 	. = ..()
 	if(speaker != wearer && speaker != ai_assistant)
 		return
-	// monkestation start: actually use the voice/name of the speaker
 	var/old_name = mod_link.visual.name
 	mod_link.visual.name = speaker.GetVoice()
 	mod_link.visual.say(raw_message, sanitize = FALSE, language = message_language, message_range = 2)
 	mod_link.visual.name = old_name
-	// monkestation end
 
 /obj/item/mod/control/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -266,12 +294,10 @@
 /obj/item/clothing/neck/link_scryer/ui_action_click(mob/user)
 	if(mod_link.link_call)
 		mod_link.end_call()
-	// monkestation start: balloon alert if there's no power cell
 	else if(QDELETED(cell))
 		user.balloon_alert(user, "no cell installed!")
 	else if(!cell.charge)
 		user.balloon_alert(user, "no charge!")
-	// monkestation end
 	else
 		call_link(user, mod_link)
 
@@ -280,8 +306,9 @@
 	return istype(user) && user.wear_neck == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
-	var/mob/living/user = loc
-	return istype(user) && cell?.charge && user.stat < DEAD
+	if(!cell?.charge)
+		return FALSE
+	return base_mod_link_checks(loc)
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
@@ -301,12 +328,10 @@
 	. = ..()
 	if(speaker != loc)
 		return
-	// monkestation start: actually use the voice/name of the speaker
 	var/old_name = mod_link.visual.name
 	mod_link.visual.name = speaker.GetVoice()
 	mod_link.visual.say(raw_message, sanitize = FALSE, language = message_language, message_range = 2)
 	mod_link.visual.name = old_name
-	// monkestation end
 
 /obj/item/clothing/neck/link_scryer/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -333,6 +358,19 @@
 
 /obj/item/clothing/neck/link_scryer/loaded/charlie
 	starting_frequency = MODLINK_FREQ_CHARLIE
+
+/// Scryer that automatically links based on area/Z-level
+/obj/item/clothing/neck/link_scryer/auto_link/Initialize(mapload)
+	. = ..()
+	var/turf/turf = get_turf(src)
+	if(isnull(turf))
+		return
+	if(is_station_level(turf.z))
+		mod_link.frequency = MODLINK_FREQ_NANOTRASEN
+		return
+	var/area/area = get_area(turf)
+	if(!isnull(GLOB.scryer_auto_link_freqs[area.type]))
+		mod_link.frequency = GLOB.scryer_auto_link_freqs[area.type]
 
 /// A MODlink datum, used to handle unique functions that will be used in the MODlink call.
 /datum/mod_link

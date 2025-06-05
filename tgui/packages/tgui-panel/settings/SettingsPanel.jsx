@@ -36,6 +36,7 @@ import {
   updateHighlightSetting,
 } from './actions';
 import { SETTINGS_TABS, FONTS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
+import { setEditPaneSplitters } from './scaling';
 import {
   selectActiveTab,
   selectSettings,
@@ -90,6 +91,7 @@ export const SettingsGeneral = (props, context) => {
   );
   const dispatch = useDispatch(context);
   const [freeFont, setFreeFont] = useLocalState('freeFont', false);
+  const [editingPanes, setEditingPanes] = useLocalState('freeFont', false);
 
   return (
     <Section>
@@ -110,6 +112,20 @@ export const SettingsGeneral = (props, context) => {
               }
             />
           ))}
+        </LabeledList.Item>
+        <LabeledList.Item label="UI sizes">
+          <Button
+            onClick={() =>
+              setEditingPanes((val) => {
+                setEditPaneSplitters(!val);
+                return !val;
+              })
+            }
+            color={editingPanes ? 'red' : undefined}
+            icon={editingPanes ? 'save' : undefined}
+          >
+            {editingPanes ? 'Save' : 'Adjust UI Sizes'}
+          </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Font style">
           <Stack.Item>

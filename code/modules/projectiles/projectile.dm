@@ -79,6 +79,8 @@
 	var/projectile_piercing = NONE
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
+	/// How many times this projectile can pierce something before deleting
+	var/max_pierces = 0
 
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -212,6 +214,10 @@
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
+	/// How much accuracy is lost for each tile travelled
+	var/accuracy_falloff = 7
+	/// How much accuracy before falloff starts to matter. Formula is range - falloff * tiles travelled
+	var/accurate_range = 100
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
 	/// If this projectile has been parried before
@@ -306,7 +312,7 @@
 			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
 			//monkestation edit start
 			if(damage_walls)
-				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = 100)
+				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = armour_penetration)
 			//monkestation edit end
 
 		return BULLET_ACT_HIT
@@ -481,19 +487,19 @@
 				store_hitscan_collision(point_cache)
 			return TRUE
 
-	if(!HAS_TRAIT(src, TRAIT_ALWAYS_HIT_ZONE) && isliving(A))
+	var/distance = decayedRange - range
+	var/hit_prob = clamp(accurate_range - (accuracy_falloff * distance), 5, 100)
+	if(isliving(A))
 		var/mob/living/who_is_shot = A
-		var/distance = decayedRange - range
-		var/hit_prob = max(100 - (7 * distance), 5)
 		if(who_is_shot.body_position == LYING_DOWN)
 			hit_prob *= 1.2
-		// melbert todo : make people more skilled with weapons have a lower miss chance
-		if(!prob(hit_prob))
-			def_zone = who_is_shot.get_random_valid_zone(def_zone, 0) // Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-			grazing = !prob(hit_prob) // jeez you missed twice? that's a graze
-			if(grazing)
-				wound_bonus = CANT_WOUND
-				bare_wound_bonus = CANT_WOUND
+	// melbert todo : make people more skilled with weapons have a lower miss chance // Consider nuking this TODO and update the projectile refactor
+	if(!prob(hit_prob))
+		def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(get_turf(A), starting)), 5, 100))
+		grazing = !prob(hit_prob) // jeez you missed twice? that's a graze
+		if(grazing)
+			wound_bonus = CANT_WOUND
+			bare_wound_bonus = CANT_WOUND
 
 	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
 

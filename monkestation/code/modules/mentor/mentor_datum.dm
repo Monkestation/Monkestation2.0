@@ -216,8 +216,6 @@ GLOBAL_PROTECT(mentor_href_token)
 	var/tok = GLOB.mentor_href_token
 	if(!forceGlobal && usr)
 		var/client/client = usr.client
-		//to_chat(world, client) // Dont see a reason to have these here.
-		//to_chat(world, usr)
 		if(!client)
 			CRASH("No client for MentorHrefToken()!")
 		var/datum/mentors/holder = client.mentor_datum

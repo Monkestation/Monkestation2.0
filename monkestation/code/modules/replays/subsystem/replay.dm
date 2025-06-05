@@ -3,6 +3,9 @@
 /datum/config_entry/string/replay_password
 	default = "mrhouse101"
 
+/datum/config_entry/string/replay_link
+	default = "http://localhost"
+
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	wait = 1
@@ -145,6 +148,9 @@ SUBSYSTEM_DEF(demo)
 	last_chat_message = SSdemo.last_chat_message
 	// last_queued = SSdemo.last_queued
 	// last_completed = SSdemo.last_completed
+
+/datum/controller/subsystem/demo/Shutdown()
+	disabled = TRUE
 
 /datum/controller/subsystem/demo/fire()
 	var/list/marked_new = src.marked_new
@@ -435,6 +441,8 @@ SUBSYSTEM_DEF(demo)
 	last_written_time = new_time
 
 /datum/controller/subsystem/demo/proc/write_event_line(line)
+	if(disabled)
+		return
 	write_time()
 	if(initialized)
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "[line]\n")

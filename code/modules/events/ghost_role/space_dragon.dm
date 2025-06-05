@@ -32,7 +32,7 @@
 		return MAP_ERROR
 
 	var/mob/living/basic/space_dragon/dragon = new (spawn_location)
-	dragon.key = key
+	dragon.PossessByPlayer(key)
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	playsound(dragon, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by an event.")

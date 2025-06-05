@@ -10,12 +10,13 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 
 	target.balloon_alert(target, "you hear a voice")
 	to_chat(target, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
-
-	log_admin("SubtlePM: [key_name(user)] -> [key_name(target)] : [msg]")
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_message = "SubtlePM: [key_name(user)] -> [key_name(target)] : [msg]"
+	log_admin(log_message)
+	// MONKESTATION EDIT END
 	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(user)] -> [key_name_admin(target)] :</b> [msg]")
-
 	message_admins(msg)
-	admin_ticket_log(target, msg)
+	admin_ticket_log(target, log_message) // MONKESTATION EDIT - tgui tickets
 	BLACKBOX_LOG_ADMIN_VERB("Subtle Message")
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
@@ -90,10 +91,13 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 		return
 
 	to_chat(target, msg, confidential = TRUE)
-	log_admin("DirectNarrate: [key_name(user)] to ([key_name(target.name)]): [msg]")
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_msg = "DirectNarrate: [key_name(user)] to ([key_name(target.name)]): [msg]"
+	log_admin(log_msg)
+	// MONKESTATION EDIT END
 	msg = span_adminnotice("<b> DirectNarrate: [key_name_admin(user)] to ([key_name_admin(target.name)]):</b> [msg]<BR>")
 	message_admins(msg)
-	admin_ticket_log(target, msg)
+	admin_ticket_log(target, log_msg) // MONKESTATION EDIT - tgui tickets
 	BLACKBOX_LOG_ADMIN_VERB("Direct Narrate")
 
 ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a custom law to the Silicons.", ADMIN_CATEGORY_EVENTS)

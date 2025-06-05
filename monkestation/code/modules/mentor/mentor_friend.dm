@@ -26,7 +26,7 @@ MENTOR_VERB(imaginary_friend, R_MENTOR, "Become Imaginary Friend", "Become someo
 		return
 
 	var/mob/camera/imaginary_friend/mentor/mentorfriend = new(get_turf(mentee), mentee)
-	mentorfriend.key = user.key
+	mentorfriend.PossessByPlayer(user.key)
 	log_admin("[key_name(mentorfriend)] started being the imaginary friend of [key_name(mentee)].")
 	message_admins("[key_name(mentorfriend)] started being the imaginary friend of [key_name(mentee)].")
 	BLACKBOX_LOG_MENTOR_VERB("Become Imaginary Friend")
@@ -142,9 +142,9 @@ MENTOR_VERB(end_imaginary_friendship, R_MENTOR, "End Imaginary Friendship", "Bre
 		return
 
 	var/mob/camera/imaginary_friend/mentor/mentorfriend = new(get_turf(friend_owner), friend_owner)
-	mentorfriend.key = usr.key
+	mentorfriend.PossessByPlayer(usr.key)
 
-	admin_ticket_log(friend_owner, "[key_name_admin(C)] became an imaginary friend of [key_name(friend_owner)]")
+	admin_ticket_log(friend_owner, "[key_name(C)] became an imaginary friend of [key_name(friend_owner)]")
 	log_admin("[key_name(mentorfriend)] started being imaginary friend of [key_name(friend_owner)].")
 	message_admins("[key_name(mentorfriend)] started being the imaginary friend of [key_name(friend_owner)].")
 

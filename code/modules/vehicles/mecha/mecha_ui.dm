@@ -254,7 +254,7 @@
 				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
 				return
 			name = userinput
-			chassis_camera.update_c_tag(src)
+			chassis_camera?.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
 			return
@@ -278,6 +278,9 @@
 			log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
 		if("toggle_port")
 			if(internal_tank.connected_port)
+				if(!internal_tank)
+					to_chat(occupants, "[icon2html(src, occupants)][span_notice("No internal tank detected on exosuit.")]")
+					return
 				if(internal_tank.disconnect())
 					to_chat(occupants, "[icon2html(src, occupants)][span_notice("Disconnected from the air system port.")]")
 					log_message("Disconnected from gas port.", LOG_MECHA)

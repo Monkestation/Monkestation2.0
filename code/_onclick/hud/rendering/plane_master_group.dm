@@ -15,7 +15,7 @@
 	var/map = ""
 	/// Controls the screen_loc that owned plane masters will use when generating relays. Due to a Byond bug, relays using the CENTER positional loc
 	/// Will be improperly offset
-	var/relay_loc = "CENTER"
+	var/relay_loc = "1,1"
 
 /datum/plane_master_group/New(key, map = "")
 	. = ..()
@@ -50,18 +50,10 @@
 		stack_trace("Hey brother, our key [key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob]. Ya fucked up, why are there dupes")
 		return
 
-#if MIN_COMPILER_VERSION > 516
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-
 	set_hud(viewing_hud)
 	our_hud.master_groups[key] = src
 	show_hud()
 	transform_lower_turfs(our_hud, active_offset)
-
-	if(viewing_hud.mymob?.client?.byond_version > 515)
-		relay_loc = "1,1"
-		rebuild_plane_masters()
 
 /// Well, refresh our group, mostly useful for plane specific updates
 /datum/plane_master_group/proc/refresh_hud()
@@ -194,17 +186,6 @@
 /// This is because it's annoying to get turfs to position inside it correctly
 /// If you wanna try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
-
-/// Note do not use return ..() because it will cause client crush when screen gets deleted
-/// TOOD: Remove this entirely when 516 is stable
-/datum/plane_master_group/popup/attach_to(datum/hud/viewing_hud)
-	if(viewing_hud.master_groups[key])
-		stack_trace("[key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob]!")
-		return
-	relay_loc = "1,1"
-	rebuild_plane_masters()
-	set_hud(viewing_hud)
-	show_hud()
 
 /datum/plane_master_group/popup/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
 	return ..(source, new_offset, FALSE)

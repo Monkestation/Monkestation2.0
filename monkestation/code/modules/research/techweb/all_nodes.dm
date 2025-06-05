@@ -206,7 +206,7 @@
 	description = "A bluespace implant which a holder can read surgical programs from their server with."
 	prereq_ids = list("exp_surgery", "micro_bluespace")
 	design_ids = list("linked_surgery")
-	boost_item_paths = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
+	required_items_to_unlock = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/serverlink = TECHWEB_TIER_3_POINTS)
 
@@ -227,11 +227,10 @@
 		"ipc_arm_right",
 		"ipc_leg_left",
 		"ipc_leg_right",
-		"power_cord"
+		"power_cord",
+		"ipc_antennae",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-
-
 
 /datum/techweb_node/bomb_actualizer
 	id = "bomb_actualizer"
@@ -253,7 +252,7 @@
 		"mod_springlock",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/springlock,
 	)
 
@@ -269,7 +268,7 @@
 		"mod_rave",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/visor/rave,
 	)
 
@@ -285,7 +284,7 @@
 		"mod_tanner",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/tanner,
 	)
 
@@ -301,7 +300,7 @@
 		"mod_balloon",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/balloon,
 	)
 
@@ -317,7 +316,7 @@
 		"mod_paper_dispenser",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/paper_dispenser,
 	)
 
@@ -333,7 +332,7 @@
 		"mod_stamp",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/stamp,
 	)
 
@@ -349,7 +348,7 @@
 		"mod_atrocinator",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/mod/module/atrocinator,
 	)
 

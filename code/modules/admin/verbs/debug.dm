@@ -164,7 +164,7 @@ ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume 
 	var/mob/adminmob = user.mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.key = user.key
+	M.PossessByPlayer(user.key)
 	user.init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
@@ -188,7 +188,7 @@ ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct
 		return
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.ckey = newkey.key
+	M.PossessByPlayer(newkey.key)
 	M.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
@@ -457,10 +457,13 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/li
 		return
 	M.revive(ADMIN_HEAL_ALL)
 
-	log_admin("[key_name(user)] healed / revived [key_name(M)]")
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_msg = "[key_name(usr)] healed / revived [key_name(M)]"
+	log_admin(log_msg)
 	var/msg = span_danger("Admin [key_name_admin(user)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	admin_ticket_log(M, log_msg)
+	// MONKESTATION EDIT END
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG | R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as obj|mob|turf in world)

@@ -32,7 +32,7 @@
 	server_ref = WEAKREF(server)
 	server.avatar_connection_refs.Add(WEAKREF(src))
 
-	avatar.key = old_body.key
+	avatar.PossessByPlayer(old_body.key)
 	ADD_TRAIT(avatar, TRAIT_NO_MINDSWAP, REF(src)) // do not remove this one
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
@@ -50,6 +50,7 @@
 	RegisterSignal(server, COMSIG_BITRUNNER_QSRV_SEVER, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
 	RegisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
+	RegisterSignal(server, COMSIG_BITRUNNER_STATION_SPAWN, PROC_REF(on_station_spawn))
 #ifndef UNIT_TESTS
 	RegisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 #endif
@@ -204,6 +205,20 @@
 	)
 	alert.name = "Domain Rebooting"
 	alert.desc = "The domain is rebooting. Find an exit."
+
+/// Triggers whenever an antag steps onto an exit turf and the server is emagged
+/datum/component/avatar_connection/proc/on_station_spawn(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/avatar = parent
+	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
+		ALERT_BITRUNNER_BREACH,
+		/atom/movable/screen/alert/bitrunning,
+		new_master = source,
+	)
+	alert.name = "Security Breach"
+	alert.desc = "A hostile entity is breaching the safehouse. Find an exit."
 
 /// Server has spawned a ghost role threat
 /datum/component/avatar_connection/proc/on_threat_created(datum/source)

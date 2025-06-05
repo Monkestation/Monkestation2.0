@@ -82,7 +82,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(get_mob, R_ADMIN, "Get Mob", "Teleport a mob to your
 	var/turf/location = get_turf(new_location)
 	var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(src)] to [isnull(new_location) ? "nullspace" : ADMIN_VERBOSEJMP(location)]"
 	message_admins(msg)
-	admin_ticket_log(src, msg)
+	admin_ticket_log(src,  "[key_name(usr)] teleported [src] to [isnull(new_location) ? "nullspace" : location]") // MONKESTATION EDIT - tgui tickets
 	return ..()
 
 
@@ -97,10 +97,13 @@ ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided k
 
 	if(!M)
 		return
-	log_admin("[key_name(user)] teleported [key_name(M)]")
-	var/msg = "[key_name_admin(user)] teleported [ADMIN_LOOKUPFLW(M)]"
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_msg = "[key_name(user)] teleported [key_name(M)]"
+	log_admin(log_msg)
+	var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(M)]"
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	admin_ticket_log(M, log_msg)
+	// MONKESTATION EDIT END
 	if(M)
 		M.forceMove(get_turf(user))
 		BLACKBOX_LOG_ADMIN_VERB("Get Key")
@@ -115,10 +118,13 @@ ADMIN_VERB(send_mob, R_ADMIN, "Send Mob", "Teleport the specified mob to an area
 		return
 	var/list/turfs = get_area_turfs(target_area)
 	if(length(turfs) && jumper.forceMove(pick(turfs)))
-		log_admin("[key_name(user)] teleported [key_name(jumper)] to [AREACOORD(jumper)]")
+		// MONKESTATION EDIT START - tgui tickets
+		var/log_msg = "[key_name(user)] teleported [key_name(jumper)] to [AREACOORD(jumper)]"
+		log_admin(log_msg)
 		var/msg = "[key_name_admin(user)] teleported [ADMIN_LOOKUPFLW(jumper)] to [AREACOORD(jumper)]"
 		message_admins(msg)
-		admin_ticket_log(jumper, msg)
+		admin_ticket_log(jumper, log_msg)
+		// MONKESTATION EDIT END
 	else
 		to_chat(user, "Failed to move mob to a valid location.", confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Send Mob")

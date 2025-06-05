@@ -654,6 +654,7 @@
 		/obj/machinery/vending/imported/yangyu = "Fudobenda",
 		/obj/machinery/vending/mechcomp = "ThinkTronic MechComp Dispenser",
 		/obj/machinery/vending/plushvendor = "Plushie Vendor",
+		/obj/machinery/vending/wardrobe/xeno_wardrobe = "Xeno_Drobe",
 		// monkestation end
 	)
 
@@ -957,7 +958,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/manipulator = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger"
@@ -1031,7 +1033,7 @@
 	build_path = /obj/machinery/dna_scannernew
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)

@@ -16,6 +16,7 @@ import {
 } from './actions';
 import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
+import { setDisplayScaling } from './scaling';
 import { exportChatSettings } from './settingsImExport';
 
 let setStatFontTimer;
@@ -58,6 +59,7 @@ export const settingsMiddleware = (store) => {
     const { type, payload } = action;
     if (!initialized) {
       initialized = true;
+      setDisplayScaling();
       storage.get('panel-settings').then((settings) => {
         store.dispatch(loadSettings(settings));
       });

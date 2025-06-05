@@ -132,6 +132,10 @@
 		. += lid
 	. += ..()
 
+/obj/structure/closet/crate/preopen
+	opened = TRUE
+	icon_state = "crateopen"
+
 /obj/structure/closet/crate/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."

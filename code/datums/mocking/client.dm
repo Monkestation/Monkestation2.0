@@ -30,7 +30,7 @@
 	var/context_menu_requires_shift = FALSE
 
 	///these persist between logins/logouts during the same round.
-	var/datum/player_details/player_details
+	var/datum/persistent_client/persistent_client
 	var/reconnecting = FALSE
 
 /datum/client_interface/proc/IsByondMember()
@@ -41,14 +41,14 @@
 	if(key)
 		src.key = key
 		ckey = ckey(key)
-		if(GLOB.player_details[ckey])
+		if(GLOB.persistent_clients_by_ckey[ckey])
 			reconnecting = TRUE
-			player_details = GLOB.player_details[ckey]
+			persistent_client = GLOB.persistent_clients_by_ckey[ckey]
 		else
-			player_details = new(ckey)
-			player_details.byond_version = world.byond_version
-			player_details.byond_build = world.byond_build
-			GLOB.player_details[ckey] = player_details
+			persistent_client = new(ckey)
+			persistent_client.byond_version = world.byond_version
+			persistent_client.byond_build = world.byond_build
+			GLOB.persistent_clients_by_ckey[ckey] = persistent_client
 
 /datum/client_interface/proc/set_macros()
 	return

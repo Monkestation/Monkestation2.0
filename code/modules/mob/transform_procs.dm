@@ -97,9 +97,6 @@
 		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
 		landmark_loc += loc
 
-	if(client)
-		client.media.stop_music()
-
 	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 	. = our_AI
 
@@ -147,7 +144,7 @@
 			mind.active = FALSE
 		mind.transfer_to(new_borg)
 	else if(transfer_after)
-		new_borg.key = key
+		new_borg.PossessByPlayer(key)
 
 	if(new_borg.mmi)
 		new_borg.mmi.name = "[initial(new_borg.mmi.name)]: [real_name]"
@@ -217,7 +214,7 @@
 			new_xeno = new /mob/living/carbon/alien/adult/drone(loc)
 
 	new_xeno.set_combat_mode(TRUE)
-	new_xeno.key = key
+	new_xeno.PossessByPlayer(key)
 	update_atom_languages()
 
 	to_chat(new_xeno, span_boldnotice("You are now an alien."))
@@ -249,7 +246,7 @@
 	else
 		new_slime = new /mob/living/basic/slime(loc)
 	new_slime.set_combat_mode(TRUE)
-	new_slime.key = key
+	new_slime.PossessByPlayer(key)
 
 	to_chat(new_slime, span_boldnotice("You are now a slime. Skreee!"))
 	qdel(src)
@@ -257,7 +254,7 @@
 
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
-	B.key = key
+	B.PossessByPlayer(key)
 	. = B
 	qdel(src)
 
@@ -277,7 +274,7 @@
 
 	var/mob/living/basic/pet/dog/corgi/new_corgi = new /mob/living/basic/pet/dog/corgi (loc)
 	new_corgi.set_combat_mode(TRUE)
-	new_corgi.key = key
+	new_corgi.PossessByPlayer(key)
 
 	to_chat(new_corgi, span_boldnotice("You are now a Corgi. Yap Yap!"))
 	qdel(src)
@@ -304,7 +301,7 @@
 	if(mind)
 		mind.transfer_to(new_gorilla)
 	else
-		new_gorilla.key = key
+		new_gorilla.PossessByPlayer(key)
 	to_chat(new_gorilla, span_boldnotice("You are now a gorilla. Ooga ooga!"))
 	qdel(src)
 	return new_gorilla
@@ -336,7 +333,7 @@
 
 	var/mob/living/new_mob = new mobpath(src.loc)
 
-	new_mob.key = key
+	new_mob.PossessByPlayer(key)
 	new_mob.set_combat_mode(TRUE)
 
 	to_chat(new_mob, span_boldnotice("You suddenly feel more... animalistic."))
@@ -355,7 +352,7 @@
 
 	var/mob/living/new_mob = new mobpath(src.loc)
 
-	new_mob.key = key
+	new_mob.PossessByPlayer(key)
 	new_mob.set_combat_mode(TRUE)
 	to_chat(new_mob, span_boldnotice("You feel more... animalistic."))
 

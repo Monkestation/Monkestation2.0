@@ -196,8 +196,19 @@
 				if (!posttransformoutfit)
 					return
 				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+				SSquirks.AssignQuirks(newmob, newmob.client, blacklist = list(/datum/quirk/stowaway)) //MONKESTATION ADDITION
 				if(posttransformoutfit && istype(newmob))
+				/* //MONKESTATION EDIT START - give me my loadout, NOW!
 					newmob.equipOutfit(posttransformoutfit)
+				*/ //MONKESTATION EDIT ORIGINAL
+					if(posttransformoutfit == "Naked")
+						posttransformoutfit = new /datum/outfit()
+					newmob.equip_outfit_and_loadout(posttransformoutfit, newmob.client.prefs)
+					for(var/datum/loadout_item/item as anything in loadout_list_to_datums(newmob.client?.prefs?.loadout_list))
+						if(length(item.restricted_roles))
+							continue
+						item.post_equip_item(newmob.client.prefs, newmob)
+				// MONKESTATION EDIT END
 			if("monkey")
 				M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
 			if("robot")
@@ -563,7 +574,7 @@
 		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
 
 		var/mob/dead/new_player/NP = new()
-		NP.ckey = M.ckey
+		NP.PossessByPlayer(M.ckey)
 		qdel(M)
 
 	else if(href_list["tdome1"])
@@ -770,6 +781,10 @@
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/subject = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
+		// MONKESTATION START
+		// Moved to monkestation/code/modules/admin/admin.dm
+		adminmoreinfo(subject)
+		/*
 		if(!ismob(subject))
 			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 			return
@@ -844,6 +859,8 @@
 		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
 
 		to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)
+		*/
+		// MONKESTATION END
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))
@@ -1771,9 +1788,9 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.queued_token_event)
 			return
-		token_holder.approve_token_event()
 		message_admins("[key_name_admin(owner)] approved a [token_holder.queued_token_event.event_name] event token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been approved by [owner].")
+		token_holder.approve_token_event()
 
 	else if(href_list["reject_token_event"])
 		if(!check_rights(R_ADMIN))
@@ -1785,7 +1802,7 @@
 		var/datum/meta_token_holder/token_holder = user_client?.client_token_holder
 		if(!token_holder?.queued_token_event)
 			return
-		token_holder.reject_token_event()
 		message_admins("[key_name_admin(owner)] rejected a [token_holder.queued_token_event.event_name] event token from [ADMIN_LOOKUPFLW(user_client)]")
 		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been rejected by [owner].")
+		token_holder.reject_token_event()
 //monkestation edit end
