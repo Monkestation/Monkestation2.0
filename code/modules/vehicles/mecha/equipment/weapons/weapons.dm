@@ -581,6 +581,20 @@
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
+// this is the 85k-a Spatha's gun, much more powerful then the normal tank, its admeme spawned only so no worries.
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/hv_tank_cannon
+	name = "40mm hv tank cannon"
+	desc = "A high velocity 40mm cannon, built for the spatha it can delete lesser beings with ease. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
+	icon_state = "mecha_hv_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/hvtankshell
+	equip_cooldown = 4 SECONDS // fires fast bruv
+	projectiles = 1
+	projectiles_cache = 45
+	projectiles_cache_max = 45
+	ammo_type = MECHA_AMMO_LIGHTTANK
+	mech_flags = EXOSUIT_MODULE_TANK
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone Mk.1 Ratcatcher"
