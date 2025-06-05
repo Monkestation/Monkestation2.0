@@ -6463,7 +6463,6 @@
 #include "monkestation\code\modules\admin\verbs\selectequipment.dm"
 #include "monkestation\code\modules\admin\verbs\spawn_mixtape.dm"
 #include "monkestation\code\modules\admin\verbs\ticketpanel.dm"
-#include "monkestation\code\modules\admin\verbs\tracy.dm"
 #include "monkestation\code\modules\admin\verbs\traits.dm"
 #include "monkestation\code\modules\admin\verbs\SDQL2\SDQL_2_wrappers.dm"
 #include "monkestation\code\modules\aesthetics\airlock\airlock.dm"

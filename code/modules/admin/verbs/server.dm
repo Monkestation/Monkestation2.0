@@ -28,7 +28,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 	var/result = input(user, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 	if(result)
 		BLACKBOX_LOG_ADMIN_VERB("Reboot World")
-		var/init_by = "Initiated by [user.client.holder.fakekey ? "Admin" : user.key]."
+		var/init_by = "Initiated by [user.holder.fakekey ? "Admin" : user.key]."
 		switch(result)
 			if("Regular Restart")
 				if(!user.is_localhost())
@@ -38,7 +38,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 				SSplexora.restart_requester = user.mob
 				SSplexora.restart_type = PLEXORA_SHUTDOWN_NORMAL
 				// monkestation end
-				SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.client.holder.fakekey ? "(stealth)" : ""]", 10)
+				SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", 10)
 			if("Regular Restart (with delay)")
 				var/delay = input(user, "What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
 				if(!delay)
@@ -50,7 +50,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 				SSplexora.restart_requester = user.mob
 				SSplexora.restart_type = PLEXORA_SHUTDOWN_NORMAL
 				// monkestation end
-				SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.client.holder.fakekey ? "(stealth)" : ""]", delay * 10)
+				SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", delay * 10)
 			if("Hard Restart (No Delay, No Feedback Reason)")
 				// monkestation start - plexora
 				SSplexora.restart_requester = user.mob
