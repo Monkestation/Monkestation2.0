@@ -68,9 +68,7 @@
 
 /datum/action/cooldown/slime_hydrophobia/Remove(mob/living/remove_from) // If we lose the spell make sure to remove its effects
 	. = ..()
-	if(remove_from.has_status_effect(/datum/status_effect/slime_hydrophobia))
-		REMOVE_TRAIT(remove_from, TRAIT_SLIME_HYDROPHOBIA, ACTION_TRAIT)
-		remove_from.remove_status_effect(/datum/status_effect/slime_hydrophobia)
+	remove_from.remove_status_effect(/datum/status_effect/slime_hydrophobia)
 
 /datum/action/cooldown/slime_hydrophobia/Activate()
 	. = ..()
