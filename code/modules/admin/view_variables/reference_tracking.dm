@@ -86,7 +86,7 @@
 
 	if(isdatum(potential_container))
 		var/datum/datum_container = potential_container
-		if(datum_container.last_find_references == search_time || datum_container == SSgarbage || datum_container == SSdemo)
+		if(datum_container.last_find_references == search_time)
 			return
 
 		datum_container.last_find_references = search_time
