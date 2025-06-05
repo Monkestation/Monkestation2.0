@@ -1,11 +1,8 @@
 /obj/effect/spawner/random/livingplush
 	name = "Ghost controlled plush spawner"
 	desc = "Will immediately create an offer a plushie to the ghosts"
-
-
-/obj/effect/spawner/random/livingplush/Initialize(mapload)
-	loot = list(typecacheof(/obj/item/toy/plush,ignore_root_path = TRUE))
-	return ..()
+	loot_subtype_path = /obj/item/toy/plush
+	loot = list()
 
 
 /obj/effect/spawner/random/livingplush/post_spawn(atom/movable/spawned_loot)
