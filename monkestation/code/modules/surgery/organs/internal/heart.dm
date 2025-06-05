@@ -23,22 +23,25 @@
 	/// Ability given to the owner of the organ
 	var/datum/action/innate/retract_limb/retract_limb
 
+/obj/item/organ/internal/heart/slime/Destroy()
+	QDEL_NULL(regenerate_limbs)
+	QDEL_NULL(retract_limb)
+	return ..()
+
 /obj/item/organ/internal/heart/slime/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	regenerate_limbs = new
+	if(!QDELETED(regenerate_limbs))
+		regenerate_limbs = new
 	regenerate_limbs.Grant(receiver)
-	retract_limb = new
+	if(!QDELETED(retract_limb))
+		retract_limb = new
 	retract_limb.Grant(receiver)
 	RegisterSignal(receiver, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(slime_blood))
 
 /obj/item/organ/internal/heart/slime/Remove(mob/living/carbon/heartless, special)
 	. = ..()
-	if(regenerate_limbs)
-		regenerate_limbs.Remove(heartless)
-		qdel(regenerate_limbs)
-	if(retract_limb)
-		retract_limb.Remove(heartless)
-		qdel(retract_limb)
+	QDEL_NULL(regenerate_limbs)
+	QDEL_NULL(retract_limb)
 	UnregisterSignal(heartless, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
 /obj/item/organ/internal/heart/slime/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
