@@ -1,0 +1,4 @@
+author: "Absolucy, PowerfulBacon"
+delete-after: True
+changes:
+  - bugfix: "Fixes movement keys being stuck."

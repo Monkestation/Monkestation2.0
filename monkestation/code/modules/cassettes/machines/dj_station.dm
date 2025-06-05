@@ -38,11 +38,13 @@ GLOBAL_VAR(dj_booth)
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	GLOB.dj_booth = src
 	register_context()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 
 /obj/machinery/cassette/dj_station/Destroy()
-	. = ..()
-	GLOB.dj_booth = null
+	if(GLOB.dj_booth == src)
+		GLOB.dj_booth = null
 	STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
 /obj/machinery/cassette/dj_station/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

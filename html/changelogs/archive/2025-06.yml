@@ -87,3 +87,21 @@
   - bugfix: Revivers will no longer spam chat that they are attempting to revive you.
   - bugfix: Revivers... Will actually revive you now.
   - bugfix: Nightmares are now nightmares. Instead of the actual scariest thing, Man.
+2025-06-04:
+  Absolucy:
+  - rscadd: Bloodsucker cloaking (Cloak of Darkness or Auspex) now hides your identity
+      while active.
+  - map: voidraptor xenobio's APC now has a fully charged 10k cell so the 500 neon
+      lights don't instantly depower it
+  - bugfix: Hopefully actually fixed nanite cloud IDs not syncing (try 2)
+  - qol: Being contracted no longer injects omnizine, it instead applies a short-lived
+      healing status effect, which doesn't kill oozelings.
+  notghosti:
+  - bugfix: NIGHTMARES. Will work. You will be evil and not some dude, actually this
+      time
+2025-06-05:
+  Salted-Zen:
+  - rscadd: Cableknit and Keyhole sweater purchasable in monkecoin shop to roundstart
+      with.
+  notghosti:
+  - map: Meta station Artsci is now accessible without xenobio access

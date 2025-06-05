@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscadd: "A Syndicate Rebar Quiver has been added to the uplink"
+  - qol: "Left clicking with a rebar crossbow will now draw/undraw the string."
