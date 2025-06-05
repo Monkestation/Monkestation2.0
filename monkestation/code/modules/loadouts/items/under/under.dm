@@ -880,6 +880,14 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Flower Dress"
 	item_path = /obj/item/clothing/under/dress/nova/flower
 
+/datum/loadout_item/under/miscellaneous/sweater //BUYABLE
+	name = "Cableknit Sweater"
+	item_path = /obj/item/clothing/under/sweater
+
+/datum/loadout_item/under/miscellaneous/sweater/keyhole //BUYABLE
+	name = "Keyhole Sweater"
+	item_path = /obj/item/clothing/under/sweater/keyhole
+
 /datum/loadout_item/under/miscellaneous/tactical_hawaiian_orange //BUYABLE
 	name = "Tactical Hawaiian Outfit - Orange"
 	item_path = /obj/item/clothing/under/tachawaiian

@@ -709,6 +709,16 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	item_path = /obj/item/clothing/under/dress/nova/flower
 	item_cost = 1000
 
+/datum/store_item/under/miscellaneous/sweater //BUYABLE
+	name = "Cableknit Sweater"
+	item_path = /obj/item/clothing/under/sweater
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/sweater/keyhole //BUYABLE
+	name = "Keyhole Sweater"
+	item_path = /obj/item/clothing/under/sweater/keyhole
+	item_cost = 1000
+
 /datum/store_item/under/miscellaneous/tactical_hawaiian_orange //BUYABLE
 	name = "Tactical Hawaiian Outfit - Orange"
 	item_path = /obj/item/clothing/under/tachawaiian
