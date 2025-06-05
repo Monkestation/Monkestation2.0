@@ -45,8 +45,10 @@
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching atoms")
 
+	var/to_skip = SSgarbage // something something local vars faster to access
 	for(var/datum/thing) //datums
-		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
+		if(thing != to_skip)
+			DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching datums")
 
 	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
