@@ -400,7 +400,7 @@
 	possible_transfer_amounts = list(10)
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 20)
 	stripe_style = "sala"
-	inhand_icon_state = "salapen"
+	inhand_icon_state = "salacid"
 
 /obj/item/reagent_containers/hypospray/medipen/advanced/morphine
 	name = "advanced morphine autoinjector"
