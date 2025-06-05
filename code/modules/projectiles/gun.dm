@@ -20,6 +20,7 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
+	action_slots = ALL
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE

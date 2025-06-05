@@ -58,7 +58,6 @@ SUBSYSTEM_DEF(air)
 	var/list/reaction_handbook
 	var/list/gas_handbook
 
-
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
