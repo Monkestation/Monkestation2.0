@@ -43,7 +43,6 @@
 /obj/vehicle/sealed/mecha/nakki/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_sonar)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_reinforce)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_dive)
 
 // better parts since TC
@@ -58,7 +57,7 @@
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/vehicle/sealed/mecha/mech_sonar
-	name = "Ping the Sonar"
+	name = "Ping the Sonar (just a sound)"
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/vehicle/sealed/mecha/mech_dive
@@ -80,11 +79,8 @@
 		owner.client.view_size.resetToDefault()
 
 
-/datum/action/vehicle/sealed/mecha/mech_horn/Trigger(trigger_flags) // ear rape. But lets people know theyre dead
-	playsound(chassis, 'sound/vehicles/dreadnaughthorn.ogg', 250)
-/datum/action/vehicle/sealed/mecha/mech_reinforce/Trigger(trigger_flags)
-	playsound(chassis, 'sound/vehicles/wearebeingreinforced.ogg', 250)
-
+/datum/action/vehicle/sealed/mecha/mech_sonar/Trigger(trigger_flags) // ear rape. sonar ping
+	playsound(chassis, 'sound/mecha/nakkisonar.ogg', 250)
 
 // the diving
 
