@@ -230,7 +230,7 @@
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 	backpack_contents = list(
 		/obj/item/syndicate_voucher/leader = 1,
-		/obj/item/choice_beacon/commando_support/spawn_option = 1,
+		/obj/item/choice_beacon/commando_support = 1,
 		/obj/item/disk/nuclear/nukie = 1,
 	)
 
