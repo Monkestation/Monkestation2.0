@@ -1111,11 +1111,11 @@
 		activate()
 
 /datum/status_effect/stabilized/rainbow/proc/activate()
-	if(!TIMER_COOLDOWN_CHECK(owner, COOLDOWN_STABLE_RAINBOW))
-		trigger_after_cooldown = TRUE
-		return
 	var/obj/item/slimecross/stabilized/rainbow/extract = linked_extract
 	if(QDELETED(src) || !istype(extract) || QDELING(extract) || QDELETED(extract.regencore))
+		return
+	if(!TIMER_COOLDOWN_CHECK(owner, COOLDOWN_STABLE_RAINBOW))
+		trigger_after_cooldown = TRUE
 		return
 	trigger_after_cooldown = FALSE
 	// bypasses cooldowns, but also removes any existing regen effects
