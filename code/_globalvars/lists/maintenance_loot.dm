@@ -399,8 +399,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			) = 1,
 		*/ // MONKESTATION EDIT END
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
-		//obj/item/gun/magic/wand/polymorph = 1, //monkestation edit. monkestation edit edit.
-		/obj/item/organ/internal/butt/atomic = 1, //monkestation edit
+		/obj/item/organ/internal/butt/atomic = 1,
 		/obj/item/a_gift/anything/wiz_name = 1, //Here's your
 	))
 
