@@ -57,6 +57,10 @@
 	name = "Survivalist Bunker"
 	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three-man heavily fortified bunker into a giant unused asteroid. \
 	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
+	undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
 
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
@@ -182,6 +186,10 @@
 	suffix = "spacerealhotel.dmm"
 	name = "The Twin-Nexus Hotel"
 	description = "An actual working interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+	undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -207,12 +215,22 @@
 	name = "DJ Station"
 	description = "Until very recently this pirate radio station was used to harangue local space stations over a variety of perceived \"ethics violations\". \
 	It seems like someone finally got sick of it, but the equipment still works."
+	undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
 
 /datum/map_template/ruin/space/thederelict
 	id = "thederelict"
 	suffix = "russian_derelict.dmm"
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
+	undesirable_ruins = list(
+		"djstation",
+		"spacerealhotel",
+		"deep-storage",
+		"listeningstation",
+	)
 
 /datum/map_template/ruin/space/abandonedteleporter
 	id = "abandonedteleporter"
@@ -241,6 +259,10 @@
 	name = "Syndicate Listening Station"
 	description = "Listening stations form the backbone of the syndicate's information-gathering operations. \
 	Assignment to these stations is dreaded by most agents, as it entails long and lonely shifts listening to nearby stations chatter incessantly about the most meaningless things."
+	undesirable_ruins = list(
+		"oldstation",
+		"thederelict",
+	)
 
 /datum/map_template/ruin/space/old_ai_sat
 	id = "oldAIsat"
@@ -276,6 +298,12 @@
 	name = "Ancient Space Station"
 	description = "The crew of a space station awaken one hundred years after a crisis. Awaking to a derelict space station on the verge of collapse, and a hostile force of invading \
 	hivebots. Can the surviving crew overcome the odds and survive and rebuild, or will the cold embrace of the stars become their new home?"
+	undesirable_ruins = list(
+		"djstation",
+		"spacerealhotel",
+		"deep-storage",
+		"listeningstation",
+	)
 
 /datum/map_template/ruin/space/gondoland
 	id = "gondolaasteroid"
@@ -479,4 +507,3 @@
 	suffix = "syndicate_depot.dmm"
 	name = "Syndicate Depot"
 	description = "A small depot ran by the Syndicate sitting out in space, responsible for logistics across the vast reaches of space."
-

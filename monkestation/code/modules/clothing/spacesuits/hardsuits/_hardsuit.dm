@@ -161,10 +161,6 @@
 			var/datum/action/A = X
 			A.Remove(user)
 
-/obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
-		return 1
-
 /// Burn the person inside the hard suit just a little, the suit got really hot for a moment
 /obj/item/clothing/suit/space/emp_act(severity)
 	. = ..()
