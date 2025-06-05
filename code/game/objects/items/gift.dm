@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/uplink/,
 			//No self antagging with the uplinks please. ~MCP
 			//This conveniently kills the debug uplink from the gifts too.
-			/obj/item/
+			/obj/item/mod/control/pre_equipped/chrono,
 			)
 		for(var/blocked_item as anything in blocked_items)
 			// Block the item listed, and any subtypes too.
