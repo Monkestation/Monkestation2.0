@@ -37,8 +37,8 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 0
-	max_occurrences = 0
+	weight = 5 //Return of the king
+	max_occurrences = 1
 	event_icon_state = "revolution"
 
 /datum/antagonist/rev/head/event_trigger
