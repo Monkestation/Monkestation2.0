@@ -95,14 +95,9 @@
 		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
 
 	. = ..()
+
 	if(merge)
-		for(var/obj/item/stack/item_stack in loc)
-			if(item_stack == src)
-				continue
-			if(can_merge(item_stack))
-				INVOKE_ASYNC(src, PROC_REF(merge_without_del), item_stack)
-				if(is_zero_amount(delete_if_zero = FALSE))
-					return INITIALIZE_HINT_QDEL
+		. = INITIALIZE_HINT_LATELOAD
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
@@ -116,10 +111,14 @@
 
 	update_weight()
 	update_appearance()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered_occupied_turf),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/item/stack/LateInitialize()
+	merge_with_loc()
+
+/obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
+		merge_with_loc()
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -135,6 +134,34 @@
  */
 /obj/item/stack/proc/update_custom_materials()
 	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
+
+/obj/item/stack/proc/find_other_stack(alist/already_found)
+	if(QDELETED(src) || isnull(loc))
+		return
+	for(var/obj/item/stack/item_stack in loc)
+		if(item_stack == src || QDELING(item_stack) || (item_stack.amount >= item_stack.max_amount))
+			continue
+		if(!(item_stack.flags_1 & INITIALIZED_1))
+			stack_trace("find_other_stack found uninitialized stack in loc? skipping for now")
+			continue
+		var/stack_ref = REF(item_stack)
+		if(already_found[stack_ref])
+			continue
+		if(can_merge(item_stack))
+			already_found[stack_ref] = TRUE
+			return item_stack
+
+/// Tries to merge the stack with everything on the same tile.
+/obj/item/stack/proc/merge_with_loc()
+	var/alist/already_found = alist()
+	var/obj/item/other_stack = find_other_stack(already_found)
+	var/sanity = max_amount // just in case
+	while(other_stack && sanity > 0)
+		sanity--
+		if(merge(other_stack))
+			return FALSE
+		other_stack = find_other_stack(already_found)
+	return TRUE
 
 /**
  * Override to make things like metalgen accurately set custom materials
@@ -623,17 +650,6 @@
 /obj/item/stack/proc/merge(obj/item/stack/target_stack, limit)
 	. = merge_without_del(target_stack, limit)
 	is_zero_amount(delete_if_zero = TRUE)
-
-/// Signal handler for connect_loc element. Called when a movable enters the turf we're currently occupying. Merges if possible.
-/obj/item/stack/proc/on_movable_entered_occupied_turf(datum/source, atom/movable/arrived)
-	SIGNAL_HANDLER
-
-	// Edge case. This signal will also be sent when src has entered the turf. Don't want to merge with ourselves.
-	if(arrived == src)
-		return
-
-	if(!arrived.throwing && can_merge(arrived))
-		INVOKE_ASYNC(src, PROC_REF(merge), arrived)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting, inhand = TRUE))

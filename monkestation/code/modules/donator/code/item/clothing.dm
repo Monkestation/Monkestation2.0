@@ -731,3 +731,16 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "clown_king_cloak"
 	worn_icon_state = "clown_king_cloak"
+
+/obj/item/clothing/suit/star_father_suit
+	name = "star father suit"
+	desc = "A slick black and gold robe."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "star_father_suit"
+	worn_icon_state = "star_father_suit"
+	alternative_screams = list(	'monkestation/code/modules/donator/sounds/starfathersuit_scream_1.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_2.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_3.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_4.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_5.ogg',)

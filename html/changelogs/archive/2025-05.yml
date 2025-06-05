@@ -161,3 +161,24 @@
   - map: Blueshift Engineering no longer has a paradox clone Poppy
   - map: Lead poisoning now allows maintenance drones to additionally suffer.
   - map: Syndicate Biolab has a few more access helpers for air alarms.
+2025-05-14:
+  Absolucy:
+  - rscdel: Beepsky no longer profiles cosplayers.
+  MissClassyPineapple:
+  - bugfix: 'Quick fix of admin outfit permissions
+
+      <!-- Both :cl:''s are required for the changelog to work! You can put your name
+      to the right of the first :cl: if you want to overwrite your GitHub username
+      as author ingame. -->
+
+      <!-- You can use multiple of the same prefix (they''re only used for the icon
+      ingame) and delete the unneeded ones. Despite some of the tags, changelogs should
+      generally represent how a player might be affected by the changes rather than
+      a summary of the PR''s contents. -->'
+2025-05-15:
+  Absolucy:
+  - map: The two middle xenobio pens on Box Station are now linked to their proper
+      ooze suckers, instead of the opposite ones.
+  Absolucy, Melbert:
+  - refactor: Stack merging has much less potential for causing large amounts of server
+      lag now.
