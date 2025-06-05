@@ -45,12 +45,8 @@
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching atoms")
 
-	// something something local vars faster to access
-	var/skipme_1 = SSgarbage
-	var/skipme_2 = SSdemo
 	for(var/datum/thing) //datums
-		if(thing != skipme_1 && thing != skipme_2)
-			DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
+		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching datums")
 
 	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
@@ -90,7 +86,7 @@
 
 	if(isdatum(potential_container))
 		var/datum/datum_container = potential_container
-		if(datum_container.last_find_references == search_time)
+		if(datum_container.last_find_references == search_time || datum_container == SSgarbage || datum_container == SSdemo)
 			return
 
 		datum_container.last_find_references = search_time
