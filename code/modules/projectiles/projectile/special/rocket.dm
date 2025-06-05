@@ -81,6 +81,7 @@ among other potential differences. This granularity is helpful for things like t
 	armour_penetration = 100
 	dismemberment = 100
 	anti_armour_damage = 200
+	speed = 0.28 // hv
 
 /obj/projectile/bullet/rocket/hvtankshell/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
