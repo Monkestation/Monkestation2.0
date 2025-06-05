@@ -301,7 +301,7 @@
 			if (volume <= 0)
 				continue
 
-			var/infusion_chance = min(round(volume / 5), 100)
+			var/infusion_chance = min(floor(volume / 5), 100)
 
 			if(prob(infusion_chance))
 				var/random_rate = rand(3, 25) / 100
