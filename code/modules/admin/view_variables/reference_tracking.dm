@@ -114,6 +114,10 @@
 				DoSearchVar(variable, "[container_name] [container_print] -> [varname] (list)", recursive_limit - 1, search_time)
 
 	else if(islist(potential_container))
+		// don't waste time searching the SSgarbage queue lol, it's almost certainly there anyways, and that's fine
+		if(potential_container == SSgarbage.queue)
+			return
+
 		var/normal = IS_NORMAL_LIST(potential_container)
 		var/list/potential_cache = potential_container
 		for(var/element_in_list in potential_cache)
