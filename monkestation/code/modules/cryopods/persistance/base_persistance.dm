@@ -17,6 +17,8 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 	"owner",
 	"vars",
 	"stored_character_slot_index",
+	"demo_last_appearance",
+	"demo_last_loc",
 ))
 
 /obj/item/organ/internal/brain
