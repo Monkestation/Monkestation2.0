@@ -1,11 +1,17 @@
 SUBSYSTEM_DEF(challenges)
 	name = "Challenges"
 	wait = 10 SECONDS
-	flags = SS_KEEP_TIMING | SS_NO_INIT
+	flags = SS_KEEP_TIMING | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	///list of challenges that have something we need to process
 	var/list/processing_challenges = list()
+
+/datum/controller/subsystem/challenges/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, processing_challenges),
+	)
 
 /datum/controller/subsystem/challenges/stat_entry(msg)
 	msg += "RC:[length(processing_challenges)]"
@@ -25,6 +31,3 @@ SUBSYSTEM_DEF(challenges)
 		if(new_challenge.processes)
 			processing_challenges += processing_challenges
 		new_challenge.on_apply(owner)
-		LAZYADD(owner.applied_challenges, new_challenge)
-
-

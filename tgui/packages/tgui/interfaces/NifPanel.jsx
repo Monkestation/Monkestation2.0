@@ -35,7 +35,7 @@ export const NifPanel = (props) => {
       resizable
       theme={current_theme}
     >
-      <Window.Content>
+      <Window.Content scrollable>
         <Section
           title={`Welcome to your NIF, ${linked_mob_name}`}
           buttons={

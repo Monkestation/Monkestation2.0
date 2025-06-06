@@ -135,8 +135,6 @@
 #define TRAIT_HIDDEN_EXPORT_VALUE	"hiddenexportvalue"
 
 // /obj/item
-/// Applied to a satchel that is being worn on the belt.
-#define TRAIT_BELT_SATCHEL 			"belt_satchel"
 /// Whether a storage item can be compressed by the bluespace compression kit, without the usual storage limitation.
 #define TRAIT_BYPASS_COMPRESS_CHECK	"can_compress_anyways"
 /// This item is considered "trash" (and will be eaten by cleaner slimes)

@@ -68,9 +68,8 @@
 /turf/closed/indestructible/binary,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "r" = (
-/mob/living/basic/mimic/crate,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
 "s" = (
 /mob/living/basic/mimic/crate,
 /turf/open/indestructible/dark,
@@ -293,7 +292,7 @@ o
 o
 Y
 Y
-r
+s
 Q
 Q
 Q
@@ -386,7 +385,7 @@ Q
 K
 Y
 Q
-r
+s
 Y
 Q
 Y
@@ -572,7 +571,7 @@ Y
 o
 o
 Y
-r
+s
 Q
 Q
 Q
@@ -586,7 +585,7 @@ Q
 Q
 Q
 Q
-Q
+r
 t
 h
 t
@@ -614,7 +613,7 @@ Q
 Q
 Q
 Q
-Q
+r
 t
 t
 t
@@ -642,7 +641,7 @@ Q
 Q
 Q
 Q
-Q
+r
 t
 t
 t

@@ -127,7 +127,5 @@
 /datum/opposing_force_equipment/modsuit_modules/flamethrower_mod
 	item_type = /obj/item/mod/module/flamethrower
 
-/*
 /datum/opposing_force_equipment/modsuit_modules/jump_jet
 	item_type = /obj/item/mod/module/jump_jet
-*/
