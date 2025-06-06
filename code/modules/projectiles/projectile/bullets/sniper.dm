@@ -122,7 +122,6 @@
 	range = 50 // Its not accurate, its fucking powerful
 	damage = 50
 	dismemberment = 25
-	catastropic_dismemberment = TRUE
 	armour_penetration = 85
 	var/object_damage = 65
 	var/mecha_damage = 40
