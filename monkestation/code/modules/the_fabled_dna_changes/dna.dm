@@ -24,6 +24,10 @@
 			new_palette.apply_prefs(holder.client.prefs)
 		color_palettes[palette] = new_palette
 
+/datum/dna/Destroy()
+	QDEL_LIST_ASSOC_VAL(color_palettes)
+	return ..()
+
 /datum/dna/proc/apply_color_palettes(datum/preferences/applied)
 	for(var/datum/species/listed_species as anything in typesof(/datum/species))
 		if(!initial(listed_species.color_palette))
