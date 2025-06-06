@@ -36,9 +36,9 @@ GLOBAL_LIST_INIT(blessed_ckeys, list(
 ///give it a list of clients and the value aswell if it should be affected by multipliers and let er rip
 /proc/mass_adjust_antag_rep(list/clients, value, mulitplier = TRUE)
 	for(var/client/listed_client as anything in clients)
-		if(!IS_CLIENT_OR_MOCK(listed_client) || QDELETED(listed_client) || QDELETED(listed_client.prefs))
+		if(!IS_CLIENT_OR_MOCK(listed_client))
 			continue
-		listed_client.prefs.adjust_antag_rep(value, mulitplier)
+		listed_client?.prefs?.adjust_antag_rep(value, mulitplier)
 
 /proc/return_antag_rep_weight(list/candidates)
 	. = list()
