@@ -120,14 +120,10 @@
 	if(!info_maptext)
 		return
 	for(var/mob/user as anything in hud_users_all_z_levels)
-		if(QDELETED(user) || QDELETED(user.client))
-			continue
-		user.client.images |= info_maptext
+		user?.client?.images |= info_maptext
 
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor/proc/take_cooldowns()
 	if(!info_maptext)
 		return
 	for(var/mob/user as anything in hud_users_all_z_levels)
-		if(QDELETED(user) || QDELETED(user.client))
-			continue
-		user.client.images -= info_maptext
+		user?.client?.images -= info_maptext
