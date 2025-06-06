@@ -224,6 +224,19 @@
 	), src)
 
 
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom
+	name = "\improper Wylom heavy rifle gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/wylom
+	extra_to_spawn = /obj/item/ammo_box/magazine/wylom
+
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom/PopulateContents()
+	new weapon_to_spawn (src)
+
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/wylom = 3,
+	), src)
+
 /obj/structure/closet/secure_closet/armory_kiboko
 	name = "heavy equipment locker"
 	req_access = list(ACCESS_ARMORY)
@@ -235,6 +248,7 @@
 	generate_items_inside(list(
 		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1, //monke edit
 		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1, //monke edit
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom, //REPLACE WITH IGNIFIST/20mm WHEN THE PR IS DONE
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko_but_evil

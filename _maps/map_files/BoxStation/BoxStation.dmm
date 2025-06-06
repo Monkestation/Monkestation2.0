@@ -7581,6 +7581,10 @@
 /obj/item/gun/ballistic/shotgun/riot{
 	pixel_y = 4
 	},
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_x = 0;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "ctb" = (
@@ -10971,6 +10975,10 @@
 /obj/item/gun/energy/e_gun{
 	pixel_x = 3;
 	pixel_y = -3
+	},
+/obj/item/gun/energy/e_gun{
+	pixel_x = 1;
+	pixel_y = -7
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -20592,6 +20600,10 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
+/obj/item/gun/energy/laser{
+	pixel_x = 2;
+	pixel_y = -6
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "gGD" = (
@@ -26333,15 +26345,33 @@
 /area/station/service/kitchen)
 "iuI" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/structure/rack{
+	pixel_x = 0;
+	pixel_y = 0
 	},
-/obj/item/gun/energy/disabler,
 /obj/item/gun/energy/disabler{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco{
+	pixel_x = 0;
+	pixel_y = -4
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco{
 	pixel_x = 3;
-	pixel_y = -3
+	pixel_y = -7
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = 4;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -42285,6 +42315,12 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nDw" = (
@@ -46157,16 +46193,7 @@
 /area/station/science/research)
 "oRs" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
-/obj/item/gun/ballistic/automatic/pistol/paco{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/ballistic/automatic/pistol/paco,
-/obj/item/gun/ballistic/automatic/pistol/paco{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/structure/closet/secure_closet/armory_kiboko,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "oRx" = (
@@ -60542,6 +60569,12 @@
 	pixel_y = 6;
 	pixel_x = 6
 	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tBq" = (
