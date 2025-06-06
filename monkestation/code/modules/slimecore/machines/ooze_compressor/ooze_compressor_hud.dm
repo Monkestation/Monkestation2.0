@@ -4,6 +4,7 @@
 
 /obj/machinery/plumbing/ooze_compressor/Destroy()
 	QDEL_NULL(hover_popup)
+	QDEL_NULL(hover_appearance)
 	return ..()
 
 /obj/machinery/plumbing/ooze_compressor/MouseEntered(location, control, params)
@@ -27,6 +28,7 @@
 	if(!anchored || (cleanup && !QDELETED(hover_popup) && !length(hover_popup.hud_users_all_z_levels)))
 		// don't bother keeping the hud around if it isn't needed
 		QDEL_NULL(hover_popup)
+		QDEL_NULL(hover_appearance)
 		return
 	setup_hud()
 
@@ -36,6 +38,7 @@
 	if(!QDELETED(hover_popup))
 		old_users = hover_popup.hud_users_all_z_levels.Copy()
 		QDEL_NULL(hover_popup)
+	QDEL_NULL(hover_appearance)
 
 	if(!length(GLOB.compressor_recipe_previews)) // we can't initialize this normally bc it will shit itself if initialized early
 		GLOB.compressor_recipe_previews = create_compressor_previews()
