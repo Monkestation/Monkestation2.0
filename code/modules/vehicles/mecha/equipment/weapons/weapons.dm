@@ -374,7 +374,7 @@
 	projectiles_cache_max = 0
 	disabledreload = TRUE
 	equip_cooldown = 60
-	harmful = TRUED
+	harmful = TRUE
 	ammo_type = MECHA_AMMO_MISSILE_SRM
 
 /// PEP-6 Missile Rack - Used by Robotics - Explodes only when it hits dense objects like walls, borgs and mechs
