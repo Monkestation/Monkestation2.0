@@ -245,6 +245,7 @@
 	number_of_shots = 1
 	cooldown_duration = 0.15 SECONDS
 	rate_of_fire = 8
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	firesound = 'sound/weapons/gun/hmg/lamentum.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
@@ -261,6 +262,7 @@
 	projectile_type = /obj/projectile/bullet/rocket/supporttankshell
 	anchored = TRUE
 	number_of_shots = 1
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cooldown_duration = 8 SECONDS
 	firesound = 'sound/weapons/gun/general/heavycannon.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
