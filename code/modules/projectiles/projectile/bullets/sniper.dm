@@ -120,10 +120,9 @@
 	name ="fukin 20mm bullet"
 	speed = 0.65
 	range = 50 // Its not accurate, its fucking powerful
-	damage = 35
-	paralyze = 10 // Its goin clean through, no spreading to really cause you to get KOed
-	dismemberment = 50
+	damage = 50
+	dismemberment = 25
 	catastropic_dismemberment = TRUE
-	armour_penetration = 100
-	var/object_damage = 80
-	var/mecha_damage = 65
+	armour_penetration = 85
+	var/object_damage = 65
+	var/mecha_damage = 40

@@ -393,7 +393,7 @@
 	fire_delay = 1.4 SECONDS
 	burst_size = 0
 	recoil = 1.6
-	projectile_damage_multiplier = 0.81 // Carbineated, less damage to account for better capacity and firerate, just a sliver under the 50dmg mark
+	projectile_damage_multiplier = 0.66 // Carbineated, less damage to account for better capacity and firerate, just at the 40dmg mark
 
 /obj/item/gun/ballistic/automatic/hangman
 	name = "\improper Hangman 757"
@@ -409,7 +409,7 @@
 	fire_delay = 2 SECONDS
 	burst_size = 0
 	recoil = 1.6
-	projectile_damage_multiplier = 0.89 // 53.4 dmg a hit, I think this is fair since of the cancer fire rate
+	projectile_damage_multiplier = 0.75 // 45 dmg a hit, I think this is fair since of the cancer fire rate
 
 /obj/item/gun/ballistic/automatic/malone
 	name = "\improper Malone Mk.2"

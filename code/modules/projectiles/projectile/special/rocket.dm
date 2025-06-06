@@ -64,13 +64,14 @@ among other potential differences. This granularity is helpful for things like t
 	name = "\improper 40mm tank shell"
 	desc = "mechanized warfare in spess."
 	icon_state = "LIGHTTANKSHELL"
-	damage = 50
+	damage = 60
 	armour_penetration = 100
 	dismemberment = 10
 	anti_armour_damage = 150
+	damage_walls = TRUE
 
 /obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
-	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
 
 /// 40mm HV tank shell - better then the standard 40mm, worse then the 75mm
 /obj/projectile/bullet/rocket/hvtankshell
@@ -108,7 +109,7 @@ among other potential differences. This granularity is helpful for things like t
 	damage = 10
 	dismemberment = -100
 	anti_armour_damage = 350
-
+	speed = 1.3 // LV
 /obj/projectile/bullet/rocket/torpenis/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 10, flame_range = 12, flash_range = 16, adminlog = TRUE)
 

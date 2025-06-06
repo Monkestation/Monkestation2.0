@@ -374,7 +374,7 @@
 	projectiles_cache_max = 0
 	disabledreload = TRUE
 	equip_cooldown = 60
-	harmful = TRUE
+	harmful = TRUED
 	ammo_type = MECHA_AMMO_MISSILE_SRM
 
 /// PEP-6 Missile Rack - Used by Robotics - Explodes only when it hits dense objects like walls, borgs and mechs
@@ -576,7 +576,7 @@
 	projectile = /obj/projectile/bullet/rocket/lighttankshell
 	equip_cooldown = 8 SECONDS
 	projectiles = 1
-	projectiles_cache = 10
+	projectiles_cache = 15
 	projectiles_cache_max = 35
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
@@ -602,9 +602,9 @@
 	icon_state = "mecha_light_tank_mg"
 	fire_sound = 'sound/weapons/gun/general/malone.ogg'
 	projectile = /obj/projectile/bullet/mm127x70
-	projectiles = 30
-	projectiles_cache = 60
-	projectiles_cache_max = 120
+	projectiles = 60
+	projectiles_cache = 120
+	projectiles_cache_max = 240
 	projectiles_per_shot = 5
 	projectile_delay = 0.1 SECONDS
 	equip_cooldown = 1 SECONDS
