@@ -276,8 +276,7 @@
 		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
 /datum/component/riding/vehicle/odyssey
-	vehicle_move_delay = 0.95
-	keytype = /obj/item/key/odyssey
+	vehicle_move_delay = 0.99
 
 /datum/component/riding/vehicle/odyssey/handle_specials()
 	. = ..()

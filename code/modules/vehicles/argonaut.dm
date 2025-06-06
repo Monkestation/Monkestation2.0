@@ -123,7 +123,6 @@
 	icon = 'icons/obj/car.dmi'
 	icon_state = "odyssey"
 	layer = LYING_MOB_LAYER
-	key_type = /obj/item/key/odyssey
 	pixel_y = -48
 	pixel_x = -48
 	max_buckled_mobs = 2
