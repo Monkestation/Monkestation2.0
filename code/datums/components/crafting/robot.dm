@@ -308,6 +308,7 @@
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/tank/internals/oxygen = 1,
 		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stack/sheet/plastic = 4,
 	)
 	category = CAT_ROBOT
 
@@ -420,6 +421,7 @@
 		/obj/item/stack/sheet/iron = 12,
 		/obj/item/tank/internals/oxygen = 1,
 		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/plastic = 4,
 	)
 	category = CAT_ROBOT
 
