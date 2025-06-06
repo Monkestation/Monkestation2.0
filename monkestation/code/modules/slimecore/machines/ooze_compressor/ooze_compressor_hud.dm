@@ -102,7 +102,7 @@
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor
 	var/image/info_maptext
 
-/datum/atom_hud/alternate_appearance/basic/Destroy()
+/datum/atom_hud/alternate_appearance/basic/ooze_compressor/Destroy()
 	. = ..()
 	QDEL_NULL(info_maptext) // needs to be AFTER parent call, so that it's removed from everyone's client images
 
