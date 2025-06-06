@@ -102,6 +102,10 @@
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor
 	var/image/info_maptext
 
+/datum/atom_hud/alternate_appearance/basic/Destroy()
+	. = ..()
+	QDEL_NULL(info_maptext) // needs to be AFTER parent call, so that it's removed from everyone's client images
+
 /datum/atom_hud/alternate_appearance/basic/ooze_compressor/show_to(mob/new_viewer)
 	. = ..()
 	if(info_maptext && !QDELETED(new_viewer) && !QDELETED(new_viewer.client))
