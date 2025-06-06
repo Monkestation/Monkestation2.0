@@ -146,7 +146,7 @@
 		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 		hud.remove_atom_from_hud(src)
 		var/list/L = hud_list[AI_DETECT_HUD]
-		QDEL_LIST(L)
+		L.Cut()
 	return ..()
 
 /atom/proc/move_camera_by_click()
