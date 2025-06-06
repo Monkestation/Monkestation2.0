@@ -49,7 +49,7 @@
 	var/mob/living/carbon/human/rammed = A
 	rammed.Paralyze(30)
 	rammed.stamina.adjust(-30)
-	rammed.apply_damage(rand(10,25), BRUTE)
+	rammed.apply_damage(rand(10,18), BRUTE)
 	if(!crash_all)
 		rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
 		visible_message(span_danger("[src] crashes into [rammed]!"))
@@ -166,7 +166,7 @@
 	var/mob/living/carbon/human/rammed = A
 	rammed.Paralyze(30)
 	rammed.stamina.adjust(-30)
-	rammed.apply_damage(rand(10,25), BRUTE)
+	rammed.apply_damage(rand(10,18), BRUTE)
 	if(!crash_all)
 		rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
 		visible_message(span_danger("[src] crashes into [rammed]!"))
