@@ -7,7 +7,7 @@
 	SET_BASE_PIXEL(-12, 0)
 	max_integrity = 220 // scout tank is not strong
 	force = 15 // not too dangerous
-	movedelay = 1.65 // slower then light tank, its small, cant fit big engine
+	movedelay = 1.8 // slower then light tank, its small, cant fit big engine
 	step_energy_drain = 33 // still a tank, just not as big
 	bumpsmash = FALSE // too light
 	stepsound = 'sound/vehicles/driving-noise.ogg'
