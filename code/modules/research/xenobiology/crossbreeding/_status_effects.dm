@@ -756,7 +756,8 @@
 /datum/status_effect/stabilized/cerulean/proc/create_clone()
 	var/typepath = owner.type
 	clone = new typepath(owner.loc)
-	clone.name = clone.real_name = owner.real_name
+	clone.real_name = owner.real_name
+	clone.name = clone.real_name
 	clone.update_name_tag(clone.real_name)
 	var/mob/living/carbon/carbon_owner = owner
 	var/mob/living/carbon/carbon_clone = clone
