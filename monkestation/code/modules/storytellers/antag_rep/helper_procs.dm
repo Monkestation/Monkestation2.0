@@ -53,4 +53,4 @@ GLOBAL_LIST_INIT(blessed_ckeys, list(
 			continue
 		.[client_source.ckey] = client_source.prefs?.antag_rep || 10
 
-	log_antag_rep("Returned Weighted List of [length(.)]", list("before_weight" = candidates, "after_weight" = .))
+	//log_antag_rep("Returned Weighted List of [length(.)]", list("before_weight" = candidates, "after_weight" = .))
