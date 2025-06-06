@@ -20626,10 +20626,6 @@
 	pixel_y = 6
 	},
 /obj/structure/sign/calendar/directional/south,
-/obj/item/key/odyssey{
-	pixel_x = 8;
-	pixel_y = 14
-	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain)
 "fXP" = (
@@ -41037,10 +41033,11 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/science/xenobiology)
 "lAu" = (
+/mob/living/basic/pet/fox/renault,
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/vehicle/ridden/odyssey,
+/obj/structure/bed/dogbed/renault,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain)
 "lAB" = (
@@ -64228,8 +64225,6 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/structure/bed/dogbed/renault,
-/mob/living/basic/pet/fox/renault,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain)
 "rTD" = (

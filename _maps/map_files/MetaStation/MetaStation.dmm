@@ -36713,8 +36713,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/table/wood,
-/obj/item/key/odyssey,
+/obj/machinery/recharge_station,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "mIP" = (
@@ -38549,7 +38548,13 @@
 /area/station/maintenance/disposal/incinerator)
 "nnh" = (
 /obj/machinery/light_switch/directional/south,
-/obj/machinery/recharge_station,
+/obj/structure/table/wood,
+/obj/item/razor{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/reagent_containers/cup/glass/flask/gold,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "nnk" = (
@@ -41405,9 +41410,12 @@
 /area/station/science/server)
 "onp" = (
 /obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "onr" = (
@@ -47497,9 +47505,8 @@
 /area/station/engineering/shipbreaker_hut)
 "qsQ" = (
 /obj/machinery/light/directional/north,
-/obj/vehicle/ridden/odyssey,
-/obj/effect/turf_decal/stripes/end,
-/turf/open/floor/iron/dark,
+/obj/machinery/computer/security/wooden_tv,
+/turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "qsT" = (
 /obj/effect/turf_decal/stripes/line,
@@ -63010,12 +63017,6 @@
 "vNG" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/west,
-/obj/item/reagent_containers/cup/glass/flask/gold,
-/obj/item/razor{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/item/clothing/mask/cigarette/cigar,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "vNL" = (

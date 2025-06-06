@@ -2740,11 +2740,6 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/medical)
-"bte" = (
-/obj/structure/table/wood,
-/obj/item/key/odyssey,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/captain/private)
 "btj" = (
 /obj/structure/cable,
 /obj/machinery/holopad,
@@ -24895,10 +24890,6 @@
 "lUS" = (
 /turf/open/floor/plating/foam,
 /area/space/nearstation)
-"lUW" = (
-/obj/vehicle/ridden/odyssey,
-/turf/open/floor/carpet,
-/area/station/command/heads_quarters/captain/private)
 "lVa" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/diagonal,
@@ -160404,9 +160395,9 @@ urb
 hmf
 khI
 ayF
-lUW
 ozA
-bte
+ozA
+mJL
 oDS
 cRD
 cRD

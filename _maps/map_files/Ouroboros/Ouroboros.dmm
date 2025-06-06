@@ -12564,26 +12564,6 @@
 	pixel_x = -12;
 	pixel_y = 4
 	},
-/obj/item/lighter{
-	color = "#d4af37";
-	desc = "A lighter clad with a thin layer of gold foil. Fancy!";
-	name = "Gilded Lighter";
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 4
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 10
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/cup/glass/flask/gold{
-	pixel_x = 5;
-	pixel_y = 9
-	},
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain)
 "dMR" = (
@@ -16868,7 +16848,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/item/melee/chainofcommand,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain)
 "eXC" = (
@@ -19733,9 +19712,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/structure/chair/wood,
 /obj/structure/sign/flag/nanotrasen/directional/north,
-/obj/structure/table/wood,
-/obj/item/key/odyssey,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/captain)
 "fRX" = (
@@ -32092,6 +32070,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/table/wood/poker,
+/obj/item/melee/chainofcommand,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/captain)
 "jzm" = (
@@ -34340,8 +34320,28 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/structure/table/wood/poker,
+/obj/item/reagent_containers/cup/glass/flask/gold{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/lighter{
+	color = "#d4af37";
+	desc = "A lighter clad with a thin layer of gold foil. Fancy!";
+	name = "Gilded Lighter";
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 4
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 7
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 10
+	},
 /obj/machinery/light/warm/directional/east,
-/obj/vehicle/ridden/odyssey,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/captain)
 "khL" = (
@@ -47359,6 +47359,9 @@
 "nSE" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
+	},
+/obj/structure/chair/wood{
+	dir = 1
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
