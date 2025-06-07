@@ -12,7 +12,7 @@
 #define SCANGATE_FLY "fly"
 #define SCANGATE_PLASMAMAN "plasma"
 #define SCANGATE_MOTH "moth"
-#define SCANGATE_JELLY "jelly"
+#define SCANGATE_OOZE "ooze"
 #define SCANGATE_POD "pod"
 #define SCANGATE_GOLEM "golem"
 #define SCANGATE_ZOMBIE "zombie"
@@ -158,8 +158,8 @@
 						scan_species = /datum/species/plasmaman
 					if(SCANGATE_MOTH)
 						scan_species = /datum/species/moth
-					if(SCANGATE_JELLY)
-						scan_species = /datum/species/jelly
+					if(SCANGATE_OOZE)
+						scan_species = /datum/species/oozeling
 					if(SCANGATE_POD)
 						scan_species = /datum/species/pod
 					if(SCANGATE_GOLEM)
@@ -291,7 +291,7 @@
 #undef SCANGATE_FLY
 #undef SCANGATE_PLASMAMAN
 #undef SCANGATE_MOTH
-#undef SCANGATE_JELLY
+#undef SCANGATE_OOZE
 #undef SCANGATE_POD
 #undef SCANGATE_GOLEM
 #undef SCANGATE_ZOMBIE

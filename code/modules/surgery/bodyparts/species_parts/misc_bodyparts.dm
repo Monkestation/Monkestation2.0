@@ -87,146 +87,44 @@
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
 
-///JELLY
-/obj/item/bodypart/head/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
-	limb_id = SPECIES_JELLYPERSON
-	is_dimorphic = TRUE
-	dmg_overlay_type = null
-	head_flags = HEAD_ALL_FEATURES
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/chest/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
-	limb_id = SPECIES_JELLYPERSON
-	is_dimorphic = TRUE
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	ass_image = 'icons/ass/assslime.png'
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/arm/left/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/arm/right/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/leg/left/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/leg/right/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
 ///SLIME
-/obj/item/bodypart/head/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/head/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
-	head_flags = HEAD_ALL_FEATURES
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/chest/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/chest/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	is_dimorphic = TRUE
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/left/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/left/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/right/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/right/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/left/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/leg/left/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/right/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/leg/right/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
 ///LUMINESCENT
-/obj/item/bodypart/head/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/head/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	is_dimorphic = TRUE
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/chest/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/chest/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	is_dimorphic = TRUE
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/left/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/left/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/right/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/right/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/left/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/leg/left/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/right/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/leg/right/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
 ///ZOMBIE
 /obj/item/bodypart/head/zombie
