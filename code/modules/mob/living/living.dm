@@ -43,6 +43,7 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	GLOB.infected_contact_mobs -= src
 	if(imaginary_group)
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
