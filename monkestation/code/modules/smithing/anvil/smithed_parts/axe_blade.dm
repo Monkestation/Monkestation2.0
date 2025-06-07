@@ -10,7 +10,7 @@
 /obj/item/smithed_part/weapon_part/axe_blade/finish_weapon()
 	sharpness = SHARP_EDGED
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
-	armour_penetration = 30 * (smithed_quality / 100)
+	armour_penetration = 50 * (smithed_quality / 100)
 
 	tool_behaviour = TOOL_SAW
 

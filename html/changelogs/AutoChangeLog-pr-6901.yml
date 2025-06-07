@@ -1,0 +1,4 @@
+author: "Unit2E, Xander3359"
+delete-after: True
+changes:
+  - bugfix: "Mobs should no longer fall asleep when breathing in enough Nitrium to provide sleep immunity."
