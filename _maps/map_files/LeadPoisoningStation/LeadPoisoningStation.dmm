@@ -25125,11 +25125,11 @@
 "lYL" = (
 /obj/structure/table/wood,
 /obj/machinery/cassette/adv_cassette_deck,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "lZo" = (
@@ -35073,15 +35073,15 @@
 /area/station/science/ordnance)
 "qUh" = (
 /obj/structure/table/wood,
-/obj/item/device/cassette_tape/blank{
+/obj/item/cassette_tape/blank{
 	pixel_y = 3;
 	pixel_x = 5
 	},
-/obj/item/device/cassette_tape/blank{
+/obj/item/cassette_tape/blank{
 	pixel_y = 3;
 	pixel_x = 5
 	},
-/obj/item/device/cassette_tape/blank{
+/obj/item/cassette_tape/blank{
 	pixel_y = 3;
 	pixel_x = 5
 	},

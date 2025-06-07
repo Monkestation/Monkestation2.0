@@ -1,3 +1,4 @@
+#warn TODO: cassette mixer
 /obj/item/device/cassette_deck
 	name = "Dual Cassette Deck"
 	desc = "A Dual Cassette Deck, popular for its ability to copy songs from a cassette. A relic of the old times"
@@ -5,13 +6,13 @@
 	icon_state = "walkman"
 	w_class = WEIGHT_CLASS_SMALL
 	///The cassette that is being copied from
-	var/obj/item/device/cassette_tape/send
+	var/obj/item/cassette_tape/send
 	///List of songs the sender has
 	var/list/sender_list
 	///List of names the Sender has
 	var/list/sender_names
 	///The cassette you are copying to
-	var/obj/item/device/cassette_tape/recieve
+	var/obj/item/cassette_tape/recieve
 	///List of songs the Reciever has
 	var/list/reciever_list
 	///List of song names the Reciever has
@@ -23,7 +24,7 @@
 
 /obj/item/device/cassette_deck/AltClick(mob/user)
 	if(recieve || send)
-		eject_tape(user)
+		//eject_tape(user)
 		return
 	return ..()
 
@@ -32,15 +33,16 @@
 	removal = !removal
 
 /obj/item/device/cassette_deck/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/device/cassette_tape))
+	if(!istype(cassette, /obj/item/cassette_tape))
 		return
 	if(!send || !recieve)
-		insert_tape(cassette)
+		//insert_tape(cassette)
 		playsound(src,'sound/weapons/handcuffs.ogg',20,1)
 		to_chat(user,("You insert \the [cassette] into \the [src]"))
 	else
 		to_chat(user,("Remove a tape first!"))
 
+/*
 /obj/item/device/cassette_deck/attack_self(mob/user)
 	. = ..()
 	if(!recieve)
@@ -76,7 +78,7 @@
 		reciever_list.Remove(reciever_list[num])
 		reciever_names.Remove(reciever_names[num])
 
-/obj/item/device/cassette_deck/proc/insert_tape(obj/item/device/cassette_tape/CTape)
+/obj/item/device/cassette_deck/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(send && recieve || !istype(CTape))
 		return
 
@@ -113,3 +115,4 @@
 		send = null
 		broke_approval = FALSE
 		playsound(src,'sound/weapons/handcuffs.ogg',20,1)
+*/
