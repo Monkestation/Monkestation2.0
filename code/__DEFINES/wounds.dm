@@ -122,6 +122,8 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_FLESH_PUNCTURE_BLEED "wound_series_flesh_puncture_bleed"
 /// Generic loss wounds. See loss.dm
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
+/// Cranial fissure wound.
+#define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 
 // MONKESTATION ADDITION START
 //Have to put it here so it can be used in the global list of wound series wounding_types_to_series
