@@ -96,7 +96,6 @@
 		You can use it in-hand to change its form to a card you fused. \
 		Does not preserve the card used in the ritual."
 	gain_text = "Gateways shall open before me, my very will ensnaring reality."
-	adds_sidepath_points = 1
 	required_atoms = list(
 		/obj/item/storage/box = 1, //monkestation edit wallet ==> box (leather is too hard to get due to botany changes)
 		/obj/item/stack/rods = 1,
@@ -144,7 +143,6 @@
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Their trinkets will be mine, as will their lives in due time."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/reroll_targets,
@@ -175,7 +173,6 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/knock_final,
 		/datum/heretic_knowledge/spell/apetra_vulnera,

@@ -1549,10 +1549,10 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 /**
  * Copies the passed /appearance, returns a /mutable_appearance
  *
- * Filters out certain overlays from the copy, depending on their planes
- * Prevents stuff like lighting from being copied to the new appearance
+ * Filters out certain overlays from the copy, depending on their planes.
+ * Prevents stuff like lighting from being copied to the new appearance.
  */
-/proc/copy_appearance_filter_overlays(appearance_to_copy) as /mutable_appearance
+/proc/copy_appearance_filter_overlays(appearance_to_copy, recursion = 0) as /mutable_appearance
 	RETURN_TYPE(/mutable_appearance)
 	var/mutable_appearance/copy = new(appearance_to_copy)
 	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
@@ -1565,7 +1565,10 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 		var/mutable_appearance/real = new()
 		real.appearance = special_overlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			overlays_to_keep += real
+			if(recursion)
+				overlays_to_keep += .(real, recursion - 1)
+			else
+				overlays_to_keep += real
 	copy.overlays = overlays_to_keep
 
 	var/list/underlays_to_keep = list()
@@ -1575,7 +1578,10 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 		var/mutable_appearance/real = new()
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			underlays_to_keep += real
+			if(recursion)
+				underlays_to_keep += .(real, recursion - 1)
+			else
+				underlays_to_keep += real
 	copy.underlays = underlays_to_keep
 
 	return copy

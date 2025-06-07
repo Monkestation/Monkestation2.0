@@ -560,6 +560,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (!interviewee)
 		initialize_menus()
 
+	loot_panel = new(src)
+
 	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
 	view_size.resetFormat()
 	view_size.setZoomMode()
@@ -604,8 +606,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.requests.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
 	QDEL_LAZYLIST(credits)
-	if(obj_window)
-		QDEL_NULL(obj_window)
 	if(holder)
 		holder.owner = null
 		GLOB.admins -= src
@@ -620,6 +620,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
+	QDEL_NULL(loot_panel)
 	seen_messages = null
 	Master.UpdateTickRate()
 	if(cam_screen)
