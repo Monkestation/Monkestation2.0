@@ -208,8 +208,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 
 //monkestation edit start
 	list(//artifacts
-		/obj/effect/artifact_spawner = 4,
-		/obj/item/a_gift/anything/wiz_name = 2,
+		/obj/effect/artifact_spawner = 6,
+		//Sorry Lucy, I stole your gifts. ~MCP.
+		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
+		/obj/item/implanter/dust = 2,
+		/obj/item/clothing/mask/facehugger/toy = 1, //Heheh ~MCP :3
+		/obj/effect/spawner/random/livingplush = 2,
 		) = 8,
 //monkestation edit end
 
@@ -384,7 +388,6 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,
-		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
 		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/shadowcloak = 1,
 		/obj/item/spear/grey_tide = 1,
@@ -396,8 +399,8 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			) = 1,
 		*/ // MONKESTATION EDIT END
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
-		/obj/item/gun/magic/wand/polymorph = 1, //monkestation edit
-		/obj/item/organ/internal/butt/atomic = 1, //monkestation edit
+		/obj/item/organ/internal/butt/atomic = 1,
+		/obj/item/a_gift/anything/wiz_name = 1, //Here's your
 	))
 
 
