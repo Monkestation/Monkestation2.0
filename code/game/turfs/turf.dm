@@ -86,6 +86,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
 
+	///our pathweight defaults to 100 lower means preferred
+	var/path_weight = 100
+
 #if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 	/// For the area_contents list unit test
 	/// Allows us to know our area without needing to preassign it
@@ -288,6 +291,29 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				continue
 			return TRUE
 	return FALSE
+
+/turf/proc/check_blocking_content(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
+	if(density)
+		return src
+
+	for(var/atom/movable/movable_content as anything in contents)
+		// We don't want to block ourselves
+		if((movable_content == source_atom))
+			continue
+		// dont consider ignored atoms or their types
+		if(length(ignore_atoms))
+			if(!type_list && (movable_content in ignore_atoms))
+				continue
+			else if(type_list && is_type_in_list(movable_content, ignore_atoms))
+				continue
+
+		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
+		// it cannot pass through the thing on the turf,  we consider the turf blocked.
+		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
+			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
+				continue
+			return movable_content
+	return null
 
 /**
  * Checks whether the specified turf is blocked by something dense inside it, but ignores anything with the climbable trait

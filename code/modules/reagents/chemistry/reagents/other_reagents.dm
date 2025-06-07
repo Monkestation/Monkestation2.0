@@ -374,52 +374,6 @@
 		to_chat(exposed_mob, span_userdanger("Your mind burns in agony as you feel the light of the Justicar being ripped away from you by something else!")) //monkestation edit
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	// monkestation edit start
-	/* original - this version of the code depends on https://github.com/tgstation/tgstation/pull/78657 which has not been ported yet
-	. = ..()
-
-	data["deciseconds_metabolized"] += (seconds_per_tick * 1 SECONDS * REM)
-
-	affected_mob.adjust_jitter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
-	var/need_mob_update = FALSE
-
-	if(IS_CULTIST(affected_mob))
-		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
-			var/removed_any = FALSE
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				removed_any = TRUE
-				qdel(BS)
-			if(removed_any)
-				to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
-
-	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
-		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
-		affected_mob.set_dizzy_if_lower(10 SECONDS)
-		if(IS_CULTIST(affected_mob) && SPT_PROB(10, seconds_per_tick))
-			affected_mob.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
-			if(prob(10))
-				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
-				affected_mob.Unconscious(12 SECONDS)
-				to_chat(affected_mob, span_cult_large("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
-					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
-		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
-			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
-				affected_mob.emote("scream")
-				need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
-
-	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
-		if(IS_CULTIST(affected_mob))
-			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
-			affected_mob.Unconscious(10 SECONDS)
-		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
-			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
-				need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
-		affected_mob.remove_status_effect(/datum/status_effect/jitter)
-		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
-		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
-	*/
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
 	if(!data)
@@ -461,12 +415,6 @@
 
 //monkestation edit start
 /datum/reagent/water/holywater/proc/handle_cultists(mob/living/carbon/affected_mob, seconds_per_tick)
-	if(IS_CULTIST(affected_mob))
-		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				to_chat(affected_mob, span_cultlarge("Your blood rites falter as holy water scours your body!"))
-				qdel(BS)
-
 	var/list/phrase_list
 	if(IS_CULTIST(affected_mob)) //snowflakey but it works
 		var/datum/antagonist/cult/cult_datum = affected_mob.mind.has_antag_datum(/datum/antagonist/cult)
@@ -493,8 +441,6 @@
 					to_chat(affected_mob, "<span class=[span_type]>[pick(phrase_list["seizure"])].</span>")
 
 	if(data["misc"] >= (1 MINUTES)) // 24 units
-		if(IS_CULTIST(affected_mob))
-			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
 		if(IS_CLOCK(affected_mob))
 			affected_mob.mind.remove_antag_datum(/datum/antagonist/clock_cultist)
 		affected_mob.Unconscious(10 SECONDS)
@@ -2794,7 +2740,7 @@
 	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
+	if(!significant && volume >= 3)
 		significant = TRUE
 		affected_mob.apply_status_effect(/datum/status_effect/determined) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
 

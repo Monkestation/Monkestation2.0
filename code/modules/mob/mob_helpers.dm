@@ -526,3 +526,35 @@
 		"[key_name(src)] manually changed selected zone",
 		data,
 	)
+
+
+/mob/proc/ResendAllUIs()
+	if (mind)
+		mind.ResendAllUIs()
+
+/mob/proc/RemoveAllUIs()
+	if (mind)
+		mind.RemoveAllUIs()
+
+/mob/proc/DisplayUI(ui_ID)
+	if (mind)
+		mind.DisplayUI(ui_ID)
+
+/mob/proc/HideUI(ui_ID)
+	if (mind)
+		mind.HideUI(ui_ID)
+
+/mob/proc/UpdateUIScreenLoc()
+	if (mind)
+		mind.UpdateUIScreenLoc()
+
+/mob/proc/UpdateUIElementIcon(element_type)
+	if (client)
+		var/obj/abstract/mind_ui_element/element = locate(element_type) in client.screen
+		if (element)
+			element.UpdateIcon()
+
+/mob/proc/UpdateAllElementIcons()
+	if (client)
+		for (var/obj/abstract/mind_ui_element/element in client.screen)
+			element.UpdateIcon()
