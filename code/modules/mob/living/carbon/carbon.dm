@@ -1169,9 +1169,7 @@
 			return
 		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MODIFY_ORGANS])
-		if(!check_rights(NONE))
-			return
-		usr.client.manipulate_organs(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 	if(href_list[VV_HK_MARTIAL_ART])
 		if(!check_rights(NONE))
 			return

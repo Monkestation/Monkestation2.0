@@ -50,7 +50,7 @@
 	var/special_bonus = details?.roundend_monkecoin_bonus
 	if(special_bonus)
 		queue[ckey] += list(list(special_bonus, "Special Bonus"))
-	if(client?.is_mentor())
+	if(is_mentor(client)) // Generalized check. Considering checking for R_MENTOR
 		queue[ckey] += list(list(500, "Mentor Bonus"))
 
 	var/list/applied_challenges = details?.applied_challenges
