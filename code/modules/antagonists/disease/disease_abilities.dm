@@ -13,12 +13,12 @@ new /datum/disease_ability/symptom/mild/sneeze,
 new /datum/disease_ability/symptom/medium/beard,
 new /datum/disease_ability/symptom/medium/choking,
 new /datum/disease_ability/symptom/medium/confusion,
-new /datum/disease_ability/symptom/medium/voice_change,
+/* new /datum/disease_ability/symptom/medium/voice_change,*/
 new /datum/disease_ability/symptom/powerful/narcolepsy,
-new /datum/disease_ability/symptom/medium/fever,
+/* new /datum/disease_ability/symptom/medium/fever, */
 new /datum/disease_ability/symptom/medium/headache,
-new /datum/disease_ability/symptom/medium/nano_boost,
-new /datum/disease_ability/symptom/medium/nano_destroy,
+/* new /datum/disease_ability/symptom/medium/nano_boost,
+new /datum/disease_ability/symptom/medium/nano_destroy, */
 new /datum/disease_ability/symptom/medium/disfiguration,
 new /datum/disease_ability/symptom/medium/polyvitiligo,
 new /datum/disease_ability/symptom/medium/itching,
@@ -321,6 +321,7 @@ new /datum/disease_ability/symptom/powerful/heal/oxygen,
 	short_desc = "Cause victims to become confused."
 	long_desc = "Cause victims to become confused intermittently."
 
+/* While they are nonfunctional. Keep em codeblocked.
 /datum/disease_ability/symptom/medium/voice_change
 	symptoms = list(/datum/symptom/voice_change)
 	short_desc = "Change the voice of victims."
@@ -328,6 +329,7 @@ new /datum/disease_ability/symptom/powerful/heal/oxygen,
 
 /datum/disease_ability/symptom/medium/fever
 	symptoms = list(/datum/symptom/fever)
+*/
 
 /datum/disease_ability/symptom/medium/headache
 	symptoms = list(/datum/symptom/headache)
@@ -361,9 +363,10 @@ new /datum/disease_ability/symptom/powerful/heal/oxygen,
 /datum/disease_ability/symptom/powerful/heal/oxygen
 	symptoms = list(/datum/symptom/oxygen)
 
+/* While they are nonfunctional. Keep em codeblocked.
 /datum/disease_ability/symptom/medium/nano_boost
 	symptoms = list(/datum/symptom/nano_boost)
 
 /datum/disease_ability/symptom/medium/nano_destroy
 	symptoms = list(/datum/symptom/nano_destroy)
-
+*/
