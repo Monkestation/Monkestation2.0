@@ -3,7 +3,7 @@
 // typecache of types that almost certainly have no refs, and thus can be safely skipped when finding references
 GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_typecache())
 
-/proc/reftracker_skip_typecache()
+/proc/init_reftracker_skip_typecache()
 	. = alist()
 	for(var/base_type in list(
 		/icon,
