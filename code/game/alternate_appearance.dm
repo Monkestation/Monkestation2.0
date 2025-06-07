@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
 	LAZYREMOVE(target.update_on_z, image)
-	QDEL_NULL(image)
+	image = null
 	target = null
 	if(ghost_appearance)
 		QDEL_NULL(ghost_appearance)

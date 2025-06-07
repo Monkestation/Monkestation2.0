@@ -1,34 +1,58 @@
-/proc/count_lists()
 #ifndef OPENDREAM
-	var/list_count = 0
-	for(var/list/list)
-		list_count++
+/proc/count_atoms()
+	. = list()
+	for(var/datum/thing in world) //atoms (don't believe its lies)
+		.[thing.type]++
+	sortTim(., cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 
-	var/file = file("data/list_count/[GLOB.round_id].txt")
+/proc/count_datums()
+	. = list()
+	for(var/datum/thing)
+		.[thing.type]++
+	sortTim(., cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+#else
+/proc/count_atoms()
+	. = list()
+	CRASH("count_atoms not supported on OpenDream")
 
-	WRITE_FILE(file, list_count)
+/proc/count_datums()
+	. = list()
+	CRASH("count_datums not supported on OpenDream")
 #endif
 
-/proc/save_types()
-#ifndef OPENDREAM
-	var/datum/D
-	var/atom/A
-	var/list/counts = new
-	for(A) counts[A.type] = (counts[A.type]||0) + 1
-	for(D) counts[D.type] = (counts[D.type]||0) + 1
+/client/proc/count_instances()
+	set name = "Count Atoms/Datums"
+	set category = "Debug"
 
-	var/F = file("data/type_tracker/[GLOB.round_id]-stat_track.txt")
-	for(var/i in counts)
-		WRITE_FILE(F, "[i]\t[counts[i]]\n")
-#endif
+	if(!check_rights(R_DEBUG))
+		return
 
-/proc/save_datums()
-#ifndef OPENDREAM
-	var/datum/D
-	var/list/counts = new
-	for(D) counts[D.type] = (counts[D.type]||0) + 1
+	var/static/is_counting
+	if(is_counting)
+		to_chat(usr, span_warning("Please wait until the previous count is finished!"), type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		return
+	is_counting = TRUE
+	ASYNC
+		count_instances_inner()
+		is_counting = FALSE
 
-	var/F = file("data/type_tracker/[GLOB.round_id]-datums-[world.time].txt")
-	for(var/i in counts)
-		WRITE_FILE(F, "[i]\t[counts[i]]\n")
-#endif
+/client/proc/count_instances_inner()
+	var/option = tgui_alert(usr, "What type of instances do you wish to count?", "Instance Count", list("Atoms", "Datums"))
+	if(!option)
+		return
+	var/list/result
+	to_chat(usr, span_notice("Beginning instance count ([option])"), type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+	switch(option)
+		if("Atoms")
+			result = count_atoms()
+		if("Datums")
+			result = count_datums()
+
+	if(result)
+		to_chat(usr, span_adminnotice("Counted [length(result)] instances, sending compiled JSON file now."), type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+		var/tmp_path = "tmp/instance_count_[ckey].json"
+		fdel(tmp_path)
+		rustg_file_write(json_encode(result, JSON_PRETTY_PRINT), tmp_path)
+		var/exportable_json = file(tmp_path)
+		DIRECT_OUTPUT(usr, ftp(exportable_json, "[lowertext(option)]_instance_count_round_[GLOB.round_id].json"))
+		fdel(tmp_path)

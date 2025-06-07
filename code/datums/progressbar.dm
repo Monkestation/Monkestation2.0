@@ -206,13 +206,10 @@
 	animate(border, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
 
 	QDEL_IN(src, PROGRESSBAR_ANIMATION_TIME)
-	QDEL_IN(border, PROGRESSBAR_ANIMATION_TIME * 2) //for garbage collection safety
 	if(shown_image)
 		animate(shown_image, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
-		QDEL_IN(shown_image, PROGRESSBAR_ANIMATION_TIME * 2) //for garbage collection safety
 	if(border_look_accessory)
 		animate(border_look_accessory, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
-		QDEL_IN(border_look_accessory, PROGRESSBAR_ANIMATION_TIME * 2) //for garbage collection safety
 
 ///Progress bars are very generic, and what hangs a ref to them depends heavily on the context in which they're used
 ///So let's make hunting harddels easier yeah?

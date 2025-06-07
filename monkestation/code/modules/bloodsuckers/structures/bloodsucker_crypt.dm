@@ -588,7 +588,8 @@
 	return ..()
 
 /obj/structure/bloodsucker/bloodthrone/Destroy()
-	QDEL_NULL(armrest)
+	cut_overlay(armrest)
+	armrest = null
 	return ..()
 
 /obj/structure/bloodsucker/bloodthrone/bolt()

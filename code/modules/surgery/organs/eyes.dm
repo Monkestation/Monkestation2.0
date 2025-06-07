@@ -453,7 +453,8 @@
 	QDEL_NULL(eyes_overlay)
 	QDEL_NULL(eyes_overlay_left)
 	QDEL_NULL(eyes_overlay_right)
-	eye.forceMove(src)
+	if(!QDELETED(eye))
+		eye.forceMove(src)
 	return ..()
 
 /obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)

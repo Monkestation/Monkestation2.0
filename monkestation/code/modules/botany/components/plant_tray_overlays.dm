@@ -80,15 +80,12 @@
 
 /datum/component/plant_tray_overlay/proc/update_plant(datum/source, mutable_appearance/plant, x = 0, y = 0, id)
 	var/atom/movable/movable = parent
-	var/mutable_appearance/visuals = plant_visual_list[id]
-	if(visuals)
-		plant_visual_list[id] = null
-		qdel(visuals)
+	plant_visual_list[id] = null
 	if(!plant)
 		movable.update_overlays()
 		return
 
-	visuals = new(plant)
+	var/mutable_appearance/visuals = new(plant)
 
 	var/list/current_offsets = offsets[text2num(id)]
 

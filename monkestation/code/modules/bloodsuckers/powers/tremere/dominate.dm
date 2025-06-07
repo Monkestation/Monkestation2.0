@@ -176,6 +176,7 @@
 	target.revive(ADMIN_HEAL_ALL)
 	var/datum/antagonist/vassal/vassaldatum = target.mind.has_antag_datum(/datum/antagonist/vassal)
 	vassaldatum.special_type = TREMERE_VASSAL //don't turn them into a favorite please
+	vassaldatum.ui_interact(target) // make sure they see the UI!!
 	var/living_time
 	if(level_current == 4)
 		living_time = 5 MINUTES

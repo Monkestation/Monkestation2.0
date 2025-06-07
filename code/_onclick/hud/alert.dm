@@ -956,11 +956,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(role_overlay)
 
 /atom/movable/screen/alert/poll_alert/Destroy()
-	QDEL_NULL(role_overlay)
-	QDEL_NULL(time_left_overlay)
-	QDEL_NULL(stacks_overlay)
-	QDEL_NULL(candidates_num_overlay)
-	QDEL_NULL(signed_up_overlay)
+	role_overlay = null
+	time_left_overlay = null
+	stacks_overlay = null
+	candidates_num_overlay = null
+	signed_up_overlay = null
 	if(poll)
 		poll.alert_buttons -= src
 	poll = null

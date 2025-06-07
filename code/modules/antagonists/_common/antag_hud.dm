@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	return ..(key, first_antagonist, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud/Destroy()
-	QDEL_LIST(antag_hud_images)
 	STOP_PROCESSING(SSantag_hud, src)
 	mind.antag_hud = null
 	mind = null

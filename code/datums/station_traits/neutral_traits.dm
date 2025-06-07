@@ -326,8 +326,8 @@
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
 
-/datum/station_trait/scarves
-	name = "Scarves"
+/datum/station_trait/scryers
+	name = "Scryers"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = TRUE
@@ -346,8 +346,13 @@
 	var/obj/item/silly_little_scarf = humanspawned.wear_neck
 	if(silly_little_scarf)
 		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
-		silly_little_scarf.forceMove(get_turf(humanspawned))
-		humanspawned.equip_in_one_of_slots(silly_little_scarf, list(ITEM_SLOT_BACKPACK, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET), qdel_on_fail = FALSE)
+		silly_little_scarf.forceMove(humanspawned.drop_location())
+		var/static/list/slots = list(
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		)
+		humanspawned.equip_in_one_of_slots(silly_little_scarf, slots, qdel_on_fail = FALSE)
 
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
 	new_scryer.label = spawned.name

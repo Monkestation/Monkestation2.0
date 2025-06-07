@@ -92,11 +92,13 @@
  * - Sol being over, dealt with by /sunlight/process() [bloodsucker_daylight.dm]
 */
 /datum/antagonist/bloodsucker/proc/check_begin_torpor(SkipChecks = FALSE)
+	var/mob/living/carbon/user = owner.current
+	if(QDELETED(user))
+		return
 	/// Are we entering Torpor via Sol/Death? Then entering it isnt optional!
 	if(SkipChecks)
 		torpor_begin()
 		return
-	var/mob/living/carbon/user = owner.current
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
@@ -106,6 +108,8 @@
 
 /datum/antagonist/bloodsucker/proc/check_end_torpor()
 	var/mob/living/carbon/user = owner.current
+	if(QDELETED(user))
+		return
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn

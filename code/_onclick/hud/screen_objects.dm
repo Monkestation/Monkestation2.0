@@ -206,7 +206,7 @@
 /atom/movable/screen/inventory/MouseExited()
 	..()
 	cut_overlay(object_overlay)
-	QDEL_NULL(object_overlay)
+	object_overlay = null
 
 /atom/movable/screen/inventory/update_icon_state()
 	if(!icon_empty)
@@ -372,6 +372,10 @@
 	screen_loc = ui_acti
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/interaction_mode/intents3/intents
+
+/atom/movable/screen/act_intent3/Destroy()
+	intents = null
+	return ..()
 
 /atom/movable/screen/act_intent3/Click(location, control, params)
 	var/list/paramlist = params2list(params)
