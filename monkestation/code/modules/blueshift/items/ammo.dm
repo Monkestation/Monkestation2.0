@@ -1261,7 +1261,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express
 	name = "express buckshot pellet"
-	damage = 4
+	damage = 3
 	wound_bonus = 0
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
@@ -1273,7 +1273,7 @@
 	desc = "A 12 gauge flechette shell that specializes in ripping unarmored targets apart."
 	icon_state = "fshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/flechette
-	pellets = 8 //8 x 6 = 48 Damage Potential
+	pellets = 6 //6 x 6 = 36 Damage Potential
 	variance = 25
 	custom_materials = AMMO_MATS_SHOTGUN_FLECH
 	advanced_print_req = TRUE
