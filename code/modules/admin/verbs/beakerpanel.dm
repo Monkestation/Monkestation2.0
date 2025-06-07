@@ -74,7 +74,7 @@
 /datum/beaker_panel/New(mob/target_user)
 	user = target_user
 
-/datum/beaker_panel/proc/beaker_panel_create_container(list/containerdata, list/reagent_data, turf/location)
+/datum/beaker_panel/proc/beaker_panel_create_container(list/containerdata, list/reagent_data, location)
 	var/containertype = text2path(containerdata["id"])
 	if(isnull(containertype))
 		return null
@@ -82,13 +82,29 @@
 	var/datum/reagents/reagents = container.reagents
 	for(var/datum/reagent/R in reagents.reagent_list) // clear the container of reagents
 		reagents.remove_reagent(R.type,R.volume)
-	for (var/list/item in reagent_data)
+	for(var/list/item in reagent_data)
 		var/datum/reagent/reagenttype = text2path(item["id"])
 		var/amount = text2num(item["amount"])
 		if ((reagents.total_volume + amount) > reagents.maximum_volume)
 			reagents.maximum_volume = reagents.total_volume + amount
 		reagents.add_reagent(reagenttype, amount)
 	return container
+
+/datum/beaker_panel/proc/beaker_panel_create_grenade(list/grenadedata, list/obj/item/reagent_containers/containers, location)
+	switch(grenadedata["grenadeType"] )
+		if("Normal")
+			var/det_time = text2num(grenadedata["grenadeTimer"])
+			var/obj/item/grenade/chem_grenade/grenade = new(location)
+			for(var/obj/item/reagent_containers/container in containers)
+				grenade.beakers += container
+				container.forceMove(grenade)
+			grenade.stage_change(GRENADE_READY)
+			if(det_time)
+				grenade.det_time = det_time * SECONDS
+
+			return grenade
+		else
+			return null
 
 /datum/beaker_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -125,3 +141,30 @@
 			var/obj/item/reagent_containers/container = beaker_panel_create_container(container_data, reagents_data, get_turf(usr))
 			if(istype(container))
 				usr.log_message("spawned a [container] containing [pretty_string_from_reagent_list(container.reagents.reagent_list)]", LOG_GAME)
+		if("spawngrenade")
+			var/list/grenade_data = json_decode(params["grenadedata"])
+			var/list/containers_data = json_decode(params["containers"])
+			var/list/reagentmatrix_data = json_decode(params["reagents"])
+
+			//TODO check if returned gredadetype is a valide type then process chems
+			var/reagent_string
+			var/list/obj/item/reagent_containers/beakers = list()
+			for(var/item in containers_data)
+				var/list/container_data = containers_data[item]
+				var/list/reagent_data = reagentmatrix_data[item]
+
+				var/obj/item/reagent_containers/new_beaker = beaker_panel_create_container(container_data, reagent_data, null)
+				if(!istype(new_beaker))
+					continue
+				beakers += new_beaker
+				reagent_string += " ([new_beaker.name] [text2num(item)] : " + pretty_string_from_reagent_list(new_beaker.reagents.reagent_list) + ");"
+
+			if(!length(beakers))
+				return
+
+			var/obj/item/grenade/chem_grenade/grenade = beaker_panel_create_grenade(grenade_data, beakers, get_turf(usr))
+			if(istype(grenade))
+				usr.log_message("spawned a [grenade] containing: [reagent_string]", LOG_GAME)
+				beakers = list()
+			else
+				QDEL_LIST(beakers)

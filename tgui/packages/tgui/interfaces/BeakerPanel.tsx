@@ -53,6 +53,11 @@ export const BeakerPanel = (props) => {
     {},
   );
 
+  const [grenadeData, setGrenadeData] = useLocalState(
+    'beakerPanel_grenadedata',
+    { grenadeType: 'Normal', grenadeTimer: 1 },
+  );
+
   const [selectedReagents, setSelectedReagents] = useLocalState(
     'beakerPanel_selectedReagents',
     {},
@@ -128,7 +133,14 @@ export const BeakerPanel = (props) => {
   };
 
   const spawnGrenade = () => {
-    act('spawngrenade', {});
+    const grenadepayload = grenadeData || [];
+    const containerspayload = selectedContainersType || [];
+    const reagentspayload = reagentsMap || [];
+    act('spawngrenade', {
+      grenadedata: JSON.stringify(grenadepayload),
+      containers: JSON.stringify(containerspayload),
+      reagents: JSON.stringify(reagentspayload),
+    });
   };
 
   const spawnContainer = (containerNum) => {
@@ -310,8 +322,34 @@ export const BeakerPanel = (props) => {
                 </Stack.Item>
                 <Stack.Item>
                   <LabeledList>
-                    <LabeledList.Item label="Grenade Type" />
-                    <LabeledList.Item label="Timer (seconds)" />
+                    <LabeledList.Item label="Grenade Type">
+                      <Dropdown
+                        width="150px"
+                        options={['Normal']}
+                        selected={grenadeData.grenadeType}
+                        value={grenadeData.grenadeType}
+                        onSelected={(value) =>
+                          setGrenadeData({
+                            ...grenadeData,
+                            grenadeType: value, // Update grenade type in state
+                          })
+                        }
+                      />
+                    </LabeledList.Item>
+                    <LabeledList.Item label="Timer (seconds)">
+                      <NumberInput
+                        width="75px"
+                        placeholder="Enter seconds"
+                        minValue={1}
+                        value={grenadeData.grenadeTimer}
+                        onChange={(e, value) =>
+                          setGrenadeData({
+                            ...grenadeData,
+                            grenadeTimer: value,
+                          })
+                        }
+                      />
+                    </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
               </Stack>
