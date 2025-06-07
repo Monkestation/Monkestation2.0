@@ -332,6 +332,19 @@
 
 	var/mob/living/living_target = target
 
+	if(living_target.buckled)
+		var/obj/buck_source = living_target.buckled
+		if(buck_source.cover_amount != 0)
+			if(prob(buck_source.cover_amount))
+				do_sparks(round((damage / 10)), FALSE, living_target)
+				src.Impact(buck_source)
+				blocked = 100 ///Brute force time
+				damage = 0
+				wound_bonus = CANT_WOUND
+				embedding = list("embed_chance" = 0)
+				qdel(src)
+				return BULLET_ACT_HIT
+
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)
 		if (damage)
@@ -483,6 +496,10 @@
 		return FALSE
 	if(impacted[A]) // NEVER doublehit
 		return FALSE
+	if(istype(A, /mob/living/))
+		var/mob/living/living_atom = A
+		if(impacted[living_atom.buckled])
+			return FALSE
 	var/datum/point/point_cache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))

@@ -108,3 +108,17 @@
 		Contains enough special solution to spray a single super-size seditious symbol, subjecting station staff to slippery suffering."
 	item = /obj/item/traitor_spraycan
 	cost = 1
+
+/datum/uplink_item/badass/callahan
+	name = "Callahan Class Battleship"
+	desc = "A literal fucking battleship, shrunk with bluespace technology and mechanized to require only 1 man. God has damned all who oppose you."
+	item = /obj/vehicle/sealed/mecha/callahan
+	cost = 250
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/badass/nakki
+	name = "Nakki Class Submarine"
+	desc = "A submarine in spess, special technology lets it dive into bluespace tiles like water. Comes stocked with torpedoes that would win in a fight against Nar'Sie."
+	item = /obj/vehicle/sealed/mecha/nakki
+	cost = 250
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

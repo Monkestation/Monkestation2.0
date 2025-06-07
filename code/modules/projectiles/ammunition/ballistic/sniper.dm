@@ -32,3 +32,10 @@
 	name = ".50 BMG marksman round bullet casing"
 	desc = "A .50 caliber marksman round casing."
 	projectile_type = /obj/projectile/bullet/p50/marksman
+
+/obj/item/ammo_casing/neville
+	name = "20x160mm bullet casing"
+	desc = "A giant bullet casing, you hope whoever was hit died quickly."
+	caliber = CALIBER_20X160MM
+	projectile_type = /obj/projectile/bullet/neville
+	icon_state = ".50"

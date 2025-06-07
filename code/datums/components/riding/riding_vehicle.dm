@@ -246,6 +246,49 @@
 	for(var/i in GLOB.cardinals)
 		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
+/datum/component/riding/vehicle/argonaut
+	vehicle_move_delay = 0.95
+
+/datum/component/riding/vehicle/argonaut/handle_specials()
+	. = ..()
+	set_riding_offsets(1, list(TEXT_NORTH = list(-6, 4), TEXT_SOUTH = list(6, 0), TEXT_EAST = list(-6, 2), TEXT_WEST = list(4, 0)))
+	set_riding_offsets(2, list(TEXT_NORTH = list(6, 4, 4), TEXT_SOUTH = list(-6, 0, 4), TEXT_EAST = list(-4, 0, 4.1), TEXT_WEST = list(4, 0, 3.9)))
+	set_riding_offsets(3, list(TEXT_NORTH = list(-6, -1, 4.2), TEXT_SOUTH = list(6, 12, 3.9), TEXT_EAST = list(-22, 2), TEXT_WEST = list(22, 0, 4.1)))
+	set_riding_offsets(4, list(TEXT_NORTH = list(6, -1, 4.2), TEXT_SOUTH = list(-6, 12, 3.9), TEXT_EAST = list(-22, 0, 3.9), TEXT_WEST = list(22, 2)))
+	set_vehicle_dir_offsets(NORTH, -48, -48)
+	set_vehicle_dir_offsets(SOUTH, -48, -48)
+	set_vehicle_dir_offsets(EAST, -48, -48)
+	set_vehicle_dir_offsets(WEST, -48, -48)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
+/datum/component/riding/vehicle/stockade
+	vehicle_move_delay = 8.5
+
+/datum/component/riding/vehicle/stockade/handle_specials()
+	. = ..()
+	set_riding_offsets(1, list(TEXT_NORTH = list(-9, 0), TEXT_SOUTH = list(9, 0), TEXT_EAST = list(-6, 0), TEXT_WEST = list(4, 0)))
+	set_vehicle_dir_offsets(NORTH, -24, 0)
+	set_vehicle_dir_offsets(SOUTH, -24, 0)
+	set_vehicle_dir_offsets(EAST, -24, 0)
+	set_vehicle_dir_offsets(WEST, -24, 0)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
+/datum/component/riding/vehicle/odyssey
+	vehicle_move_delay = 0.99
+
+/datum/component/riding/vehicle/odyssey/handle_specials()
+	. = ..()
+	set_riding_offsets(1, list(TEXT_NORTH = list(-6, 4), TEXT_SOUTH = list(6, 0), TEXT_EAST = list(-6, 0), TEXT_WEST = list(4, 0)))
+	set_riding_offsets(2, list(TEXT_NORTH = list(6, 4, 4), TEXT_SOUTH = list(-6, 0, 4), TEXT_EAST = list(-4, 0, 4.1), TEXT_WEST = list(4, 0, 3.9)))
+	set_vehicle_dir_offsets(NORTH, -48, -48)
+	set_vehicle_dir_offsets(SOUTH, -48, -48)
+	set_vehicle_dir_offsets(EAST, -48, -48)
+	set_vehicle_dir_offsets(WEST, -48, -48)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
 
 /datum/component/riding/vehicle/wheelchair
 	vehicle_move_delay = 0
