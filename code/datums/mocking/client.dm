@@ -43,13 +43,15 @@
 
 	var/static/mock_client_uid = 0
 
-/datum/client_interface/New()
+/datum/client_interface/New(key)
 	..()
 
 	byond_version = world.byond_version
 	byond_build = world.byond_build
 
-	src.key = "[key]_[mock_client_uid++]"
+	if(!key)
+		key = "[src::key]_[mock_client_uid++]"
+	src.key = key
 	ckey = ckey(key)
 
 #ifdef UNIT_TESTS // otherwise this shit can leak into production servers which is drather dbad
@@ -81,4 +83,10 @@
 	return
 
 /datum/client_interface/proc/get_award_status(achievement_type, mob/user, value = 1)
+	return FALSE
+
+/datum/client_interface/proc/set_right_click_menu_mode()
+	return
+
+/datum/client_interface/proc/is_afk(duration)
 	return FALSE
