@@ -23,7 +23,10 @@
 /datum/voucher_set/syndicate/kit
 
 /datum/voucher_set/syndicate/kit/assault_trooper
-	name = "Assault Trooper"
+	name = "Assault Trooper (Easy)"
+	description = "Move fast and shut down key targets before they have a chance to react. \
+		Weapons: Rostokov carbine, energy sword, C4, flashbangs, and frag grenades. \
+		Utility: Stimulant medipen."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-green"
 	set_items = list(
@@ -37,16 +40,19 @@
 		/obj/item/tank/jetpack/harness = 1,
 		/obj/item/gun/ballistic/automatic/rostokov = 1,
 		/obj/item/ammo_box/magazine/rostokov10mm = 4,
-		/obj/item/grenade/c4/x4 = 4,
+		/obj/item/melee/energy/sword/saber = 1,
+		/obj/item/grenade/c4 = 4,
 		/obj/item/grenade/flashbang = 2,
 		/obj/item/grenade/frag = 2,
-		/obj/item/grenade/spawnergrenade/manhacks = 1,
 		/obj/item/reagent_containers/hypospray/medipen/stimulants = 1,
 		/obj/item/clothing/glasses/night = 1,
 	),src)
 
 /datum/voucher_set/syndicate/kit/heavy_assault_trooper
-	name = "Heavy Assault Trooper"
+	name = "Heavy Assault Trooper (Easy)"
+	description = "Lock down tight areas and take bullets for the team. \
+		Weapons: Bulldog Autoshotgun, energy sword, energy shield, and manhack grenades. \
+		Utility: Thermal goggles and anti-drop implant."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-green-dark"
 	set_items = list(
@@ -65,14 +71,17 @@
 		/obj/item/ammo_box/magazine/m12g/bioterror = 2,
 		/obj/item/ammo_box/magazine/m12g/stun = 2,
 		/obj/item/ammo_box/magazine/m12g/meteor = 2,
-		/obj/item/grenade/spawnergrenade/manhacks = 1,
+		/obj/item/grenade/spawnergrenade/manhacks = 2,
 		/obj/item/autosurgeon/syndicate/nodrop = 1,
 		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
 		/obj/item/clothing/glasses/thermal = 1,
 	),src)
 
 /datum/voucher_set/syndicate/kit/sniper
-	name = "Sniper"
+	name = "Sniper (Medium)"
+	description = "Set up from afar and take out targets outside the team's effective area. \
+		Weapons: Anti-materiel sniper rifle and teargas grenades. \
+		Utility: Thermal goggles."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-black-green"
 	set_items = list(
@@ -90,12 +99,15 @@
 		/obj/item/ammo_box/magazine/sniper_rounds/disruptor = 2,
 		/obj/item/ammo_box/magazine/sniper_rounds/penetrator = 2,
 		/obj/item/ammo_box/magazine/sniper_rounds/marksman = 2,
-		/obj/item/storage/box/smokebomb = 1,
-		/obj/item/clothing/glasses/thermal/xray = 1,
+		/obj/item/storage/box/teargas = 2,
+		/obj/item/clothing/glasses/thermal = 1,
 	),src)
 
 /datum/voucher_set/syndicate/kit/infiltrator
-	name = "Infiltrator"
+	name = "Infiltrator (Hard)"
+	description = "Infiltrate the station using the provided tools, track down the disk, and sabotage the station for the coming assault. \
+		Weapons: .357 revolver, sleepy pen, and chemical kit. \
+		Utility: Chameleon kit, chameleon projector, mulligan syringe, freedom implant, storage implant, infiltrator modsuit, cryptographic sequencer, airlock authentication override card, and disk pinpointer."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-blue"
 	set_items = list(
@@ -107,6 +119,7 @@
 		/obj/item/clothing/head/helmet/space/syndicate/blue = 1,
 		/obj/item/clothing/suit/space/syndicate/blue = 1,
 		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/infiltrator = 1,
 		/obj/item/gun/ballistic/revolver/syndicate = 1,
 		/obj/item/ammo_box/a357 = 2,
 		/obj/item/pen/sleepy = 1,
@@ -123,7 +136,10 @@
 	),src)
 
 /datum/voucher_set/syndicate/kit/scout
-	name = "Scout"
+	name = "Scout (Very Hard)"
+	description = "Use your cloak to get around the station and access areas harder to reach by the rest of the team without going unnoticed. \
+		Weapons: PP-96 SMG and energy sword. \
+		Utility: Suppressor, cryptographic sequencer, airlock authentication override card, disk pinpointer, experimental Syndicate teleporter, cloaker belt, and security HUD night vision goggles."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-black-blue"
 	set_items = list(
@@ -137,17 +153,21 @@
 		/obj/item/tank/jetpack/harness = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 1,
 		/obj/item/suppressor = 1,
-		/obj/item/ammo_box/magazine/plastikov10mm = 1,
+		/obj/item/ammo_box/magazine/plastikov10mm = 2,
 		/obj/item/melee/energy/sword/saber = 1,
 		/obj/item/card/emag = 1,
 		/obj/item/card/emag/doorjack = 1,
 		/obj/item/pinpointer/nuke = 1,
+		/obj/item/storage/box/syndie_kit/syndicate_teleporter = 1,
 		/obj/item/storage/belt/military/assault/cloak = 1,
 		/obj/item/clothing/glasses/hud/security/night = 1,
 	),src)
 
 /datum/voucher_set/syndicate/kit/grenadier
-	name = "Grenadier"
+	name = "Grenadier (Very Hard)"
+	description = "Blow up everything owned by Nanotrasen and clear the way for the team. \
+		Weapons: China Lake 40mm grenade launcher and a fuckton of grenades. \
+		Utility: Kickass looking sunglasses."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-black"
 	set_items = list(
@@ -166,12 +186,14 @@
 
 /obj/item/storage/belt/grenade/grenadier/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/grenade/chem_grenade/facid = 1,
+		/obj/item/grenade/c4 = 6,
+		/obj/item/grenade/c4/x4 = 4,
+		/obj/item/grenade/chem_grenade/facid = 2,
 		/obj/item/grenade/empgrenade = 5,
-		/obj/item/grenade/frag = 6,
+		/obj/item/grenade/frag = 10,
 		/obj/item/grenade/flashbang = 6,
 		/obj/item/grenade/gluon = 5,
-		/obj/item/grenade/smokebomb = 5,
+		/obj/item/grenade/smokebomb = 6,
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/multitool = 1,
 		/obj/item/screwdriver = 1,
@@ -184,8 +206,11 @@
 	),src)
 
 /datum/voucher_set/syndicate/kit/medic
-	name = "Medic"
+	name = "Medic (Hard)"
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
+	description = "Keep the team alive and revive them when they fall. \
+		Weapons: PP-96 SMG. \
+		Utility: Medical beamgun, combat medical kit, combat surgical kit, combat defibrillator, double use stimulant medipen, Syndicate surgical serverlink, and medical HUD night vision goggles."
 	icon_state = "syndicate-helm-black-med"
 	set_items = list(
 		/obj/item/storage/box/syndie_kit/medic,
@@ -197,7 +222,7 @@
 		/obj/item/clothing/suit/space/syndicate/black/med = 1,
 		/obj/item/tank/jetpack/harness = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 1,
-		/obj/item/ammo_box/magazine/plastikov10mm = 1,
+		/obj/item/ammo_box/magazine/plastikov10mm = 2,
 		/obj/item/storage/medkit/combat = 1,
 		/obj/item/storage/medkit/combat/surgery = 1,
 		/obj/item/defibrillator/compact/combat/loaded = 1,
@@ -210,7 +235,10 @@
 	),src)
 
 /datum/voucher_set/syndicate/kit/engineer
-	name = "Engineer"
+	name = "Engineer (Medium)"
+	description = "Secure the decryption zone, repair the nuke, and provide cover for the rest of the team. \
+		Weapons: PP-96 SMG. \
+		Utility: Full toolbelt with combat wrench, 9mm deployable turret, industrial RCD, advanced fire extinguisher, combat forcefield projector, circuit skillchip, and diagnostic HUD night vision goggles."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-black-engie"
 	set_items = list(
@@ -223,7 +251,7 @@
 		/obj/item/clothing/suit/space/syndicate/black/engie = 1,
 		/obj/item/tank/jetpack/harness = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 1,
-		/obj/item/ammo_box/magazine/plastikov10mm = 1,
+		/obj/item/ammo_box/magazine/plastikov10mm = 2,
 		/obj/item/storage/belt/utility/syndicate = 1,
 		/obj/item/construction/rcd/combat = 1,
 		/obj/item/extinguisher/advanced = 1,

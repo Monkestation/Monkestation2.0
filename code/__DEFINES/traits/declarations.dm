@@ -148,6 +148,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
 #define TRAIT_AKIMBO "akimbo"
+#define TRAIT_NO_RECOIL "no_recoil"
 ///Can toss a guns like a badass, causing additional damage/effect to their enemies
 /* #define TRAIT_TOSS_GUN_HARD "toss_gun_hard" */
 /// Species with this trait are genderless

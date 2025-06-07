@@ -235,7 +235,7 @@
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
 /obj/machinery/nuclearbomb/commando/proc/process_code(mob/user)
-	if(isinspace() || ispath(get_area(src), /area/shuttle))
+	if(isinspace() || istype(get_area(src), /area/shuttle))
 		to_chat(user, span_warning("Location too unstable!"))
 		return
 	yes_code = TRUE
@@ -327,8 +327,9 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
 
 	countdown.start()
-	var/area/our_area = get_area(src)
-	if(is_station_area_or_adjacent(our_area))
+
+	if(is_station_level(our_turf.z))
+		var/area/our_area = get_area(src)
 		SSsecurity_level.set_level(SEC_LEVEL_RED)
 		SSshuttle.registerHostileEnvironment(src)
 		priority_announce(

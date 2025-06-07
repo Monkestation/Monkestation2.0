@@ -612,7 +612,7 @@
 	. = ..()
 	atom_storage.max_slots = 30
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.max_total_storage = 300
+	atom_storage.max_total_storage = 1000 //store every grenade under the sun without issue or remorse
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,

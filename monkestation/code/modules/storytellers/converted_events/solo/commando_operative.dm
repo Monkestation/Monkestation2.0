@@ -35,11 +35,10 @@
 		JOB_WARDEN,
 	)
 	required_enemies = 5
-	// I give up, just there should be enough heads with 35 players...
-	min_players = 35
+	min_players = 40
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 4
+	weight = 8
 	max_occurrences = 1
 	event_icon_state = "nukeops"
 

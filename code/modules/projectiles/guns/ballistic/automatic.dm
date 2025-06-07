@@ -137,9 +137,9 @@
 	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
-	name = "\improper refurbished PP-95 SMG"
+	name = "\improper PP-96 SMG"
 	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished for better performance."
-	spread = 5
+	spread = 15
 	burst_size = 2
 	icon_state = "plastikov_refurbished"
 	inhand_icon_state = "plastikov_refurbished"
@@ -153,8 +153,8 @@
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/rostokov
-	name = "\improper Rostokov Autorifle"
-	desc = "Cool gun. Nuff said."
+	name = "\improper Rostokov carbine"
+	desc = "A bullpup fully automatic 10mm carbine. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "rostokov"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "rostokov"
@@ -173,7 +173,7 @@
 
 /obj/item/gun/ballistic/automatic/rostokov/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/automatic/rostokov/unrestricted
 	pin = /obj/item/firing_pin
