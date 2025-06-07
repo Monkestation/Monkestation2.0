@@ -54,6 +54,9 @@
 	owner.knockdown_diminish = 1
 	return ..()
 
+// stupid subtype of knockdown for the sole purpose of not being considered a knockdown (to prevent shovestuns) but still having the same effects
+/datum/status_effect/incapacitating/knockdown/tripped
+	id = "tripped"
 
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
