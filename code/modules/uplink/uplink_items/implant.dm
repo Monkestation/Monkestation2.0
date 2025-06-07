@@ -72,15 +72,6 @@
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
 	cost = 7
 
-/datum/uplink_item/implants/hardlight/max
-	name = "Commanding Hardlight Spear Implant"
-	desc = "An implant that allows you to summon and control seven hardlight spears. \
-	Additional implants will do nothing, you cannot improve on perfection. Side effects may include: Uncontrollable telepathy, formation of subconscious hiveminds, anamnesis, levitation, and hallucinations of music. \
-	Aetherofusion is not responsable for any damages this may cause."
-	purchasable_from = UPLINK_NUKE_OPS
-	item = /obj/item/storage/box/syndie_kit/imp_hard_spear/max
-	cost = 40
-
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
 	uplink_box.name = "Uplink Implant Box"
