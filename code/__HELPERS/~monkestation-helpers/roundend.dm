@@ -5,6 +5,38 @@
 	. = list()
 	for(var/client/client as anything in GLOB.clients)
 		calculate_rewards_for_client(client, .)
+	calculate_station_goal_bonus(.)
+
+/datum/controller/subsystem/ticker/proc/calculate_station_goal_bonus(list/rewards)
+	var/total_crew = length(GLOB.joined_player_list)
+	if(total_crew < 10) // prevent wrecking the economy on like MRP2
+		return
+	var/completed = FALSE
+	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
+		if(station_goal.check_completion())
+			completed = TRUE
+			break
+	if(!completed)
+		return
+	var/amount = CEILING(50000 / total_crew, 50) // nice even number
+	var/rewarded_players = 0
+	for(var/ckey in GLOB.joined_player_list)
+		var/mob/living/player = get_mob_by_ckey(ckey)
+		if(!isliving(player) || QDELING(player))
+			continue
+		if(!player.mind?.force_escaped && !GLOB.station_was_nuked)
+			if(player.stat == DEAD)
+				continue
+			var/turf/player_turf = get_turf(player)
+			if(isnull(player_turf))
+				continue
+			if(!player_turf.onCentCom() && !player_turf.onSyndieBase())
+				continue
+		rewards += list(list(total_crew, "Station Goal Completion Bonus"))
+		rewarded_players++
+
+	message_admins("As a result of the station goal being completed, [rewarded_players] players were rewarded [amount] monkecoins each.")
+	log_game("As a result of the station goal being completed, [rewarded_players] players were rewarded [amount] monkecoins each.")
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
