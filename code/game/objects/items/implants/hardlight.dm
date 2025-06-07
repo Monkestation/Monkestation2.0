@@ -281,7 +281,7 @@
 	light_power = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_wall = 'sound/weapons/parry.ogg'
-	embedding = list(embed_chance=100, fall_chance=2, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embedding = list(embed_chance=100, fall_chance=2, jostle_chance=8, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 
 /obj/item/shrapnel/bullet/spear
 	name = "hardlight spear"
