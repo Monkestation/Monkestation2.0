@@ -380,6 +380,9 @@
 /obj/item/melee/curator_whip/proc/whip_trip(mob/living/user, mob/living/target)
 	if(!isliving(target) || target == user)
 		return FALSE
+	// you need to be standing up on your own legs in order to be tripped
+	if(target.body_position != STANDING_UP || target.buckled || target.num_legs < 1)
+		return FALSE
 	if(user.zone_selected != BODY_ZONE_L_LEG && user.zone_selected != BODY_ZONE_R_LEG)
 		return FALSE
 	switch(get_dist(user, target))
@@ -390,7 +393,17 @@
 			EMPTY_BLOCK_GUARD
 		if(4 to INFINITY)
 			return FALSE
-	target.Knockdown(3 SECONDS)
+	// this is a horrible hack to make it so tripping doesn't drop items.
+	// we just apply nodrop to their held items right before tripping them,
+	// and then immediately remove it after the status effect is applied.
+	// i'm sorry ~Lucy
+	var/list/stupid_horrible_list = list()
+	for(var/obj/item/item in target.held_items)
+		ADD_TRAIT(item, TRAIT_NODROP, REF(src))
+		stupid_horrible_list += item
+	target.apply_status_effect(/datum/status_effect/incapacitating/knockdown/tripped, 3 SECONDS)
+	for(var/obj/item/item in stupid_horrible_list)
+		REMOVE_TRAIT(item, TRAIT_NODROP, REF(src))
 	log_combat(user, target, "tripped", src)
 	target.visible_message(span_danger("[user] knocks [target] off [target.p_their()] feet!"), span_userdanger("[user] yanks your legs out from under you!"))
 	user.do_attack_animation(target, used_item = src)
