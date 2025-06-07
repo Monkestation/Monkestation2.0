@@ -908,3 +908,12 @@
 	cost = 16
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
+
+/datum/uplink_item/implants/hardlight/max
+	name = "Commanding Hardlight Spear Implant"
+	desc = "An implant that allows you to summon and control seven hardlight spears. \
+	Additional implants will do nothing, you cannot improve on perfection. Side effects may include: Uncontrollable telepathy, formation of subconscious hiveminds, anamnesis, levitation, and hallucinations of music. \
+	Aetherofusion is not responsable for any damages this may cause."
+	purchasable_from = UPLINK_NUKE_OPS
+	item = /obj/item/storage/box/syndie_kit/imp_hard_spear/max
+	cost = 35
