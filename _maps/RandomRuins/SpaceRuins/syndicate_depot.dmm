@@ -332,6 +332,19 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = -8;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = -5;
+	pixel_y = 0
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "dZ" = (
@@ -1063,6 +1076,26 @@
 	},
 /turf/open/floor/engine/airless,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
+"lx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/coffeemaker/impressa,
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 7;
+	pixel_y = -12
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 7;
+	pixel_y = -14
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 7;
+	pixel_y = -17
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "lz" = (
 /obj/machinery/growing/tray,
 /turf/open/misc/dirt/station,
@@ -1340,11 +1373,10 @@
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "oz" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/chair/office/tactical{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "oO" = (
@@ -1606,7 +1638,6 @@
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/mapping_helpers/apc/cell_10k,
 /obj/structure/safe,
-/obj/item/stack/telecrystal/five,
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/item/card/id/advanced/chameleon,
 /obj/item/card/id/advanced/chameleon,
@@ -1920,8 +1951,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_depot/shipbreaking_control)
 "uX" = (
-/obj/machinery/rnd/production/protolathe/offstation,
-/obj/structure/railing{
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -2606,7 +2636,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/rnd/production/colony_lathe,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "CG" = (
@@ -2953,6 +2983,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/assembler,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "HN" = (
@@ -3174,13 +3205,13 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "Kd" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "syndicate_depot_manufacturing";
-	pixel_x = -12;
-	pixel_y = 0
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "Kg" = (
@@ -3264,6 +3295,15 @@
 /obj/item/circuitboard/machine/quantumpad,
 /obj/item/storage/toolbox/electrical,
 /obj/item/circuitboard/machine/spaceship_navigation_beacon,
+/obj/item/manipulator_filter,
+/obj/item/manipulator_filter,
+/obj/item/manipulator_filter,
+/obj/item/manipulator_filter/cargo,
+/obj/item/manipulator_filter/cargo,
+/obj/item/circuitboard/machine/big_manipulator,
+/obj/item/circuitboard/machine/big_manipulator,
+/obj/item/circuitboard/machine/big_manipulator,
+/obj/item/circuitboard/machine/big_manipulator,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "KP" = (
@@ -3419,12 +3459,11 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "MV" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "MZ" = (
@@ -3634,13 +3673,15 @@
 "PG" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
-/obj/machinery/rnd/production/circuit_imprinter/offstation,
+/obj/machinery/conveyor_switch/oneway{
+	id = "syndicate_depot_manufacturing";
+	pixel_x = 10;
+	pixel_y = 0
+	},
+/obj/machinery/autolathe/hacked,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "PL" = (
@@ -3670,6 +3711,9 @@
 	fax_name = "Syndicate Depot Cargo Bay"
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/paper/crumpled{
+	default_raw_text = "Fucking maniacs! Stop directly hitting Nanotrasen! If their navy takes notice to this we'll all get shot down!"
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "PR" = (
@@ -3730,15 +3774,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "Qz" = (
-/obj/machinery/autolathe/hacked,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "QC" = (
@@ -3883,13 +3922,13 @@
 	name = "Manufacturing"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "syndicate_depot_lockdown";
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "So" = (
@@ -4363,6 +4402,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/assembler,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/manufacturing)
 "Xz" = (
@@ -7444,7 +7484,7 @@ jw
 eC
 dn
 MZ
-HU
+lx
 dU
 HU
 EJ
