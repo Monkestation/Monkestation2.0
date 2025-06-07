@@ -99,3 +99,61 @@
   notghosti:
   - bugfix: NIGHTMARES. Will work. You will be evil and not some dude, actually this
       time
+2025-06-05:
+  Absolucy:
+  - bugfix: Homeostasis levels (i.e stabilized orange extracts, sub-dermal cooler/heater
+      implants, leporazine, fevers, gaseous holoparasites) now account for the seconds
+      between ticks, meaning they should be more "accurate" in adjusting body temperature.
+  Absolucy, PowerfulBacon:
+  - bugfix: Fixes movement keys being stuck.
+  Absolucy, jlsnow301, Bisar, MTandi:
+  - rscadd: Added a loot window for alt-clicking tiles.
+  - rscdel: Removed the item browser from the stat panel.
+  Salted-Zen:
+  - rscadd: Cableknit and Keyhole sweater purchasable in monkecoin shop to roundstart
+      with.
+  Xander3359:
+  - rscadd: A Syndicate Rebar Quiver has been added to the uplink
+  - qol: Left clicking with a rebar crossbow will now draw/undraw the string.
+  notghosti:
+  - map: Meta station Artsci is now accessible without xenobio access
+  - rscadd: Made the captains beret actually in the game
+2025-06-07:
+  Absolucy:
+  - code_imp: Improved how stabilized cerulean and oil extracts trigger on death,
+      allowing them to properly work for oozelings and such.
+  F-e-r-n:
+  - balance: Awakened dragon no longer has baton resistance
+  - balance: Lethal ammunition boxes now cost twice as much
+  - balance: The Renoster shotgun crate now holds parity with the riot shotgun crate
+  - balance: 'Shotgun shell boxes are no longer tiny
+
+      :cl:'
+  Goat-Real, Xander3359:
+  - qol: You can now insert tanks into bluespace gas vendors to fill instead of having
+      to buy and use a large tank.
+  - sound: Bluespace gas vendors now use sounds from canisters when adding/removing
+      tanks
+  Ice-Type:
+  - qol: Both detective's revolvers are now actual Detective's Revolvers.
+  Loiosh42:
+  - balance: AP has been rebalanced from a flat reduction to a percentage of armor
+      reduction
+  - balance: Bogseo is now semi-auto burst instead of full-auto burst
+  Melbert, TheColorCyan:
+  - rscdel: Heretic side path points are gone
+  - balance: Void pull stun radius and aoe reduced, cooldown increased
+  - balance: Blood siphon recieved major cooldown increase
+  MrBagHead:
+  - rscadd: Added Syndicate Mini-Kits, a 10 TC traitor uplink bundle with 5 random
+      loadouts and a unique box sprite.
+  - rscadd: Added 'Self-Incinerating Paper' which incinerates after 20 seconds of
+      being read if its armed
+  - rscadd: Added Syndicate Pill Canisters with new sprites, including a poisonous
+      variant with cyanide, spewium, amanitin and toxin pills.
+  - rscadd: Added 'can_be_folded' variable for paper to control if they can be folded.
+  Tostah:
+  - bugfix: Mod suit gear items now get placed into storage units when deactivated
+  Unit2E, Xander3359:
+  - bugfix: Mobs should no longer fall asleep when breathing in enough Nitrium to
+      provide sleep immunity.

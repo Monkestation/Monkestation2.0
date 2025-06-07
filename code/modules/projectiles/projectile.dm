@@ -79,6 +79,8 @@
 	var/projectile_piercing = NONE
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
+	/// How many times this projectile can pierce something before deleting
+	var/max_pierces = 0
 
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -161,6 +163,8 @@
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
+	///Flat armor ignorance, applied AFTER penetration has reduced the amount of armor by %
+	var/armour_ignorance = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
 	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
@@ -209,9 +213,18 @@
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
+	///Stamina and damage dropoff over distance, for shotguns and the like
+	///It is a flat value that is SUBTRACTED from damage for every tile it moves, I.E 5 dropoff means the projectile looses 5 damage for every tile it moves past the first tile
+	var/tile_dropoff = 0
+	var/tile_dropoff_s = 0
+
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
+	/// How much accuracy is lost for each tile travelled
+	var/accuracy_falloff = 7
+	/// How much accuracy before falloff starts to matter. Formula is range - falloff * tiles travelled
+	var/accurate_range = 100
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
 	/// If this projectile has been parried before
@@ -238,6 +251,12 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	if(damage > 0)
+		damage -= tile_dropoff
+	if(stamina > 0)
+		stamina -= tile_dropoff_s
+	if(damage < 0 && stamina < 0)
+		qdel(src)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()
@@ -481,19 +500,19 @@
 				store_hitscan_collision(point_cache)
 			return TRUE
 
-	if(!HAS_TRAIT(src, TRAIT_ALWAYS_HIT_ZONE) && isliving(A))
+	var/distance = decayedRange - range
+	var/hit_prob = clamp(accurate_range - (accuracy_falloff * distance), 5, 100)
+	if(isliving(A))
 		var/mob/living/who_is_shot = A
-		var/distance = decayedRange - range
-		var/hit_prob = max(100 - (7 * distance), 5)
 		if(who_is_shot.body_position == LYING_DOWN)
 			hit_prob *= 1.2
-		// melbert todo : make people more skilled with weapons have a lower miss chance
-		if(!prob(hit_prob))
-			def_zone = who_is_shot.get_random_valid_zone(def_zone, 0) // Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-			grazing = !prob(hit_prob) // jeez you missed twice? that's a graze
-			if(grazing)
-				wound_bonus = CANT_WOUND
-				bare_wound_bonus = CANT_WOUND
+	// melbert todo : make people more skilled with weapons have a lower miss chance // Consider nuking this TODO and update the projectile refactor
+	if(!prob(hit_prob))
+		def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(get_turf(A), starting)), 5, 100))
+		grazing = !prob(hit_prob) // jeez you missed twice? that's a graze
+		if(grazing)
+			wound_bonus = CANT_WOUND
+			bare_wound_bonus = CANT_WOUND
 
 	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
 

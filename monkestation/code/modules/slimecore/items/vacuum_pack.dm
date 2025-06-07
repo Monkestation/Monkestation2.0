@@ -140,10 +140,6 @@
 	else
 		remove_nozzle()
 
-/obj/item/vacuum_pack/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
-		return TRUE
-
 /obj/item/vacuum_pack/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_BACK)
