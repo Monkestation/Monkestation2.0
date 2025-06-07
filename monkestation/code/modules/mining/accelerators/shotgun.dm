@@ -8,7 +8,7 @@
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"
 	worn_icon_state = ""
-	recoil = 4
+	recoil = 3
 	force = 20
 	armour_penetration = 5
 	pin = /obj/item/firing_pin/wastes //yes this is required, do NOT remove it
@@ -23,7 +23,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
-	pb_knockback = 0 // :3
+	pb_knockback = 0 //you may have your point blank, but you dont get a fling
 
 /obj/item/ammo_box/magazine/internal/shot/dual/kinetic
 	name = "kinetic double barrel shotgun internal magazine"
@@ -32,17 +32,28 @@
 	caliber = MINER_SHOTGUN
 	max_ammo = 2
 
-/obj/item/ammo_casing/shotgun/kinetic
-	name = "Kinetic Shell"
+//You cant just pry these shells out with your fingers, youll have to eject them by breaking open the shotgun
+/obj/item/ammo_box/magazine/internal/shot/dual/kinetic/give_round(obj/item/ammo_casing/R)
+	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
+		return FALSE
+
+	else if (stored_ammo.len < max_ammo)
+		stored_ammo += R
+		R.forceMove(src)
+		return TRUE
+	return FALSE
+
+/obj/item/ammo_casing/shotgun/kinetic //for slaying, works on crowds
+	name = "Kinetic Magnum Buckshot Shell"
 	desc = "A 12 gauge Shell loaded with kinetic projectiles."
 	icon_state = "heshell"
 	worn_icon_state = ""
 	caliber = MINER_SHOTGUN
 	pellets = 5
-	variance = 40
+	variance = 30
 	projectile_type = /obj/projectile/plasma/kineticshotgun
 
-/obj/item/ammo_casing/shotgun/kinetic/sniperslug
+/obj/item/ammo_casing/shotgun/kinetic/sniperslug //slugs essentially
 	name = "Kinetic .50 BMG"
 	desc = "If god did not want us to put 50 BMG in a 12 gauge, he would not have given them similar diameter!"
 	icon_state = "stunshell"
@@ -50,15 +61,18 @@
 	variance = 5
 	projectile_type = /obj/projectile/plasma/kineticshotgun/sniperslug
 
-/obj/projectile/kinetic/shotgun
-	name = "magnum kinetic projectile"
-	damage = 35
-	range = 7
-	icon_state = "cryoshot"
-	projectile_piercing = PASSMOB
-	Skillbasedweapon = FALSE
 
-/obj/projectile/plasma/kineticshotgun //subtype of plasma instead of kinetic so it can mine walls. Cant be used off of lavaland or off the wastes of icemoon anyways so...
+/obj/item/ammo_casing/shotgun/kinetic/rockbreaker //for digging!
+	name = "Kinetic Rockbreaker Shell"
+	desc = "A 12 gauge Shell loaded with dozens of special tiny kinetic rockbreaker pellets, perfect for clearing masses of rocks but no good for killing fauna."
+	icon_state = "bountyshell"
+	worn_icon_state = ""
+	caliber = MINER_SHOTGUN
+	pellets = 10
+	variance = 120
+	projectile_type = /obj/projectile/plasma/kineticshotgun/rockbreaker
+
+/obj/projectile/plasma/kineticshotgun //subtype of plasma instead of kinetic so it can punch through mineable turf. Cant be used off of lavaland or off the wastes of icemoon anyways so...
 	name = "magnum kinetic projectile"
 	icon_state = "cryoshot"
 	damage_type = BRUTE
@@ -74,21 +88,28 @@
 	impact_type = ""
 
 /obj/projectile/plasma/kineticshotgun/sniperslug // long range but cant hit the oneshot breakpoint of a watcher and does not penetrate targets
-	name = ".50 BMG Kinetic"
+	name = ".50 BMG kinetic"
 	speed = 0.4
 	damage = 150
 	range = 10
 	icon_state = "gaussstrong"
 	projectile_piercing = NONE
 
-/obj/item/storage/box/kinetic/shotgun
+/obj/projectile/plasma/kineticshotgun/rockbreaker // for breaking rocks
+	name = "kinetic rockbreaker"
+	speed = 1 //slower than average
+	damage = 2
+	range = 13
+	icon_state = "guardian"
+	projectile_piercing = NONE
+
+/obj/item/storage/box/kinetic/shotgun //box
 	name = "box of kinetic shells"
-	desc = "A box full of kinetic projectile magazines, specifically for the proto-kinetic SMG.\
-	It is specially designed to only hold proto-kinetic magazines, and also fit inside of explorer webbing."
+	desc = ""
 	icon_state = "rubbershot_box"
 	illustration = "rubbershot_box"
 
-/obj/item/storage/box/kinetic/shotgun/Initialize(mapload)
+/obj/item/storage/box/kinetic/shotgun/Initialize(mapload) //initialize
 	. = ..()
 	atom_storage.max_slots = 10
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -97,18 +118,17 @@
 		/obj/item/ammo_casing/shotgun/kinetic,
 	))
 
-/obj/item/storage/box/kinetic/shotgun/PopulateContents()
+/obj/item/storage/box/kinetic/shotgun/PopulateContents() //populate
 	for(var/i in 1 to 10)
 		new /obj/item/ammo_casing/shotgun/kinetic(src)
 
-/obj/item/storage/box/kinetic/shotgun/sniperslug
+/obj/item/storage/box/kinetic/shotgun/sniperslug //box
 	name = "box of .50 BMG Kinetic"
-	desc = "A box full of kinetic projectile magazines, specifically for the proto-kinetic SMG.\
-	It is specially designed to only hold proto-kinetic magazines, and also fit inside of explorer webbing."
+	desc = ""
 	icon_state = "rubbershot_box"
 	illustration = "rubbershot_box"
 
-/obj/item/storage/box/kinetic/shotgun/shotgun/sniperslug/Initialize(mapload)
+/obj/item/storage/box/kinetic/shotgun/sniperslug/Initialize(mapload) //initialize
 	. = ..()
 	atom_storage.max_slots = 10
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -117,6 +137,25 @@
 		/obj/item/ammo_casing/shotgun/kinetic/sniperslug,
 	))
 
-/obj/item/storage/box/kinetic/shotgun/PopulateContents()
+/obj/item/storage/box/kinetic/shotgun/sniperslug/PopulateContents() //populate
 	for(var/i in 1 to 10)
 		new /obj/item/ammo_casing/shotgun/kinetic/sniperslug(src)
+
+/obj/item/storage/box/kinetic/shotgun/rockbreaker //box
+	name = "box of kinetic rock breaker"
+	desc = ""
+	icon_state = "rubbershot_box"
+	illustration = "rubbershot_box"
+
+/obj/item/storage/box/kinetic/shotgun/rockbreaker/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 20
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker,
+	))
+
+/obj/item/storage/box/kinetic/shotgun/rockbreaker/PopulateContents() //populate
+	for(var/i in 1 to 20)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
