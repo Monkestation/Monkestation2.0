@@ -48,11 +48,6 @@
 		new extra_to_spawn (src)
 	new /obj/item/storage/fancy/a40mm_box (src)
 
-/obj/item/storage/toolbox/guncase/rocketlauncher
-	name = "rocket launcher gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/rocketlauncher
-	extra_to_spawn = /obj/item/ammo_box/rocket
-
 /obj/item/storage/toolbox/guncase/rocketlauncher/PopulateContents()
 	new weapon_to_spawn (src)
 	new extra_to_spawn (src)

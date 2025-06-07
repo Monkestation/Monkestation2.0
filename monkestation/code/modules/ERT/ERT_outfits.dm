@@ -705,7 +705,7 @@
 	)
 	glasses = /obj/item/clothing/glasses/thermal
 	l_pocket = /obj/item/melee/energy/sword/saber/purple //I am going to end to this, once and for all!
-	r_pocket = /obj/item/shield/energy
+	r_pocket = /obj/item/shield/energy/advanced
 	additional_radio = /obj/item/encryptionkey/heads/captain
 	implants = list(/obj/item/implant/krav_maga)
 

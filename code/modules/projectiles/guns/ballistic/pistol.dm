@@ -130,3 +130,14 @@
 	else
 		to_chat(user, span_notice("..and falls into view. Whew, that was a close one."))
 		user.dropItemToGround(src)
+
+/**
+ * Weak 1911 for syndicate chimps. It comes in a 4 TC kit.
+ * 15 damage every.. second? 7 shots to kill. Not fast.
+ */
+/obj/item/gun/ballistic/automatic/pistol/m1911/chimpgun
+	name = "\improper CH1M911"
+	desc = "For the monkey mafioso on-the-go. Uses .45 rounds and has the distinct smell of bananas."
+	projectile_damage_multiplier = 0.5
+	projectile_wound_bonus = -12
+	pin = /obj/item/firing_pin/monkey
