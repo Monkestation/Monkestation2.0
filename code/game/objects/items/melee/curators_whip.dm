@@ -66,7 +66,9 @@
 
 /obj/item/melee/curator_whip/proc/whip_disarm(mob/living/carbon/user, mob/living/target, side)
 	var/obj/item/item = target.get_held_items_for_side(side)
-	if(QDELETED(item))
+	if(istype(item, /obj/item/offhand)) // if it's an offhand, check whatever's in their other hand
+		item = target.get_held_items_for_side(side == LEFT_HANDS ? RIGHT_HANDS : LEFT_HANDS)
+	if(QDELETED(item) || (item.item_flags & ABSTRACT))
 		return FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
