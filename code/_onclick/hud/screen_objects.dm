@@ -206,7 +206,7 @@
 /atom/movable/screen/inventory/MouseExited()
 	..()
 	cut_overlay(object_overlay)
-	QDEL_NULL(object_overlay)
+	object_overlay = null
 
 /atom/movable/screen/inventory/update_icon_state()
 	if(!icon_empty)

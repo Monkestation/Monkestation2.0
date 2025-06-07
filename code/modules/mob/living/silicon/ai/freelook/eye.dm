@@ -42,7 +42,7 @@
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
 		hud.remove_atom_from_hud(src)
-		QDEL_LIST(old_images)
+		old_images.Cut()
 		return
 
 	if(!length(hud.hud_users))
@@ -69,8 +69,7 @@
 		I.loc = T
 		I.vis_contents += hud_obj
 		new_images += I
-	for(var/i in (new_images.len + 1) to old_images.len)
-		qdel(old_images[i])
+	old_images.Cut(length(new_image) + 1, length(old_images) + 1)
 	hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
