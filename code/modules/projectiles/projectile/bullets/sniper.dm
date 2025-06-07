@@ -126,7 +126,7 @@
 	var/object_damage = 65
 	var/mecha_damage = 40
 
-/obj/projectile/bullet/nivelle/pierce/on_hit(atom/target, blocked = 0, pierce_hit)  /// If anyone is deranged enough to use it on soft targets, you may as well let them have fun
+/obj/projectile/bullet/neville/pierce/on_hit(atom/target, blocked = 0, pierce_hit)  /// If anyone is deranged enough to use it on soft targets, you may as well let them have fun
 	if(isliving(target))
 		// If the bullet has already gone through 3 people, stop it on this hit
 		if(pierces > 3)
