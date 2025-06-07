@@ -641,8 +641,8 @@
 	fire_sound = 'sound/weapons/gun/sniper/neville.ogg'
 	projectile = /obj/projectile/bullet/neville
 	projectiles = 10
-	projectiles_cache = 10
-	projectiles_cache_max = 30
+	projectiles_cache = 30
+	projectiles_cache_max = 80
 	projectiles_per_shot = 1
 	equip_cooldown = 1 SECONDS
 	randomspread = 1
