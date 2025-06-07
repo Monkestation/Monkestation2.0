@@ -120,5 +120,4 @@
 	)
 	user.do_attack_animation(target, used_item = src)
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = -1, falloff_distance = 0)
-	target.balloon_alert(target, "you trip over!")
 	return TRUE
