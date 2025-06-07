@@ -1,5 +1,46 @@
 #ifdef REFERENCE_TRACKING
 
+// typecache of types that almost certainly have no refs, and thus can be safely skipped when finding references
+GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_typecache())
+
+/proc/reftracker_skip_typecache()
+	. = alist()
+	for(var/base_type in list(
+		/icon,
+		/regex,
+		/datum/armor,
+		/datum/asset_cache_item,
+		/datum/book_info,
+		/datum/card,
+		/datum/cassette_data,
+		/datum/chat_payload,
+		/datum/color_palette,
+		/datum/component/mirage_border, // only turf and mirage holder refs
+		/datum/gas_mixture,
+		/datum/greyscale_layer,
+		/datum/instrument_key,
+		/datum/lighting_object, // only contains turf and MA refs
+		/datum/media_track,
+		/datum/movespeed_modifier,
+		/datum/painting,
+		/datum/paper_input,
+		/datum/physiology,
+		/datum/plant_gene/core,
+		/datum/plant_gene/reagent,
+		/datum/qdel_item,
+		/datum/stack_recipe,
+		/datum/tlv,
+		/datum/weakref,
+		/turf/open/space/basic,
+		/turf/cordon,
+		/obj/effect/abstract/mirage_holder, // only a turf ref i think?
+		// no need to scan these two
+		/datum/controller/subsystem/demo,
+		/datum/controller/subsystem/garbage,
+	))
+		for(var/type in typesof(base_type))
+			.[type] = TRUE
+
 /datum/proc/find_references(skip_alert)
 	running_find_references = type
 	if(usr?.client)
@@ -28,6 +69,8 @@
 
 	log_reftracker("Refcount for [type]: [refcount(src)]")
 
+	var/alist/skip_types = GLOB.reftracker_skip_typecache
+
 	//Time to search the whole game for our ref
 	DoSearchVar(GLOB, "GLOB", search_time = starting_time) //globals
 	log_reftracker("Finished searching globals")
@@ -42,11 +85,13 @@
 	log_reftracker("Finished searching native globals")
 
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
-		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+		if(isnull(skip_types[thing.type]))
+			DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching atoms")
 
 	for(var/datum/thing) //datums
-		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
+		if(isnull(skip_types[thing.type]))
+			DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching datums")
 
 	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
@@ -86,7 +131,7 @@
 
 	if(isdatum(potential_container))
 		var/datum/datum_container = potential_container
-		if(datum_container.last_find_references == search_time || datum_container == SSdemo || datum_container == SSgarbage)
+		if(datum_container.last_find_references == search_time || GLOB.reftracker_skip_typecache[datum_container.type])
 			return
 
 		datum_container.last_find_references = search_time
