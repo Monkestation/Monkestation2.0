@@ -70,7 +70,8 @@
 	icon_state = "rebar"
 	damage = 55
 	dismemberment = 2 //It's a budget sniper rifle.
-	armour_penetration = 40 //A bit better versus armor.
+	armour_penetration = 30 //A bit better versus armor.
+	armour_ignorance = 20 //Makes it one tap limbs against about the same level of armour as it did before the AP rework
 	wound_bonus = 10
 	bare_wound_bonus = 20
 	embed_falloff_tile = -3

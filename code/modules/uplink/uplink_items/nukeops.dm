@@ -4,6 +4,7 @@
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."
 	item = /obj/item/storage/box/cyber_implants
 	cost = 40
+	surplus = 30
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/medical
@@ -12,6 +13,7 @@
 			a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	cost = 25 // normally 31
+	surplus = 40
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/sniper
@@ -95,6 +97,7 @@
 	item = /obj/item/firing_pin/clown/ultra
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+	surplus = 80
 
 /datum/uplink_item/dangerous/clownopsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
@@ -103,6 +106,7 @@
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+	surplus = 80
 
 /datum/uplink_item/dangerous/shotgun
 	name = "Bulldog Shotgun"
@@ -599,12 +603,14 @@
 			for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, ion thrusters and a Tesla energy array."
 	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
 	cost = 80
+	surplus = 40
 
 /datum/uplink_item/support/honker
 	name = "Dark H.O.N.K."
 	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."
 	item = /obj/vehicle/sealed/mecha/honker/dark/loaded
 	cost = 80
+	surplus = 60
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/support/mauler
@@ -810,6 +816,7 @@
 	cost = 25
 	purchasable_from = UPLINK_CLOWN_OPS|UPLINK_NUKE_OPS
 	cant_discount = TRUE
+	surplus = 10 //very rare from lootboxes
 
 /datum/uplink_item/support/bomb_key
 	name = "Syndicate Ordnance Laboratory Access Card"
@@ -852,3 +859,52 @@
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
+/datum/uplink_item/suits/cybersun_juggernaut_suit
+	name = "Cybersun Juggernaut Minigun Combo and Suit Access Card"
+	desc = "Developed by Cybersun for use in clearing heavy space bear infestations in asteroid belt operations.\
+	 It now has a new purpose as the heavy operation suit of the Syndicate. By purchasing this you get a special Authorization Key to the only suit in storage at Firebase Balthazord."
+	item = /obj/item/keycard/syndicate_suit_storage
+	cost = 35
+	purchasable_from = UPLINK_NUKE_OPS
+	limited_stock = 1
+
+/datum/uplink_item/stealthy_tools/amogus_potion
+	name = "Mysterious potion"
+	desc = "A strange red potion that's said to turn you into a tiny red space man at 3AM, seems to work at any time though. \
+			Drinking this potion will turn you very small allowing you to be carried in backpacks by your fellow operatives, \
+			seems to not make goblins or monkeys any smaller though. No money refunds."
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	item = /obj/item/amogus_potion
+	cost = 7
+
+/datum/uplink_item/ammo/LMG
+	name = "6.5 FMJ Quarad drum"
+	desc = "A surplus 120 round drum of FMJ bullets for the Quarad"
+	item = /obj/item/ammo_box/magazine/c65xeno_drum/evil
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
+
+/datum/uplink_item/ammo/LMG/incendiary
+	name = "6.5 Inferno Quarad drum"
+	desc = "A 120 round drum of Inferno bullets for the Quarad. They leave a trail of fire"
+	item = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
+
+/datum/uplink_item/ammo/LMG/pierce
+	name = "6.5 UDS Quarad drum"
+	desc = "No, NOT depleted uranium. 120 round drum of piercing and irradiating bullets for the Quarad"
+	item = /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
+
+/datum/uplink_item/dangerous/Evil_Quarad
+	name = "Syndicate-Enhanced Light Suppression Weapon"
+	desc = "A heavily modified Quarad LMG, complete with bluespace barrel extender and retooled recoil reduction. Takes 120 round drums, good for suppressive fire."
+	item = /obj/item/gun/ballistic/automatic/quarad_lmg/evil
+	cost = 16
+	purchasable_from = UPLINK_NUKE_OPS
+	illegal_tech = FALSE
