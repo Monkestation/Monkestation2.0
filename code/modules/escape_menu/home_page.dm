@@ -84,7 +84,7 @@
 
 /datum/escape_menu/proc/open_map()
 	var/map_name = replacetext_char(trimtext(SSmapping.current_map.map_name), " ", "")
-	var/url = replacetext_char(CONFIG_GET(text/webmap_url), "$map", map_name)
+	var/url = replacetext_char(CONFIG_GET(string/webmap_url), "$map", map_name)
 	if(client)
 		client << link(url)
 

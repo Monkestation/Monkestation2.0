@@ -83,7 +83,6 @@
 	var/fire_brightness = 4
 	///The Light colour to use when working in fire alarm status
 	var/fire_colour = COLOR_FIRE_LIGHT_RED
-
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
@@ -122,6 +121,7 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(alert_level_updated))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -198,6 +198,21 @@
 /obj/machinery/light/proc/handle_fire(area/source, new_fire)
 	SIGNAL_HANDLER
 	update(dont_burn_out = TRUE)
+
+/obj/machinery/light/proc/alert_level_updated()
+	SIGNAL_HANDLER
+
+	if(!is_station_level(z))
+		return
+	if(!is_station_area_or_adjacent(src))
+		return
+	if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
+		set_major_emergency_light()
+	else
+		unset_major_emergency_light()
+
+
+
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE, dont_burn_out = FALSE)

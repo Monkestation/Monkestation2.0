@@ -178,7 +178,7 @@
 	owner.current.playsound_local(null, 'monkestation/sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 	owner.announce_objectives()
 
-/datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
+/datum/antagonist/slasher/proc/LifeTick(mob/living/source, seconds_between_ticks, times_fired)
 	SIGNAL_HANDLER
 
 	var/list/currently_beating = list()
@@ -252,7 +252,7 @@
 	. = ..()
 
 
-/datum/status_effect/slasher/stalking/tick(seconds_per_tick, times_fired)
+/datum/status_effect/slasher/stalking/tick(seconds_between_ticks, times_fired)
 	if(slasherdatum.stalked_human)
 		for(var/mob/living/mob in view(7, owner))
 			if(mob == owner)
@@ -546,3 +546,22 @@
 	explanation_text = "Use your traps to slow down your victims."
 	admin_grantable = TRUE
 
+
+/datum/antagonist/slasher/antag_token(datum/mind/hosts_mind, mob/spender)
+	var/spender_key = spender.key
+	if(!spender_key)
+		CRASH("wtf, spender had no key")
+	var/turf/spawn_loc = find_safe_turf_in_maintenance()//Used for the Drop Pod type of spawn for maints only
+	if(isnull(spawn_loc))
+		message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent a slasher antag token")
+		CRASH("Failed to find valid spawn location for slasher antag token")
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 1 SECOND)
+	var/mob/living/carbon/human/slasher = new (spawn_loc)
+	slasher.PossessByPlayer(spender_key)
+	slasher.mind.add_antag_datum(/datum/antagonist/slasher)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(slasher)] has been made into a slasher by using an antag token.")

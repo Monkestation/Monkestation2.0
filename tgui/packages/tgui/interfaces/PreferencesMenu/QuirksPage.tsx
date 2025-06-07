@@ -1,7 +1,7 @@
 import type { Inferno } from 'inferno';
 import { Box, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const getValueClass = (value: number): string => {
@@ -140,10 +140,12 @@ const StatDisplay: Inferno.StatelessComponent<{}> = (props) => {
 export const QuirksPage = (props) => {
   const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [selectedQuirks, setSelectedQuirks] = useLocalState(
-    `selectedQuirks_${data.active_slot}`,
-    data.selected_quirks,
-  );
+  const selectedQuirks = data.selected_quirks;
+  const speciesDisallowedQuirks = data.species_disallowed_quirks;
+
+  const setSelectedQuirks = (selected_quirks) => {
+    data.selected_quirks = selected_quirks;
+  };
 
   return (
     <ServerPreferencesFetcher
@@ -213,6 +215,9 @@ export const QuirksPage = (props) => {
             }
           }
 
+          if (speciesDisallowedQuirks.includes(quirk.name)) {
+            return 'This quirk is incompatible with your selected species.';
+          }
           return undefined;
         };
 

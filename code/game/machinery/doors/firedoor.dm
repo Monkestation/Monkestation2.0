@@ -282,10 +282,7 @@
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
 	if(!environment)
-		var/a1 = !!(checked_turf.flags_1 & INITIALIZED_1)
-		var/a2 = SSatoms.initializing_something()
-		stack_trace("We tried to check a gas_mixture that doesn't exist for its firetype, what are you DOING (debug: a1=[a1], a2=[a2])")
-		return
+		CRASH("We tried to check a gas_mixture that doesn't exist for its firetype, what are you DOING")
 
 	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return FIRELOCK_ALARM_TYPE_HOT
@@ -301,6 +298,8 @@
 			return
 
 	var/turf/checked_turf = source
+	if(!(checked_turf.flags_1 & INITIALIZED_1)) // uninitialized turfs won't have atmos setup anyways, so check_atmos would just complain and not work
+		return
 	var/result = check_atmos(checked_turf)
 
 	if(result && TURF_SHARES(checked_turf))

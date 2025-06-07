@@ -41,7 +41,6 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 /datum/loadout_item/plushies/ratvar
 	name = "Ratvar Plushie"
 	item_path = /obj/item/toy/plush/ratplush
-	restricted_roles = list(JOB_CHAPLAIN)
 
 /datum/loadout_item/plushies/rouny
 	name = "Rouny Plushie"

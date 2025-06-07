@@ -11690,7 +11690,7 @@
 	id = "xeno_blastdoor";
 	name = "Biohazard Containment Door"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
 /turf/open/floor/iron/white,
 /area/station/science/breakroom)
 "ejJ" = (

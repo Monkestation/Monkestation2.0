@@ -628,6 +628,25 @@
 	for(var/i in 1 to 7)
 		new /obj/item/food/bait/natural(src)
 
+/// Syndicate Pill Bottles
+
+/obj/item/storage/pill_bottle/syndicate
+	name = "suspicious pill bottle"
+	desc = "It's an airtight container for storing 'medication'."
+	icon_state = "syndie_pill_canister"
+
+/obj/item/storage/pill_bottle/syndicate/poison
+	name = "bottle of poisonous pills"
+	desc = "Contains Interdyne-Branded pills used to poison people. The label reads: 'Do NOT put this in your own drink on accident.'"
+
+/obj/item/storage/pill_bottle/syndicate/poison/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/pill/cyanide(src)
+		new /obj/item/reagent_containers/pill/tox(src)
+		new /obj/item/reagent_containers/pill/spewium(src)
+	new /obj/item/reagent_containers/pill/amanitin(src)
+
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
