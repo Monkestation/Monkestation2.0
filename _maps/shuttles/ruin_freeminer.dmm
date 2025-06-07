@@ -542,6 +542,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/ruin/free_miner)
+"oV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/ruin/free_miner)
 "oW" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/structure/cable,
@@ -713,6 +721,13 @@
 "sQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/ruin/free_miner)
+"th" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/catwalk_floor/iron,
 /area/shuttle/ruin/free_miner)
 "tq" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -1680,6 +1695,7 @@
 /area/shuttle/ruin/free_miner)
 "Oo" = (
 /obj/machinery/oven/range_frontier,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/ruin/free_miner)
 "Os" = (
@@ -1829,6 +1845,7 @@
 /area/shuttle/ruin/free_miner)
 "RO" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/large,
 /area/shuttle/ruin/free_miner)
 "Sk" = (
@@ -2264,7 +2281,7 @@ un
 un
 un
 un
-CJ
+GB
 fw
 Df
 NO
@@ -2272,14 +2289,14 @@ BQ
 fw
 Df
 NO
-CJ
+GB
 un
 un
 un
 un
 "}
 (2,1,1) = {"
-CJ
+GB
 fw
 Df
 NO
@@ -2295,7 +2312,7 @@ CJ
 fw
 Df
 NO
-CJ
+GB
 "}
 (3,1,1) = {"
 CJ
@@ -2390,7 +2407,7 @@ fl
 qx
 ut
 CJ
-CJ
+GB
 "}
 (8,1,1) = {"
 KJ
@@ -2512,7 +2529,7 @@ Zi
 Wj
 Wj
 nR
-Fu
+th
 CJ
 nh
 WV
@@ -2570,7 +2587,7 @@ fh
 xR
 MN
 JP
-JP
+oV
 ud
 IY
 IV
@@ -2675,7 +2692,7 @@ Vx
 CJ
 Pr
 CJ
-CJ
+GB
 "}
 (23,1,1) = {"
 CJ
@@ -2732,7 +2749,7 @@ kP
 CJ
 oE
 CJ
-CJ
+GB
 "}
 (26,1,1) = {"
 KJ
@@ -2789,7 +2806,7 @@ hy
 CJ
 CJ
 CJ
-CJ
+GB
 "}
 (29,1,1) = {"
 GB
@@ -2805,7 +2822,7 @@ CJ
 PA
 dn
 CJ
-CJ
+GB
 un
 un
 un
@@ -2823,7 +2840,7 @@ he
 CJ
 CJ
 CJ
-CJ
+GB
 un
 un
 un
