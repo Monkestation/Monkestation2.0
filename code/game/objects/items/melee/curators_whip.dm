@@ -70,7 +70,11 @@
 		return FALSE
 	if(!target.dropItemToGround(item))
 		return FALSE
-	target.visible_message(span_danger("[item] is yanked out of [target]'s hands by \the [src]!"), span_userdanger("[user] yanks [item] out of your hands with \the [src]!"))
+	target.visible_message(
+		span_danger("[item] is yanked out of [target]'s hands by \the [src]!"),
+		span_userdanger("[user] yanks [item] out of your hands with \the [src]!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	to_chat(user, span_notice("You yank [item] towards yourself."))
 	log_combat(user, target, "disarmed", src)
 	user.do_attack_animation(target, used_item = src)
@@ -109,7 +113,12 @@
 	for(var/obj/item/item in stupid_horrible_list)
 		REMOVE_TRAIT(item, TRAIT_NODROP, REF(src))
 	log_combat(user, target, "tripped", src)
-	target.visible_message(span_danger("[user] knocks [target] off [target.p_their()] feet!"), span_userdanger("[user] yanks your legs out from under you!"))
+	target.visible_message(
+		span_danger("[user] knocks [target] off [target.p_their()] feet!"),
+		span_userdanger("[user] yanks your legs out from under you!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	user.do_attack_animation(target, used_item = src)
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = -1, falloff_distance = 0)
+	target.balloon_alert(target, "you trip over!")
 	return TRUE
