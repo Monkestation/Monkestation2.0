@@ -93,13 +93,13 @@
 /datum/beaker_panel/proc/beaker_panel_create_grenade(list/grenadedata, list/obj/item/reagent_containers/containers, location)
 	switch(grenadedata["grenadeType"] )
 		if("Normal")
-			var/timer = text2num(grenadedata["grenadeTimer"]) * SECONDS
+			var/timer = text2num(grenadedata["grenadeTimer"]) SECONDS
 			var/obj/item/grenade/chem_grenade/grenade = new(location)
 			for(var/obj/item/reagent_containers/container in containers)
 				grenade.beakers += container
 				container.forceMove(grenade)
 			grenade.stage_change(GRENADE_READY)
-			if(det_time)
+			if(timer)
 				grenade.det_time = timer
 
 			return grenade
