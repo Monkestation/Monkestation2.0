@@ -2461,6 +2461,7 @@
 #include "code\game\objects\items\implants\implantpad.dm"
 #include "code\game\objects\items\implants\implantuplink.dm"
 #include "code\game\objects\items\melee\baton.dm"
+#include "code\game\objects\items\melee\curators_whip.dm"
 #include "code\game\objects\items\melee\energy.dm"
 #include "code\game\objects\items\melee\misc.dm"
 #include "code\game\objects\items\rcd\RCD.dm"
