@@ -26,7 +26,7 @@
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * REM * seconds_per_tick, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	affected_mob.adjustToxLoss(0.25 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	..()
 	. = TRUE

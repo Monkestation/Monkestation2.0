@@ -63,7 +63,8 @@
 	maxHealth = 100 //RoboTongue!
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
-	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
+	organ_flags = ORGAN_ROBOTIC
+	//organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
 
 /obj/item/organ/internal/tongue/synth/get_scream_sound()
 	return 'monkestation/sound/voice/screams/silicon/scream_silicon.ogg'
@@ -118,7 +119,7 @@
 	desc = "A voice synthesizer that allows you to emulate the tongues of other species."
 	say_mod = "beeps"
 	icon_state = "tonguerobot"
-	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_ROBOTIC
 	//The current tongue being emulated.
 	var/current_tongue = "Synth"
 	var/datum/action/innate/select_tongue/select_tongue

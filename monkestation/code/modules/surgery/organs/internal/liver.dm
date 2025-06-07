@@ -3,8 +3,7 @@
 	desc = "A series of small pumps and boilers, designed to facilitate proper metabolism."
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "liver-clock"
-	organ_flags = ORGAN_SYNTHETIC
-	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_ROBOTIC
 	alcohol_tolerance = 0
 	liver_resistance = 0
 	toxTolerance = 1 //while the organ isn't damaged by doing its job, it doesnt do it very well
@@ -33,7 +32,7 @@
 /obj/item/organ/internal/liver/synth/emp_act(severity)
 	. = ..()
 
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
@@ -42,11 +41,11 @@
 	switch(severity)
 		if(EMP_HEAVY)
 			to_chat(owner, span_warning("Alert: Critical! Reagent processing unit failure, seek maintenance immediately. Error Code: DR-1k"))
-			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maxHealth, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Reagent processing unit failure, seek maintenance for diagnostic. Error Code: DR-0k"))
-			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maxHealth, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 
 /datum/design/synth_liver
 	name = "Reagent Processing Unit"

@@ -1,4 +1,5 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003 // Conversion between internal drunk power and common blood alcohol content
 
 /****************************************************
 				BLOOD SYSTEM
@@ -326,6 +327,14 @@
 	our_splatter.add_mob_blood(src)
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
+
+/mob/living/proc/get_blood_alcohol_content()
+	var/blood_alcohol_content = 0
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+
+	return blood_alcohol_content
 
 /**
  * Helper proc for throwing blood particles around, similar to the spray_blood proc.

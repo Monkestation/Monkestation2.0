@@ -5,7 +5,7 @@
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_SMALL
 	encode_info = AUGMENT_NT_LOWLEVEL
-
+	organ_flags = ORGAN_ROBOTIC
 	var/double_legged = FALSE
 
 /obj/item/organ/internal/cyberimp/leg/Initialize()
