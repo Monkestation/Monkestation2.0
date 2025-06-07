@@ -173,6 +173,7 @@
 	fire_sound = 'sound/weapons/fwoosh.ogg'
 	pinless = TRUE
 	force = 30
+	demolition_mod = 1.5
 	wound_bonus = -5
 	bare_wound_bonus = 20
 	armour_penetration = 60
