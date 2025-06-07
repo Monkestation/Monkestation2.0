@@ -30,13 +30,19 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/larva/Initialize(mapload)
-	var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
-	evolution.Grant(src)
+/mob/living/carbon/alien/larva/Initialize(mapload, neuter)
+	// Monkeystation EDIT. If a larva is neutered or not it gets a different ability and trait
+	if(neuter)
+		ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
+		var/datum/action/cooldown/alien/neutered_larva_evolve/evolution = new(src)
+		evolution.Grant(src)
+	else
+		var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
+		evolution.Grant(src)
 	var/datum/action/cooldown/alien/hide/hide = new(src)
 	hide.Grant(src)
 	return ..()
-
+//END monkeystation edit
 /mob/living/carbon/alien/larva/create_internal_organs()
 	organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	..()
