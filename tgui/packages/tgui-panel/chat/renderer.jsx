@@ -77,6 +77,15 @@ const createReconnectedNode = () => {
   return node;
 };
 
+// Removes job formatting
+const stripColoredNames = (inputHtml) => {
+  const spanRegex = new RegExp(
+    '(<span[\\w| |\t|=]*[\'|"][\\w| ]*)(?:job__[a-z]+)([\'|"]>)',
+    'gi',
+  );
+  return inputHtml.replace(spanRegex, '$1$2');
+};
+
 const handleImageError = (e) => {
   setTimeout(() => {
     /** @type {HTMLImageElement} */
@@ -280,6 +289,14 @@ class ChatRenderer {
     });
   }
 
+  setColoredNames(newValue) {
+    if (newValue === this.coloredNames) {
+      return;
+    }
+    this.coloredNames = newValue;
+    this.rebuildChat();
+  }
+
   scrollToBottom() {
     this.tryFindScrollable();
     // scrollHeight is always bigger than scrollTop and is
@@ -392,7 +409,9 @@ class ChatRenderer {
         }
         // Payload is HTML
         else if (message.html) {
-          node.innerHTML = message.html;
+          node.innerHTML = this.coloredNames
+            ? message.html
+            : stripColoredNames(message.html);
         } else {
           logger.error('Error: message is missing text payload', message);
         }

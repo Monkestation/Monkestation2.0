@@ -85,7 +85,7 @@ export const SettingsPanel = (props, context) => {
 };
 
 export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, fontSize, lineHeight } = useSelector(
+  const { theme, fontFamily, coloredNames, fontSize, lineHeight } = useSelector(
     context,
     selectSettings,
   );
@@ -186,6 +186,19 @@ export const SettingsGeneral = (props, context) => {
               </Stack>
             )}
           </Stack.Item>
+        </LabeledList.Item>
+        <LabeledList.Item label="High Contrast">
+          <Button.Checkbox
+            content="Colored Names"
+            checked={coloredNames}
+            onClick={() =>
+              dispatch(
+                updateSettings({
+                  coloredNames: !coloredNames,
+                }),
+              )
+            }
+          />
         </LabeledList.Item>
         <LabeledList.Item label="Font size" verticalAlign="middle">
           <Stack textAlign="center">
