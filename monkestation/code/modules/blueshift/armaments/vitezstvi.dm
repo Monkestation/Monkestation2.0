@@ -167,6 +167,7 @@
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/hunter_slug
 	item_type = /obj/item/ammo_box/advanced/s12gauge/hunter
+	cost = PAYCHECK_COMMAND
 
 /datum/armament_entry/company_import/vitezstvi/shot_shells/flechettes
 	item_type = /obj/item/ammo_box/advanced/s12gauge/flechette
