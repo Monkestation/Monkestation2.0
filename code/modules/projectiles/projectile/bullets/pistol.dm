@@ -8,7 +8,7 @@
 /obj/projectile/bullet/c9mm/ap
 	name = "9mm armor-piercing bullet"
 	damage = 27
-	armour_penetration = 40
+	armour_penetration = 75
 	embedding = null
 	shrapnel_type = null
 
@@ -31,7 +31,7 @@
 /obj/projectile/bullet/c10mm/ap
 	name = "10mm armor-piercing bullet"
 	damage = 35
-	armour_penetration = 40
+	armour_penetration = 60
 
 /obj/projectile/bullet/c10mm/hp
 	name = "10mm hollow-point bullet"
