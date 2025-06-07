@@ -92,11 +92,13 @@
 	name = "Make Vox Announcement"
 	icon_state = "announcement"
 
+#ifdef AI_VOX
 /atom/movable/screen/ai/announcement/Click()
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	AI.announcement()
+	AI.vox_holder.ui_interact(AI)
+#endif
 
 /atom/movable/screen/ai/call_shuttle
 	name = "Call Emergency Shuttle"

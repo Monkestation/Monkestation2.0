@@ -535,11 +535,6 @@
 		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
 	if (href_list["showalerts"])
 		alert_control.ui_interact(src)
-#ifdef AI_VOX
-	if(href_list["say_word"])
-		play_vox_word(href_list["say_word"], null, src)
-		return
-#endif
 	if(href_list["show_tablet_note"])
 		if(last_tablet_note_seen)
 			src << browse(last_tablet_note_seen, "window=show_tablet")
