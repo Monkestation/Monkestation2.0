@@ -39,10 +39,6 @@ Slimecrossing Armor
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
 	var/glasses_color = "#FFFFFF"
 
-/obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
-
 /obj/structure/light_prism
 	name = "light prism"
 	desc = "A shining crystal of semi-solid light. Looks fragile."

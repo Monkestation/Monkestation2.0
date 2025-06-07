@@ -28,6 +28,7 @@
 	modstorage.set_real_location(src)
 	modstorage.allow_big_nesting = big_nesting
 	modstorage.locked = STORAGE_NOT_LOCKED
+	atom_storage.locked = FALSE
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
