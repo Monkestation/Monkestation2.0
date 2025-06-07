@@ -168,14 +168,14 @@ SUBSYSTEM_DEF(particle_weather)
 	switch(weather_plane_master.z_type)
 		if("Default")
 			if(QDELETED(weather_effect))
-				weather_effect = new /obj()
+				weather_effect = new
 				weather_effect.particles = particle_effect
 				weather_effect.filters += filter(type="alpha", render_source="[WEATHER_RENDER_TARGET] #[weather_plane_master.offset]")
 				weather_effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			return weather_effect
 		if("Eclipse")
 			if(QDELETED(weather_effect_eclipse))
-				weather_effect_eclipse = new /obj()
+				weather_effect_eclipse = new
 				weather_effect_eclipse.filters += filter(type="alpha", render_source="[WEATHER_ECLIPSE_RENDER_TARGET] #[weather_plane_master.offset]")
 				weather_effect_eclipse.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			return weather_effect_eclipse
