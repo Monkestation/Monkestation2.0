@@ -207,3 +207,16 @@
 		/obj/item/dyespray,
 	)
 	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/internal/cyberimp/arm/item_set/synth_repair
+	name = "integrated synthetic repair kit"
+	desc = "An ultra stripped down tool kit implant, containing only what you need to fix the most basic damage to a synthetic's exterior, that being a welder and a big coil of cable. Does not require a cyberlink."
+	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
+	icon_state = "toolkit_engineering"
+	items_to_create = list(
+		/obj/item/weldingtool/experimental,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/cable_coil,
+	)
+	encode_info = AUGMENT_NO_REQ //its just a welder and a big coil of cable
