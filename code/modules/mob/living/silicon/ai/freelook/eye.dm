@@ -69,7 +69,7 @@
 		I.loc = T
 		I.vis_contents += hud_obj
 		new_images += I
-	old_images.Cut(length(new_image) + 1, length(old_images) + 1)
+	old_images.Cut(length(new_images) + 1, length(old_images) + 1)
 	hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
