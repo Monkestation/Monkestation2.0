@@ -3,7 +3,7 @@
 /obj/projectile/bullet/a556
 	name = "5.56mm bullet"
 	damage = 35
-	armour_penetration = 30
+	armour_penetration = 75
 	wound_bonus = -40
 
 /obj/projectile/bullet/a556/weak //centcom
@@ -13,7 +13,7 @@
 	name = "5.56mm phasic bullet"
 	icon_state = "gaussphase"
 	damage = 20
-	armour_penetration = 70
+	armour_penetration = 80
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 // 7.62 (Nagant Rifle)
@@ -21,14 +21,15 @@
 /obj/projectile/bullet/a762
 	name = "7.62 bullet"
 	damage = 60
-	armour_penetration = 10
+	armour_penetration = 0
+	armour_ignorance = 10
 	wound_bonus = -45
 	wound_falloff_tile = 0
 
 /obj/projectile/bullet/a762/surplus
 	name = "7.62 surplus bullet"
 	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
-	armour_penetration = 0
+	armour_ignorance = 0
 
 /obj/projectile/bullet/a762/enchanted
 	name = "enchanted 7.62 bullet"
@@ -41,7 +42,7 @@
 	name = "harpoon"
 	icon_state = "gauss"
 	damage = 60
-	armour_penetration = 50
+	armour_penetration = 80
 	wound_bonus = -20
 	bare_wound_bonus = 80
 	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
@@ -54,7 +55,7 @@
 	damage = 30
 	speed = 0.4
 	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
-	armour_penetration = 10
+	armour_penetration = 20
 	wound_bonus = -20
 	bare_wound_bonus = 20
 	embedding = list("embed_chance" = 60, "fall_chance" = 2, "jostle_chance" = 2, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.4, "pain_mult" = 4, "jostle_pain_mult" = 2, "rip_time" = 10)
@@ -69,7 +70,7 @@
 	icon_state = "rebar"
 	damage = 55
 	dismemberment = 2 //It's a budget sniper rifle.
-	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
+	armour_penetration = 40 //A bit better versus armor.
 	wound_bonus = 10
 	bare_wound_bonus = 20
 	embed_falloff_tile = -3
@@ -101,9 +102,10 @@
 	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
-	armour_penetration = 30 //very pointy.
-	wound_bonus = -100
-	bare_wound_bonus = 0
+	armour_penetration = 75 //very pointy.
+	projectile_piercing = PASSMOB //felt this might have been a nice compromise for the lower damage for the difficulty of getting it
+	wound_bonus = -15
+	bare_wound_bonus = 10
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	embedding = list("embed_chance" = 50, "fall_chance" = 2, "jostle_chance" = 3, "ignore_throwspeed_threshold" = TRUE, "pain_stam_pct" = 0.6, "pain_mult" = 4, "jostle_pain_mult" = 2, "rip_time" =18)
 	embed_falloff_tile = -3
@@ -185,7 +187,7 @@
 /obj/projectile/bullet/a223
 	name = ".223 bullet"
 	damage = 35
-	armour_penetration = 30
+	armour_penetration = 40
 	wound_bonus = -40
 
 /obj/projectile/bullet/a223/weak //centcom

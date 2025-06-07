@@ -141,6 +141,8 @@
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
+	///flat armour pen, like the way old armour pen worked. Applied AFTER percentage pen
+	var/armour_ignorance = 0
 	///Whether or not our object is easily hindered by the presence of armor
 	var/weak_against_armour = FALSE
 	/// The click cooldown given after attacking. Lower numbers means faster attacks
