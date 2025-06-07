@@ -38,6 +38,8 @@
 	var/tgui_say
 	var/typing_indicators
 	var/window_scaling
+	var/datum/interaction_mode/imode
+	var/context_menu_requires_shift = FALSE
 
 	var/fully_created = FALSE
 
