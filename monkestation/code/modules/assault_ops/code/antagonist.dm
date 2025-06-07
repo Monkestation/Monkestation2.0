@@ -39,14 +39,7 @@
 	return ..()
 
 /datum/antagonist/assault_operative/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/target = mob_override || owner.current
-	monitor = target.AddComponent(/datum/component/team_monitor, "goldeneye_key")
-	for(var/obj/item/goldeneye_key/keycard as anything in SSgoldeneye.goldeneye_keys)
-		if(QDELETED(keycard))
-			continue
-		monitor.add_to_tracking_network(keycard.beacon)
-	monitor.show_hud(target)
-	add_team_hud(target, /datum/antagonist/assault_operative)
+
 
 /datum/antagonist/assault_operative/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/target = mob_override || owner.current
@@ -64,7 +57,7 @@
 
 /datum/antagonist/assault_operative/on_gain()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_GOLDENEYE_KEY_CREATED, PROC_REF(on_goldeneye_key_created))
+	//RegisterSignal(SSdcs, COMSIG_GLOB_GOLDENEYE_KEY_CREATED, PROC_REF(on_goldeneye_key_created))
 	equip_operative()
 	forge_objectives()
 	if(send_to_spawnpoint)
@@ -93,15 +86,14 @@
 // UI systems
 /datum/antagonist/assault_operative/ui_data(mob/user)
 	return list(
-		"uploaded_keys" = SSgoldeneye.uploaded_keys,
+		"uploaded_minds" = SSgoldeneye.uploaded_minds,
 		"available_targets" = get_available_targets(),
 		"extracted_targets" = get_extracted_targets(),
-		"goldeneye_keys" = get_goldeneye_keys(),
 	)
 
 /datum/antagonist/assault_operative/ui_static_data(mob/user)
 	return list(
-		"required_keys" = SSgoldeneye.required_keys,
+		"required_minds" = SSgoldeneye.required_minds,
 		"objectives" = get_objectives(),
 	)
 
@@ -124,7 +116,7 @@
 			"job" = iterating_mind.assigned_role.title,
 		))
 	return extracted_targets_data
-
+/*
 /datum/antagonist/assault_operative/proc/get_goldeneye_keys()
 	. = list()
 	for(var/obj/item/goldeneye_key/keycard as anything in SSgoldeneye.goldeneye_keys)
@@ -139,7 +131,7 @@
 			"coord_z" = location.z,
 			"ref" = REF(keycard),
 		))
-
+*/
 
 /datum/antagonist/assault_operative/forge_objectives()
 	if(assault_team)
@@ -199,11 +191,11 @@
 	disky.Shift(NORTH, 6)
 	final_icon.Blend(disky, ICON_UNDERLAY)
 	return finish_preview_icon(final_icon)
-
+/*
 /datum/antagonist/assault_operative/proc/on_goldeneye_key_created(datum/source, obj/item/goldeneye_key/key)
 	SIGNAL_HANDLER
 	monitor?.add_to_tracking_network(key.beacon)
-
+*/
 /**
  * ASSAULT OPERATIVE TEAM DATUM
  */
@@ -254,7 +246,6 @@
 		else
 			parts += "<span class='neutraltext big'>Neutral Victory</span>"
 			parts += "<B>Mission aborted!</B>"
-	parts += span_redtext("GoldenEye keys uploaded: [SSgoldeneye.uploaded_keys]/[SSgoldeneye.required_keys]")
 
 	var/text = "<br><span class='header'>The assault operatives were:</span>"
 	text += printplayerlist(members)
