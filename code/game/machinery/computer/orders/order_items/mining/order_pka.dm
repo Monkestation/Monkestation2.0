@@ -14,7 +14,7 @@
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/gun/shockwave //monke edit
-	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave
+	item_path = /obj/item/storage/box/shockwave
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/gun/glock //monke edit
