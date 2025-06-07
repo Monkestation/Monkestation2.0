@@ -29,5 +29,7 @@
 	you need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 
 /datum/quirk/prosthetic_limb/remove()
+	if(QDELETED(quirk_holder))
+		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.reset_to_original_bodypart(limb_zone)
