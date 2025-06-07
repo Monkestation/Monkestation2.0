@@ -90,6 +90,6 @@
 /obj/projectile/bullet/mm127x70
 	name = "12.7x70mm bullet"
 	damage = 10
-	armour_penetration = 0
+	armour_penetration = 10
 	wound_bonus = -50
 	wound_falloff_tile = 0

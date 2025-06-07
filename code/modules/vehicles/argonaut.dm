@@ -133,7 +133,7 @@
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	cover_amount = 95
+	cover_amount = 85
 	integrity_failure = 0.2
 
 /datum/armor/odyssey

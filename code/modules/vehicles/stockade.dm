@@ -17,7 +17,7 @@
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	cover_amount = 100 // its has a giant gunshield
+	cover_amount = 92 // its has a giant gunshield
 	var/can_be_undeployed = TRUE
 	var/undeploy_time = 3 SECONDS
 	var/always_anchored = TRUE
