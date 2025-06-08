@@ -97,12 +97,12 @@
 
 /datum/armament_entry/company_import/bms/vehicles/callahanmeme
 	item_type = /obj/vehicle/sealed/mecha/callahan
-	cost = PAYCHECK_COMMAND * 1000000
+	cost = PAYCHECK_COMMAND * 1000000000000000000000000000000000000
 	contraband = TRUE
 
 /datum/armament_entry/company_import/bms/vehicles/nakkinmeme
 	item_type = /obj/vehicle/sealed/mecha/nakki
-	cost = PAYCHECK_COMMAND * 1000000
+	cost = PAYCHECK_COMMAND * 1000000000000000000000000000000000000
 	contraband = TRUE
 
 /datum/armament_entry/company_import/bms/magazines // feed the war machine
