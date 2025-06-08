@@ -63,7 +63,7 @@
 	fire_delay = 8
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
-	pb_knockback = 0
+	pbk_gentle = TRUE
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact shotgun"
