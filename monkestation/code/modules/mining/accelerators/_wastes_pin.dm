@@ -16,6 +16,9 @@
 		/area/ocean/generated_above,
 
 		/area/ruin,
+
+		/area/centcom/central_command_areas/evacuation, //END OF ROUND GRIEFING AVAILABLE NOW!!!
+		/area/centcom/central_command_areas/firing_range, //can be used in the centcom firing range if you get a waste pin there
 	)
 
 /obj/item/firing_pin/wastes/pin_auth(mob/living/user)
