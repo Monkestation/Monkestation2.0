@@ -199,14 +199,14 @@ SUBSYSTEM_DEF(particle_weather)
 	switch(z_type)
 		if("Default")
 			QDEL_NULL(running_weather)
-			QDEL_NULL(particle_effect)
 			//QDEL_NULL(weather_effect)
 			QDEL_NULL(weather_special_effect)
+			particle_effect = null
 		if("Eclipse")
 			QDEL_NULL(running_eclipse_weather)
-			QDEL_NULL(particle_effect_eclipse)
 			//QDEL_NULL(weather_effect_eclipse)
 			QDEL_NULL(weather_special_effect_eclipse)
+			particle_effect_eclipse = null
 
 /obj/weather_effect
 	plane = LIGHTING_PLANE
