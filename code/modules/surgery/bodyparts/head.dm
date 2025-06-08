@@ -163,11 +163,10 @@
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
 	if(!can_dismember)
-		if(!HAS_TRAIT(owner, TRAIT_CURSED))
-			if(owner.stat != DEAD)
-				return FALSE
-			if((owner.timeofdeath + (15 SECONDS)) > world.time)
-				return FALSE
+		if(owner.stat != DEAD)
+			return FALSE
+		if((owner.timeofdeath + (15 SECONDS)) > world.time)
+			return FALSE
 		if(!HAS_TRAIT(owner, TRAIT_HAS_CRANIAL_FISSURE))
 			return FALSE
 		if(get_damage() < max_damage)
