@@ -37,6 +37,13 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 		// no need to scan these two
 		/datum/controller/subsystem/demo,
 		/datum/controller/subsystem/garbage,
+		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue
+		/datum/light_source,
+		/datum/lighting_corner,
+		/datum/component/connect_loc_behalf,
+		/datum/reagent/consumable/nutriment,
+		/datum/chatmessage,
+		/atom/movable/outdoor_effect,
 	))
 		for(var/type in typesof(base_type))
 			.[type] = TRUE
