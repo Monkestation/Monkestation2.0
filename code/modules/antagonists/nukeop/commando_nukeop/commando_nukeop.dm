@@ -4,8 +4,6 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 3 //If you can't take out the station, take the shuttle instead.
 	remove_from_manifest = TRUE
-	/// Which nukie team are we on?
-	var/datum/team/nuclear/commando/commando_nuke_team
 
 	/// The DEFAULT outfit we will give to players granted this datum
 	nukeop_outfit = /datum/outfit/syndicate/commando
@@ -19,59 +17,24 @@
 
 /datum/antagonist/nukeop/commando/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
-	to_chat(owner, span_big("You are a [commando_nuke_team ? commando_nuke_team.syndicate_name : "syndicate"] agent!"))
+	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
-/datum/antagonist/nukeop/commando/get_team()
-	return commando_nuke_team
-
 /datum/antagonist/nukeop/commando/assign_nuke()
-	if(commando_nuke_team && !commando_nuke_team.tracked_nuke)
+	if(nuke_team && !nuke_team.tracked_nuke)
 		var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
 		if(nuke)
-			commando_nuke_team.tracked_nuke = nuke
-			commando_nuke_team.memorized_code = nuke.r_code
+			nuke_team.tracked_nuke = nuke
+			nuke_team.memorized_code = nuke.r_code
 		else
 			stack_trace("Syndicate nuke not found during nuke team creation.")
-			commando_nuke_team.memorized_code = null
-
-/datum/antagonist/nukeop/commando/give_alias()
-	if(commando_nuke_team?.syndicate_name)
-		var/mob/living/carbon/human/human_to_rename = owner.current
-		if(istype(human_to_rename)) // Reinforcements get a real name
-			var/first_name = owner.current.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
-			var/chosen_name = "[first_name] [commando_nuke_team.syndicate_name]"
-			human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
-		else
-			var/number = 1
-			number = commando_nuke_team.members.Find(owner)
-			owner.current.real_name = "[commando_nuke_team.syndicate_name] Operative #[number]"
-
-/datum/antagonist/nukeop/commando/memorize_code()
-	if(commando_nuke_team.memorized_code)
-		antag_memory += "<B>[commando_nuke_team.tracked_nuke] Code</B>: [commando_nuke_team.memorized_code]<br>"
-		owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = commando_nuke_team.memorized_code)
-		to_chat(owner, "The nuclear authorization code is: <B>[commando_nuke_team.memorized_code]</B>")
-	else
-		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
-
-/datum/antagonist/nukeop/commando/forge_objectives()
-	if(commando_nuke_team)
-		objectives |= commando_nuke_team.objectives
-
-/// Actually moves our nukie to where they should be
-/datum/antagonist/nukeop/commando/move_to_spawnpoint()
-	var/turf/destination = get_spawnpoint()
-	owner.current.forceMove(destination)
-	if(!owner.current.onSyndieBase())
-		message_admins("[ADMIN_LOOKUPFLW(owner.current)] is a NUKE OP and move_to_spawnpoint put them somewhere that isn't the syndie base, help please.")
-		stack_trace("Nuke op move_to_spawnpoint resulted in a location not on the syndicate base. (Was moved to: [destination])")
+			nuke_team.memorized_code = null
 
 /// Gets the position we spawn at
 /datum/antagonist/nukeop/commando/get_spawnpoint()
 	var/team_number = 1
-	if(commando_nuke_team)
-		team_number = commando_nuke_team.members.Find(owner)
+	if(nuke_team)
+		team_number = nuke_team.members.Find(owner)
 
 	return GLOB.commando_nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
 
@@ -85,11 +48,11 @@
 				if(!N.owner)
 					stack_trace("Antagonist datum without owner in GLOB.antagonists: [N]")
 					continue
-				if(N.commando_nuke_team)
-					commando_nuke_team = N.commando_nuke_team
+				if(N.nuke_team && istype(N.nuke_team, /datum/team/nuclear/commando))
+					nuke_team = N.nuke_team
 					return
-		commando_nuke_team = new /datum/team/nuclear/commando
-		commando_nuke_team.update_objectives()
+		nuke_team = new /datum/team/nuclear/commando
+		nuke_team.update_objectives()
 		assign_nuke() //This is bit ugly
 		return
 	if(!istype(new_team))
@@ -121,14 +84,13 @@
 	name = "Commando Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/commando/leader
 	always_new_team = TRUE
-	/// Randomly chosen honorific, for distinction
-	var/title
+	var/title = "Lieutenant"
 
 /datum/antagonist/nukeop/commando/leader/memorize_code()
 	..()
-	if(commando_nuke_team?.memorized_code)
+	if(nuke_team?.memorized_code)
 		var/obj/item/paper/nuke_code_paper = new
-		nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[commando_nuke_team.memorized_code]</b>")
+		nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>")
 		nuke_code_paper.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = owner.current
 		if(!istype(H))
@@ -141,8 +103,6 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
 	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
 	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
-	if(!CONFIG_GET(flag/disable_warops))
-		to_chat(owner, "<span class='warningplain'><B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B></span>")
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/commando/leader/on_gain()
@@ -150,9 +110,9 @@
 	addtimer(CALLBACK(src, PROC_REF(nuketeam_name_assign)), 1)
 
 /datum/antagonist/nukeop/commando/leader/proc/nuketeam_name_assign()
-	if(!commando_nuke_team)
+	if(!nuke_team)
 		return
-	commando_nuke_team.rename_team(ask_name())
+	nuke_team.rename_team(ask_name())
 
 /datum/antagonist/nukeop/commando/leader/proc/ask_name()
 	var/randomname = pick(GLOB.last_names)

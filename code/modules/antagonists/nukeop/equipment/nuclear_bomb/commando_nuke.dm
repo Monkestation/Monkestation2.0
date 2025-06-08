@@ -10,6 +10,7 @@
 	use_power = NO_POWER_USE
 	can_buckle = TRUE
 	buckle_lying = 0
+	drag_slowdown = 1.5
 	max_integrity = 500
 	r_code = "11111"
 
@@ -352,3 +353,84 @@
 /obj/machinery/nuclearbomb/commando/disarm_nuke(mob/disarmer)
 	. = ..()
 	SSshuttle.clearHostileEnvironment(src)
+
+/obj/item/nuke_recaller
+	name = "nuke relocator"
+	desc = "A one time use designator for calling a Syndicate relocation pod to relocate the nuke to your current location."
+	desc_controls = "Alt-Click the device to toggle the safety."
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "relocator_1"
+	inhand_icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
+	w_class = WEIGHT_CLASS_SMALL
+	var/used = FALSE
+	var/safety = TRUE
+	var/obj/structure/closet/supplypod/nuke_relocation/tracked_pod
+
+/obj/item/nuke_recaller/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/nuke_recaller/AltClick(mob/living/user)
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return ..()
+	toggle_safety(user)
+
+/obj/item/nuke_recaller/proc/toggle_safety(mob/living/user)
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	safety = !safety
+	update_appearance(UPDATE_OVERLAYS)
+	balloon_alert(user, "safety [safety ? "on" : "off"]!")
+
+/obj/item/nuke_recaller/update_overlays()
+	. = ..()
+	. +=  mutable_appearance(icon, "safety_[safety]")
+
+/obj/item/nuke_recaller/proc/check_usability(mob/user)
+	if(safety)
+		balloon_alert(user, "safety on!")
+		return FALSE
+	if(used)
+		balloon_alert(user, "out of charge!")
+		return FALSE
+	return TRUE
+
+/obj/item/nuke_recaller/attack_self(mob/user)
+	if(!(check_usability(user)))
+		return
+	var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
+	if(nuke)
+		var/obj/structure/closet/supplypod/nuke_relocation/new_pod = new()
+		new /obj/effect/pod_landingzone(get_turf(nuke), new_pod)
+		tracked_pod = new_pod
+		new_pod.return_to_turf = get_turf(src)
+		playsound(src, 'sound/machines/chime.ogg', 30, TRUE)
+		used = TRUE
+		say("Landing zone designated! ETA: 10 SECONDS")
+		icon_state = "relocator_0"
+		update_appearance()
+		START_PROCESSING(SSobj, src)
+	else
+		balloon_alert(user, "unable to locate!")
+
+/obj/item/nuke_recaller/process(seconds_per_tick)
+	var/obj/machinery/nuclearbomb/commando/found_nuke = locate() in get_turf(tracked_pod)
+	if(!found_nuke)
+		return
+	if(found_nuke.anchored)
+		return
+	if(!tracked_pod.opened)
+		return
+	tracked_pod.startExitSequence(tracked_pod)
+	STOP_PROCESSING(SSobj, src)
+	say("Pod in transit to LZ!")
+
+/obj/item/nuke_recaller/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)

@@ -28025,6 +28025,11 @@
 	},
 /turf/open/floor/iron/white/herringbone,
 /area/centcom/central_command_areas/kitchen)
+"pHV" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/nuclearbomb/commando,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
 "pIf" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -75134,7 +75139,7 @@ jLf
 eDT
 fEp
 kEy
-qTM
+pHV
 lYR
 ogN
 kUq

@@ -232,6 +232,7 @@
 		/obj/item/syndicate_voucher/leader = 1,
 		/obj/item/choice_beacon/commando_support = 1,
 		/obj/item/disk/nuclear/nukie = 1,
+		/obj/item/nuke_recaller = 1,
 	)
 
 /datum/outfit/syndicate/commando/leader/plasmaman

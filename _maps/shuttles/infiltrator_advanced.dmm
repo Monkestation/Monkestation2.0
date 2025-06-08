@@ -1771,7 +1771,6 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
-/obj/machinery/nuclearbomb/commando,
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/hallway)
 "ef" = (
