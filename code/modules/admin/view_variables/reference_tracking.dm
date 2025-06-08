@@ -1,5 +1,6 @@
 #ifdef REFERENCE_TRACKING
 
+#ifdef FAST_REFERENCE_TRACKING
 // typecache of types that almost certainly have no refs, and thus can be safely skipped when finding references
 GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_typecache())
 
@@ -47,6 +48,7 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 	))
 		for(var/type in typesof(base_type))
 			.[type] = TRUE
+#endif
 
 /datum/proc/find_references(skip_alert)
 	running_find_references = type
@@ -76,8 +78,6 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 
 	log_reftracker("Refcount for [type]: [refcount(src)]")
 
-	var/alist/skip_types = GLOB.reftracker_skip_typecache
-
 	//Time to search the whole game for our ref
 	DoSearchVar(GLOB, "GLOB", search_time = starting_time) //globals
 	log_reftracker("Finished searching globals")
@@ -91,14 +91,24 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 	DoSearchVar(global_vars, "Native Global", search_time = starting_time)
 	log_reftracker("Finished searching native globals")
 
+#ifdef FAST_REFERENCE_TRACKING
+	var/alist/skip_types = GLOB.reftracker_skip_typecache
+#endif
+
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
-		if(isnull(skip_types[thing.type]))
-			DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+#ifdef FAST_REFERENCE_TRACKING
+		if(skip_types[thing.type])
+			continue
+#endif
+		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching atoms")
 
 	for(var/datum/thing) //datums
-		if(isnull(skip_types[thing.type]))
-			DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
+#ifdef FAST_REFERENCE_TRACKING
+		if(skip_types[thing.type])
+			continue
+#endif
+		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching datums")
 
 	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
@@ -138,8 +148,12 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 
 	if(isdatum(potential_container))
 		var/datum/datum_container = potential_container
-		if(datum_container.last_find_references == search_time || GLOB.reftracker_skip_typecache[datum_container.type])
+		if(datum_container.last_find_references == search_time)
 			return
+#ifdef FAST_REFERENCE_TRACKING
+		if(GLOB.reftracker_skip_typecache[datum_container.type])
+			return
+#endif
 
 		datum_container.last_find_references = search_time
 		var/container_print = datum_container.ref_search_details()
