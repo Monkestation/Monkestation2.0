@@ -171,6 +171,8 @@
 			return FALSE
 		if(get_damage() < max_damage)
 			return FALSE
+	else if(owner.stat < HARD_CRIT)
+		return FALSE
 	return ..()
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
