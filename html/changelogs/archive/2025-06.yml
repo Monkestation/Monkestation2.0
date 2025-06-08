@@ -118,3 +118,49 @@
   notghosti:
   - map: Meta station Artsci is now accessible without xenobio access
   - rscadd: Made the captains beret actually in the game
+2025-06-07:
+  Absolucy:
+  - code_imp: Improved how stabilized cerulean and oil extracts trigger on death,
+      allowing them to properly work for oozelings and such.
+  F-e-r-n:
+  - balance: Awakened dragon no longer has baton resistance
+  - balance: Lethal ammunition boxes now cost twice as much
+  - balance: The Renoster shotgun crate now holds parity with the riot shotgun crate
+  - balance: 'Shotgun shell boxes are no longer tiny
+
+      :cl:'
+  Goat-Real, Xander3359:
+  - qol: You can now insert tanks into bluespace gas vendors to fill instead of having
+      to buy and use a large tank.
+  - sound: Bluespace gas vendors now use sounds from canisters when adding/removing
+      tanks
+  Ice-Type:
+  - qol: Both detective's revolvers are now actual Detective's Revolvers.
+  Loiosh42:
+  - balance: AP has been rebalanced from a flat reduction to a percentage of armor
+      reduction
+  - balance: Bogseo is now semi-auto burst instead of full-auto burst
+  Melbert, TheColorCyan:
+  - rscdel: Heretic side path points are gone
+  - balance: Void pull stun radius and aoe reduced, cooldown increased
+  - balance: Blood siphon recieved major cooldown increase
+  MrBagHead:
+  - rscadd: Added Syndicate Mini-Kits, a 10 TC traitor uplink bundle with 5 random
+      loadouts and a unique box sprite.
+  - rscadd: Added 'Self-Incinerating Paper' which incinerates after 20 seconds of
+      being read if its armed
+  - rscadd: Added Syndicate Pill Canisters with new sprites, including a poisonous
+      variant with cyanide, spewium, amanitin and toxin pills.
+  - rscadd: Added 'can_be_folded' variable for paper to control if they can be folded.
+  Tostah:
+  - bugfix: Mod suit gear items now get placed into storage units when deactivated
+  Unit2E, Xander3359:
+  - bugfix: Mobs should no longer fall asleep when breathing in enough Nitrium to
+      provide sleep immunity.
+2025-06-08:
+  Absolucy:
+  - rscadd: Mentors now get an extra 500 monkecoins at roundend if they were a head
+      of staff.
+  Xander3359:
+  - bugfix: Healium crystals properly work in a 7 range AOE
+  - qol: Atmos holofans automatically open firelocks
