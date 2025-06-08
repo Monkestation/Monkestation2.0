@@ -54,6 +54,13 @@ multiple modular subtrees with behaviors
 	var/datum/ai_movement/ai_movement = /datum/ai_movement/dumb
 	///Delay between movements. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
+	///Cooldown until next movement - LEGACY for non SSpathfinding controlled paths (astar)
+	COOLDOWN_DECLARE(movement_cooldown)
+	///A list for the path we're currently following, if we're using AStar pathing
+	var/list/movement_path
+	///Cooldown for Astar movement, how often we're allowed to try making a new path
+	COOLDOWN_DECLARE(repath_cooldown)
+
 
 	// The variables below are fucking stupid and should be put into the blackboard at some point.
 	///AI paused time

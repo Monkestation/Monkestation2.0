@@ -21,3 +21,11 @@ MOVEMENT_SUBSYSTEM_DEF(ai_movement)
 	for(var/key as anything in subtypesof(/datum/ai_movement))
 		var/datum/ai_movement/ai_movement = new key
 		movement_types[key] = ai_movement
+
+PROCESSING_SUBSYSTEM_DEF(processing_ai_movement)
+	name = "AI movement - Processor"
+	flags = SS_KEEP_TIMING|SS_BACKGROUND
+	priority = FIRE_PRIORITY_NPC_MOVEMENT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	init_order = INIT_ORDER_AI_MOVEMENT
+	wait = 1

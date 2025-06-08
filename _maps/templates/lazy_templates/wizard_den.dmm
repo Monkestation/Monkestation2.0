@@ -378,7 +378,7 @@
 /turf/open/lava,
 /area/centcom/wizard_station)
 "Pz" = (
-/obj/structure/destructible/cult/item_dispenser/altar{
+/obj/structure/cult/altar{
 	desc = "An altar dedicated to the Wizard Federation."
 	},
 /obj/item/knife/ritual,
@@ -482,7 +482,7 @@
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
 "VO" = (
-/obj/structure/destructible/cult/item_dispenser/forge/engine,
+/obj/structure/cult/forge,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "WQ" = (

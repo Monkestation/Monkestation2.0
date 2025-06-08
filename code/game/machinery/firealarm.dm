@@ -53,6 +53,8 @@
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
+	if(istype(get_area(src), /area))
+		LAZYADD(GLOB.station_fire_alarms["[z]"], src)
 	id_tag = assign_random_name()
 	if(building)
 		buildstage = ALARM_NO_CIRCUIT
@@ -88,6 +90,7 @@
 	update_appearance()
 
 /obj/machinery/firealarm/Destroy()
+	LAZYREMOVE(GLOB.station_fire_alarms["[z]"], src)
 	if(my_area)
 		LAZYREMOVE(my_area.firealarms, src)
 		my_area = null

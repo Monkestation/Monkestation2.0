@@ -199,10 +199,12 @@
 
 /// Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
+	/*
 	if(IS_CULTIST(creator))
 		add_antag_datum(/datum/antagonist/cult)
+	*/
 
-	else if(IS_REVOLUTIONARY(creator))
+	if(IS_REVOLUTIONARY(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src, stun = FALSE, mute = FALSE)
 

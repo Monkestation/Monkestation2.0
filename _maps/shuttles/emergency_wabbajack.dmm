@@ -251,7 +251,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/destructible/cult/item_dispenser/forge/engine,
+/obj/structure/cult/forge,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -327,7 +327,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Aj" = (
-/obj/structure/destructible/cult/item_dispenser/forge/engine,
+/obj/structure/cult/forge,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)

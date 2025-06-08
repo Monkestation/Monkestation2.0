@@ -30,6 +30,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	. = ..()
 	if(!QDELETED(parent))
 		icon_state = parent.radial_slice_icon
+		if(parent.radial_icon)
+			icon = parent.radial_icon
 
 /atom/movable/screen/radial/slice/MouseEntered(location, control, params)
 	. = ..()
@@ -118,6 +120,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 	///A replacement icon state for the generic radial slice bg icon. Doesn't affect the next page nor the center buttons
 	var/radial_slice_icon
+	var/radial_icon
 
 //If we swap to vis_contens inventory these will need a redo
 /datum/radial_menu/proc/check_screen_border(mob/user)
@@ -358,7 +361,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, radial_icon)
 	if(!user || !anchor || !length(choices))
 		return
 
@@ -382,6 +385,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		menu.custom_check_callback = custom_check
 	menu.anchor = anchor
 	menu.radial_slice_icon = radial_slice_icon
+	if(radial_icon)
+		menu.radial_icon = radial_icon
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices, tooltips)
 	menu.show_to(user)
