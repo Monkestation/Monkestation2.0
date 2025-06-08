@@ -4,6 +4,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/ruin/free_miner)
+"aW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/ruin/free_miner)
 "bn" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer4{
 	dir = 1
@@ -2349,7 +2356,7 @@ UY
 zt
 UY
 cb
-UY
+aW
 CJ
 "}
 (5,1,1) = {"
