@@ -14,7 +14,6 @@
 /datum/status_effect/streamer/Destroy()
 	extra_checks = null
 	camera = null
-	QDEL_NULL(viewer_display)
 	return ..()
 
 /datum/status_effect/streamer/on_creation(mob/living/new_owner, obj/machinery/camera/camera, datum/callback/extra_checks)
@@ -41,6 +40,7 @@
 	UnregisterSignal(camera, COMSIG_QDELETING)
 	if(!isnull(viewer_display))
 		owner.client?.screen -= viewer_display
+		QDEL_NULL(viewer_display)
 
 /datum/status_effect/streamer/before_remove(source)
 	if(!isnull(source) && !QDELETED(camera) && source == camera)

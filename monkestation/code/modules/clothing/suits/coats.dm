@@ -189,10 +189,6 @@
 	if(suit)
 		suit.RemoveMask()
 
-/obj/item/clothing/suit/armor/secduster/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_OCLOTHING)
-		return 1
-
 //departmental sec colors
 /obj/item/clothing/suit/armor/secduster/medical
 	name = "medical security duster"

@@ -39,9 +39,9 @@
 
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
+	. |= FALSE
 	if(!proximity_flag)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!check_allowed_items(target, not_inside = TRUE))
 		return .
 	var/turf/target_turf = get_turf(target)
@@ -69,7 +69,7 @@
 		if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return .
 	target_holosign = create_holosign(target, user)
-	return .
+	return target_holosign
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -155,6 +155,13 @@
 /obj/item/holosign_creator/atmos/Initialize(mapload)
 	. = ..()
 	register_context()
+
+/obj/item/holosign_creator/atmos/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!.)
+		return
+	var/obj/machinery/door/firedoor/firelock = locate() in get_turf(target)
+	firelock?.open()
 
 /obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
