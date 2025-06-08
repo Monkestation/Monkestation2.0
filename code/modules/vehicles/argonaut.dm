@@ -17,15 +17,15 @@
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	cover_amount = 50
+	cover_amount = 35
 	integrity_failure = 0.2
 
 /datum/armor/argonaut
-	melee = 25
-	bullet = 10
-	laser = 15
-	energy = 15
-	fire = 20
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	fire = 30
 	acid = 30
 
 /obj/vehicle/ridden/argonaut/Initialize(mapload)
@@ -37,23 +37,17 @@
 	. = ..()
 	if(!A.density || !has_buckled_mobs())
 		return
-
-	if(crash_all)
-		if(ismovable(A))
-			var/atom/movable/AM = A
-			AM.throw_at(get_edge_target_turf(A, dir), 1, 1)
-		visible_message(span_danger("[src] crashes into [A]!"))
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	var/mob/living/rider = buckled_mobs[1]
 	if(!ishuman(A))
 		return
 	var/mob/living/carbon/human/rammed = A
-	rammed.Paralyze(30)
-	rammed.stamina.adjust(-30)
-	rammed.apply_damage(rand(10,18), BRUTE)
-	if(!crash_all)
-		rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
-		visible_message(span_danger("[src] crashes into [rammed]!"))
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	rammed.stamina.adjust(-50)
+	rammed.apply_damage(rand(10,20), BRUTE)
+	rider.Paralyze(1.2 SECONDS)
+	rammed.Paralyze(0.9 SECONDS)
+	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
+	visible_message(span_danger("[src] crashes into [rammed]!"))
+	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/ridden/argonaut/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -62,7 +56,6 @@
 	for(var/atom/A in range(0, src))
 		if(!(A in buckled_mobs))
 			Bump(A)
-
 
 /obj/vehicle/ridden/argonaut/welder_act(mob/living/user, obj/item/W)
 	if((user.istate & ISTATE_HARM))
@@ -80,7 +73,7 @@
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+		if(W.use_tool(src, user, 1.3 SECONDS, volume=50, amount=1))
 			did_the_thing = TRUE
 			atom_integrity += min(10, (max_integrity - atom_integrity))
 			audible_message(span_hear("You hear welding."))
@@ -119,7 +112,7 @@
 
 /obj/vehicle/ridden/odyssey
 	name = "UV-05c Odyssey"
-	desc = "A modfication to an argonaut, providing cover from small arms and weather."
+	desc = "A modfication to an argonaut, providing cover from small arms."
 	icon = 'icons/obj/car.dmi'
 	icon_state = "odyssey"
 	layer = LYING_MOB_LAYER
@@ -129,47 +122,33 @@
 	max_occupants = 2
 	pass_flags_self = null
 	max_integrity = 250
-	armor_type = /datum/armor/odyssey
-	var/crash_all = FALSE
+	armor_type = /datum/armor/argonaut
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cover_amount = 85
 	integrity_failure = 0.2
-
-/datum/armor/odyssey
-	melee = 25
-	bullet = 25
-	laser = 25
-	energy = 25
-	fire = 20
-	acid = 30
 
 /obj/vehicle/ridden/odyssey/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, "odyssey_cover", ABOVE_MOB_LAYER))
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/odyssey)
 
+
 /obj/vehicle/ridden/odyssey/Bump(atom/A)
 	. = ..()
 	if(!A.density || !has_buckled_mobs())
 		return
-
-	if(crash_all)
-		if(ismovable(A))
-			var/atom/movable/AM = A
-			AM.throw_at(get_edge_target_turf(A, dir), 1, 1)
-		visible_message(span_danger("[src] crashes into [A]!"))
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	var/mob/living/rider = buckled_mobs[1]
 	if(!ishuman(A))
 		return
 	var/mob/living/carbon/human/rammed = A
-	rammed.Paralyze(30)
-	rammed.stamina.adjust(-30)
-	rammed.apply_damage(rand(10,18), BRUTE)
-	if(!crash_all)
-		rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
-		visible_message(span_danger("[src] crashes into [rammed]!"))
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	rammed.stamina.adjust(-50)
+	rammed.apply_damage(rand(10,20), BRUTE)
+	rider.Paralyze(1.2 SECONDS)
+	rammed.Paralyze(0.9 SECONDS)
+	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
+	visible_message(span_danger("[src] crashes into [rammed]!"))
+	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/ridden/odyssey/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -178,7 +157,6 @@
 	for(var/atom/A in range(0, src))
 		if(!(A in buckled_mobs))
 			Bump(A)
-
 
 /obj/vehicle/ridden/odyssey/welder_act(mob/living/user, obj/item/W)
 	if((user.istate & ISTATE_HARM))
@@ -196,7 +174,7 @@
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+		if(W.use_tool(src, user, 1.5 SECONDS, volume=50, amount=1))
 			did_the_thing = TRUE
 			atom_integrity += min(10, (max_integrity - atom_integrity))
 			audible_message(span_hear("You hear welding."))
@@ -228,3 +206,37 @@
 /obj/vehicle/ridden/odyssey/Destroy()
 	STOP_PROCESSING(SSobj,src)
 	return ..()
+
+/obj/item/argonaut_control
+	name = "Argonaut's controls"
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/obj/vehicle/ridden/argonaut/jeep
+
+
+/obj/item/argonaut_control/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	jeep = loc
+	if(!istype(jeep))
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/odyssey_control
+	name = "Odyssey's controls"
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/obj/vehicle/ridden/odyssey/jeepers
+
+
+/obj/item/odyssey_control/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	jeepers = loc
+	if(!istype(jeepers))
+		return INITIALIZE_HINT_QDEL

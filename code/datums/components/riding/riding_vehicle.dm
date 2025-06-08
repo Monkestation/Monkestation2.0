@@ -247,7 +247,7 @@
 		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
 /datum/component/riding/vehicle/argonaut
-	vehicle_move_delay = 0.95
+	vehicle_move_delay = 1.15
 
 /datum/component/riding/vehicle/argonaut/handle_specials()
 	. = ..()
@@ -276,7 +276,7 @@
 		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
 /datum/component/riding/vehicle/odyssey
-	vehicle_move_delay = 0.99
+	vehicle_move_delay = 1.27
 
 /datum/component/riding/vehicle/odyssey/handle_specials()
 	. = ..()
