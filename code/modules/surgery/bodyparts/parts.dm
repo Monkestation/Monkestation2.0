@@ -21,7 +21,7 @@
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
-	if((!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT) || !length(contents))
+	if(owner.stat < HARD_CRIT || !get_organs())
 		return FALSE
 	return ..()
 
