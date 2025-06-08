@@ -5,7 +5,7 @@
 	icon_state = "percutio_0_0"
 	base_icon_state = "percutio"
 	SET_BASE_PIXEL(-9, 0)
-	max_integrity = 170 // its flimsy since armored car
+	max_integrity = 220 // its flimsy since armored car
 	force = 18 // low damage, but fast af
 	movedelay = 1
 	step_energy_drain = 40 // still armored vehicle.
