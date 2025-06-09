@@ -296,7 +296,7 @@
 	projectile = /obj/projectile/bullet/neville
 	projectiles = 10
 	projectiles_cache = 10
-	projectiles_cache_max = 20
+	projectiles_cache_max = 40
 	projectiles_per_shot = 1
 	equip_cooldown = 1.6 SECONDS
 	randomspread = 1
