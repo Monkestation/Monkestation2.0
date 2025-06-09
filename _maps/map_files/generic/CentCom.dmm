@@ -19722,6 +19722,22 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/firebase_trident)
 "bpj" = (
@@ -26706,7 +26722,6 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/sign/poster/contraband/donk_co/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/firebase_trident)
 "nuh" = (
@@ -30955,6 +30970,13 @@
 /obj/machinery/door/poddoor/shutters/indestructible/preopen,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/adminroom)
+"uXc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/sign/poster/contraband/donk_co/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
 "uXS" = (
 /obj/structure/fans/tiny/forcefield{
 	color = "#276c87"
@@ -74358,7 +74380,7 @@ aaa
 vfT
 vfT
 vfT
-vfT
+cHM
 cHM
 rHO
 rHO
@@ -74616,7 +74638,7 @@ vfT
 cHM
 cHM
 cHM
-cHM
+iGO
 fIi
 fIi
 hWu
@@ -74872,7 +74894,7 @@ aaa
 vfT
 cHM
 tmd
-iGO
+uXc
 nte
 oHE
 oHE
