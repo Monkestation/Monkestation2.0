@@ -133,4 +133,57 @@
 
 	return victim?.get_organ_by_type(/obj/item/organ/internal/eyes) == eyes
 
+/datum/wound/cranial_fissure/item_can_treat(obj/item/potential_treater, mob/user)
+	if(!(user.istate & ISTATE_SECONDARY) || HAS_TRAIT(user, TRAIT_PACIFISM))
+		return FALSE
+	if(victim.stat != DEAD)
+		return FALSE
+	if(!can_behead_with(potential_treater))
+		return FALSE
+	return TRUE
+
+/datum/wound/cranial_fissure/treat(obj/item/item, mob/user)
+	// victim will be null once we dismember, so we need to go ahead and grab this
+	var/mob/living/victim = src.victim
+	var/limb_name = limb.plaintext_zone
+
+	var/decap_time
+	switch(item.force)
+		if(15 to 24)
+			decap_time = 10 SECONDS
+		if(25 to 30)
+			decap_time = 7.5 SECONDS
+		if(31 to INFINITY)
+			decap_time = 5 SECONDS
+
+	log_combat(user, victim, "attempted to behead", item)
+	user.visible_message(span_warning("[user] begins slicing [victim]'s [limb_name] off with \the [item]!"), span_notice("You begin to slice [victim]'s [limb_name] off using [item]..."))
+	playsound(user, 'sound/weapons/slice.ogg', vol = 45, vary = TRUE)
+	if(!do_after(user, decap_time, victim, extra_checks = CALLBACK(src, PROC_REF(behead_progress_checks), item, user)))
+		return TRUE
+	if(!limb.dismember(dam_type = item.damtype))
+		user.visible_message(span_danger("[user] fails to slice through [victim]'s [limb_name] with \the [item]!"), span_boldnotice("You fail to slice through [victim]'s [limb_name] with \the [item]!"))
+		return TRUE
+	log_combat(user, victim, "beheaded", item)
+	user.visible_message(span_danger("[user] slices [victim]'s [limb_name] off with \the [item]!"), span_boldnotice("You slice [victim]'s [limb_name] off with \the [item]!"))
+	playsound(user, 'sound/items/unsheath.ogg', vol = 75, vary = TRUE) // SHING!
+	return TRUE
+
+/datum/wound/cranial_fissure/proc/can_behead_with(obj/item/tool)
+	return tool?.get_sharpness() && tool.force >= 15
+
+/datum/wound/cranial_fissure/proc/behead_progress_checks(obj/item/tool, mob/user)
+	PRIVATE_PROC(TRUE)
+
+	return !QDELETED(src) && victim.stat == DEAD && can_behead_with(tool) // ensure the victim is still dead, still has the cranial fissure, and the tool is still sharp
+
+/datum/wound/cranial_fissure/get_examine_description(mob/user)
+	. = ..()
+	if(victim.stat != DEAD || get_dist(user, victim) > 2)
+		return
+	for(var/obj/item/item in user.held_items)
+		if(can_behead_with(item))
+			. += span_smallnotice("You could perhaps behead [victim.p_them()] by <b>right-clicking</b> [victim.p_them()] with a sharp weapon while targeting [victim.p_their()] head.")
+			break
+
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT
