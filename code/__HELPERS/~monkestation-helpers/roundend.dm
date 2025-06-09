@@ -32,7 +32,8 @@
 				continue
 			if(!player_turf.onCentCom() && !player_turf.onSyndieBase())
 				continue
-		rewards += list(list(ckey, "Station Goal Completion Bonus"))
+		LAZYINITLIST(rewards[ckey])
+		rewards[ckey] += list(list(amount, "Station Goal Completion Bonus"))
 		rewarded_players++
 
 	message_admins("As a result of the station goal being completed, [rewarded_players] players were rewarded [amount] monkecoins each.")
