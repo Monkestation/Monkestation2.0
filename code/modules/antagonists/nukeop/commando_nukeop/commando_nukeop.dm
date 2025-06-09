@@ -84,13 +84,14 @@
 	name = "Commando Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/commando/leader
 	always_new_team = TRUE
-	var/title = "Lieutenant"
+	var/title = "commander"
 
 /datum/antagonist/nukeop/commando/leader/memorize_code()
 	..()
 	if(nuke_team?.memorized_code)
 		var/obj/item/paper/nuke_code_paper = new
 		nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>")
+		nuke_code_paper.add_raw_text("Standard decryption time with the given disk: 15 MINUTES. Decrypting in the designated areas or with a Nanotrasen NAD will lower the decryption time.")
 		nuke_code_paper.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = owner.current
 		if(!istype(H))
@@ -101,8 +102,8 @@
 
 /datum/antagonist/nukeop/commando/leader/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
-	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
-	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
+	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team.</B></span>")
+	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your disk and radio to another operative.</B></span>")
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/commando/leader/on_gain()
@@ -115,8 +116,8 @@
 	nuke_team.rename_team(ask_name())
 
 /datum/antagonist/nukeop/commando/leader/proc/ask_name()
-	var/randomname = pick(GLOB.last_names)
-	var/newname = tgui_input_text(owner.current, "You are the nuclear operative [title]. Please choose a last name for your family.", "Name change", randomname, MAX_NAME_LEN)
+	var/randomname = pick(GLOB.operative_aliases)
+	var/newname = tgui_input_text(owner.current, "You are the commando operative [title]. Please choose an operator name for your team.", "Name change", randomname, MAX_NAME_LEN)
 	if (!newname)
 		newname = randomname
 	else
@@ -125,6 +126,18 @@
 			newname = randomname
 
 	return capitalize(newname)
+
+/datum/antagonist/nukeop/commando/give_alias()
+	if(nuke_team?.syndicate_name)
+		var/mob/living/carbon/human/human_to_rename = owner.current
+		if(istype(human_to_rename)) // Reinforcements get a real name
+			var/first_name = owner.current.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
+			var/chosen_name = "[nuke_team.syndicate_name] [first_name] "
+			human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
+		else
+			var/number = 1
+			number = nuke_team.members.Find(owner)
+			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
 
 /datum/outfit/commando_operative
 	name = "Commando Operative (Preview only)"
@@ -138,6 +151,18 @@
 	belt = /obj/item/storage/belt/military
 
 /datum/team/nuclear/commando
+
+/datum/team/nuclear/commando/rename_team(new_name)
+	syndicate_name = new_name
+	name = "[syndicate_name] Operators"
+	for(var/I in members)
+		var/datum/mind/synd_mind = I
+		var/mob/living/carbon/human/human_to_rename = synd_mind.current
+		if(!istype(human_to_rename))
+			continue
+		var/first_name = human_to_rename.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
+		var/chosen_name = "[syndicate_name] [first_name] "
+		human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
 
 /datum/team/nuclear/commando/get_result()
 	var/shuttle_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED

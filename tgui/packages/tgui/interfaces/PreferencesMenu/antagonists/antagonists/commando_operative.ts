@@ -8,8 +8,7 @@ const CommandoOperative: Antagonist = {
     multiline`
       Congratulations, agent. You have been chosen to join the Syndicate
       Commando Operative team. Your mission, whether or not you choose
-      to accept it, is to destroy Nanotrasen's most advanced research facility!
-      That's right, you're going to Space Station 13.
+      to accept it, is to shut down Nanotrasen's second most advanced research facility!
     `,
 
     multiline`

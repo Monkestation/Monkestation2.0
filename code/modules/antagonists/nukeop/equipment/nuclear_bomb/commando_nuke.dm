@@ -421,11 +421,11 @@
 
 /obj/item/nuke_recaller/process(seconds_per_tick)
 	var/obj/machinery/nuclearbomb/commando/found_nuke = locate() in get_turf(tracked_pod)
+	if(!tracked_pod.opened)
+		return
 	if(!found_nuke)
 		return
 	if(found_nuke.anchored)
-		return
-	if(!tracked_pod.opened)
 		return
 	tracked_pod.startExitSequence(tracked_pod)
 	STOP_PROCESSING(SSobj, src)

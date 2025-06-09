@@ -208,6 +208,7 @@
 
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/pinpointer/area_pinpointer
+	r_pocket = /obj/item/reagent_containers/pill/patch/advanced
 	backpack_contents = list(
 		/obj/item/syndicate_voucher/kit = 1,
 	)
@@ -227,9 +228,11 @@
 	name = "Syndicate Commando Operative Leader"
 	command_radio = TRUE
 
+	head = /obj/item/clothing/head/hats/hos/beret/syndicate
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 	backpack_contents = list(
 		/obj/item/syndicate_voucher/leader = 1,
+		/obj/item/syndicate_voucher/kit = 1,
 		/obj/item/choice_beacon/commando_support = 1,
 		/obj/item/disk/nuclear/nukie = 1,
 		/obj/item/nuke_recaller = 1,

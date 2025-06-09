@@ -38,6 +38,6 @@
 	else
 		var/datum/objective/syndicate_monkey/objective = new
 		objective.monky_master = monky_master
-		objective.explanation_text = "Sabotage the efforts of Nanotrasen."
+		objective.explanation_text = "Sabotage the efforts of the station. DEATH TO NANOTRASEN!"
 		objective.owner = owner
 		objectives += objective

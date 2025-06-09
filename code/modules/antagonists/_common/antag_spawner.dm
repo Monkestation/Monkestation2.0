@@ -438,6 +438,13 @@
 	id_trim = /datum/id_trim/chameleon/operative
 	l_hand = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 
+/datum/outfit/syndicate_monkey/ricky/post_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	if(visualsOnly)
+		return
+	var/obj/item/implant/weapons_auth/weapons_implant = new/obj/item/implant/weapons_auth(H)
+	weapons_implant.implant(H)
+
 /obj/item/antag_spawner/loadout/monkey_crash
 	name = "monkey strike beacon"
 	desc = "A single-use beacon designed to launch an elite monkey strike team to terrorize the station."

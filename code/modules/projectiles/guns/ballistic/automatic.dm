@@ -139,12 +139,12 @@
 /obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
 	name = "\improper PP-96 SMG"
 	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished for better performance."
-	spread = 15
+	spread = 10
 	burst_size = 2
 	icon_state = "plastikov_refurbished"
 	inhand_icon_state = "plastikov_refurbished"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov10mm
-	projectile_damage_multiplier = 0.625
+	projectile_damage_multiplier = 0.625 //25
 	can_suppress = TRUE
 	suppressor_x_offset = 4
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -168,7 +168,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	projectile_damage_multiplier = 0.75
+	projectile_damage_multiplier = 0.875 //35
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 
 /obj/item/gun/ballistic/automatic/rostokov/Initialize(mapload)

@@ -1,5 +1,6 @@
 /obj/item/choice_beacon/commando_support
 	name = "support beacon"
+	icon_state = "gangtool-red"
 	desc = "A single use beacon to deliver a team support asset."
 	company_source = "Gorlex Securities"
 	company_message = span_bold("Supply Pod incoming, please stand back.")

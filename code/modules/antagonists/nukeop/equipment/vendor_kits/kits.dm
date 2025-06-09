@@ -165,7 +165,7 @@
 
 /datum/voucher_set/syndicate/kit/grenadier
 	name = "Grenadier (Very Hard)"
-	description = "Blow up everything owned by Nanotrasen and clear the way for the team. \
+	description = "Blow up everything and anything owned by Nanotrasen and clear the way for the team. \
 		Weapons: China Lake 40mm grenade launcher and a fuckton of grenades. \
 		Utility: Kickass looking sunglasses."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
@@ -280,12 +280,10 @@
 		/obj/item/clothing/suit/space/syndicate/black/red = 1,
 		/obj/item/tank/jetpack/harness = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 2,
-		/obj/item/ammo_box/magazine/plastikov10mm = 4,
+		/obj/item/ammo_box/magazine/plastikov10mm = 2,
 		/obj/item/wrench/combat = 1,
 		/obj/item/storage/medkit/combat = 1,
 		/obj/item/book/granter/martial/cqc = 1,
 		/obj/item/book/granter/gun_mastery = 1,
 		/obj/item/language_manual/codespeak_manual/unlimited = 1,
-		/obj/item/clothing/glasses/thermal = 1,
-		/obj/item/clothing/glasses/hud/health/night = 1,
 	),src)
