@@ -248,6 +248,7 @@
 
 /datum/component/riding/vehicle/argonaut
 	vehicle_move_delay = 1.15
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 
 /datum/component/riding/vehicle/argonaut/handle_specials()
 	. = ..()
@@ -264,6 +265,7 @@
 
 /datum/component/riding/vehicle/stockade
 	vehicle_move_delay = 8.5
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 
 /datum/component/riding/vehicle/stockade/handle_specials()
 	. = ..()
@@ -277,6 +279,7 @@
 
 /datum/component/riding/vehicle/odyssey
 	vehicle_move_delay = 1.27
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 
 /datum/component/riding/vehicle/odyssey/handle_specials()
 	. = ..()
