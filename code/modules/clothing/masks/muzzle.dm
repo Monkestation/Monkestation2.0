@@ -16,7 +16,7 @@
 		if(src == carbon_user.wear_mask)
 			to_chat(user, span_warning("You need help taking this off!"))
 			return
-	..()
+	return ..()
 
 /obj/item/clothing/mask/muzzle/breath
 	name = "surgery mask"
@@ -47,9 +47,6 @@
 	var/harmful_strip = FALSE
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
-
-/datum/armor/muzzle_breath
-	bio = 100
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
