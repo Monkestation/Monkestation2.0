@@ -164,3 +164,19 @@
   Xander3359:
   - bugfix: Healium crystals properly work in a 7 range AOE
   - qol: Atmos holofans automatically open firelocks
+2025-06-09:
+  Absolucy:
+  - bugfix: (Artemchik542) Quirk "quadruple amputee" now will return your original
+      limbs back if you off it.
+  - qol: (Artemchik542) Quirk "prosthetic limb" now resets more correctly.
+  - bugfix: (Melbert) Enabling or disabling ambience mid round will properly enable
+      or disable ambience.
+  - qol: (Melbert) Added descriptions differentiating "Ship ambience" from "ambience".
+  - bugfix: (distributivgesetz) Ambient loops will now refresh when entering a mob.
+  - bugfix: (ShizCalev) Deafened mobs will no longer hear the station's ambient sounds.
+  - bugfix: (ShizCalev) Fixed ambient sounds resetting their loop when entering different
+      bodies (ie admin ghosting, being moved to other mobs, ect.)
+  - bugfix: (Kapu, StrangeWeirdKitten) Ambience buzz will now respect ship ambience
+      prefrences for observers.
+  - sound: (Kapu, StrangeWeirdKitten) Ambience buzz requires APC enviorment power
+      to function.

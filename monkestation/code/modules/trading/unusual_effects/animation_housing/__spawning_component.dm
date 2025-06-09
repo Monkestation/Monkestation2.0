@@ -13,8 +13,6 @@
 	var/atom/source_object
 	///the unusual_description grabbed into the actual handler itself only needed when used as an unusual
 	var/unusual_description = "teehee"
-	//the worn mob
-	var/mob/worn_mob
 	///the duration we last
 	var/duration = 0
 	///the spawn intervals in game ticks
@@ -152,7 +150,6 @@
 	offset_y -= added_y
 	added_x = 0
 	added_y = 0
-	worn_mob = equipper
 
 	switch(slot)
 		if(ITEM_SLOT_HEAD)
@@ -170,7 +167,6 @@
 	offset_y -= added_y
 	added_x = 0
 	added_y = 0
-	worn_mob = null
 
 /obj/item/debug_particle_holder/Initialize(mapload)
 	. = ..()
