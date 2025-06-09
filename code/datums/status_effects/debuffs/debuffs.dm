@@ -349,7 +349,7 @@
 	hammer_synced = null
 	if(owner)
 		owner.underlays -= marked_underlay
-	QDEL_NULL(marked_underlay)
+	marked_underlay = null
 	return ..()
 
 /datum/status_effect/crusher_mark/be_replaced()

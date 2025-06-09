@@ -51,7 +51,10 @@
 	if(special_bonus)
 		queue[ckey] += list(list(special_bonus, "Special Bonus"))
 	if(client?.is_mentor())
-		queue[ckey] += list(list(500, "Mentor Bonus"))
+		if(details?.mob?.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			queue[ckey] += list(list(800, "Mentor Head of Staff Bonus"))
+		else
+			queue[ckey] += list(list(500, "Mentor Bonus"))
 
 	var/list/applied_challenges = details?.applied_challenges
 	if(LAZYLEN(applied_challenges))
