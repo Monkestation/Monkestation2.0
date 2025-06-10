@@ -41,7 +41,7 @@
 
 
 /datum/religion_rites/burning_sacrifice
-	name = "Burning Offering"
+	name = "Cleansed Offering"
 	desc = "Sacrifice a buckled husked corpse for favor, the more burn damage the corpse has the more favor you will receive."
 	ritual_length = 20 SECONDS
 	ritual_invocations = list("Burning body ...",
