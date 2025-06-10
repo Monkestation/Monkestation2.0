@@ -19,6 +19,11 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cover_amount = 35
 	integrity_failure = 0.2
+	var/crash_dmg_high = 20
+	var/crash_dmg_low = 10
+	var/crash_dmg_stm = 50
+	var/crash_para_driv = 1.2
+	var/crash_para_roadkill = 0.9
 
 /datum/armor/argonaut
 	melee = 5
@@ -41,10 +46,10 @@
 	if(!ishuman(A))
 		return
 	var/mob/living/carbon/human/rammed = A
-	rammed.stamina.adjust(-50)
-	rammed.apply_damage(rand(10,20), BRUTE)
-	rider.Paralyze(1.2 SECONDS)
-	rammed.Paralyze(0.9 SECONDS)
+	rammed.stamina.adjust(-crash_dmg_stm)
+	rammed.apply_damage(rand(crash_dmg_low,crash_dmg_high), BRUTE)
+	rider.Paralyze(crash_para_driv SECONDS)
+	rammed.Paralyze(crash_para_roadkill SECONDS)
 	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
 	visible_message(span_danger("[src] crashes into [rammed]!"))
 	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
@@ -127,6 +132,11 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	cover_amount = 85
 	integrity_failure = 0.2
+	var/crash_dmg_high = 20
+	var/crash_dmg_low = 10
+	var/crash_dmg_stm = 50
+	var/crash_para_driv = 1.2
+	var/crash_para_roadkill = 0.9
 
 /obj/vehicle/ridden/odyssey/Initialize(mapload)
 	. = ..()
@@ -142,10 +152,10 @@
 	if(!ishuman(A))
 		return
 	var/mob/living/carbon/human/rammed = A
-	rammed.stamina.adjust(-50)
-	rammed.apply_damage(rand(10,20), BRUTE)
-	rider.Paralyze(1.2 SECONDS)
-	rammed.Paralyze(0.9 SECONDS)
+	rammed.stamina.adjust(-crash_dmg_stm)
+	rammed.apply_damage(rand(crash_dmg_low,crash_dmg_high), BRUTE)
+	rider.Paralyze(crash_para_driv SECONDS)
+	rammed.Paralyze(crash_para_roadkill SECONDS)
 	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
 	visible_message(span_danger("[src] crashes into [rammed]!"))
 	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
