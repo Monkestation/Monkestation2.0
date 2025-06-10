@@ -134,13 +134,12 @@
 	design_ids = list(
 		"gygax_armor",
 		"gygax_chassis",
-		"gygax_head",
-		"gygax_left_arm",
-		"gygax_left_leg",
+		"scourgehunter_left_arm",
+		"scourgehunter_left_leg",
 		"scourgehunter_main",
 		"scourgehunter_peri",
-		"gygax_right_arm",
-		"gygax_right_leg",
+		"scourgehunter_right_arm",
+		"scourgehunter_right_leg",
 		"scourgehunter_targ",
 		"scourgehunter_torso",
 	)
