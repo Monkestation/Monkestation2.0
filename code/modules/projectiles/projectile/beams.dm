@@ -28,6 +28,29 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
+/obj/projectile/beam/laser/lasrifle
+	generic_name = "laser beam"
+	damage = 35
+	tracer_type = /obj/effect/projectile/tracer/sniper
+	hitscan = TRUE
+	impact_effect_type = null
+	hitscan_light_intensity = 3
+	hitscan_light_outer_range = 0.75
+	hitscan_light_color_override = LIGHT_COLOR_INTENSE_RED
+	muzzle_flash_intensity = 5
+	muzzle_flash_range = 1
+	muzzle_flash_color_override = LIGHT_COLOR_INTENSE_RED
+	impact_light_intensity = 5
+	impact_light_outer_range = 1
+	impact_light_color_override = LIGHT_COLOR_INTENSE_RED
+	ricochets_max = 2
+	ricochet_chance = 90
+	ricochet_auto_aim_angle = 10
+	ricochet_auto_aim_range = 10
+	ricochet_incidence_leeway = 90
+	ricochet_decay_damage = 10
+	ricochet_shoots_firer = TRUE
+
 /obj/projectile/beam/laser/carbine
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
