@@ -19,25 +19,12 @@
 	if(!completed)
 		return
 	var/amount = CEILING(50000 / total_crew, 50) // nice even number
-	var/rewarded_players = 0
 	for(var/ckey in GLOB.joined_player_list)
-		var/mob/living/player = get_mob_by_ckey(ckey)
-		if(!isliving(player) || QDELING(player))
-			continue
-		if(!player.mind?.force_escaped && !GLOB.station_was_nuked)
-			if(player.stat == DEAD)
-				continue
-			var/turf/player_turf = get_turf(player)
-			if(isnull(player_turf))
-				continue
-			if(!player_turf.onCentCom() && !player_turf.onSyndieBase())
-				continue
 		LAZYINITLIST(rewards[ckey])
 		rewards[ckey] += list(list(amount, "Station Goal Completion Bonus"))
-		rewarded_players++
 
-	message_admins("As a result of the station goal being completed, [rewarded_players] players were rewarded [amount] monkecoins each.")
-	log_game("As a result of the station goal being completed, [rewarded_players] players were rewarded [amount] monkecoins each.")
+	message_admins("As a result of the station goal being completed, [total_crew] players were rewarded [amount] monkecoins each.")
+	log_game("As a result of the station goal being completed, [total_crew] players were rewarded [amount] monkecoins each.")
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
