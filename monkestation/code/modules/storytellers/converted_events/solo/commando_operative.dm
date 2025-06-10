@@ -21,7 +21,7 @@
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
 	)
-	base_antags = 3
+	base_antags = 4
 	maximum_antags = 6
 	enemy_roles = list(
 		JOB_AI,

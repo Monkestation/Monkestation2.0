@@ -51,7 +51,7 @@
 /datum/voucher_set/syndicate/kit/heavy_assault_trooper
 	name = "Heavy Assault Trooper (Easy)"
 	description = "Lock down tight areas and take bullets for the team. \
-		Weapons: Bulldog Autoshotgun, energy sword, energy shield, and manhack grenades. \
+		Weapons: Bulldog Autoshotgun, energy sword, energy shield, and a manhack grenade. \
 		Utility: Thermal goggles and anti-drop implant."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-green-dark"
@@ -71,7 +71,7 @@
 		/obj/item/ammo_box/magazine/m12g/bioterror = 2,
 		/obj/item/ammo_box/magazine/m12g/stun = 2,
 		/obj/item/ammo_box/magazine/m12g/meteor = 2,
-		/obj/item/grenade/spawnergrenade/manhacks = 2,
+		/obj/item/grenade/spawnergrenade/manhacks = 1,
 		/obj/item/autosurgeon/syndicate/nodrop = 1,
 		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
 		/obj/item/clothing/glasses/thermal = 1,

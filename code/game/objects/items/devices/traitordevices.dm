@@ -573,8 +573,8 @@ effective or pretty fucking useless.
 	base_icon_state = "syndie"
 	//render the frame underneath?
 	frame = FALSE
-	max_integrity = 150
-	shot_delay = 1 SECOND
+	max_integrity = 100
+	shot_delay = 1.5 SECONDS
 	stun_projectile = /obj/projectile/bullet/c9mm
 	stun_projectile_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
 	lethal_projectile = /obj/projectile/bullet/c9mm

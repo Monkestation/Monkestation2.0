@@ -153,6 +153,7 @@
 /obj/vehicle/sealed/mecha/marauder/mauler/ricky
 	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model. Smells faintly of iron and bananas."
 	name = "Ricky's Mauler"
+	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS //no MMIs
 	max_equip_by_category = list(
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 2,

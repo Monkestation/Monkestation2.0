@@ -11,7 +11,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	drag_slowdown = 1.5
-	max_integrity = 500
+	max_integrity = 250
 	r_code = "11111"
 
 	base_icon_state = "old_nuclearbomb"
@@ -31,7 +31,7 @@
 	bullet = 60
 	laser = 50
 	energy = 50
-	bomb = 80
+	bomb = 100
 
 /obj/machinery/nuclearbomb/commando/Initialize(mapload)
 	. = ..()
@@ -43,7 +43,7 @@
 	update_appearance()
 	if(atom_integrity <= 100 && (prob(25)))
 		do_sparks(rand(1,2), FALSE, src)
-	else if(atom_integrity <= 250 && (prob(10)))
+	else if(atom_integrity <= 200 && (prob(20)))
 		do_sparks(1, FALSE, src)
 	if(!timing)
 		return
@@ -249,7 +249,7 @@
 	timer = 900
 	var/area/arm_location = get_area(src)
 	if(arm_location in decrypt_areas)
-		timer -= 300
+		timer -= 480 //8 minutes
 	if(istype(auth, /obj/item/disk/nuclear) && !auth.fake)
 		timer -= 300
 
