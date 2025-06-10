@@ -18,7 +18,7 @@
 	inhand_icon_state = "lasrifle"
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
-	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/lasrifle)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasrifle)
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"

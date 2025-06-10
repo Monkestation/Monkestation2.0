@@ -29,7 +29,7 @@
 	bare_wound_bonus = 40
 
 /obj/projectile/beam/laser/lasrifle
-	generic_name = "laser beam"
+	generic_name = "rifle beam"
 	damage = 35
 	tracer_type = /obj/effect/projectile/tracer/sniper
 	impact_type = /obj/effect/projectile/impact/sniper
