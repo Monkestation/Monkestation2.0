@@ -208,12 +208,9 @@
 	var/turf/location = get_turf(owner)
 	location.hotspot_expose(700, 25 * seconds_between_ticks, TRUE)
 
-	if(ishuman(owner) && !no_protection)
-		var/mob/living/carbon/human/victim = owner
-		if(victim.get_thermal_protection() >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			return
+	if(owner.get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
+		return
 
-	owner.adjust_bodytemperature((stacks KELVIN) * seconds_between_ticks)
 	switch(ticks_on_fire)
 		if(0 to 3)
 			owner.apply_damage(0.10 * stacks, BURN)
