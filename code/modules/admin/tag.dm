@@ -51,7 +51,7 @@ ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums
 	var/list/tagged_datums = user.holder.tagged_datums
 	var/list/marked_datum = user.holder.marked_datum
 
-	dat += "<br><a href='byond://?_src_=[REF(user)];[HrefToken(forceGlobal = TRUE)];show_tags=1'>Refresh</a><br>"
+	dat += "<br><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];show_tags=1'>Refresh</a><br>"
 	if(LAZYLEN(tagged_datums))
 		for(var/datum/iter_datum as anything in tagged_datums)
 			index++
@@ -85,8 +85,9 @@ ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums
 	else
 		dat += "No datums tagged :("
 
-	dat = dat.Join("<br>")
-	user << browse(dat, "window=tag;size=800x480")
+	var/datum/browser/browser = new(user.mob, "tag", "Tag Menu", 800, 480)
+	browser.set_content(dat.Join("<br>"))
+	browser.open()
 
 #undef TAG_DEL
 #undef TAG_MARK

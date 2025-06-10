@@ -106,7 +106,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					for(var/datum/disease/acute/disease as anything in living.diseases)
 						disease.cure(target = living)
 
-		if("list_bombers") //TODO use the dynamic_invoke_verb here maybe? Any reason why we aren't?
+		if("list_bombers")
 			holder.holder.list_bombers()
 
 		if("list_signalers")
