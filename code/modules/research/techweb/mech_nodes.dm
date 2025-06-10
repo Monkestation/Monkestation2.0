@@ -126,6 +126,27 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_2_POINTS)
 
+/datum/techweb_node/scourgehunter
+	id = "mech_scourgehunter"
+	display_name = "PROTOTYPE Mech: Scourge Hunter"
+	description = "A really REALLY old mech design we got from corporate mergers, its terrible."
+	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	design_ids = list(
+		"scourgehunter_armor",
+		"scourgehunter_chassis",,
+		"scourgehunter_left_arm",
+		"scourgehunter_left_leg",
+		"scourgehunter_main",
+		"scourgehunter_peri",
+		"scourgehunter_right_arm",
+		"scourgehunter_right_leg",
+		"scourgehunter_targ",
+		"scourgehunter_torso",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_2_POINTS)
+
+
 /datum/techweb_node/durand
 	id = "mech_durand"
 	display_name = "EXOSUIT: Durand"

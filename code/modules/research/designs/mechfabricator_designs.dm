@@ -372,6 +372,84 @@
 		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
+//Heme QMW 1a Scourge Hunter
+/datum/design/scourgehunter_chassis
+	name = "Mech Chassis (Heme QMW 1a \"Scourge Hunter\")"
+	id = "scourgehunter_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/scourgehunter
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_SCOURGEHUNTER + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/scourgehunter_torso
+	name = "Mech Ram (Heme QMW 1a \"Scourge Hunter\")"
+	id = "scourgehunter_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/scourgehunter_torso
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*30,/datum/material/glass =SHEET_MATERIAL_AMOUNT*5)
+	construction_time = 200
+	category = list(
+		RND_CATEGORY_MECHFAB_SCOURGEHUNTER + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/scourgehunter_left_arm
+	name = "Mech Front Left Leg (Heme QMW 1a \"Scourge Hunter\")"
+	id = "scourgehunter_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/scourgehunter_left_arm
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*20)
+	construction_time = 150
+	category = list(
+		RND_CATEGORY_MECHFAB_SCOURGEHUNTER + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/scourgehunter_right_arm
+	name = "Mech Front Right Leg (Heme QMW 1a \"Scourge Hunter\")"
+	id = "scourgehunter_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/scourgehunter_right_arm
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*20)
+	construction_time = 150
+	category = list(
+		RND_CATEGORY_MECHFAB_SCOURGEHUNTER + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/scourgehunter_left_leg
+	name = "Mech Back Left Leg (Heme QMW 1a \"Scourge Hunter\")"
+	id = "scourgehunter_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/scourgehunter_left_leg
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*20)
+	construction_time = 150
+	category = list(
+		RND_CATEGORY_MECHFAB_SCOURGEHUNTER + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/scourgehunter_right_leg
+	name = "Mech Back Right Leg (Heme QMW 1a \"Scourge Hunter\")"
+	id = "scourgehunter_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/scourgehunter_right_leg
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*20)
+	construction_time = 150
+	category = list(
+		RND_CATEGORY_MECHFAB_SCOURGEHUNTER + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/scourgehunter_armor
+	name = "Mech Turret (Heme QMW 1a \"Scourge Hunter\")"
+	id = "scourgehunter_armor"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/scourgehunter_armor
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 40,/datum/material/titanium=SHEET_MATERIAL_AMOUNT*10,/datum/material/glass =SHEET_MATERIAL_AMOUNT*5)
+	construction_time = 600
+	category = list(
+		RND_CATEGORY_MECHFAB_SCOURGEHUNTER + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
 //Durand
 /datum/design/durand_chassis
 	name = "Exosuit Chassis (\"Durand\")"

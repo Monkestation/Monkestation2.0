@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/scourgehunter
-	desc = "Made as a modification to a storm tank,tracks would be gunked up by zombie hordes, so legs were installed to walk over corpse mountains. This thing is huge, it might not fit through doors"
+	desc = "Made as a modification to a storm tank, tracks would be gunked up by zombie hordes, so legs were installed to walk over mountains of corpses."
 	name = "\improper Heme QMW 1a Scourge Hunter"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "scourgehunter"

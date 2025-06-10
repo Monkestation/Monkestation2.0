@@ -72,6 +72,36 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/scourgehunter_main
+	name = "\"Heme QMW 1a\" Valves and Dials"
+	desc = "Allows for the construction of a \"Heme QMW 1a\" control set."
+	id = "scourgehunter_main"
+	build_path = /obj/item/circuitboard/mecha/scourgehunter/main
+	category = list(
+		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_SCOURGEHUNTER
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/scourgehunter_peri
+	name = "\"Heme QMW 1a\" Hydraulics"
+	desc = "Allows for the construction of a \"Heme QMW 1a\" Hydraulics set."
+	id = "scourgehunter_peri"
+	build_path = /obj/item/circuitboard/mecha/scourgehunter/peripherals
+	category = list(
+		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_SCOURGEHUNTER
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/scourgehunter_targ
+	name = "\"Heme QMW 1a\" Cockpit seat."
+	desc = "Allows for the construction of a \"Heme QMW 1a\" cockpit seat."
+	id = "scourgehunter_targ"
+	build_path = /obj/item/circuitboard/mecha/scourgehunter/targeting
+	category = list(
+		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_SCOURGEHUNTER
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/durand_main
 	name = "\"Durand\" Central Control module"
 	desc = "Allows for the construction of a \"Durand\" Central Control module."

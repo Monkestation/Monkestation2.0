@@ -378,6 +378,50 @@
 	icon = 'icons/mecha/tanks_construct.dmi'
 	icon_state = "kingspire_armor"
 
+// Scourge Hunter
+
+/obj/item/mecha_parts/chassis/scourgehunter
+	name = "\improper Heme QMW 1a Chassis"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_chass"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/scourgehunter
+
+/obj/item/mecha_parts/part/scourgehunter_torso
+	name="\improper Heme QMW 1a ram shield"
+	desc="A slightly bent peice of thick sheet metal, used to protect the chassis when ramming the undead."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_harness"
+
+/obj/item/mecha_parts/part/scourgehunter_left_arm
+	name="\improper Heme QMW 1a Front Left Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the front left one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_l_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_right_arm
+	name="\improper Heme QMW 1a Front Right Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the front right one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_r_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_left_leg
+	name="\improper Heme QMW 1a Back Left Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the back left one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_l_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_right_leg
+	name="\improper Heme QMW 1a Back Right Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the back right one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_r_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_armor
+	name="\improper Heme QMW 1a Turret"
+	desc="An armored turret containing four Malone Ratcatchers, originally the turret contained 4 rocket launchers but Nanotrassen required this prototype to be less destructive before being alowed in exosuit fabricators."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_armor"
+
 // T5 Percutio
 
 /obj/item/mecha_parts/chassis/percutio
@@ -416,7 +460,7 @@
 	icon = 'icons/mecha/tanks_construct.dmi'
 	icon_state = "percutio_armor"
 
-// Balfour Stockade
+// Balfour Stockade (chimera)
 
 /obj/item/mecha_parts/chassis/stockade
 	name = "\improper Balfour Stockade Carriage"
@@ -578,3 +622,18 @@
 	name = "T5 Percutio fuel tank"
 	desc = "The fuel tank of an armored car, repurposed for internal air storage, since batteries are so good now"
 	icon_state = "percutio3"
+
+/obj/item/circuitboard/mecha/scourgehunter/peripherals
+	name = "Heme QMW 1a Hydraulics"
+	desc = "Hydaulic systems for the Heme QMW 1a Scourge Hunter. Thanks to the fact that no minaturization technology existed in its insception, the hydraulics consume an absurd amount of power to move this machine."
+	icon_state = "scourgehunter1"
+
+/obj/item/circuitboard/mecha/scourgehunter/targeting
+	name = "Heme QMW 1a Cockpit Seat"
+	desc = "the seat for the pilot of a Scourge Hunter"
+	icon_state = "scourgehunter2"
+
+/obj/item/circuitboard/mecha/scourgehunter/main
+	name = "Heme QMW 1a dials & valves"
+	desc = "many delicate glass dials and valves, the mechanical masterpiece required to keep the walker upright without electronics"
+	icon_state = "scourgehunter3"

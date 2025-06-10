@@ -1321,3 +1321,225 @@
 			"backward_message" = "unsecured gun"
 		),
 	)
+
+// Heme QMW 1a Scourge Hunter
+/datum/component/construction/unordered/mecha_chassis/scourgehunter
+	result = /datum/component/construction/mecha/scourgehunter
+	steps = list(
+		/obj/item/mecha_parts/part/scourgehunter_left_arm,
+		/obj/item/mecha_parts/part/scourgehunter_right_arm,
+		/obj/item/mecha_parts/part/scourgehunter_left_leg,
+		/obj/item/mecha_parts/part/scourgehunter_right_leg,
+		/obj/item/mecha_parts/part/scourgehunter_torso
+	)
+
+
+/datum/component/construction/mecha/scourgehunter
+	result = /obj/vehicle/sealed/mecha/scourgehunter
+	base_icon = "scourgehunter"
+
+	circuit_control = /obj/item/circuitboard/mecha/scourgehunter/main
+	circuit_periph = /obj/item/circuitboard/mecha/scourgehunter/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/scourgehunter/targeting
+
+	inner_plating = /obj/item/stack/sheet/plastic
+	inner_plating_amount = 10
+
+	outer_plating = /obj/item/mecha_parts/part/scourgehunter_armor
+	outer_plating_amount = 1
+
+/datum/component/construction/mecha/scourgehunter/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "legs arent on, you can start with the left ones with some gusto and a <b>wrench</b>.",
+			"forward_message" = "Attached left legs",
+		),
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The left legs are on, now you can put the right ones on with a <b>wrench</b>.",
+			"forward_message" = "Attached right legs",
+			"backward_message" = "removed left legs"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The legs are now attached properly, you can deploy the feet with a <b>crowbar</b>.",
+			"forward_message" = "pried out feet",
+			"backward_message" = "removed right legs"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_circuit_steps()
+	return list(
+		list(
+			"key" = circuit_periph,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Now that the legs are attached, you can put in the hydraulics.",
+			"forward_message" = "added hydraulics",
+			"backward_message" = "colapsed feet"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The hydraulics are in but is sitting unsecured. it and can be <b>screwed</b> into place.",
+			"forward_message" = "secured hydraulics",
+			"backward_message" = "removed hydraulics"
+		),
+		list(
+			"key" = circuit_control,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The hydraulics are now secured, and the <b>valves & dials</b> can be slotted in.",
+			"forward_message" = "added control components",
+			"backward_message" = "unsecured hydraulics"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The control area slotted in nicely, there is alot of <b>screwing</b> to do so get to work.",
+			"forward_message" = "secured controls station",
+			"backward_message" = "removed dials and valves"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "There are still more screws to be worked at, dont give up!.",
+			"forward_message" = "secrewed more screws",
+			"backward_message" = "unsecured part"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Who decided there needed to be 8 screws per light? Who cares keep <b>screwing</b>.",
+			"forward_message" = "secrewed even more screws",
+			"backward_message" = "ripped out some screws"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Finally only a few screws left. No wonder the screw box weighed 30 pounds. Finish <b>screwing</b>.",
+			"forward_message" = "Restored Sanity",
+			"backward_message" = "ripped out some screws"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_circuit_weapon_steps()
+	return list(
+				list(
+			"key" = circuit_weapon,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The <b>Seating</b> is still not in, do you want to crouch while driving?.",
+			"forward_message" = "added the seats",
+			"backward_message" = "disconnected some screws"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The seating is loose and your not stupid enough to leave it like that.",
+			"forward_message" = "secured seating",
+			"backward_message" = "removed seating"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the crew compartment parts are almost finished, you can add the <b>scanning_module</b> now.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured seating"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"forward_message" = "added capacitor",
+			"backward_message" = "unscecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured capacitor",
+			"backward_message" = "removed capacitor"
+		),
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added.",
+			"forward_message" = "added power cell",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured power cell",
+			"backward_message" = "removed power cell"
+		),
+	)
+
+/datum/component/construction/mecha/scourgehunter/get_inner_plating_steps()
+	return list(
+		list(
+			"key" = inner_plating,
+			"amount" = inner_plating_amount,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The interior of the Scourge Hunter is almost done, you need to use 10 sheets of plastic to fabricate hydraulic lines.",
+			"forward_message" = "installed hydraulic lines",
+			"backward_message" = "unsecured power cell"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The lines need to be secured... with more god damned screws <b>screwdriver</b>.",
+			"forward_message" = "hydraulic lines secured",
+			"backward_message" = "removed hydraulic lines"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "That didnt need to many screws thankfully, now you can weld everything up.",
+			"forward_message" = "welded mech chassis",
+			"backward_message" = "slackened hydraulics"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_WELDER,
+			"desc" = "the hull is welded, you now need to add the turret to the tank.",
+			"forward_message" = "installed turret",
+			"backward_message" = "cut welds on hull"
+		),
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The turret falls into its socket with a satisfying clunk, it needs some bolts <b>wrenched<b/> to be secured.",
+			"forward_message" = "gun and antenna added",
+			"backward_message" = "pushed off turret"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The turret is assembled and the legs are on, you just need to pry it from its packaged state.",
+			"forward_message" = "deployed mech",
+			"backward_message" = "unsecured turret"
+		),
+	)
+
