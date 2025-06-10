@@ -17,8 +17,6 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "lasrifle"
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/lasrifle)

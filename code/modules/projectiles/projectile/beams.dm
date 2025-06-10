@@ -32,6 +32,8 @@
 	generic_name = "laser beam"
 	damage = 35
 	tracer_type = /obj/effect/projectile/tracer/sniper
+	impact_type = /obj/effect/projectile/impact/sniper
+	muzzle_type = /obj/effect/projectile/muzzle/sniper
 	hitscan = TRUE
 	impact_effect_type = null
 	hitscan_light_intensity = 3
