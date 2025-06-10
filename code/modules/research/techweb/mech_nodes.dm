@@ -134,8 +134,8 @@
 	design_ids = list(
 		"scourgehunter_armor",
 		"scourgehunter_chassis",,
-		"scourgehunter_left_arm",
 		"scourgehunter_left_leg",
+		"scourgehunter_left_arm",
 		"scourgehunter_main",
 		"scourgehunter_peri",
 		"scourgehunter_right_arm",
