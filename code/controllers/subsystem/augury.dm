@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(augury)
 	hibernate_checks = list(
 		NAMEOF(src, watchers),
 		NAMEOF(src, doombringers),
+		NAMEOF(src, observers_given_action),
 	)
 
 /datum/controller/subsystem/augury/stat_entry(msg)
