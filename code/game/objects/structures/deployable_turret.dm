@@ -240,7 +240,7 @@
 	desc = "A 12.7mm Machinegun used in the Colonial Legion, it is known for its exceptional accuracy for the sheer amount of bullets it puts out."
 	icon_state = "lamentum"
 	max_integrity = 125
-	cover_ammount = 15
+	cover_amount = 15
 	projectile_type = /obj/projectile/bullet/manned_turret/lamentum
 	anchored = TRUE
 	number_of_shots = 1
