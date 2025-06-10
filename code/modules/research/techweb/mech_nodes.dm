@@ -132,7 +132,7 @@
 	description = "A really REALLY old mech design we got from corporate mergers, its terrible."
 	prereq_ids = list("adv_mecha", "adv_mecha_armor")
 	design_ids = list(
-		"gygax_armor",
+		"scourgehunter_armor",
 		"scourgehunter_chassis",
 		"scourgehunter_left_arm",
 		"scourgehunter_left_leg",
