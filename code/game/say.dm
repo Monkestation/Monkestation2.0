@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		else if(visible_name)
 			namepart = "[human_speaker.get_visible_name()]"
 		if(!radio_freq)
-			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.trim?.chat_span()
+			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.chat_span()
 			spanpart2 = "<span class='name [id_span || "job__unknown"]'>"
 	//End name span.
 	var/endspanpart = "</span></a>"
