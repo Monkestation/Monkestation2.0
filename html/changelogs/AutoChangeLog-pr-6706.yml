@@ -1,0 +1,6 @@
+author: "MissClassyPineapple"
+delete-after: True
+changes:
+  - rscadd: "New spooks in maints"
+  - rscadd: "New secrets in maints"
+  - balance: "rebalanced maint loot tables"

@@ -121,6 +121,8 @@
 	var/list/datum/action/actions
 	///list of paths of action datums to give to the item on New().
 	var/list/actions_types
+	///Slot flags in which this item grants actions. If null, defaults to the item's slot flags (so actions are granted when worn)
+	var/action_slots = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	///This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -139,6 +141,8 @@
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
+	///flat armour pen, like the way old armour pen worked. Applied AFTER percentage pen
+	var/armour_ignorance = 0
 	///Whether or not our object is easily hindered by the presence of armor
 	var/weak_against_armour = FALSE
 	/// The click cooldown given after attacking. Lower numbers means faster attacks
@@ -434,7 +438,7 @@
 	///Separator between the items on the list
 	var/sep = ""
 	///Nodes that can be boosted
-	var/list/boostable_nodes = techweb_item_boost_check(src)
+	var/list/boostable_nodes = techweb_item_unlock_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
@@ -635,9 +639,6 @@
 			R.activate_module(src)
 			R.hud_used.update_robot_modules_display()
 
-/obj/item/proc/GetDeconstructableContents()
-	return get_all_contents() - src
-
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -756,8 +757,14 @@
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/action)
-	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
+	if(!slot) // Equipped into storage
 		return FALSE
+	if(slot & (ITEM_SLOT_HANDCUFFED|ITEM_SLOT_LEGCUFFED)) // These aren't true slots, so avoid granting actions there
+		return FALSE
+	if(!isnull(action_slots))
+		return (slot & action_slots)
+	else if (slot_flags)
+		return (slot & slot_flags)
 	return TRUE
 
 /**
@@ -1704,3 +1711,8 @@
 	if (!isnull(tool_behaviour))
 		return list(tool_behaviour)
 	return null
+
+/obj/item/dump_harddel_info()
+	var/list/wardrobe_stock = SSwardrobe?.preloaded_stock?[type]
+	if(wardrobe_stock && (src in wardrobe_stock[WARDROBE_STOCK_CONTENTS]))
+		return "Stocked in SSwardrobe"

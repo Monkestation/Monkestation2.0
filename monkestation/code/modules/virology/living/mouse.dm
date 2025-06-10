@@ -39,10 +39,8 @@
 		disease.AddToGoggleView(src)
 
 /mob/living/basic/mouse/Destroy()
-	. = ..()
-	if(src in GLOB.infected_contact_mobs)
-		GLOB.infected_contact_mobs -= src
 	QDEL_NULL(immune_system)
+	return ..()
 
 /mob/living/basic/mouse/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()

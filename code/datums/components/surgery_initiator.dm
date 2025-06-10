@@ -324,7 +324,7 @@
 	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
 	target.balloon_alert(user, "starting \"[lowertext(procedure.name)]\"")
-
+	// add some signal here maybe to alert serverlink users the starting tool
 	user.visible_message(
 		span_notice("[user] drapes [parent] over [target]'s [parse_zone(selected_zone)] to prepare for surgery."),
 		span_notice("You drape [parent] over [target]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name]."),

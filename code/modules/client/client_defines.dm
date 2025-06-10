@@ -202,8 +202,6 @@
 	var/list/spell_tabs = list()
 	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
-	///Our object window datum. It stores info about and handles behavior for the object tab
-	var/datum/object_window_info/obj_window
 
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
@@ -274,6 +272,12 @@
 
 	/// Does this client have typing indicators enabled?
 	var/typing_indicators = FALSE
+
+	/// Loot panel for the client
+	var/datum/lootpanel/loot_panel
+
+	///Which ambient sound this client is currently being provided.
+	var/current_ambient_sound
 
 	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
 	var/window_scaling

@@ -410,3 +410,15 @@
   - rscadd: Robotic limbs can now be adjusted to fit satyrs and orthinid's by using
       a wrench on the limbs
   - bugfix: All of satyrs and orthinids limbs will now fit, a satyr or orthinid
+2025-05-30:
+  BingusSS13:
+  - qol: The space hotel now has more universal enzyme, flour, sugar, and rice.
+  - qol: The space hotel now has actual parts to build hydroponics with.
+  - qol: The space hotel now has a seed extractor board and a composter board for
+      hydroponics.
+2025-05-31:
+  notghosti:
+  - bugfix: Slimes now ignore drones.
+  sprungleio:
+  - rscadd: The hole.
+  - rscadd: More flavor to Beverly's fax machine.

@@ -189,7 +189,7 @@
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
-	else if(isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+	else if(target != src && isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
 		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
 		return
 	. = ..()
@@ -372,6 +372,12 @@
 		new_slime.add_trait(trait.type)
 	SEND_SIGNAL(src, COMSIG_FRIENDSHIP_PASS_FRIENDSHIP, new_slime)
 	new_slime.recompile_ai_tree()
+	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
+	if(nanites)
+		//copying over nanite programs/cloud sync with 50% saturation in host and spare
+		nanites.nanite_volume *= 0.5
+		new_slime.AddComponent(/datum/component/nanites, nanites.nanite_volume)
+		SEND_SIGNAL(new_slime, COMSIG_NANITE_SYNC, nanites, TRUE, TRUE) //The trues are to copy activation as well
 
 /mob/living/basic/slime/proc/start_mutating(random = FALSE)
 	if(!pick_mutation(random))

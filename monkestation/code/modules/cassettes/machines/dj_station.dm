@@ -38,11 +38,13 @@ GLOBAL_VAR(dj_booth)
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	GLOB.dj_booth = src
 	register_context()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 
 /obj/machinery/cassette/dj_station/Destroy()
-	. = ..()
-	GLOB.dj_booth = null
+	if(GLOB.dj_booth == src)
+		GLOB.dj_booth = null
 	STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
 /obj/machinery/cassette/dj_station/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -163,13 +165,9 @@ GLOBAL_VAR(dj_booth)
 	active_listeners = list()
 
 	if(!soft)
-		for(var/mob/living/carbon/anything as anything in people_with_signals)
-			if(!istype(anything))
-				continue
-			UnregisterSignal(anything, COMSIG_CARBON_UNEQUIP_EARS)
-			UnregisterSignal(anything, COMSIG_CARBON_EQUIP_EARS)
-			UnregisterSignal(anything, COMSIG_MOVABLE_Z_CHANGED)
-		people_with_signals = list()
+		for(var/mob/living/carbon/anything in people_with_signals)
+			UnregisterSignal(anything, list(COMSIG_CARBON_UNEQUIP_EARS, COMSIG_CARBON_EQUIP_EARS, COMSIG_MOVABLE_Z_CHANGED, COMSIG_QDELETING))
+		people_with_signals.Cut()
 
 /obj/machinery/cassette/dj_station/proc/start_broadcast()
 	var/choice = tgui_input_list(usr, "Choose which song to play.", "[src]", current_namelist)
@@ -195,6 +193,7 @@ GLOBAL_VAR(dj_booth)
 				RegisterSignal(anything, COMSIG_CARBON_UNEQUIP_EARS, PROC_REF(stop_solo_broadcast))
 				RegisterSignal(anything, COMSIG_CARBON_EQUIP_EARS, PROC_REF(check_solo_broadcast))
 				RegisterSignal(anything, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_solo_broadcast))
+				RegisterSignal(anything, COMSIG_QDELETING, PROC_REF(on_listener_delete))
 				people_with_signals |= anything
 
 			if(!(anything.client in active_listeners))
@@ -343,6 +342,7 @@ GLOBAL_VAR(dj_booth)
 		RegisterSignal(new_player, COMSIG_CARBON_UNEQUIP_EARS, PROC_REF(stop_solo_broadcast))
 		RegisterSignal(new_player, COMSIG_CARBON_EQUIP_EARS, PROC_REF(check_solo_broadcast))
 		RegisterSignal(new_player, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_solo_broadcast))
+		RegisterSignal(new_player, COMSIG_QDELETING, PROC_REF(on_listener_delete))
 		people_with_signals |= new_player
 
 	if(!broadcasting)
@@ -375,3 +375,9 @@ GLOBAL_VAR(dj_booth)
 
 	pl_index++
 	start_playing(active_listeners)
+
+/obj/machinery/cassette/dj_station/proc/on_listener_delete(datum/listener)
+	SIGNAL_HANDLER
+	people_with_signals -= listener
+	UnregisterSignal(listener, list(COMSIG_CARBON_UNEQUIP_EARS, COMSIG_CARBON_EQUIP_EARS, COMSIG_MOVABLE_Z_CHANGED, COMSIG_QDELETING))
+	stop_solo_broadcast(listener)
