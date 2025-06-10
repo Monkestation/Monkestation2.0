@@ -271,6 +271,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_puzzgrids,
 	/client/proc/view_runtimes,
 	// monkestation verbs: debugger tools
+	/client/proc/count_instances,
 	/client/proc/log_viewer_new,
 	/client/proc/getserverlogs_debug,
 	/client/proc/getcurrentlogs_debug,

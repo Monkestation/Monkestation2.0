@@ -163,6 +163,8 @@
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
+	///Flat armor ignorance, applied AFTER penetration has reduced the amount of armor by %
+	var/armour_ignorance = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
 	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
@@ -211,6 +213,11 @@
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
+	///Stamina and damage dropoff over distance, for shotguns and the like
+	///It is a flat value that is SUBTRACTED from damage for every tile it moves, I.E 5 dropoff means the projectile looses 5 damage for every tile it moves past the first tile
+	var/tile_dropoff = 0
+	var/tile_dropoff_s = 0
+
 	var/static/list/projectile_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -244,6 +251,12 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	if(damage > 0)
+		damage -= tile_dropoff
+	if(stamina > 0)
+		stamina -= tile_dropoff_s
+	if(damage < 0 && stamina < 0)
+		qdel(src)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
 		on_range()

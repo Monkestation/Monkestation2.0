@@ -1,0 +1,9 @@
+author: "Siro"
+delete-after: True
+changes:
+  - qol: "Health Analyzer readout improvements."
+  - qol: "Alerts to consume alcohol if they have the living_drunk component."
+  - code_imp: "Ports tgstation#76350 organ_flags and status merged. Fixes purist issues."
+  - bugfix: "Spleen organ now properly handled by the Health Analyzer readout."
+  - bugfix: "Properly displays when the heart is missing."
+  - bugfix: "DNA Infuser will not remove organs with the ORGAN_UNREMOVABLE flag"

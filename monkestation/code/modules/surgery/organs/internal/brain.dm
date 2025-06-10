@@ -3,8 +3,7 @@
 	desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-clock"
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	var/robust //Set to true if the robustbits causes brain replacement. Because holy fuck is the CLANG CLANG CLANG CLANG annoying
 
 /obj/item/organ/internal/brain/clockwork/emp_act(severity)
@@ -455,7 +454,7 @@
 /obj/item/organ/internal/brain/synth/emp_act(severity) // EMP act against the posi, keep the cap far below the organ health
 	. = ..()
 
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
@@ -464,12 +463,12 @@
 	switch(severity)
 		if(EMP_HEAVY)
 			to_chat(owner, span_warning("01001001 00100111 01101101 00100000 01100110 01110101 01100011 01101011 01100101 01100100 00101110"))
-			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maximum = SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Electromagnetic damage taken in central processing unit. Error Code: 401-YT"))
-			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum = SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
 
-/obj/item/organ/internal/brain/synth/apply_organ_damage(damage_amount, maximumm, required_organtype)
+/obj/item/organ/internal/brain/synth/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 
 	if(owner && damage > 0 && (world.time - last_message_time) > SYNTH_BRAIN_DAMAGE_MESSAGE_INTERVAL)
