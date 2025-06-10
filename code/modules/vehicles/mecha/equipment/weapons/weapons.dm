@@ -621,7 +621,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/quadmg
 	name = "Quad Ratcatcher machineguns"
 	desc = "Four machineguns linked together, the firerate has been toned down but is still formidable. This gun was specifically designed for this mech, you doubt it can be mounted on other mechs."
-	icon_state = "mecha_quadmg"
+	icon_state = "mecha_quadlmg"
 	fire_sound = 'sound/weapons/gun/general/malone.ogg'
 	projectile = /obj/projectile/bullet/mm127x70
 	projectiles = 240
