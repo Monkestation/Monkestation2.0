@@ -21,8 +21,6 @@
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
-	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/lasrifle)
 
 /obj/item/gun/energy/laser/practice
