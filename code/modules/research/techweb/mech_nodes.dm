@@ -138,7 +138,7 @@
 		"gygax_left_arm",
 		"gygax_left_leg",
 		"gygax_main",
-		"gygax_peri",
+		"scourgehunter_peri",
 		"gygax_right_arm",
 		"gygax_right_leg",
 		"gygax_targ",
