@@ -13,7 +13,6 @@
 	name = "laser rifle"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "lasrifle"
-	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "lasrifle"
