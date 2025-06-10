@@ -49,6 +49,7 @@
 // Module is compatible with fucking battleship "mechs" do I need to explain?
 #define EXOSUIT_MODULE_BATTLESHIP (1<<18)
 //monkestation edit end
+#define EXOSUIT_MODULE_FOXMECH (1<<18)
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)

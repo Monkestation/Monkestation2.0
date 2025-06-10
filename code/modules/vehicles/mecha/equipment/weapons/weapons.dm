@@ -581,21 +581,6 @@
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
-// this is the 85k-a Spatha's gun, much more powerful then the normal tank, its admeme spawned only so no worries.
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/hv_tank_cannon
-	name = "40mm hv tank cannon"
-	desc = "A high velocity 40mm cannon, built for the spatha it can delete lesser beings with ease. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
-	icon_state = "mecha_hv_tank_cannon"
-	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
-	harmful = TRUE
-	projectile = /obj/projectile/bullet/rocket/hvtankshell
-	equip_cooldown = 4 SECONDS // fires fast bruv
-	projectiles = 1
-	projectiles_cache = 45
-	projectiles_cache_max = 45
-	ammo_type = MECHA_AMMO_LIGHTTANK
-	mech_flags = EXOSUIT_MODULE_TANK
-
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone Mk.1 Ratcatcher"
 	desc = "Harvey Malone's first machinegun design. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
@@ -613,6 +598,45 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 	mech_flags = EXOSUIT_MODULE_TANK
+
+
+// this is the 85k-a Spatha's gun, much more powerful then the normal tank, its admeme spawned only so no worries.
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/hv_tank_cannon
+	name = "40mm hv tank cannon"
+	desc = "A high velocity 40mm cannon, built for the spatha it can delete lesser beings with ease. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
+	icon_state = "mecha_hv_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/hvtankshell
+	equip_cooldown = 4 SECONDS // fires fast bruv
+	projectiles = 1
+	projectiles_cache = 45
+	projectiles_cache_max = 45
+	ammo_type = MECHA_AMMO_LIGHTTANK
+	mech_flags = EXOSUIT_MODULE_TANK
+
+
+// the ScourgeHunter's MG, not as op as 4 mgs strapped together, mostly just more firerate and more bullets spat out per volley.
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/quadmg
+	name = "Quad Ratcatcher machineguns"
+	desc = "Four machineguns linked together, the firerate has been toned down but is still formidable. This gun was specifically designed for this mech, you doubt it can be mounted on other mechs."
+	icon_state = "mecha_quadmg"
+	fire_sound = 'sound/weapons/gun/general/malone.ogg'
+	projectile = /obj/projectile/bullet/mm127x70
+	projectiles = 240
+	projectiles_cache = 240
+	projectiles_cache_max = 1200
+	projectiles_per_shot = 20
+	projectile_delay = 0.15 SECONDS
+	equip_cooldown = 1.3 SECONDS
+	variance = 22
+	randomspread = 6
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_FOXMECH
+
+// to be made, Centurion MV-2's (not very powerful) incendary cannon
 
 //Talos (the huge fucker) weapons
 

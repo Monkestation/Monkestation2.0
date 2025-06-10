@@ -316,3 +316,20 @@
 /obj/structure/mecha_wreckage/callahan/Initialize(mapload)
 	. = ..()
 	playsound(loc, 'sound/effects/explosion3.ogg', 250)
+
+
+/obj/structure/mecha_wreckage/scourgehunter
+	name = "\improper Heme QMW 1a Scourge Hunter wreckage"
+	icon = 'icons/mecha/largetanks.dmi'
+	icon_state = "scourgehunter-broken"
+	bound_width = 64 // 2x2, we like em big, we like em chunky, main downside to making this pile of steel
+	bound_height = 64
+	SET_BASE_PIXEL(-24, 0)
+	welder_salvage = list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+//	parts = list(
+//			/obj/item/mecha_parts/part/durand_torso,
+//			/obj/item/mecha_parts/part/durand_head,
+//			/obj/item/mecha_parts/part/durand_left_arm,
+//			/obj/item/mecha_parts/part/durand_right_arm,
+//			/obj/item/mecha_parts/part/durand_left_leg,
+//			/obj/item/mecha_parts/part/durand_right_leg)
