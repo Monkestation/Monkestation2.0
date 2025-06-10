@@ -133,7 +133,7 @@
 	prereq_ids = list("adv_mecha", "adv_mecha_armor")
 	design_ids = list(
 		"gygax_armor",
-		"gygax_chassis",
+		"scourgehunter_chassis",
 		"scourgehunter_left_arm",
 		"scourgehunter_left_leg",
 		"scourgehunter_main",
