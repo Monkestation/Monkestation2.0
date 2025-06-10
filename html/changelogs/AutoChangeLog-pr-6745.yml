@@ -1,7 +1,0 @@
-author: "F-e-r-n"
-delete-after: True
-changes:
-  - balance: "Awakened dragon no longer has baton resistance"
-  - balance: "Lethal ammunition boxes now cost twice as much"
-  - balance: "The Renoster shotgun crate now holds parity with the riot shotgun crate"
-  - balance: "Shotgun shell boxes are no longer tiny\n:cl:"
