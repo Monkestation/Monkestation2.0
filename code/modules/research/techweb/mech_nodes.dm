@@ -132,15 +132,16 @@
 	description = "A really REALLY old mech design we got from corporate mergers, its terrible."
 	prereq_ids = list("adv_mecha", "adv_mecha_armor")
 	design_ids = list(
-		"scourgehunter_armor",
-		"scourgehunter_chassis",,
-		"scourgehunter_left_arm",
-		"scourgehunter_left_leg",
-		"scourgehunter_main",
-		"scourgehunter_peri",
-		"scourgehunter_right_arm",
-		"scourgehunter_right_leg",
-		"scourgehunter_targ",
+		"gygax_armor",
+		"gygax_chassis",
+		"gygax_head",
+		"gygax_left_arm",
+		"gygax_left_leg",
+		"gygax_main",
+		"gygax_peri",
+		"gygax_right_arm",
+		"gygax_right_leg",
+		"gygax_targ",
 		"scourgehunter_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
