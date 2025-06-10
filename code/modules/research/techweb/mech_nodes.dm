@@ -137,11 +137,11 @@
 		"gygax_head",
 		"gygax_left_arm",
 		"gygax_left_leg",
-		"gygax_main",
+		"scourgehunter_main",
 		"scourgehunter_peri",
 		"gygax_right_arm",
 		"gygax_right_leg",
-		"gygax_targ",
+		"scourgehunter_targ",
 		"scourgehunter_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
