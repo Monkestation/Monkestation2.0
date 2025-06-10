@@ -219,7 +219,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 		new_character.real_name = record_found.name
 		new_character.gender = lowertext(record_found.gender)
 		new_character.age = record_found.age
-		var/datum/dna/found_dna = record_found.dna_ref
+		var/datum/dna/found_dna = record_found.locked_dna
 		new_character.hardset_dna(found_dna.unique_identity, found_dna.mutation_index, null, record_found.name, record_found.blood_type, new record_found.species_type, found_dna.features)
 	else
 		new_character.randomize_human_appearance()
