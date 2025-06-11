@@ -121,6 +121,8 @@
 	var/ricochet_incidence_leeway = 40
 	/// Can our ricochet autoaim hit our firer?
 	var/ricochet_shoots_firer = TRUE
+	/// Do we bounce off of everything reasonable to bounce, or based off of armor flags
+	var/expanded_bounce = FALSE
 
 	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
@@ -759,6 +761,9 @@
 		return TRUE
 
 	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
+		return TRUE
+
+	if((expanded_bounce = TRUE) && (A.flags_ricochet & (RICOCHET_HARD || RICOCHET_SHINY)))
 		return TRUE
 
 	return FALSE

@@ -48,6 +48,7 @@
 	impact_light_intensity = 4
 	impact_light_outer_range = 1
 	impact_light_color_override = LIGHT_COLOR_INTENSE_RED
+	expanded_bounce = TRUE
 	ricochets_max = 2
 	ricochet_chance = 100
 	ricochet_auto_aim_angle = 10
