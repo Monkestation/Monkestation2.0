@@ -178,7 +178,7 @@
 		if(time_since >= decap_time)
 			break
 	progress.end_progress()
-	if(!limb.dismember(dam_type = item.damtype))
+	if(!limb.dismember(dam_type = item.damtype, sound = FALSE))
 		user.visible_message(span_danger("[user] fails to slice through [victim]'s [limb_name] with \the [item]!"), span_boldnotice("You fail to slice through [victim]'s [limb_name] with \the [item]!"))
 		return TRUE
 	log_combat(user, victim, "beheaded", item)
