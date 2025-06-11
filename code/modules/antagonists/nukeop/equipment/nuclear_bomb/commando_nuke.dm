@@ -129,6 +129,8 @@
 		core.forceMove(get_turf(src))
 		START_PROCESSING(SSobj, core)
 		core = null
+	if(timing || exploding)
+		SSticker.force_ending = FORCE_END_ROUND
 	return ..()
 
 /obj/machinery/nuclearbomb/commando/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
