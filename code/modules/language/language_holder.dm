@@ -449,6 +449,9 @@ Key procs
 	understood_languages = list()
 	spoken_languages = list()
 
+// Has all the languages known (via "mind")
+/datum/language_holder/universal
+
 /datum/language_holder/universal/New()
 	..()
 	grant_all_languages()
