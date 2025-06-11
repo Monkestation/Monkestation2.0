@@ -200,7 +200,7 @@
 		return
 	for(var/obj/item/item in user.held_items)
 		if(can_behead_with(item))
-			. += span_smallnotice("\nYou could perhaps behead [victim.p_them()] by <b>right-clicking</b> [victim.p_them()] with a sharp weapon while targeting [victim.p_their()] head.")
+			. += span_smallnoticeital("\n[FOURSPACES]You could perhaps behead [victim.p_them()] by <b>right-clicking</b> [victim.p_them()] with a sharp weapon while targeting [victim.p_their()] head.")
 			break
 
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT
