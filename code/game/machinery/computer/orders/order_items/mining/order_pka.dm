@@ -14,7 +14,7 @@
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/gun/shockwave //monke edit
-	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave
+	item_path = /obj/item/storage/box/shockwave
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/gun/glock //monke edit
@@ -24,6 +24,21 @@
 /datum/orderable_item/accelerator/gun/railgun //monke edit
 	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/railgun
 	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/pksmg //monkestation edit
+	item_path = /obj/item/storage/box/pksmg
+	desc = "A case containing a PKSMG and three magazines to get you started."
+	cost_per_order = 1750
+
+/datum/orderable_item/accelerator/magbox/small //monkestation edit
+	item_path = /obj/item/storage/box/kinetic/small
+	desc = "A case containing two seperate magazines for the PKSMG."
+	cost_per_order = 150
+
+/datum/orderable_item/accelerator/magbox //monkestation edit
+	item_path = /obj/item/storage/box/kinetic
+	desc = "A box containing seven magazines for the PKSMG that also fits in explorer webbing."
+	cost_per_order = 500
 
 /datum/orderable_item/accelerator/range
 	item_path = /obj/item/borg/upgrade/modkit/range
