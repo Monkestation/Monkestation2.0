@@ -31,6 +31,7 @@
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
 	damage = 35
+	range = 30
 	tracer_type = /obj/effect/projectile/tracer/laser/rifle
 	impact_type = /obj/effect/projectile/impact/laser/rifle
 	muzzle_type = /obj/effect/projectile/muzzle/laser/rifle
@@ -51,8 +52,7 @@
 	ricochet_chance = 100
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 10
-	ricochet_incidence_leeway = 0
-	ricochet_decay_damage = 5
+	ricochet_incidence_leeway = 90
 	ricochet_shoots_firer = TRUE
 
 /obj/projectile/beam/laser/carbine
