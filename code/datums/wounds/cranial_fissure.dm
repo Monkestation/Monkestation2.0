@@ -158,7 +158,7 @@
 
 	log_combat(user, victim, "attempted to behead", item)
 	user.visible_message(span_warning("[user] begins slicing [victim]'s [limb_name] off with \the [item]!"), span_notice("You begin to slice [victim]'s [limb_name] off using [item]..."))
-	playsound(user, 'sound/weapons/slice.ogg', vol = 45, vary = TRUE)
+	playsound(get_turf(user), 'sound/weapons/slice.ogg', vol = 45, vary = TRUE)
 	// shitty custom do_after thing so we can do a funny attack animation while you're decapping
 	var/datum/progressbar/progress = new(user, decap_time, victim)
 	var/next_attack_animation = 0
@@ -170,7 +170,7 @@
 			return TRUE
 		if(world.time >= next_attack_animation)
 			if(item.hitsound)
-				playsound(user.loc, item.hitsound, vol = item.get_clamped_volume(), vary = TRUE, extrarange = -1, falloff_distance = 0)
+				playsound(get_turf(user), item.hitsound, vol = item.get_clamped_volume(), vary = TRUE, extrarange = -1, falloff_distance = 0)
 			user.do_attack_animation(victim, used_item = item)
 			next_attack_animation = world.time + item.attack_speed
 		var/time_since = world.time - start_time
@@ -183,7 +183,7 @@
 		return TRUE
 	log_combat(user, victim, "beheaded", item)
 	user.visible_message(span_danger("[user] slices [victim]'s [limb_name] off with \the [item]!"), span_boldnotice("You slice [victim]'s [limb_name] off with \the [item]!"))
-	playsound(user, 'sound/items/unsheath.ogg', vol = 75, vary = TRUE) // SHING!
+	playsound(get_turf(user), 'sound/items/unsheath.ogg', vol = 75, vary = TRUE) // SHING!
 	return TRUE
 
 /datum/wound/cranial_fissure/proc/can_behead_with(obj/item/tool)
