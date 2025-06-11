@@ -136,7 +136,7 @@
 	///This is critical non-policy information about the ghost role. Shown in the spawner menu and after spawning last.
 	var/important_text = ""
 
-	///Trigger "don't be a shit" reminder? ONLY DISABLE FOR GHOSTROLES THAT ARE OPEN ANTAGONISTS (PIRATES AND BATTLECRUISER) AND NO EXCEPTIONS
+	///Trigger "don't be a shit" reminder - should only be disabled for ghostroles that are antagonists.
 	var/dont_be_a_shit = TRUE
 
 	///Show these on spawn? Usually used for hardcoded special flavor
