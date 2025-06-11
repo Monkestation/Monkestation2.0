@@ -68,7 +68,7 @@
 
 	return TRUE
 
-/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent = TRUE, wounding_type, sound = TRUE)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_GODMODE))
