@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(admin_verbs)
 //MONKE EDIT START Having it report offline is confusing. So if it initialized it initialized.
 	. = ..()
 	if(initialized)
-		. = "Initialized | V: [length(admin_verbs_by_type)] | MV: [length(mentor_verbs_by_type)]"
+		. = "Initialized | AV: [length(admin_verbs_by_type)] | MV: [length(mentor_verbs_by_type)]"
 	return .
 //MONKE EDIT END
 
@@ -183,6 +183,8 @@ SUBSYSTEM_DEF(admin_verbs)
 		admin_verbs_by_type[verb_type].unassign_from_client(admin)
 	admin_visibility_flags -= list(admin.ckey)
 
+
+///MENTOR VERB PROCS START HERE
 /datum/controller/subsystem/admin_verbs/proc/process_pending_mentors()
 	load_contrib_status() //By the time we reach here mentor datums are already created. Give them their special flag.
 	var/list/pending_mentors = mentors_pending_subsytem_init

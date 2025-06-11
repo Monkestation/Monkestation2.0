@@ -1,5 +1,5 @@
 /datum/artifactpanel
-	var/user
+	var/client/user
 
 ADMIN_VERB(open_artifactpanel, R_ADMIN, "Artifact Panel", "Opens the artifact panel.", ADMIN_CATEGORY_GAME)
 	var/datum/artifactpanel/artifactpanel = new(user)
@@ -7,7 +7,7 @@ ADMIN_VERB(open_artifactpanel, R_ADMIN, "Artifact Panel", "Opens the artifact pa
 	artifactpanel.ui_interact(user.mob)
 
 /datum/artifactpanel/New(to_user, mob/living/silicon/robot/to_borg)
-	user = to_user //AVD user is a client so this would be setting a client.
+	user = to_user
 
 /datum/artifactpanel/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
