@@ -18,7 +18,7 @@
 
 /obj/item/ammo_casing/energy/laser/lasrifle
 	projectile_type = /obj/projectile/beam/laser/lasrifle
-	e_cost = 100
+	e_cost = 100 ///10 shots
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/carbine
