@@ -31,26 +31,29 @@
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
 	damage = 35
-	tracer_type = /obj/effect/projectile/tracer/sniper
-	impact_type = /obj/effect/projectile/impact/sniper
-	muzzle_type = /obj/effect/projectile/muzzle/sniper
+	tracer_type = /obj/effect/projectile/tracer/laser
+	impact_type = /obj/effect/projectile/impact/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
 	hitscan = TRUE
+	tile_dropoff = 1 //Only 3-hit within the first 2 tiles, not counting wound. This makes ricochets less impactful
+	wound_falloff_tile = 2
 	impact_effect_type = null
 	hitscan_light_intensity = 3
 	hitscan_light_outer_range = 0.75
-	hitscan_light_color_override = LIGHT_COLOR_DIM_YELLOW
+	hitscan_light_color_override = LIGHT_COLOR_INTENSE_RED
 	muzzle_flash_intensity = 5
 	muzzle_flash_range = 1
-	muzzle_flash_color_override = LIGHT_COLOR_DIM_YELLOW
+	muzzle_flash_color_override = LIGHT_COLOR_INTENSE_RED
 	impact_light_intensity = 5
 	impact_light_outer_range = 1
-	impact_light_color_override = LIGHT_COLOR_DIM_YELLOW
+	impact_light_color_override = LIGHT_COLOR_INTENSE_RED
 	ricochets_max = 2
 	ricochet_chance = 75
+	ricochet_decay_chance = 0.75
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 10
 	ricochet_incidence_leeway = 0
-	ricochet_decay_damage = 10
+	ricochet_decay_damage = 5
 	ricochet_shoots_firer = TRUE
 
 /obj/projectile/beam/laser/carbine
