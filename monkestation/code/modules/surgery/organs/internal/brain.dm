@@ -179,12 +179,25 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		return
 
 	original_mind = victim.mind || victim.last_mind
+	copy_mind_and_dna(victim)
 	addtimer(CALLBACK(src, PROC_REF(core_ejection), victim), 0) // explode them after the current proc chain ends, to avoid weirdness
 
 /obj/item/organ/internal/brain/slime/proc/enable_coredeath() // No longer used.
 	coredeath = TRUE
 	if(owner?.stat == DEAD)
+		copy_mind_and_dna(owner)
 		addtimer(CALLBACK(src, PROC_REF(core_ejection), owner), 0)
+
+/obj/item/organ/internal/brain/slime/proc/copy_mind_and_dna(mob/living/carbon/human/slime)
+	if(QDELETED(original_mind))
+		original_mind = brainmob?.mind || slime.mind || slime.last_mind
+
+	if(isnull(slime.dna))
+		QDEL_NULL(stored_dna)
+	else
+		if(QDELETED(stored_dna))
+			stored_dna = new
+		slime.dna.copy_dna(stored_dna)
 
 ///////
 /// CORE EJECTION PROC
@@ -193,16 +206,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 /obj/item/organ/internal/brain/slime/proc/core_ejection(mob/living/carbon/human/victim, new_stat, turf/loc_override)
 	if(core_ejected || !coredeath)
 		return
-
-	if(QDELETED(original_mind))
-		original_mind = brainmob?.mind || victim.mind || victim.last_mind
-
-	if(isnull(victim.dna))
-		QDEL_NULL(stored_dna)
-	else
-		if(QDELETED(stored_dna))
-			stored_dna = new
-		victim.dna.copy_dna(stored_dna)
 
 	GLOB.dead_oozeling_cores |= src
 	core_ejected = TRUE
