@@ -81,12 +81,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/ghost_arena_corner)
 
 /// Resets all the turfs in the arena to indestructible plating, removing anything on the arena tiles.
 /datum/ghost_arena/proc/reset_turfs()
+	var/static/list/ignore_typecache = typecacheof(list(/mob/living/carbon/human/ghost, /obj/machinery/camera/motion/thunderdome))
+
 	for(var/turf/turf in get_arena_turfs())
 		for(var/mob/living/carbon/human/ghost/ghost_player in turf.get_all_contents())
 			ghost_player.life_or_death()
 		turf.empty(
 			turf_type = /turf/open/indestructible/event/plating,
 			baseturf_type = /turf/open/indestructible/event/plating,
+			ignore_typecache = ignore_typecache,
 			flags = CHANGETURF_IGNORE_AIR
 		)
 		CHECK_TICK
