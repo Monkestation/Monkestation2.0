@@ -150,11 +150,11 @@
 	var/decap_time
 	switch(item.force)
 		if(15 to 24)
-			decap_time = 10 SECONDS
-		if(25 to 30)
 			decap_time = 7.5 SECONDS
-		if(31 to INFINITY)
+		if(25 to 30)
 			decap_time = 5 SECONDS
+		if(31 to INFINITY)
+			decap_time = 3 SECONDS
 
 	log_combat(user, victim, "attempted to behead", item)
 	user.visible_message(span_warning("[user] begins slicing [victim]'s [limb_name] off with \the [item]!"), span_notice("You begin to slice [victim]'s [limb_name] off using [item]..."))
