@@ -45,6 +45,7 @@
 
 /datum/round_event/antagonist/solo/nuclear_operative
 	excute_round_end_reports = TRUE
+	lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/job_type = /datum/job/nuclear_operative
 	var/antag_type = /datum/antagonist/nukeop

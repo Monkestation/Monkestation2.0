@@ -2,6 +2,7 @@
 	antag_flag = ROLE_HERETIC
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_MAGICAL, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/heretic
+	typepath = /datum/round_event/antagonist/solo/heretic
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_NANOTRASEN_REPRESENTATIVE,
@@ -34,3 +35,6 @@
 /datum/round_event_control/antagonist/solo/heretic/midround
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
+
+/datum/round_event/antagonist/solo/heretic
+	lazy_templates = list(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)

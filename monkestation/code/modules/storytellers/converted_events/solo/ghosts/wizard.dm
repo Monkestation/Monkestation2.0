@@ -33,6 +33,7 @@
 		return FALSE
 
 /datum/round_event/antagonist/solo/ghost/wizard
+	lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
 /datum/round_event/antagonist/solo/ghost/wizard/add_datum_to_mind(datum/mind/antag_mind)
 	. = ..()

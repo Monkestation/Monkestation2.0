@@ -30,7 +30,7 @@
 	)
 	required_candidates = 1
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
-
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WONDERLAND)
 
 /datum/dynamic_ruleset/midround/monsterhunter/trim_candidates()
 	. = ..()

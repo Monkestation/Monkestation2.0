@@ -36,6 +36,7 @@
 		return FALSE
 
 /datum/round_event/antagonist/solo/wizard
+	lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
 /datum/round_event/antagonist/solo/wizard/add_datum_to_mind(datum/mind/antag_mind)
 	var/mob/living/current_mob = antag_mind.current

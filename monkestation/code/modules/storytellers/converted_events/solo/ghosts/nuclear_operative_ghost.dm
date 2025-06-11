@@ -42,6 +42,7 @@
 
 /datum/round_event/antagonist/solo/ghost/nuclear_operative
 	excute_round_end_reports = TRUE
+	lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/static/datum/team/nuclear/nuke_team
 	var/set_leader = FALSE
 	var/required_role = ROLE_NUCLEAR_OPERATIVE

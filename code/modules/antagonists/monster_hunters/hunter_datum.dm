@@ -95,17 +95,10 @@
 	return ..()
 
 /datum/antagonist/monsterhunter/proc/load_wonderland()
-	var/static/wonderland_loaded = FALSE
-	if(wonderland_loaded)
-		return
-
-	wonderland_loaded = TRUE
-	var/datum/map_template/wonderland/wonderland_template = new
-	if(!wonderland_template.load_new_z())
-		wonderland_loaded = FALSE
-		QDEL_NULL(wonderland_template)
-		message_admins("Failed to load Wonderland z-level!")
-		CRASH("Failed to load Wonderland z-level!")
+	if(!SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WONDERLAND))
+		log_game("The Wonderland template failed to load.")
+		message_admins("The Wonderland lazy template failed to load, monster hunter stuff is prolly borked!")
+		CRASH("Failed to lazy load Wonderland template!")
 
 /datum/antagonist/monsterhunter/proc/setup_bnuuy_images()
 	SIGNAL_HANDLER

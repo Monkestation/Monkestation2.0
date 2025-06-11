@@ -6,6 +6,7 @@
 	antag_flag = ROLE_MONSTERHUNTER
 	tags = list(TAG_MAGICAL, TAG_TARGETED, TAG_COMBAT, TAG_CREW_ANTAG, TAG_DESTRUCTIVE)
 	antag_datum = /datum/antagonist/monsterhunter
+	typepath = /datum/round_event/antagonist/solo/monsterhunter
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_NANOTRASEN_REPRESENTATIVE,
@@ -49,5 +50,8 @@
 		return FALSE
 
 	return ..()
+
+/datum/round_event/antagonist/solo/monsterhunter
+	lazy_templates = list(LAZY_TEMPLATE_KEY_WONDERLAND)
 
 #undef MINIMUM_MONSTERS_REQUIRED
