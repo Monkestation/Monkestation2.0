@@ -78,7 +78,7 @@
 		while(atom_integrity != max_integrity)
 			if(!weapon.use_tool(src, user, 2 SECONDS, volume = 20, extra_checks = CALLBACK(weapon, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 				return
-			repair_damage(10)
+			repair_damage(25)
 			update_damage()
 
 		balloon_alert(user, "repaired!")

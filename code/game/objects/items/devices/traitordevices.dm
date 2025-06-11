@@ -575,12 +575,16 @@ effective or pretty fucking useless.
 	frame = FALSE
 	max_integrity = 100
 	shot_delay = 1.5 SECONDS
-	stun_projectile = /obj/projectile/bullet/c9mm
+	stun_projectile = /obj/projectile/bullet/c9mm/nukie_turret
 	stun_projectile_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
-	lethal_projectile = /obj/projectile/bullet/c9mm
+	lethal_projectile = /obj/projectile/bullet/c9mm/nukie_turret
 	lethal_projectile_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
 	var/activating
 	COOLDOWN_DECLARE(acquire_target_cooldown)
+
+/obj/projectile/bullet/c9mm/nukie_turret
+	name = "9mm bullet"
+	projectile_phasing = PASSMACHINE
 
 /obj/machinery/porta_turret/syndicate/toolbox/nukie/tryToShootAt(list/atom/movable/targets)
 	if(targets.len > 0)
