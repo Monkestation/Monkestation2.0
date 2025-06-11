@@ -126,3 +126,9 @@
 	item = /obj/vehicle/sealed/mecha/devitt
 	cost = 40
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/dangerous/efireaxe
+	name = "Syndicate Fire Axe"
+	desc = "A modernised replika of the infamous fire axe, courtesy of the Gorlex Marauders. Capable of breaching almost anything, and cleaving through almost any armour, it is to be handled with care. WARNING: Warranty void if used to destroy non-window objects."
+	item = /obj/item/fireaxe/efireaxe
+	cost = 12
