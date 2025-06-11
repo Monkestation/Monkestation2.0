@@ -7810,6 +7810,7 @@
 #include "monkestation\code\modules\mining\accelerators\repeater.dm"
 #include "monkestation\code\modules\mining\accelerators\shockwave.dm"
 #include "monkestation\code\modules\mining\accelerators\shotgun.dm"
+#include "monkestation\code\modules\mining\accelerators\smg.dm"
 #include "monkestation\code\modules\mining\lavaland\megafauna_loot.dm"
 #include "monkestation\code\modules\mining\lavaland\tendril_loot.dm"
 #include "monkestation\code\modules\mob\inventory.dm"

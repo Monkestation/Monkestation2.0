@@ -194,10 +194,26 @@
       now Oozeling subspecies.
   - admin: Admins can now easily aheal dead oozelings via the new "Heal Oozeling Core"
       verb.
+  - map: Fixed some stacked scrubber pipes in a couple of the icebox bars.
+  - qol: The color of your name in chat when speaking is now based on the trim of
+      your current ID!
+  Ice-Type:
+  - rscdel: Removes the light all bullets are given
+  - bugfix: Bullet casings do not glow anymore
+  Kmla2:
+  - bugfix: you now get 425 monkecoins instead of 150 monkecoins for playing a whole
+      round as a roundstart security / janitor to keep parity with latejoining
   MissClassyPineapple:
   - rscadd: New spooks in maints
   - rscadd: New secrets in maints
   - balance: rebalanced maint loot tables
+  Salted-Zen:
+  - balance: Mining RND is back, and the PK-Shockwave has been reworked, now coming
+      in a box on purchase with a special modkit that grants it a 2 tile offensive
+      mining blast! The modkit only fits in the shockwave, but it should work good
+      for clearing lots of rock or fauna at once!
+  - qol: Wastes pin locked weapons now works AFTER ROUND ENDS ANYWHERE
+  - rscadd: The PKSMG returns for miners to spray, pray, and slay with.
   Siro:
   - qol: Health Analyzer readout improvements.
   - qol: Alerts to consume alcohol if they have the living_drunk component.
@@ -205,3 +221,5 @@
   - bugfix: Spleen organ now properly handled by the Health Analyzer readout.
   - bugfix: Properly displays when the heart is missing.
   - bugfix: DNA Infuser will not remove organs with the ORGAN_UNREMOVABLE flag
+  tvesion:
+  - image: Slims down the ballgown side sprites
