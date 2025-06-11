@@ -159,8 +159,25 @@
 	log_combat(user, victim, "attempted to behead", item)
 	user.visible_message(span_warning("[user] begins slicing [victim]'s [limb_name] off with \the [item]!"), span_notice("You begin to slice [victim]'s [limb_name] off using [item]..."))
 	playsound(user, 'sound/weapons/slice.ogg', vol = 45, vary = TRUE)
-	if(!do_after(user, decap_time, victim, extra_checks = CALLBACK(src, PROC_REF(behead_progress_checks), item, user)))
-		return TRUE
+	// shitty custom do_after thing so we can do a funny attack animation while you're decapping
+	var/datum/progressbar/progress = new(user, decap_time, victim)
+	var/next_attack_animation = 0
+	var/start_time = world.time
+	var/datum/callback/extra_checks = CALLBACK(src, PROC_REF(behead_progress_checks), item, user)
+	while(TRUE)
+		if(!do_after(user, 0.1 SECONDS, victim, progress = FALSE, extra_checks = extra_checks))
+			progress.end_progress()
+			return TRUE
+		if(world.time >= next_attack_animation)
+			if(item.hitsound)
+				playsound(user.loc, item.hitsound, vol = item.get_clamped_volume(), vary = TRUE, extrarange = -1, falloff_distance = 0)
+			user.do_attack_animation(victim, used_item = item)
+			next_attack_animation = world.time + item.attack_speed
+		var/time_since = world.time - start_time
+		progress.update(time_since)
+		if(time_since >= decap_time)
+			break
+	progress.end_progress()
 	if(!limb.dismember(dam_type = item.damtype))
 		user.visible_message(span_danger("[user] fails to slice through [victim]'s [limb_name] with \the [item]!"), span_boldnotice("You fail to slice through [victim]'s [limb_name] with \the [item]!"))
 		return TRUE
@@ -183,7 +200,7 @@
 		return
 	for(var/obj/item/item in user.held_items)
 		if(can_behead_with(item))
-			. += span_smallnotice("You could perhaps behead [victim.p_them()] by <b>right-clicking</b> [victim.p_them()] with a sharp weapon while targeting [victim.p_their()] head.")
+			. += span_smallnotice("\nYou could perhaps behead [victim.p_them()] by <b>right-clicking</b> [victim.p_them()] with a sharp weapon while targeting [victim.p_their()] head.")
 			break
 
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT
