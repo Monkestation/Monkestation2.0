@@ -306,7 +306,7 @@
 			output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
-		if(dont_be_a_shit = TRUE)
+		if(dont_be_a_shit != FALSE)
 			output_message += "\n[span_adminhelp("DO NOT DIRECTLY INTERFERE WITH OR SABOTAGE THE ROUND ON THE MAIN STATION IN ANY WAY WITHOUT PROVOCATION OR DIRECT ADMIN APPROVAL OR YOU WILL BE BANNED.")]"
 		to_chat(spawned_mob, output_message)
 
