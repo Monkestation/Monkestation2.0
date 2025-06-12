@@ -645,3 +645,20 @@
 		/obj/item/light/bulb = 4,
 	)
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/snazbike
+	name = "Snaz Bike"
+	always_available = TRUE
+	result = /obj/vehicle/ridden/snazbike
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 15 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/stack/sheet/iron = 20,
+		/obj/item/stack/cable_coil = 30,
+		/obj/item/light/bulb = 1,
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/pipe = 4,
+	)
+	category = CAT_ROBOT

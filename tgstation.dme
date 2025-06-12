@@ -5864,6 +5864,7 @@
 #include "code\modules\vehicles\scooter.dm"
 #include "code\modules\vehicles\sealed.dm"
 #include "code\modules\vehicles\secway.dm"
+#include "code\modules\vehicles\snazbike.dm"
 #include "code\modules\vehicles\speedbike.dm"
 #include "code\modules\vehicles\stockade.dm"
 #include "code\modules\vehicles\vehicle_actions.dm"
