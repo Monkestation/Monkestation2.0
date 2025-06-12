@@ -327,6 +327,107 @@
 	desc = "You have earned the right to use death-kwon-do."
 	icon_state = "death_sandwich"
 
+//All of this is Monkestation edits start
+
+/obj/item/food/sandwich/death/make_edible()
+	. = ..()
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
+///Eat it right, or you die.
+/obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
+	/// Closest thing to a mullet we have /// We now actually have a mullet so uh...yeah its mullet now :)
+	if(consumer.hairstyle == "Mullet" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/shorts/jeanshorts))///Changed from "cookshorts" to "jeanshorts" for better accuracy to the show.
+		return FOOD_LIKED
+	return FOOD_ALLERGIC
+
+/obj/item/food/sandwich/death/proc/on_consume(mob/living/carbon/human/consumer)
+	if(check_liked(consumer) == FOOD_LIKED)
+		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
+		return
+
+/datum/martial_art/death_kwon_do
+	name = "Death Kwon Do"
+	id = MARTIAL_ART_DEATH_KWON_DO
+	var/datum/action/death_punch/death_punch = new/datum/action/death_punch()
+	var/datum/action/death_kick/death_kick = new/datum/action/death_kick()
+	var/datum/action/death_block/death_block = new/datum/action/death_block()
+
+/datum/martial_art/death_kwon_do/proc/check_streak(mob/living/attacker, mob/living/defender)
+	switch(streak)
+		if("punch")
+			streak = ""
+			death_punch(attacker, defender)
+			return TRUE
+		if("kick")
+			streak = ""
+			death_kick(attacker, defender)
+			return TRUE
+	return FALSE
+
+/datum/action/death_punch
+	name = "Death Punch"
+	desc = "Lands a devestating punch on your foes."
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon_state = "wrassle_throw"
+
+/datum/action/death_punch/Trigger(trigger_flags)
+	if(owner.incapacitated())
+		to_chat(owner, span_warning("You cant death punch while you're incapacitated! Your forms all wrong!"))
+		return
+	owner.visible_message(span_danger("[owner] has an impecable form!"))
+	owner.mind.martial_art.streak = "punch"
+
+/datum/action/death_kick
+	name = "Death Kick"
+	desc = "Lands a devestating flying kick on your foes."
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon_state = "wrassle_kick"
+
+/datum/action/death_kick/Trigger(trigger_flags)
+	if(owner.incapacitated())
+		to_chat(owner, span_warning("You cant death kick while you're incapacitated! Your forms all wrong!"))
+		return
+	owner.visible_message(span_danger("[owner] has an impecable form!"))
+	owner.mind.martial_art.streak = "kick"
+
+/datum/action/death_block
+	name = "Death Block"
+	desc = "Use the power of the death sandwich to protect yourself from damage."
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
+	button_icon_state = "wrassle_throw"
+
+/datum/action/death_block/Trigger(trigger_flags)
+	if(owner.incapacitated())
+		to_chat(owner, span_warning("You cant death block while you're incapacitated! Your forms all wrong!"))
+		return
+	owner.visible_message(span_danger("[owner] has an impecable form!"))
+	owner.mind.martial_art.streak = "block"
+
+/datum/martial_art/death_kwon_do/teach(mob/living/consumer, make_temporary=TRUE)
+	if(..())
+		to_chat(consumer, span_userdanger("You are worthy."))
+		to_chat(consumer, span_danger("Place your cursor over a move at the top of the screen to see what they do."))
+		death_punch.Grant(consumer)
+		death_kick.Grant(consumer)
+		death_block.Grant(consumer)
+
+/datum/martial_art/death_kwon_do/on_remove(mob/living/consumer)
+	to_chat(consumer, span_userdanger("You no longer feel worthy."))
+	death_punch.Remove(consumer)
+	death_kick.Remove(consumer)
+	death_block.Remove(consumer)
+
+/datum/status_effect/food/death_kwon_do/liked(mob/consumer)
+	.  = ..()
+	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
+		deathkwondo.teach(consumer, TRUE)
+	return
+
+/datum/status_effect/food/death_kwon_do/liked(mob/consumer)
+	.  = ..()
+	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
+		deathkwondo.teach(consumer, TRUE)
+	return
+
 /////JOB BUFFS
 
 /datum/status_effect/food/botanist
