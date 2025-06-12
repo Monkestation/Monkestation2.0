@@ -197,6 +197,15 @@
   - map: Fixed some stacked scrubber pipes in a couple of the icebox bars.
   - qol: The color of your name in chat when speaking is now based on the trim of
       your current ID!
+  Absolucy, PowerfulBacon:
+  - bugfix: Screentip icons work on the latest BYOND 516 again.
+  F-e-r-n:
+  - balance: nerfs combat shotguns fire delay from 0.8 seconds to 1.2 seconds
+  - balance: rebalances crew-accessible shotgun lethals to be 3 hit crits from 2.
+  - rscdel: removes APDS shells from imports. Planned to add back to the game somewhere
+      else
+  - balance: combat shotguns no longer wallslam.
+  - balance: changes stun baton click cooldown to 1 sec from 1.5 sec
   Ice-Type:
   - rscdel: Removes the light all bullets are given
   - bugfix: Bullet casings do not glow anymore
@@ -223,3 +232,11 @@
   - bugfix: DNA Infuser will not remove organs with the ORGAN_UNREMOVABLE flag
   tvesion:
   - image: Slims down the ballgown side sprites
+2025-06-12:
+  Absolucy:
+  - qol: Bloodsucker vassals now get an arrow near the center of their screen pointing
+      towards their master, instead of a dinky pinpointer at the top right.
+  - qol: HUD tracking arrows (i.e vassals, assops with goldeneye cards, and some slasher
+      thing) now fade when you're right next to your target.
+  - qol: Stargazers (the species) can now manually disconnect someone from their Slime
+      Link, by right clicking the "Link Minds" action.
