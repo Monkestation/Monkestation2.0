@@ -326,7 +326,7 @@
 	name = "Ate it right!"
 	desc = "You have earned the right to use death-kwon-do."
 	icon_state = "death_sandwich"
-
+	var/datum/martial_art/death_kwon_do/deathkwondo = new
 //All of this is Monkestation edits start
 
 /datum/martial_art/death_kwon_do
@@ -404,13 +404,7 @@
 /datum/status_effect/food/death_kwon_do/liked(mob/consumer)
 	.  = ..()
 	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
-		death_kwon_do.teach(consumer, TRUE)
-	return
-
-/datum/status_effect/food/death_kwon_do/liked(mob/consumer)
-	.  = ..()
-	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
-		death_kwon_do.teach(consumer, TRUE)
+		deathkwondo.teach(consumer, TRUE)
 	return
 
 /////JOB BUFFS
