@@ -16,6 +16,8 @@
 	mech_type = EXOSUIT_MODULE_VENDOZER
 	mecha_flags = OMNIDIRECTIONAL_ATTACKS
 	bumpsmash = TRUE
+	var/crushdmglower = 10
+	var/crushdmgupper = 15
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -52,7 +54,7 @@
 
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	var/damage = rand(10, 15)
+	var/damage = rand(crushdmglower, crushdmgupper)
 	crushed.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
 	crushed.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
 	crushed.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
