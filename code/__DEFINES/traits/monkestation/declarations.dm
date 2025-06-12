@@ -1,5 +1,9 @@
 // BEGIN TRAIT DEFINES
 
+// /mob
+/// This mob can hear the music from the DJ station.
+#define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"
+
 // /mob/living
 // Genetics start
 /// Removes tackle and throwing debuffs from dwarfs

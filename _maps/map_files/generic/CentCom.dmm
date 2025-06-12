@@ -25927,7 +25927,7 @@
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/cassette_tape/blank{
+/obj/item/cassette_tape/blank{
 	pixel_x = 7;
 	pixel_y = 0
 	},

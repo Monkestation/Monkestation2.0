@@ -1,113 +1,75 @@
 
-/obj/item/device/cassette_tape
+/obj/item/cassette_tape
 	name = "Debug Cassette Tape"
-	desc = "You shouldn't be seeing this! If you are, ask an admin to spawn you a new cassette tape."
+	desc = "You shouldn't be seeing this!"
 	icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
 	icon_state = "cassette_flip"
 	w_class = WEIGHT_CLASS_SMALL
-	///icon of the cassettes front side
-	var/side1_icon = "cassette_worstmap"
-	var/side2_icon = "cassette_worstmap"
-	///if the cassette is flipped, for playing second list of songs
+	item_flags = NOBLUDGEON
+	/// If the cassette is flipped, for playing second list of songs.
 	var/flipped = FALSE
-	///list of songs each side has to play
-	var/list/songs = list("side1" = list(),
-						  "side2" = list())
-	///list of each songs name in the order they appear
-	var/list/song_names = list("side1" = list(),
-						 	   "side2" = list())
-	///the id of the cassette
-	var/id
-	///the ckey of the cassette author
-	var/ckey_author
-	///the authors name displayed in examine text
-	var/author_name
-	///are we an approved tape?
-	var/approved_tape = FALSE
-	///are we random?
+	/// The data for this cassette.
+	var/datum/cassette/cassette_data
+	/// Should we just spawn a random cassette?
 	var/random = FALSE
-	var/cassette_desc_string = "Generic Desc"
+	/// ID of the cassette to spawn in as by default.
+	var/id
 
-/obj/item/device/cassette_tape/Initialize(mapload, spawned_id)
+/obj/item/cassette_tape/Initialize(mapload, spawned_id)
 	. = ..()
-	if(!length(GLOB.approved_ids))
-		GLOB.approved_ids = initialize_approved_ids()
+	spawned_id ||= id
+	if(!isnull(spawned_id))
+		cassette_data = SScassettes.load_cassette(spawned_id)
+	else if(random)
+		var/list/random_cassette = SScassettes.unique_random_cassettes(amount = 1, status = CASSETTE_STATUS_APPROVED)
+		if(length(random_cassette))
+			cassette_data = random_cassette[1]
+	cassette_data ||= new
+	update_appearance(UPDATE_DESC | UPDATE_ICON_STATE)
 
-	if(length(GLOB.approved_ids))
-		if(spawned_id && (spawned_id in GLOB.approved_ids))
-			id = spawned_id
-		else if(random)
-			id = pick(GLOB.approved_ids)
+/obj/item/cassette_tape/Destroy(force)
+	cassette_data = null
+	return ..()
 
-	var/loaded_successfully = load_current_id()
-	if(random && !loaded_successfully)
-		var/list/approved_ids = GLOB.approved_ids.Copy()
-		var/attempts_left = 2
-		while(!loaded_successfully && length(approved_ids) && attempts_left > 0)
-			id = pick_n_take(approved_ids)
-			loaded_successfully = load_current_id()
-			attempts_left--
-
-	if(!loaded_successfully)
-		// this isn't working
-		// notify the admins so they know in case of an ahelp
-		message_admins("A cassette tape at [ADMIN_VERBOSEJMP(src)] has [random ? "repeatedly " : ""]failed to load data from the cassette storage. Please check the runtime logs for more information (search for \"cassette tape data\").")
-		// we probably don't want to try to spawn a new cassette, as that might cause an infinite
-		// loop in extreme circumstances (i.e. if no cassettes exist)
-
-/// Attempts to load the JSON associated with the current ID. Returns a boolean - TRUE if the load
-/// was successful, and FALSE if it wasn't.
-/obj/item/device/cassette_tape/proc/load_current_id()
-	var/file = file("data/cassette_storage/[id].json")
-	if(!fexists(file))
-		stack_trace("Failed to load cassette tape data for ID '[id]': Cassette storage does not have a matching JSON file.")
-		return FALSE
-
-	var/file_text = file2text(file)
-	if(!rustg_json_is_valid(file_text))
-		stack_trace("Failed to load cassette tape data for ID '[id]': The loaded file contains invalid JSON.")
-		return FALSE
-
-	var/list/data = json_decode(file_text)
-	name = data["name"]
-	cassette_desc_string = data["desc"]
-	icon_state = data["side1_icon"]
-	side1_icon = data["side1_icon"]
-	side2_icon = data["side2_icon"]
-	songs = data["songs"]
-	song_names = data["song_names"]
-	author_name = data["author_name"]
-	ckey_author = data["author_ckey"]
-	approved_tape = data["approved"]
-
-	update_appearance()
-
-	return TRUE
-
-/obj/item/device/cassette_tape/attack_self(mob/user)
-	..()
-	icon_state = flipped ? side1_icon : side2_icon
+/obj/item/cassette_tape/attack_self(mob/user)
+	. = ..()
 	flipped = !flipped
 	to_chat(user, span_notice("You flip [src]."))
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/device/cassette_tape/update_desc(updates)
+/obj/item/cassette_tape/update_desc(updates)
+	desc = cassette_data.desc || "A generic cassette."
+	return ..()
+
+/obj/item/cassette_tape/update_icon_state()
+	icon_state = cassette_data.get_side(!flipped)?.design || src::icon_state
+	return ..()
+
+/obj/item/cassette_tape/examine(mob/user)
 	. = ..()
-	desc = cassette_desc_string
-	desc += "\n"
-	if(!approved_tape)
-		desc += span_warning("It appears to be a bootleg tape, quality is not a guarantee!\n")
-	if(author_name)
-		desc += span_notice("Mixed by [author_name]\n")
+	switch(cassette_data.status)
+		if(CASSETTE_STATUS_UNAPPROVED)
+			. += span_warning("It appears to be a bootleg tape, quality is not a guarantee!")
+			. += span_notice("In order to play this tape for the whole station, it must be submitted to the Space Board of Music and approved.")
+		if(CASSETTE_STATUS_REVIEWING)
+			. += span_warning("It seems this tape is still being reviewed by the Space Board of Music.")
+		if(CASSETTE_STATUS_APPROVED)
+			. += span_info("This cassette has been approved by the Space Board of Music, and can be played for the whole station with the Cassette Player.")
+		else
+			stack_trace("Unknown status [cassette_data.status] for cassette [cassette_data.name] ([cassette_data.id])")
 
-/obj/item/device/cassette_tape/attackby(obj/item/item, mob/living/user)
+	if(cassette_data.author.name)
+		. += span_info("Mixed by [span_name(cassette_data.author.name)]")
+
+/obj/item/cassette_tape/attackby(obj/item/item, mob/living/user)
 	if(!istype(item, /obj/item/pen))
 		return ..()
-	var/choice = tgui_input_list(usr, "What would you like to change?", items = list("Cassette Name", "Cassette Description", "Cancel"))
+	var/choice = tgui_input_list(user, "What would you like to change?", items = list("Cassette Name", "Cassette Description", "Cancel"))
 	switch(choice)
 		if("Cassette Name")
 			///the name we are giving the cassette
-			var/newcassettename = reject_bad_text(tgui_input_text(user, "Write a new Cassette name:", name, name, max_length = MAX_NAME_LEN))
-			if(!user.can_perform_action (src, TRUE))
+			var/newcassettename = reject_bad_text(tgui_input_text(user, "Write a new Cassette name:", name, html_decode(name), max_length = MAX_NAME_LEN))
+			if(!user.can_perform_action(src, TRUE))
 				return
 			if(length(newcassettename) > MAX_NAME_LEN)
 				to_chat(user, span_warning("That name is too long!"))
@@ -119,7 +81,7 @@
 				name = "[lowertext(newcassettename)]"
 		if("Cassette Description")
 			///the description we are giving the cassette
-			var/newdesc = tgui_input_text(user, "Write a new description:", name, desc, max_length = 180)
+			var/newdesc = tgui_input_text(user, "Write a new description:", name, html_decode(desc), max_length = 180)
 			if(!user.can_perform_action(src, TRUE))
 				return
 			if (length(newdesc) > 180)
@@ -128,29 +90,11 @@
 			if(!newdesc)
 				to_chat(user, span_warning("That description is invalid."))
 				return
-			cassette_desc_string = newdesc
-			update_appearance()
-		else
-			return
+			cassette_data.desc = newdesc
+			update_appearance(UPDATE_DESC)
 
-/datum/cassette/cassette_tape
-	var/name = "Broken Cassette"
-	var/desc = "You shouldn't be seeing this! Make an issue about it"
-	var/icon_state = "cassette_flip"
-	var/side1_icon = "cassette_flip"
-	var/side2_icon = "cassette_flip"
-	var/id = "blank"
-	var/creator_ckey = "Dwasint"
-	var/creator_name = "Collects-The-Candy"
-	var/approved = TRUE
-	var/list/song_names = list("side1" = list(),
-							   "side2" = list())
-
-	var/list/songs = list("side1" = list(),
-						  "side2" = list())
-
-/obj/item/device/cassette_tape/blank
+/obj/item/cassette_tape/blank
 	id = "blank"
 
-/obj/item/device/cassette_tape/friday
+/obj/item/cassette_tape/friday
 	id = "friday"
