@@ -273,6 +273,27 @@
 	log_admin("[consumer.name] has died to a death sandwich.")
 	var/msg = span_notice("[consumer.name] has died to a death sandwich.")
 	message_admins(msg)
+
+/datum/martial_art/death_kwon_do/teach(mob/living/consumer, make_temporary=TRUE)
+	if(..())
+		to_chat(consumer, span_userdanger("You are worthy."))
+		to_chat(consumer, span_danger("Place your cursor over a move at the top of the screen to see what they do."))
+		death_punch.Grant(consumer)
+		death_kick.Grant(consumer)
+		death_block.Grant(consumer)
+
+/datum/martial_art/death_kwon_do/on_remove(mob/living/consumer)
+	to_chat(consumer, span_userdanger("You no longer feel worthy."))
+	death_punch.Remove(consumer)
+	death_kick.Remove(consumer)
+	death_block.Remove(consumer)
+
+/datum/status_effect/food/death_kwon_do/liked(mob/consumer)
+	.  = ..()
+	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
+		deathkwondo.teach(consumer, TRUE)
+	return
+
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.

@@ -1,4 +1,4 @@
-//All of this is Monkestation edits
+//All of this is Monkestation edits start
 /datum/martial_art/death_kwon_do
 	name = "Death Kwon Do"
 	id = MARTIAL_ART_DEATH_KWON_DO
@@ -35,7 +35,7 @@
 	name = "Death Kick"
 	desc = "Lands a devestating flying kick on your foes."
 	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
-	button_icon_state = "wrassle_throw"
+	button_icon_state = "wrassle_kick"
 
 /datum/action/death_kick/Trigger(trigger_flags)
 	if(owner.incapacitated())
@@ -56,24 +56,6 @@
 		return
 	owner.visible_message(span_danger("[owner] has an impecable form!"))
 	owner.mind.martial_art.streak = "block"
-
-/datum/martial_art/death_kwon_do/teach(mob/living/consumer, make_temporary=TRUE)
-	if(..())
-		to_chat(consumer, span_userdanger("You are worthy."))
-		to_chat(consumer, span_danger("Place your cursor over a move at the top of the screen to see what they do."))
-		death_punch.Grant(consumer)
-		death_kick.Grant(consumer)
-		death_block.Grant(consumer)
-
-/datum/martial_art/death_kwon_do/on_remove(mob/living/consumer)
-	to_chat(consumer, span_userdanger("You no longer feel worthy."))
-	death_punch.Remove(consumer)
-	death_kick.Remove(consumer)
-	death_block.Remove(consumer)
-
-/datum/status_effect/food/death_kwon_do
-	id = "death_kwon_do"
-	var/datum/martial_art/death_kwon_do/deathkwondo
 
 /datum/status_effect/food/death_kwon_do/liked(mob/consumer)
 	.  = ..()
