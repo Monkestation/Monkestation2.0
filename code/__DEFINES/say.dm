@@ -60,6 +60,8 @@
 
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 
+#define MODE_BLOODLING "bloodling" // monkestation edit
+
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
