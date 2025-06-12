@@ -116,6 +116,19 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/torpenis/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 10, flame_range = 12, flash_range = 16, adminlog = TRUE)
 
+/// admin only spawned vendozer
+/obj/projectile/bullet/rocket/mininuke
+	name = "\improper mininuke"
+	desc = "A torpedo with a nuclear warhead, Shouldn't see this unless an admin spawned it. Why a torpedo sprite? Fuck you thats why."
+	icon = 'icons/obj/weapons/guns/tallprojectiles.dmi'
+	icon_state = "torpenis"
+	damage = 1 // damn this does so little damage
+	dismemberment = -100
+	anti_armour_damage = 0
+	speed = 3 // derp velocity
+	damage_walls = TRUE
+/obj/projectile/bullet/rocket/mininuke/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 20, heavy_impact_range = 30, light_impact_range = 35, flame_range = 38, flash_range = 25, adminlog = TRUE)
 
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
