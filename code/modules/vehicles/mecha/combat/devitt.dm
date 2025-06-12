@@ -41,6 +41,35 @@
 	fire = 90
 	acid = 0
 
+/obj/vehicle/sealed/mecha/devitt/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(has_gravity())
+		for(var/mob/living/carbon/human/future_pancake in loc)
+			run_over(future_pancake)
+
+/obj/vehicle/sealed/mecha/devitt/proc/run_over(mob/living/carbon/human/crushed)
+	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
+	crushed.visible_message(
+		span_danger("[src] drives over [crushed]!"),
+		span_userdanger("[src] drives over you!"),
+	)
+
+	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+
+	var/damage = rand(10, 15)
+	crushed.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_HEAD)
+	crushed.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_CHEST)
+	crushed.apply_damage(0.25 * damage, BRUTE, BODY_ZONE_L_LEG)
+	crushed.apply_damage(0.25 * damage, BRUTE, BODY_ZONE_R_LEG)
+	crushed.apply_damage(0.25 * damage, BRUTE, BODY_ZONE_L_ARM)
+	crushed.apply_damage(0.25 * damage, BRUTE, BODY_ZONE_R_ARM)
+
+	add_mob_blood(crushed)
+
+	var/turf/below_us = get_turf(src)
+	below_us.add_mob_blood(crushed)
+
+
 /obj/vehicle/sealed/mecha/devitt/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_zoom)

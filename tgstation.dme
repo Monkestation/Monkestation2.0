@@ -5905,6 +5905,7 @@
 #include "code\modules\vehicles\mecha\combat\scourgehunter.dm"
 #include "code\modules\vehicles\mecha\combat\spatha.dm"
 #include "code\modules\vehicles\mecha\combat\talos.dm"
+#include "code\modules\vehicles\mecha\combat\vendozer.dm"
 #include "code\modules\vehicles\mecha\equipment\mecha_equipment.dm"
 #include "code\modules\vehicles\mecha\equipment\tools\medical_tools.dm"
 #include "code\modules\vehicles\mecha\equipment\tools\mining_tools.dm"
