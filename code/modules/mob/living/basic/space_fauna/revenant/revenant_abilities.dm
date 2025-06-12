@@ -278,7 +278,7 @@
 			/obj/structure/table = FALSE,
 			/obj/structure/rack = FALSE,
 			// that's a window.
-			/obj/structure/window = FALSE
+			/obj/structure/window = FALSE,
 			/obj/structure/window_sill = FALSE,
 			/obj/structure/grille = FALSE,
 			// no singuloosing or whatever
