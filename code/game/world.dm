@@ -84,6 +84,10 @@ GLOBAL_VAR(restart_counter)
 	Profile(PROFILE_RESTART)
 	Profile(PROFILE_RESTART, type = "sendmaps")
 
+#ifndef DISABLE_DREAMLUAU
+	dreamluau_load()
+#endif
+
 	// Write everything to this log file until we get to SetupLogs() later
 	_initialize_log_files("data/logs/config_error.[GUID()].log")
 	GLOB.demo_log = "[GLOB.log_directory]/demo.txt" //Guh //Monkestation Edit: REPLAYS
