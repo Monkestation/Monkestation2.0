@@ -327,7 +327,7 @@
 	desc = "You have earned the right to use death-kwon-do."
 	icon_state = "death_sandwich"
 	var/datum/martial_art/death_kwon_do/deathkwondo = new
-//All of this is Monkestation edits start
+//All of this is Death Kwon Do edits start
 
 /datum/martial_art/death_kwon_do
 	name = "Death Kwon Do"
@@ -401,12 +401,12 @@
 	death_kick.Remove(consumer)
 	death_block.Remove(consumer)
 
-/datum/status_effect/food/death_kwon_do/liked(mob/consumer)
+/datum/status_effect/food/death_kwon_do/check_liked(mob/consumer)
 	.  = ..()
 	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
 		deathkwondo.teach(consumer, TRUE)
 	return
-
+//Death kwon do martial arts end
 /////JOB BUFFS
 
 /datum/status_effect/food/botanist
