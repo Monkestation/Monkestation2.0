@@ -80,10 +80,10 @@
 				world.Reboot(fast_track = TRUE)
 			if("Server Restart (Kill and restart DD)")
 				// monkestation start - plexora
-				SSplexora.restart_type = PLEXORA_SHUTDOWN_KILLDD
 				SSplexora.restart_requester = usr
 				// monkestation end
 				to_chat(world, "Server restart - [init_by]")
+				SSplexora.notify_shutdown(PLEXORA_SHUTDOWN_KILLDD)
 				world.TgsEndProcess()
 
 /* uncomment this when/if we port the the admin verb refactor

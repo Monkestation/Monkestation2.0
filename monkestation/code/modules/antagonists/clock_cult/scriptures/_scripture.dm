@@ -311,7 +311,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	pointed_spell.parent_scripture = src
 
 /datum/scripture/slab/Destroy()
-	progress?.end_progress()
+	if(!QDELETED(progress))
+		progress.end_progress()
 
 	if(!QDELETED(pointed_spell))
 		QDEL_NULL(pointed_spell)
@@ -320,7 +321,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 
 /datum/scripture/slab/invoke()
-	progress = new(invoker, use_time)
+	progress = new(invoker, use_time, invoking_slab)
 	uses_left = uses
 	time_left = use_time
 	invoking_slab.charge_overlay = slab_overlay

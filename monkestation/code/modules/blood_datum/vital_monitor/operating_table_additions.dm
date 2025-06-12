@@ -28,9 +28,20 @@
 
 	return data
 
+/mob/living/proc/get_pretend_heart_rate()
+	if(!(mob_biotypes & MOB_ORGANIC))
+		return 0
+	switch(stat)
+		if(DEAD)
+			return 0
+		if(SOFT_CRIT, HARD_CRIT)
+			return 60 + rand(-15, -10)
+		else
+			return 90 + rand(-10, 10)
+
 /// I fully intend on adding real heart rate eventually, but now we fake it
 /// This also serves as a nice way to collect things which should affect heart rate later.
-/mob/living/carbon/proc/get_pretend_heart_rate()
+/mob/living/carbon/get_pretend_heart_rate()
 	if(stat == DEAD)
 		return 0
 

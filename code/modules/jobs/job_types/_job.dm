@@ -295,10 +295,13 @@
 /datum/job/proc/map_check()
 	var/available_roundstart = TRUE
 	var/available_latejoin = TRUE
+
 	var/edited_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
 	if(!isnull(edited_spawn_positions) && (edited_spawn_positions == 0))
 		available_roundstart = FALSE
 	var/edited_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
+	if(!isnull(edited_total_positions) && (edited_total_positions == 0))
+		available_latejoin = FALSE
 
 	if(!available_roundstart && !available_latejoin) //map config disabled the job
 		return FALSE
@@ -348,6 +351,10 @@
 /datum/job/proc/get_radio_information()
 	if(job_flags & JOB_CREW_MEMBER)
 		return "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>"
+
+//Checks if certain conditions are met making the job eligible.
+/datum/job/proc/conditions_met()
+	return TRUE
 
 /datum/outfit/job
 	name = "Standard Gear"

@@ -130,7 +130,6 @@
 	QDEL_NULL(modularInterface)
 	QDEL_NULL(wires)
 	QDEL_NULL(model)
-	QDEL_NULL(eye_lights)
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
@@ -140,6 +139,7 @@
 	QDEL_LIST(upgrades)
 	QDEL_NULL(cell)
 	QDEL_NULL(robot_suit)
+	eye_lights = null
 	return ..()
 
 /mob/living/silicon/robot/Topic(href, href_list)

@@ -100,11 +100,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
 
-	///Percentage modifier for overall defense of the race, or less defense, if it's negative.
+	/// Percentage modifier for overall defense of the race, or less defense, if it's negative.
+	/// Please use bodypart damage modifiers instead of this.
 	var/armor = 0
-	///multiplier for brute damage
+	/// Multiplier for brute damage.
+	/// Please use bodypart damage modifiers instead of this.
 	var/brutemod = 1
-	///multiplier for burn damage
+	/// Multiplier for burn damage.
+	/// Please use bodypart damage modifiers instead of this.
 	var/burnmod = 1
 	//Used for metabolizing reagents. We're going to assume you're a meatbag unless you say otherwise.
 	var/reagent_tag = PROCESS_ORGANIC
@@ -762,7 +765,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 	if(mutant_bodyparts["ears"])
-		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || (source.head && (source.head.flags_inv & HIDEHAIR)) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
+		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || (source.head && (source.head.flags_inv & HIDEHAIR)) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || IS_ROBOTIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
 
 // MONKESTATION ADDITION START
@@ -1275,10 +1278,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
-			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
-			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
+			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "punched")

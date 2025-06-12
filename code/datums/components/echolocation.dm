@@ -178,5 +178,5 @@
 	particles = new /particles/echo()
 
 /atom/movable/screen/fullscreen/echo/Destroy()
-	QDEL_NULL(particles)
+	particles = null
 	return ..()

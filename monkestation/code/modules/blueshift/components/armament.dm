@@ -113,7 +113,7 @@
 					continue
 				subcategory_items += list(list(
 					"ref" = REF(armament_entry),
-					"icon" = armament_entry.item_type::icon,
+					"icon" = text_ref(armament_entry.item_type::icon_preview || armament_entry.item_type::icon),
 					"icon_state" = armament_entry.item_type::icon_state_preview || armament_entry.item_type::icon_state,
 					"name" = armament_entry.name,
 					"cost" = armament_entry.cost,
@@ -391,7 +391,7 @@
 
 				subcategory_items += list(list(
 					"ref" = REF(armament_entry),
-					"icon" = armament_entry.item_type::icon,
+					"icon" = text_ref(armament_entry.item_type::icon_preview || armament_entry.item_type::icon),
 					"icon_state" = armament_entry.item_type::icon_state_preview || armament_entry.item_type::icon_state,
 					"name" = armament_entry.name,
 					"cost" = cost_calculate(armament_entry.cost),

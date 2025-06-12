@@ -188,6 +188,7 @@ export const chatMiddleware = (store) => {
         nextSettings.highlightSettings,
         nextSettings.highlightSettingById,
       );
+      chatRenderer.setColoredNames(nextSettings.coloredNames);
 
       return;
     }

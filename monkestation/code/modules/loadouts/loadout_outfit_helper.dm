@@ -39,6 +39,7 @@
 	var/list/loadout_datums = loadout_list_to_datums(preference_source?.loadout_list)
 
 
+	var/spawned_briefcase = FALSE
 	if(override_preference == LOADOUT_OVERRIDE_CASE && !visuals_only)
 		var/obj/item/storage/briefcase/empty/briefcase = new(loc)
 
@@ -67,6 +68,7 @@
 		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
 		equipOutfit(equipped_outfit, visuals_only)
 		put_in_hands(briefcase)
+		spawned_briefcase = TRUE
 	else
 		for(var/datum/loadout_item/item as anything in loadout_datums)
 			if(item.restricted_roles && equipping_job && !(equipping_job.title in item.restricted_roles))
@@ -82,19 +84,20 @@
 
 		equipOutfit(equipped_outfit, visuals_only)
 
-	for(var/num as anything in preference_source?.special_loadout_list["unusual"])
-		var/list/unusuals = preference_source?.extra_stat_inventory["unusual"]
-		var/unusual_idx = text2num(num)
-		if(length(unusuals) < unusual_idx)
-			stack_trace("tried to get unusual [unusual_idx] despite length being [length(unusuals)]")
-			continue
-		var/list/data = unusuals[unusual_idx]
-		var/item_path = text2path(data["unusual_type"])
-		var/obj/item/new_item = new item_path
-		new_item.AddComponent(/datum/component/unusual_handler, data)
-		if(!new_item.equip_to_best_slot(src))
-			if(!put_in_hands(new_item))
-				new_item.forceMove(get_turf(src))
+	if(!spawned_briefcase) // avoid double spawning unusuals
+		for(var/num as anything in preference_source?.special_loadout_list["unusual"])
+			var/list/unusuals = preference_source?.extra_stat_inventory["unusual"]
+			var/unusual_idx = text2num(num)
+			if(length(unusuals) < unusual_idx)
+				stack_trace("tried to get unusual [unusual_idx] despite length being [length(unusuals)]")
+				continue
+			var/list/data = unusuals[unusual_idx]
+			var/item_path = text2path(data["unusual_type"])
+			var/obj/item/new_item = new item_path
+			new_item.AddComponent(/datum/component/unusual_handler, data)
+			if(!new_item.equip_to_best_slot(src))
+				if(!put_in_hands(new_item))
+					new_item.forceMove(get_turf(src))
 
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		if(istype(item, /datum/loadout_item/effects))

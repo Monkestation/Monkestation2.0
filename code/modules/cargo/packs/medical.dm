@@ -147,15 +147,6 @@
 	dangerous = TRUE
 End Monkestation Removal*/
 
-/datum/supply_pack/medical/cmoturtlenecks
-	name = "Chief Medical Officer Turtlenecks"
-	desc = "Contains the CMO's turtleneck and turtleneck skirt."
-	cost = CARGO_CRATE_VALUE * 2
-	access = ACCESS_CMO
-	contains = list(/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
-					/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt,
-				)
-
 /datum/supply_pack/medical/arm_implants
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."

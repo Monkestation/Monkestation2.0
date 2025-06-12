@@ -271,6 +271,12 @@
 "lS" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/powered)
+"lU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "ml" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -287,6 +293,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
+"of" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "oy" = (
 /obj/effect/mob_spawn/ghost_role/human/bartender{
 	dir = 4
@@ -571,6 +581,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/misc/beach/sand/coastline_b,
 /area/virtual_domain/powered)
+"zT" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "zU" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/beach/sand,
@@ -579,6 +593,10 @@
 /obj/structure/chair,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
+"Aj" = (
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain/protected_space)
 "Al" = (
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/virtual_domain)
@@ -869,6 +887,12 @@
 /obj/effect/landmark/bitrunning/loot_signal,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/powered)
+"Oq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "OE" = (
 /obj/effect/mob_spawn/ghost_role/human/beach{
 	dir = 4
@@ -911,7 +935,7 @@
 /obj/effect/turf_decal/sand,
 /obj/item/coin/gold,
 /obj/structure/railing,
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /turf/open/floor/sepia,
 /area/virtual_domain/powered)
 "Qu" = (
@@ -1433,8 +1457,8 @@ gl
 gl
 gl
 gl
-gl
-gl
+of
+Oq
 ml
 ml
 ml
@@ -1476,8 +1500,8 @@ Al
 Al
 Al
 Al
-gl
-gl
+zT
+Aj
 ml
 ml
 ml
@@ -1519,8 +1543,8 @@ Fn
 Fn
 Fn
 Al
-gl
-gl
+Al
+Aj
 ml
 ml
 ml
@@ -1563,7 +1587,7 @@ di
 Fn
 DL
 Al
-gl
+Aj
 ml
 ml
 ml
@@ -1606,7 +1630,7 @@ TG
 AP
 Fn
 Al
-gl
+lU
 ml
 ml
 ml

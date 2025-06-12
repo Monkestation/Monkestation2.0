@@ -65,9 +65,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
@@ -112,6 +109,9 @@
 	},
 /obj/structure/closet/radiation,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aH" = (
@@ -1993,7 +1993,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/storage/part_replacer/bluespace/tier4,
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
 "sH" = (
@@ -2016,6 +2015,11 @@
 "tB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
+/obj/item/card/emag,
+/obj/item/storage/part_replacer/bluespace/tier4{
+	pixel_x = 0;
+	pixel_y = 0
+	},
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
 "tE" = (

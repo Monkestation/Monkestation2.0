@@ -189,3 +189,26 @@
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+
+/obj/item/clothing/shoes/pirate
+	name = "pirate boots"
+	desc = "Yarr."
+	icon_state = "pirateboots"
+	inhand_icon_state = null
+
+/obj/item/clothing/shoes/pirate/armored
+	armor_type = /datum/armor/shoes_pirate
+	strip_delay = 40
+	resistance_flags = NONE
+	lace_time = 12 SECONDS
+	body_parts_covered = FEET|LEGS
+
+/datum/armor/shoes_pirate
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 90
+	fire = 70
+	acid = 50

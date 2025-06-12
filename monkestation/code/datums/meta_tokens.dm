@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	to_chat(owner, span_boldnicegreen("Your request to trigger [queued_token_event] has been approved."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been approved.")
 	adjust_event_tokens(-queued_token_event.token_cost)
-	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
+	SStwitch.add_to_queue(initial(queued_token_event.id_tag), owner.key)
 	queued_token_event = null
 	if(event_timeout)
 		deltimer(event_timeout)

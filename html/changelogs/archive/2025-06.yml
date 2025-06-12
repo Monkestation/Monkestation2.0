@@ -1,0 +1,242 @@
+2025-06-01:
+  Absolucy:
+  - sound: Reduced the range of the audio of some emotes that had higher-pitched audio,
+      such as speen and wawa.
+  - bugfix: Fixed ooze suckers being weird with pumping adjacent turfs.
+  - bugfix: Slimes now properly copy nanites when splitting again.
+  - qol: Nanites now also copy cloud ID and safety thresholds when "syncing" with
+      a full overwrite.
+  - refactor: (Melbert) Refactor of connections.js. Yeah that's it.
+  - qol: (nikothedude) Character preferences now have descriptions as tooltips - hover
+      over their names to see them.
+  - refactor: (JohnFulpWillard) Destructive Analyzers now have a TGUI menu.
+  - code_imp: Improved rail cart code a bit.
+  Absolucy, Kapu1178:
+  - server: The Master Controller now allocates tick time based on the work required
+      for the tick.
+  Absolucy, Melbert:
+  - bugfix: Anti-magic visual effects will no longer trigger overtop one another
+  Anonymous Clock Cultist:
+  - balance: Ratvar plush is no longer chaplain restricted in loadout menu.
+  Shoddd:
+  - balance: Express console can now be unlocked by cargo access
+  - rscadd: Fab-o-vend and command clothing vender restocking units in cargo
+  Siro:
+  - bugfix: Oozlings don,t delete items in hand when dying or get round removed when
+      dying in cryo.
+  - bugfix: Borg surgeries that require hands can now be completed. (Cavity implant/Stomach
+      Pump)
+  - bugfix: Siman Wizards are no longer attacked by their own casted monkeys.
+  - bugfix: 'Fixed pipe and wire connecting Theseus Southwest Solar maintence APC
+      back to the system.
+
+      fix. Mech internal tank UI runtime fixed and user dialog when no internal tank
+      is present.'
+  - bugfix: Insealed condifential Biscuit now acts like a normal biscuit when sealed.
+      (No longer resealable.)
+  - code_imp: Mechpad lieform restriction defaults to off.
+  - qol: NIFSoft menu now scrolls so long descriptions don't hide options.
+  - qol: Ports tgstation#85379 movement fixes for mobs moving in the same direction
+      at same speed.
+  Xander3359:
+  - rscadd: Oozelings can now selectively retract their limbs whenever they want
+  notghosti:
+  - rscadd: Chemical kits now come with a new chemical vial. Changeling Immunoglobulin,
+      harvested from its namesake, a powerful antipathogen that can instantly cure
+      most diseases.
+  - balance: Heretic Eldritch Flask now cleanses heretics of negative diseases and
+      heathens of any positive ones. Reinfection is still possible in both cases.
+  - balance: Monster Hunter blood flask now cures the drinker of any negative diseases
+      upon consumption. Reinfection is still possible.
+  - balance: True husks now allow for two teratomas spawned.
+  - balance: Birth Teratoma now costs 50 chemicals. (From 60)
+  - rscadd: Added the remote power AI disk
+  - code_imp: made it possible to easily add new AI upgrade disks
+  - rscadd: Adds the functionality for obsessed, drifting contractors, solo abductors,
+      nightmares, and slashers
+  - bugfix: Making someone into an abductor will no longer smuggle their previous
+      items into the ship.
+  - code_imp: Moved some nightmare code from the event into the antagonist datum.
+2025-06-03:
+  Absolucy:
+  - bugfix: Fixed nanite cloud IDs getting reset to 0.
+  - map: Swapped the position of the biomass recycler and the intergalactic market
+      pad in xenobio on HelioStation, allowing the pad to automatically link to the
+      market roundstart.
+  - map: Added liquid barriers to all the entrances to xenobio on HelioStation.
+  - map: Removed the floating lightbulbs in xenobio on HelioStation.
+  - map: Fixed the weird fluid duct positioning in xenobio on HelioStation, also fixing
+      the top left ooze sucker not being connected at all.
+  Absolucy, Ghommie:
+  - bugfix: Fixed active conveyor belts not moving movables spawned on top of them.
+  Aniantan, FlufflesTheDog:
+  - bugfix: Species without blood and species that don't breathe can no longer be
+      blood deficient.
+  BingusSS13:
+  - balance: thederelict (KS13) and oldstation (Charlie Station) are now less likely
+      to spawn near telecommunication relays.
+  - bugfix: You can now repair bullet holes in walls easily again.
+  Glyphee:
+  - rscadd: Added plushies for QB, Giacomo and Mr.Glasses
+  - rscadd: Goblin liver and spleen
+  ghosti, SirNightKnight:
+  - rscadd: Penlight Holobarriers now have a separate sprite for when biometrics are
+      disabled.
+  - qol: Medical Kiosks no longer tell you if your sick with a dormant disease
+  notghosti:
+  - bugfix: Revivers will no longer spam chat that they are attempting to revive you.
+  - bugfix: Revivers... Will actually revive you now.
+  - bugfix: Nightmares are now nightmares. Instead of the actual scariest thing, Man.
+2025-06-04:
+  Absolucy:
+  - rscadd: Bloodsucker cloaking (Cloak of Darkness or Auspex) now hides your identity
+      while active.
+  - map: voidraptor xenobio's APC now has a fully charged 10k cell so the 500 neon
+      lights don't instantly depower it
+  - bugfix: Hopefully actually fixed nanite cloud IDs not syncing (try 2)
+  - qol: Being contracted no longer injects omnizine, it instead applies a short-lived
+      healing status effect, which doesn't kill oozelings.
+  notghosti:
+  - bugfix: NIGHTMARES. Will work. You will be evil and not some dude, actually this
+      time
+2025-06-05:
+  Absolucy:
+  - bugfix: Homeostasis levels (i.e stabilized orange extracts, sub-dermal cooler/heater
+      implants, leporazine, fevers, gaseous holoparasites) now account for the seconds
+      between ticks, meaning they should be more "accurate" in adjusting body temperature.
+  Absolucy, PowerfulBacon:
+  - bugfix: Fixes movement keys being stuck.
+  Absolucy, jlsnow301, Bisar, MTandi:
+  - rscadd: Added a loot window for alt-clicking tiles.
+  - rscdel: Removed the item browser from the stat panel.
+  Salted-Zen:
+  - rscadd: Cableknit and Keyhole sweater purchasable in monkecoin shop to roundstart
+      with.
+  Xander3359:
+  - rscadd: A Syndicate Rebar Quiver has been added to the uplink
+  - qol: Left clicking with a rebar crossbow will now draw/undraw the string.
+  notghosti:
+  - map: Meta station Artsci is now accessible without xenobio access
+  - rscadd: Made the captains beret actually in the game
+2025-06-07:
+  Absolucy:
+  - code_imp: Improved how stabilized cerulean and oil extracts trigger on death,
+      allowing them to properly work for oozelings and such.
+  F-e-r-n:
+  - balance: Awakened dragon no longer has baton resistance
+  - balance: Lethal ammunition boxes now cost twice as much
+  - balance: The Renoster shotgun crate now holds parity with the riot shotgun crate
+  - balance: 'Shotgun shell boxes are no longer tiny
+
+      :cl:'
+  Goat-Real, Xander3359:
+  - qol: You can now insert tanks into bluespace gas vendors to fill instead of having
+      to buy and use a large tank.
+  - sound: Bluespace gas vendors now use sounds from canisters when adding/removing
+      tanks
+  Ice-Type:
+  - qol: Both detective's revolvers are now actual Detective's Revolvers.
+  Loiosh42:
+  - balance: AP has been rebalanced from a flat reduction to a percentage of armor
+      reduction
+  - balance: Bogseo is now semi-auto burst instead of full-auto burst
+  Melbert, TheColorCyan:
+  - rscdel: Heretic side path points are gone
+  - balance: Void pull stun radius and aoe reduced, cooldown increased
+  - balance: Blood siphon recieved major cooldown increase
+  MrBagHead:
+  - rscadd: Added Syndicate Mini-Kits, a 10 TC traitor uplink bundle with 5 random
+      loadouts and a unique box sprite.
+  - rscadd: Added 'Self-Incinerating Paper' which incinerates after 20 seconds of
+      being read if its armed
+  - rscadd: Added Syndicate Pill Canisters with new sprites, including a poisonous
+      variant with cyanide, spewium, amanitin and toxin pills.
+  - rscadd: Added 'can_be_folded' variable for paper to control if they can be folded.
+  Tostah:
+  - bugfix: Mod suit gear items now get placed into storage units when deactivated
+  Unit2E, Xander3359:
+  - bugfix: Mobs should no longer fall asleep when breathing in enough Nitrium to
+      provide sleep immunity.
+2025-06-08:
+  Absolucy:
+  - rscadd: Mentors now get an extra 500 monkecoins at roundend if they were a head
+      of staff.
+  Xander3359:
+  - bugfix: Healium crystals properly work in a 7 range AOE
+  - qol: Atmos holofans automatically open firelocks
+2025-06-09:
+  Absolucy:
+  - bugfix: (Artemchik542) Quirk "quadruple amputee" now will return your original
+      limbs back if you off it.
+  - qol: (Artemchik542) Quirk "prosthetic limb" now resets more correctly.
+  - bugfix: (Melbert) Enabling or disabling ambience mid round will properly enable
+      or disable ambience.
+  - qol: (Melbert) Added descriptions differentiating "Ship ambience" from "ambience".
+  - bugfix: (distributivgesetz) Ambient loops will now refresh when entering a mob.
+  - bugfix: (ShizCalev) Deafened mobs will no longer hear the station's ambient sounds.
+  - bugfix: (ShizCalev) Fixed ambient sounds resetting their loop when entering different
+      bodies (ie admin ghosting, being moved to other mobs, ect.)
+  - bugfix: (Kapu, StrangeWeirdKitten) Ambience buzz will now respect ship ambience
+      prefrences for observers.
+  - sound: (Kapu, StrangeWeirdKitten) Ambience buzz requires APC enviorment power
+      to function.
+2025-06-11:
+  Absolucy:
+  - bugfix: The Crew Manifest UI no longer incorrectly labels the Quartermaster as
+      a member of command.
+  - bugfix: Fixed black market auctions not processing.
+  - bugfix: Golem species now have their proper damage resistances again.
+  - bugfix: Ethereals properly take 25% more brute damage again.
+  - bugfix: Plasmamen now take 50% more brute and burn damage instead of 125%.
+  - map: The botany, chemistry, R&D, genetics, robotics, and cargo shutters are now
+      opened by default on Box.
+  - refactor: The Slimeperson, Stargazer, and Luminescent xenobiology species are
+      now Oozeling subspecies.
+  - admin: Admins can now easily aheal dead oozelings via the new "Heal Oozeling Core"
+      verb.
+  - map: Fixed some stacked scrubber pipes in a couple of the icebox bars.
+  - qol: The color of your name in chat when speaking is now based on the trim of
+      your current ID!
+  Absolucy, PowerfulBacon:
+  - bugfix: Screentip icons work on the latest BYOND 516 again.
+  F-e-r-n:
+  - balance: nerfs combat shotguns fire delay from 0.8 seconds to 1.2 seconds
+  - balance: rebalances crew-accessible shotgun lethals to be 3 hit crits from 2.
+  - rscdel: removes APDS shells from imports. Planned to add back to the game somewhere
+      else
+  - balance: combat shotguns no longer wallslam.
+  - balance: changes stun baton click cooldown to 1 sec from 1.5 sec
+  Ice-Type:
+  - rscdel: Removes the light all bullets are given
+  - bugfix: Bullet casings do not glow anymore
+  Kmla2:
+  - bugfix: you now get 425 monkecoins instead of 150 monkecoins for playing a whole
+      round as a roundstart security / janitor to keep parity with latejoining
+  MissClassyPineapple:
+  - rscadd: New spooks in maints
+  - rscadd: New secrets in maints
+  - balance: rebalanced maint loot tables
+  Salted-Zen:
+  - balance: Mining RND is back, and the PK-Shockwave has been reworked, now coming
+      in a box on purchase with a special modkit that grants it a 2 tile offensive
+      mining blast! The modkit only fits in the shockwave, but it should work good
+      for clearing lots of rock or fauna at once!
+  - qol: Wastes pin locked weapons now works AFTER ROUND ENDS ANYWHERE
+  - rscadd: The PKSMG returns for miners to spray, pray, and slay with.
+  Siro:
+  - qol: Health Analyzer readout improvements.
+  - qol: Alerts to consume alcohol if they have the living_drunk component.
+  - code_imp: Ports tgstation#76350 organ_flags and status merged. Fixes purist issues.
+  - bugfix: Spleen organ now properly handled by the Health Analyzer readout.
+  - bugfix: Properly displays when the heart is missing.
+  - bugfix: DNA Infuser will not remove organs with the ORGAN_UNREMOVABLE flag
+  tvesion:
+  - image: Slims down the ballgown side sprites
+2025-06-12:
+  Absolucy:
+  - qol: Bloodsucker vassals now get an arrow near the center of their screen pointing
+      towards their master, instead of a dinky pinpointer at the top right.
+  - qol: HUD tracking arrows (i.e vassals, assops with goldeneye cards, and some slasher
+      thing) now fade when you're right next to your target.
+  - qol: Stargazers (the species) can now manually disconnect someone from their Slime
+      Link, by right clicking the "Link Minds" action.

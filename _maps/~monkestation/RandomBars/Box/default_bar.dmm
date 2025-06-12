@@ -361,7 +361,7 @@
 "Lc" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/camera/autoname/directional/north,
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "Ly" = (

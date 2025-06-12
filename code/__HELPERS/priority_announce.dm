@@ -162,7 +162,10 @@
 	var/title
 	var/message
 
-	if(current_level_number > previous_level_number)
+	if((SSsecurity_level.number_level_to_text(previous_level_number) in GLOB.same_level_alert_levels) && (current_level_name in GLOB.same_level_alert_levels))
+		title = "Attention! Security level switched to [current_level_name]:"
+		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name())
+	else if(current_level_number > previous_level_number)
 		title = "Attention! Security level elevated to [current_level_name]:"
 		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name()) // monkestation edit: add %STATION_NAME% replacement
 	else
