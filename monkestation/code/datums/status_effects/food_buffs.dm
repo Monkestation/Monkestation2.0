@@ -326,9 +326,9 @@
 	name = "Ate it right!"
 	desc = "You have earned the right to use death-kwon-do."
 	icon_state = "death_sandwich"
-	var/datum/martial_art/death_kwon_do/deathkwondo = new
-//All of this is Death Kwon Do edits start
 
+//All of this is Death Kwon Do edits start
+var/datum/martial_art/death_kwon_do/deathkwondo = new
 /datum/martial_art/death_kwon_do
 	name = "Death Kwon Do"
 	id = MARTIAL_ART_DEATH_KWON_DO
