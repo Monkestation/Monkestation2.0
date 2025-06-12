@@ -328,14 +328,14 @@
 	icon_state = "death_sandwich"
 
 //All of this is Death Kwon Do edits start
-var/datum/martial_art/death_kwon_do/deathkwondo = new
+
 /datum/martial_art/death_kwon_do
 	name = "Death Kwon Do"
 	id = MARTIAL_ART_DEATH_KWON_DO
 	var/datum/action/death_punch/death_punch = new/datum/action/death_punch()
 	var/datum/action/death_kick/death_kick = new/datum/action/death_kick()
 	var/datum/action/death_block/death_block = new/datum/action/death_block()
-
+	var/datum/martial_art/death_kwon_do/deathkwondo = new
 /datum/martial_art/death_kwon_do/proc/check_streak(mob/living/attacker, mob/living/defender)
 	switch(streak)
 		if("punch")
