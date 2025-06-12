@@ -28,13 +28,6 @@
 	max_occurrences = 1
 	event_icon_state = "wizard"
 
-/datum/round_event_control/antagonist/solo/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(!length(GLOB.wizardstart))
-		return FALSE
-
 /datum/round_event/antagonist/solo/wizard
 	lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
