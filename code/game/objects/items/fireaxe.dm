@@ -98,13 +98,13 @@
 	icon = 'icons/obj/weapons/eaxe.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/eaxe_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/eaxe_righthand.dmi'
-	icon_state = "eaxe_1"
-	base_icon_state = "eaxe_0"
+	icon_state = "eaxe0"
+	base_icon_state = "eaxe"
 	name = "energised fire axe"
 	desc = "A truly terrifying weapon, this variant of the fireaxe boasts a durable and lightweight polymer handle, and an impossibly sharp hardlight edge. You feel like this could probably cut through anything."
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 1.5
-	light_power = 2.5
+	light_power = 1.5
 	light_color = COLOR_DARK_RED
 	light_on = TRUE
 	force_unwielded = 15
