@@ -401,7 +401,7 @@
 	death_kick.Remove(consumer)
 	death_block.Remove(consumer)
 
-/datum/status_effect/food/death_kwon_do/check_liked(mob/consumer)
+/obj/item/food/sandwich/death/check_liked(mob/living/carbon/human/consumer)
 	.  = ..()
 	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
 		deathkwondo.teach(consumer, TRUE)
