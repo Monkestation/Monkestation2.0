@@ -246,7 +246,8 @@
 
 /obj/projectile/herald/teleshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	firer.forceMove(get_turf(src))
+	if(!QDELETED(firer))
+		firer.forceMove(get_turf(src))
 
 //Herald's loot: Cloak of the Prophet
 

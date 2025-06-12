@@ -15,6 +15,7 @@
 
 GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
 #define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+#define isappearance_or_image(thing) (isimage(thing) || (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing)))
 
 // The filters list has the same ref type id as a filter, but isnt one and also isnt a list, so we have to check if the thing has Cut() instead
 GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
@@ -93,8 +94,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
-#define isjellyperson(A) (is_species(A, /datum/species/jelly))
-#define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
+#define isslimeperson(A) (is_species(A, /datum/species/oozeling/slime))
 #define isoozeling(A) (is_species(A, /datum/species/oozeling))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
@@ -269,6 +269,8 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
 #define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
+
+#define isapc(A) (istype(A, /obj/machinery/power/apc))
 
 //MONKESTATION EDIT: used to block cargo teleporters from escaping with syndicate blackbox
 #define issyndicateblackbox(O) (istype(O, /obj/item/syndicate_blackbox))

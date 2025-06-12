@@ -1357,3 +1357,78 @@ $border-width-px: $border-width * 1px;
   }
 }
 // monkestation addition end: kbity
+
+$job-colors: (
+  // Command
+  'rawcommand': #7584ad,
+  'captain': #d8aa53,
+  'actingcaptain': #cfa962,
+  // Service
+  'rawservice': #6ec959,
+  'assistant': #a1a1a1,
+  'headofpersonnel': #526bf8,
+  'bartender': #71a073,
+  'botanist': #7cb86f,
+  'cook': #54ce75,
+  'chaplain': #8ab48c,
+  'curator': #88c999,
+  'janitor': #2da792,
+  'lawyer': #c07d7d,
+  'clown': #ff83d7,
+  'mime': #6e9b6e,
+  'explorer': #85d8b8,
+  'barber': #836f5f,
+  // Cargo
+  'rawcargo': #d8b999,
+  'quartermaster': #c79c52,
+  'cargotechnician': #d3a372,
+  'shaftminer': #ce957e,
+  // Engineering
+  'rawengineering': #daa32d,
+  'chiefengineer': #cfbb72,
+  'stationengineer': #be953d,
+  'atmospherictechnician': #d4a07d,
+  'signaltech': #e79b69,
+  // Medical
+  'rawmedical': #47b6d8,
+  'chiefmedicalofficer': #67b7f8,
+  'medicaldoctor': #6cb1c5,
+  'paramedic': #8fbeb4,
+  'chemist': #82bdce,
+  'virologist': #5ac5b0,
+  'psychiatrist': #5394a8,
+  // R&D
+  'rawscience': #ce6fce,
+  'researchdirector': #974ea9,
+  'scientist': #c772c7,
+  'roboticist': #ac71ba,
+  'geneticist': #83bbbf,
+  'xenobiologist': #ff6eff,
+  // Security
+  'rawsecurity': #c75c5c,
+  'headofsecurity': #be132d,
+  'warden': #dd3944,
+  'securityofficer': #c43a3a,
+  'detective': #b45c5c,
+  'brigphysician': #b16789,
+  'secass': #cc7e7e,
+  // CentCom
+  'rawcentcom': #55b835,
+  'centcom': #419b23,
+  'ert': #0070bb,
+  'blueshield': #3333ff,
+  // MISC - job
+  'vip': #d3be62,
+  'king': #dbbc33,
+  'prisoner': #8b644b,
+  'syndicate': #6e4141,
+  'notcentcom': #6e6cc7,
+  'unassigned': #585858,
+  'unknown': #313131
+);
+
+@each $job-name, $job-color in $job-colors {
+  .job__#{$job-name} {
+    color: $job-color;
+  }
+}

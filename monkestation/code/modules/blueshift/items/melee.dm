@@ -16,7 +16,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/melee.dmi'
 	force = 18
 	block_chance = 20
-	armour_penetration = 10
+	armour_penetration = 20
 	wound_bonus = 0
 	bare_wound_bonus = 15
 

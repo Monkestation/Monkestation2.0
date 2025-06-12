@@ -36,8 +36,12 @@
 #define EXOSUIT_MODULE_MAKESHIFT (1<<11)
 // Module is compatbile with ambulance "mechs"
 #define EXOSUIT_MODULE_AMBULANCE (1<<12)
-// Module is compatbile with tank "mechs"
+// Module is compatbile with makeshift tank "mechs"
 #define EXOSUIT_MODULE_TRASHTANK (1<<13)
+// Module is compatbile with tank "mechs"
+#define EXOSUIT_MODULE_TANK (1<<14)
+// Module is compatbile with drilling "mechs"
+#define EXOSUIT_MODULE_DRILL (1<<15)
 //monkestation edit end
 
 

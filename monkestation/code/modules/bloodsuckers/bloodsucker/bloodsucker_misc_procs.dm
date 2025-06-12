@@ -96,7 +96,7 @@
 /datum/antagonist/bloodsucker/proc/SpendRank(mob/living/carbon/human/target, cost_rank = TRUE, blood_cost)
 	if(!owner || !owner.current || !owner.current.client || (cost_rank && bloodsucker_level_unspent <= 0))
 		return
-	SEND_SIGNAL(src, BLOODSUCKER_RANK_UP, target, cost_rank, blood_cost)
+	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_RANK_UP, target, cost_rank, blood_cost)
 
 /**
  * Called when a Bloodsucker reaches Final Death
@@ -105,10 +105,7 @@
 /datum/antagonist/bloodsucker/proc/free_all_vassals()
 	for(var/datum/antagonist/vassal/all_vassals in vassals)
 		// Skip over any Bloodsucker Vassals, they're too far gone to have all their stuff taken away from them
-		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker))
-			all_vassals.owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
-			continue
-		if(all_vassals.special_type == REVENGE_VASSAL)
+		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker) || all_vassals.special_type == REVENGE_VASSAL)
 			continue
 		all_vassals.owner.add_antag_datum(/datum/antagonist/ex_vassal)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)

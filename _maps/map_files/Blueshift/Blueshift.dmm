@@ -6746,6 +6746,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/spawner/random/contraband/prison,
+/obj/item/book/manual/botanical_lexicon,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "bpT" = (
@@ -59855,6 +59856,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
+"lCz" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	color = "#DE3A3A";
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/security/prison)
 "lCA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -95502,14 +95518,14 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/common/wrestling/concessions)
 "syG" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/machinery/requests_console/auto_name/directional/west,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -123189,11 +123205,17 @@
 "xLj" = (
 /obj/machinery/biogenerator,
 /obj/item/reagent_containers/cup/beaker{
-	pixel_x = 8;
-	pixel_y = 2
+	pixel_x = 5;
+	pixel_y = 16
 	},
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker/large,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = -8;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = -8;
+	pixel_y = 15
+	},
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/security/prison/garden)
 "xLo" = (
@@ -167127,7 +167149,7 @@ qYn
 qYn
 qYn
 lEZ
-mAp
+lCz
 ote
 kew
 xUa

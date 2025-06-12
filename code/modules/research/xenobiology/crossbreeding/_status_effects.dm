@@ -462,9 +462,6 @@
 	if(linked_extract.get_held_mob() == owner)
 		return
 	owner.balloon_alert(owner, "[colour] extract faded!")
-	if(!QDELETED(linked_extract))
-		linked_extract.linked_effect = null
-		START_PROCESSING(SSobj,linked_extract)
 	qdel(src)
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
@@ -740,36 +737,44 @@
 	var/mob/living/clone
 
 /datum/status_effect/stabilized/cerulean/on_apply()
-	var/typepath = owner.type
-	clone = new typepath(owner.loc)
-	var/mob/living/carbon/O = owner
-	var/mob/living/carbon/C = clone
-	if(istype(C) && istype(O))
-		C.real_name = O.real_name
-		C.update_name_tag(C.real_name) // monkestation edit: name tags
-		O.dna.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	create_clone()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 	return ..()
 
-/datum/status_effect/stabilized/cerulean/tick()
-	if(owner.stat == DEAD)
-		if(clone && clone.stat != DEAD)
-			owner.visible_message(span_warning("[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away."),
-				span_notice("You feel a warm glow from [linked_extract], and you open your eyes... elsewhere."))
-			if(owner.mind)
-				owner.mind.transfer_to(clone)
-			clone = null
-			qdel(linked_extract)
-		if(!clone || clone.stat == DEAD)
-			to_chat(owner, span_notice("[linked_extract] desperately tries to move your soul to a living body, but can't find one!"))
-			qdel(linked_extract)
-	..()
-
 /datum/status_effect/stabilized/cerulean/on_remove()
-	if(clone)
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	if(!QDELETED(clone))
 		clone.visible_message(span_warning("[clone] dissolves into a puddle of goo!"))
 		clone.unequip_everything()
 		qdel(clone)
+	clone = null
+	return ..()
+
+/datum/status_effect/stabilized/cerulean/proc/create_clone()
+	var/typepath = owner.type
+	clone = new typepath(owner.loc)
+	clone.real_name = owner.real_name
+	clone.name = clone.real_name
+	clone.update_name_tag(clone.real_name)
+	var/mob/living/carbon/carbon_owner = owner
+	var/mob/living/carbon/carbon_clone = clone
+	if(istype(carbon_owner) && istype(carbon_clone))
+		carbon_owner.dna.transfer_identity(carbon_clone)
+		carbon_clone.updateappearance(mutcolor_update = TRUE)
+
+/datum/status_effect/stabilized/cerulean/proc/on_owner_death(datum/source)
+	SIGNAL_HANDLER
+	if(QDELETED(clone) || clone.stat == DEAD)
+		to_chat(owner, span_notice("[linked_extract] desperately tries to move your soul to a living body, but can't find one!"))
+		qdel(linked_extract)
+		return
+	owner.visible_message(
+		span_warning("[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away."),
+		span_notice("You feel a warm glow from [linked_extract], and you open your eyes... elsewhere.")
+	)
+	owner.mind?.transfer_to(clone)
+	clone = null
+	QDEL_NULL(linked_extract)
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
@@ -928,10 +933,17 @@
 	id = "stabilizedoil"
 	colour = "oil"
 
-/datum/status_effect/stabilized/oil/tick()
-	if(owner.stat == DEAD)
-		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
+/datum/status_effect/stabilized/oil/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 	return ..()
+
+/datum/status_effect/stabilized/oil/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	return ..()
+
+/datum/status_effect/stabilized/oil/proc/on_owner_death(datum/source)
+	SIGNAL_HANDLER
+	explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 
 /datum/status_effect/stabilized/oil/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] smell[owner.p_s()] of sulfur and oil!")

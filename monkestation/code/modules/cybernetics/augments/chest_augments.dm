@@ -9,6 +9,7 @@
 	implant_overlay = "chest_implant_overlay"
 	slot = ORGAN_SLOT_SPINAL
 	var/double_legged = FALSE
+	organ_flags = ORGAN_ROBOTIC
 
 /datum/action/item_action/organ_action/sandy
 	name = "Sandevistan Activation"
@@ -88,7 +89,7 @@
 
 
 /datum/reagent/medicine/brain_healer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
 
 
@@ -289,6 +290,7 @@
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
+		return // Keep this. Otherwise we spam defib cooldown and it never procs
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
 		return
