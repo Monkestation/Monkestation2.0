@@ -329,21 +329,6 @@
 
 //All of this is Monkestation edits start
 
-/obj/item/food/sandwich/death/make_edible()
-	. = ..()
-	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
-///Eat it right, or you die.
-/obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
-	/// Closest thing to a mullet we have /// We now actually have a mullet so uh...yeah its mullet now :)
-	if(consumer.hairstyle == "Mullet" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/shorts/jeanshorts))///Changed from "cookshorts" to "jeanshorts" for better accuracy to the show.
-		return FOOD_LIKED
-	return FOOD_ALLERGIC
-
-/obj/item/food/sandwich/death/proc/on_consume(mob/living/carbon/human/consumer)
-	if(check_liked(consumer) == FOOD_LIKED)
-		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
-		return
-
 /datum/martial_art/death_kwon_do
 	name = "Death Kwon Do"
 	id = MARTIAL_ART_DEATH_KWON_DO
@@ -419,13 +404,13 @@
 /datum/status_effect/food/death_kwon_do/liked(mob/consumer)
 	.  = ..()
 	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
-		deathkwondo.teach(consumer, TRUE)
+		death_kwon_do.teach(consumer, TRUE)
 	return
 
 /datum/status_effect/food/death_kwon_do/liked(mob/consumer)
 	.  = ..()
 	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
-		deathkwondo.teach(consumer, TRUE)
+		death_kwon_do.teach(consumer, TRUE)
 	return
 
 /////JOB BUFFS
