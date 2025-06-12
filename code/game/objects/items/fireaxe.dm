@@ -94,7 +94,7 @@
 /*
  * Energised Fire Axe
  */
-/obj/item/fireaxe/efireaxe
+/obj/item/fireaxe/energy
 	icon = 'icons/obj/weapons/eaxe.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/eaxe_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/eaxe_righthand.dmi'
@@ -116,12 +116,12 @@
 	armour_ignorance = 10
 	hitsound = 'sound/weapons/blade1.ogg'
 
-/obj/item/fireaxe/efireaxe/suicide_act(mob/living/user)
+/obj/item/fireaxe/energy/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! Heavens above it's going clean through!"))
 	user.gib()
 	return MANUAL_SUICIDE
 
-/obj/item/fireaxe/efireaxe/ignition_effect(atom/atom, mob/user)
+/obj/item/fireaxe/energy/ignition_effect(atom/atom, mob/user)
 	. = span_warning("[user] holds [user.p_their()] axe edge to the [atom.name]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process. Holy fuck.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
