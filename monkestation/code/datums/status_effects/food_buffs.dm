@@ -335,7 +335,6 @@
 	var/datum/action/death_punch/death_punch = new/datum/action/death_punch()
 	var/datum/action/death_kick/death_kick = new/datum/action/death_kick()
 	var/datum/action/death_block/death_block = new/datum/action/death_block()
-	var/datum/martial_art/death_kwon_do/deathkwondo = new
 /datum/martial_art/death_kwon_do/proc/check_streak(mob/living/attacker, mob/living/defender)
 	switch(streak)
 		if("punch")
@@ -403,6 +402,7 @@
 
 /obj/item/food/sandwich/death/check_liked(mob/living/carbon/human/consumer)
 	.  = ..()
+	var/datum/martial_art/death_kwon_do/deathkwondo = new
 	if(consumer.has_status_effect(STATUS_EFFECT_DEATH_KWON_DO)) //Get the fuck back to this on its application
 		deathkwondo.teach(consumer, TRUE)
 	return
