@@ -259,7 +259,7 @@
 		"terminated" = 'sound/announcer/vox_mil/terminated.ogg',
 		"test" = 'sound/announcer/vox_mil/test.ogg',
 		"the" = 'sound/announcer/vox_mil/the.ogg',
-		"thirtteen" = 'sound/announcer/vox_mil/thirtteen.ogg',
+		"thirteen" = 'sound/announcer/vox_mil/thirtteen.ogg',
 		"thirty" = 'sound/announcer/vox_mil/thirty.ogg',
 		"this" = 'sound/announcer/vox_mil/this.ogg',
 		"three" = 'sound/announcer/vox_mil/three.ogg',
