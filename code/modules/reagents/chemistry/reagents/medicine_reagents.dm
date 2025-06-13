@@ -1530,10 +1530,10 @@ MONKESTATION REMOVAL END */
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
-	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second
+	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second whilst in crit
 	var/clot_rate = 0.3
 	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
-	var/passive_bleed_modifier = 0.7
+	var/passive_bleed_modifier = 0.85
 	/// For tracking when we tell the person we're no longer bleeding
 	var/was_working
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1566,7 +1566,7 @@ MONKESTATION REMOVAL END */
 			if(iter_wound.blood_flow > bloodiest_wound?.blood_flow)
 				bloodiest_wound = iter_wound
 
-	if(bloodiest_wound)
+	if(bloodiest_wound && affected_mob.health <= affected_mob.crit_threshold) //only works in crit
 		if(!was_working)
 			to_chat(affected_mob, span_green("You can feel your flowing blood start thickening!"))
 			was_working = TRUE
