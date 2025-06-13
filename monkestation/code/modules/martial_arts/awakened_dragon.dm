@@ -43,7 +43,7 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
-	target.physiology.stamina_mod = 0.7
+	target.physiology.stamina_mod *= 0.7
 	original_name = target.real_name
 	if(original_body == null)
 		original_body = target
