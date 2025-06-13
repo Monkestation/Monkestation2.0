@@ -138,7 +138,7 @@
 
 /obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
 	name = "\improper PP-96 SMG"
-	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished for better performance."
+	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished and rechambered to 10mm for better performance."
 	spread = 10
 	burst_size = 2
 	icon_state = "plastikov_refurbished"

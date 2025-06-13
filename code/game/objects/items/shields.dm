@@ -256,6 +256,8 @@
 	var/can_clumsy_use = FALSE
 	/// The chance for projectiles to be reflected by the shield
 	var/reflection_probability = 50
+	/// The chance for energy projectiles to be reflected by the shield
+	var/energy_reflection_probability = 75
 
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
@@ -282,7 +284,7 @@
 	return ..()
 
 /obj/item/shield/energy/IsReflect()
-	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && prob(reflection_probability)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && prob(energy_reflection_probability)
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  */
@@ -350,4 +352,5 @@
 		Often employed by Nanotrasen deathsquads."
 	icon_state = "advanced_eshield"
 	inhand_icon_state = "advanced_eshield"
-	reflection_probability = 100 //Guaranteed reflection
+	reflection_probability = 75
+	energy_reflection_probability = 100 //Guaranteed reflection
