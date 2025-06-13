@@ -111,7 +111,7 @@
 	throwforce = 30
 	force_wielded = 40
 	demolition_mod = 2.5
-	wound_bonus = 40
+	wound_bonus = 10
 	armour_penetration = 75
 	armour_ignorance = 10
 	hitsound = 'sound/weapons/blade1.ogg'
