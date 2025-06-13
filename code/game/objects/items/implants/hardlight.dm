@@ -271,10 +271,9 @@
 	icon_state = "lightspear"
 	damage = 30
 	armour_penetration = 50
-	wound_bonus = -5
-	bare_wound_bonus = 50
+	wound_bonus = 5
+	bare_wound_bonus = 20 //Why was this fifty before wtf
 	wound_falloff_tile = -1
-	embed_falloff_tile = -1
 	speed = 0.4 //lower = faster
 	shrapnel_type = /obj/item/shrapnel/bullet/spear
 	light_outer_range = 1
