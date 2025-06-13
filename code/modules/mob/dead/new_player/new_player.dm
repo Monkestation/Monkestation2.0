@@ -23,10 +23,7 @@
 		var/atom/movable/screen/splash/S = new(null, client, TRUE, TRUE)
 		S.Fade(TRUE)
 
-	if(length(GLOB.newplayer_start))
-		forceMove(pick(GLOB.newplayer_start))
-	else
-		forceMove(locate(1,1,1))
+	forceMove(get_new_player_start())
 
 	. = ..()
 

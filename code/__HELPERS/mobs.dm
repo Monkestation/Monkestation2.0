@@ -877,3 +877,37 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		. = invoked_callback.Invoke()
 	usr = temp
+
+/proc/create_human_mob_copy(turf/create_at, mob/living/carbon/human/old_mob, qdel_old_mob = TRUE)
+	if(!old_mob?.client)
+		return
+
+	var/mob/living/carbon/human/new_character = new(create_at)
+	if(!create_at)
+		SSjob.SendToLateJoin(new_character)
+
+	old_mob.client.prefs.safe_transfer_prefs_to(new_character)
+	new_character.dna.update_dna_identity()
+	old_mob.mind.transfer_to(new_character)
+	if(old_mob.has_quirk(/datum/quirk/anime)) // stupid special case bc this quirk is basically janky wrapper shitcode around some optional appearance prefs
+		new_character.add_quirk(/datum/quirk/anime)
+	if(qdel_old_mob)
+		qdel(old_mob)
+	return new_character
+
+/proc/prepare_non_crew_antag(datum/mind/antag_mind, free_role = TRUE, datum/job/job_type, special_role) as /mob/living/carbon/human
+	var/mob/living/current_mob = antag_mind.current
+	if(free_role)
+		SSjob.FreeRole(antag_mind.assigned_role.title)
+	current_mob.clear_inventory()
+	var/mob/living/carbon/human/new_body
+	if(ishuman(current_mob))
+		new_body = create_human_mob_copy(get_new_player_start(), current_mob)
+	if(!new_body)
+		new_body = new(get_new_player_start())
+		antag_mind.transfer_to(new_body)
+	if(job_type)
+		antag_mind.set_assigned_role(SSjob.GetJobType(job_type))
+	if(special_role)
+		antag_mind.special_role = special_role
+	return new_body

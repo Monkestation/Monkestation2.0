@@ -45,16 +45,8 @@
 	var/static/datum/team/assault_operatives/assault_team
 
 /datum/round_event/antagonist/solo/assault_operative/add_datum_to_mind(datum/mind/antag_mind)
-	var/mob/living/current_mob = antag_mind.current
-	SSjob.FreeRole(antag_mind.assigned_role.title)
-	current_mob.clear_inventory()
-
-	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/assault_operative))
-	antag_mind.special_role = ROLE_ASSAULT_OPERATIVE
-
-	var/datum/antagonist/assault_operative/new_op = new antag_datum()
-	antag_mind.add_antag_datum(new_op)
-
+	prepare_non_crew_antag(antag_mind, job_type = /datum/job/assault_operative, special_role = ROLE_ASSAULT_OPERATIVE)
+	antag_mind.add_antag_datum(/datum/antagonist/assault_operative)
 
 /datum/round_event/antagonist/solo/assault_operative/round_end_report()
 	var/result = assault_team.get_result()

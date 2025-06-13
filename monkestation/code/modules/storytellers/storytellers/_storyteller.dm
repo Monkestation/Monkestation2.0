@@ -59,7 +59,8 @@
 	///weight this has of being picked for random storyteller/showing up in the vote if not always_votable
 	var/weight = 0
 
-/datum/storyteller/process(seconds_per_tick)
+// We don't use process() here so that we don't have issues with process having waitfor = FALSE
+/datum/storyteller/proc/tick(seconds_per_tick)
 	if(!round_started || disable_distribution) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
 		return
 

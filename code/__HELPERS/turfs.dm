@@ -428,3 +428,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(locate(type_to_find) in location)
 		return TRUE
 	return FALSE
+
+/proc/get_new_player_start()
+	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
+		return pick(GLOB.newplayer_start)
+	else
+		return locate(1, 1, 1)

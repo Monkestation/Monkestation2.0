@@ -239,7 +239,7 @@ SUBSYSTEM_DEF(gamemode)
 		// We update crew information here to adjust population scalling and event thresholds for the storyteller.
 		update_crew_infos()
 		next_storyteller_process = world.time + STORYTELLER_WAIT_TIME
-		current_storyteller.process(STORYTELLER_WAIT_TIME * 0.1)
+		current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1)
 
 /// Gets the number of antagonists the antagonist injection events will stop rolling after.
 /datum/controller/subsystem/gamemode/proc/get_antag_cap()

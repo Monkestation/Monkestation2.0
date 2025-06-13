@@ -63,14 +63,8 @@
 		op.nuke_team = nuke_team
 		antag_mind.add_antag_datum(op)
 
-/// Frees the target mind's job slot, clears and deletes all their items, creates a fresh body for them, and sets
 /datum/round_event/antagonist/solo/nuclear_operative/proc/prepare(datum/mind/antag_mind)
-	var/mob/living/current_mob = antag_mind.current
-	SSjob.FreeRole(antag_mind.assigned_role.title)
-	current_mob.clear_inventory()
-	create_human_mob_copy(get_turf(current_mob), current_mob)
-	antag_mind.set_assigned_role(SSjob.GetJobType(job_type))
-	antag_mind.special_role = required_role
+	prepare_non_crew_antag(antag_mind, job_type = job_type, special_role = required_role)
 
 /datum/round_event/antagonist/solo/nuclear_operative/add_datum_to_mind(datum/mind/antag_mind)
 	CRASH("this should not be called")
