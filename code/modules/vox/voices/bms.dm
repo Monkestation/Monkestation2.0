@@ -165,7 +165,7 @@
 		"please_call" = 'sound/announcer/vox_bms/please_call.ogg',
 		"please_report_status" = 'sound/announcer/vox_bms/please_report_status.ogg',
 		"please_report_to" = 'sound/announcer/vox_bms/please_report_to.ogg',
-		"proceedural" = 'sound/announcer/vox_bms/proceedural.ogg',
+		"procedural" = 'sound/announcer/vox_bms/proceedural.ogg',
 		"processing" = 'sound/announcer/vox_bms/processing.ogg',
 		"processing_plant" = 'sound/announcer/vox_bms/processing_plant.ogg',
 		"profile" = 'sound/announcer/vox_bms/profile.ogg',
