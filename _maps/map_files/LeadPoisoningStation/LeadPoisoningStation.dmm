@@ -4588,6 +4588,10 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/iron/shuttle/arrivals/airless,
 /area/space/nearstation)
+"csT" = (
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "csU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/liquids_spawner/acid_waist,
@@ -65808,7 +65812,7 @@ xlc
 ghy
 rfU
 kom
-dnj
+csT
 ghy
 oni
 uwb

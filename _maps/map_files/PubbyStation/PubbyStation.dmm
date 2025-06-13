@@ -45764,6 +45764,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/department/engine)
+"rhY" = (
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/plating,
+/area/station/engineering/storage_shared)
 "rie" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -82156,7 +82160,7 @@ xiw
 cdI
 cri
 eVW
-nqa
+rhY
 tkr
 ceq
 ceq

@@ -73529,6 +73529,7 @@
 "vpS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor/has_bulb,
+/obj/structure/closet/crate/engineering/fundedsatellites,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "vpU" = (

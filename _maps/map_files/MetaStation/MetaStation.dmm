@@ -7170,6 +7170,10 @@
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
+"cCE" = (
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "cCN" = (
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
@@ -109696,7 +109700,7 @@ rBe
 uXd
 dVc
 bYp
-gXu
+cCE
 oaC
 uXd
 hps

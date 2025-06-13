@@ -33890,6 +33890,10 @@
 /obj/structure/sign/departments/engineering/directional/west,
 /turf/open/space/basic,
 /area/space/nearstation)
+"kTO" = (
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "kUa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -100316,7 +100320,7 @@ uEU
 fxk
 hGH
 jvA
-rFn
+kTO
 rFn
 rFn
 mwn

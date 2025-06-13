@@ -6486,6 +6486,12 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/restrooms)
+"cbt" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/effect/turf_decal/tile/red,
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "cbC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
@@ -114559,7 +114565,7 @@ rja
 fvC
 xCr
 btQ
-xyg
+cbt
 lIU
 bGY
 wTe
