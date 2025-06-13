@@ -3,7 +3,7 @@
 	id = MARTIALART_AWAKENEDDRAGON
 	help_verb = /mob/living/proc/awakened_dragon_help
 	//deflect_cooldown = 0
-	deflect_stamcost = 10
+	deflect_stamcost = 0
 	log_name = "Awakened Dragon"
 	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
 	counter = TRUE
@@ -43,6 +43,7 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
+	target.physiology.stamina_mod = 0.7
 	original_name = target.real_name
 	if(original_body == null)
 		original_body = target
@@ -54,6 +55,7 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
 	. = ..()
+	target.physiology.stamina_mod = 1
 	target.fully_replace_character_name(titled_name, original_name)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender, set_damage)
