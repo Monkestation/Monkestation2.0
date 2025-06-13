@@ -236,7 +236,7 @@
 		"seventeen" = 'sound/announcer/vox_mil/seventeen.ogg',
 		"seventy" = 'sound/announcer/vox_mil/seventy.ogg',
 		"severe" = 'sound/announcer/vox_mil/severe.ogg',
-		"sheild" = 'sound/announcer/vox_mil/sheild.ogg',
+		"shield" = 'sound/announcer/vox_mil/sheild.ogg',
 		"shoot" = 'sound/announcer/vox_mil/shoot.ogg',
 		"sierra" = 'sound/announcer/vox_mil/sierra.ogg',
 		"sight" = 'sound/announcer/vox_mil/sight.ogg',
