@@ -78,6 +78,8 @@
 	///Sunlight timer HUD
 	var/atom/movable/screen/bloodsucker/sunlight_counter/sunlight_display
 
+	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
+
 	/// Static typecache of all bloodsucker powers.
 	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, ignore_root_path = TRUE)
 	/// Antagonists that cannot be Vassalized no matter what
@@ -157,6 +159,7 @@
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	ensure_brain_nonvital(current_mob)
+	setup_tracker(current_mob)
 
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
@@ -175,6 +178,8 @@
 	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
+
+	cleanup_tracker()
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
@@ -542,6 +547,7 @@
 	var/mob/living/current = owner?.current
 	if(QDELETED(current))
 		return
+	tracker?.tracking_beacon?.update_position()
 	if(istype(current.loc, /obj/structure/closet/crate/coffin))
 		current.add_traits(coffin_traits, BLOODSUCKER_COFFIN_TRAIT)
 	else

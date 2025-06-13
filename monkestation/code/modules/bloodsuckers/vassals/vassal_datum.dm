@@ -21,6 +21,8 @@
 	var/special_type = FALSE
 	///Description of what this Vassal does.
 	var/vassal_description
+	/// A link to our team monitor, used to track our master.
+	var/datum/component/team_monitor/monitor
 
 /datum/antagonist/vassal/antag_panel_data()
 	return "Master : [master.owner.name]"
@@ -28,10 +30,24 @@
 /datum/antagonist/vassal/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
 	current_mob.clear_mood_event("vampcandle")
 	add_team_hud(current_mob)
 	current_mob.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
+	setup_monitor(current_mob)
+
+/datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/current_mob = mob_override || owner.current
+	QDEL_NULL(monitor)
+	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
+
+/datum/antagonist/vassal/proc/setup_monitor(mob/target)
+	QDEL_NULL(monitor)
+	if(QDELETED(master?.owner?.current) || QDELETED(master.tracker))
+		return
+	monitor = target.AddComponent(/datum/component/team_monitor, REF(master))
+	monitor.add_to_tracking_network(master.tracker.tracking_beacon)
+	monitor.show_hud(target)
 
 /datum/antagonist/vassal/add_team_hud(mob/target)
 	QDEL_NULL(team_hud_ref)
@@ -54,12 +70,6 @@
 			continue
 		antag_hud.show_to(target)
 		hud.show_to(antag_hud.target)
-
-/datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-	var/mob/living/current_mob = mob_override || owner.current
-	current_mob.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
-	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
 
 /datum/antagonist/vassal/pre_mindshield(mob/implanter, mob/living/mob_override)
 	return COMPONENT_MINDSHIELD_PASSED
@@ -101,24 +111,22 @@
 	return ..()
 
 /datum/antagonist/vassal/on_removal()
-	UnregisterSignal(owner.current, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
 	//Free them from their Master
-	if(!QDELETED(master?.owner))
+	if(!QDELETED(master))
 		if(special_type && master.special_vassals[special_type])
 			master.special_vassals[special_type] -= src
 		master.vassals -= src
 		owner.enslaved_to = null
-	//Remove ALL Traits, as long as its from BLOODSUCKER_TRAIT's source.
-	for(var/allstatus_traits in owner.current._status_traits)
-		REMOVE_TRAIT(owner.current, allstatus_traits, BLOODSUCKER_TRAIT)
+	if(owner.current)
+		UnregisterSignal(owner.current, COMSIG_ATOM_EXAMINE)
+		REMOVE_TRAITS_IN(owner.current, BLOODSUCKER_TRAIT)
+	// remove the monitor
+	QDEL_NULL(monitor)
 	//Remove Recuperate Power
-	while(length(powers))
-		var/datum/action/cooldown/bloodsucker/power = pick(powers)
-		powers -= power
-		power.Remove(owner.current)
+	QDEL_LIST(powers)
 	//Remove Language & Hud
-	owner.current.remove_language(/datum/language/vampiric)
+	owner.current?.remove_language(/datum/language/vampiric)
 	return ..()
 
 /datum/antagonist/vassal/on_body_transfer(mob/living/old_body, mob/living/new_body)
