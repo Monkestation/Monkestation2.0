@@ -1559,13 +1559,16 @@ MONKESTATION REMOVAL END */
 		return
 
 	var/datum/wound/bloodiest_wound
-
+	var/datum/wound/slash/flesh/slash_wound
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		if(iter_wound.blood_flow)
 			if(iter_wound.blood_flow > bloodiest_wound?.blood_flow)
 				bloodiest_wound = iter_wound
-
+		if(istype(iter_wound, /datum/wound/slash/flesh)) //not inclusive of internal or pierce as that would take a refactor of the wounds themselves
+			slash_wound = iter_wound
+		if(slash_wound.clot_rate < 0)
+			slash_wound.clot_rate = 0
 	if(bloodiest_wound && affected_mob.health <= affected_mob.crit_threshold) //only works in crit
 		if(!was_working)
 			to_chat(affected_mob, span_green("You can feel your flowing blood start thickening!"))
