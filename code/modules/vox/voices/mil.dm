@@ -245,7 +245,7 @@
 		"sixteen" = 'sound/announcer/vox_mil/sixteen.ogg',
 		"sixty" = 'sound/announcer/vox_mil/sixty.ogg',
 		"sorry" = 'sound/announcer/vox_mil/sorry.ogg',
-		"sqaud" = 'sound/announcer/vox_mil/sqaud.ogg',
+		"squad" = 'sound/announcer/vox_mil/sqaud.ogg',
 		"status" = 'sound/announcer/vox_mil/status.ogg',
 		"sterilization" = 'sound/announcer/vox_mil/sterilization.ogg',
 		"storage" = 'sound/announcer/vox_mil/storage.ogg',
