@@ -455,7 +455,7 @@
 		"required" = 'sound/announcer/vox_hl/required.ogg',
 		"research" = 'sound/announcer/vox_hl/research.ogg',
 		"reset" = 'sound/announcer/vox_hl/reset.ogg',
-		"resevoir" = 'sound/announcer/vox_hl/resevoir.ogg',
+		"reservoir" = 'sound/announcer/vox_hl/resevoir.ogg',
 		"resistance" = 'sound/announcer/vox_hl/resistance.ogg',
 		"returned" = 'sound/announcer/vox_hl/returned.ogg',
 		"right" = 'sound/announcer/vox_hl/right.ogg',
