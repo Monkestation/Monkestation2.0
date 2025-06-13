@@ -304,7 +304,7 @@
 		"inspector" = 'sound/announcer/vox_hl/inspector.ogg',
 		"interchange" = 'sound/announcer/vox_hl/interchange.ogg',
 		"intruder" = 'sound/announcer/vox_hl/intruder.ogg',
-		"invallid" = 'sound/announcer/vox_hl/invallid.ogg',
+		"invalid" = 'sound/announcer/vox_hl/invallid.ogg',
 		"invasion" = 'sound/announcer/vox_hl/invasion.ogg',
 		"is" = 'sound/announcer/vox_hl/is.ogg',
 		"it" = 'sound/announcer/vox_hl/it.ogg',
