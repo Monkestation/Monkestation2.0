@@ -595,7 +595,7 @@
 		"valid" = 'sound/announcer/vox_hl/valid.ogg',
 		"vapor" = 'sound/announcer/vox_hl/vapor.ogg',
 		"vent" = 'sound/announcer/vox_hl/vent.ogg',
-		"ventillation" = 'sound/announcer/vox_hl/ventillation.ogg',
+		"ventilation" = 'sound/announcer/vox_hl/ventillation.ogg',
 		"victor" = 'sound/announcer/vox_hl/victor.ogg',
 		"violated" = 'sound/announcer/vox_hl/violated.ogg',
 		"violation" = 'sound/announcer/vox_hl/violation.ogg',
