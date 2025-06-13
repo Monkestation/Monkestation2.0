@@ -199,7 +199,7 @@
 		"percent" = 'sound/announcer/vox_mil/percent.ogg',
 		"perimeter" = 'sound/announcer/vox_mil/perimeter.ogg',
 		"permitted" = 'sound/announcer/vox_mil/permitted.ogg',
-		"perpulsion" = 'sound/announcer/vox_mil/perpulsion.ogg',
+		"propulsion" = 'sound/announcer/vox_mil/perpulsion.ogg',
 		"personnel" = 'sound/announcer/vox_mil/personnel.ogg',
 		"plant" = 'sound/announcer/vox_mil/plant.ogg',
 		"please" = 'sound/announcer/vox_mil/please.ogg',
