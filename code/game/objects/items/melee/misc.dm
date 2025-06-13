@@ -384,14 +384,14 @@
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
 	if (is_type_in_typecache(target, roastables))
-		if (HAS_TRAIT(target, TRAIT_NODROP) || (target.resistance_flags & INDESTRUCTIBLE))
-			to_chat(user, span_warning("You don't feel it would be wise to put [target] on [src]..."))
-			return
 		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
 		if (held_sausage)
 			to_chat(user, span_warning("[held_sausage] is already attached to [src]!"))
+			return
+		if (HAS_TRAIT(target, TRAIT_NODROP) || (target.resistance_flags & INDESTRUCTIBLE))
+			to_chat(user, span_warning("You don't feel it would be wise to put [target] on [src]..."))
 			return
 		if (user.transferItemToLoc(target, src))
 			held_sausage = target
@@ -400,11 +400,12 @@
 	update_appearance()
 
 /obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
-	..()
-	if (held_sausage)
+	if (held_sausage && loc == user && user.is_holding(src))
 		user.put_in_hands(held_sausage)
 		held_sausage = null
-	update_appearance()
+		update_appearance()
+		return
+	..()
 
 /obj/item/melee/roastingstick/update_overlays()
 	. = ..()
