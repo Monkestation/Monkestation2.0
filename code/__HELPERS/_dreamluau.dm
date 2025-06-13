@@ -6,6 +6,7 @@
 /proc/dreamluau_load()
 	__dreamluau = world.system_type == MS_WINDOWS ? "dreamluau.dll" : __detect_auxtools("dreamluau")
 	__dreamluau_exists = fexists(__dreamluau)
+#ifndef OPENDREAM
 	if(!__dreamluau_exists)
 		return
 	for(var/key in global.vars)
@@ -14,13 +15,14 @@
 		var/func_name = copytext(key, 18)
 		SEND_TEXT(world.log, "found [func_name] in global.vars")
 		global.vars[key] = load_ext(__dreamluau, "byond:" + func_name)
+#endif
 
-#define DREAMLUAU_PRELOAD(func) /var/__dreamluau_load_##func
-
-#ifndef SPACEMAN_DMM
+#if !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
 #define DREAMLUAU_CALL(func) (!__dreamluau_exists) ? null : call_ext(__dreamluau_load_##func)
-#else // just so unit tests won't complain
-#define DREAMLUAU_CALL(func) (!__dreamluau_exists) ? null : call_ext(__dreamluau, __dreamluau_load_##func)
+#define DREAMLUAU_PRELOAD(func) /var/__dreamluau_load_##func
+#else // just so linters won't complain
+#define DREAMLUAU_CALL(func) (!__dreamluau_exists) ? null : call_ext(__dreamluau, "byond:" + #func)
+#define DREAMLUAU_PRELOAD(func)
 #endif
 
 /**
