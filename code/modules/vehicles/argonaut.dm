@@ -22,7 +22,8 @@
 	var/crash_dmg_high = 20
 	var/crash_dmg_low = 10
 	var/crash_dmg_stm = 50
-	var/crash_para_driv = 1.2
+	var/crash_para_driv = 1.5
+	var/crash_para_pass = 0.3
 	var/crash_para_roadkill = 0.9
 
 /datum/armor/argonaut
@@ -43,12 +44,18 @@
 	if(!A.density || !has_buckled_mobs())
 		return
 	var/mob/living/rider = buckled_mobs[1]
+	var/mob/living/pass1 = buckled_mobs[2]
+	var/mob/living/pass2 = buckled_mobs[3]
+	var/mob/living/pass3 = buckled_mobs[4]
 	if(!ishuman(A))
 		return
 	var/mob/living/carbon/human/rammed = A
 	rammed.stamina.adjust(-crash_dmg_stm)
 	rammed.apply_damage(rand(crash_dmg_low,crash_dmg_high), BRUTE)
 	rider.Paralyze(crash_para_driv SECONDS)
+	pass1.Paralyze(crash_para_pass SECONDS)
+	pass2.Paralyze(crash_para_pass SECONDS)
+	pass3.Paralyze(crash_para_pass SECONDS)
 	rammed.Paralyze(crash_para_roadkill SECONDS)
 	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
 	visible_message(span_danger("[src] crashes into [rammed]!"))
@@ -135,7 +142,8 @@
 	var/crash_dmg_high = 20
 	var/crash_dmg_low = 10
 	var/crash_dmg_stm = 50
-	var/crash_para_driv = 1.2
+	var/crash_para_driv = 1.5
+	var/crash_para_pass = 0.3
 	var/crash_para_roadkill = 0.9
 
 /obj/vehicle/ridden/odyssey/Initialize(mapload)
@@ -149,12 +157,14 @@
 	if(!A.density || !has_buckled_mobs())
 		return
 	var/mob/living/rider = buckled_mobs[1]
+	var/mob/living/pass1 = buckled_mobs[2]
 	if(!ishuman(A))
 		return
 	var/mob/living/carbon/human/rammed = A
 	rammed.stamina.adjust(-crash_dmg_stm)
 	rammed.apply_damage(rand(crash_dmg_low,crash_dmg_high), BRUTE)
 	rider.Paralyze(crash_para_driv SECONDS)
+	pass1.Paralyze(crash_para_pass SECONDS)
 	rammed.Paralyze(crash_para_roadkill SECONDS)
 	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
 	visible_message(span_danger("[src] crashes into [rammed]!"))
