@@ -94,8 +94,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
-#define isjellyperson(A) (is_species(A, /datum/species/jelly))
-#define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
+#define isslimeperson(A) (is_species(A, /datum/species/oozeling/slime))
 #define isoozeling(A) (is_species(A, /datum/species/oozeling))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
@@ -270,6 +269,8 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 #define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
 #define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
+
+#define isapc(A) (istype(A, /obj/machinery/power/apc))
 
 //MONKESTATION EDIT: used to block cargo teleporters from escaping with syndicate blackbox
 #define issyndicateblackbox(O) (istype(O, /obj/item/syndicate_blackbox))

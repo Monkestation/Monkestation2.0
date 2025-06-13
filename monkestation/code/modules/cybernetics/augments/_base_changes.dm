@@ -3,7 +3,7 @@
 
 /obj/item/organ/internal/cyberimp
 	var/hacked = FALSE
-
+	organ_flags = ORGAN_ROBOTIC
 	var/list/encode_info = AUGMENT_NO_REQ
 
 	///are we a visual implant
@@ -165,6 +165,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/item/cyberlink_connector/connector
 	var/extended = FALSE
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/cyberimp/cyberlink/Insert(mob/living/carbon/user, special, drop_if_replaced)
 	for(var/obj/item/organ/internal/cyberimp/cyber in user.organs)

@@ -32,6 +32,7 @@
 
 /datum/component/simple_rotation/RegisterWithParent()
 	AddSignals()
+	ADD_TRAIT(parent, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	return ..()
 
 /datum/component/simple_rotation/PostTransfer()
@@ -42,6 +43,7 @@
 
 /datum/component/simple_rotation/UnregisterFromParent()
 	RemoveSignals()
+	REMOVE_TRAIT(parent, TRAIT_ALT_CLICK_BLOCKER, REF(src))
 	return ..()
 
 /datum/component/simple_rotation/Destroy()
