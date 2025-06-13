@@ -55,7 +55,7 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/remove(mob/living/carbon/human/target)
 	. = ..()
-	target.physiology.stamina_mod = 1
+	target.physiology.stamina_mod /= 0.7
 	target.fully_replace_character_name(titled_name, original_name)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender, set_damage)
