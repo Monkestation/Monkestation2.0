@@ -93,28 +93,28 @@
 	var/static/list/always_traits = list(
 		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
 		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
-		TRAIT_NO_BLEED_WARN,
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_SLEEPIMMUNE,
-		TRAIT_NOCRITDAMAGE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_STABLEHEART,
-		TRAIT_STABLELIVER,
-		TRAIT_NOSOFTCRIT,
-		TRAIT_NOHARDCRIT,
 		TRAIT_AGEUSIA,
 		TRAIT_COLD_BLOODED,
-		TRAIT_VIRUSIMMUNE,
-		TRAIT_TOXIMMUNE,
-		TRAIT_HARDLY_WOUNDED,
-		TRAIT_NO_MIRROR_REFLECTION,
 		TRAIT_ETHEREAL_NO_OVERCHARGE,
+		TRAIT_GENELESS,
+		TRAIT_HARDLY_WOUNDED,
+		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NO_BLEED_WARN,
+		TRAIT_NO_MIRROR_REFLECTION,
 		TRAIT_OOZELING_NO_CANNIBALIZE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
+		TRAIT_TOXIMMUNE,
+		TRAIT_VIRUSIMMUNE,
 		// they eject zombie tumors and xeno larvae during eepy time anyways
 		TRAIT_NO_ZOMBIFY, // they're already undead lol
 		TRAIT_XENO_IMMUNE, // something something facehuggers only latch onto living things
