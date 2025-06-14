@@ -56,14 +56,13 @@
 /datum/symptom/robotic_adaptation/proc/Replace(mob/living/carbon/human/Host)
 	if(replaceorgans)
 		for(var/obj/item/organ/Oldlimb in Host.organs)
-			if(Oldlimb.status == ORGAN_ROBOTIC) //they are either part robotic or we already converted them!
+			if(IS_ROBOTIC_ORGAN(Oldlimb)) //they are either part robotic or we already converted them!
 				continue
 			switch(Oldlimb.slot) //i hate doing it this way, but the cleaner way runtimes and does not work
 				if(ORGAN_SLOT_BRAIN)
 					Oldlimb.name = "enigmatic gearbox"
 					Oldlimb.desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'"
 					Oldlimb.icon_state = "brain-clock"
-					Oldlimb.status = ORGAN_ROBOTIC
 					Oldlimb.organ_flags = ORGAN_ROBOTIC
 					return TRUE
 				if(ORGAN_SLOT_STOMACH)
