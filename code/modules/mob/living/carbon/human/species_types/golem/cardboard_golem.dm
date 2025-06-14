@@ -21,7 +21,7 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_NOBLOOD,
 	)
-	mutanttongue = null
+	//mutanttongue = null
 	fixed_mut_color = null
 	armor = 25
 	burnmod = 1.25
@@ -40,7 +40,7 @@
 /datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	. = ..()
 	if(user != H)
-		return FALSE //forced reproduction is rape.
+		return FALSE
 	if(istype(I, /obj/item/stack/sheet/cardboard))
 		var/obj/item/stack/sheet/cardboard/C = I
 		if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork
