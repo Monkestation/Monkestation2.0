@@ -42,6 +42,7 @@
 
 /datum/round_event/antagonist/solo/ghost/assault_operative
 	excute_round_end_reports = TRUE
+	lazy_templates = list(LAZY_TEMPLATE_KEY_GOLDENEYE_SATELLITE)
 	var/static/datum/team/assault_operatives/assault_team
 
 /datum/round_event/antagonist/solo/ghost/assault_operative/add_datum_to_mind(datum/mind/antag_mind)

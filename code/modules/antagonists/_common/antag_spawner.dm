@@ -150,10 +150,8 @@
 	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
 	nukie.PossessByPlayer(our_client.key)
 	var/datum/mind/op_mind = nukie.mind
-	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
-		nukie.forceMove(pick(GLOB.newplayer_start))
-	else
-		nukie.forceMove(locate(1,1,1))
+	// needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
+	nukie.forceMove(get_new_player_start())
 
 	antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE

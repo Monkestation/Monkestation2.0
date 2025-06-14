@@ -25,15 +25,5 @@
 	max_occurrences = 1
 	prompted_picking = TRUE
 
-/datum/round_event_control/antagonist/solo/from_ghosts/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(!length(GLOB.wizardstart))
-		return FALSE
-
 /datum/round_event/antagonist/solo/ghost/wizard
-
-/datum/round_event/antagonist/solo/ghost/wizard/add_datum_to_mind(datum/mind/antag_mind)
-	. = ..()
-	antag_mind.current.forceMove(pick(GLOB.wizardstart))
+	lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)

@@ -204,6 +204,7 @@ Runs the event
 		for(var/datum/event_admin_setup/admin_setup_datum in admin_setup)
 			admin_setup_datum.apply_to_event(round_event)
 	SEND_SIGNAL(src, COMSIG_CREATED_ROUND_EVENT, round_event)
+	UNLINT(round_event.load_templates()) // prevent complaints about this sleeping
 	round_event.setup()
 	round_event.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	occurrences++
@@ -269,6 +270,8 @@ Runs the event
 	var/has_started = FALSE
 	///have we finished setup?
 	var/setup = FALSE
+	/// A list, or null, of templates that the ruleset depends on to function correctly
+	var/list/lazy_templates
 	//monkestation vars end
 
 //Called first before processing.
@@ -416,7 +419,10 @@ Runs the event
 /datum/round_event/proc/end()
 	return
 
-
+/// This should always be called before setup is, to ensure that the event can locate map/template based landmarks as needed
+/datum/round_event/proc/load_templates()
+	for(var/template in lazy_templates)
+		SSmapping.lazy_load_template(template)
 
 //Do not override this proc, instead use the appropiate procs.
 //This proc will handle the calls to the appropiate procs.

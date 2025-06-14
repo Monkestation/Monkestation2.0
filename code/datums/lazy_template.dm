@@ -116,3 +116,15 @@
 /datum/lazy_template/abductor_ship
 	key = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS
 	map_name = "abductor_ships"
+
+/datum/lazy_template/heretic_sacrifice_room
+	key = LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE
+	map_name = "heretic_sacrifice"
+
+/datum/lazy_template/wonderland
+	key = LAZY_TEMPLATE_KEY_WONDERLAND
+	map_name = "wonderland"
+
+/datum/lazy_template/goldeneye_satellite
+	key = LAZY_TEMPLATE_KEY_GOLDENEYE_SATELLITE
+	map_name = "goldeneye_satellite"

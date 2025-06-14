@@ -9,10 +9,6 @@
 /obj/item/toy/plush/goatplushie,
 /turf/open/misc/grass/jungle/planet,
 /area/ruin/space/has_grav/wonderland)
-"aR" = (
-/obj/item/clothing/shoes/costume_2021/doll_shoes,
-/turf/open/misc/grass/jungle/planet,
-/area/ruin/space/has_grav/wonderland)
 "bf" = (
 /obj/structure/chess/blackrook,
 /turf/open/floor/holofloor/pure_white,
@@ -20,10 +16,6 @@
 "br" = (
 /obj/structure/chess/blackknight,
 /turf/open/floor/black,
-/area/ruin/space/has_grav/wonderland)
-"bZ" = (
-/obj/item/clothing/head/costume_2021/doll_hat,
-/turf/open/misc/grass/jungle/planet,
 /area/ruin/space/has_grav/wonderland)
 "cj" = (
 /obj/structure/chess/blackbishop,
@@ -122,11 +114,6 @@
 /area/ruin/space/has_grav/wonderland)
 "wY" = (
 /mob/living/basic/rabbit,
-/turf/open/misc/grass/jungle/planet,
-/area/ruin/space/has_grav/wonderland)
-"yW" = (
-/obj/structure/flora/bush/flowers_pp/style_2,
-/obj/item/clothing/under/costume_2021/doll_suit,
 /turf/open/misc/grass/jungle/planet,
 /area/ruin/space/has_grav/wonderland)
 "Av" = (
@@ -1231,9 +1218,9 @@ Yp
 ZA
 ZA
 Mw
-bZ
-yW
-aR
+ZA
+Yp
+ZA
 ZA
 Yp
 wY

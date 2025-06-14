@@ -326,23 +326,6 @@
 	var/datum/round_event_control/event = pick_weight(extra_spawned_events)
 	event?.run_event(random = FALSE, event_cause = "storyteller")
 
-/datum/round_event/antagonist/solo/proc/create_human_mob_copy(turf/create_at, mob/living/carbon/human/old_mob, qdel_old_mob = TRUE)
-	if(!old_mob?.client)
-		return
-
-	var/mob/living/carbon/human/new_character = new(create_at)
-	if(!create_at)
-		SSjob.SendToLateJoin(new_character)
-
-	old_mob.client.prefs.safe_transfer_prefs_to(new_character)
-	new_character.dna.update_dna_identity()
-	old_mob.mind.transfer_to(new_character)
-	if(old_mob.has_quirk(/datum/quirk/anime)) // stupid special case bc this quirk is basically janky wrapper shitcode around some optional appearance prefs
-		new_character.add_quirk(/datum/quirk/anime)
-	if(qdel_old_mob)
-		qdel(old_mob)
-	return new_character
-
 /datum/round_event/antagonist/solo/ghost/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		add_datum_to_mind(antag_mind)

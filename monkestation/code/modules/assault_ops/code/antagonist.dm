@@ -177,6 +177,8 @@
 	return TRUE
 
 /datum/antagonist/assault_operative/proc/move_to_spawnpoint()
+	// Ensure that the goldeneye satellite is loaded, and wait for it if required
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_GOLDENEYE_SATELLITE)
 	var/team_number = 1
 	if(assault_team)
 		team_number = assault_team.members.Find(owner)
