@@ -246,6 +246,7 @@
 	if(!.)
 		return
 	AddComponent(/datum/component/rot, 0, 5 MINUTES, 0.7)
+#ifndef UNIT_TESTS
 	for(var/obj/effect/decal/cleanable/blood/gibs/other_gibs in loc)
 		if(!other_gibs.dried || other_gibs == src)
 			continue
@@ -255,6 +256,7 @@
 		other_appearance.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
 		add_overlay(other_appearance)
 		qdel(other_gibs)
+#endif
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
