@@ -50686,6 +50686,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
+/obj/structure/closet/crate/engineering/fundedsatellites,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "jPa" = (
@@ -103218,6 +103219,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/closet/crate/engineering/fundedsatellites,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "tUW" = (
