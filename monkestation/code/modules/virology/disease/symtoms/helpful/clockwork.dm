@@ -64,7 +64,7 @@
 					Oldlimb.desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'"
 					Oldlimb.icon_state = "brain-clock"
 					Oldlimb.status = ORGAN_ROBOTIC
-					Oldlimb.organ_flags = ORGAN_SYNTHETIC
+					Oldlimb.organ_flags = ORGAN_ROBOTIC
 					return TRUE
 				if(ORGAN_SLOT_STOMACH)
 					if(HAS_TRAIT(Host, TRAIT_NOHUNGER))//for future, we could make this give people who requires no food to maintain its no food policy
