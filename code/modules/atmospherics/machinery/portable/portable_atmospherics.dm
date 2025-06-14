@@ -48,6 +48,11 @@
 	SSair.start_processing_machine(src)
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
+	register_context()
+
+/obj/machinery/portable_atmospherics/on_construction(mob/user)
+	. = ..()
+	set_anchored(FALSE)
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
@@ -101,6 +106,14 @@
 			return TRUE
 		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
 	return TRUE
+
+/obj/machinery/portable_atmospherics/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!isliving(user) || !Adjacent(user))
+		return .
+	if(held_item?.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
 /// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
@@ -222,9 +235,9 @@
 		playsound(src, remove_sound, sound_vol)
 		playsound(src, insert_sound, sound_vol)
 	else if(holding)//we remove a tank
+		investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("You remove [holding] from [src]."))
 		if(Adjacent(user))
-			investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
-			to_chat(user, span_notice("You remove [holding] from [src]."))
 			user.put_in_hands(holding)
 		else
 			holding.forceMove(get_turf(src))
