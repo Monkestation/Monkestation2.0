@@ -288,6 +288,37 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_INCENDIARY
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	name = "Executor Mech Rifle"
+	desc = "A large bore rifle designed to fire armor peircing rounds, will bring down men and mech alike."
+	icon_state = "mecha_heavy"
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 10
+	projectiles_cache = 10
+	projectiles_cache_max = 40
+	projectiles_per_shot = 1
+	equip_cooldown = 1.6 SECONDS
+	randomspread = 1
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	name = "\improper FNX-100 \"Conflagorator\" Flamethrower"
+	desc = "A modification of the FNX-99 Hades carbine, This weapon has traded incendary bullets to be a full flamethrower."
+	icon_state = "mecha_flamethrower"
+	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
+	projectile = /obj/projectile/bullet/incendiary/fire/heavy
+	projectiles = 120
+	projectiles_cache = 40
+	projectiles_cache_max = 120
+	projectiles_per_shot = 4
+	equip_cooldown = 0.7 SECONDS
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_FLAME
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
@@ -538,28 +569,27 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
 	name = "40mm tank cannon"
-	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	desc = "A 40mm Deckard 21-C, a literally ancient cannon, it looks fine but the age worries you. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
 	icon_state = "mecha_light_tank_cannon"
 	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
 	projectile = /obj/projectile/bullet/rocket/lighttankshell
 	equip_cooldown = 8 SECONDS
 	projectiles = 1
-	projectiles_cache = 10
+	projectiles_cache = 15
 	projectiles_cache_max = 35
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
-
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone Mk.1 Ratcatcher"
-	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	desc = "Harvey Malone's first machinegun design. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
 	icon_state = "mecha_light_tank_mg"
-	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	fire_sound = 'sound/weapons/gun/general/malone.ogg'
 	projectile = /obj/projectile/bullet/mm127x70
-	projectiles = 30
-	projectiles_cache = 60
-	projectiles_cache_max = 120
+	projectiles = 60
+	projectiles_cache = 120
+	projectiles_cache_max = 240
 	projectiles_per_shot = 5
 	projectile_delay = 0.1 SECONDS
 	equip_cooldown = 1 SECONDS
@@ -568,3 +598,161 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 	mech_flags = EXOSUIT_MODULE_TANK
+
+
+// this is the 85k-a Spatha's gun, much more powerful then the normal tank, its admeme spawned only so no worries.
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/hv_tank_cannon
+	name = "40mm hv tank cannon"
+	desc = "A high velocity 40mm cannon, built for the spatha it can delete lesser beings with ease. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
+	icon_state = "mecha_hv_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/hvtankshell
+	equip_cooldown = 4 SECONDS // fires fast bruv
+	projectiles = 1
+	projectiles_cache = 45
+	projectiles_cache_max = 45
+	ammo_type = MECHA_AMMO_LIGHTTANK
+	mech_flags = EXOSUIT_MODULE_TANK
+
+
+// the ScourgeHunter's MG, not as op as 4 mgs strapped together, mostly just more firerate and more bullets spat out per volley.
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/quadmg
+	name = "Quad Ratcatcher machineguns"
+	desc = "Four machineguns linked together, the firerate has been toned down but is still formidable. This gun was specifically designed for this mech, you doubt it can be mounted on other mechs."
+	icon_state = "mecha_quadlmg"
+	fire_sound = 'sound/weapons/gun/general/malone.ogg'
+	projectile = /obj/projectile/bullet/mm127x70
+	projectiles = 240
+	projectiles_cache = 240
+	projectiles_cache_max = 1200
+	projectiles_per_shot = 20
+	projectile_delay = 0.15 SECONDS
+	equip_cooldown = 1.3 SECONDS
+	variance = 22
+	randomspread = 6
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_FOXMECH
+
+// to be made, Centurion MV-2's (not very powerful) incendary cannon
+
+//Talos (the huge fucker) weapons
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/support_tank_cannon
+	name = "75mm tank cannon"
+	desc = "A huge cannon designed to crack bunkers,. It has no autoloader or mounting bolts, you doubt it would work on anything other than tanks."
+	icon_state = "mecha_support_tank_cannon"
+	fire_sound = 'sound/weapons/gun/general/heavycannon.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/supporttankshell
+	equip_cooldown = 12 SECONDS
+	projectiles = 1
+	projectiles_cache = 16
+	projectiles_cache_max = 16
+	ammo_type = MECHA_AMMO_SUPPORTTANK
+	mech_flags = EXOSUIT_MODULE_SUPPORTTANK
+
+// T5 Percutio (typhon can be a tripod weapon like the lamentum, but its being made here first)
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/typhon
+	name = "Typhon ra.XII"
+	desc = "A mounted anti tank rifle, designed for faster firing over free standing counterparts, while maintaining accuracy."
+	icon_state = "mecha_atr"
+	fire_sound = 'sound/weapons/gun/sniper/neville.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 10
+	projectiles_cache = 30
+	projectiles_cache_max = 80
+	projectiles_per_shot = 1
+	equip_cooldown = 1 SECONDS
+	randomspread = 1
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+	mech_flags = EXOSUIT_MODULE_TANK // not gonna make another flag, its about on the danger level of a devitt, and you cant build these guns either.
+
+// Noble Firebrand Weapon
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamer
+	name = "Heavy Flamethrower"
+	desc = "A wide bore flamethrower that is able to spit out tens of pounds of fuel far enough to avoid close range weaponary. More a weapon of terror then of war."
+	icon_state = "mecha_flamer"
+	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
+	projectile = /obj/projectile/bullet/incendiary/fire/heavy
+	projectiles = 10000
+	projectiles_cache = 10000
+	projectiles_cache_max = 10000
+	projectiles_per_shot = 10
+	equip_cooldown = 0.7 SECONDS
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_FLAME
+	mech_flags = EXOSUIT_MODULE_FLAMETANK
+
+// Callahan's armaments
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/callahan150s
+	name = "6x 150mm Huber Exalts Navalized "
+	desc = "Six large artillery guns for a Callahan Class, though since it was shrunk down they act much more like 40mms"
+	icon_state = "mecha_bblargo"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/lighttankshell
+	equip_cooldown = 5 SECONDS
+	projectile_delay = 0.03 SECONDS
+	projectiles = 600
+	projectiles_cache = 600
+	projectiles_cache_max = 600
+	projectiles_per_shot = 6
+	variance = 24
+	randomspread = 15
+	ammo_type = MECHA_AMMO_BBLARGE
+	mech_flags = EXOSUIT_MODULE_BATTLESHIP
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/callahansecondary
+	name = "Assorted Secondary Weapons"
+	desc = "120mm guns, 30mm torpedo-boat guns, and machineguns, all made into a concophony of 20mm effectively"
+	icon_state = "mecha_bbsmall"
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 1200
+	projectiles_cache = 1200
+	projectiles_cache_max = 1200
+	projectiles_per_shot = 20
+	equip_cooldown = 5 SECONDS
+	projectile_delay = 0.01 SECONDS
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_BBSMALL
+	mech_flags = EXOSUIT_MODULE_BATTLESHIP
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/torpedos
+	name = "Torpedo Launchers"
+	desc = "2 torpedo tubes, ready to ruin the day of whoever they're fired at."
+	icon_state = "mecha_torpenis"
+	projectile = /obj/projectile/bullet/rocket/torpenis
+	projectiles = 2
+	projectiles_cache = 12
+	projectiles_cache_max = 12
+	equip_cooldown = 4 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_TORPENIS
+	mech_flags = EXOSUIT_MODULE_BATTLESHIP
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/mininuke
+	name = "mininuke"
+	desc = "shouldn't see this unless an admin spawned it, you might survive firing this in the vendozer? It has 100 bomb armor but who fucking knows!"
+	icon_state = "mecha_torpenis"
+	projectile = /obj/projectile/bullet/rocket/mininuke
+	projectiles = 100000000
+	projectiles_cache = 10000000
+	projectiles_cache_max = 100000000
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_TORPENIS
+	mech_flags = EXOSUIT_MODULE_TRASHTANK

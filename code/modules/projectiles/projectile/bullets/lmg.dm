@@ -26,6 +26,13 @@
 	generic_name = "bullet"
 	icon_state = "redtrac"
 
+/obj/projectile/bullet/manned_turret/lamentum
+	generic_name = "bullet"
+	icon_state = "redtrac"
+	damage = 12
+	wound_bonus = -10
+	armour_penetration = 5
+
 /obj/projectile/bullet/syndicate_turret
 	generic_name = "bullet"
 	damage = 20
@@ -83,7 +90,7 @@
 
 /obj/projectile/bullet/mm127x70
 	name = "12.7x70mm bullet"
-	damage = 15
-	armour_penetration = 5
+	damage = 10
+	armour_penetration = 10
 	wound_bonus = -50
 	wound_falloff_tile = 0

@@ -678,3 +678,23 @@
 	fire = 40
 	acid = 50
 	wound = 30
+
+
+/obj/item/clothing/suit/armor/foxhole_warden
+	name = "Gunners breastplate"
+	desc = "Repurposed from ancient wars, these armour plates are highly effective at stopping small arms fire. That protection comes at a cost of weight, and the wearer will feel quite restricted and encumbered."
+	icon_state = "warden"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|ARMS
+	slowdown = 1.4
+	armor_type = /datum/armor/foxhole_warden
+
+/datum/armor/foxhole_warden
+	melee = 40
+	bullet = 50
+	laser = 10 // old stuff was not designed for lasers
+	energy = 15
+	bomb = 50
+	fire = 40
+	acid = 50
+	wound = 60

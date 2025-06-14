@@ -72,6 +72,36 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/scourgehunter_main
+	name = "\"Heme QMW 1a\" Valves and Dials"
+	desc = "Allows for the construction of a \"Heme QMW 1a\" control set."
+	id = "scourgehunter_main"
+	build_path = /obj/item/circuitboard/mecha/scourgehunter/main
+	category = list(
+		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_SCOURGEHUNTER
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/scourgehunter_peri
+	name = "\"Heme QMW 1a\" Hydraulics"
+	desc = "Allows for the construction of a \"Heme QMW 1a\" Hydraulics set."
+	id = "scourgehunter_peri"
+	build_path = /obj/item/circuitboard/mecha/scourgehunter/peripherals
+	category = list(
+		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_SCOURGEHUNTER
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/scourgehunter_targ
+	name = "\"Heme QMW 1a\" Cockpit seat."
+	desc = "Allows for the construction of a \"Heme QMW 1a\" cockpit seat."
+	id = "scourgehunter_targ"
+	build_path = /obj/item/circuitboard/mecha/scourgehunter/targeting
+	category = list(
+		RND_CATEGORY_EXOSUIT_BOARDS + RND_SUBCATEGORY_EXOSUIT_BOARDS_SCOURGEHUNTER
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/durand_main
 	name = "\"Durand\" Central Control module"
 	desc = "Allows for the construction of a \"Durand\" Central Control module."
@@ -281,6 +311,79 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_ammo/incendiary
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
+	construction_time = 20
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_flamethrower
+	name = "FNX-100 \"Immolator\" Flamethrower"
+	desc = "Allows for the construction of FNX-100 \"Conflagorator\" Flamethrower."
+	id = "mech_flamethrower"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/silver=SHEET_MATERIAL_AMOUNT*3)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_flamethrower_ammo
+	name = "FNX-100 Flamethrower Fuel"
+	desc = "Ammunition for the FNX-100 \"Conflagorator\" Flamethrower."
+	id = "mech_flamethrower_ammo"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_ammo/flamer
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*3)
+	construction_time = 20
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+
+/datum/design/mech_heavy
+	name = "Executor Mech Rifle"
+	desc = "Allows for the construction of Executor Mech Rifle."
+	id = "mech_heavy"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/titanium=SHEET_MATERIAL_AMOUNT*8)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_CATEGORY_MECHFAB_GYGAX + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_DURAND + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_PHAZON + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_HONK + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/mech_heavy_ammo
+	name = "Executor ammunition"
+	desc = "Ammunition for the Executor Mech Rifle."
+	id = "mech_heavy_ammo"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_ammo/heavy
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
 	construction_time = 20
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,

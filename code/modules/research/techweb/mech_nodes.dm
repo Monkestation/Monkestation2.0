@@ -126,6 +126,27 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_2_POINTS)
 
+/datum/techweb_node/scourgehunter
+	id = "mech_scourgehunter"
+	display_name = "PROTOTYPE Mech: Scourge Hunter"
+	description = "A really REALLY old mech design we got from corporate mergers, its terrible."
+	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	design_ids = list(
+		"scourgehunter_armor",
+		"scourgehunter_chassis",
+		"scourgehunter_left_arm",
+		"scourgehunter_left_leg",
+		"scourgehunter_main",
+		"scourgehunter_peri",
+		"scourgehunter_right_arm",
+		"scourgehunter_right_leg",
+		"scourgehunter_targ",
+		"scourgehunter_torso",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_2_POINTS)
+
+
 /datum/techweb_node/durand
 	id = "mech_durand"
 	display_name = "EXOSUIT: Durand"
@@ -267,6 +288,17 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
+/datum/techweb_node/mech_flamethrower
+	id = "mech_flamethrower"
+	display_name = "Exosuit Weapon (FNX-100 \"Conflagorator\" Flamethrower)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("exotic_ammo")
+	design_ids = list(
+		"mech_flamethrower",
+		"mech_flamethrower_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
 /datum/techweb_node/mech_ion
 	id = "mmech_ion"
 	display_name = "Exosuit Weapon (MKIV Ion Heavy Cannon)"
@@ -378,6 +410,17 @@
 	design_ids = list(
 		"mech_lmg",
 		"mech_lmg_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
+/datum/techweb_node/mech_heavy
+	id = "mech_heavy"
+	display_name = "Exosuit Weapon (\"Executor\" Mech Rifle)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("adv_mecha")
+	design_ids = list(
+		"mech_heavy",
+		"mech_heavy_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
