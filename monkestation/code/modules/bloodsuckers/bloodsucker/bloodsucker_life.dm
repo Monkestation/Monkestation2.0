@@ -20,10 +20,14 @@
 			COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_HEALING)
 	// Standard Updates
 
-	update_blood()
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_ON_LIFETICK)
-	INVOKE_ASYNC(src, PROC_REF(HandleStarving))
 	INVOKE_ASYNC(src, PROC_REF(update_hud))
+
+/datum/antagonist/bloodsucker/proc/handle_blood()
+	SIGNAL_HANDLER
+	update_blood()
+	handle_starving()
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN | HANDLE_BLOOD_NO_EFFECTS
 
 /datum/antagonist/bloodsucker/proc/on_death(mob/living/source, gibbed)
 	SIGNAL_HANDLER
@@ -239,7 +243,7 @@
 	to_chat(owner.current, span_userdanger("Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor."))
 	check_begin_torpor(TRUE)
 
-/datum/antagonist/bloodsucker/proc/HandleStarving() // I am thirsty for blood!
+/datum/antagonist/bloodsucker/proc/handle_starving() // I am thirsty for blood!
 	// Nutrition - The amount of blood is how full we are.
 	if(!isoozeling(owner.current))
 		owner.current.set_nutrition(min(bloodsucker_blood_volume, NUTRITION_LEVEL_FED))
@@ -296,18 +300,8 @@
 	// If we have no body, end here.
 	if(QDELETED(owner.current))
 		return
-	UnregisterSignal(src, list(
-		COMSIG_BLOODSUCKER_ON_LIFETICK,
-		COMSIG_LIVING_LIFE,
-		COMSIG_LIVING_DEATH,
-	))
-	UnregisterSignal(SSsol, list(
-		COMSIG_SOL_RANKUP_BLOODSUCKERS,
-		COMSIG_SOL_NEAR_START,
-		COMSIG_SOL_END,
-		COMSIG_SOL_RISE_TICK,
-		COMSIG_SOL_WARNING_GIVEN,
-	))
+	unregister_body_signals(owner.current)
+	unregister_sol_signals()
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)
 	if(!iscarbon(owner.current))

@@ -93,6 +93,7 @@
 	var/static/list/always_traits = list(
 		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
 		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
+		TRAIT_NO_BLEED_WARN,
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
@@ -114,6 +115,9 @@
 		TRAIT_NO_MIRROR_REFLECTION,
 		TRAIT_ETHEREAL_NO_OVERCHARGE,
 		TRAIT_OOZELING_NO_CANNIBALIZE,
+		// they eject zombie tumors and xeno larvae during eepy time anyways
+		TRAIT_NO_ZOMBIFY, // they're already undead lol
+		TRAIT_XENO_IMMUNE, // something something facehuggers only latch onto living things
 	)
 	/// Traits applied during Torpor.
 	var/static/list/torpor_traits = list(
@@ -135,6 +139,22 @@
 		/obj/item/organ/internal/body_egg,
 		/obj/item/organ/internal/zombie_infection,
 	))
+	/// An associative list of signals to procs to be registered on the bloodsucker's body.
+	var/static/list/body_signals = list(
+		COMSIG_ATOM_EXAMINE = PROC_REF(on_examine),
+		COMSIG_LIVING_LIFE = PROC_REF(LifeTick),
+		COMSIG_LIVING_DEATH = PROC_REF(on_death),
+		COMSIG_MOVABLE_MOVED = PROC_REF(on_moved),
+		COMSIG_HUMAN_ON_HANDLE_BLOOD = PROC_REF(handle_blood),
+	)
+	/// An associative list of signals to procs to be registered on SSsol.
+	var/static/list/sol_signals = list(
+		COMSIG_SOL_RANKUP_BLOODSUCKERS = PROC_REF(sol_rank_up),
+		COMSIG_SOL_NEAR_START = PROC_REF(sol_near_start),
+		COMSIG_SOL_END = PROC_REF(on_sol_end),
+		COMSIG_SOL_RISE_TICK = PROC_REF(handle_sol),
+		COMSIG_SOL_WARNING_GIVEN = PROC_REF(give_warning),
+	)
 
 /**
  * Apply innate effects is everything given to the mob
@@ -144,10 +164,7 @@
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
-	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	register_body_signals(current_mob)
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
@@ -175,7 +192,7 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
+	unregister_body_signals(current_mob)
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 
@@ -189,6 +206,22 @@
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
 		QDEL_NULL(sunlight_display)
+
+/datum/antagonist/bloodsucker/proc/register_body_signals(mob/living/body)
+	for(var/signal in body_signals)
+		RegisterSignal(body, signal, body_signals[signal])
+
+/datum/antagonist/bloodsucker/proc/unregister_body_signals(mob/living/body)
+	for(var/signal in body_signals)
+		UnregisterSignal(body, signal)
+
+/datum/antagonist/bloodsucker/proc/register_sol_signals()
+	for(var/signal in sol_signals)
+		RegisterSignal(SSsol, signal, sol_signals[signal])
+
+/datum/antagonist/bloodsucker/proc/unregister_sol_signals()
+	for(var/signal in sol_signals)
+		UnregisterSignal(SSsol, signal)
 
 /datum/antagonist/bloodsucker/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
@@ -224,11 +257,7 @@
 
 ///Called when you get the antag datum, called only ONCE per antagonist.
 /datum/antagonist/bloodsucker/on_gain()
-	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
-	RegisterSignal(SSsol, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
-	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
-	RegisterSignal(SSsol, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
-	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
+	register_sol_signals()
 
 	if(IS_FAVORITE_VASSAL(owner.current)) // Vassals shouldnt be getting the same benefits as Bloodsuckers.
 		bloodsucker_level_unspent = 0
@@ -250,7 +279,7 @@
 
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
-	UnregisterSignal(SSsol, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
+	unregister_sol_signals()
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
 	owner.special_role = null
