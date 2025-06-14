@@ -78,7 +78,6 @@
 		else
 			parts += "<span class='neutraltext big'>Neutral Victory</span>"
 			parts += "<B>Mission aborted!</B>"
-	parts += span_redtext("GoldenEye keys uploaded: [SSgoldeneye.uploaded_keys]/[SSgoldeneye.required_keys]")
 
 	var/text = "<br><span class='header'>The assault operatives were:</span>"
 	text += printplayerlist(assault_team.members)
