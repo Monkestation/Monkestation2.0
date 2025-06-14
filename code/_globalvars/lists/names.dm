@@ -29,6 +29,7 @@ GLOBAL_LIST_INIT(simian_last_names, world.file2list("monkestation/strings/names/
 GLOBAL_LIST_INIT(simian_names_female, world.file2list("monkestation/strings/names/simian_female_first.txt"))
 GLOBAL_LIST_INIT(simian_names_male, world.file2list("monkestation/strings/names/simian_male_first.txt"))
 GLOBAL_LIST_INIT(cyberauth_names, world.file2list("strings/names/cyberauth.txt"))
+GLOBAL_LIST_INIT(random_monkey_names, world.file2list("strings/names/random_monkey_names.txt"))
 GLOBAL_LIST_INIT(syndicate_monkey_names, world.file2list("strings/names/syndicate_monkey.txt"))
 GLOBAL_LIST_INIT(guardian_first_names, world.file2list("strings/names/guardian_descriptions.txt"))
 GLOBAL_LIST_INIT(guardian_tech_surnames, world.file2list("strings/names/guardian_gamepieces.txt"))
