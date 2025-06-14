@@ -42,9 +42,9 @@
 		show_debrained = FALSE
 
 	if(!owner.get_organ_slot(ORGAN_SLOT_EYES) && (head_flags & HEAD_EYEHOLES))
-		show_missing_eyes = TRUE
+		show_eyeless = TRUE
 	else
-		show_missing_eyes = FALSE
+		show_eyeless = FALSE
 
 	var/datum/sprite_accessory/sprite_accessory
 
