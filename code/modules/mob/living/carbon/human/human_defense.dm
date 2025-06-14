@@ -905,7 +905,7 @@
 		if(get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
 			return 0
 		if(get_insulation(FIRE_SUIT_MAX_TEMP_PROTECT) >= 0.9)
-			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * 0.2 * fire_handler.stacks * seconds_per_tick)
+			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
 
 	. = ..()
 	if(. && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
