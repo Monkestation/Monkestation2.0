@@ -15,9 +15,6 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_VIRUS_SCANNER), PROC_REF(on_virus_scanner_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_VIRUS_SCANNER), PROC_REF(on_virus_scanner_trait_loss))
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), PROC_REF(on_nohunger_trait_gain))
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NOHUNGER), PROC_REF(on_nohunger_trait_loss))
-
 /mob/living/proc/on_ignoredamageslowdown_trait_gain(datum/source)
 	SIGNAL_HANDLER
 	add_movespeed_mod_immunities(TRAIT_IGNOREDAMAGESLOWDOWN, /datum/movespeed_modifier/damage_slowdown)
@@ -52,11 +49,3 @@
 /mob/living/proc/on_virus_scanner_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	RemoveElement(/datum/element/virus_viewer)
-
-/mob/living/proc/on_nohunger_trait_gain(datum/source)
-	SIGNAL_HANDLER
-	reset_hunger()
-
-/mob/living/proc/on_nohunger_trait_loss(datum/source)
-	SIGNAL_HANDLER
-	reset_hunger()

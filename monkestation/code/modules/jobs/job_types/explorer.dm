@@ -33,6 +33,11 @@
 	rpg_title = "Adventurer"
 	job_flags = STATION_JOB_FLAGS
 
+/datum/job/explorer/conditions_met()
+	if(SSmapping.is_planetary())
+		return FALSE
+	else
+		return TRUE
 
 /datum/outfit/job/explorer
 	name = "Explorer"

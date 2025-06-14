@@ -31,3 +31,10 @@
 	name = "7.12x82mm rubber bullet casing"
 	desc = "A 7.12x82mm rubber bullet casing manufactured to unfailingly disastrous standards, you could piss off a lot of people spraying this down a hallway."
 	projectile_type = /obj/projectile/bullet/mm712x82/bouncy
+
+/obj/item/ammo_casing/minigun22
+	name = ".22LR bullet casing"
+	desc = "A .22LR bullet casing"
+	icon_state = "s-casing"
+	caliber = CALIBER_22LR
+	projectile_type = /obj/projectile/bullet/peashooter

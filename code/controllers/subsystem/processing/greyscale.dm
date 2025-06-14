@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(greyscale)
 	name = "Greyscale"
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_HIBERNATE
 	init_order = INIT_ORDER_GREYSCALE
 	wait = 3 SECONDS
 

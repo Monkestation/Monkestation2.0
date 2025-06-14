@@ -78,9 +78,11 @@
 		inline_html = "",
 		inline_js = "",
 		inline_css = "")
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(client,
 		context = "[id]/initialize",
 		window = src)
+#endif
 	if(QDELETED(client))
 		return
 	src.initial_fancy = fancy
@@ -238,16 +240,20 @@
 	if(mouse_event_macro_set)
 		remove_mouse_macro()
 	if(can_be_suspended && can_be_suspended())
+#ifdef EXTENDED_DEBUG_LOGGING
 		log_tgui(client,
 			context = "[id]/close (suspending)",
 			window = src)
+#endif
 		visible = FALSE
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
+#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(client,
 		context = "[id]/close",
 		window = src)
+#endif
 	release_lock()
 	visible = FALSE
 	status = TGUI_WINDOW_CLOSED

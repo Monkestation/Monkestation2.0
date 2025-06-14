@@ -229,7 +229,7 @@
 	for(var/mob/living/near_targets in oview(1, owner))
 		if(!owner.Adjacent(near_targets))
 			continue
-		if(near_targets.stat)
+		if(near_targets.stat < DEAD)
 			close_living_mobs |= near_targets
 		else
 			close_dead_mobs |= near_targets

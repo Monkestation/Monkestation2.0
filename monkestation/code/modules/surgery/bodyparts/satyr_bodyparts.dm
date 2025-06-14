@@ -3,6 +3,7 @@
 	limb_id = SPECIES_SATYR
 	is_dimorphic = TRUE
 	head_flags = HEAD_HAIR | HEAD_FACIAL_HAIR | HEAD_EYESPRITES | HEAD_EYECOLOR | HEAD_EYEHOLES | HEAD_DEBRAIN
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/chest/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
@@ -13,10 +14,12 @@
 /obj/item/bodypart/arm/left/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/arm/right/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
+	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/leg/left/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
