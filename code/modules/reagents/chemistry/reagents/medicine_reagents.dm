@@ -1525,17 +1525,19 @@ MONKESTATION REMOVAL END */
 // helps bleeding wounds clot faster
 /datum/reagent/medicine/coagulant
 	name = "Sanguirite"
-	description = "A proprietary coagulant used to help bleeding wounds clot faster. It is purged by heparin."
+	description = "A proprietary coagulant used to help bleeding wounds clot faster while in critical condition. It is purged by heparin."
 	reagent_state = LIQUID
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
-	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second
+	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second whilst in crit
 	var/clot_rate = 0.3
 	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
-	var/passive_bleed_modifier = 0.7
+	var/passive_bleed_modifier = 0.8
 	/// For tracking when we tell the person we're no longer bleeding
 	var/was_working
+	//For any children that need to work while awake
+	var/work_while_awake = FALSE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_COAGULATING)
 
@@ -1559,14 +1561,19 @@ MONKESTATION REMOVAL END */
 		return
 
 	var/datum/wound/bloodiest_wound
-
+	var/datum/wound/slash/flesh/slash_wound
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		if(iter_wound.blood_flow)
 			if(iter_wound.blood_flow > bloodiest_wound?.blood_flow)
 				bloodiest_wound = iter_wound
-
-	if(bloodiest_wound)
+		if(istype(iter_wound, /datum/wound/slash/flesh)) //not inclusive of internal or pierce as that would take a refactor of the wounds themselves
+			slash_wound = iter_wound
+		if(slash_wound.clot_rate < 0)
+			slash_wound.clot_rate = 0
+	if(!bloodiest_wound)
+		return
+	if(work_while_awake || affected_mob.health <= affected_mob.crit_threshold) //only works in crit
 		if(!was_working)
 			to_chat(affected_mob, span_green("You can feel your flowing blood start thickening!"))
 			was_working = TRUE
@@ -1601,6 +1608,7 @@ MONKESTATION REMOVAL END */
 	description = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
 	color = "#50531a" // rgb: 175, 175, 0
 	taste_description = "horribly stringy, bitter pulp"
+	work_while_awake = TRUE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	clot_rate = 0.2
 	passive_bleed_modifier = 0.8
@@ -1612,11 +1620,18 @@ MONKESTATION REMOVAL END */
 	desc = "Ancient Clown Lore says that pulped banana peels are good for your blood, \
 		but are you really going to take medical advice from a clown about bananas?"
 
+/datum/reagent/medicine/coagulant/syndicate
+	name = "Legally distinct Interdyne-brand Sanguirine"
+	description = "An extremely fast coagulant that is legally completely distinct from Nanotrasen's Sanguirite. Any similarities between the two are mere coincidence."
+	work_while_awake = TRUE
+	passive_bleed_modifier = 0.7
+
 /datum/reagent/medicine/coagulant/seraka_extract
 	name = "Seraka Extract"
 	description = "A deeply coloured oil present in small amounts in Seraka Mushrooms. Acts as an effective blood clotting agent, but has a low overdose threshold."
 	color = "#00767C"
 	taste_description = "intensely savoury bitterness"
+	work_while_awake = TRUE
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	clot_rate = 0.4 //slightly better than regular coagulant
 	passive_bleed_modifier = 0.5
