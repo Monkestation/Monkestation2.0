@@ -20,6 +20,9 @@
 	var/zone = null //where the attack is targetting
 	var/stamina_damage = 0
 	var/counter = FALSE //monke edit end
+	var/damage_sharpness = NONE
+	var/instant_grab = FALSE
+	var/snap_grab_state = GRAB_KILL
 
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/target, make_temporary = FALSE)
 	. = ..()
@@ -52,10 +55,9 @@
 	return FALSE
 
 ///Gnashing Teeth: Harm Harm, consistent 25 force punch on every second harm punch
-/datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/attacker, mob/living/defender, set_damage = TRUE)
-	if(set_damage)
-		damage = 25
-		wounding = 0
+/datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/attacker, mob/living/defender)
+	damage = 25
+	wounding = 0
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	//This var is ripped from beestation. Credit to whomever made it, it checks the armour on the attacked part so the damage can account for it
@@ -70,7 +72,7 @@
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 	playsound(defender, 'sound/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
 	log_combat(attacker, defender, "strong punched ([log_name])") //monke edit
-	defender.apply_damage(damage, attacker.get_attack_type(), affecting, wound_bonus = wounding, blocked = def_check)
+	defender.apply_damage(damage, attacker.get_attack_type(), affecting, wound_bonus = wounding, blocked = def_check, sharpness = damage_sharpness)
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/attacker, mob/living/defender, set_damage = TRUE)
@@ -145,12 +147,14 @@
 		)
 		grab_log_description = "grabbed and nerve pinched"
 		defender.Unconscious(10 SECONDS)
+		if(attacker.grab_state == GRAB_PASSIVE && instant_grab == TRUE)
+			attacker.grab_state = GRAB_NECK
 	defender.stamina.adjust(-50)
 	log_combat(attacker, defender, "[grab_log_description] (Sleeping Carp)")
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/attacker, mob/living/defender)
-	if(attacker.grab_state == GRAB_KILL \
+	if(attacker.grab_state == snap_grab_state \
 		&& attacker.zone_selected == BODY_ZONE_HEAD \
 		&& attacker.pulling == defender \
 		&& defender.stat != DEAD \

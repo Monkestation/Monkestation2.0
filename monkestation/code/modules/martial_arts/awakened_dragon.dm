@@ -22,6 +22,9 @@
 	var/original_name
 	var/titled_name
 	var/list/datum/weakref/all_bodies = list()
+	instant_grab = TRUE
+	snap_grab_state = GRAB_NECK //you can kill people a little faster
+	damage_sharpness = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)
 	//if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
@@ -60,7 +63,7 @@
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/strongPunch(mob/living/attacker, mob/living/defender, set_damage)
 	damage = 55
-	. = ..(attacker, defender, set_damage = FALSE)
+	. = ..(attacker, defender)
 	attacker.say("Crushing Maw!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/launchKick(mob/living/attacker, mob/living/defender, set_damage)
