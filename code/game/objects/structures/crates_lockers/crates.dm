@@ -292,7 +292,7 @@
 
 /obj/structure/closet/crate/engineering/fundedsatellites
 	name = "budgeted meteor satellites"
-	desc = "The lock seems to respond to Centcom's station goal announcements."
+	desc = "The lock seems to respond to Centcom's station goal announcements. CAUTION: Do not attempt to break the lock."
 	secure = TRUE
 	locked = TRUE
 
