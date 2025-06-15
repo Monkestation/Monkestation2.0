@@ -105,3 +105,31 @@
 	rounds = 3
 	direct_load = TRUE
 	ammo_type = MECHA_AMMO_CLUSTERBANG
+
+/obj/item/mecha_ammo/supporttankammo
+	name = "75mm Tank Shells"
+	desc = "A large crate of 3 giant tank shells. You can bearly lift this."
+	icon_state = "SUPPORTTANKSHELL"
+	rounds = 3
+	ammo_type = MECHA_AMMO_SUPPORTTANK
+
+/obj/item/mecha_ammo/antitankammo
+	name = "20mm Typhon rounds"
+	desc = "A small crate with a magazine of anti tank bullets for a Typhon ATR."
+	icon_state = "tankatr"
+	rounds = 10
+	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_ammo/flamer
+	name = "Flamethrower Fuel Tank"
+	desc = "A man portable fuel tank of flamable liquids. For use with the FNX-100."
+	icon_state = "flamer"
+	rounds = 60
+	ammo_type = MECHA_AMMO_FLAME
+
+/obj/item/mecha_ammo/heavy
+	name = "20mm Ammo Box"
+	desc = "A box of large caliber rifle rounds. Used with the Executor Mech Rifle"
+	icon_state = "heavy"
+	rounds = 20
+	ammo_type = MECHA_AMMO_ATR

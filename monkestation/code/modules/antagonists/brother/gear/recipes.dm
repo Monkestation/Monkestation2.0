@@ -44,3 +44,10 @@
 	spawn_path = /obj/item/book/granter/crafting_recipe/maint_gun/explosive_lance
 	preview_path = /obj/item/spear/explosive
 
+/datum/bb_gear/granter/vendozer
+	name = "Recipe:The Vendozer (Killing Machine)"
+	desc = "Contains a recipe book, allowing you to learn the knowledge to build The Vendozer."
+	spawn_path = /obj/item/book/granter/crafting_recipe/vendozer
+	preview_path = /obj/vehicle/sealed/mecha/vendozer
+
+

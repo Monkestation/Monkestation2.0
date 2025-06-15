@@ -12,11 +12,9 @@
 #define STYLE_INVISIBLE 12
 #define STYLE_GONDOLA 13
 #define STYLE_SEETHROUGH 14
-
-//Monkestation Edit: Two new drop pods, the beater car and the washing machine
 #define STYLE_WASHER 15
 #define STYLE_CAR 16
-//Monkestation Edit End
+#define STYLE_MORTAR 17
 
 #define POD_SHAPE 1
 #define POD_BASE 2
@@ -70,7 +68,8 @@ GLOBAL_LIST_INIT(podstyles, list(\
 	list(POD_SHAPE_OTHER, "gondola",     FALSE, FALSE, FALSE,   RUBBLE_NONE,     "gondola",     "The silent walker. This one seems to be part of a delivery agency."),\
 	list(POD_SHAPE_OTHER, FALSE,         FALSE,    FALSE,            FALSE,   RUBBLE_NONE,         FALSE,      FALSE,      "rl_click", "give_po"),\
 	list(POD_SHAPE_OTHER, "washer",      TRUE, FALSE, FALSE,   RUBBLE_NONE, "washing machine",     "A washing machine rigged to fly straight for the target."),\
-	list(POD_SHAPE_OTHER, "beat_car",    	TRUE, FALSE, FALSE,   RUBBLE_NONE, "beat up car",     "An ancient car, you have no idea how it got here.")\
+	list(POD_SHAPE_OTHER, "beat_car",    	TRUE, FALSE, FALSE,   RUBBLE_NONE, "beat up car",     "An ancient car, you have no idea how it got here."),\
+	list(POD_SHAPE_OTHER, "mortar",     FALSE, FALSE, FALSE,   RUBBLE_THIN,     "Mortar shell", "A handheld mortar round, huh. ")\
 ))
 //Monkestation Edit: Two new drop pods, the beater car and the washing machine
 //Nearby reference because nobody else did this:

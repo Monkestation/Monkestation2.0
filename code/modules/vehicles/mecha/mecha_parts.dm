@@ -332,6 +332,204 @@
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "savannah_ivanov_armor"
 
+// Kingspire Mk.1
+
+/obj/item/mecha_parts/chassis/kingspire
+	name = "\improper Kingspire Mk.1 Chassis"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_chass"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/kingspire
+
+/obj/item/mecha_parts/part/kingspire_torso
+	name="\improper Kingspire Mk.1 drivers cupola"
+	desc="A cylindrical peice of metal designed to house the driver and his equipment. It was found to be easier to manufacture this peice seperate from the rest of the hull."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_harness"
+
+/obj/item/mecha_parts/part/kingspire_left_arm
+	name="\improper Kingspire Mk.1 Transmission"
+	desc="Linkages and a gearbox for a Kingspire Mk.1, emphasis was taken on reliability."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_l_arm"
+
+/obj/item/mecha_parts/part/kingspire_right_arm
+	name="\improper Kingspire Mk.1 Engine bay"
+	desc="The small (for a tank) engine fitted onto a Kingspire Mk.1 , the decision to have a self contained engine was abandoned in larger tanks due to problems with scale."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_r_arm"
+
+/obj/item/mecha_parts/part/kingspire_left_leg
+	name="\improper Kingspire Mk.1 left track"
+	desc="The Leftside track for a Kingspire Mk.1, Designed for simple maintence with little tools."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_l_leg"
+	SET_BASE_PIXEL(-8, 0)
+
+/obj/item/mecha_parts/part/kingspire_right_leg
+	name="\improper Kingspire Mk.1 right track"
+	desc="The Rightside track for a Kingspire Mk.1, Designed for simple maintence with little tools."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_r_leg"
+	SET_BASE_PIXEL(-8, 0)
+
+/obj/item/mecha_parts/part/kingspire_armor
+	name="\improper Kingspire Mk.1 Ratcatcher Turret"
+	desc="An armored turret containing Harvey Malone's First Designed Machinegun, also contains radio equipment and the large antenna."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "kingspire_armor"
+
+// Scourge Hunter
+
+/obj/item/mecha_parts/chassis/scourgehunter
+	name = "\improper Heme QMW 1a Chassis"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_chass"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/scourgehunter
+
+/obj/item/mecha_parts/part/scourgehunter_torso
+	name="\improper Heme QMW 1a ram shield"
+	desc="A slightly bent peice of thick sheet metal, used to protect the chassis when ramming the undead."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_harness"
+
+/obj/item/mecha_parts/part/scourgehunter_left_arm
+	name="\improper Heme QMW 1a Front Left Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the front left one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_l_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_right_arm
+	name="\improper Heme QMW 1a Front Right Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the front right one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_r_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_left_leg
+	name="\improper Heme QMW 1a Back Left Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the back left one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_l_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_right_leg
+	name="\improper Heme QMW 1a Back Right Leg"
+	desc="One of the hydraulicly powered legs of the Scourge hunter, this one is the back right one."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_r_leg"
+
+/obj/item/mecha_parts/part/scourgehunter_armor
+	name="\improper Heme QMW 1a Turret"
+	desc="An armored turret containing four Malone Ratcatchers, originally the turret contained 4 rocket launchers but Nanotrassen required this prototype to be less destructive before being alowed in exosuit fabricators."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "scourgehunter_armor"
+
+// T5 Percutio
+
+/obj/item/mecha_parts/chassis/percutio
+	name = "\improper T5 Percutio Chassis"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_chass"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/percutio
+
+/obj/item/mecha_parts/part/percutio_left_arm
+	name="\improper T5 Percutio headlights"
+	desc="The headlights of a T5 Percutio armored car."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_l_arm"
+
+/obj/item/mecha_parts/part/percutio_right_arm
+	name="\improper T5 Percutio Engine bay"
+	desc="A modified truck engine compacted into an armored car, problems with overheating never arose in the frozen north they were designed to fight in.."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_r_arm"
+
+/obj/item/mecha_parts/part/percutio_left_leg
+	name="\improper T5 Percutio wheels"
+	desc="The wheels of a T5 Percutio, can have chains mounted on for grip."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_l_leg"
+
+/obj/item/mecha_parts/part/percutio_right_leg
+	name="\improper T5 Percutio Transmission"
+	desc="Linkages, gears, and axles required to transmit power from the engine of the armored car, to its 4 wheels."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_r_leg"
+
+/obj/item/mecha_parts/part/percutio_armor
+	name="\improper T5 Percutio Typhon Turret"
+	desc="A lightly armored and open topped turret containing a Typhon ra.XII anti tank rifle.."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "percutio_armor"
+
+// Balfour Stockade (chimera)
+
+/obj/item/mecha_parts/chassis/stockade
+	name = "\improper Balfour Stockade Carriage"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_chass"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/stockade
+
+
+/obj/item/mecha_parts/part/stockade_left_arm
+	name="\improper Balfour Stockade Gunshield"
+	desc="A fucking yuge gunshield for the Balfour Stockade, your wondering how you'll lift this."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_l_arm"
+
+/obj/item/mecha_parts/part/stockade_right_arm
+	name="\improper Balfour Stockade Syndicate Ammo maker"
+	desc="A box? That with special technology makes more ammo for the stockade, You were told to not stick your hand it, or ask questions."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_r_arm"
+
+/obj/item/mecha_parts/part/stockade_left_leg
+	name="\improper Balfour Stockade Wheels"
+	desc="2 giant wooden wheels with a massive band of metal for reinforcement and traction."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_l_leg"
+
+/obj/item/mecha_parts/part/stockade_armor
+	name="\improper Balfour Stockade Cannon"
+	desc="A massive fucking cannon, meant for a Stockade field gun."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "stockade_armor"
+
+// The Vendozer, Needed a spot to put the parts, doesnt have a mech buildup. Has intermediary parts.
+
+/obj/item/mecha_parts/part/vendozer_fl
+	name="\improper Vendozer Front left Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_fl"
+
+/obj/item/mecha_parts/part/vendozer_fr
+	name="\improper Vendozer Front right Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_fr"
+
+/obj/item/mecha_parts/part/vendozer_br
+	name="\improper Vendozer Back right Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_br"
+
+/obj/item/mecha_parts/part/vendozer_bl
+	name="\improper Vendozer Back left Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_bl"
+
+/obj/item/mecha_parts/part/vendozer_ck
+	name="\improper Oven Cockpit"
+	desc="A armored box with an oven as its top, Multiple pipeguns are sticking out and theres cameras everywhere, why would someone build this?"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_ck"
+
+/obj/item/mecha_parts/part/vendozer_eg
+	name="\improper Giant Turbine Engine"
+	desc="The Atmospherics turbine ripped from its mountings and modified, Who needs something like this?"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_eg"
 ///////// Circuitboards
 
 /obj/item/circuitboard/mecha
@@ -431,3 +629,48 @@
 /obj/item/circuitboard/mecha/savannah_ivanov/main
 	name = "Savannah-Ivanov Combination Control Lock module (Exosuit Board)"
 	icon_state = "mainboard"
+
+/obj/item/circuitboard/mecha/kingspire/peripherals
+	name = "Kingspire Mk.1 Hydraulics"
+	desc = "Hydaulic systems for the Kingspire Mk.1"
+	icon_state = "kingspire1"
+
+/obj/item/circuitboard/mecha/kingspire/targeting
+	name = "Kingspire Mk.1 Seats"
+	desc = "Seats for the crew of a Kingspire Mk.1"
+	icon_state = "kingspire2"
+
+/obj/item/circuitboard/mecha/kingspire/main
+	name = "Kingspire Mk.1 Radio Equipment"
+	desc = "A Radioset for the Kingspire Mk.1"
+	icon_state = "kingspire3"
+
+/obj/item/circuitboard/mecha/percutio/peripherals
+	name = "T5 Percutio Hydraulics"
+	desc = "Hydaulic systems for the T5 Percutio"
+	icon_state = "percutio1"
+
+/obj/item/circuitboard/mecha/percutio/targeting
+	name = "T5 Percutio Seats"
+	desc = "Seats for the crew of a T5 Percutio"
+	icon_state = "percutio2"
+
+/obj/item/circuitboard/mecha/percutio/main
+	name = "T5 Percutio fuel tank"
+	desc = "The fuel tank of an armored car, repurposed for internal air storage, since batteries are so good now"
+	icon_state = "percutio3"
+
+/obj/item/circuitboard/mecha/scourgehunter/peripherals
+	name = "Heme QMW 1a Hydraulics"
+	desc = "Hydaulic systems for the Heme QMW 1a Scourge Hunter. Thanks to the fact that no minaturization technology existed in its insception, the hydraulics consume an absurd amount of power to move this machine."
+	icon_state = "scourgehunter1"
+
+/obj/item/circuitboard/mecha/scourgehunter/targeting
+	name = "Heme QMW 1a Cockpit Seat"
+	desc = "the seat for the pilot of a Scourge Hunter"
+	icon_state = "scourgehunter2"
+
+/obj/item/circuitboard/mecha/scourgehunter/main
+	name = "Heme QMW 1a dials & valves"
+	desc = "many delicate glass dials and valves, the mechanical masterpiece required to keep the walker upright without electronics"
+	icon_state = "scourgehunter3"
