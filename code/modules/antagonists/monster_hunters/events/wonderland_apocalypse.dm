@@ -49,7 +49,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 		if(prob(25) && char != " ")
 			amt = rand(2, 3)
 		for(var/_ in 1 to amt)
-			if(prob(50))
+			if(prob(55))
 				. += uppertext(char)
 			else
 				. += lowertext(char)
