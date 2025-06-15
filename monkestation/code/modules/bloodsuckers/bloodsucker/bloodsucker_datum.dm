@@ -212,16 +212,14 @@
 		RegisterSignal(body, signal, body_signals[signal])
 
 /datum/antagonist/bloodsucker/proc/unregister_body_signals(mob/living/body)
-	for(var/signal in body_signals)
-		UnregisterSignal(body, signal)
+	UnregisterSignal(body, assoc_to_keys(body_signals))
 
 /datum/antagonist/bloodsucker/proc/register_sol_signals()
 	for(var/signal in sol_signals)
 		RegisterSignal(SSsol, signal, sol_signals[signal])
 
 /datum/antagonist/bloodsucker/proc/unregister_sol_signals()
-	for(var/signal in sol_signals)
-		UnregisterSignal(SSsol, signal)
+	UnregisterSignal(SSsol, assoc_to_keys(sol_signals))
 
 /datum/antagonist/bloodsucker/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
