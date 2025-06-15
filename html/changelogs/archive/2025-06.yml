@@ -157,3 +157,116 @@
   Unit2E, Xander3359:
   - bugfix: Mobs should no longer fall asleep when breathing in enough Nitrium to
       provide sleep immunity.
+2025-06-08:
+  Absolucy:
+  - rscadd: Mentors now get an extra 500 monkecoins at roundend if they were a head
+      of staff.
+  Xander3359:
+  - bugfix: Healium crystals properly work in a 7 range AOE
+  - qol: Atmos holofans automatically open firelocks
+2025-06-09:
+  Absolucy:
+  - bugfix: (Artemchik542) Quirk "quadruple amputee" now will return your original
+      limbs back if you off it.
+  - qol: (Artemchik542) Quirk "prosthetic limb" now resets more correctly.
+  - bugfix: (Melbert) Enabling or disabling ambience mid round will properly enable
+      or disable ambience.
+  - qol: (Melbert) Added descriptions differentiating "Ship ambience" from "ambience".
+  - bugfix: (distributivgesetz) Ambient loops will now refresh when entering a mob.
+  - bugfix: (ShizCalev) Deafened mobs will no longer hear the station's ambient sounds.
+  - bugfix: (ShizCalev) Fixed ambient sounds resetting their loop when entering different
+      bodies (ie admin ghosting, being moved to other mobs, ect.)
+  - bugfix: (Kapu, StrangeWeirdKitten) Ambience buzz will now respect ship ambience
+      prefrences for observers.
+  - sound: (Kapu, StrangeWeirdKitten) Ambience buzz requires APC enviorment power
+      to function.
+2025-06-11:
+  Absolucy:
+  - bugfix: The Crew Manifest UI no longer incorrectly labels the Quartermaster as
+      a member of command.
+  - bugfix: Fixed black market auctions not processing.
+  - bugfix: Golem species now have their proper damage resistances again.
+  - bugfix: Ethereals properly take 25% more brute damage again.
+  - bugfix: Plasmamen now take 50% more brute and burn damage instead of 125%.
+  - map: The botany, chemistry, R&D, genetics, robotics, and cargo shutters are now
+      opened by default on Box.
+  - refactor: The Slimeperson, Stargazer, and Luminescent xenobiology species are
+      now Oozeling subspecies.
+  - admin: Admins can now easily aheal dead oozelings via the new "Heal Oozeling Core"
+      verb.
+  - map: Fixed some stacked scrubber pipes in a couple of the icebox bars.
+  - qol: The color of your name in chat when speaking is now based on the trim of
+      your current ID!
+  Absolucy, PowerfulBacon:
+  - bugfix: Screentip icons work on the latest BYOND 516 again.
+  F-e-r-n:
+  - balance: nerfs combat shotguns fire delay from 0.8 seconds to 1.2 seconds
+  - balance: rebalances crew-accessible shotgun lethals to be 3 hit crits from 2.
+  - rscdel: removes APDS shells from imports. Planned to add back to the game somewhere
+      else
+  - balance: combat shotguns no longer wallslam.
+  - balance: changes stun baton click cooldown to 1 sec from 1.5 sec
+  Ice-Type:
+  - rscdel: Removes the light all bullets are given
+  - bugfix: Bullet casings do not glow anymore
+  Kmla2:
+  - bugfix: you now get 425 monkecoins instead of 150 monkecoins for playing a whole
+      round as a roundstart security / janitor to keep parity with latejoining
+  MissClassyPineapple:
+  - rscadd: New spooks in maints
+  - rscadd: New secrets in maints
+  - balance: rebalanced maint loot tables
+  Salted-Zen:
+  - balance: Mining RND is back, and the PK-Shockwave has been reworked, now coming
+      in a box on purchase with a special modkit that grants it a 2 tile offensive
+      mining blast! The modkit only fits in the shockwave, but it should work good
+      for clearing lots of rock or fauna at once!
+  - qol: Wastes pin locked weapons now works AFTER ROUND ENDS ANYWHERE
+  - rscadd: The PKSMG returns for miners to spray, pray, and slay with.
+  Siro:
+  - qol: Health Analyzer readout improvements.
+  - qol: Alerts to consume alcohol if they have the living_drunk component.
+  - code_imp: Ports tgstation#76350 organ_flags and status merged. Fixes purist issues.
+  - bugfix: Spleen organ now properly handled by the Health Analyzer readout.
+  - bugfix: Properly displays when the heart is missing.
+  - bugfix: DNA Infuser will not remove organs with the ORGAN_UNREMOVABLE flag
+  tvesion:
+  - image: Slims down the ballgown side sprites
+2025-06-12:
+  Absolucy:
+  - qol: Bloodsucker vassals now get an arrow near the center of their screen pointing
+      towards their master, instead of a dinky pinpointer at the top right.
+  - qol: HUD tracking arrows (i.e vassals, assops with goldeneye cards, and some slasher
+      thing) now fade when you're right next to your target.
+  - qol: Stargazers (the species) can now manually disconnect someone from their Slime
+      Link, by right clicking the "Link Minds" action.
+2025-06-14:
+  Absolucy:
+  - code_imp: Dried gibs now merge into one object, hopefully reducing the lag from
+      large amounts of blood tomatoes or monkeys being gibbed.
+  - qol: Revenant malfunction will now ignore tiles that have nothing that it can
+      actually potentially screw with on them, meaning it'll hopefully hit something
+      interesting far more often.
+  - rscadd: (Melbert) Revenants can now use Ouija Boards.
+  - rscadd: (Melbert) Ouija Boards now have more options to select from by default.
+      (and admins can VV it to even more options)
+  - bugfix: (Melbert) Blind people are now worse at using Ouija Boards.
+  - bugfix: (aaaa1023) Revenants can now again emag Medibots, Cleanbots, and Hygienebots.
+  - bugfix: (Wayland-Smithy) Fixed revenant spawning next to brains and other unharvestable
+      dead mobs.
+  - bugfix: (Rhials) Revenants can no longer be fake-eaten by the recycler.
+  - bugfix: (JohnFulpWillard) Revenants (and other flying mobs) will not make noise
+      when walking into pools of gibs,
+  - code_imp: Improved how pressure tanks handle updating their gas visuals.
+  - code_imp: Improved the performance of how starlight is enabled/updated.
+  - refactor: Refactored how the ghost duel arena is reset/loaded.
+  - bugfix: The lobby screen now properly fades out during roundstart/latejoin/
+  - bugfix: Roundstart setup now properly immediately triggers the storyteller to
+      process.
+  SirNightKnight:
+  - qol: the chaplain rite burning offering is now called cleansed offering and takes
+      husks instead of corpses that have to be on fire.
+  notghosti:
+  - balance: '"Camera Obscura" (crafted with holy water + camera) will now steal the
+      soul of ghostly apparitions when a picture is taken causing damage. This will
+      also stun and reveal revenants briefly.'

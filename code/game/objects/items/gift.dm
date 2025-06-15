@@ -134,6 +134,9 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/bounty_cube/debug_cube,
 			/obj/item/organ/internal/cyberimp/brain/nif/debug,
 			/obj/item/spellbook_charge/debug,
+			/obj/item/uplink/nuclear/debug,
+			//kills only the debug uplink from the gifts.
+			/obj/item/mod/control/pre_equipped/chrono,
 			)
 		for(var/blocked_item as anything in blocked_items)
 			// Block the item listed, and any subtypes too.

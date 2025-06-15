@@ -44,9 +44,32 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/oozeling,
 	)
 
-	var/datum/action/cooldown/spell/slime_washing/slime_washing
-	var/datum/action/cooldown/spell/slime_hydrophobia/slime_hydrophobia
-	var/datum/action/innate/core_signal/core_signal
+	/// Typepaths of the default oozeling actions to give.
+	var/static/list/default_actions = list(
+		/datum/action/cooldown/slime_washing,
+		/datum/action/cooldown/slime_hydrophobia,
+		/datum/action/innate/core_signal,
+	)
+	/// Typepaths of extra actions to give to all oozelings.
+	var/list/extra_actions = list()
+	/// Instances of all actions given to this oozeling.
+	var/list/actions_given = list()
+
+/datum/species/oozeling/Destroy(force)
+	QDEL_LIST(actions_given)
+	return ..()
+
+/datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
+	. = ..()
+	for(var/action_type in default_actions + extra_actions)
+		var/datum/action/action = new action_type(src)
+		action.Grant(slime)
+		actions_given += action
+
+/datum/species/oozeling/on_species_loss(mob/living/carbon/former_slime)
+	QDEL_LIST(actions_given)
+	. = ..()
+	former_slime.blood_volume = clamp(former_slime.blood_volume, BLOOD_VOLUME_SAFE, BLOOD_VOLUME_NORMAL)
 
 /datum/species/oozeling/get_species_description()
 	return "A species of sentient semi-solids. \
@@ -63,46 +86,28 @@
 		if(findname(.))
 			. = .(gender, TRUE, lastname, ++attempts)
 
-/datum/species/oozeling/on_species_loss(mob/living/carbon/C)
-	if(slime_washing)
-		slime_washing.Remove(C)
-	if(slime_hydrophobia)
-		slime_hydrophobia.Remove(C)
-	if(core_signal)
-		core_signal.Remove(C)
-	..()
-	C.blood_volume = BLOOD_VOLUME_SAFE
-
-/datum/species/oozeling/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	if(ishuman(C))
-		slime_washing = new
-		slime_washing.Grant(C)
-		slime_hydrophobia = new
-		slime_hydrophobia.Grant(C)
-		core_signal = new
-		core_signal.Grant(C)
-
 //////
 /// HEALING SECTION
 /// Handles passive healing and water damage.
 
 /datum/species/oozeling/spec_life(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	. = ..()
-
-	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects
-	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
+	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE))
 		return
-	if(istype(wetness) && wetness.stacks > (DAMAGE_WATER_STACKS))
-		slime.blood_volume -= 2 * seconds_per_tick
+	if(slime.blood_volume <= 0) // stop, stop they're already dead!
+		return
+	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects // locate should be slightly faster in theory, as this has no subtypes hopefully, so we don't need to check ids
+	if(!wetness)
+		return
+
+	if(wetness.stacks > (DAMAGE_WATER_STACKS))
+		slime.blood_volume = max(slime.blood_volume - (2 * seconds_per_tick), 0)
 		if (SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
 
-	if(istype(wetness) && wetness.stacks > (REGEN_WATER_STACKS))
-		if (SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
-			//to_chat(slime, span_warning("You can't pull your body together and regenerate with water inside it!"))
-			to_chat(slime, span_warning("You can't pull your body together it is dripping wet!"))
-			slime.blood_volume -= 1 * seconds_per_tick
+	if(wetness.stacks > (REGEN_WATER_STACKS) && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
+		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
+		slime.blood_volume = max(slime.blood_volume - (1 * seconds_per_tick), 0)
 
 //////
 /// DEATH OF BODY SECTION
@@ -136,54 +141,27 @@
 				slime.heal_damage_type(remaining_heal * REM * seconds_per_tick, BURN)
 				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 			else
-				to_chat(slime, span_purple("Your membrane is too viscous to mend its wounds"))
+				to_chat(slime, span_purple("Your membrane is too viscous to mend its wounds..."))
 		if(slime.blood_volume > BLOOD_VOLUME_SLIME_SPLIT)
 			slime.adjustOrganLoss(
-			pick(organs_we_mend),
-			- 2 * seconds_per_tick,
-		)
-		if (SPT_PROB(5, seconds_per_tick))
+				pick(organs_we_mend),
+				-2 * seconds_per_tick,
+			)
+		if(SPT_PROB(5, seconds_per_tick))
 			to_chat(slime, span_purple("Your body's thirst for plasma is quenched, your inner and outer membrane using it to regenerate."))
 
-	if(chem.type == /datum/reagent/water)
-		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
-			return TRUE
+	else if(chem.type == /datum/reagent/water)
+		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
+			return ..()
 
-		slime.blood_volume -= 3 * seconds_per_tick
-		slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
-		if (SPT_PROB(25, seconds_per_tick))
+		slime.blood_volume = max(slime.blood_volume - (3 * seconds_per_tick), 0)
+		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
+		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
 
+		return TRUE
+
 	return ..()
-
-/datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)
-	//Flat blood loss damage from being touched by water
-	. = ..()
-
-	if(isoozeling(exposed_mob))
-		if(HAS_TRAIT(exposed_mob, TRAIT_SLIME_HYDROPHOBIA))
-			to_chat(exposed_mob, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
-			return
-		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
-		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
-
-/datum/reagent/toxin/slimeooze
-	name = "Slime Ooze"
-	description = "A gooey semi-liquid produced from Oozelings"
-	color = "#611e80"
-	toxpwr = 0
-	taste_description = "slime"
-	taste_mult = 1.5
-
-/datum/reagent/toxin/slimeooze/on_mob_life(mob/living/carbon/M)
-	if(prob(10))
-		to_chat(M, span_danger("Your insides are burning!</span>"))
-		M.adjustToxLoss(rand(1,10)*REM, 0)
-		. = 1
-	else if(prob(40))
-		M.heal_bodypart_damage(5*REM)
-		. = 1
-	..()
 
 /datum/species/oozeling/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -220,13 +198,13 @@
 			SPECIES_PERK_DESC = "[plural_form] will dissolve away when in contact with water.",
 		),
 		list(
-            SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-            SPECIES_PERK_ICON = "briefcase-medical",
-            SPECIES_PERK_NAME = "Oozeling Biology",
-            SPECIES_PERK_DESC = "[plural_form] take specialized medical knowledge to be \
-                treated. Do not expect speedy revival, if you are lucky enough to get \
-                one at all.",
-        ),
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "briefcase-medical",
+			SPECIES_PERK_NAME = "Oozeling Biology",
+			SPECIES_PERK_DESC = "[plural_form] take specialized medical knowledge to be \
+				treated. Do not expect speedy revival, if you are lucky enough to get \
+				one at all.",
+		),
 	)
 
 	return to_add
