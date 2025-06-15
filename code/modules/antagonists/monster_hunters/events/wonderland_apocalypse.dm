@@ -32,8 +32,8 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	if(!fake && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_LAMBDA)
 		SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
 	priority_announce(
-		text = Gibberish(wonderland_scramble("What the hell is going on?! We have detected rapid destabilization of bluespace across all frequencies in your sector! Get out of there NOW!!"), replace_characters = TRUE, chance = 25),
-		title = Gibberish("[command_name()] Higher Dimensional Affairs", replace_characters = TRUE, chance = 15),
+		text = Gibberish(wonderland_scramble("What the hell is going on?! We have detected rapid destabilization of bluespace across all frequencies in your sector! Get out of there NOW!!"), replace_characters = TRUE, chance = 20),
+		title = Gibberish("[command_name()] Higher Dimensional Affairs", replace_characters = TRUE, chance = 10),
 		sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg',
 		has_important_message = TRUE,
 		encode_text = FALSE, // Gibberish() already sanitizes
