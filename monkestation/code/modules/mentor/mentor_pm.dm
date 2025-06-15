@@ -42,8 +42,8 @@
 				mentorhelp(msg)
 				return
 
-		/// Neither party is a mentor, they shouldn't be PMing!
-		if(!chosen_client.is_mentor() && !is_mentor())
+		/// Neither party is a mentor, and the chosen client doesnt have mentor rights, they shouldn't be PMing!
+		if(!chosen_client?.mentor_datum?.check_for_rights(R_MENTOR) && !is_mentor())
 			return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
@@ -57,7 +57,7 @@
 	var/list/all_requests = GLOB.mentor_requests.requests
 	var/list/chosen_requests = all_requests[chosen_client.ckey]
 	var/chosen_requests_len = length(chosen_requests)
-	if(chosen_client.is_mentor())
+	if(is_mentor(chosen_client))
 		if(is_mentor())
 			/// Both are Mentors
 			to_chat(chosen_client,
@@ -80,7 +80,6 @@
 				confidential = TRUE)
 			var/datum/request/request = chosen_requests[chosen_requests_len]
 			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, msg)
-
 	else
 		if(is_mentor())
 			/// Reciever is a Non-Mentor - Left unsorted so people that Mentorhelp with Mod chat off will still get it, otherwise they'll complain.
@@ -105,7 +104,7 @@
 		if(request)
 			id = "[request.id]"
 
-	if(is_mentor() && chosen_client.is_mentor())
+	if(is_mentor() && is_mentor(chosen_client))
 		id = "Both Mentors, ID Retrival may be wrong: [id]"
 
 	/// We don't use message_Mentors here because the sender/receiver might get it too

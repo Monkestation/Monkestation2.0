@@ -161,7 +161,7 @@
 				continue
 
 		if(item.mentor_only) //These checks are also performed in the backend.
-			if(!preferences.parent.mentor_datum && !is_admin(preferences.parent))
+			if(!is_mentor(preferences.parent) || !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
