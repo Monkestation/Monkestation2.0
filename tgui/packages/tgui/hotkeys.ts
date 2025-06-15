@@ -188,6 +188,12 @@ export const setupHotKeys = () => {
   globalEvents.on('input-focus', () => {
     releaseHeldKeys();
   });
+  globalEvents.on('key', (key: KeyEvent) => {
+    for (const keyListener of keyListeners) {
+      keyListener(key);
+    }
+    handlePassthrough(key);
+  });
 };
 
 /**
