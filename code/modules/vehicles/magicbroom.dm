@@ -46,7 +46,7 @@
 		folded_item.forceMove(src)
 
 /obj/vehicle/ridden/magic_broom/Destroy(force)
-	QDEL_NULL(broom_overlay)
+	broom_overlay = null
 	folded_item = null
 	return ..()
 

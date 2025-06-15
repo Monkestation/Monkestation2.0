@@ -227,6 +227,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	AddElement(/datum/element/squish_sound)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 
 /obj/effect/decal/cleanable/blood/gibs/Destroy()
@@ -245,14 +246,20 @@
 	if(!.)
 		return
 	AddComponent(/datum/component/rot, 0, 5 MINUTES, 0.7)
+#ifndef UNIT_TESTS
+	for(var/obj/effect/decal/cleanable/blood/gibs/other_gibs in loc)
+		if(!other_gibs.dried || other_gibs == src)
+			continue
+		other_gibs.handle_merge_decal(src)
+		beauty += other_gibs.beauty
+		var/mutable_appearance/other_appearance = copy_appearance_filter_overlays(other_gibs.appearance)
+		other_appearance.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+		add_overlay(other_appearance)
+		qdel(other_gibs)
+#endif
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
-
-/obj/effect/decal/cleanable/blood/gibs/on_entered(datum/source, atom/movable/L)
-	if(isliving(L) && has_gravity(loc))
-		playsound(loc, 'sound/effects/footstep/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, TRUE)
-	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER

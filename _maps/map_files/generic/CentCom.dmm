@@ -12851,7 +12851,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "aIs" = (
-/obj/effect/spawner/random_arena_spawner,
+/obj/effect/ghost_arena_corner,
 /turf/open/indestructible/event/plating,
 /area/centcom/tdome/arena/actual)
 "aIt" = (
@@ -26636,6 +26636,11 @@
 /obj/item/pai_card,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
+"onu" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/ghost_arena_corner,
+/turf/open/indestructible/event/plating,
+/area/centcom/tdome/arena/actual)
 "ooz" = (
 /obj/machinery/light/neon_lining{
 	icon_state = "pink2_1"
@@ -71485,7 +71490,7 @@ aaa
 aaa
 aaa
 awc
-aWg
+onu
 aJk
 aJk
 aIJ
