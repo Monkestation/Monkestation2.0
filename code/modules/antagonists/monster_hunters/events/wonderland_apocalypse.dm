@@ -25,16 +25,34 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	category = EVENT_CATEGORY_SPACE
 	track = EVENT_TRACK_OBJECTIVES
 
+/datum/round_event/wonderlandapocalypse
+	fakeable = FALSE
+
 /datum/round_event/wonderlandapocalypse/announce(fake)
-	if(!fake && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_DELTA)
-		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	if(!fake && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_LAMBDA)
+		SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
 	priority_announce(
-		text = "What the heELl is going on?! WEeE have detected  massive up-spikes in ##@^^?? coming fr*m yoOourr st!*i@n! GeEeEEET out of THERE NOW!!",
-		title = Gibberish("[command_name()] Higher Dimensional Affairs", TRUE, 45),
+		text = Gibberish(wonderland_scramble("What the hell is going on?! We have detected rapid destabilization of bluespace across all frequencies in your sector! Get out of there NOW!!"), replace_characters = TRUE, chance = 20),
+		title = Gibberish("[command_name()] Higher Dimensional Affairs", replace_characters = TRUE, chance = 10),
 		sound = 'monkestation/sound/ambience/antag/monster_hunter.ogg',
-		encode_title = FALSE, // Gibberish() already sanitizes
-		color_override = "purple"
+		has_important_message = TRUE,
+		encode_text = FALSE, // Gibberish() already sanitizes
+		encode_title = FALSE,
+		color_override = "purple",
 	)
+
+/proc/wonderland_scramble(text)
+	. = ""
+	for(var/idx in 1 to length_char(text))
+		var/char = copytext_char(text, idx, idx + 1)
+		var/amt = 1
+		if(prob(25) && char != " ")
+			amt = rand(2, 3)
+		for(var/_ in 1 to amt)
+			if(prob(55))
+				. += uppertext(char)
+			else
+				. += lowertext(char)
 
 /datum/round_event/wonderlandapocalypse/start()
 	GLOB.wonderland_apocalypse = TRUE
