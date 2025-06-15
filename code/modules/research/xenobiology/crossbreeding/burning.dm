@@ -101,10 +101,9 @@ Burning extracts:
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
 	// nothing here should deal actual damage - it's just painful and disorienting
 	for(var/mob/living/victim in range(4, get_turf(user)) - user)
-		victim.cause_pain(BODY_ZONES_ALL, 30, BURN)
+		victim.cause_pain(BODY_ZONES_ALL, 10, BURN)
 		victim.set_confusion_if_lower(10 SECONDS)
 		victim.set_eye_blur_if_lower(10 SECONDS)
-		victim.Knockdown(2 SECONDS)
 		ADD_TRAIT(victim, TRAIT_POOR_AIM, type)
 		addtimer(TRAIT_CALLBACK_REMOVE(victim, TRAIT_POOR_AIM, type), 15 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		to_chat(victim, span_userdanger("You feel a sharp, painful pulse of energy throughout your body!"))
