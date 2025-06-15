@@ -927,16 +927,6 @@
 	name = "ammo box (40mm rubber slug)"
 	ammo_type = /obj/item/ammo_casing/a40mm/rubber
 
-/obj/item/ammo_box/rocket
-	name = "rocket bouquet (84mm HE)"
-	icon_state = "rocketbundle"
-	ammo_type = /obj/item/ammo_casing/rocket
-	max_ammo = 3
-	multiple_sprites = AMMO_BOX_PER_BULLET
-
-/obj/item/ammo_box/rocket/can_load(mob/user)
-	return FALSE
-
 /obj/item/ammo_box/strilka310
 	name = "stripper clip (.310 Strilka)"
 	desc = "A stripper clip."
@@ -1008,10 +998,6 @@
 /obj/item/ammo_box/c46x30mm/ap
 	name = "ammo box (4.6x30mm AP)"
 	ammo_type = /obj/item/ammo_casing/c46x30mm/ap
-
-/obj/item/ammo_box/c46x30mm/rubber
-	name = "ammo box (4.6x30mm rubber)"
-	ammo_type = /obj/item/ammo_casing/c46x30mm/rubber
 
 /obj/item/ammo_box/advanced/s12gauge
 	name = "slug ammo box"

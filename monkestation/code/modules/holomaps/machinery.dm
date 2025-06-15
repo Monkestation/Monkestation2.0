@@ -372,6 +372,32 @@
 	pixel_x = -16
 	pixel_y = -16
 
+/obj/machinery/station_map/syndicate
+	name = "recon holomap"
+	desc = "A virtual map of the target station."
+
+/obj/machinery/station_map/syndicate/Initialize()
+	. = ..()
+	var/tracked_z_level = SSmapping.levels_by_trait(ZTRAIT_STATION)[1]
+	current_z_level = tracked_z_level
+
+/obj/machinery/station_map/syndicate/directional/north
+	dir = NORTH
+	pixel_y = 32
+
+/obj/machinery/station_map/syndicate/directional/south
+	dir = SOUTH
+	pixel_y = -32
+
+/obj/machinery/station_map/syndicate/directional/west
+	dir = WEST
+	pixel_x = -32
+
+/obj/machinery/station_map/syndicate/directional/east
+	dir = EAST
+	pixel_x = 32
+
+
 #undef HOLOMAP_LOW_LIGHT
 #undef HOLOMAP_HIGH_LIGHT
 #undef HOLOMAP_LIGHT_OFF

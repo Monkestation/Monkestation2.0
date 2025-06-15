@@ -416,6 +416,8 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	var/icon_state_to_use = "blood"
 	if(SPECIES_MONKEY in species_types)
 		icon_state_to_use += "paw"
+	else if(SPECIES_TRAINED_MONKEY in species_types)
+		icon_state_to_use += "paw"
 	else if(BODYPART_ID_DIGITIGRADE in species_types)
 		icon_state_to_use += "claw"
 
@@ -445,7 +447,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			// god help me
 			if(species == "unknown")
 				. += "Some <B>feet</B>."
-			else if(species == SPECIES_MONKEY)
+			else if(species == SPECIES_MONKEY || species == SPECIES_TRAINED_MONKEY)
 				. += "[icon2html('icons/mob/species/human/human.dmi', user, "monkey")] Some <B>monkey paws</B>."
 			else if(species == SPECIES_SIMIAN)
 				. += "[icon2html('monkestation/icons/mob/species/monkey/bodyparts.dmi', user, "monkey_l_leg")] Some <B>simian paws</B>."

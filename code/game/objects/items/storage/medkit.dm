@@ -71,12 +71,15 @@
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
 		/obj/item/stack/sticky_tape,
+		/obj/item/bodybag,
+		/obj/item/emergency_bed,
 		/obj/item/device/antibody_scanner //monkestation addition
 	)
 
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
@@ -321,7 +324,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/tactical
-	name = "combat medical kit"
+	name = "tactical medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
 	inhand_icon_state = "medkit-tactical"
@@ -353,7 +356,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/tactical/premium
-	name = "premium combat medical kit"
+	name = "premium tactical medical kit"
 	desc = "May or may not contain traces of lead."
 	grind_results = list(/datum/reagent/lead = 10)
 
@@ -377,6 +380,68 @@
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 		/obj/item/organ/internal/cyberimp/cyberlink/syndicate = 1, //Monkestation addition: unable to use the hacked surgery toolset without this
+	)
+	generate_items_inside(items_inside,src)
+
+//------------------------------------------------------------------------------------------------
+// Combat Medkits. The better tactical medkits. TO-DO: Go and replace tactical medkits with these.
+//------------------------------------------------------------------------------------------------
+/obj/item/storage/medkit/combat
+	name = "combat medical kit"
+	desc = "I hope you've got insurance."
+	icon_state = "medkit_tactical"
+	inhand_icon_state = "medkit-tactical"
+	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/combat/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 14
+	atom_storage.max_total_storage = 32
+
+/obj/item/storage/medkit/combat/PopulateContents()
+	if(empty)
+		return
+	var/static/list/items_inside = list(
+		/obj/item/stack/medical/gauze/twelve = 1,
+		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/mesh/advanced = 2,
+		/obj/item/storage/pill_bottle/libital_patch = 1,
+		/obj/item/storage/pill_bottle/aiuri_patch = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/reagent_containers/hypospray/medipen/advanced/epinephrine = 1,
+		/obj/item/reagent_containers/hypospray/medipen/advanced/blood_loss = 1,
+		/obj/item/reagent_containers/hypospray/medipen/advanced/salacid = 1,
+		/obj/item/reagent_containers/hypospray/medipen/advanced/oxandrolone = 1,
+		/obj/item/reagent_containers/hypospray/medipen/advanced/salbutamol = 1,
+		/obj/item/reagent_containers/hypospray/medipen/advanced/penacid = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/combat/surgery
+	name = "combat surgical kit"
+	icon_state = "medkit_tactical_surgery"
+	inhand_icon_state = "medkit-tactical"
+	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/combat/surgery/PopulateContents()
+	if(empty)
+		return
+	var/static/list/items_inside = list(
+		/obj/item/emergency_bed = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/cautery/advanced = 1,
+		/obj/item/blood_filter = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/stack/medical/bone_gel = 1,
+		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/reagent_containers/hypospray/medipen/advanced/morphine = 1,
+		/obj/item/storage/pill_bottle/modafinil_patch = 1,
+		/obj/item/reagent_containers/medigel/advanced = 1,
+		/obj/item/reagent_containers/hypospray/combat/anti_tox = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -520,6 +585,30 @@
 	new /obj/item/reagent_containers/pill/patch/aiuri(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/patch/libital(src)
+
+/obj/item/storage/pill_bottle/libital_patch
+	name = "bottle of libital patches"
+	desc = "Contains libital patches used to treat brute damage."
+
+/obj/item/storage/pill_bottle/libital_patch/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/patch/libital(src)
+
+/obj/item/storage/pill_bottle/aiuri_patch
+	name = "bottle of aiuri patches"
+	desc = "Contains aiuri patches used to treat burn damage."
+
+/obj/item/storage/pill_bottle/aiuri_patch/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/patch/aiuri(src)
+
+/obj/item/storage/pill_bottle/modafinil_patch
+	name = "bottle of modafinil patches (WARNING)"
+	desc = "Contains modafinil patches which help quickly wake up patients and cure dizziness. Easy to overdose, apply one patch and wait for it to finish applying before applying another."
+
+/obj/item/storage/pill_bottle/modafinil_patch/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/patch/modafinil(src)
 
 /obj/item/storage/pill_bottle/zoom
 	name = "suspicious pill bottle"

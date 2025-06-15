@@ -222,6 +222,14 @@
 	icon_state = "syndie-elite"
 	ambience_index = AMBIENCE_DANGER
 
+/area/centcom/syndicate_mothership/firebase_trident
+	name = "Firebase Trident preparations zone"
+	icon_state = "syndie-elite"
+
+/area/centcom/syndicate_mothership/firebase_trident/hangar
+	name = "Firebase Trident hangar bay"
+	icon_state = "syndie-elite"
+
 //CAPTURE THE FLAG
 /area/centcom/ctf
 	name = "Capture the Flag"

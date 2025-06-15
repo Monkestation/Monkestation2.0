@@ -652,6 +652,21 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		'sound/creatures/monkey/monkey_screech_7.ogg',
 	)
 
+/obj/item/organ/internal/tongue/monkey/hindered
+	modifies_speech = TRUE
+
+/obj/item/organ/internal/tongue/monkey/hindered/get_possible_languages()
+	return list(
+		/datum/language/monkey,
+	)
+
+/obj/item/organ/internal/tongue/monkey/hindered/could_speak_language(datum/language/language_path)
+	if(owner && HAS_TRAIT(owner, TRAIT_SIGN_LANG))
+		var/list/all_languages = subtypesof(/datum/language)
+		return (language_path in all_languages)
+	else
+		return (language_path in languages_possible)
+
 /obj/item/organ/internal/tongue/monkey/get_laugh_sound()
 	return 'monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'
 
