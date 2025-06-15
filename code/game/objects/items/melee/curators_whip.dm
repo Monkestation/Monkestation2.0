@@ -104,7 +104,8 @@
 			to_chat(user, span_warning("[target] is too close to trip with \the [src]!"))
 			return FALSE
 		if(2 to 3)
-			EMPTY_BLOCK_GUARD
+			if(!CheckToolReach(user, target, 3))
+				return FALSE
 		if(4 to INFINITY)
 			return FALSE
 	// this is a horrible hack to make it so tripping doesn't drop items.
