@@ -235,12 +235,15 @@
 	desc = "Eat it right, or you die!"
 	icon_state = "death_sandwich"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 8,
-		/datum/reagent/consumable/nutriment/protein = 14,
-		/datum/reagent/consumable/nutriment/vitamin = 6,
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
+	bite_consumption = 100 //You either eat it right once or you die, this also prevents people from mass feeding others
+	food_quality = FOOD_QUALITY_TOP //If it can give you god like powers its gotta taste pretty godly!
 	foodtypes = GRAIN | MEAT
+	food_buffs = STATUS_EFFECT_DEATH_KWON_DO
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
 
 /obj/item/food/sandwich/death/Initialize(mapload)
@@ -250,8 +253,7 @@
 // Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
-
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
 ///Eat it right, or you die.
 /obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
 	/// Closest thing to a mullet we have /// We now actually have a mullet so uh...yeah its mullet now :)
@@ -259,18 +261,24 @@
 		return FOOD_LIKED
 	return FOOD_ALLERGIC
 
+/obj/item/food/sandwich/death/proc/on_consume(mob/living/carbon/human/consumer)
+	if(check_liked(consumer) == FOOD_LIKED)
+		food_buffs = STATUS_EFFECT_DEATH_KWON_DO //Monkestation Edit End:New status effect if you eat it right
+		return
+		//Its funnier that if you eat it wrong you just fucking explode.
+	consumer.visible_message(span_danger(span_boldbig("[consumer.name] ate it wrong!!!")))
+	explosion(consumer, 0, 0, 0, 0, 0, FALSE, FALSE, FALSE, FALSE)
+	new /obj/effect/temp_visual/explosion(get_turf(consumer), 2, COLOR_ORANGE, TRUE, FALSE)
+	consumer.gib(FALSE, TRUE, TRUE)
+	log_admin("[consumer.name] has died to a death sandwich.")
+	var/msg = span_notice("[consumer.name] has died to a death sandwich.")
+	message_admins(msg)
+
 /**
 * Callback to be used with the edible component.
 * If you take a bite of the sandwich with the right clothes and hairstyle, you like it.
-* If you don't, you contract a deadly disease.
+* If you don't, you explode.
 */
-/obj/item/food/sandwich/death/proc/after_eat(mob/living/carbon/human/consumer)
-	// If you like it, you're eating it right.
-	if(check_liked(consumer) == FOOD_LIKED)
-		return
-	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
-	balloon_alert(consumer, "ate it wrong!")
-	consumer.infect_disease_predefined(DISEASE_SANDWICH, TRUE) //Monkestation Edit: Pathology (drinking anacea is still the only cure)
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
