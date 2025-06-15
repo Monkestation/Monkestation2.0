@@ -17472,6 +17472,7 @@
 /area/station/medical/medbay/central)
 "isB" = (
 /obj/machinery/light/directional/east,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "isN" = (
@@ -26370,6 +26371,14 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
+"mGh" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "mGt" = (
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass/lavaland{
@@ -131590,7 +131599,7 @@ lIo
 kxW
 kxW
 eiv
-rKh
+mGh
 nva
 mES
 qcv

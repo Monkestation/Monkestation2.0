@@ -13245,6 +13245,11 @@
 	},
 /turf/open/space/openspace,
 /area/station/solars/starboard/fore)
+"dee" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/plating,
+/area/station/engineering/atmos)
 "deh" = (
 /obj/structure/sink/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -23394,6 +23399,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "gpe" = (
@@ -118634,7 +118640,7 @@ hZr
 diq
 pvG
 lDj
-djX
+dee
 ixc
 ixc
 hYn

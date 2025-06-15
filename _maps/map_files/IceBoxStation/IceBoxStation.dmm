@@ -25563,6 +25563,7 @@
 /area/mine/living_quarters)
 "ign" = (
 /obj/structure/railing,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "igx" = (
@@ -75470,6 +75471,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
+"ybe" = (
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/glass/reinforced,
+/area/station/science/ordnance/office)
 "ybf" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark,
@@ -256405,7 +256410,7 @@ tIq
 tIq
 vaa
 xLq
-xLq
+ybe
 nsZ
 rDZ
 sFA

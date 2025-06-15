@@ -43770,6 +43770,16 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/theater)
+"mmL" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 9
+	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron/textured,
+/area/station/engineering/atmos)
 "mna" = (
 /obj/structure/plasticflaps{
 	name = "Deliveries"
@@ -83498,6 +83508,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/textured_edge{
 	dir = 8
 	},
@@ -111863,7 +111874,7 @@ pkR
 pGY
 lMS
 lMS
-ltK
+mmL
 hLI
 dYh
 aCW

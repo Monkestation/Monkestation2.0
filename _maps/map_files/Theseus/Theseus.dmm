@@ -5539,6 +5539,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
 "bGS" = (
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "bGY" = (
@@ -38867,6 +38868,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/warm/directional/south,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "lqn" = (
