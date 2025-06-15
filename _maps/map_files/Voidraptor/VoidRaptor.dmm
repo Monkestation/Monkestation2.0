@@ -42513,6 +42513,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
+"lTK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/engine,
+/area/station/engineering/main)
 "lTS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -117779,7 +117786,7 @@ vZF
 mAy
 mAy
 mym
-vRH
+lTK
 luV
 cNe
 qcq

@@ -52615,6 +52615,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 8
 	},
+/obj/structure/closet/crate/engineering/fundedsatellites,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pxM" = (
@@ -74339,6 +74340,7 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
 	},
+/obj/structure/closet/crate/engineering/fundedsatellites,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "wbf" = (
