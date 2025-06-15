@@ -142,7 +142,7 @@
 	/// An associative list of signals to procs to be registered on the bloodsucker's body.
 	var/static/list/body_signals = list(
 		COMSIG_ATOM_EXAMINE = PROC_REF(on_examine),
-		COMSIG_LIVING_LIFE = PROC_REF(LifeTick),
+		COMSIG_LIVING_LIFE = PROC_REF(life_tick),
 		COMSIG_LIVING_DEATH = PROC_REF(on_death),
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_moved),
 		COMSIG_HUMAN_ON_HANDLE_BLOOD = PROC_REF(handle_blood),

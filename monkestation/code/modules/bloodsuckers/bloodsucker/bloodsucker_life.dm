@@ -2,7 +2,7 @@
 #define BLOODSUCKER_PASSIVE_BLOOD_DRAIN 0.1
 
 /// Runs from COMSIG_LIVING_LIFE, handles Bloodsucker constant proccesses.
-/datum/antagonist/bloodsucker/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
+/datum/antagonist/bloodsucker/proc/life_tick(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 	if(isbrain(owner?.current))
 		return
@@ -86,7 +86,7 @@
  * ## HEALING
  */
 
-/// Constantly runs on Bloodsucker's LifeTick, and is increased by being in Torpor/Coffins
+/// Constantly runs on Bloodsucker's life_tick, and is increased by being in Torpor/Coffins
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 	if(QDELETED(owner?.current))
 		return
