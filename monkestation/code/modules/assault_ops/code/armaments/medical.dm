@@ -25,7 +25,7 @@
 	cost = 1
 
 /datum/armament_entry/assault_operatives/medical/injector/atropine
-	item_type = /obj/item/reagent_containers/hypospray/medipen/atropine
+	item_type = /obj/item/reagent_containers/hypospray/medipen/atropine/syndicate
 	cost = 2
 
 /datum/armament_entry/assault_operatives/medical/injector/salacid

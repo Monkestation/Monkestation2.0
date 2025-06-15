@@ -281,11 +281,16 @@
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
-	desc = "A rapid way to save a person from a critical injury state!"
+	desc = "A rapid way to save a person from a critical state!"
 	icon_state = "atropen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
 	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant = 2)
+
+/obj/item/reagent_containers/hypospray/medipen/atropine/syndicate
+	name = "interdyne-brand autoinjector"
+	desc = "A rapid way to save a person from a critical state! This one seems to have an interdyne sticker over the original logo."
+	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant/syndicate = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"
