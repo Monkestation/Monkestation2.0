@@ -33,7 +33,7 @@
 		"adv_weaponry" = TECHWEB_TIER_2_POINTS,
 		"weaponry" = TECHWEB_TIER_1_POINTS,
 		"sec_basic" = TECHWEB_DISCOUNT_MINOR * 2,
-		"explosive_weapons" = TECHWEB_DISCOUNT_MINOR * 2,
+		"chemical_weapons" = TECHWEB_DISCOUNT_MINOR * 2,
 		"electronic_weapons" = TECHWEB_DISCOUNT_MINOR * 2,
 		"radioactive_weapons" = TECHWEB_DISCOUNT_MINOR * 2,
 		"beam_weapons" = TECHWEB_DISCOUNT_MINOR * 2,
