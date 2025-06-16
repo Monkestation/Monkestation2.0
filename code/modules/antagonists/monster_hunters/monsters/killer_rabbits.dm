@@ -21,7 +21,7 @@
 /mob/living/basic/killer_rabbit/proc/hostile_attackingtarget(mob/living/basic/source, atom/target, success)
 	SIGNAL_HANDLER
 
-	if(!success || !ishuman(target))
+	if(!success || (!iscarbon(target) || !issilicon(target)))
 		return
 	explosion(src, heavy_impact_range = 1, light_impact_range = 1, flame_range = 2)
 	gib(src)
