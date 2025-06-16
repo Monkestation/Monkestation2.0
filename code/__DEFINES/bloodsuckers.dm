@@ -103,37 +103,39 @@
  * Bloodsucker Signals
  */
 ///Called when a Bloodsucker ranks up: (datum/bloodsucker_datum, mob/owner, mob/target)
-#define BLOODSUCKER_RANK_UP "bloodsucker_rank_up"
+#define COMSIG_BLOODSUCKER_RANK_UP "bloodsucker_rank_up"
 ///Called when a Bloodsucker interacts with a Vassal on their persuasion rack.
-#define BLOODSUCKER_INTERACT_WITH_VASSAL "bloodsucker_interact_with_vassal"
+#define COMSIG_BLOODSUCKER_INTERACT_WITH_VASSAL "bloodsucker_interact_with_vassal"
 ///Called when a Bloodsucker makes a Vassal into their Favorite Vassal: (datum/vassal_datum, mob/master)
-#define BLOODSUCKER_MAKE_FAVORITE "bloodsucker_make_favorite"
+#define COMSIG_BLOODSUCKER_MAKE_FAVORITE "bloodsucker_make_favorite"
 ///Called when a new Vassal is successfully made: (datum/bloodsucker_datum)
-#define BLOODSUCKER_MADE_VASSAL "bloodsucker_made_vassal"
+#define COMSIG_BLOODSUCKER_MADE_VASSAL "bloodsucker_made_vassal"
 ///Called when a Bloodsucker exits Torpor.
-#define BLOODSUCKER_EXIT_TORPOR "bloodsucker_exit_torpor"
+#define COMSIG_BLOODSUCKER_EXIT_TORPOR "bloodsucker_exit_torpor"
 ///Called when a Bloodsucker reaches Final Death.
-#define BLOODSUCKER_FINAL_DEATH "bloodsucker_final_death"
+#define COMSIG_BLOODSUCKER_FINAL_DEATH "bloodsucker_final_death"
 	///Whether the Bloodsucker should not be dusted when arriving Final Death
 	#define DONT_DUST (1<<0)
 ///Called when a Bloodsucker breaks the Masquerade
-#define COMSIG_BLOODSUCKER_BROKE_MASQUERADE "comsig_bloodsucker_broke_masquerade"
+#define COMSIG_BLOODSUCKER_BROKE_MASQUERADE "bloodsucker_broke_masquerade"
 ///Called when a Bloodsucker enters Frenzy
-#define BLOODSUCKER_ENTERS_FRENZY "bloodsucker_enters_frenzy"
+#define COMSIG_BLOODSUCKER_ENTERS_FRENZY "bloodsucker_enters_frenzy"
 ///Called when a Bloodsucker exits Frenzy
-#define BLOODSUCKER_EXITS_FRENZY "bloodsucker_exits_frenzy"
+#define COMSIG_BLOODSUCKER_EXITS_FRENZY "bloodsucker_exits_frenzy"
+/// Called on the mind when a Bloodsucker chooses a clan: (datum/antagonist/bloodsucker, datum/bloodsucker_clan)
+#define COMSIG_BLOODSUCKER_CLAN_CHOSEN "clan_chosen"
 
 /**
  * Sol signals & Defines
  */
-#define COMSIG_SOL_RANKUP_BLOODSUCKERS "comsig_sol_rankup_bloodsuckers"
-#define COMSIG_SOL_RISE_TICK "comsig_sol_rise_tick"
-#define COMSIG_SOL_NEAR_START "comsig_sol_near_start"
-#define COMSIG_SOL_END "comsig_sol_end"
+#define COMSIG_SOL_RANKUP_BLOODSUCKERS "sol_rankup_bloodsuckers"
+#define COMSIG_SOL_RISE_TICK "sol_rise_tick"
+#define COMSIG_SOL_NEAR_START "sol_near_start"
+#define COMSIG_SOL_END "sol_end"
 ///Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)
-#define COMSIG_SOL_WARNING_GIVEN "comsig_sol_warning_given"
+#define COMSIG_SOL_WARNING_GIVEN "sol_warning_given"
 ///Called on a Bloodsucker's Lifetick.
-#define COMSIG_BLOODSUCKER_ON_LIFETICK "comsig_bloodsucker_on_lifetick"
+#define COMSIG_BLOODSUCKER_ON_LIFETICK "bloodsucker_on_lifetick"
 
 #define DANGER_LEVEL_FIRST_WARNING 1
 #define DANGER_LEVEL_SECOND_WARNING 2

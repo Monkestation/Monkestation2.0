@@ -197,7 +197,7 @@ Runs the event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/round_event = new typepath(TRUE, src)
-	if(round_event.oshan_blocked && SSmapping.config.map_name == "Oshan Station")
+	if(round_event.oshan_blocked && SSmapping.current_map.map_name == "Oshan Station")
 		return
 	if(admin_forced && length(admin_setup))
 		//not part of the signal because it's conditional and relies on usr heavily

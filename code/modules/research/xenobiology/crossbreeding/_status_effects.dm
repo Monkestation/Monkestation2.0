@@ -438,6 +438,7 @@
 /datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its' own.
 	id = "stabilizedbase"
 	duration = STATUS_EFFECT_PERMANENT
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
@@ -461,9 +462,6 @@
 	if(linked_extract.get_held_mob() == owner)
 		return
 	owner.balloon_alert(owner, "[colour] extract faded!")
-	if(!QDELETED(linked_extract))
-		linked_extract.linked_effect = null
-		START_PROCESSING(SSobj,linked_extract)
 	qdel(src)
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
@@ -487,7 +485,6 @@
 /datum/status_effect/stabilized/orange/tick()
 	owner.update_homeostasis_level(id, owner.standard_body_temperature, 0.5 KELVIN)
 
-
 /datum/status_effect/stabilized/orange/on_remove()
 	. = ..()
 	owner.remove_homeostasis_level(id)
@@ -497,25 +494,27 @@
 	colour = "purple"
 	/// Whether we healed from our last tick
 	var/healed_last_tick = FALSE
+	/// How much damage is healed per tick.
+	var/heal_amount = 0.2
 
 /datum/status_effect/stabilized/purple/tick()
 	healed_last_tick = FALSE
 
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.2)
+		owner.adjustBruteLoss(-heal_amount, updating_health = FALSE)
 		healed_last_tick = TRUE
 
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.2)
+		owner.adjustFireLoss(-heal_amount, updating_health = FALSE)
 		healed_last_tick = TRUE
 
 	if(owner.getToxLoss() > 0)
-		// Forced, so slimepeople are healed as well.
-		owner.adjustToxLoss(-0.2, forced = TRUE)
+		healed_last_tick += owner.adjustToxLoss(-heal_amount, updating_health = FALSE, forced = TRUE) // Forced, so slimepeople are healed as well.
 		healed_last_tick = TRUE
 
 	// Technically, "healed this tick" by now.
 	if(healed_last_tick)
+		owner.updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(owner), "#FF0000")
 
 	return ..()
@@ -523,8 +522,6 @@
 /datum/status_effect/stabilized/purple/get_examine_text()
 	if(healed_last_tick)
 		return span_warning("[owner.p_they(TRUE)] [owner.p_are()] regenerating slowly, purplish goo filling in small injuries!")
-
-	return null
 
 /datum/status_effect/stabilized/blue
 	id = "stabilizedblue"
@@ -621,33 +618,43 @@
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
 	colour = "dark blue"
+	/// Typecache of items to ignore extingushing.
+	var/static/list/ignore_typecache
+
+/datum/status_effect/stabilized/darkblue/New(list/arguments)
+	if(isnull(ignore_typecache))
+		ignore_typecache = typecacheof(list(
+			/obj/item/lighter,
+			/obj/item/clothing/mask/cigarette,
+		))
+	return ..()
 
 /datum/status_effect/stabilized/darkblue/tick()
 	if(owner.fire_stacks > 0 && prob(80))
 		owner.adjust_wet_stacks(1)
 		if(owner.fire_stacks <= 0)
 			to_chat(owner, span_notice("[linked_extract] coats you in a watery goo, extinguishing the flames."))
-	var/obj/O = owner.get_active_held_item()
-	if(O)
-		O.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
-		O.wash(CLEAN_TYPE_ACID)
+	var/obj/held_item = owner.get_active_held_item()
+	if(QDELETED(held_item) || is_type_in_typecache(held_item, ignore_typecache))
+		return
+	held_item.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
+	held_item.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
-	if(istype(O, /obj/item/food/monkeycube))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It makes [O] expand!"))
-		var/obj/item/food/monkeycube/cube = O
+	if(istype(held_item, /obj/item/food/monkeycube))
+		var/obj/item/food/monkeycube/cube = held_item
+		to_chat(owner, span_warning("[linked_extract] kept your hands wet, making [held_item] expand!"))
 		cube.Expand()
-
 	// Dehydrated carp
-	else if(istype(O, /obj/item/toy/plush/carpplushie/dehy_carp))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It makes [O] expand!"))
-		var/obj/item/toy/plush/carpplushie/dehy_carp/dehy = O
-		dehy.Swell() // Makes a carp
-
-	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It wets [O]!"))
-		var/obj/item/stack/sheet/hairlesshide/HH = O
-		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
-		qdel(HH)
+	else if(istype(held_item, /obj/item/toy/plush/carpplushie/dehy_carp))
+		var/obj/item/toy/plush/carpplushie/dehy_carp/carp_friend = held_item
+		to_chat(owner, span_warning("[linked_extract] kept your hands wet, making [carp_friend] expand!"))
+		carp_friend.Swell() // Makes a carp
+	else if(istype(held_item, /obj/item/stack/sheet/hairlesshide))
+		var/obj/item/stack/sheet/hairlesshide/hide = held_item
+		to_chat(owner, span_warning("[linked_extract] kept your hands wet, hydrating [hide]!"))
+		new /obj/item/stack/sheet/wethide(hide.drop_location(), hide.amount)
+		qdel(hide)
+		owner.put_in_active_hand(hide)
 	..()
 
 /datum/status_effect/stabilized/silver
@@ -730,36 +737,44 @@
 	var/mob/living/clone
 
 /datum/status_effect/stabilized/cerulean/on_apply()
-	var/typepath = owner.type
-	clone = new typepath(owner.loc)
-	var/mob/living/carbon/O = owner
-	var/mob/living/carbon/C = clone
-	if(istype(C) && istype(O))
-		C.real_name = O.real_name
-		C.update_name_tag(C.real_name) // monkestation edit: name tags
-		O.dna.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	create_clone()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 	return ..()
 
-/datum/status_effect/stabilized/cerulean/tick()
-	if(owner.stat == DEAD)
-		if(clone && clone.stat != DEAD)
-			owner.visible_message(span_warning("[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away."),
-				span_notice("You feel a warm glow from [linked_extract], and you open your eyes... elsewhere."))
-			if(owner.mind)
-				owner.mind.transfer_to(clone)
-			clone = null
-			qdel(linked_extract)
-		if(!clone || clone.stat == DEAD)
-			to_chat(owner, span_notice("[linked_extract] desperately tries to move your soul to a living body, but can't find one!"))
-			qdel(linked_extract)
-	..()
-
 /datum/status_effect/stabilized/cerulean/on_remove()
-	if(clone)
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	if(!QDELETED(clone))
 		clone.visible_message(span_warning("[clone] dissolves into a puddle of goo!"))
 		clone.unequip_everything()
 		qdel(clone)
+	clone = null
+	return ..()
+
+/datum/status_effect/stabilized/cerulean/proc/create_clone()
+	var/typepath = owner.type
+	clone = new typepath(owner.loc)
+	clone.real_name = owner.real_name
+	clone.name = clone.real_name
+	clone.update_name_tag(clone.real_name)
+	var/mob/living/carbon/carbon_owner = owner
+	var/mob/living/carbon/carbon_clone = clone
+	if(istype(carbon_owner) && istype(carbon_clone))
+		carbon_owner.dna.transfer_identity(carbon_clone)
+		carbon_clone.updateappearance(mutcolor_update = TRUE)
+
+/datum/status_effect/stabilized/cerulean/proc/on_owner_death(datum/source)
+	SIGNAL_HANDLER
+	if(QDELETED(clone) || clone.stat == DEAD)
+		to_chat(owner, span_notice("[linked_extract] desperately tries to move your soul to a living body, but can't find one!"))
+		qdel(linked_extract)
+		return
+	owner.visible_message(
+		span_warning("[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away."),
+		span_notice("You feel a warm glow from [linked_extract], and you open your eyes... elsewhere.")
+	)
+	owner.mind?.transfer_to(clone)
+	clone = null
+	QDEL_NULL(linked_extract)
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
@@ -780,13 +795,17 @@
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
 	colour = "red"
+	var/static/list/affected_modifiers = list(
+		/datum/movespeed_modifier/equipment_speedmod,
+		/datum/movespeed_modifier/belt_satchel,
+	)
 
 /datum/status_effect/stabilized/red/on_apply()
 	. = ..()
-	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
+	owner.add_movespeed_mod_immunities(type, affected_modifiers)
 
 /datum/status_effect/stabilized/red/on_remove()
-	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
+	owner.remove_movespeed_mod_immunities(type, affected_modifiers)
 	return ..()
 
 /datum/status_effect/stabilized/green
@@ -914,10 +933,17 @@
 	id = "stabilizedoil"
 	colour = "oil"
 
-/datum/status_effect/stabilized/oil/tick()
-	if(owner.stat == DEAD)
-		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
+/datum/status_effect/stabilized/oil/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 	return ..()
+
+/datum/status_effect/stabilized/oil/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	return ..()
+
+/datum/status_effect/stabilized/oil/proc/on_owner_death(datum/source)
+	SIGNAL_HANDLER
+	explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 
 /datum/status_effect/stabilized/oil/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] smell[owner.p_s()] of sulfur and oil!")

@@ -1,3 +1,4 @@
+
 #define GOHOME_START 0
 #define GOHOME_FLICKER_ONE 2
 #define GOHOME_FLICKER_TWO 4
@@ -20,7 +21,7 @@
 		Immediately after activating, lights around the user will begin to flicker. \n\
 		Once the user teleports to their coffin, in their place will be a Rat or Bat."
 	power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN
-	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED
+	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_IN_FRENZY
 	purchase_flags = NONE
 	bloodcost = 100
 	constant_bloodcost = 2

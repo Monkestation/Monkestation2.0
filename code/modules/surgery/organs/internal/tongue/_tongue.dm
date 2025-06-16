@@ -163,7 +163,7 @@
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 
-/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!owner)
 		return
@@ -536,8 +536,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
-	status = ORGAN_ROBOTIC
-	organ_flags = NONE
+	organ_flags = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb_continuous = list("beeps", "boops")
@@ -696,9 +695,13 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/floran
 	name = "floran tongue"
 	desc = "A plant-like organ used for speaking and eating."
-	say_mod = "whistles"
+	say_mod = "hisses"
+	modifies_speech = TRUE
 	liked_foodtypes =  GORE | MEAT | DAIRY | SEAFOOD | BUGS
 	disliked_foodtypes = VEGETABLES
+
+	/// How long is our hissssssss?
+	var/draw_length = 3
 
 /obj/item/organ/internal/tongue/floran/get_scream_sound()
 	return pick(
@@ -710,3 +713,26 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/floran/get_laugh_sound()
 	return 'monkestation/sound/voice/laugh/lizard/lizard_laugh.ogg'
+
+/obj/item/organ/internal/tongue/floran/Initialize(mapload)
+	. = ..()
+	draw_length = rand(2, 6)
+	if(prob(10))
+		draw_length += 2
+
+/obj/item/organ/internal/tongue/floran/modify_speech(datum/source, list/speech_args)
+	var/static/regex/floran_hiss = new("s+", "g")
+	var/static/regex/floran_hiSS = new("S+", "g")
+	var/static/regex/floran_kss = new(@"(\w)x", "g")
+	var/static/regex/floran_kSS = new(@"(\w)X", "g")
+	var/static/regex/floran_ecks = new(@"\bx([\-|r|R]|\b)", "g")
+	var/static/regex/floran_eckS = new(@"\bX([\-|r|R]|\b)", "g")
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = floran_hiss.Replace(message, repeat_string(draw_length, "s"))
+		message = floran_hiSS.Replace(message, repeat_string(draw_length, "S"))
+		message = floran_kss.Replace(message, "$1k[repeat_string(max(draw_length - 1, 1), "s")]")
+		message = floran_kSS.Replace(message, "$1K[repeat_string(max(draw_length - 1, 1), "S")]")
+		message = floran_ecks.Replace(message, "eck[repeat_string(max(draw_length - 2, 1), "s")]$1")
+		message = floran_eckS.Replace(message, "ECK[repeat_string(max(draw_length - 2, 1), "S")]$1")
+	speech_args[SPEECH_MESSAGE] = message

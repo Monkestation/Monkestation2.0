@@ -30,6 +30,7 @@ const initialState = {
   // Keep these two state vars for compatibility with other servers
   highlightText: '',
   highlightColor: '#ffdd44',
+  coloredNames: true,
   // END compatibility state vars
   highlightSettings: [defaultHighlightSetting.id],
   highlightSettingById: {
@@ -100,6 +101,10 @@ export const settingsReducer = (state = initialState, action) => {
         nextState.highlightSettingById[defaultHighlightSetting.id];
       highlightSetting.highlightColor = nextState.highlightColor;
       highlightSetting.highlightText = nextState.highlightText;
+
+      if (nextState.coloredNames === undefined) {
+        nextState.coloredNames = true;
+      }
       return nextState;
     }
     case importSettings.type: {

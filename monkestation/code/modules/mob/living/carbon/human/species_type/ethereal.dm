@@ -20,7 +20,6 @@
 	temperature_normalization_speed = 3
 
 	siemens_coeff = 0.5 //They thrive on energy
-	brutemod = 1.25 //They're weak to punches
 	payday_modifier = 1
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -82,7 +81,6 @@
 	RegisterSignal(new_ethereal, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(on_after_attackedby))
 	ethereal_light = ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	spec_updatehealth(ethereal)
-	new_ethereal.set_safe_hunger_level()
 
 	var/obj/item/organ/internal/heart/ethereal/ethereal_heart = new_ethereal.get_organ_slot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color

@@ -9,6 +9,7 @@ import {
 export const sound_ambience: FeatureToggle = {
   name: 'Enable ambience',
   category: 'SOUND',
+  description: `Ambience refers to the more noticeable ambient sounds that play on occasion.`,
   component: CheckboxInput,
 };
 
@@ -63,6 +64,7 @@ export const sound_midi: FeatureToggle = {
 export const sound_ship_ambience: FeatureToggle = {
   name: 'Enable ship ambience',
   category: 'SOUND',
+  description: `Ship ambience refers to the low ambient buzz that plays on loop.`,
   component: CheckboxInput,
 };
 
@@ -76,7 +78,6 @@ export const sound_achievement: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
-// monke edit start - AI vox announcement toggle
 export const sound_vox: FeatureToggle = {
   name: 'Enable AI VOX announcements',
   category: 'SOUND',
@@ -84,4 +85,11 @@ export const sound_vox: FeatureToggle = {
   description: 'When enabled, hear AI VOX (text-to-speech) announcements.',
   component: CheckboxInput,
 };
-// monke edit end
+
+export const hearmusic: FeatureToggle = {
+  name: 'Hear Radio Music',
+  category: 'SOUND',
+  description:
+    'When enabled, hear music played in-game by the cassette player.',
+  component: CheckboxInput,
+};

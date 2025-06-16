@@ -58,7 +58,7 @@
 	for(var/obj/item/organ/organ in target.organs)
 		if(is_type_in_typecache(organ, blacklisted_organs))
 			continue
-		if(organ.organ_flags & ORGAN_SYNTHETIC)
+		if(IS_ROBOTIC_ORGAN(organ))
 			continue
 		. |= organ.type
 

@@ -148,7 +148,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
-	var/map_name = SSmapping.config.map_name
+	var/map_name = SSmapping.current_map.map_name
 
 	// Need to escape the text to properly support newlines.
 	var/annotation_text = replacetext(text, "%", "%25")
@@ -167,14 +167,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
-	var/skip_test = (test_path in SSmapping.config.skipped_tests)
+	var/skip_test = (test_path in SSmapping.current_map.skipped_tests)
 	var/test_output_desc = "[test_path]"
 	var/message = ""
 
 	log_world("::group::[test_path]")
 
 	if(skip_test)
-		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.config.map_name].")
+		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.current_map.map_name].")
 
 	else
 
@@ -258,6 +258,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/effect/transmission_beam, // relies on the existence of a PTL
 		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
 		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
+		/obj/effect/ghost_arena_corner, // this is used to mark two corners of the ghost arena at centcom, and should never be created outside of the two instances mapped in there
 		// monkestation end
 	)
 	//Say it with me now, type template

@@ -1,6 +1,6 @@
 /obj/item/card/id/away/old/cmo
-	name = "Charlie Station Chief Medical Officer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Chief Medical Officer\"."
+	name = "Beta Station Chief Medical Officer's ID card"
+	desc = "A faded Beta Station ID card. You can make out the rank \"Chief Medical Officer\"."
 	trim = /datum/id_trim/job/away/old/cmo
 
 /obj/item/card/id/away/old/chef
@@ -9,6 +9,6 @@
 	trim = /datum/id_trim/job/away/old/chef
 
 /obj/item/card/id/away/old/explorer
-	name = "Charlie Station Explorer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Explorer\"."
+	name = "Beta Station Explorer's ID card"
+	desc = "A faded Beta Station ID card. You can make out the rank \"Explorer\"."
 	trim = /datum/id_trim/job/away/old/explorer

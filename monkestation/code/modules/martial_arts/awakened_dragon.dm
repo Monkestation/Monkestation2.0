@@ -5,7 +5,7 @@
 	//deflect_cooldown = 0
 	deflect_stamcost = 10
 	log_name = "Awakened Dragon"
-	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS, TRAIT_BATON_RESISTANCE)
+	scarp_traits = list(TRAIT_NOGUNS, TRAIT_NEVER_WOUNDED, TRAIT_NODISMEMBER, TRAIT_LIGHT_SLEEPER, TRAIT_THROW_GUNS)
 	counter = TRUE
 	var/title = null //YOUR TITLE BELOW THE HEAVENS! This is the prefix you use :]
 	var/static/list/character_prefixes = list(

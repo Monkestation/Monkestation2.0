@@ -29,15 +29,16 @@
 	var/damage_multiplier = 1
 
 /obj/item/organ/internal/ears/get_status_appendix(advanced, add_tooltips)
-	if(owner.stat == DEAD)
+	if(owner.stat == DEAD || !HAS_TRAIT(owner, TRAIT_DEAF))
 		return
 	if(advanced)
+		if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, QUIRK_TRAIT))
+			return conditional_tooltip("Subject is permanently deaf.", "Irreparable under normal circumstances.", add_tooltips)
 		if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, GENETIC_MUTATION))
-			return "Subject is genetically deaf."
+			return conditional_tooltip("Subject is genetically deaf.", "Use medication such as [/datum/reagent/medicine/mutadone::name].", add_tooltips)
 		if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
-			return "Subject is [(organ_flags & ORGAN_FAILING) ? "permanently": "temporarily"] deaf from ear damage."
-	if(HAS_TRAIT(owner, TRAIT_DEAF))
-		return "Subject is deaf."
+			return conditional_tooltip("Subject is [(organ_flags & ORGAN_FAILING) ? "permanently": "temporarily"] deaf from ear damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/inacusiate::name], or protect ears with earmuffs.", add_tooltips)
+	return "Subject is deaf."
 
 /obj/item/organ/internal/ears/show_on_condensed_scans()
 	// Always show if we have an appendix
@@ -125,7 +126,7 @@
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/ears/cybernetic/upgraded
 	name = "cybernetic ears"
