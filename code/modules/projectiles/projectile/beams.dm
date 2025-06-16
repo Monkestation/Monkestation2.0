@@ -30,13 +30,13 @@
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
-	damage = 35
+	damage = 32
 	range = 30
 	tracer_type = /obj/effect/projectile/tracer/laser/rifle
 	impact_type = /obj/effect/projectile/impact/laser/rifle
 	muzzle_type = /obj/effect/projectile/muzzle/laser/rifle
 	hitscan = TRUE
-	tile_dropoff = 1 //Only 3-hit within the first 2 tiles, not counting wound. This makes ricochets less impactful
+	tile_dropoff = 1 //This makes ricochets less impactful
 	wound_falloff_tile = 3
 	impact_effect_type = null
 	hitscan_light_intensity = 2
