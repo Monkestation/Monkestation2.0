@@ -34,7 +34,7 @@
 		to_chat(source, span_warning("You can't shoot lasers whilst your cornea is melted!"))
 		return
 
-	if(eyes.status == ORGAN_ROBOTIC)
+	if(IS_ROBOTIC_ORGAN(eyes))
 		owner.balloon_alert(owner, "eyes robotic!")
 		return FALSE
 
@@ -148,7 +148,7 @@
 		return TRUE
 
 	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes && eyes.status == ORGAN_ROBOTIC)
+	if(IS_ROBOTIC_ORGAN(eyes))
 		return TRUE
 
 	. = ..()
@@ -177,7 +177,7 @@
 	if(!istype(eyes))
 		return
 
-	if(eyes.status == ORGAN_ROBOTIC)
+	if(IS_ROBOTIC_ORGAN(eyes))
 		return
 
 	eyes.flash_protect = FLASH_PROTECTION_FLASH
@@ -250,7 +250,7 @@
 			to_chat(owner, span_warning("You can't use your X-ray vision whilst blind!"))
 		return FALSE
 
-	if(eyes.status == ORGAN_ROBOTIC)
+	if(IS_ROBOTIC_ORGAN(eyes))
 		if(feedback)
 			owner.balloon_alert(owner, "eyes robotic!")
 		return FALSE

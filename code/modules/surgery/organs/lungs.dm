@@ -794,7 +794,7 @@
 	var/oxyloss = suffocator.getOxyLoss()
 	if(oxyloss >= 50)
 		// Suffocating = brain damage
-		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organtype = ORGAN_ORGANIC)
+		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organ_flag = ORGAN_ORGANIC)
 	// If mob is at critical health, check if they can be damaged further.
 	if(suffocator.stat >= SOFT_CRIT && HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
 		return
@@ -894,7 +894,7 @@
 
 	QDEL_IN(holder, breath_particle.lifespan)
 
-/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organtype)
+/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!.)
 		return
@@ -985,7 +985,7 @@
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
 	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
@@ -1020,7 +1020,7 @@
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 
 /obj/item/organ/internal/lungs/lavaland

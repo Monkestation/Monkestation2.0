@@ -524,10 +524,6 @@
 		/obj/item/stack/biomass // monke: make science bags able to hold biomass cubes
 		))
 
-/*
- *  Construction bag (for engineering, holds stock parts and electronics)
- */
-
 /obj/item/storage/bag/construction
 	name = "construction bag"
 	icon = 'icons/obj/tools.dmi'
@@ -535,22 +531,7 @@
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/construction/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 100
-	atom_storage.max_slots = 50
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.set_holdable(list(
-		/obj/item/assembly,
-		/obj/item/circuitboard,
-		/obj/item/electronics,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/stock_parts,
-		/obj/item/wallframe/camera,
-		))
+	storage_type = /datum/storage/bag/construction
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"

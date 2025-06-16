@@ -462,9 +462,6 @@
 	if(linked_extract.get_held_mob() == owner)
 		return
 	owner.balloon_alert(owner, "[colour] extract faded!")
-	if(!QDELETED(linked_extract))
-		linked_extract.linked_effect = null
-		START_PROCESSING(SSobj,linked_extract)
 	qdel(src)
 
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
