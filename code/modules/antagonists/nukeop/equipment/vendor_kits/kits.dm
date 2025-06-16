@@ -283,7 +283,6 @@
 		/obj/item/ammo_box/magazine/plastikov10mm = 2,
 		/obj/item/wrench/combat = 1,
 		/obj/item/storage/medkit/combat = 1,
-		/obj/item/book/granter/martial/cqc = 1,
 		/obj/item/book/granter/gun_mastery = 1,
 		/obj/item/language_manual/codespeak_manual/unlimited = 1,
 	),src)

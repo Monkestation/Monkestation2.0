@@ -10,21 +10,9 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
-"ac" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 9
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/bridge)
 "ad" = (
 /turf/template_noop,
 /area/template_noop)
-"ae" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 5
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/bridge)
 "af" = (
 /turf/closed/wall/r_wall/syndicate/hull,
 /area/shuttle/syndicate/bridge)
@@ -246,24 +234,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/bridge)
-"aB" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 9
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/airlock)
 "aC" = (
 /obj/structure/chair/comfy/shuttle{
 	name = "tactical chair"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate/airlock)
-"aD" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 5
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
 /area/shuttle/syndicate/airlock)
 "aE" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1121,12 +1097,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
-"cC" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 6
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/medical)
 "cD" = (
 /obj/machinery/power/shuttle_engine/large,
 /obj/effect/turf_decal/stripes/line{
@@ -1156,12 +1126,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
-"cK" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 10
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/armory)
 "cL" = (
 /obj/machinery/power/shuttle_engine/large,
 /turf/open/floor/plating,
@@ -1210,12 +1174,6 @@
 /obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
-"cV" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 10
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/medical)
 "cW" = (
 /obj/machinery/door/poddoor{
 	id = "infiltrator_starboardblast";
@@ -1244,12 +1202,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
-"cZ" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 6
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/armory)
 "da" = (
 /obj/item/sbeacondrop/bomb{
 	pixel_x = -4;
@@ -1870,12 +1822,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/armory)
-"en" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 9
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/medical)
 "ep" = (
 /obj/structure/mirror/directional/north,
 /obj/structure/sink/directional/south,
@@ -1885,12 +1831,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
-"eq" = (
-/obj/machinery/porta_turret/syndicate/shuttle{
-	dir = 5
-	},
-/turf/closed/wall/r_wall/syndicate/hull,
-/area/shuttle/syndicate/armory)
 "er" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1978,6 +1918,13 @@
 /obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
+"wj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/syndicate/medical)
 "xQ" = (
 /obj/machinery/computer/operating{
 	dir = 1
@@ -2110,7 +2057,7 @@ ad
 ad
 ad
 ad
-en
+bD
 bn
 bw
 ad
@@ -2165,7 +2112,7 @@ bD
 bD
 bD
 bD
-cV
+bD
 ad
 "}
 (4,1,1) = {"
@@ -2196,7 +2143,7 @@ ad
 ad
 ad
 ad
-aB
+aO
 aO
 aL
 bZ
@@ -2250,18 +2197,18 @@ BD
 dv
 bq
 bs
-bs
+wj
 er
 du
 bX
 dF
 cr
 bD
-cC
+bD
 ad
 "}
 (8,1,1) = {"
-ac
+af
 aa
 am
 at
@@ -2399,7 +2346,7 @@ cJ
 ad
 "}
 (14,1,1) = {"
-ae
+af
 aa
 as
 az
@@ -2441,7 +2388,7 @@ em
 ea
 ct
 bE
-cK
+bE
 ad
 "}
 (16,1,1) = {"
@@ -2472,7 +2419,7 @@ ad
 ad
 ad
 ad
-aD
+aO
 aO
 aL
 bZ
@@ -2533,7 +2480,7 @@ bE
 bE
 bE
 bE
-cZ
+bE
 ad
 "}
 (20,1,1) = {"
@@ -2570,7 +2517,7 @@ ad
 ad
 ad
 ad
-eq
+bE
 cG
 bF
 ad

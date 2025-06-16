@@ -34,8 +34,8 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 	)
-	required_enemies = 5
-	min_players = 40
+	required_enemies = 6
+	min_players = 45
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 8

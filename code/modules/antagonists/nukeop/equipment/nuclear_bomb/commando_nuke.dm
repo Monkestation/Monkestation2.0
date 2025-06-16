@@ -1,3 +1,4 @@
+#define NUKE_ANNOUNCE_INTERVAL 2 MINUTES
 
 /obj/machinery/nuclearbomb/commando
 	name = "old nuclear fission explosive"
@@ -15,13 +16,18 @@
 	r_code = "11111"
 
 	base_icon_state = "old_nuclearbomb"
-	// decrypt areas where the nuke gets shortened timer for decrypting in
+	/// Decrypt areas where the nuke gets a shortened timer for decrypting in.
 	var/list/decrypt_areas = list()
-	// what the timer will be once the code is set. default 15 minutes
+	/// Areas the nuke cannot be armed in.
+	var/list/forbidden_areas
+	/// What the timer will be once the code is set. Default 15 minutes.
 	var/timer = 900
 
 	// partical holder
 	var/obj/effect/abstract/particle_holder/damage_particles = null
+
+	/// Next world time we announce. Ripped straight from malf AI code since my last method was stupid :D
+	var/next_announce
 
 	special_icons = TRUE
 	armor_type = /datum/armor/commando_nuke
@@ -35,6 +41,13 @@
 
 /obj/machinery/nuclearbomb/commando/Initialize(mapload)
 	. = ..()
+	forbidden_areas = typecacheof(list(
+		/area/station/hallway,
+		/area/station/maintenance,
+		/area/station/engineering/shipbreaker_hut,
+		/area/station/engineering/atmos,
+		/area/station/engineering/atmospherics_engine,
+		/area/station/solars))
 	pick_decrypt_areas()
 	START_PROCESSING(SSobj, src)
 
@@ -49,6 +62,10 @@
 		return
 	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_DELTA && get_time_left() < 120)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	if(world.time >= next_announce)
+		var/area/our_area = get_area(src)
+		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()]", "Nuclear Operations Command", sound_override = 'sound/misc/notice1.ogg', should_play_sound = TRUE, color_override = "red")
+		next_announce += NUKE_ANNOUNCE_INTERVAL
 
 /obj/machinery/nuclearbomb/commando/proc/update_damage()
 	if(atom_integrity <= 100)
@@ -102,7 +119,6 @@
 
 /obj/machinery/nuclearbomb/commando/proc/pick_decrypt_areas()
 	decrypt_areas = list()
-	var/static/list/forbidden_areas = typecacheof(list(/area/station/hallway, /area/station/maintenance, /area/station/solars))
 	var/list/possible_areas = list()
 	for(var/area/possible_area as anything in GLOB.the_station_areas)
 		if(is_type_in_typecache(possible_area, forbidden_areas) || initial(possible_area.outdoors) || !GLOB.areas_by_type[possible_area])
@@ -130,7 +146,9 @@
 		START_PROCESSING(SSobj, core)
 		core = null
 	if(timing || exploding)
-		SSticker.force_ending = FORCE_END_ROUND
+		SSshuttle.admin_emergency_no_recall = TRUE
+		if(!EMERGENCY_AT_LEAST_DOCKED)
+			SSshuttle.emergency.request()
 	return ..()
 
 /obj/machinery/nuclearbomb/commando/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
@@ -238,8 +256,12 @@
 				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
 
 /obj/machinery/nuclearbomb/commando/proc/process_code(mob/user)
-	if(isinspace() || istype(get_area(src), /area/shuttle))
+	var/area/our_area = get_area(src)
+	if(isinspace() || istype(our_area, /area/shuttle))
 		to_chat(user, span_warning("Location too unstable!"))
+		return
+	if(is_type_in_typecache(our_area, forbidden_areas))
+		to_chat(user, span_warning("Connection can not be established, relocate to another area! Large open spaces and maintenance are more likely to block connection."))
 		return
 	yes_code = TRUE
 	numeric_input = ""
@@ -350,11 +372,14 @@
 		action = NOTIFY_ORBIT,
 		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
+	next_announce = world.time + NUKE_ANNOUNCE_INTERVAL
 	update_appearance()
 
-/obj/machinery/nuclearbomb/commando/disarm_nuke(mob/disarmer)
+/obj/machinery/nuclearbomb/commando/disarm_nuke(mob/disarmer, change_level_back = FALSE)
 	. = ..()
 	SSshuttle.clearHostileEnvironment(src)
+
+#undef NUKE_ANNOUNCE_INTERVAL
 
 /obj/item/nuke_recaller
 	name = "nuke relocator"
