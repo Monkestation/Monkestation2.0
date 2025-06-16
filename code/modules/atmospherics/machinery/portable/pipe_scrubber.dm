@@ -1,3 +1,5 @@
+#define PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT 0
+
 /obj/machinery/portable_atmospherics/pipe_scrubber
 	name = "pipe scrubber"
 	desc = "A machine for cleaning out pipes of lingering gases. It is a huge tank with a pump attached to it."
@@ -5,8 +7,10 @@
 	density = TRUE
 	max_integrity = 250
 	volume = 200
-	///The internal air tank obj of the mech
-	var/obj/machinery/portable_atmospherics/canister/internal_tank
+	///Secondary tank gas mixture
+	var/datum/gas_mixture/secondary_tank_contents
+	///Secondary tank volume
+	var/secondary_tank_volume = 2000
 	///Is the machine on?
 	var/on = FALSE
 	///What direction is the machine pumping to (into scrubber or out to the port)?
@@ -33,25 +37,22 @@
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/Initialize(mapload)
 	. = ..()
-	internal_tank = new(src)
+	secondary_tank_contents = new
+	secondary_tank_contents.volume = secondary_tank_volume
+	secondary_tank_contents.temperature = T20C
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/Destroy()
 	var/turf/my_turf = get_turf(src)
 	my_turf.assume_air(air_contents)
-	my_turf.assume_air(internal_tank.air_contents)
-	SSair.stop_processing_machine(internal_tank)
-	qdel(internal_tank)
+	my_turf.assume_air(secondary_tank_contents)
+	secondary_tank_contents = null
 	return ..()
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/return_analyzable_air()
 	return list(
 		air_contents,
-		internal_tank.air_contents
+		secondary_tank_contents
 	)
-
-/obj/machinery/portable_atmospherics/pipe_scrubber/welder_act(mob/living/user, obj/item/tool)
-	internal_tank.welder_act(user, tool)
-	return ..()
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/AltClick(mob/living/user)
 	. = ..()
@@ -65,21 +66,42 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/process_atmos()
+	excited = (!suppress_reactions && (excited || air_contents.react(src) || secondary_tank_contents.react(src)))
 	if(take_atmos_damage())
 		excited = TRUE
-		return ..()
-	if(!on)
-		return ..()
-	excited = TRUE
-	if(direction == PUMP_IN)
-		scrub(air_contents)
-	else
-		internal_tank.air_contents.pump_gas_to(air_contents, PUMP_MAX_PRESSURE)
-	return ..()
+	if(on)
+		excited = TRUE
+		if(direction == PUMP_IN)
+			scrub(air_contents)
+		else
+			secondary_tank_contents.pump_gas_to(air_contents, PUMP_MAX_PRESSURE)
+	if(!excited)
+		return PROCESS_KILL
+	excited = FALSE
 
-/// Scrub gasses from own air_contents into internal_tank.air_contents
+/obj/machinery/portable_atmospherics/pipe_scrubber/take_atmos_damage()
+	var/taking_damage = FALSE
+
+	var/temp_damage = 1
+	var/pressure_damage = 1
+
+	if(temp_limit != PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT)
+		temp_damage = max(air_contents.temperature, secondary_tank_contents.temperature) / temp_limit
+		taking_damage = temp_damage > 1
+
+	if(pressure_limit != PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT)
+		pressure_damage = max(air_contents.return_pressure(), secondary_tank_contents.return_pressure()) / pressure_limit
+		taking_damage = taking_damage || pressure_damage > 1
+
+	if(!taking_damage)
+		return FALSE
+
+	take_damage(clamp(temp_damage * pressure_damage, 5, 50), BURN, 0)
+	return TRUE
+
+/// Scrub gasses from own air_contents into secondary_tank_contents
 /obj/machinery/portable_atmospherics/pipe_scrubber/proc/scrub()
-	if(internal_tank.air_contents.return_pressure() >= PUMP_MAX_PRESSURE)
+	if(secondary_tank_contents.return_pressure() >= PUMP_MAX_PRESSURE)
 		return
 
 	var/transfer_moles = min(1, volume_rate / air_contents.volume) * air_contents.total_moles()
@@ -96,7 +118,7 @@
 		filtering.gases[gas][MOLES] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
 
-	internal_tank.air_contents.merge(filtered) // Store filtered out gasses.
+	secondary_tank_contents.merge(filtered) // Store filtered out gasses.
 	air_contents.merge(filtering) // Returned the cleaned gas.
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/ui_interact(mob/user, datum/tgui/ui)
@@ -110,10 +132,10 @@
 	data["on"] = on
 	data["direction"] = direction
 	data["connected"] = connected_port ? 1 : 0
-	data["pressureTank"] = round(internal_tank.air_contents.return_pressure() ? internal_tank.air_contents.return_pressure() : 0)
+	data["pressureTank"] = round(secondary_tank_contents.return_pressure() ? secondary_tank_contents.return_pressure() : 0)
 	data["pressurePump"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["hasHypernobCrystal"] = nob_crystal_inserted
-	data["reactionSuppressionEnabled"] = internal_tank.suppress_reactions
+	data["reactionSuppressionEnabled"] = suppress_reactions
 
 	data["filterTypes"] = list()
 	for(var/gas_path in GLOB.meta_gas_info)
@@ -125,7 +147,7 @@
 /obj/machinery/portable_atmospherics/pipe_scrubber/ui_static_data()
 	var/list/data = list()
 	data["pressureLimitPump"] = pressure_limit
-	data["pressureLimitTank"] = internal_tank.pressure_limit
+	data["pressureLimitTank"] = pressure_limit
 	return data
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, params)
@@ -137,7 +159,6 @@
 			on = !on
 			if(on)
 				SSair.start_processing_machine(src)
-				SSair.start_processing_machine(internal_tank)
 			. = TRUE
 		if("direction")
 			direction = !direction
@@ -146,21 +167,14 @@
 			scrubbing ^= gas_id2path(params["val"])
 			. = TRUE
 		if("reaction_suppression")
-			if(!internal_tank.nob_crystal_inserted)
+			if(!nob_crystal_inserted)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to toggle reaction suppression on a pipe scrubber without a noblium crystal inside, possible href exploit attempt.")
 				return
-			internal_tank.suppress_reactions = !internal_tank.suppress_reactions
-			SSair.start_processing_machine(internal_tank)
-			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [internal_tank.suppress_reactions ? "on" : "off"] the [internal_tank] reaction suppression.")
-			usr.investigate_log("turned [internal_tank.suppress_reactions ? "on" : "off"] the [internal_tank] reaction suppression.")
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			. = TRUE
 	update_appearance()
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/insert_nob_crystal()
-	. = ..()
-	internal_tank.nob_crystal_inserted = TRUE
-
-/obj/machinery/portable_atmospherics/pipe_scrubber/proc/toggle_reaction_suppression()
-	var/new_value = !suppress_reactions
-	suppress_reactions = new_value
-	internal_tank.suppress_reactions = new_value
+#undef PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT
