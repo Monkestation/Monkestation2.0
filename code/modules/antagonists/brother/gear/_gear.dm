@@ -14,15 +14,13 @@ GLOBAL_LIST_INIT_TYPED(bb_gear, /datum/bb_gear, init_bb_gear())
 		"spawn" = spawn_path
 	))
 
-/datum/bb_gear/proc/preview()
-	RETURN_TYPE(/icon)
+/datum/bb_gear/proc/preview() as /mutable_appearance
 	if(LAZYACCESS(cached_previews, type))
 		return cached_previews[type]
 	var/preview_source = preview_path || spawn_path
 	if(ispath(preview_source))
-		// using getFlatIcon here so we never have any problems with GAGS or overlay-reliant objects
 		var/obj/thingymajig = new preview_source(null)
-		. = getFlatIcon(thingymajig)
+		. = copy_appearance_filter_overlays(thingymajig.appearance, recursion = 1)
 		qdel(thingymajig)
 		LAZYSET(cached_previews, type, .)
 
@@ -33,6 +31,5 @@ GLOBAL_LIST_INIT_TYPED(bb_gear, /datum/bb_gear, init_bb_gear())
 	. = list()
 	for(var/datum/bb_gear/gear as anything in subtypesof(/datum/bb_gear))
 		var/name = gear::name
-		if(!istext(name))
-			continue
-		.[name] = new gear
+		if(istext(name))
+			.[name] = new gear
