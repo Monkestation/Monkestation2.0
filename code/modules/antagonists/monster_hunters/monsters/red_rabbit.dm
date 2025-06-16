@@ -54,3 +54,10 @@
 	hole_power.Grant(src)
 	rabbit_power.Grant(src)
 	spear_power.Grant(src)
+
+/mob/living/basic/red_rabbit/Destroy()
+	QDEL_NULL(hole_power)
+	QDEL_NULL(rabbit_power)
+	QDEL_NULL(cards_power)
+	QDEL_NULL(spear_power)
+	return ..()
