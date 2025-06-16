@@ -4,8 +4,8 @@
 	icon = 'monkestation/icons/mob/red_rabbit.dmi'
 	icon_state = "red_rabbit"
 
-	health = 500
-	maxHealth = 500
+	health = 2500
+	maxHealth = 2500
 	speed = 5
 	unsuitable_atmos_damage = NONE
 	attack_verb_continuous = "claws"
