@@ -49,6 +49,7 @@
 /mob/living/basic/red_rabbit/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL)
+	AddComponent(/datum/component/glitching_state)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	hole_power = new
 	rabbit_power = new
