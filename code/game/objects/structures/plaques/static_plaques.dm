@@ -31,10 +31,9 @@
 	layer = BELOW_OPEN_DOOR_LAYER
 
 //Current stations
-
-// Icebox Station: added May 13, 2020 (#51090)
-/obj/structure/plaque/static_plaque/golden/commission/icebox
-	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revision 2.2: 'Icebox')\nCommissioned 13/05/2560\n'Cold Reliable'"
+// Crater Station: Mapping started 12/10/2024, added [date of merge here] PR is Monkestation/Monkestation2.0 4986
+/obj/structure/plaque/static_plaque/golden/commission/crater
+	desc = "Spinward Sector Outpost SO-13\n'Crater' Sheltered Colony\nCommissioned 12/10/2564\n'Warmest in the Frost'"
 
 // Metastation: added Mar 11, 2013 (best estimate, pre-git)
 /obj/structure/plaque/static_plaque/golden/commission/meta
@@ -55,6 +54,10 @@
 // North Star: added Apr 13, 2023 (#74371)
 /obj/structure/plaque/static_plaque/golden/commission/northstar
 	desc = "Spinward Sector Ship SS-13\n'North Star' Class Vessel\nCommissioned 13/04/2563\n'New Opportunities'"
+
+// Icebox Station: added May 13, 2020 (#51090)
+/obj/structure/plaque/static_plaque/golden/commission/icebox
+	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revision 2.2: 'Icebox')\nCommissioned 13/05/2560\n'Cold Reliable'"
 //Removed stations
 
 // Asteroidstation: added Oct 17, 2015 (169ab09f7b52254ee505e54cdea681fab287647b), removed Jun 19, 2016 (#18661)- 8 months, 2 days
@@ -104,6 +107,8 @@
 // Uterusstation: added Sep 03, 2011 (bbd6db9ce2d6341892b89a620593fc8877f5a817), removed Jun 21, 2012 (72d72f7ce522c2d2ad4863f44ee9f5054413c489)- 9 months, 18 days
 /obj/structure/plaque/static_plaque/golden/commission/uterus
 	desc = "Spinward Sector Station SS-01\n'Uterus' Class Outpost\nCommissioned 03/09/2551\nDecommissioned 21/06/2552\n'Humanity's Vanguard'"
+
+
 
 // Other Stations
 
