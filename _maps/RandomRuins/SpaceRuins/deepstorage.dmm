@@ -2642,7 +2642,9 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "jD" = (
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/plumbing/ooze_compressor{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -2865,7 +2867,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "vc" = (
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/plumbing/ooze_compressor{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
