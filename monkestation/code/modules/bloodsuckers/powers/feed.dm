@@ -131,6 +131,8 @@
 		return FALSE
 	if(viewer.stat >= DEAD)
 		return FALSE
+	if(viewer.invisibility)
+		return FALSE
 	if(viewer.is_blind() || viewer.is_nearsighted_currently())
 		return FALSE
 	if(IS_BLOODSUCKER(viewer) || IS_VASSAL(viewer))
