@@ -193,7 +193,7 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
-	var/area/shipbreak/A = get_area(src)
+	var/area/space/shipbreak/A = get_area(src)
 	if(istype(A)) //if we are actually in the shipbreaking zone...
 		new scrap_type(src, sheet_amount)
 	else
@@ -202,7 +202,7 @@
 		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	var/area/shipbreak/A = get_area(src)
+	var/area/space/shipbreak/A = get_area(src)
 	if(istype(A))
 		new scrap_type(src, sheet_amount)
 	else

@@ -118,9 +118,9 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = COLOR_SOFT_RED
-	mapped_start_area = /area/shipbreak/syndicate_depot
+	mapped_start_area = /area/space/shipbreak/syndicate_depot
 
-/area/shipbreak/syndicate_depot
+/area/space/shipbreak/syndicate_depot
 	name = "Syndicate Depot Shipbreaking Zone"
 
 /obj/item/storage/toolbox/syndicate/shipbreaking

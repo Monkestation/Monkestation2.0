@@ -84221,7 +84221,7 @@
 /area/station/medical/treatment_center)
 "tWr" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "tWv" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

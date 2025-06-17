@@ -75114,7 +75114,7 @@
 /area/station/service/chapel/monastery)
 "won" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "wox" = (
 /obj/machinery/door/airlock/atmos{
 	name = "The Pipe Cave"

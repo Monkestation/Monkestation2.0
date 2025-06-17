@@ -6034,7 +6034,7 @@
 /area/station/security/bitden)
 "ciU" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "cji" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8

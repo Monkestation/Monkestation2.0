@@ -28625,7 +28625,7 @@
 /area/station/service/library)
 "cAv" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "cAy" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{

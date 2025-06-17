@@ -40517,7 +40517,7 @@
 /area/station/cargo/lobby)
 "trJ" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "tsu" = (
 /obj/machinery/fax{
 	fax_name = "Chief Medical Officer's Office";

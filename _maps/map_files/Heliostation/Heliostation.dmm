@@ -29512,7 +29512,7 @@
 /area/station/maintenance/department/security/upper)
 "eld" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "elg" = (
 /obj/structure/sign/departments/maint/alt/directional/west,
 /obj/machinery/navbeacon{

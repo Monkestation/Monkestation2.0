@@ -270,3 +270,33 @@
   - balance: '"Camera Obscura" (crafted with holy water + camera) will now steal the
       soul of ghostly apparitions when a picture is taken causing damage. This will
       also stun and reveal revenants briefly.'
+2025-06-15:
+  Absolucy:
+  - rscadd: Completing the station goal now rewards monkecoins to all crew.
+  Addust:
+  - rscadd: To further discourage poor behaviour from ghostroles, a warning has been
+      added that will appear on spawn. I will make this even more in-your-face if
+      you don't listen.
+  Bisar Xander3359:
+  - balance: Construction bags can now carry stacks of material up to size 'small',
+      and can now also carry RCD ammo.
+  SirNightKnight:
+  - balance: made fire less deadly
+2025-06-16:
+  Absolucy:
+  - qol: The BSA station goal is now completed by FIRING the BSA, rather than having
+      it just exist + be powered.
+  Ice-Type:
+  - balance: cardboard golems have tongues now
+  - balance: weak punching golems no longer get 1 hit knockdowns
+  - bugfix: fixes golem numbers that might have made sense at one point maybe
+2025-06-17:
+  Absolucy:
+  - bugfix: Fixed not being able to set keybindings.
+  - bugfix: Fixed keys not properly passing through tgui windows.
+  Salted-Zen:
+  - rscadd: Griddle Toast in monkestore for 2500, its a mask slot item.
+  Shoddd:
+  - bugfix: renames "a reflector trenchcoat" to "the ablative trenchcoat" in tot objective
+  ThePooba:
+  - bugfix: fixed gravity for top level shipbreaker not powerslamming you anymore

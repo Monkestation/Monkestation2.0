@@ -69089,7 +69089,7 @@
 /area/station/maintenance/starboard/aft)
 "vHH" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "vHS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

@@ -48694,7 +48694,7 @@
 /area/station/service/hydroponics/garden)
 "pHR" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "pHW" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
