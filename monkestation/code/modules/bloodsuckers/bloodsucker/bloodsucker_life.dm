@@ -300,8 +300,20 @@
 	// If we have no body, end here.
 	if(QDELETED(owner.current))
 		return
-	unregister_body_signals(owner.current)
-	unregister_sol_signals()
+	UnregisterSignal(owner.current, list(
+		COMSIG_LIVING_LIFE,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_LIVING_DEATH,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_HUMAN_ON_HANDLE_BLOOD,
+	))
+	UnregisterSignal(SSsol, list(
+		COMSIG_SOL_RANKUP_BLOODSUCKERS,
+		COMSIG_SOL_NEAR_START,
+		COMSIG_SOL_END,
+		COMSIG_SOL_RISE_TICK,
+		COMSIG_SOL_WARNING_GIVEN,
+	))
 	free_all_vassals()
 	DisableAllPowers(forced = TRUE)
 	if(!iscarbon(owner.current))
