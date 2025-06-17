@@ -113,7 +113,7 @@
 			vision_distance = FEED_NOTICE_RANGE, ignored_mobs = feed_target)
 
 	//check if we were seen
-	for(var/mob/living/viewer in oviewers(FEED_NOTICE_RANGE) - feed_target)
+	for(var/mob/living/viewer in oviewers(FEED_NOTICE_RANGE, owner) - feed_target)
 		if(check_for_masquerade_infraction(viewer))
 			owner.balloon_alert(owner, "feed noticed!")
 			bloodsuckerdatum_power.give_masquerade_infraction()
