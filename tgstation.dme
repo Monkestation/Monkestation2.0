@@ -5869,6 +5869,7 @@
 #include "code\modules\vehicles\stockade.dm"
 #include "code\modules\vehicles\vehicle_actions.dm"
 #include "code\modules\vehicles\vehicle_key.dm"
+#include "code\modules\vehicles\weinermobile.dm"
 #include "code\modules\vehicles\wheelchair.dm"
 #include "code\modules\vehicles\cars\car.dm"
 #include "code\modules\vehicles\cars\clowncar.dm"
