@@ -1528,7 +1528,7 @@ MONKESTATION REMOVAL END */
 	description = "A proprietary coagulant used to help bleeding wounds clot faster while in critical condition. It is purged by heparin."
 	reagent_state = LIQUID
 	color = "#bb2424"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second whilst in crit
 	var/clot_rate = 0.3
@@ -1571,6 +1571,8 @@ MONKESTATION REMOVAL END */
 			slash_wound = iter_wound
 		if(slash_wound.clot_rate < 0)
 			slash_wound.clot_rate = 0
+		else
+			slash_wound.clot_rate = src.clot_rate * 0.5
 	if(!bloodiest_wound)
 		return
 	if(work_while_awake || affected_mob.health <= affected_mob.crit_threshold) //only works in crit
