@@ -20,7 +20,7 @@
 		if(atmos_device.nob_crystal_inserted)
 			to_chat(user, span_warning("[atmos_device] already has a hypernoblium crystal inserted in it!"))
 			return
-		atmos_device.insert_nob_crystal()
+		atmos_device.nob_crystal_inserted = TRUE
 		to_chat(user, span_notice("You insert the [src] into [atmos_device]."))
 	var/obj/item/clothing/worn_item = target_object
 	if(!istype(worn_item) && !istype(atmos_device))

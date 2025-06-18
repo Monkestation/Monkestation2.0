@@ -306,8 +306,4 @@
 	UnregisterSignal(holding, COMSIG_QDELETING)
 	holding = null
 
-/// Insert Hypernob crystal into the machine
-/obj/machinery/portable_atmospherics/proc/insert_nob_crystal()
-	nob_crystal_inserted = TRUE
-
 #undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT
