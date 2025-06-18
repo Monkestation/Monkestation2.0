@@ -131,6 +131,7 @@
 	return
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/attacker, mob/living/defender)
+	var/old_grab_state = attacker.grab_state
 	if(!can_deflect(attacker)) //allows for deniability
 		return ..()
 
@@ -147,8 +148,13 @@
 		)
 		grab_log_description = "grabbed and nerve pinched"
 		defender.Unconscious(10 SECONDS)
-		if(attacker.grab_state == GRAB_PASSIVE && instant_grab == TRUE)
-			attacker.grab_state = GRAB_NECK
+		if(old_grab_state == GRAB_PASSIVE || old_grab_state == GRAB_AGGRESSIVE && instant_grab == TRUE)
+			attacker.setGrabState(GRAB_NECK)
+			defender.grabbedby(attacker, 1)
+			log_combat(attacker, defender, "grabbed", addition="by the neck")
+			defender.visible_message(span_warning("[attacker] violently grabs [defender]!"), \
+			span_userdanger("You're grabbed violently by [attacker]!"), span_hear("You hear sounds of aggressive fondling!"), COMBAT_MESSAGE_RANGE, attacker)
+			to_chat(attacker, span_danger("You violently grab [defender]!"))
 	defender.stamina.adjust(-50)
 	log_combat(attacker, defender, "[grab_log_description] (Sleeping Carp)")
 	return ..()
