@@ -49,6 +49,7 @@
 	. = ..()
 	if(offset != 0)
 		// You aren't the source? don't change yourself
+		critical = PLANE_CRITICAL_FUCKO_PARALLAX
 		return
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 /*
