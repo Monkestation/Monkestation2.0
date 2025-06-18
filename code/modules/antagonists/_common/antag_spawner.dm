@@ -463,7 +463,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/list/baddie_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a [role_to_play]?", check_jobban = poll_role_check, role = poll_role_check, poll_time = 15 SECONDS, ignore_category = poll_ignore_category, alert_pic = src, role_name_text = role_to_play, amount_to_pick = 5)
+	var/list/baddie_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a [role_to_play]?", check_jobban = poll_role_check, role = poll_role_check, poll_time = 15 SECONDS, ignore_category = poll_ignore_category, alert_pic = src, role_name_text = role_to_play, amount_to_pick = 8)
 	if(!LAZYLEN(baddie_candidates))
 		to_chat(user, span_warning(fail_text))
 		return

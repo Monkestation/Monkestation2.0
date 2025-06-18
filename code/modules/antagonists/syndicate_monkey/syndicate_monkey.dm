@@ -26,6 +26,8 @@
 	var/mob/living/monky_master
 
 /datum/objective/syndicate_monkey/check_completion()
+	if(!monky_master)
+		return TRUE
 	return monky_master.stat != DEAD
 
 /datum/antagonist/syndicate_monkey/forge_objectives(mob/monky_master)
@@ -38,6 +40,6 @@
 	else
 		var/datum/objective/syndicate_monkey/objective = new
 		objective.monky_master = monky_master
-		objective.explanation_text = "Sabotage the efforts of the station. DEATH TO NANOTRASEN!"
+		objective.explanation_text = "You are a badass monkey syndicate agent. Sabotage the efforts of the station, DEATH TO NANOTRASEN!"
 		objective.owner = owner
 		objectives += objective
