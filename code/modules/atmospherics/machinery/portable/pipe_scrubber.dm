@@ -1,4 +1,4 @@
-#define PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT 0
+#define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
 
 /obj/machinery/portable_atmospherics/pipe_scrubber
 	name = "pipe scrubber"
@@ -66,15 +66,20 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/process_atmos()
-	excited = (!suppress_reactions && (excited || air_contents.react(src) || secondary_tank_contents.react(src)))
 	if(take_atmos_damage())
 		excited = TRUE
+
 	if(on)
 		excited = TRUE
 		if(direction == PUMP_IN)
 			scrub(air_contents)
 		else
 			secondary_tank_contents.pump_gas_to(air_contents, PUMP_MAX_PRESSURE)
+
+	if(!suppress_reactions)
+		if(max(air_contents.react(src), secondary_tank_contents.react(src)))
+			excited = TRUE
+
 	if(!excited)
 		return PROCESS_KILL
 	excited = FALSE
@@ -85,11 +90,11 @@
 	var/temp_damage = 1
 	var/pressure_damage = 1
 
-	if(temp_limit != PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT)
+	if(temp_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
 		temp_damage = max(air_contents.temperature, secondary_tank_contents.temperature) / temp_limit
 		taking_damage = temp_damage > 1
 
-	if(pressure_limit != PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT)
+	if(pressure_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
 		pressure_damage = max(air_contents.return_pressure(), secondary_tank_contents.return_pressure()) / pressure_limit
 		taking_damage = taking_damage || pressure_damage > 1
 
@@ -177,4 +182,4 @@
 			. = TRUE
 	update_appearance()
 
-#undef PIPE_SCRUBBER_IGNORE_ATMOS_LIMIT
+#undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT

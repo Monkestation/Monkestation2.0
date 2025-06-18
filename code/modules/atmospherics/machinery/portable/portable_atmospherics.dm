@@ -83,7 +83,9 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	excited = (!suppress_reactions && (excited || air_contents.react(src)))
+	if(!suppress_reactions)
+		if(air_contents.react(src))
+			excited = TRUE
 	if(!excited)
 		return PROCESS_KILL
 	excited = FALSE
@@ -200,7 +202,6 @@
 		return
 	if(!holding)
 		return
-	to_chat(user, span_notice("You remove [holding] from [src]."))
 	replace_tank(user, TRUE)
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
