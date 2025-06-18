@@ -183,7 +183,8 @@ export const TicketMessages = (props) => {
         (entry) =>
           (
             <Box key={entry.time} m="2px">
-              {entry.time} - <b>{entry.ckey}</b> - {decodeHtmlEntities(entry.text)}
+              {entry.time} - <b>{entry.ckey}</b> -{' '}
+              {decodeHtmlEntities(entry.text)}
             </Box>
           ) || '',
       )}
