@@ -28,6 +28,10 @@
 
 	/// Next world time we announce. Ripped straight from malf AI code since my last method was stupid :D
 	var/next_announce
+	/// Announcement time for the research grant.
+	var/grant_announce
+	/// If the research grant has been given.
+	var/grant_given = FALSE
 
 	special_icons = TRUE
 	armor_type = /datum/armor/commando_nuke
@@ -38,6 +42,8 @@
 	laser = 50
 	energy = 50
 	bomb = 100
+	acid = 100
+	fire = 100
 
 /obj/machinery/nuclearbomb/commando/Initialize(mapload)
 	. = ..()
@@ -66,6 +72,17 @@
 		var/area/our_area = get_area(src)
 		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()]", "Nuclear Operations Command", sound_override = 'sound/misc/notice1.ogg', should_play_sound = TRUE, color_override = "red")
 		next_announce += NUKE_ANNOUNCE_INTERVAL
+	if(world.time >= grant_announce && !grant_given)
+		priority_announce(
+				text = "10,000 research points have been refunded.",
+				title = "Emergency Research Grant",
+				sender_override = "Nanotasen Science Directorate",
+				sound = 'sound/misc/notice2.ogg',
+				has_important_message = TRUE,
+				color_override = "pink",
+			)
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 10000))
+		grant_given = TRUE
 
 /obj/machinery/nuclearbomb/commando/proc/update_damage()
 	if(atom_integrity <= 100)
@@ -146,6 +163,14 @@
 		START_PROCESSING(SSobj, core)
 		core = null
 	if(timing || exploding)
+		priority_announce(
+				text = "The nuclear device has been deactivated. For the safety of our staff, we are expediting an emergency shuttle for the remaining members of the crew.",
+				sound = 'sound/misc/notice2.ogg',
+				has_important_message = TRUE,
+				color_override = "blue",
+		)
+		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
+			SSsecurity_level.set_level(SEC_LEVEL_RED)
 		SSshuttle.admin_emergency_no_recall = TRUE
 		if(!EMERGENCY_AT_LEAST_DOCKED)
 			SSshuttle.emergency.request()
@@ -261,7 +286,7 @@
 		to_chat(user, span_warning("Location too unstable!"))
 		return
 	if(is_type_in_typecache(our_area, forbidden_areas))
-		to_chat(user, span_warning("Connection can not be established, relocate to another area! Large open spaces and maintenance are more likely to block connection."))
+		to_chat(user, span_warning("Connection could not be established, find an area with better connection! Large open spaces and radiation shielded areas such as maintenance are more likely to have a bad connection."))
 		return
 	yes_code = TRUE
 	numeric_input = ""
@@ -362,7 +387,6 @@
 			title = "Priority Alert",
 			sound = 'sound/machines/alarm.ogg',
 			has_important_message = TRUE,
-			sender_override = "Nanotrasen Security Division",
 			color_override = "red",
 		)
 	notify_ghosts(
@@ -373,6 +397,7 @@
 		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 	next_announce = world.time + NUKE_ANNOUNCE_INTERVAL
+	grant_announce = world.time + 30 SECONDS
 	update_appearance()
 
 /obj/machinery/nuclearbomb/commando/disarm_nuke(mob/disarmer, change_level_back = FALSE)

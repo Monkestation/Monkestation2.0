@@ -91,7 +91,7 @@
 	if(nuke_team?.memorized_code)
 		var/obj/item/paper/nuke_code_paper = new
 		nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>")
-		nuke_code_paper.add_raw_text("Standard decryption time with the given disk: 15 MINUTES. Decrypting in the designated areas or with a Nanotrasen NAD will lower the decryption time. NT NAD: 8 MINUTES. DECRYPTION AREA: 5 MINUTES.")
+		nuke_code_paper.add_raw_text("Standard decryption time with the given disk: 15 MINUTES <br>Decrypting in the designated areas or with a Nanotrasen NAD will lower the decryption time. <br>NT NAD: 8 MINUTES <br>DECRYPTION AREA: 5 MINUTES")
 		nuke_code_paper.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = owner.current
 		if(!istype(H))

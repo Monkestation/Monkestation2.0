@@ -612,7 +612,7 @@
 
 /obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 30
+	atom_storage.max_slots = 100
 	atom_storage.numerical_stacking = TRUE
 	atom_storage.max_total_storage = 1000 //store every grenade under the sun without issue or remorse
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY

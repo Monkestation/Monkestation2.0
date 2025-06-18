@@ -291,6 +291,7 @@
 		mutation.mutadone_proof = TRUE
 		mutation.instability = 0
 	human_who_gained_species.dna.species.name = "Monkey"
+	human_who_gained_species.dna.features["fur"] = COLOR_MONKEY_BROWN
 
 /datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/C)
 	. = ..()

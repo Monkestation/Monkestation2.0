@@ -32840,6 +32840,10 @@
 	pixel_x = -1;
 	pixel_y = 16
 	},
+/obj/item/clothing/mask/chameleon{
+	pixel_x = 13;
+	pixel_y = -1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/firebase_trident)
 "xZe" = (
@@ -32876,7 +32880,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/obj/machinery/holopad/secure,
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/firebase_trident)
 "ydt" = (
