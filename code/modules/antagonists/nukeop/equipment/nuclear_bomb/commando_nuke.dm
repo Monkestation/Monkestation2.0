@@ -389,6 +389,8 @@
 			has_important_message = TRUE,
 			color_override = "red",
 		)
+		next_announce = world.time + NUKE_ANNOUNCE_INTERVAL
+		grant_announce = world.time + 30 SECONDS
 	notify_ghosts(
 		"A nuclear device has been armed in [get_area_name(src)]!",
 		source = src,
@@ -396,8 +398,6 @@
 		action = NOTIFY_ORBIT,
 		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
-	next_announce = world.time + NUKE_ANNOUNCE_INTERVAL
-	grant_announce = world.time + 30 SECONDS
 	update_appearance()
 
 /obj/machinery/nuclearbomb/commando/disarm_nuke(mob/disarmer, change_level_back = FALSE)
