@@ -586,7 +586,7 @@
 		breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
 	if (nitrium_pp > 10)
 		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
-		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
+		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 2 - existing))
 
 /// Radioactive, green gas. Toxin damage, and a radiation chance
 /obj/item/organ/internal/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
@@ -624,7 +624,7 @@
  * * breather: A carbon mob that is using the lungs to breathe.
  */
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather, skip_breath)
-	if(breather.status_flags & GODMODE)
+	if(HAS_TRAIT(breather, TRAIT_GODMODE))
 		breather.failed_last_breath = FALSE
 		return FALSE
 
@@ -666,22 +666,18 @@
 	// We're in a low / high pressure environment, can't breathe, but trying to, so this hurts the lungs
 	// Unless it's cybernetic then it just doesn't care. Handwave magic whatever
 	else if(!skip_breath && (owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
-		if(lung_pop_tick > 10)
+		if(lung_pop_tick > 5)
 			lung_pop_tick = 0
-			if(!failed)
+			if(!failed && num_moles < 0.02)
 				// Lungs are poppin
-				if(damage >= 40 && damage <= 50 && breather.can_feel_pain())
-					to_chat(breather, span_userdanger("You feel a stabbing pain in your chest!"))
-				else if(num_moles < 0.02)
-					to_chat(breather, span_boldwarning("You feel air rapidly exiting your lungs!"))
-				else if(num_moles > 0.1)
-					to_chat(breather, span_boldwarning("You feel air force itself into your lungs!"))
-
+				to_chat(breather, span_boldwarning("You feel air rapidly exiting your lungs!"))
+				breather.failed_last_breath = TRUE
 				breather.cause_pain(BODY_ZONE_CHEST, 10, BRUTE)
-				apply_organ_damage(5)
-		breather.failed_last_breath = TRUE
+				apply_organ_damage(35)
+
 		failed_last_breath_checker = TRUE
-		lung_pop_tick++
+		if(num_moles < 0.02)
+			lung_pop_tick++
 	// Robot, don't care lol
 	else if((owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
 		// Can't breathe!
@@ -798,7 +794,7 @@
 	var/oxyloss = suffocator.getOxyLoss()
 	if(oxyloss >= 50)
 		// Suffocating = brain damage
-		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organtype = ORGAN_ORGANIC)
+		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organ_flag = ORGAN_ORGANIC)
 	// If mob is at critical health, check if they can be damaged further.
 	if(suffocator.stat >= SOFT_CRIT && HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
 		return
@@ -871,7 +867,7 @@
 	var/breath_dir = breather.dir
 
 	var/list/particle_grav = list(0, 0.1, 0)
-	var/list/particle_pos = list(0, breather.get_mob_height() + 2, 0)
+	var/list/particle_pos = list(0, breather.mob_height + 2, 0)
 	if(breath_dir & NORTH)
 		particle_grav[2] = 0.2
 		breath_particle.rotation = pick(-45, 45)
@@ -898,7 +894,7 @@
 
 	QDEL_IN(holder, breath_particle.lifespan)
 
-/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organtype)
+/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!.)
 		return
@@ -989,7 +985,7 @@
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
 	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
@@ -1024,7 +1020,7 @@
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 
 /obj/item/organ/internal/lungs/lavaland

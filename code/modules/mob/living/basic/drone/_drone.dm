@@ -41,7 +41,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
-	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
+	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET,FACTION_SLIME)
 	hud_type = /datum/hud/dextrous/drone
 	dexterous = TRUE
 	// Going for a sort of pale green here
@@ -182,6 +182,7 @@
 	AddElement(/datum/element/dextrous, hud_type = hud_type)
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
+	AddComponent(/datum/component/personal_crafting) //MONKESTATION ADDITION
 
 	if(default_storage)
 		var/obj/item/storage = new default_storage(src)
@@ -269,7 +270,7 @@
 
 	//Hands
 	for(var/obj/item/held_thing in held_items)
-		if(held_thing.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
 		. += "It has [held_thing.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(held_thing))]."
 

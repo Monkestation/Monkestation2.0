@@ -31,6 +31,12 @@ SUBSYSTEM_DEF(pollution)
 		singletons[type] = new type()
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/pollution/Recover()
+	active_pollution = SSpollution.active_pollution.Copy()
+	all_polution = SSpollution.all_polution.Copy()
+	dissapation_ticker = SSpollution.dissapation_ticker
+	singletons = deep_copy_list(SSpollution.singletons)
+
 /datum/controller/subsystem/pollution/fire(resumed = FALSE)
 	var/list/current_run_cache = current_run
 	if(pollution_task == POLLUTION_TASK_PROCESS)

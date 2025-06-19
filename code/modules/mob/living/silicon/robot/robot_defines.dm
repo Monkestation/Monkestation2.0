@@ -144,6 +144,7 @@
 	cell = null
 
 /mob/living/silicon/robot/shell
+	name = "AI Shell"
 	shell = TRUE
 	cell = null
 

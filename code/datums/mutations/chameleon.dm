@@ -8,6 +8,7 @@
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
 	instability = 25
 	power_coeff = 1
+	energy_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	. = ..() // monkestation edit
@@ -17,13 +18,26 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/datum/mutation/human/chameleon/process(seconds_per_tick) // monkestation edit, also do NOT move this to animate() as it *WILL* get interrupted constantly
+/* MONKESTATION EDIT OLD START
+/datum/mutation/human/chameleon/on_life(seconds_per_tick, times_fired)
 	owner.alpha = max(owner.alpha - (12.5 * (GET_MUTATION_POWER(src)) * seconds_per_tick), 0)
+*/
+// MONKESTATION EDIT OLD END
+
+// MONKESTATION EDIT NEW START
+/datum/mutation/human/chameleon/process(seconds_per_tick)
+	if(owner.stat == DEAD)
+		owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+		return
+
+	owner.alpha = max(owner.alpha - (12.5 / (min(GET_MUTATION_ENERGY(src) * 1.4, 1)) * seconds_per_tick), 0)
+// MONKESTATION EDIT NEW END
 
 //Upgraded mutation of the base variant, used for changelings. No instability and better power_coeff
 /datum/mutation/human/chameleon/changeling
 	instability = 0
-	power_coeff = 2.5
+//	power_coeff = 2.5 // MONKESTATION EDIT OLD
+	energy_coeff = 0.28 // MONKESTATION EDIT NEW
 	locked = TRUE
 
 /**
@@ -39,7 +53,8 @@
 /datum/mutation/human/chameleon/proc/on_move(atom/movable/source, atom/old_loc, move_dir, forced, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+//	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY // MONKESTATION EDIT OLD
+	owner.alpha = min(owner.alpha + CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY / (GET_MUTATION_POWER(src) > 1 ? GET_MUTATION_POWER(src) * 2 : 1), CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY) // MONKESTATION EDIT NEW
 
 /**
  * Resets the alpha of the host if they click on something nearby.

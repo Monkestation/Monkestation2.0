@@ -32,13 +32,13 @@
 	projectile_type = /obj/projectile/bullet/a556/weak
 
 // 40mm (Grenade Launcher)
-
-/obj/item/ammo_casing/a40mm
-	name = "40mm HE shell"
-	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
-	caliber = CALIBER_40MM
-	icon_state = "40mmHE"
-	projectile_type = /obj/projectile/bullet/a40mm
+//MONKESTATION REMOVAL: moved to 40mm_grenade.dm
+// /obj/item/ammo_casing/a40mm
+// 	name = "40mm HE shell"
+// 	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
+// 	caliber = CALIBER_40MM
+// 	icon_state = "40mmHE"
+// 	projectile_type = /obj/projectile/bullet/a40mm
 
 /obj/item/ammo_casing/rebar
 	name = "Sharpened Iron Rod"
@@ -50,7 +50,7 @@
 
 /obj/item/ammo_casing/rebar/syndie
 	name = "Jagged Iron Rod"
-	desc = "An Iron rod, with notches cut into it. You really dont want this stuck in you."
+	desc = "An Iron rod, with notches cut into it. You really don't want this stuck in you."
 	caliber = CALIBER_REBAR
 	icon_state = "rod_jagged"
 	base_icon_state = "rod_jagged"

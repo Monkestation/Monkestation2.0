@@ -342,13 +342,14 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || (item.item_flags & EXAMINE_SKIP)))
+		if (isnull(item) || HAS_TRAIT(item, TRAIT_NO_STRIP) || HAS_TRAIT(item, TRAIT_EXAMINE_SKIP))
 			items[strippable_key] = result
 			continue
 
 		LAZYINITLIST(result)
 
-		result["icon"] = icon2base64(icon(item.icon, item.icon_state))
+		result["icon"] = ref(item.icon)
+		result["icon_state"] = item.icon_state
 		result["name"] = item.name
 		result["alternate"] = item_data.get_alternate_action(owner, user)
 

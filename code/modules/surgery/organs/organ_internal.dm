@@ -29,7 +29,7 @@
 	. = ..()
 
 	if(organ_owner)
-		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
+		if((organ_flags & ORGAN_VITAL) && !special && !(HAS_TRAIT(organ_owner, TRAIT_GODMODE)))
 			if(organ_owner.stat != DEAD)
 				organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
 			organ_owner.death(null, "losing your [name]")
@@ -41,7 +41,7 @@
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
-	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
 	if(HAS_TRAIT(src, TRAIT_NO_ORGAN_DECAY) || (owner && HAS_TRAIT(owner, TRAIT_NO_ORGAN_DECAY)))
 		return
@@ -70,7 +70,7 @@
 	if(failure_time > 0)
 		failure_time--
 
-	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
+	if(organ_flags & ORGAN_EMP) //Synthetic organ has been emped, is now failing.
 		apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 		return
 

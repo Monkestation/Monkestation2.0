@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(glowshrooms)
 	name = "Glowshroom Processing"
 	wait = 1 SECONDS
 	priority = FIRE_PRIORITY_GLOWSHROOMS
-	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD
 	var/enable_spreading = TRUE
@@ -13,8 +13,16 @@ SUBSYSTEM_DEF(glowshrooms)
 	var/list/obj/structure/glowshroom/currentrun_spread = list()
 	var/list/obj/structure/glowshroom/currentrun_decay = list()
 
+/datum/controller/subsystem/glowshrooms/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, glowshrooms),
+		NAMEOF(src, currentrun_spread),
+		NAMEOF(src, currentrun_decay),
+	)
+
 /datum/controller/subsystem/glowshrooms/Recover()
-	glowshrooms = SSglowshrooms.glowshrooms
+	glowshrooms = SSglowshrooms.glowshrooms.Copy()
 
 /datum/controller/subsystem/glowshrooms/fire(resumed)
 	// just... trust me, this makes COMPLETE sense
@@ -25,6 +33,7 @@ SUBSYSTEM_DEF(glowshrooms)
 				currentrun_spread = glowshrooms.Copy()
 			currentrun_decay = glowshrooms.Copy()
 
+	var/seconds_per_tick = DELTA_WORLD_TIME(src)
 	if(run_type == SSGLOWSHROOMS_RUN_TYPE_SPREAD)
 		if(enable_spreading)
 			var/list/current_run_spread = currentrun_spread
@@ -35,7 +44,7 @@ SUBSYSTEM_DEF(glowshrooms)
 					glowshrooms -= glowshroom
 				else if(COOLDOWN_FINISHED(glowshroom, spread_cooldown))
 					COOLDOWN_START(glowshroom, spread_cooldown, rand(glowshroom.min_delay_spread, glowshroom.max_delay_spread))
-					glowshroom.Spread(wait * 0.1)
+					glowshroom.Spread(seconds_per_tick)
 				if(MC_TICK_CHECK)
 					return
 		run_type = SSGLOWSHROOMS_RUN_TYPE_DECAY
@@ -48,7 +57,7 @@ SUBSYSTEM_DEF(glowshrooms)
 			if(QDELETED(glowshroom))
 				glowshrooms -= glowshroom
 			else
-				glowshroom.Decay(wait * 0.1)
+				glowshroom.Decay(seconds_per_tick)
 			if(MC_TICK_CHECK)
 				return
 		run_type = SSGLOWSHROOMS_RUN_TYPE_SPREAD

@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/simple_animal/hostile/asteroid/elite,
 	/mob/living/simple_animal/hostile/asteroid,
 	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/mimic, // Cannot exist if spawned without being passed an item reference
+	/mob/living/basic/mimic/crate, // Cannot exist if spawned without being passed an item reference
 	/mob/living/simple_animal/hostile/retaliate,
 	/mob/living/simple_animal/hostile,
 	/mob/living/simple_animal/pet,
@@ -106,6 +106,15 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 	CONSTRUCT_ARTIFICER = image(icon = 'icons/mob/nonhuman-player/cult.dmi', icon_state = "artificer")
 ))
 
+/// List of all species prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototypes())
+
+/proc/init_species_prototypes()
+	var/list/species_list = list()
+	for(var/species_type in subtypesof(/datum/species))
+		species_list[species_type] = new species_type()
+	return species_list
+
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	var/list/mob_types = list()
 	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed)
@@ -142,10 +151,14 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 			else
 				.[E.key_third_person] |= E
 
-/proc/get_crewmember_minds()
-	var/list/minds = list()
+/proc/get_crewmember_minds(require_body = TRUE)
+	. = list()
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
-		var/datum/mind/mind = target.mind_ref?.resolve() // monkestation edit: weakreffed mind ref
-		if(mind)
-			minds += mind
-	return minds
+		var/datum/mind/mind = target.mind_ref?.resolve()
+		if(isnull(mind))
+			continue
+		if(HAS_TRAIT(mind, TRAIT_REMOVED_FROM_MANIFEST)) // shouldn't really happen but let's make sure
+			continue
+		if(require_body && QDELETED(mind.current))
+			continue
+		. += mind

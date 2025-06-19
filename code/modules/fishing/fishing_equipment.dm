@@ -132,7 +132,7 @@
 	icon_state = "rescue"
 	rod_overlay_icon_state = "hook_rescue_overlay"
 	chasm_detritus_type = /datum/chasm_detritus/restricted/bodies
-
+	custom_premium_price = PAYCHECK_CREW * 6 //Monkestation edit
 
 // This hook can only fish in chasms.
 /obj/item/fishing_hook/rescue/reason_we_cant_fish(datum/fish_source/target_fish_source)

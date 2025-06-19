@@ -125,7 +125,7 @@
 	icon_state = "blooddrunk"
 
 /datum/status_effect/blooddrunk/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.brute_mod *= 0.1
@@ -147,7 +147,7 @@
 		human_owner.physiology.oxy_mod *= 10
 		human_owner.physiology.clone_mod *= 10
 		human_owner.physiology.stamina_mod *= 10
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.remove_stun_absorption(id)
 
 //Used by changelings to rapidly heal
@@ -398,7 +398,7 @@
 
 	if(iscarbon(owner))
 		chainsaw = new(get_turf(owner))
-		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		ADD_TRAIT(chainsaw, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 		chainsaw.item_flags |= DROPDEL // monkestation addition
 		chainsaw.resistance_flags |= INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // monkestation addition
 		owner.put_in_hands(chainsaw, forced = TRUE)
@@ -480,17 +480,17 @@
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
-/datum/status_effect/nest_sustenance/tick(seconds_per_tick, times_fired)
+/datum/status_effect/nest_sustenance/tick(seconds_between_ticks, times_fired)
 	. = ..()
 
 	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
 		qdel(src)
 		return
 
-	owner.adjustBruteLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustOxyLoss(-4 * seconds_per_tick, updating_health = FALSE)
-	owner.stamina.adjust(4 * seconds_per_tick)
+	owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	owner.stamina.adjust(4 * seconds_between_ticks)
 	owner.adjust_bodytemperature(INFINITY, max_temp = owner.standard_body_temperature) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
@@ -528,7 +528,7 @@
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
-	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), id)
+	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -546,4 +546,17 @@
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
-	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), id)
+	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), TRAIT_STATUS_EFFECT(id))
+
+/// Gives you a brief period of anti-gravity
+/datum/status_effect/jump_jet
+	id = "jump_jet"
+	alert_type = null
+	duration = 5 SECONDS
+
+/datum/status_effect/jump_jet/on_apply()
+	owner.AddElement(/datum/element/forced_gravity, 0)
+	return TRUE
+
+/datum/status_effect/jump_jet/on_remove()
+	owner.RemoveElement(/datum/element/forced_gravity, 0)

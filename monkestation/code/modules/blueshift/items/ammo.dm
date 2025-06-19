@@ -389,7 +389,7 @@
 	name = ".35 Sol Short armor piercing bullet"
 	damage = 13
 	bare_wound_bonus = -30
-	armour_penetration = 20
+	armour_penetration = 30
 
 /obj/item/ammo_box/c35sol/pierce
 	name = "ammo box (.35 Sol Short armor piercing)"
@@ -417,8 +417,8 @@
 /obj/projectile/bullet/c40sol
 	name = ".40 Sol Long bullet"
 	damage = 20
-	wound_bonus = 10
-	bare_wound_bonus = 20
+	wound_bonus = -10
+	bare_wound_bonus = 5
 
 
 /obj/item/ammo_box/c40sol
@@ -460,7 +460,7 @@
 	weak_against_armour = TRUE
 
 	sharpness = SHARP_EDGED
-	wound_bonus = 0
+	wound_bonus = -5
 	bare_wound_bonus = 10
 
 	shrapnel_type = /obj/item/shrapnel/stingball
@@ -511,7 +511,7 @@
 	speed = 0.5
 
 	damage = 15
-	armour_penetration = 20
+	armour_penetration = 40
 
 	wound_bonus = -30
 	bare_wound_bonus = -10
@@ -632,9 +632,11 @@
 
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
-	damage = 50
-	armour_penetration = 50
-	wound_bonus = -20
+	damage = 45
+	armour_penetration = 60
+	wound_falloff_tile = -2
+	wound_bonus = -45
+	speed = 0.3
 
 // .585 Trappiste
 // High caliber round used in large pistols and revolvers
@@ -652,7 +654,7 @@
 /obj/projectile/bullet/c585trappiste
 	name = ".585 Trappiste bullet"
 	damage = 25
-	wound_bonus = 0 // Normal bullets are 20
+	wound_bonus = -10 // Normal bullets are 20
 
 /obj/item/ammo_box/c585trappiste
 	name = "ammo box (.585 Trappiste lethal)"
@@ -683,8 +685,8 @@
 /obj/projectile/bullet/c585trappiste/incapacitator
 	name = ".585 Trappiste flathead bullet"
 	damage = 9
-	stamina = 40
-	wound_bonus = 10
+	stamina = 35
+	wound_bonus = -20
 
 	weak_against_armour = TRUE
 
@@ -749,7 +751,8 @@
 /obj/projectile/bullet/c27_54cesarzowa
 	name = ".27-54 Cesarzowa piercing bullet"
 	damage = 15
-	armour_penetration = 15
+	armour_penetration = 30
+	wound_bonus = -10
 
 /obj/item/ammo_box/c27_54cesarzowa
 	name = "ammo box (.27-54 Cesarzowa piercing)"
@@ -872,7 +875,7 @@
 	icon_state = "gaussphase"
 	speed = 0.4
 	damage = 50
-	armour_penetration = 50
+	armour_penetration = 80
 	wound_bonus = 10
 	bare_wound_bonus = 10
 	demolition_mod = 1.8
@@ -1030,8 +1033,13 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(istype(target, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/gun = target
-		if(length(gun.magazine.stored_ammo) >= gun.magazine.max_ammo)
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+		if(!(istype(target, /obj/item/gun/ballistic/revolver)))
+			if(length(gun.magazine.stored_ammo) >= gun.magazine.max_ammo)
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+		else
+			var/live_ammo = gun.magazine.ammo_count(FALSE)
+			if(live_ammo >= length(gun.magazine.stored_ammo))
+				return COMPONENT_CANCEL_ATTACK_CHAIN
 		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
 		old_ammo_count = length(stored_ammo)
 		if(do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))
@@ -1236,7 +1244,7 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum
 	name = "magnum blockshot pellet"
 	damage = 12
-	wound_bonus = 10
+	wound_bonus = 7
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum/Initialize(mapload)
 	. = ..()
@@ -1253,7 +1261,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express
 	name = "express buckshot pellet"
-	damage = 4
+	damage = 3
 	wound_bonus = 0
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
@@ -1265,7 +1273,7 @@
 	desc = "A 12 gauge flechette shell that specializes in ripping unarmored targets apart."
 	icon_state = "fshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/flechette
-	pellets = 8 //8 x 6 = 48 Damage Potential
+	pellets = 6 //6 x 6 = 36 Damage Potential
 	variance = 25
 	custom_materials = AMMO_MATS_SHOTGUN_FLECH
 	advanced_print_req = TRUE
@@ -1275,9 +1283,10 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "flechette"
 	damage = 6
-	wound_bonus = 10
-	bare_wound_bonus = 20
+	wound_bonus = 3
+	bare_wound_bonus = 14
 	sharpness = SHARP_EDGED //Did you knew flechettes fly sideways into people
+	weak_against_armour = TRUE // Specializes in ripping unarmored targets apart
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/flechette/Initialize(mapload)
 	. = ..()

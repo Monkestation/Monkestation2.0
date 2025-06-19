@@ -124,20 +124,6 @@
 		"puppy" = FALSE,
 		"spider" = FALSE,
 	)
-	/// List of all available card overlays.
-	var/static/list/possible_overlays = list(
-		"null",
-		"angry",
-		"cat",
-		"extremely-happy",
-		"face",
-		"happy",
-		"laugh",
-		"off",
-		"sad",
-		"sunglasses",
-		"what"
-	)
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
@@ -257,7 +243,7 @@
 	return radio.screwdriver_act(user, tool)
 
 /mob/living/silicon/pai/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
@@ -449,3 +435,6 @@
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
 	leash.set_distance(new_distance)
+
+/mob/living/silicon/pai/get_access()
+	return list(ACCESS_MAINT_TUNNELS) //MONKESTATION EDIT: Add inherent maints access to pAIs

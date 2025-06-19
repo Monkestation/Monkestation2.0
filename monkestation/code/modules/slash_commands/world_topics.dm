@@ -95,10 +95,3 @@
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<B><font color='green'>Mentor PM: [key_name_mentor(from, honked_clients, FALSE, FALSE)]-&gt;[key_name_mentor(chosen_client, honked_clients, FALSE, FALSE)]:</B> <font color = #5c00e6> <span class='message linkify'>[msg]</span></font>",
 				confidential = TRUE)
-
-	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-	if(regular_webhook_url)
-		var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, from)
-		if(!embed)
-			return
-		send2mentorchat_webhook(embed, from)

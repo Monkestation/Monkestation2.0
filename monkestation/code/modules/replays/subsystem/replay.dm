@@ -3,6 +3,9 @@
 /datum/config_entry/string/replay_password
 	default = "mrhouse101"
 
+/datum/config_entry/string/replay_link
+	default = "http://localhost"
+
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	wait = 1
@@ -29,13 +32,19 @@ SUBSYSTEM_DEF(demo)
 	//var/last_queued = 0
 	//var/last_completed = 0
 
-/datum/controller/subsystem/demo/Initialize()
+/datum/controller/subsystem/demo/OnConfigLoad()
+	. = ..()
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
-	CONFIG_SET(flag/demos_enabled, FALSE)
-#endif
+	disable()
+#else
 	if(!CONFIG_GET(flag/demos_enabled))
 		disable()
+#endif
+
+/datum/controller/subsystem/demo/Initialize()
+	if(disabled)
 		return SS_INIT_NO_NEED
+	rustg_file_write("[GLOB.round_id]", "[GLOB.demo_directory]/round_number_[world.port].txt")
 
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "demo version 1\n") // increment this if you change the format
 	if(GLOB.revdata)
@@ -73,9 +82,11 @@ SUBSYSTEM_DEF(demo)
 					// do a diff with the previous turf to save those bytes
 					row_list += encode_appearance(this_appearance, istext(last_appearance) ? null : last_appearance)
 			last_appearance = this_appearance
+			CHECK_TICK
 		if(rle_count > 1)
 			row_list += rle_count
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, jointext(row_list, ",") + "\n")
+		CHECK_TICK
 	CHECK_TICK
 	// then do objects
 	log_world("Writing objects")
@@ -101,6 +112,7 @@ SUBSYSTEM_DEF(demo)
 			CHECK_TICK // This is a bit risky because something might change but meh, its not a big deal.
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, jointext(row_list, ",") + "\n")
 
+	CHECK_TICK
 	// track objects that exist in nullspace
 	var/nullspace_list = list()
 	for(var/M in world)
@@ -136,6 +148,9 @@ SUBSYSTEM_DEF(demo)
 	last_chat_message = SSdemo.last_chat_message
 	// last_queued = SSdemo.last_queued
 	// last_completed = SSdemo.last_completed
+
+/datum/controller/subsystem/demo/Shutdown()
+	disabled = TRUE
 
 /datum/controller/subsystem/demo/fire()
 	var/list/marked_new = src.marked_new
@@ -249,17 +264,17 @@ SUBSYSTEM_DEF(demo)
 	return ..()
 
 /datum/controller/subsystem/demo/proc/disable()
-	flags |= SS_NO_FIRE
+	flags |= SS_NO_INIT|SS_NO_FIRE
 	can_fire = FALSE
 	disabled = TRUE
-	pre_init_lines.len = 0
-	icon_cache.len = 0
-	icon_state_caches.len = 0
-	name_cache.len = 0
-	marked_dirty.len = 0
-	marked_new.len = 0
-	marked_turfs.len = 0
-	del_list.len = 0
+	pre_init_lines = null
+	icon_cache = null
+	icon_state_caches = null
+	name_cache = null
+	marked_dirty = null
+	marked_new = null
+	marked_turfs = null
+	del_list = null
 
 /datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
@@ -426,6 +441,8 @@ SUBSYSTEM_DEF(demo)
 	last_written_time = new_time
 
 /datum/controller/subsystem/demo/proc/write_event_line(line)
+	if(disabled)
+		return
 	write_time()
 	if(initialized)
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "[line]\n")
@@ -468,7 +485,7 @@ SUBSYSTEM_DEF(demo)
 /datum/controller/subsystem/demo/proc/mark_turf(turf/turf)
 	if(disabled)
 		return
-	if(isturf(turf))
+	if(!isturf(turf))
 		return
 	marked_turfs[turf] = TRUE
 
@@ -482,16 +499,16 @@ SUBSYSTEM_DEF(demo)
 			continue
 		marked_turfs[turf] = TRUE
 
-/datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
+/datum/controller/subsystem/demo/proc/mark_new(atom/movable/atom)
 	if(disabled)
 		return
-	if(!isobj(M) && !ismob(M))
+	if(!isobj(atom) && !ismob(atom))
 		return
-	if(QDELING(M))
+	if(QDELING(atom))
 		return
-	marked_new[M] = TRUE
-	if(marked_dirty[M])
-		marked_dirty -= M
+	marked_new[atom] = TRUE
+	if(marked_dirty[atom])
+		marked_dirty -= atom
 
 /datum/controller/subsystem/demo/proc/mark_multiple_new(list/atom/atom_list)
 	if(disabled)
@@ -499,22 +516,22 @@ SUBSYSTEM_DEF(demo)
 	for(var/atom/atom as anything in atom_list)
 		if(!isobj(atom) && !ismob(atom))
 			continue
-		if(QDELING(atom))
+		if(QDELING(atom) || (atom.flags_1 & DEMO_IGNORE_1))
 			continue
 		marked_new[atom] = TRUE
 		if(marked_dirty[atom])
 			marked_dirty -= atom
 
 // I can't wait for when TG ports this and they make this a #define macro.
-/datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
+/datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/dirty)
 	if(disabled)
 		return
-	if(!isobj(M) && !ismob(M))
+	if(!isobj(dirty) && !ismob(dirty))
 		return
-	if(QDELING(M))
+	if(QDELING(dirty) || (dirty.flags_1 & DEMO_IGNORE_1))
 		return
-	if(!marked_new[M])
-		marked_dirty[M] = TRUE
+	if(!marked_new[dirty])
+		marked_dirty[dirty] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_multiple_dirty(list/atom/movable/dirty_list)
 	if(disabled)
@@ -522,19 +539,21 @@ SUBSYSTEM_DEF(demo)
 	for(var/atom/movable/dirty as anything in dirty_list)
 		if(!isobj(dirty) && !ismob(dirty))
 			continue
-		if(QDELING(dirty))
+		if(QDELING(dirty) || (dirty.flags_1 & DEMO_IGNORE_1))
 			continue
 		if(!marked_new[dirty])
 			marked_dirty[dirty] = TRUE
 
-/datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
+/datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/destroyed)
 	if(disabled)
 		return
-	if(!isobj(M) && !ismob(M))
+	if(!isobj(destroyed) && !ismob(destroyed))
 		return
-	if(marked_new[M])
-		marked_new -= M
-	if(marked_dirty[M])
-		marked_dirty -= M
+	if(destroyed.flags_1 & DEMO_IGNORE_1)
+		return
+	if(marked_new[destroyed])
+		marked_new -= destroyed
+	if(marked_dirty[destroyed])
+		marked_dirty -= destroyed
 	if(initialized)
-		del_list[ref(M)] = TRUE
+		del_list[ref(destroyed)] = TRUE

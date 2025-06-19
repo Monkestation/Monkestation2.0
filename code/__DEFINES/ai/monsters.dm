@@ -217,3 +217,9 @@
 #define BB_WIZARD_BLINK_SPELL "BB_wizard_blink_spell"
 /// Key for the next time we can cast a spell
 #define BB_WIZARD_SPELL_COOLDOWN "BB_wizard_spell_cooldown"
+
+#define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
+
+//netguardians
+/// rocket launcher
+#define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"

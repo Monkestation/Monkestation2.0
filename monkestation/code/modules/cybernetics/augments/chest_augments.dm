@@ -9,6 +9,7 @@
 	implant_overlay = "chest_implant_overlay"
 	slot = ORGAN_SLOT_SPINAL
 	var/double_legged = FALSE
+	organ_flags = ORGAN_ROBOTIC
 
 /datum/action/item_action/organ_action/sandy
 	name = "Sandevistan Activation"
@@ -88,7 +89,7 @@
 
 
 /datum/reagent/medicine/brain_healer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
 
 
@@ -275,9 +276,8 @@
 	COOLDOWN_DECLARE(defib_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
-	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
-		return
-	try_heal() // Allows implant to work even on dead people
+	if(!QDELETED(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
+		try_heal() // Allows implant to work even on dead people
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
 	try_heal()
@@ -290,7 +290,7 @@
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
-		return
+		return // Keep this. Otherwise we spam defib cooldown and it never procs
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
 		return
@@ -303,6 +303,8 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
+	if(QDELETED(owner))
+		return
 	if(COOLDOWN_FINISHED(src, defib_cooldown))
 		revive_dead()
 
@@ -376,6 +378,10 @@
 	if(human_owner.stat == CONSCIOUS)
 		to_chat(human_owner, span_notice("You feel your heart beating again!"))
 
+/obj/item/organ/internal/cyberimp/chest/reviver/syndicate
+	name = "contraband reviver implant"
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
@@ -391,22 +397,18 @@
 
 	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/on = FALSE
-	var/datum/callback/get_mover
-	var/datum/callback/check_on_move
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, PROC_REF(get_user))
-	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
-	refresh_jetpack()
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/Destroy()
-	get_mover = null
-	check_on_move = null
-	return ..()
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, FALSE, COMSIG_THRUSTER_ACTIVATED, COMSIG_THRUSTER_DEACTIVATED, THRUSTER_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion)
+	AddComponent( \
+		/datum/component/jetpack, \
+		FALSE, \
+		COMSIG_THRUSTER_ACTIVATED, \
+		COMSIG_THRUSTER_DEACTIVATED, \
+		THRUSTER_ACTIVATION_FAILED, \
+		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
+		/datum/effect_system/trail_follow/ion \
+	)
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
 	if(on)
@@ -431,7 +433,7 @@
 		if(!silent)
 			to_chat(owner, span_warning("Your thrusters set seems to be broken!"))
 		return
-	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED) & THRUSTER_ACTIVATION_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED, owner) & THRUSTER_ACTIVATION_FAILED)
 		return
 
 	on = TRUE
@@ -443,7 +445,7 @@
 /obj/item/organ/internal/cyberimp/chest/thrusters/proc/deactivate(silent = FALSE)
 	if(!on)
 		return
-	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED)
+	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED, owner)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set off."))
@@ -488,10 +490,6 @@
 
 	deactivate(silent = TRUE)
 	return FALSE
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/proc/get_user()
-	return owner
-
 
 /datum/action/item_action/organ_action/knockout
 	name = "Knockout Punch"

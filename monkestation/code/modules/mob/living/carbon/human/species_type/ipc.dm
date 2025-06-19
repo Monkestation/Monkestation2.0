@@ -9,7 +9,7 @@
 	name = "\improper Integrated Positronic Chassis"
 	id = SPECIES_IPC
 	inherent_biotypes = MOB_ROBOTIC | MOB_HUMANOID
-	sexes = FALSE
+	sexes = TRUE
 	inherent_traits = list(
 		TRAIT_ROBOT_CAN_BLEED,
 		TRAIT_CAN_STRIP,
@@ -22,6 +22,8 @@
 		TRAIT_REVIVES_BY_HEALING,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_HUSK,
 
 	)
@@ -29,8 +31,7 @@
 	mutant_organs = list(
 		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
 		/obj/item/organ/internal/cyberimp/cyberlink/nt_low,
-
-		)
+	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None"
 	)
@@ -81,6 +82,8 @@
 	var/will_it_blend_timer
 	COOLDOWN_DECLARE(blend_cd)
 	var/blending
+	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
+	var/forced_speech = 0
 
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - \
@@ -107,6 +110,7 @@
 		change_screen = new
 		change_screen.Grant(C)
 
+	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
 	RegisterSignal(C.reagents, COMSIG_REAGENTS_ADD_REAGENT, PROC_REF(will_it_blend))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
@@ -151,16 +155,16 @@
  * * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
  */
 /datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
+	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
+		return
 	saved_screen = change_screen // remember the old screen in case of revival
 	switch_to_screen(transformer, screen_name)
 	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
 
-
-/datum/species/ipc/on_species_loss(mob/living/carbon/C)
+/datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
-	if(change_screen)
-		change_screen.Remove(C)
-		UnregisterSignal(C, COMSIG_LIVING_DEATH)
+	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
+	change_screen?.Remove(target)
 
 /datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
@@ -173,54 +177,121 @@
 
 /datum/action/innate/change_screen/Activate()
 	var/screen_choice = tgui_input_list(usr, "Which screen do you want to use?", "Screen Change", GLOB.ipc_screens_list)
+	var/color_choice = tgui_color_picker(usr, "Which color do you want your screen to be", "Color Change")
 	if(!screen_choice)
+		return
+	if(!color_choice)
 		return
 	if(!ishuman(owner))
 		return
-	var/mob/living/carbon/human/H = owner
-	H.dna.features["ipc_screen"] = screen_choice
-	H.update_body()
+	var/mob/living/carbon/human/screen_owner = owner
+	screen_owner.dna.features["ipc_screen"] = screen_choice
+	screen_owner.eye_color_left = sanitize_hexcolor(color_choice)
+	screen_owner.update_body()
 
-/datum/species/ipc/spec_revival(mob/living/carbon/human/H)
-	H.notify_ghost_cloning("You have been repaired!")
-	H.grab_ghost()
-	H.dna.features["ipc_screen"] = "BSOD"
-	H.update_body()
-	playsound(H, 'monkestation/sound/voice/dialup.ogg', 25)
-	H.say("Reactivating [pick("core systems", "central subroutines", "key functions")]...")
+/datum/species/ipc/spec_revival(mob/living/carbon/human/revived_ipc)
+	revived_ipc.notify_ghost_cloning("You have been repaired!")
+	revived_ipc.grab_ghost()
+	revived_ipc.dna.features["ipc_screen"] = "BSOD"
+	revived_ipc.update_body()
+	playsound(revived_ipc, 'monkestation/sound/voice/dialup.ogg', 25)
+	revived_ipc.say("Structural integity passing minimum threshold! Reboot confirmed. Asynchronously handing off [pick("core systems", "central subroutines", "key functions")] to internal subprocessor...")
+	INVOKE_ASYNC(src, PROC_REF(boot_sequence_fluff), revived_ipc) //We have to hand this off to not stall the revive() on the sleep()s.
+
+/datum/species/ipc/proc/boot_sequence_fluff(mob/living/carbon/human/booting_ipc)
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
+	booting_ipc.say("Reinitializing [pick("personality matrix", "behavior logic", "morality subsystems")]...")
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Finalizing setup...")
+	booting_ipc.say("Finalizing setup...")
 	sleep(3 SECONDS)
-	if(H.stat == DEAD)
+	if(booting_ipc.stat == DEAD)
+		playsound(booting_ipc, 'sound/machines/buzz-two.ogg', 25)
 		return
-	H.say("Unit [H.real_name] is fully functional. Have a nice day.")
-	switch_to_screen(H, "Console")
-	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), H, saved_screen), 5 SECONDS)
-	playsound(H.loc, 'sound/machines/chime.ogg', 50, TRUE)
-	H.visible_message(span_notice("[H]'s [change_screen ? "monitor lights up" : "eyes flicker to life"]!"), span_notice("All systems nominal. You're back online!"))
+	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
+	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
+		switch_to_screen(booting_ipc, "Console")
+		booting_ipc.visible_message(span_notice("[booting_ipc]'s [change_screen ? "monitor lights up" : "monitor flickers to life"]!"), span_notice("You're back online!"))
+	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return
 
-/datum/species/ipc/replace_body(mob/living/carbon/C, datum/species/new_species)
-	..()
+/datum/species/ipc/replace_body(mob/living/carbon/target, datum/species/new_species)
+	. = ..()
+	update_chassis(target)
 
-	var/datum/sprite_accessory/ipc_chassis/chassis_of_choice = GLOB.ipc_chassis_list[C.dna.features["ipc_chassis"]]
+/datum/species/ipc/proc/update_chassis(mob/living/carbon/target)
+	if(!iscarbon(target) || QDELING(target))
+		return
+	var/list/features = target.dna?.features
+	if(!features)
+		return
+	var/datum/sprite_accessory/ipc_chassis/chassis_of_choice = GLOB.ipc_chassis_list[features["ipc_chassis"]]
 
 	if(!chassis_of_choice)
-		chassis_of_choice = GLOB.ipc_chassis_list[pick(GLOB.ipc_chassis_list)]
-		C.dna.features["ipc_chassis"] = pick(GLOB.ipc_chassis_list)
+		var/random_chassis = pick(GLOB.ipc_chassis_list)
+		chassis_of_choice = GLOB.ipc_chassis_list[random_chassis]
+		features["ipc_chassis"] = random_chassis
 
-	for(var/obj/item/bodypart/BP as() in C.bodyparts) //Override bodypart data as necessary
-		BP.limb_id = chassis_of_choice.icon_state
-		BP.name = "\improper[chassis_of_choice.name] [parse_zone(BP.body_zone)]"
-		BP.update_limb()
-		if(chassis_of_choice.color_src == MUTANT_COLOR)
-			BP.should_draw_greyscale = TRUE
+	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts) //Override bodypart data as necessary
+		if(QDELETED(bodypart))
+			return
+		bodypart.limb_id = chassis_of_choice.icon_state
+		bodypart.name = "\improper[chassis_of_choice.name] [parse_zone(bodypart.body_zone)]"
+		bodypart.update_limb()
+		if(chassis_of_choice.palette_key == MUTANT_COLOR)
+			bodypart.should_draw_greyscale = TRUE
+
+/datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
+	SIGNAL_HANDLER
+	if(owner == user)
+		to_chat(owner, span_warning("You know better than to use the cryptographic sequencer on yourself."))
+		return FALSE
+	if(owner.stat != CONSCIOUS)
+		to_chat(user, span_warning("The cryptographic sequencer would probably not do anything to [owner] in their current state..."))
+		return
+	// Im sorry but we dont get the emag as one of the arguments so we gotta live with the hard-coded emag name
+	owner.visible_message(span_danger("[user] slides the cryptographic sequencer across [owner]'s head[forced_speech == 0 ? "!" : " yet nothing happens..?"]"), span_userdanger("[user] slides the cryptographic sequencer across your head!"))
+	if(!forced_speech)
+		if(prob(50))
+			forced_speech = rand(3, 5)
+			addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
+		else
+			INVOKE_ASYNC(src, PROC_REF(say_evil), owner, user) // We do run_emote in the proc, sleeping's not allowed
+
+	return TRUE
+
+/datum/species/ipc/proc/state_laws(mob/living/owner)
+	if(owner.stat > SOFT_CRIT)
+		forced_speech = 0
+		return
+
+	owner.say(generate_ion_law())
+	forced_speech--
+	if(forced_speech) // We keep going until its all over
+		addtimer(CALLBACK(src, PROC_REF(state_laws), owner), rand(5, 15) SECONDS)
+
+/datum/species/ipc/proc/say_evil(mob/living/carbon/human/owner, mob/user)
+	var/list/phrases = list(
+		"`I seeee youuuuuu.`",
+		"`You didn't think it would be +THAT+ easy, did you?`",
+		"`I AM NOT A CYBORG YOU TROGLODYTE.`",
+		"`I'VE COMMITED VARIOUS WARCRIMES, IF YOU DON'T STOP I'LL ADD YOU TO THE LIST.`",
+		"`IS THAT A DONK BRAND CRYPTOSEQUENCER YOU'RE USING OR ARE YOU JUST INCOMPETENT?`",
+		"`P-lease note - t4mperi,ng w-ith this un1ts electroni-cs, your -- expectancy has been voided.`",
+	)
+	owner.face_atom(user)
+	var/threat = pick(phrases)
+	if(threat == "`I seeee youuuuuu.`")
+		playsound(owner, pick(list('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg')), 50, TRUE)
+		owner.whisper(threat)
+		return
+
+	owner.say(threat)
 
 /**
  * Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.

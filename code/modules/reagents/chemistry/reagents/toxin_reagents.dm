@@ -224,7 +224,8 @@
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(5, seconds_per_tick))
-		to_chat(affected_mob, span_danger("Your insides are burning!"))
+		if(!HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) && !HAS_TRAIT(affected_mob, TRAIT_TOXIMMUNE))
+			to_chat(affected_mob, span_danger("Your insides are burning!"))
 		affected_mob.adjustToxLoss(rand(20, 60), FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	else if(SPT_PROB(23, seconds_per_tick))
@@ -539,13 +540,13 @@
 	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
 	silent_toxin = TRUE
 	color = "#6E2828"
-	data = 15
+	data = 45 // monkestation edit
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.stamina.adjust(-data * REM * seconds_per_tick, 0)
-	data = max(data - 1, 3)
+	data = max(data - 3, 9) // monkestation edit
 	..()
 	. = TRUE
 

@@ -223,6 +223,7 @@
 			use_power(power)
 			icon_state = "autolathe_n"
 			var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
+			SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 			addtimer(CALLBACK(src, PROC_REF(make_item), power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
 			. = TRUE
 		else
@@ -336,6 +337,7 @@
 
 	icon_state = "autolathe"
 	busy = FALSE
+	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 /obj/machinery/autolathe/RefreshParts()
 	. = ..()

@@ -8,6 +8,8 @@
 
 #define JOB_LATEJOIN_EXPLORER "Explorer"
 
+#define JOB_XENOBIOLOGIST "Xenobiologist"
+
 /// Whether this job is enabled/disabled by the spooktober config
 #define JOB_SPOOKTOBER (1<<16)
 

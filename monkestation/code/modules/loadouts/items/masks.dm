@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.mask)
-			LAZYADD(outfit.backpack_contents, outfit.mask)
+			spawn_in_backpack(outfit, outfit.mask, equipper)
 		outfit.mask = item_path
 	else
 		outfit.mask = item_path
@@ -82,6 +82,11 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /*
 *	MISC
 */
+
+/datum/loadout_item/mask/griddle_toast
+	name = "Griddle Toast"
+	item_path = /obj/item/food/griddle_toast
+
 /datum/loadout_item/mask/fake_mustache
 	name = "Fake Moustache"
 	item_path = /obj/item/clothing/mask/fakemoustache
@@ -129,6 +134,11 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/kitsune
 	name = "Greyscale Kitsune Mask"
 	item_path = /obj/item/clothing/mask/kitsune
+
+/datum/loadout_item/mask/manhunt
+	name = "Smiley Mask"
+	item_path = /obj/item/clothing/mask/joy/manhunt
+
 /*
 *	DONATOR
 */

@@ -91,7 +91,9 @@
 	if(!istype(next) || !istype(current))
 		return //not happening.
 	if(!turf_check(next, current))
-		to_chat(user, span_warning("\The [movable_parent] can not go onto [next]!"))
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			COOLDOWN_START(src, message_cooldown, 0.75 SECONDS)
+			to_chat(user, span_warning("\The [movable_parent] can not go onto [next]!"))
 		return
 	if(!Process_Spacemove(direction) || !isturf(movable_parent.loc))
 		return
@@ -281,3 +283,20 @@
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
 	if(istype(our_chair) && our_chair.power_cell)
 		our_chair.power_cell.use(our_chair.power_usage / max(our_chair.power_efficiency, 1) * 0.05)
+
+/datum/component/riding/vehicle/magic_broom //monkestation addition
+	vehicle_move_delay = 1.5
+	override_allow_spacemove = TRUE
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+
+/datum/component/riding/vehicle/magic_broom/handle_specials()
+	. = ..()
+	set_vehicle_dir_offsets(NORTH, 0, 6)
+	set_vehicle_dir_offsets(SOUTH, 0, 6)
+	set_vehicle_dir_offsets(EAST, 0, 2)
+	set_vehicle_dir_offsets(WEST, 0, 2)
+	set_vehicle_dir_layer(EAST, BELOW_MOB_LAYER)
+	set_vehicle_dir_layer(WEST, BELOW_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(0, 8), TEXT_WEST = list( 0, 8)))

@@ -13,7 +13,7 @@
 	throw_speed = 4
 	demolition_mod = 0.75
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
-	armour_penetration = 10
+	armour_penetration = 30
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
@@ -164,7 +164,7 @@
 		return .
 	if(ismob(AM))
 		var/mob/mob_target = AM
-		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
+		if(HAS_TRAIT(mob_target, TRAIT_GODMODE)) //no embedding grenade phylacteries inside of ghost poly either
 			return .
 	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
 		return .

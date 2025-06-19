@@ -37,6 +37,10 @@
 
 	///Bitmap of what game states can this subsystem fire at. See [RUNLEVELS_DEFAULT] for more details.
 	var/runlevels = RUNLEVELS_DEFAULT //points of the game at which the SS can fire
+
+	///A list of var names present on this subsystem to be checked during CheckQueue. See [SS_HIBERNATE] for usage.
+	var/list/hibernate_checks
+
 	///Subsystem ID. Used for when we need a technical name for the SS used by SSmetrics
 	var/ss_id = "generic_ss_id"
 
@@ -55,6 +59,9 @@
 
 	/// Scheduled world.time for next fire()
 	var/next_fire = 0
+
+	/// The subsystem had no work during CheckQueue and was not queued.
+	var/hibernating
 
 	/// Running average of the amount of milliseconds it takes the subsystem to complete a run (including all resumes but not the time spent paused)
 	var/cost = 0
@@ -105,10 +112,6 @@
 	var/datum/controller/subsystem/queue_next
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
-
-	var/avg_iter_count = 0
-	var/avg_drift = 0
-	/* var/list/enqueue_log = list() */
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
@@ -189,35 +192,17 @@
 /// (we loop thru a linked list until we get to the end or find the right point)
 /// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/controller/subsystem/proc/enqueue()
+	hibernating = FALSE
+
 	var/SS_priority = priority
 	var/SS_flags = flags
 	var/datum/controller/subsystem/queue_node
 	var/queue_node_priority
 	var/queue_node_flags
 
-	var/iter_count = 0
-
-	/* enqueue_log.Cut() */
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
-		iter_count++
-		if(iter_count >= ENQUEUE_SANITY)
-			/* log_enqueue(msg, list("enqueue_log" = enqueue_log.Copy())) */
-			SSplexora.mc_alert("[src] has likely entered an infinite loop in enqueue(), we're restarting the MC immediately!")
-			stack_trace("enqueue() entered an infinite loop, we're restarting the MC!")
-			/* enqueue_log.Cut() */
-			Recreate_MC()
-			return
-
-
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
-
-		/* enqueue_log["[iter_count]"] = list(
-			"node" = "[queue_node]",
-			"next" = "[queue_node.queue_next || "(none)"]",
-			"priority" = queue_node_priority,
-			"flags" = queue_node_flags,
-		) */
 
 		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
 			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
@@ -238,11 +223,6 @@
 				break
 			if (queue_node_priority < SS_priority)
 				break
-
-	if(iter_count > 0)
-		avg_iter_count = avg_iter_count ? ((avg_iter_count + iter_count) * 0.5) : iter_count
-		var/drift = RELATIVE_ERROR(iter_count, avg_iter_count)
-		avg_drift = avg_drift ? ((drift + avg_drift) * 0.5) : drift
 
 	queued_time = world.time
 	queued_priority = SS_priority
@@ -310,6 +290,9 @@
 	return msg
 
 /datum/controller/subsystem/proc/state_letter()
+	if(hibernating)
+		return "H"
+
 	switch (state)
 		if (SS_RUNNING)
 			. = "R"
@@ -340,21 +323,3 @@
 		if (NAMEOF(src, queued_priority)) //editing this breaks things.
 			return FALSE
 	. = ..()
-
-/**
-* Returns the metrics for the subsystem.
-*
-* This can be overriden on subtypes for variables that could affect tick usage
-* Example: ATs on SSair
-*/
-
-/datum/controller/subsystem/proc/get_metrics()
-	SHOULD_CALL_PARENT(TRUE)
-	var/list/out = list()
-	out["relation_id_SS"] = "[ss_id]-[time_stamp()]-[rand(100, 10000)]" // since we insert custom into its own table we want to add a relational id to fetch from the custom data and the subsystem
-	out["cost"] = cost
-	out["tick_usage"] = tick_usage
-	out["avg_iter_count"] = avg_iter_count
-	out["avg_drift"] = avg_drift
-	out["custom"] = list() // Override as needed on child
-	return out

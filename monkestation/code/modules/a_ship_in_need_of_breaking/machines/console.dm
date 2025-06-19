@@ -7,19 +7,16 @@
 	var/turf/bottom_left
 
 ///what area type this holodeck loads into. linked turns into the nearest instance of this area
-	var/area/mapped_start_area = /area/shipbreak
+	var/area/mapped_start_area = /area/space/shipbreak
 
 ///the currently used map template
 	var/datum/map_template/shipbreaker/template
-
-///List of ships to spawn.
-	var/list/possible_ships = list()
 
 ///subtypes of this (but not this itself) are loadable programs
 	var/ship_type = /datum/map_template/shipbreaker
 
 ///links the shipbreaker zone to the computer
-	var/area/shipbreak/linked
+	var/area/space/shipbreak/linked
 ///cool variablw
 	var/spawn_area_clear = TRUE
 
@@ -27,6 +24,8 @@
 	var/ship_health = 0
 	///our initial turf count
 	var/turf_count = 0
+	var/ship_part = 0
+	var/total_turf = 0
 
 /obj/machinery/computer/shipbreaker/Initialize(mapload)
 	..()
@@ -37,9 +36,12 @@
 	if(!linked)
 		return
 	bottom_left = locate(linked.x, linked.y, src.z)
-	for(var/ship in subtypesof(ship_type))
-		var/datum/map_template/shipbreaker/s = new ship
-		possible_ships+= s
+
+/obj/machinery/computer/shipbreaker/Destroy()
+	bottom_left = null
+	linked = null
+	template = null
+	return ..()
 
 /obj/machinery/computer/shipbreaker/proc/spawn_ship()
 	area_clear_check()
@@ -47,7 +49,8 @@
 		say("ERROR: SHIPBREAKING ZONE NOT CLEAR, PLEASE REMOVE ALL REMAINING FLOORS, STRUCTURES, AND MACHINERY")
 		return
 
-	var/datum/map_template/shipbreaker/ship_to_spawn = pick(possible_ships)
+	var/random_ship = pick(SSmapping.shipbreaker_templates)
+	var/datum/map_template/shipbreaker/ship_to_spawn = SSmapping.shipbreaker_templates[random_ship]
 
 	ship_to_spawn.load(bottom_left)
 
@@ -56,7 +59,7 @@
 
 /obj/machinery/computer/shipbreaker/proc/area_clear_check()
 	for(var/turf/t in linked)
-		if(!isspaceturf(t))
+		if(!isgroundlessturf(t))
 			spawn_area_clear = FALSE
 			say("FLOORING OR WALL DETECTED")
 			return
@@ -108,14 +111,18 @@
 
 /obj/machinery/computer/shipbreaker/proc/setup_health_tracker()
 	for(var/turf/turf in linked)
-		if(!isspaceturf(turf))
+		if(!isgroundlessturf(turf))
 			turf_count++
 			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(modify_health))
+	total_turf = turf_count
+	ship_part = (100 / turf_count)
 	ship_health = 100
 
 /obj/machinery/computer/shipbreaker/proc/modify_health(turf/source)
-	ship_health -= (100 / turf_count)
+	ship_health -= ((total_turf - turf_count) * ship_part)
 	ship_health = max(ship_health, 0)
+	if(ship_health < 1)
+		ship_health = 0
 
 
 /obj/machinery/computer/shipbreaker/proc/damage_ship()

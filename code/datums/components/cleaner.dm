@@ -121,14 +121,17 @@
 		clean_succeeded = TRUE
 		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(clean_target)
-			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
-				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
+			var/exp_gained = 0
+			for(var/obj/effect/decal/cleanable/cleanable_decal in target.contents + target) //it's important to do this before you wash all of the cleanables off
+				exp_gained += round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1)
 			if(target.wash(cleaning_strength))
-				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
+				exp_gained += round(CLEAN_SKILL_GENERIC_WASH_XP, 1)
+			if(exp_gained)
+				user.mind?.adjust_experience(/datum/skill/cleaning, exp_gained)
 		if(isitem(target))
 			var/obj/item/item= target
 			if(length(item.viruses))
-				for(var/datum/disease/advanced/D as anything in item.viruses)
+				for(var/datum/disease/acute/D as anything in item.viruses)
 					item.remove_disease(D)
 
 	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded)

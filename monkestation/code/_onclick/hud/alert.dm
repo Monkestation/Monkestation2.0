@@ -8,7 +8,7 @@
 	///The static info we use so we only have to actually update our data once each tick
 	var/static/static_desc
 
-/atom/movable/screen/alert/clockwork/clocksense/Initialize(mapload)
+/atom/movable/screen/alert/clockwork/clocksense/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(!static_desc)
 		static_desc = get_static_desc()

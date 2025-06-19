@@ -410,7 +410,7 @@
 	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 
 /obj/item/toy/darksabre/get_belt_overlay()
-	return mutable_appearance('monkestation/icons/donator/obj/custom.dmi', "darksheath-darksabre")
+	return mutable_appearance('monkestation/icons/donator/obj/custom.dmi', "darksheath-sabre")
 
 // Donation reward for inferno707
 /obj/item/storage/belt/sabre/darksabre
@@ -420,6 +420,9 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "darksheath"
 	worn_icon_state = "darksheath"
+	inhand_icon_state = "darksheath"
+	lefthand_file = 'monkestation/icons/donator/mob/inhands/donator_left.dmi'
+	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 
 /obj/item/storage/belt/sabre/darksabre/Initialize(mapload)
 	. = ..()
@@ -715,11 +718,6 @@
 	. = ..()
 	if(welding_upgraded)
 		. += "It has been upgraded with welding shutters, which are currently [welding_protection ? "closed" : "opened"]."
-
-/obj/item/clothing/glasses/welding/steampunk_goggles/item_action_slot_check(slot, mob/user)
-	. = ..()
-	if(. && (slot & ITEM_SLOT_HEAD))
-		return FALSE
 
 /obj/item/clothing/glasses/welding/steampunk_goggles/attack_self(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_HEAD) == src)

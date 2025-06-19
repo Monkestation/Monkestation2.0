@@ -201,15 +201,9 @@
 		else
 			var/obj/O = src
 			if(isgun(O))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
+				new /mob/living/basic/mimic/copy/ranged(drop_location(), src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
-
-	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
-		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = src
-		if(owner)
-			C.ChangeOwner(owner)
+				new /mob/living/basic/mimic/copy(drop_location(), src, owner)
 
 /obj/projectile/magic/spellblade
 	name = "blade energy"
@@ -409,8 +403,8 @@
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = chosen_one.key
-		trauma.friend.key = oldkey
+		target.PossessByPlayer(chosen_one.key)
+		trauma.friend.PossessByPlayer(oldkey)
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
 		trauma.friend_initialized = TRUE

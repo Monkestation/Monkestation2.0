@@ -1,7 +1,7 @@
 /datum/artifact_fault/greg
 	name = "Greg Fault"
 	discovered_credits = 250
-	research_value = 1000
+	research_value = TECHWEB_DISCOUNT_MINOR * 2
 	trigger_chance = 5
 	weight = ARTIFACT_RARE
 

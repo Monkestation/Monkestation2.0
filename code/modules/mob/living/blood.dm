@@ -1,4 +1,5 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003 // Conversion between internal drunk power and common blood alcohol content
 
 /****************************************************
 				BLOOD SYSTEM
@@ -10,7 +11,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 		return
 
-	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_HUSK)) //cold or husked people do not pump the blood.
+	if(bodytemperature < BLOOD_STOP_TEMP) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return
 
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
@@ -94,12 +95,8 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
 		temp_bleed += iter_bleed_rate * seconds_per_tick
-		if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
-			temp_bleed *= 2
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
-			if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
-				iter_part.adjustBleedStacks(-1, minimum = 0) /// we basically double up on bleedstacks
 			iter_part.adjustBleedStacks(-1, 0)
 
 	if(temp_bleed)
@@ -113,7 +110,7 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt, no_visual = FALSE)
-	if((status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 	blood_volume = max(blood_volume - amt, 0)
 
@@ -147,7 +144,7 @@
  * * forced-
  */
 /mob/living/carbon/proc/bleed_warn(bleed_amt = 0, forced = FALSE)
-	if(!client || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!client || HAS_TRAIT(src, TRAIT_NOBLOOD) || HAS_TRAIT(src, TRAIT_NO_BLEED_WARN))
 		return
 	if(!COOLDOWN_FINISHED(src, bleeding_message_cd) && !forced)
 		return
@@ -289,12 +286,12 @@
 	return GLOB.blood_types[/datum/blood_type/oil]
 
 /mob/living/carbon/alien/get_blood_type()
-	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return null
 	return GLOB.blood_types[/datum/blood_type/xenomorph]
 
 /mob/living/carbon/human/get_blood_type()
-	if(HAS_TRAIT(src, TRAIT_HUSK) || isnull(dna) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!has_dna() || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return null
 	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return GLOB.blood_types[/datum/blood_type/clown]
@@ -330,6 +327,14 @@
 	our_splatter.add_mob_blood(src)
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
+
+/mob/living/proc/get_blood_alcohol_content()
+	var/blood_alcohol_content = 0
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+
+	return blood_alcohol_content
 
 /**
  * Helper proc for throwing blood particles around, similar to the spray_blood proc.

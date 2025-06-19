@@ -62,5 +62,5 @@
 	chest.dismember()
 	owner.visible_message(span_danger("[spawned_cb] explodes out of [owner]'s chest, sending gore flying everywhere!"), span_danger("[spawned_cb] explodes out of your chest, giblets flying everywhere!"))
 	spawned_cb.generation = generation
-	spawned_cb.ckey = new_borer.ckey
+	spawned_cb.PossessByPlayer(new_borer.ckey)
 	spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)

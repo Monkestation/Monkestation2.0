@@ -10,6 +10,7 @@
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_OUTSIDER_ANTAG, TAG_SPACE, TAG_COMBAT)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/contractor
 	minimum_required = 1

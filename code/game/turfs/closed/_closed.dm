@@ -9,6 +9,20 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 	pass_flags_self = PASSCLOSEDTURF
 
+//Monkestation edit start
+/turf/closed/examine(mob/user)
+	. = ..()
+	if(uses_integrity && atom_integrity < max_integrity)
+		var/healthpercent = (atom_integrity/max_integrity) * 100
+		switch(healthpercent)
+			if(50 to 99)
+				. +=  "It looks slightly damaged."
+			if(25 to 50)
+				. +=  "It appears heavily damaged."
+			if(0 to 25)
+				. += span_warning("It's falling apart!")
+//Monkestation edit end
+
 /turf/closed/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src
@@ -374,3 +388,13 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/grille/Initialize(mapload)
 	. = ..()
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
+
+/turf/closed/indestructible/meat
+	name = "dense meat wall"
+	desc = "A huge chunk of dense, packed meat. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/meat_wall.dmi'
+	icon_state = "meat_wall-0"
+	base_icon_state = "meat_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS

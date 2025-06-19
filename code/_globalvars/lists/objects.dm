@@ -25,12 +25,15 @@ GLOBAL_LIST_EMPTY(deliverybeacons)
 /// list of all tags associated with delivery beacons.
 GLOBAL_LIST_EMPTY(deliverybeacontags)
 GLOBAL_LIST_EMPTY(nuke_list)
+GLOBAL_LIST_EMPTY(nuke_disk_list) //monkestation addition
 /// list of all machines or programs that can display station alerts
 GLOBAL_LIST_EMPTY(alarmdisplay)
 /// list of all singularities on the station
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
 /// list of all /obj/machinery/mechpad
 GLOBAL_LIST_EMPTY(mechpad_list)
+/// list of all crewside CentCom headsets on station
+GLOBAL_LIST_EMPTY(crew_cc_keys)
 
 /// list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
 GLOBAL_LIST(chemical_reactions_list)
@@ -98,3 +101,6 @@ GLOBAL_LIST_EMPTY(alert_consoles)
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas)
 /// List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
+
+/// Associative list of alcoholic container typepath to instances, currently used by the alcoholic quirk
+GLOBAL_LIST_INIT(alcohol_containers, init_alcohol_containers())

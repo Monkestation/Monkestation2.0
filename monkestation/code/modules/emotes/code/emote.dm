@@ -111,7 +111,7 @@
 				'monkestation/code/modules/emotes/sound/claponce2.ogg')
 
 /datum/emote/living/clap1/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
-	if(user.usable_hands < 2)
+	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
 
@@ -163,7 +163,7 @@
 	// It's not fair to NOT scream like a cat when we're cat, so alt screams get lowest priority
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		if(length(human_user.alternative_screams))
+		if(LAZYLEN(human_user.alternative_screams))
 			return pick(human_user.alternative_screams)
 		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
 		. = tongue?.get_scream_sound()
@@ -237,6 +237,8 @@
 	message_param = "barks at %t!"
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = 10
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/living/bark/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
 	return ..() && HAS_TRAIT(user, TRAIT_ANIME)
@@ -285,6 +287,8 @@
 	message_mime = "squeals silently!"
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
+	falloff_exponent = 10
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/living/squeal/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/lizard/squeal.ogg' //This is from Bay
@@ -304,21 +308,6 @@
 
 /datum/emote/living/tailthump/can_run_emote(mob/user, status_check, intentional)
 	return ..() && islizard(user)
-
-// The below function replaces the `/datum/emote/silicon/mob_type_allowed_typecache` variable. If
-// you remove this function, be sure to replace the above variable.
-/datum/emote/silicon/can_run_emote(mob/user, status_check, intentional)
-	// Silicons and simple bots can always use silicon emotes, assuming nothing else is wrong
-	if(issilicon(user) || isbot(user))
-		return ..()
-
-	// Allow users with synthetic voice boxes to use silicon emotes as well, because a synthetic
-	// voice box is more akin to a speaker than a human larynx.
-	var/tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(istype(tongue, /obj/item/organ/internal/tongue/synth))
-		return ..()
-
-	return FALSE
 
 /datum/emote/squint
 	key = "squint"
@@ -501,11 +490,14 @@
 /datum/emote/spin/speen
 	key = "speen"
 	key_third_person = "speens"
+	message = "speens!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 	audio_cooldown = 2 SECONDS
 	vary = TRUE
+	falloff_exponent = 10
+	extra_range = SHORT_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/spin/speen/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/speen.ogg'

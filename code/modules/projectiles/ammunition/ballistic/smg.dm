@@ -24,6 +24,14 @@
 	caliber = CALIBER_45
 	projectile_type = /obj/projectile/bullet/c45
 
+/// Monkestation edit start
+
+/obj/item/ammo_casing/c45/rubber
+	name = ".45 rubber bullet casing"
+	desc = "A .45 rubber bullet casing."
+	projectile_type = /obj/projectile/bullet/c45/rubber
+
+/// Monkestation edit end
 /obj/item/ammo_casing/c45/ap
 	name = ".45 armor-piercing bullet casing"
 	desc = "A .45 bullet casing."

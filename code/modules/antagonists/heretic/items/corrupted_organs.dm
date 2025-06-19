@@ -2,6 +2,7 @@
 /obj/item/organ/internal/eyes/corrupt
 	name = "corrupt orbs"
 	desc = "These eyes have seen something they shouldn't have."
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// The override images we are applying
 	var/list/hallucinations
 
@@ -39,6 +40,7 @@
 /obj/item/organ/internal/tongue/corrupt
 	name = "corrupt tongue"
 	desc = "This one tells only lies."
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 
 /obj/item/organ/internal/tongue/corrupt/Initialize(mapload)
 	. = ..()
@@ -65,6 +67,7 @@
 /obj/item/organ/internal/liver/corrupt
 	name = "corrupt liver"
 	desc = "After what you've seen you could really go for a drink."
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How much extra ingredients to add?
 	var/amount_added = 5
 	/// What extra ingredients can we add?
@@ -108,6 +111,7 @@
 /obj/item/organ/internal/stomach/corrupt
 	name = "corrupt stomach"
 	desc = "This parasite demands an unwholesome diet in order to be satisfied."
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// Do we have an unholy thirst?
 	var/thirst_satiated = FALSE
 	/// Timer for when we get thirsty again
@@ -173,6 +177,7 @@
 /obj/item/organ/internal/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 
@@ -193,6 +198,7 @@
 /obj/item/organ/internal/lungs/corrupt
 	name = "corrupt lungs"
 	desc = "Some things SHOULD be drowned in tar."
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How likely are we not to cough every time we take a breath?
 	var/cough_chance = 15
 	/// How much gas to emit?
@@ -203,6 +209,8 @@
 		/datum/gas/miasma = 50,
 		/datum/gas/plasma = 20,
 	)
+	/// Cooldown between corrupted effects (monkestation addition)
+	COOLDOWN_DECLARE(effect_cooldown)
 
 /obj/item/organ/internal/lungs/corrupt/Initialize(mapload)
 	. = ..()
@@ -212,6 +220,11 @@
 	. = ..()
 	if (!. || IS_IN_MANSUS(owner) || breather.has_reagent(/datum/reagent/water/holywater) || !prob(cough_chance))
 		return
+	// monkestation start: add cooldown
+	if(!COOLDOWN_FINISHED(src, effect_cooldown))
+		return
+	COOLDOWN_START(src, effect_cooldown, rand(25 SECONDS, 90 SECONDS))
+	// monkestation end
 	breather.emote("cough");
 	var/chosen_gas = pick_weight(gas_types)
 	var/datum/gas_mixture/mix_to_spawn = new()
@@ -227,8 +240,11 @@
 /obj/item/organ/internal/appendix/corrupt
 	name = "corrupt appendix"
 	desc = "What kind of dark, cosmic force is even going to bother to corrupt an appendix?"
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How likely are we to spawn worms?
 	var/worm_chance = 2
+	/// Cooldown between corrupted effects (monkestation addition)
+	COOLDOWN_DECLARE(effect_cooldown)
 
 /obj/item/organ/internal/appendix/corrupt/Initialize(mapload)
 	. = ..()
@@ -239,5 +255,10 @@
 	. = ..()
 	if (owner.stat != CONSCIOUS || owner.has_reagent(/datum/reagent/water/holywater) || IS_IN_MANSUS(owner) || !SPT_PROB(worm_chance, seconds_per_tick))
 		return
+	// monkestation start: add cooldown
+	if(!COOLDOWN_FINISHED(src, effect_cooldown))
+		return
+	COOLDOWN_START(src, effect_cooldown, rand(25 SECONDS, 90 SECONDS))
+	// monkestation end
 	owner.vomit(vomit_type = /obj/effect/decal/cleanable/vomit/nebula/worms, distance = 0)
 	owner.Knockdown(0.5 SECONDS)

@@ -71,6 +71,7 @@
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
 		/obj/item/stack/sticky_tape,
+		/obj/item/device/antibody_scanner //monkestation addition
 	)
 
 /obj/item/storage/medkit/Initialize(mapload)
@@ -375,7 +376,7 @@
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
-		/obj/item/organ/internal/cyberimp/cyberlink/nt_high = 1, //Monkestation edti: unable to use the hacked surgery toolset without this
+		/obj/item/organ/internal/cyberimp/cyberlink/syndicate = 1, //Monkestation addition: unable to use the hacked surgery toolset without this
 	)
 	generate_items_inside(items_inside,src)
 
@@ -626,6 +627,25 @@
 /obj/item/storage/pill_bottle/naturalbait/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/food/bait/natural(src)
+
+/// Syndicate Pill Bottles
+
+/obj/item/storage/pill_bottle/syndicate
+	name = "suspicious pill bottle"
+	desc = "It's an airtight container for storing 'medication'."
+	icon_state = "syndie_pill_canister"
+
+/obj/item/storage/pill_bottle/syndicate/poison
+	name = "bottle of poisonous pills"
+	desc = "Contains Interdyne-Branded pills used to poison people. The label reads: 'Do NOT put this in your own drink on accident.'"
+
+/obj/item/storage/pill_bottle/syndicate/poison/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/pill/cyanide(src)
+		new /obj/item/reagent_containers/pill/tox(src)
+		new /obj/item/reagent_containers/pill/spewium(src)
+	new /obj/item/reagent_containers/pill/amanitin(src)
 
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox

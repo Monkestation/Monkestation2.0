@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 
 /datum/loadout_item/plushies/lizard_greyscale
 	name = "Greyscale Lizard Plushie"
-	item_path = /obj/item/toy/plush/lizard_plushie
+	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/loadout_item/plushies/moth
 	name = "Moth Plushie"
@@ -41,7 +41,6 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 /datum/loadout_item/plushies/ratvar
 	name = "Ratvar Plushie"
 	item_path = /obj/item/toy/plush/ratplush
-	restricted_roles = list(JOB_CHAPLAIN)
 
 /datum/loadout_item/plushies/rouny
 	name = "Rouny Plushie"
@@ -108,11 +107,7 @@ GLOBAL_LIST_INIT(loadout_plushies, generate_loadout_items(/datum/loadout_item/pl
 /datum/loadout_item/plushies/durrcell
 	name = "Durrcell Plush"
 	item_path = /obj/item/toy/plush/durrcell
-/*
-/datum/loadout_item/plushies/Eeble
-	name = "Eeble Plushie"
-	item_path = /obj/item/toy/plush/Eeble
-*/
+
 /datum/loadout_item/plushies/big_bad_wolf
 	name = "Big And Will Be Bad Wolf Plushie"
 	item_path = /obj/item/toy/plush/lobotomy/big_bad_wolf

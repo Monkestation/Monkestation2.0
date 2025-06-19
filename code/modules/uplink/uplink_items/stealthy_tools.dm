@@ -85,7 +85,7 @@
 	name = "Radio Jammer"
 	desc = "This device will disrupt any nearby outgoing radio communication when activated. Does not affect binary chat."
 	item = /obj/item/jammer
-	cost = 5
+	cost = 1
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
@@ -99,7 +99,7 @@
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
-	item = /obj/effect/gibspawner/generic
+	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
 	progression_minimum = 15 MINUTES
 	limited_stock = 1
@@ -114,7 +114,7 @@
 /datum/uplink_item/stealthy_tools/blackout
 	name = "Trigger Stationwide Blackout"
 	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
-	item = /obj/effect/gibspawner/generic
+	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
 	progression_minimum = 20 MINUTES
 	limited_stock = 1

@@ -6,6 +6,10 @@ SUBSYSTEM_DEF(memory_stats)
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
+/datum/controller/subsystem/memory_stats/OnConfigLoad()
+	if(!CONFIG_GET(flag/auto_memory_stats))
+		can_fire = FALSE
+
 /datum/controller/subsystem/memory_stats/Initialize()
 	if(!rustg_file_exists(MEMORYSTATS_DLL_PATH))
 		flags |= SS_NO_FIRE
@@ -20,7 +24,10 @@ SUBSYSTEM_DEF(memory_stats)
 		rustg_file_write(memory_summary, "[GLOB.log_directory]/profiler/memstat-[timestamp].txt")
 
 /datum/controller/subsystem/memory_stats/proc/get_memory_stats()
-	return trimtext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")())
+	var/result = trimtext(call_ext(MEMORYSTATS_DLL_PATH, "memory_stats")())
+	if(!findtext(result, "Server mem usage:"))
+		CRASH("byond-memorystats call errored: [result || "(null)"]")
+	return result
 #endif
 
 /client/proc/server_memory_stats()

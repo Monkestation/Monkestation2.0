@@ -26,6 +26,7 @@
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
+	inherent_factions = list(FACTION_MONKEY)
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
@@ -67,12 +68,19 @@
 		passtable_on(human_who_gained_species, SPECIES_TRAIT)
 		human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 		human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
+	human_who_gained_species.update_mob_height()
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	if(give_monkey_species_effects)
 		passtable_off(C, SPECIES_TRAIT)
 		C.dna.remove_mutation(/datum/mutation/human/race)
+	C.update_mob_height()
+
+/datum/species/monkey/update_species_heights(mob/living/carbon/human/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return MONKEY_HEIGHT_DWARF
+	return MONKEY_HEIGHT_MEDIUM
 
 /datum/species/monkey/randomize_features(mob/living/carbon/human/human_mob)
 	randomize_external_organs(human_mob)

@@ -22,6 +22,8 @@
 #define BLOODSUCKER_TRAIT "bloodsucker_trait"
 /// Source trait for bloodsuckers in torpor.
 #define TORPOR_TRAIT "torpor_trait"
+/// Source trait for stuff related to bloodsuckers in coffins.
+#define BLOODSUCKER_COFFIN_TRAIT "bloodsucker_coffin_trait"
 /// Source trait for bloodsuckers using fortitude.
 #define FORTITUDE_TRAIT "fortitude_trait"
 /// Source trait for bloodsucker mesmerization.
@@ -30,8 +32,6 @@
 #define HUNTER_TRAIT "monsterhunter_trait"
 /// Source trait while Feeding
 #define FEED_TRAIT "feed_trait"
-/// Source trait during a Frenzy
-#define FRENZY_TRAIT "frenzy_trait"
 /// Source trait for slashers.
 #define TRAIT_SLASHER "slasher_trait"
 /// Source trait for zombies

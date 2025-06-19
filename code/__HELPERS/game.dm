@@ -139,8 +139,7 @@
 	for(var/client/remove_from in hide_from)
 		remove_from.images -= image_to_remove
 
-
-///Add an image to a list of clients and calls a proc to remove it after a duration
+/// Add an image to a list of clients and calls a proc to remove it after a duration
 /proc/flick_overlay_global(image/image_to_show, list/show_to, duration)
 	if(!show_to || !length(show_to) || !image_to_show)
 		return
@@ -148,7 +147,7 @@
 		add_to.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-/// Flicks a certain overlay onto an atom, handling icon_state strings
+///Flicks a certain overlay onto an atom, handling icon_state strings
 /atom/proc/flick_overlay(image_to_show, list/show_to, duration, layer)
 	var/image/passed_image = \
 		istext(image_to_show) \
@@ -157,30 +156,54 @@
 
 	flick_overlay_global(passed_image, show_to, duration)
 
-/// flicks an overlay to anyone who can view this atom
-/atom/proc/flick_overlay_view(image_to_show, duration)
-	var/list/viewing = list()
-	for(var/mob/viewer as anything in viewers(src))
-		if(viewer.client)
-			viewing += viewer.client
-	flick_overlay(image_to_show, viewing, duration)
+/**
+ * Helper atom that copies an appearance and exists for a period
+*/
+/atom/movable/flick_visual
+
+/// Takes the passed in MA/icon_state, mirrors it onto ourselves, and displays that in world for duration seconds
+/// Returns the displayed object, you can animate it and all, but you don't own it, we'll delete it after the duration
+/atom/proc/flick_overlay_view(mutable_appearance/display, duration)
+	if(!display)
+		return null
+
+	var/mutable_appearance/passed_appearance = \
+		istext(display) \
+			? mutable_appearance(icon, display, layer) \
+			: display
+
+	// If you don't give it a layer, we assume you want it to layer on top of this atom
+	// Because this is vis_contents, we need to set the layer manually (you can just set it as you want on return if this is a problem)
+	if(passed_appearance.layer == FLOAT_LAYER)
+		passed_appearance.layer = layer + 0.1
+	// This is faster then pooling. I promise
+	var/atom/movable/flick_visual/visual = new()
+	visual.appearance = passed_appearance
+	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	// I hate /area
+	var/atom/movable/lies_to_children = src
+	lies_to_children.vis_contents += visual
+	QDEL_IN_CLIENT_TIME(visual, duration)
+	return visual
+
+/area/flick_overlay_view(mutable_appearance/display, duration)
+	return
 
 ///Get active players who are playing in the round
 /proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
 	var/active_players = 0
-	for(var/i = 1; i <= GLOB.player_list.len; i++)
-		var/mob/player_mob = GLOB.player_list[i]
+	for(var/mob/player_mob as anything in GLOB.player_list)
 		if(!player_mob?.client)
 			continue
-		if(alive_check && player_mob.stat)
+		if(alive_check && player_mob.stat == DEAD)
 			continue
-		else if(afk_check && player_mob.client.is_afk())
+		if(afk_check && player_mob.client.is_afk())
 			continue
-		else if(human_check && !ishuman(player_mob))
+		if(human_check && !ishuman(player_mob))
 			continue
-		else if(isnewplayer(player_mob)) // exclude people in the lobby
+		if(isnewplayer(player_mob)) // exclude people in the lobby
 			continue
-		else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
+		if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
 			var/mob/dead/observer/ghost_player = player_mob
 			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
@@ -198,7 +221,7 @@
 
 	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
-	new_character.key = ghost_player.key
+	new_character.PossessByPlayer(ghost_player.key)
 
 	return new_character
 

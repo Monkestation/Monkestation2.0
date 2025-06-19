@@ -39,8 +39,7 @@
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
 		human_owner.set_pain_mod(id, 0.625) // 0.625 * 0.8 = 0.5 = numbness
-	ADD_TRAIT(owner, TRAIT_NO_PAIN_EFFECTS, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_ABATES_SHOCK, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
 	if(duration >= WOUND_DETERMINATION_SEVERE)
 		owner.throw_alert(id, /atom/movable/screen/alert/determined)
 	return TRUE
@@ -53,8 +52,7 @@
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
 		human_owner.unset_pain_mod(id)
-	REMOVE_TRAIT(owner, TRAIT_NO_PAIN_EFFECTS, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_ABATES_SHOCK, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
 	owner.clear_alert(id)
 	owner.apply_status_effect(/datum/status_effect/determination_crash)
 
@@ -197,19 +195,6 @@
 /////////////////////////
 //////// WOUNDS /////////
 /////////////////////////
-
-// wound alert
-/atom/movable/screen/alert/status_effect/wound
-	name = "Wounded"
-	desc = "Your body has sustained serious damage, click here to inspect yourself."
-
-/atom/movable/screen/alert/status_effect/wound/Click()
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.check_self_for_injuries()
 
 // wound status effect base
 /datum/status_effect/wound

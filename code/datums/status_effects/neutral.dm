@@ -61,6 +61,7 @@
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"in_love",
 		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		null,
 		new_owner,
 	))
 
@@ -75,11 +76,11 @@
 
 /datum/status_effect/throat_soothed/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/throat_soothed/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+	REMOVE_TRAIT(owner, TRAIT_SOOTHED_THROAT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/bounty
 	id = "bounty"
@@ -149,6 +150,7 @@
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone."
 	icon_state = "aimed"
+	clickable_glow = TRUE
 
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
@@ -325,6 +327,7 @@
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
 	icon_state = "surrender"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
 	. = ..()

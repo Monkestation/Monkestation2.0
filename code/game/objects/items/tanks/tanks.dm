@@ -26,6 +26,7 @@
 	demolition_mod = 1.25
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	actions_types = list(/datum/action/item_action/set_internals)
+	action_slots = ALL
 	armor_type = /datum/armor/item_tank
 	integrity_failure = 0.5
 	/// If we are in the process of exploding, stops multi explosions
@@ -237,6 +238,7 @@
 	return air_contents.remove(amount)
 
 /obj/item/tank/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	START_PROCESSING(SSobj, src)
 	return air_contents
 

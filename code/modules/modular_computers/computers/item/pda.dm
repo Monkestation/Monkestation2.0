@@ -26,6 +26,8 @@
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
 
+	action_slots = ALL
+
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
 
@@ -36,7 +38,10 @@
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
-		/datum/computer_file/program/crew_manifest // monke edit: install crew manifest by default
+		// monkestation edit: install crew manifest and spess.tv by default
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/secureye/spesstv,
+		// monkestation end
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(

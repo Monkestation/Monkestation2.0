@@ -3,7 +3,7 @@
 	trigger_chance = 75
 	var/list/whispers = list("Help me!","I've seen your sins","Egg.")
 
-	research_value = 50
+	research_value = TECHWEB_DISCOUNT_MINOR / 4
 
 /datum/artifact_fault/whisper/on_trigger()
 	if(!length(whispers))

@@ -48,6 +48,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 
 /datum/armor/machinery_camera
 	melee = 50
@@ -98,7 +99,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	LAZYADD(myarea.cameras, src)
 
-	if(mapload && is_station_level(z) && prob(3) && !start_active)
+	if(mapload && should_break_roundstart())
 		toggle_cam()
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_appearance()
@@ -122,6 +123,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/set_area_motion(area/A)
 	area_motion = A
 	create_prox_monitor()
+
+/obj/machinery/camera/proc/should_break_roundstart()
+	if(start_active)
+		return FALSE
+	if(!prob(3)) // only 3% chance to break roundstart
+		return FALSE
+	if(!is_station_level(z))
+		return FALSE
+	if(istype(get_area(src), /area/ruin))
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/Destroy()
 	if(can_use())
@@ -365,9 +377,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				ai.last_tablet_note_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 
 				if(user.name == "Unknown")
-					to_chat(ai, "[span_name(user)] holds <a href='?_src_=usr;show_tablet=1;'>\a [itemname]</a> up to one of your cameras ...")
+					to_chat(ai, "[span_name(user)] holds <a href='byond://?_src_=usr;show_tablet=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
-					to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='?_src_=usr;last_shown_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+					to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;last_shown_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				continue
 
 			if (potential_viewer.client?.eye == src)
@@ -408,16 +420,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				log_paper("[key_name(user)] held [last_shown_paper] up to [src], requesting [key_name(ai)] read it.")
 
 				if(user.name == "Unknown")
-					to_chat(ai, "[span_name(user.name)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
+					to_chat(ai, "[span_name(user.name)] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 				else
-					to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
+					to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 				continue
 
 			// If it's not an AI, eye if the client's eye is set to the camera. I wonder if this even works anymore with tgui camera apps and stuff?
 			if (potential_viewer.client?.eye == src)
 				log_paper("[key_name(user)] held [last_shown_paper] up to [src], and [key_name(potential_viewer)] may read it.")
 				potential_viewer.log_talk(item_name, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-				to_chat(potential_viewer, "[span_name(user)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to your camera...")
+				to_chat(potential_viewer, "[span_name(user)] holds <a href='byond://?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to your camera...")
 		return
 
 	return ..()
@@ -486,9 +498,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/change_msg = "deactivates"
 	if(status)
 		change_msg = "reactivates"
-		triggerCameraAlarm()
-		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
+		if(!QDELETED(alarm_manager))
+			triggerCameraAlarm()
+			if(!QDELETED(src)) //We'll be doing it anyway in destroy
+				addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 	if(displaymessage)
 		if(user)
 			visible_message(span_danger("[user] [change_msg] [src]!"))

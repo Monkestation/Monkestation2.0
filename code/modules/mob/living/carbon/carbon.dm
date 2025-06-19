@@ -155,7 +155,8 @@
 	var/power_throw = 0
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
-	if(HAS_TRAIT(src, TRAIT_DWARF))
+//	if(HAS_TRAIT(src, TRAIT_DWARF)) // MONKESTATION EDIT OLD
+	if(HAS_TRAIT(src, TRAIT_DWARF) && !HAS_TRAIT(src, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
 		power_throw--
 	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 		power_throw++
@@ -192,7 +193,7 @@
 	if (!bulky && prob(50))
 		return
 	visible_message(span_danger("[src] looses [src.p_their()] balance."), \
-		span_danger("You loose your balance."))
+		span_danger("You lose your balance."))
 	Knockdown(2 SECONDS)
 
 	//MONKESTATION EDIT END
@@ -549,7 +550,7 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/total_burn = 0
 	var/total_brute = 0
@@ -820,33 +821,30 @@
 	else
 		hud_used.healths.icon_state = "health6"
 
-/mob/living/carbon/update_stamina_hud(shown_stamina_loss)
+/mob/living/carbon/update_stamina_hud() //monkestation edit
 	if(!client || !hud_used?.stamina)
 		return
 
-	var/stam_crit_threshold = maxHealth - crit_threshold
+	//MONKESTATION EDIT START
+	var/current_stamina = stamina.current
 
-	if(stat == DEAD)
+	if(stamina.current <= (0.20 * STAMINA_MAX)) //stamina stun threshold
 		hud_used.stamina.icon_state = "stamina_dead"
+	else if(current_stamina <= (0.30 * STAMINA_MAX)) //exhaustion threshold
+		hud_used.stamina.icon_state = "stamina_crit"
+	else if(current_stamina <= (0.40 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_5"
+	else if(current_stamina <= (0.60 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_4"
+	else if(current_stamina <= (0.70 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_3"
+	else if(current_stamina <= (0.80 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_2"
+	else if(current_stamina <= (0.90 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_1"
 	else
-
-		if(shown_stamina_loss == null)
-			shown_stamina_loss = stamina.loss
-
-		if(shown_stamina_loss >= stam_crit_threshold)
-			hud_used.stamina.icon_state = "stamina_crit"
-		else if(shown_stamina_loss > maxHealth*0.8)
-			hud_used.stamina.icon_state = "stamina_5"
-		else if(shown_stamina_loss > maxHealth*0.6)
-			hud_used.stamina.icon_state = "stamina_4"
-		else if(shown_stamina_loss > maxHealth*0.4)
-			hud_used.stamina.icon_state = "stamina_3"
-		else if(shown_stamina_loss > maxHealth*0.2)
-			hud_used.stamina.icon_state = "stamina_2"
-		else if(shown_stamina_loss > 0)
-			hud_used.stamina.icon_state = "stamina_1"
-		else
-			hud_used.stamina.icon_state = "stamina_full"
+		hud_used.stamina.icon_state = "stamina_full"
+	//MONKESTATION EDIT STOP
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)
@@ -869,7 +867,7 @@
 
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -909,8 +907,6 @@
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
 
 		for(var/obj/item/organ/organ as anything in organs)
-			if(organ.organ_flags & ORGAN_SYNTHETIC)
-				continue
 			organ.apply_organ_damage(excess_healing * -1) //1 excess = 5 organ damage healed
 
 	return ..()
@@ -939,6 +935,11 @@
 	if(heal_flags & HEAL_NEGATIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
+				disease.cure(FALSE)
+
+	if(heal_flags & HEAL_POSTIVE_DISEASES)
+		for(var/datum/disease/disease as anything in diseases)
+			if(disease.severity == DISEASE_SEVERITY_POSITIVE)
 				disease.cure(FALSE)
 
 	if(heal_flags & HEAL_WOUNDS)
@@ -1144,20 +1145,20 @@
 				if("remove")
 					if(BP)
 						BP.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
+						admin_ticket_log("[key_name(usr)] has removed [src]'s [parse_zone(BP.body_zone)]") // MONKESTATION EDIT - tgui tickets
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+						admin_ticket_log("[key_name(usr)] has attempted to modify the bodyparts of [src]") // MONKESTATION EDIT - tgui tickets
 				if("replace")
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
 
 					if(new_bp.replace_limb(src, special = TRUE))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [BP.type] with [new_bp.type]")
+						admin_ticket_log("[key_name(usr)] has replaced [src]'s [BP.type] with [new_bp.type]") // MONKESTATION EDIT - tgui tickets
 						qdel(BP)
 					else
 						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+						admin_ticket_log("[key_name(usr)] has attempted to modify the bodyparts of [src]") // MONKESTATION EDIT - tgui tickets
 
 	if(href_list[VV_HK_MAKE_AI])
 		if(!check_rights(R_SPAWN))
@@ -1383,7 +1384,6 @@
 	else
 		set_lying_angle(new_lying_angle)
 
-
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, disgust))
@@ -1399,17 +1399,18 @@
 
 	return ..()
 
-
 /mob/living/carbon/get_attack_type()
 	if(has_active_hand())
 		var/obj/item/bodypart/arm/active_arm = get_active_hand()
 		return active_arm.attack_type
 	return ..()
 
-
 /mob/living/carbon/proc/attach_rot()
-	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
-		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+	if(flags_1 & HOLOGRAM_1)
+		return
+	if(!(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
 /mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER

@@ -74,6 +74,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("cargo shelf parts", /obj/item/rack_parts/cargo_shelf, 4, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	null, \
+	new/datum/stack_recipe("pipe", /obj/item/pipe/quaternary/pipe/crafted, 1, time = 4 SECONDS, check_density = FALSE, category = CAT_ATMOSPHERIC), \
+	null, \
 	new/datum/stack_recipe("unfinished canister frame", /obj/structure/canister_frame/machine/unfinished_canister_frame, 5, time = 0.8 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ATMOSPHERIC), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron/base, 1, 4, 20, category = CAT_TILES), \
@@ -613,7 +615,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs, check_density = FALSE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed, check_density = FALSE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps, check_density = FALSE, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box, check_density = FALSE, category = CAT_CONTAINERS)
+		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box, check_density = FALSE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("cigarette box", /obj/item/storage/fancy/cigarettes/crafted, check_density = FALSE, category = CAT_CONTAINERS)
 		)),
 
 	null, \

@@ -59,6 +59,7 @@
 	var/bloodsucker_level = 0
 	var/bloodsucker_level_unspent = 1
 	var/additional_regen
+	var/blood_over_cap = 0
 	var/bloodsucker_regen_rate = 0.3
 
 	// Used for Bloodsucker Objectives
@@ -66,12 +67,18 @@
 	var/obj/structure/closet/crate/coffin
 	var/total_blood_drank = 0
 
+	/// Used for Bloodsuckers gaining levels from drinking blood
+	var/blood_level_gain = 0
+	var/blood_level_gain_amount = 0
+
 	///Blood display HUD
 	var/atom/movable/screen/bloodsucker/blood_counter/blood_display
 	///Vampire level display HUD
 	var/atom/movable/screen/bloodsucker/rank_counter/vamprank_display
 	///Sunlight timer HUD
 	var/atom/movable/screen/bloodsucker/sunlight_counter/sunlight_display
+
+	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
 
 	/// Static typecache of all bloodsucker powers.
 	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, ignore_root_path = TRUE)
@@ -82,32 +89,48 @@
 		/datum/antagonist/changeling,
 		/datum/antagonist/cult,
 	)
+	/// Traits that don't get removed by Masquerade
+	var/static/list/always_traits = list(
+		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
+		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
+	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_SLEEPIMMUNE,
-		TRAIT_NOCRITDAMAGE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_STABLEHEART,
-		TRAIT_STABLELIVER,
-		TRAIT_NOSOFTCRIT,
-		TRAIT_NOHARDCRIT,
 		TRAIT_AGEUSIA,
 		TRAIT_COLD_BLOODED,
-		TRAIT_VIRUSIMMUNE,
-		TRAIT_TOXIMMUNE,
-		TRAIT_HARDLY_WOUNDED,
-		TRAIT_NO_MIRROR_REFLECTION,
 		TRAIT_ETHEREAL_NO_OVERCHARGE,
+		TRAIT_GENELESS,
+		TRAIT_HARDLY_WOUNDED,
+		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NO_BLEED_WARN,
+		TRAIT_NO_MIRROR_REFLECTION,
 		TRAIT_OOZELING_NO_CANNIBALIZE,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
+		TRAIT_TOXIMMUNE,
+		TRAIT_VIRUSIMMUNE,
+		// they eject zombie tumors and xeno larvae during eepy time anyways
+		TRAIT_NO_ZOMBIFY, // they're already undead lol
+		TRAIT_XENO_IMMUNE, // something something facehuggers only latch onto living things
 	)
 	/// Traits applied during Torpor.
 	var/static/list/torpor_traits = list(
 		TRAIT_DEATHCOMA,
 		TRAIT_FAKEDEATH,
 		TRAIT_NODEATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+	)
+	/// Traits applied while inside of a coffin.
+	var/static/list/coffin_traits = list(
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 	)
@@ -126,11 +149,14 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
+	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(life_tick))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
+	current_mob.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 
 	if(current_mob.hud_used)
 		on_hud_created()
@@ -138,6 +164,7 @@
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	ensure_brain_nonvital(current_mob)
+	setup_tracker(current_mob)
 
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
@@ -153,8 +180,11 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH))
+	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD))
 	handle_clown_mutation(current_mob, removing = FALSE)
+	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
+
+	cleanup_tracker()
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
@@ -169,16 +199,13 @@
 	SIGNAL_HANDLER
 	var/datum/hud/bloodsucker_hud = owner.current.hud_used
 
-	blood_display = new /atom/movable/screen/bloodsucker/blood_counter()
-	blood_display.hud = bloodsucker_hud
+	blood_display = new /atom/movable/screen/bloodsucker/blood_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += blood_display
 
-	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter()
-	vamprank_display.hud = bloodsucker_hud
+	vamprank_display = new /atom/movable/screen/bloodsucker/rank_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += vamprank_display
 
-	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter()
-	sunlight_display.hud = bloodsucker_hud
+	sunlight_display = new /atom/movable/screen/bloodsucker/sunlight_counter(null, bloodsucker_hud)
 	bloodsucker_hud.infodisplay += sunlight_display
 
 	bloodsucker_hud.show_hud(bloodsucker_hud.hud_version)
@@ -202,11 +229,11 @@
 
 ///Called when you get the antag datum, called only ONCE per antagonist.
 /datum/antagonist/bloodsucker/on_gain()
-	RegisterSignal(SSsunlight, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
-	RegisterSignal(SSsunlight, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
-	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
-	RegisterSignal(SSsunlight, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
-	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
+	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
+	RegisterSignal(SSsol, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
+	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
+	RegisterSignal(SSsol, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
+	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 
 	if(IS_FAVORITE_VASSAL(owner.current)) // Vassals shouldnt be getting the same benefits as Bloodsuckers.
 		bloodsucker_level_unspent = 0
@@ -228,7 +255,7 @@
 
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
-	UnregisterSignal(SSsunlight, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
+	UnregisterSignal(SSsol, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
 	owner.special_role = null
@@ -282,11 +309,12 @@
 		new_right_arm.unarmed_damage_high = old_right_arm_unarmed_damage_high
 
 	//Give Bloodsucker Traits
-	old_body?.remove_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
-	new_body.add_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	old_body?.remove_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
+	new_body.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 
 /datum/antagonist/bloodsucker/greet()
-	. = ..()
+	if(silent) // don't bother calling ..(), we don't need the duplicate "You are the Bloodsucker!" message
+		return
 	var/fullname = return_full_name()
 	to_chat(owner, span_userdanger("You are [fullname], a strain of vampire known as a Bloodsucker!"))
 	owner.announce_objectives()
@@ -320,32 +348,23 @@
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/bloodsucker/ui_static_data(mob/user)
-	var/list/data = list()
-	//we don't need to update this that much.
-	data["in_clan"] = !!my_clan
-	var/list/clan_data = list()
+	. = ..()
 	if(my_clan)
-		clan_data["clan_name"] = my_clan.name
-		clan_data["clan_description"] = my_clan.description
-		clan_data["clan_icon"] = my_clan.join_icon_state
+		.["clan"] = list(
+			"name" = my_clan.name,
+			"desc" = my_clan.description,
+			"icon" = text_ref(my_clan.join_icon),
+			"icon_state" = my_clan.join_icon_state,
+		)
 
-	data["clan"] += list(clan_data)
-
+	.["powers"] = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
-		var/list/power_data = list()
-
-		power_data["power_name"] = power.name
-		power_data["power_explanation"] = power.power_explanation
-		power_data["power_icon"] = power.button_icon_state
-
-		data["power"] += list(power_data)
-
-	return data + ..()
-
-/datum/antagonist/bloodsucker/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/simple/bloodsucker_icons),
-	)
+		.["powers"] += list(list(
+			"name" = power.name,
+			"explanation" = power.html_power_explanation(),
+			"icon" = text_ref(power.button_icon),
+			"icon_state" = power.button_icon_state,
+		))
 
 /datum/antagonist/bloodsucker/ui_act(action, params, datum/tgui/ui)
 	. = ..()
@@ -358,7 +377,7 @@
 				return
 			assign_clan_and_bane()
 			ui.send_full_update(force = TRUE)
-			return
+			return TRUE
 
 /datum/antagonist/bloodsucker/roundend_report()
 	var/list/report = list()
@@ -437,16 +456,13 @@
 		user_right_arm.unarmed_damage_low += 1 //lowest possible punch damage - 0
 		user_right_arm.unarmed_damage_high += 1 //highest possible punch damage - 9
 	//Give Bloodsucker Traits
-	owner.current.add_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	owner.current.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 	//Clear Addictions
 	for(var/addiction_type in subtypesof(/datum/addiction))
 		owner.current.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 	//No Skittish "People" allowed
 	if(HAS_TRAIT(owner.current, TRAIT_SKITTISH))
 		REMOVE_TRAIT(owner.current, TRAIT_SKITTISH, ROUNDSTART_TRAIT)
-	// Tongue & Language
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
-	owner.current.grant_language(/datum/language/vampiric)
 	/// Clear Disabilities & Organs
 	heal_vampire_organs()
 
@@ -474,7 +490,7 @@
 		var/datum/species/user_species = user.dna.species
 		user_species.inherent_traits -= TRAIT_DRINKS_BLOOD
 	// Remove all bloodsucker traits
-	owner.current.remove_traits(bloodsucker_traits, BLOODSUCKER_TRAIT)
+	owner.current.remove_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 	// Update Health
 	owner.current.setMaxHealth(initial(owner.current.maxHealth))
 	// Language
@@ -530,3 +546,15 @@
 			gourmand_objective.owner = owner
 			gourmand_objective.objective_name = "Optional Objective"
 			objectives += gourmand_objective
+
+/datum/antagonist/bloodsucker/proc/on_moved(datum/source)
+	SIGNAL_HANDLER
+	var/mob/living/current = owner?.current
+	if(QDELETED(current))
+		return
+	tracker?.tracking_beacon?.update_position()
+	if(istype(current.loc, /obj/structure/closet/crate/coffin))
+		current.add_traits(coffin_traits, BLOODSUCKER_COFFIN_TRAIT)
+	else
+		REMOVE_TRAITS_IN(current, BLOODSUCKER_COFFIN_TRAIT)
+

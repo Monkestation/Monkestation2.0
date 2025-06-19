@@ -23,7 +23,7 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/middle
 	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 20,
+		/obj/item/stack/ore/bluespace_crystal = 10,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/dna_vault
@@ -645,11 +645,18 @@
 		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
 		/obj/machinery/vending/tool = "YouTool",
 		/obj/machinery/vending/custom = "Custom Vendor",
+		// monkestation start
+		/obj/machinery/vending/access/command = "Command Outfitting Station",
+		/obj/machinery/vending/barbervend = "Fab-O-Vend",
 		/obj/machinery/vending/imported = "NT Sustenance Supplier",
-		/obj/machinery/vending/imported/yangyu = "Fudobenda",
 		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
 		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",
-		/obj/machinery/vending/plushvendor = "Plushie Vendor",)
+		/obj/machinery/vending/imported/yangyu = "Fudobenda",
+		/obj/machinery/vending/mechcomp = "ThinkTronic MechComp Dispenser",
+		/obj/machinery/vending/plushvendor = "Plushie Vendor",
+		/obj/machinery/vending/wardrobe/xeno_wardrobe = "Xeno_Drobe",
+		// monkestation end
+	)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -951,7 +958,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/manipulator = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger"
@@ -1025,7 +1033,7 @@
 	build_path = /obj/machinery/dna_scannernew
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)

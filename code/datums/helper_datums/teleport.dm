@@ -116,7 +116,28 @@
 
 		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
 			return random_location
+// Safe Location finder in maintenance (used in slasher)
+/proc/find_safe_turf_in_maintenance(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
+	if(!zlevels)
+		if (zlevel)
+			zlevels = list(zlevel)
+		else
+			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/turf/random_location = locate(x,y,z)
 
+		// Check if we're in maintenance
+		var/area/A = get_area(random_location)
+		if(!istype(A, /area/station/maintenance))
+			continue
+
+		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))
+			return random_location
+	return null // Return null if no safe maintenance turf found
 /// Checks if a given turf is a "safe" location
 /proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
 	. = FALSE

@@ -57,7 +57,7 @@
 /obj/machinery/interrogator/examine(mob/user)
 	. = ..()
 	. += "It requies a direct link to a Nanotrasen defence network, stay near a Nanotrasen comms sat!"
-	. += span_info(span_italics("If a target has committed suicide, their body can be still be used to instantly extract the keycard."))
+	. += span_info(span_italics("If a target has committed suicide, their body can still be used to instantly extract the keycard."))
 
 /obj/machinery/interrogator/AltClick(mob/user)
 	. = ..()
@@ -213,7 +213,7 @@
 		disk_pinpointers.switch_mode_to(TRACK_GOLDENEYE) //Pinpointer will track the newly created goldeneye key.
 
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-		var/delaytime = 3 MINUTES
+		var/delaytime = 5 MINUTES
 		var/timer = SSshuttle.emergency.timeLeft(1) + delaytime
 		var/surplus = timer - (SSshuttle.emergency_call_time)
 		SSshuttle.emergency.setTimer(timer)

@@ -93,7 +93,6 @@
 	dir = 10;
 	network = list("ss13","engine","engineering")
 	},
-/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "fo" = (
@@ -314,6 +313,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Gas to Chamber"
 	},
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "lv" = (
@@ -806,6 +806,11 @@
 /area/station/engineering/supermatter/room)
 "Fs" = (
 /obj/effect/turf_decal/bot,
+/obj/structure/bed/dogbed{
+	anchored = 1;
+	name = "Poppy's bed"
+	},
+/mob/living/basic/pet/poppy,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "FF" = (

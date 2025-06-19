@@ -34,6 +34,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null //The target mob that the ghost is observing. Used as a reference in logout()
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
+	var/disease_view = FALSE //Is disease view currently enabled? (Init signals is on living and I'm not poking that bear.) MONKESTATION EDIT
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
@@ -301,10 +302,17 @@ Works together with spawning an observer, noted above.
 	var/mob/dead/observer/ghost = new(src) // Transfer safety to observer spawning proc.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
-	ghost.key = key
+	ghost.PossessByPlayer(key)
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
+
+	var/recordable_time = world.time
+	var/mob/living/former_mob = ghost.mind?.current
+	if(isliving(former_mob))
+		recordable_time = former_mob.timeofdeath
+
+	ghost.persistent_client?.time_of_death = recordable_time
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
@@ -374,6 +382,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	abstract_move(destination) // move like the wind
 	return TRUE
 
+/mob/dead/observer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	var/area/new_area = get_area(src)
+	if(new_area != ambience_tracked_area)
+		update_ambience_area(new_area)
+
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
@@ -392,7 +406,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
 		to_chat(src, span_warning("To leave your body again use the Ghost verb."))
-	mind.current.key = key
+	mind.current.PossessByPlayer(key)
 	mind.current.client.init_verbs()
 	return TRUE
 
@@ -442,7 +456,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.add_overlay(source)
 				source.layer = old_layer
 				source.plane = old_plane
-	to_chat(src, span_ghostalert("<a href=?src=[REF(src)];reenter=1>(Click to re-enter)</a>"))
+	to_chat(src, span_ghostalert("<a href='byond://?src=[REF(src)];reenter=1'>(Click to re-enter)</a>"))
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
@@ -686,7 +700,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_warning("Someone has taken this body while you were choosing!"))
 		return FALSE
 
-	target.key = key
+	target.PossessByPlayer(key)
 	target.faction = list(FACTION_NEUTRAL)
 	return TRUE
 
@@ -783,6 +797,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		show_data_huds()
 		to_chat(src, span_notice("Data HUDs enabled."))
 		data_huds_on = 1
+
+// MONKESTATION ADDITION START
+/mob/dead/observer/verb/toggle_disease_view()
+	set name = "Toggle Disease View"
+	set desc = "Toggles whether you see disease infection vectors. (dormant, blood, contact and airborne)"
+	set category = "Ghost"
+
+	if(disease_view)
+		RemoveElement(/datum/element/virus_viewer)
+		to_chat(src, span_notice("Disease view disabled."))
+	else
+		AddElement(/datum/element/virus_viewer)
+		to_chat(src, span_notice("Disease view enabled."))
+
+	disease_view = !disease_view
+// MONKESTATION ADDITION END
 
 /mob/dead/observer/verb/toggle_health_scan()
 	set name = "Toggle Health Scan"
@@ -927,6 +957,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	// During the break between opening the input menu and selecting our target, has this become an invalid option?
 	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
+		return
+
+	if (chosen_target == usr)
 		return
 
 	do_observe(chosen_target)

@@ -290,7 +290,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		// Alternative Laugh Hook
-		if(human_user.alternative_laughs.len)
+		if(LAZYLEN(human_user.alternative_laughs))
 			return pick(human_user.alternative_laughs)
 
 		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
@@ -626,6 +626,8 @@ monkestation edit end */
 	key = "me"
 	key_third_person = "custom"
 	message = null
+	muzzle_ignore = TRUE // monkestation addition
+	stat_allowed = SOFT_CRIT // monkestation addition
 
 /datum/emote/living/custom/can_run_emote(mob/user, status_check, intentional)
 	. = ..() && intentional
@@ -642,7 +644,7 @@ monkestation edit end */
 	var/custom_emote_type
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
-	if(is_banned_from(user.ckey, "Emote"))
+	if(!isnull(user.ckey) && is_banned_from(user.ckey, "Emote"))
 		to_chat(user, span_boldwarning("You cannot send custom emotes (banned)."))
 		return FALSE
 	else if(QDELETED(user))
@@ -674,15 +676,6 @@ monkestation edit end */
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
-
-/datum/emote/living/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/inhale
 	key = "inhale"

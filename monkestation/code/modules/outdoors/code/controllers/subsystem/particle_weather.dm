@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(particle_weather)
 		return SS_INIT_NO_NEED
 	for(var/particle_weather_type in subtypesof(/datum/particle_weather))
 		var/datum/particle_weather/particle_weather = new particle_weather_type
-		if(particle_weather.target_trait in SSmapping.config.particle_weathers)
+		if(particle_weather.target_trait in SSmapping.current_map.particle_weathers)
 			eligible_weathers[particle_weather_type] = particle_weather.probability
 
 		if(particle_weather.eclipse)
@@ -40,6 +40,9 @@ SUBSYSTEM_DEF(particle_weather)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/particle_weather/Recover()
+	eligible_weathers = SSparticle_weather.eligible_weathers.Copy()
+	eligible_eclipse_weathers = SSparticle_weather.eligible_eclipse_weathers.Copy()
+
 	running_weather = SSparticle_weather.running_weather
 	running_eclipse_weather = SSparticle_weather.running_eclipse_weather
 
@@ -56,6 +59,8 @@ SUBSYSTEM_DEF(particle_weather)
 	particle_effect_eclipse = SSparticle_weather.particle_effect_eclipse
 	weather_special_effect_eclipse = SSparticle_weather.weather_special_effect_eclipse
 	weather_effect_eclipse = SSparticle_weather.weather_effect_eclipse
+
+	enabled = SSparticle_weather.enabled
 
 /datum/controller/subsystem/particle_weather/stat_entry(msg)
 	if(enabled)
@@ -142,7 +147,7 @@ SUBSYSTEM_DEF(particle_weather)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_CHANGE)
 		running_eclipse_weather = weather_datum_type
 		running_eclipse_weather.start()
-		weather_datum_type = null
+		next_hit_eclipse = null
 	else
 		if(!QDELETED(running_weather))
 			if(!force)
@@ -154,7 +159,7 @@ SUBSYSTEM_DEF(particle_weather)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_CHANGE)
 		running_weather = weather_datum_type
 		running_weather.start()
-		weather_datum_type = null
+		next_hit = null
 
 /datum/controller/subsystem/particle_weather/proc/make_eligible(datum/particle_weather/possible_weather, probability = 10)
 	eligible_weathers[possible_weather] = probability
@@ -163,14 +168,14 @@ SUBSYSTEM_DEF(particle_weather)
 	switch(weather_plane_master.z_type)
 		if("Default")
 			if(QDELETED(weather_effect))
-				weather_effect = new /obj()
+				weather_effect = new
 				weather_effect.particles = particle_effect
 				weather_effect.filters += filter(type="alpha", render_source="[WEATHER_RENDER_TARGET] #[weather_plane_master.offset]")
 				weather_effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			return weather_effect
 		if("Eclipse")
 			if(QDELETED(weather_effect_eclipse))
-				weather_effect_eclipse = new /obj()
+				weather_effect_eclipse = new
 				weather_effect_eclipse.filters += filter(type="alpha", render_source="[WEATHER_ECLIPSE_RENDER_TARGET] #[weather_plane_master.offset]")
 				weather_effect_eclipse.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			return weather_effect_eclipse
@@ -194,14 +199,14 @@ SUBSYSTEM_DEF(particle_weather)
 	switch(z_type)
 		if("Default")
 			QDEL_NULL(running_weather)
-			QDEL_NULL(particle_effect)
 			//QDEL_NULL(weather_effect)
 			QDEL_NULL(weather_special_effect)
+			particle_effect = null
 		if("Eclipse")
 			QDEL_NULL(running_eclipse_weather)
-			QDEL_NULL(particle_effect_eclipse)
 			//QDEL_NULL(weather_effect_eclipse)
 			QDEL_NULL(weather_special_effect_eclipse)
+			particle_effect_eclipse = null
 
 /obj/weather_effect
 	plane = LIGHTING_PLANE

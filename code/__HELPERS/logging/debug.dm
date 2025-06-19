@@ -15,9 +15,11 @@
 /proc/log_job_debug(text, list/data)
 	logger.Log(LOG_CATEGORY_DEBUG_JOB, text, data)
 
+#ifndef DISABLE_DREAMLUAU
 /// Logging for lua scripting
 /proc/log_lua(text, list/data)
 	logger.Log(LOG_CATEGORY_DEBUG_LUA, text, data)
+#endif
 
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
@@ -59,8 +61,3 @@
 	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
 #endif
 	SEND_TEXT(world.log, text)
-
-/*
-/proc/log_enqueue(text, list/data)
-	logger.Log(LOG_CATEGORY_ENQUEUE, text, data)
-*/

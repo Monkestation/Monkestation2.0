@@ -304,8 +304,11 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	pointed_spell.parent_scripture = src
 
 /datum/scripture/slab/Destroy()
-	progress?.end_progress()
-	QDEL_NULL(pointed_spell)
+	if(!QDELETED(progress))
+		progress.end_progress()
+
+	if(!QDELETED(pointed_spell))
+		QDEL_NULL(pointed_spell)
 
 	return ..()
 

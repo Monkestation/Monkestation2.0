@@ -103,6 +103,8 @@
 #define ORGAN_SLOT_MONSTER_CORE "monstercore"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device" //This one ignores alphabetical order cause the arms should be together
+#define ORGAN_SLOT_RIGHT_ARM_MUSCLE "r_arm_muscle"
+#define ORGAN_SLOT_LEFT_ARM_MUSCLE "l_arm_muscle" //same as above
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_STORAGE_CAVITY "storage_cavity" // monkestation edit
@@ -168,6 +170,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_APPENDIX,
 	ORGAN_SLOT_RIGHT_ARM_AUG,
 	ORGAN_SLOT_LEFT_ARM_AUG,
+	ORGAN_SLOT_LEFT_ARM_MUSCLE,
+	ORGAN_SLOT_RIGHT_ARM_MUSCLE,
 	ORGAN_SLOT_RIGHT_LEG_AUG,
 	ORGAN_SLOT_LEFT_LEG_AUG,
 	ORGAN_SLOT_STOMACH,

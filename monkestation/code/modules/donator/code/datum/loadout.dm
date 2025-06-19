@@ -720,7 +720,7 @@
 
 //TheSpecialSnowflake
 /datum/loadout_item/under/miscellaneous/turtleneck
-	name = "Colorable Turtleneck"
+	name = "Recolorable Turtleneck (Donator)"
 	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -748,5 +748,142 @@
 /datum/loadout_item/neck/donatorwhitefurshawl
 	name = "White Fur Shawl"
 	item_path = /obj/item/clothing/neck/donatorwhitefurshawl
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//elchorico
+/datum/loadout_item/suit/elchorico_big_labcoat
+	name = "Huge Labcoat"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/elchorico_big_labcoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//QuarianCommando
+/datum/loadout_item/suit/jacket/formal_overcoat
+	name = "Formal Overcoat"
+	item_path = /obj/item/clothing/suit/jacket/formal_overcoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Cobalt Velvet 235
+/datum/loadout_item/head/traumatic_veteran_cap
+	name = "Traumatic Veteran Cap"
+	item_path = /obj/item/clothing/head/costume/traumatic_veteran_cap
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/jacket/traumatic_veteran_jacket
+	name = "Traumatic Veteran Jacket"
+	item_path = /obj/item/clothing/suit/toggle/traumatic_veteran_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/jill_plushie
+	name = "Jill Plushie"
+	item_path = /obj/item/toy/plush/jill_plushie
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/babypukeko
+	name = "Pet Delivery Beacon - Baby Pukeko"
+	item_path = /obj/item/choice_beacon/pet/donator/babypukeko
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/datum/loadout_item/effects/babypukeko
+	ckeywhitelist = list("Cobalt Velvet 235")
+	name = "Baby Pukeko Transformation"
+	item_path = /obj/item/effect_granter/donator/babypukeko
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/tallbabypukeko
+	name = "Pet Delivery Beacon - Tall Baby Pukeko"
+	item_path = /obj/item/choice_beacon/pet/donator/tallbabypukeko
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/datum/loadout_item/effects/tallbabypukeko
+	ckeywhitelist = list("Cobalt Velvet 235")
+	name = "Tall Baby Pukeko Transformation"
+	item_path = /obj/item/effect_granter/donator/tallbabypukeko
+	requires_purchase = FALSE
+
+//Judgement_Bird
+/datum/loadout_item/suit/strange_merchant_jacket
+	name = "Strange Merchant Jacket"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/strange_merchant
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Mycah
+/datum/loadout_item/plushies/kaiser_roach
+	name = "Kaiser Roach"
+	item_path = /obj/item/toy/plush/kaiser_roach
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/ironhammer_commander_hat
+	name = "Ironhammer Commander Hat"
+	item_path = /obj/item/clothing/head/costume/ironhammer_commander_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/ironhammer_commander_jacket
+	name = "Ironhammer Commander Jacket"
+	item_path = /obj/item/clothing/suit/ironhammer_commander_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/eris_romch
+	name = "Pet Delivery Beacon - Romch"
+	item_path = /obj/item/choice_beacon/pet/donator/eris_romch
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Mycah")
+
+/datum/loadout_item/effects/eris_romch
+	ckeywhitelist = list("Mycah")
+	name = "Romch Transformation"
+	item_path = /obj/item/effect_granter/donator/eris_romch
+	requires_purchase = FALSE
+
+//Mrsmall_theclown
+/datum/loadout_item/plushies/clown_king
+	name = "Clown King"
+	item_path = /obj/item/toy/plush/clown_king
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/ironhammer_commander_hat
+	name = "Grand Clown King Crown"
+	item_path = /obj/item/clothing/head/costume/clown_king_crown
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/neck/clown_king_cloak
+	name = "Grand Clown King Cloak"
+	item_path = /obj/item/clothing/neck/clown_king_cloak
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/theclown_clownpet
+	name = "Pet Delivery Beacon - Short Clown"
+	item_path = /obj/item/choice_beacon/pet/donator/theclown_clownpet
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Mrsmall_theclown")
+
+/datum/loadout_item/effects/theclown_clownpet
+	ckeywhitelist = list("Mrsmall_theclown")
+	name = "Short Clown Transformation"
+	item_path = /obj/item/effect_granter/donator/theclown_clownpet
+	requires_purchase = FALSE
+
+//Foxei
+/datum/loadout_item/suit/star_father_suit
+	name = "Star Father Suit"
+	item_path = /obj/item/clothing/suit/star_father_suit
 	donator_only = TRUE
 	requires_purchase = FALSE

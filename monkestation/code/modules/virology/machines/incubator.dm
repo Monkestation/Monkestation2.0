@@ -253,7 +253,8 @@
 
 		var/list/symptom_data = list()
 		var/obj/item/weapon/virusdish/dish = dish_datum.dish
-		for(var/datum/symptom/symptom in dish.contained_virus.symptoms)
+		dish_ui_datum["contains_disease"] = istype(dish.contained_virus) ? TRUE : FALSE
+		for(var/datum/symptom/symptom in dish.contained_virus?.symptoms)
 			if(!(dish.contained_virus.disease_flags & DISEASE_ANALYZED))
 				symptom_data += list(list("name" = "Unknown", "desc" = "Unknown", "strength" = symptom.multiplier, "max_strength" = symptom.max_multiplier, "chance" = symptom.chance, "max_chance" = symptom.max_chance, "stage" = symptom.stage))
 				continue
@@ -481,6 +482,21 @@
 	var/updates_new = 0
 	var/updates = 0
 
+/obj/machinery/disease2/incubator/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(on)
+		to_chat(user, span_warning("\The [src] is currently on! Please turn the machine off."))
+		return FALSE
+	return default_deconstruction_screwdriver(user, "incubatoru", "incubator", I)
+
+/obj/machinery/disease2/incubator/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(on == 1)
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		return FALSE
+	return default_deconstruction_crowbar(I)
 #undef INCUBATOR_DISH_GROWTH
 #undef INCUBATOR_DISH_REAGENT
 #undef INCUBATOR_DISH_MAJOR

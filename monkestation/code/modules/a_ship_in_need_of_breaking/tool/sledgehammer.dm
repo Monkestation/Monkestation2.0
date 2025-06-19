@@ -9,8 +9,9 @@
 	force = 5 /// The weapon requires two hands
 	throwforce = 12
 	throw_range = 3 /// Doesn't throw very far
-	demolition_mod = 3 // BREAK THINGS
-	armour_penetration = -20
+	demolition_mod = 6 // BREAK THINGS
+	armour_penetration = 0
+	armour_ignorance = -20
 	hitsound = 'sound/weapons/smash.ogg' /// Hitsound when thrown at someone
 	attack_verb_continuous = list("slams", "crushes", "smashes", "flattens", "pounds")
 	attack_verb_simple = list("slam", "crush", "smash", "flatten", "pound")
@@ -46,7 +47,7 @@
 
 	if(target.uses_integrity)
 		if(!QDELETED(target))
-			if(istype(get_area(target), /area/shipbreak))
+			if(istype(get_area(target), /area/space/shipbreak))
 				if(isstructure(target))
 					target.take_damage(force * demolition_mod, BRUTE, MELEE, FALSE, null, 20) // Breaks "structures pretty good"
 				if(ismachinery(target))

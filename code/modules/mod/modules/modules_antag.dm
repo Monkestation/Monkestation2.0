@@ -30,6 +30,9 @@
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
+/obj/item/mod/module/armor_booster/no_speedbost
+	speed_added = 0
+
 /datum/armor/mod_module_armor_boost
 	melee = 25
 	bullet = 30
@@ -225,6 +228,9 @@
 
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
+
+/obj/item/mod/module/insignia/syndie
+	color = COLOR_SYNDIE_RED
 
 ///Anti Slip - Prevents you from slipping on water.
 /obj/item/mod/module/noslip
@@ -484,10 +490,10 @@ monkestation end */
 	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
 
 /obj/item/mod/module/infiltrator/on_install()
-	mod.item_flags |= EXAMINE_SKIP
+	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
-	mod.item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_suit_activation()
 	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)

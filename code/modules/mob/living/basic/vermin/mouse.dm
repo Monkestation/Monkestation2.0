@@ -43,6 +43,9 @@
 
 	var/chooses_bodycolor = TRUE
 
+	///can they heal for eating non-cheese
+	var/hungry = FALSE
+
 //MONKESTATION EDIT START
 /mob/living/basic/mouse/get_scream_sound()
 	return 'sound/effects/mousesqueek.ogg'
@@ -53,6 +56,11 @@
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
 	if(contributes_to_ratcap)
+		var/cap = CONFIG_GET(number/ratcap)
+		if (LAZYLEN(SSmobs.cheeserats) > cap)
+			do_sparks(rand(3, 4), FALSE, src)
+			visible_message(span_warning("ERROR: Bluespace Disturbance Detected. More than [cap] entities will disturb bluespace harmonics. Entity eradicated."))
+			return INITIALIZE_HINT_QDEL
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -166,6 +174,8 @@
 			return //mice savour cheese differently
 		var/datum/component/edible/edible = attack_target.GetComponent(/datum/component/edible)
 		edible.UseByMouse(edible, src)
+		if(hungry && prob(90))
+			adjust_health(-4)
 
 		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
 			if(istype(target_reagent, /datum/reagent/toxin))
@@ -419,6 +429,13 @@
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
 		BB_BASIC_MOB_FLEE_DISTANCE = 3,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me cleans its whiskers in disapproval.",
+			"*me squeaks sadly.",
+			"*me sheds a single small tear.",
+			"MY LIEGE! NO!!",
+			"*me offers a crumb of cheese to cheer you up.",
+		)
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

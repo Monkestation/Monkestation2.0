@@ -10,6 +10,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	/// Does this item get the clockwork_pickup element
 	var/has_pickup_element = TRUE
 
+
 /obj/item/clockwork/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/clockwork_description, clockwork_desc)
@@ -138,7 +139,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	if(!IS_CLOCK(user))
 		to_chat(user, span_warning("As you try and fiddle with \the [src] you feel a shock course through you!"))
 		user.dropItemToGround(user, TRUE)
-		user.electrocute_act((IS_CULTIST(user) ? 40 : 20), src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
+		user.electrocute_act((IS_CULTIST(user) ? 40 : 20), src, 1, SHOCK_NOGLOVES | SHOCK_SUPPRESS_MESSAGE)
 		return
 
 	if(active_scripture)

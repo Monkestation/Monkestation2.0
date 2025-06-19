@@ -135,10 +135,12 @@ CREATE TABLE `connection_log` (
   `datetime` datetime DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NULL,
+  `round_id` int(11) unsigned DEFAULT NULL,
   `ckey` varchar(45) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
+  `byond_version` varchar(8) DEFAULT NULL,
+  `byond_build` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -720,23 +722,6 @@ CREATE TABLE `tutorial_completions` (
   UNIQUE INDEX `ckey_tutorial_unique` (`ckey`, `tutorial_key`));
 
 --
--- Table structure for table `metric_data`
---
-DROP TABLE IF EXISTS `metric_data`;
-CREATE TABLE `metric_data` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`datetime` datetime NOT NULL,
-	`cpu` decimal(20,10) unsigned DEFAULT NULL,
-	`maptick` decimal(20,10) unsigned DEFAULT NULL,
-	`elapsed_processed` int(15) unsigned DEFAULT NULL,
-	`elapsed_real` int(15) unsigned DEFAULT NULL,
-	`client_count` int(15) unsigned DEFAULT NULL,
-	`round_id` int(15) unsigned DEFAULT NULL,
-	`relational_id` varchar(255) DEFAULT NULL,
-	PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
 -- Table structure for table `overwatch_asn_ban`
 --
 DROP TABLE IF EXISTS `overwatch_asn_ban`;
@@ -768,39 +753,6 @@ CREATE TABLE `overwatch_whitelist` (
 	`timestamp` datetime NOT NULL,
 	PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-
---
--- Table structure for table `subsystem_extra_metrics`
---
-DROP TABLE IF EXISTS `subsystem_extra_metrics`;
-CREATE TABLE `subsystem_extra_metrics` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`datetime` datetime NOT NULL,
-	`round_id` int(15) unsigned DEFAULT NULL,
-	`ss_id` varchar(255) DEFAULT NULL,
-	`relation_id_SS` varchar(255) DEFAULT NULL,
-	`ss_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-	PRIMARY KEY (`id`) USING BTREE,
-	CONSTRAINT `ss_value` CHECK (json_valid(`ss_value`))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Table structure for table `metric_data`
---
-DROP TABLE IF EXISTS `subsystem_metrics`;
-CREATE TABLE `subsystem_metrics` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`avg_iter_count` decimal(20,6) NOT NULL DEFAULT 0.000000,
-	`avg_drift` decimal(20,6) NOT NULL DEFAULT 0.000000,
-	`datetime` datetime NOT NULL,
-	`round_id` int(15) unsigned DEFAULT NULL,
-	`ss_id` varchar(255) DEFAULT NULL,
-	`relational_id` varchar(255) DEFAULT NULL,
-	`relation_id_SS` varchar(255) DEFAULT NULL,
-	`cost` decimal(20,6) unsigned DEFAULT NULL,
-	`tick_usage` decimal(20,6) unsigned DEFAULT NULL,
-	PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

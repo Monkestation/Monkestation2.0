@@ -1,66 +1,14 @@
-/obj/item/organ/internal/tongue/ornithid
-	name = "avian tongue"
-	desc = "A seemingly normal looking tongue which causes ones voice to caw. However that works."
-	say_mod = "caws"
-	///Birds like these but they're still human-mutans, so they dislike the same stuff.
-	liked_foodtypes = VEGETABLES | FRUIT | NUTS | GRAIN
-	disliked_foodtypes = RAW | GORE | DAIRY
-
-	/// Our song datum.
-	var/datum/song/organ/song
-	/// How far away our song datum can be heard.
-	var/instrument_range = 12
-	///our music ability
-	var/datum/action/innate/singing/sing
-	///static list of instruments we can play
-	var/list/static/allowed_instrument_ids = list("mothscream", "honk", "violin", "guitar", "piano", "recorder", "banjo", "r3grand","r3harpsi","crharpsi","crgrand1","crbright1", "crichugan", "crihamgan")
-	///this is our spewer component
-	var/datum/component/particle_spewer/music_notes/music
-
-/obj/item/organ/internal/tongue/ornithid/Initialize(mapload)
-	. = ..()
-	song = new(src, allowed_instrument_ids, instrument_range)
-	RegisterSignal(src, COMSIG_INSTRUMENT_START, PROC_REF(start_sound_particles))
-	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(stop_sound_particles))
-
-/obj/item/organ/internal/tongue/ornithid/Destroy()
-	. = ..()
-	QDEL_NULL(song)
-	UnregisterSignal(src, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END))
-
-/obj/item/organ/internal/tongue/ornithid/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
-	. = ..()
-	if(QDELETED(sing))
-		sing = new
-	sing.Grant(tongue_owner)
-
-/obj/item/organ/internal/tongue/ornithid/Remove(mob/living/carbon/tongue_owner, special)
-	. = ..()
-	sing?.Remove	(tongue_owner)
-	song.stop_playing()
-	stop_sound_particles()
-
-/obj/item/organ/internal/tongue/ornithid/proc/start_sound_particles()
-	if(!music)
-		music = owner.AddComponent(/datum/component/particle_spewer/music_notes)
-
-/obj/item/organ/internal/tongue/ornithid/proc/stop_sound_particles()
-	qdel(owner?.GetComponent(/datum/component/particle_spewer/music_notes))
-	music = null
-
 // subtype for organs, like ornithid tongues
 /datum/song/organ
 	cares_about_distance = FALSE
 
 /datum/song/organ/updateDialog(mob/user)
 	var/obj/item/organ/owner = parent
-	var/mob/living/musician = owner?.owner
-	ui_interact(musician)
+	ui_interact(owner?.owner)
 
 /datum/song/organ/should_stop_playing(obj/player)
 	var/obj/item/organ/owner = parent
-	var/mob/living/musician = owner?.owner
-	return musician?.stat >= UNCONSCIOUS
+	return owner?.owner?.stat >= UNCONSCIOUS
 
 /datum/song/organ/do_hearcheck()
 	var/obj/item/organ/player = parent
@@ -84,10 +32,8 @@
 /datum/action/innate/singing/Activate()
 	var/mob/living/carbon/human/human = owner
 	var/obj/item/organ/internal/tongue/ornithid/music_maker = human.get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(!istype(music_maker))
-		return
-	music_maker?.song.ui_interact(human)
-
+	if(istype(music_maker))
+		music_maker?.song?.ui_interact(human)
 
 /datum/component/particle_spewer/music_notes
 	icon_file = 'goon/icons/effects/particles.dmi'

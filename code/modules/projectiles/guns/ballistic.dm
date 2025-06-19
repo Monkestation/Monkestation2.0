@@ -413,7 +413,7 @@
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
+	if(can_misfire && magazine && chambered?.loaded_projectile && misfire_probability > 0)  //monke edit : moved can_misfire from the third spot to the first to cancel some runtime issues
 		if(prob(misfire_probability))
 			if(blow_up(user))
 				to_chat(user, span_userdanger("[src] misfires!"))
@@ -717,6 +717,13 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		magazine = new accepted_magazine_type(src)
 	chamber_round()
 	update_appearance()
+
+// monkestation edit start
+/obj/item/gun/ballistic/handle_atom_del(atom/A)
+	if (istype(A, /obj/item/ammo_casing) && magazine)
+		magazine.handle_atom_del(A)
+	return ..()
+// monkestation edit end
 
 /obj/item/suppressor
 	name = "suppressor"

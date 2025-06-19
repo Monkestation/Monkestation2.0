@@ -9,7 +9,7 @@
 	plane = GAME_PLANE_UPPER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
-	organ_flags = ORGAN_VITAL
+	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL | ORGAN_PROMINENT
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -62,7 +62,7 @@
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(brain_owner)
 		else
-			brain_owner.key = brainmob.key
+			brain_owner.PossessByPlayer(brainmob.key)
 
 		brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
@@ -194,7 +194,7 @@
 		to_chat(user, span_danger("You hit [src] with [item]!"))
 
 /obj/item/organ/internal/brain/proc/check_for_repair(obj/item/item, mob/user)
-	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/mannitol) && (status == ORGAN_ORGANIC)) //attempt to heal the brain
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/mannitol) && (IS_ORGANIC_ORGAN(src))) //attempt to heal the brain
 		// MONKESTATION NOTE: There was a check for the brain being completely dead here. But that's like, the only case when you'd want to do this. Pretty sure it isn't on tg, so I'm leaving this here for documentation.
 
 		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
@@ -215,6 +215,10 @@
 	. = ..()
 	if(length(skillchips))
 		. += span_info("It has a skillchip embedded in it.")
+	. += brain_damage_examine()
+
+/// Needed so subtypes can override examine text while still calling parent
+/obj/item/organ/internal/brain/proc/brain_damage_examine()
 	if(suicided)
 		. += span_info("It's started turning slightly grey. They must not have been able to handle the stress of it all.")
 		return
@@ -227,6 +231,26 @@
 			. += span_info("You can feel the small spark of life still left in this one.")
 	else
 		. += span_info("This one is completely devoid of life.")
+
+/obj/item/organ/internal/brain/get_status_appendix(advanced, add_tooltips)
+	var/list/trauma_text
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		var/trauma_desc = ""
+		switch(trauma.resilience)
+			if(TRAUMA_RESILIENCE_BASIC)
+				trauma_desc = conditional_tooltip("Mild ", "Repair via brain surgery or medication such as [/datum/reagent/medicine/neurine::name].", add_tooltips)
+			if(TRAUMA_RESILIENCE_SURGERY)
+				trauma_desc = conditional_tooltip("Severe ", "Repair via brain surgery.", add_tooltips)
+			if(TRAUMA_RESILIENCE_LOBOTOMY)
+				trauma_desc = conditional_tooltip("Deep-rooted ", "Repair via Lobotomy.", add_tooltips)
+			if(TRAUMA_RESILIENCE_WOUND)
+				trauma_desc = conditional_tooltip("Fracture-derived ", "Repair via treatment of wounds afflicting the head.", add_tooltips)
+			if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+				trauma_desc = conditional_tooltip("Permanent ", "Irreparable under normal circumstances.", add_tooltips)
+		trauma_desc += capitalize(trauma.scan_desc)
+		LAZYADD(trauma_text, trauma_desc)
+	if(LAZYLEN(trauma_text))
+		return "Mental trauma: [english_list(trauma_text, and_text = ", and ")]."
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -246,6 +270,9 @@
 	//since these people will be dead M != usr
 
 	if(!target_has_brain)
+		if(src.zone != BODY_ZONE_HEAD) // MONKESTATION ADDITION START only head brains go in the head. since we have two species that have chest-brains, this prevents shenanigans.
+			to_chat(user, span_warning("It doesn't seem like [src] goes in the head..."))
+			return ..() // MONKESTATION ADDITION END
 		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
@@ -470,7 +497,9 @@
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
-		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
+		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
+			qdel(actual_trauma)
+			return FALSE
 		actual_trauma.on_gain()
 	if(resilience)
 		actual_trauma.resilience = resilience
@@ -517,7 +546,7 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	if(!owner)
 		return

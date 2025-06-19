@@ -62,8 +62,11 @@
 
 
 /obj/item/reagent_containers/hypospray/cmo
+	volume = 60
+	possible_transfer_amounts = list(1,3,5)
 	list_reagents = list(/datum/reagent/medicine/omnizine = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	ignore_flags = 1
 
 //combat
 
@@ -282,7 +285,7 @@
 	icon_state = "atropen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
-	list_reagents = list(/datum/reagent/medicine/atropine = 10)
+	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"

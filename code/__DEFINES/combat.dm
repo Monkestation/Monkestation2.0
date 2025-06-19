@@ -77,15 +77,12 @@
 #define CANUNCONSCIOUS (1<<2)
 /// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
-/// Mob godmode. Prevents most statuses and damage from being taken, but is more often than not a crapshoot. Use with caution.
-#define GODMODE (1<<4)
 
 DEFINE_BITFIELD(status_flags, list(
 	"CAN STUN" = CANSTUN,
 	"CAN KNOCKDOWN" = CANKNOCKDOWN,
 	"CAN UNCONSCIOUS" = CANUNCONSCIOUS,
 	"CAN PUSH" = CANPUSH,
-	"GOD MODE" = GODMODE,
 ))
 
 //Health Defines
@@ -161,6 +158,9 @@ DEFINE_BITFIELD(status_flags, list(
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
+#define STAGGERED_SLOWDOWN_LENGTH 3 SECONDS
+#define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))

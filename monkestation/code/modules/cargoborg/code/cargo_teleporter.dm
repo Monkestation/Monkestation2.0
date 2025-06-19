@@ -57,6 +57,8 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 			continue
 		if(!ismovable(check_content))
 			continue
+		if(issyndicateblackbox(check_content))
+			continue
 		var/atom/movable/movable_content = check_content
 		if(isliving(movable_content))
 			continue
@@ -77,16 +79,6 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	materials = list(/datum/material/iron = 500, /datum/material/plastic = 500, /datum/material/uranium =  500)
 	category = list(RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
-
-/datum/techweb_node/cargo_teleporter
-	id = "cargoteleporter"
-	display_name = "Cargo Teleporter"
-	description = "We can teleport items across long distances, as long as they are not blocked."
-	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list(
-		"cargotele",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /obj/effect/decal/cleanable/cargo_mark
 	name = "cargo mark"

@@ -26,6 +26,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESTRAINED "restrained"
 /// Apply this to make a mob not dense, and remove it when you want it to no longer make them undense, other sorces of undesity will still apply. Always define a unique source when adding a new instance of this!
 #define TRAIT_UNDENSE "undense"
+/// Makes the mob immune to damage and several other ailments.
+#define TRAIT_GODMODE "godmode"
 /// Expands our FOV by 30 degrees if restricted
 #define TRAIT_EXPANDED_FOV "expanded_fov"
 /// Doesn't miss attacks
@@ -174,6 +176,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This carbon doesn't metabolize reagents.
 /// This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
+/// This carbon doesn't get warnings about blood level.
+#define TRAIT_NO_BLEED_WARN "no_bleed_warn"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 // This means the carbon does not have altered bloodloss from having or not having a spleen
@@ -255,7 +259,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// These mobs have particularly hygienic tongues
 /* #define TRAIT_WOUND_LICKER "wound_licker" */
 /// Mobs with this trait are allowed to use silicon emotes
-/* #define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed" */
+#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
 
 /// This trait designate that the mob was originally a monkey
 /* #define TRAIT_BORN_MONKEY "born_as_a_monkey" */
@@ -321,9 +325,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 /// Makes whispers clearly heard from seven tiles away, the full hearing range
-/* #define TRAIT_GOOD_HEARING "good_hearing" */
+#define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
-/* #define TRAIT_XRAY_HEARING "xray_hearing" */
+#define TRAIT_XRAY_HEARING "xray_hearing"
 
 /// This mob can not enter or move on a shuttle
 /* #define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement" */
@@ -517,7 +521,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
 
 /// Trait that tracks if something has been renamed. Typically holds a REF() to the object itself (AKA src) for wide addition/removal.
-/* #define TRAIT_WAS_RENAMED "was_renamed" */
+#define TRAIT_WAS_RENAMED "was_renamed"
 
 /// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
 #define TRAIT_DOUBLE_TAP "double_tap"
@@ -555,14 +559,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait cannot be hit by projectiles, meaning the projectiles will just go through.
 /* #define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles" */
 
-/// Projectile with this trait will always hit the defined zone of a struck living mob.
-#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
-
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
 /// Whether or not the user is in a MODlink call, prevents making more calls
-/* #define TRAIT_IN_CALL "in_call" */
+#define TRAIT_IN_CALL "in_call"
 
 /// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
 #define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
@@ -588,7 +589,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_HIGH_VALUE_RANSOM "high_value_ransom" */
 
 /// Makes the user handcuff others faster
-/* #define TRAIT_FAST_CUFFING "fast_cuffing" */
+#define TRAIT_FAST_CUFFING "fast_cuffing"
 
 ///Given by /obj/item/virgin_mary, mobs that used this can no longer use it again ever
 /* #define TRAIT_MAFIAINITIATE "mafiainitiate" */
@@ -658,7 +659,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Allows chef's to chefs kiss their food, to make them with love
 #define TRAIT_CHEF_KISS "chefs_kiss"
 /// Allows clowns to bend balloons into animals
-/* #define TRAIT_BALLOON_SUTRA "balloon_sutra" */
+#define TRAIT_BALLOON_SUTRA "balloon_sutra"
 /// Allows detectives to identify chemicals by taste
 /* #define TRAIT_DETECTIVES_TASTE "detectives_taste" */
 
@@ -817,11 +818,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAUNTED "haunted"
 /// An item that, if it has contents, will ignore its contents when scanning for contraband.
 /* #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker" */
+/// For edible items that cannot be composted inside hydro trays
+/* #define TRAIT_UNCOMPOSTABLE "uncompostable" */
+/// Items with this trait will not have their worn icon overlayed.
+#define TRAIT_NO_WORN_ICON "no_worn_icon"
+/// Items with this trait will not appear when examined.
+#define TRAIT_EXAMINE_SKIP "examine_skip"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
 /* #define TRAIT_ANOSMIA "anosmia" */
-/* #define TRAIT_HEAVY_DRINKER "heavy_drinker" */
+#define TRAIT_HEAVY_DRINKER "heavy_drinker"
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"
 #define TRAIT_NIGHT_VISION "night_vision"
@@ -840,6 +847,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
 #define TRAIT_EMPATH "empath"
+#define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
@@ -853,6 +861,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
+#define TRAIT_CAFFEINE_DEPENDENCE "caffeine_dependence"
 /* #define TRAIT_STRONG_STOMACH "strong_stomach" */
 
 /// This mob always lands on their feet when they fall, for better or for worse.
@@ -1150,10 +1159,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RUNECHAT_HIDDEN "runechat_hidden"
 
 /// the object has a label applied
-/* #define TRAIT_HAS_LABEL "labeled" */
+#define TRAIT_HAS_LABEL "labeled"
 
 /// Trait given to a mob that is currently thinking (giving off the "thinking" icon), used in an IC context
-/* #define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC" */
+#define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC"
 
 ///without a human having this trait, they speak as if they have no tongue.
 #define TRAIT_SPEAKS_CLEARLY "speaks_clearly"
@@ -1284,5 +1293,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
+/// Prevents the affected object from opening a loot window via alt click. See atom/AltClick()
+#define TRAIT_ALT_CLICK_BLOCKER "no_alt_click"
+
+/// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
+/// Can either be applied to the attacker or an individual limb.
+#define TRAIT_BORG_PUNCHER "borg_puncher"
 
 // END TRAIT DEFINES

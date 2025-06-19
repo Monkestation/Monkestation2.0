@@ -1,14 +1,30 @@
 /datum/surgery/advanced/bioware
 	name = "Enhancement surgery"
-	requires_bodypart_type = NONE
-	var/bioware_target = BIOWARE_GENERIC
+	requires_bodypart_type = NONE // monkestation edit: allow robotic bodyparts to get bioware surgeries
+	/// What status effect is gained when the surgery is successful?
+	/// Used to check against other bioware types to prevent stacking.
+	var/status_effect_gained = /datum/status_effect/bioware
 
 /datum/surgery/advanced/bioware/can_start(mob/user, mob/living/carbon/human/target)
 	if(!..())
 		return FALSE
 	if(!istype(target))
 		return FALSE
-	for(var/datum/bioware/bioware as anything in target.bioware)
-		if(bioware.mod_type == bioware_target)
-			return FALSE
+	if(target.has_status_effect(status_effect_gained))
+		return FALSE
 	return TRUE
+
+/datum/surgery_step/apply_bioware
+	accept_hand = TRUE
+	time = 12.5 SECONDS
+
+/datum/surgery_step/apply_bioware/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/advanced/bioware/surgery, default_display_results)
+	. = ..()
+	if(!.)
+		return
+	if(!istype(surgery))
+		return
+
+	target.apply_status_effect(surgery.status_effect_gained)
+	if(target.ckey)
+		SSblackbox.record_feedback("tally", "bioware", 1, surgery.type)

@@ -173,10 +173,10 @@
 	layer = ECHO_LAYER
 	show_when_dead = TRUE
 
-/atom/movable/screen/fullscreen/echo/Initialize(mapload)
+/atom/movable/screen/fullscreen/echo/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	particles = new /particles/echo()
 
 /atom/movable/screen/fullscreen/echo/Destroy()
-	QDEL_NULL(particles)
+	particles = null
 	return ..()

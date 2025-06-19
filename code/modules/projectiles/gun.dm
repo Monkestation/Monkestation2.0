@@ -20,6 +20,7 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
+	action_slots = ALL
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE
@@ -64,6 +65,7 @@
 	var/pinless = FALSE
 
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
+	var/has_manufacturer = TRUE // Set to true by default. This didn't exist until Brad needed to make a new pipe-gun esque weapon.
 	var/obj/item/knife/bayonet
 	var/knife_x_offset = 0
 	var/knife_y_offset = 0
@@ -72,6 +74,7 @@
 	var/ammo_y_offset = 0
 
 	var/pb_knockback = 0
+	var/pbk_gentle = FALSE
 
 /obj/item/gun/Initialize(mapload)
 	. = ..()
@@ -79,7 +82,9 @@
 		pin = new pin(src)
 
 	add_seclight_point()
-	give_manufacturer_examine()
+
+	if(has_manufacturer)
+		give_manufacturer_examine()
 
 /obj/item/gun/Destroy()
 	if(isobj(pin)) //Can still be the initial path, then we skip
@@ -197,7 +202,7 @@
 				if(pb_knockback > 0 && ismob(pbtarget))
 					var/mob/PBT = pbtarget
 					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
-					PBT.throw_at(throw_target, pb_knockback, 2)
+					PBT.throw_at(throw_target, pb_knockback, 2, gentle = pbk_gentle)
 			else if(!tk_firing(user))
 				user.visible_message(
 						span_danger("[user] fires [src]!"),
@@ -323,7 +328,7 @@
 
 /obj/item/gun/throw_impact(mob/living/carbon/target, datum/thrownthing/throwing_datum)
 	. = ..()
-	if(super_throw)
+	if(super_throw && istype(target))
 		target.apply_damage((src.w_class * 7.5), BRUTE, attacking_item = src)
 		target.Knockdown((w_class) SECONDS)
 		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)
@@ -564,7 +569,7 @@
 	if(bayonet)
 		var/mutable_appearance/knife_overlay
 		var/state = "bayonet" //Generic state.
-		if(bayonet.icon_state in icon_states('icons/obj/weapons/guns/bayonets.dmi')) //Snowflake state?
+		if(icon_exists('icons/obj/weapons/guns/bayonets.dmi', bayonet.icon_state)) //Snowflake state? //MONKESTATION EDIT - Refactored to `icon_exists`.
 			state = bayonet.icon_state
 		var/icon/bayonet_icons = 'icons/obj/weapons/guns/bayonets.dmi'
 		knife_overlay = mutable_appearance(bayonet_icons, state)

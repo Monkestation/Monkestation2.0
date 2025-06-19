@@ -130,16 +130,11 @@
 		if(human.overeatduration < (200 SECONDS))
 			to_chat(human, span_notice("You feel fit again!"))
 			REMOVE_TRAIT(human, TRAIT_FAT, OBESITY)
-			human.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_worn_undersuit()
-			human.update_worn_oversuit()
+
 	else
 		if(human.overeatduration >= (200 SECONDS))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
 			ADD_TRAIT(human, TRAIT_FAT, OBESITY)
-			human.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			human.update_worn_undersuit()
-			human.update_worn_oversuit()
 
 	// nutrition decrease and satiety
 	if (human.nutrition > 0 && human.stat != DEAD)
@@ -188,18 +183,6 @@
 	//Hunger slowdown for if mood isn't enabled
 	if(CONFIG_GET(flag/disable_human_mood))
 		handle_hunger_slowdown(human)
-
-	// If we did anything more then just set and throw alerts here I would add bracketing
-	// But well, it is all we do, so there's not much point bothering with it you get me?
-	switch(nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/fat)
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			human.clear_alert(ALERT_NUTRITION)
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/hungry)
-		if(0 to NUTRITION_LEVEL_STARVING)
-			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/starving)
 
 ///for when mood is disabled and hunger should handle slowdowns
 /obj/item/organ/internal/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
@@ -263,13 +246,16 @@
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
 			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
+/obj/item/organ/internal/stomach/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	receiver.hud_used?.hunger?.update_hunger_bar()
+
+/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special = FALSE)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
-		human_owner.clear_alert(ALERT_NUTRITION)
-
+	stomach_owner.hud_used?.hunger?.update_hunger_bar()
 	return ..()
 
 /obj/item/organ/internal/stomach/bone
@@ -307,7 +293,7 @@
 	name = "basic cybernetic stomach"
 	icon_state = "stomach-c"
 	desc = "A basic device designed to mimic the functions of a human stomach"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 	metabolism_efficiency = 0.035 // not as good at digestion
@@ -338,7 +324,7 @@
 		owner.vomit(stun = FALSE)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 // Lizard stomach to Let Them Eat Rat
 /obj/item/organ/internal/stomach/lizard
