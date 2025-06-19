@@ -1103,7 +1103,6 @@
 	if(QDELING(src))
 		CRASH("Illegal forceMove() on qdeling [type]")
 
-
 	if(destination)
 		. = doMove(destination)
 	else
