@@ -1,6 +1,6 @@
 ///A subsystem to manage the global effects of clock cult
 //#define SERVANT_CAPACITY_TO_GIVE 2 //how many extra servant slots do we give on first charged crystal
-SUBSYSTEM_DEF(the_ark)
+PROCESSING_SUBSYSTEM_DEF(the_ark)
 	name = "The Clockwork Ark"
 	wait = 1 SECOND
 	flags = SS_KEEP_TIMING | SS_NO_INIT
@@ -22,6 +22,8 @@ SUBSYSTEM_DEF(the_ark)
 	var/clock_power = 2500
 	///What is the maximum amount of power the cult can have stored
 	var/max_clock_power = 2500
+	///How much passive power does the cult have access to, this gets used for things like turning on structures
+	var/passive_power = 15
 	///The list of areas that has been marked by the cult, formatted as a filled with 1s for anti duplication
 	var/list/marked_areas = list()
 	///A list of all cogscarabs
@@ -31,7 +33,7 @@ SUBSYSTEM_DEF(the_ark)
 	///A list of all the areas on reebe
 	var/list/reebe_areas = list()
 
-/datum/controller/subsystem/the_ark/Initialize()
+/datum/controller/subsystem/processing/the_ark/Initialize()
 	initialized = TRUE
 	anchoring_crystals = list()
 	clock_dimension_theme = new(is_cult = TRUE)

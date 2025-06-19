@@ -12,9 +12,18 @@
 	girder_type = /obj/structure/girder/bronze
 	turf_flags = NOJAUNT
 	hardness = 3 //very hard for hulks to break
+	wall_trim = null
 	//for deconstruction
 	var/d_state = INTACT
-	wall_trim = null //monkestation edit
+	///Should we spawn with a stabilization lattice
+	var/should_spawn_lattice = TRUE
+	///Our linked lattice
+	var/obj/structure/destructible/clockwork_wall_lattice/linked_lattice
+
+/turf/closed/wall/clockwork/Initialize(mapload)
+	. = ..()
+	if(should_spawn_lattice)
+		linked_lattice = new(src, src)
 
 /turf/closed/wall/clockwork/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	if(IS_CLOCK(hulkman)) //dont recoil for clock cultists
@@ -133,3 +142,4 @@
 
 /turf/closed/wall/clockwork/reebe //for mapping on reebe
 	baseturfs = /turf/open/indestructible/reebe_flooring
+	should_spawn_lattice = FALSE

@@ -37,6 +37,7 @@
 
 	var/new_desc = "Stored Power - <b>[display_power(SSthe_ark.clock_power)]</b>.<br>"
 	new_desc += "Stored Vitality - <b>[GLOB.clock_vitality]</b>.<br>"
+	new_desc += "Passive power access - <b>[SSthe_ark.passive_power]</b>.<br>"
 	if(!GLOB.main_clock_cult)
 		return
 
@@ -58,4 +59,3 @@
 	if(crystal_diff > 0)
 		new_desc += "We must summon [crystal_diff] more Anchoring Crystal[crystal_diff > 1 ? "s" : ""] before the ark may open.<br>"
 	return new_desc
-
