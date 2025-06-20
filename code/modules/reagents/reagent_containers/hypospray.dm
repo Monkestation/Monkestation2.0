@@ -407,4 +407,4 @@
 	base_icon_state = "nanite_hypo"
 	amount_per_transfer_from_this = 10.5
 	volume = 10.5
-	list_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 9, /datum/reagent/drug/methamphetamine = 1.5)
+	list_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 9, /datum/reagent/drug/methamphetamine/robo = 1.5)

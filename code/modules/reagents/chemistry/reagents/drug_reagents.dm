@@ -209,6 +209,12 @@
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	. = TRUE
 
+/datum/reagent/drug/methamphetamine/robo
+	name = "Positronic Excitement Salts"
+	description = "An experimental excitement chemical for synthetic life, this produces a similar effect to methamphetamine, but on robots."
+	process_flags = SYNTHETIC
+	color = "#FAFAFA"
+
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
