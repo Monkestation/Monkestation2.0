@@ -1531,9 +1531,9 @@ MONKESTATION REMOVAL END */
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second
-	var/clot_rate = 0.3
+	var/clot_rate = 0
 	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
-	var/passive_bleed_modifier = 0.7
+	var/passive_bleed_modifier = 0.2
 	/// For tracking when we tell the person we're no longer bleeding
 	var/was_working
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1576,7 +1576,7 @@ MONKESTATION REMOVAL END */
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
 		return
 
 	if(SPT_PROB(7.5, seconds_per_tick))
@@ -1626,3 +1626,27 @@ MONKESTATION REMOVAL END */
 	required_drink_type = /datum/reagent/medicine/coagulant/seraka_extract
 	name = "glass of seraka extract"
 	desc = "Deeply savoury, bitter, and makes your blood clot up in your veins. A great drink, all things considered."
+
+/datum/reagent/medicine/coagulant/extreme
+	name = "Insta-Clot"
+	desc = "A dark red substance that completely stops bleeding and closes wounds extremely quickly. Its clotting power does come with the drawback of it wrecking the heart of the user. An overdose will quickly kill the user"
+	color = "#4b0b0be8"
+	taste_description = "dense, rotten blood"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	clot_rate = 0.6
+	passive_bleed_modifier = 0
+	overdose_threshold = 5
+	var/obj/item/organ/internal/heart/our_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/spleen/our_spleen = affected_mob.get_organ_slot(ORGAN_SLOT_SPLEEN)
+
+/datum/reagent/medicine/coagulant/extreme/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	if(HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
+		return
+	if(prob(25))
+		our_heart.apply_organ_damage(3) //Pray this kills you first
+	else
+		var/blood_addition = 10
+		affected_mob.blood_volume = blood_volume + blood_addition //Eventually will cause you to pop like a balloon at 2150 blood or about 8.3 units of the stuff over 166 cycles.
+		our_spleen.apply_organ_damage(1)
+
+
