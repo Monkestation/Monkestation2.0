@@ -7,7 +7,11 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	runlevels = RUNLEVEL_GAME
 
 	///The list of anchoring crystals, value is 0 is uncharged and 1 if charged
+#ifdef UNIT_TESTS
+	var/list/anchoring_crystals = list()
+#else
 	var/list/anchoring_crystals
+#endif
 	///How many charged anchoring crystals are there
 	var/charged_anchoring_crystals = 0
 	///Dimension theme used for transforming turfs
