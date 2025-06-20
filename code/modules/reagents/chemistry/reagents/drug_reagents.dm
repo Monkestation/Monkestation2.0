@@ -212,6 +212,7 @@
 /datum/reagent/drug/methamphetamine/robo
 	name = "Positronic Excitement Salts"
 	description = "An experimental excitement chemical for synthetic life, this produces a similar effect to methamphetamine, but on robots."
+	metabolized_traits = list(TRAIT_ANALGESIA)
 	process_flags = SYNTHETIC
 	color = "#FAFAFA"
 
