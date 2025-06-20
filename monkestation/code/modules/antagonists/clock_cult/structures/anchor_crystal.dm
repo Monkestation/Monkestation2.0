@@ -70,10 +70,9 @@
 
 	priority_announce("Reality warping object aboard the station, emergency shuttle uplink connection lost.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 	send_clock_message(null, span_bigbrass(span_bold("An Anchoring Crystal has been created at [crystal_area], defend it!")))
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSthe_ark, src)
 	RegisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	update_icon()
-	START_PROCESSING(SSmachines, src)
 
 	SSthe_ark.marked_areas[crystal_area] = TRUE
 	SSthe_ark.block_shuttle(src)
@@ -107,7 +106,7 @@
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
 
 	if(charge_state == FULLY_CHARGED) //if fully charged then add the power and return
-		SSthe_ark.clock_power = min(SSthe_ark.clock_power + (10 * seconds_per_tick), SSthe_ark.max_clock_power)
+		SSthe_ark.clock_power = min(SSthe_ark.clock_power + (5 * seconds_per_tick), SSthe_ark.max_clock_power)
 		return
 
 	charging_for = min(charging_for + (seconds_per_tick SECONDS), ANCHORING_CRYSTAL_CHARGE_DURATION)
@@ -129,7 +128,7 @@
 /obj/structure/destructible/clockwork/anchoring_crystal/Destroy()
 	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has been destroyed!")))
 	SSthe_ark.anchoring_crystals -= src
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSthe_ark, src)
 	UnregisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS)
 	return ..()
 
@@ -149,7 +148,6 @@
 	desc += "Reality around it shimmers, making it effectively impervious to damage."
 	priority_announce("Reality in [crystal_area] has been destabilized, all personnel are advised to avoid the area.", \
 					  "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
-	SSthe_ark.max_clock_power += 1000
 	SSthe_ark.on_crystal_charged(src)
 
 //set the shield overlay

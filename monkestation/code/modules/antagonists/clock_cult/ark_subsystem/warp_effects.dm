@@ -1,5 +1,5 @@
 //boy this sure is some fun code
-/datum/controller/subsystem/the_ark/proc/handle_charged_crystals()
+/datum/controller/subsystem/processing/the_ark/proc/handle_charged_crystals()
 	if(prob(charged_anchoring_crystals))
 		crystal_warp_minds()
 
@@ -9,7 +9,7 @@
 	if(charged_anchoring_crystals >= 3 && prob(charged_anchoring_crystals))
 		crystal_warp_space()
 
-/datum/controller/subsystem/the_ark/proc/crystal_warp_minds()
+/datum/controller/subsystem/processing/the_ark/proc/crystal_warp_minds()
 	var/list/players = GLOB.alive_player_list.Copy()
 	var/mob/living/selected_player = pick_n_take(players)
 	var/sanity = 0
@@ -29,7 +29,7 @@
 			"You see a flash of light out of the corner of your eye", "You feel an otherworldly presence", "You feel like your forgetting something"))))
 
 //making these their own procs for eaiser to read code
-/datum/controller/subsystem/the_ark/proc/crystal_warp_machines()
+/datum/controller/subsystem/processing/the_ark/proc/crystal_warp_machines()
 	switch(rand(1, 3))
 		if(1) //randomly mess with the settings of an APC with a low chance to emag it
 			var/list/apcs = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc, /obj/machinery/power/apc/worn_out)
@@ -125,7 +125,7 @@
 				simple_bot.bot_cover_flags &= BOT_COVER_OPEN | ~BOT_COVER_LOCKED
 			selected_atom.emag_act()
 
-/datum/controller/subsystem/the_ark/proc/crystal_warp_space()
+/datum/controller/subsystem/processing/the_ark/proc/crystal_warp_space()
 	switch(rand(1, 2))
 		if(1)
 			var/datum/action/cooldown/spell/spacetime_dist/clock_ark/dist_spell = new
@@ -140,14 +140,14 @@
 			new /obj/effect/timestop/magic/clock_ark(get_random_station_turf(), 1, 30 SECONDS, servants)
 			return
 
-/datum/controller/subsystem/the_ark/proc/get_emag_target_type_instances(input_path)
+/datum/controller/subsystem/processing/the_ark/proc/get_emag_target_type_instances(input_path)
 	if(ispath(input_path, /obj/machinery))
 		return SSmachines.get_machines_by_type(input_path)
 	if(ispath(input_path, /mob/living/simple_animal/bot) || ispath(input_path, /mob/living/basic/bot))
 		return GLOB.bots_list.Copy()
 
 //OH YEAH I LOVE GOOD CODE
-/datum/controller/subsystem/the_ark/proc/bot_v_machine_check(atom/checked_atom)
+/datum/controller/subsystem/processing/the_ark/proc/bot_v_machine_check(atom/checked_atom)
 	if(ismachinery(checked_atom))
 		var/obj/machinery/checked_machine = checked_atom
 		return checked_machine.obj_flags & EMAGGED

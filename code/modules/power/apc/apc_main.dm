@@ -609,12 +609,11 @@
 			charging = APC_NOT_CHARGING
 			chargecount = 0
 
-		// MONKESTATION ADDITION START - CLOCK CULT
+		//clock cult stuff
 		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
 			var/power_delta = clamp(cell.charge - 10, 0, 10)
-			SSthe_ark.clock_power = min(round(SSthe_ark.clock_power + (power_delta)), SSthe_ark.max_clock_power)
+			SSthe_ark.clock_power = min(round(SSthe_ark.clock_power + (power_delta / 10)), SSthe_ark.max_clock_power)
 			cell.charge -= power_delta
-		// MONKESTATION ADDITION END
 
 	else // no cell, switch everything off
 

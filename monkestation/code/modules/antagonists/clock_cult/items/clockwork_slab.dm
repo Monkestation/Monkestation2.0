@@ -2,14 +2,12 @@
 
 GLOBAL_LIST_INIT(clockwork_slabs, list())
 
-
 /obj/item/clockwork
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
 	/// Extra info to give clock cultists, added via the /datum/element/clockwork_description element
 	var/clockwork_desc = ""
 	/// Does this item get the clockwork_pickup element
 	var/has_pickup_element = TRUE
-
 
 /obj/item/clockwork/Initialize(mapload)
 	. = ..()

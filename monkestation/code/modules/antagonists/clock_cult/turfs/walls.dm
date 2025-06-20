@@ -25,6 +25,11 @@
 	if(should_spawn_lattice)
 		linked_lattice = new(src, src)
 
+/turf/closed/wall/clockwork/Destroy()
+	if(linked_lattice)
+		QDEL_NULL(linked_lattice)
+	return ..()
+
 /turf/closed/wall/clockwork/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	if(IS_CLOCK(hulkman)) //dont recoil for clock cultists
 		damage = 0

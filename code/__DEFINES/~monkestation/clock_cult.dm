@@ -5,6 +5,10 @@
 
 #define SIGIL_TRANSMISSION_RANGE 4
 
+#define CLOCK_PASSIVE_POWER_PER_COG 3
+
+#define CLOCK_MAX_POWER_PER_COG 50
+
 #define MAX_CLOCK_VITALITY 400
 
 ///base state the ark is created in, any state besides this will be a hostile environment
