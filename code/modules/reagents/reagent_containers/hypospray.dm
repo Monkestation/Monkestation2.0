@@ -368,7 +368,7 @@
 	desc = "An experimental medipen containing some mysterious chemical cocktail that allows the user to move incredibly fast for a very short period of time. Takes a second to kick in. <b> SIDE EFFECTS OF USING MANY STIMS IN A SHORT PERIOD UNKNOWN </b>"
 	icon_state = "gorillapen"
 	base_icon_state = "gorillapen"
-	amount_per_transfer_from_this = 4
+	amount_per_transfer_from_this = 4.5
 	volume = 4
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 1, /datum/reagent/drug/methamphetamine = 1.5, /datum/reagent/medicine/ephedrine = 1, /datum/reagent/drug/cocaine = 1)
 
@@ -406,5 +406,5 @@
 	icon_state = "nanite_hypo"
 	base_icon_state = "nanite_hypo"
 	amount_per_transfer_from_this = 10
-	volume = 10
+	volume = 10.5
 	list_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 9, /datum/reagent/drug/methamphetamine = 1.5)
