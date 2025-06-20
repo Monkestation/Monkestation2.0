@@ -519,6 +519,6 @@
 		var/atom/A = processing_list[++i]
 		if(A.atom_storage)
 			var/list/item_stuff = list()
-			A.atom_storage.return_inv(item_stuff)
+			item_stuff = A.atom_storage.return_inv()
 			processing_list += item_stuff
 	return processing_list

@@ -1,0 +1,5 @@
+author: "Salted-Zen"
+delete-after: True
+changes:
+  - rscadd: "Added four new medipens for miners to buy. One to keep your temperature stable, one to make you pull ores to you, one for a brief speed boost, and one that contains penthrite, the stuff from a luxury pen that keeps you up in crit."
+  - rscadd: "Added for miners, an oozling safe luxury pen and pens for IPCs / synthetics, along with a stripped down toolkit to purchase that contains an experimental welder and 90 cable coil, for field repairs and helping the occasional borg or mech."

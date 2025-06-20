@@ -105274,6 +105274,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
+"upq" = (
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron,
+/area/station/engineering/atmos/test_chambers)
 "upv" = (
 /obj/machinery/bluespace_vendor/directional/east,
 /obj/effect/turf_decal/tile/red,
@@ -109669,6 +109673,7 @@
 /area/station/common/wrestling/lobby)
 "viz" = (
 /obj/machinery/light/directional/east,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "viC" = (
@@ -164958,7 +164963,7 @@ fth
 sQQ
 sQQ
 sQQ
-sQQ
+upq
 vLv
 vLv
 vLv

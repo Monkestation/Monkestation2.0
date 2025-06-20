@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Reduced the meteor sat deploy time to half a second, from 5 seconds."

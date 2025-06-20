@@ -300,3 +300,35 @@
   - bugfix: renames "a reflector trenchcoat" to "the ablative trenchcoat" in tot objective
   ThePooba:
   - bugfix: fixed gravity for top level shipbreaker not powerslamming you anymore
+2025-06-19:
+  Absolucy:
+  - map: The ooze compressors in the syndicate deep storage ruin are now properly
+      connected.
+  - balance: Stabilized rainbow extracts now have a cooldown of 1.5 minutes (90 seconds)
+      between activations.
+  Absolucy, Arturlang:
+  - bugfix: Fixed not being able to forcefeed bloodsuckers and such from blood bags.
+  - bugfix: Fixed bloodsuckers bleeding forever.
+  - qol: Bloodsuckers now just can't be zombified or facehugged (they already ejected
+      xeno larvae and zombie tumors during eepy time anyways, so there's practically
+      zero difference)
+  Loiosh42:
+  - balance: D-swords now ignore basic sec armor, as intended
+  Xander3359:
+  - bugfix: Fixed nukies getting discounts on items they are unable to use
+2025-06-20:
+  EssentialTomato:
+  - rscadd: Added Pipe Scrubber portable atmos machine
+  - qol: Portable scrubber, pump and pipe scrubber are now buildable as any other
+      machine
+  - qol: You can now repair portable scrubbers and pumps.
+  - sound: Added compressed air sound for when air tanks are inserted into machinery
+  - qol: Portable scrubbers, pumps and canisters are now climbable
+  - bugfix: Fixed the processing logic on portable atmos devices
+  Xander3359:
+  - rscadd: Re-adds the old hardsuit jetpack upgrade
+  - rscadd: Boxed space suits now fit back in their original box
+  - balance: Cargo teleporter weight class has lowered from 3 -> 2
+  - code_imp: Updates some storage code
+  - bugfix: You can no longer bypass weight limits of things that fit in storages
+      by merging stacks
