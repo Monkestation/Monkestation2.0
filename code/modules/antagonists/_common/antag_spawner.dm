@@ -387,6 +387,7 @@
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
 
 	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))
+	monkey_man.dna.features["fur"] = COLOR_MONKEY_BROWN
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 
@@ -424,6 +425,7 @@
 	new /obj/vehicle/sealed/mecha/marauder/mauler/ricky(spawn_turf)
 
 	monkey_man.fully_replace_character_name(monkey_man.real_name, "Ricky")
+	monkey_man.dna.features["fur"] = COLOR_MONKEY_BROWN
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 
@@ -485,9 +487,11 @@
 // For subtypes to do special things to the summoned dude.
 /obj/item/antag_spawner/loadout/monkey_crash/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
 	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))
+	monkey_man.dna.features["fur"] = COLOR_MONKEY_BROWN
 
 	var/obj/item/implant/explosive/imp = new(src)
 	imp.implant(monkey_man, user)
+
 	return
 
 /datum/outfit/syndicate_monkey/elite

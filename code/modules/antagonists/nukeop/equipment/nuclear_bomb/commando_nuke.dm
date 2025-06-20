@@ -385,7 +385,7 @@
 		priority_announce(
 			text = "An unauthorized nuclear device is currently being decrypted for detonation in the [our_area.get_original_area_name()]. Crew are advised to halt the decryption through immediate rapid deconstruction of the device.",
 			title = "Priority Alert",
-			sound = 'sound/machines/alarm.ogg',
+			sound = 'sound/misc/notice2.ogg',
 			has_important_message = TRUE,
 			color_override = "red",
 		)

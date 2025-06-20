@@ -10,9 +10,10 @@
 	products = list(
 		/obj/item/trench_tool = 2,
 		/obj/item/clothing/glasses/night = 2,
-		/obj/item/ammo_box/magazine/m10mm = 2,
+		/obj/item/ammo_box/magazine/m9mm = 3,
 		/obj/item/knife/combat = 2,
 		/obj/item/grenade/smokebomb = 4,
+		/obj/item/climbing_hook/syndicate = 2,
 		/obj/item/storage/belt/military = 2,
 		/obj/item/storage/belt/holster/nukie = 2,
 		/obj/item/radio/headset/syndicate = 2,

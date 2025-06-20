@@ -47,17 +47,10 @@
 	. = ..()
 	icon_state = "[base_icon_state]-[ammo_count() ? 50 : 0]"
 
-/obj/item/ammo_box/magazine/plastikov10mm
-	name = "PP-95 magazine (10mm)"
-	icon_state = "9x19-red-1"
+/obj/item/ammo_box/magazine/plastikov9mm/red
+	name = "PP-96 magazine (9mm)"
+	icon_state = "9x19-red-50"
 	base_icon_state = "9x19-red"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	caliber = CALIBER_10MM
-	max_ammo = 40
-
-/obj/item/ammo_box/magazine/plastikov10mm/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]-[ammo_count() ? 1 : 0]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"

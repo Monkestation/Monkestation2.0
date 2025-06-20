@@ -746,6 +746,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/mob/living/basic/bot/medbot/nukie,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/medical)
 "bM" = (
@@ -1578,8 +1579,13 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "dO" = (
-/obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/storage/medkit/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/fire,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "dP" = (
@@ -1667,13 +1673,18 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "ea" = (
-/obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/light/small/directional/south,
+/obj/structure/rack,
+/obj/item/storage/medkit/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/brute,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "eb" = (
@@ -2020,6 +2031,10 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
+"Xj" = (
+/obj/structure/rack,
+/turf/closed/wall/r_wall/syndicate/hull/nodiagonal,
+/area/shuttle/syndicate/eva)
 "YB" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
@@ -2356,7 +2371,7 @@ bg
 cU
 ce
 dR
-dR
+Xj
 dg
 dR
 ce

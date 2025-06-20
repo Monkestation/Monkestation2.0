@@ -134,6 +134,7 @@
 	projectile_damage_multiplier = 0.35 //It's like 10.5 damage per bullet, it's close enough to 10 shots
 	mag_display = TRUE
 	empty_indicator = TRUE
+	special_mags = TRUE
 	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
@@ -143,8 +144,9 @@
 	burst_size = 2
 	icon_state = "plastikov_refurbished"
 	inhand_icon_state = "plastikov_refurbished"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov10mm
-	projectile_damage_multiplier = 0.625 //25
+	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm
+	spawn_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm/red
+	projectile_damage_multiplier = 0.66 // 20 damage
 	can_suppress = TRUE
 	suppressor_x_offset = 4
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -154,12 +156,13 @@
 
 /obj/item/gun/ballistic/automatic/rostokov
 	name = "\improper Rostokov carbine"
-	desc = "A bullpup fully automatic 10mm carbine. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	desc = "A bullpup fully automatic 9mm carbine. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "rostokov"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "rostokov"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/rostokov10mm
+	accepted_magazine_type = /obj/item/ammo_box/magazine/rostokov9mm
 	fire_delay = 1
+	spread = 5
 	can_suppress = FALSE
 	burst_size = 1
 	slot_flags = null
@@ -168,7 +171,6 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	projectile_damage_multiplier = 0.875 //35
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 
 /obj/item/gun/ballistic/automatic/rostokov/Initialize(mapload)
