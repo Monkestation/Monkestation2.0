@@ -1629,12 +1629,12 @@ MONKESTATION REMOVAL END */
 
 /datum/reagent/medicine/coagulant/extreme
 	name = "Insta-Clot"
-	description = "A dark red substance that completely stops bleeding and closes wounds extremely quickly. Its clotting power does come with the drawback of it wrecking the heart of the user. An overdose will quickly kill the user"
+	description = "A dark red substance that halves bleeding and closes wounds extremely quickly. Its clotting power does come with the drawback of it wrecking the heart of the user. An overdose will quickly kill the user"
 	color = "#4b0b0be8"
 	taste_description = "dense, rotten blood"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	clot_rate = 0.6
-	passive_bleed_modifier = 0
+	clot_rate = 0.4
+	passive_bleed_modifier = 0.5
 	overdose_threshold = 5
 
 
