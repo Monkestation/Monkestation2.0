@@ -22,13 +22,12 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 	var/mapping_id
 
 /obj/machinery/slime_pen_controller/Initialize(mapload)
-	. = ..()
+	..()
 	GLOB.slime_pen_controllers += src
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/slime_pen_controller/LateInitialize()
-	. = ..()
 	locate_machinery()
 
 /obj/machinery/slime_pen_controller/Destroy()
