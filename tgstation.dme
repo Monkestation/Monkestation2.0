@@ -8431,6 +8431,7 @@
 #include "monkestation\code\modules\smithing\material_changes\new_materials.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\_base_trait.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\chemical_injector.dm"
+#include "monkestation\code\modules\smithing\material_changes\material_traits\holy.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\honk.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\magical.dm"
 #include "monkestation\code\modules\smithing\material_changes\material_traits\radioactive.dm"
