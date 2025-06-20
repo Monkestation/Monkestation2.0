@@ -9,13 +9,15 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	///The list of anchoring crystals, value is 0 is uncharged and 1 if charged
 #ifdef UNIT_TESTS
 	var/list/anchoring_crystals = list()
+	var/datum/dimension_theme/clockwork/clock_dimension_theme = new(is_cult = TRUE)
 #else
+	///The list of anchoring crystals, value is 0 is uncharged and 1 if charged
 	var/list/anchoring_crystals
+	///Dimension theme used for transforming turfs
+	var/datum/dimension_theme/clockwork/clock_dimension_theme
 #endif
 	///How many charged anchoring crystals are there
 	var/charged_anchoring_crystals = 0
-	///Dimension theme used for transforming turfs
-	var/datum/dimension_theme/clockwork/clock_dimension_theme
 	///Assoc list of the original names of areas that are valid to summon anchoring crystals keyed to its area
 	var/list/valid_crystal_areas
 	///The pool of hallucinations we can trigger
