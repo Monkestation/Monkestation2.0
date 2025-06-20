@@ -208,9 +208,7 @@
 
 /// Removes an equipped deployable atom upon its retraction or destruction
 /datum/component/toggle_attached_clothing/proc/unequip_deployable()
-	if (isnull(deployable))
-		return
-	else if (QDELING(deployable))
+	if (QDELETED(deployable))
 		deployable = null
 		return
 	if (!ishuman(deployable.loc))
