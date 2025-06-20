@@ -37,6 +37,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/laser/rifle
 	hitscan = TRUE
 	tile_dropoff = 1 //This makes ricochets less impactful
+	armour_penetration = -30 //armor is * 130% more effective against it
 	wound_falloff_tile = 3
 	impact_effect_type = null
 	hitscan_light_intensity = 2
