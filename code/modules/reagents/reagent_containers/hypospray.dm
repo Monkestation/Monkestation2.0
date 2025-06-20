@@ -369,7 +369,7 @@
 	icon_state = "gorillapen"
 	base_icon_state = "gorillapen"
 	amount_per_transfer_from_this = 4.5
-	volume = 4
+	volume = 4.5
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 1, /datum/reagent/drug/methamphetamine = 1.5, /datum/reagent/medicine/ephedrine = 1, /datum/reagent/drug/cocaine = 1)
 
 /obj/item/reagent_containers/hypospray/medipen/magnet
@@ -405,6 +405,6 @@
 	desc = "A single use applicator made to rapidly fix urgent damage to synthetic parts on the go in low pressure enviorments and provide a small speed boost. Contains chemicals that are safe but otherwise worthless for organics. <b> WARNING : DO NOT APPLY A SECOND APPLICATOR UNTIL FIRST HAS FULLY PROCESSED. FAILURE TO FOLLOW INSTRUCTIONS IS GURANTEED TO BE LETHAL TO SYNTHETICS. DOES NOT WORK ON CYBORGS. UNDER NO CIRCUMSTANCES IS THIS TO BE MIXED WITH BASIC NANITE SLURRY (FOUND IN THE SMALL SYNTHETIC CARE PEN)</b>"
 	icon_state = "nanite_hypo"
 	base_icon_state = "nanite_hypo"
-	amount_per_transfer_from_this = 10
+	amount_per_transfer_from_this = 10.5
 	volume = 10.5
 	list_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 9, /datum/reagent/drug/methamphetamine = 1.5)
