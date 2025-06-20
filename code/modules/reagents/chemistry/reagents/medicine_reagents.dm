@@ -1656,7 +1656,7 @@ MONKESTATION REMOVAL END */
 		our_heart.apply_organ_damage(6) //Pray this kills you first
 		to_chat(affected_mob, span_danger("You feel your clotted blood shredding your heart!"))
 	else
-		var/blood_addition = 25
+		var/blood_addition = 20
 		affected_mob.blood_volume = affected_mob.blood_volume + blood_addition //Eventually will cause you to pop like a balloon at 2150 blood or about 8.3 units of the stuff over 166 cycles.
 		if(prob(20))
 			to_chat(affected_mob, span_danger("Your blood feels like hot fire!"))
