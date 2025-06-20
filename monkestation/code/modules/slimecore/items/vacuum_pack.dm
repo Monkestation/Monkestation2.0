@@ -272,10 +272,31 @@
 	user.visible_message(span_warning("[user] shoots [spawned] out their [src]!"), span_notice("You fabricate and shoot [spawned] out of your [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/vacuum_nozzle/afterattack(atom/movable/target, mob/user, proximity, params)
+/obj/item/vacuum_nozzle/afterattack(atom/movable/target, mob/user, proximity, click_parameters)
 	. = ..()
 	if(pack.ghost_busting)
 		return
+
+/*
+	if(LAZYACCESS(click_parameters, ALT_CLICK))
+		var/turf/target_turf = get_turf(target)
+		if(isnull(target_turf))
+			return
+		if(get_dist(user, target_turf) > pack.range)
+			user.balloon_alert(user, "out of range!")
+			return
+		var/list/options = list()
+		for(var/atom/movable/thing as anything in target_turf)
+			if(is_type_in_typecache(thing, pack.storable_objects) || is_type_in_list(thing, pack.linked?.recyclable_types))
+				options[thing] = thing
+		if(!length(options))
+			user.balloon_alert(user, "no valid targets on turf!")
+			return
+		var/chosen = show_radial_menu(user, user, options, radius = 40, autopick_single_option = FALSE)
+		if(!chosen)
+			return
+		target = chosen
+*/
 
 	if(pack.modified && !pack.ghost_busting && isrevenant(target) && get_dist(user, target) < 4)
 		start_busting(target, user)
