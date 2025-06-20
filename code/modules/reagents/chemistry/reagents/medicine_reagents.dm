@@ -1632,10 +1632,20 @@ MONKESTATION REMOVAL END */
 	description = "A dark red substance that completely stops bleeding and closes wounds extremely quickly. Its clotting power does come with the drawback of it wrecking the heart of the user. An overdose will quickly kill the user"
 	color = "#4b0b0be8"
 	taste_description = "dense, rotten blood"
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	clot_rate = 0.6
 	passive_bleed_modifier = 0
 	overdose_threshold = 5
+
+
+/datum/reagent/medicine/coagulant/extreme/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/obj/item/organ/internal/heart/our_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/spleen/our_spleen = affected_mob.get_organ_slot(ORGAN_SLOT_SPLEEN)
+	if(prob(50))
+		our_heart.apply_organ_damage(2)
+		our_spleen.apply_organ_damage(2)
+		to_chat(affected_mob, span_danger("You feel an uncomfortable squeeze on your organs!"))
 
 /datum/reagent/medicine/coagulant/extreme/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/heart/our_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
@@ -1643,10 +1653,10 @@ MONKESTATION REMOVAL END */
 	if(HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
 		return
 	if(prob(25))
-		our_heart.apply_organ_damage(3) //Pray this kills you first
+		our_heart.apply_organ_damage(6) //Pray this kills you first
 		to_chat(affected_mob, span_danger("You feel your clotted blood shredding your heart!"))
 	else
-		var/blood_addition = 10
+		var/blood_addition = 25
 		affected_mob.blood_volume = affected_mob.blood_volume + blood_addition //Eventually will cause you to pop like a balloon at 2150 blood or about 8.3 units of the stuff over 166 cycles.
 		if(prob(20))
 			to_chat(affected_mob, span_danger("Your blood feels like hot fire!"))
