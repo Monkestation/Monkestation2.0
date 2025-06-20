@@ -745,10 +745,10 @@
 /mob/living/get_contents()
 	. = list()
 	. |= contents //add our contents
-	for(var/atom/iter_atom as anything in ret) //iterate storage objects
+	for(var/atom/iter_atom as anything in .) //iterate storage objects
 		if(iter_atom.atom_storage)
 			. |= iter_atom.atom_storage.return_inv()
-	for(var/obj/item/folder/folder in ret) //very snowflakey-ly iterate folders
+	for(var/obj/item/folder/folder in .) //very snowflakey-ly iterate folders
 		. |= folder.contents
 
 /**
