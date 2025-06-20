@@ -1,9 +1,0 @@
-author: "EssentialTomato"
-delete-after: True
-changes:
-  - rscadd: "Added Pipe Scrubber portable atmos machine"
-  - qol: "Portable scrubber, pump and pipe scrubber are now buildable as any other machine"
-  - qol: "You can now repair portable scrubbers and pumps."
-  - sound: "Added compressed air sound for when air tanks are inserted into machinery"
-  - qol: "Portable scrubbers, pumps and canisters are now climbable"
-  - bugfix: "Fixed the processing logic on portable atmos devices"

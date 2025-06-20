@@ -63,7 +63,7 @@
 		"advanced_microfusion",
 		"bluespace_power",
 		"beam_weapons",
-		"explosive_weapons",
+		"chemical_weapons",
 	)
 	design_ids = list(
 		"bluespace_microfusion_cell",

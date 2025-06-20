@@ -316,3 +316,35 @@
   - balance: D-swords now ignore basic sec armor, as intended
   Xander3359:
   - bugfix: Fixed nukies getting discounts on items they are unable to use
+2025-06-20:
+  Absolucy:
+  - qol: Reduced the meteor sat deploy time to half a second, from 5 seconds.
+  EssentialTomato:
+  - rscadd: Added Pipe Scrubber portable atmos machine
+  - qol: Portable scrubber, pump and pipe scrubber are now buildable as any other
+      machine
+  - qol: You can now repair portable scrubbers and pumps.
+  - sound: Added compressed air sound for when air tanks are inserted into machinery
+  - qol: Portable scrubbers, pumps and canisters are now climbable
+  - bugfix: Fixed the processing logic on portable atmos devices
+  Salted-Zen:
+  - rscadd: Added four new medipens for miners to buy. One to keep your temperature
+      stable, one to make you pull ores to you, one for a brief speed boost, and one
+      that contains penthrite, the stuff from a luxury pen that keeps you up in crit.
+  - rscadd: Added for miners, an oozling safe luxury pen and pens for IPCs / synthetics,
+      along with a stripped down toolkit to purchase that contains an experimental
+      welder and 90 cable coil, for field repairs and helping the occasional borg
+      or mech.
+  Shoddd:
+  - rscdel: Removes name tags
+  - balance: piercing syringes are now behind Chemical weaponary in the tech tree
+  - rscadd: The Explosive & Pyrotechnical Weaponry node is now the Chemical Weaponary
+      node
+  Xander3359:
+  - rscadd: Re-adds the old hardsuit jetpack upgrade
+  - rscadd: Boxed space suits now fit back in their original box
+  - balance: Cargo teleporter weight class has lowered from 3 -> 2
+  - code_imp: Updates some storage code
+  - bugfix: You can no longer bypass weight limits of things that fit in storages
+      by merging stacks
+  - bugfix: Fix some cases of return_inv() not working properly.
