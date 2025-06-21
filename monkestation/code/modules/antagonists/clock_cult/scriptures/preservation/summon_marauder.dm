@@ -5,7 +5,7 @@
 	desc = "Summons a Clockwork Marauder, a powerful warrior that can deflect ranged attacks. Requires 100 vitality."
 	tip = "Use Clockwork Marauders as a powerful soldier to send into combat when the fighting gets rough."
 	button_icon_state = "Clockwork Marauder"
-	power_cost = 2000
+	power_cost = 1000
 	vitality_cost = 100
 	invocation_time = 30 SECONDS
 	invocation_text = list("Through the fires and flames...", "nothing outshines Eng'Ine!")
@@ -16,11 +16,9 @@
 	// Ref to the selected observer
 	var/mob/dead/observer/selected
 
-
 /datum/scripture/marauder/Destroy(force)
 	selected = null
 	return ..()
-
 
 /datum/scripture/marauder/invoke()
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
@@ -46,7 +44,6 @@
 		end_invoke()
 		return FALSE
 	return ..()
-
 
 /datum/scripture/marauder/invoke_success()
 	var/mob/living/basic/clockwork_marauder/new_mob = new (get_turf(invoker))

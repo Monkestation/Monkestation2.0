@@ -6,7 +6,7 @@
 	invocation_time = 45 SECONDS
 	invocation_text = list("Return to our home, the city of cogs.")
 	category = SPELLTYPE_SERVITUDE
-	power_cost = 5
+	power_cost = 10
 
 /datum/scripture/abscond/check_special_requirements(mob/user)
 	. = ..()

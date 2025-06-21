@@ -3,12 +3,12 @@
 	desc = "Prepares the Ark for activation, alerting the crew of your existence."
 	tip = "Prepares the Ark for activation, alerting the crew of your existence."
 	button_icon_state = "Spatial Gateway"
-	power_cost = 5000
+	power_cost = 1500
 	invocation_time = 14 SECONDS
 	invocation_text = list("Oh bright Eng'ine, take my soul...", "to complete, our great goal...", "through the rifts you shall come...", "they will see where the light is from!")
 	invokers_required = 6
 	category = SPELLTYPE_PRESERVATION
-	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg'
+	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg' //ironic
 	fast_invoke_mult = 1
 	cogs_required = 5
 

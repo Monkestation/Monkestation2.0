@@ -4,7 +4,7 @@
 	name = "Sentinel's Compromise"
 	desc = "Continuously heals non-toxin damage on a target then converts 80% of it back as toxin damage to you."
 	tip = "Works well with Properity Prisms. Cannot be used by cogscarabs."
-	power_cost = 80
+	power_cost = 150
 	cogs_required = 1
 	invocation_time = 1 SECONDS //short invocation but using it also takes some time afterwards
 	invocation_text = list("By the light of Eng'Ine...") //the second line is said when used on someone

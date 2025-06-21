@@ -106,7 +106,7 @@
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
 
 	if(charge_state == FULLY_CHARGED) //if fully charged then add the power and return
-		SSthe_ark.clock_power = min(SSthe_ark.clock_power + (5 * seconds_per_tick), SSthe_ark.max_clock_power)
+		SSthe_ark.adjust_clock_power(5 * seconds_per_tick, TRUE)
 		return
 
 	charging_for = min(charging_for + (seconds_per_tick SECONDS), ANCHORING_CRYSTAL_CHARGE_DURATION)

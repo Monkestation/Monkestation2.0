@@ -17,36 +17,29 @@
 	/// A list of structures linked to this sigil
 	var/list/linked_structures = list()
 
-
 /obj/structure/destructible/clockwork/sigil/transmission/Initialize(mapload)
 	. = ..()
 
 	for(var/obj/structure/destructible/clockwork/gear_base/powered/gear_base in range(src, SIGIL_TRANSMISSION_RANGE))
 		gear_base.link_to_sigil(src)
-
-	START_PROCESSING(SSobj, src)
-
+	//START_PROCESSING(SSthe_ark, src)
 
 /obj/structure/destructible/clockwork/sigil/transmission/Destroy()
-	STOP_PROCESSING(SSobj, src)
-
+	//STOP_PROCESSING(SSthe_ark, src)
 	for(var/obj/structure/destructible/clockwork/gear_base/powered/gear_base as anything in linked_structures)
 		gear_base.unlink_to_sigil(src)
 
 	return ..()
 
-
-/obj/structure/destructible/clockwork/sigil/transmission/process()
+/*/obj/structure/destructible/clockwork/sigil/transmission/process()
 	for(var/obj/structure/destructible/clockwork/gear_base/powered/gear_base as anything in linked_structures)
 		if(gear_base.transmission_sigils[1] != src) // [1] Ensures we are the master (first) transmission signal
 			continue
 
-		gear_base.update_power()
-
+		gear_base.check_transmission_sigils()*/
 
 /obj/structure/destructible/clockwork/sigil/transmission/can_affect(atom/movable/atom_movable)
 	return (ismecha(atom_movable) || iscyborg(atom_movable) || ishuman(atom_movable))
-
 
 /obj/structure/destructible/clockwork/sigil/transmission/apply_effects(atom/movable/apply_to)
 	if(ismecha(apply_to))

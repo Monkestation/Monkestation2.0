@@ -75,6 +75,16 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	clock_power = new_total
 	return TRUE
 
+///same as adjust_clock_power() but much simpler as this does not have a max amount and is somewhat static, set only_check to TRUE to skip the actual adjustment step
+/datum/controller/subsystem/processing/the_ark/proc/adjust_passive_power(amount, only_check = FALSE)
+	var/new_total = passive_power + amount
+	if(new_total < 0)
+		return FALSE
+
+	if(!only_check)
+		passive_power = new_total
+	return TRUE
+
 ///set up timed do_turf_conversion calls for the turfs in an area
 /datum/controller/subsystem/processing/the_ark/proc/convert_area_turfs(area/converted_area, conversion_percent = 100, counter_override)
 	var/timer_counter = counter_override || 1 //used by the addtimer()

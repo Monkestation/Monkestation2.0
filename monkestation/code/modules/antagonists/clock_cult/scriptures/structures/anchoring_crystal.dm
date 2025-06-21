@@ -3,7 +3,7 @@
 	desc = "Summon an anchoring crystal to the station."
 	tip = "Oops!" //this is set on New()
 	button_icon_state = "Clockwork Obelisk"
-	power_cost = 2000
+	power_cost = 500
 	invocation_time = 20 SECONDS
 	invocation_text = list("Reality Fold...", "Time will mold...", "Anchor us here...", "Eng'ine is near!")
 	summoned_structure = /obj/structure/destructible/clockwork/anchoring_crystal

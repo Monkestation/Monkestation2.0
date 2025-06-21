@@ -1,6 +1,7 @@
 /datum/scripture/slab/empower_wall
 	name = "Empower Wall"
 	desc = "Empowers a clockwork wall's stabilization lattice, improving its resilience."
+	tip = "Empowers a clockwork wall's stabilization lattice, improving its resilience."
 	button_icon_state = "empower_wall"
 	power_cost = 100
 	invocation_time = 3 SECONDS
@@ -20,9 +21,13 @@
 		return FALSE
 
 	applied_to.balloon_alert(invoker, "You start to empower \the [applied_to].")
-	if(!do_after(invoker, 3 SECONDS, applied_to) || applied_to.is_empowered)
+	if(!do_after(invoker, 3 SECONDS, applied_to) || applied_to?.is_empowered)
 		applied_to.balloon_alert(invoker, "You fail to empower \the [applied_to].")
 		return FALSE
 
+	if(QDELETED(applied_to))
+		return FALSE
+
+	applied_to.balloon_alert(invoker, "You empower \the [applied_to].")
 	applied_to.empower()
 	return TRUE

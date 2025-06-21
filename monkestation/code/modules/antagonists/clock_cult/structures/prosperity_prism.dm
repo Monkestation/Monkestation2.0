@@ -1,4 +1,4 @@
-#define POWER_PER_USE 20
+#define POWER_PER_USE 3
 #define HEAL_PER_USE 2
 
 /obj/structure/destructible/clockwork/gear_base/powered/prosperity_prism
@@ -10,8 +10,7 @@
 	anchored = TRUE
 	break_message = span_warning("The prism falls apart, smoke leaking out into the air.")
 	max_integrity = 150
-	minimum_power = POWER_PER_USE
-	passive_consumption = POWER_PER_USE / 2
+	passive_consumption = 5
 	///typecache of chem types to purge
 	var/static/list/chems_to_purge
 
@@ -26,10 +25,7 @@
 		return
 
 	for(var/mob/living/possible_cultist in range(3, src))
-		if(isnull(possible_cultist) || !IS_CLOCK(possible_cultist))
-			continue
-
-		if(possible_cultist.health >= possible_cultist.maxHealth)
+		if(isnull(possible_cultist) || !IS_CLOCK(possible_cultist) || possible_cultist.health >= possible_cultist.maxHealth || !SSthe_ark.adjust_clock_power(-POWER_PER_USE))
 			continue
 
 		var/healed_amount = HEAL_PER_USE * seconds_per_tick
@@ -37,8 +33,9 @@
 		possible_cultist.adjustOxyLoss(-healed_amount)
 		possible_cultist.adjustCloneLoss(-(HEAL_PER_USE / 2) * seconds_per_tick)
 		possible_cultist.heal_overall_damage(healed_amount, healed_amount, updating_health = TRUE)
-
 		new /obj/effect/temp_visual/heal(get_turf(possible_cultist), "#1E8CE1")
+		if(!possible_cultist.reagents)
+			continue
 
 		for(var/datum/reagent/negative_chem in possible_cultist.reagents?.reagent_list)
 			if(is_type_in_typecache(negative_chem, chems_to_purge))

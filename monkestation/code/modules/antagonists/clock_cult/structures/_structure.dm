@@ -16,8 +16,6 @@
 	)
 	///if we ignore attacks from servants of ratvar instead of taking damage
 	var/immune_to_servant_attacks = FALSE
-	///The person who placed this structure
-	var/datum/mind/owner = null
 	///Shown to servants when they examine
 	var/clockwork_desc = ""
 	///Shown to servants when they examine and are on reebe
@@ -34,14 +32,12 @@
 	AddElement(/datum/element/clockwork_description, clockwork_desc, reebe_desc)
 
 /obj/structure/destructible/clockwork/Destroy()
-	owner = null
 	return ..()
 
 /obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user)
 	if(immune_to_servant_attacks && user.istate != ISTATE_HARM && (IS_CLOCK(user)))
 		return
 	return ..()
-
 
 /obj/structure/destructible/clockwork/crowbar_act(mob/living/user, obj/item/tool)
 	if(IS_CLOCK(user) && can_rotate)

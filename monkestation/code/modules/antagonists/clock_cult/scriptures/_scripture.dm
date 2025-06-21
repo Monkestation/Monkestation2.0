@@ -266,11 +266,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		. *= (iscogscarab(invoker) ? assault_invoke_time_mult : assault_invoke_time_mult * 2)
 
 /datum/scripture/create_structure/invoke_success()
-	var/created_structure = new summoned_structure(get_turf(invoker))
-	var/obj/structure/destructible/clockwork/clockwork_structure = created_structure
-
-	if(istype(clockwork_structure))
-		clockwork_structure.owner = invoker.mind
+	return new summoned_structure(get_turf(invoker))
 
 //For scriptures that charge the slab, and the slab will affect something
 //(stunning etc.)

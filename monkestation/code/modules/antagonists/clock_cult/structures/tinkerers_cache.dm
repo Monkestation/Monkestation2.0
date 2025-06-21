@@ -33,7 +33,7 @@
 		to_chat(user, span_brass("[src] needs to be anchored to the floor first."))
 		return
 
-	if(depowered)
+	if(!length(transmission_sigils))
 		to_chat(user, span_brass("[src] isn't connected to power!"))
 		return
 
@@ -47,7 +47,7 @@
 		return
 
 	chosen_item = valid_list[chosen_item]
-	if(!can_interact(user) || !anchored || depowered || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
+	if(!can_interact(user) || !anchored || !is_powered || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
 		return
 
 	if(!length(transmission_sigils))
