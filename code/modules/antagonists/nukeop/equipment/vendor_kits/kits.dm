@@ -51,7 +51,7 @@
 /datum/voucher_set/syndicate/kit/heavy_assault_trooper
 	name = "Heavy Assault Trooper (Easy)"
 	description = "Lock down tight areas and take bullets for the team. \
-		Weapons: Bulldog Autoshotgun, energy sword, energy shield, and a manhack grenade. \
+		Weapons: Bulldog Autoshotgun, energy sword, and energy shield. \
 		Utility: Thermal goggles and anti-drop implant."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-green-dark"
@@ -68,10 +68,10 @@
 		/obj/item/melee/energy/sword/saber = 1,
 		/obj/item/gun/ballistic/shotgun/bulldog = 1,
 		/obj/item/ammo_box/magazine/m12g = 2,
+		/obj/item/ammo_box/magazine/m12g/slug = 2,
 		/obj/item/ammo_box/magazine/m12g/bioterror = 2,
 		/obj/item/ammo_box/magazine/m12g/stun = 2,
 		/obj/item/ammo_box/magazine/m12g/meteor = 2,
-		/obj/item/grenade/spawnergrenade/manhacks = 1,
 		/obj/item/autosurgeon/syndicate/nodrop = 1,
 		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
 		/obj/item/clothing/glasses/thermal = 1,
@@ -97,7 +97,7 @@
 		/obj/item/suppressor = 1,
 		/obj/item/ammo_box/magazine/sniper_rounds = 3,
 		/obj/item/ammo_box/magazine/sniper_rounds/disruptor = 2,
-		/obj/item/ammo_box/magazine/sniper_rounds/penetrator = 2,
+		/obj/item/ammo_box/magazine/sniper_rounds/penetrator = 1,
 		/obj/item/ammo_box/magazine/sniper_rounds/marksman = 2,
 		/obj/item/storage/box/teargas = 2,
 		/obj/item/clothing/glasses/thermal = 1,
@@ -282,7 +282,7 @@
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 2,
 		/obj/item/ammo_box/magazine/plastikov9mm/red = 2,
 		/obj/item/wrench/combat = 1,
-		/obj/item/storage/medkit/combat = 1,
+		/obj/item/grenade/spawnergrenade/manhacks = 1,
 		/obj/item/book/granter/gun_mastery = 1,
 		/obj/item/language_manual/codespeak_manual/unlimited = 1,
 	),src)

@@ -233,6 +233,7 @@
 	secondary_magazine = weapon
 	if(old_mag)
 		user.put_in_hands(old_mag)
+		old_mag.update_appearance()
 	balloon_alert(user, "secondary [magazine_wording] loaded")
 	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	update_appearance(UPDATE_OVERLAYS)
@@ -243,14 +244,15 @@
 		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
 		secondary_magazine = null
 		user.put_in_hands(old_mag)
+		old_mag.update_appearance()
 		update_appearance(UPDATE_OVERLAYS)
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/ballistic/shotgun/bulldog/proc/toggle_magazine()
 	var/rechamber = FALSE
-	if(magazine)
-		if(chambered && magazine.stored_ammo.len < magazine.max_ammo)
+	if(magazine && chambered)
+		if(chambered.loaded_projectile && magazine.stored_ammo.len < magazine.max_ammo)
 			magazine.give_round(chambered, 0)
 			chambered = null
 			rechamber = TRUE
