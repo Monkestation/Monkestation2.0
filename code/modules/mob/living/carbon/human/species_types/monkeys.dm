@@ -59,7 +59,7 @@
 	var/give_monkey_species_effects = TRUE
 
 /datum/species/monkey/random_name(gender,unique,lastname)
-	var/randname = "monkey ([rand(1,999)])"
+	var/randname = pick(GLOB.random_monkey_names)
 	return randname
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
@@ -254,3 +254,46 @@
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE
+
+/datum/species/monkey/trained //like a regular monkey but evil with combat training
+	name = "Trained Monkey"
+	id = SPECIES_TRAINED_MONKEY
+	examine_limb_id = SPECIES_MONKEY
+	mutantbrain = /obj/item/organ/internal/brain/primate
+	mutanttongue = /obj/item/organ/internal/tongue/monkey/hindered
+	species_language_holder = /datum/language_holder/monkey/smart
+	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_GUN_NATURAL,
+		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_WEAK_SOUL,
+		TRAIT_HARD_SOLES,
+		TRAIT_MONKEYFRIEND,
+		//Non-Modular change: Gives Monkeys fur colors.
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FUR_COLORS,
+	)
+	give_monkey_species_effects = FALSE
+	no_equip_flags = ITEM_SLOT_GLOVES | ITEM_SLOT_FEET
+	var/datum/component/sign_language/signer
+
+/datum/species/monkey/trained/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	if(!human_who_gained_species.GetComponent(/datum/component/sign_language)) // if they're already capable of signing, don't clobber that
+		signer = human_who_gained_species.AddComponent(/datum/component/sign_language)
+	passtable_on(human_who_gained_species, SPECIES_TRAIT)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/human/clever)
+	// Can't make them human or nonclever. At least not with the easy and boring way out.
+	for(var/datum/mutation/human/mutation as anything in human_who_gained_species.dna.mutations)
+		mutation.mutadone_proof = TRUE
+		mutation.instability = 0
+	human_who_gained_species.dna.species.name = "Monkey"
+	human_who_gained_species.dna.features["fur"] = COLOR_MONKEY_BROWN
+
+/datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/C)
+	. = ..()
+	if(!QDELETED(signer))
+		QDEL_NULL(signer)

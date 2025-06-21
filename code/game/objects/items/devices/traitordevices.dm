@@ -214,26 +214,34 @@ effective or pretty fucking useless.
 				target = round(target)
 				wavelength = clamp(target, 0, 120)
 
-/obj/item/shadowcloak
+/obj/item/storage/belt/military/assault/cloak
 	name = "cloaker belt"
-	desc = "Makes you invisible for short periods of time. Recharges in darkness."
+	desc = "Makes you invisible for short periods of time. Recharges in darkness while active."
 	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "utility"
-	inhand_icon_state = "utility"
+	icon_state = "cloak"
+	inhand_icon_state = "security"
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
-	worn_icon_state = "utility"
+	worn_icon_state = "assault"
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb_continuous = list("whips", "lashes", "disciplines")
-	attack_verb_simple = list("whip", "lash", "discipline")
 
+	COOLDOWN_DECLARE(stealth_cooldown)
 	var/mob/living/carbon/human/user = null
 	var/charge = 300
 	var/max_charge = 300
 	var/on = FALSE
 	actions_types = list(/datum/action/item_action/toggle)
 
-/obj/item/shadowcloak/ui_action_click(mob/user)
+/obj/item/storage/belt/military/assault/cloak/update_overlays()
+	. = ..()
+	. +=  mutable_appearance(icon, "cloak_meter", alpha = (charge / max_charge) * 255)
+
+/obj/item/storage/belt/military/assault/cloak/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+	atom_storage.max_slots = 4
+
+/obj/item/storage/belt/military/assault/cloak/ui_action_click(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		if(!on)
 			Activate(usr)
@@ -243,32 +251,69 @@ effective or pretty fucking useless.
 
 	return
 
-/obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
+/obj/item/storage/belt/military/assault/cloak/item_action_slot_check(slot, mob/user)
+	if(slot & ITEM_SLOT_BELT)
+		return 1
+
+/obj/item/storage/belt/military/assault/cloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
 		return
-
+	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return
 	to_chat(user, span_notice("You activate [src]."))
+	RegisterSignal(user, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
+	RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(user, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	RegisterSignals(user, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	src.user = user
+	animate(user,alpha = 25,time = 1.5 SECONDS)
 	START_PROCESSING(SSobj, src)
+	playsound(src, 'sound/magic/charge.ogg', 50, TRUE)
 	on = TRUE
 
-/obj/item/shadowcloak/proc/Deactivate()
-	to_chat(user, span_notice("You deactivate [src]."))
+/obj/item/storage/belt/military/assault/cloak/proc/Deactivate(display_message)
 	STOP_PROCESSING(SSobj, src)
 	if(user)
-		user.alpha = initial(user.alpha)
-
+		animate(user, alpha =  initial(user.alpha), time = 1.5 SECONDS)
+		if(display_message)
+			to_chat(user, span_notice("You deactivate [src]."))
+	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
+	UnregisterSignal(user, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
 	on = FALSE
 	user = null
 
-/obj/item/shadowcloak/dropped(mob/user)
+/obj/item/storage/belt/military/assault/cloak/proc/unstealth(datum/source)
+	SIGNAL_HANDLER
+
+	COOLDOWN_START(src, stealth_cooldown, 30 SECONDS)
+	to_chat(user, span_warning("[src] gets discharged from contact!"))
+	do_sparks(2, TRUE, src)
+	Deactivate(display_message = FALSE)
+
+/obj/item/storage/belt/military/assault/cloak/proc/on_unarmed_attack(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	unstealth(source)
+
+/obj/item/storage/belt/military/assault/cloak/proc/on_bullet_act(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
+	if(!projectile.is_hostile_projectile())
+		return
+	unstealth(source)
+
+/obj/item/storage/belt/military/assault/cloak/dropped(mob/user)
 	..()
 	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
-/obj/item/shadowcloak/process(seconds_per_tick)
+/obj/item/storage/belt/military/assault/cloak/process(seconds_per_tick)
 	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
-		Deactivate()
+		do_sparks(2, TRUE, src)
+		Deactivate(display_message = FALSE)
 		return
 
 	var/turf/T = get_turf(src)
@@ -276,12 +321,15 @@ effective or pretty fucking useless.
 		var/lumcount = T.get_lumcount()
 
 		if(lumcount > 0.3)
-			charge = max(0, charge - 12.5 * seconds_per_tick)//Quick decrease in light
+			charge = clamp(charge - 10, 0, max_charge)//Quick decrease in light
 
 		else
-			charge = min(max_charge, charge + 25 * seconds_per_tick) //Charge in the dark
-
-		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
+			charge = clamp(charge + 20, 0, max_charge)//Charge in the dark
+	if(charge == 0)
+		balloon_alert(user, "out of charge!")
+		do_sparks(2, TRUE, src)
+		Deactivate(display_message = FALSE)
+	update_appearance(UPDATE_OVERLAYS)
 
 /// Checks if a given atom is in range of a radio jammer, returns TRUE if it is.
 /proc/is_within_radio_jammer_range(atom/source)
@@ -372,6 +420,8 @@ effective or pretty fucking useless.
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
+	//type of turret we spawn
+	var/turret_type = /obj/machinery/porta_turret/syndicate/toolbox
 
 /obj/item/storage/toolbox/emergency/turret/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -400,7 +450,7 @@ effective or pretty fucking useless.
 		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
 
 	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
+	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
@@ -408,19 +458,22 @@ effective or pretty fucking useless.
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")
 
+/obj/item/storage/toolbox/emergency/turret/nukie
+	turret_type = /obj/machinery/porta_turret/syndicate/toolbox/nukie
+
 /obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list(ROLE_SYNDICATE)
+
+/obj/item/storage/toolbox/emergency/turret/nukie/explosives/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/c4/x4(src)
 
 /obj/machinery/porta_turret/syndicate/toolbox
 	icon_state = "toolbox_off"
 	base_icon_state = "toolbox"
-
-/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
-	. = ..()
-	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
-
-/obj/machinery/porta_turret/syndicate/toolbox
 	integrity_failure = 0
+	//render the frame underneath?
+	var/frame = TRUE
 	max_integrity = 100
 	shot_delay = 0.5 SECONDS
 	stun_projectile = /obj/projectile/bullet/toolbox_turret
@@ -429,6 +482,11 @@ effective or pretty fucking useless.
 	ignore_faction = TRUE
 	/// The toolbox we store.
 	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+	. = ..()
+	if(frame)
+		underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
@@ -452,9 +510,12 @@ effective or pretty fucking useless.
 	if(!attacking_item.toolspeed)
 		return
 
+	if(!attacking_item.toolspeed)
+		return
+
 	if((user.istate & ISTATE_HARM))
 		balloon_alert(user, "deconstructing...")
-		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
+		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20, extra_checks = CALLBACK(attacking_item, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 			return
 
 		deconstruct(TRUE)
@@ -468,7 +529,7 @@ effective or pretty fucking useless.
 
 		balloon_alert(user, "repairing...")
 		while(atom_integrity != max_integrity)
-			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
+			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20, extra_checks = CALLBACK(attacking_item, TYPE_PROC_REF(/obj/item/wrench/combat, is_active))))
 				return
 
 			repair_damage(10)
@@ -505,3 +566,41 @@ effective or pretty fucking useless.
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
 	speed = 0.6
+
+/obj/machinery/porta_turret/syndicate/toolbox/nukie
+	name = "9mm turret"
+	icon_state = "syndie_off"
+	base_icon_state = "syndie"
+	//render the frame underneath?
+	frame = FALSE
+	max_integrity = 100
+	shot_delay = 1.5 SECONDS
+	stun_projectile = /obj/projectile/bullet/c9mm/nukie_turret
+	stun_projectile_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
+	lethal_projectile = /obj/projectile/bullet/c9mm/nukie_turret
+	lethal_projectile_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
+	var/activating
+	COOLDOWN_DECLARE(acquire_target_cooldown)
+
+/obj/projectile/bullet/c9mm/nukie_turret
+	name = "9mm bullet"
+	projectile_phasing = PASSMACHINE
+
+/obj/machinery/porta_turret/syndicate/toolbox/nukie/tryToShootAt(list/atom/movable/targets)
+	if(targets.len > 0)
+		var/atom/movable/M = pick(targets)
+		targets -= M
+		if(COOLDOWN_FINISHED(src, acquire_target_cooldown))
+			activating = TRUE
+			COOLDOWN_START(src, acquire_target_cooldown, 10 SECONDS)
+			playsound(src, 'sound/machines/beep.ogg', 75, FALSE)
+			sleep(0.25 SECONDS)
+			playsound(src, 'sound/machines/beep.ogg', 75, TRUE)
+			sleep(1.25 SECONDS)
+			target(M) //warning shot?
+			activating = FALSE
+			return
+		if(!activating)
+			COOLDOWN_START(src, acquire_target_cooldown, 10 SECONDS)
+			target(M)
+			return

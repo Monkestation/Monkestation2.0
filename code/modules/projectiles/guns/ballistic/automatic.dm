@@ -134,7 +134,51 @@
 	projectile_damage_multiplier = 0.35 //It's like 10.5 damage per bullet, it's close enough to 10 shots
 	mag_display = TRUE
 	empty_indicator = TRUE
+	special_mags = TRUE
 	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+
+/obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
+	name = "\improper PP-96 SMG"
+	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished and rechambered to 10mm for better performance."
+	spread = 10
+	burst_size = 2
+	icon_state = "plastikov_refurbished"
+	inhand_icon_state = "plastikov_refurbished"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm
+	spawn_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm/red
+	projectile_damage_multiplier = 0.66 // 20 damage
+	can_suppress = TRUE
+	suppressor_x_offset = 4
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/automatic/plastikov/refurbished/unrestricted
+	pin = /obj/item/firing_pin
+
+/obj/item/gun/ballistic/automatic/rostokov
+	name = "\improper Rostokov carbine"
+	desc = "A bullpup fully automatic 9mm carbine. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	icon_state = "rostokov"
+	w_class = WEIGHT_CLASS_BULKY
+	inhand_icon_state = "rostokov"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/rostokov9mm
+	fire_delay = 1
+	spread = 5
+	can_suppress = FALSE
+	burst_size = 1
+	slot_flags = null
+	worn_icon_state = "rostokov"
+	actions_types = list()
+	pin = /obj/item/firing_pin/implant/pindicate
+	mag_display = TRUE
+	empty_indicator = TRUE
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
+
+/obj/item/gun/ballistic/automatic/rostokov/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+
+/obj/item/gun/ballistic/automatic/rostokov/unrestricted
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -379,3 +423,25 @@
 /obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, TRUE, 0.1, 0.08, 5 SECONDS)
+
+/**
+ * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
+/obj/item/gun/ballistic/automatic/mini_uzi/chimpgun
+	name = "\improper MONK-10"
+	desc = "Developed by Syndicate monkeys, for syndicate Monkeys. Despite the name, this weapon resembles an Uzi significantly more than a MAC-10. Uses 9mm rounds. There's a label on the other side of the gun that says \"Do what comes natural.\""
+	projectile_damage_multiplier = 0.4
+	projectile_wound_bonus = -25
+	pin = /obj/item/firing_pin/monkey
+
+/**
+ * Weak tommygun for syndicate chimps. It comes in a 4 TC kit.
+ * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.
+ */
+/obj/item/gun/ballistic/automatic/tommygun/chimpgun
+	name = "\improper Typewriter"
+	desc = "It was the best of times, it was the BLURST of times!? You stupid monkeys!"
+	projectile_damage_multiplier = 0.4
+	projectile_wound_bonus = -25
+	pin = /obj/item/firing_pin/monkey

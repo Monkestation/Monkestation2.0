@@ -56,6 +56,9 @@ GLOBAL_VAR(station_nuke_source)
 	/// A reference to the countdown that goes up over the nuke
 	var/obj/effect/countdown/nuclearbomb/countdown
 
+	// Special icon system
+	var/special_icons = FALSE
+
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
@@ -69,7 +72,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
-	if(!exploding)
+	if(!exploded)
 		// If we're not exploding, set the alert level back to normal
 		toggle_nuke_safety()
 	GLOB.nuke_list -= src
@@ -79,26 +82,48 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/examine(mob/user)
 	. = ..()
-	if(exploding)
-		. += span_bolddanger("It is in the process of exploding. Perhaps reviewing your affairs is in order.")
-	if(timing)
-		. += span_danger("There are [get_time_left()] seconds until detonation.")
+	switch(deconstruction_state)
+		if(NUKESTATE_UNSCREWED)
+			. += span_notice("The front panel has been unscrewed and can be <b>pried open</b>.")
+		if(NUKESTATE_PANEL_REMOVED)
+			. += span_notice("The inner plate is exposed and can be cut with a <b>welding tool</b>.")
+		if(NUKESTATE_WELDED)
+			. += span_notice("The inner plate has been cut through and can be <b>pried off</b>.")
+		if(NUKESTATE_CORE_EXPOSED)
+			. += span_danger("The inner chamber is exposed, revealing [core] to the outside!")
+			. += span_notice("The damaged inner plate covering the inner chamber can be replaced with some <b>iron</b>.")
+		if(NUKESTATE_CORE_REMOVED)
+			. += span_notice("The inner chamber is exposed, but is empty.")
+		if(NUKESTATE_INTACT)
+			. += span_notice("The front panel is secured.")
+
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED)
+			. += span_notice("The device is awaiting activation codes.")
+		if(NUKE_OFF_UNLOCKED)
+			. += span_notice("The device is set and is ready for arming the detonation countdown.")
+		if(NUKE_ON_TIMING)
+			. += span_danger("There are [get_time_left()] seconds until detonation.")
+		if(NUKE_ON_EXPLODING)
+			. += span_bolddanger("It is in the process of exploding. Perhaps reviewing your affairs is in order.")
 
 /// Checks if the disk inserted is a real nuke disk or not.
 /obj/machinery/nuclearbomb/proc/disk_check(obj/item/disk/nuclear/inserted_disk)
 	if(inserted_disk.fake)
 		say("Authentication failure; disk not recognised.")
 		return FALSE
-
+	auth = inserted_disk
 	return TRUE
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, params)
 	if (istype(weapon, /obj/item/disk/nuclear))
+		if(auth) //god forbid there be more than one nuclear disk
+			playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
+			return TRUE
 		if(!disk_check(weapon))
 			return TRUE
 		if(!user.transferItemToLoc(weapon, src))
 			return TRUE
-		auth = weapon
 		update_ui_mode()
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		add_fingerprint(user)
@@ -197,6 +222,8 @@ GLOBAL_VAR(station_nuke_source)
 		return NUKE_OFF_UNLOCKED
 
 /obj/machinery/nuclearbomb/update_icon_state()
+	if(special_icons)
+		return ..()
 	if(deconstruction_state != NUKESTATE_INTACT)
 		icon_state = "nuclearbomb_base"
 		return ..()
@@ -213,7 +240,8 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/update_overlays()
 	. = ..()
-
+	if(special_icons)
+		return ..()
 	if(lights)
 		cut_overlay(lights)
 	cut_overlay(interior)
@@ -230,12 +258,11 @@ GLOBAL_VAR(station_nuke_source)
 		if(NUKESTATE_CORE_REMOVED)
 			interior = "core-removed"
 		if(NUKESTATE_INTACT)
-			return
+			interior = null
 
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			lights = ""
-			return
+			lights = null
 		if(NUKE_OFF_UNLOCKED)
 			lights = "lights-safety"
 		if(NUKE_ON_TIMING)
@@ -337,6 +364,9 @@ GLOBAL_VAR(station_nuke_source)
 	. = ..()
 	if(.)
 		return
+	ui_process(action, params)
+
+/obj/machinery/nuclearbomb/proc/ui_process(action, params)
 	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
 	switch(action)
 		if("eject_disk")
@@ -351,7 +381,6 @@ GLOBAL_VAR(station_nuke_source)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
-					auth = I
 					. = TRUE
 			update_ui_mode()
 		if("keypad")
@@ -431,10 +460,11 @@ GLOBAL_VAR(station_nuke_source)
 	if(safety)
 		if(timing)
 			disarm_nuke()
+			timing = FALSE
 
-		timing = FALSE
 		detonation_timer = null
 		countdown.stop()
+	update_appearance(UPDATE_OVERLAYS) //only the lights overlay are affected by safety
 
 /// Arms the nuke, or disarms it if it's already active.
 /obj/machinery/nuclearbomb/proc/toggle_nuke_armed()
@@ -474,18 +504,20 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 
 /// Disarms the nuke, reverting all pinpointers and the security level
-/obj/machinery/nuclearbomb/proc/disarm_nuke(mob/disarmer)
+/obj/machinery/nuclearbomb/proc/disarm_nuke(mob/disarmer, change_level_back = TRUE)
 	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] at [ADMIN_VERBOSEJMP(our_turf)] was disarmed by [disarmer ? ADMIN_LOOKUPFLW(disarmer) : "an unknown user"].")
 	if(disarmer)
 		disarmer.log_message("disarmed [src].", LOG_GAME)
 
 	detonation_timer = null
-	SSsecurity_level.set_level(previous_level)
 
-	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
-		nuke_pointer.switch_mode_to(initial(nuke_pointer.mode))
-		nuke_pointer.alert = FALSE
+	if(change_level_back)
+		SSsecurity_level.set_level(previous_level)
+
+	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
+		disk_pinpointers.switch_mode_to(TRACK_NUKE_DISK)
+		disk_pinpointers.alert = FALSE
 
 	countdown.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)

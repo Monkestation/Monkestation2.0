@@ -47,6 +47,11 @@
 	. = ..()
 	icon_state = "[base_icon_state]-[ammo_count() ? 50 : 0]"
 
+/obj/item/ammo_box/magazine/plastikov9mm/red
+	name = "PP-96 magazine (9mm)"
+	icon_state = "9x19-red-50"
+	base_icon_state = "9x19-red"
+
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"

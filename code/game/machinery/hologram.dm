@@ -113,6 +113,11 @@ Possible to do for anyone motivated enough:
 	board.secure = TRUE
 	board.build_path = /obj/machinery/holopad/secure
 
+/obj/machinery/holopad/secure/hacked
+	name = "hacked holopad"
+	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
+	req_access = list(ACCESS_SYNDICATE)
+
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1

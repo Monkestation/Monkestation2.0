@@ -161,9 +161,12 @@
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
 
 /obj/item/gun/ballistic/fire_sounds()
-	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo())
+	var/max_ammo = magazine?.max_ammo || initial(spawn_magazine_type.max_ammo)
+	var/current_ammo = get_ammo()
+	var/frequency_to_use = sin((90 / max_ammo) * current_ammo)
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
-	var/play_click = round(sqrt(magazine?.max_ammo * 2)) > get_ammo()
+	var/play_click = round(sqrt(max_ammo * 2)) > current_ammo
+
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 		if(play_click)
