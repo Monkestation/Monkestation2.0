@@ -50,7 +50,6 @@
 	to_chat(user, span_notice("You return to your old form."))
 	originalDNA.transfer_identity(user)
 	user.real_name = originalname
-	user.update_name_tag(originalname) // monkestation edit: name tags
 	user.updateappearance(mutcolor_update=1)
 	//user.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.
 	if(prev_disfigured)
