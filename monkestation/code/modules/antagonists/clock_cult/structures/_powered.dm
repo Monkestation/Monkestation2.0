@@ -117,17 +117,12 @@
 		return FALSE
 	return TRUE
 
-/// Checks if there's equal or greater power to the amount arg, TRUE if so, FALSE otherwise
-/obj/structure/destructible/clockwork/gear_base/powered/proc/check_power(amount)
-	return !amount || SSthe_ark.clock_power > amount
-
 /// Uses power if there's enough to do so
 /obj/structure/destructible/clockwork/gear_base/powered/proc/use_power(amount)
 	check_transmission_sigils()
-	if(!check_power(amount))
+	if(!SSthe_ark.adjust_clock_power(-amount))
 		return FALSE
 
-	SSthe_ark.clock_power -= amount
 	return TRUE
 
 /// Triggers when the structure runs out of power to use

@@ -1,4 +1,4 @@
-#define BRASS_POWER_COST 10
+#define BRASS_POWER_COST 5
 #define REGULAR_POWER_COST (BRASS_POWER_COST / 2)
 
 /obj/item/clockwork/replica_fabricator
@@ -129,7 +129,7 @@
 	if(!sheets)
 		return
 
-	SSthe_ark.clock_power -= sheets * BRASS_POWER_COST
+	SSthe_ark.adjust_clock_power(sheets * BRASS_POWER_COST)
 
 	var/obj/item/stack/sheet/bronze/sheet_stack = new(null, sheets)
 	user.put_in_hands(sheet_stack)

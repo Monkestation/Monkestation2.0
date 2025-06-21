@@ -97,19 +97,19 @@
 /datum/tinker_cache_item/speed_robes
 	name = "Robes Of Divinity"
 	item_path = /obj/item/clothing/suit/clockwork/speed
-	power_use = 200
+	power_use = 300
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/invis_cloak
 	name = "Shrouding Cloak"
 	item_path = /obj/item/clothing/suit/clockwork/cloak
-	power_use = 200
+	power_use = 300
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/sight_goggles
 	name = "Wraith Spectacles"
 	item_path = /obj/item/clothing/glasses/clockwork/wraith_spectacles
-	power_use = 500
+	power_use = 400
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/hud_visor
@@ -121,7 +121,7 @@
 /datum/tinker_cache_item/borg_shell
 	name = "Clockwork Cyborg Shell"
 	item_path = /obj/item/robot_suit/prebuilt/clockwork
-	power_use = 3000
+	power_use = 750
 	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/replica_fabricator
@@ -138,13 +138,13 @@
 /datum/tinker_cache_item/tools
 	name = "Equipped Toolbelt"
 	item_path = /obj/item/storage/belt/utility/clock
-	power_use = 300
+	power_use = 150
 	time_delay_mult = 0.75
 
 /datum/tinker_cache_item/trap
 	name = "Flipper (Trap)"
 	item_path = /obj/item/clockwork/trap_placer/flipper
-	power_use = 75
+	power_use = 50
 	time_delay_mult = 0
 
 /datum/tinker_cache_item/trap/skewer
