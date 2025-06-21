@@ -151,7 +151,7 @@
 
 	LAZYREMOVE(transmission_sigils, sigil)
 	sigil.linked_structures -= src
-	check_power()
+	check_transmission_sigils()
 
 /datum/component/clockwork_trap/powered_structure
 	takes_input = TRUE

@@ -70,16 +70,10 @@
 	flick("interdiction_lens_discharged", src)
 	QDEL_NULL(dampening_field)
 
+/obj/structure/destructible/clockwork/gear_base/powered/interdiction_lens/free
 
 /obj/structure/destructible/clockwork/gear_base/powered/interdiction_lens/free/use_power(amount)
-	return
-
-
-/obj/structure/destructible/clockwork/gear_base/powered/interdiction_lens/free/check_power(amount)
-	if(!LAZYLEN(transmission_sigils))
-		return FALSE
 	return TRUE
-
 
 //Dampening field
 
@@ -88,10 +82,8 @@
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/clockwork/setup_edge_turf(turf/target)
 	edge_turfs |= target
 
-
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/clockwork/cleanup_edge_turf(turf/target)
 	edge_turfs -= target
-
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/clockwork/capture_projectile(obj/projectile/fired_projectile, track_projectile = TRUE)
 	if(fired_projectile in tracked)
@@ -109,11 +101,9 @@
 	if(track_projectile)
 		tracked += fired_projectile
 
-
 /obj/item/borg/projectile_dampen/clockcult
 	name = "internal clockcult projectile dampener"
 	projectile_damage_coefficient = 0.75 // Only -25% damage instead of -50%
-
 
 /obj/item/borg/projectile_dampen/clockcult/process_recharge()
 	energy = maxenergy
