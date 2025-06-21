@@ -1,5 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - balance: "piercing syringes are now behind Chemical weaponary in the tech tree"
-  - rscadd: "The Explosive & Pyrotechnical Weaponry node is now the Chemical Weaponary node"

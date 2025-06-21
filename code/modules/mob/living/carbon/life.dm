@@ -291,7 +291,6 @@
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name
-					update_name_tag() // monkestation edit: name tags
 					dna.previous.Remove("name")
 				if(dna.previous["UE"])
 					dna.unique_enzymes = dna.previous["UE"]
