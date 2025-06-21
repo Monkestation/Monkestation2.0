@@ -18,11 +18,13 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
 	)
-	base_antags = 4
-	maximum_antags = 6
+	denominator = 10
+	base_antags = 1 //should scale with pop so its 1 op + 1 for every 10 people ready.
+	maximum_antags = 10 //so 10 maximum is for the rare megapop rounds. i hope this just doesnt spawn 10 ops with 30 ready.
 	enemy_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
@@ -34,8 +36,8 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 	)
-	required_enemies = 6
-	min_players = 45
+	required_enemies = 8
+	min_players = 40
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 8
