@@ -281,11 +281,11 @@
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
-	desc = "A rapid way to save a person from a critical injury state!"
+	desc = "A rapid way to save a person from a critical injury state. Overuse is not recommended."
 	icon_state = "atropen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
-	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant = 2)
+	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant/extreme = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"
@@ -328,12 +328,12 @@
 
 /obj/item/reagent_containers/hypospray/medipen/blood_loss
 	name = "hypovolemic-response autoinjector"
-	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
+	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss. Overuse will lead to death."
 	icon_state = "hypovolemic"
 	base_icon_state = "hypovolemic"
 	volume = 15
 	amount_per_transfer_from_this = 15
-	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant/extreme = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)
 
 /obj/item/reagent_containers/hypospray/medipen/mutadone
 	name = "mutadone autoinjector"
