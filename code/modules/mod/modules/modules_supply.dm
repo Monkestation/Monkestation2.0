@@ -198,6 +198,8 @@
 		if(QDELETED(ore))
 			return
 		break
+	if(QDELETED(ore))
+		return
 	ore.forceMove(src)
 	ores += ore
 
@@ -206,7 +208,8 @@
 	if(!.)
 		return
 	for(var/obj/item/ore as anything in ores)
-		ore.forceMove(drop_location())
+		if(!QDELETED(ore))
+			ore.forceMove(drop_location())
 		ores -= ore
 	drain_power(use_power_cost)
 

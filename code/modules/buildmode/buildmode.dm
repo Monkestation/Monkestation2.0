@@ -48,6 +48,8 @@
 	li_cb = null
 	holder = null
 	QDEL_NULL(mode)
+	QDEL_NULL(modebutton)
+	QDEL_NULL(dirbutton)
 	QDEL_LIST(buttons)
 	QDEL_LIST(modeswitch_buttons)
 	QDEL_LIST(dirswitch_buttons)
