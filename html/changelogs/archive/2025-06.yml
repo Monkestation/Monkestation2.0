@@ -348,3 +348,30 @@
   - bugfix: You can no longer bypass weight limits of things that fit in storages
       by merging stacks
   - bugfix: Fix some cases of return_inv() not working properly.
+2025-06-21:
+  Absolucy:
+  - bugfix: Fixed messages in the ticket viewer sometimes having messed up apostrophes
+      and similar symbols.
+  - qol: You can now alt-click with the xenobio vacuum pack in order to get a selection
+      of valid mobs to suck up on that tile.
+  Absolucy, Scrambledeggs00, Tractor Mann (Original Code by Gandalf2k15, GoldenAlpharex, and others from Nova Sector/Skyrat):
+  - rscadd: 3 New AI VOXes! Pick from Black Mesa/Black Mesa Military or Half Life
+      VOX! or just keep using the normal one!
+  - rscadd: '"Display Word String" AI Verb, to quickly print the pushed VOX words
+      from Announcement Help into chat.'
+  - rscadd: New UI for VOX announcements, by Scrambledeggs00.
+  Addust:
+  - balance: The Syndicate Depot and Deep Storage have had their budgets reduced (and
+      some equipment confiscated by J&C) due to bad behaviour.
+  - balance: This means no more depot telecrystals, no more depot imprinter or lathe,
+      and no more deep storage techfab either. You've been given frontier surplus
+      as compensation.
+  SirNightKnight:
+  - bugfix: fixes quick pull from belt and backpack.
+  Siro, Veth:
+  - code_imp: Beaker Panel converted to TGUI
+  - qol: Beaker Panel now looks nicer and supports future changes. Has a search function
+      now.
+  flleeppyy:
+  - bugfix: Setting storytellers should now actually set, before the round starts
+  - bugfix: Storytellers changed after roundstart will now tick instead of doing nothing
