@@ -45,7 +45,7 @@
 			var/damage_multiplier = 1
 			SEND_SIGNAL(attacking_item, COMSIG_ITEM_DAMAGE_MULTIPLIER, &damage_multiplier, src, def_zone)
 			if(damage_multiplier != 1)
-				damage_amount = round(damage_amount * damage_multiplier, 1)
+				damage_amount = round(damage_amount * damage_multiplier, 0.5)
 
 	if(damage_amount <= 0)
 		return 0
