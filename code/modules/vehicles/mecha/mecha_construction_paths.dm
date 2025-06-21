@@ -783,3 +783,763 @@
 
 	outer_plating = /obj/item/stack/sheet/plasteel
 	outer_plating_amount = 5
+
+//KINGSPIRE MK.1
+/datum/component/construction/unordered/mecha_chassis/kingspire
+	result = /datum/component/construction/mecha/kingspire
+	steps = list(
+		/obj/item/mecha_parts/part/kingspire_torso,
+		/obj/item/mecha_parts/part/kingspire_left_arm,
+		/obj/item/mecha_parts/part/kingspire_right_arm,
+		/obj/item/mecha_parts/part/kingspire_left_leg,
+		/obj/item/mecha_parts/part/kingspire_right_leg
+	)
+
+/datum/component/construction/mecha/kingspire
+	result = /obj/vehicle/sealed/mecha/kingspire
+	base_icon = "kingspire"
+
+	circuit_control = /obj/item/circuitboard/mecha/kingspire/main
+	circuit_periph = /obj/item/circuitboard/mecha/kingspire/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/kingspire/targeting
+
+	inner_plating = /obj/item/stack/sheet/iron
+	inner_plating_amount = 3
+
+	outer_plating = /obj/item/mecha_parts/part/kingspire_armor
+	outer_plating_amount = 1
+
+/datum/component/construction/mecha/kingspire/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "The roadwheels are disconnected but can be attached to keep the hull of the ground with a <b>wrench</b>.",
+			"forward_message" = "Attached roadwheels",
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The track is still slack from the lack of return rollers, which can be attached with a <b>screwdriver</b>.",
+			"forward_message" = "attached return rollers",
+			"backward_message" = "removed roadwheels"
+		),
+		list(
+			"key" = /obj/item/stack/cable_coil,
+			"amount" = 5,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The tracks are now tensioned and ready for use, now the engine can be <b>wired</b>.",
+			"forward_message" = "added wiring",
+			"backward_message" = "removed return rollers"
+		),
+		list(
+			"key" = TOOL_WIRECUTTER,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>.",
+			"forward_message" = "adjusted wiring",
+			"backward_message" = "removed wiring"
+		),
+	)
+/datum/component/construction/mecha/kingspire/get_circuit_steps()
+	return list(
+		list(
+			"key" = circuit_control,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The engine is wired and the <b>Radio Equipment</b> can now be wired in and powered.",
+			"forward_message" = "added radio set",
+			"backward_message" = "disconnected wiring"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The radio is in but is sitting unsecured. it and can be <b>screwed</b> into place.",
+			"forward_message" = "secured radio set",
+			"backward_message" = "removed radio set"
+		),
+		list(
+			"key" = circuit_periph,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Radio is now secured, and the <b>hydraulic equipment</b> can be slotted in.",
+			"forward_message" = "added hydraulic equipment",
+			"backward_message" = "unsecured radio set"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The hydraulics are now installed, and the hoses can be <b>screwed</b> into place.",
+			"forward_message" = "secured hydraulic lines",
+			"backward_message" = "removed hydraulics"
+		)
+	)
+/datum/component/construction/mecha/kingspire/get_circuit_weapon_steps()
+	return list(
+				list(
+			"key" = circuit_weapon,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The <b>Seating</b> is still not in, do you want to crouch while driving?.",
+			"forward_message" = "added the seats",
+			"backward_message" = "disconnected hydraulic lines"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The seats are loose and your not stupid enough to leave it like that.",
+			"forward_message" = "secured seating",
+			"backward_message" = "removed seating"
+		),
+	)
+/datum/component/construction/mecha/kingspire/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the crew compartment parts are almost finished, you can add the <b>scanning_module</b> for the driver.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured seats"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"forward_message" = "added capacitor",
+			"backward_message" = "unscecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured capacitor",
+			"backward_message" = "removed capacitor"
+		),
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added.",
+			"forward_message" = "added power cell",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured power cell",
+			"backward_message" = "removed power cell"
+		),
+	)
+
+/datum/component/construction/mecha/kingspire/get_inner_plating_steps()
+	return list(
+		list(
+			"key" = inner_plating,
+			"amount" = inner_plating_amount,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The interior of the Kingspire is finished, you need to use [inner_plating_amount] sheets of [initial(inner_plating.name)] to make the headlight.",
+			"forward_message" = "installed headlight socket",
+			"backward_message" = "unsecured power cell"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The headlight socket is built, the bulb can be <b>screwed</b> into place.",
+			"forward_message" = "lightbulb added",
+			"backward_message" = "pried off headlight mount"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The hull is finished, you need to reinforce everything by welding it.",
+			"forward_message" = "welded tank hull",
+			"backward_message" = "removed lightbulb"
+		),
+	)
+/datum/component/construction/mecha/kingspire/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_WELDER,
+			"desc" = "the hull is welded, you now need to add the turret to the tank.",
+			"forward_message" = "installed turret",
+			"backward_message" = "cut welds on hull"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The turret is now on the Kingspire, you need to mount the antenna and machinegun into the turret",
+			"forward_message" = "gun and antenna added",
+			"backward_message" = "pried off turret"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The turret is assembled, the plates on it need to be welded shut for combat.",
+			"forward_message" = "welded turret",
+			"backward_message" = "removed turret parts"
+		),
+	)
+
+// t5 percutio
+/datum/component/construction/unordered/mecha_chassis/percutio
+	result = /datum/component/construction/mecha/percutio
+	steps = list(
+		/obj/item/mecha_parts/part/percutio_left_arm,
+		/obj/item/mecha_parts/part/percutio_right_arm,
+		/obj/item/mecha_parts/part/percutio_left_leg,
+		/obj/item/mecha_parts/part/percutio_right_leg
+	)
+
+
+/datum/component/construction/mecha/percutio
+	result = /obj/vehicle/sealed/mecha/percutio
+	base_icon = "percutio"
+
+	circuit_control = /obj/item/circuitboard/mecha/percutio/main
+	circuit_periph = /obj/item/circuitboard/mecha/percutio/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/percutio/targeting
+
+	inner_plating = /obj/item/stack/rods
+	inner_plating_amount = 16
+
+	outer_plating = /obj/item/mecha_parts/part/percutio_armor
+	outer_plating_amount = 1
+
+/datum/component/construction/mecha/percutio/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "The wheels are lying on the ground, you can put them on with a <b>wrench</b>.",
+			"forward_message" = "Attached wheels",
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The wheels are on the axle but the suspension is slack, you can set the suspension with a <b>screwdriver</b>.",
+			"forward_message" = "activated suspension",
+			"backward_message" = "removed wheels"
+		),
+		list(
+			"key" = /obj/item/stack/cable_coil,
+			"amount" = 5,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wheels are finished, you can now put the headlights in and <b>wire</b> them.",
+			"forward_message" = "added & wired headlights",
+			"backward_message" = "reset suspension"
+		),
+		list(
+			"key" = /obj/item/stack/cable_coil,
+			"amount" = 5,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The headlights are ready, now the engine needs some <b>wire</b>.",
+			"forward_message" = "added engine wiring",
+			"backward_message" = "removed wiring & headlights"
+		),
+	)
+/datum/component/construction/mecha/percutio/get_circuit_steps()
+	return list(
+		list(
+			"key" = circuit_control,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The engine is wired. You can go throw in the fuel tank.",
+			"forward_message" = "added fuel tank",
+			"backward_message" = "disconnected engine wiring"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The fuel is in but is sitting unsecured. it and can be <b>screwed</b> into place.",
+			"forward_message" = "secured fuel tank",
+			"backward_message" = "removed fuel tank"
+		),
+		list(
+			"key" = circuit_periph,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The fuel tank is now secured, and the <b>hydraulic equipment</b> can be slotted in.",
+			"forward_message" = "added hydraulic equipment",
+			"backward_message" = "unsecured fuel tank"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The hydraulics are now installed, and the hoses can be <b>screwed</b> into place.",
+			"forward_message" = "secured hydraulic lines",
+			"backward_message" = "removed hydraulics"
+		)
+	)
+/datum/component/construction/mecha/percutio/get_circuit_weapon_steps()
+	return list(
+				list(
+			"key" = circuit_weapon,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The <b>Seating</b> is still not in, do you want to crouch while driving?.",
+			"forward_message" = "added the seats",
+			"backward_message" = "disconnected hydraulic lines"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The seats are loose and your not stupid enough to leave it like that.",
+			"forward_message" = "secured seating",
+			"backward_message" = "removed seating"
+		),
+	)
+/datum/component/construction/mecha/percutio/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the crew compartment parts are almost finished, you can add the <b>scanning_module</b> for the driver.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured seats"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"forward_message" = "added capacitor",
+			"backward_message" = "unscecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured capacitor",
+			"backward_message" = "removed capacitor"
+		),
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added.",
+			"forward_message" = "added power cell",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured power cell",
+			"backward_message" = "removed power cell"
+		),
+	)
+
+/datum/component/construction/mecha/percutio/get_inner_plating_steps()
+	return list(
+		list(
+			"key" = inner_plating,
+			"amount" = inner_plating_amount,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The interior of the Percutio is finished, you need to use 16 iron rods to form the back wheels chains.",
+			"forward_message" = "installed traction chains",
+			"backward_message" = "unsecured power cell"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The chains are on but slacked, they can be adjusted with a <b>screwdriver</b>.",
+			"forward_message" = "chains tightened",
+			"backward_message" = "removed chains"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The hull is finished, you need to reinforce everything by welding it.",
+			"forward_message" = "welded car hull",
+			"backward_message" = "slackened chains"
+		),
+	)
+/datum/component/construction/mecha/percutio/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_WELDER,
+			"desc" = "the hull is welded, you now need to add the turret to the tank.",
+			"forward_message" = "installed turret",
+			"backward_message" = "cut welds on hull"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The turret is now on the percutio, but its ready to fall out at any movement, you need to <b> screw <b/> it in.",
+			"forward_message" = "gun and antenna added",
+			"backward_message" = "pushed off turret"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The turret is assembled, the plates on it need to be welded shut for combat.",
+			"forward_message" = "welded turret",
+			"backward_message" = "unsecured turret"
+		),
+	)
+
+// Balfour Stockade (the chimera mech non mech)
+
+/datum/component/construction/unordered/mecha_chassis/stockade
+	result = /datum/component/construction/mecha/stockade
+	steps = list(
+		/obj/item/mecha_parts/part/stockade_left_arm,
+		/obj/item/mecha_parts/part/stockade_right_arm,
+		/obj/item/mecha_parts/part/stockade_left_leg,
+	)
+
+
+/datum/component/construction/mecha/stockade
+	result = /obj/vehicle/ridden/stockade // yep, mech building for a non mech
+	base_icon = "stockade"
+
+	outer_plating = /obj/item/mecha_parts/part/stockade_armor
+	outer_plating_amount = 1
+
+/datum/component/construction/mecha/stockade/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "The wheels arent attached to the carriage, you can <b>wrench</b> the first bolts on.",
+			"forward_message" = "Attached wheels",
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The wheels are on the axle but the thing has like 20 screws per wheel also, better get busy with a <b>screwdriver</b>.",
+			"forward_message" = "screwed screws",
+			"backward_message" = "removed wheels"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The wheels are on the carriage, now the gunshield, you might be able to lever it up with a <b>crowbar</b>.",
+			"forward_message" = "set gunshield",
+			"backward_message" = "unscrewed wheels"
+		),
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The gunshield bent your crowbar slightly, but its set in its position, you can use a <b>wrench</b> to secure it.",
+			"forward_message" = "secured gunshield",
+			"backward_message" = "unset gunshield"
+		),
+	)
+/datum/component/construction/mecha/stockade/get_circuit_steps()
+	return list(
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The gunshield needs to be <b>welded</b> so it can protect you.",
+			"forward_message" = "welded gunshield",
+			"backward_message" = "unsecured gunshield"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_WELDER,
+			"desc" = "The slot for the box of more ammo is exposed now, you can <b>pry</b> it into its slot.",
+			"forward_message" = "inserted box of infinity ammo",
+			"backward_message" = "broke welds"
+		),
+	)
+/datum/component/construction/mecha/stockade/get_circuit_weapon_steps()
+	return list(
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "You need to <b>screw</b> the box in, otherwise it might tip over and it said dont do that.",
+			"forward_message" = "unset syndicate doom box",
+			"backward_message" = "secured violation of thermodynamics"
+		),
+	)
+/datum/component/construction/mecha/stockade/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the gunsight needs to be made, put a <b>scanning_module</b> in.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured blackbox of boom"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+	)
+
+/datum/component/construction/mecha/stockade/get_inner_plating_steps()
+	return list(
+	)
+/datum/component/construction/mecha/stockade/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the gun needs to be put in get ready to heave.",
+			"forward_message" = "gun lifted into place",
+			"backward_message" = "unsecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Your arms dont want to work much anymore, but the gun is in its mounting, now you need to <b> screw </b> it in.",
+			"forward_message" = "gun affixed",
+			"backward_message" = "pushed off gun"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The uhh, thing looks compressed? Smack the funny box the syndicate made with a <b> Crowbar </b> and maybe that fixes it.",
+			"forward_message" = "space time distortion dispersed",
+			"backward_message" = "unsecured gun"
+		),
+	)
+
+// Heme QMW 1a Scourge Hunter
+/datum/component/construction/unordered/mecha_chassis/scourgehunter
+	result = /datum/component/construction/mecha/scourgehunter
+	steps = list(
+		/obj/item/mecha_parts/part/scourgehunter_left_arm,
+		/obj/item/mecha_parts/part/scourgehunter_right_arm,
+		/obj/item/mecha_parts/part/scourgehunter_left_leg,
+		/obj/item/mecha_parts/part/scourgehunter_right_leg,
+		/obj/item/mecha_parts/part/scourgehunter_torso
+	)
+
+
+/datum/component/construction/mecha/scourgehunter
+	result = /obj/vehicle/sealed/mecha/scourgehunter
+	base_icon = "scourgehunter"
+
+	circuit_control = /obj/item/circuitboard/mecha/scourgehunter/main
+	circuit_periph = /obj/item/circuitboard/mecha/scourgehunter/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/scourgehunter/targeting
+
+	inner_plating = /obj/item/stack/sheet/plastic
+	inner_plating_amount = 10
+
+	outer_plating = /obj/item/mecha_parts/part/scourgehunter_armor
+	outer_plating_amount = 1
+
+/datum/component/construction/mecha/scourgehunter/get_frame_steps()
+	return list(
+		list(
+			"key" = TOOL_WRENCH,
+			"desc" = "legs arent on, you can start with the left ones with some gusto and a <b>wrench</b>.",
+			"forward_message" = "Attached left legs",
+		),
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The left legs are on, now you can put the right ones on with a <b>wrench</b>.",
+			"forward_message" = "Attached right legs",
+			"backward_message" = "removed left legs"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The legs are now attached properly, you can deploy the feet with a <b>crowbar</b>.",
+			"forward_message" = "pried out feet",
+			"backward_message" = "removed right legs"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_circuit_steps()
+	return list(
+		list(
+			"key" = circuit_periph,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Now that the legs are attached, you can put in the hydraulics.",
+			"forward_message" = "added hydraulics",
+			"backward_message" = "colapsed feet"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The hydraulics are in but is sitting unsecured. it and can be <b>screwed</b> into place.",
+			"forward_message" = "secured hydraulics",
+			"backward_message" = "removed hydraulics"
+		),
+		list(
+			"key" = circuit_control,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The hydraulics are now secured, and the <b>valves & dials</b> can be slotted in.",
+			"forward_message" = "added control components",
+			"backward_message" = "unsecured hydraulics"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The control area slotted in nicely, there is alot of <b>screwing</b> to do so get to work.",
+			"forward_message" = "secured controls station",
+			"backward_message" = "removed dials and valves"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "There are still more screws to be worked at, dont give up!.",
+			"forward_message" = "secrewed more screws",
+			"backward_message" = "unsecured part"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Who decided there needed to be 8 screws per light? Who cares keep <b>screwing</b>.",
+			"forward_message" = "secrewed even more screws",
+			"backward_message" = "ripped out some screws"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Finally only a few screws left. No wonder the screw box weighed 30 pounds. Finish <b>screwing</b>.",
+			"forward_message" = "Restored Sanity",
+			"backward_message" = "ripped out some screws"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_circuit_weapon_steps()
+	return list(
+				list(
+			"key" = circuit_weapon,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The <b>Seating</b> is still not in, do you want to crouch while driving?.",
+			"forward_message" = "added the seats",
+			"backward_message" = "disconnected some screws"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The seating is loose and your not stupid enough to leave it like that.",
+			"forward_message" = "secured seating",
+			"backward_message" = "removed seating"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_stockpart_steps()
+	return list(
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "the crew compartment parts are almost finished, you can add the <b>scanning_module</b> now.",
+			"forward_message" = "added scanning module",
+			"backward_message" = "unsecured seating"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Scanning module is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured scanning module",
+			"backward_message" = "removed scanning module"
+		),
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"forward_message" = "added capacitor",
+			"backward_message" = "unscecured scanning module"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "Capacitor is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured capacitor",
+			"backward_message" = "removed capacitor"
+		),
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "Capacitor is secured, and the <b>power cell</b> can be added.",
+			"forward_message" = "added power cell",
+			"backward_message" = "unsecured capacitor"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The power cell is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured power cell",
+			"backward_message" = "removed power cell"
+		),
+	)
+
+/datum/component/construction/mecha/scourgehunter/get_inner_plating_steps()
+	return list(
+		list(
+			"key" = inner_plating,
+			"amount" = inner_plating_amount,
+			"back_key" = TOOL_SCREWDRIVER,
+			"desc" = "The interior of the Scourge Hunter is almost done, you need to use 10 sheets of plastic to fabricate hydraulic lines.",
+			"forward_message" = "installed hydraulic lines",
+			"backward_message" = "unsecured power cell"
+		),
+		list(
+			"key" = TOOL_SCREWDRIVER,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The lines need to be secured... with more god damned screws <b>screwdriver</b>.",
+			"forward_message" = "hydraulic lines secured",
+			"backward_message" = "removed hydraulic lines"
+		),
+		list(
+			"key" = TOOL_WELDER,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "That didnt need to many screws thankfully, now you can weld everything up.",
+			"forward_message" = "welded mech chassis",
+			"backward_message" = "slackened hydraulics"
+		),
+	)
+/datum/component/construction/mecha/scourgehunter/get_outer_plating_steps()
+	return list(
+		list(
+			"key" = outer_plating,
+			"amount" = outer_plating_amount,
+			"action" = ITEM_DELETE,
+			"back_key" = TOOL_WELDER,
+			"desc" = "the hull is welded, you now need to add the turret to the tank.",
+			"forward_message" = "installed turret",
+			"backward_message" = "cut welds on hull"
+		),
+		list(
+			"key" = TOOL_WRENCH,
+			"back_key" = TOOL_CROWBAR,
+			"desc" = "The turret falls into its socket with a satisfying clunk, it needs some bolts <b>wrenched<b/> to be secured.",
+			"forward_message" = "gun and antenna added",
+			"backward_message" = "pushed off turret"
+		),
+		list(
+			"key" = TOOL_CROWBAR,
+			"back_key" = TOOL_WRENCH,
+			"desc" = "The turret is assembled and the legs are on, you just need to pry it from its packaged state.",
+			"forward_message" = "deployed mech",
+			"backward_message" = "unsecured turret"
+		),
+	)
+

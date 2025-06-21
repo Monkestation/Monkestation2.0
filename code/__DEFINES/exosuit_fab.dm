@@ -42,9 +42,15 @@
 #define EXOSUIT_MODULE_TANK (1<<14)
 // Module is compatbile with drilling "mechs"
 #define EXOSUIT_MODULE_DRILL (1<<15)
+// Module is compatible with support tank "mechs"  (needed to seperate this otherwise we could have devitts with gibbing cannons)
+#define EXOSUIT_MODULE_SUPPORTTANK (1<<16)
+// Module is compatible with flame tank "mechs"
+#define EXOSUIT_MODULE_FLAMETANK (1<<17)
+// Module is compatible with fucking battleship "mechs" do I need to explain?
+#define EXOSUIT_MODULE_BATTLESHIP (1<<18)
+// Module is compatible with old ass mechs.
+#define EXOSUIT_MODULE_FOXMECH (1<<18)
 //monkestation edit end
-
-
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)
 /// Module is compatible with "Combat" Exosuit models - Gygax, H.O.N.K, Durand and Phazon, or any Exosuit with an empty Concealed Weapon Bay

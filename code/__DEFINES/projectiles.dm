@@ -69,7 +69,12 @@
 #define CALIBER_SPEAR "throwing spear"
 //Peashooter ammo for mech and minigun
 #define CALIBER_22LR ".22 LR"
-
+//12.7x70mm malone, used in devitt, and in malone Mk.2
+#define CALIBER_127X70MM "12.7X70MM"
+//60mm rocket, used for the ignifist AT launcher
+#define CALIBER_60MM "60MM ROCKETS"
+//20x160mm, used in killing the devitt, found in neville AT rifle
+#define CALIBER_20X160MM "20X160MM"
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
 

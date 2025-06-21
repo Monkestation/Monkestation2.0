@@ -8,6 +8,7 @@
 		/datum/traitor_objective/ultimate/infect_ai = 1,
 		/datum/traitor_objective/ultimate/dark_matteor = 1,
 //		/datum/traitor_objective/ultimate/wizard = 1, //monkestation edit
+		/datum/traitor_objective/ultimate/firebrand = 1,
 	)
 	weight = 100
 
