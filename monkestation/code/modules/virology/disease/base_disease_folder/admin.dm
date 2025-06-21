@@ -79,14 +79,14 @@
 
 			var/datum/symptom/e = new symptom(D)
 			e.stage = i
-			e.chance = input(C, "Choose the default chance for this effect to activate", "Effect", e.chance) as null | num
-			e.chance = clamp(e.chance,0,100)
 			e.max_chance = input(C, "Choose the maximum chance for this effect to activate", "Effect", e.max_chance) as null | num
 			e.max_chance = clamp(e.max_chance,0,100)
-			e.multiplier = input(C, "Choose the default strength for this effect", "Effect", e.multiplier) as null | num
-			e.multiplier = clamp(e.multiplier,0,100)
+			e.chance = input(C, "Choose the default chance for this effect to activate", "Effect", e.chance) as null | num
+			e.chance = clamp(e.chance,0,100)
 			e.max_multiplier = input(C, "Choose the maximum strength for this effect", "Effect", e.max_multiplier) as null | num
 			e.max_multiplier = clamp(e.max_multiplier,0,100)
+			e.multiplier = input(C, "Choose the default strength for this effect", "Effect", e.multiplier) as null | num
+			e.multiplier = clamp(e.multiplier,0,100)
 
 			D.log += "Added [e.name] at [e.chance]% chance and [e.multiplier] strength<br>"
 			D.symptoms += e
