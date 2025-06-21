@@ -362,11 +362,11 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/ui_act(action, params)
 	. = ..()
+	if(.)
+		return
 	ui_process(action, params)
 
 /obj/machinery/nuclearbomb/proc/ui_process(action, params)
-	if(.)
-		return
 	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
 	switch(action)
 		if("eject_disk")

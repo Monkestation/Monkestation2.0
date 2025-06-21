@@ -147,6 +147,8 @@
 
 /obj/machinery/nuclearbomb/commando/examine(mob/user)
 	. = ..()
+	if(!isliving(user))
+		return
 	if(user.mind.has_antag_datum(/datum/antagonist/nukeop))
 		var/list/area_list = list()
 		for(var/area/added_area in decrypt_areas)
@@ -206,8 +208,6 @@
 	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)
 
 /obj/machinery/nuclearbomb/commando/ui_process(action, params)
-	if(.)
-		return
 	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
 	switch(action)
 		if("eject_disk")
