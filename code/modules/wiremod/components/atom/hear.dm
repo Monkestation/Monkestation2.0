@@ -43,9 +43,16 @@
 	if(speaker == parent?.shell)
 		return
 
-	message_port.set_output(raw_message)
+	var/output_message = html_decode(raw_message)
 	if(message_language)
-		language_port.set_output(initial(message_language.name))
+		var/language_output = message_language::name
+		if(!(message_language in GLOB.roundstart_languages))
+			var/datum/language/dialect = GLOB.language_datum_instances[message_language]
+			output_message = dialect.scramble(output_message)
+			if(dialect.flags & LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD)
+				language_output = "Unknown Language"
+		language_port.set_output(language_output)
+	message_port.set_output(output_message)
 	speaker_port.set_output(speaker)
 	speaker_name.set_output(speaker.GetVoice())
 	trigger_port.set_output(COMPONENT_SIGNAL)
