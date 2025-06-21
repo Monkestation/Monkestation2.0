@@ -1,3 +1,4 @@
+/*
 /datum/techweb_node/ore_processing
 	id = "ore_processing_nodes"
 	display_name = "Ore Processing Nodes"
@@ -16,3 +17,4 @@
 	hidden = TRUE
 	show_on_wiki = FALSE
 	starting_node = TRUE
+*/
