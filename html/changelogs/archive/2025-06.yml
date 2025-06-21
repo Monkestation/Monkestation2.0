@@ -348,3 +348,9 @@
   - bugfix: You can no longer bypass weight limits of things that fit in storages
       by merging stacks
   - bugfix: Fix some cases of return_inv() not working properly.
+2025-06-21:
+  SirNightKnight:
+  - bugfix: fixes quick pull from belt and backpack.
+  flleeppyy:
+  - bugfix: Setting storytellers should now actually set, before the round starts
+  - bugfix: Storytellers changed after roundstart will now tick instead of doing nothing
