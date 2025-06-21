@@ -38,7 +38,7 @@
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
-	var/list/researched_knowledge = list()
+	var/list/researched_knowledge = list(/datum/heretic_knowledge/ritual_lore)
 	/// The organ slot we place our Living Heart in.
 	var/living_heart_organ_slot = ORGAN_SLOT_HEART
 	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
@@ -83,6 +83,10 @@
 		PATH_KNOCK = COLOR_YELLOW,
 		PATH_MOON = COLOR_BLUE_LIGHT,
 	)
+	///Handles how difficult each ritual is and how severe the side effects. Currently 7 is the cap for ascention.
+	var/ritual_progression = 0
+	///
+	var/magic_words = "KABLAM"
 
 /* monkestation removal: sacrifice refactor
 /datum/antagonist/heretic/Destroy()
@@ -675,7 +679,6 @@ monkestation end */
  */
 /datum/antagonist/heretic/proc/get_rituals()
 	var/list/rituals = list()
-
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		if(!knowledge.can_be_invoked(src))
