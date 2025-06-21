@@ -28,6 +28,10 @@
 	name = "laser"
 	icon_state = "beam"
 
+/obj/effect/projectile/tracer/laser/rifle
+	name = "laser"
+	icon_state = "beam_rifle"
+
 /obj/effect/projectile/tracer/laser/blue
 	icon_state = "beam_blue"
 
