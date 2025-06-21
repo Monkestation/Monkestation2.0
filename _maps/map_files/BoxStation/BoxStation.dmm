@@ -3059,6 +3059,7 @@
 "bay" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
 "baD" = (
@@ -6097,7 +6098,6 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "bTK" = (
@@ -31736,7 +31736,9 @@
 	specialfunctions = 4;
 	normaldoorcontrol = 1
 	},
-/obj/structure/filingcabinet,
+/obj/machinery/computer/records/pathology{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "kiC" = (
@@ -46329,6 +46331,7 @@
 	name = "medical camera"
 	},
 /obj/structure/table,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "oUG" = (
@@ -48695,7 +48698,7 @@
 /area/station/service/hydroponics/garden)
 "pHR" = (
 /turf/open/space/basic,
-/area/space/shipbreak)
+/area/shipbreak)
 "pHW" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
@@ -57459,7 +57462,6 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "sHr" = (
