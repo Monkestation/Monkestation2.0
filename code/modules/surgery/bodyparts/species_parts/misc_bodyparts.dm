@@ -487,28 +487,24 @@
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
+	unarmed_damage_high = 7
 
 /obj/item/bodypart/arm/right/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
+	unarmed_damage_high = 7
 
 /obj/item/bodypart/leg/left/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/right/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 ///CARDBOARD GOLEM
@@ -529,8 +525,7 @@
 	unarmed_attack_verb = "whip"
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 8
 	unarmed_damage_high = 8
 
 /obj/item/bodypart/arm/right/golem/cardboard
@@ -539,8 +534,7 @@
 	unarmed_attack_verb = "whip"
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 8
 	unarmed_damage_high = 8
 
 /obj/item/bodypart/leg/left/golem/cardboard
@@ -548,8 +542,7 @@
 	should_draw_greyscale = FALSE
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/right/golem/cardboard
@@ -557,8 +550,7 @@
 	should_draw_greyscale = FALSE
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 ///DURATHREAD GOLEM
@@ -656,31 +648,27 @@
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 1
+	unarmed_damage_low = 10
 	unarmed_damage_high = 10
-	unarmed_stun_threshold = 9
 
 /obj/item/bodypart/arm/right/golem/uranium
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 1
+	unarmed_damage_low = 10
 	unarmed_damage_high = 10
-	unarmed_stun_threshold = 9
 
 /obj/item/bodypart/leg/left/golem/uranium
 	attack_type = BURN
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 2
+	unarmed_damage_low = 15
 	unarmed_damage_high = 15
-	unarmed_stun_threshold = 9
 
 /obj/item/bodypart/leg/right/golem/uranium
 	attack_type = BURN
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 2
+	unarmed_damage_low = 15
 	unarmed_damage_high = 15
-	unarmed_stun_threshold = 9
 
 ///PLASTEEL GOLEM
 /obj/item/bodypart/arm/left/golem/plasteel
@@ -710,8 +698,8 @@
 /obj/item/bodypart/leg/right/golem/plasteel
 	unarmed_attack_effect = ATTACK_EFFECT_SMASH
 	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 18
-	unarmed_damage_high = 32
+	unarmed_damage_low = 22
+	unarmed_damage_high = 22
 	unarmed_stun_threshold = 18
 
 ///BANANIUM GOLEM
@@ -719,28 +707,24 @@
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
-	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2 //Harmless and can't stun
+	unarmed_damage_high = 1 //Harmless and can't stun
 
 /obj/item/bodypart/arm/right/golem/bananium
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
 
 /obj/item/bodypart/leg/right/golem/bananium
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
 
 /obj/item/bodypart/leg/left/golem/bananium
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
 
 //

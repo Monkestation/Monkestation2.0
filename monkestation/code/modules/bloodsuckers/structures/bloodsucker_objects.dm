@@ -10,7 +10,7 @@
 		return
 
 	if(victim != attacker)
-		if(!do_after(victim, 5 SECONDS, attacker))
+		if(!do_after(attacker, 5 SECONDS, victim))
 			return
 		attacker.visible_message(
 			span_notice("[attacker] forces [victim] to drink from \the [src]."),

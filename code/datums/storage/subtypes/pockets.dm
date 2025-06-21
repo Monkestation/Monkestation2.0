@@ -4,22 +4,18 @@
 	max_total_storage = 50
 	rustle_sound = FALSE
 
-/datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force)
+/datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	. = ..()
 	if(!.)
-		return
-
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
 		return
 
 	if(!silent || override)
 		return
 
 	if(quickdraw)
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]. Right-click [resolve_parent] to remove it."))
+		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]. Right-click to remove it."))
 	else
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]."))
+		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]."))
 
 /datum/storage/pockets/small
 	max_slots = 1

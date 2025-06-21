@@ -119,7 +119,7 @@
 		return
 	build_all_button_icons()
 	if(next_use_time > world.time)
-		START_PROCESSING(SSfastprocess, src)
+		START_PROCESSING(SScooldown_actions, src)
 	RegisterSignal(granted_to, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(handle_melee_attack))
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Grant(granted_to)
@@ -172,7 +172,7 @@
 	else
 		next_use_time = world.time + cooldown_time
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SScooldown_actions, src)
 
 /// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
 /// Will use default cooldown time if an override is not specified
@@ -268,7 +268,7 @@
 /datum/action/cooldown/process()
 	if(QDELETED(owner) || (next_use_time - world.time) <= 0)
 		build_all_button_icons(UPDATE_BUTTON_STATUS)
-		STOP_PROCESSING(SSfastprocess, src)
+		STOP_PROCESSING(SScooldown_actions, src)
 		return
 
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
