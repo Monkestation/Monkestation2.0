@@ -91,6 +91,11 @@
 #define JOB_FLORIST "Florist"
 #define JOB_SPRING_CLEANER "Spring Cleaner"
 #define JOB_BIRD_WATCHER "Bird Watcher"
+//Summer Donator Jobs
+#define JOB_GRILLER "Grill Master"
+#define JOB_HOTDOG "Hotdog Dude"
+#define JOB_GYMBRO "Gym Bro"
+#define JOB_TOURIST "Tourist"
 //Spooktober
 #define JOB_SPOOKTOBER_GHOST "Ghost"
 #define JOB_SPOOKTOBER_GODZILLA "Discount Godzilla"
