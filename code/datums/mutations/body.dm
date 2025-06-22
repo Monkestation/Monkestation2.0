@@ -241,29 +241,23 @@
 	glow_color = get_glow_color()
 	glow = owner.mob_light()
 	modify()
-	RegisterSignal(owner, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(on_saboteur))
 
 // Override modify here without a parent call, because we don't actually give an action.
 /datum/mutation/human/glow/modify()
-	glow?.set_light_range_power_color(glow_range * GET_MUTATION_POWER(src), glow_power, glow_color)
+	if(!glow)
+		return
+
+	glow.set_light_range_power_color(glow_range * GET_MUTATION_POWER(src), glow_power, glow_color)
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(owner, COMSIG_ATOM_SABOTEUR_ACT)
 	QDEL_NULL(glow)
 
 /// Returns a color for the glow effect
 /datum/mutation/human/glow/proc/get_glow_color()
 	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
-
-/datum/mutation/human/glow/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
-	if(QDELETED(glow))
-		return
-	glow.set_light_on(FALSE)
-	addtimer(CALLBACK(glow, TYPE_PROC_REF(/atom, set_light_on), TRUE), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/mutation/human/glow/anti
 	name = "Anti-Glow"
@@ -275,9 +269,6 @@
 
 /datum/mutation/human/glow/anti/get_glow_color()
 	return COLOR_BLACK
-
-/datum/mutation/human/glow/anti/on_saboteur(datum/source, disrupt_duration)
-	return // there's no "light" to put out, only darkness
 
 /datum/mutation/human/strong
 	name = "Strength"
