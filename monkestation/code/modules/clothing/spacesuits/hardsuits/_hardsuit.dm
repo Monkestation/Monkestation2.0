@@ -11,92 +11,54 @@
 	max_integrity = 300
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/hardsuit
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser, /obj/item/tank/jetpack/oxygen, /obj/item/tank/jetpack/carbondioxide)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/tank/jetpack,
+		/obj/item/t_scanner,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+	)
 	siemens_coefficient = 0
-	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
+	actions_types = list(/datum/action/item_action/toggle_spacesuit)
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
+	/// Type of helmet that is attached to our hardsuit. Can be retracted/deployed at a press of a button. Should never be null
+	var/hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit
+	/// If our helmet is deployed. If the suit is removed and re-equipped, the helmet will automatically deploy if it was already engaged
+	var/helmet_deployed = FALSE
+
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
-	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/tank/jetpack/suit/jetpack = null
 	var/hardsuit_type
-	/// Whether the helmet is on.
-	var/helmet_on = FALSE
 
 /obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
 	. = ..()
+	if(isnull(hardsuit_helmet))
+		CRASH("[type] is a hardsuit which does not have a `hardsuit_helmet` defined")
+	AddComponent(\
+		/datum/component/toggle_attached_clothing,\
+		deployable_type = hardsuit_helmet,\
+		equipped_slot = ITEM_SLOT_HEAD,\
+		action_name = "Toggle Helmet",\
+		on_deployed = CALLBACK(src, PROC_REF(on_helmet_toggle)),\
+		on_removed = CALLBACK(src, PROC_REF(on_helmet_toggle)),\
+	)
 	if(jetpack && ispath(jetpack))
 		jetpack = new jetpack(src)
 
-	MakeHelmet()
+/// Plays a sound when the helmet is toggled
+/obj/item/clothing/suit/space/hardsuit/proc/on_helmet_toggle()
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
-	if(!QDELETED(helmet))
-		QDEL_NULL(helmet)
 	if(jetpack)
 		QDEL_NULL(jetpack)
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
-	if(!helmettype)
-		return
-	if(!helmet)
-		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
-		W.suit = src
-		helmet = W
-
-/obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
-	if(!helmet)
-		return
-	helmet_on = FALSE
-	if(ishuman(helmet.loc))
-		var/mob/living/carbon/H = helmet.loc
-		if(helmet.on)
-			helmet.attack_self(H)
-		H.transferItemToLoc(helmet, src, TRUE)
-		H.update_worn_oversuit()
-		to_chat(H, span_notice("The helmet on the hardsuit disengages."))
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	else
-		helmet.forceMove(src)
-
-/obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
-	var/mob/living/carbon/human/H = src.loc
-	if(!istype(src.loc) || !helmettype)
-		return
-	if(!helmet)
-		to_chat(H, span_warning("The helmet's lightbulb seems to be damaged! You'll need a replacement bulb."))
-		return
-	if(!helmet_on)
-		if(H.wear_suit != src)
-			to_chat(H, span_warning("You must be wearing [src] to engage the helmet!"))
-			return
-		if(H.head)
-			to_chat(H, span_warning("You're already wearing something on your head!"))
-			return
-		else if(H.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
-			to_chat(H, span_notice("You engage the helmet on the hardsuit."))
-			helmet_on = TRUE
-			H.update_worn_oversuit()
-			playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	else
-		RemoveHelmet()
-
-/// implements button for thermoregulamators, checks if helmet or regulator is being toggled
-/obj/item/clothing/suit/space/hardsuit/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/toggle_spacesuit))
-		toggle_spacesuit(user)
-	else if(istype(actiontype, /datum/action/item_action/toggle_helmet))
-		ToggleHelmet()
-
 /obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	..()
-
-/obj/item/clothing/suit/space/hardsuit/examine(mob/user)
-	. = ..()
-	if(!helmet && helmettype)
-		. += span_notice("The helmet on [src] seems to be malfunctioning. Its light bulb needs to be replaced.")
+	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/tank/jetpack/suit))
@@ -124,29 +86,10 @@
 		jetpack = null
 		to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
 		return
-	else if(istype(I, /obj/item/light) && helmettype)
-		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
-			to_chat(user, span_warning("You cannot replace the bulb in the helmet of [src] while wearing it."))
-			return
-		if(helmet)
-			to_chat(user, span_warning("The helmet of [src] does not require a new bulb."))
-			return
-		var/obj/item/light/L = I
-		if(L.status)
-			to_chat(user, span_warning("This bulb is too damaged to use as a replacement!"))
-			return
-		if(do_after(user, 5 SECONDS, src))
-			qdel(I)
-			helmet = new helmettype(src)
-			to_chat(user, span_notice("You have successfully repaired [src]'s helmet."))
-			new /obj/item/light/bulb/broken(drop_location())
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
-	..()
-	if(helmet && slot != ITEM_SLOT_OCLOTHING)
-		RemoveHelmet()
-
+	. = ..()
 	if(jetpack)
 		if(slot == ITEM_SLOT_OCLOTHING)
 			for(var/X in jetpack.actions)
@@ -154,8 +97,7 @@
 				A.Grant(user)
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
-	..()
-	RemoveHelmet()
+	. = ..()
 	if(jetpack)
 		for(var/X in jetpack.actions)
 			var/datum/action/A = X
