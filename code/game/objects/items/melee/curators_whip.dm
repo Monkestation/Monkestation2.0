@@ -22,7 +22,7 @@
 
 /obj/item/melee/curator_whip/examine(mob/user)
 	. = ..()
-	. += span_notice("Target someone's arms in order to yank whatever they're holding out of that hand.")
+	. += span_notice("Target someone's arms in order to yank whatever they're holding out of that hand, tossing it away from the both of you.")
 	. += span_notice("Target someone's legs in order to trip someone who's 2 to 3 tiles away.")
 
 /obj/item/melee/curator_whip/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
@@ -64,6 +64,40 @@
 		user.changeNext_move(CLICK_CD_WHIP)
 		. |= AFTERATTACK_PROCESSED_ITEM
 
+/// Tries to find a target to throw a a disarmed item towards.
+/// It will ignore anything adjacent to the user or target.
+/// It prioritizes (in order) trash bins (not the disposals ones), clowns,
+/// and if there's neither in view, it will then just throw it away from the user and target.
+/// Why? Because it's funny.
+/obj/item/melee/curator_whip/proc/find_disarm_target(mob/living/carbon/user, mob/living/target)
+	var/list/targets = oview(target)
+	var/list/blacklisted_turfs = RANGE_TURFS(1, get_turf(user)) + RANGE_TURFS(1, get_turf(target)) // don't throw it directly next to them
+	var/list/trash_targets
+	var/list/clown_targets
+	for(var/atom/movable/thing in targets)
+		if(QDELETED(thing))
+			continue
+		var/turf/open/turf = thing.loc
+		if(!isopenturf(turf) || (turf in blacklisted_turfs))
+			continue
+		if(istype(thing, /obj/structure/closet/crate/bin))
+			LAZYADD(trash_targets, thing)
+		else if(ishuman(thing))
+			var/mob/living/carbon/human/potential_clown = thing
+			if(is_clown_job(potential_clown.mind?.assigned_role))
+				LAZYADD(clown_targets, potential_clown)
+
+	if(LAZYLEN(trash_targets))
+		var/obj/structure/closet/crate/bin/bin = pick(trash_targets)
+		// lmao
+		if(prob(45) && (bin.opened || bin.open()))
+			addtimer(CALLBACK(bin, TYPE_PROC_REF(/obj/structure/closet, close)), 1.5 SECONDS)
+		return bin
+	else if(LAZYLEN(clown_targets))
+		return pick(clown_targets)
+	else
+		return get_edge_target_turf(target, get_dir(user, target))
+
 /obj/item/melee/curator_whip/proc/whip_disarm(mob/living/carbon/user, mob/living/target, side)
 	var/obj/item/item = target.get_held_items_for_side(side)
 	if(istype(item, /obj/item/offhand)) // if it's an offhand, check whatever's in their other hand
@@ -76,19 +110,18 @@
 			return TRUE // we still return TRUE so we don't continue the attack chain
 	if(!target.dropItemToGround(item))
 		return FALSE
+	var/atom/disarm_target = find_disarm_target(user, target)
+	var/target_text = isturf(disarm_target) ? "away" : "towards \the [disarm_target]"
 	target.visible_message(
-		span_danger("[item] is yanked out of [target]'s hands by \the [src]!"),
-		span_userdanger("[user] yanks [item] out of your hands with \the [src]!"),
+		span_danger("[item] is yanked out of [target]'s hands by \the [src], sending it flying [target_text]!"),
+		span_userdanger("[user] yanks [item] out of your hands with \the [src], sending it flying [target_text]!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
-	to_chat(user, span_notice("You yank [item] towards yourself."))
-	log_combat(user, target, "disarmed", src)
+	to_chat(user, span_notice("You yank [item] away, sending it flying [target_text]!"))
+	log_combat(user, target, "disarmed", src, addition = isturf(disarm_target) ? "thrown [dir2text(get_dir(user, target))]" : "thrown towards [disarm_target]")
 	user.do_attack_animation(target, used_item = src)
 	playsound(target.loc, hitsound, get_clamped_volume(), TRUE, extrarange = -1, falloff_distance = 0)
-	if(!user.get_inactive_held_item())
-		user.throw_mode_on(THROW_MODE_TOGGLE)
-		user.swap_hand()
-		item.throw_at(user, range = 10, speed = 2)
+	item.throw_at(target, range = 10, speed = 3)
 	return TRUE
 
 /obj/item/melee/curator_whip/proc/whip_trip(mob/living/user, mob/living/target)
@@ -108,17 +141,7 @@
 				return FALSE
 		if(4 to INFINITY)
 			return FALSE
-	// this is a horrible hack to make it so tripping doesn't drop items.
-	// we just apply nodrop to their held items right before tripping them,
-	// and then immediately remove it after the status effect is applied.
-	// i'm sorry ~Lucy
-	var/list/stupid_horrible_list = list()
-	for(var/obj/item/item in target.held_items)
-		ADD_TRAIT(item, TRAIT_NODROP, REF(src))
-		stupid_horrible_list += item
-	target.apply_status_effect(/datum/status_effect/incapacitating/knockdown/tripped, 3 SECONDS)
-	for(var/obj/item/item in stupid_horrible_list)
-		REMOVE_TRAIT(item, TRAIT_NODROP, REF(src))
+	target.apply_status_effect(/datum/status_effect/incapacitating/knockdown/tripped, 2 SECONDS)
 	log_combat(user, target, "tripped", src)
 	target.visible_message(
 		span_danger("[user] knocks [target] off [target.p_their()] feet!"),
