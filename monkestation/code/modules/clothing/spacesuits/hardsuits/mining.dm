@@ -19,6 +19,10 @@
 		/obj/item/pickaxe,
 		)
 
+/obj/item/clothing/suit/space/hardsuit/mining/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
 /obj/item/clothing/head/helmet/space/hardsuit/mining
 	name = "mining hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights."
@@ -26,17 +30,6 @@
 	armor_type = /datum/armor/hardsuit/mining/explorer
 	hardsuit_type = "mining"
 	light_outer_range = 7
-
-/datum/armor/hardsuit/mining/explorer
-	bullet = 30
-	laser = 30
-
-/obj/item/clothing/suit/space/hardsuit/mining/Initialize(mapload)
-	. = ..()
-	if(jetpack && ispath(jetpack))
-		jetpack = new jetpack(src)
-
-	AddComponent(/datum/component/armor_plate)
 
 /obj/item/clothing/head/helmet/space/hardsuit/mining/Initialize(mapload)
 	. = ..()

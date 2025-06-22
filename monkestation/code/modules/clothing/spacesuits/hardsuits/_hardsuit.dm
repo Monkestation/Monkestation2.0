@@ -22,15 +22,14 @@
 	siemens_coefficient = 0
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
-
+	/// Basically a shitty version of base_icon_state. TODO unfuck this
+	var/hardsuit_type
 	/// Type of helmet that is attached to our hardsuit. Can be retracted/deployed at a press of a button. Should never be null
 	var/hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit
-	/// If our helmet is deployed. If the suit is removed and re-equipped, the helmet will automatically deploy if it was already engaged
-	var/helmet_deployed = FALSE
-
-	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
-	var/obj/item/tank/jetpack/suit/jetpack = null
-	var/hardsuit_type
+	/// Upgrade module that allows a jetpack to be attached to the hardsuit. Cannot be removed once installed
+	var/obj/item/jetpack_module/jetpack_upgrade = null
+	/// Jetpack that is installed in our hardsuit
+	var/obj/item/tank/jetpack/attached_jetpack = null
 
 /obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
 	. = ..()
@@ -44,16 +43,12 @@
 		on_deployed = CALLBACK(src, PROC_REF(on_helmet_toggle)),\
 		on_removed = CALLBACK(src, PROC_REF(on_helmet_toggle)),\
 	)
-	if(jetpack && ispath(jetpack))
-		jetpack = new jetpack(src)
 
 /// Plays a sound when the helmet is toggled
 /obj/item/clothing/suit/space/hardsuit/proc/on_helmet_toggle()
 	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
-	if(jetpack)
-		QDEL_NULL(jetpack)
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
@@ -61,8 +56,20 @@
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/tank/jetpack/suit))
-		if(jetpack)
+	if(istype(I, /obj/item/jetpack_module))
+		if(jetpack_upgrade)
+			to_chat(user, span_warning("[src] has already been upgraded!"))
+			return
+		if(user.transferItemToLoc(I, src))
+			jetpack_upgrade = I
+			to_chat(user, span_notice("You install the upgrade module."))
+			return
+
+	if(istype(I, /obj/item/tank/jetpack))
+		if(isnull(jetpack_upgrade))
+			to_chat(user, span_warning("[src] needs to be upgraded to hold a jetpack."))
+			return
+		if(attached_jetpack)
 			to_chat(user, span_warning("[src] already has a jetpack installed."))
 			return
 		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING)) //Make sure the player is not wearing the suit before applying the upgrade.
@@ -70,50 +77,55 @@
 			return
 
 		if(user.transferItemToLoc(I, src))
-			jetpack = I
+			attached_jetpack = I
+			attached_jetpack.on_attach()
 			to_chat(user, span_notice("You successfully install the jetpack into [src]."))
 			return
-	else if(!cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!jetpack)
+
+	if(!cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(!attached_jetpack)
 			to_chat(user, span_warning("[src] has no jetpack installed."))
 			return
 		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 			to_chat(user, span_warning("You cannot remove the jetpack from [src] while wearing it."))
 			return
 
-		jetpack.turn_off(user)
-		jetpack.forceMove(drop_location())
-		jetpack = null
+		attached_jetpack.turn_off(user)
+		attached_jetpack.forceMove(drop_location())
+		attached_jetpack = null
 		to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
 		return
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	. = ..()
-	if(jetpack)
-		if(slot == ITEM_SLOT_OCLOTHING)
-			for(var/X in jetpack.actions)
-				var/datum/action/A = X
-				A.Grant(user)
+	if(slot != ITEM_SLOT_OCLOTHING)
+		return
+	if(attached_jetpack)
+		for(var/datum/action/jetpack_actions in attached_jetpack.actions)
+			if(istype(jetpack_actions, /datum/action/item_action/set_internals))
+				continue // XANTODO, maybe figure out a way to make this into externals instead? It keeps cutting off when it acts as internals
+			jetpack_actions.Grant(user)
 
 /obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
 	. = ..()
-	if(jetpack)
-		for(var/X in jetpack.actions)
-			var/datum/action/A = X
-			A.Remove(user)
+	if(attached_jetpack)
+		for(var/datum/action/jetpack_actions in attached_jetpack.actions)
+			jetpack_actions.Remove(user)
 
 /// Burn the person inside the hard suit just a little, the suit got really hot for a moment
-/obj/item/clothing/suit/space/emp_act(severity)
+/obj/item/clothing/suit/space/hardsuit/emp_act(severity)
 	. = ..()
-	var/mob/living/carbon/human/user = src.loc
-	if(istype(user))
-		user.apply_damage(HARDSUIT_EMP_BURN, BURN, spread_damage=TRUE)
-		to_chat(user, span_warning("You feel \the [src] heat up from the EMP burning you slightly."))
-
-		// Chance to scream
-		if (user.stat < UNCONSCIOUS && prob(10))
-			user.emote("scream")
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	var/mob/living/carbon/human/user = get(loc, /mob/living)
+	if(!istype(user))
+		return
+	user.apply_damage(HARDSUIT_EMP_BURN, BURN, spread_damage=TRUE)
+	to_chat(user, span_warning("You feel \the [src] heat up from the EMP burning you slightly."))
+	// Chance to scream
+	if(user.stat < UNCONSCIOUS && prob(10))
+		user.emote("scream")
 
 //////////////// JETPACK /////////////////////
 /obj/item/tank/jetpack/suit
@@ -192,3 +204,10 @@
 /obj/item/tank/jetpack/suit/proc/on_user_del(mob/living/carbon/human/source, force)
 	SIGNAL_HANDLER
 	turn_off(active_user)
+
+//---- Jetpack module, an upgrade that you attach to any hardsuit that allows a jetpack to be placed in the suit itself (instead of the suit storage slot)
+/obj/item/jetpack_module
+	name = "Jetpack fittings"
+	desc = "Has some hooks which allows you to attach any jetpack to any hardsuit."
+	icon = 'icons/obj/atmospherics/tank.dmi'
+	icon_state = "jetpack_module"
