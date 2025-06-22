@@ -889,7 +889,7 @@
 	requires_purchase = FALSE
 
 //Helixsix
-/datum/loadout_item/suit/star_father_suit
+/datum/loadout_item/suit/peacejacket
 	name = "Peace Jacket"
 	item_path = /obj/item/clothing/suit/peacejacket
 	donator_only = TRUE
