@@ -50,9 +50,6 @@
 	item_type = /obj/item/ammo_box/c9mm/hp
 	cost = PAYCHECK_CREW * 2
 
-/datum/armament_entry/company_import/vitezstvi/ammo_boxes/peacekeeper_rubber
-	item_type = /obj/item/ammo_box/c9mm/rubber
-
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_lethal
 	item_type = /obj/item/ammo_box/c10mm
 	cost = PAYCHECK_CREW * 2
@@ -60,9 +57,6 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_hp
 	item_type = /obj/item/ammo_box/c10mm/hp
 	cost = PAYCHECK_CREW * 2
-
-/datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_rubber
-	item_type = /obj/item/ammo_box/c10mm/rubber
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/strilka_lethal
 	item_type = /obj/item/ammo_box/c310_cargo_box

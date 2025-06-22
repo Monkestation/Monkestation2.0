@@ -99,18 +99,21 @@
 	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
 	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
+	bare_wound_bonus = 10
+	item_flags = NO_BLOOD_ON_ITEM
 
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
 	AddComponent( \
 		/datum/component/transforming, \
-		force_on = 6, \
-		throwforce_on = 8, \
+		force_on = 18, \
+		throwforce_on = 10, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		clumsy_check = FALSE, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -125,6 +128,16 @@
 		balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/wrench/combat/proc/on_scan(datum/source, mob/user, list/extra_data)
+	SIGNAL_HANDLER
+	LAZYADD(extra_data[DETSCAN_CATEGORY_ILLEGAL], "Hard-light generator detected.")
+
+/obj/item/wrench/combat/proc/is_active()
+	if(tool_behaviour)
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/wrench/bolter
 	name = "bolter wrench"
