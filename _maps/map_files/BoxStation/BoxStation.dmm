@@ -24012,6 +24012,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "hGj" = (
@@ -28520,6 +28521,11 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"jhl" = (
+/obj/structure/chair,
+/obj/effect/landmark/start/virologist,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "jhq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -117788,7 +117794,7 @@ qXC
 hQX
 bUc
 sPW
-gOr
+jhl
 oUD
 kFe
 khD
