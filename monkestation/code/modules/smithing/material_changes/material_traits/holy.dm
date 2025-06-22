@@ -12,26 +12,21 @@
 		return
 	RegisterSignal(parent, COMSIG_ITEM_DAMAGE_MULTIPLIER, PROC_REF(apply_damage_multiplier))
 
-GLOBAL_VAR_INIT(__vamp_multiplier, 2)
-GLOBAL_VAR_INIT(__vamp_sol_multiplier, 3)
-GLOBAL_VAR_INIT(__vamp_sol_test, FALSE)
-GLOBAL_VAR_INIT(__werewolf_multiplier, 5)
-
 /datum/material_trait/holy/proc/apply_damage_multiplier(obj/item/source, damage_multiplier_ptr, mob/living/victim, def_zone)
 	SIGNAL_HANDLER
 	var/damage_multiplier = 1
 	if(IS_BLOODSUCKER(victim))
 		// extra damage during sol
-		if(victim.has_status_effect(/datum/status_effect/bloodsucker_sol) || GLOB.__vamp_sol_test)
-			damage_multiplier *= GLOB.__vamp_sol_multiplier
+		if(victim.has_status_effect(/datum/status_effect/bloodsucker_sol))
+			damage_multiplier *= 3
 		else
-			damage_multiplier *= GLOB.__vamp_multiplier
+			damage_multiplier *= 2
 
 	// werewolves have insane damage resistance, so 3x damage
 	if(iswerewolf(victim))
-		damage_multiplier *= GLOB.__werewolf_multiplier
+		damage_multiplier *= 5
 	else if(isvampire(victim))
-		damage_multiplier *= GLOB.__vamp_multiplier
+		damage_multiplier *= 2
 
 	if(damage_multiplier != 1)
 		// negate physiology damage modifiers (i.e fortitude)
