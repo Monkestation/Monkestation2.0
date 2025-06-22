@@ -39028,8 +39028,9 @@
 "jhG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/plating,
-/area/station/medical/pathology/isolation)
+/area/station/medical/pathology)
 "jhH" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -45724,7 +45725,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "kIz" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/medical/pathology/isolation)
 "kIJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -68470,6 +68471,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"qgI" = (
+/turf/closed/wall,
+/area/station/medical/pathology/isolation)
 "qgQ" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/siding/dark_red{
@@ -77668,7 +77672,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "ssR" = (
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/station/medical/pathology/isolation)
 "ssY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -92909,6 +92915,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"wai" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/space/basic,
+/area/space)
 "wak" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron/dark,
@@ -135229,8 +135239,8 @@ xso
 baB
 qQM
 aaa
-aaa
 qYo
+aaa
 aaa
 lvw
 aaa
@@ -135486,8 +135496,8 @@ wjP
 qQM
 qQM
 aaa
-aaa
 efQ
+aaa
 aaa
 lvw
 aaa
@@ -135743,8 +135753,8 @@ aaa
 qYo
 aaa
 aaa
-aaa
 efQ
+aaa
 aaa
 efQ
 qYo
@@ -136000,8 +136010,8 @@ aaa
 qYo
 aaa
 aaa
-aaa
 qYo
+aaa
 aaa
 qYo
 qYo
@@ -136257,9 +136267,9 @@ gqm
 gqm
 tgT
 gqm
-gqm
+jhG
 gUf
-qYo
+aaa
 qYo
 efQ
 aaa
@@ -136517,7 +136527,7 @@ uxI
 lGt
 gqm
 gqm
-aaa
+qYo
 efQ
 aaa
 qYo
@@ -139074,17 +139084,17 @@ uXF
 tgT
 riB
 tgT
+kIz
 ssR
-jhG
+kIz
+kIz
 ssR
-ssR
-jhG
 eJm
+qgI
+qgI
+qgI
+qgI
 kIz
-kIz
-kIz
-kIz
-ssR
 hrs
 aaa
 qYo
@@ -139334,14 +139344,14 @@ tgT
 vvb
 hlG
 ePb
-kIz
+qgI
 oOz
 vfa
-jhG
+ssR
 bBG
 mJy
 hFZ
-jhG
+ssR
 qYo
 qYo
 efQ
@@ -139591,14 +139601,14 @@ tgT
 xWi
 vjI
 eec
-jhG
+ssR
 fym
 dgl
 ifi
 dZn
 bLU
 ggG
-jhG
+ssR
 aaa
 qYo
 efQ
@@ -139851,11 +139861,11 @@ xoa
 rJQ
 nlz
 bNs
+qgI
+qgI
+qgI
+qgI
 kIz
-kIz
-kIz
-kIz
-ssR
 anZ
 qYo
 efQ
@@ -140102,17 +140112,17 @@ tgT
 tgT
 pol
 tgT
-ssR
+kIz
 bla
 hGG
-jhG
+ssR
 nbR
 dgl
 ifi
 ljM
 ofa
 ggG
-jhG
+ssR
 aaa
 qYo
 efQ
@@ -140359,17 +140369,17 @@ tgT
 vKI
 iFg
 geU
-ssR
+kIz
 lkE
 uoS
-kIz
+qgI
 jQL
 ovW
-jhG
+ssR
 jFJ
 skg
 qSa
-jhG
+ssR
 qYo
 qYo
 efQ
@@ -140616,17 +140626,17 @@ oCE
 wnD
 tSU
 mNK
-ssR
-ssR
-ssR
-ssR
-ssR
-ssR
-ssR
-ssR
-ssR
-ssR
-ssR
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
+kIz
 nPp
 aaa
 aaa
@@ -140880,7 +140890,7 @@ aaa
 aaa
 qYo
 aaa
-aaa
+wai
 qYo
 aaa
 qYo
