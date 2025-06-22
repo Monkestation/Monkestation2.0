@@ -141,3 +141,14 @@
 	projectile_damage_multiplier = 0.5
 	projectile_wound_bonus = -12
 	pin = /obj/item/firing_pin/monkey
+
+/obj/item/gun/ballistic/automatic/pistol/cascadier
+	name = "\improper Cascadier 873"
+	desc = "An old Caoivish design. It attempts to compact a burst fire mechanism into a pistol. The tradeoff being extreme innacuracy. Rechambered in 9mm bullets instead of its original 8mm."
+	icon_state = "cascadier"
+	w_class = WEIGHT_CLASS_NORMAL
+	accepted_magazine_type = /obj/item/ammo_box/magazine/cascadier
+	burst_size = 3
+	fire_delay = 0.1 SECONDS
+	spread = 16
+	projectile_damage_multiplier = 0.4 // tradeoffs for an experimental pistol

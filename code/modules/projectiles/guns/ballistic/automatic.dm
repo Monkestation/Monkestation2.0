@@ -134,51 +134,7 @@
 	projectile_damage_multiplier = 0.35 //It's like 10.5 damage per bullet, it's close enough to 10 shots
 	mag_display = TRUE
 	empty_indicator = TRUE
-	special_mags = TRUE
 	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
-
-/obj/item/gun/ballistic/automatic/plastikov/refurbished //forgive me lord for i have sinned
-	name = "\improper PP-96 SMG"
-	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs. This one has been refurbished and rechambered to 10mm for better performance."
-	spread = 10
-	burst_size = 2
-	icon_state = "plastikov_refurbished"
-	inhand_icon_state = "plastikov_refurbished"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm
-	spawn_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm/red
-	projectile_damage_multiplier = 0.66 // 20 damage
-	can_suppress = TRUE
-	suppressor_x_offset = 4
-	pin = /obj/item/firing_pin/implant/pindicate
-
-/obj/item/gun/ballistic/automatic/plastikov/refurbished/unrestricted
-	pin = /obj/item/firing_pin
-
-/obj/item/gun/ballistic/automatic/rostokov
-	name = "\improper Rostokov carbine"
-	desc = "A bullpup fully automatic 9mm carbine. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
-	icon_state = "rostokov"
-	w_class = WEIGHT_CLASS_BULKY
-	inhand_icon_state = "rostokov"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/rostokov9mm
-	fire_delay = 1
-	spread = 5
-	can_suppress = FALSE
-	burst_size = 1
-	slot_flags = null
-	worn_icon_state = "rostokov"
-	actions_types = list()
-	pin = /obj/item/firing_pin/implant/pindicate
-	mag_display = TRUE
-	empty_indicator = TRUE
-	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
-
-/obj/item/gun/ballistic/automatic/rostokov/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
-
-/obj/item/gun/ballistic/automatic/rostokov/unrestricted
-	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -419,7 +375,6 @@
 	item_flags = SLOWS_WHILE_IN_HAND
 	recoil = 1.2
 	spread = 20
-
 /obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, TRUE, 0.1, 0.08, 5 SECONDS)
@@ -445,3 +400,90 @@
 	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
 	pin = /obj/item/firing_pin/monkey
+
+/obj/item/gun/ballistic/automatic/argenti
+	name = "\improper Argenti r.ii"
+	desc = "A relic of a rifle. The primary bolt action rifle of the Colonial Legion, still in good condition despite the centuries of wear. Chambered in 7.62x54r"
+	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	icon_state = "argenti"
+	inhand_icon_state = "argenti"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/argenti
+	semi_auto = FALSE
+	bolt_type = BOLT_TYPE_STANDARD
+	fire_delay = 1.4 SECONDS
+	burst_size = 0
+	recoil = 1.6
+	projectile_damage_multiplier = 0.66 // Carbineated, less damage to account for better capacity and firerate, just at the 40dmg mark
+
+/obj/item/gun/ballistic/automatic/hangman
+	name = "\improper Hangman 757"
+	desc = "An ancient revolving rifle from Caoiva. This one uses .357 instead of the original .44, probably since its more common in space."
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	icon_state = "hangman"
+	inhand_icon_state = "hangman"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/hangman
+	semi_auto = TRUE
+	bolt_type = BOLT_TYPE_STANDARD
+	fire_delay = 2 SECONDS
+	burst_size = 0
+	recoil = 1.6
+	projectile_damage_multiplier = 0.75 // 45 dmg a hit, I think this is fair since of the cancer fire rate
+
+/obj/item/gun/ballistic/automatic/malone
+	name = "\improper Malone Mk.2"
+	desc = "A cumbersome machinegun just bearly on the edge of man portability, fires the low powered 12.7x70mm round at an excessive rate of fire."
+	icon = 'icons/obj/weapons/guns/guns56x.dmi'
+	fire_sound = 'sound/weapons/gun/general/malone.ogg'
+	rack_sound = 'sound/weapons/gun/general/malonerack.ogg'
+	icon_state = "malone"
+	SET_BASE_PIXEL(-8, 0)
+	w_class = WEIGHT_CLASS_HUGE
+	inhand_icon_state = "malone"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/malone
+	fire_delay = 0.08 SECONDS
+	can_suppress = FALSE
+	burst_size = 2
+	actions_types = list()
+	slowdown = 1.5
+	item_flags = SLOWS_WHILE_IN_HAND
+	can_bayonet = FALSE
+	mag_display = TRUE
+	mag_display_ammo = FALSE
+	empty_indicator = FALSE
+	recoil = 3.8
+	wield_recoil = 2.2
+/obj/item/gun/ballistic/automatic/malone/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
+
+/obj/item/gun/ballistic/automatic/neville
+	name = "\improper 20 Neville Anti-Tank Rifle"
+	desc = "A brick of steel vaugly gunshaped. Fires bullets designed to penetrate tank armor, good luck lugging this thing around. Chambered in 20x160mm"
+	icon = 'icons/obj/weapons/guns/guns56x.dmi'
+	icon_state = "neville"
+	SET_BASE_PIXEL(-12, 0)
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	fire_sound = 'sound/weapons/gun/sniper/neville.ogg'
+	fire_sound_volume = 110
+	load_sound = 'sound/weapons/gun/sniper/nevillemag.ogg'
+	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_icon_state = "neville"
+	burst_size = 0
+	accepted_magazine_type = /obj/item/ammo_box/magazine/neville
+	actions_types = list()
+	semi_auto = TRUE
+	item_flags = SLOWS_WHILE_IN_HAND
+	bolt_type = BOLT_TYPE_STANDARD
+	fire_delay = 3.5 SECONDS
+	recoil = 10
+	wield_recoil = 3.5
+	slowdown = 2
