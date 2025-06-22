@@ -53,6 +53,9 @@
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+	/// Cached icon that has been built for this card. Intended for use in chat.
+	var/icon/cached_flat_icon
+
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
 	/// Linked bank account.
@@ -142,10 +145,22 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[ma2html(src, user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+
+/obj/item/card/id/update_overlays()
+	. = ..()
+
+	cached_flat_icon = null
+
+/// If no cached_flat_icon exists, this proc creates it and crops it. This proc then returns the cached_flat_icon. Intended only for use displaying ID card icons in chat.
+/obj/item/card/id/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+		cached_flat_icon.Crop(ID_ICON_BORDERS)
+	return cached_flat_icon
 
 /obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[ma2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.

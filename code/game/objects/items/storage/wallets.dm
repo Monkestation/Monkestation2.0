@@ -8,6 +8,7 @@
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
+	var/cached_flat_icon
 
 /obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
@@ -93,15 +94,21 @@
 
 /obj/item/storage/wallet/update_overlays()
 	. = ..()
+	cached_flat_icon = null
 	if(!front_id)
 		return
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
 	. += mutable_appearance(icon, "wallet_overlay")
 
+/obj/item/storage/wallet/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
+
 /obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
 	if(front_id)
-		return "[ma2html(src, user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
 	return ..()
 
 /obj/item/storage/wallet/proc/update_label()
