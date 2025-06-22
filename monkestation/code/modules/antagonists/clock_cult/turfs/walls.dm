@@ -19,7 +19,7 @@
 	///Should we spawn with a stabilization lattice
 	var/should_spawn_lattice = TRUE
 	///Our linked lattice
-	var/obj/structure/destructible/clockwork_wall_lattice/linked_lattice
+	var/obj/structure/destructible/clockwork/wall_lattice/linked_lattice
 
 /turf/closed/wall/clockwork/Initialize(mapload)
 	. = ..()

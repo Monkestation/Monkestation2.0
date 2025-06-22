@@ -4,7 +4,7 @@
 #define EMPOWERED_REGEN_DELAY 10 SECONDS
 #define EMPOWER_PASSIVE_DRAIN 0.5
 
-/obj/structure/destructible/clockwork_wall_lattice
+/obj/structure/destructible/clockwork/wall_lattice
 	name = "clockwork stabilization lattice"
 	desc = "A field of energy around a clockwork wall. If destroyed the wall would quickly implode."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
@@ -18,6 +18,9 @@
 	armor_type = /datum/armor/clockwork_wall_lattice
 	break_message = span_warning("The stabilization lattice rapidly collapses, bringing the wall its supporting with it!")
 	debris = null
+	damage_cap = 80
+	immune_to_servant_attacks = TRUE
+	can_rotate = FALSE
 	///The wall we are linked to
 	var/turf/closed/wall/clockwork/linked_wall
 	///Are we empowered
@@ -29,7 +32,7 @@
 	///How long does it take us to start regenerating
 	var/regen_delay = BASE_REGEN_DELAY
 
-/obj/structure/destructible/clockwork_wall_lattice/Initialize(mapload, atom/link_to)
+/obj/structure/destructible/clockwork/wall_lattice/Initialize(mapload, atom/link_to)
 	. = ..()
 	linked_wall = link_to
 	if(linked_wall)
@@ -41,7 +44,7 @@
 	if(istype(our_turf, /turf/closed/wall/clockwork))
 		linked_wall = our_turf
 
-/obj/structure/destructible/clockwork_wall_lattice/Destroy()
+/obj/structure/destructible/clockwork/wall_lattice/Destroy()
 	STOP_PROCESSING(SSthe_ark, src)
 	var/turf/closed/wall/clockwork/temp = linked_wall //this is to super ensure we dont loop
 	linked_wall = null
@@ -49,17 +52,13 @@
 		temp.dismantle_wall()
 	return ..()
 
-/obj/structure/destructible/clockwork_wall_lattice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
-	damage_amount = min(damage_amount, 80) //any single hit is capped to 80 damage
+/obj/structure/destructible/clockwork/wall_lattice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if(!regenerate_at)
 		START_PROCESSING(SSthe_ark, src)
 		regenerate_at = world.time + regen_delay
 	return ..()
 
-/obj/structure/destructible/clockwork_wall_lattice/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration, armour_ignorance)
-	return
-
-/obj/structure/destructible/clockwork_wall_lattice/process(seconds_per_tick)
+/obj/structure/destructible/clockwork/wall_lattice/process(seconds_per_tick)
 	if(world.time > regenerate_at)
 		repair_damage(regen_per_second * seconds_per_tick)
 
@@ -67,10 +66,10 @@
 		regenerate_at = 0
 		return PROCESS_KILL
 
-/obj/structure/destructible/clockwork_wall_lattice/play_attack_sound(damage_amount, damage_type, damage_flag)
+/obj/structure/destructible/clockwork/wall_lattice/play_attack_sound(damage_amount, damage_type, damage_flag)
 	playsound(get_turf(src), 'sound/effects/empulse.ogg', 75, TRUE)
 
-/obj/structure/destructible/clockwork_wall_lattice/proc/empower()
+/obj/structure/destructible/clockwork/wall_lattice/proc/empower()
 	if(is_empowered)
 		return FALSE
 
@@ -82,7 +81,7 @@
 		regenerate_at = regenerate_at - (BASE_REGEN_DELAY - EMPOWERED_REGEN_DELAY)
 	return TRUE
 
-/obj/structure/destructible/clockwork_wall_lattice/proc/unempower()
+/obj/structure/destructible/clockwork/wall_lattice/proc/unempower()
 	if(!is_empowered)
 		return FALSE
 

@@ -29,7 +29,8 @@
 
 /obj/structure/destructible/clockwork/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/clockwork_description, clockwork_desc, reebe_desc)
+	if(clockwork_desc || reebe_desc)
+		AddElement(/datum/element/clockwork_description, clockwork_desc, reebe_desc)
 
 /obj/structure/destructible/clockwork/Destroy()
 	return ..()
