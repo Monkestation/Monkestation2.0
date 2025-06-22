@@ -44,6 +44,18 @@
 		on_removed = CALLBACK(src, PROC_REF(on_helmet_toggle)),\
 	)
 
+/obj/item/clothing/suit/space/hardsuit/examine(mob/user)
+	. = ..()
+	if(!in_range(src, user) && !isobserver(user))
+		return
+	if(isnull(jetpack_upgrade))
+		. += span_alert("It can be upgraded to hold a jetpack with a jetpack fittings")
+		return
+	if(isnull(attached_jetpack))
+		. += span_alertwarning("It has no jetpack installed!")
+		return
+	. += span_info("The jetpack can be removed by ALT+Right clicking the suit.")
+
 /// Plays a sound when the helmet is toggled
 /obj/item/clothing/suit/space/hardsuit/proc/on_helmet_toggle()
 	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
@@ -96,6 +108,23 @@
 		to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
 		return
 	return ..()
+
+/obj/item/clothing/suit/space/hardsuit/alt_click_secondary(atom/A)
+	. = ..()
+	if(!.)
+		return
+	if(!attached_jetpack)
+		to_chat(user, span_warning("[src] has no jetpack installed."))
+		return
+	if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
+		to_chat(user, span_warning("You cannot remove the jetpack from [src] while wearing it."))
+		return
+
+		attached_jetpack.turn_off(user)
+		attached_jetpack.forceMove(drop_location())
+		attached_jetpack = null
+		to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
+		return
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	. = ..()
