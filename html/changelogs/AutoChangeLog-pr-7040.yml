@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - sound: "Halved the base volume of the Black Mesa Source Military VOX voice."
