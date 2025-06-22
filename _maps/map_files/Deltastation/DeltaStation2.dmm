@@ -5333,7 +5333,7 @@
 	},
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white/smooth_large,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "blc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -6679,7 +6679,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "bBK" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/flasher/directional/south{
@@ -7737,7 +7737,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "bMd" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/white/warning{
@@ -7797,7 +7797,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "bNB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13615,7 +13615,7 @@
 /obj/effect/turf_decal/trimline/green/filled/warning,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "dgn" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -16987,7 +16987,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "dZr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -17449,7 +17449,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "eee" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18625,7 +18625,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "esH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 10
@@ -19932,7 +19932,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "eJq" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -20425,7 +20425,7 @@
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "ePd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23466,7 +23466,7 @@
 	},
 /obj/structure/bed/medical/anchored,
 /turf/open/floor/iron/white/smooth_large,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "fyt" = (
 /obj/machinery/light/built/directional/west,
 /turf/open/floor/plating,
@@ -26221,7 +26221,7 @@
 /obj/item/pen/red,
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "ggS" = (
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron,
@@ -30852,7 +30852,7 @@
 /obj/structure/cable,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "hlM" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -32394,7 +32394,7 @@
 /obj/structure/cable,
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "hGd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -32444,7 +32444,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "hGI" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -34657,7 +34657,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "ifp" = (
 /obj/structure/easel,
 /obj/item/canvas/twentythree_twentythree,
@@ -39026,8 +39026,10 @@
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "jhG" = (
-/turf/closed/wall/r_wall,
-/area/space)
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/medical/pathology/isolation)
 "jhH" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -41126,7 +41128,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "jFP" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
@@ -42107,7 +42109,7 @@
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "jQV" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -45722,14 +45724,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "kIz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "viro_private_shutters";
-	name = "Virology Privacy Shutters"
-	},
-/turf/open/floor/plating,
-/area/space)
+/turf/closed/wall,
+/area/station/medical/pathology/isolation)
 "kIJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/command{
@@ -47890,7 +47886,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "ljP" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -47992,7 +47988,7 @@
 	},
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "lkL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -54323,7 +54319,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "mJD" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -55735,7 +55731,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white/smooth_large,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "nbU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 9
@@ -56421,7 +56417,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "nlB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -59935,7 +59931,7 @@
 	dir = 10
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "ofd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61226,15 +61222,15 @@
 /area/station/command/heads_quarters/ce)
 "ovW" = (
 /obj/item/paper_bin,
-/obj/machinery/newscaster/directional/east,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/item/pen,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "owb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61903,7 +61899,7 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/flowers_pp,
 /turf/open/floor/grass,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "oEC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -62688,7 +62684,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "oOE" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -68474,11 +68470,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
-"qgI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/space)
 "qgQ" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/siding/dark_red{
@@ -71573,7 +71564,7 @@
 /obj/structure/cable,
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "qSd" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -74862,7 +74853,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "rJR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
@@ -77012,7 +77003,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "skr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/vending/snackvend,
@@ -77677,9 +77668,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "ssR" = (
-/obj/structure/lattice,
 /turf/closed/wall/r_wall,
-/area/space/nearstation)
+/area/station/medical/pathology/isolation)
 "ssY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -85845,7 +85835,7 @@
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "uoV" = (
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
@@ -89229,7 +89219,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "vfw" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -89524,7 +89514,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/smooth_large,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "vjN" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -90465,7 +90455,7 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/flowers_yw,
 /turf/open/floor/grass,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "vvp" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "engielock";
@@ -98398,7 +98388,7 @@
 /obj/effect/turf_decal/trimline/green/filled/warning,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "xoI" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -101139,7 +101129,7 @@
 /obj/structure/flora/bush/lavendergrass,
 /obj/structure/flora/bush/flowers_br,
 /turf/open/floor/grass,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "xWm" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
@@ -136262,7 +136252,7 @@ aaa
 qYo
 aaa
 aaa
-jhG
+tgT
 gqm
 gqm
 tgT
@@ -136518,7 +136508,7 @@ hMI
 tgT
 tgT
 aaa
-qgI
+gqm
 gqm
 tiJ
 bmR
@@ -136775,7 +136765,7 @@ iAt
 lSG
 tgT
 tgT
-ssR
+gUf
 jkB
 hZE
 eab
@@ -137032,7 +137022,7 @@ nSp
 hXu
 dAX
 hBw
-ssR
+gUf
 jJa
 jQq
 wjV
@@ -137289,7 +137279,7 @@ qJA
 gKl
 ecC
 seD
-kIz
+iid
 hry
 jyT
 rvM
@@ -137546,7 +137536,7 @@ eNo
 tfn
 rKP
 xHd
-jhG
+tgT
 qiJ
 wpU
 hTv
@@ -139084,17 +139074,17 @@ uXF
 tgT
 riB
 tgT
-tgT
-gqm
-tgT
-tgT
-gqm
+ssR
+jhG
+ssR
+ssR
+jhG
 eJm
-xPc
-xPc
-xPc
-xPc
-tgT
+kIz
+kIz
+kIz
+kIz
+ssR
 hrs
 aaa
 qYo
@@ -139344,14 +139334,14 @@ tgT
 vvb
 hlG
 ePb
-xPc
+kIz
 oOz
 vfa
-gqm
+jhG
 bBG
 mJy
 hFZ
-gqm
+jhG
 qYo
 qYo
 efQ
@@ -139601,14 +139591,14 @@ tgT
 xWi
 vjI
 eec
-gqm
+jhG
 fym
 dgl
 ifi
 dZn
 bLU
 ggG
-gqm
+jhG
 aaa
 qYo
 efQ
@@ -139861,11 +139851,11 @@ xoa
 rJQ
 nlz
 bNs
-xPc
-xPc
-xPc
-xPc
-tgT
+kIz
+kIz
+kIz
+kIz
+ssR
 anZ
 qYo
 efQ
@@ -140112,17 +140102,17 @@ tgT
 tgT
 pol
 tgT
-tgT
+ssR
 bla
 hGG
-gqm
+jhG
 nbR
 dgl
 ifi
 ljM
 ofa
 ggG
-gqm
+jhG
 aaa
 qYo
 efQ
@@ -140369,17 +140359,17 @@ tgT
 vKI
 iFg
 geU
-tgT
+ssR
 lkE
 uoS
-xPc
+kIz
 jQL
 ovW
-gqm
+jhG
 jFJ
 skg
 qSa
-gqm
+jhG
 qYo
 qYo
 efQ
@@ -140626,17 +140616,17 @@ oCE
 wnD
 tSU
 mNK
-tgT
-tgT
-tgT
-tgT
-tgT
-tgT
-tgT
-tgT
-tgT
-tgT
-tgT
+ssR
+ssR
+ssR
+ssR
+ssR
+ssR
+ssR
+ssR
+ssR
+ssR
+ssR
 nPp
 aaa
 aaa
