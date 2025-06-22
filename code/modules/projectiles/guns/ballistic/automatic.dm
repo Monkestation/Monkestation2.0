@@ -530,3 +530,4 @@
 	recoil = 10
 	wield_recoil = 3.5
 	slowdown = 2
+// if you read this you lost
