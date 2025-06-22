@@ -771,4 +771,4 @@
 /datum/greyscale_config/donator_greyscale_scrubs_worn
 	name = "scrubs"
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs.json'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs_worn.json'
