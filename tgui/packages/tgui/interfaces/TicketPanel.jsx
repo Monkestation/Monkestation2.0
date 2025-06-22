@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Button, Box, Flex, TextArea } from '../components';
 import { Window } from '../layouts';
 import { KEY_ENTER } from 'common/keycodes';
+import { decodeHtmlEntities } from 'common/string';
 
 export const TicketPanel = (props) => {
   const { act, data } = useBackend();
@@ -182,7 +183,8 @@ export const TicketMessages = (props) => {
         (entry) =>
           (
             <Box key={entry.time} m="2px">
-              {entry.time} - <b>{entry.ckey}</b> - {entry.text}
+              {entry.time} - <b>{entry.ckey}</b> -{' '}
+              {decodeHtmlEntities(entry.text)}
             </Box>
           ) || '',
       )}

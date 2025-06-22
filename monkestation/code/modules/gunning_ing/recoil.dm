@@ -10,6 +10,8 @@
 /proc/recoil_camera(mob/M, duration, backtime_duration, strength, angle)
 	if(!M || !M.client)
 		return
+	if(HAS_TRAIT(M, TRAIT_NO_RECOIL))
+		return
 	var/client/sufferer = M.client
 	strength *= world.icon_size
 	var/oldx = sufferer.pixel_x
