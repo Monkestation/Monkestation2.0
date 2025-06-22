@@ -376,6 +376,18 @@
   - bugfix: Setting storytellers should now actually set, before the round starts
   - bugfix: Storytellers changed after roundstart will now tick instead of doing nothing
 2025-06-22:
+  Absolucy:
+  - balance: Reworked the curator's whip.
+  - balance: Instead of instantly disarming both hands with each attack, you need
+      to target an arm, and it will yank the item out of that hand.
+  - balance: The curator's whip can also trip people who are 2-3 tiles away. Tripping
+      someone does not drop their items, and doesn't qualify for shovestuns.
+  - balance: The curator's whip does not deal damage and has a longer click/attack
+      cooldown when it trips/disarms someone.
+  - balance: The curator's whip now causes very slight pain from normal attacks (it's
+      a whip, of course it's gonna sting)
+  - balance: Curator's whip no longer bypasses shields / block chance.
+  - sound: Halved the base volume of the Black Mesa Source Military VOX voice.
   SirNightKnight:
   - rscadd: The Syndicate has opened up the Banana Department to sponsor their agent
       with monkey field agents.
