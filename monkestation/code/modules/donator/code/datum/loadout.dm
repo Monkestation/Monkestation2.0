@@ -887,3 +887,12 @@
 	item_path = /obj/item/clothing/suit/star_father_suit
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+
+
+//Helixsix
+/datum/loadout_item/suit/star_father_suit
+	name = "Peace Jacket"
+	item_path = /obj/item/clothing/suit/peacejacket
+	donator_only = TRUE
+	requires_purchase = FALSE
