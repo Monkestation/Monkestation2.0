@@ -515,4 +515,14 @@
 	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
 	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
 
+/obj/item/skillchip/gorlex
+	name = "Gorlex Securities Type 3 skillchip"
+	desc = "This biochip integrates with user's brain to enable mastery of a specific skill. Consult certified Interdyne neurosurgeon before use."
+	auto_traits = list(TRAIT_NO_RECOIL)
+	skill_name = "Recoil Compensation"
+	skill_description = "Your senses adapt to the recoil of guns, mitigating it completely."
+	skill_icon = "disk"
+	activate_message = "<span class='notice'>Your senses feel sharper and your eyes feel deep.</span>"
+	deactivate_message = "<span class='notice'>Your senses dull.</span>"
+
 #undef SKILLCHIP_CATEGORY_GENERAL
