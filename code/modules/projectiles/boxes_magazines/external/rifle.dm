@@ -22,6 +22,18 @@
 	name = "toploader magazine (5.56mm Phasic)"
 	ammo_type = /obj/item/ammo_casing/a556/phasic
 
+/obj/item/ammo_box/magazine/rostokov9mm
+	name = "rostokov magazine (9mm)"
+	icon_state = "rostokov-1"
+	base_icon_state = "rostokov"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = CALIBER_9MM
+	max_ammo = 25
+
+/obj/item/ammo_box/magazine/rostokov9mm/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[ammo_count() ? 1 : 0]"
+
 /obj/item/ammo_box/magazine/argenti
 	name = "Argenti magazine (7.62mm)"
 	desc = "A 12 round magazine for the Argenti r.II rifle. Uses 7.62x54r."
