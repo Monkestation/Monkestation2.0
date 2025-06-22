@@ -11416,10 +11416,6 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
-"cEf" = (
-/obj/machinery/power/apc/auto_name/directional/east,
-/turf/open/space/basic,
-/area/space)
 "cEn" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -68477,10 +68473,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "qgI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/medical/pathology/isolation)
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/space/basic,
+/area/space)
 "qgQ" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/siding/dark_red{
@@ -77681,9 +77676,8 @@
 "ssR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/plating,
-/area/station/medical/pathology)
+/area/station/medical/pathology/isolation)
 "ssY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -136271,7 +136265,7 @@ gqm
 gqm
 tgT
 gqm
-ssR
+gqm
 gUf
 aaa
 qYo
@@ -139089,10 +139083,10 @@ tgT
 riB
 tgT
 jhG
-qgI
+ssR
 jhG
 jhG
-qgI
+ssR
 eJm
 kIz
 kIz
@@ -139351,11 +139345,11 @@ ePb
 kIz
 oOz
 vfa
-qgI
+ssR
 bBG
 mJy
 hFZ
-qgI
+ssR
 qYo
 qYo
 efQ
@@ -139605,14 +139599,14 @@ tgT
 xWi
 vjI
 eec
-qgI
+ssR
 fym
 dgl
 ifi
 dZn
 bLU
 ggG
-qgI
+ssR
 aaa
 qYo
 efQ
@@ -140119,14 +140113,14 @@ tgT
 jhG
 bla
 hGG
-qgI
+ssR
 nbR
 dgl
 ifi
 ljM
 ofa
 ggG
-qgI
+ssR
 aaa
 qYo
 efQ
@@ -140379,11 +140373,11 @@ uoS
 kIz
 jQL
 ovW
-qgI
+ssR
 jFJ
 skg
 qSa
-qgI
+ssR
 qYo
 qYo
 efQ
@@ -140894,7 +140888,7 @@ aaa
 aaa
 qYo
 aaa
-cEf
+qgI
 qYo
 aaa
 qYo
