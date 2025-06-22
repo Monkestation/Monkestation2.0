@@ -1234,6 +1234,7 @@
 	dir = 4;
 	invisibility = 101
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "asG" = (
@@ -2060,11 +2061,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"aHt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
 "aHD" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4725,6 +4721,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
+"btk" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "btp" = (
 /obj/machinery/light/directional/west,
 /obj/structure/bed/dogbed{
@@ -11402,7 +11403,7 @@
 /area/station/command/gateway)
 "dtt" = (
 /turf/closed/wall,
-/area/station/maintenance/department/medical/pathology)
+/area/station/medical/pathology/isolation)
 "dtv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Central Starboard Maintenance"
@@ -20780,6 +20781,7 @@
 	dir = 4;
 	invisibility = 101
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "ghl" = (
@@ -24270,6 +24272,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"hiJ" = (
+/obj/machinery/airalarm/directional/south,
+/turf/closed/wall,
+/area/station/medical/pathology/isolation)
 "hjg" = (
 /obj/structure/chair{
 	dir = 4
@@ -31413,11 +31419,6 @@
 /obj/item/bikehorn/rubberducky,
 /turf/open/water/overlay/hotspring,
 /area/station/command/heads_quarters/captain/private)
-"jlE" = (
-/obj/machinery/duct,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/medical/pathology)
 "jlO" = (
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/circuit/green{
@@ -32552,6 +32553,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
+"jDn" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "jDr" = (
 /obj/machinery/door/airlock/research{
 	name = "Ordnance Lab"
@@ -57125,6 +57133,11 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"qKd" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "qKe" = (
 /turf/closed/wall/r_wall,
 /area/station/security/processing)
@@ -62995,6 +63008,9 @@
 "stD" = (
 /turf/closed/wall,
 /area/station/service/chapel/office)
+"stJ" = (
+/turf/closed/wall,
+/area/station/maintenance/department/medical/pathology)
 "stS" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge"
@@ -67086,9 +67102,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"tAx" = (
-/turf/closed/wall,
-/area/station/medical/pathology/isolation)
 "tAB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67541,13 +67554,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"tIV" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
 "tIY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -109484,7 +109490,7 @@ lXw
 lXw
 lXw
 elp
-tIV
+jDn
 lXw
 lXw
 nhC
@@ -109741,7 +109747,7 @@ rwL
 rwL
 rwL
 mNe
-aHt
+qKd
 rwL
 lXw
 lXw
@@ -110506,11 +110512,11 @@ fnq
 doH
 fvw
 ili
-dtt
-dtt
-dtt
-dtt
-dtt
+stJ
+stJ
+stJ
+stJ
+stJ
 nqT
 uaR
 snA
@@ -110763,11 +110769,11 @@ sTb
 xRA
 gkM
 kYa
-dtt
+stJ
 qIP
 hxW
 wgi
-dtt
+stJ
 oJN
 peI
 snA
@@ -111020,11 +111026,11 @@ oMg
 oMg
 oMg
 oMg
-dtt
+stJ
 iKJ
 fEO
 mBf
-dtt
+stJ
 jNo
 duX
 snA
@@ -111277,11 +111283,11 @@ pHa
 iXA
 jxj
 qHZ
-dtt
+stJ
 cbU
 vdO
 qDF
-dtt
+stJ
 clV
 lOa
 snA
@@ -111534,7 +111540,7 @@ gJw
 vbA
 ehT
 klJ
-dtt
+stJ
 pxg
 gkd
 enK
@@ -112304,7 +112310,7 @@ pFl
 ohq
 lPp
 wJN
-jlE
+btk
 mZq
 uJh
 pnc
@@ -113339,7 +113345,7 @@ lPp
 lPp
 lPp
 lPp
-tAx
+dtt
 jzt
 snA
 vgC
@@ -113587,16 +113593,16 @@ cbE
 ase
 bQj
 kXr
-tAx
+dtt
 tpZ
 sRq
-tAx
+hiJ
 hjs
 jtU
-tAx
+dtt
 rJx
 pYA
-tAx
+dtt
 tdB
 snA
 lHY
@@ -113844,7 +113850,7 @@ qGA
 tvw
 mMy
 kLm
-tAx
+dtt
 uMJ
 iFS
 uVg
@@ -113853,7 +113859,7 @@ oec
 ouE
 iEr
 aPv
-tAx
+dtt
 evS
 snA
 snA
@@ -114101,7 +114107,7 @@ iIS
 dOb
 jnS
 heq
-tAx
+dtt
 hBI
 qlf
 nau
@@ -114110,7 +114116,7 @@ llT
 nau
 ybz
 jdU
-tAx
+dtt
 qfS
 fdH
 rfH
@@ -114358,7 +114364,7 @@ cbs
 trH
 uKC
 ibC
-tAx
+dtt
 fHd
 qbI
 nau
@@ -114367,7 +114373,7 @@ pPm
 nau
 jLg
 eYx
-tAx
+dtt
 evS
 snA
 snA
@@ -114615,16 +114621,16 @@ dzc
 dzc
 dzc
 dzc
-tAx
+dtt
 aBF
-tAx
-tAx
+dtt
+dtt
 cHF
 nau
-tAx
+dtt
 nau
-tAx
-tAx
+dtt
+dtt
 evS
 snA
 gDp
@@ -115648,8 +115654,8 @@ lOk
 dzc
 nau
 iaQ
-tAx
-tAx
+dtt
+dtt
 nau
 nau
 snA
