@@ -490,25 +490,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		deconstruct(TRUE)
 	return TRUE
 
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if((user.istate & ISTATE_HARM))
-		return FALSE
-	if(atom_integrity >= max_integrity)
-		return TRUE
-	if(machine_stat & BROKEN)
-		return TRUE
-	if(!tool.tool_start_check(user, amount=0))
-		return TRUE
-	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
-	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		atom_integrity = min(atom_integrity + 25, max_integrity)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_notice("You've finished repairing [src]."))
-			return TRUE
-		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
-	return TRUE
-
 /obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == internal_cell)

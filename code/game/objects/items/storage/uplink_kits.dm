@@ -410,6 +410,8 @@
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
+	desc = "A sleek, sturdy box used to hold an emergency spacesuit."
+	illustration = "syndiesuit"
 
 /obj/item/storage/box/syndie_kit/space/Initialize(mapload)
 	. = ..()

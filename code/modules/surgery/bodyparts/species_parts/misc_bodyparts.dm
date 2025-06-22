@@ -87,146 +87,44 @@
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
 
-///JELLY
-/obj/item/bodypart/head/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
-	limb_id = SPECIES_JELLYPERSON
-	is_dimorphic = TRUE
-	dmg_overlay_type = null
-	head_flags = HEAD_ALL_FEATURES
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/chest/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED)
-	limb_id = SPECIES_JELLYPERSON
-	is_dimorphic = TRUE
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	ass_image = 'icons/ass/assslime.png'
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/arm/left/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/arm/right/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/leg/left/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/leg/right/jelly
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
-	limb_id = SPECIES_JELLYPERSON
-	dmg_overlay_type = null
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
-
 ///SLIME
-/obj/item/bodypart/head/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/head/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
-	head_flags = HEAD_ALL_FEATURES
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/chest/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/chest/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	is_dimorphic = TRUE
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/left/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/left/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/right/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/right/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/left/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/leg/left/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/right/slime
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/leg/right/oozeling/slime
 	limb_id = SPECIES_SLIMEPERSON
-	composition_effects = list(/datum/element/soft_landing = 0.5)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
 ///LUMINESCENT
-/obj/item/bodypart/head/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/head/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	is_dimorphic = TRUE
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/chest/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED)
+/obj/item/bodypart/chest/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	is_dimorphic = TRUE
-	wing_types = list(/obj/item/organ/external/wings/functional/slime)
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/left/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/left/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/right/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/arm/right/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/left/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/leg/left/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/right/luminescent
-	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JOINTED)
+/obj/item/bodypart/leg/right/oozeling/luminescent
 	limb_id = SPECIES_LUMINESCENT
-	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
 
 ///ZOMBIE
 /obj/item/bodypart/head/zombie
@@ -588,28 +486,24 @@
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
+	unarmed_damage_high = 7
 
 /obj/item/bodypart/arm/right/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
 	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
-	unarmed_damage_high = 8
+	unarmed_damage_high = 7
 
 /obj/item/bodypart/leg/left/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/right/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 ///CARDBOARD GOLEM
@@ -630,8 +524,7 @@
 	unarmed_attack_verb = "whip"
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 8
 	unarmed_damage_high = 8
 
 /obj/item/bodypart/arm/right/golem/cardboard
@@ -640,8 +533,7 @@
 	unarmed_attack_verb = "whip"
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 8
 	unarmed_damage_high = 8
 
 /obj/item/bodypart/leg/left/golem/cardboard
@@ -649,8 +541,7 @@
 	should_draw_greyscale = FALSE
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/right/golem/cardboard
@@ -658,8 +549,7 @@
 	should_draw_greyscale = FALSE
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 7
-	unarmed_stun_threshold = 7
+	unarmed_damage_low = 12
 	unarmed_damage_high = 12
 
 ///DURATHREAD GOLEM
@@ -757,31 +647,27 @@
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 1
+	unarmed_damage_low = 10
 	unarmed_damage_high = 10
-	unarmed_stun_threshold = 9
 
 /obj/item/bodypart/arm/right/golem/uranium
 	attack_type = BURN
 	unarmed_attack_verb = "burn"
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 1
+	unarmed_damage_low = 10
 	unarmed_damage_high = 10
-	unarmed_stun_threshold = 9
 
 /obj/item/bodypart/leg/left/golem/uranium
 	attack_type = BURN
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 2
+	unarmed_damage_low = 15
 	unarmed_damage_high = 15
-	unarmed_stun_threshold = 9
 
 /obj/item/bodypart/leg/right/golem/uranium
 	attack_type = BURN
 	unarmed_attack_sound = 'sound/weapons/sear.ogg'
-	unarmed_damage_low = 2
+	unarmed_damage_low = 15
 	unarmed_damage_high = 15
-	unarmed_stun_threshold = 9
 
 ///PLASTEEL GOLEM
 /obj/item/bodypart/arm/left/golem/plasteel
@@ -811,8 +697,8 @@
 /obj/item/bodypart/leg/right/golem/plasteel
 	unarmed_attack_effect = ATTACK_EFFECT_SMASH
 	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 18
-	unarmed_damage_high = 32
+	unarmed_damage_low = 22
+	unarmed_damage_high = 22
 	unarmed_stun_threshold = 18
 
 ///BANANIUM GOLEM
@@ -820,28 +706,24 @@
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
-	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2 //Harmless and can't stun
+	unarmed_damage_high = 1 //Harmless and can't stun
 
 /obj/item/bodypart/arm/right/golem/bananium
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
 
 /obj/item/bodypart/leg/right/golem/bananium
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
 
 /obj/item/bodypart/leg/left/golem/bananium
 	unarmed_attack_verb = "honk"
 	unarmed_attack_sound = 'sound/items/airhorn2.ogg'
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
-	unarmed_stun_threshold = 2
 
 //
