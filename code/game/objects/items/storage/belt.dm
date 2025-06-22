@@ -434,6 +434,12 @@
 		/obj/item/cargo_teleporter, //monkestation edit
 		/obj/item/storage/box/kinetic, //monkestation edit
 		/obj/item/ammo_box/magazine/pksmgmag, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
 	))
 
 
