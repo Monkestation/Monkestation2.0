@@ -27,6 +27,14 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	//Crimes against humanity
+	var/held_w_class = WEIGHT_CLASS_HUGE
+	var/held_lh = 'icons/mob/inhands/microwave_held_lh.dmi'
+	var/held_rh = 'icons/mob/inhands/microwave_held_rh.dmi'
+	var/held_state = "standard"
+	var/held_force = 14
+	throwforce = 20
+
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
 	/// How dirty is it?
@@ -613,6 +621,135 @@
 	if(prob(95))
 		//The microwave should turn off asynchronously from any other microwaves that initialize at the same time. Keep in mind this will not turn off, since there is nothing to call the proc that ends this microwave's looping
 		addtimer(CALLBACK(src, PROC_REF(wzhzhzh)), rand(0.5 SECONDS, 3 SECONDS))
+
+/obj/machinery/microwave/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(isliving(hit_atom))
+		var/mob/living/living_target = hit_atom
+		var/blocked = living_target.run_armor_check(attack_flag = MELEE)
+		if(iscarbon(living_target))
+			var/mob/living/carbon/carbon_target = living_target
+			carbon_target.take_bodypart_damage(throwforce, 0, check_armor = TRUE, wound_bonus = 5)
+		else
+			living_target.apply_damage(throwforce, BRUTE, blocked = blocked, forced = FALSE, attack_direction = get_dir(get_turf(src), living_target))
+		living_target.Knockdown(1.5 SECONDS)
+		playsound(src, 'sound/effects/bang.ogg', 40)
+	else
+		playsound(hit_atom, 'sound/weapons/genhit.ogg',80 , TRUE, -1)
+	return ..()
+
+/obj/machinery/microwave/MouseDrop(over_object, src_location, over_location)
+	. = ..()
+	if(over_object == usr && Adjacent(usr))
+		if(src.anchored || src.flags_1 & NODECONSTRUCT_1)
+			return
+		if(!usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+			return
+		microwave_try_pickup(usr)
+
+/obj/machinery/microwave/proc/microwave_try_pickup(mob/living/user, instant=FALSE)
+	if(!ishuman(user))
+		return
+	if(!user.get_empty_held_indexes())
+		to_chat(user, span_warning("Your hands are full!"))
+		return FALSE
+	user.visible_message(span_notice("[user] starts picking up [src]!"), span_notice("You start picking up [src]..."))
+	if(!do_after(user, 3 SECONDS, target = src))
+		return FALSE
+	if(src.anchored)
+		return FALSE
+	microwave_pickup(user)
+	return TRUE
+
+/obj/machinery/microwave/proc/microwave_pickup(mob/living/user)
+	var/obj/item/microwave_holder/holder = new(get_turf(src), src, held_state, held_lh, held_rh, held_force, throwforce)
+	user.visible_message(span_warning("[user] picks up [src]!"), span_warning("You pick up [src]!"))
+	user.put_in_hands(holder)
+
+//Hit them with the michaelwave // Holder so we can pick it up
+/obj/item/microwave_holder
+	name = "bugged michaelwave"
+	desc = "Yell at coders."
+	icon = null
+	icon_state = ""
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
+	attack_verb_simple = list("smack", "strike", "crack", "beat")
+	var/obj/machinery/microwave/held_microwave
+	var/destroying = FALSE
+
+/obj/item/microwave_holder/Initialize(mapload, obj/machinery/microwave/michaelwave, held_state, lh_icon, rh_icon, held_force, held_throwforce)
+	if(held_state)
+		inhand_icon_state = held_state
+	if(lh_icon)
+		lefthand_file = lh_icon
+	if(rh_icon)
+		righthand_file = rh_icon
+	if(held_force)
+		force = held_force
+	if(held_throwforce)
+		throwforce = held_throwforce
+	deposit(michaelwave)
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = force, force_wielded = force)
+	. = ..()
+
+/obj/item/microwave_holder/Destroy()
+	destroying = TRUE
+	if(held_microwave)
+		release(FALSE)
+	return ..()
+
+/obj/item/microwave_holder/proc/deposit(obj/machinery/microwave/michelwave)
+	if(!istype(michelwave))
+		return FALSE
+	michelwave.setDir(SOUTH)
+	update_visuals(michelwave)
+	held_microwave = michelwave
+	michelwave.forceMove(src)
+	name = michelwave.name
+	desc = michelwave.desc
+	return TRUE
+
+/obj/item/microwave_holder/proc/update_visuals(obj/machinery/microwave/mangowave)
+	appearance = mangowave.appearance
+
+/obj/item/microwave_holder/on_thrown(mob/living/carbon/user, atom/target)
+	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_notice("You set [src] down gently on the ground."))
+		release()
+		return
+
+	var/mob/living/throw_microwave = held_microwave
+	release()
+	return throw_microwave
+
+/obj/item/microwave_holder/dropped(mob/living/user)
+	..()
+	if(held_microwave && isturf(loc))
+		//user.visible_message(span_notice("[user] suddenly drops [src]."), span_notice("You suddenly drop [src]."))
+		release()
+
+/obj/item/microwave_holder/proc/release(del_on_release = TRUE, display_messages = TRUE)
+	if(!held_microwave)
+		if(del_on_release && !destroying)
+			qdel(src)
+		return FALSE
+	var/mob/living/released_microwave = held_microwave
+	held_microwave = null // stops the held microwave from being release()'d twice.
+	if(isliving(loc))
+		var/mob/living/microwave_carrier = loc
+		microwave_carrier.dropItemToGround(src)
+	released_microwave.forceMove(drop_location())
+	released_microwave.setDir(SOUTH)
+	if(del_on_release && !destroying)
+		qdel(src)
+	return TRUE
+
+/obj/item/microwave_holder/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(held_microwave && held_microwave == gone)
+		release()
 
 #undef MICROWAVE_NORMAL
 #undef MICROWAVE_MUCK
