@@ -6097,6 +6097,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "bTK" = (
@@ -48694,7 +48695,7 @@
 /area/station/service/hydroponics/garden)
 "pHR" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "pHW" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
@@ -57458,6 +57459,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "sHr" = (

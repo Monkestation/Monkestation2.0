@@ -723,12 +723,11 @@
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
+	new /obj/item/compression_kit(src)
+	new /obj/item/compression_kit(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."

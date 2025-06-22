@@ -1,6 +1,0 @@
-author: "Ice-Type"
-delete-after: True
-changes:
-  - balance: "cardboard golems have tongues now"
-  - balance: "weak punching golems no longer get 1 hit knockdowns"
-  - bugfix: "fixes golem numbers that might have made sense at one point maybe"
