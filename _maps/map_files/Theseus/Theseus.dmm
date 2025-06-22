@@ -1234,7 +1234,6 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "asG" = (
@@ -3349,6 +3348,11 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/station/service/hydroponics)
+"aZc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "aZh" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/spawner/random/trash/graffiti{
@@ -4721,11 +4725,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
-"btk" = (
-/obj/machinery/duct,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/medical/pathology)
 "btp" = (
 /obj/machinery/light/directional/west,
 /obj/structure/bed/dogbed{
@@ -6262,6 +6261,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"bTA" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "bTD" = (
 /obj/structure/window/spawner/directional/north,
 /obj/structure/cable,
@@ -11402,7 +11406,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "dtt" = (
-/turf/closed/wall,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/station/medical/pathology/isolation)
 "dtv" = (
 /obj/machinery/door/airlock/maintenance{
@@ -15524,6 +15530,9 @@
 "eAz" = (
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
+"eAA" = (
+/turf/closed/wall,
+/area/station/maintenance/department/medical/pathology)
 "eAB" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -20781,7 +20790,6 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "ghl" = (
@@ -24272,10 +24280,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"hiJ" = (
-/obj/machinery/airalarm/directional/south,
-/turf/closed/wall,
-/area/station/medical/pathology/isolation)
 "hjg" = (
 /obj/structure/chair{
 	dir = 4
@@ -32553,13 +32557,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
-"jDn" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
 "jDr" = (
 /obj/machinery/door/airlock/research{
 	name = "Ordnance Lab"
@@ -38236,6 +38233,9 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"lhP" = (
+/turf/closed/wall,
+/area/station/medical/pathology/isolation)
 "lhU" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/grass,
@@ -44608,10 +44608,12 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
 "nau" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/medical/pathology/isolation)
+/area/station/maintenance/department/medical)
 "naD" = (
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/light/directional/east,
@@ -57133,11 +57135,6 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"qKd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
 "qKe" = (
 /turf/closed/wall/r_wall,
 /area/station/security/processing)
@@ -63008,9 +63005,6 @@
 "stD" = (
 /turf/closed/wall,
 /area/station/service/chapel/office)
-"stJ" = (
-/turf/closed/wall,
-/area/station/maintenance/department/medical/pathology)
 "stS" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Departures Lounge"
@@ -109490,7 +109484,7 @@ lXw
 lXw
 lXw
 elp
-jDn
+nau
 lXw
 lXw
 nhC
@@ -109747,7 +109741,7 @@ rwL
 rwL
 rwL
 mNe
-qKd
+aZc
 rwL
 lXw
 lXw
@@ -110512,11 +110506,11 @@ fnq
 doH
 fvw
 ili
-stJ
-stJ
-stJ
-stJ
-stJ
+eAA
+eAA
+eAA
+eAA
+eAA
 nqT
 uaR
 snA
@@ -110769,11 +110763,11 @@ sTb
 xRA
 gkM
 kYa
-stJ
+eAA
 qIP
 hxW
 wgi
-stJ
+eAA
 oJN
 peI
 snA
@@ -111026,11 +111020,11 @@ oMg
 oMg
 oMg
 oMg
-stJ
+eAA
 iKJ
 fEO
 mBf
-stJ
+eAA
 jNo
 duX
 snA
@@ -111283,11 +111277,11 @@ pHa
 iXA
 jxj
 qHZ
-stJ
+eAA
 cbU
 vdO
 qDF
-stJ
+eAA
 clV
 lOa
 snA
@@ -111540,7 +111534,7 @@ gJw
 vbA
 ehT
 klJ
-stJ
+eAA
 pxg
 gkd
 enK
@@ -112310,7 +112304,7 @@ pFl
 ohq
 lPp
 wJN
-btk
+bTA
 mZq
 uJh
 pnc
@@ -113345,7 +113339,7 @@ lPp
 lPp
 lPp
 lPp
-dtt
+lhP
 jzt
 snA
 vgC
@@ -113593,16 +113587,16 @@ cbE
 ase
 bQj
 kXr
-dtt
+lhP
 tpZ
 sRq
-hiJ
+lhP
 hjs
 jtU
-dtt
+lhP
 rJx
 pYA
-dtt
+lhP
 tdB
 snA
 lHY
@@ -113850,7 +113844,7 @@ qGA
 tvw
 mMy
 kLm
-dtt
+lhP
 uMJ
 iFS
 uVg
@@ -113859,7 +113853,7 @@ oec
 ouE
 iEr
 aPv
-dtt
+lhP
 evS
 snA
 snA
@@ -114107,16 +114101,16 @@ iIS
 dOb
 jnS
 heq
-dtt
+lhP
 hBI
 qlf
-nau
+dtt
 lUm
 llT
-nau
+dtt
 ybz
 jdU
-dtt
+lhP
 qfS
 fdH
 rfH
@@ -114364,16 +114358,16 @@ cbs
 trH
 uKC
 ibC
-dtt
+lhP
 fHd
 qbI
-nau
+dtt
 bJt
 pPm
-nau
+dtt
 jLg
 eYx
-dtt
+lhP
 evS
 snA
 snA
@@ -114621,16 +114615,16 @@ dzc
 dzc
 dzc
 dzc
-dtt
+lhP
 aBF
-dtt
-dtt
+lhP
+lhP
 cHF
-nau
 dtt
-nau
+lhP
 dtt
-dtt
+lhP
+lhP
 evS
 snA
 gDp
@@ -115652,12 +115646,12 @@ jcz
 fNw
 lOk
 dzc
-nau
+dtt
 iaQ
+lhP
+lhP
 dtt
 dtt
-nau
-nau
 snA
 ikq
 rwL
