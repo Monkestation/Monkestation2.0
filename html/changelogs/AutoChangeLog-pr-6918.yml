@@ -1,0 +1,9 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Reworked the curator's whip."
+  - balance: "Instead of instantly disarming both hands with each attack, you need to target an arm, and it will yank the item out of that hand."
+  - balance: "The curator's whip can also trip people who are 2-3 tiles away. Tripping someone does not drop their items, and doesn't qualify for shovestuns."
+  - balance: "The curator's whip does not deal damage and has a longer click/attack cooldown when it trips/disarms someone."
+  - balance: "The curator's whip now causes very slight pain from normal attacks (it's a whip, of course it's gonna sting)"
+  - balance: "Curator's whip no longer bypasses shields / block chance."
