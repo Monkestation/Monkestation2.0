@@ -12,7 +12,7 @@
 	category = SPELLTYPE_STRUCTURES
 	uses = 3
 
-/datum/scripture/slab/empower_wall/apply_effects(obj/structure/destructible/clockwork_wall_lattice/applied_to)
+/datum/scripture/slab/empower_wall/apply_effects(obj/structure/destructible/clockwork/wall_lattice/applied_to)
 	if(!istype(applied_to))
 		return FALSE
 
