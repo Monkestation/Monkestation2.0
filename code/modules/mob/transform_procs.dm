@@ -32,9 +32,8 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
-	name = "monkey"
+	src.fully_replace_character_name(name, pick(GLOB.random_monkey_names))
 	regenerate_icons()
-	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
 	return src
