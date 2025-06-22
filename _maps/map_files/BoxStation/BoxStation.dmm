@@ -74000,6 +74000,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/structure/table,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xQF" = (

@@ -18547,6 +18547,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
+"dBt" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/medical/pathology)
 "dBv" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/field/generator,
@@ -47835,6 +47838,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"jnI" = (
+/turf/closed/wall,
+/area/station/maintenance/department/medical/pathology)
 "jnJ" = (
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/camera/directional/east{
@@ -61694,7 +61700,7 @@
 "lVA" = (
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/iron,
-/area/station/medical/virology/isolation)
+/area/station/maintenance/department/medical/pathology)
 "lVC" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -78552,7 +78558,7 @@
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
-/area/station/medical/virology/isolation)
+/area/station/maintenance/department/medical/pathology)
 "pjC" = (
 /obj/item/weldingtool,
 /turf/open/floor/plating,
@@ -81212,7 +81218,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/medical/virology/isolation)
+/area/station/maintenance/department/medical/pathology)
 "pKS" = (
 /obj/machinery/light/directional/east,
 /obj/structure/lattice,
@@ -93079,8 +93085,9 @@
 /obj/item/storage/box/syringes,
 /obj/machinery/light/small/directional/west,
 /obj/item/restraints/handcuffs,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
-/area/station/medical/virology/isolation)
+/area/station/maintenance/department/medical/pathology)
 "sak" = (
 /obj/structure/bed/dogbed/mcgriff,
 /mob/living/basic/pet/dog/pug/mcgriff,
@@ -118394,7 +118401,7 @@
 	},
 /obj/item/storage/box/monkeycubes,
 /turf/open/floor/iron,
-/area/station/medical/virology/isolation)
+/area/station/maintenance/department/medical/pathology)
 "wNp" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 10
@@ -234818,9 +234825,9 @@ uZK
 jju
 uZK
 sPm
-sPm
-sPm
-tff
+dBt
+dBt
+dBt
 kXC
 kys
 dRn
@@ -235077,7 +235084,7 @@ ose
 uZK
 wNn
 sac
-tff
+dBt
 hCR
 rbs
 wXK
@@ -235334,7 +235341,7 @@ gPM
 uZK
 lVA
 pKM
-tff
+dBt
 mEC
 rbs
 iWJ
@@ -235589,9 +235596,9 @@ lBW
 uZK
 die
 uZK
-uZK
+jnI
 pjB
-tff
+dBt
 tff
 tff
 tff

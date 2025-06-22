@@ -11416,6 +11416,10 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
+"cEf" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/space/basic,
+/area/space)
 "cEn" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -39026,11 +39030,8 @@
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "jhG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
-/turf/open/floor/plating,
-/area/station/medical/pathology)
+/turf/closed/wall/r_wall,
+/area/station/medical/pathology/isolation)
 "jhH" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -41387,6 +41388,10 @@
 /obj/structure/cable,
 /obj/machinery/disease2/centrifuge,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "jJc" = (
@@ -45725,7 +45730,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "kIz" = (
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/station/medical/pathology/isolation)
 "kIJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -68472,7 +68477,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "qgI" = (
-/turf/closed/wall,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/station/medical/pathology/isolation)
 "qgQ" = (
 /obj/machinery/holopad,
@@ -77674,8 +77681,9 @@
 "ssR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/plating,
-/area/station/medical/pathology/isolation)
+/area/station/medical/pathology)
 "ssY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -92915,10 +92923,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"wai" = (
-/obj/machinery/power/apc/auto_name/directional/east,
-/turf/open/space/basic,
-/area/space)
 "wak" = (
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron/dark,
@@ -136267,7 +136271,7 @@ gqm
 gqm
 tgT
 gqm
-jhG
+ssR
 gUf
 aaa
 qYo
@@ -139084,17 +139088,17 @@ uXF
 tgT
 riB
 tgT
-kIz
-ssR
-kIz
-kIz
-ssR
+jhG
+qgI
+jhG
+jhG
+qgI
 eJm
-qgI
-qgI
-qgI
-qgI
 kIz
+kIz
+kIz
+kIz
+jhG
 hrs
 aaa
 qYo
@@ -139344,14 +139348,14 @@ tgT
 vvb
 hlG
 ePb
-qgI
+kIz
 oOz
 vfa
-ssR
+qgI
 bBG
 mJy
 hFZ
-ssR
+qgI
 qYo
 qYo
 efQ
@@ -139601,14 +139605,14 @@ tgT
 xWi
 vjI
 eec
-ssR
+qgI
 fym
 dgl
 ifi
 dZn
 bLU
 ggG
-ssR
+qgI
 aaa
 qYo
 efQ
@@ -139861,11 +139865,11 @@ xoa
 rJQ
 nlz
 bNs
-qgI
-qgI
-qgI
-qgI
 kIz
+kIz
+kIz
+kIz
+jhG
 anZ
 qYo
 efQ
@@ -140112,17 +140116,17 @@ tgT
 tgT
 pol
 tgT
-kIz
+jhG
 bla
 hGG
-ssR
+qgI
 nbR
 dgl
 ifi
 ljM
 ofa
 ggG
-ssR
+qgI
 aaa
 qYo
 efQ
@@ -140369,17 +140373,17 @@ tgT
 vKI
 iFg
 geU
-kIz
+jhG
 lkE
 uoS
-qgI
+kIz
 jQL
 ovW
-ssR
+qgI
 jFJ
 skg
 qSa
-ssR
+qgI
 qYo
 qYo
 efQ
@@ -140626,17 +140630,17 @@ oCE
 wnD
 tSU
 mNK
-kIz
-kIz
-kIz
-kIz
-kIz
-kIz
-kIz
-kIz
-kIz
-kIz
-kIz
+jhG
+jhG
+jhG
+jhG
+jhG
+jhG
+jhG
+jhG
+jhG
+jhG
+jhG
 nPp
 aaa
 aaa
@@ -140890,7 +140894,7 @@ aaa
 aaa
 qYo
 aaa
-wai
+cEf
 qYo
 aaa
 qYo

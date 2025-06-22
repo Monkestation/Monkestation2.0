@@ -8683,6 +8683,11 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/smooth_edge,
 /area/station/security/lockers)
+"cFC" = (
+/obj/structure/chair/office/light,
+/obj/effect/landmark/start/virologist,
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "cFJ" = (
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
@@ -9677,8 +9682,8 @@
 "cTt" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/light/directional/south,
-/obj/structure/closet/l3closet/virology,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/disease2/centrifuge,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "cTv" = (
@@ -16550,7 +16555,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/obj/machinery/disease2/incubator,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "ffZ" = (
@@ -21221,7 +21226,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 6
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
@@ -23410,9 +23415,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
@@ -25427,6 +25429,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"iei" = (
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "iep" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
@@ -30509,9 +30516,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "jLK" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
 /obj/machinery/duct,
 /obj/machinery/camera{
 	c_tag = "Virology Module North";
@@ -30519,9 +30523,6 @@
 	network = list("ss13","medbay")
 	},
 /obj/machinery/light/small/directional/north,
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "jLO" = (
@@ -37168,10 +37169,6 @@
 	dir = 4;
 	network = list("ss13","medbay")
 	},
-/obj/item/clothing/mask/breath/medical,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
@@ -41385,8 +41382,12 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/machinery/vending/medical,
 /obj/item/radio/intercom/directional/east,
+/obj/structure/table/glass,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "nio" = (
@@ -45623,15 +45624,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "osr" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/station/medical/pathology)
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/medical/morgue)
 "osD" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
@@ -50574,6 +50571,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "pTN" = (
@@ -52222,16 +52225,10 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "qxv" = (
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the frozen exterior of the moon.";
-	name = "deathsposal unit"
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
 /obj/structure/sign/warning/deathsposal/directional/north,
 /obj/structure/sign/warning/fire/directional/west,
 /obj/effect/turf_decal/tile/green/full,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pathology)
 "qxy" = (
@@ -53467,10 +53464,8 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/vending/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "qST" = (
@@ -54815,7 +54810,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "rpU" = (
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
@@ -57186,14 +57180,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "sfz" = (
@@ -57721,6 +57710,10 @@
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/machinery/reagentgrinder{
 	pixel_y = 8
+	},
+/obj/structure/reagent_dispensers/wall/virusfood/directional/south{
+	pixel_x = 30;
+	pixel_y = -30
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
@@ -63182,6 +63175,9 @@
 /obj/structure/cable,
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/structure/railing{
+	dir = 6
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "ueP" = (
@@ -63639,29 +63635,14 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs/auxiliary)
 "ukV" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/o_plus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/blood/o_minus,
-/obj/item/reagent_containers/blood/b_plus,
-/obj/item/reagent_containers/blood/b_minus,
-/obj/item/reagent_containers/blood/a_plus,
-/obj/item/reagent_containers/blood/a_minus,
-/obj/item/reagent_containers/blood/lizard,
-/obj/item/reagent_containers/blood/lizard,
-/obj/item/reagent_containers/blood/ethereal,
-/obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "uli" = (
@@ -64734,6 +64715,7 @@
 "uDF" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "uDP" = (
@@ -69387,11 +69369,14 @@
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "wgL" = (
@@ -70166,7 +70151,6 @@
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/trimline/green/filled/line,
-/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "wsO" = (
@@ -70875,8 +70859,14 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/sink/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/machinery/disposal/bin{
+	desc = "A pneumatic waste disposal unit. This one leads to the frozen exterior of the moon.";
+	name = "deathsposal unit"
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "wDl" = (
@@ -178517,7 +178507,7 @@ qhy
 dYX
 sAI
 hjM
-hjM
+osr
 hjM
 hjM
 dXF
@@ -180324,7 +180314,7 @@ drR
 jyz
 oQY
 oQY
-oQY
+cFC
 cTt
 xDb
 xMq
@@ -181346,7 +181336,7 @@ vMf
 tdL
 xDb
 qxv
-osr
+cDb
 wiD
 dRz
 pwn
@@ -182374,7 +182364,7 @@ wbe
 jUB
 jGN
 gHN
-qWD
+iei
 uDF
 pTJ
 goF
