@@ -62,6 +62,7 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 
 	if(charged_anchoring_crystals)
 		handle_charged_crystals()
+	return ..()
 
 ///try and adjust our clock_power, returns FALSE if it would put us above our max_clock_power or below 0, set always_adjust to TRUE to make us instead just adjust to be within bounds
 /datum/controller/subsystem/processing/the_ark/proc/adjust_clock_power(amount, always_adjust = FALSE)

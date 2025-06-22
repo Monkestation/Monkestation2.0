@@ -15,6 +15,9 @@
 	resistance_flags = ACID_PROOF | FIRE_PROOF | LAVA_PROOF
 	anchored = TRUE
 	break_sound = null
+	armor_type = /datum/armor/clockwork_wall_lattice
+	break_message = span_warning("The stabilization lattice rapidly collapses, bringing the wall its supporting with it!")
+	debris = null
 	///The wall we are linked to
 	var/turf/closed/wall/clockwork/linked_wall
 	///Are we empowered
@@ -53,6 +56,9 @@
 		regenerate_at = world.time + regen_delay
 	return ..()
 
+/obj/structure/destructible/clockwork_wall_lattice/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration, armour_ignorance)
+	return
+
 /obj/structure/destructible/clockwork_wall_lattice/process(seconds_per_tick)
 	if(world.time > regenerate_at)
 		repair_damage(regen_per_second * seconds_per_tick)
@@ -62,7 +68,7 @@
 		return PROCESS_KILL
 
 /obj/structure/destructible/clockwork_wall_lattice/play_attack_sound(damage_amount, damage_type, damage_flag)
-	. = ..()
+	playsound(get_turf(src), 'sound/effects/empulse.ogg', 75, TRUE)
 
 /obj/structure/destructible/clockwork_wall_lattice/proc/empower()
 	if(is_empowered)
@@ -71,6 +77,7 @@
 	//SSthe_ark.passive_power -= EMPOWER_PASSIVE_DRAIN
 	regen_per_second = EMPOWERED_REGEN_PER_SECOND
 	regen_delay = EMPOWERED_REGEN_DELAY
+	set_armor(/datum/armor/empowered_clockwork_wall_lattice)
 	if(regenerate_at)
 		regenerate_at = regenerate_at - (BASE_REGEN_DELAY - EMPOWERED_REGEN_DELAY)
 	return TRUE
@@ -82,6 +89,7 @@
 	//SSthe_ark.passive_power += EMPOWER_PASSIVE_DRAIN
 	regen_per_second = BASE_REGEN_PER_SECOND
 	regen_delay = BASE_REGEN_DELAY
+	set_armor(/datum/armor/clockwork_wall_lattice)
 	if(regenerate_at)
 		regenerate_at = regenerate_at + (BASE_REGEN_DELAY - EMPOWERED_REGEN_DELAY)
 	return TRUE

@@ -7,6 +7,7 @@
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
+	uses_integrity = FALSE
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
@@ -26,8 +27,9 @@
 		linked_lattice = new(src, src)
 
 /turf/closed/wall/clockwork/Destroy()
-	if(linked_lattice)
-		QDEL_NULL(linked_lattice)
+	if(!QDELETED(linked_lattice))
+		qdel(linked_lattice)
+	linked_lattice = null
 	return ..()
 
 /turf/closed/wall/clockwork/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)

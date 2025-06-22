@@ -43,10 +43,9 @@
 	if(IS_CLOCK(user) && can_rotate)
 		setDir(turn(dir, 90))
 		balloon_alert(user, "rotated [dir2text(dir)]")
-
 	return TRUE
 
-/obj/structure/destructible/clockwork/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+/obj/structure/destructible/clockwork/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration, armour_ignorance)
 	if(damage_cap)
-		damage_amount = min(damage_cap, damage_amount)
-	. = ..()
+		return min(damage_cap, ..())
+	return ..()
