@@ -90,7 +90,6 @@
 
 		if(user.transferItemToLoc(I, src))
 			attached_jetpack = I
-			attached_jetpack.on_attach()
 			to_chat(user, span_notice("You successfully install the jetpack into [src]."))
 			return
 
@@ -109,7 +108,7 @@
 		return
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/alt_click_secondary(atom/A)
+/obj/item/clothing/suit/space/hardsuit/alt_click_secondary(mob/user)
 	. = ..()
 	if(!.)
 		return
@@ -120,11 +119,10 @@
 		to_chat(user, span_warning("You cannot remove the jetpack from [src] while wearing it."))
 		return
 
-		attached_jetpack.turn_off(user)
-		attached_jetpack.forceMove(drop_location())
-		attached_jetpack = null
-		to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
-		return
+	attached_jetpack.turn_off(user)
+	attached_jetpack.forceMove(drop_location())
+	attached_jetpack = null
+	to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	. = ..()

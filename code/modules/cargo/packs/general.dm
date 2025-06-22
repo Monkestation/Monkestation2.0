@@ -292,3 +292,10 @@
 		/obj/item/hatchet/cutterblade = 1,
 	)
 	crate_name = "paper cutters crate"
+
+/datum/supply_pack/misc/hardsuit_jetpack_upgrade
+	name = "Hardsuit Jetpack Uprade"
+	desc = "Contains an upgrade module which allows you to attach any jetpack to any hardsuit"
+	cost = CARGO_CRATE_VALUE * 2.5
+	contains = list(/obj/item/jetpack_module)
+	crate_name = "hardsuit jetpack upgrade"
