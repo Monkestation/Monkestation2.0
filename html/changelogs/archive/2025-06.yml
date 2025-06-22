@@ -388,6 +388,9 @@
       a whip, of course it's gonna sting)
   - balance: Curator's whip no longer bypasses shields / block chance.
   - sound: Halved the base volume of the Black Mesa Source Military VOX voice.
+  Salted-Zen:
+  - rscadd: reworked the protokinetic shotgun into a limited ammo powerhouse, with
+      three new shells specifically made just for it.
   SirNightKnight:
   - rscadd: The Syndicate has opened up the Banana Department to sponsor their agent
       with monkey field agents.
