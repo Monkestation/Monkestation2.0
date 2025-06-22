@@ -731,6 +731,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/miscellaneous/scrubs_donator_greyscale
+	name = "Greyscale Scrubs"
+	item_path = /obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 /datum/loadout_item/plushies/donator_xsi
 	name = "XSI Plush"
 	item_path = /obj/item/toy/plush/donator_xsi

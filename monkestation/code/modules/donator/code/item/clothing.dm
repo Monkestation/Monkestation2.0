@@ -752,3 +752,23 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "peacejacket"
 	worn_icon_state = "peacejacket"
+
+/obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
+	name = "scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "greyscale_scrubs"
+	inhand_icon_state = null
+	greyscale_colors = "#7f8a7c"
+	greyscale_config = /datum/greyscale_config/donator_greyscale_scrubs
+	greyscale_config_worn = /datum/greyscale_config/donator_greyscale_scrubs_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+/datum/greyscale_config/donator_greyscale_scrubs
+	name = "scrubs"
+	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs.json'
+/datum/greyscale_config/donator_greyscale_scrubs_worn
+	name = "scrubs"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs.json'
