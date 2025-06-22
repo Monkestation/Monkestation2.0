@@ -40299,7 +40299,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "jxq" = (
-/obj/structure/lattice,
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
@@ -135237,8 +135236,8 @@ xso
 baB
 qQM
 aaa
-qYo
 aaa
+qYo
 aaa
 lvw
 aaa
@@ -135494,8 +135493,8 @@ wjP
 qQM
 qQM
 aaa
-efQ
 aaa
+efQ
 aaa
 lvw
 aaa
@@ -135751,8 +135750,8 @@ aaa
 qYo
 aaa
 aaa
-efQ
 aaa
+efQ
 aaa
 efQ
 qYo
@@ -136008,9 +136007,9 @@ aaa
 qYo
 aaa
 aaa
+aaa
 qYo
-aaa
-aaa
+qYo
 qYo
 qYo
 aaa
@@ -136266,7 +136265,7 @@ gqm
 tgT
 gqm
 gqm
-gUf
+tgT
 aaa
 qYo
 efQ
