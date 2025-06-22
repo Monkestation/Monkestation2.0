@@ -47,7 +47,7 @@
 
 	if(target.uses_integrity)
 		if(!QDELETED(target))
-			if(istype(get_area(target), /area/shipbreak))
+			if(istype(get_area(target), /area/space/shipbreak))
 				if(isstructure(target))
 					target.take_damage(force * demolition_mod, BRUTE, MELEE, FALSE, null, 20) // Breaks "structures pretty good"
 				if(ismachinery(target))

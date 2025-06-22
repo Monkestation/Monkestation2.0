@@ -829,7 +829,7 @@
 	spawn_frame(disassembled)
 
 	for(var/part in component_parts)
-		var/area/shipbreak/A = get_area(src)
+		var/area/space/shipbreak/A = get_area(src)
 		if(istype(part, /datum/stock_part))
 			var/datum/stock_part/datum_part = part
 			var/obj/item/item = new datum_part.physical_object_type(loc)

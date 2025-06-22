@@ -46,6 +46,7 @@
 	glasses = /obj/item/clothing/glasses/meson
 	uniform = /obj/item/clothing/under/rank/cargo/miner
 	backpack_contents = list(
+		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
@@ -77,4 +78,6 @@
 	new /obj/item/clothing/suit/space/hardsuit/mining(src)
 	new /obj/item/gps/mining(src)
 
-
+/obj/item/storage/box/emergency_eva/explorer/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/tank/jetpack/mining, /obj/item/clothing/suit/space/hardsuit/mining))

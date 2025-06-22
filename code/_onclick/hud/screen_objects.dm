@@ -826,12 +826,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(QDELETED(src))
 		return
 	if(out)
-		animate(src, alpha = 0, time = 30)
+		animate(src, alpha = 0, time = 3 SECONDS)
 	else
 		alpha = 0
-		animate(src, alpha = 255, time = 30)
+		animate(src, alpha = 255, time = 3 SECONDS)
 	if(qdel_after)
-		QDEL_IN(src, 30)
+		QDEL_IN(src, 3 SECONDS)
 
 /atom/movable/screen/splash/Destroy()
 	if(holder)
