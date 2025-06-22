@@ -110,8 +110,6 @@
 
 /obj/item/clothing/suit/space/hardsuit/alt_click_secondary(mob/user)
 	. = ..()
-	if(!.)
-		return
 	if(!attached_jetpack)
 		to_chat(user, span_warning("[src] has no jetpack installed."))
 		return
