@@ -2060,6 +2060,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"aHt" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "aHD" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6947,6 +6952,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical/pathology)
 "ccj" = (
@@ -11396,7 +11402,7 @@
 /area/station/command/gateway)
 "dtt" = (
 /turf/closed/wall,
-/area/station/medical/pathology/isolation)
+/area/station/maintenance/department/medical/pathology)
 "dtv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Central Starboard Maintenance"
@@ -31407,6 +31413,11 @@
 /obj/item/bikehorn/rubberducky,
 /turf/open/water/overlay/hotspring,
 /area/station/command/heads_quarters/captain/private)
+"jlE" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "jlO" = (
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/circuit/green{
@@ -44589,8 +44600,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
 "nau" = (
-/turf/closed/wall,
-/area/station/maintenance/department/medical/pathology)
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/medical/pathology/isolation)
 "naD" = (
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/light/directional/east,
@@ -45409,13 +45422,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/brig/entrance)
-"nlL" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
 "nlN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58439,11 +58445,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"rdS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/medical/pathology/isolation)
 "rdU" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
@@ -63388,11 +63389,6 @@
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
-"sAf" = (
-/obj/machinery/duct,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/medical/pathology)
 "sAh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67090,6 +67086,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage)
+"tAx" = (
+/turf/closed/wall,
+/area/station/medical/pathology/isolation)
 "tAB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67542,6 +67541,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"tIV" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
 "tIY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -73598,6 +73604,7 @@
 /obj/machinery/camera/autoname/directional/south,
 /obj/machinery/requests_console/auto_name/directional/west,
 /obj/machinery/computer/diseasesplicer,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "vqZ" = (
@@ -74205,11 +74212,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"vAg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical)
 "vAk" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/abandoned)
@@ -109482,7 +109484,7 @@ lXw
 lXw
 lXw
 elp
-nlL
+tIV
 lXw
 lXw
 nhC
@@ -109739,7 +109741,7 @@ rwL
 rwL
 rwL
 mNe
-vAg
+aHt
 rwL
 lXw
 lXw
@@ -110504,11 +110506,11 @@ fnq
 doH
 fvw
 ili
-nau
-nau
-nau
-nau
-nau
+dtt
+dtt
+dtt
+dtt
+dtt
 nqT
 uaR
 snA
@@ -110761,11 +110763,11 @@ sTb
 xRA
 gkM
 kYa
-nau
+dtt
 qIP
 hxW
 wgi
-nau
+dtt
 oJN
 peI
 snA
@@ -111018,11 +111020,11 @@ oMg
 oMg
 oMg
 oMg
-nau
+dtt
 iKJ
 fEO
 mBf
-nau
+dtt
 jNo
 duX
 snA
@@ -111275,11 +111277,11 @@ pHa
 iXA
 jxj
 qHZ
-nau
+dtt
 cbU
 vdO
 qDF
-nau
+dtt
 clV
 lOa
 snA
@@ -111532,7 +111534,7 @@ gJw
 vbA
 ehT
 klJ
-nau
+dtt
 pxg
 gkd
 enK
@@ -112302,7 +112304,7 @@ pFl
 ohq
 lPp
 wJN
-sAf
+jlE
 mZq
 uJh
 pnc
@@ -113337,7 +113339,7 @@ lPp
 lPp
 lPp
 lPp
-dtt
+tAx
 jzt
 snA
 vgC
@@ -113585,16 +113587,16 @@ cbE
 ase
 bQj
 kXr
-dtt
+tAx
 tpZ
 sRq
-dtt
+tAx
 hjs
 jtU
-dtt
+tAx
 rJx
 pYA
-dtt
+tAx
 tdB
 snA
 lHY
@@ -113842,7 +113844,7 @@ qGA
 tvw
 mMy
 kLm
-dtt
+tAx
 uMJ
 iFS
 uVg
@@ -113851,7 +113853,7 @@ oec
 ouE
 iEr
 aPv
-dtt
+tAx
 evS
 snA
 snA
@@ -114099,16 +114101,16 @@ iIS
 dOb
 jnS
 heq
-dtt
+tAx
 hBI
 qlf
-rdS
+nau
 lUm
 llT
-rdS
+nau
 ybz
 jdU
-dtt
+tAx
 qfS
 fdH
 rfH
@@ -114356,16 +114358,16 @@ cbs
 trH
 uKC
 ibC
-dtt
+tAx
 fHd
 qbI
-rdS
+nau
 bJt
 pPm
-rdS
+nau
 jLg
 eYx
-dtt
+tAx
 evS
 snA
 snA
@@ -114613,16 +114615,16 @@ dzc
 dzc
 dzc
 dzc
-dtt
+tAx
 aBF
-dtt
-dtt
+tAx
+tAx
 cHF
-rdS
-dtt
-rdS
-dtt
-dtt
+nau
+tAx
+nau
+tAx
+tAx
 evS
 snA
 gDp
@@ -115644,12 +115646,12 @@ jcz
 fNw
 lOk
 dzc
-rdS
+nau
 iaQ
-dtt
-dtt
-rdS
-rdS
+tAx
+tAx
+nau
+nau
 snA
 ikq
 rwL
