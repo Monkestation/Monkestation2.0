@@ -69,7 +69,7 @@
 /// It prioritizes (in order) trash bins (not the disposals ones), clowns,
 /// and if there's neither in view, it will then just throw it away from the user and target.
 /// Why? Because it's funny.
-/obj/item/melee/curator_whip/proc/find_disarm_target(mob/living/carbon/user, mob/living/target)
+/obj/item/melee/curator_whip/proc/find_disarm_throw_target(mob/living/carbon/user, mob/living/target)
 	var/list/targets = oview(target)
 	var/list/blacklisted_turfs = RANGE_TURFS(1, get_turf(user)) + RANGE_TURFS(1, get_turf(target)) // don't throw it directly next to them
 	var/list/trash_targets
@@ -110,7 +110,7 @@
 			return TRUE // we still return TRUE so we don't continue the attack chain
 	if(!target.dropItemToGround(item))
 		return FALSE
-	var/atom/disarm_target = find_disarm_target(user, target)
+	var/atom/disarm_target = find_disarm_throw_target(user, target)
 	var/target_text = isturf(disarm_target) ? "away" : "towards \the [disarm_target]"
 	target.visible_message(
 		span_danger("[item] is yanked out of [target]'s hands by \the [src], sending it flying [target_text]!"),
