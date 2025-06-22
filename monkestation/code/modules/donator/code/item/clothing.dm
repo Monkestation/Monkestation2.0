@@ -746,7 +746,7 @@
 								'monkestation/code/modules/donator/sounds/starfathersuit_scream_5.ogg',)
 
 /obj/item/clothing/suit/peacejacket
-	name = "peacejacket"
+	name = "peace jacket"
 	desc = "A worn brownish/green coat with a peace symbol on the back."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'

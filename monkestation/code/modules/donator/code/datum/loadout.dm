@@ -888,8 +888,6 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-
-
 //Helixsix
 /datum/loadout_item/suit/star_father_suit
 	name = "Peace Jacket"
