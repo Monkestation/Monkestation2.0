@@ -279,7 +279,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/server_memory_stats,
 	/client/proc/tracy_next_round,
 	/client/proc/start_tracy,
-	/client/proc/cpu_control,
 	// monkestation end
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
@@ -1135,12 +1134,3 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		holder.library_manager = new()
 	holder.library_manager.ui_interact(usr)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Library Management") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
-
-/client/proc/cpu_control()
-	set name = "Toggle CPU Controls"
-	set category = "Debug"
-	set desc = "Enables performance debug view"
-	if(!check_rights(R_DEBUG))
-		return
-
-	GLOB.cpu_tracker.toggle_cpu_debug(usr.client)
