@@ -107,6 +107,10 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 /proc/pathflatten(path)
 	return replacetext(path, "/", "_")
 
+/// Returns the md5 of a file at a given path.
+/proc/md5filepath(path)
+	return rustg_hash_file(RUSTG_HASH_MD5, path)
+
 /// Save file as an external file then md5 it.
 /// Used because md5ing files stored in the rsc sometimes gives incorrect md5 results.
 /proc/md5asfile(file)
@@ -115,7 +119,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 	var/filename = "tmp/md5asfile.[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
 	notch = WRAP(notch+1, 0, 2**15)
 	fcopy(file, filename)
-	. = rustg_hash_file(RUSTG_HASH_MD5, filename)
+	. = md5filepath(filename)
 	fdel(filename)
 
 /**
