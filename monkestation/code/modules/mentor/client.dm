@@ -35,6 +35,12 @@
 	log_admin("[key_name(src)] re-mentored themselves.")
 	BLACKBOX_LOG_MENTOR_VERB("Rementor")
 
+//TEMPORARY FOR TM PURPOSES
+///Verifies if the client is considered a Mentor, AKA has a Mentor datum or is an Admin.
+/client/proc/is_mentor()
+	if(mentor_datum || check_rights_for(src, R_ADMIN, 0))
+		return TRUE
+
 MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CATEGORY_MAIN)
 	user.mentor_datum.deactivate()
 	to_chat(user, span_interface("You are now an unmentored player."), confidential = TRUE)
