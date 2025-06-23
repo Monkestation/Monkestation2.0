@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "You can now alt-click with the xenobio vacuum pack in order to get a selection of valid mobs to suck up on that tile."

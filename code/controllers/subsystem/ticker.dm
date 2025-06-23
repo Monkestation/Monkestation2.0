@@ -81,6 +81,9 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/popcount
 
+	/// A lazylist of roundstart splashes, so they can be faded out AFTER antags are initialized.
+	var/list/roundstart_splashes
+
 	/// (monkestation addition) The station integrity at roundend.
 	var/roundend_station_integrity
 
@@ -344,9 +347,11 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
-	SSgamemode.current_storyteller.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	SSgamemode.current_storyteller.round_started = TRUE
+	SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
+	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
+
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
@@ -527,11 +532,10 @@ SUBSYSTEM_DEF(ticker)
 	var/mob/living = player.transfer_character()
 	if(!living)
 		return
-	qdel(player)
 	ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 	if(living.client)
-		var/atom/movable/screen/splash/splash = new(null, living.client, TRUE)
-		splash.Fade(TRUE)
+		var/atom/movable/screen/splash/splash = new(null, null, living.client, TRUE)
+		LAZYADD(roundstart_splashes, splash)
 		living.client?.init_verbs()
 	. = living
 	var/datum/persistent_client/persistent_client = living.persistent_client
@@ -588,6 +592,11 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(next_in_line, span_danger("No response received. You have been removed from the line."))
 			queued_players -= next_in_line
 			queue_delay = 0
+
+/datum/controller/subsystem/ticker/proc/fade_all_splashes()
+	for(var/atom/movable/screen/splash/splash in roundstart_splashes)
+		splash.Fade(TRUE)
+	LAZYNULL(roundstart_splashes)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING

@@ -1,44 +1,37 @@
+/datum/admins
+	var/datum/vox_holder/admin/vox_holder
+
+/datum/admins/disassociate()
+	. = ..()
+	QDEL_NULL(vox_holder)
+
 ADMIN_VERB(AdminVOX, R_ADMIN, "VOX", "Allows unrestricted use of the AI VOX announcement system.", ADMIN_CATEGORY_MAIN)
-	// Prompt message via TGUI
-	var/message = tgui_input_text(user, "Enter your VOX announcement message:", "AdminVOX", encode = FALSE)
+	if(QDELETED(user.holder.vox_holder))
+		user.holder.vox_holder = new(user.holder)
+	user.holder.vox_holder.ui_interact(user.mob)
 
-	// Check for valid message input
-	if(!message || message == "")
-		return
-
-	// Process the message for VOX
-	var/list/words = splittext(trim(message), " ")
-	var/list/incorrect_words
-
-	words.len = min(30, length(words))
-
-	for(var/word in words)
-		word = lowertext(trim(word))
-		if(!word)
-			words -= word
-			continue
-		if(!GLOB.vox_sounds[word])
-			LAZYADD(incorrect_words, word)
-
-	if(LAZYLEN(incorrect_words))
-		to_chat(user, span_notice("These words are not available on the announcement system: [english_list(incorrect_words)]."))
-		return
-
-	// Announce to players on the same Z-level
-	var/list/players = list()
-	var/turf/ai_turf = get_turf(user.mob)
-	for(var/mob/player_mob in GLOB.player_list)
-		var/turf/player_turf = get_turf(player_mob)
-		if(is_valid_z_level(ai_turf, player_turf))
-			players += player_mob
-
-	minor_announce(capitalize(message), "[user.mob] announces:", players = players, should_play_sound = FALSE)
-
-	// Play each VOX word for the announcement
-	for(var/word in words)
-		play_vox_word(word, ai_turf, null)
-
-	// Log the successful announcement
-	message_admins("[key_name(user)] made a VOX announcement: \"[message]\".")
-	log_admin("[key_name(user)] made a VOX announcement: \"[message]\".")
 	BLACKBOX_LOG_ADMIN_VERB("Show VOX Announcement")
+
+/datum/vox_holder/admin
+	cooldown = 5 SECONDS
+	var/datum/admins/parent
+
+/datum/vox_holder/admin/New(datum/admins/parent)
+	. = ..()
+	src.parent = parent
+
+/datum/vox_holder/admin/Destroy(force)
+	parent = null
+	return ..()
+
+/datum/vox_holder/admin/ui_status(mob/user, datum/ui_state/state)
+	if(user.client == parent.owner)
+		return UI_INTERACTIVE
+	else
+		return UI_CLOSE
+
+/datum/vox_holder/admin/speak(mob/speaker, message, name_override, turf/origin_turf, test, check_hearing)
+	. = ..()
+	if(. && !test)
+		message_admins("[key_name(speaker)] made a VOX announcement: \"[message]\".")
+		log_admin("[key_name(speaker)] made a VOX announcement: \"[message]\".")

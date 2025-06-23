@@ -1,6 +1,7 @@
 /datum/material_trait/slippery
 	name = "Slippery"
 	desc = "Item will randomly fall to the ground regardless of where its stored."
+	trait_flags = MT_PROCESSES
 	reforges = 2
 
 /datum/material_trait/slippery/on_process(atom/movable/parent, datum/material_stats/host)

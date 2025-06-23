@@ -2,7 +2,7 @@
 #define BLOODSUCKER_PASSIVE_BLOOD_DRAIN 0.1
 
 /// Runs from COMSIG_LIVING_LIFE, handles Bloodsucker constant proccesses.
-/datum/antagonist/bloodsucker/proc/LifeTick(mob/living/source, seconds_per_tick, times_fired)
+/datum/antagonist/bloodsucker/proc/life_tick(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 	if(isbrain(owner?.current))
 		return
@@ -20,10 +20,14 @@
 			COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_HEALING)
 	// Standard Updates
 
-	update_blood()
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_ON_LIFETICK)
-	INVOKE_ASYNC(src, PROC_REF(HandleStarving))
 	INVOKE_ASYNC(src, PROC_REF(update_hud))
+
+/datum/antagonist/bloodsucker/proc/handle_blood()
+	SIGNAL_HANDLER
+	update_blood()
+	handle_starving()
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN | HANDLE_BLOOD_NO_EFFECTS
 
 /datum/antagonist/bloodsucker/proc/on_death(mob/living/source, gibbed)
 	SIGNAL_HANDLER
@@ -82,7 +86,7 @@
  * ## HEALING
  */
 
-/// Constantly runs on Bloodsucker's LifeTick, and is increased by being in Torpor/Coffins
+/// Constantly runs on Bloodsucker's life_tick, and is increased by being in Torpor/Coffins
 /datum/antagonist/bloodsucker/proc/HandleHealing(mult = 1)
 	if(QDELETED(owner?.current))
 		return
@@ -239,7 +243,7 @@
 	to_chat(owner.current, span_userdanger("Your immortal body will not yet relinquish your soul to the abyss. You enter Torpor."))
 	check_begin_torpor(TRUE)
 
-/datum/antagonist/bloodsucker/proc/HandleStarving() // I am thirsty for blood!
+/datum/antagonist/bloodsucker/proc/handle_starving() // I am thirsty for blood!
 	// Nutrition - The amount of blood is how full we are.
 	if(!isoozeling(owner.current))
 		owner.current.set_nutrition(min(bloodsucker_blood_volume, NUTRITION_LEVEL_FED))
@@ -296,10 +300,12 @@
 	// If we have no body, end here.
 	if(QDELETED(owner.current))
 		return
-	UnregisterSignal(src, list(
-		COMSIG_BLOODSUCKER_ON_LIFETICK,
+	UnregisterSignal(owner.current, list(
 		COMSIG_LIVING_LIFE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_HUMAN_ON_HANDLE_BLOOD,
 	))
 	UnregisterSignal(SSsol, list(
 		COMSIG_SOL_RANKUP_BLOODSUCKERS,

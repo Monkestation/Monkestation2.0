@@ -71,8 +71,14 @@
 		if(!nuke_team.team_discounts)
 			var/list/uplink_items = list()
 			for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-				if(item.item && !item.cant_discount && (item.purchasable_from & uplink.uplink_handler.uplink_flag) && item.cost > 1)
+				if(!item.item || item.cant_discount || !(item.purchasable_from & uplink.uplink_handler.uplink_flag) || item.cost <= 1)
+					continue
+				if(!length(item.restricted_roles) && !length(item.restricted_species))
 					uplink_items += item
+					continue
+				if((uplink.uplink_handler.assigned_role in item.restricted_roles) || (uplink.uplink_handler.assigned_species in item.restricted_species))
+					uplink_items += item
+					continue
 			nuke_team.team_discounts = list()
 			nuke_team.team_discounts += create_uplink_sales(discount_team_amount, /datum/uplink_category/discount_team_gear, -1, uplink_items)
 			nuke_team.team_discounts += create_uplink_sales(discount_limited_amount, /datum/uplink_category/limited_discount_team_gear, 1, uplink_items)

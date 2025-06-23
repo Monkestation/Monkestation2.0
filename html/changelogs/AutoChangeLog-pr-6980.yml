@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - code_imp: "Dried gibs now merge into one object, hopefully reducing the lag from large amounts of blood tomatoes or monkeys being gibbed."
