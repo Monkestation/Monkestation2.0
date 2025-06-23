@@ -160,16 +160,16 @@
 	canSmoothWith = SMOOTH_GROUP_FLOOR_BLOODLING
 	layer = HIGH_TURF_LAYER
 	underfloor_accessibility = UNDERFLOOR_HIDDEN
+
+	/// The bloodling who is set as the master of the thralls created by these tiles
 	var/mob/living/basic/bloodling/master
+	/// Assoc list for mobs and timers we are trying to thrallify, Mob then timer
+	var/list/eligable_thralls = list()
 
 /turf/open/misc/bloodling/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	for(var/datum/antagonist/antag in GLOB.antagonists)
 		if(!IS_BLOODLING(antag.owner.current))
 			continue
@@ -190,8 +190,8 @@
 
 	underlay_appearance.transform = transform
 
-/turf/open/misc/bloodling/proc/on_entered(datum/source, atom/movable/arrived)
-	SIGNAL_HANDLER
+/turf/open/misc/bloodling/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
 	if(!isliving(arrived))
 		return
 
@@ -200,8 +200,35 @@
 		return
 
 	var/mob/living/carbon/carbon_mob = mob
+	// If we try to give an antag datum to someone who already has said datum we get a runtime
+	if(IS_BLOODLING_OR_THRALL(carbon_mob))
+		return
+
+
+	eligable_thralls[carbon_mob] += addtimer(CALLBACK(src, PROC_REF(thrallify), carbon_mob), 10 SECONDS, TIMER_STOPPABLE)
+	//addtimer(CALLBACK(src, PROC_REF(thrallify), carbon_mob), 10 SECONDS)
+
+/turf/open/misc/bloodling/Exit(atom/movable/leaving, direction)
+	. = ..()
+	if(!isliving(leaving))
+		return
+
+	var/mob/living/mob = leaving
+	if(!iscarbon(mob))
+		return
+
+	var/mob/living/carbon/carbon_mob = mob
+	if(!(carbon_mob in eligable_thralls))
+		return
+
+	// Deletes the timer and removes the carbon from our thrall list
+	deltimer(eligable_thralls[carbon_mob])
+	eligable_thralls -= carbon_mob
+
+/turf/open/misc/bloodling/proc/thrallify(mob/living/carbon/carbon_mob)
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	thrall.set_master(master)
+	eligable_thralls -= carbon_mob
 
 /datum/dimension_theme/bloodling
 	icon = 'icons/obj/food/meat.dmi'
