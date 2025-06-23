@@ -486,6 +486,14 @@
 	qdel(item)
 	qdel(src)
 
+/obj/item/melee/baton/security/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!active)
+		return
+	active = FALSE
+	update_appearance()
+	return TRUE
+
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)

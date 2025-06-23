@@ -2,7 +2,7 @@
 
 /datum/vox_voice/mil
 	name = VOX_MIL
-	volume = 50
+	volume = 25
 	sounds = list(
 		"," = 'sound/announcer/vox_mil/_comma.ogg',
 		"." = 'sound/announcer/vox_mil/_period.ogg',

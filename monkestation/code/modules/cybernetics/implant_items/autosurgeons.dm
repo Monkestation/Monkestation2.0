@@ -160,6 +160,8 @@
 
 	return TRUE
 
+/obj/item/autosurgeon/skillchip/syndicate/engineer
+	starting_skillchip = /obj/item/skillchip/job/engineer
 
 /obj/item/autosurgeon/organ/drill
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill
