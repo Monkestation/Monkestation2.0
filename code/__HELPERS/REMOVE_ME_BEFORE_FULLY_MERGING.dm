@@ -10,4 +10,4 @@
 	return rustg_file_write(text, fname)
 
 /proc/DREAMLUAU_CLEAR_REF_USERDATA(object)
-	return DREAMLUAU_CALL(clear_ref_userdata)((object))
+	DREAMLUAU_CALL(clear_ref_userdata)(object)
