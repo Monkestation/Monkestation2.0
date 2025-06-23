@@ -1,3 +1,5 @@
+GLOBAL_VAR(ascended_bloodling)
+
 /datum/action/cooldown/bloodling/ascension
 	name = "Ascend"
 	desc = "We spread our wings across the station...Mass consumption is required. Costs 500 Biomass and takes 5 minutes for you to ascend. Your presence will be alerted to the crew. Fortify the hive."
@@ -15,6 +17,11 @@
 	our_turf = get_turf(our_mob)
 
 	if(antag.is_ascended)
+		qdel(src)
+		return FALSE
+
+	if(GLOB.ascended_bloodling)
+		to_chat(our_mob, span_noticealien("Someone has already ascended before us..."))
 		qdel(src)
 		return FALSE
 
@@ -97,8 +104,15 @@
 	update_health_hud()
 
 /mob/living/basic/bloodling/proper/ascending/proc/ascend()
+	if(GLOB.ascended_bloodling)
+		to_chat(src, span_noticealien("There is not enough matter here for ascension... Unworthy..."))
+		src.evolution(5)
+		src.gib()
+		return
+
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
 	antag.is_ascended = TRUE
+	GLOB.ascended_bloodling = antag
 	// Gives em 750 biomass
 	add_biomass(biomass_max - biomass)
 	ascension_datum = new /datum/bloodling_ascension()
@@ -161,20 +175,30 @@
 	layer = HIGH_TURF_LAYER
 	underfloor_accessibility = UNDERFLOOR_HIDDEN
 
-	/// The bloodling who is set as the master of the thralls created by these tiles
-	var/mob/living/basic/bloodling/master
-	/// Assoc list for mobs and timers we are trying to thrallify, Mob then timer
-	var/list/eligable_thralls = list()
+	/// Status effect given to anyone who walks on these tiles
+	var/thrall_stat = /datum/status_effect/bloodling_thrall
 
 /turf/open/misc/bloodling/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
-	for(var/datum/antagonist/antag in GLOB.antagonists)
-		if(!IS_BLOODLING(antag.owner.current))
+
+	if(!GLOB.ascended_bloodling)
+		return
+
+	for(var/atom/atom as anything in contents)
+		if(!iscarbon(atom))
 			continue
-		master = antag.owner.current
-		break
+
+		var/mob/living/carbon/carbon_mob = atom
+
+		if(isnull(carbon_mob.key))
+			continue
+
+		if(carbon_mob.stat == DEAD && !(carbon_mob.mind.get_ghost()?.can_reenter_corpse))
+			continue
+
+		carbon_mob.apply_status_effect(thrall_stat)
 
 /turf/open/misc/bloodling/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
@@ -199,36 +223,50 @@
 	if(!iscarbon(mob))
 		return
 
+	if(isnull(mob.key))
+		return
+
 	var/mob/living/carbon/carbon_mob = mob
-	// If we try to give an antag datum to someone who already has said datum we get a runtime
+
+	if(carbon_mob.stat == DEAD)
+		if(!(carbon_mob.mind.get_ghost()?.can_reenter_corpse))
+			return
+
 	if(IS_BLOODLING_OR_THRALL(carbon_mob))
 		return
 
-
-	eligable_thralls[carbon_mob] += addtimer(CALLBACK(src, PROC_REF(thrallify), carbon_mob), 10 SECONDS, TIMER_STOPPABLE)
-	//addtimer(CALLBACK(src, PROC_REF(thrallify), carbon_mob), 10 SECONDS)
-
-/turf/open/misc/bloodling/Exit(atom/movable/leaving, direction)
-	. = ..()
-	if(!isliving(leaving))
+	if(!GLOB.ascended_bloodling)
 		return
 
-	var/mob/living/mob = leaving
-	if(!iscarbon(mob))
-		return
+	carbon_mob.apply_status_effect(thrall_stat)
 
-	var/mob/living/carbon/carbon_mob = mob
-	if(!(carbon_mob in eligable_thralls))
-		return
+// The status effect given to people who walk on the tiles
+/datum/status_effect/bloodling_thrall
+	id = "Thrallification"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1
+	show_duration = TRUE
+	var/mob/living/basic/bloodling/master
 
-	// Deletes the timer and removes the carbon from our thrall list
-	deltimer(eligable_thralls[carbon_mob])
-	eligable_thralls -= carbon_mob
+/datum/status_effect/bloodling_thrall/on_apply()
+	to_chat(owner,span_warning("You feel the floor grasp you, stay on the move!"))
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(Destroy))
+	addtimer(CALLBACK(src, PROC_REF(thrallify), owner), 10 SECONDS, TIMER_STOPPABLE)
 
-/turf/open/misc/bloodling/proc/thrallify(mob/living/carbon/carbon_mob)
-	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
-	thrall.set_master(master)
-	eligable_thralls -= carbon_mob
+	if(!GLOB.ascended_bloodling)
+		Destroy()
+
+/datum/status_effect/bloodling_thrall/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
+
+/datum/status_effect/bloodling_thrall/proc/thrallify()
+	if(owner.stat == DEAD)
+		owner.revive(ADMIN_HEAL_ALL)
+
+	var/datum/antagonist/changeling/bloodling_thrall/thrall = owner.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
+	var/datum/antagonist/antag = GLOB.ascended_bloodling
+	thrall.set_master(antag.owner.current)
+	Destroy()
 
 /datum/dimension_theme/bloodling
 	icon = 'icons/obj/food/meat.dmi'
