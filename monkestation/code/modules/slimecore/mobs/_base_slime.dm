@@ -11,8 +11,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/slime
 	density = FALSE
 
-	bodytemp_heat_damage_limit = 2000
-
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
 	faction = list(FACTION_SLIME)
@@ -20,11 +18,16 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 15
 
+	damage_coeff = list(BRUTE = 1, BURN = -1, TOX = 1, STAMINA = 1, OXY = 1) //Healed by fire
+	unsuitable_cold_damage = 15
+	unsuitable_heat_damage = 0
+	bodytemp_heat_damage_limit = INFINITY
+	habitable_atmos = null
+
 	//emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
 	bubble_icon = "slime"
 	initial_language_holder = /datum/language_holder/slime
-
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
