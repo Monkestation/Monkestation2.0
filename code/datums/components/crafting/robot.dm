@@ -216,6 +216,7 @@
 // Kingspire parts
 
 /datum/crafting_recipe/kingspire_engine
+	always_available = FALSE
 	name = "Kingspire Mk.1 Engine"
 	result = /obj/item/mecha_parts/part/kingspire_right_arm
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH)
@@ -231,6 +232,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_cupola
+	always_available = FALSE
 	name = "Kingspire Mk.1 Drivers cupola"
 	result = /obj/item/mecha_parts/part/kingspire_torso
 	tool_behaviors = list(TOOL_WELDER)
@@ -243,6 +245,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_transmission
+	always_available = FALSE
 	name = "Kingspire Mk.1 transmission"
 	result = /obj/item/mecha_parts/part/kingspire_left_arm
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -256,6 +259,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_turret
+	always_available = FALSE
 	name = "Kingspire Mk.1 Turret"
 	result = /obj/item/mecha_parts/part/kingspire_armor
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -271,6 +275,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_ltrack
+	always_available = FALSE
 	name = "Kingspire Mk.1 <b>LEFT</b> Track"
 	result = /obj/item/mecha_parts/part/kingspire_left_leg
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
@@ -284,6 +289,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_rtrack
+	always_available = FALSE
 	name = "Kingspire Mk.1 <b>RIGHT</b> Track"
 	result = /obj/item/mecha_parts/part/kingspire_right_leg
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
@@ -297,6 +303,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_hydraulics
+	always_available = FALSE
 	name = "Kingspire Mk.1 Hydraulic equipment"
 	result = /obj/item/circuitboard/mecha/kingspire/peripherals
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -313,6 +320,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_seats
+	always_available = FALSE
 	name = "Kingspire Mk.1 Seating"
 	result = /obj/item/circuitboard/mecha/kingspire/targeting
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
@@ -325,6 +333,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/kingspire_radio
+	always_available = FALSE
 	name = "Kingspire Mk.1 Radio set"
 	result = /obj/item/circuitboard/mecha/kingspire/main
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
@@ -342,6 +351,7 @@
 // T5 Percutio crafts
 
 /datum/crafting_recipe/percutio_engine
+	always_available = FALSE
 	name = "T5 Percutio Engine"
 	result = /obj/item/mecha_parts/part/percutio_right_arm
 	tool_behaviors = list(TOOL_WELDER)
@@ -357,6 +367,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/percutio_lights
+	always_available = FALSE
 	name = "T5 Percutio Headlights"
 	result = /obj/item/mecha_parts/part/percutio_left_arm
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR)
@@ -369,6 +380,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/percutio_turret
+	always_available = FALSE
 	name = "T5 Percutio Turret"
 	result = /obj/item/mecha_parts/part/percutio_armor
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -384,6 +396,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/percutio_wheels
+	always_available = FALSE
 	name = "T5 Percutio Wheels"
 	result = /obj/item/mecha_parts/part/percutio_left_leg
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
@@ -397,6 +410,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/percutio_transmission
+	always_available = FALSE
 	name = "T5 Percutio transmission"
 	result = /obj/item/mecha_parts/part/percutio_right_leg
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
@@ -410,6 +424,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/percutio_hydraulics
+	always_available = FALSE
 	name = "T5 Percutio Hydraulic equipment"
 	result = /obj/item/circuitboard/mecha/percutio/peripherals
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -426,6 +441,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/percutio_seats
+	always_available = FALSE
 	name = "T5 Percutio Seating"
 	result = /obj/item/circuitboard/mecha/percutio/targeting
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
@@ -438,6 +454,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/percutio_tank
+	always_available = FALSE
 	name = "T5 Percutio Fuel tank"
 	result = /obj/item/circuitboard/mecha/percutio/main
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)

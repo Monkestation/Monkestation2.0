@@ -63,38 +63,6 @@
 	cost = PAYCHECK_COMMAND * 48
 	contraband = TRUE
 
-/datum/armament_entry/company_import/bms/vehicles // No shit that the vics are restricted
-	subcategory = "Vehicles"
-	restricted = TRUE
-
-/datum/armament_entry/company_import/bms/vehicles/argonaut
-	item_type = /obj/vehicle/ridden/argonaut
-	cost = PAYCHECK_COMMAND * 150
-
-/datum/armament_entry/company_import/bms/vehicles/odyssey
-	item_type = /obj/vehicle/ridden/odyssey
-	cost = PAYCHECK_COMMAND * 185
-
-/datum/armament_entry/company_import/bms/vehicles/kingspire
-	item_type = /obj/item/mecha_parts/chassis/kingspire
-	cost = PAYCHECK_COMMAND * 200
-	contraband = TRUE
-
-/datum/armament_entry/company_import/bms/vehicles/ratcatcherbelt
-	item_type = /obj/item/mecha_ammo/makeshift/lighttankmg
-	cost = PAYCHECK_COMMAND * 2
-	contraband = TRUE
-
-/datum/armament_entry/company_import/bms/vehicles/percutio
-	item_type = /obj/item/mecha_parts/chassis/percutio
-	cost = PAYCHECK_COMMAND * 220
-	contraband = TRUE
-
-/datum/armament_entry/company_import/bms/vehicles/typhonmag
-	item_type = /obj/item/mecha_ammo/antitankammo
-	cost = PAYCHECK_COMMAND * 3
-	contraband = TRUE
-
 /datum/armament_entry/company_import/bms/vehicles/callahanmeme
 	item_type = /obj/vehicle/sealed/mecha/callahan
 	cost = PAYCHECK_COMMAND * 1000000000000000000000000000000000000

@@ -178,26 +178,12 @@
 	cost = 80
 	purchasable_from = (UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/datum/uplink_item/dangerous/talos
-	name = "85V-g Talos Assault tank"
-	desc = "A slow assault tank with an extremely large cannon, drains its battery fast. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
-	item = /obj/vehicle/sealed/mecha/talos
-	cost = 180
-	purchasable_from = (UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
 /datum/uplink_item/dangerous/stockade
 	name = "Balfour Stockade 75mm"
 	desc = "Want a giant cannon but too poor to pay for an entire tank? Look no further! The Balfour Stockade has the same cannon as the Talos, but without an engine, internals, \
 	you can even be grabbed off the gun! You need to deploy the thing with a wrench to get it into a firing position, and again with a wrench to undeploy it, only needs 1 crewmember!."
 	item = /obj/vehicle/ridden/stockade
 	cost = 90
-	purchasable_from = (UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
-/datum/uplink_item/dangerous/supporttankammo
-	name = "75mm cannon ammo"
-	desc = "3 crated shells for use with the 85V-g Talos assault tank."
-	item = /obj/item/mecha_ammo/supporttankammo
-	cost = 5
 	purchasable_from = (UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/dangerous/firebrand
