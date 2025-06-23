@@ -1,7 +1,7 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	icon_state = "pellet"
-	damage = 50
+	damage = 40
 	sharpness = SHARP_POINTY
 	wound_bonus = -5
 
@@ -18,9 +18,10 @@
 /obj/projectile/bullet/shotgun_slug/apds
 	name = "tungsten sabot-slug"
 	icon_state = "gauss"
-	damage = 30 //20 less than slugs. Only better when bullet armor is 50+, primarily counters bulletproof armor.
+
+	damage = 25 //10 less than slugs.
 	speed = 0.25 //sub-caliber + lighter = speed. (Smaller number = faster)
-	armour_penetration = 75 //Tis a solid-tungsten penetrator, what do you expect?
+	armour_penetration = 25
 
 	wound_bonus = -25
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
@@ -96,7 +97,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 7.5
+	damage = 8
 	wound_bonus = 5
 	bare_wound_bonus = 5
 	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank

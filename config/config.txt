@@ -574,3 +574,6 @@ TGUI_MAX_CHUNK_COUNT 32
 # The URL for webmaps.
 # $map will be replaced with the current map's name (with spaces removed)
 WEBMAP_URL https://maps.monkestation.com/maps/Monkestation/$map
+
+## Enables the "Memory Statistics" subsystem, automatically logging some overall (albeit not detailed) memory stats every 5 minutes.
+#AUTO_MEMORY_STATS

@@ -6097,6 +6097,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "bTK" = (
@@ -7634,7 +7635,7 @@
 /area/station/maintenance/starboard/aft)
 "cua" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "medbay_desk_shutters";
 	name = "Medbay Front Desk Shutters";
 	dir = 8
@@ -12290,7 +12291,7 @@
 /obj/machinery/door/window/right/directional/north{
 	name = "Ore Redemption"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "cargo_desk";
 	name = "Cargo Desk Shutters";
 	dir = 1
@@ -20156,7 +20157,7 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Reception"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "genetics_shutters";
 	name = "Genetics Shutters"
 	},
@@ -22153,7 +22154,7 @@
 /obj/machinery/door/window/left/directional/west{
 	name = "Medbay Front Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "medbay_desk_shutters";
 	name = "Medbay Front Desk Shutters";
 	dir = 8
@@ -26385,7 +26386,7 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Public Autolathe"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "cargo_desk";
 	name = "Cargo Desk Shutters";
 	dir = 1
@@ -29487,7 +29488,7 @@
 "jyS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics_pub_shutters";
 	name = "Robotics Shutters"
 	},
@@ -32960,7 +32961,7 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Hydroponics Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydroponics_shutters";
 	name = "Hydroponics Shutters";
 	dir = 1
@@ -39796,7 +39797,7 @@
 /obj/machinery/door/window/right/directional/east{
 	name = "Apothecary Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "apothecary_pri_desk_shutters";
 	name = "Apothecary Primary Desk Shutters";
 	dir = 4
@@ -40278,7 +40279,7 @@
 /obj/machinery/door/window/right/directional/north{
 	name = "Public Biogenerator"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydroponics_shutters";
 	name = "Hydroponics Shutters";
 	dir = 1
@@ -42486,7 +42487,7 @@
 /area/station/commons/fitness/recreation)
 "nHY" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydroponics_shutters";
 	name = "Hydroponics Shutters";
 	dir = 1
@@ -44813,7 +44814,7 @@
 /area/station/security/prison/workout)
 "ovo" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "medbay_desk_shutters";
 	name = "Medbay Front Desk Shutters";
 	dir = 4
@@ -46560,7 +46561,7 @@
 	name = "RaD Desk";
 	req_access = list("science")
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "rad_shutters";
 	name = "RaD Shutters"
 	},
@@ -47340,7 +47341,7 @@
 /area/station/science/ordnance/office)
 "png" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "cargo_desk";
 	name = "Cargo Desk Shutters";
 	dir = 1
@@ -48694,7 +48695,7 @@
 /area/station/service/hydroponics/garden)
 "pHR" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "pHW" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
@@ -49562,7 +49563,7 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "Cargo Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "cargo_desk";
 	name = "Cargo Desk Shutters";
 	dir = 1
@@ -50046,7 +50047,7 @@
 /area/station/medical/morgue)
 "qeZ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "rad_shutters";
 	name = "RaD Shutters"
 	},
@@ -57124,7 +57125,7 @@
 /area/station/engineering/main)
 "sAJ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "genetics_shutters";
 	name = "Genetics Shutters"
 	},
@@ -57458,6 +57459,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "sHr" = (
@@ -62108,7 +62110,7 @@
 /obj/machinery/door/window/right/directional/north{
 	name = "Hydroponics Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydroponics_shutters";
 	name = "Hydroponics Shutters";
 	dir = 1
@@ -64287,7 +64289,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics_pub_shutters";
 	name = "Robotics Shutters"
 	},
@@ -67394,7 +67396,7 @@
 /obj/machinery/door/window/right/directional/west{
 	name = "Apothecary Desk"
 	},
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "apothecary_ter_desk_shutters";
 	name = "Apothecary Tertiary Desk Shutters";
 	dir = 8
@@ -70071,7 +70073,7 @@
 /area/station/security/prison/mess)
 "wzL" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "sci_west_win_shutters";
 	name = "Research Division Shutters";
 	dir = 8

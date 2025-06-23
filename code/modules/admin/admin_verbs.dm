@@ -103,6 +103,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
 	// monkestation verbs start
+	/client/proc/cmd_admin_heal_oozeling,
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
 	/client/proc/log_viewer_new,
@@ -271,6 +272,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_puzzgrids,
 	/client/proc/view_runtimes,
 	// monkestation verbs: debugger tools
+	/client/proc/count_instances,
 	/client/proc/log_viewer_new,
 	/client/proc/getserverlogs_debug,
 	/client/proc/getcurrentlogs_debug,

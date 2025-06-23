@@ -121,7 +121,7 @@
 	return FALSE
 
 /**
- * Called during Bloodsucker's LifeTick
+ * Called during Bloodsucker's life_tick
  * args:
  * bloodsuckerdatum - the antagonist datum of the Bloodsucker running this.
  */

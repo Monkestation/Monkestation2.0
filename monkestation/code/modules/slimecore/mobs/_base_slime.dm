@@ -189,7 +189,7 @@
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
-	else if(isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
+	else if(target != src && isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
 		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
 		return
 	. = ..()
@@ -345,7 +345,6 @@
 		else
 			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
 		real_name = name
-	update_name_tag()
 	return ..()
 
 /mob/living/basic/slime/proc/start_split()

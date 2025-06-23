@@ -241,12 +241,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(GLOB.persistent_clients_by_ckey[ckey])
 		reconnecting = TRUE
 		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
 	else
 		persistent_client = new(ckey)
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
+	persistent_client.set_client(src)
 
 	winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
 
@@ -547,7 +544,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref()
+	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
 
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -599,7 +596,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client?.client = null
+	persistent_client?.set_client(null)
+
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.interviews.client_logout(src)
@@ -621,6 +619,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
+	QDEL_NULL(xp_menu)
 	seen_messages = null
 	Master.UpdateTickRate()
 	if(cam_screen)
@@ -991,8 +990,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 #if (PRELOAD_RSC == 0)
 /client/proc/preload_vox()
-	for (var/name in GLOB.vox_sounds)
-		var/file = GLOB.vox_sounds[name]
+	for (var/file in GLOB.all_vox_sounds)
 		Export("##action=load_rsc", file)
 		stoplag()
 #endif
@@ -1208,8 +1206,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")
 			winset(src, "Shift", "command=\".winset :map.right-click=false\"")
 
-/client/proc/update_ambience_pref()
-	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+/client/proc/update_ambience_pref(value)
+	if(value)
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.

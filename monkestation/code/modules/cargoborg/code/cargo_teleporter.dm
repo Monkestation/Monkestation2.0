@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	desc = "An item that can set down a set number of markers, allowing them to teleport items within a tile to the set markers."
 	icon = 'monkestation/code/modules/cargoborg/icons/cargo_teleporter.dmi'
 	icon_state = "cargo_tele"
+	w_class = WEIGHT_CLASS_SMALL
 	///the list of markers spawned by this item
 	var/list/marker_children = list()
 
