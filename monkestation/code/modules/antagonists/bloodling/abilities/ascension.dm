@@ -243,18 +243,21 @@ GLOBAL_VAR(ascended_bloodling)
 // The status effect given to people who walk on the tiles
 /datum/status_effect/bloodling_thrall
 	id = "Thrallification"
-	status_type = STATUS_EFFECT_UNIQUE
+	status_type = STATUS_EFFECT_REFRESH
 	duration = -1
+	alert_type = null
 	show_duration = TRUE
 	var/mob/living/basic/bloodling/master
 
 /datum/status_effect/bloodling_thrall/on_apply()
 	to_chat(owner,span_warning("You feel the floor grasp you, stay on the move!"))
-	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(Destroy))
-	addtimer(CALLBACK(src, PROC_REF(thrallify), owner), 10 SECONDS, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(thrallify)), 10 SECONDS, TIMER_STOPPABLE)
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(signal_destroy))
 
 	if(!GLOB.ascended_bloodling)
-		Destroy()
+		qdel(src)
+
+	return TRUE
 
 /datum/status_effect/bloodling_thrall/on_remove()
 	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
@@ -266,7 +269,13 @@ GLOBAL_VAR(ascended_bloodling)
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = owner.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	var/datum/antagonist/antag = GLOB.ascended_bloodling
 	thrall.set_master(antag.owner.current)
-	Destroy()
+	qdel(src)
+
+// Signal handler for our movement destruction
+/datum/status_effect/bloodling_thrall/proc/signal_destroy()
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/dimension_theme/bloodling
 	icon = 'icons/obj/food/meat.dmi'
