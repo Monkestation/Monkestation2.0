@@ -55459,6 +55459,13 @@
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
+"qlo" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/effect/landmark/start/virologist,
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "qlq" = (
 /turf/open/floor/iron,
 /area/station/maintenance/solars/port/aft)
@@ -67301,7 +67308,6 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "tDY" = (
@@ -73677,13 +73683,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
-"vsz" = (
-/obj/structure/chair/office/light{
-	dir = 8
-	},
-/obj/effect/landmark/start/virologist,
-/turf/open/floor/iron/white,
-/area/station/medical/pathology)
 "vsG" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -112304,7 +112303,7 @@ bTA
 mZq
 uJh
 pnc
-vsz
+qlo
 vvS
 lPp
 uwH
