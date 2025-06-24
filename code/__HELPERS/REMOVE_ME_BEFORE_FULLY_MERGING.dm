@@ -7,7 +7,7 @@
 	return json_encode(stuff)
 
 /proc/_rustg_file_write(text, fname)
-	rustg_file_write(text, fname)
+	return rustg_file_write(text, fname)
 
 /proc/DREAMLUAU_CLEAR_REF_USERDATA(object)
 	DREAMLUAU_CALL(clear_ref_userdata)(object)
