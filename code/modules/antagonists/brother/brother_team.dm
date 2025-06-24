@@ -42,13 +42,18 @@
 /datum/team/brother_team/proc/update_name()
 	var/list/last_names = list()
 	for(var/datum/mind/team_minds as anything in members)
-		var/list/split_name = splittext(team_minds.name," ")
+		var/list/split_name = splittext_char(team_minds.name, " ")
 		last_names += split_name[length(split_name)]
 
 	if (length(last_names) == 1)
 		name = "[last_names[1]]'s Isolated Intifada"
 	else
-		name = "[initial(name)] of " + last_names.Join(" & ")
+		name = "[initial(name)] of " + english_list(last_names)
+
+/datum/team/brother_team/proc/notify_whos_who()
+	for(var/datum/mind/member as anything in members)
+		var/datum/antagonist/brother/blood_bond = member.has_antag_datum(/datum/antagonist/brother)
+		to_chat(member.current, span_alertsyndie("Your fellow blood brother[length(members) > 2 ? "s are" : " is"] [blood_bond.get_brother_names(TRUE)]."), type = MESSAGE_TYPE_INFO)
 
 /datum/team/brother_team/proc/forge_brother_objectives()
 	objectives = list()
@@ -64,7 +69,8 @@
 
 	for(var/datum/mind/brother as anything in members)
 		var/datum/antagonist/brother/blood_bond = brother.has_antag_datum(/datum/antagonist/brother)
-		blood_bond?.update_static_data_for_all_viewers() // ensure they all see the objectives immediately on the popup
+		// stupid hack to ensure they all see their objectives
+		addtimer(CALLBACK(blood_bond, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers)), 0.5 SECONDS)
 
 /datum/team/brother_team/proc/forge_single_objective()
 	if(prob(50))

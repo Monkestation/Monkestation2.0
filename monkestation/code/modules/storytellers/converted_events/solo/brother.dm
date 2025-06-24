@@ -61,3 +61,4 @@
 			team.add_member(pick_n_take(setup_minds))
 		team.update_name()
 		team.forge_brother_objectives()
+		team.notify_whos_who()

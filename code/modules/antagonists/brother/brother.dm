@@ -95,17 +95,11 @@
 	return finish_preview_icon(get_base_preview_icon())
 // monkestation end
 
-/datum/antagonist/brother/proc/get_brother_names()
-	var/list/brothers = team.members - owner
-	var/brother_text = ""
-	for(var/i = 1 to length(brothers))
-		var/datum/mind/M = brothers[i]
-		brother_text += M.name
-		if(i == length(brothers) - 1)
-			brother_text += " and "
-		else if(i != length(brothers))
-			brother_text += ", "
-	return brother_text
+/datum/antagonist/brother/proc/get_brother_names(add_span = FALSE)
+	var/list/names = list()
+	for(var/datum/mind/brother as anything in team.members - owner)
+		names += add_span ? span_name(brother.name) : brother.name
+	return english_list(names)
 
 /datum/antagonist/brother/greet()
 	to_chat(owner.current, span_alertsyndie("You are the [owner.special_role]."))
