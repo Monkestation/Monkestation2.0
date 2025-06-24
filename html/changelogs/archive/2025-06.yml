@@ -460,6 +460,8 @@
   - balance: Voice Activator circuit components can now only understand roundstart
       languages - languages such as codespeak, xenomorph, blah-tongue, shadowtongue,
       etc will not be translated.
+  - rscadd: Silver forged weapons now deal bonus damage against bloodsuckers, werewolves,
+      and the vampire species.
   Xander3359:
   - rscadd: Added a jetpack upgrade module to cargo/mining vendor which allows you
       to attach a jetpack to your hardsuit
