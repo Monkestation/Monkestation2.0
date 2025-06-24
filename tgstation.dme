@@ -7799,7 +7799,6 @@
 #include "monkestation\code\modules\mentor\_mentor_verb_datum.dm"
 #include "monkestation\code\modules\mentor\ahelp_reject.dm"
 #include "monkestation\code\modules\mentor\client.dm"
-#include "monkestation\code\modules\mentor\config.dm"
 #include "monkestation\code\modules\mentor\keybinds.dm"
 #include "monkestation\code\modules\mentor\mentor_datum.dm"
 #include "monkestation\code\modules\mentor\mentor_follow.dm"

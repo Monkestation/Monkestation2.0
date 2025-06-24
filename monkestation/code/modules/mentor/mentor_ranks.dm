@@ -51,38 +51,6 @@ GLOBAL_PROTECT(protected_mentor_ranks)
 	var/flag = 0
 	for(var/k in keywords)
 		switch(k)
-			if("BUILD")
-				flag = R_BUILD
-			if("ADMIN")
-				flag = R_ADMIN
-			if("BAN")
-				flag = R_BAN
-			if("FUN")
-				flag = R_FUN
-			if("SERVER")
-				flag = R_SERVER
-			if("DEBUG")
-				flag = R_DEBUG
-			if("PERMISSIONS")
-				flag = R_PERMISSIONS
-			if("POSSESS")
-				flag = R_POSSESS
-			if("STEALTH")
-				flag = R_STEALTH
-			if("POLL")
-				flag = R_POLL
-			if("VAREDIT")
-				flag = R_VAREDIT
-			if("EVERYTHING")
-				flag = R_EVERYTHING
-			if("SOUND")
-				flag = R_SOUND
-			if("SPAWN")
-				flag = R_SPAWN
-			if("AUTOADMIN")
-				flag = R_AUTOADMIN
-			if("DBRANKS")
-				flag = R_DBRANKS
 			if("HEADMENTOR")
 				flag = R_HEADMENTOR
 			if("MENTOR")
