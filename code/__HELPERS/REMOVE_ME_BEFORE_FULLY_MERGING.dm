@@ -1,5 +1,5 @@
 // temporary things for profiling purposes
-#ifdef OPENDREAM
+#ifdef UNIT_TESTS
 #warn remove these profiling wrappers before full merging
 #endif
 
