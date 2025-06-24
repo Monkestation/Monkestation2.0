@@ -171,10 +171,10 @@ GLOBAL_PROTECT(protected_mentor_ranks)
 			rank_names -= rank.name
 			ranks += rank
 
-			if (rank_names.len == 0)
+			if (!length(rank_names))
 				break
 
-	if (rank_names.len > 0)
+	if (length(rank_names) > 0)
 		log_config("Mentor rank names were invalid: [jointext(ranks, ", ")]")
 
 	return ranks
@@ -207,7 +207,7 @@ GLOBAL_PROTECT(protected_mentor_ranks)
 		rank_names[Rank.name] = Rank
 	//ckeys listed in mentors.txt are always made mentors before sql loading is attempted
 	var/mentors_text = file2text("[global.config.directory]/mentors.txt")
-	var/regex/mentors_regex = new(@"^(?!#)(.+?)\s+=\s+(.+)", "gm")
+	var/regex/mentors_regex = new(@"^(?!#)(\S+)(?:\s+=\s+(.+))?", "gm")
 
 	while(mentors_regex.Find(mentors_text))
 		var/mentor_key = mentors_regex.group[1]
