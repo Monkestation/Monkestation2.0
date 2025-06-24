@@ -29419,10 +29419,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/abandoned_gambling_den/gaming)
-"gUf" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/medical/pathology)
 "gUi" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 10
@@ -137029,7 +137025,7 @@ nSp
 hXu
 dAX
 hBw
-gUf
+tgT
 jJa
 jQq
 wjV
