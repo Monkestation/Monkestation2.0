@@ -67951,6 +67951,10 @@
 "tbK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/structure/cable,
+/mob/living/basic/mouse/gray{
+	dir = 4;
+	name = "Plaguebearer"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/pathology)
 "tbN" = (

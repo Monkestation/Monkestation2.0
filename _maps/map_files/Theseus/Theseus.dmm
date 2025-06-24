@@ -2769,10 +2769,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "aPv" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/folder/white,
-/obj/item/pen/red,
 /obj/effect/turf_decal/trimline/green/filled/line,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology/isolation)
 "aPH" = (
@@ -6925,22 +6923,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "cbU" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/o_plus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/blood/o_minus,
-/obj/item/reagent_containers/blood/b_plus,
-/obj/item/reagent_containers/blood/b_minus,
-/obj/item/reagent_containers/blood/a_plus,
-/obj/item/reagent_containers/blood/a_minus,
-/obj/item/reagent_containers/blood/lizard,
-/obj/item/reagent_containers/blood/ethereal,
 /obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
@@ -6958,6 +6940,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical/pathology)
 "ccj" = (
@@ -16808,11 +16791,13 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "eYx" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/item/folder/white,
+/obj/item/pen/red,
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology/isolation)
 "eYL" = (
@@ -25297,6 +25282,10 @@
 /area/space/nearstation)
 "hxW" = (
 /obj/effect/turf_decal/bot,
+/mob/living/basic/mouse/gray{
+	dir = 4;
+	name = "Plaguebearer"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/pathology)
 "hxZ" = (
@@ -30907,7 +30896,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "jdU" = (
-/obj/structure/table/reinforced/rglass,
 /obj/item/reagent_containers/cup/beaker{
 	pixel_y = 4
 	},
@@ -30917,6 +30905,7 @@
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/light/small/directional/south,
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology/isolation)
 "jdY" = (
@@ -44613,7 +44602,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/maintenance/department/medical)
+/area/space/nearstation)
 "naD" = (
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/light/directional/east,
@@ -73688,6 +73677,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
+"vsz" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/effect/landmark/start/virologist,
+/turf/open/floor/iron/white,
+/area/station/medical/pathology)
 "vsG" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -112308,7 +112304,7 @@ bTA
 mZq
 uJh
 pnc
-szL
+vsz
 vvS
 lPp
 uwH

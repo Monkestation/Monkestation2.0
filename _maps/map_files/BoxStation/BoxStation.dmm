@@ -5129,10 +5129,8 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 8
 	},
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma{
-	pixel_x = -6;
-	pixel_y = 6
+	amount = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -73884,10 +73882,8 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 8
 	},
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma{
-	pixel_x = -6;
-	pixel_y = 6
+	amount = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)

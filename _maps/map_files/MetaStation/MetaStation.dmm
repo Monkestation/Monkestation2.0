@@ -273,6 +273,8 @@
 	pixel_y = -6
 	},
 /obj/item/device/antibody_scanner,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "afz" = (
@@ -12616,6 +12618,7 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 6
 	},
+/obj/structure/sign/poster/official/cleanliness/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "eyP" = (
@@ -18042,27 +18045,16 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "gyw" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/o_plus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/blood/o_minus,
-/obj/item/reagent_containers/blood/b_plus,
-/obj/item/reagent_containers/blood/b_minus,
-/obj/item/reagent_containers/blood/a_plus,
-/obj/item/reagent_containers/blood/a_minus,
-/obj/item/reagent_containers/blood/lizard,
-/obj/item/reagent_containers/blood/ethereal,
 /obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "gyG" = (
@@ -30858,6 +30850,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "kLF" = (
@@ -50559,6 +50552,7 @@
 	},
 /obj/machinery/camera/autoname/directional/south,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology/isolation)
 "rvE" = (
@@ -56457,6 +56451,14 @@
 "tsd" = (
 /turf/closed/wall,
 /area/station/maintenance/space_hut)
+"tsm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/medical/pathology)
 "tso" = (
 /obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
@@ -84651,7 +84653,7 @@ ddR
 dQI
 xjH
 afy
-xry
+tsm
 gZn
 xjH
 xjH

@@ -12221,6 +12221,20 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"csk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/door/airlock/virology{
+	name = "Virology Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/virology,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "csn" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -60695,16 +60709,13 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "lLg" = (
-/obj/machinery/door/airlock/virology{
-	name = "Virology Access"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/medical/virology,
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/structure/sign/poster/official/cleanliness/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "lLl" = (
@@ -68388,6 +68399,7 @@
 	pixel_y = -3
 	},
 /obj/machinery/iv_drip,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "nmu" = (
@@ -78554,7 +78566,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/virology,
+/obj/effect/mapping_helpers/airlock/access/any/medical/virology,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -81216,6 +81228,10 @@
 "pKM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
 	dir = 5
+	},
+/mob/living/basic/mouse/gray{
+	dir = 4;
+	name = "Plaguebearer"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/pathology)
@@ -123724,6 +123740,10 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/disease2/centrifuge,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "xQR" = (
@@ -125672,6 +125692,10 @@
 	dir = 4
 	},
 /obj/machinery/disease2/centrifuge,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
+/obj/item/reagent_containers/cup/tube,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "yiE" = (
@@ -236634,7 +236658,7 @@ blr
 kIp
 cPn
 lLg
-vlQ
+csk
 soi
 vlQ
 hpu

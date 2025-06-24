@@ -18657,6 +18657,7 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "fRG" = (
@@ -20051,6 +20052,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
 /obj/effect/turf_decal/tile/green/full,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pathology/isolation)
 "goS" = (
@@ -29070,6 +29072,10 @@
 "jms" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/mob/living/basic/mouse/gray{
+	dir = 4;
+	name = "Plaguebearer"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/pathology)
 "jmI" = (
@@ -51379,6 +51385,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "qkG" = (
@@ -54815,6 +54822,7 @@
 	dir = 10
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "rpV" = (
@@ -59990,6 +59998,7 @@
 /obj/machinery/computer/records/pathology{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "tcO" = (
@@ -61289,6 +61298,7 @@
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "tAh" = (
@@ -63654,6 +63664,7 @@
 /obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood,
 /obj/structure/closet/crate/freezer/blood,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "uli" = (
@@ -66895,6 +66906,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/machinery/requests_console/auto_name/directional/south,
 /obj/machinery/disease2/diseaseanalyser,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "vqg" = (
@@ -66931,6 +66943,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "vqN" = (
@@ -70417,6 +70430,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology/isolation)
 "wwL" = (
