@@ -49779,6 +49779,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "lGv" = (
@@ -81140,6 +81141,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "tiM" = (

@@ -276,7 +276,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
-/area/station/medical/pathology)
+/area/station/maintenance/department/medical/pathology)
 "afz" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -1658,6 +1658,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"aEa" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/department/medical/pathology)
 "aEj" = (
 /obj/structure/table,
 /obj/item/poster/random_official{
@@ -18056,7 +18064,7 @@
 /obj/machinery/light/directional/north,
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/dark/textured,
-/area/station/medical/pathology)
+/area/station/maintenance/department/medical/pathology)
 "gyG" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
@@ -19545,7 +19553,7 @@
 /obj/item/restraints/handcuffs,
 /obj/item/crowbar/red,
 /turf/open/floor/iron/dark/textured,
-/area/station/medical/pathology)
+/area/station/maintenance/department/medical/pathology)
 "gZD" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -21381,6 +21389,9 @@
 /obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
+"hDg" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/medical/pathology)
 "hDj" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -30845,14 +30856,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/virology/glass{
-	name = "Containment Cells"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/iron/dark/textured,
-/area/station/medical/pathology)
+/area/station/maintenance/department/medical/pathology)
 "kLF" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/light_switch/directional/south{
@@ -33158,7 +33167,7 @@
 /obj/item/radio/headset/headset_med,
 /obj/item/radio/headset/headset_med,
 /turf/open/floor/iron/dark/textured,
-/area/station/medical/pathology)
+/area/station/maintenance/department/medical/pathology)
 "lxm" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix{
 	dir = 4
@@ -43402,7 +43411,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/medical/pathology)
+/area/station/maintenance/department/medical/pathology)
 "oWF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
@@ -56451,14 +56460,6 @@
 "tsd" = (
 /turf/closed/wall,
 /area/station/maintenance/space_hut)
-"tsm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark/textured,
-/area/station/medical/pathology)
 "tso" = (
 /obj/machinery/oven/range,
 /turf/open/floor/iron/cafeteria,
@@ -67830,7 +67831,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/medical/pathology)
+/area/station/maintenance/department/medical/pathology)
 "xrN" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -84137,11 +84138,11 @@ lOi
 lOi
 lOi
 lOi
-xjH
-xjH
+hDg
+hDg
 oWq
-xjH
-xjH
+hDg
+hDg
 aaa
 aaa
 aaa
@@ -84394,11 +84395,11 @@ rEL
 lOi
 iyF
 rEL
-xjH
+hDg
 gyw
 xry
 lxh
-xjH
+hDg
 xjH
 aaa
 aaa
@@ -84651,11 +84652,11 @@ dQI
 lOi
 ddR
 dQI
-xjH
+hDg
 afy
-tsm
+aEa
 gZn
-xjH
+hDg
 xjH
 xjH
 xjH
@@ -84908,11 +84909,11 @@ jMF
 lOi
 phu
 jMF
-xjH
-xjH
+hDg
+hDg
 kLx
-xjH
-xjH
+hDg
+hDg
 gYH
 tkK
 kvS
