@@ -183,23 +183,6 @@ GLOBAL_VAR(ascended_bloodling)
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-	if(!GLOB.ascended_bloodling)
-		return
-
-	for(var/atom/atom as anything in contents)
-		if(!iscarbon(atom))
-			continue
-
-		var/mob/living/carbon/carbon_mob = atom
-
-		if(isnull(carbon_mob.key))
-			continue
-
-		if(carbon_mob.stat == DEAD && !(carbon_mob.mind.get_ghost()?.can_reenter_corpse))
-			continue
-
-		carbon_mob.apply_status_effect(thrall_stat)
-
 /turf/open/misc/bloodling/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
 	if (!.)
