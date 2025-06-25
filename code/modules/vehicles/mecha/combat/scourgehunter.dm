@@ -26,7 +26,6 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,  // this one can be modified!
 	)
-	step_energy_drain = 3
 
 /datum/armor/foxmechs
 	melee = 50
