@@ -260,3 +260,13 @@
 	jeepers = loc
 	if(!istype(jeepers))
 		return INITIALIZE_HINT_QDEL
+
+/obj/vehicle/ridden/argonaut/corporate
+	name = "UV-05a Argonaut NT edition"
+	desc = "An argonaut downrated for station side use, anti-vehicular manslaughter components have been added to dissuade lawsuits."
+	icon_state = "argonautnt"
+	crash_para_driv = 3
+
+/obj/vehicle/ridden/argonaut/corporate/Initialize(mapload)
+	. = ..()
+	add_overlay(image(icon, "argonautnt_cover", ABOVE_MOB_LAYER))

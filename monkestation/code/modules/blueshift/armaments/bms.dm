@@ -63,6 +63,16 @@
 	cost = PAYCHECK_COMMAND * 48
 	contraband = TRUE
 
+//SHES BACK
+
+/datum/armament_entry/company_import/bms/vehicles // restricted, this shits scary
+	subcategory = "Vehicles"
+	restricted = TRUE
+
+/datum/armament_entry/company_import/bms/vehicles/argonaut
+	item_type = /obj/vehicle/ridden/argonaut/corporate
+	cost = PAYCHECK_COMMAND * 250
+
 /datum/armament_entry/company_import/bms/vehicles/callahanmeme
 	item_type = /obj/vehicle/sealed/mecha/callahan
 	cost = PAYCHECK_COMMAND * 1000000000000000000000000000000000000
