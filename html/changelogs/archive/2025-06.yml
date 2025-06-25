@@ -468,3 +468,6 @@
   - image: added sprite for the jetpack upgrade module
   - refactor: hardsuits use the attached clothing component
   - code_imp: splits up departmental hardsuits into their own files
+2025-06-25:
+  ThePooba:
+  - rscadd: 4 new donator only summer jobs and also a hotdog suit

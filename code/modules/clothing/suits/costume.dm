@@ -600,3 +600,22 @@
 /obj/item/clothing/suit/costume/irs/Initialize(mapload)
 	. = ..()
 	allowed += GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/hooded/hotdog
+	name = "hotdog suit"
+	desc = "With great hotdog comes great responsi-bun-ity."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN
+	hoodtype = /obj/item/clothing/head/hooded/hotdog
+
+/obj/item/clothing/head/hooded/hotdog
+	name = "hotdog suit hood"
+	desc = "There's a certain joke to be made here."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR
