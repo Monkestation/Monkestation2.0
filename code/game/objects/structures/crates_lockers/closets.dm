@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	integrity_failure = 0.25
 	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	pass_flags_self = LETPASSCLICKS
+	pass_flags_self = PASSSTRUCTURE | LETPASSCLICKS
 
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj
