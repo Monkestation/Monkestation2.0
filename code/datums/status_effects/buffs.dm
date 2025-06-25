@@ -590,5 +590,6 @@
 	RegisterSignals(owner, list(COMSIG_ATTEMPT_IRRADIATION, COMSIG_ATTEMPT_RADSTORM_ACT), PROC_REF(increment_rad_regen_charge))
 
 /datum/status_effect/radregen/on_remove()
-	UnregisterSignals(owner, list(COMSIG_ATTEMPT_IRRADIATION, COMSIG_ATTEMPT_RADSTORM_ACT))
+	UnregisterSignal(owner, COMSIG_ATTEMPT_IRRADIATION)
+	UnregisterSignal(owner, COMSIG_ATTEMPT_RADSTORM_ACT)
 	return ..()

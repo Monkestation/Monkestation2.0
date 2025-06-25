@@ -244,7 +244,6 @@
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
 		owner.physiology?.tox_mod /= 0.85
 	if(GET_MUTATION_POWER(src) > 1)
-	//	REMOVE_TRAIT(owner, GENETIC_MUTATION)
 		owner.remove_status_effect(/datum/status_effect/radregen)
 /datum/mutation/human/radproof/modify()
 	. = ..()
@@ -254,7 +253,6 @@
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
 		owner.physiology?.tox_mod *= 0.85
 	if(GET_MUTATION_POWER(src) > 1)
-	//	ADD_TRAIT(owner, GENETIC_MUTATION)
 		owner.apply_status_effect(/datum/status_effect/radregen)
 
 /datum/mutation/human/thickskin
