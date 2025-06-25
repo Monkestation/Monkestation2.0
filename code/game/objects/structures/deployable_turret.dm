@@ -240,12 +240,12 @@
 	desc = "A 12.7mm Machinegun used in the Colonial Legion, it is known for its exceptional accuracy for the sheer amount of bullets it puts out."
 	icon_state = "lamentum"
 	max_integrity = 125
-	cover_amount = 15
+	cover_amount = 30
 	projectile_type = /obj/projectile/bullet/manned_turret/lamentum
 	anchored = TRUE
-	number_of_shots = 1
-	cooldown_duration = 0.15 SECONDS
-	rate_of_fire = 8
+	number_of_shots = 10
+	cooldown_duration = 1 SECONDS
+	rate_of_fire = 0.1
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	firesound = 'sound/weapons/gun/hmg/lamentum.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
