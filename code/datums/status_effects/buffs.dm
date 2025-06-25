@@ -560,3 +560,35 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/datum/status_effect/radregen
+	id = "radregen"
+	alert_type = null
+	duration = STATUS_EFFECT_PERMANENT
+	//How many times we've been irradiated since the last healing tick
+	var/rad_regen_charge = 0
+	//the amount of healing to do
+	var/tickheal = 0
+
+/datum/status_effect/radregen/tick(seconds_between_ticks, rad_regen_charge, tickheal)
+	. = ..()
+	tickheal = (rad_regen_charge * 0.5)
+	if (tickheal > 2 * seconds_between_ticks)
+		tickheal = (2 * seconds_between_ticks)
+	rad_regen_charge = 0
+	owner.adjustBruteLoss(-tickheal)
+	owner.adjustFireLoss(-tickheal)
+
+//Increments "rad_regen_charge" up by one whenever something tries to irradiate us
+/datum/status_effect/radregen/proc/increment_rad_regen_charge()
+	SIGNAL_HANDLER
+	rad_regen_charge++
+	return IRRADIATION_BLOCKED
+
+/datum/status_effect/radregen/on_apply()
+	. = ..()
+	RegisterSignals(owner, list(COMSIG_ATTEMPT_IRRADIATION, COMSIG_ATTEMPT_RADSTORM_ACT), PROC_REF(increment_rad_regen_charge))
+
+/datum/status_effect/radregen/on_remove()
+	UnregisterSignals(owner, list(COMSIG_ATTEMPT_IRRADIATION, COMSIG_ATTEMPT_RADSTORM_ACT))
+	return ..()

@@ -4,8 +4,6 @@
 // Genetics start
 /// Removes tackle and throwing debuffs from dwarfs
 #define TRAIT_STABLE_DWARF "stable_dwarf"
-/// Makes you heal from radiation received
-#define TRAIT_RADHEALING "radiation_healing"
 /// Makes embed-able projectiles have an additional 50% chance at not embedding when hitting the target
 #define TRAIT_EMBED_RESISTANCE "embed_resistance"
 /// Makes you not leave fingerprints (you still leave fibers though)

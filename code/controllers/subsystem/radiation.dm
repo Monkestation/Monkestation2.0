@@ -127,17 +127,14 @@ SUBSYSTEM_DEF(radiation)
 /datum/controller/subsystem/radiation/proc/can_irradiate_basic(atom/target)
 	if (!CAN_IRRADIATE(target))
 		return FALSE
+// Sends a signal to say if something has attempted to irradiate the target, and returns irradiation blocked if the thing using it is meant to also protect from radiation
+	if(SEND_SIGNAL(target, COMSIG_ATTEMPT_IRRADIATION) & IRRADIATION_BLOCKED)
+		return FALSE
 
+//
 	if (HAS_TRAIT(target, TRAIT_IRRADIATED) && !HAS_TRAIT(target, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK))
 		return FALSE
 
-	// MONKESTATION ADDITION START -- Is this what they call "jank"?
-	var/mob/living/living_target = target
-	if(istype(living_target))
-		if(HAS_TRAIT(target, TRAIT_RADHEALING))
-			living_target.adjustBruteLoss(-5)
-			living_target.adjustFireLoss(-5)
-	// MONKESTATION ADDITION END
 
 	if (HAS_TRAIT(target, TRAIT_RADIMMUNE))
 		return FALSE
