@@ -1,7 +1,7 @@
 /datum/traitor_objective/ultimate/firebrand
 	name = "Recieve a technologically upgraded flamethrower terror tank in %AREA% and melt the station down with it"
 	description = "Go to %AREA%, and recieve the Noble Fireband Mk.XVII. It has been modified to only need 1 person to drive and fire it, \
-	the flamethrower can melt walls, kill through firesuits, and make rooms uninhabitably. Warning: The tank is slow and dies to melee attacks very fast."
+	the flamethrower can melt walls, kill through firesuits, and make rooms uninhabitable. Warning: The tank is slow and dies to melee attacks very fast."
 
 	//this is a prototype so this progression is for all basic level kill objectives
 	// stole rommerol code and modified it.
