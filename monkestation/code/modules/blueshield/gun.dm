@@ -11,7 +11,6 @@
 /obj/item/gun/energy/laser/hellgun/blueshield
 	name ="modified hellfire laser gun"
 	desc = "A lightly overtuned version of NT's Hellfire Laser rifle, scratches showing its age and the fact it has definitely been owned before. This one is more energy efficient without sacrificing damage."
-	icon_state = "hellgun_blueshield"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/blueshield)
 
 // Blueshields custom takbok revolver.
@@ -20,10 +19,11 @@
 	icon_state = "takbok_blueshield"
 	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or tracablable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
-	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3.
+	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
 	fire_delay = 0.6 SECONDS
 	recoil = 2
-	projectile_damage_multiplier = 1.25
+	wield_recoil = 0.8
+	projectile_damage_multiplier = 1.3
 
 /obj/item/gun/ballistic/revolver/takbok/blueshield/give_manufacturer_examine()
 	RemoveElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
