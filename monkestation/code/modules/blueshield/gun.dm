@@ -17,7 +17,7 @@
 /obj/item/gun/ballistic/revolver/takbok/blueshield
 	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
 	icon_state = "takbok_blueshield"
-	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or tracablable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
+	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
 
 	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
 	fire_delay = 0.6 SECONDS
