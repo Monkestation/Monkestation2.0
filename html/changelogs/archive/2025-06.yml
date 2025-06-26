@@ -471,3 +471,8 @@
 2025-06-25:
   ThePooba:
   - rscadd: 4 new donator only summer jobs and also a hotdog suit
+2025-06-26:
+  Absolucy:
+  - bugfix: Pyro slimes (and slimes in general) no longer die in plasma fires.
+  Absolucy, Ghommie:
+  - bugfix: Meat and other bloody things will not spread blood forever.
