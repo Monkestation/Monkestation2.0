@@ -630,7 +630,7 @@
 	result = /obj/item/mecha_parts/part/vendozer_eg
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/machinery/power/turbine/inlet_compressor  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/core_rotor  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/turbine_outlet = CRAFTING_MACHINERY_CONSUME)
+	machinery = list(/obj/machinery/power/turbine/inlet_compressor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/core_rotor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/turbine_outlet/constructed = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 30,
 		/obj/item/tank/internals/oxygen = 10,
