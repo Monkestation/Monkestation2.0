@@ -11,8 +11,7 @@
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
 	var/datum/action/bb/comms/comms_action
 	var/datum/action/bb/gear/gear_action
-	VAR_PRIVATE
-		datum/team/brother_team/team
+	VAR_PRIVATE/datum/team/brother_team/team
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
