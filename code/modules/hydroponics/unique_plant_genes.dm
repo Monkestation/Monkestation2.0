@@ -15,7 +15,7 @@
 	if(!.)
 		return
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	shield_uses = round(our_seed.potency / 20)
+	shield_uses = max(round(our_seed.potency / 20), 5)
 	//deliver us from evil o melon god
 	our_plant.AddComponent(/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
