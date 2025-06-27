@@ -477,6 +477,13 @@
   Absolucy, Ghommie:
   - bugfix: Meat and other bloody things will not spread blood forever.
 2025-06-27:
+  Absolucy:
+  - bugfix: Fixed the UIs for the xenobio market and slime pen controller being cut
+      off at the bottom.
+  F-e-r-n:
+  - bugfix: 'Gave bulldog the damage mod as promised
+
+      :cl:'
   Xander3359:
   - rscadd: Cargo teleporter can hold fulton charges. Load it up with a fulton, and
       right click to use it

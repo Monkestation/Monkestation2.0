@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed the UIs for the xenobio market and slime pen controller being cut off at the bottom."
