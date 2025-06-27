@@ -7,7 +7,7 @@
 		/area/misc,
 		/area/ocean,
 		/area/ruin,
-		/area/shipbreak,
+		/area/space/shipbreak,
 		/area/shuttle,
 		/area/space,
 		/area/station/asteroid,

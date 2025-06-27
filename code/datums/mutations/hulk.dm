@@ -20,6 +20,10 @@
 	)
 	energy_coeff = 1 // MONKESTATION ADDITION
 
+/datum/mutation/human/hulk/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = list("." = "!"), end_string = "!!", uppercase = TRUE)
+
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
@@ -31,7 +35,6 @@
 	owner.physiology?.cold_mod *= HULK_COLD_DAMAGE_MOD
 	owner.bodytemp_cold_damage_limit += BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(statchange))
 	owner.add_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
@@ -101,22 +104,9 @@
 	owner.physiology?.cold_mod /= HULK_COLD_DAMAGE_MOD
 	owner.bodytemp_cold_damage_limit -= BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER
 	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 	owner.remove_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
-
-/datum/mutation/human/hulk/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = "[replacetext(message, ".", "!")]!!"
-	speech_args[SPEECH_MESSAGE] = message
-
-	// the reason we don't just uppertext(message) in this proc is so that our hulk speech
-	// can uppercase all other speech moidifiers after they are done (by returning COMPONENT_UPPERCASE_SPEECH)
-	return COMPONENT_UPPERCASE_SPEECH
 
 /// How many steps it takes to throw the mob
 #define HULK_TAILTHROW_STEPS 28

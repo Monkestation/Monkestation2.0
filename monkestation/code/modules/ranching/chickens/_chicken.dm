@@ -80,7 +80,6 @@
 			name = real_name = "[breed_name_female]"
 		else
 			name = real_name = "[breed_name] Hen"
-	update_name_tag()
 
 	build_initial_planning_tree()
 

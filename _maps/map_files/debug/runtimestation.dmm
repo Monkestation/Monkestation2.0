@@ -1955,7 +1955,7 @@
 /area/station/engineering/atmos)
 "qn" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "qF" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,

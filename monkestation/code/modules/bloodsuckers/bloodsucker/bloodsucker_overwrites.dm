@@ -4,12 +4,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Prevents Bloodsuckers from getting affected by blood
-/mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
-	if(mind && IS_BLOODSUCKER(src))
-		return FALSE
-	return ..()
-
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(exposed_mob)
 	if(!bloodsuckerdatum)

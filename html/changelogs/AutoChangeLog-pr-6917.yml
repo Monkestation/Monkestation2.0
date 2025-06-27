@@ -1,4 +1,0 @@
-author: "Kmla2"
-delete-after: True
-changes:
-  - bugfix: "you now get 425 monkecoins instead of 150 monkecoins for playing a whole round as a roundstart security / janitor to keep parity with latejoining"

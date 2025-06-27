@@ -37,7 +37,6 @@
 	new_dna.transfer_identity(transforming)
 	transforming.real_name = new_dna.real_name
 	transforming.name = transforming.get_visible_name()
-	transforming.update_name_tag() // monkestation edit: name tags
 	transforming.updateappearance(mutcolor_update = TRUE)
 	transforming.domutcheck()
 	return TRUE
