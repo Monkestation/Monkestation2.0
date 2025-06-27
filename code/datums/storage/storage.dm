@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(isitem(parent))
 		var/obj/item/item_parent = parent
 		var/datum/storage/smaller_fish = to_insert.atom_storage
-		if(smaller_fish && !allow_big_nesting && to_insert.w_class >= item_parent.w_class)
+		if(!is_type_in_typecache(to_insert, exception_hold) && smaller_fish && !allow_big_nesting && to_insert.w_class >= item_parent.w_class)
 			if(messages && user)
 				user.balloon_alert(user, "too big!")
 			return FALSE

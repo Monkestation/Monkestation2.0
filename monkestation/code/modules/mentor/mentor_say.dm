@@ -1,5 +1,5 @@
 MENTOR_VERB(cmd_mentor_say, R_MENTOR, "Mentorsay", "Send a message to other mentors.", MENTOR_CATEGORY_MAIN, message as text)
-	message = emoji_parse(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
 	if(!message)
 		return
 
@@ -12,7 +12,8 @@ MENTOR_VERB(cmd_mentor_say, R_MENTOR, "Mentorsay", "Send a message to other ment
 		prefix = "CONTRIB"
 		prefix_color = "#16ABF9"
 
-	SSplexora.relay_mentor_say(user, message, prefix)
+	SSplexora.relay_mentor_say(user, html_decode(message), prefix)
+	message = emoji_parse(message)
 
 	var/list/pinged_mentor_clients = check_mentor_pings(message)
 	if(length(pinged_mentor_clients) && pinged_mentor_clients[ASAY_LINK_PINGED_ADMINS_INDEX])

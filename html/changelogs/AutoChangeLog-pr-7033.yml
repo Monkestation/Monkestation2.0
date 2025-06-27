@@ -1,0 +1,4 @@
+author: "F-e-r-n"
+delete-after: True
+changes:
+  - bugfix: "Gave bulldog the damage mod as promised\n:cl:"
