@@ -424,8 +424,11 @@
 
 
 /obj/item/proc/equip_to_best_slot(mob/equipper)
-	if(equipper.active_storage?.attempt_insert(src, equipper)) // Prioritize our open storage before trying to decide anything else
-		return TRUE
+	var/should_prioritize_storage = !isclothing(src) && !(slot_flags & ITEM_SLOT_ON_BODY)
+
+	if(should_prioritize_storage)
+		if(equipper.active_storage?.attempt_insert(src, equipper)) // Prioritize our open storage before trying to decide anything else
+			return TRUE
 
 	if(equipper.equip_to_appropriate_slot(src))
 		equipper.update_held_items()
@@ -433,6 +436,10 @@
 	else
 		if(equip_delay_self)
 			return
+
+	if(!should_prioritize_storage)
+		if(equipper.active_storage?.attempt_insert(src, equipper)) // Prioritize our open storage before trying to decide anything else
+			return TRUE
 
 	var/list/obj/item/possible = list(equipper.get_inactive_held_item(), equipper.get_item_by_slot(ITEM_SLOT_BELT), equipper.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), equipper.get_item_by_slot(ITEM_SLOT_BACK))
 	for(var/i in possible)
