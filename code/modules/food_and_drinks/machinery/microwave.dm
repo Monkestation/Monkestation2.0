@@ -27,7 +27,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
-	//Crimes against humanity
+
 	var/held_w_class = WEIGHT_CLASS_HUGE
 	var/held_lh = 'icons/mob/inhands/microwave_held_lh.dmi'
 	var/held_rh = 'icons/mob/inhands/microwave_held_rh.dmi'
@@ -646,7 +646,7 @@
 			return
 		microwave_try_pickup(usr)
 
-/obj/machinery/microwave/proc/microwave_try_pickup(mob/living/user, instant=FALSE)
+/obj/machinery/microwave/proc/microwave_try_pickup(mob/living/user)
 	if(!ishuman(user))
 		return
 	if(!user.get_empty_held_indexes())
@@ -655,7 +655,7 @@
 	user.visible_message(span_notice("[user] starts picking up [src]!"), span_notice("You start picking up [src]..."))
 	if(!do_after(user, 3 SECONDS, target = src))
 		return FALSE
-	if(src.anchored)
+	if(src.anchored || !Adjacent(user))
 		return FALSE
 	microwave_pickup(user)
 	return TRUE
@@ -664,8 +664,9 @@
 	var/obj/item/microwave_holder/holder = new(get_turf(src), src, held_state, held_lh, held_rh, held_force, throwforce)
 	user.visible_message(span_warning("[user] picks up [src]!"), span_warning("You pick up [src]!"))
 	user.put_in_hands(holder)
+	playsound(holder, SFX_RUSTLE, 50, TRUE, -5)
 
-//Hit them with the michaelwave // Holder so we can pick it up
+// Holder so we can pick it up
 /obj/item/microwave_holder
 	name = "bugged michaelwave"
 	desc = "Yell at coders."
@@ -702,15 +703,12 @@
 	if(!istype(michelwave))
 		return FALSE
 	michelwave.setDir(SOUTH)
-	update_visuals(michelwave)
+	appearance = michelwave.appearance
 	held_microwave = michelwave
 	michelwave.forceMove(src)
 	name = michelwave.name
 	desc = michelwave.desc
 	return TRUE
-
-/obj/item/microwave_holder/proc/update_visuals(obj/machinery/microwave/mangowave)
-	appearance = mangowave.appearance
 
 /obj/item/microwave_holder/on_thrown(mob/living/carbon/user, atom/target)
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
@@ -727,10 +725,9 @@
 /obj/item/microwave_holder/dropped(mob/living/user)
 	..()
 	if(held_microwave && isturf(loc))
-		//user.visible_message(span_notice("[user] suddenly drops [src]."), span_notice("You suddenly drop [src]."))
 		release()
 
-/obj/item/microwave_holder/proc/release(del_on_release = TRUE, display_messages = TRUE)
+/obj/item/microwave_holder/proc/release(del_on_release = TRUE)
 	if(!held_microwave)
 		if(del_on_release && !destroying)
 			qdel(src)
