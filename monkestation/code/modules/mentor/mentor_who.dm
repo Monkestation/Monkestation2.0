@@ -15,7 +15,7 @@
 				msg += "Dementored "
 
 			msg += "a [join_mentor_ranks(mentor_clients.mentor_datum.ranks)] "
-			msg += mentor_clients.mentor_datum.is_contributor ? "Contributor " : ""
+			msg += mentor_clients.mentor_datum.is_contributor ? "and Contributor " : ""
 
 			if(isobserver(mentor_clients.mob))
 				msg += "- Observing"
