@@ -360,6 +360,11 @@
 	desc = "May or may not contain traces of lead."
 	grind_results = list(/datum/reagent/lead = 10)
 
+/obj/item/storage/medkit/tactical/premium/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 21
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/storage/box/evilmeds, /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset))
+
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
 		return

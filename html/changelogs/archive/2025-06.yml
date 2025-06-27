@@ -476,3 +476,12 @@
   - bugfix: Pyro slimes (and slimes in general) no longer die in plasma fires.
   Absolucy, Ghommie:
   - bugfix: Meat and other bloody things will not spread blood forever.
+2025-06-27:
+  Xander3359:
+  - rscadd: Cargo teleporter can hold fulton charges. Load it up with a fulton, and
+      right click to use it
+  - qol: Quick equipping something while you have an open storage will prioritize
+      that storage
+  - balance: Explorer EVA box can hold medium sized items
+  - bugfix: Premium Tactical Medkit can hold more of the items it spawns with
+  - rscadd: Combat hyposprays can draw reagents with right click
