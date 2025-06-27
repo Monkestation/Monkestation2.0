@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(mentor_datums)
+GLOBAL_LIST_EMPTY(mentor_datums) // Active mentor datums
 GLOBAL_PROTECT(mentor_datums)
 GLOBAL_LIST_EMPTY(protected_mentors) // These appear to be anyone loaded from the config files
 GLOBAL_PROTECT(protected_mentors)
@@ -199,6 +199,11 @@ GLOBAL_PROTECT(mentor_href_token)
 
 	return .
 
+/proc/check_mentor_rights_for(client/subject, rights_required)
+	if(subject?.mentor_datum)
+		return subject.mentor_datum.check_for_rights(rights_required)
+	return FALSE
+
 /datum/mentors/proc/CheckMentorHREF(href, href_list)
 	var/auth = href_list["mentor_token"]
 	. = auth && (auth == href_token || auth == GLOB.mentor_href_token)
@@ -225,3 +230,11 @@ GLOBAL_PROTECT(mentor_href_token)
 
 /proc/MentorHrefToken(forceGlobal = FALSE)
 	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
+
+/proc/MentorizeAdmins()
+	//If an admin for some reason doesn't have a mentor datum create a deactivated one for them and assign.
+	for(var/ckey in (GLOB.admin_datums + GLOB.deadmins))
+		if(!(GLOB.mentor_datums[ckey] || GLOB.dementors[ckey]))
+			var/datum/admins/some_admin = GLOB.admin_datums[ckey] || GLOB.deadmins[ckey]
+			if(some_admin.check_for_rights(NONE))
+				new /datum/mentors(mentor_ranks_from_rank_name("Staff Assigned Mentor"), ckey)

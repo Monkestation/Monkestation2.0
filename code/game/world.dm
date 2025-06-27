@@ -162,6 +162,7 @@ GLOBAL_VAR(restart_counter)
 
 	load_admins()
 	load_mentors()
+	MentorizeAdmins()
 
 	load_poll_data()
 

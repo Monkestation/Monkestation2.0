@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Admin Verbs need the client's mob to exist. Must be after ..()
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
-	//Admin Authorisation
+	//Admin Authorization
 	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
 	if (!isnull(admin_datum))
 		admin_datum.associate(src)
@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//MONKE EDIT START
 	// Mentor Verbs need the client's mob to exist. Must be after ..() and admin_datum setups. A lot of checks require admins to load first.
 	//var/connecting_mentor = FALSE //because de-mentored mentors connecting should be treated like mentors. Might not be needed as of 3/31/25
-	//Mentor Authorisation
+	//Mentor Authorization
 	var/datum/mentors/mentor_datum = GLOB.mentor_datums[ckey]
 	if (!isnull(mentor_datum))
 		mentor_datum.associate(src)
@@ -375,11 +375,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_verb(src, /client/proc/rementor)
 	//	connecting_mentor = TRUE
 	//if(CONFIG_GET(flag/automentor)) //Can be added but not really needed.
-	//If an admin for some reason doesn't have a mentor datum create a deactivated one for them and assign.
-	if((GLOB.admin_datums[ckey] || GLOB.deadmins[ckey]) && !(GLOB.mentor_datums[ckey] || GLOB.dementors[ckey]))
-		var/datum/admins/some_admin = GLOB.admin_datums[ckey] || GLOB.deadmins[ckey]
-		if(some_admin.check_for_rights(NONE))
-			new /datum/mentors(mentor_ranks_from_rank_name("Staff Assigned Mentor"), ckey)
 	//MONKE EDIT END
 
 	if (length(GLOB.stickybanadminexemptions))

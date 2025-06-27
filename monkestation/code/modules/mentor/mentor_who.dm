@@ -6,15 +6,14 @@
 	//Admin version
 	if(holder)
 		for(var/client/mentor_clients in GLOB.mentors)
-			msg += "\t[mentor_clients] is a "
+			msg += "\t[mentor_clients] is "
 
-			if(GLOB.deadmins[mentor_clients.ckey])
-				msg += "Deadmin "
-			if(mentor_clients.mentor_datum.check_for_rights(R_MENTOR))
-				if(mentor_clients.mentor_datum.check_for_rights(R_HEADMENTOR))
-					msg += "Head Mentor "
-				else
-					msg += mentor_clients.mentor_datum.is_contributor ? "Contributor " : "Mentor "
+			if(GLOB.dementors[mentor_clients.ckey])
+				msg += "Dementored "
+
+			if(check_mentor_rights_for(mentor_clients, R_MENTOR))
+				msg += "a [join_mentor_ranks(mentor_clients.mentor_datum.ranks)]"
+				msg += mentor_clients.mentor_datum.is_contributor ? "Contributor " : ""
 
 			if(isobserver(mentor_clients.mob))
 				msg += "- Observing"
@@ -31,10 +30,10 @@
 	//Regular version
 	else
 		for(var/client/mentor_clients in GLOB.mentors)
-			if(GLOB.deadmins[mentor_clients.ckey])
+			if(GLOB.dementors[mentor_clients.ckey])
 				continue
 
-			if(mentor_clients.mentor_datum.check_for_rights(R_MENTOR))
+			if(check_mentor_rights_for(mentor_clients, R_MENTOR))
 				msg += mentor_clients.mentor_datum.is_contributor ? "\t[mentor_clients] is a Mentor\n" : "\t[mentor_clients] is a Mentor\n"
 
 	to_chat(src, msg)

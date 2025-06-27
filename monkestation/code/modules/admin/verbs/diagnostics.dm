@@ -5,6 +5,7 @@ ADMIN_VERB(reload_mentors, R_NONE, "Reload Mentors", "Reloads all mentors from t
 		return
 
 	load_mentors()
+	MentorizeAdmins()
 	BLACKBOX_LOG_ADMIN_VERB("Reload All Mentors")
 	message_admins("[key_name_admin(usr)] manually reloaded mentors")
 
@@ -15,5 +16,6 @@ MENTOR_VERB(mreload_mentors, R_HEADMENTOR, "Reload Mentors", "Reloads all mentor
 		return
 
 	load_mentors()
+	MentorizeAdmins()
 	BLACKBOX_LOG_MENTOR_VERB("Reload All Mentors")
 	message_admins("[key_name_mentor(user)] manually reloaded admins")
