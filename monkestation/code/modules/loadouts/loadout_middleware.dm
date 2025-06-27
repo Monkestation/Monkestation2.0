@@ -161,7 +161,7 @@
 				continue
 
 		if(item.mentor_only) //These checks are also performed in the backend.
-			if(!is_mentor(preferences.parent) || !is_admin(preferences.parent))
+			if((isnull(GLOB.mentor_datums[preferences.parent?.ckey]) || isnull(GLOB.dementors[preferences.parent?.ckey])) || !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 

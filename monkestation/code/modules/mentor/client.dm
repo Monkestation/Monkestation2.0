@@ -38,7 +38,7 @@
 //TEMPORARY FOR TM PURPOSES
 ///Verifies if the client is considered a Mentor, AKA has a Mentor datum or is an Admin.
 /client/proc/is_mentor()
-	if(mentor_datum || check_rights_for(src, R_ADMIN, 0))
+	if(check_mentor_rights_for(src, R_MENTOR) || check_rights_for(src, R_ADMIN))
 		return TRUE
 
 MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CATEGORY_MAIN)

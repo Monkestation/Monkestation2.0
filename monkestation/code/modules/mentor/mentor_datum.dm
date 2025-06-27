@@ -199,6 +199,9 @@ GLOBAL_PROTECT(mentor_href_token)
 
 	return .
 
+/// This proc checks whether subject has at least ONE of the rights specified in rights_required.
+/// NOTE: These will use mentor rights don't mix them with Admin rights.
+/// Like is_mentor() but it will only check for active mentor datums with the supplied rights.
 /proc/check_mentor_rights_for(client/subject, rights_required)
 	if(subject?.mentor_datum)
 		return subject.mentor_datum.check_for_rights(rights_required)
@@ -231,6 +234,7 @@ GLOBAL_PROTECT(mentor_href_token)
 /proc/MentorHrefToken(forceGlobal = FALSE)
 	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
 
+/// Mentor admins without mentor datums. Use after a mentor reload or similar.
 /proc/MentorizeAdmins()
 	//If an admin for some reason doesn't have a mentor datum create a deactivated one for them and assign.
 	for(var/ckey in (GLOB.admin_datums + GLOB.deadmins))
