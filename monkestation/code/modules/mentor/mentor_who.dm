@@ -35,7 +35,12 @@
 			if(GLOB.dementors[mentor_clients.ckey])
 				continue
 
-			if(check_mentor_rights_for(mentor_clients, R_MENTOR))
-				msg += mentor_clients.mentor_datum.is_contributor ? "\t[mentor_clients] is a Mentor\n" : "\t[mentor_clients] is a Mentor\n"
+			if(check_mentor_rights_for(mentor_clients, R_HEADMENTOR))
+				msg += "\t[mentor_clients] is a Head Mentor"
+			else if(check_mentor_rights_for(mentor_clients, R_MENTOR))
+				msg += "\t[mentor_clients] is a Mentor"
+			else
+				continue
+			msg += mentor_clients.mentor_datum.is_contributor ? " and Contributor\n" : "\n"
 
 	to_chat(src, msg)
