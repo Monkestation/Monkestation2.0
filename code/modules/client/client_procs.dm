@@ -374,7 +374,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else if(GLOB.dementors[ckey])
 		add_verb(src, /client/proc/rementor)
 	//	connecting_mentor = TRUE
-	//if(CONFIG_GET(flag/automentor)) //Can be added but not really needed.
 	//MONKE EDIT END
 
 	if (length(GLOB.stickybanadminexemptions))

@@ -29,4 +29,4 @@
 #define R_MENTOR (1<<0)
 #define R_HEADMENTOR (1<<1)
 #define R_AUTOMENTOR (1<<2)
-#define R_MENTOR_EVERYTHING (1<<3)-1 //the sum of all other rank permissions, used for +EVERYTHING
+#define R_MENTOR_EVERYTHING (R_AUTOMENTOR<<1)-1 //the sum of all other rank permissions, used for +EVERYTHING set to the highest bitflag if you add more

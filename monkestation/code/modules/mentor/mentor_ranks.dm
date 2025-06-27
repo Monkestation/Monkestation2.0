@@ -55,6 +55,8 @@ GLOBAL_PROTECT(protected_mentor_ranks)
 				flag = R_HEADMENTOR
 			if("MENTOR")
 				flag = R_MENTOR
+			if("EVERYTHING")
+				flag = R_MENTOR_EVERYTHING
 			if("AUTOMENTOR")
 				flag = R_AUTOMENTOR
 			if("@")

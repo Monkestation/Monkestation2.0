@@ -38,7 +38,7 @@ GLOBAL_PROTECT(mentor_href_token)
 		CRASH("Mentor datum created with invalid ranks: [ranks] ([json_encode(ranks)])")
 	target = ckey
 	name = "[ckey]'s mentor datum ([join_mentor_ranks(ranks)])"
-	src.ranks = ranks
+	src.ranks = isnull(ranks) ? NONE : ranks
 	href_token = GenerateToken()
 	if(protected)
 		GLOB.protected_mentors[target] = src

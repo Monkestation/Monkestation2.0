@@ -6,14 +6,16 @@
 	//Admin version
 	if(holder)
 		for(var/client/mentor_clients in GLOB.mentors)
+			if(!check_mentor_rights_for(mentor_clients, R_MENTOR))
+				continue
+
 			msg += "\t[mentor_clients] is "
 
 			if(GLOB.dementors[mentor_clients.ckey])
 				msg += "Dementored "
 
-			if(check_mentor_rights_for(mentor_clients, R_MENTOR))
-				msg += "a [join_mentor_ranks(mentor_clients.mentor_datum.ranks)]"
-				msg += mentor_clients.mentor_datum.is_contributor ? "Contributor " : ""
+			msg += "a [join_mentor_ranks(mentor_clients.mentor_datum.ranks)] "
+			msg += mentor_clients.mentor_datum.is_contributor ? "Contributor " : ""
 
 			if(isobserver(mentor_clients.mob))
 				msg += "- Observing"
