@@ -56,6 +56,7 @@
 	generate_items_inside(list(
 		/obj/item/ammo_box/c585trappiste/incapacitator = 1,
 		/obj/item/ammo_box/c585trappiste = 1,
+		/obj/item/ammo_box/c585trappiste/hollowpoint = 1,
 	), src)
 
 //Weapon beacon
