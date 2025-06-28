@@ -119,11 +119,7 @@
 
 /// Uses power if there's enough to do so
 /obj/structure/destructible/clockwork/gear_base/powered/proc/use_power(amount)
-	check_transmission_sigils()
-	if(!SSthe_ark.adjust_clock_power(-amount))
-		return FALSE
-
-	return TRUE
+	return check_transmission_sigils() && SSthe_ark.adjust_clock_power(-amount)
 
 /// Triggers when the structure runs out of power to use
 /obj/structure/destructible/clockwork/gear_base/powered/proc/depowered()
