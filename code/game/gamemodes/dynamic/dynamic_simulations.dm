@@ -68,7 +68,7 @@
 	/// Optional, force this threat level instead of picking randomly through the lorentz distribution
 	var/forced_threat_level
 
-ADMIN_VERB(run_dynamic_simulations, R_ADMIN, "Run Dynamic Simulations", "Run simulation of dynamic a gamemode.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(run_dynamic_simulations, R_ADMIN, FALSE, "Run Dynamic Simulations", "Run simulation of dynamic a gamemode.", ADMIN_CATEGORY_DEBUG)
 	var/simulations = input(user, "Enter number of simulations") as num
 	var/roundstart_players = input(user, "Enter number of round start players") as num
 	var/forced_threat_level = input(user, "Enter forced threat level, if you want one") as num | null
