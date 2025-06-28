@@ -912,6 +912,7 @@
 /area/station/construction)
 "dN" = (
 /obj/structure/table,
+/obj/item/debug/human_spawner,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dO" = (
@@ -930,6 +931,8 @@
 "dQ" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
+/obj/item/abductor/alien_omnitool,
+/obj/item/clothing/glasses/debug,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dR" = (
@@ -1997,7 +2000,7 @@
 /area/station/bitrunning/den)
 "sH" = (
 /obj/structure/table,
-/obj/item/storage/box/shipping,
+/obj/item/storage/box/debugtools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "sU" = (
@@ -2325,6 +2328,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
+"Hu" = (
+/obj/item/debug/human_spawner,
+/turf/open/floor/plating,
+/area/station/construction)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/iron,
@@ -6756,7 +6763,7 @@ bE
 bE
 cN
 cY
-dn
+Hu
 dn
 XE
 dn
