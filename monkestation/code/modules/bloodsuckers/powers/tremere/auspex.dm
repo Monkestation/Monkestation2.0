@@ -113,11 +113,10 @@
 			continue
 		if(level_current >= 4)
 			var/obj/item/bodypart/bodypart = pick(living_mob.bodyparts)
-			var/severity = pick(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
-			living_mob.cause_wound_of_type_and_severity(WOUND_SLASH, bodypart, severity, wound_source = "auspex")
+			living_mob.cause_wound_of_type_and_severity(WOUND_SLASH, bodypart, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
 			living_mob.adjustBruteLoss(15)
-			if(level_current >= 5)
-				living_mob.Knockdown(10 SECONDS, ignore_canstun = TRUE)
+		if(level_current >= 5)
+			living_mob.Knockdown(10 SECONDS, ignore_canstun = TRUE)
 
 	do_teleport(owner, targeted_turf, no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 	power_activated_sucessfully()

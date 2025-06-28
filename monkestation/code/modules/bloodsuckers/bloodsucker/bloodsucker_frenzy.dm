@@ -46,7 +46,6 @@
 		TRAIT_PUSHIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
-		TRAIT_STRONG_GRABBER,
 	)
 
 /datum/status_effect/frenzy/get_examine_text()
@@ -73,6 +72,7 @@
 	// Give the other Frenzy effects
 	owner.add_traits(frenzy_traits, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_frenzy)
+	bloodsuckerdatum.frenzygrab.teach(user, TRUE)
 	owner.add_client_colour(/datum/client_colour/cursed_heart_blood)
 	user.uncuff()
 	bloodsuckerdatum.frenzied = TRUE
@@ -80,9 +80,11 @@
 
 /datum/status_effect/frenzy/on_remove()
 	if(bloodsuckerdatum?.frenzied)
+		var/mob/living/carbon/human/user = owner
 		owner.balloon_alert(owner, "you come back to your senses.")
 		owner.remove_traits(frenzy_traits, TRAIT_STATUS_EFFECT(id))
 		owner.remove_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_frenzy)
+		bloodsuckerdatum.frenzygrab.remove(user)
 		owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 
 		SEND_SIGNAL(bloodsuckerdatum, COMSIG_BLOODSUCKER_EXITS_FRENZY)
