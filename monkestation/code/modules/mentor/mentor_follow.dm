@@ -1,4 +1,4 @@
-MENTOR_VERB(mentor_follow, R_MENTOR, "Mentor Follow", "Visually follow a mob.", MENTOR_CATEGORY_MAIN, mob/living/followed_guy in world)
+MENTOR_VERB(mentor_follow, R_MENTOR, FALSE, "Mentor Follow", "Visually follow a mob.", MENTOR_CATEGORY_MAIN, mob/living/followed_guy in world)
 	if(isnull(followed_guy))
 		return
 	user.mob.reset_perspective(followed_guy)

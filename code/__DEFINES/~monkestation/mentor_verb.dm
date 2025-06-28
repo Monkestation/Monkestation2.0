@@ -1,13 +1,14 @@
 //These macros are used to define all verbs that mentor datums get. Macros defined here ARE NOT shared with ADMIN_VERB macros so if you
 //need similar functionality for admins make it using the ADMIN_VERB macro.
 //Admin Verb macros defines in [code\__DEFINES\admin_verb.dm]
-#define _MENTOR_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, show_in_context_menu, verb_args...) \
+#define _MENTOR_VERB(verb_path_name, verb_permissions, exact_permissions, verb_name, verb_desc, verb_category, show_in_context_menu, verb_args...) \
 /datum/mentor_verb/##verb_path_name \
 { \
 	name = ##verb_name; \
 	description = ##verb_desc; \
 	category = ##verb_category; \
 	permissions = ##verb_permissions; \
+	match_exact_permissions = ##exact_permissions; \
 	verb_path = /client/proc/__avd_##verb_path_name; \
 }; \
 /client/proc/__avd_##verb_path_name(##verb_args) \
@@ -24,14 +25,14 @@
 /datum/mentor_verb/##verb_path_name/__avd_do_verb(client/user, ##verb_args)
 
 
-#define MENTOR_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
-_MENTOR_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, FALSE, ##verb_args)
+#define MENTOR_VERB(verb_path_name, verb_permissions, exact_permissions, verb_name, verb_desc, verb_category, verb_args...) \
+_MENTOR_VERB(verb_path_name, verb_permissions, exact_permissions, verb_name, verb_desc, verb_category, FALSE, ##verb_args)
 
-#define MENTOR_VERB_ONLY_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_args...) \
-_MENTOR_VERB(verb_path_name, verb_permissions, verb_name, ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, TRUE, ##verb_args)
+#define MENTOR_VERB_ONLY_CONTEXT_MENU(verb_path_name, exact_permissions, verb_permissions, verb_name, verb_args...) \
+_MENTOR_VERB(verb_path_name, verb_permissions, exact_permissions, verb_name, ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, TRUE, ##verb_args)
 
-#define MENTOR_VERB_AND_CONTEXT_MENU(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
-_MENTOR_VERB(verb_path_name, verb_permissions, verb_name, verb_desc, verb_category, TRUE, ##verb_args)
+#define MENTOR_VERB_AND_CONTEXT_MENU(verb_path_name, exact_permissions, verb_permissions, verb_name, verb_desc, verb_category, verb_args...) \
+_MENTOR_VERB(verb_path_name, verb_permissions, exact_permissions, verb_name, verb_desc, verb_category, TRUE, ##verb_args)
 
 /// Used to define a special check to determine if the mentor verb should exist at all. Useful for verbs such as play sound which require configuration.
 #define MENTOR_VERB_CUSTOM_EXIST_CHECK(verb_path_name) \

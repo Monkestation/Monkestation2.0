@@ -450,7 +450,7 @@ SUBSYSTEM_DEF(overwatch)
 		return TRUE
 	return FALSE
 
-ADMIN_VERB(Overwatch_toggle, R_SERVER, "Toggle Overwatch", "Toggle the overwatch subsystem.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(Overwatch_toggle, R_SERVER, FALSE, "Toggle Overwatch", "Toggle the overwatch subsystem.", ADMIN_CATEGORY_GAME)
 	if(!SSdbcore.Connect())
 		to_chat(user, span_notice("The Database is not connected!"))
 		return

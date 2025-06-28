@@ -1,4 +1,4 @@
-ADMIN_VERB(spawn_liquid, R_FUN, "Spawn Liquid", "Spawns an amount of chosen liquid at your current location.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(spawn_liquid, R_FUN, FALSE, "Spawn Liquid", "Spawns an amount of chosen liquid at your current location.", ADMIN_CATEGORY_FUN)
 	var/choice
 	var/valid_id
 	while(!valid_id)
@@ -27,7 +27,7 @@ ADMIN_VERB(spawn_liquid, R_FUN, "Spawn Liquid", "Spawns an amount of chosen liqu
 	log_admin("[key_name(user)] spawned liquid at [epicenter.loc] ([choice] - [volume]).")
 	BLACKBOX_LOG_ADMIN_VERB("Spawn Liquid")
 
-ADMIN_VERB(remove_liquid, R_FUN, "Remove Liquids", "Removes a chosen liquid in a radius at your current location.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(remove_liquid, R_FUN, FALSE, "Remove Liquids", "Removes a chosen liquid in a radius at your current location.", ADMIN_CATEGORY_FUN)
 	var/turf/epicenter = get_turf(user.mob)
 
 	var/range = input(user, "Enter range:", "Range selection", 2) as num
@@ -40,7 +40,7 @@ ADMIN_VERB(remove_liquid, R_FUN, "Remove Liquids", "Removes a chosen liquid in a
 	log_game("[key_name_admin(user)] removed liquids with range [range] in [epicenter.loc.name]")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Liquids")
 
-ADMIN_VERB(change_ocean, R_FUN, "Change Ocean Liquid", "Changes the reagent of the ocean.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(change_ocean, R_FUN, FALSE, "Change Ocean Liquid", "Changes the reagent of the ocean.", ADMIN_CATEGORY_FUN)
 	var/choice = tgui_input_list(user, "Choose a reagent", "Ocean Reagent", subtypesof(/datum/reagent))
 	if(!choice)
 		return

@@ -162,7 +162,7 @@
 
 	return 1
 
-ADMIN_VERB(disease_view, R_ADMIN, "Disease View", "See disease visuals.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(disease_view, R_ADMIN, FALSE, "Disease View", "See disease visuals.", ADMIN_CATEGORY_DEBUG)
 	if(isobserver(user.mob))
 		var/mob/dead/observer/observer = user.mob
 		observer.toggle_disease_view() // The trait doesn't work if you're an observer, so this redirects the call to the observer verb.
@@ -174,7 +174,7 @@ ADMIN_VERB(disease_view, R_ADMIN, "Disease View", "See disease visuals.", ADMIN_
 		ADD_TRAIT(user.mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
 		to_chat(user, span_notice("Admin disease view enabled."))
 
-ADMIN_VERB(diseases_panel, R_ADMIN, "Disease Panel", "See diseases and disease information.", ADMIN_CATEGORY_LOGGING)
+ADMIN_VERB(diseases_panel, R_ADMIN, FALSE, "Disease Panel", "See diseases and disease information.", ADMIN_CATEGORY_LOGGING)
 	user.holder.diseases_panel()
 
 /datum/admins/var/viewingID

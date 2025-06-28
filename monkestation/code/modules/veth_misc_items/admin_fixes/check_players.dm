@@ -1,4 +1,4 @@
-ADMIN_VERB(check_players, R_ADMIN, "Check Players", "Check current player statistics such as total clients.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(check_players, R_ADMIN, FALSE, "Check Players", "Check current player statistics such as total clients.", ADMIN_CATEGORY_GAME)
 	var/datum/check_players/tgui = new
 	tgui.ui_interact(user.mob)
 	to_chat(user, span_interface("Player statistics displayed."), confidential = TRUE)

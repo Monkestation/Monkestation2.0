@@ -5,7 +5,7 @@
 	. = ..()
 	QDEL_NULL(vox_holder)
 
-ADMIN_VERB(AdminVOX, R_ADMIN, "VOX", "Allows unrestricted use of the AI VOX announcement system.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(AdminVOX, R_ADMIN, FALSE, "VOX", "Allows unrestricted use of the AI VOX announcement system.", ADMIN_CATEGORY_MAIN)
 	if(QDELETED(user.holder.vox_holder))
 		user.holder.vox_holder = new(user.holder)
 	user.holder.vox_holder.ui_interact(user.mob)

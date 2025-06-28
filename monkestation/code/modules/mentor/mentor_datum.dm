@@ -126,8 +126,15 @@ GLOBAL_PROTECT(mentor_href_token)
 		owner.mentor_datum = null
 		owner = null
 
+/// Will check to see if rank has at least one of the rights required.
 /datum/mentors/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank_flags()))
+		return FALSE
+	return TRUE
+
+/// Will check to see if rank has exact rights required.
+/datum/mentors/proc/check_for_exact_rights(rights_required)
+	if(rights_required && ((rights_required & rank_flags()) != rights_required))
 		return FALSE
 	return TRUE
 

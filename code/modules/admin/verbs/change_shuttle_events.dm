@@ -1,5 +1,5 @@
-ADMIN_VERB(change_shuttle_events, R_ADMIN | R_FUN, "Change Shuttle Events", "Change the events on a shuttle.", ADMIN_CATEGORY_EVENTS)
-	//At least for now, just letting admins modify the emergency shuttle is fine
+ADMIN_VERB(change_shuttle_events, R_ADMIN | R_FUN, FALSE, "Change Shuttle Events", "Change the events on a shuttle.", ADMIN_CATEGORY_EVENTS)
+	//At least for now, just letting admins modify the emergency shuttle is fine. Are we sure about that since trialmins can get them and we can restrict now.
 	var/obj/docking_port/mobile/port = SSshuttle.emergency
 
 	if(!port)

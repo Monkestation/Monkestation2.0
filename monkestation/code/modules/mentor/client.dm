@@ -1,5 +1,5 @@
 /client
-	///If this is set, this person is has Mentor powers.
+	///Contains mentor info. Null if client is not a mentor or a player with custom powers.
 	var/datum/mentors/mentor_datum
 
 /client/proc/add_mentor_verbs()
@@ -41,7 +41,7 @@
 	if(check_mentor_rights_for(src, R_MENTOR) || check_rights_for(src, R_ADMIN))
 		return TRUE
 
-MENTOR_VERB(dementor, R_NONE, "Dementor", "Shed your mentor powers.", MENTOR_CATEGORY_MAIN)
+MENTOR_VERB(dementor, R_NONE, FALSE, "Dementor", "Shed your mentor powers.", MENTOR_CATEGORY_MAIN)
 	user.mentor_datum.deactivate()
 	to_chat(user, span_interface("You are now an unmentored player."), confidential = TRUE)
 	log_admin("[key_name(user)] dementored themselves.")

@@ -1,4 +1,4 @@
-ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(message_pda, R_ADMIN, FALSE, "PDA Message", "Send a message to a user's PDA.", ADMIN_CATEGORY_EVENTS)
 	user.holder.message_pda()
 
 ///Opens up the PDA Message Panel

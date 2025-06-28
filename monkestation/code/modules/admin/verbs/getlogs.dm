@@ -1,14 +1,14 @@
 GLOBAL_LIST(debug_logfile_names)
 GLOBAL_PROTECT(debug_logfile_names)
 
-ADMIN_VERB(getserverlogs_debug, R_DEBUG, "Get Server Logs (Debug)", "View/retrieve debug-related logfiles.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(getserverlogs_debug, R_DEBUG,  FALSE, "Get Server Logs (Debug)", "View/retrieve debug-related logfiles.", ADMIN_CATEGORY_DEBUG)
 	get_debug_logfiles()
 	if(!GLOB.debug_logfile_names)
 		return
 	user.browseserverlogs(whitelist = GLOB.debug_logfile_names, allow_folder = FALSE)
 
 
-ADMIN_VERB(getcurrentlogs_debug, R_DEBUG, "Get Current Logs (Debug)", "View/retrieve debug-related logfiles for the current round.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(getcurrentlogs_debug, R_DEBUG, FALSE, "Get Current Logs (Debug)", "View/retrieve debug-related logfiles for the current round.", ADMIN_CATEGORY_DEBUG)
 	get_debug_logfiles()
 	if(!GLOB.debug_logfile_names)
 		return

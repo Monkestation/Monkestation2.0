@@ -1,4 +1,4 @@
-ADMIN_VERB(summon_twitch_event, R_FUN, "Summon Twitch Event", "Starts a twitch event with the given ID.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(summon_twitch_event, R_FUN, FALSE, "Summon Twitch Event", "Starts a twitch event with the given ID.", ADMIN_CATEGORY_FUN)
 	var/datum/twitch_event/choice = tgui_input_list(user, "Choose an event", "Event Selection", subtypesof(/datum/twitch_event))
 	if(!choice)
 		return

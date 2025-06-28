@@ -282,7 +282,7 @@
 	qdel(src)
 #endif
 
-ADMIN_VERB(lua_editor, R_DEBUG, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(lua_editor, R_DEBUG, FALSE, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
 #ifndef DISABLE_DREAMLUAU
 	var/datum/lua_editor/editor = new
 	editor.ui_interact(user.mob)

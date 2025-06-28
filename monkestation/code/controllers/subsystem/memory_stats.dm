@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(memory_stats)
 	return result
 #endif
 
-ADMIN_VERB(server_memory_stats, R_DEBUG, "Server Memory Stats", "Print various statistics about the server's current memory usage. (does not work on OpenDream)", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(server_memory_stats, R_DEBUG, FALSE, "Server Memory Stats", "Print various statistics about the server's current memory usage. (does not work on OpenDream)", ADMIN_CATEGORY_DEBUG)
 	var/box_color = "red"
 #ifndef OPENDREAM
 	var/result = SSmemory_stats?.initialized ? span_danger("Error fetching memory statistics!") : span_warning("SSmemory_stats hasn't been initialized yet!")

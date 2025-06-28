@@ -453,7 +453,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	drop_items_to_ground(new_body.drop_location())
 	return new_body
-ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
+ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
 	if(QDELETED(core))
 		to_chat(user, span_boldannounce("Invalid Oozeling Core."), confidential = TRUE)
 		return

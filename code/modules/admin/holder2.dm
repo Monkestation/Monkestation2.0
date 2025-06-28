@@ -215,8 +215,15 @@ GLOBAL_PROTECT(href_token)
 
 	return cached_feedback_link
 
+/// Will check to see if rank has at least one of the rights required.
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank_flags()))
+		return FALSE
+	return TRUE
+
+/// Will check to see if rank has exact rights required.
+/datum/admins/proc/check_for_exact_rights(rights_required)
+	if(rights_required && ((rights_required & rank_flags()) != rights_required))
 		return FALSE
 	return TRUE
 

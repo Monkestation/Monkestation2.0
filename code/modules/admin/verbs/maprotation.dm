@@ -1,4 +1,4 @@
-ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.", ADMIN_CATEGORY_SERVER)
 	var/list/maprotatechoices = list()
 	for (var/map in config.maplist)
 		var/datum/map_config/virtual_map = config.maplist[map]
@@ -122,5 +122,5 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 			message_admins("[key_name_admin(user)] has changed the map to [virtual_map.map_name]")
 			SSmap_vote.admin_override = TRUE
 
-ADMIN_VERB(admin_revert_map, R_SERVER, "Revert Map Vote", "Reverts the next map.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(admin_revert_map, R_SERVER, FALSE, "Revert Map Vote", "Reverts the next map.", ADMIN_CATEGORY_SERVER)
 	SSmap_vote.revert_next_map()

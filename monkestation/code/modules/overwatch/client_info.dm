@@ -11,14 +11,14 @@
 /client
 	var/datum/ip_info/ip_info = new
 
-ADMIN_VERB(Overwatch_ASN_panel, R_SERVER, "Overwatch ASN Panel", "Opens the Overwatch ASN Panel.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(Overwatch_ASN_panel, R_SERVER, FALSE, "Overwatch ASN Panel", "Opens the Overwatch ASN Panel.", ADMIN_CATEGORY_SERVER)
 	if(!SSdbcore.Connect())
 		to_chat(user, span_warning("Failed to establish database connection"))
 		return
 
 	new /datum/overwatch_asn_panel(user)
 
-ADMIN_VERB(Overwatch_WhitelistPanel, R_BAN, "Overwatch WL Panel", "Opens the Overwatch Whitelist Panel.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(Overwatch_WhitelistPanel, R_BAN, FALSE, "Overwatch WL Panel", "Opens the Overwatch Whitelist Panel.", ADMIN_CATEGORY_MAIN)
 	if(!SSdbcore.Connect())
 		to_chat(user, span_warning("Failed to establish database connection"))
 		return

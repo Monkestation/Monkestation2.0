@@ -58,7 +58,7 @@
 		))
 	return container_list
 
-ADMIN_VERB(beaker_panel, R_SPAWN, "Spawn Reagent Container", "Spawn a reagent container.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(beaker_panel, R_SPAWN, FALSE, "Spawn Reagent Container", "Spawn a reagent container.", ADMIN_CATEGORY_EVENTS)
 	var/datum/beaker_panel/tgui = new(user.mob)
 	tgui.ui_interact(user.mob)
 

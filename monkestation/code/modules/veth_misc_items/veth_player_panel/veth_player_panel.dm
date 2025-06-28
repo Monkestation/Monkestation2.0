@@ -1,13 +1,13 @@
 /datum/player_panel_veth/ //required for tgui component
 	var/title = "Veth's Ultimate Player Panel"
 
-ADMIN_VERB(player_panel_veth, R_ADMIN, "Player Panel Veth", "Updated Player Panel with TGUI. Currently in testing.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(player_panel_veth, R_ADMIN, FALSE,"Player Panel Veth", "Updated Player Panel with TGUI. Currently in testing.", ADMIN_CATEGORY_GAME)
 	var/datum/player_panel_veth/tgui = new(user.mob)
 	tgui.ui_interact(user.mob)
 	to_chat(src, span_interface("VUAP has been opened!"), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("VUAP")
 
-ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, "Open TGUI PP", "Player options panel for a mob.", ADMIN_CATEGORY_GAME, mob/target in GLOB.player_list)
+ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, FALSE, "Open TGUI PP", "Player options panel for a mob.", ADMIN_CATEGORY_GAME, mob/target in GLOB.player_list)
 	var/client/targetclient = target.client
 	if(!length(targetclient.ckey) || targetclient.ckey[1] == "@")
 		var/mob/player = target

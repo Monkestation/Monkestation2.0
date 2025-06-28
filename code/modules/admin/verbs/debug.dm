@@ -1,4 +1,4 @@
-ADMIN_VERB(toggle_game_debug, R_DEBUG, "Debug-Game", "Toggles game debugging.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(toggle_game_debug, R_DEBUG, FALSE, "Debug-Game", "Toggles game debugging.", ADMIN_CATEGORY_DEBUG)
 	GLOB.Debug2 = !GLOB.Debug2
 	var/message = "toggled debugging [(GLOB.Debug2 ? "ON" : "OFF")]"
 	message_admins("[key_name_admin(user)] [message].")
@@ -6,14 +6,14 @@ ADMIN_VERB(toggle_game_debug, R_DEBUG, "Debug-Game", "Toggles game debugging.", 
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Game Debug") // MONKE EDIT renamed this to match the verb.
 
 ADMIN_VERB_VISIBILITY(air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(air_status, R_DEBUG, "Air Status In Location", "Gets the air status for your current turf.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(air_status, R_DEBUG, FALSE, "Air Status In Location", "Gets the air status for your current turf.", ADMIN_CATEGORY_DEBUG)
 	var/turf/user_turf = get_turf(user.mob)
 	if(!isturf(user_turf))
 		return
 	atmos_scan(user=user.mob, target=user_turf, silent=TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Air Status In Location")
 
-ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
+ADMIN_VERB(cmd_admin_robotize, R_FUN, FALSE, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user,"Wait until the game starts")
 		return
@@ -34,7 +34,7 @@ ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, 
 		return
 	return types[key]
 
-ADMIN_VERB(cmd_del_all, R_DEBUG|R_SPAWN, "Del-All", "Delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(cmd_del_all, R_DEBUG | R_SPAWN, FALSE, "Del-All", "Delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
@@ -49,7 +49,7 @@ ADMIN_VERB(cmd_del_all, R_DEBUG|R_SPAWN, "Del-All", "Delete all datums with the 
 	message_admins("[key_name_admin(user)] has deleted all ([counter]) instances of [type_to_del].")
 	BLACKBOX_LOG_ADMIN_VERB("Delete All")
 
-ADMIN_VERB(cmd_del_all_force, R_DEBUG|R_SPAWN, "Force-Del-All", "Forcibly delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(cmd_del_all_force, R_DEBUG | R_SPAWN, FALSE, "Force-Del-All", "Forcibly delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
@@ -64,7 +64,7 @@ ADMIN_VERB(cmd_del_all_force, R_DEBUG|R_SPAWN, "Force-Del-All", "Forcibly delete
 	message_admins("[key_name_admin(user)] has force-deleted all ([counter]) instances of [type_to_del].")
 	BLACKBOX_LOG_ADMIN_VERB("Force-Delete All")
 
-ADMIN_VERB(cmd_del_all_hard, R_DEBUG|R_SPAWN, "Hard-Del-All", "Hard delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(cmd_del_all_hard, R_DEBUG | R_SPAWN, FALSE, "Hard-Del-All", "Hard delete all datums with the specified type.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/type_to_del = user.poll_type_to_del(object)
 	if(!type_to_del)
 		return
@@ -104,14 +104,14 @@ ADMIN_VERB(cmd_del_all_hard, R_DEBUG|R_SPAWN, "Hard-Del-All", "Hard delete all d
 	message_admins("[key_name_admin(user)] has hard deleted all ([counter]) instances of [type_to_del].")
 	BLACKBOX_LOG_ADMIN_VERB("Hard Delete All")
 
-ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regenerates all powernets for all cables.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG | R_SERVER, FALSE, "Make Powernets", "Regenerates all powernets for all cables.", ADMIN_CATEGORY_DEBUG)
 	SSmachines.makepowernets()
 	log_admin("[key_name(user)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(user)] has remade the powernets. makepowernets() called.")
 	BLACKBOX_LOG_ADMIN_VERB("Make Powernets")
 
 ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
+ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, FALSE, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user,"Wait until the game starts")
 		return
@@ -152,7 +152,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 	log_admin("[key_name(user)] has granted [M.key] full access.")
 	message_admins(span_adminnotice("[key_name_admin(user)] has granted [M.key] full access."))
 
-ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume direct control of a mob.", ADMIN_CATEGORY_DEBUG, mob/M)
+ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, FALSE, "Assume Direct Control", "Assume direct control of a mob.", ADMIN_CATEGORY_DEBUG, mob/M)
 	if(M.ckey)
 		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
@@ -170,7 +170,7 @@ ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume 
 		qdel(adminmob)
 	BLACKBOX_LOG_ADMIN_VERB("Assume Direct Control")
 
-ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct control of a mob to another player.", ADMIN_CATEGORY_GAME, mob/M)
+ADMIN_VERB(cmd_give_direct_control, R_ADMIN, FALSE, "Give Direct Control", "Give direct control of a mob to another player.", ADMIN_CATEGORY_GAME, mob/M)
 	if(!M)
 		return
 	if(M.ckey)
@@ -197,7 +197,7 @@ ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct
 	BLACKBOX_LOG_ADMIN_VERB("Give Direct Control")
 
 ADMIN_VERB_VISIBILITY(cmd_admin_areatest, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(cmd_admin_areatest, R_DEBUG, "Test Areas", "Tests the areas for various machinery.", ADMIN_CATEGORY_MAPPING, on_station as num, filter_maint as num)
+ADMIN_VERB(cmd_admin_areatest, R_DEBUG, FALSE, "Test Areas", "Tests the areas for various machinery.", ADMIN_CATEGORY_MAPPING, on_station as num, filter_maint as num)
 	var/list/dat = list()
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
@@ -388,15 +388,15 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, "Test Areas", "Tests the areas for vario
 	popup.open()
 
 ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(cmd_admin_areatest_station, R_DEBUG, "Test Areas (STATION ONLY)", "Tests the areas for various machinery on station z-levels.", ADMIN_CATEGORY_MAPPING)
+ADMIN_VERB(cmd_admin_areatest_station, R_DEBUG, FALSE, "Test Areas (STATION ONLY)", "Tests the areas for various machinery on station z-levels.", ADMIN_CATEGORY_MAPPING)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest, /* on_station = */ TRUE)
 
 ADMIN_VERB_VISIBILITY(cmd_admin_areatest_station_no_maintenance, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(cmd_admin_areatest_station_no_maintenance, R_DEBUG, "Test Areas (STATION - NO MAINT)", "Tests the areas for various machinery on station z-levels, excluding maintenance areas.", ADMIN_CATEGORY_MAPPING)
+ADMIN_VERB(cmd_admin_areatest_station_no_maintenance, R_DEBUG, FALSE, "Test Areas (STATION - NO MAINT)", "Tests the areas for various machinery on station z-levels, excluding maintenance areas.", ADMIN_CATEGORY_MAPPING)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest, /* on_station = */ TRUE, /* filter_maint = */ TRUE)
 
 ADMIN_VERB_VISIBILITY(cmd_admin_areatest_all, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas for various machinery on all z-levels.", ADMIN_CATEGORY_MAPPING)
+ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, FALSE, "Test Areas (ALL)", "Tests the areas for various machinery on all z-levels.", ADMIN_CATEGORY_MAPPING)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/cmd_admin_areatest)
 
 /client/proc/robust_dress_shop()
@@ -451,7 +451,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 
 	return dresscode
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/living/M in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, FALSE, "Rejuvenate", mob/living/M in world)
 	if(!istype(M))
 		tgui_alert(usr,"Cannot revive a ghost")
 		return
@@ -466,16 +466,16 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/li
 	// MONKESTATION EDIT END
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG | R_SPAWN, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as obj|mob|turf in world)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG | R_SPAWN, FALSE, "Delete", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as obj|mob|turf in world)
 	user.admin_delete(target)
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/mob)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, FALSE, "Check Contents", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/mob)
 	var/list/mob_contents = mob.get_contents()
 	for(var/content in mob_contents)
 		to_chat(user, "[content] [ADMIN_VV(content)] [ADMIN_TAG(content)]", confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Check Contents")
 
-ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for the shift.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(modify_goals, R_ADMIN, FALSE, "Modify Goals", "Modify the station goals for the shift.", ADMIN_CATEGORY_DEBUG)
 	user.holder.modify_goals()
 
 /datum/admins/proc/modify_goals()
@@ -487,7 +487,7 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 	browser.set_content(dat)
 	browser.open()
 
-ADMIN_VERB(debug_mob_lists, R_DEBUG, "Debug Mob Lists", "For when you just gotta know.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(debug_mob_lists, R_DEBUG, FALSE, "Debug Mob Lists", "For when you just gotta know.", ADMIN_CATEGORY_DEBUG)
 	var/chosen_list = tgui_input_list(user, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 	if(isnull(chosen_list))
 		return
@@ -507,7 +507,7 @@ ADMIN_VERB(debug_mob_lists, R_DEBUG, "Debug Mob Lists", "For when you just gotta
 		if("Joined Clients")
 			to_chat(user, jointext(GLOB.joined_player_list,","), confidential = TRUE)
 
-ADMIN_VERB(del_log, R_DEBUG, "Display del() Log", "Display del's log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(del_log, R_DEBUG, FALSE, "Display del() Log", "Display del's log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
 	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
 	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
 	for(var/path in SSgarbage.items)
@@ -540,16 +540,16 @@ ADMIN_VERB(del_log, R_DEBUG, "Display del() Log", "Display del's log of everythi
 
 	user << browse(dellog.Join(), "window=dellog")
 
-ADMIN_VERB(display_overlay_log, R_DEBUG, "Display Overlay Log", "Display SSoverlays log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(display_overlay_log, R_DEBUG, FALSE, "Display Overlay Log", "Display SSoverlays log of everything that's passed through it.", ADMIN_CATEGORY_DEBUG)
 	render_stats(SSoverlays.stats, user)
 
-ADMIN_VERB(init_log, R_DEBUG, "Display Initialize() Log", "Displays a list of things that didn't handle Initialize() properly.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(init_log, R_DEBUG, FALSE, "Display Initialize() Log", "Displays a list of things that didn't handle Initialize() properly.", ADMIN_CATEGORY_DEBUG)
 	user << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
-ADMIN_VERB(debug_color_test, R_DEBUG, "Colorblind Testing", "Change your view to a budget version of colorblindness to test for usability.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(debug_color_test, R_DEBUG, FALSE, "Colorblind Testing", "Change your view to a budget version of colorblindness to test for usability.", ADMIN_CATEGORY_DEBUG)
 	user.holder.color_test.ui_interact(user.mob)
 
-ADMIN_VERB(debug_plane_masters, R_DEBUG, "Edit/Debug Planes", "Edit and visualize plane masters and their connections (relays).", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(debug_plane_masters, R_DEBUG, FALSE, "Edit/Debug Planes", "Edit and visualize plane masters and their connections (relays).", ADMIN_CATEGORY_DEBUG)
 	user.edit_plane_masters()
 
 /client/proc/edit_plane_masters(mob/debug_on)
@@ -562,10 +562,10 @@ ADMIN_VERB(debug_plane_masters, R_DEBUG, "Edit/Debug Planes", "Edit and visualiz
 		holder.plane_debug.set_mirroring(FALSE)
 	holder.plane_debug.ui_interact(mob)
 
-ADMIN_VERB(debug_huds, R_DEBUG, "Debug HUDs", "Debug the data or antag HUDs.", ADMIN_CATEGORY_DEBUG, i as num)
+ADMIN_VERB(debug_huds, R_DEBUG, FALSE, "Debug HUDs", "Debug the data or antag HUDs.", ADMIN_CATEGORY_DEBUG, i as num)
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/debug_variables, GLOB.huds[i])
 
-ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed ruins to teleport to.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(jump_to_ruin, R_DEBUG, FALSE, "Jump to Ruin", "Displays a list of all placed ruins to teleport to.", ADMIN_CATEGORY_DEBUG)
 	var/list/names = list()
 	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
@@ -592,7 +592,7 @@ ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed
 	to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
 
 ADMIN_VERB_VISIBILITY(place_ruin, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a specific ruin.", ADMIN_CATEGORY_MAPPING)
+ADMIN_VERB(place_ruin, R_DEBUG, FALSE, "Spawn Ruin", "Attempt to randomly place a specific ruin.", ADMIN_CATEGORY_MAPPING)
 	var/list/exists = list()
 	for(var/landmark in GLOB.ruin_landmarks)
 		var/obj/effect/landmark/ruin/L = landmark
@@ -632,10 +632,10 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 	else
 		to_chat(user, span_warning("Failed to place [template.name]."), confidential = TRUE)
 
-ADMIN_VERB(unload_ctf, R_DEBUG, "Unload CTF", "Despawns the majority of CTF.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(unload_ctf, R_DEBUG, FALSE, "Unload CTF", "Despawns the majority of CTF.", ADMIN_CATEGORY_DEBUG)
 	toggle_id_ctf(user, CTF_GHOST_CTF_GAME_ID, unload=TRUE)
 
-ADMIN_VERB(run_empty_query, R_DEBUG, "Run Empty Query", "Runs a specified number of empty queries.", ADMIN_CATEGORY_DEBUG, val as num)
+ADMIN_VERB(run_empty_query, R_DEBUG, FALSE, "Run Empty Query", "Runs a specified number of empty queries.", ADMIN_CATEGORY_DEBUG, val as num)
 	var/list/queries = list()
 	for(var/i in 1 to val)
 		var/datum/db_query/query = SSdbcore.NewQuery("NULL")
@@ -649,7 +649,7 @@ ADMIN_VERB(run_empty_query, R_DEBUG, "Run Empty Query", "Runs a specified number
 
 	message_admins("[key_name_admin(user)] ran [val] empty queries.")
 
-ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", "Deallocates all reserved space, restoring it to round start conditions.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(clear_turf_reservations, R_DEBUG, FALSE, "Clear Dynamic Turf Reservations", "Deallocates all reserved space, restoring it to round start conditions.", ADMIN_CATEGORY_DEBUG)
 	var/answer = tgui_alert(
 		user,
 		"WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!",
@@ -663,14 +663,14 @@ ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", 
 	log_admin("[key_name(user)] cleared dynamic transit space.")
 	SSmapping.wipe_reservations() //this goes after it's logged, incase something horrible happens.
 
-ADMIN_VERB(toggle_medal_disable, R_DEBUG, "Toggle Medal Disable", "Toggles the safety lock on trying to contact the medal hub.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(toggle_medal_disable, R_DEBUG, FALSE, "Toggle Medal Disable", "Toggles the safety lock on trying to contact the medal hub.", ADMIN_CATEGORY_DEBUG)
 	SSachievements.achievements_enabled = !SSachievements.achievements_enabled
 
 	message_admins(span_adminnotice("[key_name_admin(user)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Medal Disable")
 	log_admin("[key_name(user)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
-ADMIN_VERB(view_runtimes, R_DEBUG, "View Runtimes", "Opens the runtime viewer.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(view_runtimes, R_DEBUG, FALSE, "View Runtimes", "Opens the runtime viewer.", ADMIN_CATEGORY_DEBUG)
 	GLOB.error_cache.show_to(user)
 
 	// The runtime viewer has the potential to crash the server if there's a LOT of runtimes
@@ -682,7 +682,7 @@ ADMIN_VERB(view_runtimes, R_DEBUG, "View Runtimes", "Opens the runtime viewer.",
 		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
 		alert(user, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
 
-ADMIN_VERB(pump_random_event, R_DEBUG, "Pump Random Event", "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(pump_random_event, R_DEBUG, FALSE, "Pump Random Event", "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification.", ADMIN_CATEGORY_DEBUG)
 	SSevents.scheduled = world.time
 
 	message_admins(span_adminnotice("[key_name_admin(user)] pumped a random event."))
@@ -690,7 +690,7 @@ ADMIN_VERB(pump_random_event, R_DEBUG, "Pump Random Event", "Schedules the event
 	log_admin("[key_name(user)] pumped a random event.")
 
 ADMIN_VERB_VISIBILITY(start_line_profiling, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(start_line_profiling, R_DEBUG, "Start Line Profiling", "Starts tracking line by line profiling for code lines that support it.", ADMIN_CATEGORY_PROFILE)
+ADMIN_VERB(start_line_profiling, R_DEBUG, FALSE, "Start Line Profiling", "Starts tracking line by line profiling for code lines that support it.", ADMIN_CATEGORY_PROFILE)
 	LINE_PROFILE_START
 
 	message_admins(span_adminnotice("[key_name_admin(user)] started line by line profiling."))
@@ -698,7 +698,7 @@ ADMIN_VERB(start_line_profiling, R_DEBUG, "Start Line Profiling", "Starts tracki
 	log_admin("[key_name(user)] started line by line profiling.")
 
 ADMIN_VERB_VISIBILITY(stop_line_profiling, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(stop_line_profiling, R_DEBUG, "Stop Line Profiling", "Stops tracking line by line profiling for code lines that support it.", ADMIN_CATEGORY_PROFILE)
+ADMIN_VERB(stop_line_profiling, R_DEBUG, FALSE, "Stop Line Profiling", "Stops tracking line by line profiling for code lines that support it.", ADMIN_CATEGORY_PROFILE)
 	LINE_PROFILE_STOP
 
 	message_admins(span_adminnotice("[key_name_admin(user)] stopped line by line profiling."))
@@ -706,7 +706,7 @@ ADMIN_VERB(stop_line_profiling, R_DEBUG, "Stop Line Profiling", "Stops tracking 
 	log_admin("[key_name(user)] stopped line by line profiling.")
 
 ADMIN_VERB_VISIBILITY(show_line_profiling, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(show_line_profiling, R_DEBUG, "Show Line Profiling", "Shows tracked profiling info from code lines that support it.", ADMIN_CATEGORY_PROFILE)
+ADMIN_VERB(show_line_profiling, R_DEBUG, FALSE, "Show Line Profiling", "Shows tracked profiling info from code lines that support it.", ADMIN_CATEGORY_PROFILE)
 	var/sortlist = list(
 		"Avg time" = GLOBAL_PROC_REF(cmp_profile_avg_time_dsc),
 		"Total Time" = GLOBAL_PROC_REF(cmp_profile_time_dsc),
@@ -718,11 +718,11 @@ ADMIN_VERB(show_line_profiling, R_DEBUG, "Show Line Profiling", "Shows tracked p
 	sort = sortlist[sort]
 	profile_show(user, sort)
 
-ADMIN_VERB(reload_configuration, R_DEBUG, "Reload Configuration", "Reloads the configuration from the default path on the disk, wiping any in-round modifications.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(reload_configuration, R_DEBUG, FALSE, "Reload Configuration", "Reloads the configuration from the default path on the disk, wiping any in-round modifications.", ADMIN_CATEGORY_DEBUG)
 	if(!tgui_alert(user, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
 
-ADMIN_VERB(check_timer_sources, R_DEBUG, "Check Timer Sources", "Checks the sources of running timers.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(check_timer_sources, R_DEBUG, FALSE, "Check Timer Sources", "Checks the sources of running timers.", ADMIN_CATEGORY_DEBUG)
 	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
 	var/second_queue = generate_timer_source_output(SStimer.second_queue)
 
@@ -783,7 +783,7 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(check_missing_sprites)
 	return FALSE
 #endif
 
-ADMIN_VERB(check_missing_sprites, R_DEBUG, "Debug Worn Item Sprites", "We're cancelling the Spritemageddon. (This will create a LOT of runtimes! Don't use on a live server!)", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(check_missing_sprites, R_DEBUG, FALSE, "Debug Worn Item Sprites", "We're cancelling the Spritemageddon. (This will create a LOT of runtimes! Don't use on a live server!)", ADMIN_CATEGORY_DEBUG)
 	var/actual_file_name
 	for(var/test_obj in subtypesof(/obj/item))
 		var/obj/item/sprite = new test_obj
@@ -845,7 +845,7 @@ ADMIN_VERB(check_missing_sprites, R_DEBUG, "Debug Worn Item Sprites", "We're can
 					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
 
 #ifndef OPENDREAM_REAL
-ADMIN_VERB(start_tracy, R_DEBUG, "Run Tracy Now", "Start running the byond-tracy profiler immediately.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(start_tracy, R_DEBUG, FALSE, "Run Tracy Now", "Start running the byond-tracy profiler immediately.", ADMIN_CATEGORY_DEBUG)
 	if(Tracy.enabled)
 		to_chat(user, span_warning("byond-tracy is already running!"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
 		return
@@ -869,7 +869,7 @@ ADMIN_VERB(start_tracy, R_DEBUG, "Run Tracy Now", "Start running the byond-tracy
 ADMIN_VERB_CUSTOM_EXIST_CHECK(start_tracy)
 	return CONFIG_GET(flag/allow_tracy_start) && fexists(TRACY_DLL_PATH)
 
-ADMIN_VERB(queue_tracy, R_DEBUG, "Toggle Tracy Next Round", "Toggle running the byond-tracy profiler next round.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(queue_tracy, R_DEBUG, FALSE, "Toggle Tracy Next Round", "Toggle running the byond-tracy profiler next round.", ADMIN_CATEGORY_DEBUG)
 	if(fexists(TRACY_ENABLE_PATH))
 		fdel(TRACY_ENABLE_PATH)
 	else

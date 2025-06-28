@@ -1,4 +1,4 @@
-MENTOR_VERB(cmd_mentor_say, R_MENTOR, "Mentorsay", "Send a message to other mentors.", MENTOR_CATEGORY_MAIN, message as text)
+MENTOR_VERB(cmd_mentor_say, R_MENTOR, FALSE, "Mentorsay", "Send a message to other mentors.", MENTOR_CATEGORY_MAIN, message as text)
 	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
 	if(!message)
 		return

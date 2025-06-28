@@ -109,7 +109,7 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		GLOB.looc_allowed = !GLOB.looc_allowed
 	to_chat(world, "<span class='oocplain bold'>LOOC channel has been globally [GLOB.looc_allowed ? "enabled" : "disabled"].</span>")
 
-ADMIN_VERB(togglelooc, R_ADMIN, "Toggle LOOC", "Shows the range of cameras on the station.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(togglelooc, R_ADMIN, FALSE, "Toggle LOOC", "Shows the range of cameras on the station.", ADMIN_CATEGORY_SERVER)
 	toggle_looc()
 	log_admin("[key_name(user)] toggled LOOC.")
 	message_admins("[key_name_admin(user)] toggled LOOC.")

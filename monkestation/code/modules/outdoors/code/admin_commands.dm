@@ -1,4 +1,4 @@
-ADMIN_VERB(run_particle_weather, R_ADMIN, "Run Particle Weather", "Triggers a particle weather.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(run_particle_weather, R_ADMIN, FALSE, "Run Particle Weather", "Triggers a particle weather.", ADMIN_CATEGORY_EVENTS)
 	if(!SSparticle_weather.enabled)
 		to_chat(user, span_warning("Particle weather is currently disabled!"), type = MESSAGE_TYPE_ADMINLOG)
 		return

@@ -503,13 +503,13 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
 	event_frequency_multiplier = 1
 
-ADMIN_VERB(force_event, R_FUN, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
+ADMIN_VERB(force_event, R_FUN, FALSE, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
 	user.holder.forceEvent(user.mob)
 
 /datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
 
-ADMIN_VERB(forceGamemode, R_FUN, "Open Gamemode Panel", "Opens the gamemode panel.", ADMIN_CATEGORY_EVENTS) // TG PORT
+ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemode panel.", ADMIN_CATEGORY_EVENTS) // TG PORT
 	user.holder.forceGamemode(user.mob)
 
 /datum/admins/proc/forceGamemode(mob/user)

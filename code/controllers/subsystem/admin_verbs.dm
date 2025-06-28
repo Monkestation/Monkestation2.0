@@ -97,6 +97,10 @@ SUBSYSTEM_DEF(admin_verbs)
 		var/verb_permissions = verb_singleton.permissions
 		if(verb_permissions == R_NONE)
 			valid_verbs |= list(verb_singleton)
+		else if(verb_type.match_exact_permissions)
+			if(!admin.holder.check_for_exact_rights(verb_permissions))
+				continue
+			valid_verbs |= list(verb_singleton)
 		else for(var/permission_flag in bitfield_to_list(verb_permissions))
 			if(!has_permission["[permission_flag]"])
 				continue
@@ -256,6 +260,10 @@ SUBSYSTEM_DEF(admin_verbs)
 
 		var/verb_permissions = verb_singleton.permissions
 		if(verb_permissions == R_NONE)
+			valid_verbs |= list(verb_singleton)
+		else if(verb_type.match_exact_permissions)
+			if(!mentor.mentor_datum.check_for_exact_rights(verb_permissions))
+				continue
 			valid_verbs |= list(verb_singleton)
 		else for(var/permission_flag in bitfield_to_list(verb_permissions))
 			if(!has_permission["[permission_flag]"])

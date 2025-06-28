@@ -58,7 +58,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(spawn_atom, R_SPAWN, FALSE, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text)
 	if(!object)
 		return
 
@@ -83,7 +83,7 @@ ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG,
 	log_admin("[key_name(user)] spawned [amount] x [chosen] at [AREACOORD(user.mob)]")
 	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
 
-ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(spawn_atom_pod, R_SPAWN, FALSE, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG, object as text)
 
 	if(!check_rights(R_SPAWN))
 		return
@@ -107,7 +107,7 @@ ADMIN_VERB(spawn_atom_pod, R_SPAWN, "PodSpawn", "Spawn an atom via supply drop."
 	log_admin("[key_name(user)] pod-spawned [chosen] at [AREACOORD(user.mob)]")
 	BLACKBOX_LOG_ADMIN_VERB("Podspawn Atom")
 
-ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG, object as text)
+ADMIN_VERB(spawn_cargo, R_SPAWN, FALSE, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)
 		return
@@ -149,7 +149,7 @@ ADMIN_VERB(spawn_cargo, R_SPAWN, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CA
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
-ADMIN_VERB(create_or_modify_area, R_DEBUG, "Create Or Modify Area", "Create of modify an area. wow.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(create_or_modify_area, R_DEBUG, FALSE, "Create Or Modify Area", "Create of modify an area. wow.", ADMIN_CATEGORY_DEBUG)
 	create_area(user.mob)
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked

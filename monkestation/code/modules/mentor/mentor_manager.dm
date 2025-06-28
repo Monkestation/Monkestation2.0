@@ -2,7 +2,7 @@
 #define REQUEST_MENTORHELP "request_mentorhelp"
 
 /// Verb for opening the requests manager panel
-MENTOR_VERB(mentor_requests, R_MENTOR, "Mentor Manager", "Open the mentor manager panel to view all requests during this round.", MENTOR_CATEGORY_MAIN)
+MENTOR_VERB(mentor_requests, R_MENTOR, FALSE, "Mentor Manager", "Open the mentor manager panel to view all requests during this round.", MENTOR_CATEGORY_MAIN)
 	BLACKBOX_LOG_MENTOR_VERB("Mentor Manager")
 	GLOB.mentor_requests.ui_interact(user.mob)
 

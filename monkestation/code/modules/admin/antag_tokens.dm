@@ -1,4 +1,4 @@
-ADMIN_VERB(adjust_players_antag_tokens, R_ADMIN, "Adjust Antag Tokens", "You can modifiy a targets antag tokens by adding or subtracting from that tier.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(adjust_players_antag_tokens, R_FUN, FALSE, "Adjust Antag Tokens", "You can modifiy a targets antag tokens by adding or subtracting from that tier.", ADMIN_CATEGORY_FUN)
 	var/client/chosen_client = tgui_input_list(user, "Choose a Player", "Player List", GLOB.clients)
 	if(!chosen_client)
 		return

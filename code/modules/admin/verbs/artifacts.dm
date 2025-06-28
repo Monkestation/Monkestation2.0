@@ -1,7 +1,7 @@
 /datum/artifactpanel
 	var/client/user
 
-ADMIN_VERB(open_artifactpanel, R_ADMIN, "Artifact Panel", "Opens the artifact panel.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(open_artifactpanel, R_ADMIN, FALSE, "Artifact Panel", "Opens the artifact panel.", ADMIN_CATEGORY_GAME)
 	var/datum/artifactpanel/artifactpanel = new(user)
 
 	artifactpanel.ui_interact(user.mob)

@@ -10,6 +10,7 @@ GENERAL_PROTECT_DATUM(/datum/mentor_verb)
 	var/description //! The description of the verb.
 	var/category //! The category of the verb.
 	var/permissions //! The permissions required to use the verb.
+	var/match_exact_permissions //! Check if all permissions required or at least one is required for the verb.
 	var/visibility_flag //! The flag that determines if the verb is visible.
 	VAR_PROTECTED/verb_path //! The path to the verb proc.
 

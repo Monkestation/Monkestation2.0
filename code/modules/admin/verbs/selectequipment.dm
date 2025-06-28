@@ -1,4 +1,4 @@
-ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment", mob/target in world)
 	var/datum/select_equipment/ui = new(user, target)
 	ui.ui_interact(user.mob)
 
@@ -45,7 +45,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/ta
 		ui.set_autoupdate(FALSE)
 
 /datum/select_equipment/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_FUN)
 
 /datum/select_equipment/ui_status(mob/user, datum/ui_state/state)
 	if(QDELETED(target_mob))
@@ -209,7 +209,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/ta
 				delete_pocket = TRUE
 
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Select Equipment")
 	for(var/obj/item/item in human_target.get_equipped_items(include_pockets = delete_pocket))
 		qdel(item)
 

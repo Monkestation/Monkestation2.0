@@ -20,7 +20,7 @@
 	CRASH("count_datums not supported on OpenDream")
 #endif
 
-ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count the number of Atoms/Datums.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(count_instances, R_DEBUG, FALSE, "Count Atoms/Datums", "Count the number of Atoms/Datums.", ADMIN_CATEGORY_DEBUG)
 	var/static/is_counting
 	if(is_counting)
 		to_chat(user, span_warning("Please wait until the previous count is finished!"), type = MESSAGE_TYPE_DEBUG, confidential = TRUE)

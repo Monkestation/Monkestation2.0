@@ -1,4 +1,4 @@
-ADMIN_VERB(spawn_pollution, R_FUN, "Spawn Pollution", "Spawns an amount of chosen pollutant at your current location.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(spawn_pollution, R_FUN, FALSE, "Spawn Pollution", "Spawns an amount of chosen pollutant at your current location.", ADMIN_CATEGORY_FUN)
 	var/list/singleton_list = SSpollution.singletons
 	var/choice = tgui_input_list(user, "What type of pollutant would you like to spawn?", "Spawn Pollution", singleton_list)
 	if(!choice)

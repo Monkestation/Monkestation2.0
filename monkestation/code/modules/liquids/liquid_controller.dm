@@ -241,5 +241,5 @@ SUBSYSTEM_DEF(liquids)
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
 
 
-ADMIN_VERB(toggle_liquid_debug, R_DEBUG, "Liquid Groups Color Debug", "SLiquid Groups Color Debug.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(toggle_liquid_debug, R_DEBUG, FALSE, "Liquid Groups Color Debug", "SLiquid Groups Color Debug.", ADMIN_CATEGORY_DEBUG)
 	GLOB.liquid_debug_colors = !GLOB.liquid_debug_colors

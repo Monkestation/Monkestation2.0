@@ -1,4 +1,4 @@
-ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_sound, R_SOUND, FALSE, "Play Global Sound", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN, sound as sound)
 	var/freq = 1
 	var/vol = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
 	if(!vol)
@@ -33,13 +33,13 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Global Sound")
 
-ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_local_sound, R_SOUND, FALSE, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
 	playsound(get_turf(user.mob), sound, 50, FALSE, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
-ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
+ADMIN_VERB(play_direct_mob_sound, R_SOUND, FALSE, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
 	if(!target)
 		target = input(user, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null | anything in sort_names(GLOB.player_list)
 	if(QDELETED(target))
@@ -155,7 +155,7 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a soun
 ADMIN_VERB_CUSTOM_EXIST_CHECK(play_web_sound)
 	return !!CONFIG_GET(string/invoke_youtubedl)
 
-ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(play_web_sound, R_SOUND, FALSE, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
 	var/web_sound_input = tgui_input_text(user, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
 
 	if(length(web_sound_input))
@@ -169,14 +169,14 @@ ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given interne
 	else
 		web_sound(user, null)
 
-ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(set_round_end_sound, R_SOUND, FALSE, "Set Round End Sound", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN, sound as sound)
 	SSticker.SetRoundEndSound(sound)
 
 	log_admin("[key_name(user)] set the round end sound to [sound]")
 	message_admins("[key_name_admin(user)] set the round end sound to [sound]")
 	BLACKBOX_LOG_ADMIN_VERB("Set Round End Sound")
 
-ADMIN_VERB(stop_sounds, R_NONE, "Stop All Playing Sounds", "Stops all playing sounds for EVERYONE.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(stop_sounds, R_NONE, FALSE, "Stop All Playing Sounds", "Stops all playing sounds for EVERYONE.", ADMIN_CATEGORY_DEBUG)
 	log_admin("[key_name(user)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(user)] stopped all currently playing sounds.")
 	for(var/mob/player as anything in GLOB.player_list)

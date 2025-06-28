@@ -1,4 +1,4 @@
-ADMIN_VERB(spawn_mixtape, R_FUN, "Spawn Mixtape", "Select an approved mixtape to spawn at your location.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(spawn_mixtape, R_FUN, FALSE, "Spawn Mixtape", "Select an approved mixtape to spawn at your location.", ADMIN_CATEGORY_GAME)
 	var/datum/mixtape_spawner/tgui = new(user)//create the datum
 	tgui.ui_interact(user.mob)//datum has a tgui component, here we open the window
 

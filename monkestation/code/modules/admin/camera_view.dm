@@ -1,7 +1,7 @@
 /client
 	var/atom/movable/screen/map_view/cam_screen
 
-ADMIN_VERB(view_player_camera, R_ADMIN, "Show Player Camera", "Lets you see around another player in a seperate window, useful for tracking players that might be bad.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(view_player_camera, R_ADMIN, FALSE, "Show Player Camera", "Lets you see around another player in a seperate window, useful for tracking players that might be bad.", ADMIN_CATEGORY_MAIN)
 	var/mob/choice = tgui_input_list(user, "Choose a client to see", "Client Selection", GLOB.player_list)
 	if(!choice || !choice.client)
 		return

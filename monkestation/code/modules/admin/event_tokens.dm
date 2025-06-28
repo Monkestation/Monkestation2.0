@@ -1,4 +1,4 @@
-ADMIN_VERB(adjust_players_event_tokens, R_ADMIN, "Adjust Event Tokens", "Adjust how many event tokens someone has.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(adjust_players_event_tokens, R_FUN, FALSE, "Adjust Event Tokens", "Adjust how many event tokens someone has.", ADMIN_CATEGORY_FUN)
 	var/client/chosen_client = tgui_input_list(user, "Choose a Player", "Player List", GLOB.clients)
 	if(!chosen_client)
 		return

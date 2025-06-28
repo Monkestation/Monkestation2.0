@@ -1,4 +1,4 @@
-ADMIN_VERB(shuttle_panel, R_ADMIN, "Shuttle Manipulator", "Opens the shuttle manipulator UI.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(shuttle_panel, R_ADMIN, FALSE, "Shuttle Manipulator", "Opens the shuttle manipulator UI.", ADMIN_CATEGORY_EVENTS)
 	SSshuttle.ui_interact(user.mob)
 
 

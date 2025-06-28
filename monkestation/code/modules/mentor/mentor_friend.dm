@@ -1,5 +1,5 @@
 //Section for the Mentor Friend verb run test
-MENTOR_VERB(imaginary_friend, R_MENTOR, "Become Imaginary Friend", "Become someones imaginary friend.", MENTOR_CATEGORY_MAIN)
+MENTOR_VERB(imaginary_friend, R_MENTOR, FALSE, "Become Imaginary Friend", "Become someones imaginary friend.", MENTOR_CATEGORY_MAIN)
 	if(istype(user.mob, /mob/camera/imaginary_friend/mentor))
 		to_chat(user, span_warning("You are already someone's imaginary friend!"))
 		return
@@ -31,7 +31,7 @@ MENTOR_VERB(imaginary_friend, R_MENTOR, "Become Imaginary Friend", "Become someo
 	message_admins("[key_name(mentorfriend)] started being the imaginary friend of [key_name(mentee)].")
 	BLACKBOX_LOG_MENTOR_VERB("Become Imaginary Friend")
 
-MENTOR_VERB(end_imaginary_friendship, R_MENTOR, "End Imaginary Friendship", "Break the heart of your friend and end your friendship.", MENTOR_CATEGORY_MAIN)
+MENTOR_VERB(end_imaginary_friendship, R_MENTOR, FALSE, "End Imaginary Friendship", "Break the heart of your friend and end your friendship.", MENTOR_CATEGORY_MAIN)
 	if(!istype(user.mob, /mob/camera/imaginary_friend/mentor))
 		to_chat(user, span_warning("You aren't anybody's imaginary friend!"))
 		return

@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 #undef ADMIN_OPEN_REVIEW
 
 // Handles UI to manage cassettes.
-ADMIN_VERB(review_cassettes, R_FUN, "Review Cassettes", "Review this rounds cassettes.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(review_cassettes, R_FUN, FALSE, "Review Cassettes", "Review this rounds cassettes.", ADMIN_CATEGORY_GAME)
 	new /datum/review_cassettes(user.mob)
 
 /datum/review_cassettes

@@ -44,7 +44,7 @@
 					<font color='#00cccc'>[X.getOxyLoss()]</font>\
 					[X.getCloneLoss() ? " <font color='#1c3ac4'>[X.getCloneLoss()]</font>" : ""])"
 
-ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(display_tags, R_ADMIN, FALSE, "View Tags", "Display all of the tagged datums.", ADMIN_CATEGORY_GAME)
 	var/index = 0
 	var/list/dat = list()
 
