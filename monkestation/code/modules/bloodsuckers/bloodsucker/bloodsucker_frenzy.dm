@@ -1,4 +1,20 @@
 /**
+ * # FrenzyGrab
+ *
+ * The martial art given to Bloodsuckers so they can instantly aggressively grab people.
+ */
+/datum/martial_art/frenzygrab
+	name = "Frenzy Grab"
+	id = MARTIALART_FRENZYGRAB
+
+/datum/martial_art/frenzygrab/grab_act(mob/living/user, mob/living/target)
+	if(user != target)
+		target.grabbedby(user)
+		target.grippedby(user, instant = TRUE)
+		return TRUE
+	return ..()
+
+/**
  * # Status effect
  *
  * This is the status effect given to Bloodsuckers in a Frenzy
