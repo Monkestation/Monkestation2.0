@@ -1,12 +1,12 @@
 /datum/symptom/metabolism
 	name = "Metabolic Boost"
-	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
+	desc = "The disease causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
 		but also causing increased hunger."
 	max_multiplier = 10
 	stage = 3
 	badness = EFFECT_DANGER_HELPFUL
 	severity = 0
-	
+
 /datum/symptom/metabolism/activate(mob/living/carbon/mob)
 	if(!iscarbon(mob))
 		return
