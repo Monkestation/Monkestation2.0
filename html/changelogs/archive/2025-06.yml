@@ -437,3 +437,58 @@
       what the charge is and made it a belt subtype with 4 storage slots.'
   - code_imp: nuked a bunch of Blueshift projectile changes that were overwriting
       the base files.
+2025-06-23:
+  Absolucy:
+  - rscadd: (Hatterhat) The SC/FISHER disruptor pistol, a very compact, permanently
+      silenced energy gun, is now stocked in Nanotrasen-accessible black markets with
+      a price generally somewhere between 400 and 800 credits. Aspiring users are
+      warned that it's really bad for trying to actually kill people. Caveat emptor.
+  - rscadd: (Ghommie) Added saboteur interactions with radios, pAIs, turrets, secbots
+      and APCs.
+  - rscadd: (Hatterhat) Guns now have a dry_fire_sound_volume variable, allowing for
+      guns to be less loud when trying to fire while empty.
+  - bugfix: (Hatterhat) Closets and crates now properly count as structures for pass
+      flags again.
+  - refactor: (SmArtKar) Refactored a lot of speech modifiers to use a component instead
+      of copied over code.
+  - rscadd: (EnterTheJake) The Wraith Cloaking Module is now available in the uplink,
+      costs 3 TC.
+  - bugfix: (Xander3359) Infiltrator suit now hides moth wings/antenna.
+  - bugfix: (Xander3359) hidden moth wings are no longer capable of flight.
+  - bugfix: Voice Activator circuit components now properly decode messages, meaning
+      apostrophes and such no longer make the message look weird.
+  - balance: Voice Activator circuit components can now only understand roundstart
+      languages - languages such as codespeak, xenomorph, blah-tongue, shadowtongue,
+      etc will not be translated.
+  - rscadd: Silver forged weapons now deal bonus damage against bloodsuckers, werewolves,
+      and the vampire species.
+  Xander3359:
+  - rscadd: Added a jetpack upgrade module to cargo/mining vendor which allows you
+      to attach a jetpack to your hardsuit
+  - image: added sprite for the jetpack upgrade module
+  - refactor: hardsuits use the attached clothing component
+  - code_imp: splits up departmental hardsuits into their own files
+2025-06-25:
+  ThePooba:
+  - rscadd: 4 new donator only summer jobs and also a hotdog suit
+2025-06-26:
+  Absolucy:
+  - bugfix: Pyro slimes (and slimes in general) no longer die in plasma fires.
+  Absolucy, Ghommie:
+  - bugfix: Meat and other bloody things will not spread blood forever.
+2025-06-27:
+  Absolucy:
+  - bugfix: Fixed the UIs for the xenobio market and slime pen controller being cut
+      off at the bottom.
+  F-e-r-n:
+  - bugfix: 'Gave bulldog the damage mod as promised
+
+      :cl:'
+  Xander3359:
+  - rscadd: Cargo teleporter can hold fulton charges. Load it up with a fulton, and
+      right click to use it
+  - qol: Quick equipping something while you have an open storage will prioritize
+      that storage
+  - balance: Explorer EVA box can hold medium sized items
+  - bugfix: Premium Tactical Medkit can hold more of the items it spawns with
+  - rscadd: Combat hyposprays can draw reagents with right click

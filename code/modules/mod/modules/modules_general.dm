@@ -391,6 +391,12 @@
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
+/obj/item/mod/module/flashlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(active)
+		on_deactivation()
+		return TRUE
+
 /obj/item/mod/module/flashlight/on_process(seconds_per_tick)
 	active_power_cost = base_power * light_outer_range
 	return ..()

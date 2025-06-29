@@ -5,11 +5,12 @@
 	if(!check_rights(0))
 		return
 
-	msg = emoji_parse(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-
-	SSplexora.relay_admin_say(src, msg)
+	// don't send emoji-parsed msg to plexora
+	SSplexora.relay_admin_say(src, html_decode(msg))
+	msg = emoji_parse(msg)
 
 	if(findtext(msg, "@") || findtext(msg, "#"))
 		var/list/link_results = check_asay_links(msg)
