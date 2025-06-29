@@ -29555,7 +29555,7 @@
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "dnR" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue{
@@ -31478,7 +31478,7 @@
 "eQR" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eQZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -32553,6 +32553,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"fHu" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "fIc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -35528,7 +35531,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ivp" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -36034,7 +36037,7 @@
 	luminosity = 2
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "iQR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -38966,7 +38969,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ltl" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -40723,7 +40726,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "naK" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/exit)
@@ -41403,7 +41406,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "nEp" = (
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
@@ -43217,7 +43220,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pcg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -43744,6 +43747,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"pAr" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "pAM" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/plating,
@@ -44269,7 +44275,7 @@
 /obj/structure/cable,
 /obj/structure/liquid_barrier,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pWo" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Armory Motion Sensor"
@@ -48371,7 +48377,7 @@
 "tfP" = (
 /obj/item/beacon,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tfS" = (
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -48695,7 +48701,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "trf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -48765,7 +48771,7 @@
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tuL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50088,7 +50094,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "uvq" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
@@ -54075,6 +54081,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/explab)
+"xnv" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "xnW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -106533,7 +106543,7 @@ mbJ
 xEI
 bbP
 aaa
-bkF
+fHu
 dmT
 ltk
 nEb
@@ -106541,7 +106551,7 @@ pWm
 uvo
 tqX
 dmT
-bkF
+fHu
 aaa
 aaa
 aaa
@@ -106790,15 +106800,15 @@ ezn
 bbP
 bbP
 aaa
-bkF
-bkF
-bkF
+fHu
+fHu
+fHu
 pbR
-blX
+pAr
 naq
-bkF
-bkF
-bkF
+fHu
+fHu
+fHu
 aht
 aed
 aht
@@ -107047,15 +107057,15 @@ aaa
 aaa
 aaa
 aaa
-bkF
-blX
-blX
-blX
-blX
-blX
-blX
-blX
-bkF
+fHu
+pAr
+pAr
+pAr
+pAr
+pAr
+pAr
+pAr
+fHu
 aaa
 aby
 aaa
@@ -107304,15 +107314,15 @@ aaa
 aaa
 aaa
 aaa
-xKc
-blX
-blX
+xnv
+pAr
+pAr
 iPj
 tfP
 iPj
-blX
-blX
-xKc
+pAr
+pAr
+xnv
 aaa
 aby
 aaa
@@ -107561,15 +107571,15 @@ aaa
 aaa
 aaa
 aaa
-bkF
-blX
-blX
-blX
+fHu
+pAr
+pAr
+pAr
 tuy
-blX
-blX
+pAr
+pAr
 eQR
-bkF
+fHu
 aaa
 aed
 aaa
@@ -107818,15 +107828,15 @@ aaa
 aaa
 aaa
 aaa
-bkF
-bkF
-bkF
-xKc
-bkF
-xKc
-bkF
-bkF
-bkF
+fHu
+fHu
+fHu
+xnv
+fHu
+xnv
+fHu
+fHu
+fHu
 aaa
 aby
 aaa
