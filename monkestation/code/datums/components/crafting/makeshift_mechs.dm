@@ -110,7 +110,7 @@
 	result = /obj/vehicle/sealed/mecha/trash_tank
 	reqs = list(/obj/item/flashlight = 1,
 			/obj/item/tank/internals/plasma = 2,
-			/obj/item/tank/internals/oxygen = 8,
+			/obj/item/tank/internals = 8,
 			/obj/item/stack/cable_coil = 60,
 			/obj/item/camera = 1,
 			/obj/item/storage/toolbox = 5,
