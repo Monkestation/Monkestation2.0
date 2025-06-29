@@ -17,10 +17,6 @@
 		if(feedback)
 			owner.balloon_alert(owner, "someone is already trying to choose gear!")
 		return FALSE
-	if(!team.fully_recruited())
-		if(feedback)
-			owner.balloon_alert(owner, "need to fully recruit team!")
-		return FALSE
 
 /datum/action/bb/gear/Trigger(trigger_flags)
 	. = ..()
