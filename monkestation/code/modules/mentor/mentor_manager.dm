@@ -10,7 +10,7 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 
 /datum/request_manager/mentor/ui_state(mob/user)
 	//return GLOB.always_state
-	return MENTOR_STATE(R_MENTOR | R_HEADMENTOR, TRUE)
+	return EXPLICIT_MENTOR_STATE(R_MENTOR | R_HEADMENTOR)
 
 /datum/request_manager/mentor/pray(client/C, message, is_chaplain)
 	return

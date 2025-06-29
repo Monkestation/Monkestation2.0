@@ -39,10 +39,12 @@
 /**
  * Gets a ui_state that checks to see if the user has specific admin permissions.
  * MENTOR_STATE works exactly the same just uses mentor rights, such as [R_MENTOR]
+ * EXPLICIT_[ADMIN/MENTOR]_STATE macros will match on all required_perms and not just one.
  * Ported from Absolucy's PR on TGstation
  * Arguments:
  * * required_perms: Which admin permission flags to check the user for, such as [R_ADMIN]
- * * explicit_check: TRUE will check if they have all required_perms.
  */
-#define ADMIN_STATE(required_perms, explicit_check) (GLOB.admin_states[required_perms] ||= new /datum/ui_state/admin_state(required_perms, explicit_check))
-#define MENTOR_STATE(required_perms, explicit_check) (GLOB.mentor_states[required_perms] ||= new /datum/ui_state/mentor_state(required_perms, explicit_check))
+#define ADMIN_STATE(required_perms) (GLOB.admin_states[required_perms] ||= new /datum/ui_state/admin_state(required_perms, FALSE))
+#define EXPLICIT_ADMIN_STATE(required_perms) (GLOB.explicit_admin_states[required_perms] ||= new /datum/ui_state/admin_state(required_perms, TRUE))
+#define MENTOR_STATE(required_perms) (GLOB.mentor_states[required_perms] ||= new /datum/ui_state/mentor_state(required_perms, FALSE))
+#define EXPLICIT_MENTOR_STATE(required_perms) (GLOB.explicit_mentor_states[required_perms] ||= new /datum/ui_state/mentor_state(required_perms, TRUE))

@@ -9,7 +9,7 @@ ADMIN_VERB(spawn_mixtape, R_FUN, FALSE, "Spawn Mixtape", "Select an approved mix
 	holder = user //AVD user is a client so this would be setting a client.
 
 /datum/mixtape_spawner/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN, FALSE)
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/mixtape_spawner/ui_close()
 	qdel(src)

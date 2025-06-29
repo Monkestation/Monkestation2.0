@@ -12,6 +12,8 @@
 
 GLOBAL_DATUM_INIT(admin_states, /alist, alist())
 GLOBAL_PROTECT(admin_states)
+GLOBAL_DATUM_INIT(explicit_admin_states, /alist, alist())
+GLOBAL_PROTECT(explicit_admin_states)
 
 /datum/ui_state/admin_state
 	/// The specific admin permissions required for the UI using this state.
@@ -41,6 +43,8 @@ GLOBAL_PROTECT(admin_states)
 
 GLOBAL_DATUM_INIT(mentor_states, /alist, alist())
 GLOBAL_PROTECT(mentor_states)
+GLOBAL_DATUM_INIT(explicit_mentor_states, /alist, alist())
+GLOBAL_PROTECT(explicit_mentor_states)
 
 /datum/ui_state/mentor_state
 	/// The specific admin permissions required for the UI using this state.
