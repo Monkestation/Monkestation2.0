@@ -1,3 +1,4 @@
+#warn TODO: walkmen
 GLOBAL_LIST_INIT(parsed_audio, list())
 
 GLOBAL_LIST_INIT(youtube_exempt, list(
@@ -10,12 +11,12 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 /obj/item/device/walkman
 	name = "walkman"
 	desc = "A cassette player that first hit the market over 200 years ago. Crazy how these never went out of style. Alt-click removes the Cassette. Ctrl-click changes to the next song"
-	icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
+	icon = 'icons/obj/cassettes/walkman.dmi'
 	icon_state = "walkman"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/walkman/play_pause,/datum/action/item_action/walkman/next_song,/datum/action/item_action/walkman/restart_song)
 	///the cassette tape object
-	var/obj/item/device/cassette_tape/tape
+	var/obj/item/cassette_tape/tape
 	///if the walkman is paused or not
 	var/paused = TRUE
 	///songs inside the current playlist
@@ -43,6 +44,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	///cooldown used by the next song to stop overlapping sounds between url based songs and normal ones
 	COOLDOWN_DECLARE(next_song_use)
 
+/*
 /obj/item/device/walkman/Initialize()
 	. = ..()
 	design = rand(1, 5)
@@ -58,7 +60,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	. = ..()
 
 /obj/item/device/walkman/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/device/cassette_tape))
+	if(!istype(cassette, /obj/item/cassette_tape))
 		return
 	if(!tape)
 		insert_tape(cassette)
@@ -142,7 +144,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 /obj/item/device/walkman/proc/play()
 	if(!current_song)
 		if(current_playlist.len > 0)
-			if(findtext(current_playlist[pl_index], GLOB.is_http_protocol))
+			if(is_http_protocol(current_playlist[pl_index]))
 				///invoking youtube-dl
 				var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 				///the input for ytdl handled by the song list
@@ -232,9 +234,9 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 
 
 /*Called when
- *Arguments: obj/item/device/cassette_tape/CT -> the cassette in question that you are inserting into the walkman
+ *Arguments: obj/item/cassette_tape/CT -> the cassette in question that you are inserting into the walkman
  */
-/obj/item/device/walkman/proc/insert_tape(obj/item/device/cassette_tape/CTape)
+/obj/item/device/walkman/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(tape || !istype(CTape))
 		return
 
@@ -285,7 +287,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	break_sound()
 
 	pl_index = pl_index + 1 <= current_playlist.len ? (pl_index += 1) : 1
-	link_play = findtext(current_playlist[pl_index], GLOB.is_http_protocol) ? TRUE : FALSE
+	link_play = is_http_protocol(current_playlist[pl_index])
 
 
 	if(!link_play)
@@ -359,13 +361,14 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 		return
 
 	update_song(current_song, current_listener, 0)
+*/
 
 /*
 	ACTION BUTTONS
 */
 
 /datum/action/item_action/walkman
-	button_icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
+	button_icon = 'icons/obj/cassettes/walkman.dmi'
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/walkman/New()
@@ -390,10 +393,12 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	..()
 	name = "Next song"
 
+/*
 /datum/action/item_action/walkman/next_song/Trigger(trigger_flags)
 	if(target)
 		var/obj/item/device/walkman/walkM = target
 		walkM.next_song(owner)
+*/
 
 /datum/action/item_action/walkman/restart_song
 	button_icon_state = "walkman_restart"
@@ -402,10 +407,13 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	..()
 	name = "Restart song"
 
+/*
 /datum/action/item_action/walkman/restart_song/Trigger(trigger_flags)
 	if(target)
 		var/obj/item/device/walkman/walkM = target
 		walkM.restart_song(owner)
+
+*/
 
 #undef sound_to
 #undef NEXT_SONG_USE_TIMER

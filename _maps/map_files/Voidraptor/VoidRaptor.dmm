@@ -10016,22 +10016,6 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/greater)
-"cYI" = (
-/obj/structure/table/wood,
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/light/warm/directional/east,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/obj/item/radio/radio_mic{
-	pixel_y = 7
-	},
-/obj/item/device/cassette_tape/friday{
-	pixel_y = -6;
-	pixel_x = -8
-	},
-/turf/open/floor/cult,
-/area/station/service/library)
 "cYN" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 8;
@@ -15393,6 +15377,22 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/medbay/central)
+"euC" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/light/warm/directional/east,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
+/obj/item/cassette_tape/friday{
+	pixel_y = -6;
+	pixel_x = -8
+	},
+/turf/open/floor/cult,
+/area/station/service/library)
 "euG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -18905,6 +18905,20 @@
 "fvs" = (
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/lab)
+"fvG" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Science - Ordnance Lab Starboard";
+	name = "science camera";
+	network = list("ss13","rd")
+	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron/textured_edge{
+	dir = 8
+	},
+/area/station/science/ordnance)
 "fvW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
@@ -43770,16 +43784,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/theater)
-"mmL" = (
-/obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 9
-	},
-/obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 9
-	},
-/obj/machinery/portable_atmospherics/pipe_scrubber,
-/turf/open/floor/iron/textured,
-/area/station/engineering/atmos)
 "mna" = (
 /obj/structure/plasticflaps{
 	name = "Deliveries"
@@ -72186,6 +72190,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/department/engine/atmos/lesser)
+"uav" = (
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 9
+	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron/textured,
+/area/station/engineering/atmos)
 "uaz" = (
 /obj/structure/table/wood/fancy/cyan,
 /obj/machinery/computer/records/medical/laptop{
@@ -83499,20 +83513,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/abandoned)
-"xjf" = (
-/obj/effect/turf_decal/trimline/dark_red/filled/line{
-	dir = 4
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Science - Ordnance Lab Starboard";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
-/obj/machinery/portable_atmospherics/pipe_scrubber,
-/turf/open/floor/iron/textured_edge{
-	dir = 8
-	},
-/area/station/science/ordnance)
 "xjI" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -108703,7 +108703,7 @@ oMs
 oew
 iXi
 idG
-xjf
+fvG
 kxt
 olt
 otw
@@ -111874,7 +111874,7 @@ pkR
 pGY
 lMS
 lMS
-mmL
+uav
 hLI
 dYh
 aCW
@@ -125181,7 +125181,7 @@ jzQ
 nQl
 fLp
 dWg
-cYI
+euC
 vZM
 uuO
 rCr
