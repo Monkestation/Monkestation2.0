@@ -71,32 +71,13 @@
 	name = "Swedish"
 	desc = "A horrible mutation originating from the distant past. Thought to be eradicated after the incident in 2037."
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
-	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
+	text_gain_indication = span_notice("You feel Swedish, however that works.")
+	text_lose_indication = span_notice("The feeling of Swedishness passes.")
+	var/static/list/language_mutilation = list("w" = "v", "j" = "y", "bo" = "bjo", "a" = list("å","ä","æ","a"), "o" = list("ö","ø","o"))
 
-/datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/swedish/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/swedish/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = replacetext(message,"w","v")
-		message = replacetext(message,"j","y")
-		message = replacetext(message,"a",pick("å","ä","æ","a"))
-		message = replacetext(message,"bo","bjo")
-		message = replacetext(message,"o",pick("ö","ø","o"))
-		if(prob(30))
-			message += " Bork[pick("",", bork",", bork, bork")]!"
-		speech_args[SPEECH_MESSAGE] = trim(message)
+/datum/mutation/human/swedish/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = language_mutilation, end_string = list("",", bork",", bork, bork"), end_string_chance = 30)
 
 /datum/mutation/human/chav
 	name = "Chav"
@@ -105,35 +86,9 @@
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
-/datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/chav/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = " [message]"
-		var/list/chav_words = strings("chav_replacement.json", "chav")
-
-		for(var/key in chav_words)
-			var/value = chav_words[key]
-			if(islist(value))
-				value = pick(value)
-
-			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
-			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
-			message = replacetextEx(message, " [key]", " [value]")
-		if(prob(30))
-			message += ", mate"
-		speech_args[SPEECH_MESSAGE] = trim(message)
+/datum/mutation/human/chav/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("chav_replacement.json", "chav"), end_string = ", mate", end_string_chance = 30)
 
 /datum/mutation/human/elvis
 	name = "Elvis"
@@ -142,6 +97,10 @@
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
+
+/datum/mutation/human/chav/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("elvis_replacement.json", "elvis"))
 
 /datum/mutation/human/elvis/on_life(seconds_per_tick, times_fired)
 	switch(pick(1,2))
@@ -153,34 +112,6 @@
 		if(2)
 			if(SPT_PROB(7.5, seconds_per_tick))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
-
-/datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/elvis/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/elvis/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = " [message] "
-		message = replacetext(message," i'm not "," I ain't ")
-		message = replacetext(message," girl ",pick(" honey "," baby "," baby doll "))
-		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
-		message = replacetext(message," out of "," outta ")
-		message = replacetext(message," thank you "," thank you, thank you very much ")
-		message = replacetext(message," thanks "," thank you, thank you very much ")
-		message = replacetext(message," what are you "," whatcha ")
-		message = replacetext(message," yes ",pick(" sure", "yea "))
-		message = replacetext(message," muh valids "," my kicks ")
-		speech_args[SPEECH_MESSAGE] = trim(message)
-
 
 /datum/mutation/human/stoner
 	name = "Stoner"

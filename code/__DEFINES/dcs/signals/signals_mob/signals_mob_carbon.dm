@@ -164,3 +164,8 @@
 
 #define COMSIG_CARBON_PRE_SPRINT "carbon_pre_sprint"
 	#define INTERRUPT_SPRINT (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"

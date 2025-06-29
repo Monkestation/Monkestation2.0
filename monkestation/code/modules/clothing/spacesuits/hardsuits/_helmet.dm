@@ -18,13 +18,7 @@
 
 	var/basestate = "hardsuit"
 	var/on = FALSE
-	var/obj/item/clothing/suit/space/hardsuit/suit
 	var/hardsuit_type = "engineering" //Determines used sprites: hardsuit[on]-[type]
-
-/obj/item/clothing/head/helmet/space/hardsuit/Destroy()
-	if(!QDELETED(suit))
-		QDEL_NULL(suit)
-	return ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	on = !on
@@ -32,20 +26,6 @@
 	user.update_worn_head() //so our mob-overlays update
 
 	set_light_on(on)
-
-
-/obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
-	..()
-	if(suit)
-		suit.RemoveHelmet()
-
-/obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
-	..()
-	if(slot != ITEM_SLOT_HEAD)
-		if(suit)
-			suit.RemoveHelmet()
-		else
-			qdel(src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(msg)
 	var/mob/wearer = loc

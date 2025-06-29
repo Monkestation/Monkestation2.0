@@ -62,6 +62,10 @@
 	fire = 50
 	acid = 75
 
+/datum/armor/hardsuit/mining/explorer
+	bullet = 30
+	laser = 30
+
 /datum/armor/hardsuit/clown
 	melee = 30
 	bullet = 5
