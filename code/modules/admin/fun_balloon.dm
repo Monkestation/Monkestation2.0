@@ -52,7 +52,7 @@
 	return data
 
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /obj/effect/fun_balloon/sentience/ui_status(mob/user)
 	if(popped)

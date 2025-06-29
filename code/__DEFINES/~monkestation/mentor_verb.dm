@@ -1,5 +1,6 @@
 //These macros are used to define all verbs that mentor datums get. Macros defined here ARE NOT shared with ADMIN_VERB macros so if you
 //need similar functionality for admins make it using the ADMIN_VERB macro.
+//The verb_name must be different from any other verbs with a similar name otherwise only one will show up.
 //Admin Verb macros defines in [code\__DEFINES\admin_verb.dm]
 #define _MENTOR_VERB(verb_path_name, verb_permissions, exact_permissions, verb_name, verb_desc, verb_category, show_in_context_menu, verb_args...) \
 /datum/mentor_verb/##verb_path_name \

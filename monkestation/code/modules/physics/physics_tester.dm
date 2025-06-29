@@ -21,7 +21,7 @@
 	return ..()
 
 /datum/movable_physics_editor/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/movable_physics_editor/ui_data(mob/user)
 	var/list/data = list()

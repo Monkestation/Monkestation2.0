@@ -969,7 +969,7 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle = null
 
 /datum/controller/subsystem/shuttle/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/controller/subsystem/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

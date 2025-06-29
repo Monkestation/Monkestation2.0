@@ -14,7 +14,7 @@ ADMIN_VERB(law_panel, R_ADMIN, FALSE, "Law Panel", "View the AI laws.", ADMIN_CA
 		ui.open()
 
 /datum/law_panel/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/law_panel/ui_close(mob/user)
 	qdel(src)

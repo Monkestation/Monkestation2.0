@@ -108,7 +108,7 @@ ADMIN_VERB(beaker_panel, R_SPAWN, FALSE, "Spawn Reagent Container", "Spawn a rea
 		ui.open()
 
 /datum/beaker_panel/ui_state(mob/user)
-	return ADMIN_STATE(R_SPAWN)
+	return ADMIN_STATE(R_SPAWN, FALSE)
 
 /datum/beaker_panel/ui_static_data(mob/user)
 	var/list/data = list()

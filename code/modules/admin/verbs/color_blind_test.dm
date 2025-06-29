@@ -23,7 +23,7 @@
 	var/selected_type = ""
 
 /datum/colorblind_tester/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/colorblind_tester/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

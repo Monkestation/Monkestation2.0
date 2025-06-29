@@ -151,7 +151,7 @@ ADMIN_VERB(review_cassettes, R_FUN, FALSE, "Review Cassettes", "Review this roun
 	ui_interact(user)//datum has a tgui component, here we open the window
 
 /datum/review_cassettes/ui_state(mob/user)
-	return ADMIN_STATE(R_FUN)
+	return ADMIN_STATE(R_FUN, FALSE)
 
 /datum/review_cassettes/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
 	qdel(src)

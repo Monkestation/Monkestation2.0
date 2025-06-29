@@ -23,7 +23,7 @@ ADMIN_VERB(message_pda, R_ADMIN, FALSE, "PDA Message", "Send a message to a user
 		ui.open()
 
 /datum/admin_pda_panel/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/admin_pda_panel/ui_static_data(mob/user)
 	var/list/data = list()

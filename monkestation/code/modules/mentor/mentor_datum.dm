@@ -214,6 +214,14 @@ GLOBAL_PROTECT(mentor_href_token)
 		return subject.mentor_datum.check_for_rights(rights_required)
 	return FALSE
 
+/// This proc checks whether subject has ALL of the rights specified in rights_required.
+/// NOTE: These will use mentor rights don't mix them with Admin rights.
+/// Like is_mentor() but it will only check for active mentor datums with the supplied rights.
+/proc/check_exact_mentor_rights_for(client/subject, rights_required)
+	if(subject?.mentor_datum)
+		return subject.mentor_datum.check_for_exact_rights(rights_required)
+	return FALSE
+
 /datum/mentors/proc/CheckMentorHREF(href, href_list)
 	var/auth = href_list["mentor_token"]
 	. = auth && (auth == href_token || auth == GLOB.mentor_href_token)

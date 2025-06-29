@@ -31,7 +31,7 @@
 	return ..()
 
 /datum/color_matrix_editor/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/color_matrix_editor/ui_static_data(mob/user)
 	var/list/data = list()

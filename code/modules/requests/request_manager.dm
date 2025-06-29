@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		ui.open()
 
 /datum/request_manager/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/request_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())

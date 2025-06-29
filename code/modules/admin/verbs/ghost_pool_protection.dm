@@ -30,7 +30,7 @@ ADMIN_VERB(ghost_pool_protection, R_ADMIN, FALSE, "Ghost Pool Protection", "Choo
 	new_role_flags = GLOB.ghost_role_flags
 
 /datum/ghost_pool_menu/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/ghost_pool_menu/ui_close()
 	qdel(src)

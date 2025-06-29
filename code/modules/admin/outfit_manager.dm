@@ -5,7 +5,7 @@ ADMIN_VERB(outfit_manager, R_DEBUG, FALSE, "Outfit Manager", "View and edit outf
 /datum/outfit_manager
 
 /datum/outfit_manager/ui_state(mob/user)
-	return ADMIN_STATE(R_DEBUG)
+	return ADMIN_STATE(R_DEBUG, FALSE)
 
 /datum/outfit_manager/ui_close(mob/user)
 	qdel(src)

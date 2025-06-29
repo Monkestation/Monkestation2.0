@@ -473,6 +473,12 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 		return subject.holder.check_for_rights(rights_required)
 	return FALSE
 
+//This proc checks whether subject has ALL the rights specified in rights_required.
+/proc/check_exact_rights_for(client/subject, rights_required)
+	if(subject?.holder)
+		return subject.holder.check_for_exact_rights(rights_required)
+	return FALSE
+
 /proc/GenerateToken()
 	. = ""
 	for(var/I in 1 to 32)

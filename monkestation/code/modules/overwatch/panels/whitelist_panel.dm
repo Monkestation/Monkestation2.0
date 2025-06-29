@@ -28,7 +28,7 @@
 	ui_interact(holder.mob)
 
 /datum/overwatch_wl_panel/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN) // admin only
+	return ADMIN_STATE(R_ADMIN, FALSE) // admin only
 
 /datum/overwatch_wl_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

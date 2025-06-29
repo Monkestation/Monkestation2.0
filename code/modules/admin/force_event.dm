@@ -27,7 +27,7 @@
 		ui.open()
 
 /datum/force_event/ui_state(mob/user)
-	return ADMIN_STATE(R_FUN)
+	return ADMIN_STATE(R_FUN, FALSE)
 
 /datum/force_event/ui_static_data(mob/user)
 	var/static/list/category_to_icons

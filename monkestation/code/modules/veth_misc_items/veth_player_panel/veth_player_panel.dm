@@ -147,7 +147,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, FALSE, "Open TGUI PP", "Play
 		ui.open()
 
 /datum/player_panel_veth/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /client //this is needed to hold the selected player ckey for moving to and from pp/vuap
 	///This is used to hold the ckey of the selected player for moving to and from the player panel and vuap
@@ -615,4 +615,4 @@ love, veth
 			return
 
 /datum/vuap_personal/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)

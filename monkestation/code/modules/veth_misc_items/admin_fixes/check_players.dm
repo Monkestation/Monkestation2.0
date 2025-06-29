@@ -26,4 +26,4 @@ ADMIN_VERB(check_players, R_ADMIN, FALSE, "Check Players", "Check current player
 		ui.open()
 
 /datum/check_players/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)

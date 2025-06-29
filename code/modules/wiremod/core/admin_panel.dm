@@ -71,7 +71,7 @@ ADMIN_VERB(view_all_circuits, R_ADMIN, FALSE, "View All Circuits", "List all cir
 	return TRUE
 
 /datum/circuit_admin_panel/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/circuit_admin_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

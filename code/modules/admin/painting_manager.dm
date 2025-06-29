@@ -6,7 +6,7 @@ ADMIN_VERB(painting_manager, R_ADMIN, FALSE, "Paintings Manager", "View and reda
 /datum/paintings_manager
 
 /datum/paintings_manager/ui_state(mob/user)
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_ADMIN, FALSE)
 
 /datum/paintings_manager/ui_close(mob/user)
 	qdel(src)
