@@ -22839,9 +22839,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
 "bSP" = (
-/obj/item/kirbyplants/organic/plant2,
 /obj/structure/sign/departments/engineering/directional/south,
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bSQ" = (
@@ -32022,6 +32022,7 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "fjM" = (
