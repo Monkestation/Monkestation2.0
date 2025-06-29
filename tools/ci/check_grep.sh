@@ -163,6 +163,13 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
+part "direct Destroy() calls"
+if $grep '(?:\.|^\s+)Destroy\(\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Destroy() should never be directly called, use qdel() instead.${NC}"
+	st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
