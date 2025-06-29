@@ -63,9 +63,9 @@
 			is_regenerating = TRUE
 
 		if(seconds_per_tick)
-			current = min(current + (regen_rate*seconds_per_tick), maximum)
+			current = min(current + (regen_rate * seconds_per_tick), maximum)
 			if(decrement)
-				current = max(current + (-decrement*seconds_per_tick), 0)
+				current = max(current + (-decrement * seconds_per_tick), 0)
 		if(current != last_current)
 			should_notify_parent = TRUE
 		loss = maximum - current
@@ -73,7 +73,7 @@
 
 	if(seconds_per_tick && current == maximum)
 		process_stamina = FALSE
-	else if(!(current == maximum))
+	else if(current != maximum)
 		process_stamina = TRUE
 
 	if(should_notify_parent)
