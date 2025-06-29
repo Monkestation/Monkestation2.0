@@ -25,7 +25,7 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/Destroy()
-	QDEL_NULL(stacks_overlay)
+	stacks_overlay = null
 	return ..()
 
 /datum/status_effect/void_chill/on_apply()

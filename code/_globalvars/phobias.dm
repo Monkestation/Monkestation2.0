@@ -593,7 +593,6 @@ GLOBAL_LIST_INIT(phobia_turfs, list(
 GLOBAL_LIST_INIT(phobia_species, list(
 	"aliens" = typecacheof(list(
 		/datum/species/abductor,
-		/datum/species/jelly,
 		/datum/species/pod,
 		/datum/species/shadow,
 		/datum/species/oozeling,

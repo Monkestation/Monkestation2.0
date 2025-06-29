@@ -426,7 +426,7 @@
 	stamina_damage = 100 //monke edit
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 1.5 SECONDS //monke edit
+	cooldown = 1 SECONDS //monke edit, enjoy your games, seccies
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
@@ -485,6 +485,14 @@
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
 	qdel(src)
+
+/obj/item/melee/baton/security/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!active)
+		return
+	active = FALSE
+	update_appearance()
+	return TRUE
 
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()

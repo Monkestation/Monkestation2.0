@@ -258,6 +258,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/effect/transmission_beam, // relies on the existence of a PTL
 		/obj/item/radio/entertainment/speakers/pda, // shouldn't outside of a modular computer
 		/mob/living/carbon/human/dummy/mechcomp, // shouldn't outside of an interaction component
+		/obj/effect/ghost_arena_corner, // this is used to mark two corners of the ghost arena at centcom, and should never be created outside of the two instances mapped in there
 		// monkestation end
 	)
 	//Say it with me now, type template

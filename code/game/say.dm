@@ -92,17 +92,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
-	var/realnamepart = "[speaker.GetVoice(TRUE)][speaker.get_alt_name()]" // MONKESTATION ADDITION -- NTSL
+	var/realnamepart = "[speaker.GetVoice(TRUE)][speaker.get_alt_name()]"
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	if(face_name && ishuman(speaker))
-		var/mob/living/carbon/human/H = speaker
-		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
-	else if(visible_name && ishuman(speaker))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/human_speaker = speaker
-		namepart = "[human_speaker.get_visible_name()]"
+		if(face_name)
+			namepart = "[human_speaker.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
+		else if(visible_name)
+			namepart = "[human_speaker.get_visible_name()]"
+		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN))
+			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.chat_span()
+			spanpart2 = "<span class='name [id_span || "job__unknown"]'>"
 	//End name span.
-//	var/endspanpart = "</span>" // MONKESTATION EDIT OLD -- NTSL
-	var/endspanpart = "</span></a>" // MONKESTATION EDIT NEW
+	var/endspanpart = "</span></a>"
 
 	//Message
 	var/messagepart
@@ -118,9 +120,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
 
-// MONKESTATION EDIT OLD -- NTSL down there
-//	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
-// MONKESTATION EDIT NEW -- NTSL down there
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, realnamepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)

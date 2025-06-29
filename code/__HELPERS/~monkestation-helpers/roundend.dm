@@ -5,6 +5,26 @@
 	. = list()
 	for(var/client/client as anything in GLOB.clients)
 		calculate_rewards_for_client(client, .)
+	calculate_station_goal_bonus(.)
+
+/datum/controller/subsystem/ticker/proc/calculate_station_goal_bonus(list/rewards)
+	var/total_crew = length(GLOB.joined_player_list)
+	if(total_crew < 10) // prevent wrecking the economy on like MRP2
+		return
+	var/completed = FALSE
+	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
+		if(station_goal.check_completion())
+			completed = TRUE
+			break
+	if(!completed)
+		return
+	var/amount = CEILING(50000 / total_crew, 50) // nice even number
+	for(var/ckey in GLOB.joined_player_list)
+		LAZYINITLIST(rewards[ckey])
+		rewards[ckey] += list(list(amount, "Station Goal Completion Bonus"))
+
+	message_admins("As a result of the station goal being completed, [total_crew] players were rewarded [amount] monkecoins each.")
+	log_game("As a result of the station goal being completed, [total_crew] players were rewarded [amount] monkecoins each.")
 
 /datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
@@ -51,7 +71,10 @@
 	if(special_bonus)
 		queue[ckey] += list(list(special_bonus, "Special Bonus"))
 	if(client?.is_mentor())
-		queue[ckey] += list(list(500, "Mentor Bonus"))
+		if(details?.mob?.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			queue[ckey] += list(list(800, "Mentor Head of Staff Bonus"))
+		else
+			queue[ckey] += list(list(500, "Mentor Bonus"))
 
 	var/list/applied_challenges = details?.applied_challenges
 	if(LAZYLEN(applied_challenges))

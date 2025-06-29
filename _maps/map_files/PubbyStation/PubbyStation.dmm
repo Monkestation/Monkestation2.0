@@ -22839,9 +22839,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
 "bSP" = (
-/obj/item/kirbyplants/organic/plant2,
 /obj/structure/sign/departments/engineering/directional/south,
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bSQ" = (
@@ -23298,6 +23298,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bUq" = (
@@ -28625,7 +28626,7 @@
 /area/station/service/library)
 "cAv" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "cAy" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -32021,6 +32022,7 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "fjM" = (
@@ -37641,6 +37643,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "kqc" = (

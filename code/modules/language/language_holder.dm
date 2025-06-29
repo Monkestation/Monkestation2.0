@@ -307,6 +307,13 @@ Key procs
 								/datum/language/monkey = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/monkey = list(LANGUAGE_ATOM))
 
+/datum/language_holder/monkey/smart
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/monkey = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/monkey = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/common
+
 /datum/language_holder/mushroom
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/mushroom = list(LANGUAGE_ATOM))
@@ -448,6 +455,9 @@ Key procs
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()
+
+// Has all the languages known (via "mind")
+/datum/language_holder/universal
 
 /datum/language_holder/universal/New()
 	..()

@@ -5,7 +5,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/item/shadowcloak,
+/obj/item/storage/belt/military/assault/cloak,
 /obj/item/storage/belt/utility/full/engi,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)

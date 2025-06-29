@@ -383,13 +383,9 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER)
 
-/obj/item/var/last_multi = 1
-
-/datum/antagonist/slasher/proc/damage_multiplier(obj/item/source, mob/living/attacked, def_zone)
+/datum/antagonist/slasher/proc/damage_multiplier(obj/item/source, damage_multiplier_ptr, mob/living/attacked, def_zone)
 	//keeping this just in case we use it later, but the damage changing has been turned off
-	source.last_multi = 1
-
-	return TRUE
+	// *damage_multiplier_ptr = 1
 
 /datum/antagonist/slasher/proc/increase_fear(atom/movable/target, amount)
 	var/datum/weakref/weak = WEAKREF(target)
