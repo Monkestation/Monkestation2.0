@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed colonies being enabled causing space explorers to accidentally trespass upon the domain of gods."
