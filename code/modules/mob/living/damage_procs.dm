@@ -42,9 +42,10 @@
 		damage_amount *= ((100 - blocked) / 100)
 		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 		if(attacking_item)
-			if(!SEND_SIGNAL(attacking_item, COMSIG_ITEM_DAMAGE_MULTIPLIER, src, def_zone))
-				attacking_item.last_multi = 1
-			damage_amount *= attacking_item.last_multi
+			var/damage_multiplier = 1
+			SEND_SIGNAL(attacking_item, COMSIG_ITEM_DAMAGE_MULTIPLIER, &damage_multiplier, src, def_zone)
+			if(damage_multiplier != 1)
+				damage_amount = round(damage_amount * damage_multiplier, 0.5)
 
 	if(damage_amount <= 0)
 		return 0

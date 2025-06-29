@@ -14,6 +14,7 @@
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
+#define ROLE_COMMANDO_OPERATIVE "Commando Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
@@ -33,6 +34,7 @@
 #define ROLE_NINJA "Space Ninja"
 #define ROLE_OBSESSED "Obsessed"
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
+#define ROLE_COMMANDO_OPERATIVE_MIDROUND "Commando Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SENTIENT_DISEASE "Sentient Disease"
@@ -86,6 +88,7 @@
 #define ROLE_SERVANT_GOLEM "Servant Golem"
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
 #define ROLE_WIZARD_APPRENTICE "apprentice"
+#define ROLE_SYNDICATE_MONKEY "Syndicate Monkey Agent"
 
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
@@ -135,6 +138,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_HERETIC = 0,
 	ROLE_MALF = 0,
 	ROLE_OPERATIVE = 14,
+	ROLE_COMMANDO_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
@@ -156,6 +160,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
 	ROLE_OPERATIVE_MIDROUND = 14,
+	ROLE_COMMANDO_OPERATIVE_MIDROUND = 14,
 	ROLE_PARADOX_CLONE = 0,
 	ROLE_REVENANT = 0,
 	ROLE_SENTIENT_DISEASE = 0,

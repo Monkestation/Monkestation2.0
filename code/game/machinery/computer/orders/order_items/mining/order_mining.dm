@@ -129,3 +129,7 @@
 /datum/orderable_item/mining/eva_kit
 	item_path = /obj/item/storage/box/emergency_eva/explorer
 	cost_per_order = 1000
+
+/datum/orderable_item/mining/hardsuit_jetpack_upgrade
+	item_path = /obj/item/jetpack_module
+	cost_per_order = 250

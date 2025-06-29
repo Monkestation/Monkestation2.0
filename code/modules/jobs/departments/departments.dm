@@ -145,6 +145,14 @@
 	label_class = "spring"
 	ui_color = "#75da83"
 
+
+/datum/job_department/summer
+	department_name = DEPARTMENT_SUMMER
+	department_bitflags = DEPARTMENT_BITFLAG_SUMMER
+	display_order = 12
+	label_class = "summer"
+	ui_color = "#ff4901"
+
 /datum/job_department/silicon/generate_nation_name()
 	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons
 

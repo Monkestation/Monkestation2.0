@@ -357,7 +357,7 @@
 	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
 
-	var/threatcount = 0
+	var/threatcount = judgement_criteria & JUDGE_CHILLOUT ? -5 : 0
 
 	//Lasertag bullshit
 	if(lasercolor)

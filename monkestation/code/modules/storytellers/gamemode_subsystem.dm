@@ -135,6 +135,9 @@ SUBSYSTEM_DEF(gamemode)
 	/// Whether the storyteller has been halted
 	var/halted_storyteller = FALSE
 
+	// Used to determine if an admin chosed a storyteller, so it doesnt pick one randomly
+	var/admin_picked_storyteller = FALSE
+
 	/// Ready players for roundstart events.
 	var/ready_players = 0
 	var/active_players = 0
@@ -827,6 +830,9 @@ SUBSYSTEM_DEF(gamemode)
 	return valid_storytellers
 
 /datum/controller/subsystem/gamemode/proc/init_storyteller()
+	// Don't allow the storyteller to be set if an admin set the storyteller
+	if (admin_picked_storyteller)
+		return
 	set_storyteller(selected_storyteller)
 
 /datum/controller/subsystem/gamemode/proc/set_storyteller(passed_type)
@@ -1070,6 +1076,8 @@ SUBSYSTEM_DEF(gamemode)
 					message_admins("[key_name_admin(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
 					var/new_storyteller_type = name_list[new_storyteller_name]
 					set_storyteller(new_storyteller_type)
+					current_storyteller.round_started = SSticker.HasRoundStarted()
+					admin_picked_storyteller = TRUE
 				if("halt_storyteller")
 					halted_storyteller = !halted_storyteller
 					message_admins("[key_name_admin(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")

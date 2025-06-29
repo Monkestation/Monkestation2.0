@@ -375,7 +375,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2) // less expensive than the organic surgery research equivalent since its JUST tend wounds
 
-/datum/techweb_node/explosive_weapons
+/datum/techweb_node/chemical_weapons
 	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)
 
 /datum/techweb_node/ai_basic
