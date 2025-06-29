@@ -38,13 +38,6 @@
 	cost = 14 // normally 16
 	purchasable_from = UPLINK_NUKE_OPS
 
-/datum/uplink_item/weapon_kits/medium_cost/rawketlawnchair
-	name = "Dardo-RE Rocket Propelled Grenade Launcher (Hard)"
-	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
-		Guaranteed to send your target out with a bang or your money back! Comes with a bouquet of additional rockets!"
-	cost = 16
-	item = /obj/item/storage/toolbox/guncase/rocketlauncher
-
 /datum/uplink_item/weapon_kits/medium_cost/revolvercase
 	name = "Syndicate Revolver Case (Moderate)"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum. \

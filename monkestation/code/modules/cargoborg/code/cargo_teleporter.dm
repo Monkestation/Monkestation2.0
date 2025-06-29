@@ -5,17 +5,30 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	desc = "An item that can set down a set number of markers, allowing them to teleport items within a tile to the set markers."
 	icon = 'monkestation/code/modules/cargoborg/icons/cargo_teleporter.dmi'
 	icon_state = "cargo_tele"
+	w_class = WEIGHT_CLASS_SMALL
 	///the list of markers spawned by this item
 	var/list/marker_children = list()
-
 	COOLDOWN_DECLARE(use_cooldown)
+	/// Maximum amount of fulton charges the teleporter can hold
+	var/max_charges = 3
+	/// Amount of charges remaining to be able to fulton somebody
+	var/charges = 0
+	/// The fulton we use to actually extract living things
+	var/obj/item/extraction_pack/my_fulton
+
+/obj/item/cargo_teleporter/Initialize(mapload)
+	. = ..()
+	my_fulton = new(src)
 
 /obj/item/cargo_teleporter/examine(mob/user)
 	. = ..()
 	. += span_notice("Attack itself to set down the markers!")
 	. += span_notice("ALT-CLICK to remove all markers!")
+	. += span_notice("You can RIGHT-CLICK a living thing to fulton it with a charge.")
+	. += span_info("It has [charges] charges remaining.")
 
 /obj/item/cargo_teleporter/Destroy()
+	QDEL_NULL(my_fulton)
 	if(length(marker_children))
 		for(var/obj/effect/decal/cleanable/cargo_mark/destroy_children in marker_children)
 			destroy_children.parent_item = null
@@ -69,6 +82,42 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		do_teleport(movable_content, moving_turf, asoundout = 'sound/magic/Disable_Tech.ogg')
 	new /obj/effect/decal/cleanable/ash(target_turf)
 	COOLDOWN_START(src, use_cooldown, 8 SECONDS)
+
+//---- Allows the cargo teleporter to hold fultons as charges, in order to fulton people with right click
+
+/obj/item/cargo_teleporter/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(!istype(attacking_item, /obj/item/extraction_pack))
+		return
+	if(charges >= max_charges)
+		balloon_alert(user, "charges full")
+		return
+	var/obj/item/extraction_pack/attacking_fulton = attacking_item
+	var/missing_charges = max_charges - charges
+	if(missing_charges >= attacking_fulton.uses_left)
+		charges += attacking_fulton.uses_left
+		balloon_alert(user, "added [attacking_fulton.uses_left] charges")
+		qdel(attacking_fulton)
+		if(!my_fulton) // Fultons delete themselves when charges hit 0, so we might have to make a new one after we recharge
+			my_fulton = new(src)
+		return
+	charges += missing_charges
+	attacking_fulton.uses_left -= missing_charges
+	balloon_alert(user, "added [missing_charges] charges")
+	if(!my_fulton) // Fulton self delete
+		my_fulton = new(src)
+
+/obj/item/cargo_teleporter/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag)
+		return
+	if(charges <= 0)
+		balloon_alert(user, "no charges left!")
+		return
+	if(!my_fulton.choose_beacon(user))
+		return
+	if(my_fulton.afterattack(target, user, proximity_flag, click_parameters) == AFTERATTACK_PROCESSED_ITEM)
+		charges--
 
 /datum/design/cargo_teleporter
 	name = "Cargo Teleporter"

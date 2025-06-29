@@ -191,6 +191,12 @@ Stabilized extracts:
 	effect_desc = "Accepts a regenerative extract and automatically uses it if the owner enters a critical condition."
 	var/obj/item/slimecross/regenerative/regencore
 
+/obj/item/slimecross/stabilized/rainbow/Destroy()
+	if(!QDELETED(regencore))
+		regencore.forceMove(drop_location())
+	regencore = null
+	return ..()
+
 /obj/item/slimecross/stabilized/rainbow/attackby(obj/item/O, mob/user)
 	var/obj/item/slimecross/regenerative/regen = O
 	if(istype(regen) && !regencore)

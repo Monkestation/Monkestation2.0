@@ -7,7 +7,7 @@
 	var/turf/bottom_left
 
 ///what area type this holodeck loads into. linked turns into the nearest instance of this area
-	var/area/mapped_start_area = /area/shipbreak
+	var/area/mapped_start_area = /area/space/shipbreak
 
 ///the currently used map template
 	var/datum/map_template/shipbreaker/template
@@ -16,7 +16,7 @@
 	var/ship_type = /datum/map_template/shipbreaker
 
 ///links the shipbreaker zone to the computer
-	var/area/shipbreak/linked
+	var/area/space/shipbreak/linked
 ///cool variablw
 	var/spawn_area_clear = TRUE
 

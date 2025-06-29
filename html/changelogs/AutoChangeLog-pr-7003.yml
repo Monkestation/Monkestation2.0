@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "The BSA station goal is now completed by FIRING the BSA, rather than having it just exist + be powered."
