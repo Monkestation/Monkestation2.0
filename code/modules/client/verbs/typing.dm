@@ -35,7 +35,7 @@
 	/// Special exemptions
 	if(isabductor(mob) && !HAS_TRAIT(mob, TRAIT_SIGN_LANG)) // monkestation edit: allow abductors to sign
 		return FALSE
-	ADD_TRAIT(mob, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
+	ADD_TRAIT(mob, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT, TRAIT_GODMODE)
 	mob.create_thinking_indicator()
 
 /** Removes typing/thinking indicators and flags the mob as not thinking */
