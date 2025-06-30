@@ -78,7 +78,8 @@
 	var/datum/action/innate/change_screen/change_screen
 	/// This is the screen that is given to the user after they get revived. On death, their screen is temporarily set to BSOD before it turns off, hence the need for this var.
 	var/saved_screen = "Blank"
-
+	/// The innate action for reconfiguring limbs
+	var/datum/action/innate/reconfigure_limbs/reconfigure
 	var/will_it_blend_timer
 	COOLDOWN_DECLARE(blend_cd)
 	var/blending
@@ -109,6 +110,9 @@
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)
+	if(ishuman(C) && !reconfigure)
+		reconfigure = new
+		reconfigure.Grant(C)
 
 	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
@@ -174,6 +178,20 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "drone_vision"
+
+/datum/action/innate/reconfigure_limbs
+	name = "Reconfigure Limbs"
+	desc = "Reconfigures non-manufacturer spec limbs to manafacturer specification."
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "pai"
+
+/datum/action/innate/reconfigure_limbs/Activate()
+	if(!owner)
+		return
+	var/mob/living/carbon/human/target_ipc = owner
+	var/datum/species/ipc/target_species = target_ipc.dna.species
+	target_species.update_chassis(target_ipc)
+	target_ipc.update_appearance()
 
 /datum/action/innate/change_screen/Activate()
 	var/screen_choice = tgui_input_list(usr, "Which screen do you want to use?", "Screen Change", GLOB.ipc_screens_list)
