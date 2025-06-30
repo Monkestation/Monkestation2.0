@@ -109,9 +109,10 @@ effective or pretty fucking useless.
 	if(QDELETED(M) || !ishuman(M))
 		return
 
-	if(HAS_TRAIT(M, TRAIT_RADHEALING))
-		M.adjustBruteLoss(-round(passed_intensity/0.075))
-		M.adjustFireLoss(-round(passed_intensity/0.075))
+	//Work on you later
+	//if(HAS_TRAIT(M, TRAIT_RADHEALING))
+	//	M.adjustBruteLoss(-round(passed_intensity/0.075))
+	//	M.adjustFireLoss(-round(passed_intensity/0.075))
 
 	if(HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
