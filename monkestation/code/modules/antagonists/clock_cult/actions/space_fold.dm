@@ -1,9 +1,9 @@
 ///list of events eminence can trigger as well as their cost in cogs, most likely gonna have to set limits on these, might do it based on cost, unsure if I should use a .txt for this
-#define EMINENCE_EVENTS list(/datum/round_event_control/brand_intelligence = 5, /datum/round_event_control/bureaucratic_error = 3, /datum/round_event_control/gravity_generator_blackout = 3, \
-							 /datum/round_event_control/communications_blackout = 5, /datum/round_event_control/electrical_storm = 2, /datum/round_event_control/ion_storm = 5, \
-							 /datum/round_event_control/grey_tide = 3, /datum/round_event_control/grid_check = 5, /datum/round_event_control/scrubber_overflow/catastrophic = 4, \
-							 /datum/round_event_control/radiation_storm = 7, /datum/round_event_control/scrubber_clog/critical = 3, /datum/round_event_control/carp_migration = 6, \
-							 /datum/round_event_control/wormholes = 5, /datum/round_event_control/immovable_rod = 8, /datum/round_event_control/anomaly/anomaly_dimensional = 2, \
+#define EMINENCE_EVENTS list(/datum/round_event_control/brand_intelligence = 5, /datum/round_event_control/bureaucratic_error = 3, /datum/round_event_control/gravity_generator_blackout = 4, \
+							 /datum/round_event_control/communications_blackout = 6, /datum/round_event_control/electrical_storm = 2, /datum/round_event_control/ion_storm = 6, \
+							 /datum/round_event_control/grey_tide = 3, /datum/round_event_control/grid_check = 6, /datum/round_event_control/scrubber_overflow/catastrophic = 4, \
+							 /datum/round_event_control/radiation_storm = 8, /datum/round_event_control/scrubber_clog/critical = 3, /datum/round_event_control/carp_migration = 6, \
+							 /datum/round_event_control/wormholes = 6, /datum/round_event_control/immovable_rod = 9, /datum/round_event_control/anomaly/anomaly_dimensional = 2, \
 							 /datum/round_event_control/anomaly/anomaly_bluespace = 4, /datum/round_event_control/anomaly/anomaly_ectoplasm = 4, \
 							 /datum/round_event_control/anomaly/anomaly_flux = 3, /datum/round_event_control/anomaly/anomaly_pyro = 5)
 

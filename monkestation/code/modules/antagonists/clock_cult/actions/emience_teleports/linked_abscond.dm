@@ -1,14 +1,10 @@
-/datum/action/cooldown/eminence/linked_abscond
+/datum/action/cooldown/clock_cult/eminence/linked_abscond
 	name = "Linked Abscond"
 	desc = "Absconds a fellow servant and whomever they may be pulling back to reebe if they stand still for 7 seconds."
 	button_icon_state = "Linked Abscond"
 	cooldown_time = 4 MINUTES
 
-/datum/action/cooldown/eminence/linked_abscond/Activate(atom/target)
-	. = ..()
-	if(!.)
-		return FALSE
-
+/datum/action/cooldown/clock_cult/eminence/linked_abscond/Activate(atom/target)
 	var/mob/living/eminence/em_user = usr
 	if(!em_user.marked_servant)
 		to_chat(em_user, span_notice("You dont currently have a marked servant!"))
@@ -17,6 +13,10 @@
 	var/mob/living/teleported = em_user.marked_servant?.resolve()
 	if(teleported.has_reagent(/datum/reagent/water/holywater)) //cant abscond servents with holy water in them, use reagent purge
 		to_chat(em_user, span_warning("Holy water inside [teleported] is blocking you from absconding them, use reagent purge!"))
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return FALSE
 
 	to_chat(em_user, span_brass("You begin to recall [teleported]."))
