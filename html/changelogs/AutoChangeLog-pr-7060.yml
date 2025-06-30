@@ -1,0 +1,7 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Unmarked takbok has received a recolored sprite"
+  - rscadd: "Takbok kit comes with hollowpoint rounds."
+  - balance: "Unmarked takbok unwielded recoil has been nerfed (1.6 -> 2) Time to fire reduced (0.8 -> 0.6)  and damage multiplier 1 -> 1.3)"
+  - spellcheck: "fixed a few typos in relation to the unmarked takbok"

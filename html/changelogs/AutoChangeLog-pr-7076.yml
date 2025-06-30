@@ -1,0 +1,4 @@
+author: "konovic"
+delete-after: True
+changes:
+  - bugfix: "Fixed gorilla suit and dinojammies disappearing when toggling the hood"

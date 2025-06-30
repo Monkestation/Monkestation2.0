@@ -1,6 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - bugfix: "auspex now properly wounds"
-  - bugfix: "auspex description now accurate"
-  - code_imp: "frenzy now uses strong grab trait rather than martial arts"

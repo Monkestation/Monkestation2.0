@@ -492,3 +492,10 @@
   - balance: Explorer EVA box can hold medium sized items
   - bugfix: Premium Tactical Medkit can hold more of the items it spawns with
   - rscadd: Combat hyposprays can draw reagents with right click
+2025-06-29:
+  Absolucy:
+  - map: Added mechcomp vendors to engineering and science on Pubby Station.
+  Shoddd:
+  - bugfix: auspex now properly wounds
+  - bugfix: auspex description now accurate
+  - code_imp: frenzy now uses strong grab trait rather than martial arts
