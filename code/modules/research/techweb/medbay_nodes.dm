@@ -2,7 +2,7 @@
 	id = "biotech"
 	display_name = "Biological Technology"
 	description = "What makes us tick." //the MC, silly!
-	prereq_ids = list("base")
+	prereq_ids = list("basic_medical")
 	design_ids = list(
 		"beer_dispenser",
 		"blood_pack",
