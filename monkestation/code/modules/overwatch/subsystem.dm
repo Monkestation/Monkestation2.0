@@ -450,15 +450,9 @@ SUBSYSTEM_DEF(overwatch)
 		return TRUE
 	return FALSE
 
-/client/proc/Overwatch_toggle()
-	set category = "Server"
-	set name = "Toggle Overwatch"
-
-	if(!check_rights(R_SERVER))
-		return
-
+ADMIN_VERB(Overwatch_toggle, R_SERVER, FALSE, "Toggle Overwatch", "Toggle the overwatch subsystem.", ADMIN_CATEGORY_GAME)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_notice("The Database is not connected!"))
+		to_chat(user, span_notice("The Database is not connected!"))
 		return
 
 	var/overwatch_status = SSoverwatch.Toggle()

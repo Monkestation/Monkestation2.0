@@ -1,12 +1,6 @@
-// Helper tool to see fishing probabilities with different setups
-/datum/admins/proc/fishing_calculator()
-	set name = "Fishing Calculator"
-	set category = "Debug"
-
-	if(!check_rights(R_DEBUG))
-		return
-	var/datum/fishing_calculator/ui = new(usr)
-	ui.ui_interact(usr)
+ADMIN_VERB(fishing_calculator, R_DEBUG, FALSE, "Fishing Calculator", "A calculator... for fishes?", ADMIN_CATEGORY_DEBUG)
+	var/datum/fishing_calculator/ui = new
+	ui.ui_interact(user.mob)
 
 /datum/fishing_calculator
 	var/list/current_table
@@ -18,7 +12,7 @@
 		ui.open()
 
 /datum/fishing_calculator/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/fishing_calculator/ui_close(mob/user)
 	qdel(src)

@@ -1,23 +1,16 @@
 /datum/artifactpanel
-	var/user
+	var/client/user
 
-/datum/admins/proc/open_artifactpanel()
-	set category = "Admin.Game"
-	set name = "Artifact Panel"
-	set desc = "Artifact panel"
+ADMIN_VERB(open_artifactpanel, R_ADMIN, FALSE, "Artifact Panel", "Opens the artifact panel.", ADMIN_CATEGORY_GAME)
+	var/datum/artifactpanel/artifactpanel = new(user)
 
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/datum/artifactpanel/artifactpanel = new(usr)
-
-	artifactpanel.ui_interact(usr)
+	artifactpanel.ui_interact(user.mob)
 
 /datum/artifactpanel/New(to_user, mob/living/silicon/robot/to_borg)
-	user = CLIENT_FROM_VAR(to_user)
+	user = to_user
 
 /datum/artifactpanel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/artifactpanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

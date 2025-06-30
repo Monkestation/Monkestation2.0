@@ -1,0 +1,23 @@
+#Mentor Rank format follows exactly the same format as Admin Ranks.
+#If SQL-based mentor loading is enabled, ranks and their keywords listed here will be loaded first and override any with the same name loaded from the database.
+#
+#The following are valid permission keywords:
+#HEADMENTOR = allows you to promote and/or demote mentors.
+#MENTOR = general mentor tools, verbs etc.
+#AUTOMENTOR = mentor gains powers upon connect. This defaults to on, you can exclude AUTOMENTOR to make a role require using the rementor verb to gain powers (this does not effect the mentor's ability to walk past bans or other on-connect limitations like panic bunker or pop limit).
+#@ = special keyword for the current permission type that adds all the keywords that the preceding rank has of the same type.
+
+Name = Staff Assigned Mentor
+Include = MENTOR
+Exclude =
+Edit =
+
+Name = Mentor
+Include = MENTOR AUTOMENTOR
+Exclude =
+Edit =
+
+Name = Head Mentor
+Include = @ HEADMENTOR
+Exclude =
+Edit =
