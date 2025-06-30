@@ -113,7 +113,7 @@
 	for(var/turf/turf in linked)
 		if(!isgroundlessturf(turf))
 			turf_count++
-			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(modify_health))
+			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(modify_health), override = TRUE)
 	total_turf = turf_count
 	ship_part = (100 / turf_count)
 	ship_health = 100

@@ -660,7 +660,7 @@
 	name = "Honk-E-Clown";
 	desc = "This clown looks pretty tough, better stay on his good side...";
 	limb_destroyer = 1;
-	maxHealth = "300"
+	maxHealth = 300
 	},
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)

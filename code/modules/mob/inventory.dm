@@ -515,7 +515,7 @@
 	var/list/processing_list = get_equipped_items(include_pockets = TRUE, include_accessories = TRUE) + held_items
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
-	while(i < length(processing_list) )
+	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
 		if(A.atom_storage)
 			var/list/item_stuff = list()
