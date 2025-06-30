@@ -113,3 +113,23 @@
 	)
 	tastes = list("buzzing" = 1, "honey" = 1, "regret" = 1)
 	spawned_mob = /mob/living/basic/bee
+
+/obj/item/food/monkeycube/cow
+	name = "Cow cube"
+	desc = "Because not all ethical committees agree with eating chimpanzee."
+	bite_consumption = 20
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 30
+	)
+	tastes = list("Leather" = 1, "Beef" = 1, "Jerky" = 1)
+	spawned_mob = /mob/living/basic/cow
+
+/obj/item/food/monkeycube/pig
+	name = "Pig cube"
+	desc = "A whole new way to bring home the bacon"
+	bite_consumption = 20
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 30
+	)
+	tastes = list("Pork" = 1, "Batons" =1)
+	spawned_mob = /mob/living/basic/pig
