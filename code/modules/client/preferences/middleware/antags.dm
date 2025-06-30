@@ -124,6 +124,7 @@
 		ROLE_DRIFTING_CONTRACTOR = /datum/antagonist/traitor/contractor,
 		ROLE_SLASHER = /datum/antagonist/slasher,
 		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man,
+		ROLE_BINGLE = /datum/antagonist/bingle,
 		ROLE_TERATOMA = /datum/antagonist/teratoma,
 		ROLE_ASSAULT_OPERATIVE = /datum/antagonist/assault_operative,
 		ROLE_PLAGUERAT = /datum/antagonist/plague_rat,
