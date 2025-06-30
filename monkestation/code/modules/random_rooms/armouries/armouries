@@ -1,0 +1,35 @@
+
+/datum/map_template/random_room/random_armoury_base
+	name = "Default random Armoury"
+	room_id = "box_default_bar"
+	mappath = "_maps/~monkestation/RandomBars/Box/default_bar.dmm"
+	centerspawner = FALSE
+	template_height = 17
+	template_width = 11
+	weight = 6
+	station_name = "Box Station"
+
+/datum/map_template/random_room/random_armoury_base/clockwork
+	name = "Clockwork Armoury"
+	room_id = ""
+	mappath = ""
+	weight = 1
+
+/datum/map_template/random_room/random_armoury_base/russian_surplus
+	name = "USSRMOURY"
+	room_id = ""
+	mappath = ""
+	weight = 1
+
+/datum/map_template/random_room/random_armoury_base/meat
+	name = "Meat Armaments"
+	room_id = ""
+	mappath = ""
+	weight = 1
+
+/datum/map_template/random_room/random_armoury_base/sponsored_khemtek
+
+/datum/map_template/random_room/random_armoury_base/trashed
+/datum/map_template/random_room/random_armoury_base/sponsored_solgov
+/datum/map_template/random_room/random_armoury_base/sponsored_
+
