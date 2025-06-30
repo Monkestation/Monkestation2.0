@@ -211,7 +211,7 @@
 	if(affected_mob.adjustFireLoss(fireheal * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype))
 		. = TRUE
 
-	var/cooling = -1 KELVIN / rand(1, 5)
+	var/cooling = -1 KELVIN / rand(1, 2)
 	affected_mob.adjust_bodytemperature(cooling * REM * seconds_per_tick, min_temp = HYPOTHERMIA - 7 CELCIUS)
 	affected_mob.reagents?.expose_temperature(affected_mob.reagents.chem_temp - (10 * REM * seconds_per_tick))
 	affected_mob.adjust_fire_stacks(-1 * REM * seconds_per_tick)

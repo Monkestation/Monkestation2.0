@@ -711,6 +711,14 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
+	for(var/obj/item/broken as anything in src.contents)
+		if(!istype(broken, /mob))
+			if(prob(33))
+				QDEL_NULL(broken)
+				new /obj/effect/decal/cleanable/ash(src.loc)
+				if(istype(broken, /obj/item/ammo_box))
+					if(prob(25))
+						explosion(src, 0, 0, 2, 0, 2)
 	open()
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
