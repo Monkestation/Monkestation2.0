@@ -29,5 +29,5 @@
 
 /datum/map_template/shuttle/ruin/freeminer
 	suffix = "freeminer"
-	name = "Free Miner Shuttle"
+	name = "Sheffield-class Free Miner Shuttle"
 	description = "An independent mining ship with a crew of four, equipped to comb the abyss for useful materials or die trying."
