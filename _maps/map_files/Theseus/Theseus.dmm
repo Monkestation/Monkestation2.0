@@ -12121,6 +12121,7 @@
 /obj/effect/turf_decal/trimline/dark/line{
 	dir = 10
 	},
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "dDC" = (
@@ -17818,7 +17819,7 @@
 /area/station/hallway/primary/central/fore)
 "flK" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/flasher/portable,
+/obj/structure/closet/secure_closet/armory_kiboko,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "flQ" = (
@@ -38313,7 +38314,7 @@
 	pixel_x = -6
 	},
 /obj/item/storage/box/handcuffs{
-	pixel_x = 6;
+	pixel_x = 7;
 	pixel_y = 11
 	},
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
@@ -38321,7 +38322,18 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_x = 9;
+	pixel_y = 0
+	},
+/obj/machinery/recharger{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/machinery/recharger{
+	pixel_x = -9;
+	pixel_y = 0
+	},
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "ljG" = (
@@ -53519,6 +53531,63 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
+"pLk" = (
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Lethal"
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "pLs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -70739,16 +70808,12 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/rack,
-/obj/item/clothing/suit/hooded/ablative,
-/obj/item/clothing/suit/hooded/ablative,
+/obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/glasses/hud/security/sunglasses/gars{
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/item/clothing/glasses/hud/security/sunglasses/gars{
-	pixel_x = 3;
-	pixel_y = -2
-	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "uBR" = (
@@ -107797,7 +107862,7 @@ nhC
 vXD
 sKL
 ptG
-flK
+pLk
 weO
 nFo
 qXY

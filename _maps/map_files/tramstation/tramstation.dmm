@@ -3508,7 +3508,12 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "avf" = (
-/obj/item/storage/toolbox/drone,
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/crowbar/large,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
@@ -4826,16 +4831,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"aFA" = (
-/obj/structure/table,
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rubbershot,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "aFC" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /obj/effect/decal/cleanable/dirt,
@@ -8954,11 +8949,11 @@
 /area/station/cargo/miningdock)
 "bKl" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "bKr" = (
@@ -18913,11 +18908,16 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "eRq" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_y = -4
+	},
+/obj/item/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_y = 4
+	},
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/closet/secure_closet/armory2,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "eRs" = (
@@ -24869,7 +24869,59 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "gNe" = (
-/obj/effect/landmark/event_spawn,
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Lethal"
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -29125,6 +29177,17 @@
 /obj/machinery/recharger,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/recharger{
+	pixel_x = 9;
+	pixel_y = 0
+	},
+/obj/machinery/recharger{
+	pixel_x = -9;
+	pixel_y = 0
+	},
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "ihi" = (
@@ -45935,9 +45998,17 @@
 /obj/item/ammo_box/magazine/m35,
 /obj/item/ammo_box/magazine/m35,
 /obj/item/ammo_box/magazine/m35,
-/obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
-	pixel_y = 6
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 3;
+	pixel_x = 1
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 8;
+	pixel_x = -1
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -70518,7 +70589,59 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "uVA" = (
-/obj/machinery/airalarm/directional/east,
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Non-lethal"
+	},
+/obj/item/storage/box/rubbershot{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/storage/box/rubbershot,
+/obj/item/storage/box/rubbershot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -77385,8 +77508,19 @@
 "wYE" = (
 /obj/structure/table,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
-/obj/machinery/recharger,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/melee/baton/security/loaded{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wYO" = (
@@ -164294,7 +164428,7 @@ trm
 epT
 hgn
 mKP
-aFA
+dQd
 dEv
 avP
 avY
@@ -164551,7 +164685,7 @@ exx
 ouM
 iub
 hgn
-dQd
+uVA
 dEv
 avQ
 ouJ
@@ -165835,7 +165969,7 @@ jlQ
 sne
 lUo
 hgn
-uVA
+hgn
 kkV
 dEv
 bwg

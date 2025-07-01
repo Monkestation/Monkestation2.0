@@ -13428,7 +13428,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "cBC" = (
-/obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet{
 	req_access = list("security");
 	name = "Ammo Locker - Lethal"
