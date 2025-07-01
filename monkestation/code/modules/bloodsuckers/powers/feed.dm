@@ -113,7 +113,7 @@
 			vision_distance = FEED_NOTICE_RANGE, ignored_mobs = feed_target)
 
 	//check if we were seen
-	for(var/mob/living/viewer in oviewers(FEED_NOTICE_RANGE) - feed_target)
+	for(var/mob/living/viewer in oviewers(FEED_NOTICE_RANGE, owner) - feed_target)
 		if(check_for_masquerade_infraction(viewer))
 			owner.balloon_alert(owner, "feed noticed!")
 			bloodsuckerdatum_power.give_masquerade_infraction()
@@ -130,6 +130,8 @@
 	if(viewer.has_unlimited_silicon_privilege)
 		return FALSE
 	if(viewer.stat >= DEAD)
+		return FALSE
+	if(viewer.invisibility)
 		return FALSE
 	if(viewer.is_blind() || viewer.is_nearsighted_currently())
 		return FALSE

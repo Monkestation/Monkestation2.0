@@ -119,7 +119,7 @@
 
 /area/shuttle/arrival/on_joining_game(mob/living/boarder)
 	if(SSshuttle.arrivals?.mode == SHUTTLE_CALL)
-		var/atom/movable/screen/splash/Spl = new(null, boarder.client, TRUE)
+		var/atom/movable/screen/splash/Spl = new(null, null, boarder.client, TRUE)
 		Spl.Fade(TRUE)
 		boarder.playsound_local(get_turf(boarder), 'monkestation/sound/ai/duke/welcome/welcome2.ogg', 50) //MONKESTATION EDIT
 	boarder.update_parallax_teleport()

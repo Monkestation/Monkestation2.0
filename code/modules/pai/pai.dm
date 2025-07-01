@@ -319,6 +319,12 @@
 	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
 	return TRUE
 
+/mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	set_silence_if_lower(disrupt_duration)
+	balloon_alert(src, "muted!")
+	return TRUE
+
 /**
  * Resets the pAI and any emagged status.
  *

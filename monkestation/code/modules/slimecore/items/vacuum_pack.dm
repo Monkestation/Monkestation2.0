@@ -183,6 +183,7 @@
 	slot_flags = NONE
 
 	var/obj/item/vacuum_pack/pack
+	var/is_selecting = FALSE
 
 /obj/item/vacuum_nozzle/Initialize(mapload)
 	. = ..()
@@ -197,11 +198,21 @@
 	else
 		. += span_notice("It's selection mechanism is hotwired to fire indiscriminately.")
 
+/obj/item/vacuum_nozzle/equipped(mob/user, slot, initial)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_ALTCLICKON, PROC_REF(on_user_altclick), override = TRUE)
+
+/obj/item/vacuum_nozzle/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_ALTCLICKON)
+	is_selecting = FALSE
+
 /obj/item/vacuum_nozzle/doMove(atom/destination)
 	if(destination && (destination != pack.loc || !ismob(destination)))
 		if (loc != pack)
 			to_chat(pack.loc, span_notice("[src] snaps back onto [pack]."))
 		destination = pack
+		is_selecting = FALSE
 	. = ..()
 
 /obj/item/vacuum_nozzle/attack_self(mob/user, modifiers)
@@ -272,8 +283,11 @@
 	user.visible_message(span_warning("[user] shoots [spawned] out their [src]!"), span_notice("You fabricate and shoot [spawned] out of your [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/vacuum_nozzle/afterattack(atom/movable/target, mob/user, proximity, params)
+/obj/item/vacuum_nozzle/afterattack(atom/movable/target, mob/user, proximity, click_parameters)
 	. = ..()
+	do_suck(target, user)
+
+/obj/item/vacuum_nozzle/proc/do_suck(atom/movable/target, mob/user)
 	if(pack.ghost_busting)
 		return
 
@@ -504,6 +518,55 @@
 		return FALSE
 
 	return TRUE
+
+/obj/item/vacuum_nozzle/proc/on_user_altclick(mob/living/user, atom/movable/target)
+	SIGNAL_HANDLER
+	if(!isliving(user) || user != loc) // what
+		UnregisterSignal(user, COMSIG_MOB_ALTCLICKON)
+		return
+	if(is_selecting || user.get_active_held_item() != src || user.incapacitated())
+		return
+	. = COMSIG_MOB_CANCEL_CLICKON // avoids loot panel showing up
+	is_selecting = TRUE
+	ASYNC
+		select_suck_target(user, target)
+		is_selecting = FALSE
+
+/obj/item/vacuum_nozzle/proc/select_suck_target(mob/living/user, atom/movable/target)
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		return
+	if(get_dist(user, target_turf) > pack.range)
+		user.balloon_alert(user, "out of range!")
+		return
+	var/list/options = list()
+	for(var/atom/movable/thing as anything in target_turf)
+		if(!is_type_in_typecache(thing, pack.storable_objects) && !is_type_in_list(thing, pack.linked?.recyclable_types))
+			continue
+		var/mutable_appearance/copied_appearance = copy_appearance_filter_overlays(thing.appearance)
+		copied_appearance.dir = SOUTH
+		copied_appearance.pixel_x = thing.base_pixel_x
+		copied_appearance.pixel_y = thing.base_pixel_y
+		copied_appearance.pixel_w = 0 /* thing.base_pixel_w */
+		copied_appearance.pixel_z = 0 /* thing.base_pixel_z */
+		options[thing] = copied_appearance
+	if(!length(options))
+		user.balloon_alert(user, "no valid targets on turf!")
+		return
+	var/chosen = show_radial_menu(
+		user,
+		user,
+		options,
+		radius = 40,
+		custom_check = CALLBACK(src, PROC_REF(extra_selection_checks), user, target_turf),
+		tooltips = TRUE,
+		autopick_single_option = FALSE,
+	)
+	if(chosen)
+		do_suck(chosen, user)
+
+/obj/item/vacuum_nozzle/proc/extra_selection_checks(mob/living/user, turf/target_turf)
+	return user.get_active_held_item() == src && !user.incapacitated() && in_view_range(user, target_turf, require_same_z = TRUE)
 
 /obj/item/disk/vacuum_upgrade
 	name = "vacuum pack upgrade disk"

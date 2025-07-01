@@ -6,7 +6,7 @@
 		to_chat(src, span_danger("Error: Only mentors and administrators may use this command."), confidential = TRUE)
 		return
 
-	msg = emoji_parse(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
 
@@ -19,7 +19,9 @@
 		prefix = "STAFF"
 		prefix_color = "#8A2BE2"
 
-	SSplexora.relay_mentor_say(src, msg, prefix)
+	SSplexora.relay_mentor_say(src, html_decode(msg), prefix)
+
+	msg = emoji_parse(msg)
 
 	var/list/pinged_mentor_clients = check_mentor_pings(msg)
 	if(length(pinged_mentor_clients) && pinged_mentor_clients[ASAY_LINK_PINGED_ADMINS_INDEX])

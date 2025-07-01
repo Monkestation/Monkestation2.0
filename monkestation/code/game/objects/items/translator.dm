@@ -6,7 +6,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/mask.dmi'
 	worn_icon_state = "translator"
 	slot_flags = ITEM_SLOT_MASK | ITEM_SLOT_NECK
-	modifies_speech = TRUE
+	var/modifies_speech = TRUE
 	var/current_language = /datum/language/common
 
 /obj/item/clothing/mask/translator/proc/generate_language_names(mob/user)
@@ -38,8 +38,8 @@
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/clothing/mask/translator/handle_speech(datum/source, list/speech_args)
-	. = ..()
+/obj/item/clothing/mask/translator/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
 	if(!(clothing_flags * (VOICEBOX_DISABLED)))
 		if(obj_flags & EMAGGED)
 			speech_args[SPEECH_LANGUAGE] = pick(GLOB.all_languages)

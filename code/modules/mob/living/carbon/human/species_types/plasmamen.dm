@@ -25,9 +25,7 @@
 	mutantbutt = /obj/item/organ/internal/butt/plasma
 	mutantappendix = null
 	mutantheart = null
-	burnmod = 1.5
 	heatmod = 1.5
-	brutemod = 1.5
 	payday_modifier = 0.75
 	breathid = "plas"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC

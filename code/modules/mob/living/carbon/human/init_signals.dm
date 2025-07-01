@@ -10,6 +10,8 @@
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), SIGNAL_REMOVETRAIT(TRAIT_NOHUNGER)), PROC_REF(on_nohunger))
 
+	RegisterSignal(src, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(check_pocket_weght))
+
 /// Gaining [TRAIT_HEAVY_BLEEDER] doubles our bleed_mod.
 /mob/living/carbon/human/proc/on_gain_heavy_bleeder_trait(datum/source)
 	SIGNAL_HANDLER
@@ -74,3 +76,19 @@
 	else
 		hud_used?.hunger?.update_hunger_bar()
 		mob_mood?.update_nutrition_moodlets()
+
+/// Signal proc for [COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED] to check if an item is suddenly too heavy for our pockets
+/mob/living/carbon/human/proc/check_pocket_weght(datum/source, obj/item/changed, old_w_class, new_w_class)
+	SIGNAL_HANDLER
+	if(changed != r_store && changed != l_store)
+		return
+	if(new_w_class <= POCKET_WEIGHT_CLASS)
+		return
+	if(!dropItemToGround(changed, force = TRUE))
+		return
+	visible_message(
+		span_warning("[changed] falls out of [src]'s pockets!"),
+		span_warning("[changed] falls out of your pockets!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)

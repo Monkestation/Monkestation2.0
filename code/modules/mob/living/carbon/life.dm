@@ -291,7 +291,6 @@
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name
-					update_name_tag() // monkestation edit: name tags
 					dna.previous.Remove("name")
 				if(dna.previous["UE"])
 					dna.unique_enzymes = dna.previous["UE"]
@@ -462,7 +461,7 @@
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
+	if(!heart || IS_ROBOTIC_ORGAN(heart))
 		return FALSE
 	return TRUE
 

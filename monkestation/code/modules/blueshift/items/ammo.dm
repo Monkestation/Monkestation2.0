@@ -927,16 +927,6 @@
 	name = "ammo box (40mm rubber slug)"
 	ammo_type = /obj/item/ammo_casing/a40mm/rubber
 
-/obj/item/ammo_box/rocket
-	name = "rocket bouquet (84mm HE)"
-	icon_state = "rocketbundle"
-	ammo_type = /obj/item/ammo_casing/rocket
-	max_ammo = 3
-	multiple_sprites = AMMO_BOX_PER_BULLET
-
-/obj/item/ammo_box/rocket/can_load(mob/user)
-	return FALSE
-
 /obj/item/ammo_box/strilka310
 	name = "stripper clip (.310 Strilka)"
 	desc = "A stripper clip."
@@ -1008,10 +998,6 @@
 /obj/item/ammo_box/c46x30mm/ap
 	name = "ammo box (4.6x30mm AP)"
 	ammo_type = /obj/item/ammo_casing/c46x30mm/ap
-
-/obj/item/ammo_box/c46x30mm/rubber
-	name = "ammo box (4.6x30mm rubber)"
-	ammo_type = /obj/item/ammo_casing/c46x30mm/rubber
 
 /obj/item/ammo_box/advanced/s12gauge
 	name = "slug ammo box"
@@ -1261,7 +1247,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express
 	name = "express buckshot pellet"
-	damage = 4
+	damage = 3
 	wound_bonus = 0
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
@@ -1273,7 +1259,7 @@
 	desc = "A 12 gauge flechette shell that specializes in ripping unarmored targets apart."
 	icon_state = "fshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/flechette
-	pellets = 8 //8 x 6 = 48 Damage Potential
+	pellets = 6 //6 x 6 = 36 Damage Potential
 	variance = 25
 	custom_materials = AMMO_MATS_SHOTGUN_FLECH
 	advanced_print_req = TRUE

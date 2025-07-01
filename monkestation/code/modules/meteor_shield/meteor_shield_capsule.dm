@@ -7,4 +7,4 @@
 
 /obj/item/meteor_shield_capsule/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/satellite/meteor_shield, delete_on_use = TRUE)
+	AddComponent(/datum/component/deployable, 0.5 SECONDS, /obj/machinery/satellite/meteor_shield, delete_on_use = TRUE)
