@@ -47,6 +47,6 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)
 	playsound(src, SFX_SHATTER, 70, TRUE)
 	use(1)
-	user.visible_message(span_notice("[user] shatters the sheet of [name] on the floor, leaving behind [english_list(shards)]."), \
-		span_notice("You shatter the sheet of [name] on the floor, leaving behind [english_list(shards)]."))
+	user.visible_message(span_notice("[user] shatters the sheet of [name] on the floor, leaving [english_list(shards)]."), \
+		span_notice("You shatter the sheet of [name] on the floor, leaving [english_list(shards)]."))
 	return TRUE
