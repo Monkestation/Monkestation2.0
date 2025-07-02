@@ -57,6 +57,8 @@
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
 	if(!stored)
+		if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
+			return ..() // Borgs should not be grabbing their own modules
 		var/itemcheck = FALSE
 		for(var/storable_type in storable)
 			if(istype(atom, storable_type))
