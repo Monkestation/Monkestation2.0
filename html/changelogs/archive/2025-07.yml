@@ -1,4 +1,35 @@
 2025-07-03:
+  Absolucy:
+  - balance: Burning yellow extracts no longer electrocute and deal damage, instead
+      they cause painful disorientation for a few seconds.
+  - balance: Burning metal extracts now just applies and ignites thermite to adjacent
+      walls, instead of instantly deleting them.
+  - rscadd: Blood Brothers is no longer a conversion antag.
+  - rscdel: Midround BBs are gone, mostly because I have no clue how to make those
+      work properly midround when you need at least 2 people to sign up.
+  - balance: Tweaked the weights for antags that might spawn alongside roundstart
+      BBs, for variety's sake.
+  - balance: The curator whip disarm no longer instantly tosses the item into your
+      other hand.
+  - balance: Instead, the disarm tosses the item away from the both of you, potentially
+      into a nearby bin or clown.
+  - balance: Halved the curator's whip tripping time to 2 seconds.
+  - bugfix: Oozelings will no longer literally lose their brain upon being sacrificed
+      by a heretic.
+  - bugfix: Tracking a target who's beheaded or an oozeling core using your living
+      heart as a heretic will now actually show the brain/core sprite, instead of
+      nothing at all.
+  Absolucy, Mothblocks:
+  - balance: Instead of too much damage to the head beheading someone, it will now
+      split their skull in half. While their skull is open, you can rip out their
+      eyes with your hands. and they will spill their brain out of their head if they
+      slip. Zombies can still be beheaded, though.
+  - rscadd: You can right click on a dead body using a sharp weapon while targeting
+      their head to decapitate them after a short delay, though. More powerful weapons
+      do this quicker - a double-bladed energy sword is faster than a normal energy
+      sword, which itself is still faster than a circular saw.
+  - balance: The Path of Blades ascension will accept either a beheaded person, or
+      someone with their skull split open.
   Absolucy, ReezeBL:
   - bugfix: fixed a PDA's messenger TGUI issue with handling of destroyed recipients.
   BValon:
@@ -8,5 +39,96 @@
       the recommendation!)
   - spellcheck: industrial_lift.dm; comment - vore -> devour
   - spellcheck: archived changelogs; two instances - changed vore -> devour
+  EssentialTomato:
+  - bugfix: Fixed syndicate rebar quiver not loading the last bolt when chambered.
+  - bugfix: Fixed engineering cyborg resource dupe glitch.
+  - bugfix: Fixed cyborgs accidentally ripping out their modules.
+  - balance: (Fikou) Space Ninja's energy net uses a projectile to catch people now.
+  - rscadd: Added a roundstart crate that only contains meteor satellites if they
+      are not a current station goal.
+  F-e-r-n:
+  - balance: Gives awakened dragon a 30% reduction to all stamina damage. Go wild.
+  - balance: Makes the neck snap threshold on awakened dragon neck grab instead of
+      strangle grab.
+  - balance: 'Gives awakened dragon an instant neck grab on vulcan pinch, which can
+      be comboed with their neck snap.
+
+      :cl:'
+  Helixsix:
+  - balance: Reduces stamina drain to 5 from 15 by order of pooba -pooba wrote this
+  Ice Type, Sian:
+  - rscadd: Adds a new Syndicate Fireaxe, 12 TC from the uplink, bulky and obvious,
+      but packs a mean punch and can cut through even rwalls.
+  - rscadd: A new emote, that allows you to nod twice.
+  - qol: Fireaxes now destroy windowsills in one hit, no need to whip out a wrench.
+  Ice-Type:
+  - balance: Hardlight spears have lowered damage on hit, however have much more lethal
+      embed damage, high AP, and esword-level melee damage.
+  - balance: Commanding hardlight spears are cheaper, to fit their lower power level
+  - bugfix: Jagged bolts now are as powerful as before.
+  - code_imp: A handful of files have been pulled out of modularisation
+  MrBagHead:
+  - rscadd: The Seed Splicer's infusion process has been overhauled. Synthesizable
+      Reagents from a beaker can now be infused into a seed one by one. Each reagent
+      in the beaker has a chance to be infused into the seed, with the chance increasing
+      based on the reagent's volume (1% per 5 units).
+  - balance: Infusing seeds now causes damage. The total volume of reagents in the
+      beaker will inflict a base amount of damage to the seed (0.1 damage per unit
+      of reagent). Seeds can be destroyed if they take too much damage.
+  Shoddd:
+  - balance: boxing no longer uses rng
+  - balance: boxers can now grab people who are laying down
+  ThePooba:
+  - rscadd: added meatman
+  - rscadd: slasher now has an instant aggro grab
+  - balance: smashing open a cargo crate now has a small chance to break the shit
+      inside and if it is an ammunition box another chance to explode it 12% chance
+      ammo explosion and 33% chance for an item to be crushed
+  - image: added some supermatter icons for delamination from yogstation - not implemented
+      yet tho
+  Veth-s:
+  - rscadd: Added five new modsuits for drags event.
   flleeppyy:
   - admin: stealthed admin logs now show the key they are/were under
+  - rscadd: OOC pronouns
+  - rscadd: lemons have a unique suicide now.
+  iamcooldan:
+  - rscadd: more biogenerator items
+  - rscadd: cow cubes and pig cubes
+  - config: caps cows and pigs to 35 each
+  notghosti:
+  - balance: Anti-Magic Vacuoles now caps at a total of 5 uses
+  - rscadd: Headache syndrome is now a mixture of old viro and new patho.
+  - qol: Extrapolators secondary feature now can be used to see some minor disease
+      information.
+  - admin: spawning diseases via admin tools will now ask you for the maximum chance/multipilier
+      BEFORE asking you for its current. (Gives better reference to the intended disease
+      numbers)
+  - balance: Longevity syndrome no longer heals toxins on toxins lovers or toxin immune.
+  - balance: Longevity syndrome has received a slight healing nerf to 4 brute/burn.
+      (Was 5)
+  - balance: Longevity syndrome cure backlash has been significantly increased to
+      0.5 of damage healed (Was 0.2)
+  - balance: Regeneration Coma max multiplier has been reduced to 12. (Was 15).
+  - balance: Regeneration Coma no crit trait threshold multipilier has been reduced
+      to 9 (Was 12)
+  - balance: Regeneration Coma sleeping multiplier has been increased to 0.3, to keep
+      in line with before. (Was 0.25)
+  - balance: Regeneration Coma triggers at higher damage threshold of 80 brute&burn
+      (Was 70)
+  - bugfix: Anima syndrome will now actually create pathogenic clouds
+  - bugfix: The common cold is a 'Viral infection', not a virus. Also good for clarity
+      as they function differently in-game.
+  - bugfix: Flesh death, Dizziness, and Flesh eating will now actually function.
+  - code_imp: Extrapolators can no longer be used to retrieve variants or use scanners
+      in code
+  - rscdel: Fever, nano-symboysis, silliconisis, and voice change have been code blocked
+      for being nonfunctional. And wont show in play until fixed
+  - map: Thesues now uses AI minisat access for the minisat.
+  - map: Fixed a missing pipe in medical  Thesues
+  - map: ' Tramstation has received a expansion to pathology'
+  - map: Reorganized several pathology workplaces.
+  - map: Added pathology consoles in pathology and in medical.
+  - map: More pathology runs on their own distro.
+  throwawayuseless:
+  - qol: Increases max program limit of nanites from 20 -> 50.
