@@ -42,9 +42,9 @@
 		inserted_card = parent
 
 /datum/component/armament/Destroy(force)
-	if(inserted_card)
+	if(!QDELETED(inserted_card))
 		inserted_card.forceMove(parent_atom.drop_location())
-		inserted_card = null
+	inserted_card = null
 	return ..()
 
 /datum/component/armament/proc/context(datum/source,
