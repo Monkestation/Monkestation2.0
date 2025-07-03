@@ -205,7 +205,7 @@
 	progression_minimum = 15 MINUTES
 	cost = 5
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Because I don't think they get an autolathe or the resources to use the disk.
-  
+
 /datum/uplink_item/dangerous/efireaxe
 	name = "Syndicate Fire Axe"
 	desc = "A modernised version of the infamous fire axe, courtesy of the Gorlex Marauders. Capable of breaching almost anything, and cleaving through almost any armour, it is to be handled with care."
