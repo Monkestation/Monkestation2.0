@@ -30,7 +30,7 @@
 	payday_modifier = 1
 
 /mob/living/carbon/human/species/oni
-    race = /datum/species/oni
+	race = /datum/species/oni
 
 /datum/species/oni/get_species_description()
 	return "A species of slightly larger then average humanoids, with vibrant skin and features not too dissimilair from the oni of folklore."
