@@ -471,6 +471,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/red,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "bX" = (
@@ -510,6 +511,7 @@
 	pixel_y = 9
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/siding/red/corner,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "cg" = (
@@ -521,6 +523,10 @@
 /area/shuttle/syndicate/engineering)
 "ci" = (
 /obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/siding/red,
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "cl" = (
@@ -633,14 +639,20 @@
 	dir = 4
 	},
 /area/shuttle/syndicate/hallway)
+"fe" = (
+/obj/vehicle/ridden/argonaut,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/syndicate/engineering)
 "fk" = (
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/siding/red,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/smooth_edge,
+/obj/machinery/door/window/survival_pod{
+	dir = 1;
+	req_access = list("syndicate");
+	name = "Telecommunications Centre"
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/engineering)
 "gt" = (
 /obj/item/storage/box/handcuffs{
@@ -667,12 +679,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "jf" = (
-/obj/effect/turf_decal/siding/red,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/smooth_edge,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/item/wrench,
+/obj/item/weldingtool/largetank,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/engineering)
 "lm" = (
 /obj/machinery/door/airlock/hatch,
@@ -745,6 +759,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
+"oG" = (
+/obj/effect/turf_decal/siding/red/corner,
+/turf/open/floor/iron/dark,
+/area/shuttle/syndicate/engineering)
 "pd" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 5
@@ -765,6 +783,14 @@
 /obj/item/healthanalyzer,
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
+"sq" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 8
+	},
+/area/shuttle/syndicate/engineering)
 "st" = (
 /obj/effect/turf_decal/syndicateemblem/top/right,
 /obj/machinery/newscaster/directional/east,
@@ -778,10 +804,21 @@
 	dir = 4
 	},
 /area/shuttle/syndicate/eva)
+"sU" = (
+/obj/machinery/door/poddoor{
+	id = "smindicategarage";
+	name = "Outer Blast Door"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red,
+/area/shuttle/syndicate/engineering)
 "tG" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/bridge)
 "tM" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -912,6 +949,11 @@
 	dir = 4
 	},
 /area/shuttle/syndicate/airlock)
+"CQ" = (
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 4
+	},
+/area/shuttle/syndicate/engineering)
 "CZ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -935,11 +977,10 @@
 	req_access = list("syndicate");
 	name = "Telecommunications Centre"
 	},
-/obj/effect/turf_decal/siding/red,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/smooth_edge,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/engineering)
 "Fe" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/middle,
@@ -985,8 +1026,21 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/white/side,
 /area/shuttle/syndicate/medical)
+"Ka" = (
+/obj/machinery/door/poddoor{
+	id = "smindicategarage";
+	name = "Outer Blast Door"
+	},
+/obj/machinery/button/door/directional/north{
+	id = "smindicategarage";
+	name = "Garage door control";
+	req_access = list("syndicate")
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red,
+/area/shuttle/syndicate/engineering)
 "Km" = (
-/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/siding/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "KB" = (
@@ -1025,6 +1079,13 @@
 	},
 /turf/closed/wall/r_wall/syndicate/hull,
 /area/shuttle/syndicate/medical)
+"Nc" = (
+/obj/effect/turf_decal/siding/red,
+/obj/effect/turf_decal/siding/red/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/syndicate/engineering)
 "Nr" = (
 /obj/machinery/computer/records/security/laptop/syndie,
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -1087,6 +1148,11 @@
 	dir = 4
 	},
 /area/shuttle/syndicate/eva)
+"UH" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light/directional/west,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/syndicate/engineering)
 "UN" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -1419,7 +1485,7 @@ bn
 bx
 bm
 ch
-Km
+cg
 ce
 bn
 aa
@@ -1443,8 +1509,8 @@ bc
 bn
 by
 ch
-bi
-bi
+Jo
+CQ
 cf
 bj
 bn
@@ -1468,11 +1534,11 @@ Az
 bn
 bz
 ch
-Jo
-tM
-cg
+bi
+bi
+Km
 jf
-cs
+UH
 cy
 cE
 "}
@@ -1492,12 +1558,12 @@ nN
 nN
 bn
 bA
-ch
-bi
-bi
-ch
+oG
+sq
+tM
+Nc
 Ed
-cs
+fe
 cy
 cF
 "}
@@ -1518,11 +1584,11 @@ aB
 bn
 bB
 bW
-ch
-ch
+cs
+cs
 ci
 fk
-cs
+bi
 cy
 cG
 "}
@@ -1546,8 +1612,8 @@ bn
 bn
 bn
 bn
-bn
-bn
+Ka
+sU
 bn
 bn
 "}

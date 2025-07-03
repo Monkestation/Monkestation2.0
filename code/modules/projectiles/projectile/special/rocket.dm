@@ -64,13 +64,71 @@ among other potential differences. This granularity is helpful for things like t
 	name = "\improper 40mm tank shell"
 	desc = "mechanized warfare in spess."
 	icon_state = "LIGHTTANKSHELL"
-	damage = 50
+	damage = 60
 	armour_penetration = 100
 	dismemberment = 10
 	anti_armour_damage = 150
+	damage_walls = TRUE
 
 /obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
+
+/// 40mm HV tank shell - better then the standard 40mm, worse then the 75mm
+/obj/projectile/bullet/rocket/hvtankshell
+	name = "\improper 40mm HV tank shell"
+	desc = "mechanized warfare in spess. More killey edition"
+	icon_state = "LIGHTTANKSHELL"
+	damage = 90
+	armour_penetration = 100
+	dismemberment = 100
+	anti_armour_damage = 200
+	speed = 0.28 // hv
+	damage_walls = TRUE
+
+/obj/projectile/bullet/rocket/hvtankshell/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
+
+/// 75mm tank shell - Puts the HEAP rocket to fucking shame
+/obj/projectile/bullet/rocket/supporttankshell
+	name = "\improper 75mm tank shell"
+	desc = "Woe be to the man facing this."
+	icon_state = "SUPPORTTANKSHELL"
+	damage = 150
+	armour_penetration = 100
+	dismemberment = 100
+	anti_armour_damage = 350
+	damage_walls = TRUE
+
+/obj/projectile/bullet/rocket/supporttankshell/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, flame_range = 6, flash_range = 4, adminlog = TRUE)
+
+/// 21in torpedo, roughly
+/obj/projectile/bullet/rocket/torpenis
+	name = "\improper 21in torpedo"
+	desc = "A nearly 2 foot wide torpedo carrying hundreds of pounds of explosives, why did NT make bluespace tech to let it swim on station tiles?"
+	icon = 'icons/obj/weapons/guns/tallprojectiles.dmi'
+	icon_state = "torpenis"
+	damage = 10
+	dismemberment = -100
+	anti_armour_damage = 350
+	speed = 1.3 // LV
+	damage_walls = TRUE
+/obj/projectile/bullet/rocket/torpenis/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 10, flame_range = 12, flash_range = 16, adminlog = TRUE)
+
+/// admin only spawned vendozer
+/obj/projectile/bullet/rocket/mininuke
+	name = "\improper mininuke"
+	desc = "A torpedo with a nuclear warhead, Shouldn't see this unless an admin spawned it. Why a torpedo sprite? Fuck you thats why."
+	icon = 'icons/obj/weapons/guns/tallprojectiles.dmi'
+	icon_state = "torpenis"
+	damage = 1 // damn this does so little damage
+	dismemberment = -100
+	anti_armour_damage = 0
+	speed = 3 // derp velocity
+	damage_walls = TRUE
+/obj/projectile/bullet/rocket/mininuke/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 20, heavy_impact_range = 30, light_impact_range = 35, flame_range = 38, flash_range = 25, adminlog = TRUE)
 
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
@@ -129,3 +187,16 @@ among other potential differences. This granularity is helpful for things like t
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
+
+/// Ignifist rocket launcher - AT only, nearly non effective on crew.
+/obj/projectile/bullet/rocket/ignifist
+	name = "\improper Ignifist rocket"
+	desc = "anti mechanized warfare in spess."
+	icon_state = "atrocket"
+	damage = 25
+	armour_penetration = 100
+	dismemberment = 10
+	anti_armour_damage = 125
+
+/obj/projectile/bullet/rocket/ignifist/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = -1, flame_range = 1, flash_range = 1, adminlog = FALSE)

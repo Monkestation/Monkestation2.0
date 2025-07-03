@@ -38,3 +38,12 @@
 	icon_state = "s-casing"
 	caliber = CALIBER_22LR
 	projectile_type = /obj/projectile/bullet/peashooter
+
+// malone mg 12.7x70mm
+
+/obj/item/ammo_casing/mm127x70
+	name = "12.7x70mm bullet casing"
+	desc = "A 12.7x70mm bullet casing."
+	icon_state = "762-casing"
+	caliber = CALIBER_127X70MM
+	projectile_type = /obj/projectile/bullet/mm127x70

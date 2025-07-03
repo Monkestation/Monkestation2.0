@@ -117,3 +117,25 @@
 	ricochet_incidence_leeway = 90
 	ricochet_decay_damage = 1
 	ricochet_shoots_firer = FALSE
+
+/obj/projectile/bullet/neville
+	name ="fukin 20mm bullet"
+	speed = 0.65
+	range = 50 // Its not accurate, its fucking powerful
+	damage = 50
+	dismemberment = 25
+	armour_penetration = 85
+	var/object_damage = 65
+	var/mecha_damage = 40
+
+/obj/projectile/bullet/neville/pierce/on_hit(atom/target, blocked = 0, pierce_hit)  /// If anyone is deranged enough to use it on soft targets, you may as well let them have fun
+	if(isliving(target))
+		// If the bullet has already gone through 3 people, stop it on this hit
+		if(pierces > 3)
+			projectile_piercing = NONE
+
+			if(damage > 10) // Lets just be safe with this one
+				damage -= 10
+			armour_penetration -= 10
+
+	return ..()

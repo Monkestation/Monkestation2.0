@@ -212,3 +212,470 @@
 		/obj/item/reagent_containers/syringe = 1,
 	)
 	category = CAT_ROBOT
+
+// Kingspire parts
+
+/datum/crafting_recipe/kingspire_engine
+	always_available = FALSE
+	name = "Kingspire Mk.1 Engine"
+	result = /obj/item/mecha_parts/part/kingspire_right_arm
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH)
+	time = 30 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/cable_coil = 60,
+		/obj/item/stack/rods = 8,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/assembly/igniter = 6,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_cupola
+	always_available = FALSE
+	name = "Kingspire Mk.1 Drivers cupola"
+	result = /obj/item/mecha_parts/part/kingspire_torso
+	tool_behaviors = list(TOOL_WELDER)
+	time = 15 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/plasteel = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_transmission
+	always_available = FALSE
+	name = "Kingspire Mk.1 transmission"
+	result = /obj/item/mecha_parts/part/kingspire_left_arm
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 20 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/rods = 12,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_turret
+	always_available = FALSE
+	name = "Kingspire Mk.1 Turret"
+	result = /obj/item/mecha_parts/part/kingspire_armor
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 30 SECONDS
+	reqs = list(
+		/obj/item/gun/ballistic/automatic/malone = 1,
+		/obj/item/stack/rods = 4,
+		/obj/item/pipe = 2,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_ltrack
+	always_available = FALSE
+	name = "Kingspire Mk.1 <b>LEFT</b> Track"
+	result = /obj/item/mecha_parts/part/kingspire_left_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/rods = 16,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/conveyor = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_rtrack
+	always_available = FALSE
+	name = "Kingspire Mk.1 <b>RIGHT</b> Track"
+	result = /obj/item/mecha_parts/part/kingspire_right_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/rods = 16,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/conveyor = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_hydraulics
+	always_available = FALSE
+	name = "Kingspire Mk.1 Hydraulic equipment"
+	result = /obj/item/circuitboard/mecha/kingspire/peripherals
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 10 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 10,
+		/obj/item/stack/rods = 2,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stack/sheet/plastic = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_seats
+	always_available = FALSE
+	name = "Kingspire Mk.1 Seating"
+	result = /obj/item/circuitboard/mecha/kingspire/targeting
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/sheet/cloth = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/kingspire_radio
+	always_available = FALSE
+	name = "Kingspire Mk.1 Radio set"
+	result = /obj/item/circuitboard/mecha/kingspire/main
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/light/tube = 2,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/radio = 2,
+	)
+	category = CAT_ROBOT
+
+// T5 Percutio crafts
+
+/datum/crafting_recipe/percutio_engine
+	always_available = FALSE
+	name = "T5 Percutio Engine"
+	result = /obj/item/mecha_parts/part/percutio_right_arm
+	tool_behaviors = list(TOOL_WELDER)
+	time = 15 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/cable_coil = 40,
+		/obj/item/stack/rods = 6,
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/plasteel = 8,
+		/obj/item/assembly/igniter = 6,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_lights
+	always_available = FALSE
+	name = "T5 Percutio Headlights"
+	result = /obj/item/mecha_parts/part/percutio_left_arm
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/light/bulb = 2,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/sheet/iron = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_turret
+	always_available = FALSE
+	name = "T5 Percutio Turret"
+	result = /obj/item/mecha_parts/part/percutio_armor
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 30 SECONDS
+	reqs = list(
+		/obj/item/gun/ballistic/automatic/neville = 1,
+		/obj/item/stack/rods = 6,
+		/obj/item/pipe = 2,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_wheels
+	always_available = FALSE
+	name = "T5 Percutio Wheels"
+	result = /obj/item/mecha_parts/part/percutio_left_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/rods = 16,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/iron = 4,
+		/obj/item/stack/sheet/plastic = 20,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_transmission
+	always_available = FALSE
+	name = "T5 Percutio transmission"
+	result = /obj/item/mecha_parts/part/percutio_right_leg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/rods = 20,
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/iron = 8,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_hydraulics
+	always_available = FALSE
+	name = "T5 Percutio Hydraulic equipment"
+	result = /obj/item/circuitboard/mecha/percutio/peripherals
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 10 SECONDS
+	reqs = list(
+		/datum/reagent/fuel/oil = 20,
+		/obj/item/stack/rods = 2,
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/iron = 12,
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/plastic = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_seats
+	always_available = FALSE
+	name = "T5 Percutio Seating"
+	result = /obj/item/circuitboard/mecha/percutio/targeting
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/pipe = 6,
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/sheet/cloth = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/percutio_tank
+	always_available = FALSE
+	name = "T5 Percutio Fuel tank"
+	result = /obj/item/circuitboard/mecha/percutio/main
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/light/tube = 1,
+		/obj/item/stack/sheet/glass = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_chassis
+	name = "Balfour Stockade Carriage"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/chassis/stockade
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/rods = 20,
+		/obj/item/pipe = 4,
+		/obj/item/stack/sheet/cloth = 2,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_larm
+	name = "Balfour Stockade Gunshield"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_left_arm
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/rods = 5,
+		/obj/item/pipe = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_rarm
+	name = "Balfour Stockade Ammo fabrication device"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_right_arm
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/plastitanium = 10,
+		/obj/item/stock_parts/manipulator = 6,
+		/obj/item/pipe = 4,
+		/datum/reagent/fuel/oil = 20,
+		/datum/reagent/gunpowder = 100,
+		/obj/item/stack/sheet/bluespace_crystal = 5,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_lleg
+	name = "Balfour Stockade Wheels"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_left_leg
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 20,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/pipe = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/stockade_armor
+	name = "Balfour Stockade 75mm Cannon"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/stockade_armor
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/plastitanium = 10,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/pipe = 8,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/assembly/igniter = 1,
+	)
+	category = CAT_ROBOT
+
+// vendozer crafts, needs book, 6 parts Plus assembly
+
+/datum/crafting_recipe/vendozer
+	name = "The Vendozer"
+	always_available = FALSE
+	result = /obj/vehicle/sealed/mecha/vendozer
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 20 SECONDS
+	reqs = list(
+		/obj/item/stack/conveyor = 30,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/mecha_parts/part/vendozer_fl = 1,
+		/obj/item/mecha_parts/part/vendozer_fr = 1,
+		/obj/item/mecha_parts/part/vendozer_bl = 1,
+		/obj/item/mecha_parts/part/vendozer_br = 1,
+		/obj/item/mecha_parts/part/vendozer_eg = 1,
+		/obj/item/mecha_parts/part/vendozer_ck = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_fl
+	name = "Vendozer Front Left Armor Parts"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_fl
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	machinery = list(/obj/machinery/vending/tool  = CRAFTING_MACHINERY_CONSUME,/obj/machinery/vending/wardrobe/sec_wardrobe = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 15,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/pipe = 6,
+		/obj/item/stack/cable_coil = 30,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_fr
+	name = "Vendozer Front Right Armor Parts"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_fr
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	machinery = list(/obj/machinery/vending/cola = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 20,
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/pipe = 6,
+		/obj/item/stack/cable_coil = 30,
+		/obj/item/toy/crayon/spraycan = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_bl
+	name = "Vendozer Back Left Armor Parts"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_bl
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	machinery = list(/obj/machinery/vending/drugs = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/cable_coil = 45,
+		/obj/item/extinguisher = 2,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/light/tube = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_br
+	name = "Vendozer Back Right Armor Parts"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_br
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 10 SECONDS
+	machinery = list(/obj/machinery/vending/snack = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 30,
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/extinguisher = 2,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/light/tube = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_eg
+	name = "Vendozer Turbine Engine"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_eg
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 30 SECONDS
+	machinery = list(/obj/machinery/power/turbine/inlet_compressor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/core_rotor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/turbine_outlet/constructed = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 30,
+		/obj/item/tank/internals/oxygen = 10,
+		/obj/item/stack/sheet/plasteel = 20,
+		/obj/item/stack/cable_coil = 60,
+		/obj/item/extinguisher = 2,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/light/tube = 4,
+		/obj/item/pipe = 10,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vendozer_ck
+	name = "Vendozer Cabin"
+	always_available = FALSE
+	result = /obj/item/mecha_parts/part/vendozer_ck
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 30 SECONDS
+	machinery = list(/obj/machinery/computer/security  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/oven  = CRAFTING_MACHINERY_CONSUME)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/clothing/mask/gas = 3,
+		/obj/item/wallframe/camera = 5,
+		/obj/item/stack/sheet/rglass = 10,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/cable_coil = 20,
+		/obj/item/radio = 2,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun = 2,
+		/obj/item/light/bulb = 4,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/snazbike
+	name = "Snaz Bike"
+	always_available = TRUE
+	result = /obj/vehicle/ridden/snazbike
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
+	time = 15 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/stack/sheet/iron = 20,
+		/obj/item/stack/cable_coil = 30,
+		/obj/item/light/bulb = 1,
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/pipe = 4,
+	)
+	category = CAT_ROBOT
