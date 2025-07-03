@@ -448,7 +448,6 @@
 	amount_per_transfer_from_this = 10.5
 	volume = 10.5
 	list_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 9, /datum/reagent/drug/methamphetamine/robo = 1.5)
-=======
 /obj/item/reagent_containers/hypospray/medipen/advanced
 	name = "advanced stimulant autoinjector"
 	desc = "Contains a very large amount of an incredibly powerful stimulant, vastly increasing your movement speed and reducing stuns by a very large amount for around five minutes. Do not take if pregnant. Has a two use system."
