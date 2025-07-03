@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(blackmarket)
 	name = "Blackmarket"
-	flags = SS_BACKGROUND | SS_HIBERNATE
+	flags = SS_BACKGROUND
 	init_order = INIT_ORDER_DEFAULT
 
 	/// Descriptions for each shipping methods.
@@ -17,12 +17,6 @@ SUBSYSTEM_DEF(blackmarket)
 	var/list/obj/machinery/ltsrbt/telepads = list()
 	/// Currently queued purchases.
 	var/list/queued_purchases = list()
-
-/datum/controller/subsystem/blackmarket/PreInit()
-	. = ..()
-	hibernate_checks = list(
-		NAMEOF(src, queued_purchases),
-	)
 
 /datum/controller/subsystem/blackmarket/Initialize()
 	for(var/market in subtypesof(/datum/market) - /datum/market/auction - /datum/market/restock) //monkestation edit - MODULAR_GUNS

@@ -48,6 +48,7 @@
 #define MODLINK_FREQ_SYNDICATE "SYND"
 #define MODLINK_FREQ_CHARLIE "CHRL"
 #define MODLINK_FREQ_CENTCOM "CC"
+#define MODLINK_FREQ_MOONLIGHT "ML"
 
 /// Global list of all /datum/mod_theme
 GLOBAL_LIST_INIT(mod_themes, setup_mod_themes())

@@ -357,7 +357,7 @@
 	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
 
-	var/threatcount = 0
+	var/threatcount = judgement_criteria & JUDGE_CHILLOUT ? -5 : 0
 
 	//Lasertag bullshit
 	if(lasercolor)
@@ -990,17 +990,14 @@
 /mob/living/carbon/human/species/oozeling
 	race = /datum/species/oozeling
 
-/mob/living/carbon/human/species/jelly
-	race = /datum/species/jelly
+/mob/living/carbon/human/species/oozeling/stargazer
+	race = /datum/species/oozeling/stargazer
 
-/mob/living/carbon/human/species/jelly/slime
-	race = /datum/species/jelly/slime
+/mob/living/carbon/human/species/oozeling/slime
+	race = /datum/species/oozeling/slime
 
-/mob/living/carbon/human/species/jelly/stargazer
-	race = /datum/species/jelly/stargazer
-
-/mob/living/carbon/human/species/jelly/luminescent
-	race = /datum/species/jelly/luminescent
+/mob/living/carbon/human/species/oozeling/luminescent
+	race = /datum/species/oozeling/luminescent
 
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard

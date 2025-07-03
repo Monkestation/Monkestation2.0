@@ -135,6 +135,7 @@
 	// Yes this code is the same as normal chameleon glasses, but we don't
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
 	. = ..()

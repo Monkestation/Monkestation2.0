@@ -40,6 +40,9 @@
 	/// The typepath of the gas this tank should be filled with.
 	var/gas_type = null
 
+	/// Cached list containing [icon, icon_state] of all gases inside
+	var/list/cached_window_visuals
+
 	///Reference to the gas mix inside the tank
 	var/datum/gas_mixture/air_contents
 
@@ -299,7 +302,7 @@
 
 /obj/machinery/atmospherics/components/tank/update_appearance()
 	. = ..()
-	refresh_window()
+	refresh_window(force = TRUE)
 
 /obj/machinery/atmospherics/components/tank/update_overlays()
 	. = ..()
@@ -311,9 +314,19 @@
 
 /obj/machinery/atmospherics/components/tank/update_greyscale()
 	. = ..()
-	refresh_window()
+	refresh_window(force = TRUE)
 
-/obj/machinery/atmospherics/components/tank/proc/refresh_window()
+/obj/machinery/atmospherics/components/tank/proc/get_gas_visuals()
+	. = list()
+	for(var/obj/effect/overlay/gas/gas as anything in air_contents?.return_visuals(get_turf(src)))
+		.[gas.icon] = gas.icon_state
+
+/obj/machinery/atmospherics/components/tank/proc/refresh_window(force = FALSE)
+	var/list/visuals = get_gas_visuals()
+	if(!force && visuals ~= cached_window_visuals)
+		return
+	cached_window_visuals = visuals
+
 	cut_overlay(window)
 
 	if(!air_contents)
@@ -327,8 +340,8 @@
 		alpha_filter = filter(type="alpha", icon = icon('icons/obj/atmospherics/stationary_canisters.dmi', "window-bg"))
 
 	var/list/new_underlays = list()
-	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
-		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
+	for(var/icon in visuals)
+		var/image/new_underlay = image(icon, icon_state = visuals[icon], layer = FLOAT_LAYER)
 		new_underlay.filters = alpha_filter
 		new_underlays += new_underlay
 

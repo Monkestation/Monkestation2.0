@@ -1,0 +1,9 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Thesues now uses AI minisat access for the minisat."
+  - map: "Fixed a missing pipe in medical  Thesues"
+  - map: " Tramstation has received a expansion to pathology"
+  - map: "Reorganized several pathology workplaces."
+  - map: "Added pathology consoles in pathology and in medical."
+  - map: "More pathology runs on their own distro."

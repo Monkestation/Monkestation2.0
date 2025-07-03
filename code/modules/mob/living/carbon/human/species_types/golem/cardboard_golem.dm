@@ -3,7 +3,7 @@
 	id = SPECIES_GOLEM_CARDBOARD
 	prefix = "Cardboard"
 	special_names = list("Box")
-	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself. Cardboard makes a poor building material for tongues, so you'll have difficulty speaking."
+	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself."
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_NO_UNDERWEAR,
@@ -21,7 +21,7 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_NOBLOOD,
 	)
-	mutanttongue = null
+	//mutanttongue = null
 	fixed_mut_color = null
 	armor = 25
 	burnmod = 1.25
@@ -40,7 +40,7 @@
 /datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	. = ..()
 	if(user != H)
-		return FALSE //forced reproduction is rape.
+		return FALSE
 	if(istype(I, /obj/item/stack/sheet/cardboard))
 		var/obj/item/stack/sheet/cardboard/C = I
 		if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork

@@ -25,43 +25,6 @@
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench(src)
 
-//Back-up space suit
-/obj/item/storage/box/syndie_kit/space_suit
-	name = "boxed space suit and helmet"
-	desc = "A sleek, sturdy box used to hold an emergency spacesuit."
-	icon_state = "syndiebox"
-	illustration = "syndiesuit"
-
-/obj/item/storage/box/syndie_kit/space_suit/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.max_slots = 2
-	atom_storage.set_holdable(list(
-		/obj/item/clothing/head/helmet/space/syndicate,
-		/obj/item/clothing/suit/space/syndicate,
-		))
-
-/obj/item/storage/box/syndie_kit/space_suit/PopulateContents()
-	switch(pick(list("red", "green", "dgreen", "blue", "orange", "black")))
-		if("green")
-			new /obj/item/clothing/head/helmet/space/syndicate/green(src)
-			new /obj/item/clothing/suit/space/syndicate/green(src)
-		if("dgreen")
-			new /obj/item/clothing/head/helmet/space/syndicate/green/dark(src)
-			new /obj/item/clothing/suit/space/syndicate/green/dark(src)
-		if("blue")
-			new /obj/item/clothing/head/helmet/space/syndicate/blue(src)
-			new /obj/item/clothing/suit/space/syndicate/blue(src)
-		if("red")
-			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			new /obj/item/clothing/suit/space/syndicate(src)
-		if("orange")
-			new /obj/item/clothing/head/helmet/space/syndicate/orange(src)
-			new /obj/item/clothing/suit/space/syndicate/orange(src)
-		if("black")
-			new /obj/item/clothing/head/helmet/space/syndicate/black(src)
-			new /obj/item/clothing/suit/space/syndicate/black(src)
-
 //Spy
 /obj/item/clothing/suit/jacket/det_suit/noir/armoured
 	armor_type = /datum/armor/heister

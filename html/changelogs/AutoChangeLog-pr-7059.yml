@@ -1,0 +1,6 @@
+author: "iamcooldan"
+delete-after: True
+changes:
+  - rscadd: "more biogenerator items"
+  - rscadd: "cow cubes and pig cubes"
+  - config: "caps cows and pigs to 35 each"

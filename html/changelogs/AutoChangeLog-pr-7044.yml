@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "The curator whip disarm no longer instantly tosses the item into your other hand."
+  - balance: "Instead, the disarm tosses the item away from the both of you, potentially into a nearby bin or clown."
+  - balance: "Halved the curator's whip tripping time to 2 seconds."
