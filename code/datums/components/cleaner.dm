@@ -96,8 +96,8 @@
 	ADD_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
 	// We need to update our planes on overlay changes
 	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cleaning_target_moved))
-	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
-	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
+	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE, appearance_flags = RESET_COLOR) // Monkestation edit BLOOD_DATUM
+	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE, appearance_flags = RESET_COLOR)  // Monkestation edit BLOOD_DATUM
 	if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
 		target.add_overlay(high_bubble)
 	else if(target.plane == low_bubble.plane)
@@ -121,14 +121,17 @@
 		clean_succeeded = TRUE
 		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(clean_target)
-			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
-				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
+			var/exp_gained = 0
+			for(var/obj/effect/decal/cleanable/cleanable_decal in target.contents + target) //it's important to do this before you wash all of the cleanables off
+				exp_gained += round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1)
 			if(target.wash(cleaning_strength))
-				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
+				exp_gained += round(CLEAN_SKILL_GENERIC_WASH_XP, 1)
+			if(exp_gained)
+				user.mind?.adjust_experience(/datum/skill/cleaning, exp_gained)
 		if(isitem(target))
 			var/obj/item/item= target
 			if(length(item.viruses))
-				for(var/datum/disease/advanced/D as anything in item.viruses)
+				for(var/datum/disease/acute/D as anything in item.viruses)
 					item.remove_disease(D)
 
 	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded)
@@ -140,16 +143,18 @@
 	REMOVE_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
 
 /datum/component/cleaner/proc/cleaning_target_moved(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+
 	if(same_z_layer)
 		return
 	// First, get rid of the old overlay
-	var/mutable_appearance/old_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, GAME_PLANE)
-	var/mutable_appearance/old_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, ABOVE_GAME_PLANE)
+	var/mutable_appearance/old_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, GAME_PLANE, appearance_flags = RESET_COLOR) // NON-MODULE CHANGE
+	var/mutable_appearance/old_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, ABOVE_GAME_PLANE, appearance_flags = RESET_COLOR) // NON-MODULE CHANGE
 	source.cut_overlay(old_low_bubble)
 	source.cut_overlay(old_high_bubble)
 
 	// Now, add the new one
-	var/mutable_appearance/new_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, GAME_PLANE)
-	var/mutable_appearance/new_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, ABOVE_GAME_PLANE)
+	var/mutable_appearance/new_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, GAME_PLANE, appearance_flags = RESET_COLOR) // NON-MODULE CHANGE
+	var/mutable_appearance/new_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, ABOVE_GAME_PLANE, appearance_flags = RESET_COLOR) // NON-MODULE CHANGE
 	source.add_overlay(new_low_bubble)
 	source.add_overlay(new_high_bubble)

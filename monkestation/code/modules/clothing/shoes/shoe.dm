@@ -67,6 +67,12 @@
 	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
 	icon_state = "civilprotection_boots"
+
+/obj/item/clothing/shoes/civilprotection_boots/Initialize(mapload)//copied from jackboots (should these be a subtype of jackboots?)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddComponent(/datum/component/shoesteps/combine_boot_sounds)
+
 //START HEELS
 
 /obj/item/clothing/shoes/heels
@@ -144,5 +150,14 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/shoes/ballheels
+	name = "ball heels"
+	desc = "A stylish pair of footwear that are difficult to walk in, somehow you are expected to dance in these."
+	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
+	icon_state = "ballheels"
+	inhand_icon_state = "ballheels"
+	can_be_tied = FALSE
 
 //END HEELS

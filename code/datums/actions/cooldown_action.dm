@@ -119,7 +119,7 @@
 		return
 	build_all_button_icons()
 	if(next_use_time > world.time)
-		START_PROCESSING(SSfastprocess, src)
+		START_PROCESSING(SScooldown_actions, src)
 	RegisterSignal(granted_to, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(handle_melee_attack))
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Grant(granted_to)
@@ -172,7 +172,7 @@
 	else
 		next_use_time = world.time + cooldown_time
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SScooldown_actions, src)
 
 /// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
 /// Will use default cooldown time if an override is not specified
@@ -222,7 +222,7 @@
 	return PreActivate(user)
 
 /// Intercepts client owner clicks to activate the ability
-/datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/proc/InterceptClickOn(mob/living/user, params, atom/target)
 	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(!target)
@@ -233,8 +233,8 @@
 
 	// And if we reach here, the action was complete successfully
 	if(unset_after_click)
-		unset_click_ability(caller, refund_cooldown = FALSE)
-	caller.next_click = world.time + click_cd_override
+		unset_click_ability(user, refund_cooldown = FALSE)
+	user.next_click = world.time + click_cd_override
 
 	return TRUE
 
@@ -266,9 +266,9 @@
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 /datum/action/cooldown/process()
-	if(!owner || (next_use_time - world.time) <= 0)
+	if(QDELETED(owner) || (next_use_time - world.time) <= 0)
 		build_all_button_icons(UPDATE_BUTTON_STATUS)
-		STOP_PROCESSING(SSfastprocess, src)
+		STOP_PROCESSING(SScooldown_actions, src)
 		return
 
 	build_all_button_icons(UPDATE_BUTTON_STATUS)

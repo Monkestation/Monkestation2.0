@@ -18,6 +18,12 @@
 	. = ..()
 	src.board_size = board_size
 
+/datum/hacking_minigame/Destroy(force)
+	for(var/list/section in board)
+		QDEL_LIST(section)
+	LAZYNULL(board)
+	return ..()
+
 /**
  * checks if the game is finished
  *
@@ -260,6 +266,10 @@
 /datum/hacking_minigame_piece/New(datum/hacking_minigame/_game)
 	. = ..()
 	game = _game
+
+/datum/hacking_minigame_piece/Destroy(force)
+	game = null
+	return ..()
 
 ///Returns value of pass_in + pass_out
 /datum/hacking_minigame_piece/proc/get_dir_val()

@@ -51,6 +51,8 @@
 	if(obliteration_range_flatten_override)
 		obliteration_range_flatten = obliteration_range_flatten_override
 
+	SSpoints_of_interest.make_point_of_interest(src)
+
 	START_PROCESSING(SSfastprocess, src)
 	update_appearance()
 	if(scale_x || scale_y)
@@ -64,6 +66,7 @@
 	soundloop = new(src, TRUE)
 
 /obj/effect/sunbeam/Destroy(force)
+	target_atom = null
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -75,7 +78,7 @@
 		. += beam_overlay
 
 /obj/effect/sunbeam/process(seconds_per_tick)
-	if(target_atom && COOLDOWN_FINISHED(src, movement_delay))
+	if(!QDELETED(target_atom) && COOLDOWN_FINISHED(src, movement_delay))
 		step_towards(src, target_atom)
 		COOLDOWN_START(src, movement_delay, movement_cooldown)
 
@@ -152,6 +155,7 @@
 	weight = 0
 	category = EVENT_CATEGORY_SPACE
 	description = "Forces the ICARUS weapons system to fire a sunbeam at a random location. Causing massive devistation to the station."
+	track = EVENT_TRACK_OBJECTIVES
 
 /datum/round_event/icarus_sunbeam
 	announce_when = 1 // Instant announcement
@@ -162,7 +166,7 @@
 
 /datum/round_event/icarus_sunbeam/start()
 	var/startside = pick(GLOB.cardinals)
-	var/turf/end_turf = get_edge_target_turf(get_safe_random_station_turf(), turn(startside, 180))
+	var/turf/end_turf = get_edge_target_turf(get_safe_random_station_turf_equal_weight(), turn(startside, 180))
 	var/turf/start_turf = spaceDebrisStartLoc(startside, end_turf.z)
 	new /obj/effect/sunbeam(start_turf, end_turf)
 

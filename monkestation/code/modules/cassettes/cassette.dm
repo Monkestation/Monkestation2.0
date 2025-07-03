@@ -1,7 +1,7 @@
 
 /obj/item/device/cassette_tape
 	name = "Debug Cassette Tape"
-	desc = "You shouldn't be seeing this!"
+	desc = "You shouldn't be seeing this! If you are, ask an admin to spawn you a new cassette tape."
 	icon = 'monkestation/code/modules/cassettes/icons/walkman.dmi'
 	icon_state = "cassette_flip"
 	w_class = WEIGHT_CLASS_SMALL
@@ -39,11 +39,36 @@
 		else if(random)
 			id = pick(GLOB.approved_ids)
 
+	var/loaded_successfully = load_current_id()
+	if(random && !loaded_successfully)
+		var/list/approved_ids = GLOB.approved_ids.Copy()
+		var/attempts_left = 2
+		while(!loaded_successfully && length(approved_ids) && attempts_left > 0)
+			id = pick_n_take(approved_ids)
+			loaded_successfully = load_current_id()
+			attempts_left--
+
+	if(!loaded_successfully)
+		// this isn't working
+		// notify the admins so they know in case of an ahelp
+		message_admins("A cassette tape at [ADMIN_VERBOSEJMP(src)] has [random ? "repeatedly " : ""]failed to load data from the cassette storage. Please check the runtime logs for more information (search for \"cassette tape data\").")
+		// we probably don't want to try to spawn a new cassette, as that might cause an infinite
+		// loop in extreme circumstances (i.e. if no cassettes exist)
+
+/// Attempts to load the JSON associated with the current ID. Returns a boolean - TRUE if the load
+/// was successful, and FALSE if it wasn't.
+/obj/item/device/cassette_tape/proc/load_current_id()
 	var/file = file("data/cassette_storage/[id].json")
 	if(!fexists(file))
-		return
+		stack_trace("Failed to load cassette tape data for ID '[id]': Cassette storage does not have a matching JSON file.")
+		return FALSE
 
-	var/list/data = json_decode(file2text(file))
+	var/file_text = file2text(file)
+	if(!rustg_json_is_valid(file_text))
+		stack_trace("Failed to load cassette tape data for ID '[id]': The loaded file contains invalid JSON.")
+		return FALSE
+
+	var/list/data = json_decode(file_text)
 	name = data["name"]
 	cassette_desc_string = data["desc"]
 	icon_state = data["side1_icon"]
@@ -57,6 +82,8 @@
 
 	update_appearance()
 
+	return TRUE
+
 /obj/item/device/cassette_tape/attack_self(mob/user)
 	..()
 	icon_state = flipped ? side1_icon : side2_icon
@@ -68,7 +95,7 @@
 	desc = cassette_desc_string
 	desc += "\n"
 	if(!approved_tape)
-		desc += span_warning("It appears to be a bootleg tape, quality is not a guarentee!\n")
+		desc += span_warning("It appears to be a bootleg tape, quality is not a guarantee!\n")
 	if(author_name)
 		desc += span_notice("Mixed by [author_name]\n")
 

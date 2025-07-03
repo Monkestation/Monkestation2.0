@@ -101,7 +101,7 @@
 		chat_text_border_icon = preview,
 	)
 	if(chosen_one)
-		clonee.key = chosen_one.key
+		clonee.PossessByPlayer(chosen_one.key)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonee.grab_ghost()
@@ -130,7 +130,7 @@
 		mob_occupant.mind.add_antag_datum(antag_object)
 		mob_occupant.grant_language(/datum/language/codespeak) // So you don't have to remember to grant each and every identical clone codespeak with the manual.
 		mob_occupant.remove_blocked_language(/datum/language/codespeak, source=LANGUAGE_ALL) // All the effects the codespeak manual would have.
-		ADD_TRAIT(mob_occupant, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
+		ADD_TRAIT(mob_occupant.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
 		var/obj/item/implant/radio/syndicate/imp = new(src)
 		imp.implant(mob_occupant)
 		mob_occupant.faction |= ROLE_SYNDICATE
@@ -254,7 +254,7 @@
 		if(istype(P.buffer, /obj/machinery/clonepod/experimental))
 			if(get_area(P.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				P.set_buffer(null)
 				return
 			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/clonepod/experimental/pod = P.buffer
@@ -262,8 +262,8 @@
 				pod.connected.DetachCloner(pod)
 			AttachCloner(pod)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			P.set_buffer(src)
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
 		return
 	else
 		return ..()
@@ -381,7 +381,7 @@
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
-		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
+		scantemp = "<font class='bad'>Subject's DNA is too damaged to initiate cloning procedure.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 
@@ -404,6 +404,6 @@
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 	else
-		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, dna.blood_type, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(mob_occupant.real_name, dna.unique_identity, dna.mutation_index, null, dna.human_blood_type, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)

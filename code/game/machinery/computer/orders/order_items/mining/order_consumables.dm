@@ -9,14 +9,50 @@
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	cost_per_order = 1000
 
-/datum/orderable_item/consumables/medkit
+/datum/orderable_item/consumables/luxury_pen/oozling //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozling
+	cost_per_order = 1000
+
+/datum/orderable_item/consumables/survival_pen/synthcare //monkestation edit CHEAPER THAN SURVIVAL PEN BECAUSE IT DOES NOT HEAL NEARLY AS MUCH AS A SURVIVAL PEN
+	item_path = /obj/item/reagent_containers/hypospray/medipen/synthcare
+	cost_per_order = 250
+
+/datum/orderable_item/consumables/luxury_pen/synthcare //monkestation edit WAY CHEAPER THAN A LUX PEN BECAUSE DOES NOT INCLUDE ALL THE FANCY CHEMS AND HAS DEVESTATING OVERDOSE EFFECTS
+	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/synthcare
+	cost_per_order = 750
+
+/datum/orderable_item/consumables/temperature //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature
+	cost_per_order = 200
+
+/datum/orderable_item/consumables/magnetic //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
+	cost_per_order = 250
+
+/datum/orderable_item/consumables/speed //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/speed
+	cost_per_order = 550
+
+/datum/orderable_item/consumables/penthrite //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/penthrite
+	cost_per_order = 750
+
+/datum/orderable_item/consumables/medkit_brute
 	item_path = /obj/item/storage/medkit/brute
 	cost_per_order = 600
 
 /datum/orderable_item/consumables/medkit_fire
 	item_path = /obj/item/storage/medkit/fire
 	desc = "For emergency magmatic burn relief."
-	cost_per_order = 700
+	cost_per_order = 600
+
+/datum/orderable_item/consumables/medkit_basic
+	item_path = /obj/item/storage/medkit/regular
+	cost_per_order = 400
+
+/datum/orderable_item/consumables/synthcaresurgeon //monke edit, basically a medkit implant for synthetics
+	item_path = /obj/item/autosurgeon/toolset/synthcare
+	cost_per_order = 750
 
 /datum/orderable_item/consumables/whiskey
 	item_path = /obj/item/reagent_containers/cup/glass/bottle/whiskey

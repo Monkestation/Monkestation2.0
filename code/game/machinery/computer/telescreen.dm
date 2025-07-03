@@ -12,6 +12,7 @@
 	light_power = 0
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
+	projectiles_pass_chance = 100
 
 /obj/item/wallframe/telescreen
 	name = "telescreen frame"
@@ -42,8 +43,19 @@
 	circuit = null
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	frame_type = /obj/item/wallframe/telescreen/entertainment
+	/// Virtual radio inside of the entertainment monitor to broadcast audio
+	var/obj/item/radio/entertainment/speakers/speakers
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
+
+/obj/machinery/computer/security/telescreen/entertainment/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/computer/security/telescreen/entertainment/CtrlClick(mob/user)
+	. = ..()
+	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
+	speakers.toggle_mute()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
@@ -55,19 +67,78 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
+	find_and_hang_on_wall()
+	register_context()
+	RegisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, PROC_REF(on_network_broadcast_updated))
+	speakers = new(src)
 
-// Bypass clickchain to allow humans to use the telescreen from a distance
-/obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
-	SIGNAL_HANDLER
+/obj/machinery/computer/security/telescreen/entertainment/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_NETWORK_BROADCAST_UPDATED)
+	QDEL_NULL(speakers)
+	return ..()
 
-	if(!network.len)
-		balloon_alert(usr, "nothing on TV!")
+/obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
+	. = ..()
+	. += length(network) ? span_notice("The TV is broadcasting something!") : span_notice("<i>There's nothing on TV.</i>")
+	. += span_notice("The volume is currently [speakers.should_be_listening ? "on" : "off"]")
+
+/obj/machinery/computer/security/telescreen/entertainment/ui_state(mob/user)
+	return GLOB.always_state
+
+// Snowflake ui status to allow mobs to watch TV from across the room,
+// but only allow adjacent mobs / tk users / silicon to change the channel
+/obj/machinery/computer/security/telescreen/entertainment/ui_status(mob/living/user, datum/ui_state/state)
+	if(!can_watch_tv(user))
+		return UI_CLOSE
+	if(!isliving(user))
+		return isAdminGhostAI(user) ? UI_INTERACTIVE : UI_UPDATE
+	if(user.stat >= SOFT_CRIT)
+		return UI_UPDATE
+
+	var/can_range = FALSE
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(user, src))
+			can_range = TRUE
+	if(user.has_unlimited_silicon_privilege || (user.interaction_range && user.interaction_range >= get_dist(user, src)))
+		can_range = TRUE
+
+	if((can_range || user.CanReach(src)) && ISADVANCEDTOOLUSER(user))
+		if(user.incapacitated())
+			return UI_UPDATE
+		if(!can_range && user.can_hold_items() && (user.usable_hands <= 0 || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)))
+			return UI_UPDATE
+		return UI_INTERACTIVE
+	return UI_UPDATE
+
+/obj/machinery/computer/security/telescreen/entertainment/Click(location, control, params)
+	if(world.time <= usr.next_click + 1)
+		return // just so someone can't turn an auto clicker on and spam tvs
+
+	. = ..()
+	if(!can_watch_tv(usr))
 		return
-
+	if((!length(network) && !Adjacent(usr)) || LAZYACCESS(params2list(params), SHIFT_CLICK)) // let people examine
+		return
+	// Lets us see the tv regardless of click results
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), usr)
 
-///Sets the monitor's icon to the selected state, and says an announcement
+/obj/machinery/computer/security/telescreen/entertainment/proc/can_watch_tv(mob/living/watcher)
+	if(!is_operational)
+		return FALSE
+	if((watcher.sight & SEE_OBJS) || watcher.has_unlimited_silicon_privilege)
+		if(get_dist(watcher, src) > 7)
+			return FALSE
+	else
+		if(!can_see(watcher, src, 7))
+			return FALSE
+	if(watcher.is_blind())
+		return FALSE
+	if(!isobserver(watcher) && watcher.stat >= UNCONSCIOUS)
+		return FALSE
+	return TRUE
+
+/// Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
 		icon_state = icon_state_on
@@ -77,7 +148,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		say(announcement)
 
 /// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
-/obj/machinery/computer/security/telescreen/entertainment/proc/update_shows(is_show_active, tv_show_id, announcement)
+/obj/machinery/computer/security/telescreen/entertainment/proc/on_network_broadcast_updated(datum/source, tv_show_id, is_show_active, announcement)
+	SIGNAL_HANDLER
 	if(!network)
 		return
 
@@ -86,7 +158,40 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		network -= tv_show_id
 
-	notify(network.len, announcement)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers))
+	notify(length(network), announcement)
+
+/**
+ * Adds a camera network to all entertainment monitors.
+ *
+ * * camera_net - The camera network ID to add to the monitors.
+ * * announcement - Optional, what announcement to make when the show starts.
+ */
+/proc/start_broadcasting_network(camera_net, announcement)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, camera_net, TRUE, announcement)
+
+/**
+ * Removes a camera network from all entertainment monitors.
+ *
+ * * camera_net - The camera network ID to remove from the monitors.
+ * * announcement - Optional, what announcement to make when the show ends.
+ */
+/proc/stop_broadcasting_network(camera_net, announcement)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, camera_net, FALSE, announcement)
+
+/**
+ * Sets the camera network status on all entertainment monitors.
+ * A way to force a network to a status if you are unsure of the current state.
+ *
+ * * camera_net - The camera network ID to set on the monitors.
+ * * is_show_active - Whether the show is active or not.
+ * * announcement - Optional, what announcement to make.
+ * Note this announcement will be made regardless of the current state of the show:
+ * This means if it's currently on and you set it to on, the announcement will still be made.
+ * Likewise, there's no way to differentiate off -> on and on -> off, unless you handle that yourself.
+ */
+/proc/set_network_broadcast_status(camera_net, is_show_active, announcement)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NETWORK_BROADCAST_UPDATED, camera_net, is_show_active, announcement)
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"
@@ -271,5 +376,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	is_show_active = !is_show_active
 	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
 	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
-		tv.update_shows(is_show_active, tv_network_id, announcement)
+	set_network_broadcast_status(tv_network_id, is_show_active, announcement)

@@ -9,8 +9,8 @@ SUBSYSTEM_DEF(explosions)
 	name = "Explosions"
 	init_order = INIT_ORDER_EXPLOSIONS
 	priority = FIRE_PRIORITY_EXPLOSIONS
-	wait = 1
-	flags = SS_TICKER|SS_NO_INIT
+	wait = 0
+	flags = SS_TICKER | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_lowturf = 0
@@ -40,6 +40,18 @@ SUBSYSTEM_DEF(explosions)
 
 	var/currentpart = SSAIR_PIPENETS
 
+/datum/controller/subsystem/explosions/PreInit(start_timeofday)
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, lowturf),
+		NAMEOF(src, medturf),
+		NAMEOF(src, highturf),
+		NAMEOF(src, flameturf),
+		NAMEOF(src, throwturf),
+		NAMEOF(src, low_mov_atom),
+		NAMEOF(src, med_mov_atom),
+		NAMEOF(src, high_mov_atom),
+	)
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
 	msg += "C:{"
@@ -173,7 +185,7 @@ SUBSYSTEM_DEF(explosions)
  * * flame_range: Flame range. Equal to the equivalent of the light impact range multiplied by this value.
  * * flash_range: The range at which the explosion flashes people. Equal to the equivalent of the light impact range multiplied by this value.
  * * adminlog: Whether to log the explosion/report it to the administration.
- * * ignorecap: Whether to ignore the relevant bombcap. Defaults to FALSE.
+ * * ignorecap: Whether to ignore the relevant bombcap. Defaults to TRUE. Re: ignorecap = TRUE. If you call dyn_explosion, ensure that you set it false or want it to ignore cap.
  * * flame_range: The range at which the explosion should produce hotspots.
  * * silent: Whether to generate/execute sound effects.
  * * smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
@@ -324,6 +336,10 @@ SUBSYSTEM_DEF(explosions)
 	var/who_did_it = "N/A"
 	var/who_did_it_game_log = "N/A"
 
+	//monkestation edit start
+	var/mob/bomber_log_person = null // I hate this. log_bomber does not take names, it takes the mob as an input.
+	//monkestation edit end
+
 	// Projectiles have special handling. They rely on a firer var and not fingerprints. Check special cases for firer being
 	// mecha, mob or an object such as the gun itself. Handle each uniquely.
 	if(isprojectile(explosion_cause))
@@ -337,14 +353,17 @@ SUBSYSTEM_DEF(explosions)
 				for(var/mob/driver in drivers)
 					who_did_it += " [ADMIN_LOOKUPFLW(driver)]"
 					who_did_it_game_log = " [key_name(driver)]"
+					bomber_log_person = driver
 				who_did_it += "\]"
 				who_did_it_game_log += "\]"
 		else if(ismob(fired_projectile.firer))
 			who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer)]\]"
 			who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer)]\]"
+			bomber_log_person = fired_projectile.firer
 		else
 			who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer.fingerprintslast)]\]"
 			who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer.fingerprintslast)]\]"
+			bomber_log_person = fired_projectile.firer.fingerprintslast
 	// Otherwise if the explosion cause is an atom, try get the fingerprints.
 	else if(istype(explosion_cause))
 		who_did_it = ADMIN_LOOKUPFLW(explosion_cause.fingerprintslast)
@@ -353,10 +372,11 @@ SUBSYSTEM_DEF(explosions)
 	if(adminlog)
 		message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
-
 	//monkestation edit start
-	deadchat_broadcast("Explosion with size: Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range].", \
+		deadchat_broadcast("Explosion with size: Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range].", \
 						turf_target = epicenter, message_type = DEADCHAT_ANNOUNCEMENT)
+		if(bomber_log_person)
+			log_bomber(bomber_log_person, "Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
 	//monkestation edit end
 
 	var/x0 = epicenter.x
@@ -667,8 +687,10 @@ SUBSYSTEM_DEF(explosions)
 				new /obj/effect/hotspot(T) //Mostly for ambience!
 		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
+		/*
 		if (low_turf.len || med_turf.len || high_turf.len)
 			Master.laggy_byond_map_update_incoming()
+		*/
 
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
 		currentpart = SSEXPLOSIONS_THROWS

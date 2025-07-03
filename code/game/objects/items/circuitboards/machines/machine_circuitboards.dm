@@ -23,7 +23,7 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/bsa/middle
 	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 20,
+		/obj/item/stack/ore/bluespace_crystal = 10,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/dna_vault
@@ -414,6 +414,15 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
+/obj/item/circuitboard/machine/portagrav
+	name = "Portable Gravity Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/portagrav
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+		/obj/item/stack/sheet/glass = 1)
+
 //Generic
 /obj/item/circuitboard/machine/component_printer
 	name = "\improper Component Printer (Machine Board)"
@@ -636,11 +645,18 @@
 		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
 		/obj/machinery/vending/tool = "YouTool",
 		/obj/machinery/vending/custom = "Custom Vendor",
+		// monkestation start
+		/obj/machinery/vending/access/command = "Command Outfitting Station",
+		/obj/machinery/vending/barbervend = "Fab-O-Vend",
 		/obj/machinery/vending/imported = "NT Sustenance Supplier",
-		/obj/machinery/vending/imported/yangyu = "Fudobenda",
 		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
 		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",
-		/obj/machinery/vending/plushvendor = "Plushie Vendor",)
+		/obj/machinery/vending/imported/yangyu = "Fudobenda",
+		/obj/machinery/vending/mechcomp = "ThinkTronic MechComp Dispenser",
+		/obj/machinery/vending/plushvendor = "Plushie Vendor",
+		/obj/machinery/vending/wardrobe/xeno_wardrobe = "Xeno_Drobe",
+		// monkestation end
+	)
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
 	var/static/list/display_vending_names_paths
@@ -942,7 +958,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/manipulator = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger"
@@ -1016,7 +1033,7 @@
 	build_path = /obj/machinery/dna_scannernew
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)
@@ -1040,7 +1057,7 @@
 	req_components = list()
 
 /obj/item/circuitboard/machine/botpad
-	name = "Bot launchpad"
+	name = "Bot Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/botpad
 	req_components = list()
@@ -1240,6 +1257,14 @@
 	name = "Recycler"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/recycler
+	req_components = list(
+		/datum/stock_part/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/shipbreaker
+	name = "Shipbreaking Recycler"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/shipbreaker
 	req_components = list(
 		/datum/stock_part/manipulator = 1)
 	needs_anchored = FALSE
@@ -1505,3 +1530,30 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/navbeacon
 	req_components = list()
+
+/obj/item/circuitboard/machine/scrubber
+	name = "Portable Air Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+	)
+
+/obj/item/circuitboard/machine/pump
+	name = "Portable Air Pump"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pump
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/vent = 1,
+	)
+
+/obj/item/circuitboard/machine/pipe_scrubber
+	name = "Portable Pipe Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pipe_scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/trinary/flippable/filter = 1,
+	)

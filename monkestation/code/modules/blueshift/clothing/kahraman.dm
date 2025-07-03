@@ -14,13 +14,21 @@
 	. = ..()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
 
-/obj/item/storage/backpack/industrial/frontier_colonist/satchel
+/obj/item/storage/backpack/satchel/eng/frontier_colonist
 	name = "frontier satchel"
 	desc = "A rugged satchel often used by settlers and explorers. Holds less of your equipment than a backpack will."
+	icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing.dmi'
 	icon_state = "satchel"
+	worn_icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	worn_icon_state = "satchel"
+	inhand_icon_state = "backpack"
 
-/obj/item/storage/backpack/industrial/frontier_colonist/messenger
+/obj/item/storage/backpack/satchel/eng/frontier_colonist/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
+
+/obj/item/storage/backpack/satchel/eng/frontier_colonist/messenger
 	name = "frontier messenger bag"
 	desc = "A rugged messenger bag often used by settlers and explorers. Holds less of your equipment than a backpack will."
 	icon_state = "messenger"
@@ -135,7 +143,7 @@
 			HELMET_FLAGS= list(
 				UNSEALED_LAYER = null,
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
@@ -277,9 +285,9 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	worn_icon_state = "flak"
 	body_parts_covered = CHEST
-	cold_protection = CHEST|GROIN
+
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN
+
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/colonist_armor
 	resistance_flags = NONE
@@ -361,9 +369,9 @@
 	worn_icon_state = "gloves"
 	greyscale_colors = "#3a373e"
 	siemens_coefficient = 0.25 // Doesn't insulate you entirely, but makes you a little more resistant
-	cold_protection = HANDS
+
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
+
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	clothing_traits = list(TRAIT_QUICK_CARRY)

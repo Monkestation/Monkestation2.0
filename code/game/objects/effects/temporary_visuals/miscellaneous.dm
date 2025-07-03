@@ -13,10 +13,10 @@
 		blood_color = COLOR_DARK_RED
 	var/x_component = sin(angle) * -15
 	var/y_component = cos(angle) * -15
-	if(!GLOB.blood_particles[blood_color])
-		GLOB.blood_particles[blood_color] = new /particles/splatter(blood_color)
-	particles = GLOB.blood_particles[blood_color]
-	particles.velocity = list(x_component, y_component)
+	var/obj/effect/abstract/shared_particle_holder/splatter = add_shared_particles(/particles/splatter, "bloodsplatter_[blood_color]")
+	if(blood_color != "red")
+		splatter.particles.color = blood_color
+	splatter.particles.velocity = list(x_component, y_component)
 	color = blood_color
 	icon_state = "[splatter_type][pick(1, 2, 3, 4, 5, 6)]"
 	. = ..()
@@ -73,11 +73,21 @@
 			target_pixel_y = 8
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Destroy()
+	remove_shared_particles("bloodsplatter_[color]")
+	return ..()
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
+	icon_state = "ion_fade"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 10
+	randomdir = 0
+
+
+/obj/effect/temp_visual/dir_setting/magicbroom_trail //monkestation addition
+	name = "magic trails"
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
@@ -310,6 +320,10 @@
 	icon_state = "bluestream_fade"
 	duration = 9
 
+/obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
@@ -450,8 +464,7 @@
 	var/size_matrix = matrix()
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
-		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/world.icon_size)
+		size_matrix = matrix() * (size_calc_target.get_cached_height() /world.icon_size)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -645,3 +658,10 @@
 	. = ..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
+
+/obj/effect/temp_visual/jet_plume
+	name = "jet plume"
+	icon_state = "jet_plume"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 0.4 SECONDS

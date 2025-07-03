@@ -19,8 +19,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
-	maximum_survivable_temperature = INFINITY
-	minimum_survivable_temperature = 0
+	bodytemp_heat_damage_limit = INFINITY
+	bodytemp_cold_damage_limit = -1
 	has_unlimited_silicon_privilege = TRUE
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
@@ -548,10 +548,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
-	if(length(initial_access))
-		if(QDELETED(access_card))
-			access_card = new /obj/item/card/id/advanced/simple_bot(src)
-		access_card.set_access(initial_access)
+	if(QDELETED(access_card))
+		access_card = new /obj/item/card/id/advanced/simple_bot(src)
+	access_card.set_access(initial_access)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 	clear_path_hud()
@@ -732,7 +731,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if(isnull(mind))
 			mind.transfer_to(paicard.pai)
 		else
-			paicard.pai.key = key
+			paicard.pai.PossessByPlayer(key)
 	else
 		ghostize(FALSE) // The pAI card that just got ejected was dead.
 
@@ -793,11 +792,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	initial_access = access_card.access.Copy()
 
 
-/mob/living/basic/bot/proc/summon_bot(atom/caller, turf/turf_destination, user_access = list(), grant_all_access = FALSE)
-	if(isAI(caller) && !set_ai_caller(caller))
+/mob/living/basic/bot/proc/summon_bot(atom/user, turf/turf_destination, user_access = list(), grant_all_access = FALSE)
+	if(isAI(user) && !set_ai_caller(user))
 		return FALSE
-	bot_reset(bypass_ai_reset = isAI(caller))
-	var/turf/destination = turf_destination ? turf_destination : get_turf(caller)
+	bot_reset(bypass_ai_reset = isAI(user))
+	var/turf/destination = turf_destination ? turf_destination : get_turf(user)
 	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, destination)
 	var/list/access_to_grant = grant_all_access ? REGION_ACCESS_ALL_STATION : user_access + initial_access
 	access_card.set_access(access_to_grant)
@@ -805,11 +804,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	update_bot_mode(new_mode = BOT_SUMMON)
 	return TRUE
 
-/mob/living/basic/bot/proc/set_ai_caller(mob/living/caller)
+/mob/living/basic/bot/proc/set_ai_caller(mob/living/user)
 	var/atom/calling_ai = calling_ai_ref?.resolve()
 	if(!isnull(calling_ai) && calling_ai != src)
 		return FALSE
-	calling_ai_ref = WEAKREF(caller)
+	calling_ai_ref = WEAKREF(user)
 	return TRUE
 
 /mob/living/basic/bot/proc/update_bot_mode(new_mode, update_hud = TRUE)

@@ -2,7 +2,7 @@ import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Stack } from '../components';
+import { Box, Button, Icon, Stack, DmIcon } from '../components';
 import { Window } from '../layouts';
 import type { InfernoNode } from 'inferno';
 
@@ -235,6 +235,7 @@ type StripMenuItem =
   | ((
       | {
           icon: string;
+          icon_state: string;
           name: string;
           alternate?: string;
         }
@@ -296,13 +297,14 @@ export const StripMenu = (props) => {
                     }
 
                     content = (
-                      <Box
-                        as="img"
-                        src={`data:image/jpeg;base64,${item.icon}`}
+                      <DmIcon
+                        icon={item.icon}
+                        icon_state={item.icon_state}
                         height="100%"
                         width="100%"
                         style={{
                           '-ms-interpolation-mode': 'nearest-neighbor',
+                          'image-rendering': 'pixelated',
                           'vertical-align': 'middle',
                         }}
                       />

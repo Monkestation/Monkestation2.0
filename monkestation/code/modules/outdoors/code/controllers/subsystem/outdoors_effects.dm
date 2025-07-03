@@ -100,6 +100,18 @@ SUBSYSTEM_DEF(outdoor_effects)
 	var/current_color
 	var/enabled = TRUE // Micro-optimization to avoid having to check config or bitflags
 
+/datum/controller/subsystem/outdoor_effects/Recover()
+	sunlighting_planes = SSoutdoor_effects.sunlighting_planes.Copy()
+	current_step_datum = SSoutdoor_effects.current_step_datum
+	next_step_datum = SSoutdoor_effects.next_step_datum
+	weather_light_affecting_event = SSoutdoor_effects.weather_light_affecting_event
+	sunlight_overlays = SSoutdoor_effects.sunlight_overlays?.Copy()
+	weather_planes_need_vis = SSoutdoor_effects.weather_planes_need_vis
+	last_color = SSoutdoor_effects.last_color
+	next_day = SSoutdoor_effects.next_day
+	current_color = SSoutdoor_effects.current_color
+	enabled = SSoutdoor_effects.enabled
+
 /datum/controller/subsystem/outdoor_effects/stat_entry(msg)
 	msg = "W:[GLOB.SUNLIGHT_QUEUE_WORK.len]|U:[GLOB.SUNLIGHT_QUEUE_UPDATE.len]|C:[GLOB.SUNLIGHT_QUEUE_CORNER.len]"
 	return ..()
@@ -116,7 +128,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 	if(CONFIG_GET(flag/disable_sunlight_visuals))
 		disable()
 		return SS_INIT_NO_NEED
-	if(SSmapping.config.map_name == "Oshan Station")
+	if(SSmapping.current_map.map_name == "Oshan Station")
 		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
 			qdel(listed_time)
 		time_cycle_steps = list(
@@ -135,14 +147,22 @@ SUBSYSTEM_DEF(outdoor_effects)
 	fire(FALSE, TRUE)
 
 	var/daylight = FALSE
+	var/dark_days = FALSE
 	for (var/z in (SSmapping.levels_by_trait(ZTRAIT_DAYCYCLE) + SSmapping.levels_by_trait(ZTRAIT_STARLIGHT)))
+		if(SSmapping.level_trait(z, ZTRAIT_JUSTWEATHER))
+			dark_days = TRUE
+			continue
 		if(SSmapping.level_trait(z, ZTRAIT_DAYCYCLE))
 			daylight = TRUE
 			continue
 
-	if(!daylight)
+	if(!daylight && !dark_days)
 		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
 			listed_time.color = GLOB.starlight_color
+
+	if(dark_days)
+		for(var/datum/time_of_day/listed_time as anything in time_cycle_steps)
+			listed_time.color = COLOR_BLACK
 
 	return SS_INIT_SUCCESS
 

@@ -212,7 +212,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
-		mychild.key = elitemind.key
+		mychild.PossessByPlayer(elitemind.key)
 		mychild.sentience_act()
 		notify_ghosts(
 			"\A [mychild] has been awakened in \the [get_area(src)]!",
@@ -379,7 +379,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
 		var/mob/living/simple_animal/hostile/asteroid/elite/E = target
-		if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS || !E.key)
+		if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS) //MONKESTATION EDIT: removed || !E.key
 			user.visible_message(span_notice("It appears [E] is unable to be revived right now.  Perhaps try again later."))
 			return
 		E.faction = list("[REF(user)]")
@@ -391,6 +391,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		E.maxHealth = E.maxHealth * 0.4
 		E.health = E.maxHealth
 		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
+		E.grab_ghost() // MONKESTATION ADDITION
 		E.sentience_type = SENTIENCE_ORGANIC
 		qdel(src)
 	else

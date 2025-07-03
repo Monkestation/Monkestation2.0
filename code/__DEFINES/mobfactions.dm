@@ -21,6 +21,8 @@
 #define FACTION_CLOWN "clowns"
 /// Headslugs
 #define FACTION_CREATURE "creature"
+/// Cats
+#define FACTION_CAT "cat"
 /// Faithless and shadowpeople
 #define FACTION_FAITHLESS "faithless"
 /// Gnomes
@@ -83,6 +85,8 @@
 #define FACTION_VINES "vines"
 /// Tamed creatures
 #define FACTION_TAMED "tamed"
+///Creates associated with plague doctor
+#define FACTION_PLAGUE "plague"
 
 // Antagonist factions
 
@@ -95,3 +99,7 @@
 
 /// Generates a mob faction for the passed owner, used by stabilized pink extracts
 #define FACTION_PINK_EXTRACT(owner) "pink_[owner]"
+
+/// MONKESTATION ADDITIONS
+// Apids and Bees!!
+#define FACTION_HIVE "hive"

@@ -36,9 +36,11 @@ Buildable meters
 	icon_state_preview = "junction"
 	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/junction
 /obj/item/pipe/directional/vent
+	name = "air vent fitting"
 	icon_state_preview = "uvent"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
 /obj/item/pipe/directional/scrubber
+	name = "air scrubber fitting"
 	icon_state_preview = "scrubber"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
 /obj/item/pipe/directional/connector
@@ -75,6 +77,7 @@ Buildable meters
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
 /obj/item/pipe/trinary/flippable/filter
+	name = "gas filter fitting"
 	icon_state_preview = "filter"
 	pipe_type = /obj/machinery/atmospherics/components/trinary/filter
 /obj/item/pipe/trinary/flippable/mixer
@@ -85,6 +88,16 @@ Buildable meters
 /obj/item/pipe/quaternary/pipe
 	icon_state_preview = "manifold4w"
 	pipe_type = /obj/machinery/atmospherics/pipe/smart
+/obj/item/pipe/quaternary/pipe/crafted
+
+/obj/item/pipe/quaternary/pipe/crafted/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
+	. = ..()
+	pipe_type = /obj/machinery/atmospherics/pipe/smart
+	pipe_color = COLOR_VERY_LIGHT_GRAY
+	p_init_dir = ALL_CARDINALS
+	setDir(SOUTH)
+	update()
+
 /obj/item/pipe/quaternary/he_pipe
 	icon_state_preview = "he_manifold4w"
 	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
@@ -107,7 +120,7 @@ Buildable meters
 	return ..()
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
-	p_init_dir = make_from.initialize_directions
+	p_init_dir = make_from.get_init_directions()
 	setDir(make_from.dir)
 	pipename = make_from.name
 	add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
@@ -239,6 +252,23 @@ Buildable meters
 		span_hear("You hear ratcheting."))
 
 	qdel(src)
+
+/obj/item/pipe/welder_act(mob/living/user, obj/item/welder)
+	. = ..()
+	if(istype(pipe_type, /obj/machinery/atmospherics/components))
+		return TRUE
+	if(!welder.tool_start_check(user, amount=2))
+		return TRUE
+	add_fingerprint(user)
+
+	if(welder.use_tool(src, user, 2 SECONDS, volume=2))
+		new /obj/item/sliced_pipe(drop_location())
+		user.visible_message( \
+			"[user] welds \the [src] in two.", \
+			span_notice("You weld \the [src] in two."), \
+			span_hear("You hear welding."))
+
+		qdel(src)
 
 /**
  * Attempt to automatically resolve a pipe conflict by reconfiguring any smart pipes involved.

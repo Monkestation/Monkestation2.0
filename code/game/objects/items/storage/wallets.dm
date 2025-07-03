@@ -27,9 +27,9 @@
 		/obj/item/coin,
 		/obj/item/dice,
 		/obj/item/disk,
+		/obj/item/gbp_punchcard,
 		/obj/item/implanter,
 		/obj/item/lighter,
-		/obj/item/lipstick,
 		/obj/item/match,
 		/obj/item/paper,
 		/obj/item/pen,
@@ -128,6 +128,7 @@
 		. += front_id.get_id_examine_strings(user)
 
 /obj/item/storage/wallet/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	return front_id
 
 /obj/item/storage/wallet/RemoveID()

@@ -106,11 +106,11 @@
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 				master.visible_message(span_boldwarning("[src] turns on [master]!"), "<span class='his_grace big bold'>[src] turns on you!</span>")
 				do_attack_animation(master, null, src)
-				master.emote("scream")
 				master.remove_status_effect(/datum/status_effect/his_grace)
+				master.emote("scream")
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
-				master.Paralyze(60)
-				master.adjustBruteLoss(master.maxHealth)
+				master.Paralyze(6 SECONDS)
+				master.take_overall_damage(brute = master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
 			else
 				master.apply_status_effect(/datum/status_effect/his_grace)
@@ -164,22 +164,8 @@
 
 	if(!awakened)
 		return
-	var/static/list/transforms
-	if(!transforms)
-		var/matrix/M1 = matrix()
-		var/matrix/M2 = matrix()
-		var/matrix/M3 = matrix()
-		var/matrix/M4 = matrix()
-		M1.Translate(-1, 0)
-		M2.Translate(0, 1)
-		M3.Translate(1, 0)
-		M4.Translate(0, -1)
-		transforms = list(M1, M2, M3, M4)
 
-	animate(src, transform=transforms[1], time=0.2, loop=-1)
-	animate(transform=transforms[2], time=0.1)
-	animate(transform=transforms[3], time=0.2)
-	animate(transform=transforms[4], time=0.3)
+	spasm_animation()
 
 /obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
 	if(!awakened || ascended)

@@ -1,6 +1,7 @@
 /datum/action/cooldown/mob_cooldown/dash/headbutt
 	name = "Headbutt"
 	desc = "Dashes 3 tiles in a direction headbutting anyone in the last tile. (You can overshoot your dash!)"
+	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_HANDS_BLOCKED | AB_CHECK_CONSCIOUS | AB_CHECK_IMMOBILE
 	cooldown_time = 1 MINUTES
 	dash_range = 3
 
@@ -17,7 +18,7 @@
 		if(iscarbon(mob))
 			var/mob/living/carbon/carbon = mob
 			carbon.stamina.adjust(-55)
-		log_combat(owner, mob, "headbutted (10 brute damage)")
+		log_combat(owner, mob, "headbutted (15 brute damage)")
 		if(!knocked)
 			var/mob/living/owner_mob = owner
 			owner_mob.AdjustKnockdown(0.2 SECONDS)

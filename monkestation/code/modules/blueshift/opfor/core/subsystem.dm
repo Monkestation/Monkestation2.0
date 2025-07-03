@@ -51,6 +51,15 @@ SUBSYSTEM_DEF(opposing_force)
 	equipment_list = sort_list(equipment_list, GLOBAL_PROC_REF(cmp_num_string_asc))
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/opposing_force/Recover()
+	equipment_list = deep_copy_list(SSopposing_force.equipment_list)
+	unsubmitted_applications = SSopposing_force.unsubmitted_applications.Copy()
+	submitted_applications = SSopposing_force.submitted_applications.Copy()
+	approved_applications = SSopposing_force.approved_applications.Copy()
+	max_objectives = SSopposing_force.max_objectives
+	accepting_objectives = SSopposing_force.accepting_objectives
+	status = SSopposing_force.status
+
 /datum/controller/subsystem/opposing_force/proc/check_availability()
 	if(get_current_applications() >= max_objectives)
 		status = OPFOR_SUBSYSTEM_REJECT_CAP

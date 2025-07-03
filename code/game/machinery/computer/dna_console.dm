@@ -5,9 +5,9 @@
 /// Timeout for DNA Scramble in DNA Consoles
 #define SCRAMBLE_TIMEOUT 600
 /// Timeout for using the Joker feature to solve a gene in DNA Console
-#define JOKER_TIMEOUT 12000
+#define JOKER_TIMEOUT (5 MINUTES)
 /// How much time DNA Scanner upgrade tiers remove from JOKER_TIMEOUT
-#define JOKER_UPGRADE 3000
+#define JOKER_UPGRADE (1 MINUTES)
 
 /// Maximum value for genetic damage strength when pulsing enzymes
 #define GENETIC_DAMAGE_STRENGTH_MAX 15
@@ -179,6 +179,7 @@
 		to_chat(user, span_notice("You insert [item]."))
 		return
 
+/* MONKESTATION REMOVAL -- Moved to monkestation/code/game/machinery/computer/dna_console.dm
 	// Recycle non-activator used injectors
 	// Turn activator used injectors (aka research injectors) to chromosomes
 	if(istype(item, /obj/item/dnainjector/activator))
@@ -203,6 +204,7 @@
 			qdel(item)
 			to_chat(user, span_notice("Recycled unused [item]."))
 			return
+*/
 	return ..()
 
 /obj/machinery/computer/scan_consolenew/multitool_act(mob/living/user, obj/item/multitool/tool)
@@ -546,6 +548,7 @@
 						var/truegenes = GET_SEQUENCE(path)
 						newgene = truegenes[genepos]
 						joker_ready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+						tgui_view_state["jokerActive"] = FALSE
 					else
 						var/current_letter = gene_letters.Find(sequence[genepos])
 						newgene = (current_letter == gene_letter_count) ? gene_letters[1] : gene_letters[current_letter + 1]
@@ -875,6 +878,14 @@
 
 			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
 			stored_mutations += A
+
+			// monkestationn start: mark as discovered when saving from disk
+			var/datum/mutation/human/mutation_type = A.type
+			if(stored_research && !(mutation_type in stored_research.discovered_mutations))
+				stored_research.discovered_mutations += mutation_type
+				say("Successfully unlocked [A.name].")
+			// monkestationn end
+
 			to_chat(usr,span_notice("Mutation successfully stored."))
 			return
 
@@ -1229,7 +1240,7 @@
 				"UE"=scanner_occupant.dna.unique_enzymes,
 				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
-				"blood_type"=scanner_occupant.dna.blood_type)
+				"blood_type"="[GLOB.blood_types[scanner_occupant.dna.human_blood_type]]")
 
 			return
 
@@ -1719,7 +1730,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.dna.human_blood_type = blood_name_to_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1737,7 +1748,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.dna.human_blood_type = blood_name_to_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1763,7 +1774,7 @@
 	if(!scanner_operational())
 		return FALSE
 
-	if(!connected_scanner.occupant)
+	if(!isliving(connected_scanner.occupant) || QDELING(connected_scanner.occupant))
 		return FALSE
 
 	scanner_occupant = connected_scanner.occupant

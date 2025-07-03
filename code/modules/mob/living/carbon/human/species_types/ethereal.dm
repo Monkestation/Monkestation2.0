@@ -69,6 +69,7 @@
 	RegisterSignal(ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(ethereal, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	ethereal_light = ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	spec_updatehealth(ethereal)
 	new_ethereal.set_safe_hunger_level()
@@ -85,6 +86,7 @@
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
+	UnregisterSignal(former_ethereal, COMSIG_HIT_BY_SABOTEUR)
 	QDEL_NULL(ethereal_light)
 	return ..()
 
@@ -139,6 +141,16 @@
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), H), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
 		if(EMP_HEAVY)
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
+
+/datum/species/ethereal/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/our_target = source
+	EMPeffect = TRUE
+	spec_updatehealth(our_target)
+	to_chat(our_target, span_warning("Something inside of you crackles in a bad way."))
+	our_target.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
+	addtimer(CALLBACK(src, PROC_REF(stop_emp), our_target), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
 	SIGNAL_HANDLER
@@ -255,6 +267,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_SPLEENLESS_METABOLISM,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/ethereal/lustrous,
@@ -265,14 +278,17 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
 	)
 
-/datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick(
-		'sound/voice/ethereal/lustrous_scream_1.ogg',
-		'sound/voice/ethereal/lustrous_scream_2.ogg',
-		'sound/voice/ethereal/lustrous_scream_3.ogg',
-	)
-
 /datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
 	..()
+	// monkestation edit start
+	/* original
 	default_color = new_lustrous.dna.features["ethcolor"]
 	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.
+	*/
+	var/datum/color_palette/generic_colors/palette = new_lustrous.dna.color_palettes[/datum/color_palette/generic_colors]
+	default_color = palette.ethereal_color
+	if(istype(new_lustrous, /mob/living/carbon/human/dummy/consistent))
+		palette.ethereal_color = GLOB.color_list_lustrous[1]
+	else
+		palette.ethereal_color = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.
+	// monkestation edit end

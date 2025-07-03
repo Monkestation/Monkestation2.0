@@ -22,9 +22,13 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"h" = (
+"g" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/space/has_grav/powered/virtual_domain/protected_space)
+"h" = (
+/mob/living/basic/alien/sentinel,
+/obj/structure/alien/weeds,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "i" = (
@@ -66,9 +70,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "p" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
-	},
+/mob/living/basic/alien/drone,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "q" = (
@@ -81,9 +83,7 @@
 /area/virtual_domain/safehouse)
 "s" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
-	},
+/mob/living/basic/alien/drone,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "t" = (
@@ -168,11 +168,10 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "J" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large{
+/mob/living/basic/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
-	pixel_x = -16;
-	plants_off = 1
+	pixel_x = -16
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -211,7 +210,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "P" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Q" = (
@@ -221,7 +220,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "S" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "T" = (
@@ -246,12 +245,14 @@
 /obj/structure/alien/egg/burst,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"X" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "Y" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
-	},
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Z" = (
@@ -477,7 +478,7 @@ a
 E
 z
 e
-e
+Y
 m
 K
 J
@@ -518,7 +519,7 @@ a
 E
 z
 W
-h
+e
 e
 e
 e
@@ -564,7 +565,7 @@ z
 e
 V
 e
-h
+e
 W
 z
 E
@@ -686,7 +687,7 @@ e
 h
 e
 e
-h
+Y
 e
 e
 z
@@ -786,7 +787,7 @@ z
 z
 W
 o
-Y
+B
 e
 z
 E
@@ -826,7 +827,7 @@ E
 z
 I
 e
-V
+X
 e
 W
 z
@@ -973,7 +974,7 @@ E
 z
 e
 e
-p
+e
 z
 z
 z
@@ -1130,7 +1131,7 @@ E
 E
 G
 t
-S
+Y
 e
 z
 z
@@ -1260,7 +1261,7 @@ E
 E
 E
 z
-p
+e
 z
 z
 E
@@ -1383,7 +1384,7 @@ z
 z
 T
 e
-e
+Y
 V
 W
 z
@@ -1403,7 +1404,7 @@ z
 V
 e
 e
-e
+g
 n
 n
 n
@@ -1423,7 +1424,7 @@ E
 z
 N
 f
-S
+e
 e
 W
 I
@@ -1444,7 +1445,7 @@ z
 V
 t
 e
-e
+g
 n
 n
 F
@@ -1485,7 +1486,7 @@ z
 z
 k
 e
-e
+g
 n
 n
 n
@@ -1873,8 +1874,8 @@ E
 E
 z
 I
-p
 e
+Y
 e
 e
 e

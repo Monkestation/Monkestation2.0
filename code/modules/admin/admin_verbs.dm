@@ -17,8 +17,10 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/mark_datum_mapview,
 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/reload_admins,
+	/client/proc/reload_mentors, /*monkestation addition Reload mentors*/
 	/client/proc/requests,
 	/client/proc/secrets,
+	/client/proc/review_cassettes, /*monkestation addition Opens the Cassette Review menu*/
 	/client/proc/stop_sounds,
 	/client/proc/tag_datum_mapview,
 	)
@@ -50,6 +52,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 	/datum/admins/proc/kick_player_by_ckey, //MONKESTATION ADDITION - kick a player by their ckey
 	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
+	/datum/admins/proc/player_panel_veth,
+	/datum/admins/proc/vuap_open_context,
+	/datum/admins/proc/vuap_open,
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -97,11 +102,18 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_combo_hud, /* toggle display of the combination pizza antag and taco sci/med/eng hud */
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
+	// monkestation verbs start
+	/client/proc/cmd_admin_heal_oozeling,
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
 	/client/proc/log_viewer_new,
 	/client/proc/request_more_opfor,
 	/client/proc/view_opfors,
+	/client/proc/check_players,
+	/client/proc/AdminVOX,
+	/client/proc/delete_all_glowshrooms,
+	/client/proc/toggle_glowshroom_spread,
+	// monkestation verbs end
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel, /client/proc/library_control))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -154,10 +166,12 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/summon_ert,
 	/client/proc/summon_twitch_event, //monkestation addition
 	/client/proc/toggle_nuke,
+	/client/proc/toggle_junior_op, //monkestation addition
 	/client/proc/toggle_random_events,
+	/client/proc/toggle_crew_cc_comms, //monkestation addition
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel, /client/proc/spawn_mixtape)) //Monkestation Addition: mixtape spawner
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel, /client/proc/spawn_mixtape,)) //Monkestation Addition: mixtape spawner
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
@@ -173,12 +187,12 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/toggleAI,
 // Client procs
 	/client/proc/adminchangemap,
+	/client/proc/admin_revert_map,
 	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_force_del_all,
 	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/everyone_random,
-	/client/proc/forcerandomrotate,
 	/client/proc/generate_job_config,
 	/client/proc/panicbunker,
 	/client/proc/toggle_cdn,
@@ -258,10 +272,14 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_puzzgrids,
 	/client/proc/view_runtimes,
 	// monkestation verbs: debugger tools
+	/client/proc/count_instances,
 	/client/proc/log_viewer_new,
 	/client/proc/getserverlogs_debug,
 	/client/proc/getcurrentlogs_debug,
 	/client/proc/server_memory_stats,
+	/client/proc/tracy_next_round,
+	/client/proc/start_tracy,
+	// monkestation end
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -545,16 +563,21 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		var/image/invisible = image(icon = 'icons/mob/simple/mob.dmi', icon_state = null, loc = mob)
+		invisible.override = TRUE
+		mob.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/actually_everyone, "stealthmin", invisible)
 
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
 
-	log_admin("[key_name(usr)] has turned stealth mode ON")
-	message_admins("[key_name_admin(usr)] has turned stealth mode ON")
+	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')")
+	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')")
 
 /client/proc/disable_stealth_mode()
+	var/previous_fakekey = holder.fakekey
 	holder.fakekey = null
 	if(isobserver(mob))
+		mob.remove_alt_appearance("stealthmin")
 		mob.invisibility = initial(mob.invisibility)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
@@ -568,8 +591,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	REMOVE_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 
-	log_admin("[key_name(usr)] has turned stealth mode OFF")
-	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
+	log_admin("[key_name(usr)] has turned stealth mode OFF (with previous key '[previous_fakekey]')")
+	message_admins("[key_name_admin(usr)] has turned stealth mode OFF (with previous key '[previous_fakekey]')")
 
 #undef STEALTH_MODE_TRAIT
 
@@ -874,7 +897,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
 
 	for (var/i in 1 to amount)
-		var/turf/tile = get_safe_random_station_turf()
+		var/turf/tile = get_safe_random_station_turf_equal_weight()
 		var/mob/living/carbon/human/hooman = new(tile)
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")

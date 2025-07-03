@@ -134,7 +134,7 @@
 						make_podman = TRUE
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
+					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED) && !HAS_TRAIT(M, TRAIT_MIND_TEMPORARILY_GONE))
 						make_podman = TRUE
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
@@ -186,13 +186,14 @@
 		podman.real_name = "Pod Person ([rand(1,999)])"
 	mind.transfer_to(podman)
 	if(ckey)
-		podman.ckey = ckey
+		podman.PossessByPlayer(ckey)
 	else
-		podman.ckey = ckey_holder
+		podman.PossessByPlayer(ckey_holder)
 	podman.gender = blood_gender
 	podman.faction |= factions
-	if(!features["mcolor"])
-		features["mcolor"] = "#59CE00"
+	var/datum/color_palette/generic_colors/palette = podman.dna.color_palettes[/datum/color_palette/generic_colors]
+	if(!palette.mutant_color)
+		palette.mutant_color = "#59CE00"
 	if(!features["pod_hair"])
 		features["pod_hair"] = pick(GLOB.pod_hair_list)
 
@@ -208,6 +209,6 @@
 			most_plentiful_reagent.Cut()
 			most_plentiful_reagent[reagent] = reagents_add[reagent]
 
-	podman.dna.species.exotic_blood = most_plentiful_reagent[1]
+	//podman.dna.species.exotic_blood = most_plentiful_reagent[1] //Monkestation edit BLOOD_DATUM: This needs to be looked into
 	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
 	return result

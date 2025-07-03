@@ -103,7 +103,7 @@
 	if(spell_requirements & SPELL_REQUIRES_STATION)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_status_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
@@ -119,6 +119,7 @@
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
 		COMSIG_MOB_ENTER_JAUNT,
 		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOB_UNEQUIPPED_ITEM,
 		COMSIG_MOVABLE_Z_CHANGED,
 		SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE),
 		SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE),
@@ -141,7 +142,9 @@
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return FALSE
-	if(!is_valid_target(target))
+	if(target == owner)
+		target = get_caster_from_target(target)
+	if(isnull(target) || !is_valid_target(target))
 		return FALSE
 
 	return Activate(target)
@@ -213,10 +216,6 @@
 				to_chat(owner, span_warning("[src] can't be cast in this state!"))
 			return FALSE
 
-		// Being put into a card form breaks a lot of spells, so we'll just forbid them in these states
-		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
-			return FALSE
-
 	return TRUE
 
 /**
@@ -228,6 +227,28 @@
  */
 /datum/action/cooldown/spell/proc/is_valid_target(atom/cast_on)
 	return TRUE
+
+/**
+ * Used to get the cast_on atom if a self cast spell is being cast.
+ *
+ * Allows for some atoms to be used as casting sources if a spell caster is located within.
+ */
+/datum/action/cooldown/spell/proc/get_caster_from_target(atom/target)
+	var/atom/cast_loc = target.loc
+	if(isnull(cast_loc))
+		return null // No magic in nullspace
+
+	if(isturf(cast_loc))
+		return target // They're just standing around, proceed as normal
+
+	if(HAS_TRAIT(cast_loc, TRAIT_CASTABLE_LOC))
+		/*if(HAS_TRAIT(cast_loc, TRAIT_SPELLS_TRANSFER_TO_LOC) && ismob(cast_loc.loc))
+			return cast_loc.loc
+		else*/ //monkestation temp removal
+		return cast_loc
+	// They're in an atom which allows casting, so redirect the caster to loc
+
+	return null
 
 // The actual cast chain occurs here, in Activate().
 // You should generally not be overriding or extending Activate() for spells.

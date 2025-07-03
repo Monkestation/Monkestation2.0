@@ -23,6 +23,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	apply_wibbly_filters(src)
 
 	warp = new(src)
 	vis_contents += warp
@@ -60,7 +61,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
-	//anomaly quickly contracts then slowly expands it's ring
+	//anomaly quickly contracts then slowly expands its ring
 	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
 	animate(time = seconds_per_tick*7, transform = matrix())
 
@@ -92,7 +93,7 @@
 	grav_field = new(src, 7, TRUE, rand(0, 3))
 
 /obj/effect/anomaly/grav/high/detonate()
-	for(var/obj/machinery/gravity_generator/main/the_generator in GLOB.machines)
+	for(var/obj/machinery/gravity_generator/main/the_generator as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gravity_generator/main))
 		if(is_station_level(the_generator.z))
 			the_generator.blackout()
 

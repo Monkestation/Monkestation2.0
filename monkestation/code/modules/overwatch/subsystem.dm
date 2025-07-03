@@ -25,11 +25,22 @@ SUBSYSTEM_DEF(overwatch)
 	Toggle()
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/overwatch/Recover()
+	max_error_count = SSoverwatch.max_error_count
+	is_active = SSoverwatch.is_active
+	error_counter = SSoverwatch.error_counter
+	minimum_player_age = SSoverwatch.minimum_player_age
+	max_ban_count = SSoverwatch.max_ban_count
+	tgui_panel_asn_data = deep_copy_list(SSoverwatch.tgui_panel_asn_data)
+	tgui_panel_wl_data = deep_copy_list(SSoverwatch.tgui_panel_wl_data)
+
 /datum/controller/subsystem/overwatch/stat_entry(msg)
 	return "[is_active ? "ACTIVE" : "OFFLINE"]"
 
 /datum/controller/subsystem/overwatch/proc/Toggle(mob/user)
-	if (!initialized && user)
+	if(SSdbcore.shutting_down)
+		return
+	if(!initialized && user)
 		return
 
 	if(!is_active && !SSdbcore.Connect())
@@ -55,8 +66,12 @@ SUBSYSTEM_DEF(overwatch)
 		CHECK_TICK
 
 /datum/controller/subsystem/overwatch/proc/CheckDBCon()
-	if(is_active && SSdbcore.Connect())
-		return TRUE
+	if(is_active)
+		if(SSdbcore.shutting_down)
+			is_active = FALSE
+			return FALSE
+		else if(SSdbcore.Connect())
+			return TRUE
 
 	is_active = FALSE
 	log_access("A Database error has occured. Overwatch is automatically disabled.")
@@ -173,7 +188,10 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckDBCon())
 		return
 
-	var/datum/db_query/query = SSdbcore.NewQuery("SELECT ckey FROM overwatch_whitelist WHERE ckey = '[ckey]'")
+	var/datum/db_query/query = SSdbcore.NewQuery(
+		"SELECT ckey FROM overwatch_whitelist WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	query.Execute()
 
 	if(query.NextRow())
@@ -197,7 +215,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(C.ip_info.is_whitelisted)
 		return
 
-	var/datum/db_query/query = SSdbcore.NewQuery("SELECT `asn` FROM overwatch_asn_ban WHERE asn = '[C.ip_info.ip_as]'")
+	var/datum/db_query/query = SSdbcore.NewQuery("SELECT `asn` FROM overwatch_asn_ban WHERE asn = :asn", list("asn" = C.ip_info.ip_as))
 	query.Execute()
 
 	if(query.NextRow())
@@ -213,7 +231,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckDBCon())
 		return FALSE
 
-	var/datum/db_query/_Cache_select_query = SSdbcore.NewQuery("SELECT response FROM overwatch_ip_cache WHERE ip = '[ip]'")
+	var/datum/db_query/_Cache_select_query = SSdbcore.NewQuery("SELECT response FROM overwatch_ip_cache WHERE ip = :ip", list("ip" = ip))
 	_Cache_select_query.Execute()
 
 	if(!_Cache_select_query.NextRow())
@@ -248,12 +266,11 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckDBCon())
 		return
 
-	var/ckey = new_sql_sanitize_text(ckey(ckey_input))
-
+	var/ckey = ckey(ckey_input)
 	if(!ckey)
 		return
 
-	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("INSERT INTO overwatch_whitelist (`ckey`, `a_ckey`, `timestamp`) VALUES ('[ckey]', '[Admin.ckey]', Now())")
+	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("INSERT INTO overwatch_whitelist (`ckey`, `a_ckey`, `timestamp`) VALUES (:ckey, :admin_ckey, Now())", list("ckey" = ckey, "admin_ckey" = Admin.ckey))
 	_Whitelist_Query.Execute()
 	qdel(_Whitelist_Query)
 
@@ -269,7 +286,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckWhitelist(ckey))
 		return
 
-	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("DELETE FROM overwatch_whitelist WHERE `ckey` = '[ckey]'")
+	var/datum/db_query/_Whitelist_Query = SSdbcore.NewQuery("DELETE FROM overwatch_whitelist WHERE `ckey` = :ckey", list("ckey" = ckey))
 	_Whitelist_Query.Execute()
 	qdel(_Whitelist_Query)
 
@@ -303,7 +320,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!check_rights(R_SERVER, TRUE))
 		return
 
-	var/ip = remove_all_spaces(new_sql_sanitize_text(address))
+	var/ip = remove_all_spaces(address)
 
 	if(length(ip) > 16)
 		return
@@ -312,7 +329,14 @@ SUBSYSTEM_DEF(overwatch)
 
 	var/ip_as = response["as"]
 
-	var/datum/db_query/_ASban_Insert_Query = SSdbcore.NewQuery("INSERT INTO overwatch_asn_ban (`ip`, `asn`, `a_ckey`, `timestamp`) VALUES ('[ip]', '[ip_as]', '[Admin.ckey]', Now())")
+	var/datum/db_query/_ASban_Insert_Query = SSdbcore.NewQuery(
+		"INSERT INTO overwatch_asn_ban (`ip`, `asn`, `a_ckey`, `timestamp`) VALUES (:ip, :ip_as, :admin_ckey, Now())",
+		list(
+			"ip" = ip,
+			"ip_as" = ip_as,
+			"admin_ckey" = Admin.ckey,
+		)
+	)
 	_ASban_Insert_Query.Execute()
 	qdel(_ASban_Insert_Query)
 
@@ -328,7 +352,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(!check_rights(R_SERVER, TRUE))
 		return
 
-	var/datum/db_query/_ASban_Delete_Query = SSdbcore.NewQuery("DELETE FROM overwatch_asn_ban WHERE `asn` = '[ip_as]'")
+	var/datum/db_query/_ASban_Delete_Query = SSdbcore.NewQuery("DELETE FROM overwatch_asn_ban WHERE `asn` = :asn", list("asn" = ip_as))
 	_ASban_Delete_Query.Execute()
 	qdel(_ASban_Delete_Query)
 
@@ -414,7 +438,7 @@ SUBSYSTEM_DEF(overwatch)
 	if(response.body == "[]")
 		return
 	var/active_ban_count = 0
-	bans = json_decode(response["body"])
+	bans = json_decode(response.body)
 	for(var/list/ban in bans)
 		if(ban["type"] != "Server")
 			continue

@@ -7,7 +7,6 @@
 	cooldown_time = 1 MINUTES
 	button_icon_state = "reproduce"
 	chemical_cost = 100
-	needs_living_host = TRUE
 	ability_explanation = "\
 	Forces your host to produce a borer egg inside of their stomach, then vomit it up\n\
 	Be carefull as the egg is fragile and can be broken very easily by any human, along with being extremelly noticable\n\
@@ -24,11 +23,12 @@
 	if(!(cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && !cortical_owner.inside_human())
 		owner.balloon_alert(owner, "host required")
 		return
-	cortical_owner.chemical_storage -= chemical_cost
 	if((cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && !cortical_owner.inside_human())
+		cortical_owner.chemical_storage -= chemical_cost
 		no_host_egg()
 		StartCooldown()
 		return
+	cortical_owner.chemical_storage -= chemical_cost
 	produce_egg()
 	var/obj/item/organ/internal/brain/victim_brain = cortical_owner.human_host.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(victim_brain)

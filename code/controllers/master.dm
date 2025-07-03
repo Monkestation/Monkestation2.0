@@ -71,6 +71,9 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
 /datum/controller/master/New()
+	// Ensure usr is null, to prevent any potential weirdness resulting from the MC having a usr if it's manually restarted.
+	usr = null
+
 	if(!config)
 		config = new
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -229,19 +232,11 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_display))
 	var/start_timeofday = REALTIMEOFDAY
+
 	for (var/current_init_stage in 1 to INITSTAGE_MAX)
-
 		// Initialize subsystems.
-		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
+		for(var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
 			init_subsystem(subsystem)
-			if(world.system_type == MS_WINDOWS)
-				var/ss_name = "[subsystem.name]"
-				var/memory_summary = call_ext("memorystats", "get_memory_stats")()
-				var/file = file("data/mem_stat/[GLOB.round_id]-memstat.txt")
-
-				var/string = "[ss_name] [memory_summary]"
-				WRITE_FILE(file, string)
-
 			CHECK_TICK
 		current_initializing_subsystem = null
 		init_stage_completed = current_init_stage
@@ -269,6 +264,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	// because who knows how long we took for initializations, and whatever.
 	SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // monkestation edit
 
+	SSplexora.serverinitdone(time) // Monkestation edit - plexora
 
 	if(world.system_type == MS_WINDOWS && CONFIG_GET(flag/toast_notification_on_init) && !length(GLOB.clients))
 		world.shelleo("start /min powershell -ExecutionPolicy Bypass -File tools/initToast/initToast.ps1 -name \"[world.name]\" -icon %CD%\\icons\\ui_icons\\common\\tg_16.png -port [world.port]")
@@ -287,7 +283,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
-	SSgamemode.handle_picking_stroyteller() //monkestation edit
+	SSgamemode.handle_picking_storyteller() //monkestation edit
 
 /**
  * Initialize a given subsystem and handle the results.
@@ -303,7 +299,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		SS_INIT_NO_NEED,
 	)
 
-	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
+	if ((subsystem.flags & SS_NO_INIT) || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
+		subsystem.initialized = TRUE // set initialized to TRUE, because the value of initialized may still be checked on SS_NO_INIT subsystems as an "is this ready" check
 		return
 
 	current_initializing_subsystem = subsystem
@@ -388,8 +385,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	if (rtn >= MC_LOOP_RTN_GRACEFUL_EXIT || processing < 0)
 		return //this was suppose to happen.
 	//loop ended, restart the mc
-	log_game("MC crashed or runtimed, restarting")
-	message_admins("MC crashed or runtimed, restarting")
+	// Monkestation edit: start - plexora
+	var/msg = "MC crashed or runtimed, restarting"
+	log_game(msg)
+	message_admins(msg)
+	SSplexora.mc_alert(msg)
+	// Monkestation edit: end
 	var/rtn2 = Recreate_MC()
 	if (rtn2 <= 0)
 		log_game("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
@@ -582,7 +583,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			current_ticklimit = TICK_LIMIT_RUNNING
 			if (processing * sleep_delta <= world.tick_lag)
 				current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
-
 		sleep(world.tick_lag * (processing * sleep_delta))
 
 
@@ -616,6 +616,17 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			SS.postponed_fires--
 			SS.update_nextfire()
 			continue
+		if(SS_flags & SS_HIBERNATE)
+			var/list/check_vars = SS.hibernate_checks
+			var/enter_queue
+			for(var/i in 1 to length(check_vars))
+				if(LAZYLEN(SS.vars[check_vars[i]]))
+					enter_queue = TRUE
+					break
+			if(!enter_queue)
+				SS.hibernating = TRUE
+				SS.update_nextfire()
+				continue
 		SS.enqueue()
 	. = 1
 
@@ -787,11 +798,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	log_world("MC: SoftReset: Finished.")
 	. = 1
 
+/*
 /// Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.
 /datum/controller/master/proc/laggy_byond_map_update_incoming()
 	if (!skip_ticks)
 		skip_ticks = 1
-
+*/
 
 /datum/controller/master/stat_entry(msg)
 	msg = "(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"

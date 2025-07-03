@@ -20,16 +20,16 @@
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/internal/brain/psyker/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/internal/brain/psyker/on_life(seconds_between_ticks, times_fired)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
 		return
-	if(!SPT_PROB(2, seconds_per_tick))
+	if(!SPT_PROB(2, seconds_between_ticks))
 		return
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
-	owner.adjust_disgust(33 * seconds_per_tick)
-	apply_organ_damage(5 * seconds_per_tick, 199)
+	owner.adjust_disgust(33 * seconds_between_ticks)
+	apply_organ_damage(5 * seconds_between_ticks, 199)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
@@ -270,7 +270,7 @@
 	id = "psychic_projection"
 	alert_type = null
 	remove_on_fullheal = TRUE
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	/// Times the target has dry fired a weapon.
 	var/times_dry_fired = 0
 	/// Needs to reach times_dry_fired for the next dry fire to happen.
@@ -295,7 +295,7 @@
 	game_plane_master_controller.remove_filter("psychic_blur")
 	game_plane_master_controller.remove_filter("psychic_wave")
 
-/datum/status_effect/psychic_projection/tick(seconds_per_tick, times_fired)
+/datum/status_effect/psychic_projection/tick(seconds_between_ticks, times_fired)
 	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)
 	if(!held_gun)
 		return

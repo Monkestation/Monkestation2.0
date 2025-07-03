@@ -1,8 +1,24 @@
 /datum/status_effect/centcom_grace
 	id = "centcom_grace"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	var/last_active = FALSE
+	var/static/list/given_traits = list(
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_NOBREATH,
+		TRAIT_NOHUNGER,
+		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
+		TRAIT_BOMBIMMUNE,
+		TRAIT_RADIMMUNE,
+		TRAIT_TUMOR_SUPPRESSED,
+		TRAIT_IGNORESLOWDOWN,
+		TRAIT_NOFIRE,
+		TRAIT_NODISMEMBER
+	)
 
 /datum/status_effect/centcom_grace/on_apply()
 	. = ..()
@@ -21,7 +37,6 @@
 	if(active())
 		if(!last_active)
 			owner.SetAllImmobility(0)
-			owner.set_safe_hunger_level()
 			owner.extinguish_mob()
 		give_traits()
 		last_active = TRUE
@@ -40,28 +55,7 @@
 		return FALSE
 
 /datum/status_effect/centcom_grace/proc/give_traits()
-	if(QDELETED(owner))
-		qdel(src)
-		return
-	owner.add_traits(list(
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHEAT,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
-		TRAIT_STABLEHEART,
-		TRAIT_STABLELIVER,
-		TRAIT_BOMBIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_TUMOR_SUPPRESSED,
-		TRAIT_IGNORESLOWDOWN,
-		TRAIT_NOFIRE,
-		TRAIT_NODISMEMBER
-	), id)
+	owner?.add_traits(given_traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/centcom_grace/proc/take_traits()
-	if(QDELETED(owner))
-		qdel(src)
-		return
-	REMOVE_TRAITS_IN(owner, id)
+	owner?.remove_traits(given_traits, TRAIT_STATUS_EFFECT(id))

@@ -41,10 +41,17 @@
 	/// A multiplier for the bloodcost during sol.
 	var/sol_multiplier
 
+	/// A looping timer ID to update the button status, because this code is garbage and doesn't process properly, and I don't feel like refactoring it. ~Lucy
+	var/stupid_looping_timer_id
+
 // Modify description to add cost.
 /datum/action/cooldown/bloodsucker/New(Target)
 	. = ..()
 	update_desc()
+
+/datum/action/cooldown/bloodsucker/Destroy()
+	bloodsuckerdatum_power = null
+	return ..()
 
 /datum/action/cooldown/bloodsucker/proc/update_desc(rebuild = TRUE)
 	desc = initial(desc)
@@ -57,16 +64,18 @@
 	if(rebuild)
 		build_all_button_icons(UPDATE_BUTTON_NAME)
 
-/datum/action/cooldown/bloodsucker/Destroy()
-	bloodsuckerdatum_power = null
-	return ..()
-
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
 
 /datum/action/cooldown/bloodsucker/Grant(mob/user)
 	. = ..()
 	find_bloodsucker_datum()
+
+/datum/action/cooldown/bloodsucker/Remove(mob/removed_from)
+	if(stupid_looping_timer_id)
+		deltimer(stupid_looping_timer_id)
+		stupid_looping_timer_id = null
+	return ..()
 
 //This is when we CLICK on the ability Icon, not USING.
 /datum/action/cooldown/bloodsucker/Trigger(trigger_flags, atom/target)
@@ -75,6 +84,8 @@
 		DeactivatePower()
 		return FALSE
 	if(!can_pay_cost() || !can_use(owner, trigger_flags))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
 		return FALSE
 	pay_cost()
 	ActivatePower(trigger_flags)
@@ -113,7 +124,7 @@
 
 ///Checks if the Power is available to use.
 /datum/action/cooldown/bloodsucker/proc/can_use(mob/living/carbon/user, trigger_flags)
-	if(!owner)
+	if(QDELETED(owner))
 		return FALSE
 	if(!isliving(user))
 		return FALSE
@@ -156,7 +167,9 @@
 	else
 		cooldown_time = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current - 1)))
 
-	return ..()
+	. = ..()
+
+	stupid_looping_timer_id = addtimer(CALLBACK(src, PROC_REF(stupid_looping_timer)), 0.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_LOOP) // this is why we can't have nice things
 
 /datum/action/cooldown/bloodsucker/proc/can_deactivate()
 	return TRUE
@@ -218,7 +231,7 @@
 
 /// Checks to make sure this power can stay active
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
-	if(!user)
+	if(QDELETED(user))
 		return FALSE
 	if(!constant_bloodcost > 0 || bloodsuckerdatum_power.bloodsucker_blood_volume > 0)
 		return TRUE
@@ -227,3 +240,12 @@
 /datum/action/cooldown/bloodsucker/proc/remove_after_use()
 	bloodsuckerdatum_power?.powers -= src
 	Remove(owner)
+
+/datum/action/cooldown/bloodsucker/proc/stupid_looping_timer()
+	if(world.time >= next_use_time)
+		deltimer(stupid_looping_timer_id)
+		stupid_looping_timer_id = null
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/datum/action/cooldown/bloodsucker/proc/html_power_explanation()
+	return replacetext_char(html_encode(trimtext(power_explanation)), "\n", "<br>")

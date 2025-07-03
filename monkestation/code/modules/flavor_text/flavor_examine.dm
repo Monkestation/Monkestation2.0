@@ -57,9 +57,9 @@
 		var/admin_line = ""
 
 		if(linked_flavor.flavor_text)
-			admin_line += "<a href='?src=[REF(linked_flavor)];flavor_text=1'>\[FLA\]</a>"
+			admin_line += "<a href='byond://?src=[REF(linked_flavor)];flavor_text=1'>\[FLA\]</a>"
 		if(linked_flavor.expl_info)
-			admin_line += "<a href='?src=[REF(linked_flavor)];exploitable_info=1'>\[EXP\]</a>"
+			admin_line += "<a href='byond://?src=[REF(linked_flavor)];exploitable_info=1'>\[EXP\]</a>"
 		if(known_identity != linked_flavor)
 			admin_line += "\nThey are currently [isnull(known_identity) ? "disguised and have no visible flavor":"visible as the flavor text of [known_identity.name]"]."
 
@@ -68,7 +68,7 @@
 
 	// if the mob doesn't have a client, show how long they've been disconnected for.
 	if(!client && last_connection_time && stat != DEAD)
-		var/formatted_afk_time = span_bold("[round((world.time - last_connection_time) / (60*60), 0.1)]")
+		var/formatted_afk_time = span_bold("[round((world.time - lastclienttime) / (1 MINUTES), 0.1)]")
 		expanded_examine += span_italics("\n[p_Theyve()] been unresponsive for [formatted_afk_time] minute(s).\n")
 
 	if(length(expanded_examine))

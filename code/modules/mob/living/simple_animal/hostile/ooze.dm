@@ -12,8 +12,8 @@
 	speak_emote = list("blorbles")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_type = /datum/hud/ooze
-	minbodytemp = 250
-	maxbodytemp = INFINITY
+	bodytemp_cold_damage_limit = 250
+	bodytemp_heat_damage_limit = INFINITY
 	faction = list(FACTION_SLIME)
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -175,7 +175,7 @@
 ///Heat up the mob a little
 /datum/action/cooldown/metabolicboost/proc/HeatUp()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	ooze.adjust_bodytemperature(50)
+	ooze.adjust_bodytemperature(3.33 KELVIN)
 
 ///Remove the speed modifier and delete the timer for heating up
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
@@ -197,7 +197,7 @@
 	button_icon_state = "consume"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE|AB_CHECK_INCAPACITATED
 	///The mob thats being consumed by this creature
-	var/mob/living/vored_mob
+	var/mob/living/devoured_mob
 
 ///Register for owner death
 /datum/action/consume/New(Target)
@@ -207,7 +207,7 @@
 
 /datum/action/consume/proc/handle_mob_deletion()
 	SIGNAL_HANDLER
-	stop_consuming() //Shit out the vored mob before u go go
+	stop_consuming() //Shit out the devoured mob before u go go
 
 ///Try to consume the pulled mob
 /datum/action/consume/Trigger(trigger_flags)
@@ -218,7 +218,7 @@
 	if(!isliving(ooze.pulling))
 		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
 		return FALSE
-	if(vored_mob)
+	if(devoured_mob)
 		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
 	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
@@ -233,9 +233,9 @@
 
 ///Start allowing this datum to process to handle the damage done to  this mob.
 /datum/action/consume/proc/start_consuming(mob/living/target)
-	vored_mob = target
-	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
-	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(handle_mob_deletion))
+	devoured_mob = target
+	devoured_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
+	RegisterSignal(devoured_mob, COMSIG_QDELETING, PROC_REF(handle_mob_deletion))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
@@ -243,24 +243,24 @@
 ///Stop consuming the mob; dump them on the floor
 /datum/action/consume/proc/stop_consuming()
 	STOP_PROCESSING(SSprocessing, src)
-	vored_mob.forceMove(get_turf(owner))
+	devoured_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
-	UnregisterSignal(vored_mob, COMSIG_QDELETING)
-	vored_mob = null
+	owner.visible_message(span_warning("[owner] pukes out [devoured_mob]!"), span_notice("You puke out [devoured_mob]."))
+	UnregisterSignal(devoured_mob, COMSIG_QDELETING)
+	devoured_mob = null
 
 ///Gain health for the consumption and dump some clone loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	vored_mob.adjustBruteLoss(5)
+	devoured_mob.adjustBruteLoss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	ooze.adjust_ooze_nutrition(3)
 
 	///Dump em at 200 cloneloss.
-	if(vored_mob.getBruteLoss() >= 200)
+	if(devoured_mob.getBruteLoss() >= 200)
 		stop_consuming()
 
-///On owner death dump the current vored mob
+///On owner death dump the current devoured mob
 /datum/action/consume/proc/on_owner_death()
 	SIGNAL_HANDLER
 	stop_consuming()
@@ -335,7 +335,7 @@
 
 	return TRUE
 
-/datum/action/cooldown/globules/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/globules/InterceptClickOn(mob/living/user, params, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -344,19 +344,19 @@
 	// Well, we need to use the params of the click intercept
 	// for passing into preparePixelProjectile, so we'll handle it here instead.
 	// We just need to make sure Pre-activate and Activate return TRUE so we make it this far
-	caller.visible_message(
-		span_nicegreen("[caller] launches a mending globule!"),
+	user.visible_message(
+		span_nicegreen("[user] launches a mending globule!"),
 		span_notice("You launch a mending globule."),
 	)
 
-	var/mob/living/simple_animal/hostile/ooze/oozy = caller
+	var/mob/living/simple_animal/hostile/ooze/oozy = user
 	if(istype(oozy))
 		oozy.adjust_ooze_nutrition(-5)
 
 	var/modifiers = params2list(params)
-	var/obj/projectile/globule/globule = new(caller.loc)
-	globule.preparePixelProjectile(target, caller, modifiers)
-	globule.def_zone = caller.zone_selected
+	var/obj/projectile/globule/globule = new(user.loc)
+	globule.preparePixelProjectile(target, user, modifiers)
+	globule.def_zone = user.zone_selected
 	globule.fire()
 
 	StartCooldown()

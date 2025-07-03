@@ -5,6 +5,7 @@ $button: #1f1f1f;
 $lightMode: #ffffff;
 $lightBorder: #bbbbbb;
 $lightHover: #eaeaea;
+$scrollbar-color-multiplier: 1 !default;
 
 $_channel_map: (
   'Admin': #ffbbff,
@@ -18,6 +19,7 @@ $_channel_map: (
   'Me': #5975da,
   'Med': #57b8f0,
   'OOC': #cca300,
+  'Ent': #5c8a87,
   'LOOC': #fafa3b,
   'Mentor': #ff00ff,
   'Radio': #1ecc43,
@@ -27,6 +29,7 @@ $_channel_map: (
   'Supp': #b88646,
   'Svc': #6ca729,
   'Synd': #8f4a4b,
+  'Uncom': #78a1b1,
 );
 
 $channel_keys: map.keys($_channel_map) !default;

@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	init_order = INIT_ORDER_PATHOGEN
 	priority = FIRE_PRIORITY_PATHOGEN
 	wait = 1 SECONDS
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/current_run_cores = list()
@@ -12,6 +12,14 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	var/list/clouds = list()
 	var/current_run_level = "clouds"
 
+/datum/controller/subsystem/pathogen_clouds/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, current_run_cores),
+		NAMEOF(src, current_run_clouds),
+		NAMEOF(src, cores),
+		NAMEOF(src, clouds),
+	)
 
 /datum/controller/subsystem/pathogen_clouds/stat_entry(msg)
 	msg += "Run Cores:[length(current_run_cores)]"
@@ -20,9 +28,9 @@ SUBSYSTEM_DEF(pathogen_clouds)
 	msg += "Clouds:[length(clouds)]"
 	return ..()
 
-
-/datum/controller/subsystem/pathogen_clouds/Initialize()
-	return SS_INIT_SUCCESS
+/datum/controller/subsystem/pathogen_clouds/Recover()
+	cores = SSpathogen_clouds.cores.Copy()
+	clouds = SSpathogen_clouds.clouds.Copy()
 
 /datum/controller/subsystem/pathogen_clouds/fire(resumed = FALSE)
 
@@ -39,7 +47,7 @@ SUBSYSTEM_DEF(pathogen_clouds)
 			//If we exist ontop of a core transfer viruses and die unless parent this means something moved back.
 			//This should prevent mobs breathing in hundreds of clouds at once
 			for(var/obj/effect/pathogen_cloud/core/core in cloud.loc)
-				for(var/datum/disease/advanced/V as anything in cloud.viruses)
+				for(var/datum/disease/acute/V as anything in cloud.viruses)
 					if("[V.uniqueID]-[V.subID]" in core.id_list)
 						continue
 					core.viruses |= V.Copy()
@@ -65,7 +73,7 @@ SUBSYSTEM_DEF(pathogen_clouds)
 					if(other_C == core)
 						return
 					if (!other_C.moving)
-						for(var/datum/disease/advanced/V as anything in other_C.viruses)
+						for(var/datum/disease/acute/V as anything in other_C.viruses)
 							if("[V.uniqueID]-[V.subID]" in core.id_list)
 								continue
 							core.viruses |= V.Copy()

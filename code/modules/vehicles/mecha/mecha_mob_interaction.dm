@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/mob_try_enter(mob/M)
 	if(!ishuman(M)) // no silicons or drones in mechas.
 		return
-	if(HAS_TRAIT(M, TRAIT_PRIMITIVE)) //no lavalizards either.
+	if(HAS_TRAIT(M, TRAIT_PRIMITIVE) && (!(HAS_TRAIT(M, TRAIT_ADVANCEDTOOLUSER)) || !(HAS_TRAIT(M, TRAIT_LITERATE)))) //no lavalizards either.
 		to_chat(M, span_warning("The knowledge to use this device eludes you!"))
 		return
 	log_message("[M] tried to move into [src].", LOG_MECHA)
@@ -158,12 +158,16 @@
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
 	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
+	RegisterSignal(M, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
 	. = ..()
 	update_appearance()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, COMSIG_MOB_CLICKON)
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	UnregisterSignal(M, list(
+		COMSIG_MOB_CLICKON,
+		COMSIG_MOB_SAY,
+		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
+	))
 	M.clear_alert(ALERT_CHARGE)
 	M.clear_alert(ALERT_MECH_DAMAGE)
 	if(M.client)

@@ -76,12 +76,16 @@
 	name = "deep-vein emergency morale rejuvenator"
 	desc = "Dangerous implant used by the syndicate to reinforce their assault forces that go on suicide missions."
 	implant_color = "#74942a"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 	encode_info = AUGMENT_SYNDICATE_LEVEL
 	reagent_list = list(
 		/datum/reagent/determination = 5,
 		/datum/reagent/drug/methamphetamine = 5 ,
 		/datum/reagent/medicine/atropine = 5
 	)
+
+/obj/item/organ/internal/cyberimp/leg/chemplant/drugs/l
+	zone = BODY_ZONE_L_LEG
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/emergency
 	name = "deep emergency chemical infuser"

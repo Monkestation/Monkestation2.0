@@ -29,34 +29,6 @@
 	)
 	return embed
 
-/proc/send2mentorchat_webhook(message_or_embed, urgent)
-	var/webhook = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-
-	if(!webhook)
-		return
-	var/list/webhook_info = list()
-	if(istext(message_or_embed))
-		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
-		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
-		webhook_info["content"] = message_content
-	else
-		var/datum/discord_embed/embed = message_or_embed
-		webhook_info["embeds"] = list(embed.convert_to_list())
-		if(embed.content)
-			webhook_info["content"] = embed.content
-	if(CONFIG_GET(string/mentorhelp_webhook_name))
-		webhook_info["username"] = CONFIG_GET(string/mentorhelp_webhook_name)
-	if(CONFIG_GET(string/mentorhelp_webhook_pfp))
-		webhook_info["avatar_url"] = CONFIG_GET(string/mentorhelp_webhook_pfp)
-	// Uncomment when servers are moved to TGS4
-	// send2chat(new /datum/tgs_message_conent("[initiator_ckey] | [message_content]"), "ahelp", TRUE)
-	var/list/headers = list()
-	headers["Content-Type"] = "application/json"
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
-	request.begin_async()
-
-
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
 	set name = "Mentorhelp"
@@ -76,9 +48,7 @@
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	var/mentor_msg = "<font color='purple'><span class='mentornotice'><b>MENTORHELP:</b> <b>[key_name_mentor(src, TRUE, FALSE)]</b> : </span><span class='message linkify'>[msg]</span></font>"
-	//Monkestation Edit Begin
-	var/mentor_msg_observing = "<span class='mentornotice'><b><span class='mentorhelp'>MENTORHELP:</b> <b>[key_name_mentor(src, TRUE, FALSE)]</b> (<a href='?_src_=mentor;[MentorHrefToken(TRUE)];mentor_friend=[REF(src.mob)]'>IF</a>) : [msg]</span></span>"
-	//Monkestation Edit End
+	var/mentor_msg_observing = "<span class='mentornotice'><b><span class='mentorhelp'>MENTORHELP:</b> <b>[key_name_mentor(src, TRUE, FALSE)]</b> (<a href='byond://?_src_=mentor;[MentorHrefToken(TRUE)];mentor_friend=[REF(src.mob)]'>IF</a>) : [msg]</span></span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, null, FALSE, FALSE)]: [msg]")
 
 	/// Send the Mhelp to all Mentors/Admins
@@ -108,13 +78,7 @@
 
 	var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
 	if(request)
-		var/id = "[request.id]"
-		var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
-		if(regular_webhook_url)
-			var/extra_message = CONFIG_GET(string/mhelp_message)
-			var/datum/discord_embed/embed = format_mhelp_embed(msg, id)
-			embed.content = extra_message
-			send2mentorchat_webhook(embed, key)
+		SSplexora.mticket_new(request)
 	return
 
 /proc/key_name_mentor(whom, include_link = null, include_name = TRUE, include_follow = TRUE, char_name_only = TRUE)
@@ -142,7 +106,7 @@
 		if(chosen_client)
 			user = chosen_client.mob
 	else if(findtext(whom, "Discord"))
-		return "<a href='?_src_=mentor;mentor_msg=[whom];[MentorHrefToken(TRUE)]'>"
+		return "<a href='byond://?_src_=mentor;mentor_msg=[whom];[MentorHrefToken(TRUE)]'>"
 	else
 		return "*invalid*"
 
@@ -153,7 +117,7 @@
 
 	if(key)
 		if(include_link != null)
-			. += "<a href='?_src_=mentor;mentor_msg=[ckey];[MentorHrefToken(TRUE)]'>"
+			. += "<a href='byond://?_src_=mentor;mentor_msg=[ckey];[MentorHrefToken(TRUE)]'>"
 
 		if(chosen_client && chosen_client.holder && chosen_client.holder.fakekey)
 			. += "Administrator"
@@ -168,6 +132,6 @@
 		. += "*no key*"
 
 	if(include_follow)
-		. += " (<a href='?_src_=mentor;mentor_follow=[REF(user)];[MentorHrefToken(TRUE)]'>F</a>)"
+		. += " (<a href='byond://?_src_=mentor;mentor_follow=[REF(user)];[MentorHrefToken(TRUE)]'>F</a>)"
 
 	return .

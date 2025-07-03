@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_glasses, generate_loadout_items(/datum/loadout_item/gla
 /datum/loadout_item/glasses/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.glasses)
-			LAZYADD(outfit.backpack_contents, outfit.glasses)
+			spawn_in_backpack(outfit, outfit.glasses, equipper)
 		outfit.glasses = item_path
 	else
 		outfit.glasses = item_path
@@ -54,6 +54,10 @@ GLOBAL_LIST_INIT(loadout_glasses, generate_loadout_items(/datum/loadout_item/gla
 /datum/loadout_item/glasses/prescription_glasses/jamjar_glasses
 	name = "Jamjar Glasses"
 	item_path = /obj/item/clothing/glasses/regular/jamjar
+
+/datum/loadout_item/glasses/prescription_glasses/betterunshit
+    name = "modern glasses"
+    item_path = /obj/item/clothing/glasses/regular/betterunshit
 
 /*
 *	COSMETIC GLASSES

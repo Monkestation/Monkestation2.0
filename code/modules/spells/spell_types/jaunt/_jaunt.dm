@@ -19,6 +19,12 @@
 	/// What dummy mob type do we put jaunters in on jaunt?
 	var/jaunt_type = /obj/effect/dummy/phased_mob
 
+/datum/action/cooldown/spell/jaunt/get_caster_from_target(atom/target)
+	if(istype(target.loc, jaunt_type))
+		return target
+
+	return ..()
+
 /datum/action/cooldown/spell/jaunt/before_cast(atom/cast_on)
 	return ..() | SPELL_NO_FEEDBACK // Don't do the feedback until after we're jaunting
 
@@ -31,15 +37,16 @@
 	if(!owner_area || !owner_turf)
 		return FALSE // nullspaced?
 
-	if(owner_area.area_flags & NOTELEPORT)
-		if(feedback)
-			to_chat(owner, span_danger("Some dull, universal force is stopping you from jaunting here."))
-		return FALSE
+	if(SSticker.current_state < GAME_STATE_FINISHED) // monkestation edit: allow jaunts to work after roundend
+		if(owner_area.area_flags & NOTELEPORT)
+			if(feedback)
+				to_chat(owner, span_danger("Some dull, universal force is stopping you from jaunting here."))
+			return FALSE
 
-	if(owner_turf?.turf_flags & NOJAUNT)
-		if(feedback)
-			to_chat(owner, span_danger("An otherwordly force is preventing you from jaunting here."))
-		return FALSE
+		if(owner_turf?.turf_flags & NOJAUNT)
+			if(feedback)
+				to_chat(owner, span_danger("An otherwordly force is preventing you from jaunting here."))
+			return FALSE
 
 	return isliving(owner)
 

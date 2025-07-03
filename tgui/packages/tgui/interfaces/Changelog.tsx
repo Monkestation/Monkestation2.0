@@ -29,6 +29,7 @@ const icons = {
   imageadd: { icon: 'tg-image-plus', color: 'green' },
   imagedel: { icon: 'tg-image-minus', color: 'red' },
   spellcheck: { icon: 'spell-check', color: 'green' },
+  map: { icon: 'map', color: 'green' },
   experiment: { icon: 'radiation', color: 'yellow' },
   balance: { icon: 'balance-scale-right', color: 'yellow' },
   code_imp: { icon: 'code', color: 'green' },
@@ -57,7 +58,7 @@ type ChangelogData = {
   testmerges?: Testmerge[];
 };
 
-const ChangeRow = (props: { kind: string; content: string }, _context) => {
+const ChangeRow = (props: { kind: string; content: string }) => {
   return (
     <Table.Row>
       <Table.Cell
@@ -77,7 +78,7 @@ const ChangeRow = (props: { kind: string; content: string }, _context) => {
   );
 };
 
-const Header = (props: { dropdown: any }, _context) => {
+const Header = (props: { dropdown: any }) => {
   return (
     <Section>
       <h1>Monkestation</h1>
@@ -106,7 +107,7 @@ const Header = (props: { dropdown: any }, _context) => {
   );
 };
 
-const Footer = (props: { dropdown: any }, _context) => {
+const Footer = (props: { dropdown: any }) => {
   return (
     <Section>
       {props.dropdown}

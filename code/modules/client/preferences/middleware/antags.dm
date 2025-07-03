@@ -17,11 +17,11 @@
 	data["selected_antags"] = selected_antags
 
 	var/list/antag_bans = get_antag_bans()
-	if (antag_bans.len)
+	if (length(antag_bans))
 		data["antag_bans"] = antag_bans
 
 	var/list/antag_days_left = get_antag_days_left()
-	if (antag_days_left?.len)
+	if (length(antag_days_left))
 		data["antag_days_left"] = antag_days_left
 
 	return data
@@ -66,7 +66,7 @@
 		if (isnull(antag_flag))
 			continue
 
-		if (is_banned_from(preferences.parent.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+		if (is_banned_from(preferences.parent?.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			antag_bans += serialize_antag_name(antag_flag)
 
 	return antag_bans
@@ -115,15 +115,22 @@
 /datum/asset/spritesheet/antagonists/create_spritesheets()
 	// Antagonists that don't have a dynamic ruleset, but do have a preference
 	var/static/list/non_ruleset_antagonists = list(
-		ROLE_CYBER_POLICE = /datum/antagonist/cyber_police,
+		ROLE_GLITCH = /datum/antagonist/bitrunning_glitch,
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
 		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,
-		//monkestation antags
+		// monkestation start: non-dynamic antags
 		ROLE_CORTICAL_BORER = /datum/antagonist/cortical_borer,
 		ROLE_DRIFTING_CONTRACTOR = /datum/antagonist/traitor/contractor,
 		ROLE_SLASHER = /datum/antagonist/slasher,
-		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man
+		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man,
+		ROLE_TERATOMA = /datum/antagonist/teratoma,
+		ROLE_ASSAULT_OPERATIVE = /datum/antagonist/assault_operative,
+		ROLE_PLAGUERAT = /datum/antagonist/plague_rat,
+		ROLE_JUNIOR_LONE_OPERATIVE = /datum/antagonist/nukeop/lone/junior,
+		ROLE_COMMANDO_OPERATIVE = /datum/antagonist/nukeop/commando,
+		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
+		// monkestation end
 	)
 
 	var/list/antagonists = non_ruleset_antagonists.Copy()

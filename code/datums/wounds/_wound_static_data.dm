@@ -86,7 +86,14 @@
  * if we have a biotype mismatch, if the limb isnt in a viable zone, or if theres any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types = required_wounding_types, datum/wound/old_wound, random_roll = FALSE, duplicates_allowed = src.duplicates_allowed, care_about_existing_wounds = TRUE)
+/datum/wound_pregen_data/proc/can_be_applied_to(
+	obj/item/bodypart/limb,
+	list/suggested_wounding_types = required_wounding_types,
+	datum/wound/old_wound,
+	random_roll = FALSE,
+	duplicates_allowed = src.duplicates_allowed,
+	care_about_existing_wounds = TRUE,
+)
 	SHOULD_BE_PURE(TRUE)
 
 	if (!istype(limb) || !limb.owner)
@@ -95,7 +102,7 @@
 	if (random_roll && !can_be_randomly_generated)
 		return FALSE
 
-	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (limb.owner.status_flags & GODMODE))
+	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (HAS_TRAIT(limb.owner, TRAIT_GODMODE)))
 		return FALSE
 
 	if (!wounding_types_valid(suggested_wounding_types))

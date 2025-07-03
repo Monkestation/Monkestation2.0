@@ -16,11 +16,14 @@
 	if(!proximity_flag)
 		return
 	else if(isliving(target))
+		var/mob/living/living_target = target
+		if(!highly_infecious && living_target.stat != DEAD)
+			return
 		if(ishuman(target))
 			try_to_zombie_infect(target, user, user.zone_selected)
-		else
+		/*else monkestation temp removal
 			. |= AFTERATTACK_PROCESSED_ITEM
-			check_feast(target, user)
+			check_feast(target, user)*/
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST)
 	CHECK_DNA_AND_SPECIES(target)
@@ -29,13 +32,13 @@
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
 		return
 
-	if((NOZOMBIE in target.dna.species.species_traits) || HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
+	if(HAS_TRAIT(target, TRAIT_NO_ZOMBIFY))
 		// cannot infect any NOZOMBIE subspecies (such as high functioning
 		// zombies)
 		return
 
 	// spaceacillin has a 75% chance to block infection
-	if(istype(target) && target.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) && prob(75))
+	if(HAS_TRAIT(target, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return
 
 	var/obj/item/bodypart/actual_limb = target.get_bodypart(def_zone)
@@ -84,3 +87,10 @@
 		user.updatehealth()
 		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))
+//monkestation edit start
+		if(iszombie(user))
+			var/mob/living/carbon/carbon_user = user
+			var/datum/species/zombie/infectious/zombie_datum = carbon_user.dna.species
+			zombie_datum.consumed_flesh += hp_gained
+//monkestation edit end
+

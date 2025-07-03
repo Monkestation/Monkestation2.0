@@ -6,7 +6,7 @@
 		BB_WATERLEVEL_THRESHOLD = 90,
 	)
 
-	ai_movement = /datum/ai_movement/basic_avoidance
+	ai_movement = /datum/ai_movement/jps // monkestation edit: use jps instead of basic avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
@@ -145,7 +145,7 @@
 
 	if(isnull(can))
 		return
-	if(locate(/datum/reagent/water) in can.reagents.reagent_list)
+	if(can.reagents?.has_reagent(/datum/reagent/water)) // monkestation edit: just use has_reagent instead of locate()
 		return
 
 	return ..()
@@ -153,7 +153,7 @@
 /datum/ai_behavior/find_hunt_target/suitable_dispenser
 
 /datum/ai_behavior/find_hunt_target/suitable_dispenser/valid_dinner(mob/living/source, obj/structure/water_source, radius)
-	if(!(locate(/datum/reagent/water) in water_source.reagents.reagent_list))
+	if(!water_source.reagents?.has_reagent(/datum/reagent/water)) // monkestation edit: just use has_reagent instead of locate()
 		return FALSE
 
 	return can_see(source, water_source, radius)

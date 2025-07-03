@@ -34,13 +34,18 @@
 
 /obj/item/ammo_casing/energy/temp
 	projectile_type = /obj/projectile/temp
-	select_name = "freeze"
+	select_name = "chill"
 	e_cost = 250
 	fire_sound = 'sound/weapons/pulse3.ogg'
 
 /obj/item/ammo_casing/energy/temp/hot
 	projectile_type = /obj/projectile/temp/hot
-	select_name = "bake"
+	select_name = "heat"
+
+/obj/item/ammo_casing/energy/temp/cryo
+	projectile_type = /obj/projectile/temp/cryo
+	select_name = "freeze"
+	e_cost = 500
 
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/projectile/meteor
@@ -56,6 +61,7 @@
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/projectile/energy/trap
 	select_name = "snare"
+	e_cost = 200 //monkestation addition
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/tesla_cannon
@@ -65,7 +71,7 @@
 	projectile_type = /obj/projectile/energy/tesla_cannon
 
 /obj/item/ammo_casing/energy/shrink
-	projectile_type = /obj/projectile/beam/shrink
+	projectile_type = /obj/projectile/magic/shrink/alien
 	select_name = "shrink ray"
 	e_cost = 200
 
@@ -74,3 +80,9 @@
 	select_name = "marksman nanoshot"
 	e_cost = 0
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+
+/obj/item/ammo_casing/energy/fisher
+	projectile_type = /obj/projectile/energy/fisher
+	select_name = "light-buster"
+	e_cost = 250
+	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip

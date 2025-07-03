@@ -114,15 +114,45 @@
 #define OFFSET_X 1
 #define OFFSET_Y 2
 
+/// Similar to get_status_text, but appends the text after the damage report, for additional status info
+/obj/item/organ/internal/eyes/get_status_appendix(advanced, add_tooltips)
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+		return
+	if(owner.is_blind())
+		if(advanced)
+			if(owner.is_blind_from(QUIRK_TRAIT))
+				return conditional_tooltip("Subject is permanently blind.", "Irreparable under normal circumstances.", add_tooltips)
+			if(owner.is_blind_from(TRAUMA_TRAIT))
+				return conditional_tooltip("Subject is blind from mental trauma.", "Repair via treatment of associated trauma.", add_tooltips)
+			if(owner.is_blind_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically blind.", "Use medication such as [/datum/reagent/medicine/mutadone::name].", add_tooltips)
+			if(owner.is_blind_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is blind from eye damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/oculine::name], or protect eyes with a blindfold.", add_tooltips)
+		return "Subject is blind."
+	if(owner.is_nearsighted())
+		if(advanced)
+			if(owner.is_nearsighted_from(QUIRK_TRAIT))
+				return conditional_tooltip("Subject is permanently nearsighted.", "Irreparable under normal circumstances. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically nearsighted.", "Use medication such as [/datum/reagent/medicine/mutadone::name]. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is nearsighted from eye damage.", "Repair surgically or use medication such as [/datum/reagent/medicine/oculine::name]. Prescription glasses will assuage the effects.", add_tooltips)
+		return "Subject is nearsighted."
+	return ""
+
+/obj/item/organ/internal/eyes/show_on_condensed_scans()
+	// Always show if we have an appendix
+	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
+
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
-	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi'
+	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
 
-	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -FACE_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -FACE_LAYER)
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -BODY_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -BODY_LAYER)
 
 	var/list/overlays = list(eye_left, eye_right)
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
@@ -153,7 +183,7 @@
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
 
-/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!owner)
 		return
@@ -262,12 +292,11 @@
 	name = "robotic eyes"
 	icon_state = "cybernetic_eyeballs"
 	desc = "Your vision is augmented."
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/eyes/robotic/emp_act(severity)
 	. = ..()
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 	if(prob(10 * severity))
 		return
@@ -292,11 +321,12 @@
 		owner.emote("scream")
 
 /obj/item/organ/internal/eyes/robotic/xray
-	name = "\improper X-ray eyes"
-	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
+	name = "prototype X-ray eyes"
+	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile. Caution - Extremely vulnerable to sudden flashes."
 	eye_color_left = "000"
 	eye_color_right = "000"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 
 /obj/item/organ/internal/eyes/robotic/xray/on_insert(mob/living/carbon/eye_owner)
 	. = ..()
@@ -305,6 +335,11 @@
 /obj/item/organ/internal/eyes/robotic/xray/on_remove(mob/living/carbon/eye_owner)
 	. = ..()
 	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
+
+/obj/item/organ/internal/eyes/robotic/xray/syndicate
+	name = "syndicate X-ray eyes"
+	desc = "An upgraded model of X-ray vision eyes, courtesy of Cybersun. All the vision, none of the drawbacks."
+	flash_protect = FLASH_PROTECTION_NONE
 
 /obj/item/organ/internal/eyes/robotic/thermals
 	name = "thermal eyes"
@@ -315,6 +350,11 @@
 	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/internal/eyes/robotic/thermals/syndicate
+	name = "syndicate thermal eyes"
+	desc = "An upgraded model of thermal vision eyes, courtesy of Cybersun. All the same vision, without the same vulnerability to overloading."
+	flash_protect = FLASH_PROTECTION_NONE
 
 /obj/item/organ/internal/eyes/robotic/flashlight
 	name = "flashlight eyes"
@@ -415,7 +455,8 @@
 	QDEL_NULL(eyes_overlay)
 	QDEL_NULL(eyes_overlay_left)
 	QDEL_NULL(eyes_overlay_right)
-	eye.forceMove(src)
+	if(!QDELETED(eye))
+		eye.forceMove(src)
 	return ..()
 
 /obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
@@ -660,7 +701,6 @@
 	icon_state = "eyeballs-moth"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	overlay_ignore_lighting = TRUE
-
 
 /obj/item/organ/internal/eyes/lizard
 	name = "lizard eyes"

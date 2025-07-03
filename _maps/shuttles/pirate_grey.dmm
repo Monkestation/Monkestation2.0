@@ -275,6 +275,7 @@
 "lk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/item/assembly/flash,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ll" = (
@@ -296,6 +297,10 @@
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"lD" = (
+/obj/item/assembly/flash,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "lL" = (
@@ -345,6 +350,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "os" = (
@@ -386,8 +392,7 @@
 /area/shuttle/pirate)
 "pB" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/storage/box/emergency_eva,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "pR" = (
@@ -437,10 +442,8 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "qo" = (
-/obj/machinery/power/smes{
-	charge = 1e+600
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/magical,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "qs" = (
@@ -464,8 +467,7 @@
 /area/shuttle/pirate)
 "rB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/storage/box/emergency_eva,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "rM" = (
@@ -488,11 +490,9 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "sh" = (
-/obj/machinery/power/smes{
-	charge = 1e+006
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/power/smes/magical,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "sm" = (
@@ -535,8 +535,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/storage/box/emergency_eva,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "tJ" = (
@@ -609,9 +608,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/storage/box/emergency_eva,
 /turf/open/floor/plating,
+/area/shuttle/pirate)
+"vU" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "silverbridge"
+	},
+/turf/closed/wall/r_wall,
 /area/shuttle/pirate)
 "wb" = (
 /obj/structure/grille,
@@ -710,8 +714,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/head/helmet/space/eva,
+/obj/item/storage/box/emergency_eva,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "xO" = (
@@ -865,6 +868,7 @@
 	dir = 4
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Bu" = (
@@ -1031,6 +1035,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"GB" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/closed/wall/r_wall,
+/area/shuttle/pirate)
 "GE" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/costume,
@@ -1067,7 +1075,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "silverbridge"
 	},
-/turf/closed/wall/rust,
+/turf/closed/wall/r_wall/rust,
 /area/shuttle/pirate)
 "HS" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -1238,7 +1246,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Pn" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/template_noop)
 "PM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1351,7 +1359,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
 	},
-/turf/closed/wall/rust,
+/turf/closed/wall/r_wall,
 /area/shuttle/pirate)
 "Ue" = (
 /obj/effect/turf_decal/bot,
@@ -1497,6 +1505,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/assembly/flash,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "ZD" = (
@@ -1531,7 +1540,7 @@ je
 vw
 pk
 TT
-zB
+pk
 Mu
 Mu
 Mu
@@ -1539,9 +1548,9 @@ UJ
 Mu
 Mu
 Mu
-zB
+pk
 TT
-zB
+pk
 vw
 je
 "}
@@ -1558,9 +1567,9 @@ eK
 Ww
 Ww
 Ww
-zB
+pk
 zN
-zB
+Sh
 AE
 je
 "}
@@ -1584,7 +1593,7 @@ ag
 TV
 "}
 (5,1,1) = {"
-zB
+pk
 qE
 Su
 Si
@@ -1594,16 +1603,16 @@ KU
 xR
 PS
 Yj
-Wy
+lD
 xR
 mT
 ci
 QI
 NO
-zB
+pk
 "}
 (6,1,1) = {"
-zB
+pk
 CP
 rB
 xu
@@ -1619,7 +1628,7 @@ Lp
 KZ
 yv
 ko
-zB
+Sh
 "}
 (7,1,1) = {"
 pk
@@ -1638,7 +1647,7 @@ VI
 xe
 ax
 uY
-zB
+pk
 "}
 (8,1,1) = {"
 pk
@@ -1657,7 +1666,7 @@ BL
 Yj
 NI
 jS
-zB
+Sh
 "}
 (9,1,1) = {"
 HD
@@ -1676,10 +1685,10 @@ IY
 Kq
 xT
 qm
-Ti
+GB
 "}
 (10,1,1) = {"
-ZU
+Sh
 Ut
 kw
 CH
@@ -1694,8 +1703,8 @@ Yj
 rV
 Tq
 uE
-ZU
-HD
+pk
+vU
 "}
 (11,1,1) = {"
 zB
@@ -1713,7 +1722,7 @@ wX
 Oa
 Tq
 Lo
-ZU
+pk
 ei
 "}
 (12,1,1) = {"
@@ -1732,7 +1741,7 @@ Sh
 Fn
 Tq
 ro
-zB
+pk
 HD
 "}
 (13,1,1) = {"
@@ -1751,7 +1760,7 @@ Sh
 gQ
 dd
 xy
-ZU
+pk
 HD
 "}
 (14,1,1) = {"
@@ -1771,10 +1780,10 @@ os
 fW
 Sh
 Sh
-zB
+pk
 "}
 (15,1,1) = {"
-ZU
+Sh
 dI
 Sv
 ZU
@@ -1790,10 +1799,10 @@ Sb
 fN
 rp
 ff
-zB
+pk
 "}
 (16,1,1) = {"
-zB
+Sh
 vM
 lO
 ZU
@@ -1809,7 +1818,7 @@ Aa
 LQ
 vJ
 uP
-zB
+Sh
 "}
 (17,1,1) = {"
 pk
@@ -1828,7 +1837,7 @@ Wd
 Jq
 RE
 Ho
-zB
+Sh
 "}
 (18,1,1) = {"
 wE
@@ -1846,12 +1855,12 @@ Sh
 Bh
 Uf
 DP
-zB
+Sh
 Pn
 "}
 (19,1,1) = {"
 je
-zB
+Sh
 Oo
 AZ
 RU
@@ -1865,12 +1874,12 @@ Ci
 Sh
 Gb
 xm
-ZU
+Sh
 je
 "}
 (20,1,1) = {"
 je
-ZU
+pk
 ia
 NI
 yU
@@ -1884,13 +1893,13 @@ xl
 Sh
 AR
 lO
-ZU
+pk
 je
 "}
 (21,1,1) = {"
 je
-ZU
-ZU
+pk
+pk
 xm
 yU
 OG
@@ -1902,14 +1911,14 @@ ZU
 Zc
 ZU
 pB
-ZU
-ZU
+pk
+pk
 je
 "}
 (22,1,1) = {"
 je
 je
-ZU
+pk
 EA
 ll
 FI
@@ -1921,7 +1930,7 @@ ZU
 gz
 ZU
 RX
-ZU
+Sh
 je
 je
 "}
@@ -1939,7 +1948,7 @@ Yf
 FI
 aV
 ZU
-ZU
+Sh
 je
 je
 je
@@ -1957,7 +1966,7 @@ Am
 FT
 pk
 pk
-ZU
+Sh
 je
 je
 je
@@ -1970,9 +1979,9 @@ je
 je
 pk
 zB
-ZU
-ZU
-zB
+pk
+pk
+pk
 pk
 pk
 je

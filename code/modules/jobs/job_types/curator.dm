@@ -30,7 +30,7 @@
 
 	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/storage/dice)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 	voice_of_god_silence_power = 3
 	rpg_title = "Veteran Adventurer"
@@ -46,13 +46,24 @@
 		/obj/item/choice_beacon/hero = 1,
 	)
 	belt = /obj/item/modular_computer/pda/curator
-	ears = /obj/item/radio/headset/headset_srv
+	ears = /obj/item/radio/headset/headset_srvent
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/laser_pointer/green
 	r_pocket = /obj/item/key/displaycase
 	l_hand = /obj/item/storage/bag/books
 
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
+
+/datum/outfit/job/curator/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return ..()
+
+	/// There can be only one cameraman on this station, and no, not that kind
+	var/static/cameraman_choosen = FALSE
+	if(!cameraman_choosen)
+		backpack_contents[/obj/item/broadcast_camera] = 1
+		cameraman_choosen = TRUE
+	return ..()
 
 /datum/outfit/job/curator/post_equip(mob/living/carbon/human/translator, visualsOnly = FALSE)
 	..()

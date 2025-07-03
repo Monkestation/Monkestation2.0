@@ -115,8 +115,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_FISSURE S_TURF(62)
 
 #define SMOOTH_GROUP_MUSHROOM S_TURF(63)
+#define SMOOTH_GROUP_CARPET_GRIMEY S_TURF(64) ///turf/open/floor/carpet/grimey
 
-#define MAX_S_TURF 63 //Always match this value with the one above it.
+#define MAX_S_TURF 64 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
@@ -177,6 +178,8 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(67) ///obj/structure/window/reinforced/shuttle, /obj/structure/window/reinforced/plasma/plastitanium, /turf/closed/indestructible/opsglass, /obj/machinery/power/shuttle_engine
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(68) ///obj/effect/decal/cleanable/dirt
+
+#define SMOOTH_GROUP_GRAV_FIELD S_OBJ(69)
 
 #define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(71) ///obj/structure/industrial_lift
 

@@ -1,21 +1,24 @@
 /datum/reagent/blood
 	data = list(
-		"viruses"=null,
-		"blood_DNA"=null,
-		"blood_type"=null,
-		"resistances"=null,
-		"trace_chem"=null,
-		"mind"=null,
-		"ckey"=null,
-		"gender"=null,
-		"real_name"=null,
-		"cloneable"=null,
-		"factions"=null,
-		"quirks"=null,
+		// Actually Relevant
+		"viruses" = null, // Refernces to virus datums in this blood
+		"blood_DNA" = null, // DNA of the guy who the blood came from
+		"blood_type" = null, // /datum/blood_type of the blood
+		"resistances" = null, // Viruses the blood is vaccinated against
 		"immunity" = null,
+		// Unused? (but cool)
+		"trace_chem" = null, // Param list of all chems in the blood at the time the sample was taken (type to volume)
+		// Used for podperson shit
+		"mind" = null, // Ref to the mind of the guy who the blood came from
+		"ckey" = null, // Ckey of the guy who the blood came from
+		"gender" = null, // Gender of the guy when the blood was taken
+		"real_name" = null, // Real name of the guy when the blood was taken
+		"cloneable" = null, // Tracks if the guy who the blood came from suicided or not
+		"factions" = null, // Factions the guy who the blood came from was in
+		"quirks" = null, // Quirk typepaths of the guy who the blood came from had
 		)
 	name = "Blood"
-	color = "#9e0101" // rgb: 200, 0, 0
+	color = COLOR_BLOOD
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
@@ -24,6 +27,7 @@
 	default_container = /obj/item/reagent_containers/blood
 	opacity = 230
 	turf_exposure = TRUE
+	chemical_flags = REAGENT_IGNORE_STASIS|REAGENT_DEAD_PROCESS
 
 /datum/glass_style/shot_glass/blood
 	required_drink_type = /datum/reagent/blood
@@ -37,33 +41,30 @@
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/strain = thing
+	for(var/datum/disease/strain as anything in data?["viruses"])
+		if(istype(strain, /datum/disease/acute))
+			var/datum/disease/acute/advanced = strain
+			if(methods & (INJECT|INGEST|PATCH))
+				exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
+			if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
+				if(exposed_mob.check_bodypart_bleeding(BODY_ZONE_EVERYTHING))
+					exposed_mob.infect_disease(advanced, notes="(Blood, splashed with infected blood)")
 
-			if(istype(strain, /datum/disease/advanced))
-				var/datum/disease/advanced/advanced = strain
-				if(methods & (INJECT|INGEST|PATCH))
-					exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
-				if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
-					if(exposed_mob.check_bodypart_bleeding(BODY_ZONE_EVERYTHING))
-						exposed_mob.infect_disease(advanced, notes="(Blood, splashed with infected blood)")
+	var/datum/blood_type/blood = exposed_mob.get_blood_type()
+	if(blood?.reagent_type == type && ((methods & INJECT) || ((methods & INGEST))))
+		if(data["blood_type"] in blood.compatible_types)
+			exposed_mob.blood_volume = min(exposed_mob.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		else
+			exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 
-	if(iscarbon(exposed_mob))
-		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
-			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
-				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
-			else
-				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-
-			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
+		exposed_mob.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
 
 
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
 	if(istype(data))
 		SetViruses(src, data)
+		color = GLOB.blood_types[data["blood_type"]]?.color || COLOR_BLOOD
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
@@ -170,7 +171,7 @@
 		cached_data = list()
 	else
 		cached_data = data
-	cached_data |= "[/datum/disease/tuberculosis]"
+	cached_data |= "[/datum/disease/acute/premade/fungal_tb]"
 	src.data = cached_data
 
 /datum/reagent/water
@@ -250,12 +251,10 @@
 /**
  * Water reaction to a mob
  */
+#define WAS_SPRAYED "was_sprayed" //monkestation edit
+
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
-	if(isoozeling(exposed_mob))
-		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
-		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
-		return
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
 		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_TOUCH) // Water makes you wet, at a 50% water-to-wet-stacks ratio. Which, in turn, gives you some mild protection from being set on fire!
@@ -266,6 +265,35 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
+	if(isoozeling(exposed_mob))
+		if(HAS_TRAIT(exposed_mob, TRAIT_SLIME_HYDROPHOBIA))
+			to_chat(exposed_mob, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+			return
+		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
+		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
+
+	//MONKESTATION EDIT START
+	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
+		return
+
+	var/mob/living/victim = exposed_mob
+	if((methods & (TOUCH|VAPOR)) && !victim.is_pepper_proof() && !HAS_TRAIT(victim, TRAIT_FEARLESS))
+		victim.set_eye_blur_if_lower(3 SECONDS)
+		victim.set_confusion_if_lower(5 SECONDS)
+		if(ishuman(victim))
+			victim.add_mood_event("watersprayed", /datum/mood_event/watersprayed/cat)
+		victim.update_damage_hud()
+		if(HAS_TRAIT(victim, WAS_SPRAYED))
+			return
+		ADD_TRAIT(victim, WAS_SPRAYED, TRAIT_GENERIC)
+		if(prob(50))
+			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "hiss")
+		else
+			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
+		addtimer(TRAIT_CALLBACK_REMOVE(victim, WAS_SPRAYED, TRAIT_GENERIC), 1 SECONDS)
+	//MONKESTATION EDIT STOP
+
+#undef WAS_SPRAYED //monkestation edit
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
@@ -273,7 +301,7 @@
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.blood_volume)
+	if(!HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
 
 /datum/reagent/water/salt
@@ -353,6 +381,52 @@
 		to_chat(exposed_mob, span_userdanger("Your mind burns in agony as you feel the light of the Justicar being ripped away from you by something else!")) //monkestation edit
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	// monkestation edit start
+	/* original - this version of the code depends on https://github.com/tgstation/tgstation/pull/78657 which has not been ported yet
+	. = ..()
+
+	data["deciseconds_metabolized"] += (seconds_per_tick * 1 SECONDS * REM)
+
+	affected_mob.adjust_jitter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+	var/need_mob_update = FALSE
+
+	if(IS_CULTIST(affected_mob))
+		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
+			var/removed_any = FALSE
+			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+				removed_any = TRUE
+				qdel(BS)
+			if(removed_any)
+				to_chat(affected_mob, span_cult_large("Your blood rites falter as holy water scours your body!"))
+
+	if(data["deciseconds_metabolized"] >= (25 SECONDS)) // 10 units
+		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+		affected_mob.set_dizzy_if_lower(10 SECONDS)
+		if(IS_CULTIST(affected_mob) && SPT_PROB(10, seconds_per_tick))
+			affected_mob.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
+			if(prob(10))
+				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
+				affected_mob.Unconscious(12 SECONDS)
+				to_chat(affected_mob, span_cult_large("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
+					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
+		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
+			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
+				affected_mob.emote("scream")
+				need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+
+	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
+		if(IS_CULTIST(affected_mob))
+			affected_mob.mind.remove_antag_datum(/datum/antagonist/cult)
+			affected_mob.Unconscious(10 SECONDS)
+		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
+			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
+				need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.remove_status_effect(/datum/status_effect/jitter)
+		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
+		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+	*/
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
 	if(!data)
@@ -364,6 +438,24 @@
 		if(handle_cultists(affected_mob, seconds_per_tick)) //only returns TRUE on deconversion
 			return
 	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * seconds_per_tick) //fixed consumption to prevent balancing going out of whack
+
+	var/need_mob_update = FALSE
+
+	if (!HAS_TRAIT(affected_mob, TRAIT_EVIL) || IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role == HOLY_ROLE_PRIEST)
+		return
+	if(data["misc"] >= (25 SECONDS)) // 10 units
+		affected_mob.adjust_stutter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+		affected_mob.set_dizzy_if_lower(10 SECONDS)
+		if(SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
+			affected_mob.emote("scream")
+			need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+	if(data["misc"] >= (1 MINUTES)) // 24 units
+		need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+		affected_mob.remove_status_effect(/datum/status_effect/jitter)
+		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
+		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
+	return need_mob_update
+	// monkestation edit edit
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -483,6 +575,7 @@
 		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, 0)
+		affected_mob.cause_pain(BODY_ZONES_ALL, -8 * REM * seconds_per_tick) //MONKESTATION ADDITION
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
 	else  // Will deal about 90 damage when 50 units are thrown
@@ -499,6 +592,8 @@
 	taste_description = "burning"
 	ph = 0.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	process_flags = ORGANIC | SYNTHETIC
+
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_fire_stacks(min(affected_mob.fire_stacks + (1.5 * seconds_per_tick), 5))
@@ -580,9 +675,10 @@
 					if ("albino")
 						exposed_human.skin_tone = "caucasian1"
 
-			if(MUTCOLORS in exposed_human.dna.species.species_traits) //take current alien color and darken it slightly
+			if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS)) //take current alien color and darken it slightly
 				var/newcolor = ""
-				var/string = exposed_human.dna.features["mcolor"]
+				var/datum/color_palette/generic_colors/located = exposed_human.dna.color_palettes[/datum/color_palette/generic_colors]
+				var/string = located.return_color(MUTANT_COLOR)
 				var/len = length(string)
 				var/char = ""
 				var/ascii = 0
@@ -605,7 +701,7 @@
 						else
 							break
 				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
-					exposed_human.dna.features["mcolor"] = newcolor
+					located.mutant_color = newcolor
 			exposed_human.update_body(is_creating = TRUE)
 
 		if((methods & INGEST) && show_message)
@@ -625,10 +721,11 @@
 		var/obj/item/bodypart/head/head = affected_human.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
 			head.head_flags |= HEAD_HAIR //No hair? No problem!
-		if(affected_human.dna.species.use_skintones)
+		if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 			affected_human.skin_tone = "orange"
-		else if(MUTCOLORS in affected_human.dna.species.species_traits) //Aliens with custom colors simply get turned orange
-			affected_human.dna.features["mcolor"] = "#ff8800"
+		else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS)) //Aliens with custom colors simply get turned orange
+			var/datum/color_palette/generic_colors/located = affected_human.dna.color_palettes[/datum/color_palette/generic_colors]
+			located.mutant_color = "#ff8800"
 		affected_human.update_body(is_creating = TRUE)
 		if(SPT_PROB(3.5, seconds_per_tick))
 			if(affected_human.w_uniform)
@@ -651,6 +748,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM //metabolizes to prevent micro-dosage
 	taste_description = "slime"
 	var/race = /datum/species/human
+	process_flags = ORGANIC | SYNTHETIC
 	var/list/mutationtexts = list( "You don't feel very well." = MUT_MSG_IMMEDIATE,
 									"Your skin feels a bit abnormal." = MUT_MSG_IMMEDIATE,
 									"Your limbs begin to take on a different shape." = MUT_MSG_EXTENDED,
@@ -692,7 +790,7 @@
 	name = "Mutation Toxin"
 	description = "A corruptive toxin."
 	color = "#13BC5E" // rgb: 19, 188, 94
-	race = /datum/species/jelly/slime
+	race = /datum/species/oozeling/slime
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/lizard
@@ -731,14 +829,14 @@
 	name = "Imperfect Mutation Toxin"
 	description = "A jellyfying toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/jelly
+	race = /datum/species/oozeling
 	taste_description = "grandma's gelatin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	if(isjellyperson(affected_mob))
+	if(isoozeling(affected_mob))
 		to_chat(affected_mob, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
-		var/species_type = pick(subtypesof(/datum/species/jelly))
+		var/species_type = pick(subtypesof(/datum/species/oozeling))
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
 		return TRUE
@@ -1011,6 +1109,7 @@
 	taste_description = "acid"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	process_flags = ORGANIC | SYNTHETIC
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, 0)
@@ -1125,6 +1224,7 @@
 	taste_description = "the inside of a reactor"
 	/// How much tox damage to deal per tick
 	var/tox_damage = 0.5
+	process_flags = ORGANIC | SYNTHETIC
 	ph = 4
 	material = /datum/material/uranium
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1164,7 +1264,8 @@
 	reagent_state = SOLID
 	color = "#00CC00" // ditto
 	taste_description = "the colour blue and regret"
-	tox_damage = 1*REM
+	tox_damage = 2*REM
+	process_flags = ORGANIC | SYNTHETIC
 	material = null
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1188,6 +1289,7 @@
 	reagent_state = SOLID
 	color = "#0000CC"
 	taste_description = "fizzling blue"
+	process_flags = ORGANIC | SYNTHETIC
 	material = /datum/material/bluespace
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1235,6 +1337,7 @@
 	taste_description = "gross metal"
 	penetrates_skin = NONE
 	ph = 4
+	process_flags = ORGANIC | SYNTHETIC
 	burning_temperature = 1725 //more refined than oil
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1410,8 +1513,7 @@
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_FUNGUS, TRUE, "[ROUND_TIME()] Tubercle Bacillus Cosmosis Microbes Infections [key_name(exposed_mob)]")  //Monkestation Edit: TB Patho
 
 /datum/reagent/snail
 	name = "Agent-S"
@@ -1747,7 +1849,7 @@
 	name = "Stable Plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#2D2D2D"
+	color = "#8228a0c6" //monkestation edit
 	taste_description = "bitterness"
 	taste_mult = 1.5
 	ph = 1.5
@@ -2439,7 +2541,7 @@
 /datum/reagent/pax
 	name = "Pax"
 	description = "A colorless liquid that suppresses violence in its subjects."
-	color = "#AAAAAA55"
+	color = "#aaaaaaff"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	ph = 15
@@ -2736,6 +2838,8 @@
 		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
+		drinker.cause_pain(BODY_ZONES_ALL, -5 * REM * seconds_per_tick) // MONKESTATION ADDITION
+		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
 	else
@@ -2744,6 +2848,7 @@
 		drinker.adjustFireLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustOxyLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(2 * REM * seconds_per_tick, FALSE)
+		drinker.fully_heal(HEAL_POSTIVE_DISEASES)
 	..()
 	return TRUE
 
@@ -2937,12 +3042,14 @@
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
+/datum/reagent/hauntium/expose_obj(obj/exposed_obj, reac_volume) //gives 20 seconds of haunting effect for every unit of it that touches an object
 	. = ..()
+	if(!isitem(exposed_obj))
+		return
 	if(HAS_TRAIT_FROM(exposed_obj, TRAIT_HAUNTED, HAUNTIUM_REAGENT_TRAIT))
 		return
 	exposed_obj.make_haunted(HAUNTIUM_REAGENT_TRAIT, "#f8f8ff")
-	addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), volume * 20 SECONDS)
+	addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), reac_volume * 20 SECONDS)
 
 /datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

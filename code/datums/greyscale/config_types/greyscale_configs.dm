@@ -296,10 +296,30 @@
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
+/datum/greyscale_config/plush_carp
+	name = "Plushie Carp"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush_slime
+	name = "Plushie Slime"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_slime.json'
+
+/datum/greyscale_config/plush_snake
+	name = "Plushie Snake"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
+
+/datum/greyscale_config/plush_spacelizard
+	name = "Plushie Space Lizard"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"
@@ -708,6 +728,26 @@
 	name = "Worn Ballgown"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ballgown_worn.json'
+
+/datum/greyscale_config/wlpinafore
+	name = "Wonderland Pinafore"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wlpinafore.json'
+
+/datum/greyscale_config/wlpinafore_worn
+	name = "Wonderland Pinafore"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wlpinafore_worn.json'
+
+/datum/greyscale_config/ribbondress
+	name = "Ribboned Gown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress.json'
+
+/datum/greyscale_config/ribbondress_worn
+	name = "Ribboned Gown"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress_worn.json'
 //MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
@@ -1046,67 +1086,6 @@
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/party_hat.json'
 
-/datum/greyscale_config/simian
-	name = "simian Clothing"
-	icon_file = 'monkestation/icons/mob/gags/clothing/simian_fallbacks.dmi'
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/under.json'
-
-/datum/greyscale_config/simian/under
-	name = "simian Under"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/under.json'
-
-/datum/greyscale_config/simian/under_skirt
-	name = "simian Skirt"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/under_skirt.json'
-
-/datum/greyscale_config/simian/shoes
-	name = "simian Shoes"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/shoes.json'
-
-/datum/greyscale_config/simian/gloves
-	name = "simian Gloves"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/gloves.json'
-
-/datum/greyscale_config/simian/glasses
-	name = "simian Glasses"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/glasses.json'
-
-/datum/greyscale_config/simian/coat
-	name = "simian Coat"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/coat.json'
-
-/datum/greyscale_config/simian/armor
-	name = "simian Armor"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/armor.json'
-
-/datum/greyscale_config/simian/backpack
-	name = "simian Backpack"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/backpack.json'
-
-/datum/greyscale_config/simian/spacesuit
-	name = "simian Spacesuit"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/spacesuit.json'
-
-/datum/greyscale_config/simian/cloak
-	name = "simian Cloak"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/cloak.json'
-
-/datum/greyscale_config/simian/tie
-	name = "simian Tie"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/tie.json'
-
-/datum/greyscale_config/simian/scarf
-	name = "simian Scarf"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/scarf.json'
-
-/datum/greyscale_config/simian/modcontrol
-	name = "simian Modsuit"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/modcontrol.json'
-
-/datum/greyscale_config/simian/hardsuit
-	name = "simian Hardsuit"
-	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/hardsuit.json'
-
 /datum/greyscale_config/lizard
 	name = "lizard Clothing"
 	icon_file = 'monkestation/icons/mob/gags/clothing/lizard_fallbacks.dmi'
@@ -1151,6 +1130,16 @@
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/boatcloakworn.json'
 
+/datum/greyscale_config/admincloak
+	name = "admincloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/admincloak.json'
+
+/datum/greyscale_config/admincloak_worn
+	name = "wadmincloak"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/admincloakworn.json'
+
 /datum/greyscale_config/fish_analyzer_inhand_left
 	name = "Held Fish Analyzer, Left"
 	icon_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -1169,6 +1158,15 @@
 /*
 *	MASKS
 */
+
+/datum/greyscale_config/kitsune
+	name = "Kitsune mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/kitsune.json'
+
+/datum/greyscale_config/kitsune/worn
+	name = "Kitsune mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
 
 // BANDANAS
 
@@ -1299,3 +1297,13 @@
 	name = "Manipulator Hand"
 	icon_file = 'monkestation/code/modules/factory_type_beat/icons/big_manipulator_hand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/manipulator_hand.json'
+
+/datum/greyscale_config/linjacket
+	name = "Tassled Jacket"
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/linjacket.json'
+
+/datum/greyscale_config/linjacket_worn
+	name = "Worn Tassled Jacket"
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'

@@ -7,11 +7,12 @@
 PROCESSING_SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
 	init_order = INIT_ORDER_QUIRKS
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 	wait = 1 SECONDS
 
 	var/list/quirks = list() //Assoc. list of all roundstart quirk datum types; "name" = /path/
+	var/list/datum/quirk/quirk_prototypes = list()
 	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
@@ -33,11 +34,23 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
-		list("Bilingual", "Foreigner"),
+		//list("Bilingual", "Foreigner"), //monkestation edit, commented out
+		//MONKESTATION ADDITION START
+		list("Listener", "Uncommon"),
+		list("Outsider", "Uncommon"),
+		list("Listener", "Mute"),
+		list("Listener", "Deaf"),
+		list("Polyglot", "Listener"),
+		list("Polyglot", "Bilingual"),
+		list("Lisp", "Mute"),
+		list("Polyglot", "Foreigner"),
 		//might be fun to change this in the future. you can be a body purist but be forced to use implants regardless for medical reasons
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
-		list("Body Purist", "Bright Eyes")
+		list("Body Purist", "Bright Eyes"),
+		list("Hypoalgesia","Hyperalgesia"),
+		list("Kakologophobia", "Easily Offended"),
+		//MONKESTATION ADDITION END
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
@@ -62,6 +75,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if(initial(quirk_type.abstract_parent_type) == type)
 			continue
 
+		quirk_prototypes[type] = new type
 		quirks[initial(quirk_type.name)] = quirk_type
 		quirk_points[initial(quirk_type.name)] = initial(quirk_type.value)
 
@@ -71,11 +85,28 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			continue
 		hardcore_quirks[quirk_type] += hardcore_value
 
-/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/applied_client)
+// Monkestation edit - original: /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/applied_client)
+/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/applied_client, omit_negatives = FALSE, omit_positives = FALSE, omit_neutrals = FALSE, list/blacklist = list())
 	var/badquirk = FALSE
 	for(var/quirk_name in applied_client?.prefs?.all_quirks)
 		var/datum/quirk/quirk_type = quirks[quirk_name]
 		if(ispath(quirk_type))
+			// Monkestation edit start
+			if (omit_negatives)
+				var/q_val = initial(quirk_type.value)
+				if (q_val < 0 && q_val != 0)
+					continue
+			if (omit_positives)
+				var/q_val = initial(quirk_type.value)
+				if (q_val > 0 && q_val != 0)
+					continue
+			if (omit_neutrals)
+				var/q_val = initial(quirk_type.value)
+				if (q_val == 0)
+					continue
+			if (quirk_type in blacklist)
+				continue
+			// monkestation end
 			if(user.add_quirk(quirk_type, override_client = applied_client))
 				SSblackbox.record_feedback("nested tally", "quirks_taken", 1, list("[quirk_name]"))
 		else

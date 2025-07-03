@@ -7,6 +7,7 @@
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -57,6 +58,17 @@
 	name = "\improper Abductor Solo"
 	outfit = /datum/outfit/abductor/scientist/onemanteam
 	role_job = /datum/job/abductor_solo
+
+/datum/antagonist/abductor/scientist/onemanteam/antag_token(datum/mind/hosts_mind, mob/spender)
+	team = new
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		hosts_mind.add_antag_datum(/datum/antagonist/abductor/scientist/onemanteam, team)
+	if(isobserver(spender))
+		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
+		var/datum/mind/new_mind = new_mob.mind
+		new_mind.add_antag_datum(/datum/antagonist/abductor/scientist/onemanteam, team)
 
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
@@ -124,6 +136,7 @@
 		team = current_teams[choice]
 	else
 		return
+	new_owner.current.unequip_everything() //Adding the datum kidnaps the person to the ship. Best they dont bring artifacts with them.
 	new_owner.add_antag_datum(src)
 	log_admin("[key_name(usr)] made [key_name(new_owner)] [name] on [choice]!")
 	message_admins("[key_name_admin(usr)] made [key_name_admin(new_owner)] [name] on [choice] !")

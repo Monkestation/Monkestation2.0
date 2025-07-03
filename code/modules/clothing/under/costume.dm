@@ -228,7 +228,7 @@
 	icon_state = "red_mech_suit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
@@ -341,6 +341,11 @@
 	icon_state = "DutchUniform"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+// For the nuke-ops cowboy fit.
+/obj/item/clothing/under/costume/dutch/syndicate
+	desc = "You can feel a <b>god damn plan</b> coming on, and the armor lining in this suit'll do wonders in makin' it work."
+	armor_type = /datum/armor/clothing_under/syndicate
 
 /obj/item/clothing/under/costume/osi
 	name = "O.S.I. jumpsuit"

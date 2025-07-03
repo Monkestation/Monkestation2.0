@@ -116,7 +116,7 @@
 
 /datum/status_effect/cosmic_beam
 	id = "cosmic_beam"
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
@@ -144,7 +144,7 @@
 		active = FALSE
 	return ..()
 
-/datum/status_effect/cosmic_beam/tick(seconds_per_tick, times_fired)
+/datum/status_effect/cosmic_beam/tick(seconds_between_ticks, times_fired)
 	if(!current_target)
 		lose_target()
 		return

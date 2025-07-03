@@ -38,6 +38,8 @@
 	values[GBACKPACK] = /obj/item/storage/backpack
 	values[GSATCHEL] = /obj/item/storage/backpack/satchel
 	values[LSATCHEL] = /obj/item/storage/backpack/satchel/leather
+	values[BSATCHEL] = /obj/item/storage/backpack/satchel/blackleather //MONKESTATION EDIT
+	values[RSATCHEL] = /obj/item/storage/backpack/satchel/retro //MONKESTATION EDIT
 	values[GDUFFELBAG] = /obj/item/storage/backpack/duffelbag
 
 	// In a perfect world, these would be your department's backpack.
@@ -92,7 +94,7 @@
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
-	return !(NO_UNDERWEAR in species.species_traits)
+	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
 
 /datum/preference/choiced/socks/compile_constant_data()
 	var/list/data = ..()
@@ -136,6 +138,14 @@
 /datum/preference/choiced/undershirt/apply_to_human(mob/living/carbon/human/target, value)
 	target.undershirt = value
 
+/datum/preference/choiced/undershirt/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = new species_type
+	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
+
 /// Underwear preference
 /datum/preference/choiced/underwear
 	savefile_key = "underwear"
@@ -156,7 +166,7 @@
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
-	return !(NO_UNDERWEAR in species.species_traits)
+	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
 
 /datum/preference/choiced/underwear/compile_constant_data()
 	var/list/data = ..()

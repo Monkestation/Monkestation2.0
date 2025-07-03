@@ -75,15 +75,15 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+//MONKESTATION ADDITION START
+/datum/design/board/bitrunning_order
+	name = "Bitrunning Vendor Console"
+	desc = "Allows for the construction of circuit boards used to build a Bitrunning Vendor Console."
+	id = "bitrunning_order"
+	build_path = /obj/item/circuitboard/computer/order_console/bitrunning
 
-/datum/techweb_node/bitrunning
-	id = "bitrunning"
-	display_name = "Bitrunning Technology"
-	description = "Bluespace technology has led to the development of quantum-scale computing, which unlocks the means to materialize atomic structures while executing advanced programs."
-	prereq_ids = list("practical_bluespace")
-	design_ids = list(
-		"byteforge",
-		"quantum_console",
-		"netpod",
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+//MONKESTATION ADDITION END

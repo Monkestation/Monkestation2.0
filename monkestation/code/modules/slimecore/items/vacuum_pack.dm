@@ -71,12 +71,12 @@
 	modified = !modified
 	to_chat(user, span_notice("You turn the safety switch on [src] [modified ? "off" : "on"]."))
 
-/obj/item/vacuum_pack/process(delta_time)
+/obj/item/vacuum_pack/process(seconds_per_tick)
 	if(!(VACUUM_PACK_UPGRADE_HEALING in upgrades))
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 	for(var/mob/living/basic/animal in stored)
-		animal.adjustBruteLoss(-5 * delta_time)
+		animal.adjustBruteLoss(-5 * seconds_per_tick)
 
 /obj/item/vacuum_pack/examine(mob/user)
 	. = ..()
@@ -140,10 +140,6 @@
 	else
 		remove_nozzle()
 
-/obj/item/vacuum_pack/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
-		return TRUE
-
 /obj/item/vacuum_pack/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_BACK)
@@ -187,6 +183,7 @@
 	slot_flags = NONE
 
 	var/obj/item/vacuum_pack/pack
+	var/is_selecting = FALSE
 
 /obj/item/vacuum_nozzle/Initialize(mapload)
 	. = ..()
@@ -201,11 +198,21 @@
 	else
 		. += span_notice("It's selection mechanism is hotwired to fire indiscriminately.")
 
+/obj/item/vacuum_nozzle/equipped(mob/user, slot, initial)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_ALTCLICKON, PROC_REF(on_user_altclick), override = TRUE)
+
+/obj/item/vacuum_nozzle/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_ALTCLICKON)
+	is_selecting = FALSE
+
 /obj/item/vacuum_nozzle/doMove(atom/destination)
 	if(destination && (destination != pack.loc || !ismob(destination)))
 		if (loc != pack)
 			to_chat(pack.loc, span_notice("[src] snaps back onto [pack]."))
 		destination = pack
+		is_selecting = FALSE
 	. = ..()
 
 /obj/item/vacuum_nozzle/attack_self(mob/user, modifiers)
@@ -276,8 +283,11 @@
 	user.visible_message(span_warning("[user] shoots [spawned] out their [src]!"), span_notice("You fabricate and shoot [spawned] out of your [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/vacuum_nozzle/afterattack(atom/movable/target, mob/user, proximity, params)
+/obj/item/vacuum_nozzle/afterattack(atom/movable/target, mob/user, proximity, click_parameters)
 	. = ..()
+	do_suck(target, user)
+
+/obj/item/vacuum_nozzle/proc/do_suck(atom/movable/target, mob/user)
 	if(pack.ghost_busting)
 		return
 
@@ -321,8 +331,8 @@
 			if(isliving(target))
 				var/mob/living/living = target
 				if(living.buckled)
-					living.buckled.unbuckle_mob(target, TRUE)
-			target.unbuckle_all_mobs(TRUE)
+					living.buckled.unbuckle_mob(target, force = TRUE)
+			target.unbuckle_all_mobs(force = TRUE)
 
 			if(!do_after(user, pack.speed, target, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
 				return
@@ -332,7 +342,7 @@
 			animation_matrix.Scale(0.5)
 			animation_matrix.Translate((user.x - target.x) * 32, (user.y - target.y) * 32)
 			animate(target, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, transform = animation_matrix, flags = ANIMATION_PARALLEL)
-			sleep(8)
+			sleep(0.8 SECONDS)
 			user.visible_message(span_warning("[user] sucks [target] into their [pack]!"), span_notice("You successfully suck [target] into your [src] and recycle it."))
 			qdel(target)
 			playsound(user, 'sound/machines/juicer.ogg', 50, TRUE)
@@ -411,8 +421,7 @@
 	if(istype(spewed, /mob/living/basic/slime))
 		var/mob/living/basic/slime/slime = spewed
 		slime.slime_flags &= ~STORED_SLIME
-		if(slime.ai_controller)
-			slime.ai_controller.set_ai_status(AI_STATUS_ON)
+		slime.ai_controller?.reset_ai_status()
 		if(VACUUM_PACK_UPGRADE_STASIS in pack.upgrades)
 			REMOVE_TRAIT(slime, TRAIT_SLIME_STASIS, "vacuum_pack_stasis")
 
@@ -453,14 +462,16 @@
 	if(!suck_checks(target, user))
 		return
 
+	target.ai_controller?.set_ai_status(AI_STATUS_OFF)
+	target.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, null)
 	if(!silent)
 		playsound(user, 'sound/effects/refill.ogg', 50, TRUE)
 	var/matrix/animation_matrix = target.transform
 	animation_matrix.Scale(0.5)
 	animation_matrix.Translate((user.x - target.x) * 32, (user.y - target.y) * 32)
 	animate(target, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, transform = animation_matrix, flags = ANIMATION_PARALLEL)
-	sleep(8)
-	target.unbuckle_all_mobs(TRUE)
+	sleep(0.8 SECONDS)
+	target.unbuckle_all_mobs(force = TRUE)
 	target.forceMove(pack)
 	pack.stored += target
 	if((VACUUM_PACK_UPGRADE_STASIS in pack.upgrades) && isslime(target))
@@ -471,9 +482,6 @@
 		user.visible_message(span_warning("[user] sucks [target] into their [pack]!"), span_notice("You successfully suck [target] into your [src]."))
 	var/mob/living/basic/slime/slime = target
 	slime.slime_flags |= STORED_SLIME
-	if(slime.ai_controller)
-		slime.ai_controller.set_ai_status(AI_STATUS_OFF)
-		slime.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, null)
 
 /obj/item/vacuum_nozzle/proc/start_busting(mob/living/basic/revenant/revenant, mob/living/user)
 	revenant.visible_message(span_warning("[user] starts sucking [revenant] into their [src]!"), span_userdanger("You are being sucked into [user]'s [src]!"))
@@ -494,10 +502,10 @@
 		//pack.ghost_busting.reveal(0.5 SECONDS, TRUE)
 
 /obj/item/vacuum_nozzle/proc/check_busting()
-	if(!pack.ghost_busting || !pack.ghost_busting.loc || QDELETED(pack.ghost_busting))
+	if(isnull(pack.ghost_busting?.loc) || QDELING(pack.ghost_busting))
 		return FALSE
 
-	if(!pack.ghost_buster || !pack.ghost_buster.loc || QDELETED(pack.ghost_buster))
+	if(isnull(pack.ghost_buster?.loc) || QDELING(pack.ghost_buster))
 		return FALSE
 
 	if(loc != pack.ghost_buster)
@@ -510,6 +518,55 @@
 		return FALSE
 
 	return TRUE
+
+/obj/item/vacuum_nozzle/proc/on_user_altclick(mob/living/user, atom/movable/target)
+	SIGNAL_HANDLER
+	if(!isliving(user) || user != loc) // what
+		UnregisterSignal(user, COMSIG_MOB_ALTCLICKON)
+		return
+	if(is_selecting || user.get_active_held_item() != src || user.incapacitated())
+		return
+	. = COMSIG_MOB_CANCEL_CLICKON // avoids loot panel showing up
+	is_selecting = TRUE
+	ASYNC
+		select_suck_target(user, target)
+		is_selecting = FALSE
+
+/obj/item/vacuum_nozzle/proc/select_suck_target(mob/living/user, atom/movable/target)
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		return
+	if(get_dist(user, target_turf) > pack.range)
+		user.balloon_alert(user, "out of range!")
+		return
+	var/list/options = list()
+	for(var/atom/movable/thing as anything in target_turf)
+		if(!is_type_in_typecache(thing, pack.storable_objects) && !is_type_in_list(thing, pack.linked?.recyclable_types))
+			continue
+		var/mutable_appearance/copied_appearance = copy_appearance_filter_overlays(thing.appearance)
+		copied_appearance.dir = SOUTH
+		copied_appearance.pixel_x = thing.base_pixel_x
+		copied_appearance.pixel_y = thing.base_pixel_y
+		copied_appearance.pixel_w = 0 /* thing.base_pixel_w */
+		copied_appearance.pixel_z = 0 /* thing.base_pixel_z */
+		options[thing] = copied_appearance
+	if(!length(options))
+		user.balloon_alert(user, "no valid targets on turf!")
+		return
+	var/chosen = show_radial_menu(
+		user,
+		user,
+		options,
+		radius = 40,
+		custom_check = CALLBACK(src, PROC_REF(extra_selection_checks), user, target_turf),
+		tooltips = TRUE,
+		autopick_single_option = FALSE,
+	)
+	if(chosen)
+		do_suck(chosen, user)
+
+/obj/item/vacuum_nozzle/proc/extra_selection_checks(mob/living/user, turf/target_turf)
+	return user.get_active_held_item() == src && !user.incapacitated() && in_view_range(user, target_turf, require_same_z = TRUE)
 
 /obj/item/disk/vacuum_upgrade
 	name = "vacuum pack upgrade disk"

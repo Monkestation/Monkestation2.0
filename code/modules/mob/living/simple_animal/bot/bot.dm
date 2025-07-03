@@ -10,8 +10,8 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
-	maxbodytemp = INFINITY
-	minbodytemp = 0
+	bodytemp_heat_damage_limit = INFINITY
+	bodytemp_cold_damage_limit = -1
 	has_unlimited_silicon_privilege = TRUE
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
@@ -102,8 +102,6 @@
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 
-	/// Component which allows ghosts to take over this bot
-	var/datum/component/ghost_direct_control/personality_download
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
 	/// If true we will offer this
@@ -195,7 +193,6 @@
 
 /mob/living/simple_animal/bot/Destroy()
 	GLOB.bots_list -= src
-	QDEL_NULL(personality_download)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
 	QDEL_NULL(path_hud)
@@ -205,14 +202,14 @@
 /mob/living/simple_animal/bot/proc/enable_possession(mapload = FALSE)
 	can_be_possessed = TRUE
 	var/can_announce = !mapload && COOLDOWN_FINISHED(src, offer_ghosts_cooldown)
-	personality_download = AddComponent(\
-		/datum/component/ghost_direct_control,\
-		ban_type = ROLE_BOT,\
-		poll_candidates = can_announce,\
-		poll_ignore_key = POLL_IGNORE_BOTS,\
-		assumed_control_message = possessed_message,\
-		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)),\
-		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)),\
+	AddComponent( \
+		/datum/component/ghost_direct_control, \
+		ban_type = ROLE_BOT, \
+		poll_candidates = can_announce, \
+		poll_ignore_key = POLL_IGNORE_BOTS, \
+		assumed_control_message = possessed_message, \
+		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)), \
+		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)), \
 	)
 	if (can_announce)
 		COOLDOWN_START(src, offer_ghosts_cooldown, 30 SECONDS)
@@ -220,7 +217,7 @@
 /// Disables this bot from being possessed by ghosts
 /mob/living/simple_animal/bot/proc/disable_possession(mob/user)
 	can_be_possessed = FALSE
-	QDEL_NULL(personality_download)
+	qdel(GetComponent(/datum/component/ghost_direct_control))
 	if (mind)
 		if (user)
 			log_combat(user, src, "ejected from [initial(src.name)] control.")
@@ -298,7 +295,8 @@
 	visible_message(span_boldnotice("[src] blows apart!"))
 	do_sparks(3, TRUE, src)
 	var/atom/location_destroyed = drop_location()
-	if(prob(50))
+
+	if(prob(50) && (bot_type != HONK_BOT))
 		drop_part(robot_arm, location_destroyed)
 	qdel(src)
 
@@ -661,8 +659,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
 		access_card.set_access(prev_access)
 
-/mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)
-	if(isAI(caller) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
+/mob/living/simple_animal/bot/proc/call_bot(user, turf/waypoint, message = TRUE)
+	if(isAI(user) && calling_ai && calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		return FALSE
 
 	bot_reset() //Reset a bot before setting it to call mode.
@@ -671,7 +669,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//Easier then building the list ourselves. I'm sorry.
 	var/static/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
 	set_path(get_path_to(src, waypoint, max_distance=200, access = all_access.GetAccess()))
-	calling_ai = caller //Link the AI to the bot!
+	calling_ai = user //Link the AI to the bot!
 	ai_waypoint = waypoint
 
 	if(path?.len) //Ensures that a valid path is calculated!
@@ -681,7 +679,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
 			reset_access_timer_id = addtimer(CALLBACK (src, PROC_REF(bot_reset)), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
-			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
+			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[user]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
 		if(message)
 			to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination."))
 		pathset = TRUE

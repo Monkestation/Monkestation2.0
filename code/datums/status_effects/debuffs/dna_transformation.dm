@@ -2,7 +2,7 @@
 /// then turns them back to how they were before transformation.
 /datum/status_effect/temporary_transformation
 	id = "temp_dna_transformation"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	duration = 1 MINUTES // set in on creation, this just needs to be any value to process
 	alert_type = null
 	remove_on_fullheal = TRUE
@@ -37,7 +37,6 @@
 	new_dna.transfer_identity(transforming)
 	transforming.real_name = new_dna.real_name
 	transforming.name = transforming.get_visible_name()
-	transforming.update_name_tag() // monkestation edit: name tags
 	transforming.updateappearance(mutcolor_update = TRUE)
 	transforming.domutcheck()
 	return TRUE
@@ -67,8 +66,8 @@
 
 /datum/status_effect/temporary_transformation/trans_sting/on_apply()
 	. = ..()
-	if(!.)
-		return
+	if(!. || HAS_TRAIT(owner, TRAIT_NO_TRANSFORMATION_STING))
+		return FALSE
 	RegisterSignals(owner, update_on_signals, PROC_REF(pause_effect))
 	pause_effect(owner) // for if we sting a dead guy
 
@@ -85,7 +84,7 @@
 			return // Already paused
 
 		time_before_pause = duration - world.time
-		duration = -1
+		duration = STATUS_EFFECT_PERMANENT
 
 	// Resume if we're none of the above and also were paused
 	else if(time_before_pause != -1)

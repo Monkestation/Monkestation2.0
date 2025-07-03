@@ -61,7 +61,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define MAP_MAXZ 6
 
 /// Path for the next_map.json file, if someone, for some messed up reason, wants to change it.
+// monkestation start: messed up cat here, i changed it (added world.port to it if there's no debugger attached)
+#ifdef UNIT_TESTS
 #define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
+#else
+#define PATH_TO_NEXT_MAP_JSON (world.GetConfig("env", "AUXTOOLS_DEBUG_DLL") ? "data/next_map.json" : "data/next_map.[world.port].json")
+#endif
+// monkestation end
 
 /// List of directories we can load map .json files from
 #define MAP_DIRECTORY_MAPS "_maps"
@@ -222,6 +228,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 //All
 #define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
 
+/// Checks the job changes in the map config for the passed change key.
+#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
+
 //monkestation start
 #define ZTRAIT_OSHAN "OshanTrait"
 
@@ -239,6 +248,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define WEATHER_MESSAGE_DELAY 30 SECONDS
 #define ZTRAIT_DAYCYCLE "Daycycle"
 #define ZTRAIT_STARLIGHT "Starlight"
+#define ZTRAIT_JUSTWEATHER "WeatherOnly"
 #define PARTICLEWEATHER_RAIN "weather_rain"
 #define PARTICLEWEATHER_SNOW "weather_snow"
 #define PARTICLEWEATHER_DUST "weather_dust"
@@ -247,7 +257,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 #define ZTRAITS_ECLIPSE list(\
 	list(\
-		ZTRAIT_LINKAGE = CROSSLINKED, \
 		ZTRAIT_UP = TRUE, \
 		ZTRAIT_GRAVITY = TRUE, \
 		ZTRAIT_MINING = TRUE, \
@@ -258,7 +267,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 		ZTRAIT_ECLIPSE = TRUE, \
 	), \
 	list(\
-		ZTRAIT_LINKAGE = CROSSLINKED, \
 		ZTRAIT_DOWN = TRUE, \
 		ZTRAIT_GRAVITY = TRUE, \
 		ZTRAIT_MINING = TRUE, \

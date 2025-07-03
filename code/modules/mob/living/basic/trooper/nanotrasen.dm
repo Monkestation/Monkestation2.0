@@ -2,7 +2,6 @@
 /mob/living/basic/trooper/nanotrasen
 	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer of Nanotrasen's private security force. Seems rather unpleased to meet you."
-	speed = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	faction = list(ROLE_DEATHSQUAD)
@@ -66,7 +65,7 @@
 	unsuitable_cold_damage = 0
 	casingtype = /obj/item/ammo_casing/energy/laser
 	burst_shots = 3
-	projectilesound = 'sound/weapons/laser.ogg'
+	projectilesound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	ranged_cooldown = 5 SECONDS
 	faction = list(ROLE_DEATHSQUAD)
 	loot = list(/obj/effect/gibspawner/human)

@@ -2,8 +2,7 @@
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
@@ -38,9 +37,11 @@
 /obj/item/organ/internal/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
+	icon_state = "brain_implant_antidrop"
 	var/active = FALSE
 	var/list/stored_items = list()
-	implant_color = "#DE7E00"
+	implant_overlay = null
+	implant_color = null
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	encode_info = AUGMENT_NT_HIGHLEVEL
@@ -103,10 +104,17 @@
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 	stored_items -= source
 
+/obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
+	name = "contraband anti-drop implant"
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/brain/anti_stun
-	name = "CNS Rebooter implant"
+	name = "CNS rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
-	implant_color = "#FFFF00"
+	icon_state = "brain_implant_rebooter"
+	implant_overlay = null
+	implant_color = null
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 	var/static/list/signalCache = list(
@@ -154,6 +162,11 @@
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 
+/obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
+	name = "contraband CNS rebooter implant"
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -165,6 +178,7 @@
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
 	encode_info = AUGMENT_NO_REQ
+	organ_traits = list(TRAIT_ASSISTED_BREATHING)
 
 /obj/item/organ/internal/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()
@@ -183,8 +197,14 @@
 	var/list/boxed = list(
 		/obj/item/autosurgeon/syndicate/thermal_eyes,
 		/obj/item/autosurgeon/syndicate/xray_eyes,
-		/obj/item/autosurgeon/syndicate/anti_stun,
-		/obj/item/autosurgeon/syndicate/reviver)
+		/obj/item/storage/box/syndie_kit/anti_stun,
+		/obj/item/storage/box/syndie_kit/reviver,
+		/obj/item/storage/box/syndie_kit/razorwire,
+		/obj/item/storage/box/syndie_kit/esword,
+		/obj/item/storage/box/syndie_kit/mantis,
+		/obj/item/storage/box/syndie_kit/laser_arm,
+		/obj/item/storage/box/syndie_kit/deepvien,
+		)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

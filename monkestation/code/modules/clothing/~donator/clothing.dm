@@ -127,7 +127,7 @@
 	inhand_icon_state = "hostrench"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
+
 	supports_variations_flags = NONE
 
 // Donation reward for Thedragmeme
@@ -292,7 +292,7 @@
 	icon_state = "avipilotup"
 	inhand_icon_state = "rus_ushanka"
 	flags_inv = HIDEEARS|HIDEHAIR
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT //about as warm as an ushanka
 	actions_types = list(/datum/action/item_action/adjust)
 	supports_variations_flags = NONE
@@ -410,7 +410,7 @@
 	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 
 /obj/item/toy/darksabre/get_belt_overlay()
-	return mutable_appearance('monkestation/icons/donator/obj/custom.dmi', "darksheath-darksabre")
+	return mutable_appearance('monkestation/icons/donator/obj/custom.dmi', "darksheath-sabre")
 
 // Donation reward for inferno707
 /obj/item/storage/belt/sabre/darksabre
@@ -420,6 +420,9 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "darksheath"
 	worn_icon_state = "darksheath"
+	inhand_icon_state = "darksheath"
+	lefthand_file = 'monkestation/icons/donator/mob/inhands/donator_left.dmi'
+	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 
 /obj/item/storage/belt/sabre/darksabre/Initialize(mapload)
 	. = ..()
@@ -442,6 +445,10 @@
 	dog_fashion = /datum/dog_fashion/back
 	supports_variations_flags = NONE
 	armor_type = /datum/armor/none
+
+/obj/item/clothing/suit/armor/vest/darkcarapace/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 // Donation reward for inferno707
 /obj/item/clothing/mask/hheart
@@ -542,6 +549,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	worn_icon_state = "scraparmor"
 	body_parts_covered = CHEST
+
+/obj/item/clothing/suit/scraparmour/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 // Donation reward for Enzoman
 /obj/item/clothing/mask/luchador/enzo
@@ -664,7 +675,7 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "greycoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for Cherno_00
@@ -675,7 +686,7 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "chernocoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 // Donation reward for GoldenAlpharex
@@ -707,11 +718,6 @@
 	. = ..()
 	if(welding_upgraded)
 		. += "It has been upgraded with welding shutters, which are currently [welding_protection ? "closed" : "opened"]."
-
-/obj/item/clothing/glasses/welding/steampunk_goggles/item_action_slot_check(slot, mob/user)
-	. = ..()
-	if(. && (slot & ITEM_SLOT_HEAD))
-		return FALSE
 
 /obj/item/clothing/glasses/welding/steampunk_goggles/attack_self(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_HEAD) == src)

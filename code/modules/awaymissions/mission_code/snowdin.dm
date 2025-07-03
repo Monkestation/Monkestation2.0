@@ -306,13 +306,13 @@
 	PRESET /datum/preset_holoimage/nanotrasenprivatesecurity
 	NAME James Reed
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND monkestation/sound/weapons/gun/energy/Laser1.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND monkestation/sound/weapons/gun/energy/Laser1.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND monkestation/sound/weapons/gun/energy/Laser1.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND monkestation/sound/weapons/gun/energy/Laser1.ogg
 	DELAY 15
 	SAY Just go! I'll keep it busy, there's an outpost south of here with an elevator to the surface.
 	NAME Jacob Ullman
@@ -376,7 +376,7 @@
 	name = "insulated tactical turtleneck"
 	desc = "A nondescript and slightly suspicious-looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection."
 	armor_type = /datum/armor/syndicate_coldres
-	cold_protection = CHEST|GROIN|ARMS|LEGS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /datum/armor/syndicate_coldres

@@ -205,13 +205,13 @@
 		if(!is_species(select_mob, /datum/species/lizard/ashwalker))
 			continue
 		to_chat(select_mob, span_boldwarning("A target has died, the curse has been lifted!"))
-	Destroy()
+	qdel(src)
 
 /datum/component/ash_cursed/proc/do_move()
 	SIGNAL_HANDLER
 	var/turf/human_turf = get_turf(human_target)
 	if(!is_mining_level(human_turf.z))
-		Destroy()
+		qdel(src)
 		for(var/mob/select_mob in GLOB.player_list)
 			if(!is_species(select_mob, /datum/species/lizard/ashwalker))
 				continue
@@ -264,11 +264,11 @@
 
 /obj/structure/railroad/Initialize(mapload)
 	. = ..()
-	for(var/obj/structure/railroad/rail in range(2, src))
+	for(var/obj/structure/railroad/rail in orange(2, src))
 		rail.change_look()
 
 /obj/structure/railroad/Destroy()
-	for(var/obj/structure/railroad/rail in range(2, src))
+	for(var/obj/structure/railroad/rail in orange(2, src))
 		rail.change_look(src)
 	return ..()
 
@@ -301,39 +301,28 @@
 
 /obj/vehicle/ridden/rail_cart/examine(mob/user)
 	. = ..()
-	. += span_notice("<br><b>Alt-Click</b> to attach a rail cart to this cart.")
-	. += span_notice("<br>Filling it with <b>10 sand</b> will allow it to be used as a planter!")
+	. += span_notice("<b>Alt-Click</b> to attach a rail cart to this cart.")
+	. += span_notice("Filling it with <b>10 sand</b> will allow it to be used as a planter!")
 
 /obj/vehicle/ridden/rail_cart/Initialize(mapload)
 	. = ..()
 	attach_trailer()
 	railoverlay = mutable_appearance(icon, "railoverlay", ABOVE_MOB_LAYER, src, ABOVE_GAME_PLANE)
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/rail_cart)
-
 	create_storage(max_total_storage = 21, max_slots = 21)
 
 /obj/vehicle/ridden/rail_cart/post_buckle_mob(mob/living/M)
 	. = ..()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/vehicle/ridden/rail_cart/post_unbuckle_mob(mob/living/M)
 	. = ..()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/vehicle/ridden/rail_cart/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
-		add_overlay(railoverlay)
-	else
-		cut_overlay(railoverlay)
-
-/obj/vehicle/ridden/rail_cart/relaymove(mob/living/user, direction)
-	var/obj/structure/railroad/locate_rail = locate() in get_step(src, direction)
-	if(!canmove || !locate_rail)
-		return FALSE
-	if(is_driver(user))
-		return relaydrive(user, direction)
-	return FALSE
+		. += railoverlay
 
 /obj/vehicle/ridden/rail_cart/AltClick(mob/user)
 	attach_trailer()
@@ -388,6 +377,11 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/vehicle/rail_cart/turf_check(turf/next, turf/current)
+	if(!(locate(/obj/structure/railroad) in next))
+		return FALSE
+	return ..()
 
 /obj/structure/plant_tank
 	name = "plant tank"
@@ -921,7 +915,7 @@
 	if(attacking_item.tool_behaviour == TOOL_SHOVEL || attacking_item.tool_behaviour == TOOL_KNIFE)
 		var/turf/src_turf = get_turf(src)
 		src_turf.balloon_alert_to_viewers("the plant crumbles!")
-		Destroy()
+		qdel(src)
 		return
 
 	//if its sinew, lower the cooldown
@@ -1104,7 +1098,7 @@
 	name = "\improper Ashland Clothing Storage"
 	desc = "A large container, filled with various clothes for the Ash Walkers."
 	product_ads = "Praise the Necropolis"
-	icon = 'monkestation/code/modules/blueshift/icons/vending.dmi'
+	icon = 'monkestation/icons/obj/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
 

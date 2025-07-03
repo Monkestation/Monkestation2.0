@@ -19,8 +19,8 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 /datum/meta_token_holder
 	///the client that owns this holder
 	var/client/owner
-	///are they a donator? and do they have their free token?
-	var/donator_token = FALSE
+	///our total donator tokens
+	var/donator_token = 0
 	///total amount of antag tokens
 	var/total_antag_tokens = 0
 	///high threat antag tokens
@@ -44,6 +44,8 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/antag_timeout
 	/// The timer for the event token timeout
 	var/event_timeout
+	/// The month we last used a donator token on
+	var/token_month = 0
 
 /datum/meta_token_holder/New(client/creator)
 	. = ..()
@@ -54,16 +56,25 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/datum/preferences/owners_prefs = creator.prefs
 	backup_tokens()
 	convert_list_to_tokens(owners_prefs.saved_tokens)
-	donator_token = check_for_donator_token()
+	check_for_donator_token()
 
 /datum/meta_token_holder/proc/convert_list_to_tokens(list/saved_tokens)
 	if(!length(saved_tokens))
 		return
+	for(var/token in saved_tokens)
+		if(isnull(saved_tokens[token]))
+			saved_tokens[token] = 0
+		if(!("donator" in saved_tokens))
+			saved_tokens |= "donator"
+			saved_tokens["donator"] = 0
+
 	total_low_threat_tokens = saved_tokens["low_threat"]
 	total_medium_threat_tokens = saved_tokens["medium_threat"]
 	total_high_threat_tokens = saved_tokens["high_threat"]
 	event_tokens = saved_tokens["event_tokens"]
 	event_token_month = saved_tokens["event_token_month"]
+	donator_token = saved_tokens["donator"]
+	token_month = saved_tokens["donator_token_month"]
 
 	total_antag_tokens = total_low_threat_tokens + total_medium_threat_tokens + total_high_threat_tokens
 
@@ -81,27 +92,40 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		"high_threat" = total_high_threat_tokens,
 		"event_tokens" = event_tokens,
 		"event_token_month" = event_token_month,
+		"donator" = donator_token,
+		"donator_token_month" = token_month,
 	)
 	backup_tokens()
 	owner.prefs.save_preferences()
 
 /datum/meta_token_holder/proc/check_for_donator_token()
-	if(!owner.patreon)
+	var/datum/patreon_data/patreon = owner?.persistent_client?.patreon
+
+	if(!patreon?.has_access(ACCESS_TRAITOR_RANK))
 		return FALSE
-	if(!owner.patreon.has_access(ACCESS_TRAITOR_RANK))
-		return FALSE
+
 	var/month_number = text2num(time2text(world.time, "MM"))
-	if(owner.prefs.token_month == month_number)
+
+	if(token_month != month_number)
+		if(patreon.has_access(ACCESS_NUKIE_RANK))    ///if nukie rank, get coins AND token
+			owner.prefs.adjust_metacoins(owner?.ckey, 10000, "Monthly Monkecoin rations", donator_multiplier = FALSE)
+
+		donator_token++
+		token_month = month_number  ///update per-person month counter
+		convert_tokens_to_list()
+		return TRUE
+
+	else
+		token_month = month_number
+		convert_tokens_to_list()
 		return FALSE
-	return TRUE
 
 /datum/meta_token_holder/proc/spend_antag_token(tier, use_donor = FALSE)
 	if(use_donor)
 		if(donator_token)
-			donator_token = FALSE
-			logger.Log(LOG_CATEGORY_META, "[owner], used donator token on [owner.prefs.token_month].")
-			owner.prefs.token_month = text2num(time2text(world.time, "MM"))
-			owner.prefs.save_preferences()
+			donator_token--
+			logger.Log(LOG_CATEGORY_META, "[owner], used donator token on [token_month].")
+			convert_tokens_to_list()
 			return
 
 	switch(tier)
@@ -184,7 +208,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/month_number = text2num(time2text(world.time, "MM"))
 	if(event_token_month != month_number)
 		event_token_month = month_number
-		event_tokens = GLOB.patreon_etoken_values[checked_client.patreon.owned_rank]
+		event_tokens = GLOB.patreon_etoken_values[checked_client.persistent_client.patreon.owned_rank]
 		convert_tokens_to_list()
 
 /datum/meta_token_holder/proc/approve_token_event()
@@ -194,7 +218,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	to_chat(owner, span_boldnicegreen("Your request to trigger [queued_token_event] has been approved."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been approved.")
 	adjust_event_tokens(-queued_token_event.token_cost)
-	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
+	SStwitch.add_to_queue(initial(queued_token_event.id_tag), owner.key)
 	queued_token_event = null
 	if(event_timeout)
 		deltimer(event_timeout)
@@ -220,3 +244,18 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
 	queued_token_event = null
 	event_timeout = null
+
+/datum/meta_token_holder/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	if(var_name in list(
+		NAMEOF(src, total_low_threat_tokens),
+		NAMEOF(src, total_medium_threat_tokens),
+		NAMEOF(src, total_high_threat_tokens),
+		NAMEOF(src, event_tokens),
+		NAMEOF(src, event_token_month),
+		NAMEOF(src, donator_token),
+		NAMEOF(src, token_month),
+	))
+		convert_tokens_to_list()

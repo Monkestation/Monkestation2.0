@@ -4,7 +4,7 @@
 		and wiring damage."
 	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
-	total_positions = 5
+	total_positions = 6
 	spawn_positions = 5
 	supervisors = SUPERVISOR_CE
 	exp_requirements = 60
@@ -36,7 +36,7 @@
 		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
 	)
 	rpg_title = "Crystallomancer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 
 /datum/outfit/job/engineer

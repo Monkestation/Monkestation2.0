@@ -6,6 +6,6 @@
 	var/datum/twitch_event/choice = tgui_input_list(usr, "Choose an event", "Event Selection", subtypesof(/datum/twitch_event))
 	if(!choice)
 		return
-	SStwitch.add_to_queue(initial(choice.id_tag))
+	SStwitch.add_to_queue(initial(choice.id_tag), "an admin")
 
 	log_admin("[key_name(usr)] added [choice] to the Twitch Event Queue.")

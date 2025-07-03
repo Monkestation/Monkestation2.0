@@ -1,3 +1,15 @@
+/datum/emote/living/carbon/vomit
+	key = "vomit"
+	key_third_person = "vomits"
+
+/datum/emote/living/carbon/vomit/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/carbon/carbon_owner = user
+	carbon_owner.vomit(harm = FALSE, force = TRUE)
+
 //Finger Guns *blows smoke off his finger tips*
 /datum/emote/living/carbon/fingergun
 	key = "fingergun"
@@ -103,3 +115,40 @@
 
 /obj/item/gun/ballistic/fingergun_emote/eject_magazine()
 	return
+
+/datum/emote/living/carbon/sweatdrop
+	key = "sweatdrop"
+	key_third_person = "sweatdrops"
+	message = "sweats"
+	emote_type = EMOTE_VISIBLE
+	vary = TRUE
+	sound = 'monkestation/sound/effects/sweatdrop.ogg'
+
+/datum/emote/living/carbon/sweatdrop/run_emote(mob/living/carbon/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/image/emote_animation = image('monkestation/icons/mob/species/human/emote_visuals.dmi', user, "sweatdrop", pixel_x = 10, pixel_y = 10)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
+
+/datum/emote/living/carbon/sweatdrop/sweat //This is entirely the same as sweatdrop, however people might use either, so I'm adding this one instead of editing the other one.
+	key = "sweat"
+
+/datum/emote/living/carbon/annoyed
+	key = "annoyed"
+	emote_type = EMOTE_VISIBLE
+
+/datum/emote/living/carbon/annoyed/run_emote(mob/living/carbon/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/image/emote_animation = image('monkestation/icons/mob/species/human/emote_visuals.dmi', user, "annoyed", pixel_x = 10, pixel_y = 10)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
+	flick_overlay_global(emote_animation, GLOB.clients, 5 SECONDS)
+	// as this emote has no message, it won't play a sound due to the parent proc, so we play it manually here
+	playsound(user, 'monkestation/sound/effects/annoyed.ogg', vol = 50, vary = TRUE)

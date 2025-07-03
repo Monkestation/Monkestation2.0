@@ -55,7 +55,7 @@
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
 	description = "Features include sentient bar staff (a Bardrone and a Barmaid), bathroom, a quality lounge for the heads, and a large gathering table."
-	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
+	admin_notes = "Bardrone and Barmaid have TRAIT_GODMODE (basically invincibility), will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
 	Has medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 10
 	occupancy_limit = "30"
@@ -172,6 +172,14 @@
 	admin_notes = "Has airlocks on both sides of the shuttle and will probably intersect near the front on some stations that build past departures."
 	credit_cost = CARGO_CRATE_VALUE * 5
 	occupancy_limit = "60"
+
+/datum/map_template/shuttle/emergency/doubleleaded
+	suffix = "doubleleaded"
+	name = "Doubled Leaded Emergency Shuttle"
+	description = "A shuttle created after the engineers were given multiple doses of lead, hence the name of the shuttle."
+	admin_notes = "It is set to purposfully crash into the station, it also has execution equipment and entrapped plasma."
+	credit_cost = CARGO_CRATE_VALUE * 5
+	occupancy_limit = "9999"
 
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"

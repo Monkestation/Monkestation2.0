@@ -30,6 +30,7 @@
 		"Off-Duty Staff",
 		"Off-Duty Crew",
 		"Test Subject",
+		"Vagabond",
 	)
 
 /datum/job/atmospheric_technician
@@ -67,6 +68,27 @@
 		"Herbalist",
 		"Florist",
 		"Rancher",
+		"Druid",
+	)
+
+/datum/job/blueshield
+	alt_titles = list(
+		"Blueshield",
+		"Corporate Henchman",
+		"Bodyguard",
+		"Revolutionary Repellent",
+		"Heavily Armed Butler",
+		"Honor Guard",
+	)
+
+/datum/job/blueshield
+	alt_titles = list(
+		"Blueshield",
+		"Corporate Henchman",
+		"Bodyguard",
+		"Revolutionary Repellent",
+		"Heavily Armed Butler",
+		"Honor Guard",
 	)
 
 /datum/job/brig_physician
@@ -86,6 +108,9 @@
 		"Commanding Officer",
 		"Site Manager",
 		"Criminally Underpaid Babysitter",
+		"Princess",
+		"Head of Command",
+		"Scapegoat",
 	)
 
 /datum/job/cargo_technician
@@ -96,6 +121,7 @@
 		"Mailman",
 		"Union Associate",
 		"Inventory Associate",
+		"Prime Delivery Associate",
 	)
 
 /datum/job/chaplain
@@ -111,6 +137,7 @@
 		"Imam",
 		"Rabbi",
 		"Monk",
+		"Mortician",
 	)
 
 /datum/job/chemist
@@ -178,6 +205,7 @@
 		"Forensic Technician",
 		"Private Investigator",
 		"Forensic Scientist",
+		"Paranormal Investigator",
 	)
 
 /datum/job/doctor
@@ -196,6 +224,7 @@
 	alt_titles = list(
 		"Geneticist",
 		"Mutation Researcher",
+		"Genesmith",
 	)
 
 /datum/job/head_of_personnel
@@ -293,6 +322,7 @@
 		"Research Supervisor",
 		"Chief Science Officer",
 		"Chief Artificer",
+		"Head of Science",
 	)
 
 /datum/job/roboticist
@@ -301,6 +331,7 @@
 		"Biomechanical Engineer",
 		"Mechatronic Engineer",
 		"Apprentice Roboticist",
+		"Ripperdoc",
 	)
 
 /datum/job/science_guard //See orderly
@@ -309,8 +340,6 @@
 	alt_titles = list(
 		"Scientist",
 		"Circuitry Designer",
-		"Xenobiologist",
-		"Cytologist",
 		"Plasma Researcher",
 		"Anomalist",
 		"Lab Technician",
@@ -319,7 +348,7 @@
 		"Xenoarchaeologist",
 		"Research Assistant",
 		"Graduate Student",
-		"Artificer"
+		"Artificer",
 	)
 
 /datum/job/security_officer
@@ -350,6 +379,7 @@
 		"Mechanic",
 		"Apprentice Engineer",
 		"Engineering Trainee",
+		"Station Reliability Engineer",
 	)
 
 /datum/job/virologist
@@ -367,4 +397,11 @@
 		"Dispatch Officer",
 		"Brig Governor",
 		"Jailer",
+	)
+
+/datum/job/xenobiologist
+	alt_titles = list(
+		"Xenobiologist",
+		"Cytologist",
+		"Cryptozoologist",
 	)

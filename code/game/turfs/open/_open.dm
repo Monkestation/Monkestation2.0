@@ -182,6 +182,18 @@
 	init_air = FALSE
 	baseturfs = /turf/open/indestructible/airblock
 
+/turf/open/indestructible/meat
+	icon_state = "meat"
+	footstep = FOOTSTEP_MEAT
+	barefootstep = FOOTSTEP_MEAT
+	clawfootstep = FOOTSTEP_MEAT
+	heavyfootstep = FOOTSTEP_MEAT
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/indestructible/meat
+
+/turf/open/indestructible/meat/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE
 	update_visuals()
@@ -200,13 +212,13 @@
 	air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freeze_turf()
-	for(var/obj/I in contents)
-		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.resistance_flags & FREEZE_PROOF))
-			I.AddElement(/datum/element/frozen)
+	for(var/obj/iced in contents)
+		if(!HAS_TRAIT(iced, TRAIT_FROZEN) && !(iced.resistance_flags & FREEZE_PROOF))
+			iced.AddElement(/datum/element/frozen)
 
-	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
-			L.apply_status_effect(/datum/status_effect/freon)
+	for(var/mob/living/freezer in src)
+		if(freezer.bodytemperature <= CELCIUS_TO_KELVIN(25 CELCIUS))
+			freezer.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return TRUE
 

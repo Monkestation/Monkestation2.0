@@ -99,14 +99,14 @@
 						depth_name = "above head height"
 				combined_msg += "\t<span class='info'>Requires liquid that is atleast [depth_name]</span>"
 
-			to_chat(user, examine_block(combined_msg.Join("\n")))
+			to_chat(user, boxed_message(combined_msg.Join("\n")))
 	else
 		var/list/combined_msg = list()
 		var/datum/component/happiness_container/container = scanned_chicken.GetComponent(/datum/component/happiness_container)
 
 		combined_msg += "\t <span class='info'>Age:[SEND_SIGNAL(scanned_chicken, COMSIG_AGE_RETURN_AGE)]</span>"
 		combined_msg += "\t <span class='info'>Happiness:[round(container.current_happiness, 1)]</span>"
-		to_chat(user, examine_block(combined_msg.Join("\n")))
+		to_chat(user, boxed_message(combined_msg.Join("\n")))
 
 /datum/design/chicken_scanner
 	name = "Chicken Scanner"
@@ -139,6 +139,10 @@
 	var/obj/item/food/first_food
 	///number of food inserted
 	var/food_inserted = 0
+
+/obj/machinery/feed_machine/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 
 /obj/machinery/feed_machine/attacked_by(obj/item/I, mob/living/user)
 	. = ..()

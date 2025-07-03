@@ -40,6 +40,7 @@ export type Name = {
 export type Species = {
   name: string;
   desc: string;
+  lore: string[];
   icon: string;
 
   use_skintones: BooleanLike;
@@ -169,6 +170,7 @@ export type PreferencesMenuData = {
   keybindings: Record<string, string[]>;
   overflow_role: string;
   selected_quirks: string[];
+  species_disallowed_quirks: string[];
 
   antag_bans?: string[];
   antag_days_left?: Record<string, number>;
@@ -194,6 +196,7 @@ type LoadoutData = {
 type LoadoutItem = {
   name: string;
   icon: string;
+  icon_state?: string;
   desc: string;
   cost: number;
   item_path: string;

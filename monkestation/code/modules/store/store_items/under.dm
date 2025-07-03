@@ -126,6 +126,10 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Recolorable Plaid Skirt"
 	item_path = /obj/item/clothing/under/dress/skirt/plaid
 
+/datum/store_item/under/miscellaneous/turtleneck
+	name = "Recolorable Turtleneck"
+	item_path = /obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
+
 /datum/store_item/under/miscellaneous/skirt_turtleneck
 	name = "Recolorable Turtleneck Skirt"
 	item_path = /obj/item/clothing/under/dress/skirt/turtleskirt
@@ -137,6 +141,10 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/miscellaneous/dress_sun
 	name = "Recolorable Sundress"
 	item_path = /obj/item/clothing/under/dress/sundress
+
+/datum/store_item/under/miscellaneous/wlpinafore
+	name = "Recolorable Wonderland Pinafore"
+	item_path = /obj/item/clothing/under/dress/wlpinafore
 
 /datum/store_item/under/miscellaneous/kilt
 	name = "Kilt"
@@ -257,6 +265,14 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/formal/beige_suit
 	name = "Beige Suit"
 	item_path = /obj/item/clothing/under/suit/beige
+
+/datum/store_item/under/formal/ballgown
+	name = "Recolorable Ball Gown"
+	item_path = /obj/item/clothing/under/dress/ballgown
+
+/datum/store_item/under/formal/ribbondress
+	name = "Recolorable Ribboned Gown"
+	item_path = /obj/item/clothing/under/dress/ribbondress
 
 /datum/store_item/under/formal/black_suit
 	name = "Black Suit"
@@ -383,6 +399,13 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "White Suit"
 	item_path = /obj/item/clothing/under/suit/white
 
+/datum/store_item/under/formal/butler
+	name = "Butler Uniform"
+	item_path = /obj/item/clothing/under/suit/butler
+
+/datum/store_item/under/formal/silk_suit
+	name = "Black Silk Suit"
+	item_path = /obj/item/clothing/under/suit/fancysuit
 
 /datum/store_item/under/formal/trek_command
 	name = "Trekkie Command Uniform"
@@ -423,6 +446,40 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/formal/the_q
 	name = "French Marshall's Uniform"
 	item_path = /obj/item/clothing/under/trek/q
+
+/datum/store_item/under/formal/sparkle_dress
+	name = "Sparkly Ribbon Dress"
+	item_path = /obj/item/clothing/under/dress/sparkle
+
+/datum/store_item/under/formal/white_dress
+	name = "Gaudy White Dress"
+	item_path = /obj/item/clothing/under/dress/white
+
+/datum/store_item/under/formal/angel
+	name = "Lacey Angel Dress"
+	item_path = /obj/item/clothing/under/dress/angel
+
+/datum/store_item/under/formal/devil
+	name = "Lacey Devil Dress"
+	item_path = /obj/item/clothing/under/dress/angel/alt
+
+/datum/store_item/under/formal/flowery
+	name = "Perfumed Light Dress"
+	item_path = /obj/item/clothing/under/dress/flowery
+
+/datum/store_item/under/formal/starry
+	name = "Starry Dress"
+	item_path = /obj/item/clothing/under/dress/starry
+
+/datum/store_item/under/formal/formal_ball
+	name = "Regal Ball Gown"
+	item_path = /obj/item/clothing/under/dress/gown
+	item_cost = 10000
+
+/datum/store_item/under/formal/moonlit
+	name = "Regal Ball Gown"
+	item_path = /obj/item/clothing/under/dress/moonlit
+	item_cost = 10000
 
 //FAMILIES GEAR
 /datum/store_item/under/formal/osi
@@ -650,6 +707,16 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/miscellaneous/flowerdress //BUYABLE
 	name = "Flower Dress"
 	item_path = /obj/item/clothing/under/dress/nova/flower
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/sweater //BUYABLE
+	name = "Cableknit Sweater"
+	item_path = /obj/item/clothing/under/sweater
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/sweater/keyhole //BUYABLE
+	name = "Keyhole Sweater"
+	item_path = /obj/item/clothing/under/sweater/keyhole
 	item_cost = 1000
 
 /datum/store_item/under/miscellaneous/tactical_hawaiian_orange //BUYABLE

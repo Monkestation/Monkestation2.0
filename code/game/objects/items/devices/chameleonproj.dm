@@ -67,9 +67,7 @@
 	saved_appearance = temp.appearance
 
 /obj/item/chameleon/proc/check_sprite(atom/target)
-	if(target.icon_state in icon_states(target.icon))
-		return TRUE
-	return FALSE
+	return icon_exists(target.icon, target.icon_state)
 
 /obj/item/chameleon/proc/toggle(mob/user)
 	if(!can_use || !saved_appearance)
@@ -152,22 +150,10 @@
 	if(!isturf(loc) || isspaceturf(loc) || !direction)
 		return //No magical movement! Trust me, this bad boy can do things like leap out of pipes if you're not careful
 
-	if(can_move < world.time)
-		var/amount
-		switch(user.bodytemperature)
-			if(300 to INFINITY)
-				amount = 10
-			if(295 to 300)
-				amount = 13
-			if(280 to 295)
-				amount = 16
-			if(260 to 280)
-				amount = 20
-			else
-				amount = 25
-
-		can_move = world.time + amount
-		try_step_multiz(direction)
+	if(can_move >= world.time)
+		return
+	can_move = world.time + 2 + (user.cached_multiplicative_slowdown * 4) // Fake movement speed calculating based on the mob's move speed
+	try_step_multiz(direction)
 	return
 
 /obj/effect/dummy/chameleon/Destroy()

@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_SECURITY]" = "secradio",
 	"[FREQ_COMMAND]" = "comradio",
 	"[FREQ_AI_PRIVATE]" = "aiprivradio",
+	"[FREQ_ENTERTAINMENT]" = "enteradio",
 	"[FREQ_SYNDICATE]" = "syndradio",
 	"[FREQ_UPLINK]" = "syndradio",  // this probably shouldnt appear ingame
 	"[FREQ_CENTCOM]" = "centcomradio",
@@ -19,7 +20,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_BLUE]" = "blueteamradio",
 	"[FREQ_CTF_GREEN]" = "greenteamradio",
 	"[FREQ_CTF_YELLOW]" = "yellowteamradio",
-	"[FREQ_RADIO]" = "radioradio"
+	"[FREQ_RADIO]" = "radioradio",
+	"[FREQ_UNCOMMON]" = "uncommonradio"
 	))
 
 /atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = FALSE, message_range = 7, datum/saymode/saymode = null)
@@ -37,14 +39,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
-//MONKESTATION EDIT
-/mob/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
-	. = ..()
-	if(client && radio_freq)
-		var/atom/movable/virtualspeaker/V = speaker
-		if(isAI(V.source))
-			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
-//MONKESTATION EDIT END
 /**
  * Checks if our movable can speak the provided message, passing it through filters
  * and spam detection. Does not call can_speak. CAN include feedback messages about
@@ -98,15 +92,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
+	var/realnamepart = "[speaker.GetVoice(TRUE)][speaker.get_alt_name()]"
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	if(face_name && ishuman(speaker))
-		var/mob/living/carbon/human/H = speaker
-		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
-	else if(visible_name && ishuman(speaker))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/human_speaker = speaker
-		namepart = "[human_speaker.get_visible_name()]"
+		if(face_name)
+			namepart = "[human_speaker.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
+		else if(visible_name)
+			namepart = "[human_speaker.get_visible_name()]"
+		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN))
+			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.chat_span()
+			spanpart2 = "<span class='name [id_span || "job__unknown"]'>"
 	//End name span.
-	var/endspanpart = "</span>"
+	var/endspanpart = "</span></a>"
 
 	//Message
 	var/messagepart
@@ -122,7 +120,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, realnamepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -181,7 +179,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
 ///	Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
 /atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list())
 	if(!language)
+		// monkestation edit start
+		/* original
 		return "makes a strange sound."
+		*/
+		var/datum/language/dialect = GLOB.language_datum_instances[/datum/language/common]
+		return dialect.scramble(raw_message)
+		// monkestation edit end
 
 	if(!has_language(language))
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
@@ -239,6 +243,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/atom/movable/source
 	var/obj/item/radio/radio
 
+	var/realvoice // MONKESTATION ADDITION -- NTSL
+
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 /atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, _radio)
 	. = ..()
@@ -246,6 +252,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 	source = M
 	if(istype(M))
 		name = radio.anonymize ? "Unknown" : M.GetVoice()
+		realvoice = name // MONKESTATION ADDITION -- NTSL
 		verb_say = M.verb_say
 		verb_ask = M.verb_ask
 		verb_exclaim = M.verb_exclaim
@@ -276,6 +283,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 
 /atom/movable/virtualspeaker/GetJob()
 	return job
+
+/atom/movable/virtualspeaker/GetVoice(bool) // MONKESTATION ADDITION -- NTSL (this entire proc)
+	if(bool && realvoice)
+		return realvoice
+	else
+		return "[src]"
 
 /atom/movable/virtualspeaker/GetSource()
 	return source

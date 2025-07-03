@@ -67,7 +67,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "cE" = (
 /obj/structure/closet{
@@ -107,7 +107,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "db" = (
 /obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "dq" = (
 /obj/effect/turf_decal/loading_area,
@@ -191,7 +191,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "eC" = (
 /obj/structure/table/wood,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "eE" = (
 /obj/effect/turf_decal/stripes/line,
@@ -204,7 +204,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "fQ" = (
 /obj/structure/hedge/opaque,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "fU" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -244,12 +244,6 @@
 "gU" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/mineral/titanium/tiled/yellow,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"ha" = (
-/obj/structure/statue/bone/rib{
-	dir = 1
-	},
-/turf/open/floor/cult,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "hk" = (
 /obj/structure/fluff/tram_rail{
@@ -333,7 +327,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "iO" = (
 /obj/structure/girder/displaced,
@@ -604,11 +598,17 @@
 /obj/structure/frame/computer,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"oW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "pq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "pC" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -619,7 +619,7 @@
 "pI" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "pY" = (
 /obj/machinery/light/small/broken/directional/east,
@@ -638,7 +638,7 @@
 /obj/item/storage/fancy/cigarettes/cigars/havana{
 	pixel_y = 4
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "qI" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -753,7 +753,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ua" = (
 /obj/structure/sign/warning/docking/directional/south,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "uc" = (
 /obj/structure/fluff/tram_rail,
@@ -1088,7 +1088,7 @@
 "Af" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/warm/directional/south,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ax" = (
 /obj/effect/turf_decal/trimline/brown/arrow_cw{
@@ -1156,6 +1156,12 @@
 "Bo" = (
 /turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Bz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BA" = (
 /obj/machinery/door/airlock/science{
 	name = "Hilbert's Office"
@@ -1188,7 +1194,7 @@
 /obj/structure/table/wood,
 /obj/item/folder/white,
 /obj/item/stamp/head/rd,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BM" = (
 /obj/effect/turf_decal/stripes/red/line,
@@ -1197,7 +1203,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BO" = (
 /obj/structure/bookcase/manuals/research_and_development,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BQ" = (
 /obj/structure/railing/corner{
@@ -1208,7 +1214,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BY" = (
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Co" = (
 /obj/structure/table/wood,
@@ -1313,7 +1319,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "EP" = (
 /obj/machinery/door/airlock/titanium{
@@ -1325,12 +1331,12 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "EY" = (
 /obj/structure/closet/crate/bin,
 /obj/item/paper/crumpled/ruins/postdocs_memo,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Fg" = (
 /obj/machinery/door/airlock/cult/unruned/friendly{
@@ -1375,7 +1381,7 @@
 "FB" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "FC" = (
 /obj/item/storage/box/monkeycubes,
@@ -1433,13 +1439,13 @@
 "GP" = (
 /obj/structure/table/wood,
 /obj/item/gps/spaceruin,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "GV" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ha" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -1621,14 +1627,14 @@
 "KL" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "KS" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /obj/structure/hedge/opaque,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "La" = (
 /turf/open/floor/mineral/plastitanium,
@@ -1645,7 +1651,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "LD" = (
 /obj/machinery/light/cold/directional/south,
@@ -1724,7 +1730,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ny" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
@@ -1754,7 +1760,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Oe" = (
 /obj/machinery/light/warm/directional/south,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ok" = (
 /turf/closed/indestructible/riveted/plastinum/nodiagonal,
@@ -1771,7 +1777,7 @@
 /obj/item/food/burger/blue{
 	pixel_y = 4
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Pw" = (
 /obj/structure/fluff/tram_rail{
@@ -1785,7 +1791,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Px" = (
 /obj/machinery/door/window/left/directional/south,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "PD" = (
 /obj/structure/frame/computer,
@@ -1803,7 +1809,7 @@
 "PL" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "PR" = (
 /obj/machinery/porta_turret/syndicate/teleport,
@@ -1878,7 +1884,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "QY" = (
 /obj/structure/chair/stool/bar/directional/east,
@@ -1978,7 +1984,7 @@
 /obj/machinery/cell_charger{
 	pixel_y = 4
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Sp" = (
 /obj/effect/turf_decal/trimline/purple/arrow_cw,
@@ -2027,7 +2033,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "SX" = (
 /obj/machinery/light/cold/directional/south,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Th" = (
 /obj/effect/spawner/random/structure/closet_private,
@@ -2069,7 +2075,7 @@
 "TT" = (
 /obj/machinery/light/cold/directional/north,
 /obj/structure/hedge/opaque,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "TV" = (
 /obj/structure/table/reinforced/rglass,
@@ -2083,7 +2089,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ui" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Un" = (
 /turf/closed/indestructible/riveted/plastinum,
@@ -2200,7 +2206,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WQ" = (
 /obj/structure/fluff/tram_rail,
@@ -2283,7 +2289,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "YF" = (
 /obj/structure/railing/corner{
@@ -2333,14 +2339,14 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Zy" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/floor/iron/grimy,
+/turf/open/floor/carpet/grimey,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "ZG" = (
 /obj/structure/railing/corner{
@@ -3711,7 +3717,7 @@ wo
 Wt
 yO
 HK
-ha
+wo
 iO
 MX
 ow
@@ -3789,7 +3795,7 @@ La
 eE
 dA
 MX
-iO
+KC
 wo
 MX
 ow
@@ -5055,8 +5061,8 @@ KC
 KC
 PR
 KC
-KC
 PR
+Ok
 Ok
 Ok
 Dk
@@ -5095,8 +5101,8 @@ Ba
 Ba
 Ba
 Ba
-Ba
-Ba
+Bz
+Bz
 Ok
 Bo
 Iy
@@ -5173,8 +5179,8 @@ vr
 vr
 vr
 vr
-vr
-vr
+oW
+oW
 Ok
 Bo
 Iy
@@ -5211,8 +5217,8 @@ KC
 KC
 PR
 KC
-KC
 PR
+Ok
 Ok
 Ok
 Dk

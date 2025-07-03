@@ -54,6 +54,22 @@
 
 	return TRUE
 
+// If accessory is being worn, make sure it updates on the player
+/obj/item/clothing/accessory/update_greyscale()
+	. = ..()
+
+	var/obj/item/clothing/under/attached_to = loc
+	
+	if(!istype(attached_to))
+		return
+
+	var/mob/living/carbon/human/wearer = attached_to.loc
+
+	if(!istype(wearer))
+		return
+
+	attached_to.update_accessory_overlay()
+
 /**
  * Actually attach this accessory to the passed clothing article.
  *
@@ -141,14 +157,19 @@
 	SIGNAL_HANDLER
 
 	accessory_dropped(source, user)
-	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
+	// MONKESTATION EDIT START
+	//	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING) - original
+	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
+	// MONKESTATION EDIT END
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	dropped(user)
 	return
 
 /// Signal proc for [COMSIG_CLOTHING_UNDER_ADJUSTED] on the uniform we're pinned to

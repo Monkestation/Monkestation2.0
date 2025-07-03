@@ -24,3 +24,4 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/offstation
 	allowed_buildtypes = AWAY_LATHE
 	charges_tax = FALSE
+	link_on_init = FALSE

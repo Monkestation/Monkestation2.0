@@ -287,7 +287,7 @@
 /obj/machinery/vending/barbervend
 	name = "Fab-O-Vend"
 	desc = "It would seem it vends dyes, and other stuff to make you pretty."
-	icon = 'monkestation/code/modules/blueshift/icons/vendor.dmi'
+	icon = 'monkestation/icons/obj/vending.dmi'
 	icon_state = "barbervend"
 	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
 	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
@@ -311,6 +311,7 @@
 		/obj/item/lipstick/quantum = 1,
 		/obj/item/razor = 1,
 		/obj/item/storage/box/perfume = 1,
+		/obj/item/secateurs = 1, //monkestation edit: plant
 	)
 	refill_canister = /obj/item/vending_refill/barbervend
 	default_price = PAYCHECK_CREW
@@ -407,13 +408,6 @@
 	visible_message(span_notice("[user] starts to masterfully paint [target_human]!"))
 
 	if(do_after(user, 20 SECONDS, target_human))
-		switch(selected_mutant_color)
-			if("One")
-				target_human.dna.features["mcolor"] = selected_color
-			if("Two")
-				target_human.dna.features["mcolor1"] = selected_color
-			if("Three")
-				target_human.dna.features["mcolor2"] = selected_color
 
 		target_human.regenerate_icons()
 		item_use_power(power_use_amount, user)

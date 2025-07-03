@@ -70,8 +70,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
-/// Used for items that cannot be used directly to harm people with, ex. loafs
-#define CANNOT_ATTACK_WITH (1<<21)
+/// This atom should never be marked in demos/replays. (monkestation addition)
+#define DEMO_IGNORE_1 (1<<21)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -157,6 +157,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define GHOST_AREA (1<<18)
 ///can we explode during rounds?
 #define NO_GHOSTS_DURING_ROUND (1<<19)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<20)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -225,6 +227,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMP_PROTECT_SELF (1<<0)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
+
+///Protects against all EMP types.
+#define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)
 
 //Mob mobility var flags
 /// can move

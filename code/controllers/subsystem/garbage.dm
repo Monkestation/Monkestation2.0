@@ -56,6 +56,13 @@ SUBSYSTEM_DEF(garbage)
 	#endif
 	#endif
 
+	// monkestation start: disabling hard deletes
+#if !defined(UNIT_TESTS) && !defined(REFERENCE_TRACKING)
+	/// Toggle for enabling/disabling hard deletes. Objects that don't explicitly request hard deletion with this disabled will leak.
+	var/enable_hard_deletes = FALSE
+#endif
+	var/list/failed_hard_deletes = list()
+	// monkestation end
 
 /datum/controller/subsystem/garbage/PreInit()
 	InitQueues()
@@ -220,13 +227,13 @@ SUBSYSTEM_DEF(garbage)
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
+				var/detail = D.dump_harddel_info()
 				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
 				message = "[message] (ref count of [refcount(D)])"
-				log_world(message)
-
-				var/detail = D.dump_harddel_info()
 				if(detail)
+					message = "[message] | [detail]"
 					LAZYADD(I.extra_details, detail)
+				log_world(message)
 
 				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
@@ -244,7 +251,8 @@ SUBSYSTEM_DEF(garbage)
 					#endif
 					continue
 			if (GC_QUEUE_HARDDELETE)
-				HardDelete(D)
+				if(!HardDelete(D))
+					D = null
 				if (MC_TICK_CHECK)
 					return
 				continue
@@ -279,7 +287,16 @@ SUBSYSTEM_DEF(garbage)
 	queue[++queue.len] = list(queue_time, D, D.gc_destroyed) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
-/datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/D, override = FALSE)
+	// monkestation start: disable hard deletes
+	if(!D)
+		return
+#if !defined(UNIT_TESTS) && !defined(REFERENCE_TRACKING)
+	if(!enable_hard_deletes && !override)
+		failed_hard_deletes |= D
+		return
+#endif
+	// monkestation end
 	++delslasttick
 	++totaldels
 	var/type = D.type
@@ -341,13 +358,36 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
+/proc/non_datum_qdel(to_delete)
+	var/found_type = "unable to determine type"
+	var/delable = FALSE
+
+	if(islist(to_delete))
+		found_type = "list"
+		delable = TRUE
+
+	if(isnum(to_delete))
+		found_type = "number"
+
+	if(ispath(to_delete))
+		found_type = "typepath"
+
+	if(delable)
+		del(to_delete)
+
+	CRASH("Bad qdel ([found_type])")
+
 /// Should be treated as a replacement for the 'del' keyword.
 ///
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/to_delete, force = FALSE)
 	if(!istype(to_delete))
-		//DREAMLUAU_CLEAR_REF_USERDATA(to_delete)
-		del(to_delete)
+		if(isnull(to_delete))
+			return
+#ifndef DISABLE_DREAMLUAU
+		DREAMLUAU_CLEAR_REF_USERDATA(to_delete)
+#endif
+		non_datum_qdel(to_delete)
 		return
 
 	var/datum/qdel_item/trash = SSgarbage.items[to_delete.type]
@@ -406,10 +446,10 @@ SUBSYSTEM_DEF(garbage)
 			SSgarbage.Queue(to_delete, GC_QUEUE_HARDDELETE)
 		if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
 			SSdemo.mark_destroyed(to_delete) // monkestation edit: replays
-			SSgarbage.HardDelete(to_delete)
+			SSgarbage.HardDelete(to_delete, override = TRUE)
 		#ifdef REFERENCE_TRACKING
 		if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
-			SSgarbage.Queue(to_delete)
+			SSgarbage.HardDelete(to_delete, override = TRUE) // Need to override enable_hard_deletes, stuff like /client uses this
 			INVOKE_ASYNC(to_delete, TYPE_PROC_REF(/datum, find_references))
 		if (QDEL_HINT_IFFAIL_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled and the object fails to collect, display all references to this object.
 			SSgarbage.Queue(to_delete)

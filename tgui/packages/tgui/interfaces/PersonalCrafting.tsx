@@ -141,6 +141,7 @@ type Data = {
   // Dynamic
   busy: BooleanLike;
   mode: BooleanLike;
+  forced_mode: BooleanLike;
   display_compact: BooleanLike;
   display_craftable_only: BooleanLike;
   craftability: Record<string, BooleanLike>;
@@ -184,6 +185,7 @@ export const PersonalCrafting = (props) => {
   const {
     mode,
     busy,
+    forced_mode,
     display_compact,
     display_craftable_only,
     craftability,
@@ -339,8 +341,8 @@ export const PersonalCrafting = (props) => {
                     </Tabs.Tab>
                   </Tabs>
                 </Stack.Item>
-                <Stack.Item grow m={-1}>
-                  <Box height={'100%'} p={1} style={{ 'overflow-y': 'auto' }}>
+                <Stack.Item grow m={-1} style={{ 'overflow-y': 'auto' }}>
+                  <Box height={'100%'} p={1}>
                     <Tabs vertical>
                       {tabMode === TABS.foodtype &&
                         mode === MODE.cooking &&
@@ -459,54 +461,56 @@ export const PersonalCrafting = (props) => {
                     onClick={() => act('toggle_compact')}
                   />
                 </Stack.Item>
-                <Stack.Item>
-                  <Stack textAlign="center">
-                    <Stack.Item grow>
-                      <Button.Checkbox
-                        fluid
-                        lineHeight={2}
-                        content="Craft"
-                        checked={mode === MODE.crafting}
-                        icon="hammer"
-                        style={{
-                          border:
-                            '2px solid ' +
-                            (mode === MODE.crafting ? '#20b142' : '#333'),
-                        }}
-                        onClick={() => {
-                          if (mode === MODE.crafting) {
-                            return;
-                          }
-                          setTabMode(TABS.category);
-                          setCategory(DEFAULT_CAT_CRAFTING);
-                          act('toggle_mode');
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item grow>
-                      <Button.Checkbox
-                        fluid
-                        lineHeight={2}
-                        content="Cook"
-                        checked={mode === MODE.cooking}
-                        icon="utensils"
-                        style={{
-                          border:
-                            '2px solid ' +
-                            (mode === MODE.cooking ? '#20b142' : '#333'),
-                        }}
-                        onClick={() => {
-                          if (mode === MODE.cooking) {
-                            return;
-                          }
-                          setTabMode(TABS.category);
-                          setCategory(DEFAULT_CAT_COOKING);
-                          act('toggle_mode');
-                        }}
-                      />
-                    </Stack.Item>
-                  </Stack>
-                </Stack.Item>
+                {!forced_mode && (
+                  <Stack.Item>
+                    <Stack textAlign="center">
+                      <Stack.Item grow>
+                        <Button.Checkbox
+                          fluid
+                          lineHeight={2}
+                          content="Craft"
+                          checked={mode === MODE.crafting}
+                          icon="hammer"
+                          style={{
+                            border:
+                              '2px solid ' +
+                              (mode === MODE.crafting ? '#20b142' : '#333'),
+                          }}
+                          onClick={() => {
+                            if (mode === MODE.crafting) {
+                              return;
+                            }
+                            setTabMode(TABS.category);
+                            setCategory(DEFAULT_CAT_CRAFTING);
+                            act('toggle_mode');
+                          }}
+                        />
+                      </Stack.Item>
+                      <Stack.Item grow>
+                        <Button.Checkbox
+                          fluid
+                          lineHeight={2}
+                          content="Cook"
+                          checked={mode === MODE.cooking}
+                          icon="utensils"
+                          style={{
+                            border:
+                              '2px solid ' +
+                              (mode === MODE.cooking ? '#20b142' : '#333'),
+                          }}
+                          onClick={() => {
+                            if (mode === MODE.cooking) {
+                              return;
+                            }
+                            setTabMode(TABS.category);
+                            setCategory(DEFAULT_CAT_COOKING);
+                            act('toggle_mode');
+                          }}
+                        />
+                      </Stack.Item>
+                    </Stack>
+                  </Stack.Item>
+                )}
               </Stack>
             </Section>
           </Stack.Item>
@@ -647,6 +651,43 @@ const FoodtypeContent = (props) => {
 
 const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
   const { act, data } = useBackend<Data>();
+
+  // Function to handle pushing steps (unchanged)
+  const specialSteps = [
+    'Optional Steps',
+    'End Optional Steps',
+    'Exclusive Optional Steps',
+    'End Exclusive Optional Steps',
+    'Optional Step',
+    'End Optional Step',
+  ];
+
+  const groupedSteps: string[] = [];
+  let previousStep = '';
+  let duplicateCount = 0;
+
+  const pushStep = (step: string, count: number) => {
+    const stepText = count > 1 ? `${step} x${count}` : step;
+    groupedSteps.push(stepText);
+  };
+
+  item.steps?.forEach((step) => {
+    const trimmedStep = step.trim();
+    if (trimmedStep === previousStep) {
+      duplicateCount++;
+    } else {
+      if (duplicateCount > 0) {
+        pushStep(previousStep, duplicateCount);
+      }
+      previousStep = trimmedStep;
+      duplicateCount = 1;
+    }
+  });
+
+  if (duplicateCount > 0) {
+    pushStep(previousStep, duplicateCount);
+  }
+
   return (
     <Section>
       <Stack my={-0.75}>
@@ -665,27 +706,31 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                 {item.name}
               </Box>
               <Box style={{ 'text-transform': 'capitalize' }} color={'gray'}>
-                {Array.from(
-                  Object.keys(item.reqs).map((atom_id) => {
-                    const name = data.atom_data[(atom_id as any) - 1]?.name;
-                    const is_reagent =
-                      data.atom_data[(atom_id as any) - 1]?.is_reagent;
-                    const amount = item.reqs[atom_id];
-                    return is_reagent
-                      ? `${name}\xa0${amount}u`
-                      : amount > 1
-                        ? `${name}\xa0${amount}x`
-                        : name;
-                  }),
-                ).join(', ')}
+                {Array.isArray(item.reqs) &&
+                  Object.keys(item.reqs).length > 0 &&
+                  Object.keys(item.reqs)
+                    .map((atom_id) => {
+                      const name = data.atom_data?.[(atom_id as any) - 1]?.name;
+                      const is_reagent =
+                        data.atom_data?.[(atom_id as any) - 1]?.is_reagent;
+                      const amount = item.reqs[atom_id];
+                      return is_reagent
+                        ? `${name}\xa0${amount}u`
+                        : amount > 1
+                          ? `${name}\xa0${amount}x`
+                          : name;
+                    })
+                    .join(', ')}
 
                 {item.chem_catalysts &&
+                  Object.keys(item.chem_catalysts).length > 0 &&
                   ', ' +
                     Object.keys(item.chem_catalysts)
                       .map((atom_id) => {
-                        const name = data.atom_data[(atom_id as any) - 1]?.name;
+                        const name =
+                          data.atom_data?.[(atom_id as any) - 1]?.name;
                         const is_reagent =
-                          data.atom_data[(atom_id as any) - 1]?.is_reagent;
+                          data.atom_data?.[(atom_id as any) - 1]?.is_reagent;
                         const amount = item.chem_catalysts[atom_id];
                         return is_reagent
                           ? `${name}\xa0${amount}u`
@@ -696,19 +741,24 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                       .join(', ')}
 
                 {item.tool_paths &&
+                  item.tool_paths.length > 0 &&
                   ', ' +
                     item.tool_paths
-                      .map((item) => data.atom_data[(item as any) - 1]?.name)
+                      .map((item) => data.atom_data?.[(item as any) - 1]?.name)
                       .join(', ')}
+
                 {item.machinery &&
+                  item.machinery.length > 0 &&
                   ', ' +
                     item.machinery
-                      .map((item) => data.atom_data[(item as any) - 1]?.name)
+                      .map((item) => data.atom_data?.[(item as any) - 1]?.name)
                       .join(', ')}
+
                 {item.structures &&
+                  item.structures.length > 0 &&
                   ', ' +
                     item.structures
-                      .map((item) => data.atom_data[(item as any) - 1]?.name)
+                      .map((item) => data.atom_data?.[(item as any) - 1]?.name)
                       .join(', ')}
               </Box>
             </Stack.Item>
@@ -746,8 +796,8 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
               ) : (
                 item.steps && (
                   <Tooltip
-                    content={item.steps.map((step) => (
-                      <Box key={step}>{step}</Box>
+                    content={groupedSteps.map((step, index) => (
+                      <Box key={index}>{step}</Box>
                     ))}
                   >
                     <Box fontSize={1.5} p={1}>

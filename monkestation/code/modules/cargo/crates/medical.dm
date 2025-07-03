@@ -65,3 +65,11 @@
 	contraband = TRUE
 	contains = list(/obj/item/reagent_containers/pill/maintenance = 10)
 	crate_name = "experimental medicine crate"
+
+/datum/supply_pack/medical/borer_cage
+	name = "Cortical Borer Cages"
+	desc = "Troublesome brain worms dumping one to many unprescribed drugs into your patients? Well this crate is for you!"
+	cost = CARGO_CRATE_VALUE * 10
+	contraband = TRUE
+	contains = list(/obj/item/cortical_cage = 3)
+	crate_name = "Anti-Borer crate"

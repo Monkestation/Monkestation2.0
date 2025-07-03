@@ -16,11 +16,11 @@
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/syndicatefake
-	name = "black space-helmet replica"
+	name = "red space helmet replica" //monkestation edit
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	worn_icon = 'icons/mob/clothing/head/spacehelm.dmi'
-	icon_state = "syndicate-helm-black-red"
-	inhand_icon_state = "syndicate-helm-black-red"
+	icon_state = "syndicate" //monkestation edit
+	inhand_icon_state = "space_syndicate" //monkestation edit
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
@@ -210,3 +210,21 @@
 	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/flowery
+	name = "perfumed bow"
+	desc = "A dainty bow worn on the back of the head, this one has a convinent clip on attachment for easy use."
+	icon_state = "flowerybow"
+	inhand_icon_state = "flowerybow"
+
+/obj/item/clothing/head/costume/starry
+	name = "star speckled bow"
+	desc = "A dainty bow that shimmers in the light, almost as if tiny stars decorated the bow."
+	icon_state = "starbow"
+	inhand_icon_state = "starbow"
+
+/obj/item/clothing/head/costume/tiara
+	name = "elegant tiara"
+	desc = "A stunning tiara that still looks good even with its questionable authenticity."
+	icon_state = "tiara"
+	inhand_icon_state = "tiara"

@@ -9,20 +9,22 @@
 	var/list/existing_suckers = get_antag_minds(/datum/antagonist/bloodsucker) - owner
 	if(!length(existing_suckers))
 		message_admins("New Sol has been created due to Bloodsucker assignment.")
-		SSsunlight.can_fire = TRUE
+		SSsol.can_fire = TRUE
 
 /// End Sol, if you're the last Bloodsucker
 /datum/antagonist/bloodsucker/proc/check_cancel_sunlight()
 	var/list/existing_suckers = get_antag_minds(/datum/antagonist/bloodsucker) - owner
 	if(!length(existing_suckers))
 		message_admins("Sol has been deleted due to the lack of Bloodsuckers")
-		SSsunlight.can_fire = FALSE
+		SSsol.can_fire = FALSE
 
 ///Ranks the Bloodsucker up, called by Sol.
 /datum/antagonist/bloodsucker/proc/sol_rank_up(atom/source)
 	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(src, PROC_REF(RankUp))
+	if(bloodsucker_level < 3)
+		INVOKE_ASYNC(src, PROC_REF(RankUp))
+	else
+		to_chat(owner.current, span_announce("You have already got as powerful as you can through surviving Sol."))
 
 ///Called when Sol is near starting.
 /datum/antagonist/bloodsucker/proc/sol_near_start(atom/source)
@@ -43,6 +45,7 @@
 	if(!owner?.current)
 		return
 
+	update_sunlight_hud()
 	if(!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 		owner.current.apply_status_effect(/datum/status_effect/bloodsucker_sol)
 		return
@@ -89,26 +92,30 @@
  * - Sol being over, dealt with by /sunlight/process() [bloodsucker_daylight.dm]
 */
 /datum/antagonist/bloodsucker/proc/check_begin_torpor(SkipChecks = FALSE)
+	var/mob/living/carbon/user = owner.current
+	if(QDELETED(user))
+		return
 	/// Are we entering Torpor via Sol/Death? Then entering it isnt optional!
 	if(SkipChecks)
 		torpor_begin()
 		return
-	var/mob/living/carbon/user = owner.current
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
 	/// Checks - Not daylight & Has more than 10 Brute/Burn & not already in Torpor
-	if(!SSsunlight.sunlight_active && (total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache)) && !is_in_torpor())
+	if(!SSsol.sunlight_active && (total_damage >= 10 || typecached_item_in_list(user.organs, yucky_organ_typecache)) && !is_in_torpor())
 		torpor_begin()
 
 /datum/antagonist/bloodsucker/proc/check_end_torpor()
 	var/mob/living/carbon/user = owner.current
+	if(QDELETED(user))
+		return
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
 	if(total_burn >= 199)
 		return FALSE
-	if(SSsunlight.sunlight_active)
+	if(SSsol.sunlight_active)
 		return FALSE
 	// You are in a Coffin, so instead we'll check TOTAL damage, here.
 	if(istype(user.loc, /obj/structure/closet/crate/coffin))
@@ -124,28 +131,36 @@
 	return HAS_TRAIT_FROM(owner.current, TRAIT_NODEATH, TORPOR_TRAIT)
 
 /datum/antagonist/bloodsucker/proc/torpor_begin()
-	to_chat(owner.current, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
+	var/mob/living/current = owner.current
+	if(QDELETED(current))
+		return
+	to_chat(current, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
 	// Force them to go to sleep
-	REMOVE_TRAIT(owner.current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
+	REMOVE_TRAIT(current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 	// Without this, you'll just keep dying while you recover.
-	owner.current.add_traits(torpor_traits, TORPOR_TRAIT)
-	owner.current.set_timed_status_effect(0 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	current.add_traits(torpor_traits, TORPOR_TRAIT)
+	current.set_timed_status_effect(0 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	// Disable ALL Powers
 	DisableAllPowers()
 
 /datum/antagonist/bloodsucker/proc/torpor_end()
-	owner.current.remove_status_effect(/datum/status_effect/bloodsucker_sol)
-	owner.current.grab_ghost()
-	to_chat(owner.current, span_warning("You have recovered from Torpor."))
-	owner.current.remove_traits(torpor_traits, TORPOR_TRAIT)
-	if(!HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
-		ADD_TRAIT(owner.current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
+	var/mob/living/current = owner.current
+	if(QDELETED(current))
+		return
+	current.remove_status_effect(/datum/status_effect/bloodsucker_sol)
+	current.grab_ghost()
+	to_chat(current, span_warning("You have recovered from Torpor."))
+	current.remove_traits(torpor_traits, TORPOR_TRAIT)
+	if(!HAS_TRAIT(current, TRAIT_MASQUERADE))
+		ADD_TRAIT(current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 	heal_vampire_organs()
-	SEND_SIGNAL(src, BLOODSUCKER_EXIT_TORPOR)
+	current.pain_controller?.remove_all_pain()
+	current.update_stat()
+	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_EXIT_TORPOR)
 
 /datum/status_effect/bloodsucker_sol
 	id = "bloodsucker_sol"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/bloodsucker_sol
 	var/list/datum/action/cooldown/bloodsucker/burdened_actions
 	var/static/list/sol_traits = list(
@@ -154,11 +169,12 @@
 	)
 
 /datum/status_effect/bloodsucker_sol/on_apply()
-	if(!SSsunlight.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin))
+	if(!SSsol.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin))
 		return FALSE
-	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
+	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
-	owner.add_traits(sol_traits, id)
+	owner.set_pain_mod(id, 1.5)
+	owner.add_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(id)
 	owner.add_filter(id, 2, drop_shadow_filter(x = 0, y = 0, size = 3, offset = 1.5, color = "#ee7440"))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
@@ -168,7 +184,11 @@
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology?.damage_resistance -= 50
 	for(var/datum/action/cooldown/bloodsucker/power in owner.actions)
-		if(power.sol_multiplier)
+		if(power.check_flags & BP_CANT_USE_DURING_SOL)
+			if(power.active && power.can_deactivate())
+				power.DeactivatePower()
+				to_chat(owner, span_danger("[power.name] has been deactivated due to the solar flares!"), type = MESSAGE_TYPE_INFO)
+		else if(power.sol_multiplier)
 			power.bloodcost *= power.sol_multiplier
 			power.constant_bloodcost *= power.sol_multiplier
 			if(power.active)
@@ -179,9 +199,10 @@
 	return TRUE
 
 /datum/status_effect/bloodsucker_sol/on_remove()
-	UnregisterSignal(SSsunlight, COMSIG_SOL_END)
+	UnregisterSignal(SSsol, COMSIG_SOL_END)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-	owner.remove_traits(sol_traits, id)
+	owner.unset_pain_mod(id)
+	owner.remove_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(id)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/bloodsucker_sol)

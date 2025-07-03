@@ -210,7 +210,7 @@
 	},
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/commons/lounge)
 "mT" = (
@@ -425,13 +425,6 @@
 "wN" = (
 /turf/open/floor/circuit/red,
 /area/station/commons/lounge)
-"wU" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/fakespace,
-/area/station/commons/lounge)
 "xk" = (
 /obj/structure/cable,
 /turf/open/floor/fakespace,
@@ -533,7 +526,7 @@
 /area/station/service/bar)
 "CF" = (
 /obj/machinery/restaurant_portal/bar,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atm/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
@@ -556,7 +549,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/jukebox,
+/obj/machinery/dance_machine,
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "Ec" = (
@@ -1098,8 +1091,6 @@
 "Zz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1243,7 +1234,7 @@ zQ
 Wg
 Uq
 tX
-wU
+ox
 TT
 ua
 EK

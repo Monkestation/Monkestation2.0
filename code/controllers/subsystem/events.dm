@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(events)
 			continue
 		var/datum/round_event_control/event = new event_type
 		if(!event.valid_for_map())
-			qdel(event)
+			qdel(event) //highly iffy on this as it does cause issues for admins sometimes
 			continue
 		control += event //add it to the list of all events (controls)
 	reschedule()
@@ -135,6 +135,18 @@ GLOBAL_LIST(holidays)
 
 	if(isnull(GLOB.holidays) && !fill_holidays())
 		return // Failed to generate holidays, for some reason
+
+	// We should allow one datum to have multiple holidays if it is applicable. Could be a community related thing.
+	if(islist(holiday_to_find)) //MONKESTATION EDIT
+
+		var/list/valid_holidays = list()
+		for(var/holiday in holiday_to_find)
+			if(GLOB.holidays[holiday])
+				valid_holidays += GLOB.holidays[holiday]
+
+			if(length(valid_holidays))
+				return pick(valid_holidays) // Return a random valid holiday if multiple are found. Until all used checks can handle a list return.
+			return
 
 	return GLOB.holidays[holiday_to_find]
 

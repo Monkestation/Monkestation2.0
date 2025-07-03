@@ -3,15 +3,15 @@
 
 /datum/round_event_control/antagonist/solo/from_ghosts/cortical_borer
 	name = "Cortical Borer Infestation"
-	tags = list(TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_ALIEN)
+	tags = list(TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
 	typepath = /datum/round_event/ghost_role/cortical_borer
 	antag_flag = ROLE_CORTICAL_BORER
 	track = EVENT_TRACK_MAJOR
 	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_MEDICAL_DOCTOR,
+		JOB_CHEMIST,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 2
 	weight = 5 // as rare as a natural blob
@@ -68,9 +68,10 @@
 	for(var/repeating_code in 1 to choosing_number)
 		var/mob/dead/observer/new_borer = pick(candidates)
 		candidates -= new_borer
-		var/turf/vent_turf = get_turf(pick(vents))
-		var/mob/living/basic/cortical_borer/spawned_cb = new /mob/living/basic/cortical_borer(vent_turf)
-		spawned_cb.ckey = new_borer.ckey
+		var/vent = pick(vents)
+		var/mob/living/basic/cortical_borer/spawned_cb = new /mob/living/basic/cortical_borer(get_turf(vent))
+		spawned_cb.move_into_vent(vent)
+		spawned_cb.PossessByPlayer(new_borer.ckey)
 		spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)
 		announce_to_ghosts(spawned_cb)
 		message_admins("[ADMIN_LOOKUPFLW(spawned_cb)] has been made into a borer by an event.")
@@ -115,7 +116,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/cortical_borer/generate_ruleset_body(mob/applicant)
 	var/obj/vent = pick_n_take(vents)
 	var/mob/living/basic/cortical_borer/new_borer = new(vent.loc)
-	new_borer.key = applicant.key
+	new_borer.PossessByPlayer(applicant.key)
 	new_borer.move_into_vent(vent)
 	message_admins("[ADMIN_LOOKUPFLW(new_borer)] has been made into a borer by the midround ruleset.")
 	log_game("DYNAMIC: [key_name(new_borer)] was spawned as a borer by the midround ruleset.")

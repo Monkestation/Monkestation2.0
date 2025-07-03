@@ -323,13 +323,13 @@
 /obj/item/circuitboard/machine/station_map
 	name = "Station Map"
 	build_path = /obj/machinery/station_map/directional/north
-	req_components = list(/obj/item/stock_parts/scanning_module/triphasic = 3, /obj/item/stock_parts/micro_laser/ultra = 4)
+	req_components = list(/obj/item/stock_parts/scanning_module = 3, /obj/item/stock_parts/micro_laser = 4)
 
 /obj/item/circuitboard/machine/station_map/engineering
 	name = "Engineering Station Map"
 	desc = "A virtual map of the surrounding station. Also shows any active fire and atmos alarms."
 	build_path = /obj/machinery/station_map/engineering/directional/north
-	req_components = list(/obj/item/stock_parts/scanning_module/triphasic = 3, /obj/item/stock_parts/micro_laser/ultra = 4, /obj/item/stock_parts/subspace/analyzer = 1)
+	req_components = list(/obj/item/stock_parts/scanning_module = 3, /obj/item/stock_parts/micro_laser = 4, /obj/item/stock_parts/subspace/analyzer = 1)
 
 // Directional Ones for Mapping //
 /obj/machinery/station_map/directional/north
@@ -371,6 +371,32 @@
 	icon_state = "strat_holomap"
 	pixel_x = -16
 	pixel_y = -16
+
+/obj/machinery/station_map/syndicate
+	name = "recon holomap"
+	desc = "A virtual map of the target station."
+
+/obj/machinery/station_map/syndicate/Initialize()
+	. = ..()
+	var/tracked_z_level = SSmapping.levels_by_trait(ZTRAIT_STATION)[1]
+	current_z_level = tracked_z_level
+
+/obj/machinery/station_map/syndicate/directional/north
+	dir = NORTH
+	pixel_y = 32
+
+/obj/machinery/station_map/syndicate/directional/south
+	dir = SOUTH
+	pixel_y = -32
+
+/obj/machinery/station_map/syndicate/directional/west
+	dir = WEST
+	pixel_x = -32
+
+/obj/machinery/station_map/syndicate/directional/east
+	dir = EAST
+	pixel_x = 32
+
 
 #undef HOLOMAP_LOW_LIGHT
 #undef HOLOMAP_HIGH_LIGHT

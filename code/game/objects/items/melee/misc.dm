@@ -70,7 +70,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
-	force = 15
+	force = 20 // MONKESTATION EDIT ORG 15
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
@@ -82,8 +82,8 @@
 	block_sound = 'sound/weapons/parry.ogg'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
-	wound_bonus = 10
-	bare_wound_bonus = 25
+	wound_bonus = 5 // MONKESTATION EDIT ORG 10
+	bare_wound_bonus = 20 // MONKESTATION EDIT ORG 25
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
@@ -100,12 +100,12 @@
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
+	var/obj/item/storage/belt/sabre/sabre = container.real_location
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/on_enter_storage(datum/storage/container)
-	var/obj/item/storage/belt/sabre/sabre = container.real_location?.resolve()
+	var/obj/item/storage/belt/sabre/sabre = container.real_location
 	if(istype(sabre))
 		playsound(sabre, 'sound/items/sheath.ogg', 25, TRUE)
 
@@ -168,7 +168,7 @@
 	throwforce = 10
 	attack_speed = CLICK_CD_RAPID
 	block_chance = 20
-	armour_penetration = 65
+	armour_penetration = 100
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
@@ -293,30 +293,6 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 	shard.Bump(turf)
-
-/obj/item/melee/curator_whip
-	name = "curator's whip"
-	desc = "Somewhat eccentric and outdated, it still stings like hell to be hit by."
-	icon = 'icons/obj/weapons/whip.dmi'
-	icon_state = "whip"
-	inhand_icon_state = "chain"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	worn_icon_state = "whip"
-	slot_flags = ITEM_SLOT_BELT
-	force = 15
-	demolition_mod = 0.25
-	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
-	attack_verb_simple = list("flog", "whip", "lash", "discipline")
-	hitsound = 'sound/weapons/whip.ogg'
-
-/obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
-	. = ..()
-	if(ishuman(target) && proximity_flag)
-		var/mob/living/carbon/human/human_target = target
-		human_target.drop_all_held_items()
-		human_target.visible_message(span_danger("[user] disarms [human_target]!"), span_userdanger("[user] disarmed you!"))
 
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
@@ -461,6 +437,6 @@
 	throwforce = 8
 	block_chance = 10
 	block_sound = 'sound/weapons/genhit.ogg'
-	armour_penetration = 50
+	armour_penetration = 75
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")

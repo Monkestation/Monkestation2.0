@@ -113,6 +113,7 @@
 	var/patient_dead = FALSE
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
+	var/adjusted_occupant = FALSE
 
 
 /datum/armor/unary_cryo_cell
@@ -145,7 +146,19 @@
 	SET_PLANE(occupant_vis, PLANE_TO_TRUE(occupant_vis.plane), new_turf)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/set_occupant(atom/movable/new_occupant)
+	if(occupant && isnull(new_occupant))
+		REMOVE_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
+		if(isliving(occupant) && adjusted_occupant)
+			adjusted_occupant = FALSE
+			var/mob/living/living = occupant
+			living.bodytemp_cold_damage_limit += 270 KELVIN
 	. = ..()
+	if(occupant && on)
+		ADD_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
+		if(isliving(occupant) && !adjusted_occupant)
+			adjusted_occupant = TRUE
+			var/mob/living/living = occupant
+			living.bodytemp_cold_damage_limit -= 270 KELVIN
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction(mob/user)
@@ -259,6 +272,20 @@
 	else
 		update_use_power(IDLE_POWER_USE)
 	update_appearance()
+	if(QDELETED(occupant))
+		return
+	if(on)
+		ADD_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
+		if(isliving(occupant) && !adjusted_occupant)
+			adjusted_occupant = TRUE
+			var/mob/living/living = occupant
+			living.bodytemp_cold_damage_limit -= 270 KELVIN
+	else
+		REMOVE_TRAIT(occupant, TRAIT_ASSISTED_BREATHING, REF(src))
+		if(isliving(occupant) && adjusted_occupant)
+			adjusted_occupant = FALSE
+			var/mob/living/living = occupant
+			living.bodytemp_cold_damage_limit += 270 KELVIN
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
 	if(old_value) //Turned off
@@ -298,6 +325,15 @@
 			radio.talk_into(src, msg, radio_channel)
 		return
 
+	// monkestation start: kick no-healers out
+	if(HAS_TRAIT(mob_occupant, TRAIT_NO_HEALS))
+		playsound(src, 'sound/machines/cryo_warning.ogg', volume)
+		radio.talk_into(src, "Patient is unable to be healed, ejecting.", radio_channel)
+		set_on(FALSE)
+		open_machine()
+		return
+	// monkerstation end
+
 	patient_dead = FALSE
 
 	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
@@ -332,7 +368,11 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
-
+	for(var/obj/item/organ/internal/brain/slime/malpractice_vic in src.contents)
+		malpractice_vic.forceMove(src.drop_location())
+		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+		radio.talk_into(src, "Unidentified organic material detected in cryo-chamber. Flushing foreign body from system. Auto eject initiated.", radio_channel)
+		open_machine()
 	if(!on)
 		return
 
@@ -351,7 +391,7 @@
 
 		if(ishuman(mob_occupant))
 			var/mob/living/carbon/human/H = mob_occupant
-			cold_protection = H.get_cold_protection(air1.temperature)
+			cold_protection = H.get_insulation(air1.temperature)
 
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
@@ -360,11 +400,6 @@
 
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
-
-			//lets have the core temp match the body temp in humans
-			if(ishuman(mob_occupant))
-				var/mob/living/carbon/human/humi = mob_occupant
-				humi.adjust_coretemperature(humi.bodytemperature - humi.coretemperature)
 
 
 		air1.garbage_collect()
@@ -383,7 +418,7 @@
 	return air1.remove(air1.total_moles() * breath_percentage)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/assume_air(datum/gas_mixture/giver)
-	airs[1].merge(giver)
+	return airs[1].merge(giver)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)

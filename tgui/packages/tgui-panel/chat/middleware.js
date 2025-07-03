@@ -12,6 +12,7 @@ import {
   addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
+  importSettings,
 } from '../settings/actions';
 import { selectSettings } from '../settings/selectors';
 import {
@@ -20,6 +21,8 @@ import {
   changeScrollTracking,
   clearChat,
   loadChat,
+  moveChatPageLeft,
+  moveChatPageRight,
   rebuildChat,
   removeChatPage,
   saveChatToDisk,
@@ -94,12 +97,14 @@ export const chatMiddleware = (store) => {
   chatRenderer.events.on('scrollTrackingChanged', (scrollTracking) => {
     store.dispatch(changeScrollTracking(scrollTracking));
   });
-  setInterval(() => {
-    saveChatToStorage(store);
-  }, MESSAGE_SAVE_INTERVAL);
   return (next) => (action) => {
     const { type, payload } = action;
-    if (!initialized) {
+    const settings = selectSettings(store.getState());
+    // Load the chat once settings are loaded
+    if (!initialized && settings.initialized) {
+      setInterval(() => {
+        saveChatToStorage(store);
+      }, MESSAGE_SAVE_INTERVAL);
       initialized = true;
       loadChatFromStorage(store);
     }
@@ -132,13 +137,14 @@ export const chatMiddleware = (store) => {
             requesting < sequence;
             requesting++
           ) {
-            requested_sequences.push(requesting);
+            sequences_requested.push(requesting);
             Byond.sendMessage('chat/resend', requesting);
           }
         }
       }
 
       chatRenderer.processBatch([payload_obj.content]);
+      sequences.push(sequence);
       return;
     }
     if (type === loadChat.type) {
@@ -153,7 +159,9 @@ export const chatMiddleware = (store) => {
       type === changeChatPage.type ||
       type === addChatPage.type ||
       type === removeChatPage.type ||
-      type === toggleAcceptedType.type
+      type === toggleAcceptedType.type ||
+      type === moveChatPageLeft.type ||
+      type === moveChatPageRight.type
     ) {
       next(action);
       const page = selectCurrentChatPage(store.getState());
@@ -170,14 +178,17 @@ export const chatMiddleware = (store) => {
       type === loadSettings.type ||
       type === addHighlightSetting.type ||
       type === removeHighlightSetting.type ||
-      type === updateHighlightSetting.type
+      type === updateHighlightSetting.type ||
+      type === updateHighlightSetting.type ||
+      type === importSettings.type
     ) {
       next(action);
-      const settings = selectSettings(store.getState());
+      const nextSettings = selectSettings(store.getState());
       chatRenderer.setHighlight(
-        settings.highlightSettings,
-        settings.highlightSettingById,
+        nextSettings.highlightSettings,
+        nextSettings.highlightSettingById,
       );
+      chatRenderer.setColoredNames(nextSettings.coloredNames);
 
       return;
     }

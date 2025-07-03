@@ -60,3 +60,17 @@
 	cost = 4
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+
+
+/datum/uplink_item/ammo/lighttankammo
+	name = "40mm cannon ammo"
+	desc = "5 crated shells for use with the Devitt Mk3 light tank."
+	item = /obj/item/mecha_ammo/makeshift/lighttankammo
+	cost = 4
+
+/datum/uplink_item/ammo/lighttankmgammo
+	name = "12.7x70mm tank mg ammo"
+	desc = "60 rounds of 12.7x70mm for use with the Devitt Mk3 light tank."
+	item = /obj/item/mecha_ammo/makeshift/lighttankmg
+	cost = 2
+

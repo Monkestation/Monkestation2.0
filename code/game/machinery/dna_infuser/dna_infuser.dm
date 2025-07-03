@@ -154,6 +154,7 @@
 			skillchip.set_metadata(chip)
 	// monkestation end
 	check_tier_progression(target)
+	return TRUE
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
 /// Tries to return a typepath of a valid mutant organ if all of the following criteria are true:
@@ -169,7 +170,7 @@
 	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
 		var/obj/item/organ/old_organ = target.get_organ_slot(initial(new_organ.slot))
 		if(old_organ)
-			if((old_organ.type != new_organ) && (old_organ.status != ORGAN_ROBOTIC))
+			if((old_organ.type != new_organ) && (!IS_ROBOTIC_ORGAN(old_organ) || IS_ORGAN_UNREMOVABLE(old_organ)))
 				continue // Old organ can be mutated!
 		else if(ispath(new_organ, /obj/item/organ/external))
 			continue // External organ can be grown!

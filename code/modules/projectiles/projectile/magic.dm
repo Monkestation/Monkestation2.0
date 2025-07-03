@@ -201,15 +201,9 @@
 		else
 			var/obj/O = src
 			if(isgun(O))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
+				new /mob/living/basic/mimic/copy/ranged(drop_location(), src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
-
-	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
-		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = src
-		if(owner)
-			C.ChangeOwner(owner)
+				new /mob/living/basic/mimic/copy(drop_location(), src, owner)
 
 /obj/projectile/magic/spellblade
 	name = "blade energy"
@@ -409,8 +403,8 @@
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = chosen_one.key
-		trauma.friend.key = oldkey
+		target.PossessByPlayer(chosen_one.key)
+		trauma.friend.PossessByPlayer(oldkey)
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
 		trauma.friend_initialized = TRUE
@@ -611,3 +605,31 @@
 	damage_type = BURN
 	damage = 2
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
+
+//a shrink ray that shrinks stuff, which grows back after a short while.
+/obj/projectile/magic/shrink
+	name = "shrink ray"
+	icon_state = "blue_laser"
+	hitsound = 'sound/weapons/shrink_hit.ogg'
+	damage = 0
+	damage_type = STAMINA
+	armor_flag = ENERGY
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
+	light_color = LIGHT_COLOR_BLUE
+	var/shrink_time = -1
+
+/obj/projectile/magic/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
+		return
+	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/projectile/magic/shrink/is_hostile_projectile()
+	return TRUE
+
+/obj/projectile/magic/shrink/wand
+	shrink_time = 90 SECONDS
+
+/obj/projectile/magic/shrink/wand/on_hit(atom/target, blocked = 0, pierce_hit)
+	shrink_time = rand(60 SECONDS, 90 SECONDS)
+	return ..()

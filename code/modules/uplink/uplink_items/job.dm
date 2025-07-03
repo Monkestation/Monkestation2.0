@@ -297,7 +297,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/reagent_containers/syringe/spider_extract
 	cost = 10
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_XENOBIOLOGIST) //Monkestation edit: xenobiology
 	surplus = 10
 
 /datum/uplink_item/role_restricted/blastcannon
@@ -318,3 +318,34 @@
 	item = /obj/item/seeds/seedling/evil
 	cost = 8
 	restricted_roles = list(JOB_BOTANIST)
+
+//Boombots ported from monkestation 1
+/datum/uplink_item/role_restricted/boom_boots
+	name = "Boom Boots"
+	desc = "The pinnacle of clown footwear technology.  Fit for only the loudest and proudest! \
+			Fully functional hydraulic clown shoes with anti-slip technology.  Anyone who tries \
+			to remove these from your person will be in for an explosive surprise, to boot. \
+			Remember to activate them for the fun to begin. "
+	item = /obj/item/clothing/shoes/magboots/boomboots
+	cost = 20
+	restricted_roles = list(JOB_CLOWN)
+
+/datum/uplink_item/role_restricted/monkey_agent
+	name = "Simian Agent Reinforcements"
+	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
+		They've been trained to operate machinery and can read, but they can't speak Common. \
+		Please note that these are free-range monkeys that don't react with Mutadone."
+	item = /obj/item/antag_spawner/loadout/monkey_man
+	cost = 6
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	refundable = TRUE
+
+/datum/uplink_item/role_restricted/monkey_supplies
+	name = "Simian Agent Supplies"
+	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
+		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+	item = /obj/item/storage/toolbox/guncase/monkeycase
+	cost = 4
+	limited_stock = 3
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	refundable = FALSE

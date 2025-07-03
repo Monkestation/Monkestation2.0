@@ -137,9 +137,13 @@
 		return NONE
 	if(mess || attempting)
 		return NONE
+	if(!isnull(mrace) && (mrace::inherent_biotypes & MOB_ROBOTIC)) // no cloning IPCs
+		return NONE
 	if(!empty) //Doesn't matter if we're just making a copy
 		clonemind = locate(mindref) in SSticker.minds
 		if(!istype(clonemind))	//not a mind
+			return NONE
+		if(clonemind.has_antag_datum(/datum/antagonist/bloodsucker)) // no cloning bloodsuckers.
 			return NONE
 		if(!QDELETED(clonemind.current))
 			if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
@@ -186,6 +190,10 @@
 	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
+	var/clone_ckey
+	if(clonemind?.key)
+		clone_ckey = ckey(clonemind.key)
+
 	if(!empty)
 		clonemind.transfer_to(H)
 
@@ -200,9 +208,15 @@
 	if(H)
 		H.faction |= factions
 
-		for(var/V in quirks)
-			var/datum/quirk/Q = new V(H)
-			Q.on_clone(quirks[V])
+		for(var/datum/quirk/quirk_type as anything in quirks)
+			if(!ispath(quirk_type, /datum/quirk))
+				stack_trace("non-quirk path [quirk_type] somehow in cloning data")
+				continue
+			if(quirk_type::quirk_flags & QUIRK_DONT_CLONE)
+				stack_trace("quirk with QUIRK_DONT_CLONE ([quirk_type]) somehow in cloning data!")
+				continue
+			var/datum/quirk/quirk = new quirk_type
+			quirk.on_clone(H, clone_ckey ? GLOB.directory[clone_ckey] : null, quirks[quirk_type])
 
 		for(var/t in traumas)
 			var/datum/brain_trauma/BT = t
@@ -317,7 +331,7 @@
 		if(istype(P.buffer, /obj/machinery/computer/cloning))
 			if(get_area(P.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				P.set_buffer(null)
 				return
 			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/computer/cloning/comp = P.buffer
@@ -325,8 +339,8 @@
 				connected.DetachCloner(src)
 			comp.AttachCloner(src)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			P.set_buffer(src)
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
 		return
 
 	var/mob/living/mob_occupant = occupant

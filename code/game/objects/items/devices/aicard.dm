@@ -14,6 +14,10 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
+/obj/item/aicard/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+
 /obj/item/aicard/Destroy(force)
 	if(AI)
 		AI.ghostize(can_reenter_corpse = FALSE)
@@ -55,7 +59,7 @@
 	if(isnull(AI))
 		return FALSE
 
-	log_silicon("[key_name(user)] carded [key_name(AI)]", src)
+	log_silicon("[key_name(user)] carded [key_name(AI)]", list(src))
 	update_appearance()
 	AI.cancel_camera()
 	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))

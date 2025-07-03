@@ -267,9 +267,14 @@
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
+		/obj/item/device/antibody_scanner //monkestation addition
 	))
 
 /obj/item/storage/belt/medical/paramedic
+	name = "EMT belt"
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
@@ -294,6 +299,9 @@
 	return to_preload
 
 /obj/item/storage/belt/medical/ert
+	icon_state = "emt"
+	inhand_icon_state = "security"
+	worn_icon_state = "emt"
 	preload = TRUE
 
 /obj/item/storage/belt/medical/ert/PopulateContents()
@@ -336,6 +344,7 @@
 		/obj/item/clothing/glasses,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight/seclite,
+		/obj/item/citationinator, //monkestation edit
 		/obj/item/food/donut,
 		/obj/item/food/spaghetti/security, //monkestation change: tactical belt spaghetti
 		/obj/item/grenade,
@@ -364,7 +373,7 @@
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = PAYCHECK_COMMAND * 3
+	custom_premium_price = PAYCHECK_COMMAND * 2 //monkestation edit: 3 to 2
 
 /obj/item/storage/belt/security/webbing/Initialize(mapload)
 	. = ..()
@@ -422,6 +431,15 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/cargo_teleporter, //monkestation edit
+		/obj/item/storage/box/kinetic, //monkestation edit
+		/obj/item/ammo_box/magazine/pksmgmag, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
 	))
 
 
@@ -570,9 +588,9 @@
 /obj/item/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."
-	icon_state = "grenadebeltold"
+	icon_state = "military"
 	inhand_icon_state = "security"
-	worn_icon_state = "grenadebeltold"
+	worn_icon_state = "military"
 
 /obj/item/storage/belt/military/assault
 	name = "assault belt"
@@ -600,9 +618,9 @@
 
 /obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 30
+	atom_storage.max_slots = 100
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.max_total_storage = 60
+	atom_storage.max_total_storage = 1000 //store every grenade under the sun without issue or remorse
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
@@ -613,6 +631,8 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
+		/obj/item/ammo_casing/a40mm,
+		/obj/item/assembly/signaler,
 	))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
@@ -639,7 +659,7 @@
 
 /obj/item/storage/belt/wands/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 6
+	atom_storage.max_slots = 7
 	atom_storage.set_holdable(list(
 		/obj/item/gun/magic/wand,
 	))
@@ -651,6 +671,7 @@
 	new /obj/item/gun/magic/wand/teleport(src)
 	new /obj/item/gun/magic/wand/door(src)
 	new /obj/item/gun/magic/wand/fireball(src)
+	new /obj/item/gun/magic/wand/shrink(src)
 
 	for(var/obj/item/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
@@ -784,6 +805,7 @@
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
+	icon_state_preview = "sheath-sabre" // monkestation edit: add preview icon state
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
@@ -833,9 +855,9 @@
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
-	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	desc = "A sturdy leather belt used to hold most hydroponics supplies."
 	icon_state = "plantbelt"
-	inhand_icon_state = "championbelt"
+	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 

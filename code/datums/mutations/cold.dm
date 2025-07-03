@@ -5,7 +5,7 @@
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 10
 	difficulty = 10
-	synchronizer_coeff = 1
+//	synchronizer_coeff = 1 // MONKESTATION REMOVAL -- THIS LITERALLY DOES NOTHING
 	power_path = /datum/action/cooldown/spell/conjure_item/snow
 
 /datum/action/cooldown/spell/conjure_item/snow
@@ -18,6 +18,7 @@
 
 	item_type = /obj/item/stack/sheet/mineral/snow
 	delete_old = FALSE
+	delete_on_failure = FALSE
 
 /datum/mutation/human/cryokinesis
 	name = "Cryokinesis"
@@ -26,7 +27,7 @@
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 30
 	difficulty = 12
-	synchronizer_coeff = 1
+//	synchronizer_coeff = 1 // MONKESTATION REMOVAL -- THIS LITERALLY DOES NOTHING
 	energy_coeff = 1
 	power_path = /datum/action/cooldown/spell/pointed/projectile/cryo
 

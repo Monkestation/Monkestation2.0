@@ -30,7 +30,7 @@
 	if(!istype(mannequin))
 		return
 
-	for(var/I in mannequin.get_equipped_items(TRUE))
+	for(var/I in mannequin.get_equipped_items(include_pockets = TRUE))
 		qdel(I)
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag
@@ -141,7 +141,7 @@
 		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
 		var/index = 0
 
-		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", check_jobban = "deathsquad", alert_pic = /obj/item/card/id/advanced/centcom/ert, role_name_text = "emergency response team")
+		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", check_jobban = "deathsquad", alert_pic = ertemplate.poll_icon, role_name_text = "[ertemplate.poll_title]") //monkestation edit: adds custom poll titles
 		var/teamSpawned = FALSE
 
 		// This list will take priority over spawnpoints if not empty
@@ -190,7 +190,7 @@
 				var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
 				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
 				admin_officer.equipOutfit(chosen_outfit)
-				admin_officer.key = usr.key
+				admin_officer.PossessByPlayer(usr.key)
 
 			else
 				to_chat(usr, span_warning("Could not spawn you in as briefing officer as you are not a ghost!"))
@@ -248,7 +248,7 @@
 				if(ertemplate.enforce_human || !(ert_operative_carbon.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
 					ert_operative_carbon.set_species(/datum/species/human)
 
-			ert_operative.key = chosen_candidate.key
+			ert_operative.PossessByPlayer(chosen_candidate.key)
 			// MONKESTATION EDIT END
 
 			//Give antag datum

@@ -155,19 +155,6 @@
 
 	ckeywhitelist = list("Rickdude1231")
 
-/mob/living/basic/pet/quilmaid
-	name = "\improper Quil' Maid"
-	desc = "Someone dressed up this Space-e-mon in a maid outfit."
-	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
-	icon_state = "quil_maid"
-	icon_living = "quil_maid"
-	icon_dead = "quil_maid"
-	icon_gib = null
-	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
-
-	ckeywhitelist = list("quilark")
-
 /mob/living/basic/pet/gumball_goblin
 	name = "Gumball Goblin"
 	desc = "AAAAAAAAAAAAAAAA"
@@ -266,3 +253,96 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Ophaq")
+
+/mob/living/basic/pet/ghastly_evil_demon
+	name = "ghastly evil demon"
+	desc = "It's so scary!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_32x48.dmi'
+	icon_state = "ghastly_evil_demon"
+	icon_living = "ghastly_evil_demon"
+	icon_dead = "ghastly_evil_demon-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("ThePooba")
+	movement_type = FLYING
+
+/mob/living/basic/pet/albino_ghost_ian
+	name = "ghost ian"
+	desc = "It's an albino corgi!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "albino_ghost_ian"
+	icon_living = "albino_ghost_ian"
+	icon_dead = "albino_ghost_ian-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Eacles13")
+
+/mob/living/basic/pet/fluffydonator
+	name = "fluffy"
+	desc = "A big black spider wearing pajama's from Central Command!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "fluffy"
+	icon_living = "fluffy"
+	icon_dead = "fluffy-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Jason Farqiour")
+
+/mob/living/basic/pet/robottoything
+	name = "robot toy"
+	desc = "It's a small robot toy. It's made of metal"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robottoything"
+	icon_living = "robottoything"
+	icon_dead = "robottoything-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("TheSpecialSnowflake")
+
+/mob/living/basic/pet/babypukeko
+	name = "baby pukeko"
+	desc = "DAMN!!!!!!!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "babypukeko"
+	icon_living = "babypukeko"
+	icon_dead = "babypukeko-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Cobalt Velvet 235")
+
+/mob/living/basic/pet/babypukeko/tall
+	icon = 'monkestation/code/modules/donator/icons/mob/pets_160x160.dmi'
+	icon_state = "tallbabypukeko"
+	icon_living = "tallbabypukeko"
+	icon_dead = "tallbabypukeko-dead"
+	pixel_x = -96
+
+/mob/living/basic/pet/eris_romch
+	name = "romch"
+	desc = "romch ."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "romch"
+	icon_living = "romch"
+	icon_dead = "romch-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mycah")
+
+/mob/living/basic/pet/theclown_clownpet
+	name = "short clown"
+	desc = "He's just a funny little guy."
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "theclown_clownpet"
+	icon_living = "theclown_clownpet"
+	icon_dead = "theclown_clownpet-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Mrsmall_theclown")
+

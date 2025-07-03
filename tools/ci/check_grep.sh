@@ -113,6 +113,14 @@ if $grep 'allocate\(/mob/living/carbon/human[,\)]' $unit_test_files ||
 	st=1
 fi;
 
+section "516 Href Styles"
+part "byond href styles"
+if $grep "href[\s='\"\\\\]*\?" $code_files ; then
+    echo
+    echo -e "${RED}ERROR: BYOND requires internal href links to begin with \"byond://\".${NC}"
+    st=1
+fi;
+
 section "common mistakes"
 part "global vars"
 if $grep '^/*var/' $code_files; then
@@ -152,6 +160,13 @@ part "balloon_alert idiomatic usage"
 if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	echo
 	echo -e "${RED}ERROR: Balloon alerts should not start with capital letters. This includes text like 'AI'. If this is a false positive, wrap the text in UNLINT().${NC}"
+	st=1
+fi;
+
+part "direct Destroy() calls"
+if $grep '(?:\.|^\s+)Destroy\(\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Destroy() should never be directly called, use qdel() instead.${NC}"
 	st=1
 fi;
 

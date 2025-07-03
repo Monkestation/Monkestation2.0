@@ -1,9 +1,9 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	icon_state = "pellet"
-	damage = 50
+	damage = 40
 	sharpness = SHARP_POINTY
-	wound_bonus = 0
+	wound_bonus = -5
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
@@ -14,12 +14,42 @@
 	name = "pulverizer slug" // admin only, can crush bones
 	sharpness = NONE
 	wound_bonus = 80
+//MONKE EDIT START
+/obj/projectile/bullet/shotgun_slug/apds
+	name = "tungsten sabot-slug"
+	icon_state = "gauss"
 
+	damage = 25 //10 less than slugs.
+	speed = 0.25 //sub-caliber + lighter = speed. (Smaller number = faster)
+	armour_penetration = 25
+
+	wound_bonus = -25
+	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
+	ricochet_chance = 50
+	ricochet_auto_aim_range = 0
+	ricochet_incidence_leeway = 50
+	embedding = null
+	demolition_mod = 2 //High-velocity tungsten > steel doors
+	projectile_piercing = PASSMOB
+
+
+/obj/projectile/bullet/shotgun_slug/apds/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(isliving(target))
+		// If the bullet has already gone through 2 people, stop it on this hit
+		if(pierces > 2)
+			projectile_piercing = NONE
+
+			if(damage > 10) // Lets just be safe with this one
+				damage -= 7
+			armour_penetration -= 25
+
+	return ..()
+//MONKE EDIT END
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
 	icon_state = "pellet"
-	damage = 10
-	stamina = 55
+	damage = 5 //10 to 5 monkestation edit
+	stamina = 75 //monkestation edit
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
@@ -62,31 +92,23 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	var/tile_dropoff = 0.45
-	var/tile_dropoff_s = 0.25
-
-/obj/projectile/bullet/pellet/Range()
-	..()
-	if(damage > 0)
-		damage -= tile_dropoff
-	if(stamina > 0)
-		stamina -= tile_dropoff_s
-	if(damage < 0 && stamina < 0)
-		qdel(src)
+	tile_dropoff = 0.45
+	tile_dropoff_s = 0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 7.5
+	damage = 8
 	wound_bonus = 5
 	bare_wound_bonus = 5
 	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
-	damage = 3
-	stamina = 11
+	damage = 2 //monkestation edit 3 to 2
+	stamina = 15 //monkestation edit
 	sharpness = NONE
 	embedding = null
+	tile_dropoff_s = 0 //monkestation edit
 	speed = 1.2
 	ricochets_max = 4
 	ricochet_chance = 120
@@ -97,6 +119,8 @@
 	ricochet_incidence_leeway = 75
 	/// Subtracted from the ricochet chance for each tile traveled
 	var/tile_dropoff_ricochet = 4
+	debilitating = TRUE
+	debilitate_mult = 1
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
 	if(ricochet_chance > 0)
@@ -106,7 +130,8 @@
 /obj/projectile/bullet/pellet/shotgun_incapacitate
 	name = "incapacitating pellet"
 	damage = 1
-	stamina = 6
+	stamina = 12 //monkestation edit
+	tile_dropoff_s = 3 //monkestation edit spitting distance
 	embedding = null
 
 /obj/projectile/bullet/pellet/shotgun_improvised

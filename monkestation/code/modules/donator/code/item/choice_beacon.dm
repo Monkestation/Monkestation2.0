@@ -76,11 +76,6 @@
 	default_name = "Plant Crab"
 	donator_pet = 	/mob/living/basic/crab/plant
 
-/obj/item/choice_beacon/pet/donator/quilava
-	name = "Quil Maid"
-	default_name = "Quil Maid"
-	donator_pet = 	/mob/living/basic/pet/quilmaid
-
 /obj/item/choice_beacon/pet/donator/gumball_goblin
 	name = "Gumball Goblin"
 	default_name = "Gumball Goblin"
@@ -98,10 +93,50 @@
 
 /obj/item/choice_beacon/pet/donator/darkscug
 	name = "night slugcat"
-	default_name ="night slugcat"
+	default_name = "night slugcat"
 	donator_pet = 	/mob/living/basic/pet/darkscug
 
 /obj/item/choice_beacon/pet/donator/hypnotoad
 	name = "hypnotoad"
-	default_name ="hypnotoad"
+	default_name = "hypnotoad"
 	donator_pet = 	/mob/living/basic/frog/hypnotoad
+
+/obj/item/choice_beacon/pet/donator/ghastly_evil_demon
+	name = "ghastly evil demon"
+	default_name = "ghastly evil demon"
+	donator_pet = 	/mob/living/basic/pet/ghastly_evil_demon
+
+/obj/item/choice_beacon/pet/donator/albino_ghost_ian
+	name = "ghost ian"
+	default_name = "ghost ian"
+	donator_pet = /mob/living/basic/pet/albino_ghost_ian
+
+/obj/item/choice_beacon/pet/donator/fluffydonator
+	name = "fluffy"
+	default_name = "fluffy"
+	donator_pet = /mob/living/basic/pet/fluffydonator
+
+/obj/item/choice_beacon/pet/donator/robottoything
+	name = "robot toy"
+	default_name = "robot toy"
+	donator_pet = /mob/living/basic/pet/robottoything
+
+/obj/item/choice_beacon/pet/donator/babypukeko
+	name = "baby pukeko"
+	default_name = "baby pukeko"
+	donator_pet = /mob/living/basic/pet/babypukeko
+
+/obj/item/choice_beacon/pet/donator/tallbabypukeko
+	name = "tall baby pukeko"
+	default_name = "tall baby pukeko"
+	donator_pet = /mob/living/basic/pet/babypukeko/tall
+
+/obj/item/choice_beacon/pet/donator/eris_romch
+	name = "romch"
+	default_name = "romch"
+	donator_pet = /mob/living/basic/pet/eris_romch
+
+/obj/item/choice_beacon/pet/donator/theclown_clownpet
+	name = "short clown"
+	default_name = "short clown"
+	donator_pet = /mob/living/basic/pet/theclown_clownpet

@@ -6,7 +6,7 @@ import { byondMessages } from './timers';
 import { dragStartHandler } from 'tgui/drag';
 import { windowOpen, windowClose, windowSet } from './helpers';
 import { BooleanLike } from 'common/react';
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 
 type ByondOpen = {
   channel: Channel;
@@ -15,6 +15,7 @@ type ByondOpen = {
 type ByondProps = {
   maxLength: number;
   lightMode: BooleanLike;
+  scale: BooleanLike;
 };
 
 type State = {
@@ -24,6 +25,13 @@ type State = {
 
 const CHANNEL_REGEX = /^[:.]\w\s/;
 
+const ROWS: Record<keyof typeof WINDOW_SIZES, number> = {
+  small: 1,
+  medium: 2,
+  large: 3,
+  width: 1, // not used
+} as const;
+
 export class TguiSay extends Component<{}, State> {
   private channelIterator: ChannelIterator;
   private chatHistory: ChatHistory;
@@ -32,6 +40,9 @@ export class TguiSay extends Component<{}, State> {
   private lightMode: boolean;
   private maxLength: number;
   private messages: typeof byondMessages;
+  private scale: boolean;
+  private position: [number, number];
+  private isDragging: boolean;
   state: State;
 
   constructor(props: never) {
@@ -44,6 +55,9 @@ export class TguiSay extends Component<{}, State> {
     this.lightMode = false;
     this.maxLength = 1024;
     this.messages = byondMessages;
+    this.scale = true;
+    this.position = [window.screenX, window.screenY];
+    this.isDragging = false;
     this.state = {
       buttonContent: '',
       size: WINDOW_SIZES.small,
@@ -51,6 +65,8 @@ export class TguiSay extends Component<{}, State> {
 
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
     this.handleBackspaceDelete = this.handleBackspaceDelete.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleButtonRelease = this.handleButtonRelease.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
     this.handleForceSay = this.handleForceSay.bind(this);
@@ -70,10 +86,10 @@ export class TguiSay extends Component<{}, State> {
     Byond.subscribeTo('open', this.handleOpen);
   }
 
-  handleArrowKeys(direction: KEY.Up | KEY.Down) {
+  handleArrowKeys(direction: KEY.Up | KEY.Down | KEY.ArrowUp | KEY.ArrowDown) {
     const currentValue = this.innerRef.current?.value;
 
-    if (direction === KEY.Up) {
+    if (direction === KEY.Up || direction === KEY.ArrowUp) {
       if (this.chatHistory.isAtLatest() && currentValue) {
         // Save current message to temp history if at the most recent message
         this.chatHistory.saveTemp(currentValue);
@@ -122,6 +138,30 @@ export class TguiSay extends Component<{}, State> {
     this.setSize(typed?.length);
   }
 
+  handleButtonClick(event: MouseEvent): void {
+    this.isDragging = true;
+
+    setTimeout(() => {
+      // So the button doesn't jump around accidentally
+      if (this.isDragging) {
+        dragStartHandler(event);
+      }
+    }, 50);
+  }
+
+  // Prevents the button from changing channels if it's dragged
+  handleButtonRelease(): void {
+    this.isDragging = false;
+    const currentPosition = [window.screenX, window.screenY];
+
+    if (JSON.stringify(this.position) !== JSON.stringify(currentPosition)) {
+      this.position = currentPosition as [number, number];
+      return;
+    }
+
+    this.handleIncrementChannel();
+  }
+
   handleClose() {
     const current = this.innerRef.current;
 
@@ -133,7 +173,7 @@ export class TguiSay extends Component<{}, State> {
     this.chatHistory.reset();
     this.channelIterator.reset();
     this.currentPrefix = null;
-    windowClose();
+    windowClose(this.scale);
   }
 
   handleEnter() {
@@ -226,6 +266,8 @@ export class TguiSay extends Component<{}, State> {
     switch (event.key) {
       case KEY.Up:
       case KEY.Down:
+      case KEY.ArrowUp:
+      case KEY.ArrowDown:
         event.preventDefault();
         this.handleArrowKeys(event.key);
         break;
@@ -245,17 +287,14 @@ export class TguiSay extends Component<{}, State> {
         this.handleIncrementChannel();
         break;
 
-      case KEY.Escape:
-        this.handleClose();
-        break;
+      default:
+        if (isEscape(event.key)) {
+          this.handleClose();
+        }
     }
   }
 
   handleOpen = (data: ByondOpen) => {
-    setTimeout(() => {
-      this.innerRef.current?.focus();
-    }, 0);
-
     const { channel } = data;
     // Catches the case where the modal is already open
     if (this.channelIterator.isSay()) {
@@ -263,13 +302,19 @@ export class TguiSay extends Component<{}, State> {
     }
     this.setState({ buttonContent: this.channelIterator.current() });
 
-    windowOpen(this.channelIterator.current());
+    windowOpen(this.channelIterator.current(), this.scale);
+
+    const input = this.innerRef.current;
+    setTimeout(() => {
+      input?.focus();
+    }, 1);
   };
 
   handleProps = (data: ByondProps) => {
-    const { maxLength, lightMode } = data;
+    const { maxLength, lightMode, scale } = data;
     this.maxLength = maxLength;
     this.lightMode = !!lightMode;
+    this.scale = !!scale;
   };
 
   reset() {
@@ -293,7 +338,7 @@ export class TguiSay extends Component<{}, State> {
 
     if (this.state.size !== newSize) {
       this.setState({ size: newSize });
-      windowSet(newSize);
+      windowSet(newSize, this.scale);
     }
   }
 
@@ -318,20 +363,30 @@ export class TguiSay extends Component<{}, State> {
         <Dragzone position="top" theme={theme} />
         <div className="center" $HasKeyedChildren>
           <Dragzone position="left" theme={theme} />
-          <div className="input" $HasKeyedChildren>
+          <div
+            className="input"
+            style={{
+              zoom: this.scale ? '' : `${100 / window.devicePixelRatio}%`,
+            }}
+            $HasKeyedChildren
+          >
             <button
               className={`button button-${theme}`}
-              onClick={this.handleIncrementChannel}
+              onMouseDown={this.handleButtonClick}
+              onMouseUp={this.handleButtonRelease}
               type="button"
             >
               {this.state.buttonContent}
             </button>
             <textarea
+              autoCorrect="off"
               className={`textarea textarea-${theme}`}
               maxLength={this.maxLength}
               onInput={this.handleInput}
               onKeyDown={this.handleKeyDown}
               ref={this.innerRef}
+              spellCheck={false}
+              rows={ROWS[this.state.size] || 1}
             />
           </div>
           <Dragzone position="right" theme={theme} />

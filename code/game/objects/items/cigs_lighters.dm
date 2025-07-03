@@ -173,7 +173,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/choke_forever = FALSE
 	/// When choking, what is the maximum amount of time we COULD choke for
 	var/choke_time_max = 30 SECONDS // I am mean
-	/// What type of pollution does this produce on smoking, changed to weed pollution sometimes
+	/// What type of pollution does this produce on smoking, changed to weed pollution sometimes, monkestation edit
 	var/pollution_type = /datum/pollutant/smoke
 	/// The particle effect of the smoke rising out of the cigarette when lit
 	VAR_PRIVATE/obj/effect/abstract/particle_holder/cig_smoke
@@ -421,9 +421,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	how_long_have_we_been_smokin += seconds_per_tick * (1 SECONDS)
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(lungs && !(lungs.organ_flags & ORGAN_SYNTHETIC))
+	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
-		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm*smoker_resistance)
+		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_all(to_smoke)
 
@@ -937,12 +937,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/carbon/human/human_user = user
 	if(!istype(human_user) || HAS_TRAIT(human_user, TRAIT_RESISTHEAT) || HAS_TRAIT(human_user, TRAIT_RESISTHEATHANDS))
 		hand_protected = TRUE
-	else if(!istype(human_user.gloves, /obj/item/clothing/gloves))
-		hand_protected = FALSE
 	else
-		var/obj/item/clothing/gloves/gloves = human_user.gloves
-		if(gloves.max_heat_protection_temperature)
-			hand_protected = (gloves.max_heat_protection_temperature > 360)
+		hand_protected = human_user.gloves?.max_heat_protection_temperature > 360
 
 	if(hand_protected || prob(75))
 		user.visible_message(

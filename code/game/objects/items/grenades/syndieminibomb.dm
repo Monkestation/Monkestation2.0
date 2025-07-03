@@ -34,7 +34,7 @@
 	shrapnel_radius = 4
 	ex_heavy = 1
 	ex_light = 3
-	ex_flame = 4
+	ex_flame = 0
 
 /obj/item/grenade/frag/mega
 	name = "FRAG grenade"
@@ -60,7 +60,7 @@
 	var/rad_range = 4
 	var/rad_threshold = RAD_EXTREME_INSULATION
 	var/stamina_damage = 30
-	var/temp_adjust = -230
+	var/temp_adjust = 230
 
 /obj/item/grenade/gluon/detonate(mob/living/lanced_by)
 	. = ..()
@@ -74,5 +74,5 @@
 		floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 		for(var/mob/living/carbon/victim in floor)
 			victim.stamina.adjust(-stamina_damage)
-			victim.adjust_bodytemperature(temp_adjust)
+			victim.adjust_bodytemperature(victim.bodytemperature - temp_adjust, use_insulation = TRUE)
 	qdel(src)

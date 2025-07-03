@@ -5,8 +5,8 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2 /// Monkestation edit : Adding some substance to the detective role
+	spawn_positions = 2 /// Monkestation edit : Adding some substance to the detective role
 	supervisors = SUPERVISOR_HOS
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -30,6 +30,7 @@
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 25,
 		/obj/item/ammo_box/c38 = 25,
+		/obj/item/ammo_box/magazine/m45 = 15, /// Monkestation edit : Adding some substance to the detective role
 		/obj/item/ammo_box/c38/dumdum = 5,
 		/obj/item/ammo_box/c38/hotshot = 5,
 		/obj/item/ammo_box/c38/iceblox = 5,
@@ -40,7 +41,7 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
 	rpg_title = "Thiefcatcher" //I guess they caught them all rip thief...
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "objection"
 
@@ -72,6 +73,7 @@
 		/obj/item/gun/ballistic/revolver/c38/detective,
 		)
 	implants = list(/obj/item/implant/mindshield)
+	accessory = /obj/item/clothing/accessory/badge/holo/detective /// Monkestation edit : Adding some substance to the detective role
 
 /datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visualsOnly = FALSE)
 	. = ..()

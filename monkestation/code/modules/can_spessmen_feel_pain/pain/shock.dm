@@ -1,5 +1,5 @@
 // -- Shock from too much pain. --
-/datum/disease/advanced/premade/shock
+/datum/disease/acute/premade/shock
 	form = "Condition"
 	name = "Shock"
 	spread_text = "Neurogenic" // Only model pain shock
@@ -22,7 +22,7 @@
 	/// How many conditions do we need to not get a heart attack?
 	var/conditions_required_to_maintain = 3
 
-/datum/disease/advanced/premade/shock/after_add()
+/datum/disease/acute/premade/shock/after_add()
 	affected_mob.apply_status_effect(/datum/status_effect/low_blood_pressure)
 	affected_mob.set_pain_mod(type, 1.2)
 	antigen = null
@@ -32,7 +32,7 @@
  *
  * returns the total number of conditions we fulfill.
  */
-/datum/disease/advanced/premade/shock/proc/check_cure_conditions()
+/datum/disease/acute/premade/shock/proc/check_cure_conditions()
 	if(!ishuman(affected_mob))
 		return TRUE
 	var/mob/living/carbon/human = affected_mob
@@ -45,7 +45,7 @@
 	var/conditions_fulfilled = 0
 
 	// Good: Body temperature is stable (not freezing, we don't care about heat)
-	if(affected_mob.bodytemperature > affected_mob.get_body_temp_cold_damage_limit())
+	if(affected_mob.bodytemperature > affected_mob.bodytemp_cold_damage_limit)
 		conditions_fulfilled += 1
 	// Good: Sleeping (or unconscious I guess)
 	if(affected_mob.IsSleeping() || affected_mob.IsUnconscious())
@@ -85,12 +85,12 @@
 
 	return conditions_fulfilled
 
-/datum/disease/advanced/premade/shock/cure(add_resistance, mob/living/carbon/target)
+/datum/disease/acute/premade/shock/cure(add_resistance, mob/living/carbon/target)
 	affected_mob.remove_status_effect(/datum/status_effect/low_blood_pressure)
 	affected_mob.unset_pain_mod(type)
 	return ..()
 
-/datum/disease/advanced/premade/shock/activate(seconds_per_tick, times_fired)
+/datum/disease/acute/premade/shock/activate(seconds_per_tick, times_fired)
 	. = ..()
 	if(!ishuman(affected_mob))
 		return
@@ -147,7 +147,7 @@
 			if(SPT_PROB(6, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel cold."))
 				affected_mob.pain_emote("shiver", 3 SECONDS)
-			affected_mob.adjust_bodytemperature(-5 * seconds_per_tick, affected_mob.get_body_temp_cold_damage_limit() + 5) // Not lethal
+			affected_mob.adjust_bodytemperature(-5 * seconds_per_tick, min_temp = affected_mob.bodytemp_cold_damage_limit + 5) // Not lethal
 
 		// decompensated (or progressive) - unable to maintain themselves
 		// - mental issues
@@ -180,7 +180,7 @@
 			if(SPT_PROB(8, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel freezing!"))
 				affected_mob.pain_emote("shiver", 3 SECONDS)
-			affected_mob.adjust_bodytemperature(-10 * seconds_per_tick, affected_mob.get_body_temp_cold_damage_limit() - 5) // uh oh
+			affected_mob.adjust_bodytemperature(-10 * seconds_per_tick, min_temp = affected_mob.bodytemp_cold_damage_limit - 5) // uh oh
 
 		// irreversible - point of no return, system failure
 		// cardiac arrest
@@ -204,4 +204,4 @@
 					affected_mob.losebreath += 10
 			else if(SPT_PROB(10, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger(pick("You feel your heart skip a beat...", "You feel your body shutting down...", "You feel your heart beat irregularly...")))
-			affected_mob.adjust_bodytemperature(-10 * seconds_per_tick, affected_mob.get_body_temp_cold_damage_limit() - 20) // welp
+			affected_mob.adjust_bodytemperature(-10 * seconds_per_tick, min_temp = affected_mob.bodytemp_cold_damage_limit - 20) // welp

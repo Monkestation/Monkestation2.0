@@ -41,7 +41,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	inhand_icon_state = "blahaj_costume"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
-	cold_protection = CHEST|GROIN|ARMS
+
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/shark_hood
 	inhand_icon_state = null
@@ -53,7 +53,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "blahaj_hood"
 	body_parts_covered = HEAD
-	cold_protection = HEAD
+
 	flags_inv = HIDEHAIR|HIDEEARS
 	inhand_icon_state = null
 
@@ -168,7 +168,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "aotcloak"
 	body_parts_covered = CHEST|ARMS
-	cold_protection = CHEST|ARMS
+
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 	hoodtype = /obj/item/clothing/head/hooded/aotcloak
@@ -206,7 +206,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "aotcloak_hood"
 	body_parts_covered = HEAD
-	cold_protection = HEAD
+
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
 
@@ -251,7 +251,7 @@
 	icon_state = "coat_quilark"
 	toggle_noun = "zipper"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/toggle/quilark/Initialize(mapload)
@@ -283,7 +283,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "lambcloak"
 	body_parts_covered = CHEST|ARMS
-	cold_protection = CHEST|ARMS
+
 	layer = NECK_LAYER
 
 /obj/item/clothing/suit/hooded/org_thirteen
@@ -294,7 +294,7 @@
 	icon_state = "org_thirteen"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
-	cold_protection = CHEST|ARMS
+
 	allowed = list()
 	armor_type = /datum/armor/hooded_wintercoat
 	hoodtype = /obj/item/clothing/head/hooded/org_thirteen
@@ -321,7 +321,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "org_thirteen_hood"
 	body_parts_covered = HEAD
-	cold_protection = HEAD
+
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
 
@@ -424,7 +424,7 @@
 	name = "menacing jacket"
 	desc = "There can only be one dragon."
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/mask/gas/bluedragon66_trenchbiomask
@@ -485,7 +485,7 @@
 	name = "rainbow coat"
 	desc = "Woah, it's a RAINBOW coat. How's it doing that?"
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
+
 	armor_type = /datum/armor/hooded_wintercoat
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 /obj/item/clothing/suit/toggle/ophaq_rainbowcoat/Initialize(mapload)
@@ -511,3 +511,264 @@
 	icon_state = "jackboot_kindle_kicks"
 	name = "jackboot kindle kicks"
 	desc = "They look just like kindle kicks! But these are boots!"
+
+/obj/item/clothing/suit/hooded/mothysmantle
+	name = "mothys mantle"
+	desc = "A thick garment that keeps warm and protects those precious wings from harsh weather, also commonly used during festivities. Feels much heavier than it looks. This one seems as if it were specially tailored for someone and has a hood unlike others of it's type."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mothysmantle"
+	inhand_icon_state = null
+	hoodtype = /obj/item/clothing/head/hooded/mothysmantle
+/obj/item/clothing/head/hooded/mothysmantle
+	name = "mothys mantle hood"
+	desc = "A thick garment that keeps warm and protects those precious wings from harsh weather, also commonly used during festivities. Feels much heavier than it looks. This one seems as if it were specially tailored for someone."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mothysmantle_hood"
+
+/obj/item/clothing/suit/toggle/centcom_jacket
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "centcom_jacket"
+	name = "centcom jacket"
+	desc = "A varsity jacket in design of centcom! It seems well made."
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/costume/purple_gold_tophat_kid
+	name = "purple and gold tophat"
+	desc = "It's a purple and gold tophat. Feels like it's from another world almost..."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "purple_gold_tophat_kid"
+	inhand_icon_state = null
+	worn_y_offset = 6
+
+/obj/item/clothing/mask/dark_skeletal_visage
+	name = "dark skeletal visage"
+	desc = "It's.. a skull that has been turned into a mask. It's coated in a strong smelling oil."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "dark_skeletal_visage"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
+
+/obj/item/clothing/suit/toggle/traxs_jacket
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traxs_jacket"
+	name = "trax's jacket"
+	desc = "A comfortable jacket with a yellow scorpion on the back! It seems well made."
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/neck/mist_cloak
+	name = "mist cloak"
+	desc = "It's a mist cloak. When someone grabs it, it somewhat rips it self appart so that thier enemy can't use the cloak to thier advantage."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mist_cloak"
+	worn_icon_state = "mist_cloak"
+
+/obj/item/clothing/neck/linen_tombstone_shroud
+	name = "linen tombstone shroud"
+	desc = "It's a dark linen cloak with a tombstone symbol on it. It seems covered in strands of blue hair and filth. It also has a pungent stench of cigarette smoke."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "linen_tombstone_shroud"
+	worn_icon_state = "linen_tombstone_shroud"
+
+/obj/item/clothing/head/costume/samuraihelmetmask
+	name = "samurai helmet"
+	desc = "It's an old samuri helmet with a red face mask connected to it."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "samuraihelmetmask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE|HIDEHAIR
+
+/obj/item/clothing/under/costume/syndicatepajamas
+	name = "syndicatepajamas"
+	desc = "Black and red Syndicate branded pajamas. They smell of gunpowder."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "syndicatepajamas"
+	inhand_icon_state = null
+	can_adjust = FALSE
+
+/obj/item/clothing/suit/flleeppyy_dreamers
+	name = "dreamers trenchcoat"
+	desc = "A vibrant garment woven from the threads of (REDACTED). They say when you put it on, you can see 15 milliseconds into the future, but that's just a rumor."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "dreamers"
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/flleeppyy_lesbian
+	name = "lesbian trenchcoat"
+	desc = "Found in a long bacon store, this coat strangely makes you thinks of girls. It smells of flowers."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "lesbian"
+	body_parts_covered = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	inhand_icon_state = null
+
+/obj/item/clothing/under/costume/donatorgrayscaleturtleneck
+	name = "turtleneck with pants"
+	desc = "A turtleneck with a pair of pants, this one is easily dyeable."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "donatorgrayscaleturtleneck"
+	can_adjust = FALSE
+	inhand_icon_state = null
+	greyscale_colors = "#8cd4a2#404577"
+	greyscale_config = /datum/greyscale_config/donatorgrayscaleturtleneck
+	greyscale_config_worn = /datum/greyscale_config/donatorgrayscaleturtleneckworn
+	flags_1 = IS_PLAYER_COLORABLE_1
+/datum/greyscale_config/donatorgrayscaleturtleneck
+	name = "turtleneck with pants"
+	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
+	expected_colors = 2
+/datum/greyscale_config/donatorgrayscaleturtleneckworn
+	name = "turtleneck with pants"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/turtleneck.json'
+	expected_colors = 2
+/obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator
+
+/obj/item/clothing/neck/donatorwhitefurshawl
+	name = "white fur shawl"
+	desc = "A wonderful fur shaw that is colored white. You typically wear it with a dress on the shoulders."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "whitefurshawl"
+	worn_icon_state = "whitefurshawl"
+
+/obj/item/clothing/suit/toggle/labcoat/elchorico_big_labcoat
+	name = "huge labcoat"
+	desc = "A suit that protects against minor chemical spills. This one is HUGE and has a purple stripe!"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "elchorico_big_labcoat"
+
+/obj/item/clothing/suit/jacket/formal_overcoat
+	name = "Formal Overcoat"
+	desc = "A snazzy black suit jacket with 6 shiny gold buttons."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "formal_overcoat"
+	worn_icon_state = "formal_overcoat"
+
+/obj/item/clothing/head/costume/traumatic_veteran_cap
+	name = "traumatic veteran cap"
+	desc = "An old war veteran's cap. It smells of heavily of tabaco and wet moss."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traumatic_veteran_cap"
+	worn_icon_state = "traumatic_veteran_cap"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/toggle/traumatic_veteran_jacket
+	name = "traumatic veteran jacket"
+	desc = "An old war veteran's coat. It smells of heavily of tabaco and wet moss."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "traumatic_veteran_jacket"
+	worn_icon_state = "traumatic_veteran_jacket"
+	toggle_noun = "zipper"
+
+/obj/item/clothing/suit/hooded/wintercoat/strange_merchant
+	name = "strange merchant jacket"
+	desc = "It's an old worn down coat, it has a hood. \"Over here, stranger!- Got somethin' that might interest ya'!\""
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "strange_merchant"
+	worn_icon_state = "strange_merchant"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/strange_merchant
+
+/obj/item/clothing/head/hooded/winterhood/strange_merchant
+	name = "strange merchant jacket hood"
+	desc = "A hood attached to an old worn down coat."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "strange_merchant_hood"
+	worn_icon_state = "strange_merchant_hood"
+	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEEARS
+
+/obj/item/clothing/head/costume/ironhammer_commander_hat
+	name = "ironhammer commander hat"
+	desc = "It's a cowboy hat that has the logo \"IH\" on the gold band. It smells like oranges and blood."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "ironhammer_commander_hat"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/ironhammer_commander_jacket
+	name = "ironhammer commander jacket"
+	desc = "A strange commander jacket made of A plastic and nylon to seem as if it were armored. It has a logo \"IH\" on a sleeve."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "ironhammer_commander_jacket"
+	worn_icon_state = "ironhammer_commander_jacket"
+
+/obj/item/clothing/head/costume/clown_king_crown
+	name = "grand clown king crown"
+	desc = "It's the Grand Clown King CROWN!! It smells like rubber."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing_32x48.dmi'
+	icon_state = "clown_king_crown"
+	inhand_icon_state = null
+
+/obj/item/clothing/neck/clown_king_cloak
+	name = "grand clown king cloak"
+	desc = "It's the CLOAK of the Grand Clown King! It smells like nylon."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "clown_king_cloak"
+	worn_icon_state = "clown_king_cloak"
+
+/obj/item/clothing/suit/star_father_suit
+	name = "star father suit"
+	desc = "A slick black and gold robe."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "star_father_suit"
+	worn_icon_state = "star_father_suit"
+	alternative_screams = list(	'monkestation/code/modules/donator/sounds/starfathersuit_scream_1.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_2.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_3.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_4.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_5.ogg',)
+
+/obj/item/clothing/suit/peacejacket
+	name = "peace jacket"
+	desc = "A worn brownish/green coat with a peace symbol on the back."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "peacejacket"
+	worn_icon_state = "peacejacket"
+
+/obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
+	name = "scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "greyscale_scrubs"
+	inhand_icon_state = null
+	greyscale_colors = "#7f8a7c"
+	greyscale_config = /datum/greyscale_config/donator_greyscale_scrubs
+	greyscale_config_worn = /datum/greyscale_config/donator_greyscale_scrubs_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+/datum/greyscale_config/donator_greyscale_scrubs
+	name = "scrubs"
+	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs.json'
+/datum/greyscale_config/donator_greyscale_scrubs_worn
+	name = "scrubs"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs_worn.json'

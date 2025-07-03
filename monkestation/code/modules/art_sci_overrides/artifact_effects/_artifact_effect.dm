@@ -28,8 +28,8 @@
 	///Does this show up on the artifact fourm?
 	var/super_secret = FALSE
 
-	///Research value when discovered For reference,5000 is one node
-	var/research_value = 100
+	///Research value when discovered For reference, 40 is one node
+	var/research_value = TECHWEB_DISCOUNT_MINOR
 	///The artifact we're on.
 	var/datum/component/artifact/our_artifact
 	///Type of effect, shows up in Xray Machine
@@ -37,8 +37,11 @@
 
 /datum/artifact_effect/New()
 	. = ..()
-	potency = rand(1,100)
+	potency = rand(1, 100)
 
+/datum/artifact_effect/Destroy(force)
+	our_artifact = null
+	return ..()
 
 ///Called when the artifact has been created
 /datum/artifact_effect/proc/setup()

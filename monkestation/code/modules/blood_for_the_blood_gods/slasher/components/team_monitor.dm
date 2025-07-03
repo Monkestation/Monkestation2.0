@@ -179,13 +179,12 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 		return
 	if(!screen)
 		//Create the screen
-		screen = new
+		screen = new(null, updating.hud_used)
 		screen.alpha = 240
 		if(multiz && !share_z && screen.color != beacon.z_diff_colour)
 			screen.color = beacon.z_diff_colour
 		else if(screen.color != beacon.colour)
 			screen.color = beacon.colour
-		screen.hud = updating.hud_used
 		updating.hud_used.team_finder_arrows += screen
 		tracking[beacon] = screen
 		//Update their hud
@@ -198,7 +197,20 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 	rotationMatrix.Scale(1.5)
 	rotationMatrix.Translate(0, -distance)
 	rotationMatrix.Turn(get_angle(target_turf, parent_turf))
-	animate(screen, transform = rotationMatrix, time = 2)
+	var/new_alpha = 240
+	if(share_z)
+		switch(get_dist(target_turf, parent_turf))
+			if(0)
+				new_alpha = 0
+			if(1)
+				new_alpha = 60
+			if(2)
+				new_alpha = 100
+			if(3)
+				new_alpha = 150
+			else
+				new_alpha = 240
+	animate(screen, alpha = new_alpha, transform = rotationMatrix, time = 0.2 SECONDS)
 
 //===========
 // Handles hiding / showing the hud when equipped
@@ -219,7 +231,7 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 	for(var/datum/component/tracking_beacon/key in tracking)
 		if(!key.visible) // calling show_hud should not show hidden beacons
 			continue
-		var/atom/movable/screen/arrow/arrow = new
+		var/atom/movable/screen/arrow/arrow = new(null, target.hud_used)
 		arrow.alpha = 240
 		var/turf/target_turf = get_turf(key.parent)
 		var/turf/parent_turf = get_turf(parent)
@@ -227,7 +239,6 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 			arrow.color = key.z_diff_colour
 		else if(arrow.color != key.colour)
 			arrow.color = key.colour
-		arrow.hud = target.hud_used
 		target.hud_used.team_finder_arrows += arrow
 		tracking[key] = arrow
 	//Update their hud
@@ -313,7 +324,7 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 /datum/component/team_monitor/proc/add_to_tracking_network(datum/component/tracking_beacon/beacon)
 	if(beacon != attached_beacon)
 		if(updating?.hud_used)
-			var/atom/movable/screen/arrow/arrow = new
+			var/atom/movable/screen/arrow/arrow = new(null, updating.hud_used)
 			arrow.alpha = 240
 			var/turf/target_turf = get_turf(beacon.parent)
 			var/turf/parent_turf = get_turf(parent)
@@ -321,7 +332,6 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 				arrow.color = beacon.z_diff_colour
 			else if(arrow.color != beacon.colour)
 				arrow.color = beacon.colour
-			arrow.hud = updating.hud_used
 			updating.hud_used.team_finder_arrows += arrow
 			tracking[beacon] = arrow
 			//Update arrow direction
@@ -602,5 +612,6 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 	icon = 'monkestation/icons/mob/hud.dmi'
 	icon_state = "hud_arrow"
 	screen_loc = ui_team_finder
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 #undef ALT_APPEARENCE_ID

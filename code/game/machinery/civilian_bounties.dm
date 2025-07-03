@@ -106,8 +106,7 @@
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.set_up(curr_bounty, inserted_scan_id)
 
-
-		usr.client.prefs.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "completed a bounty", respects_roundcap = TRUE)
+		usr.client?.prefs?.adjust_metacoins(usr.ckey, round(curr_bounty.reward * 0.1), "Completed a bounty", respects_roundcap = TRUE)
 
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
@@ -328,7 +327,7 @@
 		COOLDOWN_START(src, next_nag_time, nag_cooldown)
 
 /obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
-	bounty_value = my_bounty.reward
+	bounty_value = round(my_bounty.reward)
 	bounty_name = my_bounty.name
 	bounty_holder = holder_id.registered_name
 	bounty_holder_job = holder_id.assignment

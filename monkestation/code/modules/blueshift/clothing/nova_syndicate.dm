@@ -199,7 +199,7 @@
 	name = "insulated tactical turtleneck skirt"
 	desc = "A non-descript and slightly suspicious looking skirtleneck. The interior has been padded with special insulation for both warmth and protection."
 	armor_type = /datum/armor/clothing_under/syndicate/coldres
-	cold_protection = CHEST|GROIN|ARMS|LEGS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 
@@ -248,7 +248,7 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/worn.dmi'
 	icon_state = "syndievest_winter"
 	body_parts_covered = CHEST|GROIN
-	cold_protection = CHEST|GROIN|ARMS
+
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
@@ -505,42 +505,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/armor.dmi'
 	current_skin = "ip_officercloak" //prevents reskinning
-
-/obj/item/clothing/suit/toggle/labcoat/nova
-	name = "MONKE LABCOAT SUIT DEBUG"
-	desc = "REPORT THIS IF FOUND"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/labcoat.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/labcoat.dmi'
-	icon_state = null //Keeps this from showing up under the chameleon hat
-
-
-/obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/black
-	name = "interdyne black labcoat"
-	desc = "A black labcoat accented with interdyne-green colors."
-	icon_state = "ip_labcoatblack"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/white
-	name = "interdyne white labcoat"
-	desc = "A white labcoat accented with interdyne-green colors."
-	icon_state = "ip_labcoatwhite"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-
-/obj/item/clothing/suit/syndicate/interdyne_jacket
-	name = "interdyne jacket"
-	desc = "A green high-visibility jacket bearing interdyne colors."
-	icon_state = "ip_armorlabcoat"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/labcoat.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/labcoat.dmi'
-	armor_type = /datum/armor/wintercoat_syndicate
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/suit/toggle/labcoat/nova/rd/deckofficer
-	name = "deck officer's labcoat"
-	desc = "A white labcoat with interdyne-green accents and a particularly fancy collar."
-	icon_state = "ip_officerlabcoat"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro/interdyne
 	name = "interdyne winter coat"

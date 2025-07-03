@@ -95,7 +95,7 @@
 		if(istype(object, /obj/item/card/id))
 			id_card = object
 
-		if(ACCESS_SECURITY in id_card.access || (obj_flags & EMAGGED))
+		if((ACCESS_SECURITY in id_card.access) || (obj_flags & EMAGGED))
 			to_chat(user, "You imprint your ID details onto the badge.")
 			set_name(user.real_name)
 			badge_string = id_card.assignment
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Transgender Pride" = "pride_trans",
 	"Intersex Pride" = "pride_intersex",
 	"Lesbian Pride" = "pride_lesbian",
-	"Man-Loving-Man / Gay Pride" = "pride_mlm",
+	"Gay Pride" = "pride_mlm",
 	"Genderfluid Pride" = "pride_genderfluid",
 	"Genderqueer Pride" = "pride_genderqueer",
 	"Aromantic Pride" = "pride_aromantic",

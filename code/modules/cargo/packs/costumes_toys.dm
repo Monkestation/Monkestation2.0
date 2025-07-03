@@ -158,6 +158,12 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/costumes_toys/costume/fill(obj/structure/closet/crate/C)
+	..()
+	var/funny_gas_internals
+	funny_gas_internals = pick(subtypesof(/obj/item/tank/internals/emergency_oxygen/engi/clown) - /obj/item/tank/internals/emergency_oxygen/engi/clown)
+	new funny_gas_internals(C)
+
 /datum/supply_pack/costumes_toys/randomised/toys
 	name = "Toy Crate"
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight \
@@ -255,4 +261,15 @@
 		/obj/item/clothing/glasses/blindfold,
 	)
 	crate_name = "corgi pinata kit"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/costumes_toys/balloons
+	name = "Long Balloons Kit"
+	desc = "This crate contains a box of long balloons, plus a skillchip for non-clowns to join the fun! Extra layer of safety so clowns at CentCom won't get to them."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/obj/item/storage/box/balloons,
+		/obj/item/skillchip/job/clown,
+	)
+	crate_name = "long balloons kit"
 	crate_type = /obj/structure/closet/crate/wooden

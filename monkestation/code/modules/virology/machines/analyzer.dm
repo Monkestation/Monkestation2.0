@@ -113,10 +113,17 @@
 
 	if(do_after(user, 5 SECONDS, src))
 		if(machine_stat & (BROKEN|NOPOWER))
+			processing = FALSE // Make sure to return the machine to normal operation if power outage
+			update_appearance()
+			scanner = null
 			return
-		if(!istype(dish.contained_virus, /datum/disease/advanced))
+		if(!istype(dish.contained_virus, /datum/disease/acute))
 			QDEL_NULL(dish)
 			say("ERROR:Bad Pathogen detected PURGING")
+			processing = FALSE // Make sure to return the machine to normal operation after purge
+			update_appearance()
+			scanner = null
+			return
 		if (dish.contained_virus.addToDB())
 			say("Added new pathogen to database.")
 		var/datum/data/record/v = GLOB.virusDB["[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]"]
@@ -128,6 +135,7 @@
 
 		dish.name = "growth dish ([last_scan_name])"
 		last_scan_info = dish.info
+		dish.contained_virus.Refresh_Acute()
 		var/datum/browser/popup = new(user, "\ref[dish]", dish.name, 600, 500, src)
 		popup.set_content(dish.info)
 		popup.open()
@@ -227,3 +235,23 @@
 		dish.forceMove(loc)
 		dish = null
 		update_appearance()
+
+/obj/machinery/disease2/diseaseanalyser/fullupgrade
+	circuit = /obj/item/circuitboard/machine/diseaseanalyser/fullupgrade
+
+
+/obj/machinery/disease2/diseaseanalyser/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(processing)
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait for process to finish"))
+		return FALSE
+	return default_deconstruction_screwdriver(user, "analyseru", "analyser", I)
+
+/obj/machinery/disease2/diseaseanalyser/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(processing)
+		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		return FALSE
+	return default_deconstruction_crowbar(I)

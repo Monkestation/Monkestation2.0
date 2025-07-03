@@ -116,7 +116,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	if(user.mind)
 		user.mind.transfer_to(created_drone, TRUE)
 	else if(isobserver(user))
-		created_drone.key = user.key
+		created_drone.PossessByPlayer(user.key)
 	else
 		return
 	created_drone.mind.add_antag_datum(/datum/antagonist/clock_cultist)
@@ -133,7 +133,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	var/next_attack_tick = 0
 
 /proc/clockcult_ending_start()
-	SSsecurity_level.set_level(3)
+	SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
 	priority_announce("Huge gravitational-energy spike detected emminating from a neutron star near your sector. Event has been determined to be survivable by 0% of life. \
 					   ESTIMATED TIME UNTIL ENERGY PULSE REACHES [GLOB.station_name]: 56 SECONDS. Godspeed crew, glory to Nanotrasen. -Admiral Telvig.", \
 					   "Central Command Anomolous Materials Division", 'sound/misc/airraid.ogg')

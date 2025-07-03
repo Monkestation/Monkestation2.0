@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/mob/living/carbon/human/built_in_his_image = blessed
 	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
 		if(!IS_ORGANIC_LIMB(bodypart))
-			balloon_alert(user, "can't heal metal!")
+			balloon_alert(user, "can't heal inorganic!")
 			return FALSE
 
 	var/heal_amt = 10
@@ -319,6 +319,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	name = "Syndicate Tome"
 	desc = "A very ominous tome resembling a bible."
 	icon_state ="ebook"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	item_flags = NO_BLOOD_ON_ITEM
 	throw_speed = 2
 	throw_range = 7

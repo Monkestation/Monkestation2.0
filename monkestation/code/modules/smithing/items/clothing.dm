@@ -65,7 +65,8 @@
 		ENERGY = min(round((material_stats.refractiveness / 1.75) * (smithed_quality/100)),60),
 		FIRE = min(round(((100-material_stats.thermal)/1.75) * (smithed_quality/100)),60),
 		LASER = min(round(((material_stats.refractiveness + material_stats.density)/3.5) * (smithed_quality/100)),60),
-		MELEE = min(round(((material_stats.density + material_stats.hardness)/1.75) * (smithed_quality/100)),60)
+		MELEE = min(round(((material_stats.density + material_stats.hardness)/1.75) * (smithed_quality/100)),60),
+		WOUND = min(round((material_stats.density/3.5) * (smithed_quality/100)),60)
 	)))
 	QDEL_NULL(temp) //Thanks now back to the void with you
 
@@ -108,9 +109,9 @@
 	icon_state = "cuirass"
 	allowed = null
 	body_parts_covered = CHEST
-	cold_protection = CHEST|GROIN
+
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN
+
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
 	equip_delay_other = 40
@@ -121,7 +122,15 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/tank/jetpack/oxygen/captain,
-		/obj/item/storage/belt/holster
+		/obj/item/storage/belt/holster,
+		/obj/item/smithed_part,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/gun/energy/laser/musket,
+		/obj/item/gun/energy/disabler/smoothbore,
+		/obj/item/shield/buckler,
+		/obj/item/spear,
+		/obj/item/melee/baton/security/cattleprod,
+		/obj/item/melee/baseball_bat
 		)
 
 	base_name = "suit"
@@ -131,9 +140,9 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "knight_green"
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-	heat_protection = HEAD
+
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
@@ -152,9 +161,9 @@
 	icon_state = "smithed_boots_inhand"
 	worn_icon_state = "smithed_boots"
 	inhand_icon_state = "jackboots"
-	cold_protection = FEET
+
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET
+
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'

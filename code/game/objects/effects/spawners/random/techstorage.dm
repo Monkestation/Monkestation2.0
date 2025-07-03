@@ -11,6 +11,7 @@
 	spawn_all_loot = FALSE
 	loot = list(
 		/obj/item/disk/data = 49,
+		/obj/item/disk/data/random = 5, // monkestation edit: add random dna data disks (this is a weighted list, it does NOT have to add up to 50 lol)
 		/obj/item/disk/nuclear/fake/obvious = 1,
 	)
 
@@ -48,6 +49,7 @@
 		/obj/item/circuitboard/machine/composters,
 		/obj/item/circuitboard/machine/plantgenes,
 		/obj/item/circuitboard/machine/biogenerator,
+		/obj/item/circuitboard/machine/splicer,
 		/obj/item/circuitboard/machine/hydroponics,
 		/obj/item/circuitboard/machine/seed_extractor,
 		/obj/item/circuitboard/machine/chicken_grinder,

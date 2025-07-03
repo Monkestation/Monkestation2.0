@@ -220,7 +220,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		..(target)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, span_notice("<b>You feel cool air surround you. You go numb as your senses turn inward.</b>"))
+			to_chat(occupant, span_boldnotice("You feel cool air surround you. You go numb as your senses turn inward."))
 			stored_ckey = mob_occupant.ckey
 			stored_name = mob_occupant.name
 
@@ -229,8 +229,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 				if(isnull(stored_ckey))
 					stored_ckey = mob_occupant.mind.key // if mob does not have a ckey and was placed in cryo by someone else, we can get the key this way
 
-		var/mob/living/carbon/human/human_occupant = occupant
-		if(human_occupant && human_occupant.mind)
+		var/mob/living/carbon/human/human_occupant = astype(occupant)
+		if(human_occupant?.mind)
 			human_occupant.save_individual_persistence(stored_ckey)
 
 		COOLDOWN_START(src, despawn_world_time, time_till_despawn)
@@ -363,10 +363,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
-	for(var/obj/item/item_content as anything in mob_occupant)
-		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
+	mob_occupant.ghostize(can_reenter_corpse = FALSE)
+	ADD_TRAIT(mob_occupant, TRAIT_NO_TRANSFORM, REF(src))
+	var/list/items = mob_occupant.get_equipped_items(include_pockets = TRUE)
+	items |= mob_occupant.held_items
+	for(var/obj/item/item_content as anything in items)
+		if(!isitem(item_content) || QDELING(item_content))
 			continue
-		if (issilicon(mob_occupant) && istype(item_content, /obj/item/mmi))
+		if(issilicon(mob_occupant) && istype(item_content, /obj/item/mmi))
 			continue
 		if(control_computer)
 			if(istype(item_content, /obj/item/modular_computer))
@@ -374,7 +378,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 				for(var/datum/computer_file/program/messenger/message_app in computer.stored_files)
 					message_app.invisible = TRUE
 			mob_occupant.transferItemToLoc(item_content, control_computer, force = TRUE, silent = TRUE)
-			item_content.dropped(mob_occupant)
 			control_computer.frozen_item += item_content
 			for(var/list/stored as anything in control_computer.frozen_crew)
 				if(!istype(stored))
@@ -384,11 +387,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		else
 			mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
 
+	if(iscarbon(mob_occupant))
+		var/mob/living/carbon/carbon_occupant = mob_occupant
+		for(var/obj/item/organ/organ as anything in carbon_occupant.organs)
+			if(QDELETED(organ))
+				continue
+			organ.Remove(carbon_occupant, special = TRUE)
+			SSwardrobe.stash_object(organ)
+
 	GLOB.joined_player_list -= stored_ckey
 	GLOB.manifest.general -= crewfile
 
 	handle_objectives()
-	mob_occupant.ghostize()
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)

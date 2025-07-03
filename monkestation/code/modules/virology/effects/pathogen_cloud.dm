@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(pathogen_clouds, list())
-GLOBAL_LIST_INIT(science_goggles_wearers, list())
+GLOBAL_LIST_INIT(virus_viewers, list())
 
 /obj/effect/pathogen_cloud
 	name = ""
@@ -34,13 +34,13 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 
 	viruses = virus
 
-	for(var/datum/disease/advanced/D as anything in viruses)
+	for(var/datum/disease/acute/D as anything in viruses)
 		id_list += "[D.uniqueID]-[D.subID]"
 
 	if(!core)
 		var/obj/effect/pathogen_cloud/core/core = locate(/obj/effect/pathogen_cloud/core) in src.loc
 		if(get_turf(core) == get_turf(src))
-			for(var/datum/disease/advanced/V as anything in viruses)
+			for(var/datum/disease/acute/V as anything in viruses)
 				if("[V.uniqueID]-[V.subID]" in core.id_list)
 					continue
 				core.viruses |= V.Copy()
@@ -55,9 +55,10 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	pathogen = image('monkestation/code/modules/virology/icons/96x96.dmi',src,"pathogen_airborne")
 	pathogen.plane = HUD_PLANE
 	pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-	for (var/mob/living/L as anything in GLOB.science_goggles_wearers)
-		if (L.client)
-			L.client.images |= pathogen
+	for (var/mob/living/wearer as anything in GLOB.virus_viewers)
+		if(QDELETED(wearer) || QDELETED(wearer.client))
+			continue
+		wearer.client.images |= pathogen
 
 	source = sourcemob
 
@@ -85,9 +86,10 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		SSpathogen_clouds.current_run_clouds -= src
 
 	if (pathogen)
-		for (var/mob/living/L in GLOB.science_goggles_wearers)
-			if (L.client)
-				L.client.images -= pathogen
+		for (var/mob/living/wearer as anything in GLOB.virus_viewers)
+			if(QDELETED(wearer) || QDELETED(wearer.client))
+				continue
+			wearer.client.images -= pathogen
 		pathogen = null
 	GLOB.pathogen_clouds -= src
 	source = null
@@ -102,7 +104,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		return
 
 	var/strength = 0
-	for (var/datum/disease/advanced/V as anything in viruses)
+	for (var/datum/disease/acute/V as anything in viruses)
 		strength += V.infectionchance
 	strength = round(strength/viruses.len)
 	var/list/possible_turfs = list()

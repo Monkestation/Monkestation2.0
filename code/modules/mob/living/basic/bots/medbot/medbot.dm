@@ -163,7 +163,7 @@
 		icon_state = "[base_icon_state]a"
 		return
 	if(mode == BOT_HEALING)
-		icon_state = "[base_icon_state]s[medical_mode_flags & MEDBOT_STATIONARY_MODE]"
+		icon_state = "[base_icon_state]s[medical_mode_flags & MEDBOT_STATIONARY_MODE ? 1 : 0]"
 		return
 	icon_state = "[base_icon_state][medical_mode_flags & MEDBOT_STATIONARY_MODE ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
 
@@ -368,6 +368,7 @@
 	medical_mode_flags = MEDBOT_SPEAK_MODE
 	heal_threshold = 0
 	heal_amount = 5
+	maints_access_required = list(ACCESS_MEDICAL, ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL)
 
 /mob/living/basic/bot/medbot/nukie
 	name = "Oppenheimer"

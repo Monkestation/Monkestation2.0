@@ -9,7 +9,7 @@
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
-	if(limb_owner.status_flags & GODMODE)
+	if(HAS_TRAIT(limb_owner, TRAIT_GODMODE))
 		return FALSE
 	if(HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
 		return FALSE
@@ -25,6 +25,17 @@
 
 	if (wounding_type)
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
+
+	if((limb_id == SPECIES_OOZELING))
+		to_chat(limb_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
+		playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
+		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
+
+// MONKESTATION ADDITION START
+	if(isipc(owner))
+		owner.dna.features["ipc_screen"] = "Blank"
+		playsound(get_turf(owner), 'sound/announcer/vox_fem/swhitenoise.ogg', 60, TRUE)
+// MONKESTATION ADDITION END
 
 	drop_limb()
 
@@ -58,7 +69,7 @@
 /obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
-	if(owner.status_flags & GODMODE)
+	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		return FALSE
@@ -77,6 +88,8 @@
 	//limb is out and about, it can't really be considered an implant
 	bodypart_flags &= ~BODYPART_IMPLANTED
 	owner.remove_bodypart(src)
+	if(speed_modifier)
+		owner.update_bodypart_speed_modifier()
 
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
@@ -134,9 +147,21 @@
 		return
 
 	if((limb_id == SPECIES_OOZELING) && !special)
-		to_chat(phantom_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
-		playsound(phantom_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
-		phantom_owner.blood_volume -= 60 //Makes for 120 when you regenerate it.
+		if(deprecise_zone(src.body_zone) in list(BODY_ZONE_HEAD, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG ))
+			var/list/limborgans = src.contents
+			if(limborgans) //Handle implants dropping when limb is dismembered
+				for(var/obj/item/organ/lmbimplant in limborgans)
+					lmbimplant.forceMove(drop_loc)
+					if(istype(lmbimplant, /obj/item/organ/internal/eyes)) // The eye slot is going to be some type of eyes right?
+						if(lmbimplant.type == /obj/item/organ/internal/eyes) // but we don't want to to drop oozlings natural eyes. Do the proper species check for eyes.
+							qdel(lmbimplant)
+							continue
+						var/obj/item/bodypart/head/oozeling/oozhead = src
+						oozhead.eyes = null // Need this otherwise qdel on head deletes the eyes.
+					if(istype(lmbimplant, /obj/item/organ/internal/brain)) // Go figure rare interactions give humans oozling heads. This stops rr's for head dismemeberment.
+						var/obj/item/bodypart/head/oozeling/oozhead = src
+						oozhead.brain = null // Similar to eyes
+					to_chat(phantom_owner, span_notice("Something small falls out the [src]."))
 		qdel(src)
 		return
 
@@ -253,6 +278,15 @@
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE, violent = violent)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
+/obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special = FALSE)
+	. = ..()
+
+	if(!.)
+		return
+
+	new_arm_owner.update_worn_gloves()
+
+
 /obj/item/bodypart/leg/drop_limb(special, dismembered, violent)
 	if(owner && !special)
 		if(owner.legcuffed)
@@ -331,6 +365,9 @@
 			if(hand)
 				hand.update_appearance()
 		new_limb_owner.update_worn_gloves()
+
+		if(speed_modifier)
+			new_limb_owner.update_bodypart_speed_modifier()
 
 	LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
 
@@ -470,6 +507,10 @@
 
 		//Copied from /datum/species/proc/on_species_gain()
 		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
+			// monkestation edit start
+			if (!should_external_organ_apply_to(organ_path, src))
+				continue
+			// monkestation edit end
 			//Load a persons preferences from DNA
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)

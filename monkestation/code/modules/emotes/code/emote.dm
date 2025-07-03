@@ -111,7 +111,7 @@
 				'monkestation/code/modules/emotes/sound/claponce2.ogg')
 
 /datum/emote/living/clap1/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
-	if(user.usable_hands < 2)
+	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
 
@@ -163,9 +163,13 @@
 	// It's not fair to NOT scream like a cat when we're cat, so alt screams get lowest priority
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		if(length(human_user.alternative_screams))
+		if(LAZYLEN(human_user.alternative_screams))
 			return pick(human_user.alternative_screams)
-		. = human_user.dna.species.get_scream_sound(user)
+		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
+		. = tongue?.get_scream_sound()
+	if(isbasicmob(user))
+		var/mob/living/basic/mob = user
+		. = mob.get_scream_sound()
 
 /datum/emote/living/scream/should_vary(mob/living/user)
 	if(ishuman(user) && !is_cat_enough(user))
@@ -233,6 +237,8 @@
 	message_param = "barks at %t!"
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = 10
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/living/bark/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
 	return ..() && HAS_TRAIT(user, TRAIT_ANIME)
@@ -281,6 +287,8 @@
 	message_mime = "squeals silently!"
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
+	falloff_exponent = 10
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/living/squeal/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/lizard/squeal.ogg' //This is from Bay
@@ -301,20 +309,17 @@
 /datum/emote/living/tailthump/can_run_emote(mob/user, status_check, intentional)
 	return ..() && islizard(user)
 
-// The below function replaces the `/datum/emote/silicon/mob_type_allowed_typecache` variable. If
-// you remove this function, be sure to replace the above variable.
-/datum/emote/silicon/can_run_emote(mob/user, status_check, intentional)
-	// Silicons and simple bots can always use silicon emotes, assuming nothing else is wrong
-	if(issilicon(user) || isbot(user))
-		return ..()
+/datum/emote/squint
+	key = "squint"
+	key_third_person = "squints"
+	message = "squints."
+	message_param = "squints at %t."
 
-	// Allow users with synthetic voice boxes to use silicon emotes as well, because a synthetic
-	// voice box is more akin to a speaker than a human larynx.
-	var/tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(istype(tongue, /obj/item/organ/internal/tongue/synth))
-		return ..()
-
-	return FALSE
+/datum/emote/living/nodnod
+	key = "nodnod"
+	key_third_person = "nodnods"
+	message = "nodnods."
+	message_param = "nodnods at %t."
 
 //The code from 'Start' to 'End' was ported from Russ-station, with permission.
 //All credit to 'bitch fish'
@@ -402,11 +407,11 @@
 	var/mob/living/L = on_who
 	src.Remove(L)
 
-/datum/action/cooldown/spell/pointed/projectile/spit/InterceptClickOn(mob/living/caller, params, atom/target)
-	var/mob/living/spitter = caller
+/datum/action/cooldown/spell/pointed/projectile/spit/InterceptClickOn(mob/living/user, params, atom/target)
+	var/mob/living/spitter = user
 
 	if(ishuman(spitter))
-		var/mob/living/carbon/human/humanoid = caller
+		var/mob/living/carbon/human/humanoid = user
 		if(humanoid.is_mouth_covered())
 			humanoid.audible_message("[emote_spit_msg] in their mask!", deaf_message = span_emote("You see <b>[spitter]</b> spit in their mask."), audible_message_flags = EMOTE_MESSAGE)
 			if(boolPlaySound)
@@ -418,7 +423,7 @@
 					ignore_walls = FALSE,
 					mixer_channel = CHANNEL_MOB_EMOTES,
 				)
-			src.Remove(caller)
+			src.Remove(user)
 			return
 
 	. = ..()
@@ -433,7 +438,7 @@
 			ignore_walls = FALSE,
 			mixer_channel = CHANNEL_MOB_EMOTES,
 		)
-	src.Remove(caller)
+	src.Remove(user)
 
 
 /datum/action/cooldown/spell/pointed/projectile/spit/mime
@@ -485,11 +490,14 @@
 /datum/emote/spin/speen
 	key = "speen"
 	key_third_person = "speens"
+	message = "speens!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 	audio_cooldown = 2 SECONDS
 	vary = TRUE
+	falloff_exponent = 10
+	extra_range = SHORT_RANGE_SOUND_EXTRARANGE
 
 /datum/emote/spin/speen/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/speen.ogg'

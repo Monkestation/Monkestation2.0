@@ -50,7 +50,7 @@
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(human.movement_type & ~FLYING)
+	if(!(human.movement_type & FLYING))
 		return FALSE
 	if(!can_fly(human))
 		toggle_flight(human)
@@ -102,17 +102,22 @@
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
+	if(QDELETED(human))
+		return
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
 		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
+		DO_FLOATING_ANIM(human)
 		passtable_on(human, SPECIES_TRAIT)
 		open_wings()
 	else
 		human.physiology.stun_mod *= 0.5
 		human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
+		STOP_FLOATING_ANIM(human)
 		passtable_off(human, SPECIES_TRAIT)
 		close_wings()
 	human.update_body_parts()
+	human.refresh_gravity()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
@@ -177,6 +182,7 @@
 /obj/item/organ/external/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
+	organ_flags = ORGAN_ROBOTIC
 	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 
 ///skeletal wings, which relate to skeletal races.

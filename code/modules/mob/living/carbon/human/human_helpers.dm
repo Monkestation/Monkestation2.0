@@ -110,24 +110,15 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/reagent_check(datum/reagent/R, seconds_per_tick, times_fired)
-	return dna.species.handle_chemicals(R, src, seconds_per_tick, times_fired)
-	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(check_chunky_fingers())
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			balloon_alert(src, "fingers are too big!")
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
-
-/mob/living/carbon/human/proc/check_chunky_fingers()
-	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
-		return TRUE
-	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
@@ -236,7 +227,8 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
+	if(client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
@@ -263,33 +255,25 @@
 			preference.apply_to_human(src, preference.create_random_value(preferences))
 
 /**
- * Setter for mob height
+ * Setter for mob height - updates the base height of the mob (which is then adjusted by traits or species)
  *
  * Exists so that the update is done immediately
  *
  * Returns TRUE if changed, FALSE otherwise
  */
 /mob/living/carbon/human/proc/set_mob_height(new_height)
-	if(mob_height == new_height)
-		return FALSE
-	if(new_height == HUMAN_HEIGHT_DWARF)
-		CRASH("Don't set height to dwarf height directly, use dwarf trait")
-
-	mob_height = new_height
-	regenerate_icons()
-	if(isdummy(src))
-		apply_height_filters(src, TRUE)
-	return TRUE
+	base_mob_height = new_height
+	update_mob_height()
 
 /**
- * Getter for mob height
+ * Updates the mob's height
  *
  * Mainly so that dwarfism can adjust height without needing to override existing height
  *
  * Returns a mob height num
  */
-/mob/living/carbon/human/proc/get_mob_height()
-	if(HAS_TRAIT(src, TRAIT_DWARF))
-		return HUMAN_HEIGHT_DWARF
-
-	return mob_height
+/mob/living/carbon/human/proc/update_mob_height()
+	var/old_height = mob_height
+	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
+	if(old_height != mob_height)
+		regenerate_icons()

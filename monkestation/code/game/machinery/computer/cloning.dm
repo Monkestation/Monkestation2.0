@@ -154,16 +154,15 @@
 		if(istype(P.buffer, /obj/machinery/clonepod))
 			if(get_area(P.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				P.set_buffer(null)
 				return
 			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/clonepod/pod = P.buffer
-			if(pod.connected)
-				pod.connected.DetachCloner(pod)
+			pod.connected?.DetachCloner(pod)
 			AttachCloner(pod)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			P.set_buffer(src)
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
 		return
 	else
 		return ..()
@@ -520,6 +519,8 @@
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
+	if(QDELETED(mob_occupant))
+		return
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
 
@@ -529,17 +530,20 @@
 
 	if(ishuman(mob_occupant))
 		dna = C.has_dna()
-		var/mob/living/carbon/human/human_occupant = mob_occupant
 		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
-		if(!istype(dna) || (NO_DNA_COPY in human_occupant.dna.species.species_traits))
+		if(!istype(dna) || HAS_TRAIT(mob_occupant, TRAIT_NO_DNA_COPY))
 			scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
 
 	if(isbrain(mob_occupant))
 		dna = B.stored_dna
+	if((mob_occupant.mob_biotypes & MOB_ROBOTIC) || (dna?.species?.inherent_biotypes & MOB_ROBOTIC))
+		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
 	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -549,7 +553,7 @@
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
-		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
+		scantemp = "<font class='bad'>Subject's DNA is too damaged to initiate cloning procedure.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if (!body_only && isnull(mob_occupant.mind))
@@ -577,13 +581,14 @@
 	R.fields["UE"] = dna.unique_enzymes
 	R.fields["UI"] = dna.unique_identity
 	R.fields["SE"] = dna.mutation_index
-	R.fields["blood_type"] = dna.blood_type
+	R.fields["blood_type"] = dna.human_blood_type
 	R.fields["features"] = dna.features
 	R.fields["factions"] = mob_occupant.faction
 	R.fields["quirks"] = list()
-	for(var/V in mob_occupant.quirks)
-		var/datum/quirk/T = V
-		R.fields["quirks"][T.type] = T.clone_data()
+	for(var/datum/quirk/quirk as anything in mob_occupant.quirks)
+		if(quirk.quirk_flags & QUIRK_DONT_CLONE)
+			continue
+		R.fields["quirks"][quirk.type] = quirk.clone_data()
 
 	R.fields["traumas"] = list()
 	if(ishuman(mob_occupant))

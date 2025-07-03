@@ -154,6 +154,7 @@
 		owner_dna = null
 		update_id(user)
 		return TRUE
+	return ..()
 
 /obj/item/gun/energy/e_gun/lawbringer/attack_self(mob/living/user as mob)
 	if(!iscarbon(user))
@@ -340,7 +341,7 @@
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	e_cost = 600 //20%, 5 shots
 	pellets = 4
 	variance = 50
@@ -437,7 +438,7 @@
 
 /obj/projectile/lawbringer/smokeshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
 	smoke.set_up(3, holder = src, location = get_turf(target))
 	smoke.start()
 
@@ -551,7 +552,7 @@
  */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	select_name = "tideshot"
 	e_cost = 250 //8%, 12 shots
 	harmful = FALSE
@@ -600,23 +601,34 @@
 	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE
 
-//LOCKER OVERRIDES//
-/obj/structure/closet/secure_closet/hos/populate_contents_immediate()
-	. = ..()
+// HoS weapon beacon
+/obj/item/choice_beacon/hos
+	name = "gun beacon"
+	desc = "A single use beacon to deliver a gunset of your choice to help with security detail."
+	company_source = "Central Command"
+	company_message = span_bold("Supply Pod incoming, please stand back.")
 
-	// Traitor steal objectives
-	new /obj/item/gun/energy/e_gun/lawbringer(src)
+/obj/item/choice_beacon/hos/generate_display_names()
+	var/static/list/selectable_guns = list(
+		"X-01 MultiPhase Energy Gun" = /obj/item/gun/energy/e_gun/hos,
+		"Lawbringer" = /obj/item/gun/energy/e_gun/lawbringer,
+		"Compact Combat Shotgun" = /obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	)
+	return selectable_guns
 
-//OBJECTIVE OVERRIDES//
-/datum/objective_item/steal/lawbringer
-	name = "the head of security's lawbringer"
-	targetitem = /obj/item/gun/energy/e_gun/lawbringer
+
+// Steal Objective, not just for Lawbringer but all their guns
+/datum/objective_item/steal/hosgun
+	name = "the head of security's personal weapon"
+	targetitem = /obj/item/choice_beacon/hos
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	altitems = list(/obj/item/gun/ballistic/shotgun/automatic/combat/compact, /obj/item/gun/energy/e_gun/lawbringer, /obj/item/gun/energy/e_gun/hos)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
 
-/obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/lawbringer)
+/obj/item/choice_beacon/hos/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/choice_beacon/hos)
+
 
 //THE MANUAL//
 /obj/item/paper/guides/lawbringer

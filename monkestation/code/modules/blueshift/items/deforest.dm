@@ -506,7 +506,7 @@
 	var/bleed_modifier_addition = 1
 
 /datum/status_effect/vulnerable_to_damage/on_apply()
-	to_chat(owner, span_userdanger("Your body suddenly feals weak and fragile!"))
+	to_chat(owner, span_userdanger("Your body suddenly feels weak and fragile!"))
 	var/mob/living/carbon/human/carbon_owner = owner
 	carbon_owner.physiology.damage_resistance -= damage_resistance_subtraction
 	carbon_owner.physiology.bleed_mod += bleed_modifier_addition
@@ -606,7 +606,7 @@
 	desc = "A sealed patch with a small nanite swarm along with electrical coagulant reagents to repair small amounts of synthetic damage."
 	icon_state = "synth_patch"
 	list_reagents = list(
-		/datum/reagent/medicine/nanite_slurry = 10,
+		/datum/reagent/medicine/nanite_slurry = 9,
 		/datum/reagent/dinitrogen_plasmide = 5,
 		/datum/reagent/medicine/coagulant/fabricated = 10,
 	)
@@ -815,42 +815,13 @@
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
-	storage_type = /datum/storage/duffel/deforest_medkit
 
-/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked
-
-/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/calopine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/hemostat = 1,
-		/obj/item/cautery = 1,
-		/obj/item/stack/medical/wound_recovery = 1,
-		/obj/item/stack/medical/wound_recovery/rapid_coagulant = 1,
-		/obj/item/stack/medical/suture/coagulant = 1,
-		/obj/item/stack/medical/mesh = 2,
-		/obj/item/stack/medical/gauze/sterilized = 1,
-		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/ointment/red_sun = 1,
-		/obj/item/storage/pill_bottle/painkiller = 1,
-		/obj/item/healthanalyzer/simple = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/datum/storage/duffel/deforest_medkit
-	max_specific_storage = WEIGHT_CLASS_SMALL
-	max_total_storage = 21 * WEIGHT_CLASS_SMALL
-	max_slots = 21
-
-/datum/storage/duffel/deforest_medkit/New()
+/obj/item/storage/backpack/duffelbag/deforest_medkit/Initialize(mapload)
 	. = ..()
-
-	can_hold = typecacheof(list(
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 21
+	atom_storage.max_total_storage = 21 * WEIGHT_CLASS_SMALL
+	atom_storage.set_holdable(list(
 		/obj/item/bonesetter,
 		/obj/item/cautery,
 		/obj/item/clothing/neck/stethoscope,
@@ -888,6 +859,32 @@
 		/obj/item/bodybag,
 	))
 
+/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked
+
+/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital = 1,
+		/obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi = 1,
+		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital = 1,
+		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
+		/obj/item/reagent_containers/hypospray/medipen/deforest/calopine = 1,
+		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/cautery = 1,
+		/obj/item/stack/medical/wound_recovery = 1,
+		/obj/item/stack/medical/wound_recovery/rapid_coagulant = 1,
+		/obj/item/stack/medical/suture/coagulant = 1,
+		/obj/item/stack/medical/mesh = 2,
+		/obj/item/stack/medical/gauze/sterilized = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/ointment/red_sun = 1,
+		/obj/item/storage/pill_bottle/painkiller = 1,
+		/obj/item/healthanalyzer/simple = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+
 // Big surgical kit that can be worn like a bag, holds 14 normal items (more than what a backpack can do!) but works like a duffelbag
 /obj/item/storage/backpack/duffelbag/deforest_surgical
 	name = "first responder surgical kit"
@@ -902,37 +899,12 @@
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
-	storage_type = /datum/storage/duffel/deforest_big_surgery
 
-/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked
-
-/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/scalpel = 1,
-		/obj/item/hemostat = 1,
-		/obj/item/retractor = 1,
-		/obj/item/circular_saw = 1,
-		/obj/item/bonesetter = 1,
-		/obj/item/cautery = 1,
-		/obj/item/surgical_drapes = 1,
-		/obj/item/blood_filter = 1,
-		/obj/item/emergency_bed = 1,
-		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/gauze/sterilized = 1,
-		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/medical/bone_gel = 1,
-	)
-	generate_items_inside(items_inside,src)
-
-/datum/storage/duffel/deforest_big_surgery
-	max_total_storage = 14 * WEIGHT_CLASS_NORMAL
-	max_slots = 14
-
-/datum/storage/duffel/deforest_big_surgery/New()
+/obj/item/storage/backpack/duffelbag/deforest_surgical/Initialize(mapload)
 	. = ..()
-
-	can_hold = typecacheof(list(
+	atom_storage.max_slots = 14
+	atom_storage.max_total_storage = 14 * WEIGHT_CLASS_NORMAL
+	atom_storage.set_holdable(list(
 		/obj/item/blood_filter,
 		/obj/item/bonesetter,
 		/obj/item/cautery,
@@ -987,6 +959,27 @@
 		/obj/item/bodybag,
 	))
 
+/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked
+
+/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/scalpel = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/retractor = 1,
+		/obj/item/circular_saw = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/cautery = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/blood_filter = 1,
+		/obj/item/emergency_bed = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/gauze/sterilized = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/stack/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/bone_gel = 1,
+	)
+	generate_items_inside(items_inside,src)
+
 // Pre-packed medkit for healing synths and repairing their wounds rapidly in the field
 /obj/item/storage/medkit/robotic_repair
 	name = "robotic repair equipment kit"
@@ -1027,6 +1020,7 @@
 /obj/item/storage/medkit/robotic_repair/stocked/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/cable_coil/five = 1,
 		/obj/item/reagent_containers/pill/robotic_patch/synth_repair = 2,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1, // Coagulants help electrical damage
@@ -1051,12 +1045,13 @@
 /obj/item/storage/medkit/robotic_repair/preemo/stocked/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze/twelve = 1,
-		/obj/item/stack/cable_coil/five = 1,
+		/obj/item/stack/cable_coil/industrial = 1,
 		/obj/item/reagent_containers/pill/robotic_patch/synth_repair = 4,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1,
 		/obj/item/healthanalyzer/simple = 1,
+		/obj/item/reagent_containers/blood/oil = 1,
 	)
 	generate_items_inside(items_inside,src)
 

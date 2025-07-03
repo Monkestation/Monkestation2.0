@@ -24,7 +24,7 @@
 
 
 /datum/status_effect/freon/tick()
-	if(can_melt && owner.bodytemperature >= owner.get_body_temp_normal())
+	if(can_melt && owner.bodytemperature >= owner.standard_body_temperature - 2 KELVIN)
 		qdel(src)
 
 /datum/status_effect/freon/proc/owner_resist()
@@ -43,7 +43,7 @@
 	if(!owner.stat)
 		to_chat(owner, span_notice("The cube melts!"))
 	owner.cut_overlay(cube)
-	owner.adjust_bodytemperature(100)
+	owner.adjust_bodytemperature(50 KELVIN, max_temp = owner.standard_body_temperature - 5 KELVIN)
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
@@ -57,7 +57,7 @@
 
 /datum/status_effect/freon/lasting
 	id = "lasting_frozen"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 
 /datum/status_effect/hypernob_protection
 	id = "hypernob_protection"
@@ -78,7 +78,7 @@
 		CRASH("[type] status effect added to non-human owner: [owner ? owner.type : "null owner"]")
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium) //small slowdown as a tradeoff
-	ADD_TRAIT(human_owner, TRAIT_NOFIRE, type)
+	ADD_TRAIT(human_owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/hypernob_protection/on_remove()
@@ -86,4 +86,4 @@
 		stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/hypernoblium)
-	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, type)
+	REMOVE_TRAIT(human_owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT(id))

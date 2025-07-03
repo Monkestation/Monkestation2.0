@@ -480,8 +480,8 @@ const FunForYouTab = (props) => {
                 color="red"
                 icon="user-secret"
                 fluid
-                content="Everyone is the traitor"
-                onClick={() => act('traitor_all')}
+                content="Everyone is the antag"
+                onClick={() => act('antag_all')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -593,32 +593,6 @@ const FunForYouTab = (props) => {
                 fluid
                 content="Shatter the Immersion"
                 onClick={() => act('unmassimmerse')}
-              />
-            </NoticeBox>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-      <Stack.Item>
-        <Stack fill>
-          <Stack.Item>
-            <NoticeBox danger width={19.6} mb={0}>
-              <Button
-                color="red"
-                icon="comment-slash"
-                fluid
-                content="Tower of Babel"
-                onClick={() => act('towerOfBabel')}
-              />
-            </NoticeBox>
-          </Stack.Item>
-          <Stack.Item>
-            <NoticeBox info width={19.6} mb={0}>
-              <Button
-                color="blue"
-                icon="comment"
-                fluid
-                content="Undo Tower of Babel"
-                onClick={() => act('cureTowerOfBabel')}
               />
             </NoticeBox>
           </Stack.Item>

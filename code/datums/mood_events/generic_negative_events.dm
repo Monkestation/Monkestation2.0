@@ -19,13 +19,29 @@
 	mood_change = -1
 	timeout = 2 MINUTES
 
+/datum/mood_event/chilly
+	description = "I'm feeling a bit chilly."
+	mood_change = -2
+
 /datum/mood_event/cold
-	description = "It's way too cold in here."
-	mood_change = -5
+	description = "It's way too cold."
+	mood_change = -3
+
+/datum/mood_event/freezing
+	description = "It's freezing cold!"
+	mood_change = -6
+
+/datum/mood_event/warm
+	description = "I'm feeling a bit warm."
+	mood_change = -2
 
 /datum/mood_event/hot
-	description = "It's getting hot in here."
-	mood_change = -5
+	description = "It's way too hot."
+	mood_change = -3
+
+/datum/mood_event/overhot
+	description = "It's scorching hot!"
+	mood_change = -6
 
 /datum/mood_event/creampie
 	description = "I've been creamed. Tastes like pie flavor."
@@ -387,6 +403,13 @@
 	mood_change = -1
 	timeout = 30 SECONDS
 
+//MONKESTATION EDIT START
+/datum/mood_event/watersprayed/cat
+	description = "HSSSSSSS!"
+	mood_change = -10
+	timeout = 5 SECONDS
+//MONKESTATION EDIT STOP
+
 /datum/mood_event/gamer_withdrawal
 	description = "I wish I was gaming right now..."
 	mood_change = -5
@@ -436,6 +459,11 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
+/datum/mood_event/mallet_humiliation
+	description = "Getting hit by such a stupid weapon feels rather humiliating..."
+	mood_change = -3
+	timeout = 10 SECONDS
+
 /datum/mood_event/amulette_insanity
 	description = "I sEe THe LiGHt, It mUsT BE stOPPed"
 	mood_change = -6
@@ -446,3 +474,8 @@
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
 	mood_change = -200
 	special_screen_obj = "mood_despair"
+
+/datum/mood_event/encountered_evil
+	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
+	mood_change = -4
+	timeout = 1 MINUTES

@@ -35,12 +35,12 @@
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
-	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
 	owner.update_sight()
 	return TRUE
 
 /datum/status_effect/duskndawn/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, TRAIT_STATUS_EFFECT(id))
 	owner.update_sight()
 
 // WOUNDED SOLDIER
@@ -53,11 +53,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/marshal/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/marshal/tick()
 	if(!iscarbon(owner))
@@ -109,7 +109,7 @@
 	id = "Silver Knives"
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// The number of blades we summon up to.
 	var/max_num_blades = 4
 	/// The radius of the blade's orbit.
@@ -181,7 +181,7 @@
 	if(HAS_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED))
 		return
 
-	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, type)
+	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id))
 
 	var/obj/effect/floating_blade/to_remove = blades[1]
 
@@ -194,7 +194,7 @@
 
 	qdel(to_remove)
 
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 1)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id)), 1)
 
 	return SHIELD_BLOCK
 
@@ -242,13 +242,12 @@
 /datum/status_effect/caretaker_refuge
 	id = "Caretaker’s Last Refuge"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
-	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
+	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION, TRAIT_GODMODE)
 
 /datum/status_effect/caretaker_refuge/on_apply()
 	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags |= GODMODE
 	animate(owner, alpha = 45,time = 0.5 SECONDS)
 	owner.density = FALSE
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
@@ -259,7 +258,6 @@
 
 /datum/status_effect/caretaker_refuge/on_remove()
 	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags &= ~GODMODE
 	owner.alpha = initial(owner.alpha)
 	owner.density = initial(owner.density)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))

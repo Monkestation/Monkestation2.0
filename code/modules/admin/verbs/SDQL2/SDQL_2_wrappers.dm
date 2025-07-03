@@ -51,6 +51,9 @@
 /proc/_get_step(Ref, Dir)
 	return get_step(Ref, Dir)
 
+/proc/_hascall(object, procname)
+	return hascall(object, procname)
+
 /proc/_hearers(Depth = world.view, Center = usr)
 	return hearers(Depth, Center)
 
@@ -61,6 +64,8 @@
 	return istype(object, type)
 
 /proc/_ispath(path, type)
+	if(isnull(type))
+		return ispath(path)
 	return ispath(path, type)
 
 /proc/_length(E)
@@ -113,6 +118,9 @@
 
 /proc/_text2num(T)
 	return text2num(T)
+
+/proc/_trimtext(Text)
+	return trimtext(Text)
 
 /proc/_ohearers(Dist, Center = usr)
 	return ohearers(Dist, Center)
@@ -267,7 +275,7 @@
 	winset(player, control_id, params)
 
 /proc/_winget(player, control_id, params)
-	winget(player, control_id, params)
+	return winget(player, control_id, params)
 
 /proc/_text2path(text)
 	return text2path(text)
@@ -294,3 +302,6 @@
 	if(!filter_index || filter_index < 1 || filter_index > length(target.filters))
 		return
 	animate(target.filters[filter_index], appearance = set_vars, time, loop, easing, flags)
+
+/proc/_is_type_in_typecache(thing_to_check, typecache)
+	return is_type_in_typecache(thing_to_check, typecache)

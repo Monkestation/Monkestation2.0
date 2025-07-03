@@ -7,6 +7,8 @@
  * Used in creating spooky-text for heretic ascension announcements.
  */
 /proc/generate_heretic_text(length = 25)
+	if(!isnum(length)) // stupid thing so we can use this directly in replacetext
+		length = 25
 	. = ""
 	for(var/i in 1 to length)
 		. += pick("!", "$", "^", "@", "&", "#", "*", "(", ")", "?")
@@ -33,8 +35,6 @@
 	var/heretic_path = PATH_START
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
-	/// How many side path points the heretic has. He gains one of these per main path that splits into two sidepaths. These can be used in place of knowledge points for side paths only.
-	var/side_path_points = 0
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
@@ -94,7 +94,6 @@ monkestation end */
 	var/list/data = list()
 
 	data["charges"] = knowledge_points
-	data["side_charges"] = side_path_points
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
@@ -108,10 +107,7 @@ monkestation end */
 		knowledge_data["desc"] = initial(knowledge.desc)
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
-		if(initial(knowledge.route) == PATH_SIDE)
-			knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points + side_path_points)
-		else
-			knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points)
+		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
@@ -152,25 +148,17 @@ monkestation end */
 	switch(action)
 		if("research")
 			var/datum/heretic_knowledge/researched_path = text2path(params["path"])
-			if(!ispath(researched_path))
+			if(!ispath(researched_path, /datum/heretic_knowledge))
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
 
-			// If side path and has path points, buy!
-			var/coupon = FALSE
-			if((initial(researched_path.route) == PATH_SIDE) && side_path_points)
-				coupon = TRUE
-			// else try normal purchase
-			else if(initial(researched_path.cost) > knowledge_points)
-				return
+			if(initial(researched_path.cost) > knowledge_points)
+				return TRUE
 
 			if(!gain_knowledge(researched_path))
 				return TRUE
 
-			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)][coupon ? "(via free side-path point)" : ""]")
-			if(coupon)
-				side_path_points -= initial(researched_path.cost)
-			else
-				knowledge_points -= initial(researched_path.cost)
+			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
+			knowledge_points -= initial(researched_path.cost)
 			return TRUE
 
 /datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
@@ -815,4 +803,5 @@ monkestation end */
 	name = "Heretic (Preview only)"
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist

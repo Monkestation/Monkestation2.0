@@ -83,7 +83,6 @@
 	var/fire_brightness = 4
 	///The Light colour to use when working in fire alarm status
 	var/fire_colour = COLOR_FIRE_LIGHT_RED
-
 	///Power usage - W per unit of luminosity
 	var/power_consumption_rate = 20
 
@@ -107,11 +106,11 @@
 				continue
 			if(on_turf.dir != dir)
 				continue
-			stack_trace("Conflicting double stacked light [on_turf.type] found at ([our_location.x],[our_location.y],[our_location.z])")
+			stack_trace("Conflicting double stacked light [on_turf.type] found at [AREACOORD(on_turf)]")
 			qdel(on_turf)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
-		var/area/our_area = get_room_area(src)
+		var/area/our_area = get_room_area()
 		var/obj/machinery/power/apc/temp_apc = our_area.apc
 		nightshift_enabled = temp_apc?.nightshift_lights
 
@@ -122,6 +121,7 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(alert_level_updated))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -137,7 +137,7 @@
 	update(trigger = FALSE)
 
 /obj/machinery/light/Destroy()
-	var/area/local_area =get_room_area(src)
+	var/area/local_area = get_room_area()
 	if(local_area)
 		on = FALSE
 	QDEL_NULL(cell)
@@ -146,7 +146,7 @@
 /obj/machinery/light/update_icon_state()
 	switch(status) // set icon_states
 		if(LIGHT_OK)
-			var/area/local_area =get_room_area(src)
+			var/area/local_area = get_room_area()
 			if(low_power_mode || major_emergency || (local_area?.fire))
 				icon_state = "[base_state]_emergency"
 			else
@@ -167,7 +167,8 @@
 	if(!overlay_icon)
 		return
 
-	var/area/local_area = get_room_area(src)
+	var/area/local_area = get_room_area()
+
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
@@ -182,7 +183,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/area/our_area = get_room_area(src)
+	var/area/our_area = get_room_area()
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
@@ -196,14 +197,30 @@
 
 /obj/machinery/light/proc/handle_fire(area/source, new_fire)
 	SIGNAL_HANDLER
-	update()
+	update(dont_burn_out = TRUE)
+
+/obj/machinery/light/proc/alert_level_updated()
+	SIGNAL_HANDLER
+
+	if(!is_station_level(z))
+		return
+	if(!is_station_area_or_adjacent(src))
+		return
+	if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
+		set_major_emergency_light()
+	else
+		unset_major_emergency_light()
+
+
+
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(trigger = TRUE)
+/obj/machinery/light/proc/update(trigger = TRUE, dont_burn_out = FALSE)
 	switch(status)
 		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
 			on = FALSE
 	low_power_mode = FALSE
+	var/should_update_light = !isnull(set_light_on(on))
 	if(on)
 		var/IR = bulb_inner_range
 		var/brightness_set = bulb_outer_range
@@ -214,7 +231,7 @@
 			color_set = color
 		if(reagents)
 			START_PROCESSING(SSmachines, src)
-		var/area/local_area =get_room_area(src)
+		var/area/local_area = get_room_area()
 		if (local_area?.fire)
 			color_set = fire_colour
 			brightness_set = fire_brightness
@@ -228,28 +245,33 @@
 		else if (major_emergency)
 			color_set = bulb_low_power_colour
 			brightness_set = bulb_outer_range * bulb_major_emergency_brightness_mul
-		var/matching = light && brightness_set == light.light_outer_range && power_set == light.light_power && color_set == light.light_color && FC == light.light_falloff_curve && IR == light.light_inner_range
+		var/matching = !QDELETED(light) && brightness_set == light.light_outer_range && power_set == light.light_power && color_set == light.light_color && FC == light.light_falloff_curve && IR == light.light_inner_range
 		if(!matching)
-			switchcount++
-			if( prob( min(60, (switchcount**2)*0.01) ) )
-				if(trigger)
+			var/should_set = TRUE
+			if(!dont_burn_out)
+				switchcount++
+				if(trigger && prob(min(60, (switchcount ** 2) * 0.01)))
 					burn_out()
-			else
+					should_set = FALSE
+			if(should_set)
 				use_power = ACTIVE_POWER_USE
+				should_update_light = TRUE
 				set_light(
 					l_outer_range = brightness_set,
 					l_inner_range = IR,
 					l_power = power_set,
 					l_falloff_curve = FC,
-					l_color = color_set
-					)
+					l_color = color_set,
+					update = FALSE
+				)
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		low_power_mode = TRUE
 		START_PROCESSING(SSmachines, src)
 	else
 		use_power = IDLE_POWER_USE
-		set_light(0)
+	if(should_update_light)
+		update_light()
 	update_appearance()
 	update_current_power_usage()
 	broken_sparks(start_only=TRUE)
@@ -260,7 +282,7 @@
 		static_power_used = 0
 	else if(on) //Light is on, just recalculate usage
 		var/static_power_used_new = 0
-		var/area/local_area = get_room_area(src)
+		var/area/local_area = get_room_area()
 		if (nightshift_enabled && !local_area?.fire)
 			static_power_used_new = nightshift_outer_range * nightshift_light_power * power_consumption_rate
 		else
@@ -304,7 +326,7 @@
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
 		on = FALSE
-		set_light(l_outer_range = 0)
+		set_light(l_outer_range = 0, l_on = FALSE)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -394,6 +416,11 @@
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
 
+/obj/machinery/light/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(isliving(throwingdatum.thrownthing) && (HAS_TRAIT_FROM(throwingdatum.thrownthing, VACPACK_THROW, "vacpack"))) // For now. If gentle doesnt cause issue with lights just remove these checks and switch.
+		return
+	..()
+
 /obj/machinery/light/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
 		qdel(src)
@@ -459,13 +486,13 @@
 // returns if the light has power /but/ is manually turned off
 // if a light is turned off, it won't activate emergency power
 /obj/machinery/light/proc/turned_off()
-	var/area/local_area = get_room_area(src)
+	var/area/local_area = get_room_area()
 	return !local_area.lightswitch && local_area.power_light || flickering
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
-	var/area/local_area =get_room_area(src)
+	var/area/local_area = get_room_area()
 	return local_area.lightswitch && local_area.power_light
 
 // returns whether this light has emergency power
@@ -569,7 +596,7 @@
 
 			if(user.gloves)
 				var/obj/item/clothing/gloves/electrician_gloves = user.gloves
-				if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
+				if(electrician_gloves.max_heat_protection_temperature > 360)
 					protected = TRUE
 		else
 			protected = TRUE
@@ -672,7 +699,7 @@
 // called when area power state changes
 /obj/machinery/light/power_change()
 	SHOULD_CALL_PARENT(FALSE)
-	var/area/local_area =get_room_area(src)
+	var/area/local_area = get_room_area()
 	set_on(local_area.lightswitch && local_area.power_light)
 
 // called when heated
@@ -692,6 +719,11 @@
 	var/obj/item/light/tube = drop_light_tube()
 	tube?.burn()
 	return
+
+/obj/machinery/light/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	break_light_tube()
+	return TRUE
 
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER

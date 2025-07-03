@@ -3,7 +3,7 @@
 	greyscale_colors = null
 
 /obj/item/clothing/gloves/color/yellow
-	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
+	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
@@ -108,14 +108,14 @@
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
 
 /obj/item/clothing/gloves/chief_engineer
-	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
+	desc = "These gloves provide excellent heat and electric insulation."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
 	inhand_icon_state = null
 	greyscale_colors = null
 	siemens_coefficient = 0
-	cold_protection = HANDS
+
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
+
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE

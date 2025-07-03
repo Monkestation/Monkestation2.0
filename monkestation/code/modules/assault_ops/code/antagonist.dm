@@ -11,10 +11,11 @@
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 	hijack_speed = 2
+	remove_from_manifest = TRUE
 
 	preview_outfit = /datum/outfit/assaultops_preview
 	/// In the preview icon, the operatives who are behind the leader
-	var/preview_outfit_behind = /datum/outfit/assaultops_preview/background
+	var/preview_outfit_behind = /datum/outfit/assaultops_preview_background
 
 	ui_name = "AntagInfoAssaultops"
 	/// The default outfit given BEFORE they choose their equipment.
@@ -29,15 +30,28 @@
 	Use your pinpointer to locate these after you have extracted the GoldenEye key from the head of staff. It will be sent in by droppod. \
 	You must then upload the key to the GoldenEye upload terminal on this GoldenEye station. After you have completed your mission, \
 	The GoldenEye defence network will fall, and we will gain access to Nanotrasen's military systems. Good luck agent."
-	/// A link to our internal pinpointer.
-	var/datum/status_effect/goldeneye_pinpointer/pinpointer
+	/// A link to our team monitor, used to track keycards.
+	var/datum/component/team_monitor/monitor
 
 /datum/antagonist/assault_operative/Destroy()
-	QDEL_NULL(pinpointer)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_GOLDENEYE_KEY_CREATED)
+	QDEL_NULL(monitor)
 	return ..()
 
 /datum/antagonist/assault_operative/apply_innate_effects(mob/living/mob_override)
-	add_team_hud(mob_override || owner.current, /datum/antagonist/assault_operative)
+	var/mob/living/target = mob_override || owner.current
+	monitor = target.AddComponent(/datum/component/team_monitor, "goldeneye_key")
+	for(var/obj/item/goldeneye_key/keycard as anything in SSgoldeneye.goldeneye_keys)
+		if(QDELETED(keycard))
+			continue
+		monitor.add_to_tracking_network(keycard.beacon)
+	monitor.show_hud(target)
+	add_team_hud(target, /datum/antagonist/assault_operative)
+
+/datum/antagonist/assault_operative/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	monitor?.hide_hud(target)
+	QDEL_NULL(monitor)
 
 /datum/antagonist/assault_operative/get_team()
 	return assault_team
@@ -50,6 +64,7 @@
 
 /datum/antagonist/assault_operative/on_gain()
 	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_GOLDENEYE_KEY_CREATED, PROC_REF(on_goldeneye_key_created))
 	equip_operative()
 	forge_objectives()
 	if(send_to_spawnpoint)
@@ -77,30 +92,18 @@
 
 // UI systems
 /datum/antagonist/assault_operative/ui_data(mob/user)
-	var/list/data = list()
+	return list(
+		"uploaded_keys" = SSgoldeneye.uploaded_keys,
+		"available_targets" = get_available_targets(),
+		"extracted_targets" = get_extracted_targets(),
+		"goldeneye_keys" = get_goldeneye_keys(),
+	)
 
-	data["required_keys"] = SSgoldeneye.required_keys
-
-	data["uploaded_keys"] = SSgoldeneye.uploaded_keys
-
-	data["available_targets"] = get_available_targets()
-	data["extracted_targets"] = get_extracted_targets()
-
-	data["goldeneye_keys"] = get_goldeneye_keys()
-
-	data["objectives"] = get_objectives()
-	return data
-
-/datum/antagonist/assault_operative/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("track_key")
-			var/obj/item/goldeneye_key/selected_key = locate(params["key_ref"]) in SSgoldeneye.goldeneye_keys
-			if(!selected_key)
-				return
-			pinpointer.set_target(selected_key)
+/datum/antagonist/assault_operative/ui_static_data(mob/user)
+	return list(
+		"required_keys" = SSgoldeneye.required_keys,
+		"objectives" = get_objectives(),
+	)
 
 /datum/antagonist/assault_operative/proc/get_available_targets()
 	var/list/available_targets_data = list()
@@ -123,18 +126,19 @@
 	return extracted_targets_data
 
 /datum/antagonist/assault_operative/proc/get_goldeneye_keys()
-	var/list/goldeneye_keys = list()
-	for(var/obj/item/goldeneye_key/iterating_key in SSgoldeneye.goldeneye_keys)
-		var/turf/location = get_turf(iterating_key)
-		goldeneye_keys += list(list(
+	. = list()
+	for(var/obj/item/goldeneye_key/keycard as anything in SSgoldeneye.goldeneye_keys)
+		if(QDELETED(keycard))
+			continue
+		var/turf/location = get_turf(keycard)
+		. += list(list(
+			"name" = keycard.goldeneye_tag,
+			"color" = keycard.beacon_color,
 			"coord_x" = location.x,
 			"coord_y" = location.y,
 			"coord_z" = location.z,
-			"selected" = pinpointer?.target == iterating_key,
-			"name" = iterating_key.goldeneye_tag,
-			"ref" = REF(iterating_key),
+			"ref" = REF(keycard),
 		))
-	return goldeneye_keys
 
 
 /datum/antagonist/assault_operative/forge_objectives()
@@ -160,15 +164,15 @@
 		human_target.set_species(/datum/species/human)
 		to_chat(human_target, span_userdanger("You are now a human!"))
 
-	for(var/obj/item/item in human_target.get_equipped_items(TRUE))
-		qdel(item)
+	human_target.clear_inventory()
 
 	var/obj/item/organ/internal/brain/human_brain = human_target.get_organ_slot(BRAIN)
 	human_brain.destroy_all_skillchips() // get rid of skillchips to prevent runtimes
 	human_target.equipOutfit(assault_operative_default_outfit)
 	human_target.regenerate_icons()
 
-	pinpointer = human_target.apply_status_effect(/datum/status_effect/goldeneye_pinpointer)
+	if(!human_target.has_language(/datum/language/common, TRUE))
+		human_target.grant_language(/datum/language/common, TRUE, TRUE, LANGUAGE_MIND)
 
 	return TRUE
 
@@ -186,16 +190,19 @@
 
 	if (!isnull(preview_outfit_behind))
 		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
-		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
+		teammate.Blend(rgb(128, 128, 128, 222), ICON_MULTIPLY)
 
 		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
 		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
 
 	var/icon/disky = icon('monkestation/code/modules/assault_ops/icons/goldeneye.dmi', "goldeneye_key")
-	disky.Shift(SOUTH, 12)
-	final_icon.Blend(disky, ICON_OVERLAY)
-
+	disky.Shift(NORTH, 6)
+	final_icon.Blend(disky, ICON_UNDERLAY)
 	return finish_preview_icon(final_icon)
+
+/datum/antagonist/assault_operative/proc/on_goldeneye_key_created(datum/source, obj/item/goldeneye_key/key)
+	SIGNAL_HANDLER
+	monitor?.add_to_tracking_network(key.beacon)
 
 /**
  * ASSAULT OPERATIVE TEAM DATUM

@@ -3,7 +3,7 @@
 		return list()
 
 	var/list/viable = list()
-	for(var/datum/disease/advanced/disease as anything in diseases)
+	for(var/datum/disease/acute/disease as anything in diseases)
 		if(!(disease.spread_flags & required))
 			continue
 		viable += disease
@@ -13,11 +13,11 @@
 	if(!length(list))
 		return list()
 	var/list/L = list()
-	for(var/datum/disease/advanced/D as anything in list)
+	for(var/datum/disease/acute/D as anything in list)
 		L += D.Copy()
 	return L
 
-/datum/disease/proc/makerandom(var/list/str = list(), var/list/rob = list(), var/list/anti = list(), var/list/bad = list(), var/atom/source = null)
+/datum/disease/proc/makerandom(list/str = list(), list/rob = list(), list/anti = list(), list/bad = list(), atom/source = null)
 	//ID
 	uniqueID = rand(0,9999)
 	subID = rand(0,9999)
@@ -79,7 +79,7 @@
 			infectedMob.pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',infectedMob,"pathogen_contact")
 			infectedMob.pathogen.plane = HUD_PLANE
 			infectedMob.pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-		for (var/mob/living/L in GLOB.science_goggles_wearers)
+		for (var/mob/living/L in GLOB.virus_viewers)
 			if (L.client)
 				L.client.images |= infectedMob.pathogen
 		return
@@ -90,7 +90,7 @@
 			infectedMob.pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',infectedMob,"pathogen_blood")
 			infectedMob.pathogen.plane = HUD_PLANE
 			infectedMob.pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-		for (var/mob/living/L in GLOB.science_goggles_wearers)
+		for (var/mob/living/L in GLOB.virus_viewers)
 			if (L.client)
 				L.client.images |= infectedMob.pathogen
 		return
@@ -101,7 +101,7 @@
 			infectedMob.pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',infectedMob,"pathogen_blood-old2")
 			infectedMob.pathogen.plane = HUD_PLANE
 			infectedMob.pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-		for (var/mob/living/L in GLOB.science_goggles_wearers)
+		for (var/mob/living/L in GLOB.virus_viewers)
 			if (L.client)
 				L.client.images |= infectedMob.pathogen
 		return

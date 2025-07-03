@@ -1,3 +1,6 @@
+/obj/item/choice_beacon
+	w_class = WEIGHT_CLASS_SMALL
+
 // Pet Beacon for Monkecoin shop
 
 /obj/item/choice_beacon/pet
@@ -37,7 +40,8 @@
 			/mob/living/basic/pet/dog/pug,
 			/mob/living/basic/pet/dog/bullterrier,
 			/mob/living/basic/lizard,
-			/mob/living/basic/ant
+			/mob/living/basic/ant,
+			/mob/living/simple_animal/pet/hamster
 		)
 
 		for(var/mob/living/basic_mob as anything in selectable_pets)
@@ -69,7 +73,6 @@
 	pod.explosionSize = list(0,0,0,0)
 	your_pet.name = name
 	your_pet.real_name = name
-	your_pet.update_name_tag() // monkestation edit: name tags
 
 	if(isbasicmob(your_pet))
 		var/mob/living/basic/pet = your_pet

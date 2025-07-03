@@ -43,7 +43,7 @@
 			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
-				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
@@ -89,6 +89,7 @@
 	icon = 'monkestation/code/modules/assault_ops/icons/modsuits/mod.dmi'
 	icon_state = "stealth-control"
 	theme = /datum/mod_theme/covert
+	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	applied_modules = list(
 		/obj/item/mod/module/dna_lock,
@@ -97,6 +98,13 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/tether,
 		/obj/item/mod/module/holster,
+	)
+
+	default_pins = list(
+
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/stealth,
+		/obj/item/mod/module/chameleon/contractor,
 	)
 
 /obj/machinery/suit_storage_unit/industrial/assault_operative

@@ -2,7 +2,16 @@ import { filter, map, sortBy, uniq } from 'common/collections';
 import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, Input, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  Input,
+  Section,
+  Stack,
+  Tabs,
+  Dropdown,
+} from '../components';
 import { Window } from '../layouts';
 
 // here's an important mental define:
@@ -54,7 +63,7 @@ export const SelectEquipment = (props) => {
   const currentOutfitEntry = getOutfitEntry(current_outfit);
 
   return (
-    <Window width={650} height={415} theme="admin">
+    <Window width={750} height={415} theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item>
@@ -92,8 +101,14 @@ export const SelectEquipment = (props) => {
                     height="100%"
                     style={{
                       '-ms-interpolation-mode': 'nearest-neighbor',
+                      'image-rendering': 'pixelated',
                     }}
                   />
+                </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <Section>
+                  <ConfirmationBox />
                 </Section>
               </Stack.Item>
             </Stack>
@@ -165,9 +180,7 @@ const OutfitDisplay = (props) => {
 };
 
 const CurrentlySelectedDisplay = (props) => {
-  const { act, data } = useBackend();
-  const [holyEffect, setHolyEffect] = useLocalState('holyEffect', false);
-  const { current_outfit } = data;
+  const { act } = useBackend();
   const { entry } = props;
   return (
     <Stack align="center">
@@ -199,22 +212,51 @@ const CurrentlySelectedDisplay = (props) => {
           {entry?.name}
         </Box>
       </Stack.Item>
-      <Stack.Item>
-        <Button.Checkbox
-          checked={holyEffect}
-          onClick={() => setHolyEffect(!holyEffect)}
-          content="Holy Effect"
+    </Stack>
+  );
+};
+
+const ConfirmationBox = (props) => {
+  const { act, data } = useBackend();
+  const { current_outfit } = data;
+  const [effectState, setEffectState] = useLocalState('effectState', 'None');
+  const [applyQuirks, setApplyQuirks] = useLocalState(
+    'applyQuirks',
+    'No Quirks',
+  );
+
+  return (
+    <Stack>
+      <Stack.Item grow={2}>
+        <Dropdown
+          options={[
+            'No Quirks',
+            'All Quirks',
+            'Positive Quirks Only',
+            'Negative Quirks Only',
+            'Neutral Quirks Only',
+          ]}
+          selected={applyQuirks}
+          onSelected={(value) => setApplyQuirks(value)}
+          width="100%"
+        />
+      </Stack.Item>
+      <Stack.Item grow={1}>
+        <Dropdown
+          options={['None', 'Holy', 'Unholy']}
+          selected={effectState}
+          onSelected={(value) => setEffectState(value)}
+          width="100%"
         />
       </Stack.Item>
       <Stack.Item>
         <Button
-          mr={0.8}
-          lineHeight={2}
           color="green"
           onClick={() =>
             act('applyoutfit', {
               path: current_outfit,
-              holyEffect,
+              effectState: effectState, // Pass the state directly
+              applyQuirks,
             })
           }
         >

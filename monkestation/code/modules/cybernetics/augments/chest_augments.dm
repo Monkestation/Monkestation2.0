@@ -9,6 +9,7 @@
 	implant_overlay = "chest_implant_overlay"
 	slot = ORGAN_SLOT_SPINAL
 	var/double_legged = FALSE
+	organ_flags = ORGAN_ROBOTIC
 
 /datum/action/item_action/organ_action/sandy
 	name = "Sandevistan Activation"
@@ -16,10 +17,11 @@
 /obj/item/organ/internal/cyberimp/chest/sandevistan
 	name = "Militech Apogee Sandevistan"
 	desc = "This model of Sandevistan doesn't exist, at least officially. Off the record, there's gossip of secret Militech Lunar labs producing covert cyberware. It was never meant to be mass produced, but an army would only really need a few pieces like this one to dominate their enemy."
-	encode_info = AUGMENT_SYNDICATE_LEVEL
-	icon_state = "sandy"
-	actions_types = list(/datum/action/item_action/organ_action/sandy)
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
+	icon_state = "sandy"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	actions_types = list(/datum/action/item_action/organ_action/sandy)
 
 	COOLDOWN_DECLARE(in_the_zone)
 	/// The bodypart overlay datum we should apply to whatever mob we are put into
@@ -60,7 +62,7 @@
 /obj/item/organ/internal/cyberimp/chest/sandevistan/refurbished
 	name = "refurbished sandevistan"
 	desc = "The branding has been scratched off of these and it looks hastily put together."
-
+	organ_flags = parent_type::organ_flags & ~ORGAN_HIDDEN
 	cooldown_time = 65 SECONDS
 
 /obj/item/organ/internal/cyberimp/chest/sandevistan/refurbished/ui_action_click(mob/user, actiontype)
@@ -87,16 +89,17 @@
 
 
 /datum/reagent/medicine/brain_healer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
 
 
 /obj/item/organ/internal/cyberimp/chest/chemvat
 	name = "R.A.G.E. chemical system"
 	desc = "Extremely dangerous system that fills the user with a mix of potent drugs."
-	encode_info = AUGMENT_SYNDICATE_LEVEL
-	icon_state = "chemvat_back_held"
 	icon = 'monkestation/code/modules/cybernetics/icons/implants_onmob.dmi'
+	icon_state = "chemvat_back_held"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 	var/obj/item/clothing/mask/chemvat/forced
 	var/obj/item/chemvat_tank/forced_tank
@@ -217,10 +220,11 @@
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/organ/internal/cyberimp/chest/nutriment
-	name = "Nutriment pump implant"
+	name = "nutriment pump implant"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
-	icon_state = "chest_implant"
-	implant_color = "#00AA00"
+	icon_state = "nutriment_implant"
+	implant_overlay = null
+	implant_color = null
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
@@ -252,18 +256,18 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/plus
-	name = "Nutriment pump implant PLUS"
+	name = "nutriment pump implant PLUS"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
-	icon_state = "chest_implant"
-	implant_color = "#006607"
+	icon_state = "adv_nutriment_implant"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 
 /obj/item/organ/internal/cyberimp/chest/reviver
-	name = "Reviver implant"
+	name = "reviver implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart!"
-	icon_state = "chest_implant"
-	implant_color = "#AD0000"
+	icon_state = "reviver_implant"
+	implant_overlay = null
+	implant_color = null
 	slot = ORGAN_SLOT_HEART_AID
 	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/revive_cost = 0
@@ -272,9 +276,8 @@
 	COOLDOWN_DECLARE(defib_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
-	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
-		return
-	try_heal() // Allows implant to work even on dead people
+	if(!QDELETED(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
+		try_heal() // Allows implant to work even on dead people
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
 	try_heal()
@@ -287,7 +290,7 @@
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
-		return
+		return // Keep this. Otherwise we spam defib cooldown and it never procs
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
 		return
@@ -300,6 +303,8 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
+	if(QDELETED(owner))
+		return
 	if(COOLDOWN_FINISHED(src, defib_cooldown))
 		revive_dead()
 
@@ -373,6 +378,10 @@
 	if(human_owner.stat == CONSCIOUS)
 		to_chat(human_owner, span_notice("You feel your heart beating again!"))
 
+/obj/item/organ/internal/cyberimp/chest/reviver/syndicate
+	name = "contraband reviver implant"
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
@@ -388,22 +397,18 @@
 
 	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/on = FALSE
-	var/datum/callback/get_mover
-	var/datum/callback/check_on_move
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, PROC_REF(get_user))
-	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
-	refresh_jetpack()
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/Destroy()
-	get_mover = null
-	check_on_move = null
-	return ..()
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, FALSE, COMSIG_THRUSTER_ACTIVATED, COMSIG_THRUSTER_DEACTIVATED, THRUSTER_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion)
+	AddComponent( \
+		/datum/component/jetpack, \
+		FALSE, \
+		COMSIG_THRUSTER_ACTIVATED, \
+		COMSIG_THRUSTER_DEACTIVATED, \
+		THRUSTER_ACTIVATION_FAILED, \
+		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
+		/datum/effect_system/trail_follow/ion \
+	)
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
 	if(on)
@@ -428,7 +433,7 @@
 		if(!silent)
 			to_chat(owner, span_warning("Your thrusters set seems to be broken!"))
 		return
-	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED) & THRUSTER_ACTIVATION_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED, owner) & THRUSTER_ACTIVATION_FAILED)
 		return
 
 	on = TRUE
@@ -440,7 +445,7 @@
 /obj/item/organ/internal/cyberimp/chest/thrusters/proc/deactivate(silent = FALSE)
 	if(!on)
 		return
-	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED)
+	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED, owner)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set off."))
@@ -485,10 +490,6 @@
 
 	deactivate(silent = TRUE)
 	return FALSE
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/proc/get_user()
-	return owner
-
 
 /datum/action/item_action/organ_action/knockout
 	name = "Knockout Punch"
@@ -555,3 +556,95 @@
 	owner.SetKnockdown(1.5 SECONDS)
 
 	return TRUE
+
+/datum/bodypart_overlay/simple/dualwield
+	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
+	icon_state = "ccms_overlay"
+	layers = EXTERNAL_ADJACENT
+
+/obj/item/organ/internal/cyberimp/chest/dualwield
+	name = "C.C.M.S implant"
+	desc = "Short for Complementary Combat Maneuvering System, it processes spinal nerve signals and enacts forced complementary maneuvers on the opposite side of the user's body when they attack. In layman's terms, it lets you dual wield."
+	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
+	icon_state = "ccms"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+
+	visual_implant = TRUE
+	bodypart_overlay = /datum/bodypart_overlay/simple/dualwield
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	register()
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	unregister()
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/proc/register()
+	RegisterSignal(owner, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_item_attack))
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/proc/unregister()
+	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/proc/on_item_attack(datum/source, mob/target, mob/user, params, obj/item/weapon)
+	SIGNAL_HANDLER
+
+	if(!(owner.istate & ISTATE_HARM)) // No dual wielding outside of combat mode.
+		return
+
+	if(weapon != owner.get_active_held_item()) // Just to be extra careful about loops.
+		return
+
+	var/item = owner.get_inactive_held_item()
+
+	if(!item)
+		return
+
+	var/attack_time = (user.next_move - world.time) * 0.5 // Allows us to attack in the "gaps" between our owner's attacks, because it looks cool as fuck.
+
+	addtimer(CALLBACK(src, PROC_REF(complement_attack), item, target), attack_time, TIMER_UNIQUE) // TIMER_UNIQUE makes sure this will never go exponential even if a loop is found.
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/proc/complement_attack(obj/item/item, mob/target)
+	if(QDELETED(owner) || QDELETED(target))
+		return
+
+	if(owner.get_inactive_held_item() != item)
+		return
+
+	if(handle_side_effects(item, target)) // If handle_side_effects returns true, that means we misfired.
+		return
+
+	if(owner.CanReach(target, item))
+		unregister() // Prevent looping in on ourselves if the user switches items during the delay.
+		item.attack(target, owner)
+		register()
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/proc/handle_side_effects(obj/item/item, mob/target)
+	return FALSE // Returning true means we misfired, i.e. failed to dual wield even though it should have triggered under normal circumstances.
+
+/datum/bodypart_overlay/simple/dualwield/refurbished
+	icon_state = "ccms_overlay_refurbished"
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/refurbished
+	name = "refurbished C.C.M.S implant"
+	desc = "A refurbished dual wielding implant. It looks old and the nerve filaments have degraded, but it's still functional."
+	icon_state = "ccms_refurbished"
+
+	bodypart_overlay = /datum/bodypart_overlay/simple/dualwield/refurbished
+
+/obj/item/organ/internal/cyberimp/chest/dualwield/refurbished/handle_side_effects(obj/item/item, mob/target)
+	if(prob(20)) // Low probability for it to not work at all.
+		owner.visible_message(
+			message = span_warning("[owner]'s arm twitches."),
+			self_message = span_danger("Your C.C.M.S misfires!")
+		)
+		return TRUE // Cancels the complementary attack.
+
+	if(prob(30)) // And if it does work, it might cause some damage.
+		owner.visible_message(
+			message = span_warning("[owner]'s arm spazzes out!"),
+			self_message = span_danger("Your arm spazzes out!")
+		)
+		var/obj/item/bodypart/arm = owner.get_holding_bodypart_of_item(item)
+		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.

@@ -27,7 +27,7 @@
 
 // NT Consultant area
 /area/station/command/heads_quarters/nt_rep
-	name = "Nanotrasen Consultant's Office"
+	name = "Nanotrasen Representative's Office"
 	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
 	icon_state = "nt_rep"
 
@@ -331,6 +331,11 @@
 	name = "Law Office Maintenance"
 	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
 	icon_state = "law_maint"
+
+/area/station/maintenance/department/security/courtroom
+	name = "\improper Courtroom Maintenance"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "sec_maint_courtroom"
 
 /area/station/maintenance/department/security/lesser
 	name = "Lesser Security Maintenance"

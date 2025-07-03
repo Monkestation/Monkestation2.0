@@ -89,6 +89,10 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"fq" = (
+/obj/machinery/air_sensor/engine_chamber,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "fx" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
@@ -192,7 +196,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hW" = (
@@ -400,9 +403,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"pa" = (
-/turf/closed/wall/r_wall/rust,
-/area/station/engineering/supermatter/room)
 "pk" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
@@ -486,21 +486,14 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/red,
 /area/station/engineering/supermatter/room)
-"sz" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "sF" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "sG" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "th" = (
@@ -610,6 +603,16 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"vH" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/supermatter/room)
 "vL" = (
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -656,6 +659,16 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
+"xo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/button/delam_scram{
+	pixel_y = 32
+	},
+/turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xp" = (
 /obj/effect/turf_decal/stripes/line,
@@ -761,13 +774,6 @@
 "zP" = (
 /turf/template_noop,
 /area/template_noop)
-"Ar" = (
-/turf/closed/wall/rust,
-/area/station/engineering/supermatter/room)
-"At" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall/rust,
-/area/station/engineering/supermatter)
 "Bl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -839,6 +845,16 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
+"Ew" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/supermatter/room)
 "EA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1049,7 +1065,7 @@
 /area/station/engineering/supermatter/room)
 "IJ" = (
 /obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall/rust,
+/turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "JC" = (
 /obj/effect/turf_decal/box,
@@ -1079,6 +1095,16 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"KF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/delam_scram/directional/east,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "KI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/delivery,
@@ -1150,7 +1176,6 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/mask/gas,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "LZ" = (
@@ -1176,7 +1201,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "MY" = (
@@ -1277,6 +1301,14 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"RM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/sign/delam_procedure/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "RN" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -1333,7 +1365,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Tt" = (
@@ -1462,6 +1493,14 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"Xz" = (
+/mob/living/basic/pet/poppy,
+/obj/structure/bed/dogbed/ian{
+	name = "Poppy's Bed"
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/supermatter/room)
 "XE" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/effect/turf_decal/stripes/corner{
@@ -1483,7 +1522,15 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "Yu" = (
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/structure/tank_holder/extinguisher/advanced,
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/supermatter/room)
 "YC" = (
 /obj/effect/turf_decal/delivery,
@@ -1628,7 +1675,7 @@ EU
 YJ
 Zt
 Uv
-pa
+zp
 zP
 zp
 qq
@@ -1651,11 +1698,11 @@ jl
 xm
 Zv
 lE
-pa
+zp
 zP
 zp
 oN
-pa
+zp
 zp
 oN
 zp
@@ -1681,7 +1728,7 @@ gQ
 JC
 qj
 NO
-pa
+zp
 Da
 Uk
 Uk
@@ -1709,7 +1756,7 @@ vD
 vD
 vD
 zp
-pa
+zp
 QA
 CQ
 lV
@@ -1733,7 +1780,7 @@ iW
 Ci
 HV
 zp
-pa
+zp
 lf
 aK
 "}
@@ -1741,7 +1788,7 @@ aK
 fN
 BL
 sG
-Yu
+vH
 Yu
 pk
 FB
@@ -1763,10 +1810,10 @@ aK
 (10,1,1) = {"
 BM
 Qj
-sz
-Yu
-Yu
-ZC
+sG
+Ew
+Xz
+pk
 wk
 EA
 nI
@@ -1787,7 +1834,7 @@ aK
 vD
 RV
 cc
-ZC
+pk
 jL
 yr
 kM
@@ -1807,7 +1854,7 @@ aK
 aK
 "}
 (12,1,1) = {"
-pa
+zp
 UA
 xp
 yr
@@ -1816,7 +1863,7 @@ jC
 Lc
 Lc
 Lc
-ZC
+pk
 Zg
 WZ
 vD
@@ -1825,18 +1872,18 @@ oe
 NC
 ue
 Hv
-pa
+zp
 aK
 aK
 "}
 (13,1,1) = {"
 zp
-Pp
+xo
 kY
 uc
 Dm
 PO
-Dm
+fq
 yw
 Dm
 am
@@ -1859,7 +1906,7 @@ ZH
 Yj
 vl
 Le
-PV
+KF
 PV
 PV
 jL
@@ -1880,7 +1927,7 @@ vD
 Pp
 UP
 pk
-At
+jL
 Yj
 uW
 GC
@@ -1940,7 +1987,7 @@ fH
 sF
 xq
 vL
-pa
+zp
 aK
 aK
 "}
@@ -1969,7 +2016,7 @@ aK
 "}
 (19,1,1) = {"
 zp
-NC
+RM
 NC
 LD
 Ib
@@ -1984,7 +2031,7 @@ zp
 lg
 vD
 vD
-pa
+zp
 zp
 aK
 aK
@@ -2000,10 +2047,10 @@ dq
 vz
 Ee
 fx
-Ar
+Ee
 zp
 zp
-pa
+zp
 ug
 zP
 zP

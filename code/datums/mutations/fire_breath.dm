@@ -1,6 +1,7 @@
 /datum/mutation/human/firebreath
 	name = "Fire Breath"
-	desc = "An ancient mutation that gives lizards breath of fire."
+//	desc = "An ancient mutation that gives lizards breath of fire."
+	desc = "An ancient mutation found in lizard DNA that gives the host ability to breathe fire."
 	quality = POSITIVE
 	difficulty = 12
 	locked = TRUE
@@ -10,6 +11,7 @@
 	instability = 30
 	energy_coeff = 1
 	power_coeff = 1
+	synchronizer_coeff = 1 // MONKESTATION ADDITION
 
 /datum/mutation/human/firebreath/modify()
 	. = ..()
@@ -24,6 +26,7 @@
 
 	to_modify.cone_levels += 2  // Cone fwooshes further, and...
 	to_modify.self_throw_range += 1 // the breath throws the user back more
+	to_modify.synchronized = GET_MUTATION_SYNCHRONIZER(src) // MONKESTATION ADDITION
 
 /datum/action/cooldown/spell/cone/staggered/fire_breath
 	name = "Fire Breath"
@@ -41,6 +44,7 @@
 	respect_density = TRUE
 	/// The range our user is thrown backwards after casting the spell
 	var/self_throw_range = 1
+	var/synchronized = 1 // MONKESTATION ADDITION
 
 /datum/action/cooldown/spell/cone/staggered/fire_breath/before_cast(atom/cast_on)
 	. = ..()
@@ -54,7 +58,8 @@
 	if(!our_lizard.is_mouth_covered())
 		return
 
-	our_lizard.adjust_fire_stacks(cone_levels)
+//	our_lizard.adjust_fire_stacks(cone_levels) // MONKESTATION EDIT OLD
+	our_lizard.adjust_fire_stacks(cone_levels * synchronized) // MONKESTATION EDIT NEW
 	our_lizard.ignite_mob()
 	to_chat(our_lizard, span_warning("Something in front of your mouth catches fire!"))
 

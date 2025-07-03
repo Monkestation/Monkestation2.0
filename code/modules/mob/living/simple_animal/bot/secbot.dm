@@ -5,8 +5,10 @@
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxHealth = 25
+	//Perish
+	health = 41
+	maxHealth = 41
+	// monkestation end
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	istate = ISTATE_HARM|ISTATE_BLOCKING
@@ -50,6 +52,8 @@
 	var/weapon_force = 20
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
+
+	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
@@ -142,6 +146,16 @@
 	SSmove_manager.stop_looping(src)
 	last_found = world.time
 
+/mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
+		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
+		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)
+		return TRUE
+
+/mob/living/simple_animal/bot/secbot/proc/remove_saboteur_effect()
+	security_mode_flags &= ~SECBOT_SABOTEUR_AFFECTED
+
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
@@ -202,6 +216,8 @@
 		final |= JUDGE_RECORDCHECK
 	if(security_mode_flags & SECBOT_CHECK_WEAPONS)
 		final |= JUDGE_WEAPONCHECK
+	if(security_mode_flags & SECBOT_SABOTEUR_AFFECTED)
+		final |= JUDGE_CHILLOUT
 	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
@@ -308,7 +324,7 @@
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
-	var/judgement_criteria = judgement_criteria()
+	//var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
@@ -316,15 +332,17 @@
 
 	if(harm)
 		weapon.attack(current_target, src)
+
+	// monkestation start: check shields and baton resistance, deal stamina damage
 	if(ishuman(current_target))
-		current_target.set_stutter(10 SECONDS)
-		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
-		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, PROC_REF(check_for_weapons)))
+		if(human_target.check_shields(src, 0, "\the [name]", MELEE_ATTACK))
+			return
+	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE))
+		current_target.stamina.adjust_to(-stamina_damage, current_target.stamina.maximum * 0.29)
 	else
-		current_target.Paralyze(100)
-		current_target.set_stutter(10 SECONDS)
-		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, PROC_REF(check_for_weapons)))
+		current_target.stamina.adjust(-stamina_damage)
+	// monkestation end
 
 	log_combat(src, current_target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)

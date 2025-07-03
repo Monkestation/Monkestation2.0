@@ -5,6 +5,9 @@
 	e_cost = 200
 	harmful = FALSE
 
+/obj/item/ammo_casing/energy/electrode/hos //monkestation edit
+	e_cost = 300
+
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = 100
 
@@ -19,8 +22,13 @@
 	projectile_type = /obj/projectile/beam/disabler
 	select_name = "disable"
 	e_cost = 50
-	fire_sound = 'sound/weapons/taser2.ogg'
+	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser2.ogg'
 	harmful = FALSE
+
+/obj/item/ammo_casing/energy/disabler/smg
+	projectile_type = /obj/projectile/beam/disabler/weak
+	e_cost = 25 //monkestation edit: half the damage but twice the ammo roughly
+	fire_sound = 'sound/weapons/taser3.ogg'
 
 /obj/item/ammo_casing/energy/disabler/hos
 	e_cost = 60

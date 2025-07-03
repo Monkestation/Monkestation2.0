@@ -28,6 +28,12 @@
 	item = /obj/item/pen/edagger
 	cost = 2
 
+/datum/uplink_item/stealthy_weapons/slipstick
+	name = "Syndie Lipstick"
+	desc = "Stylish way to kiss to death, isn't it syndiekisser?"
+	item = /obj/item/lipstick/syndie
+	cost = 12
+
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
@@ -77,7 +83,7 @@
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
-	cost = 17
+	cost = 12 //monke edit
 	surplus = 30 //monkestation edit: from 0 to 30
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 

@@ -234,6 +234,45 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/// Monkestation edit start
+
+/datum/design/c45/rubber
+	name = "Ammo Box (.45) (Rubber)"
+	id = "c45rubber"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
+	build_path = /obj/item/ammo_box/c45/rubber
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/// Monkestation edit end
+/datum/design/g45l
+	name = "Ammo Box (.45 Long) (Rubber)"
+	id = "g45l"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 30000)
+	build_path = /obj/item/ammo_box/g45l/rubber
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/g45lethal
+	name = "Ammo Box (.45 Long) (Lethal)"
+	id = "g45lethal"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 35000)
+	build_path = /obj/item/ammo_box/g45l
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/c9mm
 	name = "Ammo Box (9mm) (Lethal)"
 	id = "c9mm"

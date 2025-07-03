@@ -20,23 +20,17 @@
 GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
 	/obj/item/bodypart/chest/larva,
 	/obj/item/bodypart/head/larva,
-	// Re-add the ones below this line when the bug with offset is fixed
-	/obj/item/bodypart/leg/left/monkey,
-	/obj/item/bodypart/leg/right/monkey,
-	/obj/item/bodypart/leg/left/tallboy,
-	/obj/item/bodypart/leg/right/tallboy
 )))
 
 /// Blacklist of limb IDs which should not appear when bioscrambled, mostly because they looks awful and buggy.
 GLOBAL_LIST_INIT(bioscrambler_limb_id_blacklist, list(
 	BODYPART_ID_PSYKER,
-	SPECIES_SIMIAN,
-	SPECIES_MONKEY,
-	SPECIES_GOBLIN
+	SPECIES_GOBLIN,
+	SPECIES_TERATOMA,
 ))
 
 /// Blacklist of organs which should not appear when bioscrambled.
-/// Either will look terrible outside of intended host, give you magical powers, are irreversible, or kill you
+/// Either will look terrible outside of intended host, give you magical powers, are irreversible, cause dumb errors, or kill you
 GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/external/pod_hair,
 	/obj/item/organ/external/spines,
@@ -75,6 +69,7 @@ GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list(
 	/obj/item/organ/internal/tongue/gondola,
 	/obj/item/organ/internal/empowered_borer_egg,
 	/obj/item/organ/internal/butt/atomic,
+	/obj/item/organ/internal/borer_body,
 )) - subtypesof(/obj/item/organ/external/wings/functional) - typesof(/obj/item/organ/external/wings/moth))
 
 /// List of body parts we can apply to people

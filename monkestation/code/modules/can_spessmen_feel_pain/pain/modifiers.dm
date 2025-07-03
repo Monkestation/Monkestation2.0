@@ -69,15 +69,13 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.set_pain_mod(id, 0.625)
-	ADD_TRAIT(owner, TRAIT_NO_PAIN_EFFECTS, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_NO_SHOCK_BUILDUP, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_NO_SHOCK_BUILDUP), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/determined/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.unset_pain_mod(id)
-	REMOVE_TRAIT(owner, TRAIT_NO_PAIN_EFFECTS, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_NO_SHOCK_BUILDUP, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_NO_SHOCK_BUILDUP), TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 // Fake healthy is supposed to mimic feeling no pain
@@ -114,12 +112,3 @@
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.unset_pain_mod(id)
 	return ..()
-
-// Reacting to all cases of gaining knocked out rather than just sleeping
-/mob/living/on_knockedout_trait_gain(datum/source)
-	. = ..()
-	set_pain_mod(PAIN_MOD_KOD, 0.8)
-
-/mob/living/on_knockedout_trait_loss(datum/source)
-	. = ..()
-	unset_pain_mod(PAIN_MOD_KOD)

@@ -19,7 +19,6 @@
 #define ALERT_BUCKLED "buckled"
 #define ALERT_HANDCUFFED "handcuffed"
 #define ALERT_LEGCUFFED "legcuffed"
-#define ALERT_WOUNDED "wound"
 #define ALERT_IRRADIATED "irradiated"
 #define ALERT_EMBEDDED_OBJECT "embeddedobject"
 #define ALERT_SHOES_KNOT "shoealert"
@@ -49,7 +48,6 @@
 #define ALERT_MECH_DAMAGE "mech_damage"
 
 /** Food related */
-#define ALERT_NUTRITION "nutrition"
 #define ALERT_DISGUST "disgust"
 
 /** Environment related */
@@ -67,5 +65,6 @@
 #define ALERT_BITRUNNER_INTEGRITY "bitrunning_integrity"
 #define ALERT_BITRUNNER_SHUTDOWN "bitrunning_shutdown"
 #define ALERT_BITRUNNER_RESET "bitrunning_reset"
-#define ALERT_BITRUNNER_SPAWN_CYBERCOP "bitrunning_spawn_cybercop"
 #define ALERT_BITRUNNER_THREAT "bitrunning_threat"
+#define ALERT_BITRUNNER_BREACH "bitrunning_breach"
+#define ALERT_BITRUNNER_GLITCH "bitrunning_glitch"

@@ -1,10 +1,11 @@
 /mob/living/basic/chicken/snowy
 	icon_suffix = "snowy"
+	worn_slot_flags = null
 
 	breed_name = "Snow"
 	egg_type = /obj/item/food/egg/snowy
-	minimum_survivable_temperature = 0
-	maximum_survivable_temperature = 40
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = 40
 	liked_foods = list(/obj/item/food/grown/icepepper = 4)
 
 	book_desc = "These chickens require a sub-zero environment to live. They will melt if its not cold enough for them."

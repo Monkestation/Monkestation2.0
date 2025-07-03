@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_gloves, generate_loadout_items(/datum/loadout_item/glov
 /datum/loadout_item/gloves/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.gloves)
-			LAZYADD(outfit.backpack_contents, outfit.gloves)
+			spawn_in_backpack(outfit, outfit.gloves, equipper)
 		outfit.gloves = item_path
 	else
 		outfit.gloves = item_path
@@ -75,6 +75,27 @@ GLOBAL_LIST_INIT(loadout_gloves, generate_loadout_items(/datum/loadout_item/glov
 	name = "Maid Arm Covers"
 	item_path = /obj/item/clothing/gloves/maid
 
+/datum/loadout_item/gloves/flowery
+	name = "Perfumed Gloves"
+	item_path = /obj/item/clothing/gloves/flowery
+
+/datum/loadout_item/gloves/starry
+	name = "Faux Leather Gloves"
+	item_path = /obj/item/clothing/gloves/starry
+
+/datum/loadout_item/gloves/butler
+	name = "Butler Gloves"
+	item_path = /obj/item/clothing/gloves/butler
+
+/datum/loadout_item/gloves/wristlets
+	name = "Golden Wristlets"
+	item_path = /obj/item/clothing/gloves/wristlets
+
+/datum/loadout_item/gloves/kim
+
+	name = "Aerobic Gloves"
+	item_path = /obj/item/clothing/gloves/kim
+	restricted_roles = list(JOB_DETECTIVE)
 /*
 *	RINGS
 */

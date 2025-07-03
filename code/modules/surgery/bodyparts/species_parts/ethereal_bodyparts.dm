@@ -6,6 +6,9 @@
 	attack_type = BURN // bish buzz
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	palette = /datum/color_palette/generic_colors
+	palette_key = "ethereal_color"
+	brute_modifier = 1.25
 
 /obj/item/bodypart/head/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -20,6 +23,9 @@
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
+	palette = /datum/color_palette/generic_colors
+	palette_key = "ethereal_color"
+	brute_modifier = 1.25
 
 /obj/item/bodypart/chest/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -36,6 +42,9 @@
 	unarmed_attack_verb = "burn"
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	palette = /datum/color_palette/generic_colors
+	palette_key = "ethereal_color"
+	brute_modifier = 1.25
 
 /obj/item/bodypart/arm/left/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -52,6 +61,9 @@
 	unarmed_attack_verb = "burn"
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	palette = /datum/color_palette/generic_colors
+	palette_key = "ethereal_color"
+	brute_modifier = 1.25
 
 /obj/item/bodypart/arm/right/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -68,6 +80,9 @@
 	attack_type = BURN // bish buzz
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	palette = /datum/color_palette/generic_colors
+	palette_key = "ethereal_color"
+	brute_modifier = 1.25
 
 /obj/item/bodypart/leg/left/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -83,6 +98,9 @@
 	attack_type = BURN // bish buzz
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	palette = /datum/color_palette/generic_colors
+	palette_key = "ethereal_color"
+	brute_modifier = 1.25
 
 /obj/item/bodypart/leg/right/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()

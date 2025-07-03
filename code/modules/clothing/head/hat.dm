@@ -135,6 +135,10 @@
 	worn_icon_state = "cowboy_hat_black"
 	inhand_icon_state = "cowboy_hat_black"
 
+/// More likely to intercept bullets, since you're likely to not be wearing your modsuit with this on
+/obj/item/clothing/head/cowboy/black/syndicate
+	deflect_chance = 25
+
 /obj/item/clothing/head/cowboy/white
 	name = "ten-gallon hat"
 	desc = "There are two kinds of people in the world: those with guns and those that dig. You dig?"
@@ -168,7 +172,7 @@
 	desc = "On the first day of christmas my employer gave to me!"
 	icon_state = "santahatnorm"
 	inhand_icon_state = "that"
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/santa
 
@@ -272,7 +276,7 @@
 	icon_state = "ushankadown"
 	inhand_icon_state = null
 	flags_inv = HIDEEARS|HIDEHAIR
-	cold_protection = HEAD
+
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/ushanka
 	var/earflaps = TRUE
@@ -301,3 +305,9 @@
 	name = "red nightcap"
 	desc = "A red nightcap for all the sleepyheads and dozers out there."
 	icon_state = "sleep_red"
+
+/obj/item/clothing/head/costume/straw_hat
+	name = "Straw Fukaamigasa"
+	desc = "Traditional wide-brimmed straw hat."
+	worn_icon = 'icons/mob/clothing/head/straw.dmi'
+	icon_state = "straw_hat"

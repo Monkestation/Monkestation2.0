@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.head)
-			LAZYADD(outfit.backpack_contents, outfit.head)
+			spawn_in_backpack(outfit, outfit.head, equipper)
 		outfit.head = item_path
 	else
 		outfit.head = item_path
@@ -183,6 +183,10 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Bowler Hat"
 	item_path = /obj/item/clothing/head/hats/bowler
 
+/datum/loadout_item/head/mini_crown
+	name = "Mini Crown"
+	item_path = /obj/item/clothing/head/costume/minicrown
+
 /datum/loadout_item/head/tragic
 	name = "Tragic Mime Headpiece"
 	item_path = /obj/item/clothing/head/tragic
@@ -194,6 +198,26 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/nemes
 	name = "Headdress of Nemes"
 	item_path = /obj/item/clothing/head/costume/nemes
+
+/datum/loadout_item/head/straw_hat
+	name = "Straw Hat"
+	item_path = /obj/item/clothing/head/costume/straw_hat
+
+/datum/loadout_item/head/flowery
+	name = "Perfumed Bow"
+	item_path = /obj/item/clothing/head/costume/flowery
+
+/datum/loadout_item/head/starry
+	name = "Star Speckled Bow"
+	item_path = /obj/item/clothing/head/costume/starry
+
+/datum/loadout_item/head/tiara
+	name = "Tiara"
+	item_path = /obj/item/clothing/head/costume/tiara
+
+/datum/loadout_item/head/fez
+	name = "Fez"
+	item_path = /obj/item/clothing/head/hats/fez
 
 /*
 *	CHRISTMAS
@@ -217,7 +241,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	item_path = /obj/item/clothing/head/costume/weddingveil
 
 /datum/loadout_item/head/synde
-	name = "Black Space-Helmet Replica"
+	name = "Red Space Helmet Replica"
 	item_path = /obj/item/clothing/head/syndicatefake
 
 /datum/loadout_item/head/glatiator
@@ -282,6 +306,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Rainbow Propeller Hat"
 	item_path = /obj/item/clothing/head/soft/propeller_hat
 
+/datum/loadout_item/head/fez
+	name = "Fez"
+	item_path = /obj/item/clothing/head/hats/fez
+
+
+
 /*
 *	JOB-LOCKED
 */
@@ -310,17 +340,17 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/engi_beret
 	name = "Engineering Beret"
 	item_path = /obj/item/clothing/head/beret/engi
-	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER)
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER, JOB_SIGNAL_TECHNICIAN)
 
 /datum/loadout_item/head/cargo_beret
 	name = "Supply Beret"
 	item_path = /obj/item/clothing/head/beret/cargo
-	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER)
+	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_LATEJOIN_EXPLORER)
 
 /datum/loadout_item/head/beret_med
 	name = "Medical Beret"
 	item_path = /obj/item/clothing/head/beret/medical
-	restricted_roles = list(JOB_MEDICAL_DOCTOR,JOB_VIROLOGIST, JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER)
 
 /datum/loadout_item/head/beret_paramedic
 	name = "Paramedic Beret"
@@ -330,7 +360,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/beret_sci
 	name = "Scientist Beret"
 	item_path = /obj/item/clothing/head/beret/science
-	restricted_roles = list(JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_XENOBIOLOGIST)
 
 /*
 *	FAMILIES
@@ -494,6 +524,22 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/floral_garland //BUYABLE
 	name = "Floral Garland"
 	item_path = /obj/item/clothing/head/costume/garland
+
+/datum/loadout_item/head/rainbowbunch //BUYABLE
+	name = "Rainbow Flower Crown"
+	item_path = /obj/item/clothing/head/costume/garland/rainbowbunch
+
+/datum/loadout_item/head/sunflower_crown //BUYABLE
+	name = "Sunflower Crown"
+	item_path = /obj/item/clothing/head/costume/garland/sunflower
+
+/datum/loadout_item/head/poppy_crown //BUYABLE
+	name = "Poppy Crown"
+	item_path = /obj/item/clothing/head/costume/garland/poppy
+
+/datum/loadout_item/head/lily_crown //BUYABLE
+	name = "Lily Crown"
+	item_path = /obj/item/clothing/head/costume/garland/lily
 
 /datum/loadout_item/head/sombrero //BUYABLE
 	name = "Sombrero"

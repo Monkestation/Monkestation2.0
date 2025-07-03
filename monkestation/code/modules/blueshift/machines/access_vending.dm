@@ -88,7 +88,7 @@
 	name = "\improper Command Outfitting Station"
 	desc = "A vending machine for specialised clothing for members of Command."
 	product_ads = "File paperwork in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
-	icon = 'monkestation/code/modules/blueshift/icons/vending.dmi'
+	icon = 'monkestation/icons/obj/vending.dmi'
 	icon_state = "commdrobe"
 	light_mask = "wardrobe-light-mask"
 	vend_reply = "Thank you for using the CommDrobe!"
@@ -168,7 +168,6 @@
 		/obj/item/clothing/under/rank/medical/chief_medical_officer = 1,
 		/obj/item/clothing/under/rank/medical/chief_medical_officer/skirt = 1,
 		/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck = 1,
-		/obj/item/clothing/under/rank/medical/chief_medical_officer/nova/imperial = 1,
 		/obj/item/clothing/neck/cloak/cmo = 1,
 		/obj/item/clothing/neck/mantle/cmomantle = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
@@ -178,10 +177,8 @@
 		/obj/item/clothing/head/beret/science/rd/alt = 1,
 		/obj/item/clothing/under/rank/rnd/research_director = 1,
 		/obj/item/clothing/under/rank/rnd/research_director/skirt = 1,
-		/obj/item/clothing/under/rank/rnd/research_director/alt = 1,
 		/obj/item/clothing/under/rank/rnd/research_director/turtleneck = 1,
 		/obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt = 1,
-		/obj/item/clothing/under/rank/rnd/research_director/nova/imperial = 1,
 		/obj/item/clothing/neck/cloak/rd = 1,
 		/obj/item/clothing/neck/mantle/rdmantle = 1,
 		/obj/item/clothing/suit/toggle/labcoat = 1,

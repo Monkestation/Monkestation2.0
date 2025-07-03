@@ -55,20 +55,6 @@
 /datum/armament_entry/company_import/sol_defense/armor_hardened/emt_hardened_vest
 	item_type = /obj/item/clothing/suit/armor/sf_hardened/emt
 
-/datum/armament_entry/company_import/sol_defense/armor_sacrifice
-	subcategory = "Sacrifical Armor"
-	cost = PAYCHECK_CREW * 3
-
-/datum/armament_entry/company_import/sol_defense/armor_sacrifice/sacrificial_helmet
-	item_type = /obj/item/clothing/head/helmet/sf_sacrificial
-
-/datum/armament_entry/company_import/sol_defense/armor_sacrifice/face_shield
-	item_type = /obj/item/sacrificial_face_shield
-	cost = PAYCHECK_LOWER
-
-/datum/armament_entry/company_import/sol_defense/armor_sacrifice/sacrificial_vest
-	item_type = /obj/item/clothing/suit/armor/sf_sacrificial
-
 /datum/armament_entry/company_import/sol_defense/case
 	subcategory = "Weapon Cases"
 
@@ -126,12 +112,12 @@
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle
 	cost = PAYCHECK_COMMAND * 14
 	contraband = TRUE
-
+/*  ///Monke removal
 /datum/armament_entry/company_import/sol_defense/longarm/outomaties
 	item_type = /obj/item/gun/ballistic/automatic/sol_rifle/machinegun
 	cost = PAYCHECK_COMMAND * 23
 	contraband = TRUE
-
+*/
 /datum/armament_entry/company_import/sol_defense/longarm/kiboko
 	item_type = /obj/item/gun/ballistic/automatic/sol_grenade_launcher
 	cost = PAYCHECK_COMMAND * 46
