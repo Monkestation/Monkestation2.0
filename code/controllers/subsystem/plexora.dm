@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(plexora)
 
 	// MUST INCREMENT BY ONE FOR EVERY CHANGE MADE TO PLEXORA
 	var/version_increment_counter = 2
-	var/plexora_is_alive = FALSE
+	var/plexora_is_alive = null // this gets set to TRUE or FALSE during is_plexora_alive, it's just initially null to so logging works properly without spamming
 	var/vanderlin_available = FALSE
 	var/base_url = ""
 	var/enabled = TRUE
@@ -108,9 +108,11 @@ SUBSYSTEM_DEF(plexora)
 	UNTIL_OR_TIMEOUT(request.is_complete(), 10 SECONDS)
 	var/datum/http_response/response = request.into_response()
 	if (response.errored)
-		plexora_is_alive = FALSE
-		log_admin("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
-		CRASH("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
+		// avoid spamming logs
+		if (isnull(plexora_is_alive) || plexora_is_alive)
+			plexora_is_alive = FALSE
+			log_admin("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
+			CRASH("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
 	else
 		var/list/json_body = json_decode(response.body)
 		if (json_body["version_increment_counter"] != version_increment_counter)

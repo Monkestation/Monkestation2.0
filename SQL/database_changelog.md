@@ -2,7 +2,7 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.27; The query to update the schema revision table is:
+The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
 INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 27);
@@ -14,6 +14,30 @@ INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
+
+-----------------------------------------------------
+Version 5.28 1 July 2025, by Flleeppyy
+Add `mentor` and `mentor_ranks` table for db loading (forgot to do in a prior PR)
+Also adds drop queries for triggers and procedures, as well as a missing `twitch_user` thing from `player`
+
+```sql
+CREATE TABLE `mentor` (
+  `ckey` varchar(32) NOT NULL,
+  `rank` varchar(32) NOT NULL,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `mentor_ranks` (
+  `rank` VARCHAR(32) NOT NULL,
+  `flags` SMALLINT(5) UNSIGNED NOT NULL,
+	`exclude_flags` SMALLINT(5) UNSIGNED NOT NULL,
+	`can_edit_flags` SMALLINT(5) UNSIGNED NOT NULL,
+  PRIMARY KEY (`rank`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `player` ADD COLUMN `twitch_user` VARCHAR(32) NOT NULL DEFAULT '';
+```
+
 
 -----------------------------------------------------
 Version 5.27 16 March 2025, by Flleeppyy
