@@ -314,6 +314,37 @@ CREATE TABLE `messages` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `mentor`
+--
+
+DROP TABLE IF EXISTS `mentor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mentor` (
+  `ckey` varchar(32) NOT NULL,
+  `rank` varchar(32) NOT NULL,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mentor_ranks`
+--
+
+DROP TABLE IF EXISTS `mentor_ranks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mentor_ranks` (
+  `rank` VARCHAR(32) NOT NULL,
+  `flags` SMALLINT(5) UNSIGNED NOT NULL,
+	`exclude_flags` SMALLINT(5) UNSIGNED NOT NULL,
+	`can_edit_flags` SMALLINT(5) UNSIGNED NOT NULL,
+  PRIMARY KEY (`rank`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
 -- Table structure for table `role_time`
 --
 
@@ -372,6 +403,7 @@ CREATE TABLE `player` (
   `antag_tokens` tinyint(4) unsigned DEFAULT '0',
   `metacoins` int(10) unsigned NOT NULL DEFAULT '0',
   `twitch_rank` VARCHAR(32) NOT NULL DEFAULT '',
+	`twitch_user` VARCHAR(32) NOT NULL DEFAULT '',
   `patreon_key` VARCHAR(32) NOT NULL DEFAULT 'None',
   `patreon_rank` VARCHAR(32) NOT NULL DEFAULT 'None',
   PRIMARY KEY (`ckey`),
@@ -617,6 +649,10 @@ CREATE TABLE `ticket` (
   KEY `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP PROCEDURE IF EXISTS `set_poll_deleted`;
+DROP TRIGGER IF EXISTS `role_timeTlogupdate`;
+DROP TRIGGER IF EXISTS `role_timeTloginsert`;
+DROP TRIGGER IF EXISTS `role_timeTlogdelete`;
 DELIMITER $$
 CREATE PROCEDURE `set_poll_deleted`(
 	IN `poll_id` INT

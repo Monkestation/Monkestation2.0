@@ -684,8 +684,10 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
 				new /obj/effect/hotspot(T) //Mostly for ambience!
 		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
+		/*
 		if (low_turf.len || med_turf.len || high_turf.len)
 			Master.laggy_byond_map_update_incoming()
+		*/
 
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
 		currentpart = SSEXPLOSIONS_THROWS

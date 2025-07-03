@@ -160,10 +160,11 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
 
-	log_admin("[key_name(usr)] has turned stealth mode ON")
-	message_admins("[key_name_admin(usr)] has turned stealth mode ON")
+	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')")
+	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')")
 
 /client/proc/disable_stealth_mode()
+	var/previous_fakekey = holder.fakekey
 	holder.fakekey = null
 	if(isobserver(mob))
 		mob.remove_alt_appearance("stealthmin")
@@ -180,8 +181,8 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 	REMOVE_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 
-	log_admin("[key_name(usr)] has turned stealth mode OFF")
-	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
+	log_admin("[key_name(usr)] has turned stealth mode OFF (with previous key '[previous_fakekey]')")
+	message_admins("[key_name_admin(usr)] has turned stealth mode OFF (with previous key '[previous_fakekey]')")
 
 #undef STEALTH_MODE_TRAIT
 

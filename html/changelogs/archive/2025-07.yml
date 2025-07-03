@@ -1,0 +1,12 @@
+2025-07-03:
+  Absolucy, ReezeBL:
+  - bugfix: fixed a PDA's messenger TGUI issue with handling of destroyed recipients.
+  BValon:
+  - spellcheck: ooze.dm; all instances of var/mob/living/vored_mob -> var/mob/living/devoured_mob,
+      as well as comments referencing the same.
+  - spellcheck: clowncar.dm; all instance of voreman -> victim (thank you Shion for
+      the recommendation!)
+  - spellcheck: industrial_lift.dm; comment - vore -> devour
+  - spellcheck: archived changelogs; two instances - changed vore -> devour
+  flleeppyy:
+  - admin: stealthed admin logs now show the key they are/were under
