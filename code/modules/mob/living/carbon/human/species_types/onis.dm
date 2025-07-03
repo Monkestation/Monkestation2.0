@@ -2,7 +2,6 @@
 	name = "\improper Oni"
 	plural_form = "Onis"
 	id = SPECIES_ONI
-	examine_limb_id = SPECIES_ONI
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	sexes = TRUE
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID

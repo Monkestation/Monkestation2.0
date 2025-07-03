@@ -268,7 +268,7 @@
 	// Find any leg of our human and add that to the footprint, instead of the default which is to just add the human type
 	for(var/obj/item/bodypart/affecting as anything in wielder.bodyparts)
 		if(!affecting.bodypart_disabled && (affecting.body_part == LEG_RIGHT || affecting.body_part == LEG_LEFT))
-			footprint.species_types |= affecting.get_non_visual_limb_id()
+			footprint.species_types |= affecting.limb_id
 			break
 
 
