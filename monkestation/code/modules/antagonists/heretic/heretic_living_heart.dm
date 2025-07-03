@@ -16,6 +16,8 @@
 		if(QDELETED(living_target))
 			continue
 		var/sac_name = trimtext(target_mind.name || living_target.real_name || living_target.name)
+		if(isbrain(living_target))
+			living_target = living_target.loc
 		living_targets[sac_name] = living_target
 		var/mutable_appearance/target_appearance = new(living_target)
 		target_appearance.appearance_flags = KEEP_TOGETHER
