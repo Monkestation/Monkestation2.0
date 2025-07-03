@@ -11,7 +11,7 @@
 	COOLDOWN_DECLARE(block_cooldown)
 	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER, TRAIT_THROW_GUNS)
 	var/deflect_cooldown = 3 SECONDS //monke edit start
-	var/deflect_stamcost = 0 //how much stamina it costs per bullet deflected
+	var/deflect_stamcost = 5 //how much stamina it costs per bullet deflected
 	var/log_name = "Sleeping Carp"
 	var/damage = 30
 	var/kick_speed = 0 //how fast you get punted into the stratosphere on launchkick
