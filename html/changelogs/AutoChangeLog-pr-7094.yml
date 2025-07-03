@@ -1,5 +1,0 @@
-author: "EssentialTomato"
-delete-after: True
-changes:
-  - bugfix: "Fixed engineering cyborg resource dupe glitch."
-  - bugfix: "Fixed cyborgs accidentally ripping out their modules."

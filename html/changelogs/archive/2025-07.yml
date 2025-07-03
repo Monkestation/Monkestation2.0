@@ -8,5 +8,9 @@
       the recommendation!)
   - spellcheck: industrial_lift.dm; comment - vore -> devour
   - spellcheck: archived changelogs; two instances - changed vore -> devour
+  EssentialTomato:
+  - bugfix: Fixed syndicate rebar quiver not loading the last bolt when chambered.
+  - bugfix: Fixed engineering cyborg resource dupe glitch.
+  - bugfix: Fixed cyborgs accidentally ripping out their modules.
   flleeppyy:
   - admin: stealthed admin logs now show the key they are/were under
