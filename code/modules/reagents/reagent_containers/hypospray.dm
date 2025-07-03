@@ -410,7 +410,7 @@
 	base_icon_state = "gorillapen"
 	amount_per_transfer_from_this = 4.5
 	volume = 4.5
-	list_reagents = list(/datum/reagent/consumable/monkey_energy = 1, /datum/reagent/drug/methamphetamine = 1.5, /datum/reagent/medicine/ephedrine = 1, /datum/reagent/drug/cocaine = 1)
+	list_reagents = list(/datum/reagent/consumable/monkey_energy = 1, /datum/reagent/drug/methamphetamine/borer_version = 1.5, /datum/reagent/medicine/ephedrine = 1, /datum/reagent/drug/cocaine = 1)
 
 /obj/item/reagent_containers/hypospray/medipen/magnet
 	name = "Magnetization Injector"
