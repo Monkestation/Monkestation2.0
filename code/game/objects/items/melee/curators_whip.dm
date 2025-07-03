@@ -121,7 +121,7 @@
 	log_combat(user, target, "disarmed", src, addition = isturf(disarm_target) ? "thrown [dir2text(get_dir(user, target))]" : "thrown towards [disarm_target]")
 	user.do_attack_animation(target, used_item = src)
 	playsound(target.loc, hitsound, get_clamped_volume(), TRUE, extrarange = -1, falloff_distance = 0)
-	item.throw_at(target, range = 10, speed = 3)
+	item.throw_at(disarm_target, range = 10, speed = 3)
 	return TRUE
 
 /obj/item/melee/curator_whip/proc/whip_trip(mob/living/user, mob/living/target)
