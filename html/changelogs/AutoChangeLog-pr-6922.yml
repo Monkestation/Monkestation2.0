@@ -1,0 +1,6 @@
+author: "Absolucy, Mothblocks"
+delete-after: True
+changes:
+  - balance: "Instead of too much damage to the head beheading someone, it will now split their skull in half. While their skull is open, you can rip out their eyes with your hands. and they will spill their brain out of their head if they slip. Zombies can still be beheaded, though."
+  - rscadd: "You can right click on a dead body using a sharp weapon while targeting their head to decapitate them after a short delay, though. More powerful weapons do this quicker - a double-bladed energy sword is faster than a normal energy sword, which itself is still faster than a circular saw."
+  - balance: "The Path of Blades ascension will accept either a beheaded person, or someone with their skull split open."

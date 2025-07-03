@@ -1,0 +1,6 @@
+author: "Ice Type, Sian"
+delete-after: True
+changes:
+  - rscadd: "Adds a new Syndicate Fireaxe, 12 TC from the uplink, bulky and obvious, but packs a mean punch and can cut through even rwalls."
+  - rscadd: "A new emote, that allows you to nod twice."
+  - qol: "Fireaxes now destroy windowsills in one hit, no need to whip out a wrench."

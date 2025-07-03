@@ -1,0 +1,6 @@
+author: "F-e-r-n"
+delete-after: True
+changes:
+  - balance: "Gives awakened dragon a 30% reduction to all stamina damage. Go wild."
+  - balance: "Makes the neck snap threshold on awakened dragon neck grab instead of strangle grab."
+  - balance: "Gives awakened dragon an instant neck grab on vulcan pinch, which can be comboed with their neck snap.\n:cl:"
