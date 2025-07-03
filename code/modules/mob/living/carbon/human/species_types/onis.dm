@@ -27,7 +27,9 @@
 	maxhealthmod = 1.1
 	stunmod = 1.2
 	heatmod = 0.8
+	coldmod = 2
 	bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT + 10 CELCIUS
+	bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT + 15 CELCIUS
 
 /mob/living/carbon/human/species/oni
 	race = /datum/species/oni
