@@ -17,10 +17,10 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/oni,
 	)
 	external_organs = list(
-		/obj/item/organ/external/goblin_ears = "long",
-		/obj/item/organ/external/oni_horns = "oni",
-		/obj/item/organ/external/oni_wings = "normal",
-		/obj/item/organ/external/oni_tail = "spade",
+		/obj/item/organ/external/goblin_ears = "Long",
+		/obj/item/organ/external/oni_horns = "Oni",
+		/obj/item/organ/external/oni_wings = "Normal",
+		/obj/item/organ/external/oni_tail = "Spade",
 	)
 	mutantlungs = /obj/item/organ/internal/lungs/oni
 	mutanttongue = /obj/item/organ/internal/tongue/oni
