@@ -5539,6 +5539,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
 "bGS" = (
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "bGY" = (
@@ -14394,6 +14395,10 @@
 "ejt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "ejx" = (
@@ -14919,7 +14924,6 @@
 "erC" = (
 /obj/effect/turf_decal/trimline/purple/filled,
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	id_tag = "xeno_airlock_exterior";
 	name = "Xenobiology Lab"
@@ -30215,6 +30219,18 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
+"iTT" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/requests_console/auto_name/directional/west,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "iTX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -34947,11 +34963,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/cyborg,
-/obj/machinery/door/airlock/research{
-	autoclose = 0;
-	frequency = 1449;
-	name = "Xenobio and Nanite Zone"
-	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "knL" = (
@@ -35539,10 +35550,6 @@
 	},
 /area/station/medical/medbay/lobby)
 "kxL" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/green/visible{
 	dir = 4
 	},
@@ -38744,7 +38751,6 @@
 /area/station/medical/medbay/central)
 "lpg" = (
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	id_tag = "xeno_airlock_exterior";
 	name = "Xenobiology Lab"
@@ -38862,6 +38868,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/warm/directional/south,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "lqn" = (
@@ -44387,7 +44394,6 @@
 /area/station/science/lower)
 "mWM" = (
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	name = "Xenobio and Nanite Zone"
 	},
@@ -45995,9 +46001,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "nvb" = (
-/obj/structure/closet/secure_closet/tac{
-	req_access = list("captain")
-	},
+/obj/structure/closet/secure_closet/tac,
 /obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_y = 6;
 	pixel_x = 7
@@ -50797,7 +50801,7 @@
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/machinery/jukebox{
+/obj/machinery/dance_machine{
 	anchored = 0;
 	name = "jukebox on wheels"
 	},
@@ -57764,7 +57768,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "qSI" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
 /obj/machinery/meter/layer4,
@@ -58676,7 +58679,6 @@
 /area/station/commons/vacant_room/commissary)
 "rhQ" = (
 /obj/machinery/door/airlock/research{
-	autoclose = 0;
 	frequency = 1449;
 	id_tag = "xeno_airlock_exterior";
 	name = "Xenobiology Lab"
@@ -63544,7 +63546,6 @@
 /area/station/command/heads_quarters/nt_rep)
 "sCg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/chair/office{
 	dir = 1
 	},
@@ -65446,11 +65447,6 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/recharge_station,
-/obj/machinery/door/airlock/research{
-	autoclose = 0;
-	frequency = 1449;
-	name = "Xenobio and Nanite Zone"
-	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "tfF" = (
@@ -67168,7 +67164,7 @@
 /area/station/security/checkpoint/medical)
 "tBz" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "tBA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -73535,6 +73531,7 @@
 "vpS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor/has_bulb,
+/obj/structure/closet/crate/engineering/fundedsatellites,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "vpU" = (
@@ -99164,8 +99161,8 @@ nhC
 nhC
 rzL
 daQ
+aQW
 oke
-jVj
 hNf
 cSE
 sQf
@@ -104982,7 +104979,7 @@ nGj
 pyK
 gaO
 mKY
-mKY
+iTT
 vtr
 jfL
 iYa

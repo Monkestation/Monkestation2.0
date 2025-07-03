@@ -1,3 +1,4 @@
+
 /datum/armament_entry/company_import/microstar
 	category = MICROSTAR_ENERGY_NAME
 	company_bitflag = CARGO_COMPANY_MICROSTAR
@@ -18,7 +19,7 @@
 /datum/armament_entry/company_import/microstar/lethal_sidearm/energy_holster
 	item_type = /obj/item/storage/belt/holster/energy/thermal
 	cost = PAYCHECK_COMMAND * 6
-
+/*
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons
 	subcategory = "Basic Energy Longarms"
 
@@ -45,3 +46,4 @@
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons/ion_carbine
 	item_type = /obj/item/gun/energy/ionrifle/carbine
 	cost = PAYCHECK_COMMAND * 5
+*/

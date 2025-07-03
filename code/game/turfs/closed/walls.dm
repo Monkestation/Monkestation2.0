@@ -193,7 +193,7 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
-	var/area/shipbreak/A = get_area(src)
+	var/area/space/shipbreak/A = get_area(src)
 	if(istype(A)) //if we are actually in the shipbreaking zone...
 		new scrap_type(src, sheet_amount)
 	else
@@ -202,7 +202,7 @@
 		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	var/area/shipbreak/A = get_area(src)
+	var/area/space/shipbreak/A = get_area(src)
 	if(istype(A))
 		new scrap_type(src, sheet_amount)
 	else
@@ -306,12 +306,20 @@
 
 	//monkestation edit start
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is intact!"))
-			return TRUE
-
 		if(!W.tool_start_check(user, amount=0))
 			to_chat(user, span_warning("You need more fuel to repair [src]!"))
+			return TRUE
+
+		if(atom_integrity >= max_integrity)
+			if(LAZYLEN(dent_decals))
+				to_chat(user, span_notice("You begin fixing dents on the wall..."))
+				if(W.use_tool(src, user, 0, volume=100))
+					if(iswallturf(src))
+						to_chat(user, span_notice("You fix some dents on the wall."))
+						cut_overlay(dent_decals)
+						dent_decals.Cut()
+			else
+				to_chat(user, span_warning("[src] is intact!"))
 			return TRUE
 
 		to_chat(user, span_notice("You begin repairing [src]..."))

@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Burning yellow extracts no longer electrocute and deal damage, instead they cause painful disorientation for a few seconds."
+  - balance: "Burning metal extracts now just applies and ignites thermite to adjacent walls, instead of instantly deleting them."

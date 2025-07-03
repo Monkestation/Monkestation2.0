@@ -43,6 +43,7 @@
 	if(.)
 		return
 
+	ADD_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
 	RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
 	RegisterSignal(owner, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
 	for(var/body_part as anything in affected_limbs)
@@ -57,8 +58,8 @@
 	if(.)
 		return
 
-	UnregisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB)
-	UnregisterSignal(owner, COMSIG_CARBON_POST_REMOVE_LIMB)
+	REMOVE_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
+	UnregisterSignal(owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
 	for(var/body_part as anything in affected_limbs)
 		var/obj/item/bodypart/limb = owner.get_bodypart(check_zone(body_part))
 		if(!limb)

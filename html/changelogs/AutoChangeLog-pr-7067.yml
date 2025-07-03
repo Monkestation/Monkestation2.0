@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - balance: "Anti-Magic Vacuoles now caps at a total of 5 uses"

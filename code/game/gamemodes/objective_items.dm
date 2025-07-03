@@ -322,7 +322,7 @@
 	return !N.fake
 
 /datum/objective_item/steal/reflector
-	name = "a reflector trenchcoat"
+	name = "the ablative trenchcoat"
 	targetitem = /obj/item/clothing/suit/hooded/ablative
 	excludefromjob = list(JOB_HEAD_OF_SECURITY, JOB_WARDEN)
 	item_owner = list(JOB_HEAD_OF_SECURITY)

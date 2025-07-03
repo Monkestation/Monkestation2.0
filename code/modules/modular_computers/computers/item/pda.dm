@@ -26,6 +26,8 @@
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
 
+	action_slots = ALL
+
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
 
@@ -380,7 +382,7 @@
 		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
-/obj/item/modular_computer/pda/silicon/toggle_flashlight()
+/obj/item/modular_computer/pda/silicon/toggle_flashlight(mob/user)
 	if(!silicon_owner || QDELETED(silicon_owner))
 		return FALSE
 	if(iscyborg(silicon_owner))

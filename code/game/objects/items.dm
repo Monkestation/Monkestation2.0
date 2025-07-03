@@ -121,6 +121,8 @@
 	var/list/datum/action/actions
 	///list of paths of action datums to give to the item on New().
 	var/list/actions_types
+	///Slot flags in which this item grants actions. If null, defaults to the item's slot flags (so actions are granted when worn)
+	var/action_slots = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	///This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -139,6 +141,8 @@
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
+	///flat armour pen, like the way old armour pen worked. Applied AFTER percentage pen
+	var/armour_ignorance = 0
 	///Whether or not our object is easily hindered by the presence of armor
 	var/weak_against_armour = FALSE
 	/// The click cooldown given after attacking. Lower numbers means faster attacks
@@ -434,7 +438,7 @@
 	///Separator between the items on the list
 	var/sep = ""
 	///Nodes that can be boosted
-	var/list/boostable_nodes = techweb_item_boost_check(src)
+	var/list/boostable_nodes = techweb_item_unlock_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
@@ -635,9 +639,6 @@
 			R.activate_module(src)
 			R.hud_used.update_robot_modules_display()
 
-/obj/item/proc/GetDeconstructableContents()
-	return get_all_contents() - src
-
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -756,8 +757,14 @@
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/action)
-	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
+	if(!slot) // Equipped into storage
 		return FALSE
+	if(slot & (ITEM_SLOT_HANDCUFFED|ITEM_SLOT_LEGCUFFED)) // These aren't true slots, so avoid granting actions there
+		return FALSE
+	if(!isnull(action_slots))
+		return (slot & action_slots)
+	else if (slot_flags)
+		return (slot & slot_flags)
 	return TRUE
 
 /**
@@ -815,8 +822,7 @@
 
 /obj/item/on_exit_storage(datum/storage/master_storage)
 	. = ..()
-	var/atom/location = master_storage.real_location?.resolve()
-	do_drop_animation(location)
+	do_drop_animation(master_storage.parent)
 
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(QDELETED(hit_atom))
@@ -1461,7 +1467,7 @@
 		if(!istype(loc, /turf))
 			return
 		source = loc
-	var/image/pickup_animation = image(icon = src, loc = source, layer = layer + 0.1)
+	var/image/pickup_animation = image(icon = src)
 	SET_PLANE(pickup_animation, GAME_PLANE, source)
 	pickup_animation.transform.Scale(0.75)
 	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -1482,13 +1488,13 @@
 		to_y += 10
 		pickup_animation.pixel_x += 6 * (prob(50) ? 1 : -1) //6 to the right or left, helps break up the straight upward move
 
-	flick_overlay_global(pickup_animation, GLOB.clients, 4)
-	var/matrix/animation_matrix = new(pickup_animation.transform)
+	var/atom/movable/flick_visual/pickup = source.flick_overlay_view(pickup_animation, 0.4 SECONDS)
+	var/matrix/animation_matrix = new(pickup.transform)
 	animation_matrix.Turn(pick(-30, 30))
 	animation_matrix.Scale(0.65)
 
-	animate(pickup_animation, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = animation_matrix, easing = CUBIC_EASING)
-	animate(alpha = 0, transform = matrix().Scale(0.7), time = 1)
+	animate(pickup, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 0.3 SECONDS, transform = animation_matrix, easing = CUBIC_EASING)
+	animate(alpha = 0, transform = matrix().Scale(0.7), time = 0.1 SECONDS)
 
 /obj/item/proc/do_drop_animation(atom/moving_from)
 	if(!istype(loc, /turf))
@@ -1535,9 +1541,9 @@
 /atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item)
 	var/image/attack_image
 	if(visual_effect_icon)
-		attack_image = image('icons/effects/effects.dmi', attacked_atom, visual_effect_icon, attacked_atom.layer + 0.1)
+		attack_image = image(icon = 'icons/effects/effects.dmi', icon_state = visual_effect_icon)
 	else if(used_item)
-		attack_image = image(icon = used_item, loc = attacked_atom, layer = attacked_atom.layer + 0.1)
+		attack_image = image(icon = used_item)
 		attack_image.plane = attacked_atom.plane + 1
 
 		// Scale the icon.
@@ -1564,12 +1570,12 @@
 	if(!attack_image)
 		return
 
-	flick_overlay_global(attack_image, GLOB.clients, 10)
+	var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
 	var/matrix/copy_transform = new(transform)
 	// And animate the attack!
-	animate(attack_image, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
-	animate(time = 1)
-	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
+	animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 0.3 SECONDS)
+	animate(time = 0.1 SECONDS)
+	animate(alpha = 0, time = 0.3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
 
 /// Common proc used by painting tools like spraycans and palettes that can access the entire 24 bits color space.
 /obj/item/proc/pick_painting_tool_color(mob/user, default_color)
@@ -1704,3 +1710,29 @@
 	if (!isnull(tool_behaviour))
 		return list(tool_behaviour)
 	return null
+
+/**
+ * Used to update the weight class of the item in a way that other atoms can react to the change.
+ *
+ * Arguments:
+ * * new_w_class - The new weight class of the item.
+ *
+ * Returns:
+ * * TRUE if weight class was successfully updated
+ * * FALSE otherwise
+ */
+/obj/item/proc/update_weight_class(new_w_class)
+	if(w_class == new_w_class)
+		return FALSE
+
+	var/old_w_class = w_class
+	w_class = new_w_class
+	SEND_SIGNAL(src, COMSIG_ITEM_WEIGHT_CLASS_CHANGED, old_w_class, new_w_class)
+	if(!isnull(loc))
+		SEND_SIGNAL(loc, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, src, old_w_class, new_w_class)
+	return TRUE
+
+/obj/item/dump_harddel_info()
+	var/list/wardrobe_stock = SSwardrobe?.preloaded_stock?[type]
+	if(wardrobe_stock && (src in wardrobe_stock[WARDROBE_STOCK_CONTENTS]))
+		return "Stocked in SSwardrobe"

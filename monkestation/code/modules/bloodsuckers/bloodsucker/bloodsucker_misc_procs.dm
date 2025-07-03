@@ -26,16 +26,17 @@
 	power.Remove(owner.current)
 
 ///When a Bloodsucker breaks the Masquerade, they get their HUD icon changed, and Malkavian Bloodsuckers get alerted.
-/datum/antagonist/bloodsucker/proc/break_masquerade(mob/admin)
+/datum/antagonist/bloodsucker/proc/break_masquerade(mob/admin, silent = FALSE)
 	if(broke_masquerade)
 		return
-	owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
-	to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
-	to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
+	if(!silent)
+		owner.current.playsound_local(null, 'monkestation/sound/bloodsuckers/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
+		to_chat(owner.current, span_cultboldtalic("You have broken the Masquerade!"))
+		to_chat(owner.current, span_warning("Bloodsucker Tip: When you break the Masquerade, you become open for termination by fellow Bloodsuckers, and your Vassals are no longer completely loyal to you, as other Bloodsuckers can steal them for themselves!"))
+		SEND_GLOBAL_SIGNAL(COMSIG_BLOODSUCKER_BROKE_MASQUERADE, src)
 	broke_masquerade = TRUE
 	antag_hud_name = "masquerade_broken"
 	add_team_hud(owner.current)
-	SEND_GLOBAL_SIGNAL(COMSIG_BLOODSUCKER_BROKE_MASQUERADE, src)
 
 ///This is admin-only of reverting a broken masquerade, sadly it doesn't remove the Malkavian objectives yet.
 /datum/antagonist/bloodsucker/proc/fix_masquerade(mob/admin)
@@ -95,7 +96,7 @@
 /datum/antagonist/bloodsucker/proc/SpendRank(mob/living/carbon/human/target, cost_rank = TRUE, blood_cost)
 	if(!owner || !owner.current || !owner.current.client || (cost_rank && bloodsucker_level_unspent <= 0))
 		return
-	SEND_SIGNAL(src, BLOODSUCKER_RANK_UP, target, cost_rank, blood_cost)
+	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_RANK_UP, target, cost_rank, blood_cost)
 
 /**
  * Called when a Bloodsucker reaches Final Death
@@ -104,10 +105,7 @@
 /datum/antagonist/bloodsucker/proc/free_all_vassals()
 	for(var/datum/antagonist/vassal/all_vassals in vassals)
 		// Skip over any Bloodsucker Vassals, they're too far gone to have all their stuff taken away from them
-		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker))
-			all_vassals.owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
-			continue
-		if(all_vassals.special_type == REVENGE_VASSAL)
+		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker) || all_vassals.special_type == REVENGE_VASSAL)
 			continue
 		all_vassals.owner.add_antag_datum(/datum/antagonist/ex_vassal)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)

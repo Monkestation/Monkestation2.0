@@ -147,6 +147,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents plasmamen from self-igniting if only their helmet is missing
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
+#define TRAIT_AKIMBO "akimbo"
+#define TRAIT_NO_RECOIL "no_recoil"
 ///Can toss a guns like a badass, causing additional damage/effect to their enemies
 /* #define TRAIT_TOSS_GUN_HARD "toss_gun_hard" */
 /// Species with this trait are genderless
@@ -176,6 +178,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This carbon doesn't metabolize reagents.
 /// This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
+/// This carbon doesn't get warnings about blood level.
+#define TRAIT_NO_BLEED_WARN "no_bleed_warn"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 // This means the carbon does not have altered bloodloss from having or not having a spleen
@@ -223,7 +227,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This allows a person who has antimagic to cast spells without getting blocked
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 /// This mob recently blocked magic with some form of antimagic
-/* #define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic" */
+#define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
 /// The user can do things like use magic staffs without penalty
 #define TRAIT_MAGICALLY_GIFTED "magically_gifted"
 /// This object innately spawns with fantasy variables already applied (the magical component is given to it on initialize), and thus we never want to give it the component again.
@@ -557,9 +561,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait cannot be hit by projectiles, meaning the projectiles will just go through.
 /* #define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles" */
 
-/// Projectile with this trait will always hit the defined zone of a struck living mob.
-#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
-
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
@@ -590,7 +591,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_HIGH_VALUE_RANSOM "high_value_ransom" */
 
 /// Makes the user handcuff others faster
-/* #define TRAIT_FAST_CUFFING "fast_cuffing" */
+#define TRAIT_FAST_CUFFING "fast_cuffing"
 
 ///Given by /obj/item/virgin_mary, mobs that used this can no longer use it again ever
 /* #define TRAIT_MAFIAINITIATE "mafiainitiate" */
@@ -660,7 +661,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Allows chef's to chefs kiss their food, to make them with love
 #define TRAIT_CHEF_KISS "chefs_kiss"
 /// Allows clowns to bend balloons into animals
-/* #define TRAIT_BALLOON_SUTRA "balloon_sutra" */
+#define TRAIT_BALLOON_SUTRA "balloon_sutra"
 /// Allows detectives to identify chemicals by taste
 /* #define TRAIT_DETECTIVES_TASTE "detectives_taste" */
 
@@ -779,8 +780,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNCATCHABLE "uncatchable"
 /// Fish in this won't die
 #define TRAIT_FISH_SAFE_STORAGE "fish_case"
-/// Stuff that can go inside fish cases
-#define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
+/// Stuff that can go inside fish cases and aquariums
+#define TRAIT_AQUARIUM_CONTENT "aquarium_content"
 /// If the item can be used as a bit.
 #define TRAIT_FISHING_BAIT "fishing_bait"
 /// The quality of the bait. It influences odds of catching fish
@@ -1085,9 +1086,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPINNING "spinning"
 
 /// This limb can't be torn open anymore
-/* #define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure" */
+#define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure"
 /// Trait given if the mob has a cranial fissure.
-/* #define TRAIT_HAS_CRANIAL_FISSURE "has_cranial_fissure" */
+#define TRAIT_HAS_CRANIAL_FISSURE "has_cranial_fissure"
 
 /// Denotes that this id card was given via the job outfit, aka the first ID this player got.
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
@@ -1294,5 +1295,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
+/// Prevents the affected object from opening a loot window via alt click. See atom/AltClick()
+#define TRAIT_ALT_CLICK_BLOCKER "no_alt_click"
+
+/// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
+/// Can either be applied to the attacker or an individual limb.
+#define TRAIT_BORG_PUNCHER "borg_puncher"
 
 // END TRAIT DEFINES

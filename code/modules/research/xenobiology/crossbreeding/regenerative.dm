@@ -206,7 +206,7 @@ Regenerative extracts:
 		target.visible_message(span_warning("\The [target] suddenly changes color!"))
 		var/mob/living/basic/slime/S = target
 		S.start_mutating(TRUE)
-	if(isjellyperson(target))
+	else if(isoozeling(target))
 		target.reagents.add_reagent(/datum/reagent/mutationtoxin/jelly, 5)
 
 
@@ -254,7 +254,6 @@ Regenerative extracts:
 		T.dna.transfer_identity(D)
 		D.updateappearance(mutcolor_update=1)
 		D.real_name = T.real_name
-		D.update_name_tag(D.real_name) // monkestation edit: name tags
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())
 	dummy.adjustToxLoss(target.getToxLoss())

@@ -91,6 +91,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	SSdemo.write_chat_global(GLOB.OOC_COLOR ? span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>") : span_ooc(span_prefix("OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]")))
 
+	// pronouns
+	var/pronouns = prefs.read_preference(/datum/preference/text/ooc_pronouns)
+
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/receiver as anything in GLOB.clients)
 		if(!receiver.prefs) // Client being created or deleted. Despite all, this can be null.
@@ -102,22 +105,27 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/avoid_highlight = receiver == src
 		if(holder)
 			if(!holder.fakekey || receiver.holder)
+				var/keyfield_pre = "[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]"
+				var/keyfield = conditional_tooltip_alt(keyfield_pre, pronouns, length(pronouns))
 				if(check_rights_for(src, R_ADMIN))
 					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
 				else
-					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 			else
+				var/keyfield_pre = holder.fakekey ? holder.fakekey : key
+				var/keyfield = conditional_tooltip_alt(keyfield_pre, pronouns, length(pronouns))
 				if(GLOB.OOC_COLOR)
-					to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
 				else
-					to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+					to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 
 		else if(!(key in receiver.prefs.ignoring))
+			var/keyfield = conditional_tooltip_alt(keyname, pronouns, length(pronouns))
 			if(GLOB.OOC_COLOR)
-				to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
+				to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
 			else
-				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
+				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -358,6 +366,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set name = "Fit Viewport"
 	set category = "OOC"
 	set desc = "Fit the width of the map window to match the viewport"
+	set waitfor = FALSE
 
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
@@ -434,7 +443,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
 	if(fully_created)
-		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
+		fit_viewport()
 	else //Delayed to avoid wingets from Login calls.
 		addtimer(CALLBACK(src, VERB_REF(fit_viewport), 1 SECONDS))
 
@@ -475,3 +484,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
+
+/client/verb/map_vote_tally_count()
+	set name = "Show Map Vote Tallies"
+	set desc = "View the current map vote tally counts."
+	set category = "Server"
+	to_chat(mob, SSmap_vote.tally_printout)

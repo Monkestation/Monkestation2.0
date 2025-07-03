@@ -20,7 +20,7 @@
 
 /mob/dead/new_player/Initialize(mapload)
 	if(client && SSticker.state == GAME_STATE_STARTUP)
-		var/atom/movable/screen/splash/S = new(null, client, TRUE, TRUE)
+		var/atom/movable/screen/splash/S = new(null, null, client, TRUE, TRUE)
 		S.Fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
@@ -100,7 +100,7 @@
 		observer.client.init_verbs()
 		observer.persistent_client.time_of_death = world.time
 	observer.update_appearance()
-	observer.client.media.stop_music()
+	observer.update_media_source()
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)
 	QDEL_NULL(mind)
 	qdel(src)
@@ -124,6 +124,8 @@
 			return "[jobtitle] is not compatible with some antagonist role assigned to you."
 		if(JOB_UNAVAILABLE_DONOR_RANK) //MONKESTATION EDIT
 			return "The [jobtitle] job requires a higher donator rank than you have or it is out of season. Go to to https://www.patreon.com/dukeook \"Duke of Ook's Monke Content Creation Fund\" to learn more."
+		if(JOB_UNAVAILABLE_CONDITIONS_UNMET)
+			return "Conditions for [jobtitle] unmet."
 
 	return GENERIC_JOB_UNAVAILABLE_ERROR
 
@@ -314,9 +316,7 @@
 		return
 	new_character.PossessByPlayer(key) //Manually transfer the key to log them in,
 	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	if(new_character?.client?.media)
-		new_character.client.media.lobby_music = FALSE
-		new_character.client.media.stop_music()
+	new_character.update_media_source()
 
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)

@@ -32,9 +32,8 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
-	name = "monkey"
+	src.fully_replace_character_name(name, pick(GLOB.random_monkey_names))
 	regenerate_icons()
-	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
 	return src
@@ -96,9 +95,6 @@
 	if(!length(landmark_loc))
 		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
 		landmark_loc += loc
-
-	if(client)
-		client.media.stop_music()
 
 	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 	. = our_AI

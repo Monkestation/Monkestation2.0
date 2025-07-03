@@ -63,11 +63,11 @@
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			all energy projectiles, but requires two hands to wield."
+			energy projectiles it blocks, but requires two hands to wield. It also struggles to protect you from tackles."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 
-	cost = 16
+	cost = 13
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
@@ -111,4 +111,24 @@
 	name = "Syndicate Rebar Crossbow"
 	desc = "A much more proffessional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
 	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	cost = 10
+
+/datum/uplink_item/dangerous/minipea
+	name = "5 peashooters strapped together"
+	desc = "For use in a trash tank, 5 small machineguns strapped together using syndicate technology. It burns through ammo like no other."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
+	cost = 8
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/dangerous/devitt
+	name = "Devitt Mk3 Light Tank"
+	desc = "An ancient tank teleported in for your machinations, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/devitt
+	cost = 40
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/dangerous/efireaxe
+	name = "Syndicate Fire Axe"
+	desc = "A modernised version of the infamous fire axe, courtesy of the Gorlex Marauders. Capable of breaching almost anything, and cleaving through almost any armour, it is to be handled with care."
+	item = /obj/item/fireaxe/energy
 	cost = 12

@@ -1,0 +1,5 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "boxing no longer uses rng"
+  - balance: "boxers can now grab people who are laying down"

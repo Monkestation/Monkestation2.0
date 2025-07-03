@@ -47,8 +47,8 @@
 
 /// Called from update_health_hud, whenever a bodypart is being updated on the health doll
 #define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
-	/// Return to override that bodypart's health hud with your own icon
-	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+	/// Return to override that bodypart's health hud with whatever is returned by the list
+	#define OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
 
 /// Called from /obj/item/bodypart/check_for_injuries (mob/living/carbon/examiner, list/check_list)
 #define COMSIG_BODYPART_CHECKED_FOR_INJURY "bodypart_injury_checked"
@@ -164,3 +164,8 @@
 
 #define COMSIG_CARBON_PRE_SPRINT "carbon_pre_sprint"
 	#define INTERRUPT_SPRINT (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"

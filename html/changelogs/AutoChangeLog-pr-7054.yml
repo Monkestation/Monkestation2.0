@@ -1,0 +1,7 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - rscadd: "added meatman"
+  - rscadd: "slasher now has an instant aggro grab"
+  - balance: "smashing open a cargo crate now has a small chance to break the shit inside and if it is an ammunition box another chance to explode it 12% chance ammo explosion and 33% chance for an item to be crushed"
+  - image: "added some supermatter icons for delamination from yogstation - not implemented yet tho"

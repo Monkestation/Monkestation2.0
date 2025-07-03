@@ -546,7 +546,7 @@
 				for(var/datum/shuttle_event/event as anything in event_list)
 					event.start_up_event(SSshuttle.emergency_escape_time * engine_coeff)
 
-				SSmapping.mapvote() //If no map vote has been run yet, start one.
+				INVOKE_ASYNC(SSvote, TYPE_PROC_REF(/datum/controller/subsystem/vote, initiate_vote), /datum/vote/map_vote, initiator_name = "Map Rotation")
 
 		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
 			SSshuttle.checkHostileEnvironment()

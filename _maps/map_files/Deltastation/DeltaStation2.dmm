@@ -3857,7 +3857,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aQB" = (
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/prison/mess)
@@ -34231,6 +34231,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hallway)
 "icf" = (
@@ -37255,6 +37256,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/engineering/fundedsatellites,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "iMV" = (
@@ -40811,7 +40813,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
@@ -60730,6 +60731,12 @@
 /obj/effect/turf_decal/siding/dark,
 /turf/open/floor/iron/vaporwave,
 /area/station/security/bitden)
+"ooI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "ooJ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -64498,6 +64505,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "plC" = (
@@ -81996,7 +82004,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
@@ -84222,7 +84229,7 @@
 /area/station/medical/treatment_center)
 "tWr" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "tWv" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -127565,7 +127572,7 @@ xex
 xwq
 sID
 nmP
-qSm
+ooI
 wIf
 rpm
 lvJ

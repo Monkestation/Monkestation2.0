@@ -1181,7 +1181,7 @@
 "PN" = (
 /obj/effect/turf_decal/sand,
 /obj/item/coin/gold,
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "PY" = (

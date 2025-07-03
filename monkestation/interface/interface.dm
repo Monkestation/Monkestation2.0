@@ -1,5 +1,5 @@
 /client/verb/show_tickets()
-	set name = "tickets"
+	set name = "Tickets"
 	set desc = "Show list of tickets"
 	set category = "Admin"
 

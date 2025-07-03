@@ -142,7 +142,7 @@
 	owner.mind.remove_antag_datum(/datum/antagonist/infected_ipc)
 
 //AI MODULE
-/datum/ai_module/utility/override_directive
+/datum/ai_module/malf/utility/override_directive
 	name = "Positronic Chassis Hacking"
 	description = "Instill a directive upon a single IPC to follow your whims and protect you, \
 	Requires target to be incapacitated and non-mindshielded to use. \

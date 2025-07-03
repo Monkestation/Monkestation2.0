@@ -345,6 +345,8 @@
 
 /datum/config_entry/flag/spring_enabled
 
+/datum/config_entry/flag/summer_enabled
+
 /datum/config_entry/flag/spooktober_enabled
 
 /datum/config_entry/flag/grey_assistants

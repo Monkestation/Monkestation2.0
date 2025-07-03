@@ -9,8 +9,8 @@ SUBSYSTEM_DEF(explosions)
 	name = "Explosions"
 	init_order = INIT_ORDER_EXPLOSIONS
 	priority = FIRE_PRIORITY_EXPLOSIONS
-	wait = 1
-	flags = SS_TICKER|SS_NO_INIT
+	wait = 0
+	flags = SS_TICKER | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_lowturf = 0
@@ -40,6 +40,18 @@ SUBSYSTEM_DEF(explosions)
 
 	var/currentpart = SSAIR_PIPENETS
 
+/datum/controller/subsystem/explosions/PreInit(start_timeofday)
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, lowturf),
+		NAMEOF(src, medturf),
+		NAMEOF(src, highturf),
+		NAMEOF(src, flameturf),
+		NAMEOF(src, throwturf),
+		NAMEOF(src, low_mov_atom),
+		NAMEOF(src, med_mov_atom),
+		NAMEOF(src, high_mov_atom),
+	)
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
 	msg += "C:{"
@@ -675,8 +687,10 @@ SUBSYSTEM_DEF(explosions)
 				new /obj/effect/hotspot(T) //Mostly for ambience!
 		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
+		/*
 		if (low_turf.len || med_turf.len || high_turf.len)
 			Master.laggy_byond_map_update_incoming()
+		*/
 
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
 		currentpart = SSEXPLOSIONS_THROWS

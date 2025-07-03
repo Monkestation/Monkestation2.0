@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	to_chat(owner, span_boldnicegreen("Your request to trigger [queued_token_event] has been approved."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been approved.")
 	adjust_event_tokens(-queued_token_event.token_cost)
-	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
+	SStwitch.add_to_queue(initial(queued_token_event.id_tag), owner.key)
 	queued_token_event = null
 	if(event_timeout)
 		deltimer(event_timeout)
@@ -244,3 +244,18 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
 	queued_token_event = null
 	event_timeout = null
+
+/datum/meta_token_holder/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	if(var_name in list(
+		NAMEOF(src, total_low_threat_tokens),
+		NAMEOF(src, total_medium_threat_tokens),
+		NAMEOF(src, total_high_threat_tokens),
+		NAMEOF(src, event_tokens),
+		NAMEOF(src, event_token_month),
+		NAMEOF(src, donator_token),
+		NAMEOF(src, token_month),
+	))
+		convert_tokens_to_list()

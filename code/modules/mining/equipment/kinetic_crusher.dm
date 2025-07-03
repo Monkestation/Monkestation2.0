@@ -21,6 +21,7 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_MINING
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	obj_flags = UNIQUE_RENAME
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 5
@@ -44,7 +45,6 @@
 			speed = 6 SECONDS, \
 			effectiveness = 110, \
 	)
-
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -169,6 +169,11 @@
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 
+/obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	set_light_on(FALSE)
+	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
+	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
 	if(!override_twohandedsprite)

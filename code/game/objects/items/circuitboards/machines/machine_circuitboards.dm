@@ -958,7 +958,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/manipulator = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger"
@@ -1032,7 +1033,7 @@
 	build_path = /obj/machinery/dna_scannernew
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)
@@ -1529,3 +1530,30 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/navbeacon
 	req_components = list()
+
+/obj/item/circuitboard/machine/scrubber
+	name = "Portable Air Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+	)
+
+/obj/item/circuitboard/machine/pump
+	name = "Portable Air Pump"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pump
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/vent = 1,
+	)
+
+/obj/item/circuitboard/machine/pipe_scrubber
+	name = "Portable Pipe Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pipe_scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/trinary/flippable/filter = 1,
+	)

@@ -70,7 +70,7 @@
 /area/station/commons/lounge)
 "iB" = (
 /obj/machinery/camera/autoname/directional/north,
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "jv" = (

@@ -12,7 +12,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 /datum/station_goal/bluespace_cannon/get_report()
 	return list(
 		"<blockquote>Our military presence is inadequate in your sector.",
-		"We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.",
+		"We need you to construct BSA-[rand(1,99)] Artillery position aboard your station,",
+		"and test-fire it to ensure it is fully functional.",
 		"",
 		"Base parts are available for shipping via cargo.",
 		"-Nanotrasen Naval Command</blockquote>",
@@ -22,14 +23,6 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	//Unlock BSA parts
 	var/datum/supply_pack/engineering/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/bsa]
 	P.special_enabled = TRUE
-
-/datum/station_goal/bluespace_cannon/check_completion()
-	if(..())
-		return TRUE
-	var/obj/machinery/bsa/full/B = locate()
-	if(B && !B.machine_stat)
-		return TRUE
-	return FALSE
 
 /obj/machinery/bsa
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
@@ -255,6 +248,12 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
 		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].", LOG_GAME)
 
+	complete_goal()
+
+/// Marks the BSA station goal as completed.
+/obj/machinery/bsa/full/proc/complete_goal()
+	var/datum/station_goal/bluespace_cannon/bsa_goal = locate() in GLOB.station_goals
+	bsa_goal?.completed = TRUE
 
 /obj/machinery/bsa/full/proc/reload()
 	ready = FALSE

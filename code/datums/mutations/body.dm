@@ -213,7 +213,7 @@
 	if(!ismonkey(owner))
 		original_species = owner.dna.species.type
 		original_name = owner.real_name
-		owner.fully_replace_character_name(null, "monkey ([rand(1,999)])")
+		//owner.fully_replace_character_name(null, pick(GLOB.random_monkey_names)) handled by monkeyize
 	. = owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
@@ -263,7 +263,7 @@
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
-	glow = -1.5
+	glow_power = -1.5
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
 

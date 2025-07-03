@@ -65,10 +65,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "av" = (
@@ -111,6 +109,9 @@
 	},
 /obj/structure/closet/radiation,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aH" = (
@@ -243,8 +244,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "bh" = (
@@ -913,6 +912,7 @@
 /area/station/construction)
 "dN" = (
 /obj/structure/table,
+/obj/item/debug/human_spawner,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dO" = (
@@ -931,6 +931,7 @@
 "dQ" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
+/obj/item/clothing/glasses/debug,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dR" = (
@@ -1887,6 +1888,7 @@
 "ny" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
+/obj/item/debug/omnitool,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "od" = (
@@ -1956,7 +1958,7 @@
 /area/station/engineering/atmos)
 "qn" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "qF" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -1994,12 +1996,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/storage/part_replacer/bluespace/tier4,
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
 "sH" = (
 /obj/structure/table,
-/obj/item/storage/box/shipping,
+/obj/item/storage/box/debugtools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "sU" = (
@@ -2017,6 +2018,11 @@
 "tB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
+/obj/item/card/emag,
+/obj/item/storage/part_replacer/bluespace/tier4{
+	pixel_x = 0;
+	pixel_y = 0
+	},
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
 "tE" = (
@@ -2306,6 +2312,10 @@
 /obj/item/storage/box/beakers,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"FS" = (
+/obj/item/debug/human_spawner,
+/turf/open/floor/plating,
+/area/station/construction)
 "GS" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
@@ -2574,13 +2584,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"Wx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/gravity_generator)
 "WK" = (
 /obj/structure/money_bot,
 /turf/open/floor/iron/dark,
@@ -6760,7 +6763,7 @@ bE
 bE
 cN
 cY
-dn
+FS
 dn
 XE
 dn
@@ -7758,7 +7761,7 @@ aI
 AR
 ak
 at
-Wx
+bh
 bh
 bh
 br

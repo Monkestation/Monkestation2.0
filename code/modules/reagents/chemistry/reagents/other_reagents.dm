@@ -265,6 +265,13 @@
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
+	if(isoozeling(exposed_mob))
+		if(HAS_TRAIT(exposed_mob, TRAIT_SLIME_HYDROPHOBIA))
+			to_chat(exposed_mob, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+			return
+		exposed_mob.blood_volume = max(exposed_mob.blood_volume - 30, 0)
+		to_chat(exposed_mob, span_warning("The water causes you to melt away!"))
+
 	//MONKESTATION EDIT START
 	if(!is_cat_enough(exposed_mob, include_all_anime = TRUE))
 		return
@@ -783,7 +790,7 @@
 	name = "Mutation Toxin"
 	description = "A corruptive toxin."
 	color = "#13BC5E" // rgb: 19, 188, 94
-	race = /datum/species/jelly/slime
+	race = /datum/species/oozeling/slime
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/lizard
@@ -822,14 +829,14 @@
 	name = "Imperfect Mutation Toxin"
 	description = "A jellyfying toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/jelly
+	race = /datum/species/oozeling
 	taste_description = "grandma's gelatin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	if(isjellyperson(affected_mob))
+	if(isoozeling(affected_mob))
 		to_chat(affected_mob, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
-		var/species_type = pick(subtypesof(/datum/species/jelly))
+		var/species_type = pick(subtypesof(/datum/species/oozeling))
 		affected_mob.set_species(species_type)
 		holder.del_reagent(type)
 		return TRUE
@@ -2832,6 +2839,7 @@
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.cause_pain(BODY_ZONES_ALL, -5 * REM * seconds_per_tick) // MONKESTATION ADDITION
+		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
 	else
@@ -2840,6 +2848,7 @@
 		drinker.adjustFireLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustOxyLoss(2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(2 * REM * seconds_per_tick, FALSE)
+		drinker.fully_heal(HEAL_POSTIVE_DISEASES)
 	..()
 	return TRUE
 

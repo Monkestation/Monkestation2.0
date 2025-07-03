@@ -103,6 +103,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
 	// monkestation verbs start
+	/client/proc/cmd_admin_heal_oozeling,
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
 	/client/proc/log_viewer_new,
@@ -186,12 +187,12 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/toggleAI,
 // Client procs
 	/client/proc/adminchangemap,
+	/client/proc/admin_revert_map,
 	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_force_del_all,
 	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/everyone_random,
-	/client/proc/forcerandomrotate,
 	/client/proc/generate_job_config,
 	/client/proc/panicbunker,
 	/client/proc/toggle_cdn,
@@ -271,6 +272,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_puzzgrids,
 	/client/proc/view_runtimes,
 	// monkestation verbs: debugger tools
+	/client/proc/count_instances,
 	/client/proc/log_viewer_new,
 	/client/proc/getserverlogs_debug,
 	/client/proc/getcurrentlogs_debug,
@@ -568,10 +570,11 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
 
-	log_admin("[key_name(usr)] has turned stealth mode ON")
-	message_admins("[key_name_admin(usr)] has turned stealth mode ON")
+	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')")
+	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')")
 
 /client/proc/disable_stealth_mode()
+	var/previous_fakekey = holder.fakekey
 	holder.fakekey = null
 	if(isobserver(mob))
 		mob.remove_alt_appearance("stealthmin")
@@ -588,8 +591,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	REMOVE_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 
-	log_admin("[key_name(usr)] has turned stealth mode OFF")
-	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
+	log_admin("[key_name(usr)] has turned stealth mode OFF (with previous key '[previous_fakekey]')")
+	message_admins("[key_name_admin(usr)] has turned stealth mode OFF (with previous key '[previous_fakekey]')")
 
 #undef STEALTH_MODE_TRAIT
 

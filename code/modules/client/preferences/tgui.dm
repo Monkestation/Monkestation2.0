@@ -70,8 +70,3 @@
 
 	INVOKE_ASYNC(client, TYPE_VERB_REF(/client, refresh_tgui))
 	client.tgui_say?.load()
-
-/datum/preference/toggle/ui_scale/is_accessible(datum/preferences/preferences)
-	if(preferences?.parent?.byond_version < 516)
-		return FALSE
-	return ..()

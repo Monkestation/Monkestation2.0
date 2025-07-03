@@ -60,11 +60,6 @@
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
 
-//Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
-#define ORGAN_MINERAL 3 // Used for the plasmaman liver
-
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
@@ -137,6 +132,7 @@
 #define SPECIES_FLORAN "floran" //Monkestation Addition
 #define SPECIES_SATYR "satyr" //Monkestation Addition
 #define SPECIES_TERATOMA "teratoma" //Monkestation Addition
+#define SPECIES_TRAINED_MONKEY "trainedmonkey"
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
@@ -270,6 +266,7 @@
 #define NUTRITION_LEVEL_WELL_FED 450
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
+#define NUTRITION_LEVEL_VERY_HUNGRY 200
 #define NUTRITION_LEVEL_STARVING 150
 
 #define NUTRITION_LEVEL_START_MIN 250
@@ -925,6 +922,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_CC_STATUS (1<<18)
 /// Deletes any restraints on the mob (handcuffs / legcuffs)
 #define HEAL_RESTRAINTS (1<<19)
+/// Heals any postive diseases
+#define HEAL_POSTIVE_DISEASES (1<<20)
 
 /// Combination flag to only heal the main damage types.
 #define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_CLONE|HEAL_STAM)

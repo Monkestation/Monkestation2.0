@@ -1,0 +1,4 @@
+author: "EssentialTomato"
+delete-after: True
+changes:
+  - rscadd: "Added a roundstart crate that only contains meteor satellites if they are not a current station goal."

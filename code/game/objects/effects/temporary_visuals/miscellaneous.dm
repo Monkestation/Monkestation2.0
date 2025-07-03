@@ -658,3 +658,10 @@
 	. = ..()
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
+
+/obj/effect/temp_visual/jet_plume
+	name = "jet plume"
+	icon_state = "jet_plume"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	duration = 0.4 SECONDS

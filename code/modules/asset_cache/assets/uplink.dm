@@ -23,7 +23,7 @@
 			items += list(list(
 				"id" = item_path,
 				"name" = item.name,
-				"icon" = actual_item.icon,
+				"icon" = text_ref(actual_item.icon),
 				"icon_state" = actual_item.icon_state,
 				"cost" = item.cost,
 				"desc" = item.desc,

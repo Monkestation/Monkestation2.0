@@ -616,6 +616,17 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			SS.postponed_fires--
 			SS.update_nextfire()
 			continue
+		if(SS_flags & SS_HIBERNATE)
+			var/list/check_vars = SS.hibernate_checks
+			var/enter_queue
+			for(var/i in 1 to length(check_vars))
+				if(LAZYLEN(SS.vars[check_vars[i]]))
+					enter_queue = TRUE
+					break
+			if(!enter_queue)
+				SS.hibernating = TRUE
+				SS.update_nextfire()
+				continue
 		SS.enqueue()
 	. = 1
 
@@ -787,11 +798,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	log_world("MC: SoftReset: Finished.")
 	. = 1
 
+/*
 /// Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.
 /datum/controller/master/proc/laggy_byond_map_update_incoming()
 	if (!skip_ticks)
 		skip_ticks = 1
-
+*/
 
 /datum/controller/master/stat_entry(msg)
 	msg = "(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"

@@ -527,3 +527,9 @@
 	name = "bottle of laugh syrup"
 	desc = "A pump bottle containing laugh syrup. The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
 	list_reagents = list(/datum/reagent/consumable/laughsyrup = 50)
+
+//Changeling stuff
+/obj/item/reagent_containers/cup/bottle/antipathogenic_changeling
+	name = "Changeling Immunoglobulin bottle"
+	desc = "A small bottle. Contains Changeling Immunoglobulin."
+	list_reagents = list(/datum/reagent/medicine/antipathogenic/changeling = 30)

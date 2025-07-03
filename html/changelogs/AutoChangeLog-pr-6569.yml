@@ -1,0 +1,18 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Headache syndrome is now a mixture of old viro and new patho."
+  - qol: "Extrapolators secondary feature now can be used to see some minor disease information."
+  - admin: "spawning diseases via admin tools will now ask you for the maximum chance/multipilier BEFORE asking you for its current. (Gives better reference to the intended disease numbers)"
+  - balance: "Longevity syndrome no longer heals toxins on toxins lovers or toxin immune."
+  - balance: "Longevity syndrome has received a slight healing nerf to 4 brute/burn. (Was 5)"
+  - balance: "Longevity syndrome cure backlash has been significantly increased to 0.5 of damage healed (Was 0.2)"
+  - balance: "Regeneration Coma max multiplier has been reduced to 12. (Was 15)."
+  - balance: "Regeneration Coma no crit trait threshold multipilier has been reduced to 9 (Was 12)"
+  - balance: "Regeneration Coma sleeping multiplier has been increased to 0.3, to keep in line with before. (Was 0.25)"
+  - balance: "Regeneration Coma triggers at higher damage threshold of 80 brute&burn (Was 70)"
+  - bugfix: "Anima syndrome will now actually create pathogenic clouds"
+  - bugfix: "The common cold is a 'Viral infection', not a virus. Also good for clarity as they function differently in-game."
+  - bugfix: "Flesh death, Dizziness, and Flesh eating will now actually function."
+  - code_imp: "Extrapolators can no longer be used to retrieve variants or use scanners in code"
+  - rscdel: "Fever, nano-symboysis, silliconisis, and voice change have been code blocked for being nonfunctional. And wont show in play until fixed"

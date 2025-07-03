@@ -149,7 +149,7 @@
 			"id" = trick_weapon,
 			"name" = trick_weapon::name,
 			"desc" = trick_weapon::ui_desc,
-			"icon" = trick_weapon::icon,
+			"icon" = text_ref(trick_weapon::icon_preview || trick_weapon::icon),
 			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
 		))
 	return list("weapons" = weapons)
@@ -296,6 +296,11 @@
 	/// Has our target been discovered?
 	var/discovered = FALSE
 
+/datum/objective/hunter/Destroy()
+	if(target)
+		UnregisterSignal(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_BLOODSUCKER_CLAN_CHOSEN))
+	return ..()
+
 /datum/objective/hunter/proc/uncover_target()
 	if(discovered)
 		return
@@ -304,8 +309,7 @@
 	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
 	owner.current?.log_message("identified one of their targets, [key_name(target.current)].", LOG_GAME)
 	target.current?.log_message("was identified by [key_name(owner.current)], a Monster Hunter.", LOG_GAME, log_globally = FALSE)
-	var/datum/antagonist/monsterhunter/hunter_datum = owner.has_antag_datum(/datum/antagonist/monsterhunter)
-	hunter_datum?.update_static_data_for_all_viewers()
+	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_BLOODSUCKER_CLAN_CHOSEN), TYPE_PROC_REF(/datum/objective, update_explanation_text))
 
 /datum/objective/hunter/check_completion()
 	return completed || !considered_alive(target)
@@ -320,11 +324,15 @@
 	if(bloodsucker)
 		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
 	else if(heretic)
-		explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path]."
+		if(heretic.heretic_path == PATH_START)
+			explanation_text = "Slay the monster known as [target_name], a heretic."
+		else
+			explanation_text = "Slay the monster known as [target_name], a heretic of the [heretic.heretic_path]."
 	else if(target.has_antag_datum(/datum/antagonist/changeling))
 		explanation_text = "Slay the monster known as [target_name], a changeling."
 	else
 		explanation_text = "Slay the monster known as [target_name]."
+	SStgui.update_uis(owner.has_antag_datum(/datum/antagonist/monsterhunter))
 
 /datum/antagonist/monsterhunter/proc/find_monster_targets()
 	var/list/possible_targets = get_all_monster_hunter_prey(include_dead = FALSE)

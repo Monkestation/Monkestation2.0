@@ -81,6 +81,9 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/popcount
 
+	/// A lazylist of roundstart splashes, so they can be faded out AFTER antags are initialized.
+	var/list/roundstart_splashes
+
 	/// (monkestation addition) The station integrity at roundend.
 	var/roundend_station_integrity
 
@@ -129,12 +132,12 @@ SUBSYSTEM_DEF(ticker)
 		switch(L.len)
 			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
 				if(use_rare_music)
-					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+					if(L[1] == "rare" && L[2] == SSmapping.current_map.map_name)
 						music += S
-					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+					else if(L[2] == "rare" && L[1] == SSmapping.current_map.map_name)
 						music += S
 			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
-				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.current_map.map_name))
 					music += S
 			if(1) //sound.ogg -- common sound
 				if(L[1] == "exclude")
@@ -194,7 +197,7 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
-			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
+			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 			// MONKESTATION EDIT START - lobby notices
@@ -252,13 +255,7 @@ SUBSYSTEM_DEF(ticker)
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
-				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-//MONKESTATION ADDITION START
-				if(SSmapping.map_voted || SSmapping.map_force_chosen == TRUE)
-					return
-				SSmapping.mapvote()
-//MONKESTATION ADDITION END
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
@@ -350,9 +347,12 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
-	SSgamemode.current_storyteller.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
-	SSgamemode.current_storyteller.round_started = TRUE
+	if(!CONFIG_GET(flag/disable_storyteller))
+		SSgamemode.current_storyteller.round_started = TRUE
+		SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
+	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
+
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
@@ -533,11 +533,10 @@ SUBSYSTEM_DEF(ticker)
 	var/mob/living = player.transfer_character()
 	if(!living)
 		return
-	qdel(player)
 	ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 	if(living.client)
-		var/atom/movable/screen/splash/splash = new(null, living.client, TRUE)
-		splash.Fade(TRUE)
+		var/atom/movable/screen/splash/splash = new(null, null, living.client, TRUE)
+		LAZYADD(roundstart_splashes, splash)
 		living.client?.init_verbs()
 	. = living
 	var/datum/persistent_client/persistent_client = living.persistent_client
@@ -545,10 +544,10 @@ SUBSYSTEM_DEF(ticker)
 		SSchallenges.apply_challenges(persistent_client)
 		for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
 			if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				persistent_client.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 425
 		for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
 			if(living.job == processing_reward_jobs)
-				persistent_client.roundend_monkecoin_bonus += 150
+				persistent_client.roundend_monkecoin_bonus += 425
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
@@ -595,12 +594,10 @@ SUBSYSTEM_DEF(ticker)
 			queued_players -= next_in_line
 			queue_delay = 0
 
-/datum/controller/subsystem/ticker/proc/check_maprotate()
-	if(!CONFIG_GET(flag/maprotation))
-		return
-	if(world.time - SSticker.round_start_time < 10 MINUTES) //Not forcing map rotation for very short rounds.
-		return
-	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping/, maprotate))
+/datum/controller/subsystem/ticker/proc/fade_all_splashes()
+	for(var/atom/movable/screen/splash/splash in roundstart_splashes)
+		splash.Fade(TRUE)
+	LAZYNULL(roundstart_splashes)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING

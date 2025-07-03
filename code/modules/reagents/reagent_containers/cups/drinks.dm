@@ -328,6 +328,13 @@
 	list_reagents = list()
 	cap_on = FALSE
 
+/obj/item/reagent_containers/cup/glass/waterbottle/protein
+
+	name = "UNGA protein drink"
+	desc = "Hey you! Yes you! Are you weak? Then drink UNGA protein!!"
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 30, /datum/reagent/consumable/nutriment/vitamin = 10,  /datum/reagent/consumable/nutriment = 10)
+	cap_on = TRUE
+
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
@@ -341,6 +348,8 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/large/empty
 	list_reagents = list()
 	cap_on = FALSE
+
+/obj/item/reagent_containers/cup/glass/waterbottle/protein
 
 // Admin spawn
 /obj/item/reagent_containers/cup/glass/waterbottle/relic

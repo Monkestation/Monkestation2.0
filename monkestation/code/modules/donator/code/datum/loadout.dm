@@ -444,6 +444,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/plushies/ellie_valentine
+	name = "Ellie plush"
+	item_path = /obj/item/toy/plush/ellie_valentine
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //ThePooba
 /datum/loadout_item/mask/poob_mask
 	name = "Yellow gas mask"
@@ -725,6 +731,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/miscellaneous/scrubs_donator_greyscale
+	name = "Greyscale Scrubs"
+	item_path = /obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 /datum/loadout_item/plushies/donator_xsi
 	name = "XSI Plush"
 	item_path = /obj/item/toy/plush/donator_xsi
@@ -814,5 +826,83 @@
 /datum/loadout_item/suit/strange_merchant_jacket
 	name = "Strange Merchant Jacket"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/strange_merchant
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Mycah
+/datum/loadout_item/plushies/kaiser_roach
+	name = "Kaiser Roach"
+	item_path = /obj/item/toy/plush/kaiser_roach
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/ironhammer_commander_hat
+	name = "Ironhammer Commander Hat"
+	item_path = /obj/item/clothing/head/costume/ironhammer_commander_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/ironhammer_commander_jacket
+	name = "Ironhammer Commander Jacket"
+	item_path = /obj/item/clothing/suit/ironhammer_commander_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/eris_romch
+	name = "Pet Delivery Beacon - Romch"
+	item_path = /obj/item/choice_beacon/pet/donator/eris_romch
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Mycah")
+
+/datum/loadout_item/effects/eris_romch
+	ckeywhitelist = list("Mycah")
+	name = "Romch Transformation"
+	item_path = /obj/item/effect_granter/donator/eris_romch
+	requires_purchase = FALSE
+
+//Mrsmall_theclown
+/datum/loadout_item/plushies/clown_king
+	name = "Clown King"
+	item_path = /obj/item/toy/plush/clown_king
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/ironhammer_commander_hat
+	name = "Grand Clown King Crown"
+	item_path = /obj/item/clothing/head/costume/clown_king_crown
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/neck/clown_king_cloak
+	name = "Grand Clown King Cloak"
+	item_path = /obj/item/clothing/neck/clown_king_cloak
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/theclown_clownpet
+	name = "Pet Delivery Beacon - Short Clown"
+	item_path = /obj/item/choice_beacon/pet/donator/theclown_clownpet
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Mrsmall_theclown")
+
+/datum/loadout_item/effects/theclown_clownpet
+	ckeywhitelist = list("Mrsmall_theclown")
+	name = "Short Clown Transformation"
+	item_path = /obj/item/effect_granter/donator/theclown_clownpet
+	requires_purchase = FALSE
+
+//Foxei
+/datum/loadout_item/suit/star_father_suit
+	name = "Star Father Suit"
+	item_path = /obj/item/clothing/suit/star_father_suit
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Helixsix
+/datum/loadout_item/suit/peacejacket
+	name = "Peace Jacket"
+	item_path = /obj/item/clothing/suit/peacejacket
 	donator_only = TRUE
 	requires_purchase = FALSE

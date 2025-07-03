@@ -71,11 +71,8 @@ GLOBAL_PROTECT(href_token)
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
-	// monkestation edit: always try to give profiling + devtools without autoadmin
-	// (mostly so i can try to narrow down a tgui crash. and also figure out lagspikes while they're happening without the whole charade)
 	try_give_profiling()
 	try_give_devtools()
-	// monkestation end
 	if (force_active || (rank_flags() & R_AUTOADMIN))
 		activate()
 	else
@@ -115,9 +112,6 @@ GLOBAL_PROTECT(href_token)
 	GLOB.admin_datums -= target
 	QDEL_NULL(plane_debug)
 
-	// MONKESTATION REMOVAL
-	//if(owner)
-	//	dementor(owner)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]
@@ -215,7 +209,7 @@ GLOBAL_PROTECT(href_token)
 
 	if(!feedback_query.NextRow())
 		qdel(feedback_query)
-		cached_feedback_link = NO_FEEDBACK_LINK // monkestation edit: fallback to prevent issues
+		cached_feedback_link = NO_FEEDBACK_LINK
 		return null // no feedback link exists
 
 	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
@@ -414,7 +408,7 @@ GLOBAL_PROTECT(href_token)
 	return combined_flags
 
 /datum/admins/proc/try_give_devtools()
-	if(isnull(owner) || !(rank_flags() & R_DEBUG) || owner.byond_version < 516)
+	if(isnull(owner) || !(rank_flags() & R_DEBUG))
 		return
 	winset(owner, null, list("browser-options" = "+devtools"))
 
@@ -429,7 +423,7 @@ GLOBAL_PROTECT(href_token)
 		return
 
 	given_profiling = TRUE
-	world.SetConfig("APP/admin", owner?.ckey || target, "role=admin") // monkestation edit: allow this to be set when owner is null
+	world.SetConfig("APP/admin", owner?.ckey || target, "role=admin")
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin

@@ -99,3 +99,18 @@
 	current_skin = "medigel_blue"
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
 	custom_price = PAYCHECK_CREW * 2
+
+/obj/item/reagent_containers/medigel/advanced
+	name = "advanced medical gel applicator (synthflesh)"
+	desc = "An advanced medical gel applicator, designed for precision application, and a large sealed internal reservoir. This one contains synthflesh, a slightly toxic medicine capable of healing both bruises and burns."
+	worn_icon_state = "hypo"
+	inhand_icon_state = "combat_hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	icon_state = "combat_gel"
+	current_skin = "combat_gel"
+	possible_transfer_amounts = list(5,10,20,30,50)
+	volume = 300
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 300)
+	can_fill_from_container = FALSE
+	reagent_flags = TRANSPARENT

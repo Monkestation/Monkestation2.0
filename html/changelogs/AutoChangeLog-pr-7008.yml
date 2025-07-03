@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Blood Brothers is no longer a conversion antag."
+  - rscdel: "Midround BBs are gone, mostly because I have no clue how to make those work properly midround when you need at least 2 people to sign up."
+  - balance: "Tweaked the weights for antags that might spawn alongside roundstart BBs, for variety's sake."

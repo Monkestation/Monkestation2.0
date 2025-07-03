@@ -699,3 +699,76 @@
 	icon_state = "strange_merchant_hood"
 	worn_icon_state = "strange_merchant_hood"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR|HIDEEARS
+
+/obj/item/clothing/head/costume/ironhammer_commander_hat
+	name = "ironhammer commander hat"
+	desc = "It's a cowboy hat that has the logo \"IH\" on the gold band. It smells like oranges and blood."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "ironhammer_commander_hat"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/ironhammer_commander_jacket
+	name = "ironhammer commander jacket"
+	desc = "A strange commander jacket made of A plastic and nylon to seem as if it were armored. It has a logo \"IH\" on a sleeve."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "ironhammer_commander_jacket"
+	worn_icon_state = "ironhammer_commander_jacket"
+
+/obj/item/clothing/head/costume/clown_king_crown
+	name = "grand clown king crown"
+	desc = "It's the Grand Clown King CROWN!! It smells like rubber."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing_32x48.dmi'
+	icon_state = "clown_king_crown"
+	inhand_icon_state = null
+
+/obj/item/clothing/neck/clown_king_cloak
+	name = "grand clown king cloak"
+	desc = "It's the CLOAK of the Grand Clown King! It smells like nylon."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "clown_king_cloak"
+	worn_icon_state = "clown_king_cloak"
+
+/obj/item/clothing/suit/star_father_suit
+	name = "star father suit"
+	desc = "A slick black and gold robe."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "star_father_suit"
+	worn_icon_state = "star_father_suit"
+	alternative_screams = list(	'monkestation/code/modules/donator/sounds/starfathersuit_scream_1.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_2.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_3.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_4.ogg',
+								'monkestation/code/modules/donator/sounds/starfathersuit_scream_5.ogg',)
+
+/obj/item/clothing/suit/peacejacket
+	name = "peace jacket"
+	desc = "A worn brownish/green coat with a peace symbol on the back."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "peacejacket"
+	worn_icon_state = "peacejacket"
+
+/obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
+	name = "scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "greyscale_scrubs"
+	inhand_icon_state = null
+	greyscale_colors = "#7f8a7c"
+	greyscale_config = /datum/greyscale_config/donator_greyscale_scrubs
+	greyscale_config_worn = /datum/greyscale_config/donator_greyscale_scrubs_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+/datum/greyscale_config/donator_greyscale_scrubs
+	name = "scrubs"
+	icon_file = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs.json'
+/datum/greyscale_config/donator_greyscale_scrubs_worn
+	name = "scrubs"
+	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs_worn.json'

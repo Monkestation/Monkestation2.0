@@ -175,7 +175,7 @@
 	force = 25
 	wound_bonus = -5
 	bare_wound_bonus = 20
-	armour_penetration = 18
+	armour_penetration = 40
 	block_chance = 0
 	sharpness = SHARP_POINTY
 	w_class = WEIGHT_CLASS_HUGE
