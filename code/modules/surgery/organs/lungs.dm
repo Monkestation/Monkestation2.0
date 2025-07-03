@@ -972,6 +972,34 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
+/obj/item/organ/internal/lungs/oni
+	name = "oni lungs"
+	desc = "The lungs of an oni, resistant to heat and able to produce small amounts of flame to be expelled through the mouth."
+	icon_state = "lungs-ashwalker"
+	actions_types = list(/datum/action/cooldown/mob_cooldown/fire_breath/oni)
+
+	cold_level_warning_threshold = CELCIUS_TO_KELVIN(1.85 CELCIUS)
+	cold_level_hazard_threshold = CELCIUS_TO_KELVIN(-48.15 CELCIUS)
+	cold_level_danger_threshold = CELCIUS_TO_KELVIN(-128.15 CELCIUS)
+
+	heat_level_warning_threshold = CELCIUS_TO_KELVIN(126.85 CELCIUS)
+	heat_level_hazard_threshold = CELCIUS_TO_KELVIN(296.85 CELCIUS)
+	heat_level_danger_threshold = CELCIUS_TO_KELVIN(526.85 CELCIUS)
+
+/datum/action/cooldown/mob_cooldown/fire_breath/oni
+	name = "Oni Breath"
+	button_icon = 'icons/obj/wizard.dmi'
+	button_icon_state = "fireball"
+	desc = "Conjure flames within your lungs, before exhaling them in front of yourself."
+	cooldown_time = 1 MINUTES
+	fire_range = 3
+	fire_sound = 'sound/magic/fireball.ogg'
+	fire_delay = 1.5 DECISECONDS
+	fire_temperature = DRAKE_FIRE_TEMP
+	fire_volume = DRAKE_FIRE_EXPOSURE
+	fire_damage = 10
+	mech_damage = 25
+
 /obj/item/organ/internal/lungs/smoker_lungs
 	name = "smoker lungs"
 	desc = "A pair of lungs that look sickly, a result from smoking a lot."
@@ -1115,33 +1143,5 @@
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT
 #undef BREATH_RELATIONSHIP_MULTIPLIER
-
-//MONKESTATION ADDITION START
-/obj/item/organ/internal/lungs/oni
-	name = "oni lungs"
-	desc = "The lungs of an oni, resistant to heat and able to produce small amounts of flame to be expelled through the mouth."
-	icon_state = "lungs-ashwalker"
-	actions_types = list(/datum/action/cooldown/mob_cooldown/fire_breath/oni)
-	heat_level_1_threshold = 400
-	heat_level_2_threshold = 570
-	heat_level_3_threshold = 800
-	cold_level_1_threshold = 275
-	cold_level_2_threshold = 225
-	cold_level_3_threshold = 145
-
-/datum/action/cooldown/mob_cooldown/fire_breath/oni
-	name = "Oni Breath"
-	button_icon = 'icons/obj/wizard.dmi'
-	button_icon_state = "fireball"
-	desc = "Conjure flames within your lungs, before exhaling them in front of yourself."
-	cooldown_time = 1 MINUTES
-	fire_range = 3
-	fire_sound = 'sound/magic/fireball.ogg'
-	fire_delay = 1.5 DECISECONDS
-	fire_temperature = DRAKE_FIRE_TEMP
-	fire_volume = DRAKE_FIRE_EXPOSURE
-	fire_damage = 10
-	mech_damage = 25
-
 #undef SMOKER_ORGAN_HEALTH
 #undef SMOKER_LUNG_HEALING

@@ -2,69 +2,35 @@
 	name = "\improper Oni"
 	plural_form = "Onis"
 	id = SPECIES_ONI
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP
+	examine_limb_id = SPECIES_ONI
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	sexes = TRUE
-	species_traits = list(
-		MUTCOLORS,
-	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
 	inherent_traits = list(
-		TRAIT_HARDLY_WOUNDED,
+		TRAIT_MUTANT_COLORS,
+	)
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/oni,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/oni,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/oni,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/oni,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/oni,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/oni,
 	)
 	external_organs = list(
 		/obj/item/organ/external/goblin_ears = "long",
 		/obj/item/organ/external/oni_horns = "oni",
 		/obj/item/organ/external/oni_wings = "normal",
 		/obj/item/organ/external/oni_tail = "spade",
-		)
+	)
 	mutantlungs = /obj/item/organ/internal/lungs/oni
-	disliked_food = VEGETABLES | GROSS
-	liked_food = GORE | MEAT | SEAFOOD
+	mutanttongue = /obj/item/organ/internal/tongue/oni
 	maxhealthmod = 1.1
 	stunmod = 1.2
-	//speedmod = 0.1
 	payday_modifier = 1
-
-/datum/species/oni/on_species_gain(mob/living/carbon/owner, datum/species/old_species, pref_load)
-	. = ..()
-#if defined(TRAIT_FEATHERED) && (defined(SPACEMAN_DMM) || defined(OPENDREAM) || defined(CIBUILDING))
-	#warn 3301 has been merged, remove this stupid hacky movespeed modifier
-#endif
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/oni)
-
-/datum/species/oni/on_species_loss(mob/living/carbon/human/owner, datum/species/new_species, pref_load)
-	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/oni)
 
 /mob/living/carbon/human/species/oni
     race = /datum/species/oni
-
-/datum/species/oni/get_scream_sound(mob/living/carbon/human/human)
-	if(human.gender == MALE)
-		if(prob(1))
-			return 'sound/voice/human/wilhelm_scream.ogg'
-		return pick(
-			'sound/voice/human/malescream_1.ogg',
-			'sound/voice/human/malescream_2.ogg',
-			'sound/voice/human/malescream_3.ogg',
-			'sound/voice/human/malescream_4.ogg',
-			'sound/voice/human/malescream_5.ogg',
-			'sound/voice/human/malescream_6.ogg',
-		)
-
-	return pick(
-		'sound/voice/human/femalescream_1.ogg',
-		'sound/voice/human/femalescream_2.ogg',
-		'sound/voice/human/femalescream_3.ogg',
-		'sound/voice/human/femalescream_4.ogg',
-		'sound/voice/human/femalescream_5.ogg',
-	)
-
-/datum/species/oni/get_laugh_sound(mob/living/carbon/human/human)
-	if(human.gender == MALE)
-		return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
-	else
-		return 'sound/voice/human/womanlaugh.ogg'
 
 /datum/species/oni/get_species_description()
 	return "A species of slightly larger then average humanoids, with vibrant skin and features not too dissimilair from the oni of folklore."
@@ -112,15 +78,3 @@
 	)
 
 	return to_add
-
-/datum/reagent/mutationtoxin/oni
-	name = "Oni Mutation Toxin"
-	description = "A demonic toxin."
-	color = "#F11514" // RGB: 241, 21, 20
-	race = /datum/species/oni
-	taste_description = "hellfire"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_NO_RANDOM_RECIPE
-
-/datum/movespeed_modifier/oni
-	movetypes = ~FLYING
-	multiplicative_slowdown = 0.1

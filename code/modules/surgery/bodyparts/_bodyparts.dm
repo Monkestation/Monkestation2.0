@@ -47,6 +47,8 @@
 	var/is_invisible = FALSE
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
 	var/limb_id = SPECIES_HUMAN
+	///limb_id but it doesn't affect the icon_state
+	var/nonvisual_limb_id
 	//Defines what sprite the limb should use if it is also sexually dimorphic.
 	var/limb_gender = "m"
 	///Is there a sprite difference between male and female?
@@ -234,7 +236,7 @@
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
 
-	name = "[limb_id] [parse_zone(body_zone)]"
+	name = "[get_non_visual_limb_id()] [parse_zone(body_zone)]"
 	update_icon_dropped()
 	refresh_bleed_rate()
 
@@ -281,6 +283,9 @@
 		. += span_warning("The flesh on this limb appears badly perforated.")
 	if(locate(/datum/wound/burn) in wounds)
 		. += span_warning("The flesh on this limb appears badly cooked.")
+
+/obj/item/bodypart/proc/get_non_visual_limb_id()
+	return nonvisual_limb_id || limb_id
 
 /**
  * Called when a bodypart is checked for injuries.
@@ -1342,8 +1347,10 @@
 
 /obj/item/bodypart/proc/return_compoostion_precent(mob/living/carbon/checker)
 	var/matching_ids = 0
+	var/limb_id = get_non_visual_limb_id()
 	for(var/obj/item/bodypart/bodypart as anything in checker.bodyparts)
-		if((bodypart.limb_id != limb_id) && !(bodypart.limb_id in shared_composition))
+		var/their_limb_id = bodypart.get_non_visual_limb_id()
+		if((their_limb_id != limb_id) && !(their_limb_id in shared_composition))
 			continue
 		matching_ids++
 
