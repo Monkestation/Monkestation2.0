@@ -26,7 +26,8 @@
 	mutanttongue = /obj/item/organ/internal/tongue/oni
 	maxhealthmod = 1.1
 	stunmod = 1.2
-	payday_modifier = 1
+	heatmod = 0.8
+	bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT + 10 CELCIUS
 
 /mob/living/carbon/human/species/oni
 	race = /datum/species/oni
