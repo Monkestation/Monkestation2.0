@@ -33,7 +33,7 @@
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 	slasherdatum.stalk_precent = 0
 	if(slasherdatum?.stalked_human)
-		slasherdatum.stalked_human.tracking_beacon.Destroy()
+		QDEL_NULL(slasherdatum.stalked_human.tracking_beacon)
 		var/datum/component/team_monitor/owner_monitor = owner.mind.current.team_monitor
 		owner_monitor.hide_hud()
 

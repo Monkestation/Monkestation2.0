@@ -438,8 +438,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/item/circuitboard/machine/techfab/department/science,
 /obj/item/mod/module/jetpack,
+/obj/item/flatpacked_machine,
+/obj/item/flatpacked_machine/ore_silo,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bn" = (
@@ -1368,6 +1369,19 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = -8;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "dW" = (
@@ -1971,10 +1985,10 @@
 	chamber_id = "deepo2";
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/power)
 "fD" = (
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/deepstorage/power)
 "fE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2028,12 +2042,12 @@
 /obj/machinery/air_sensor{
 	chamber_id = "deepo2"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/power)
 "fM" = (
 /obj/machinery/atmospherics/miner/oxygen,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/power)
 "fN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2281,7 +2295,7 @@
 	chamber_id = "deepn2";
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/deepstorage/power)
 "gw" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -2353,12 +2367,12 @@
 /obj/machinery/air_sensor{
 	chamber_id = "deepn2"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/deepstorage/power)
 "gE" = (
 /obj/machinery/atmospherics/miner/nitrogen,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/deepstorage/power)
 "gF" = (
 /turf/closed/wall/r_wall,
@@ -2386,7 +2400,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gL" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "RTG Observation"
+	name = "RTG Chamber"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -2408,7 +2422,7 @@
 	chamber_id = "deepn2";
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/deepstorage/power)
 "gQ" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -2473,14 +2487,14 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gZ" = (
-/obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
+/obj/machinery/power/rtg/portable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "ha" = (
-/obj/machinery/power/rtg/advanced,
 /obj/machinery/light/small/directional/south,
 /obj/structure/cable,
+/obj/machinery/power/rtg/portable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hb" = (
@@ -2642,7 +2656,9 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "jD" = (
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/plumbing/ooze_compressor{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -2672,7 +2688,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "lj" = (
-/turf/closed/wall,
+/turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/power)
 "lB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -2761,7 +2777,7 @@
 	chamber_id = "deepo2";
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/deepstorage/power)
 "qM" = (
 /obj/effect/turf_decal/stripes{
@@ -2865,7 +2881,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "vc" = (
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/plumbing/ooze_compressor{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -2970,6 +2988,15 @@
 	},
 /turf/open/floor/light,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"xn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/radiation,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/power)
 "xI" = (
 /obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -3187,6 +3214,15 @@
 "Iy" = (
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"Jp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/radiation,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage/power)
 "JC" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -3264,6 +3300,18 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
+"Nl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/table,
+/obj/machinery/coffeemaker/impressa,
+/obj/item/storage/box/coffeepack,
+/obj/item/storage/box/coffeepack/robusta,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "Nw" = (
 /obj/machinery/corral_corner{
 	mapping_id = "s1"
@@ -4525,7 +4573,7 @@ cH
 cT
 dk
 dD
-dU
+Nl
 pP
 eE
 eR
@@ -5208,9 +5256,9 @@ LO
 fo
 fA
 fJ
-gb
+xn
 gk
-fA
+Jp
 gC
 gb
 gW
@@ -5261,7 +5309,7 @@ ZP
 fB
 fK
 hq
-lj
+ZP
 fB
 fK
 hq
@@ -5313,7 +5361,7 @@ ZP
 fC
 fL
 qm
-lj
+ZP
 gv
 gD
 gP
@@ -5362,10 +5410,10 @@ de
 hW
 LO
 ZP
-fD
-fM
-fD
 lj
+fM
+lj
+ZP
 fD
 gE
 fD

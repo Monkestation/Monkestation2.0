@@ -321,7 +321,7 @@
 	id = "mech_grenade_launcher"
 	display_name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("explosive_weapons")
+	prereq_ids = list("chemical_weapons")
 	design_ids = list(
 		"mech_grenade_launcher",
 		"mech_grenade_launcher_ammo",
@@ -332,7 +332,7 @@
 	id = "mech_missile_rack"
 	display_name = "Exosuit Weapon (BRM-6 Missile Rack)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("explosive_weapons")
+	prereq_ids = list("chemical_weapons")
 	design_ids = list(
 		"mech_missile_rack",
 		"mech_missile_rack_ammo",
@@ -343,7 +343,7 @@
 	id = "clusterbang_launcher"
 	display_name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("explosive_weapons")
+	prereq_ids = list("chemical_weapons")
 	design_ids = list(
 		"clusterbang_launcher",
 		"clusterbang_launcher_ammo",

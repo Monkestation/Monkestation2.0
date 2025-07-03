@@ -1,0 +1,5 @@
+author: "MrBagHead"
+delete-after: True
+changes:
+  - rscadd: "The Seed Splicer's infusion process has been overhauled. Synthesizable Reagents from a beaker can now be infused into a seed one by one. Each reagent in the beaker has a chance to be infused into the seed, with the chance increasing based on the reagent's volume (1% per 5 units)."
+  - balance: "Infusing seeds now causes damage. The total volume of reagents in the beaker will inflict a base amount of damage to the seed (0.1 damage per unit of reagent). Seeds can be destroyed if they take too much damage."

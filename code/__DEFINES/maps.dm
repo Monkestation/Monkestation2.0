@@ -257,7 +257,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 #define ZTRAITS_ECLIPSE list(\
 	list(\
-		ZTRAIT_LINKAGE = CROSSLINKED, \
 		ZTRAIT_UP = TRUE, \
 		ZTRAIT_GRAVITY = TRUE, \
 		ZTRAIT_MINING = TRUE, \
@@ -268,7 +267,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 		ZTRAIT_ECLIPSE = TRUE, \
 	), \
 	list(\
-		ZTRAIT_LINKAGE = CROSSLINKED, \
 		ZTRAIT_DOWN = TRUE, \
 		ZTRAIT_GRAVITY = TRUE, \
 		ZTRAIT_MINING = TRUE, \
