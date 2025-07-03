@@ -78,11 +78,15 @@
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
+	if(should_modify_speech(source, speech_args))
+		modify_speech(source, speech_args)
+
+/obj/item/organ/internal/tongue/proc/should_modify_speech(datum/source, list/speech_args)
 	if(speech_args[SPEECH_LANGUAGE] in languages_native) // Speaking a native language?
 		return FALSE // Don't modify speech
 	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers - I hate this but I simply cannot get these to combine into one statement
 		return FALSE // Don't modify speech
-	modify_speech(source, speech_args)
+	return TRUE
 
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
 	return speech_args[SPEECH_MESSAGE]
@@ -195,6 +199,7 @@
 	languages_native = list(/datum/language/draconic, /datum/language/ashtongue)
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
+	var/static/list/speech_replacements = list(new /regex("s+", "g") = "sss", new /regex("S+", "g") = "SSS", new /regex(@"(\w)x", "g") = "$1kss", new /regex(@"(\w)X", "g") = "$1KSSS", new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1", new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1")
 
 	//MONKESTATION EDIT START
 
@@ -228,22 +233,9 @@
 	if(prob(10))
 		draw_length += 2
 
-/obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
-	var/static/regex/lizard_hiss = new("s+", "g")
-	var/static/regex/lizard_hiSS = new("S+", "g")
-	var/static/regex/lizard_kss = new(@"(\w)x", "g")
-	var/static/regex/lizard_kSS = new(@"(\w)X", "g")
-	var/static/regex/lizard_ecks = new(@"\bx([\-|r|R]|\b)", "g")
-	var/static/regex/lizard_eckS = new(@"\bX([\-|r|R]|\b)", "g")
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = lizard_hiss.Replace(message, repeat_string(draw_length, "s"))
-		message = lizard_hiSS.Replace(message, repeat_string(draw_length, "S"))
-		message = lizard_kss.Replace(message, "$1k[repeat_string(max(draw_length - 1, 1), "s")]")
-		message = lizard_kSS.Replace(message, "$1K[repeat_string(max(draw_length - 1, 1), "S")]")
-		message = lizard_ecks.Replace(message, "eck[repeat_string(max(draw_length - 2, 1), "s")]$1")
-		message = lizard_eckS.Replace(message, "ECK[repeat_string(max(draw_length - 2, 1), "S")]$1")
-	speech_args[SPEECH_MESSAGE] = message
+/obj/item/organ/internal/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
 	//MONKESTATION EDIT END
 
@@ -651,6 +643,21 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		'sound/creatures/monkey/monkey_screech_6.ogg',
 		'sound/creatures/monkey/monkey_screech_7.ogg',
 	)
+
+/obj/item/organ/internal/tongue/monkey/hindered
+	modifies_speech = TRUE
+
+/obj/item/organ/internal/tongue/monkey/hindered/get_possible_languages()
+	return list(
+		/datum/language/monkey,
+	)
+
+/obj/item/organ/internal/tongue/monkey/hindered/could_speak_language(datum/language/language_path)
+	if(owner && HAS_TRAIT(owner, TRAIT_SIGN_LANG))
+		var/list/all_languages = subtypesof(/datum/language)
+		return (language_path in all_languages)
+	else
+		return (language_path in languages_possible)
 
 /obj/item/organ/internal/tongue/monkey/get_laugh_sound()
 	return 'monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'

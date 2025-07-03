@@ -22839,9 +22839,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
 "bSP" = (
-/obj/item/kirbyplants/organic/plant2,
 /obj/structure/sign/departments/engineering/directional/south,
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bSQ" = (
@@ -31719,9 +31719,6 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Storage"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31729,6 +31726,9 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "faA" = (
@@ -32022,6 +32022,7 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
+/obj/machinery/vending/mechcomp,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "fjM" = (
@@ -49991,6 +49992,9 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/large/style_random,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/grass,
 /area/station/medical/storage)
 "urP" = (

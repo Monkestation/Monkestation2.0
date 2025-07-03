@@ -137,7 +137,6 @@
 	var/mob/living/carbon/C = clone
 	if(istype(C) && istype(O))
 		C.real_name = O.real_name
-		C.update_name_tag(C.real_name) // monkestation edit: name tags
 		O.dna.transfer_identity(C)
 		C.updateappearance(mutcolor_update=1)
 	if(owner.mind)
@@ -755,7 +754,6 @@
 	clone = new typepath(owner.loc)
 	clone.real_name = owner.real_name
 	clone.name = clone.real_name
-	clone.update_name_tag(clone.real_name)
 	var/mob/living/carbon/carbon_owner = owner
 	var/mob/living/carbon/carbon_clone = clone
 	if(istype(carbon_owner) && istype(carbon_clone))
@@ -837,7 +835,6 @@
 		var/mob/living/carbon/human/H = owner
 		originalDNA.transfer_identity(H)
 		H.real_name = originalname
-		H.update_name_tag(originalname) // monkestation edit: name tags
 		H.updateappearance(mutcolor_update=1)
 
 /datum/status_effect/brokenpeace

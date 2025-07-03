@@ -181,7 +181,7 @@
 	prompt_name = "a syndicate comms agent"
 	you_are_text = "You are a syndicate comms agent, employed in a remote research bunker."
 	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has a station in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
-	important_text = "DO NOT abandon the base. However, you may freely explore your surrounding within your current space quadrant (Z-Level)"
+	important_text = "DO NOT abandon the base. However, you may freely explore your surrounding within your current space quadrant (Z-Level). Do not directly interfere with the Nanotrasen station without the express permission of Syndicate Command."
 	outfit = /datum/outfit/lavaland_syndicate/comms
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/deepstorage
@@ -191,7 +191,7 @@
 	prompt_name = "a syndicate science technician"
 	you_are_text = "You are a syndicate science technician, employed in a remote research bunker developing biological weapons."
 	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has a station in this sector. Continue your research as best you can, and try to keep a low profile."
-	important_text = "DO NOT abandon the base or let it fall into enemy hands! However, you may freely explore your surrounding within your current space quadrant (Z-Level)"
+	important_text = "DO NOT abandon the base or let it fall into enemy hands! However, you may freely explore your surrounding within your current space quadrant (Z-Level). Do not directly interfere with the Nanotrasen station without the express permission of Syndicate Command. Do not test bioweapons on the Nanotrasen station without Syndicate Command's approval either."
 	outfit = /datum/outfit/deepstorage_syndicate
 
 /datum/outfit/deepstorage_syndicate

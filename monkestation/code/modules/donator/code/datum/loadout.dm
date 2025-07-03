@@ -444,6 +444,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/plushies/ellie_valentine
+	name = "Ellie plush"
+	item_path = /obj/item/toy/plush/ellie_valentine
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //ThePooba
 /datum/loadout_item/mask/poob_mask
 	name = "Yellow gas mask"
@@ -725,6 +731,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/miscellaneous/scrubs_donator_greyscale
+	name = "Greyscale Scrubs"
+	item_path = /obj/item/clothing/under/rank/medical/scrubs/donator_greyscale
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 /datum/loadout_item/plushies/donator_xsi
 	name = "XSI Plush"
 	item_path = /obj/item/toy/plush/donator_xsi
@@ -885,5 +897,12 @@
 /datum/loadout_item/suit/star_father_suit
 	name = "Star Father Suit"
 	item_path = /obj/item/clothing/suit/star_father_suit
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Helixsix
+/datum/loadout_item/suit/peacejacket
+	name = "Peace Jacket"
+	item_path = /obj/item/clothing/suit/peacejacket
 	donator_only = TRUE
 	requires_purchase = FALSE

@@ -59,3 +59,6 @@
 	caliber = CALIBER_40MM
 	max_ammo = 3
 	multiload = FALSE
+
+/obj/item/gun/ballistic/shotgun/china_lake/restricted
+	pin = /obj/item/firing_pin/implant/pindicate
