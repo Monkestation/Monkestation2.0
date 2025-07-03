@@ -377,9 +377,9 @@
 	desc = "A single use medipen that gives a long lasting magnetization effect, causing you to pull in ores laying on the ground. <b> WARNING : CONTENTS MAY BE LIGHTLY ALCOHOLIC IN NATURE </b>"
 	icon_state = "invispen"
 	base_icon_state = "invispen"
-	amount_per_transfer_from_this = 30
-	volume = 30
-	list_reagents = list(/datum/reagent/consumable/ethanol/fetching_fizz = 30)
+	amount_per_transfer_from_this = 20
+	volume = 20
+	list_reagents = list(/datum/reagent/consumable/ethanol/fetching_fizz = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozling //oozling safe version of the luxury pen!
 	name = "luxury oozling medipen"
