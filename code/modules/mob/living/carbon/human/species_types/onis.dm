@@ -37,6 +37,14 @@
 /datum/species/oni/get_species_description()
 	return "A species of slightly larger then average humanoids, with vibrant skin and features not too dissimilair from the oni of folklore."
 
+/datum/species/oni/prepare_human_for_preview(mob/living/carbon/human/oni)
+	oni.dna.features["oni_horns"] = "Oni"
+	oni.dna.features["oni_wings"] = "Normal"
+	oni.dna.features["oni_tail"] = "Spade"
+	var/datum/color_palette/generic_colors/colors = oni.dna.color_palettes[/datum/color_palette/generic_colors]
+	colors.mutant_color = "#2D80CC"
+	oni.update_body(TRUE)
+
 /datum/species/oni/create_pref_unique_perks()
 	var/list/to_add = list()
 
