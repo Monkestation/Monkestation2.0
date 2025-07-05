@@ -743,3 +743,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		message = floran_ecks.Replace(message, "eck[repeat_string(max(draw_length - 2, 1), "s")]$1")
 		message = floran_eckS.Replace(message, "ECK[repeat_string(max(draw_length - 2, 1), "S")]$1")
 	speech_args[SPEECH_MESSAGE] = message
+
+/obj/item/organ/internal/tongue/oni
+	name = "oni tongue"
+	liked_foodtypes = GORE | MEAT | SEAFOOD
+	disliked_foodtypes = VEGETABLES | GROSS
