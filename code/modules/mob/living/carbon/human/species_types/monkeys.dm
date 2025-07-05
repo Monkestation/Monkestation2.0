@@ -47,11 +47,6 @@
 
 	// NON-MODULAR CHANGES BELOW
 
-	//Makes hats appear 1 pixel above so the eyes are still visible, and brings belt items down 1 pixel so they fit on the chest.
-	offset_features = list(
-		OFFSET_HEAD = list(0,1),
-		OFFSET_BELT = list(0,-1),
-		)
 	//Default eyes have the side portrait icons on the wrong side, this fixes that.
 	eyes_icon = 'monkestation/icons/mob/species/monkey/bodyparts.dmi'
 	///Whether or not this monkey gets the innate effects of running over tables and the gene activated, used to exclude subtypes from getting it.

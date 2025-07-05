@@ -13,10 +13,19 @@
 	unarmed_damage_high = 5
 	unarmed_stun_threshold = 10
 	body_zone = BODY_ZONE_L_ARM
+	/// Datum describing how to offset things worn on the hands of this arm, note that an x offset won't do anything here
+	var/datum/worn_feature_offset/worn_glove_offset
+	/// Datum describing how to offset things held in the hands of this arm, the x offset IS functional here
+	var/datum/worn_feature_offset/held_hand_offset
 
 	biological_state = BIO_STANDARD_JOINTED
 	/// Basically, bodypart traits that ONLY apply when this arm is the active hand of the mob
 	var/list/hand_traits
+
+/obj/item/bodypart/arm/Destroy()
+	QDEL_NULL(worn_glove_offset)
+	QDEL_NULL(held_hand_offset)
+	return ..()
 
 /obj/item/bodypart/arm/set_owner(new_owner)
 	. = ..()
