@@ -1,6 +1,6 @@
 /datum/disease/acute/premade/cold
 	name = "Common Cold"
-	form = "Virus"
+	form = "Viral Infection"
 	category = DISEASE_COLD
 
 	symptoms = list(

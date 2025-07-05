@@ -6,6 +6,7 @@
 /obj/structure/closet/secure_closet/captains/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/civ(src)
 	new /obj/item/storage/backpack/captain(src)
 	new /obj/item/storage/backpack/satchel/cap(src)
 	new /obj/item/storage/backpack/duffelbag/captain(src)
@@ -28,6 +29,7 @@
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
+	new /obj/item/card/id/departmental_budget/srv(src)
 	new /obj/item/dog_bone(src)
 	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
@@ -54,6 +56,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/sec(src)
 	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/storage/bag/garment/hos(src)
