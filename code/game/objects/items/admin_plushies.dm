@@ -71,6 +71,19 @@
 	item_path = /obj/item/toy/plush/admin/andrea
 	item_cost = 7500
 
+/obj/item/toy/plush/admin/antlers
+	name = "Nikki"
+	desc = "She seems dangerous. There's a tag wrapped around one of the ears... \"property of Antlers\". You ponder how a pair of antlers could own such an object."
+	icon_state = "antlers"
+	gender = FEMALE
+/datum/loadout_item/plushies/antlers
+	name = "Nikki Plush"
+	item_path = /obj/item/toy/plush/admin/antlers
+/datum/store_item/plushies/antlers
+	name = "Nikki Plush"
+	item_path = /obj/item/toy/plush/admin/antlers
+	item_cost = 7500
+
 /obj/item/toy/plush/admin/pippi
 	name = "pippi"
 	desc = "..."
