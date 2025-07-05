@@ -583,6 +583,14 @@
 	desc = "A celestial ladder that violates the laws of physics."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder00"
+	/// List of z-traits that will be ignored by the ladder.
+	var/static/list/banned_ztraits = list(
+		ZTRAIT_AWAY,
+		ZTRAIT_CENTCOM,
+		ZTRAIT_ECLIPSE,
+		ZTRAIT_REEBE,
+		ZTRAIT_RESERVED,
+	)
 
 /obj/item/jacobs_ladder/attack_self(mob/user)
 	var/turf/T = get_turf(src)
@@ -591,7 +599,7 @@
 	to_chat(user, span_notice("You unfold the ladder. It extends much farther than you were expecting."))
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_reserved_level(i) || is_away_level(i))
+		if(SSmapping.level_has_any_trait(i, banned_ztraits))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
