@@ -87,7 +87,8 @@
 #define FACTION_TAMED "tamed"
 ///Creates associated with plague doctor
 #define FACTION_PLAGUE "plague"
-
+/// Bingles
+#define FACTION_BINGLE "bingle"
 // Antagonist factions
 
 /// Cultists and their constructs
