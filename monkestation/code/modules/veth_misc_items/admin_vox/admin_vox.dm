@@ -5,20 +5,12 @@
 	. = ..()
 	QDEL_NULL(vox_holder)
 
-/client/proc/AdminVOX()
-	set name = "VOX"
-	set category = "Admin"
-	set desc = "Allows unrestricted use of the AI VOX announcement system."
+ADMIN_VERB(AdminVOX, R_ADMIN, FALSE, "VOX", "Allows unrestricted use of the AI VOX announcement system.", ADMIN_CATEGORY_MAIN)
+	if(QDELETED(user.holder.vox_holder))
+		user.holder.vox_holder = new(user.holder)
+	user.holder.vox_holder.ui_interact(user.mob)
 
-	if(!check_rights(NONE))
-		message_admins("[key_name(usr)] attempted to use AdminVOX without sufficient rights.")
-		return
-
-	if(QDELETED(holder.vox_holder))
-		holder.vox_holder = new(holder)
-	holder.vox_holder.ui_interact(usr)
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show VOX Announcement")
+	BLACKBOX_LOG_ADMIN_VERB("Show VOX Announcement")
 
 /datum/vox_holder/admin
 	cooldown = 5 SECONDS

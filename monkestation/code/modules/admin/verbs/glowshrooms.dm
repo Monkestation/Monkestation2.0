@@ -1,17 +1,12 @@
-/client/proc/delete_all_glowshrooms()
-	set category = "Admin.Game"
-	set name = "Delete All Glowshrooms"
-	set desc = "Deletes all glowshrooms in the world. Use this instead of SDQL, as this prevents them from spreading mid-deletion."
-	if(!check_rights(R_ADMIN))
-		return
+ADMIN_VERB(delete_all_glowshrooms, R_ADMIN, FALSE, "Delete All Glowshrooms", "Deletes all glowshrooms in the world. Use this instead of SDQL, as this prevents them from spreading mid-deletion.", ADMIN_CATEGORY_GAME)
 	var/static/currently_nuking_glowshrooms = FALSE
 	if(currently_nuking_glowshrooms)
-		to_chat(src, span_warning("Someone is already in the process of clearing all glowshrooms!"))
+		to_chat(user, span_warning("Someone is already in the process of clearing all glowshrooms!"))
 		return
 
 	currently_nuking_glowshrooms = TRUE
-	message_admins("[key_name_admin(src)] started deleting all glowshrooms.")
-	log_admin("[key_name(src)] started deleting all glowshrooms.")
+	message_admins("[key_name_admin(user)] started deleting all glowshrooms.")
+	log_admin("[key_name(user)] started deleting all glowshrooms.")
 	ASYNC
 		nuke_glowshrooms()
 		currently_nuking_glowshrooms = FALSE
@@ -37,13 +32,7 @@
 	message_admins("Cleared a total of [glowshrooms_deleted] glowshrooms.")
 	log_admin("Cleared a total of [glowshrooms_deleted] glowshrooms.")
 
-/client/proc/toggle_glowshroom_spread()
-	set category = "Admin.Game"
-	set name = "Toggle Glowshroom Spreading"
-	set desc = "Toggles whether glowshrooms can spread or not. You don't need to use this if you're using the Delete All Glowshrooms verb, as that handles that on its own."
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(toggle_glowshroom_spread, R_ADMIN, FALSE, "Toggle Glowshroom Spreading", "Toggles whether glowshrooms can spread or not. You don't need to use this if you're using the Delete All Glowshrooms verb, as that handles that on its own.", ADMIN_CATEGORY_GAME)
 	SSglowshrooms.enable_spreading = !SSglowshrooms.enable_spreading
-	message_admins("[key_name_admin(src)] toggled glowshroom spreading [SSglowshrooms.enable_spreading ? "on" : "off"].")
-	log_admin("[key_name(src)] toggled glowshroom spreading [SSglowshrooms.enable_spreading ? "on" : "off"].")
+	message_admins("[key_name_admin(user)] toggled glowshroom spreading [SSglowshrooms.enable_spreading ? "on" : "off"].")
+	log_admin("[key_name(user)] toggled glowshroom spreading [SSglowshrooms.enable_spreading ? "on" : "off"].")

@@ -10,19 +10,15 @@
 		CHECK_TICK
 	return lighting
 
-/client/proc/export_lighting_info()
-	set name = "Export Lighting Info"
-	set desc = "Exports a JSON file containing info about the lighting level of all floor turfs on a given Z-level."
-	set category = "Mapping"
-
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB_VISIBILITY(export_lighting_info, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(export_lighting_info, R_DEBUG, FALSE, "Export Lighting Info", "Shows the range of cameras on the station.", ADMIN_CATEGORY_MAPPING)
 	var/list/options = list("All Station Z-Levels")
-	var/turf/our_turf = get_turf(mob)
-	if(!isnewplayer(mob) && !isnull(our_turf))
+	var/turf/our_turf = get_turf(user.mob)
+
+	if(!isnewplayer(user.mob) && !isnull(our_turf))
 		options += "Current Z-Level"
 	var/list/zs
-	switch(tgui_alert(src, "What Z-levels would you like to export lighting info for?", "Select Z Levels", options + list("Cancel")))
+	switch(tgui_alert(user.mob, "What Z-levels would you like to export lighting info for?", "Select Z Levels", options + list("Cancel")))
 		if("All Station Z-Levels")
 			zs = SSmapping.levels_by_trait(ZTRAIT_STATION)
 		if("Current Z-Level")
@@ -38,10 +34,10 @@
 			for(var/z in zs)
 				lighting_info["[z]"] = encode_lighting_levels(z)
 		else
-			to_chat(src, span_warning("No Z-levels selected!"))
+			to_chat(user, span_warning("No Z-levels selected!"))
 			return
 
-	var/file_name = "[ckey]_lighting_info_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
+	var/file_name = "[user.ckey]_lighting_info_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
 	var/json_file = file("tmp/[file_name]")
 	WRITE_FILE(json_file, json_encode(lighting_info))
-	DIRECT_OUTPUT(src, ftp(json_file, file_name))
+	DIRECT_OUTPUT(user, ftp(json_file, file_name))

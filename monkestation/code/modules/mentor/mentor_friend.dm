@@ -1,60 +1,44 @@
 //Section for the Mentor Friend verb run test
-
-/client/proc/imaginary_friend()
-	set category = "Mentor"
-	set name = "Become Imaginary Friend"
-
-	if(!usr.client.is_mentor())
-		return
-
-	if(istype(usr, /mob/camera/imaginary_friend/mentor))
-		to_chat(usr, span_warning("You are already someone's imaginary friend!"))
-		return
-
-	if(!isobserver(usr))
-		to_chat(usr, span_warning("You can only be an imaginary friend when you are observing."))
+MENTOR_VERB(imaginary_friend, R_MENTOR, FALSE, "Become Imaginary Friend", "Become someones imaginary friend.", MENTOR_CATEGORY_MAIN)
+	if(istype(user.mob, /mob/camera/imaginary_friend/mentor))
+		to_chat(user, span_warning("You are already someone's imaginary friend!"))
 		return
 
 	var/mob/living/mentee
-
-	switch(input("Select by:", "Imaginary Friend") as null|anything in list("Key", "Mob"))
+	switch(input(user, "Select by:", "Imaginary Friend") as null|anything in list("Key", "Mob"))
 		if("Key")
-			var/client/friendclient = input("Please, select a key.", "Imaginary Friend") as null|anything in sort_key(GLOB.clients)
+			var/client/friendclient = input(user, "Please, select a key.", "Imaginary Friend") as null|anything in sort_key(GLOB.clients)
 			if(!friendclient)
 				return
 			mentee = friendclient.mob
 		if("Mob")
-			var/mob/friendmob = input("Please, select a mob.", "Imaginary Friend") as null|anything in sort_names(GLOB.alive_player_list)
+			var/mob/friendmob = input(user, "Please, select a mob.", "Imaginary Friend") as null|anything in sort_names(GLOB.alive_player_list)
 			if(!friendmob)
 				return
 			mentee = friendmob
 
-	if(!isobserver(usr))
+	if(!isobserver(user.mob))
+		to_chat(user, span_warning("You can only be an imaginary friend when you are observing."))
 		return
 
 	if(!istype(mentee))
-		to_chat(usr, span_warning("Selected mob is not alive."))
+		to_chat(user, span_warning("Selected mob is not alive."))
 		return
 
 	var/mob/camera/imaginary_friend/mentor/mentorfriend = new(get_turf(mentee), mentee)
-	mentorfriend.PossessByPlayer(usr.key)
-
+	mentorfriend.PossessByPlayer(user.key)
 	log_admin("[key_name(mentorfriend)] started being the imaginary friend of [key_name(mentee)].")
 	message_admins("[key_name(mentorfriend)] started being the imaginary friend of [key_name(mentee)].")
+	BLACKBOX_LOG_MENTOR_VERB("Become Imaginary Friend")
 
-/client/proc/end_imaginary_friendship()
-	set category = "Mentor"
-	set name = "End Imaginary Friendship"
-
-	if(!usr.client.is_mentor())
+MENTOR_VERB(end_imaginary_friendship, R_MENTOR, FALSE, "End Imaginary Friendship", "Break the heart of your friend and end your friendship.", MENTOR_CATEGORY_MAIN)
+	if(!istype(user.mob, /mob/camera/imaginary_friend/mentor))
+		to_chat(user, span_warning("You aren't anybody's imaginary friend!"))
 		return
 
-	if(!istype(usr, /mob/camera/imaginary_friend/mentor))
-		to_chat(usr, span_warning("You aren't anybody's imaginary friend!"))
-		return
-
-	var/mob/camera/imaginary_friend/mentor/mentorfriend = usr
+	var/mob/camera/imaginary_friend/mentor/mentorfriend = user.mob
 	mentorfriend.unmentor()
+	BLACKBOX_LOG_MENTOR_VERB("End Imaginary Friendship")
 
 //Section for the Mentor Friend mob.
 /mob/camera/imaginary_friend/mentor
@@ -137,7 +121,7 @@
 
 /client/proc/create_ifriend(mob/living/friend_owner, seek_confirm = FALSE)
 	var/client/C = usr.client
-	if(!usr.client.is_mentor())
+	if(!C.mentor_datum?.check_for_rights(R_MENTOR))
 		return
 
 	if(istype(C.mob, /mob/camera/imaginary_friend))
@@ -169,6 +153,3 @@
 	if(href_list["mentor_friend"])
 		var/mob/M = locate(href_list["mentor_friend"])
 		create_ifriend(M, TRUE)
-
-//for Mentor Chat Messages
-
