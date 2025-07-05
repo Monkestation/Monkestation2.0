@@ -2197,6 +2197,9 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/east,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -8615,10 +8618,8 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/gun/energy/ionrifle{
-	pixel_y = -6
-	},
 /obj/effect/turf_decal/delivery,
+/obj/item/crowbar/large,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "cDg" = (
@@ -22924,13 +22925,24 @@
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "gEO" = (
-/obj/structure/rack/gunrack,
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 4
 	},
 /obj/structure/sign/poster/official/ion_rifle/directional/east,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/armory_spawn/smg,
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 8;
+	pixel_x = -1
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 3;
+	pixel_x = 2
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = -3;
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -27201,9 +27213,6 @@
 /area/station/service/forge)
 "hPg" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/hooded/ablative{
-	pixel_y = 7
-	},
 /obj/item/gun/energy/temperature/security{
 	pixel_y = 5
 	},
@@ -27216,6 +27225,11 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
+/obj/item/gun/energy/ionrifle{
+	pixel_y = 0;
+	pixel_x = 0
+	},
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "hPi" = (
@@ -36091,7 +36105,6 @@
 /turf/open/floor/carpet/grimey,
 /area/station/commons/lounge)
 "kjG" = (
-/obj/structure/rack/gunrack,
 /obj/effect/turf_decal/tile/dark_red/half{
 	dir = 1
 	},
@@ -36100,7 +36113,19 @@
 /obj/machinery/digital_clock/directional/north{
 	pixel_y = 37
 	},
-/obj/effect/spawner/armory_spawn/mod_lasers_big,
+/obj/structure/rack,
+/obj/item/gun/energy/e_gun{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/e_gun{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/gun/energy/e_gun{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -40371,13 +40396,66 @@
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/hos)
 "lqX" = (
-/obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/effect/turf_decal/tile/dark_red/half,
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Lethal"
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Armory - Interior"
 	},
+/obj/effect/turf_decal/tile/dark_red/half,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
@@ -47068,19 +47146,64 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos)
 "njg" = (
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Non-lethal"
+	},
+/obj/item/storage/box/rubbershot{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/storage/box/rubbershot,
+/obj/item/storage/box/rubbershot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/tile/dark_red/anticorner{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/south,
-/obj/structure/closet/ammunitionlocker/useful,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/armory/rubbershot,
-/turf/open/floor/iron/dark/textured_corner{
-	dir = 4
-	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "njl" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
@@ -77495,8 +77618,19 @@
 	},
 /obj/machinery/requests_console/auto_name/directional/north,
 /obj/effect/turf_decal/delivery,
-/obj/structure/rack/gunrack,
-/obj/effect/spawner/armory_spawn/mod_lasers_small,
+/obj/structure/rack,
+/obj/item/gun/energy/laser{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 5;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 2;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "vwz" = (

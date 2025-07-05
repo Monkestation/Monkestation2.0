@@ -2268,6 +2268,18 @@
 	pixel_y = -2
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/melee/baton/security/loaded{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "alx" = (
@@ -3300,14 +3312,22 @@
 "arP" = (
 /obj/structure/table,
 /obj/item/storage/box/firingpins{
-	pixel_y = 4
+	pixel_y = 12;
+	pixel_x = 7
 	},
 /obj/item/storage/box/firingpins{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 12
 	},
-/obj/item/storage/lockbox/loyalty,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/handcuffs{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_x = 7;
+	pixel_y = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "arS" = (
@@ -3470,8 +3490,8 @@
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/hooded/ablative,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "atd" = (
@@ -3609,22 +3629,72 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "aun" = (
-/obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet{
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Lethal"
+	},
+/obj/item/storage/box/lethalshot{
 	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot{
+	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/directional/west,
-/obj/structure/sign/poster/official/twelve_gauge/directional/west,
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
 /area/station/ai_monitored/security/armory)
 "auo" = (
 /obj/vehicle/ridden/secway,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/item/key/security{
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "auv" = (
@@ -36915,11 +36985,9 @@
 	pixel_x = 10;
 	pixel_y = -4
 	},
-/obj/item/key/security{
-	pixel_x = -6
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/ai/directional/north,
+/obj/item/crowbar/large,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "hke" = (
@@ -55673,9 +55741,9 @@
 /turf/open/floor/wood,
 /area/station/maintenance/aft/lesser)
 "opt" = (
-/obj/machinery/flasher/portable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/box,
+/obj/structure/closet/secure_closet/armory_kiboko,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "opG" = (
@@ -60223,24 +60291,20 @@
 /area/station/maintenance/department/medical)
 "qbI" = (
 /obj/structure/rack,
-/obj/item/storage/box/rubbershot{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 5;
-	pixel_y = -5
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/west,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "qbX" = (
@@ -80100,14 +80164,58 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "xOa" = (
-/obj/structure/table,
-/obj/item/storage/box/handcuffs{
-	pixel_x = -12;
-	pixel_y = 4
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Non-lethal"
 	},
-/obj/item/storage/box/handcuffs{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/item/storage/box/rubbershot{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/storage/box/rubbershot,
+/obj/item/storage/box/rubbershot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
@@ -81185,6 +81293,8 @@
 	},
 /obj/item/storage/box/trackimp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/lockbox/loyalty,
+/obj/structure/sign/poster/official/twelve_gauge/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "ykc" = (

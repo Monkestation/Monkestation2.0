@@ -25758,10 +25758,6 @@
 	},
 /obj/item/gun/ballistic/shotgun/riot{
 	pixel_x = 0;
-	pixel_y = -5
-	},
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_x = 0;
 	pixel_y = -1
 	},
 /obj/item/gun/ballistic/shotgun/riot{
@@ -81752,10 +81748,6 @@
 	},
 /obj/structure/rack,
 /obj/item/gun/energy/laser{
-	pixel_x = 1;
-	pixel_y = -7
-	},
-/obj/item/gun/energy/laser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -107683,10 +107675,6 @@
 /obj/item/gun/energy/e_gun{
 	pixel_x = -1;
 	pixel_y = -2
-	},
-/obj/item/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = -6
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)

@@ -56288,8 +56288,36 @@
 /obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot,
-/obj/item/key/security,
-/obj/item/key/security,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "qwS" = (
@@ -64217,6 +64245,8 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/item/key/security,
+/obj/item/key/security,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "sKT" = (
