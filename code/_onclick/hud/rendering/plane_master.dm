@@ -684,3 +684,28 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 	allows_offsetting = FALSE
+
+/atom/movable/screen/plane_master/cpu_debug
+	name = "CPU Debug"
+	documentation = "Debug CPU visualization/control maptext (and related junk)."
+	plane = CPU_DEBUG_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	allows_offsetting = FALSE
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/cpu_debug/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	update_visibility(mymob)
+
+/atom/movable/screen/plane_master/cpu_debug/proc/update_visibility(mob/viewer)
+	if(viewer.client?.displaying_cpu_debug)
+		if(force_hidden == FALSE)
+			return
+		unhide_plane(viewer)
+	else
+		if(force_hidden == TRUE)
+			return
+		hide_plane(viewer)
