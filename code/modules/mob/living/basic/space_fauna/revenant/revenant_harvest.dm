@@ -26,6 +26,18 @@
 
 	return value_to_return
 
+/mob/living/basic/revenant/proc/can_harvest(mob/living/carbon/human/target)
+	if(QDELETED(target))
+		return FALSE
+	var/datum/status_effect/revenant_blight/blight = target.has_status_effect(/datum/status_effect/revenant_blight)
+	if(blight?.finalstage)
+		return TRUE
+	if(target.stat != CONSCIOUS)
+		return TRUE
+	if(HAS_TRAIT_FROM(target, TRAIT_INCAPACITATED, STAMINA))
+		return TRUE
+	return FALSE
+
 /// Harvest; activated by clicking a target, will try to drain their essence. Handles all messages and handling of the target.
 /// Returns FALSE if we exit out of the harvest, TRUE if it is fully done.
 /mob/living/basic/revenant/proc/harvest_soul(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
@@ -38,7 +50,7 @@
 	var/target_Theyre = target.p_Theyre()
 	var/target_They_have = "[target.p_They()] [target.p_have()]"
 
-	if(target.stat == CONSCIOUS && !HAS_TRAIT_FROM(target, TRAIT_INCAPACITATED, STAMINA)) // monkestation edit: allow revenants to drain stamcrit people
+	if(!can_harvest(target))
 		to_chat(src, span_revennotice("[target_Their] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
@@ -53,14 +65,19 @@
 	if(!do_after(src, (rand(10, 20) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted in that second?
 		return FALSE
 
+	// essence drained will always be maximum if they're conscious and in stamcrit
+	var/guaranteed_perfect = target.stat == CONSCIOUS && HAS_TRAIT_FROM(target, TRAIT_INCAPACITATED, STAMINA)
+	if(guaranteed_perfect)
+		essence_drained += 10
+
 	var/target_has_client = !isnull(target.client)
 	if(target_has_client || target.ckey) // any target that has been occupied with a ckey is considered "intelligent"
 		to_chat(src, span_revennotice("[target_Their] soul burns with intelligence."))
-		essence_drained += rand(20, 30)
+		essence_drained += guaranteed_perfect ? 30 : rand(20, 30)
 
 	if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
 		to_chat(src, span_revennotice("[target_Their] soul blazes with life!"))
-		essence_drained += rand(40, 50)
+		essence_drained += guaranteed_perfect ? 50 : rand(40, 50)
 
 	if(!target_has_client && HAS_TRAIT(target, TRAIT_WEAK_SOUL))
 		to_chat(src, span_revennotice("[target_Their] soul is weak and underdeveloped. They won't be worth very much."))
@@ -86,7 +103,7 @@
 		to_chat(src, span_revenwarning("You are not close enough to siphon [target ? "[target]'s" : "[target_their]"] soul. The link has been broken."))
 		return FALSE
 
-	if(target.stat == CONSCIOUS)
+	if(!can_harvest(target))
 		to_chat(src, span_revenwarning("[target_Theyre] now powerful enough to fight off your draining!"))
 		to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding.")) //hey, wait a minute...
 		return FALSE
@@ -95,7 +112,7 @@
 	if(target.stat != DEAD)
 		to_chat(target, span_warning("You feel a horribly unpleasant draining sensation as your grip on life weakens..."))
 	if(target.stat == SOFT_CRIT)
-		target.Stun(46)
+		target.Stun(4.6 SECONDS)
 
 	apply_status_effect(/datum/status_effect/revenant/revealed, 5 SECONDS)
 	apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 5 SECONDS)
