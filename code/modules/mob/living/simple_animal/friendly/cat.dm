@@ -111,6 +111,7 @@
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten/tabby = 1)
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/static/cats_deployed = 0
@@ -329,3 +330,143 @@
 	if((user.istate & ISTATE_HARM) && user.reagents && !stat)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+
+/mob/living/simple_animal/pet/cat/tabby
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	held_state = "cat"
+	desc = "Hopefully no one will confuse this for the real runtime. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/white
+	icon_state = "white"
+	icon_living = "white"
+	icon_dead = "white_dead"
+	held_state = "white"
+	desc = "One will never know if this white fur is authentic or if someone decided to bleach a cat. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/void
+	icon_state = "void"
+	icon_living = "void"
+	icon_dead = "void_dead"
+	held_state = "void"
+	desc = "The Void always stares back. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/siamese
+	icon_state = "siamese"
+	icon_living = "siamese"
+	icon_dead = "siamese_dead"
+	held_state = "siamese"
+	desc = "No they are not twins... then again... they do come from the same litter? This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/rusblue
+	icon_state = "rusblue"
+	icon_living = "rusblue"
+	icon_dead = "rusblue_dead"
+	held_state = "rusblue"
+	desc = "This cat might possess magic beyond your imagination, thank god it is not the grey kitten. This one is female."
+	gender = FEMALE
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/tabbym
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	held_state = "cat"
+	desc = "Hopefully no one will confuse this for the real runtime. This one is male."
+	gender = MALE
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten/tabby = 1)
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/whitem
+	icon_state = "white"
+	icon_living = "white"
+	icon_dead = "white_dead"
+	held_state = "white"
+	desc = "One will never know if this white fur is authentic or if someone decided to bleach a cat. This one is male."
+	gender = MALE
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten/white = 1)
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/voidm
+	icon_state = "void"
+	icon_living = "void"
+	icon_dead = "void_dead"
+	held_state = "void"
+	desc = "The Void always stares back. This one is male."
+	gender = MALE
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten/void = 1)
+	faction = list(FACTION_CAT)
+
+
+/mob/living/simple_animal/pet/cat/siamesem
+	icon_state = "siamese"
+	icon_living = "siamese"
+	icon_dead = "siamese_dead"
+	held_state = "siamese"
+	desc = "No they are not twins... then again... they do come from the same litter? This one is male."
+	gender = MALE
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten/shitten = 1)
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/rusbluem
+	icon_state = "rusblue"
+	icon_living = "rusblue"
+	icon_dead = "rusblue_dead"
+	held_state = "rusblue"
+	desc = "This cat might possess magic beyond your imagination, thank god it is not the grey kitten. This one is male."
+	gender = MALE
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten/rusblue = 1)
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/syndicat_docile
+	icon_state = "syndicat"
+	icon_living = "syndicat"
+	icon_dead = "syndicat_dead"
+	held_state = "syndicat"
+	desc = "Catnapped during disk sniffing training, they know the scent, but not to hunt...\
+	You can't seem to get the suit off and it appears to be missing it's combat module and the explosive implant."
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/kitten/void
+	icon_state = "void_kitten"
+	icon_living = "void_kitten"
+	icon_dead = "void_kitten_dead"
+	held_state = "void"
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/kitten/rusblue
+	icon_state = "rusblue_kitten"
+	icon_living = "rusblue_kitten"
+	icon_dead = "rusblue_kitten_dead"
+	held_state = "rusblue"
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/kitten/white
+	icon_state = "white_kitten"
+	icon_living = "white_kitten"
+	icon_dead = "white_kitten_dead"
+	held_state = "white"
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/kitten/shitten
+	icon_state = "shitten"
+	icon_living = "shitten"
+	icon_dead = "shitten_dead"
+	held_state = "siamese"
+	faction = list(FACTION_CAT)
+
+/mob/living/simple_animal/pet/cat/kitten/tabby
+	icon_state = "tabby_kitten"
+	icon_living = "tabby_kitten"
+	icon_dead = "tabby_kitten_dead"
+	held_state = "cat"
+	faction = list(FACTION_CAT)
