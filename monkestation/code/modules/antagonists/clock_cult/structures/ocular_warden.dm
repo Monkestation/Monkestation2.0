@@ -15,7 +15,6 @@
 	max_integrity = 75
 	armor_type = /datum/armor/clockwork_ocular_warden
 	passive_consumption = 3
-	minimum_power = SHOOT_POWER_USE
 	can_unwrench = FALSE
 	anchored = TRUE
 	/// Cooldown between firing
