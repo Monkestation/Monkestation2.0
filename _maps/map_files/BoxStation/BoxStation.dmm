@@ -69442,10 +69442,6 @@
 "wnR" = (
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/processing)
-"wnT" = (
-/turf/open/space/basic,
-/area/space,
-/area/space)
 "wnY" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/firealarm/directional/south,
@@ -103526,7 +103522,7 @@ ksa
 ksa
 ksa
 ksa
-wnT
+ksa
 ksa
 ksa
 ksa
@@ -103558,7 +103554,7 @@ uoo
 uoo
 ksa
 fEP
-pKr
+uoo
 rHA
 mfE
 mfE
