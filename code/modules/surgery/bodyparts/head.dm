@@ -83,6 +83,17 @@
 	///Lipstick color
 	var/lip_color = "white"
 
+	/// Offset to apply to equipment worn on the ears
+	var/datum/worn_feature_offset/worn_ears_offset
+	/// Offset to apply to equipment worn on the eyes
+	var/datum/worn_feature_offset/worn_glasses_offset
+	/// Offset to apply to equipment worn on the mouth
+	var/datum/worn_feature_offset/worn_mask_offset
+	/// Offset to apply to equipment worn on the head
+	var/datum/worn_feature_offset/worn_head_offset
+	/// Offset to apply to overlays placed on the face
+	var/datum/worn_feature_offset/worn_face_offset
+
 	///Current lipstick trait, if any (such as TRAIT_KISS_OF_DEATH)
 	var/stored_lipstick_trait
 
@@ -113,6 +124,12 @@
 	QDEL_NULL(eyes)
 	QDEL_NULL(ears)
 	QDEL_NULL(tongue)
+
+	QDEL_NULL(worn_ears_offset)
+	QDEL_NULL(worn_glasses_offset)
+	QDEL_NULL(worn_mask_offset)
+	QDEL_NULL(worn_head_offset)
+	QDEL_NULL(worn_face_offset)
 	return ..()
 
 /obj/item/bodypart/head/handle_atom_del(atom/head_atom)
@@ -277,7 +294,7 @@
 				. += facial_gradient_overlay
 
 		if(show_debrained && (head_flags & HEAD_DEBRAIN))
-			. += mutable_appearance('icons/mob/species/human/human_face.dmi', "debrained", HAIR_LAYER)
+			. += get_debrain_overlay(can_rotate = TRUE)
 
 		else if(!hair_hidden && hair_overlay && (head_flags & HEAD_HAIR))
 			hair_overlay.alpha = hair_alpha
@@ -287,6 +304,7 @@
 
 		if(show_eyeless && (head_flags && HEAD_EYEHOLES))
 			var/mutable_appearance/no_eyes = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
+			worn_glasses_offset?.apply_offset(no_eyes)
 			. += no_eyes
 
 	return
