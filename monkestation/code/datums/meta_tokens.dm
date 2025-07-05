@@ -244,3 +244,18 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
 	queued_token_event = null
 	event_timeout = null
+
+/datum/meta_token_holder/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	if(var_name in list(
+		NAMEOF(src, total_low_threat_tokens),
+		NAMEOF(src, total_medium_threat_tokens),
+		NAMEOF(src, total_high_threat_tokens),
+		NAMEOF(src, event_tokens),
+		NAMEOF(src, event_token_month),
+		NAMEOF(src, donator_token),
+		NAMEOF(src, token_month),
+	))
+		convert_tokens_to_list()

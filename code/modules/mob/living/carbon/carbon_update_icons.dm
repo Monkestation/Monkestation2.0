@@ -547,7 +547,7 @@
 		if(facial_hair_gradient_style)
 			. += "-[facial_hair_gradient_style]"
 			. += "-[facial_hair_gradient_color]"
-	if(show_missing_eyes)
+	if(show_eyeless)
 		. += "-SHOW_MISSING_EYES"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
@@ -566,7 +566,7 @@
 
 /obj/item/bodypart/head/generate_husk_key()
 	. = ..()
-	if(show_missing_eyes)
+	if(show_eyeless)
 		. += "-SHOW_MISSING_EYES"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
