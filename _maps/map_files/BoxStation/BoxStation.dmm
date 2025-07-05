@@ -48829,11 +48829,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/entry)
-"pKr" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "pKw" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -104065,7 +104060,7 @@ ksa
 ksa
 ksa
 ksa
-pKr
+uoo
 ksa
 bkw
 ksa
