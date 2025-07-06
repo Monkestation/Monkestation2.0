@@ -242,7 +242,7 @@
 		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
-		// /datum/job/roboticist = /obj/item/organ/internal/cyberimp/arm/item_set/connector,
+		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/datum/job/scientist = /obj/item/organ/internal/cyberimp/eyes/fakehud/science,
 		/datum/job/security_assistant = list(/obj/item/organ/internal/cyberimp/leg/accelerator, /obj/item/organ/internal/cyberimp/leg/accelerator/l),
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
