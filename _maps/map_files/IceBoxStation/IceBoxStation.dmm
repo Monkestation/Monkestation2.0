@@ -1696,6 +1696,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"aCi" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "aCl" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -8025,6 +8032,13 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"ctp" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "ctB" = (
 /obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -15064,6 +15078,9 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Atrium"
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/bar/atrium)
 "eBd" = (
@@ -17208,6 +17225,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
+"fjX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "fkf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -25411,6 +25437,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/door/airlock/glass{
+	name = "Atrium"
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/bar/atrium)
 "hSF" = (
@@ -25627,6 +25656,10 @@
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"hWp" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "hWu" = (
 /obj/machinery/corral_corner{
 	mapping_id = "6"
@@ -26298,6 +26331,12 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/navigate_destination/kitchen,
+/obj/machinery/door/airlock/glass{
+	name = "Atrium"
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Atrium"
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/bar/atrium)
 "ihu" = (
@@ -28229,6 +28268,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/navigate_destination/bar,
+/obj/machinery/door/airlock/glass{
+	name = "Atrium"
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/bar/atrium)
 "iMj" = (
@@ -41550,9 +41592,8 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
 "mVh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "mVm" = (
@@ -49524,6 +49565,10 @@
 /obj/structure/sign/warning/cold_temp/directional/south,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/fore/lesser)
+"pjE" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "pjF" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	color = "#ff0000";
@@ -56668,6 +56713,11 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/medical/central)
+"rxq" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "rxz" = (
 /obj/structure/girder,
 /turf/open/floor/plating/snowed/icemoon,
@@ -244936,7 +244986,7 @@ iHF
 fbb
 hSq
 iAq
-mVh
+iAq
 vwO
 hHg
 kLI
@@ -245193,8 +245243,8 @@ mdy
 vLj
 lEO
 aJh
-lso
-lso
+ctp
+hWp
 aAa
 bai
 azw
@@ -245450,8 +245500,8 @@ ixH
 wYl
 ptO
 ibI
-lso
-lso
+ctp
+rxq
 dEV
 bai
 azw
@@ -245707,8 +245757,8 @@ ixH
 nGz
 izC
 yjX
-lso
-lso
+aCi
+hWp
 kjK
 owP
 azw
@@ -245964,8 +246014,8 @@ eEz
 vLj
 lEO
 nIr
-lso
-qGV
+aCi
+mVh
 dEV
 bai
 hgh
@@ -246221,9 +246271,9 @@ iAJ
 eCA
 ihf
 uMu
-lso
-lso
-dEV
+uMu
+pjE
+fjX
 bai
 hgh
 gca
