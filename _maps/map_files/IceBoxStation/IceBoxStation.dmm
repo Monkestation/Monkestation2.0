@@ -12667,7 +12667,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "dMS" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "dMX" = (
@@ -17509,10 +17509,10 @@
 /turf/open/floor/plating/snowed/coldroom,
 /area/icemoon/underground/explored)
 "fpd" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/machinery/light/warm/directional/south,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "fpp" = (
@@ -32439,12 +32439,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/fore)
 "kbU" = (
-/mob/living/basic/goat/pete{
-	desc = "Not known for their pleasant disposition. This one seems a bit more hardy to the cold.";
-	habitable_atmos = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
-	minimum_survivable_temperature = 150;
-	name = "Snowy Pete"
-	},
+/mob/living/basic/goat/pete/icebox,
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)
 "kce" = (
@@ -33658,8 +33653,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "ksU" = (
@@ -35110,7 +35105,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 9
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "kRr" = (
@@ -37697,11 +37692,11 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
 "lEH" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "lEK" = (
@@ -59404,7 +59399,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "spl" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -59417,6 +59411,7 @@
 	c_tag = "Service - Botany";
 	dir = 9
 	},
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "spq" = (
@@ -60183,8 +60178,8 @@
 "sAY" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "sBi" = (
@@ -65868,7 +65863,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "urG" = (
@@ -69687,7 +69682,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 10
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "vCD" = (
