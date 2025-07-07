@@ -13,7 +13,7 @@
 	force = 60 // dont get hit
 	internal_damage_threshold = 18
 	wreckage = null
-	mech_type = EXOSUIT_MODULE_TRASHTANK
+	mech_type = EXOSUIT_MODULE_TANK
 	mecha_flags = OMNIDIRECTIONAL_ATTACKS
 	bumpsmash = TRUE
 	var/crushdmglower = 10
