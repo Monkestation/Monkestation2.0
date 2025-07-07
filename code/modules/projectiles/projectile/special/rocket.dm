@@ -134,7 +134,6 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/mininuke
 	name = "\improper mininuke"
 	desc = "A torpedo with a nuclear warhead, Shouldn't see this unless an admin spawned it. Why a torpedo sprite? Fuck you thats why."
-	icon = 'icons/obj/weapons/guns/tallprojectiles.dmi'
 	damage = 1 // damn this does so little damage
 	dismemberment = -100
 	anti_armour_damage = 0

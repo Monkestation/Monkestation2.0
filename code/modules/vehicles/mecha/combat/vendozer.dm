@@ -92,7 +92,7 @@
 	mecha_flags = OMNIDIRECTIONAL_ATTACKS
 	bumpsmash = TRUE
 	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/callahansecondary,
+		MECHA_L_ARM = null,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/mininuke,
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(/obj/item/mecha_parts/mecha_equipment/generator),
