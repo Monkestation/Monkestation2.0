@@ -15,9 +15,10 @@
 	gold_core_spawnable = NONE
 	faction = list(FACTION_RABBITS)
 	sentience_type = SENTIENCE_BOSS
+
 	unsuitable_atmos_damage = 0
-	unsuitable_cold_damage = 0
-	unsuitable_heat_damage = 0
+	bodytemp_cold_damage_limit = -1
+	bodytemp_heat_damage_limit = INFINITY
 	/// Innate traits paradox rabbits have.
 	/// Remember, these are not normal rabbits by any means,
 	/// they are fantastical entities that don't exactly follow the same laws of reality.
