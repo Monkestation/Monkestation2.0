@@ -611,8 +611,8 @@
 
 		//clock cult stuff
 		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
-			var/power_delta = clamp(cell.charge - 10, 0, 10)
-			SSthe_ark.adjust_clock_power(power_delta / 10, TRUE)
+			var/power_delta = clamp(cell.charge - 7, 0, 7)
+			SSthe_ark.adjust_clock_power(power_delta / 7, TRUE)
 			cell.charge -= power_delta
 
 	else // no cell, switch everything off
