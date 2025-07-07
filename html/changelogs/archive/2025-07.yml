@@ -152,3 +152,6 @@
   - bugfix: Removed stray white pixels from some AI core sprites.
   Fikou:
   - admin: _generator wrapper for sdql, RandList proc for generators
+2025-07-07:
+  EssentialTomato:
+  - map: Fixed Pubbystation Artifact science access,
