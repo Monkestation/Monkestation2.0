@@ -5,7 +5,7 @@
 	return TRUE
 
 ///Remove target limb from it's owner, with side effects.
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent = TRUE, wounding_type, sound = TRUE)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
@@ -19,7 +19,8 @@
 	if(!silent)
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
-	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
+	if(sound)
+		playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
 	limb_owner.add_mood_event("dismembered", /datum/mood_event/dismembered)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
 
@@ -28,7 +29,8 @@
 
 	if((limb_id == SPECIES_OOZELING))
 		to_chat(limb_owner, span_warning("Your [src] splatters with an unnerving squelch!"))
-		playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
+		if(sound)
+			playsound(limb_owner, 'sound/effects/blobattack.ogg', 60, TRUE)
 		limb_owner.blood_volume -= 60 //Makes for 120 when you regenerate it. monkeedit it actually it costs 100 limbs are 40 right now.
 
 // MONKESTATION ADDITION START
@@ -66,7 +68,7 @@
 
 	return TRUE
 
-/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent = TRUE, wounding_type, sound = TRUE)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_GODMODE))
@@ -127,9 +129,6 @@
 			if(org_zone != body_zone)
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
-
-	if(length(bodypart_traits))
-		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
@@ -353,6 +352,7 @@
 		return FALSE
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
+	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
@@ -397,9 +397,6 @@
 	update_bodypart_damage_state()
 	if(can_be_disabled)
 		update_disabled()
-
-	if(length(bodypart_traits))
-		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.

@@ -471,10 +471,6 @@
 				to_chat(user, span_warning("No ID card detected."))
 				return
 
-			if(istype(id_card, /obj/item/card/id/departmental_budget))
-				to_chat(user, span_warning("[id_card] cannot be used to make purchases."))
-				return
-
 			var/datum/bank_account/account = id_card.registered_account
 
 			if(!istype(account))

@@ -32,6 +32,41 @@
 	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
 		update_pockets()
 
+	/// Updates features and clothing attached to a specific limb with limb-specific offsets
+/mob/living/carbon/proc/update_features(feature_key)
+	switch(feature_key)
+		if(OFFSET_UNIFORM)
+			update_worn_undersuit()
+		if(OFFSET_ID)
+			update_worn_id()
+		if(OFFSET_GLOVES)
+			update_worn_gloves()
+		if(OFFSET_GLASSES)
+			update_worn_glasses()
+		if(OFFSET_EARS)
+			update_inv_ears()
+		if(OFFSET_SHOES)
+			update_worn_shoes()
+		if(OFFSET_S_STORE)
+			update_suit_storage()
+		if(OFFSET_FACEMASK)
+			update_worn_mask()
+		if(OFFSET_HEAD)
+			update_worn_head()
+		if(OFFSET_FACE)
+			dna?.species?.handle_body(src) // updates eye icon
+			update_worn_mask()
+		if(OFFSET_BELT)
+			update_worn_belt()
+		if(OFFSET_BACK)
+			update_worn_back()
+		if(OFFSET_SUIT)
+			update_worn_oversuit()
+		if(OFFSET_NECK)
+			update_worn_neck()
+		if(OFFSET_HELD)
+			update_held_items()
+
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
 
@@ -547,7 +582,7 @@
 		if(facial_hair_gradient_style)
 			. += "-[facial_hair_gradient_style]"
 			. += "-[facial_hair_gradient_color]"
-	if(show_missing_eyes)
+	if(show_eyeless)
 		. += "-SHOW_MISSING_EYES"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
@@ -566,7 +601,7 @@
 
 /obj/item/bodypart/head/generate_husk_key()
 	. = ..()
-	if(show_missing_eyes)
+	if(show_eyeless)
 		. += "-SHOW_MISSING_EYES"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
