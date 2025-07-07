@@ -719,7 +719,7 @@ ADMIN_VERB(show_line_profiling, R_DEBUG, FALSE, "Show Line Profiling", "Shows tr
 	profile_show(user, sort)
 
 ADMIN_VERB(reload_configuration, R_DEBUG, FALSE, "Reload Configuration", "Reloads the configuration from the default path on the disk, wiping any in-round modifications.", ADMIN_CATEGORY_DEBUG)
-	if(!tgui_alert(user, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")	if(tgui_alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
+	if(tgui_alert(user, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
 
 ADMIN_VERB(check_timer_sources, R_DEBUG, FALSE, "Check Timer Sources", "Checks the sources of running timers.", ADMIN_CATEGORY_DEBUG)
