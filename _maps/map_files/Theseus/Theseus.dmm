@@ -5180,6 +5180,9 @@
 /obj/structure/table/reinforced,
 /obj/item/flashlight/seclite,
 /obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/head/helmet/toggleable/justice/escape{
+	name = "justice helmet"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/office)
 "bBP" = (
@@ -5289,6 +5292,7 @@
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
+/obj/effect/landmark/start/security_officer,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "bDJ" = (
@@ -21854,6 +21858,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "gyx" = (
@@ -24274,15 +24281,11 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/radshelter/civil)
 "hjj" = (
-/obj/structure/table/reinforced,
-/obj/item/poster/random_official,
-/obj/item/poster/random_official{
-	pixel_y = 5
-	},
-/obj/item/poster/random_official,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/light/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/station/security/office)
 "hjl" = (
@@ -40651,11 +40654,11 @@
 /turf/open/floor/carpet,
 /area/station/service/cafeteria)
 "lPP" = (
-/obj/machinery/vending/security,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "lPZ" = (
@@ -45282,13 +45285,12 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/effect/landmark/start/security_officer,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 6
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/security/lockers)
@@ -46745,16 +46747,13 @@
 	name = "Secure Environment";
 	id = "SecureEnvironment"
 	},
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/machinery/recharger{
-	pixel_x = -6;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/disposal/bin,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -48631,9 +48630,17 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "okl" = (
-/obj/machinery/recharge_station,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/station/security/lockers)
@@ -51069,12 +51076,12 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology/hallway)
 "oXq" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/closet/secure_closet/security/sec,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "oXE" = (
@@ -52449,13 +52456,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "psl" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
+/obj/machinery/vending/security,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "psI" = (
@@ -56048,6 +56051,7 @@
 /area/station/security/prison)
 "qto" = (
 /obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/black,
 /obj/item/storage/fancy/donut_box{
 	pixel_x = -8;
 	pixel_y = 3
@@ -68634,15 +68638,16 @@
 /area/station/medical/medbay/central)
 "tWh" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/black,
-/obj/item/clothing/head/helmet/toggleable/justice/escape{
-	name = "justice helmet"
-	},
 /obj/effect/turf_decal/tile/red/half{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/poster/random_official{
+	pixel_y = 5
+	},
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "tWj" = (
@@ -69563,22 +69568,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "ujV" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
-/obj/item/restraints/handcuffs{
-	pixel_x = -1
-	},
-/obj/item/restraints/handcuffs{
-	pixel_y = 3;
-	pixel_x = 1
-	},
-/obj/item/restraints/handcuffs{
-	pixel_y = 5;
-	pixel_x = 3
-	},
 /obj/machinery/camera/autoname/directional/north,
+/obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/security/lockers)
 "ukb" = (
@@ -74246,8 +74241,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
-/obj/structure/table/reinforced,
-/obj/item/hand_labeler,
+/obj/structure/closet/secure_closet/evidence,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "vzC" = (
@@ -79924,13 +79918,14 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/evidence,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "xiG" = (
