@@ -12457,10 +12457,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
-"dKd" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "dKh" = (
 /obj/machinery/light_switch/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -18294,6 +18290,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
+"fBI" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "fBM" = (
 /obj/structure/chair{
 	dir = 4
@@ -18531,11 +18532,6 @@
 /obj/structure/sign/warning/cold_temp,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"fHd" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "fHg" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/dark/side,
@@ -26324,9 +26320,6 @@
 /obj/machinery/door/airlock/glass{
 	name = "Atrium"
 	},
-/obj/machinery/door/airlock/glass{
-	name = "Atrium"
-	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/bar/atrium)
 "ihu" = (
@@ -29926,13 +29919,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/pathology)
-"jmy" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "jmI" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/workout)
@@ -30827,13 +30813,6 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/carpet/grimey,
 /area/station/service/chapel/office)
-"jCO" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/turf_decal/tile/bar{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "jCY" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/chair/sofa/corp/right{
@@ -32153,9 +32132,7 @@
 /obj/structure/railing/wood{
 	dir = 1
 	},
-/mob/living/basic/chicken/brown{
-	forced_gender = "male"
-	},
+/mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "jWl" = (
@@ -38562,15 +38539,6 @@
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"lTc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/junction{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "lTs" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -41608,7 +41576,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
 "mVh" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "mVm" = (
@@ -43466,9 +43434,7 @@
 	dir = 1
 	},
 /obj/structure/nestbox,
-/mob/living/basic/chicken/brown{
-	forced_gender = "male"
-	},
+/mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "nuH" = (
@@ -44811,10 +44777,8 @@
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
 "nMQ" = (
-/mob/living/basic/chicken/brown{
-	forced_gender = "male"
-	},
 /obj/structure/flora/bush/flowers_pp/style_random,
+/mob/living/basic/chicken,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "nMR" = (
@@ -46517,6 +46481,10 @@
 "omk" = (
 /turf/open/floor/glass/reinforced,
 /area/station/security/office)
+"oms" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "omt" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -48158,6 +48126,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"oMq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "oMs" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/carpet/grimey,
@@ -49597,6 +49574,13 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"pjI" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "pjZ" = (
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/white,
@@ -55394,6 +55378,13 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
+"qZU" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "rab" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -65111,6 +65102,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"ugn" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "ugq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -77005,9 +77001,7 @@
 /obj/structure/railing/wood{
 	dir = 8
 	},
-/mob/living/basic/chicken/brown{
-	forced_gender = "male"
-	},
+/mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "xOM" = (
@@ -77817,11 +77811,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"ycs" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "ycw" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -245260,8 +245249,8 @@ mdy
 vLj
 lEO
 aJh
-jCO
-dKd
+qZU
+mVh
 aAa
 bai
 azw
@@ -245517,8 +245506,8 @@ ixH
 wYl
 ptO
 ibI
-jCO
-fHd
+qZU
+fBI
 dEV
 bai
 azw
@@ -245774,8 +245763,8 @@ ixH
 nGz
 izC
 yjX
-jmy
-dKd
+pjI
+mVh
 kjK
 owP
 azw
@@ -246031,8 +246020,8 @@ eEz
 vLj
 lEO
 nIr
-jmy
-ycs
+pjI
+ugn
 dEV
 bai
 hgh
@@ -246289,8 +246278,8 @@ eCA
 ihf
 uMu
 uMu
-mVh
-lTc
+oms
+oMq
 bai
 hgh
 gca
