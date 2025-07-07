@@ -31,6 +31,11 @@
 
 /mob/living/basic/wonderland_rabbit/Initialize(mapload)
 	add_traits(innate_traits, INNATE_TRAIT)
+	RegisterSignal(SSdcs, COMSIG_GLOB_WONDERLAND_APOCALYPSE, PROC_REF(on_wonderland))
+	return ..()
+
+/mob/living/basic/wonderland_rabbit/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_WONDERLAND_APOCALYPSE)
 	return ..()
 
 /mob/living/basic/wonderland_rabbit/death(gibbed)
@@ -49,6 +54,11 @@
 /mob/living/basic/wonderland_rabbit/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_e", src)
+
+/mob/living/basic/wonderland_rabbit/proc/on_wonderland()
+	SIGNAL_HANDLER
+	fully_heal()
+	ADD_TRAIT(src, TRAIT_GODMODE, HUNTER_TRAIT)
 
 /obj/effect/wonderland_rabbit_enter
 	name = "rabbit?"
