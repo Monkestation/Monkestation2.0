@@ -138,3 +138,20 @@
   - bugfix: Jacob's ladder now skips the colony and reebe Z-levels.
   EssentialTomato:
   - bugfix: Fixed extreme case of empathy while relocating someone's limb.
+2025-07-06:
+  Absolucy:
+  - admin: 'Added some more Lua/SDQL2 wrappers: _floor(), _ceil(), _typesof(), _uppertext(),
+      _html_encode(), _html_decode(), _url_encode(), and _url_decode()'
+  - bugfix: Fixed the unborgable quirk not actually working.
+  - bugfix: Fixed bloodsuckers being able to spam their coffin to open a bunch of
+      blood thickening prompts to rank up when they really shouldn't be able to.
+  - bugfix: The air on the planet used for the the hermit/colony ghost role will no
+      longer kill you.
+  Cmpwarrior:
+  - rscadd: Added a new AI Core design based off of Tenna (from Deltarune)
+  - bugfix: Removed stray white pixels from some AI core sprites.
+  Fikou:
+  - admin: _generator wrapper for sdql, RandList proc for generators
+2025-07-07:
+  EssentialTomato:
+  - map: Fixed Pubbystation Artifact science access,

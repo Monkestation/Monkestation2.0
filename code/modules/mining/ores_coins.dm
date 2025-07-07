@@ -260,52 +260,60 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
-	if(primed)
-		if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
-			primed = FALSE
-			if(det_timer)
-				deltimer(det_timer)
-			user.visible_message(span_notice("The chain reaction stopped! ...The ore's quality looks diminished."), span_notice("You stopped the chain reaction. ...The ore's quality looks diminished."))
-			icon_state = "Gibtonite ore"
-			quality = GIBTONITE_QUALITY_LOW
-			return
-	..()
+
+	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
+		defuse(user)
+		return
+
+	return ..()
+
+/// Stop the reaction and reduce ore explosive power
+/obj/item/gibtonite/proc/defuse(mob/defuser)
+	if (!primed)
+		return
+	primed = FALSE
+	if(det_timer)
+		deltimer(det_timer)
+	defuser?.visible_message(span_notice("The chain reaction stopped! ...The ore's quality looks diminished."), span_notice("You stopped the chain reaction. ...The ore's quality looks diminished."))
+	icon_state = "Gibtonite ore"
+	quality = GIBTONITE_QUALITY_LOW
 
 /obj/item/gibtonite/attack_self(user)
 	if(wires)
 		wires.interact(user)
 	else
-		..()
+		return ..()
 
 /obj/item/gibtonite/bullet_act(obj/projectile/P)
 	GibtoniteReaction(P.firer)
-	. = ..()
+	return ..()
 
 /obj/item/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
 
 /obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
-	if(!primed)
-		primed = TRUE
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
-		icon_state = "Gibtonite active"
-		var/notify_admins = FALSE
-		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
-			notify_admins = TRUE
+	if(primed)
+		return
+	primed = TRUE
+	playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
+	icon_state = "Gibtonite active"
+	var/notify_admins = FALSE
+	if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
+		notify_admins = TRUE
 
-		if(triggered_by == 1)
-			log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
-		else if(triggered_by == 2)
-			var/turf/bombturf = get_turf(src)
-			if(notify_admins)
-				message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
-			var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
-			log_game(bomb_message)
-			GLOB.bombers += bomb_message
-		else
-			user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
-			log_bomber(user, "has primed a", src, "for detonation", notify_admins)
-		det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
+	if(triggered_by == 1)
+		log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
+	else if(triggered_by == 2)
+		var/turf/bombturf = get_turf(src)
+		if(notify_admins)
+			message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
+		var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
+		log_game(bomb_message)
+		GLOB.bombers += bomb_message
+	else
+		user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
+		log_bomber(user, "has primed a", src, "for detonation", notify_admins)
+	det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/gibtonite/proc/detonate(notify_admins)
 	if(primed)
