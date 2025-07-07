@@ -37,7 +37,7 @@
 /obj/vehicle/ridden/wienermobile/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, "wienermobile_cover", ABOVE_MOB_LAYER))
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/argonaut)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wienermobile)
 
 /obj/vehicle/ridden/wienermobile/Bump(atom/A)
 	. = ..()
