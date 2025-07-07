@@ -4,12 +4,14 @@
 ADMIN_VERB(player_panel_veth, R_ADMIN, FALSE,"Player Panel Veth", "Updated Player Panel with TGUI. Currently in testing.", ADMIN_CATEGORY_GAME)
 	var/datum/player_panel_veth/tgui = new(user.mob)
 	tgui.ui_interact(user.mob)
-	to_chat(src, span_interface("VUAP has been opened!"), confidential = TRUE)
+	to_chat(user, span_interface("VUAP has been opened!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("VUAP")
 
 ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, FALSE, "Open TGUI PP", "Player options panel for a mob.", ADMIN_CATEGORY_GAME, mob/target in GLOB.player_list)
-	var/client/targetclient = target.client
-	if(!length(targetclient.ckey) || targetclient.ckey[1] == "@")
+	if(!target)
+		to_chat(user, span_warning("Could not find desired target mob!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
+		return
+	if(!length(target.ckey) || target.ckey[1] == "@")
 		var/mob/player = target
 		var/datum/mind/player_mind = get_mind(player, include_last = TRUE)
 		var/player_mind_ckey = ckey(player_mind.key)
@@ -17,7 +19,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(vuap_personal, R_ADMIN, FALSE, "Open TGUI PP", "Play
 		user.VUAP_selected_mob = target
 		var/datum/vuap_personal/tgui = new(user.mob)
 		tgui.ui_interact(user.mob)
-		tgui_alert(usr, "WARNING! This mob has no associated Mind! Most actions will not work. Last ckey to control this mob is [player_mind_ckey].", "No Mind!")
+		tgui_alert(user, "WARNING! This mob has no associated Mind! Most actions will not work. Last ckey to control this mob is [player_mind_ckey].", "No Mind!")
 
 	else
 		user.selectedPlayerCkey = target.ckey
