@@ -68,16 +68,4 @@
 		if(panel_open && (integration_cog || (living_user.has_status_effect(/datum/status_effect/hallucination) && prob(HALLUCINATION_COG_CHANCE))))
 			. += span_brass("A small cogwheel is inside of it.")
 
-/obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
-	if(!opened || !integration_cog)
-		return ..()
-
-	balloon_alert(user, "prying something out of [src]...")
-	crowbar.play_tool_sound(src)
-	if(!crowbar.use_tool(src, user, 5 SECONDS))
-		return
-
-	balloon_alert(user, "pried out something, destroying it!")
-	QDEL_NULL(integration_cog)
-
 #undef HALLUCINATION_COG_CHANCE

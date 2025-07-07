@@ -14,13 +14,19 @@
 	///what area types cost double
 	var/static/list/costly_areas = typecacheof(list(/area/station/command, /area/station/security))
 
+/datum/action/innate/clockcult/add_warp_area/New(Target)
+	. = ..()
+	if(isnull(cached_addable_areas))
+		build_addable_areas()
+		choose_starting_warp_areas()
+
 /datum/action/innate/clockcult/add_warp_area/IsAvailable(feedback)
 	if(!IS_CLOCK(owner))
 		return FALSE
 	return ..()
 
 /datum/action/innate/clockcult/add_warp_area/Activate()
-	if(!cached_addable_areas || !length(cached_addable_areas))
+	if(!length(cached_addable_areas))
 		return
 
 	var/area/input_area = tgui_input_list(owner, "Select an area to add.", "Add Area", cached_addable_areas)
@@ -44,7 +50,7 @@
 		send_clock_message(null, "[input_area] added to warpable areas.")
 
 /datum/action/innate/clockcult/add_warp_area/proc/choose_starting_warp_areas()
-	if(length(cached_addable_areas))
+	if(!length(cached_addable_areas))
 		return
 
 	if(!SSthe_ark.initialized)

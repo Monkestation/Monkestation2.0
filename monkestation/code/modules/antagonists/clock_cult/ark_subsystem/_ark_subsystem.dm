@@ -51,10 +51,6 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 		/datum/hallucination/fake_sound/weird/clockcult_kindle = 2,
 		/datum/hallucination/fake_sound/weird/clockcult_warp = 2,
 	)
-	var/datum/action/innate/clockcult/add_warp_area/warp_action = new //my brain is dying
-	warp_action.build_addable_areas()
-	warp_action.choose_starting_warp_areas()
-	qdel(warp_action)
 
 /datum/controller/subsystem/processing/the_ark/fire(resumed)
 	if(!initialized) //we are not currently being used so just return
