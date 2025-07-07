@@ -19,7 +19,6 @@
 	var/max_drivers = 1
 	var/movedelay = 2
 	var/lastmove = 0
-	var/cover_amount = 0 // Percentage cover that vehicle provides when being shot at
 	/**
 	  * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on their riding component subtype
 	  * [/datum/component/riding/var/keytype] variable because only a few specific checks are handled here with this var, and the majority of it is on the riding component

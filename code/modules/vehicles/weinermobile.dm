@@ -17,7 +17,6 @@
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	cover_amount = 55
 	integrity_failure = 0.2
 	var/crash_dmg_high = 25
 	var/crash_dmg_low = 10
