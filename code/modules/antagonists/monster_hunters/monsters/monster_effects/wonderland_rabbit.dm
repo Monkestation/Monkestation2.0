@@ -91,7 +91,8 @@
 		var/amt_to_reduce = rand(5, 25) * seconds_per_tick
 		owner.mob_mood.set_sanity(owner.mob_mood.sanity - amt_to_reduce)
 
-	if(owner.stamina && SPT_PROB(3, seconds_per_tick))
+	// only drains stamina if they have over 50%
+	if(owner.stamina && owner.stamina.current >= (owner.stamina.maximum * 0.5) && SPT_PROB(3, seconds_per_tick))
 		var/amt_to_drain = owner.stamina.maximum * (rand(10, 20) / 100) * seconds_per_tick
 		owner.stamina.adjust(-amt_to_drain, forced = TRUE)
 
@@ -105,7 +106,7 @@
 		var/msg = pick(
 			"I glimpse a grassy nightmare reflected in the windows...",
 			"Am I merely prey, despite my power?",
-			"My body aches, as if I shared my breath with an <i>incompatible</i> presence..."
+			"My body aches, as if I shared my breath with an <i>incompatible</i> presence...",
 		)
 		to_chat(owner, span_hypnophrase(msg), type = MESSAGE_TYPE_WARNING)
 		COOLDOWN_START(src, message_cooldown, 10 SECONDS)
