@@ -9032,8 +9032,6 @@
 /area/station/medical/storage)
 "cHy" = (
 /obj/structure/railing,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -11135,8 +11133,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "dnH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -21743,8 +21739,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gHm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
@@ -27955,15 +27949,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/maintenance/starboard/fore)
-"iIa" = (
-/obj/structure/railing,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "iIe" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -49851,11 +49836,6 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
-"ppy" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "ppE" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -70220,7 +70200,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/stone,
 /area/station/service/bar/atrium)
 "vLk" = (
@@ -246791,8 +246771,8 @@ rxK
 uiC
 lEO
 ehA
-ppy
-ppy
+mqq
+mqq
 vSa
 fuY
 clK
@@ -250114,8 +250094,8 @@ lIC
 kKL
 tml
 lli
-iIa
-lRZ
+jWp
+lli
 jWp
 lli
 jWp
