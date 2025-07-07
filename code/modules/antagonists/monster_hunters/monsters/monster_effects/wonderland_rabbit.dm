@@ -45,6 +45,10 @@
 		. += span_warning("You feel sick as you look into its eyes...")
 		user.apply_status_effect(/datum/status_effect/rabbit_sickness)
 
+/mob/living/basic/wonderland_rabbit/update_overlays()
+	. = ..()
+	. += . += emissive_appearance(icon, "[icon_state]_e", src)
+
 /obj/effect/wonderland_rabbit_enter
 	name = "rabbit?"
 	icon = 'monkestation/icons/mob/rabbit.dmi'
@@ -53,6 +57,10 @@
 /obj/effect/wonderland_rabbit_enter/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(finish_animation)), 4 SECONDS)
+
+/obj/effect/wonderland_rabbit_enter/update_overlays()
+	. = ..()
+	. += . += emissive_appearance(icon, "[icon_state]_e", src)
 
 /obj/effect/wonderland_rabbit_enter/proc/finish_animation()
 	new /mob/living/basic/wonderland_rabbit(loc)
@@ -66,6 +74,10 @@
 /obj/effect/wonderland_rabbit_exit/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 8 SECONDS)
+
+/obj/effect/wonderland_rabbit_exit/update_overlays()
+	. = ..()
+	. += . += emissive_appearance(icon, "[icon_state]_e", src)
 
 /datum/status_effect/rabbit_sickness
 	id = "rabbit_sickness"
