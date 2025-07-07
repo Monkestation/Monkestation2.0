@@ -132,8 +132,8 @@
 		ethereal_light.set_light_on(FALSE)
 		current_color = rgb(230, 230, 230)
 		fixed_mut_color = current_color
-	ethereal.hair_color = current_color
-	ethereal.facial_hair_color = current_color
+	ethereal.set_haircolor(current_color, update = FALSE)
+	ethereal.set_facial_haircolor(current_color, update = FALSE)
 	if(ethereal.organs_slot["horns"])
 		var/obj/item/organ/external/horms = ethereal.organs_slot["horns"]
 		horms.bodypart_overlay.draw_color = current_color
