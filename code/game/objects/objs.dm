@@ -49,6 +49,8 @@
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
 
+	var/cover_amount = 0 ///Chance for a projectile to hit the object instead of whoever is buckled to it. Might use this for more later.
+
 	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)

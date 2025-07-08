@@ -13,6 +13,7 @@
 	max_occupants = 9
 	pass_flags_self = null
 	max_integrity = 400
+	cover_amount = 45
 	armor_type = /datum/armor/weeweenor
 	var/crash_all = FALSE
 	move_force = MOVE_FORCE_VERY_STRONG
