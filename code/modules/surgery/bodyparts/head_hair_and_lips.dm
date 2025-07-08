@@ -27,13 +27,12 @@
 			var/obj/item/item_uniform = human_head_owner.w_uniform
 			if(item_uniform.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
-				if(item_uniform.flags_inv & HIDEFACIALHAIR)
-					facial_hair_hidden = TRUE
+			if(item_uniform.flags_inv & HIDEFACIALHAIR)
+				facial_hair_hidden = TRUE
 		//invisibility and husk stuff
 		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
 			hair_hidden = TRUE
 			facial_hair_hidden = TRUE
-
 	if(is_husked)
 		hair_hidden = TRUE
 		facial_hair_hidden = TRUE
@@ -191,7 +190,6 @@
 	worn_face_offset?.apply_offset(eyeless_overlay)
 	return eyeless_overlay
 
-
 /// Returns an appropriate hair/facial hair gradient overlay
 /obj/item/bodypart/head/proc/get_gradient_overlay(file, icon, layer, datum/sprite_accessory/gradient, grad_color)
 	RETURN_TYPE(/mutable_appearance)
@@ -251,12 +249,16 @@
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
 	hairstyle = new_style
-	if(hairstyle)
-		my_head?.hairstyle = new_style
+	my_head?.hairstyle = new_style
 
 	if(update)
 		update_body_parts()
 
+/**
+ * Set the hair color of a human.
+ * Override instead sets the override value, it will not be changed away from the override value until override is set to null.
+ * Update calls update_body_parts().
+ **/
 /mob/living/proc/set_haircolor(hex_string, override, update = TRUE)
 	return
 
