@@ -11,7 +11,6 @@ export const AnnouncementTab = (props) => {
       <Stack.Item grow>
         <TextArea
           fluid
-          height={20}
           maxLength={1025}
           multiline
           height="100%"
