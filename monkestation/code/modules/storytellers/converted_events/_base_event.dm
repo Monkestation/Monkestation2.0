@@ -160,6 +160,14 @@
 	. = ..()
 	if(!.)
 		return
+	if(shared_occurence_type == SHARED_HIGH_THREAT)
+		if(name in SSgamemode.last_round_events)
+			return FALSE
+		for(var/datum/round_event_control/antagonist/solo/event as anything in subtypesof(/datum/round_event_control/antagonist/solo))
+			if(event::shared_occurence_type != SHARED_HIGH_THREAT || !event::name)
+				continue
+			if(event::name in SSgamemode.last_round_events)
+				return FALSE
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates()
 	if(length(candidates) < antag_amt)
