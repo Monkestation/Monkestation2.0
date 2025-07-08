@@ -28,7 +28,8 @@
 	if(ishuman(old_current))
 		removeCluwne(old_current)
 	if(ishuman(our_mind.current))
-		makeCluwne(our_mind.current) //no escape
+		our_mind.current.AddComponent(/datum/component/cluwne, deconversion = deconversion_method) //no escape
+		qdel(src)
 
 /datum/component/cluwne/proc/makeCluwne(mob/living/carbon/human/our_human)
 	if(HAS_TRAIT(our_human, TRAIT_CLUWNE))
