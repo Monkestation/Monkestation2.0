@@ -32041,7 +32041,9 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "jTf" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics/chicken)
 "jTg" = (
@@ -76545,6 +76547,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
+"xEX" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/ice,
+/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "xFi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -174759,7 +174765,7 @@ gjq
 thA
 thA
 thA
-thA
+xEX
 scw
 scw
 scw
@@ -175016,7 +175022,7 @@ gjq
 gjq
 gjq
 gjq
-gjq
+fKv
 gjq
 nfG
 scw
@@ -175273,7 +175279,7 @@ gjq
 gjq
 gjq
 gjq
-gjq
+fKv
 gjq
 gjq
 gjq
@@ -175530,13 +175536,13 @@ iDt
 gjq
 gjq
 gjq
-gjq
+kum
+oZd
 cWm
 cWm
-olJ
 olJ
 cEk
-oZd
+jTf
 kum
 gjq
 gjq
@@ -175787,7 +175793,7 @@ hid
 wMP
 gjq
 gjq
-cWm
+iZm
 xIT
 llW
 azM
@@ -176044,7 +176050,7 @@ wHk
 jRY
 wMP
 gjq
-jTf
+iZm
 oHA
 ifg
 xpp
@@ -176301,7 +176307,7 @@ dxQ
 vCA
 xCa
 wdw
-jTf
+iZm
 gBo
 ifg
 wgF
