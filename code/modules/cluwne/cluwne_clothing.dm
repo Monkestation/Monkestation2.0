@@ -51,7 +51,7 @@
 /obj/item/clothing/mask/gas/cluwne/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
-	if(prob(50)) //spared
+	if(prob(75)) //spared
 		return
 	var/original_message = replacetext(speech_args[SPEECH_MESSAGE], regex(@"(\s+)", "g"), " ")
 	var/list/old_words = splittext(original_message, " ")
