@@ -62,6 +62,7 @@
 	//Alternative Scream/Laugh Vars
 	var/list/alternative_screams
 	var/list/alternative_laughs
+	var/list/alternative_deathgasps
 	//MonkeStation Edit End
 
 /obj/item/clothing/Initialize(mapload)
@@ -272,6 +273,8 @@
 		LAZYREMOVE(wearer.alternative_screams, alternative_screams)
 	if(LAZYLEN(alternative_laughs))
 		LAZYREMOVE(wearer.alternative_laughs, alternative_laughs)
+	if(LAZYLEN(alternative_deathgasps))
+		LAZYREMOVE(wearer.alternative_deathgasps, alternative_deathgasps)
 	//MonkeStation Edit End
 
 /obj/item/clothing/equipped(mob/living/user, slot)
@@ -298,6 +301,8 @@
 			LAZYADD(wearer.alternative_screams, alternative_screams)
 		if(LAZYLEN(alternative_laughs))
 			LAZYADD(wearer.alternative_laughs, alternative_laughs)
+		if(LAZYLEN(alternative_deathgasps))
+			LAZYADD(wearer.alternative_deathgasps, alternative_deathgasps)
 		//MonkeStation Edit End
 
 // If the item is a piece of clothing and is being worn, make sure it updates on the player
