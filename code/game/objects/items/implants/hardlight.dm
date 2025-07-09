@@ -172,10 +172,12 @@
 	desc = "A spear made out of hardened light."
 	fire_sound = 'sound/weapons/fwoosh.ogg'
 	pinless = TRUE
-	force = 25
+	force = 30
+	demolition_mod = 1.5
 	wound_bonus = -5
 	bare_wound_bonus = 20
-	armour_penetration = 40
+	armour_penetration = 60
+	armour_ignorance = 5 //Go on, be an esword
 	block_chance = 0
 	sharpness = SHARP_POINTY
 	w_class = WEIGHT_CLASS_HUGE
@@ -254,7 +256,7 @@
 
 /obj/item/gun/magic/hardlight_spear/proc/apply_cooldown()
 	semicd = TRUE
-	addtimer(CALLBACK(src, PROC_REF(reset_semicd)), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_semicd)), 0.4 SECONDS) //Equal to fast firing weapons, like .357s, disablers, lasguns
 
 /obj/item/ammo_casing/magic/hardlight_spear
 	name = "please god report this"
@@ -267,19 +269,18 @@
 	name = "hardlight spear"
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
 	icon_state = "lightspear"
-	damage = 40
-	armour_penetration = 5
-	wound_bonus = -5
-	bare_wound_bonus = 50
+	damage = 30
+	armour_penetration = 50
+	wound_bonus = 5
+	bare_wound_bonus = 20 //Why was this fifty before wtf
 	wound_falloff_tile = -1
-	embed_falloff_tile = -1
-	speed = 0.7 //lower = faster
+	speed = 0.4 //lower = faster
 	shrapnel_type = /obj/item/shrapnel/bullet/spear
 	light_outer_range = 1
 	light_power = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_wall = 'sound/weapons/parry.ogg'
-	embedding = list(embed_chance=70, fall_chance=6, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=2, jostle_pain_mult=3, rip_time=10)
+	embedding = list(embed_chance=100, fall_chance=2, jostle_chance=8, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 
 /obj/item/shrapnel/bullet/spear
 	name = "hardlight spear"

@@ -31,7 +31,6 @@
 	spawn_path = /obj/item/book/granter/crafting_recipe/maint_gun/smoothbore_disabler_prime
 	preview_path = /obj/item/gun/energy/disabler/smoothbore/prime
 
-
 /datum/bb_gear/granter/death_sandwich
 	name = "Recipe: Death Sandwich"
 	desc = "Contains a recipe book, allowing you to learn the knowledge to build a death sandwich."

@@ -1,0 +1,5 @@
+author: "QueenReduviidae"
+delete-after: True
+changes:
+  - bugfix: "Chickens possible mutation scan now includes required items."
+  - bugfix: "Pigeons are no longer basically impossible to get."
