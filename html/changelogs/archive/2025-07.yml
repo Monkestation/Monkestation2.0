@@ -155,3 +155,6 @@
 2025-07-07:
   EssentialTomato:
   - map: Fixed Pubbystation Artifact science access,
+2025-07-09:
+  iamcooldan:
+  - bugfix: biogen now actually dispenses water
