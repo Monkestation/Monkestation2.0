@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "A few sounds no longer go through walls: grandfather clock ticking, whistles, wumpas, and boulder processing."
