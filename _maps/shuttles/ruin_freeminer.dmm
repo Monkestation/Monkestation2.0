@@ -23,7 +23,7 @@
 /area/shuttle/ruin/free_miner)
 "bZ" = (
 /obj/machinery/growing/tray,
-/turf/open/floor/iron/shuttle/exploration/equipmentrail3,
+/turf/open/floor/iron/colony/texture,
 /area/shuttle/ruin/free_miner)
 "ca" = (
 /obj/machinery/door/airlock/public/glass{
@@ -1195,10 +1195,6 @@
 /obj/machinery/atmospherics/components/binary/valve/layer4,
 /turf/open/floor/plating,
 /area/shuttle/ruin/free_miner)
-"Cu" = (
-/obj/machinery/growing/tray,
-/turf/open/floor/iron/shuttle/exploration/equipmentrail2,
-/area/shuttle/ruin/free_miner)
 "Cw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet/black,
@@ -1805,10 +1801,6 @@
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/shuttle/cargo,
-/area/shuttle/ruin/free_miner)
-"Pn" = (
-/obj/machinery/growing/tray,
-/turf/open/floor/iron/shuttle/exploration/equipmentrail1,
 /area/shuttle/ruin/free_miner)
 "Pr" = (
 /obj/machinery/door/airlock{
@@ -2791,7 +2783,7 @@ un
 "}
 (25,1,1) = {"
 KJ
-Pn
+bZ
 Hr
 yM
 vB
@@ -2810,7 +2802,7 @@ GB
 "}
 (26,1,1) = {"
 KJ
-Cu
+bZ
 ZA
 re
 Dn
@@ -2829,7 +2821,7 @@ CJ
 "}
 (27,1,1) = {"
 KJ
-Cu
+bZ
 NT
 ef
 yd
