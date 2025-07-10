@@ -199,6 +199,10 @@ GLOBAL_VAR(ascended_bloodling)
 
 /turf/open/misc/bloodling/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
+	check_bloodling_elegability(arrived)
+
+/// Takes the arrived atom as an argument and checks if they are eligable to be turned into a thrall
+/turf/open/misc/bloodling/proc/check_bloodling_elegability(atom/movable/arrived)
 	if(!isliving(arrived))
 		return
 
@@ -212,7 +216,8 @@ GLOBAL_VAR(ascended_bloodling)
 	var/mob/living/carbon/carbon_mob = mob
 
 	if(carbon_mob.stat == DEAD)
-		if(!(carbon_mob.get_ghost(FALSE, TRUE)))
+		var/dumbass = carbon_mob.mind.get_ghost(ghosts_with_clients = TRUE)
+		if(!carbon_mob.mind.get_ghost(ghosts_with_clients = TRUE) && !carbon_mob.client)// THIS does not work for some reason
 			return
 
 	if(IS_BLOODLING_OR_THRALL(carbon_mob))
