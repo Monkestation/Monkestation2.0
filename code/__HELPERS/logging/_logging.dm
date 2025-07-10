@@ -271,3 +271,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/log_antag_rep(text, list/data)
 	logger.Log(LOG_CATEGORY_ANTAG_REP, text, data)
+
+/proc/log_rustg_debug(text)
+#ifdef UNIT_TESTS
+	SEND_TEXT(world.log, "\[rust-g debug\] [text]")
+#endif
+	WRITE_LOG("[GLOB.log_directory]/rustg_debug.log", "[text]")

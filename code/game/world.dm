@@ -160,6 +160,8 @@ GLOBAL_VAR(restart_counter)
 
 	SetupLogs()
 
+	RUSTG_CALL(RUST_G, "start_dhat")("[GLOB.log_directory]/rustg-dhat-heap.json")
+
 	load_admins()
 	load_mentors()
 
