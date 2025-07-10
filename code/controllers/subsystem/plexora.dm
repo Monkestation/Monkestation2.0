@@ -140,14 +140,14 @@ SUBSYSTEM_DEF(plexora)
 	var/datum/world_topic/status/status_handler = new()
 	var/list/status = status_handler.Run()
 
-	var/datum/http_request/request = http_request(
+	var/datum/http_request/status_request = http_request(
 		RUSTG_HTTP_METHOD_POST,
 		"[base_url]/status",
 		json_encode(status),
 		default_headers
 	)
-	request.begin_async()
-	active_requests += request
+	status_request.begin_async()
+	active_requests += status_request
 	for(var/datum/http_request/request as anything in active_requests)
 		if(request.is_complete()) // rust-g will clear the job once it's complete
 			active_requests -= request
