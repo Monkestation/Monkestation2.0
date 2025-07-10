@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(plexora)
 		"restart_type" = isnull(restart_type_override) ? restart_type : restart_type_override,
 		"requestedby" = usr?.ckey,
 		"requestedby_stealthed" = usr?.client?.holder?.fakekey,
-	))
+	), mark_active = FALSE)
 
 /datum/controller/subsystem/plexora/proc/serverstarted()
 	http_basicasync("serverupdates", list(
@@ -393,7 +393,7 @@ SUBSYSTEM_DEF(plexora)
 		"data" = data,
 	))
 
-/datum/controller/subsystem/plexora/proc/http_basicasync(path, list/body)
+/datum/controller/subsystem/plexora/proc/http_basicasync(path, list/body, mark_active = TRUE)
 	if(!enabled) return
 
 	var/datum/http_request/request = new(
@@ -404,7 +404,8 @@ SUBSYSTEM_DEF(plexora)
 		"tmp/response.json"
 	)
 	request.begin_async()
-	active_requests += request
+	if(mark_active)
+		active_requests += request
 
 /datum/world_topic/plx_announce
 	keyword = "PLX_announce"
