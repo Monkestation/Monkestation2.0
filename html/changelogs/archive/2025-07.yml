@@ -156,5 +156,11 @@
   EssentialTomato:
   - map: Fixed Pubbystation Artifact science access,
 2025-07-09:
+  Absolucy:
+  - qol: 'A few sounds no longer go through walls: grandfather clock ticking, whistles,
+      wumpas, and boulder processing.'
+  QueenReduviidae:
+  - bugfix: Chickens possible mutation scan now includes required items.
+  - bugfix: Pigeons are no longer basically impossible to get.
   iamcooldan:
   - bugfix: biogen now actually dispenses water
