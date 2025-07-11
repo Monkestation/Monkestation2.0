@@ -38,7 +38,7 @@
 	source.minimum_distance = controller.get_minimum_distance()
 
 /datum/ai_movement/jps/bot
-	max_pathing_attempts = 25
+	max_pathing_attempts = 8
 	maximum_length = 25
 	diagonal_flags = DIAGONAL_REMOVE_ALL
 
@@ -51,3 +51,4 @@
 
 /datum/ai_movement/jps/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
+	max_pathing_attempts = 20

@@ -209,7 +209,7 @@
 	for(var/mob/living/basic/bot/bot in victim)
 		if(!(bot.bot_access_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.bot_access_flags |= BOT_CONTROL_PANEL_OPEN
+			bot.bot_access_flags |= BOT_COVER_LOCKED
 			bot.bot_access_flags |= BOT_MAINTS_PANEL_OPEN
 			bot.emag_act(caster)
 	for(var/mob/living/carbon/human/human in victim)

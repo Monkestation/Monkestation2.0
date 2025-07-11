@@ -132,7 +132,19 @@
 	. = ..()
 	AddComponent(/datum/component/connect_loc_behalf, pawn, loc_connections)
 
-/datum/ai_controller/chicken/able_to_run()
+/datum/ai_controller/chicken/on_stat_changed(mob/living/source, new_stat)
+	. = ..()
+	update_able_to_run()
+
+/datum/ai_controller/chicken/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/chicken/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
+	return ..()
+
+/datum/ai_controller/chicken/get_able_to_run()
 	. = ..()
 	var/mob/living/living_pawn = pawn
 

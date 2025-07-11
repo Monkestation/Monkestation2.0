@@ -12,7 +12,7 @@
 	set name = "Navigate"
 	set category = "IC"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 	if(length(client.navigation_images))
 		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
@@ -48,7 +48,7 @@
 	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
 	var/atom/navigate_target = destination_list[platform_code]
 
-	if(isnull(navigate_target) || incapacitated())
+	if(isnull(navigate_target) || incapacitated)
 		return
 
 	var/finding_zchange = FALSE

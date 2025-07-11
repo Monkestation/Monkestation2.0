@@ -168,7 +168,7 @@
 	var/target_area = tgui_input_list(user, "Area to track", "Pinpoint", sort_list(possible_areas))
 	if(isnull(target_area))
 		return
-	if(QDELETED(src) || QDELETED(user) || !user.is_holding(src) || user.incapacitated())
+	if(QDELETED(src) || QDELETED(user) || !user.is_holding(src) || user.incapacitated)
 		return
 
 	tracked_area = target_area

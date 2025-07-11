@@ -74,7 +74,7 @@
 		return TRUE
 	if(is_admin(user.client))
 		return TRUE
-	if(check_incapacitated && user.incapacitated())
+	if(check_incapacitated && user.incapacitated)
 		return FALSE
 	return TRUE
 
@@ -123,7 +123,7 @@
 			return FALSE
 		if(DOING_INTERACTION_WITH_TARGET(src, table))
 			return FALSE
-		if(incapacitated())
+		if(incapacitated)
 			return FALSE
 		if(!CanReach(table))
 			return FALSE

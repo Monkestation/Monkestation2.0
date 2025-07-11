@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		can_range = TRUE
 
 	if((can_range || user.CanReach(src)) && ISADVANCEDTOOLUSER(user))
-		if(user.incapacitated())
+		if(user.incapacitated)
 			return UI_UPDATE
 		if(!can_range && user.can_hold_items() && (user.usable_hands <= 0 || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)))
 			return UI_UPDATE

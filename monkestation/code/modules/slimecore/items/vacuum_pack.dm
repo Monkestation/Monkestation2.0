@@ -125,7 +125,7 @@
 		to_chat(user, span_warning("[src] must be worn properly to use!"))
 		return
 
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 
 	if(QDELETED(nozzle))
@@ -524,7 +524,7 @@
 	if(!isliving(user) || user != loc) // what
 		UnregisterSignal(user, COMSIG_MOB_ALTCLICKON)
 		return
-	if(is_selecting || user.get_active_held_item() != src || user.incapacitated())
+	if(is_selecting || user.get_active_held_item() != src || user.incapacitated)
 		return
 	. = COMSIG_MOB_CANCEL_CLICKON // avoids loot panel showing up
 	is_selecting = TRUE
@@ -566,7 +566,7 @@
 		do_suck(chosen, user)
 
 /obj/item/vacuum_nozzle/proc/extra_selection_checks(mob/living/user, turf/target_turf)
-	return user.get_active_held_item() == src && !user.incapacitated() && in_view_range(user, target_turf, require_same_z = TRUE)
+	return user.get_active_held_item() == src && !user.incapacitated && in_view_range(user, target_turf, require_same_z = TRUE)
 
 /obj/item/disk/vacuum_upgrade
 	name = "vacuum pack upgrade disk"

@@ -477,7 +477,7 @@
 		. += "shion-mask"
 
 /obj/item/toy/plush/admin/shion/AltClick(mob/living/user)
-	if(!Adjacent(user) || user.incapacitated())
+	if(!Adjacent(user) || user.incapacitated)
 		return
 	mask_on = !mask_on
 

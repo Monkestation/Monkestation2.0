@@ -629,7 +629,7 @@
 					leg.receive_damage(2 * mutation_power)
 				// MONKESTATION ADDITION END
 		if(2)
-			if(owner.incapacitated())
+			if(owner.incapacitated)
 				return
 			// MONKESTATION ADDITION START
 			if(mutation_power > 1)
@@ -677,7 +677,7 @@
 				arm.receive_damage(2 * mutation_power)
 			// MONKESTATION ADDITION END
 		if(5)
-			if(owner.incapacitated())
+			if(owner.incapacitated)
 				return
 			var/obj/item/held_item = owner.get_active_held_item()
 			var/list/turf/targets = list()

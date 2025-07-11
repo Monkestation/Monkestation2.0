@@ -124,6 +124,9 @@
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
 
+///Only target mobs with these traits
+#define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
+
 #define BB_GROUP_DATUM "BB_group_datum"
 ///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"

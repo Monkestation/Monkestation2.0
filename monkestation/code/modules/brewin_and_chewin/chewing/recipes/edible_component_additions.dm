@@ -1,7 +1,7 @@
 /datum/component/edible/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(parent))
+	if(user.incapacitated || !user.Adjacent(parent))
 		return FALSE
 	return TRUE
 

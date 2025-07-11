@@ -166,7 +166,7 @@
 	desc = "[desc] It has [uses] use\s remaining."
 
 /datum/action/innate/ai/ranged/override_directive/do_ability(mob/living/user, atom/clicked_on)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		unset_ranged_ability(user)
 		return FALSE
 	if(!isipc(clicked_on))
@@ -185,7 +185,7 @@
 	if(HAS_TRAIT(ipc, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(ipc, TRAIT_UNCONVERTABLE))
 		to_chat(user, span_warning("Target has propietary firewall defenses from their mindshield!"))
 		return FALSE
-	if(!ipc.incapacitated())
+	if(!ipc.incapacitated)
 		to_chat(user, span_warning("Target must be vulnerable by being incapacitated."))
 		return FALSE
 	if(!ipc.get_organ_by_type(/obj/item/organ/internal/brain))

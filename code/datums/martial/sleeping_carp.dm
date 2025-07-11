@@ -223,7 +223,7 @@
 		return FALSE
 	if(check_intent && !(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
 		return FALSE
-	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
+	if(INCAPACITATED_IGNORING(carp_user, IGNORE_GRAB)) //NO STUN
 		return FALSE
 	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE

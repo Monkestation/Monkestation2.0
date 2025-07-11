@@ -28,7 +28,7 @@
 	var/time_between_alerts = 60 SECONDS
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
-	if(opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
+	if(opened || move_delay || user.incapacitated || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
 	var/oldloc = loc
@@ -67,7 +67,7 @@
 	COOLDOWN_START(src, alert_cooldown, time_between_alerts)
 
 	for(var/mob/living/alerted_mob as anything in alerted)
-		if(!alerted_mob.incapacitated(IGNORE_RESTRAINTS))
+		if(!INCAPACITATED_IGNORING(alerted_mob, IGNORE_RESTRAINTS))
 			alerted_mob.face_atom(src)
 		alerted_mob.do_alert_animation()
 

@@ -20,7 +20,7 @@
 		return FALSE
 	var/mob/living/silicon/ai/ai_clicker = clicker
 
-	if(clicker.incapacitated())
+	if(clicker.incapacitated)
 		unset_ranged_ability(clicker)
 		return FALSE
 

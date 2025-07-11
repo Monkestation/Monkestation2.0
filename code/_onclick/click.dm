@@ -127,7 +127,7 @@
 		alt_click_on_secondary(A)
 		return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_CRIT))
+	if(INCAPACITATED_IGNORING(src, IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_CRIT)) //ignore crit allows using in crit
 		return
 
 	face_atom(A)
@@ -388,7 +388,7 @@
 		return FALSE
 
 /mob/living/CtrlClick(mob/user)
-	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
+	if(!isliving(user) || !user.CanReach(src) || user.incapacitated)
 		return ..()
 
 	if(world.time < user.next_move)
@@ -403,7 +403,7 @@
 
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated())
+	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated)
 		return ..()
 
 	if(world.time < user.next_move)

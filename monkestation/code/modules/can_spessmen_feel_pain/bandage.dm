@@ -106,7 +106,7 @@
 /obj/item/bodypart/proc/help_remove_gauze(mob/living/helper)
 	if(!istype(helper))
 		return
-	if(helper.incapacitated())
+	if(helper.incapacitated)
 		return
 	if(!helper.can_perform_action(owner, NEED_HANDS|FORBID_TELEKINESIS_REACH)) // telekinetic removal can be added later
 		return

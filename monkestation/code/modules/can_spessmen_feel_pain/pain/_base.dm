@@ -638,7 +638,7 @@
 					parent.losebreath += 4
 				else if(heart_attack_counter >= 3)
 					to_chat(parent, span_userdanger("Your heart stops!"))
-					if(!parent.incapacitated())
+					if(!parent.incapacitated)
 						parent.visible_message(span_danger("[parent] grabs at [parent.p_their()] chest!"), ignored_mobs = parent)
 					parent.set_heartattack(TRUE)
 					heart_attack_counter = -2
@@ -816,7 +816,7 @@
 		return FALSE
 	if(cooldown && !COOLDOWN_FINISHED(src, time_since_last_pain_message))
 		return FALSE
-	if(parent.stat >= UNCONSCIOUS || parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
+	if(parent.stat >= UNCONSCIOUS || INCAPACITATED_IGNORING(parent, IGNORE_RESTRAINTS|IGNORE_GRAB))
 		return FALSE
 
 	INVOKE_ASYNC(parent, TYPE_PROC_REF(/mob, emote), emote)

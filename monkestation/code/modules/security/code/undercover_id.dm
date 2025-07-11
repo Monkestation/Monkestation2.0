@@ -63,7 +63,7 @@
 	// MONKESTATION ADDITION END
 	if(isliving(user) && user.mind)
 		var/popup_input = tgui_input_list(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
-		if(user.incapacitated())
+		if(user.incapacitated)
 			return
 		if(!user.is_holding(src))
 			return

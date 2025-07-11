@@ -212,7 +212,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	#endif
 	/proc/machine_upgrade,
 	/datum/admins/proc/create_or_modify_area,
-	/client/proc/adventure_manager,
+	///client/proc/adventure_manager,
 	/client/proc/atmos_control,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,

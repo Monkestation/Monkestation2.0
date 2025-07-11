@@ -4,20 +4,20 @@
 	reward = CARGO_CRATE_VALUE * 2.5
 	wanted_types = list(/mob/living/basic/bot/cleanbot/medbay/jr = TRUE)
 
-/datum/bounty/item/bot/floorbot
-	name = "Floorbot"
-	description = "Out last floorbot went haywire and removed all our floors. So we need another floorbot to replace the priors issues."
-	reward = CARGO_CRATE_VALUE * 3
-	wanted_types = list(/mob/living/simple_animal/bot/floorbot = TRUE)
+/datum/bounty/item/bot/repairbot
+	name = "Repairbot"
+	description = "Out last Repairbot went haywire and removed all our floors. So we need another repairbot to replace the priors issues."
+	reward = CARGO_CRATE_VALUE * 6
+	wanted_types = list(/mob/living/basic/bot/repairbot = TRUE)
 
 /datum/bounty/item/bot/honkbot
 	name = "Honkbot"
 	description = "Mr. Gigglesworth birthday is around the corner and we didn't get a present. Ship us off a honkbot to giftwrap please."
 	reward = CARGO_CRATE_VALUE * 5
-	wanted_types = list(/mob/living/simple_animal/bot/secbot/honkbot = TRUE)
+	wanted_types = list(/mob/living/basic/bot/secbot/honkbot = TRUE)
 
 /datum/bounty/item/bot/firebot
 	name = "Firebot"
 	description = "An assistant waving around some license broke into atmospherics and its now all on fire. Send us a Firebot before the gas fire leaks further."
 	reward = CARGO_CRATE_VALUE * 4
-	wanted_types = list(/mob/living/simple_animal/bot/firebot = TRUE)
+	wanted_types = list(/mob/living/basic/bot/firebot = TRUE)

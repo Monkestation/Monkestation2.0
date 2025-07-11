@@ -143,7 +143,7 @@
 /obj/item/sticker/analysis_form/ui_status(mob/user,/datum/ui_state/ui_state)
 	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
 		return UI_CLOSE
-	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
+	if(INCAPACITATED_IGNORING(user, IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind!"))

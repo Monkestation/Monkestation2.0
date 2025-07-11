@@ -187,7 +187,7 @@
 /datum/martial_art/the_tunnel_arts/proc/check_usability(mob/living/khan_user, check_intent = TRUE)
 	if(check_intent && !(khan_user.istate & ISTATE_HARM))
 		return FALSE
-	if(khan_user.incapacitated(IGNORE_GRAB)) //NO STUN
+	if(INCAPACITATED_IGNORING(khan_user, IGNORE_GRAB)) //NO STUN
 		return FALSE
 	if(!(khan_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE

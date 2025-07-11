@@ -230,31 +230,6 @@
 		if(ASSEMBLY_SECOND_STEP)
 			icon_state = "[toolbox_color]toolbox_tiles_sensor"
 
-/obj/item/bot_assembly/floorbot/attackby(obj/item/W, mob/user, params)
-	..()
-	switch(build_step)
-		if(ASSEMBLY_FIRST_STEP)
-			if(isprox(W))
-				if(!user.temporarilyRemoveItemFromInventory(W))
-					return
-				to_chat(user, span_notice("You add [W] to [src]."))
-				qdel(W)
-				build_step++
-				update_appearance()
-
-		if(ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
-				if(!can_finish_build(W, user))
-					return
-				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location(), toolbox_color)
-				A.name = created_name
-				A.robot_arm = W.type
-				A.toolbox = toolbox
-				to_chat(user, span_notice("You add [W] to [src]. Boop beep!"))
-				qdel(W)
-				qdel(src)
-
-
 //Medbot Assembly
 /obj/item/bot_assembly/medbot
 	name = "incomplete medibot assembly"
@@ -325,7 +300,7 @@
 				if(!can_finish_build(attacking_item, user))
 					return
 				to_chat(user, span_notice("You add the [attacking_item] to [src]! Honk!"))
-				var/mob/living/simple_animal/bot/secbot/honkbot/new_honkbot = new(drop_location())
+				var/mob/living/basic/bot/honkbot/new_honkbot = new(drop_location())
 				new_honkbot.name = created_name
 				new_honkbot.limiting_spam = TRUE // only long enough to hear the first ping.
 				playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
@@ -498,7 +473,7 @@
 				if(!can_finish_build(I, user))
 					return
 				to_chat(user, span_notice("You add the [I] to [src]! Beep Boop!"))
-				var/mob/living/simple_animal/bot/firebot/F = new(drop_location())
+				var/mob/living/basic/bot/firebot/F = new(drop_location())
 				F.name = created_name
 				qdel(I)
 				qdel(src)

@@ -346,7 +346,7 @@
 		return
 	if(!usr.can_perform_action(src))
 		return
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if(reagent_container)
 		if(attached)
@@ -366,7 +366,7 @@
 		return
 	if(!usr.can_perform_action(src))
 		return
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if(inject_only)
 		mode = IV_INJECTING

@@ -51,7 +51,7 @@
 
 	generate_anvil_beats(TRUE)
 
-	if(QDELETED(user.client) || user.incapacitated())
+	if(QDELETED(user.client) || user.incapacitated)
 		return FALSE
 	. = TRUE
 	anvil_hud = new

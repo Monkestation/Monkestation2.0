@@ -60,7 +60,7 @@
 		return FALSE
 	if(user.stat >= DEAD)
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		owner.balloon_alert(owner, "too exhausted...")
 		return FALSE
 	return TRUE

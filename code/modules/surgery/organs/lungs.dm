@@ -900,7 +900,7 @@
 		return
 
 	if(organ_flags & ORGAN_FAILING)
-		if(!owner?.incapacitated())
+		if(!owner?.incapacitated)
 			owner.visible_message(
 				span_danger("[owner] grabs [owner.p_their()] throat, struggling for breath!"),
 				span_userdanger("You suddenly feel like you can't breathe!"),

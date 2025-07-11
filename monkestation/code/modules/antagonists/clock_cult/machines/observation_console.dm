@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(clock_warp_areas)
 	var/static/list/blocked_areas = typecacheof(list(/area/station/service/chapel, /area/station/ai_monitored))
 
 /datum/action/innate/clockcult/warp/IsAvailable(feedback)
-	if(!IS_CLOCK(owner) || owner.incapacitated())
+	if(!IS_CLOCK(owner) || owner.incapacitated)
 		return FALSE
 	return ..()
 

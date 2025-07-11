@@ -21,7 +21,7 @@
 		/obj/item/storage/backpack/duffelbag/sec = 3,
 		/obj/item/clothing/under/rank/security/officer = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
-		/obj/item/clothing/gloves/color/black = 3,
+		/obj/item/clothing/gloves/color/black/security/blu = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
 		/obj/item/clothing/gloves/color/black/security = 3,

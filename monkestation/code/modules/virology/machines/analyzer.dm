@@ -227,7 +227,7 @@
 
 
 /obj/machinery/disease2/diseaseanalyser/AltClick()
-	if((!usr.Adjacent(src) || usr.incapacitated()))
+	if((!usr.Adjacent(src) || usr.incapacitated))
 		return ..()
 
 	if (dish && !scanner)

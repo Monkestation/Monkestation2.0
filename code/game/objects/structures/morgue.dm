@@ -383,7 +383,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		var/mob/M = O
 		if(M.buckled)
 			return
-	if(!ismob(user) || user.incapacitated())
+	if(!ismob(user) || user.incapacitated)
 		return
 	if(isliving(user))
 		var/mob/living/L = user

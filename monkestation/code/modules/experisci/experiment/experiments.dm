@@ -24,7 +24,7 @@
 	name = "Bot Scan Analysis"
 	description = "Central is curious at the potential of replacing the workforce with robots. Create a few and begin the replacement of your coworkers."
 	total_requirement = 2
-	possible_types = list(/mob/living/simple_animal/bot/vibebot, /mob/living/basic/bot/hygienebot, /mob/living/basic/bot/cleanbot/medbay/jr, /mob/living/simple_animal/bot/firebot,)
+	possible_types = list(/mob/living/basic/bot/vibebot, /mob/living/basic/bot/hygienebot, /mob/living/basic/bot/cleanbot/medbay/jr, /mob/living/basic/bot/firebot,)
 
 /datum/experiment/scanning/random/money
 	name = "Computing Software Funding Salvage"

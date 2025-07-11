@@ -6,23 +6,6 @@
 	// If you are refactoring a simple_animal, REMOVE it from this list
 	var/list/allowed_types = list(
 		/mob/living/simple_animal/bot,
-		/mob/living/simple_animal/bot/firebot,
-		/mob/living/simple_animal/bot/floorbot,
-		/mob/living/simple_animal/bot/mulebot,
-		/mob/living/simple_animal/bot/mulebot/paranormal,
-		/mob/living/simple_animal/bot/secbot,
-		/mob/living/simple_animal/bot/secbot/beepsky,
-		/mob/living/simple_animal/bot/secbot/beepsky/armsky,
-		/mob/living/simple_animal/bot/secbot/beepsky/jr,
-		/mob/living/simple_animal/bot/secbot/beepsky/officer,
-		/mob/living/simple_animal/bot/secbot/beepsky/ofitser,
-		/mob/living/simple_animal/bot/secbot/ed209,
-		/mob/living/simple_animal/bot/secbot/genesky,
-		/mob/living/simple_animal/bot/secbot/grievous,
-		/mob/living/simple_animal/bot/secbot/grievous/toy,
-		/mob/living/simple_animal/bot/secbot/honkbot,
-		/mob/living/simple_animal/bot/secbot/pingsky,
-		/mob/living/simple_animal/bot/vibebot,
 		/mob/living/simple_animal/hostile,
 		/mob/living/simple_animal/hostile/asteroid,
 		/mob/living/simple_animal/hostile/asteroid/curseblob,
@@ -86,7 +69,6 @@
 
 		//MONKESTATION-SPECIFIC ENTRIES START
 		/mob/living/simple_animal/bot/buttbot,
-		/mob/living/simple_animal/bot/secbot/beepsky/big,
 		/mob/living/simple_animal/fish,
 		/mob/living/simple_animal/fish/angelfish,
 		/mob/living/simple_animal/fish/catfish,
