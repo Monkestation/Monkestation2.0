@@ -130,9 +130,6 @@
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
 
-	if(length(bodypart_traits))
-		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
-
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
@@ -255,6 +252,8 @@
 /obj/item/bodypart/chest/drop_limb(special, dismembered, violent)
 	if(special)
 		return ..()
+	//if this is not a special drop, this is a mistake
+	return FALSE
 
 /obj/item/bodypart/arm/drop_limb(special, dismembered, violent)
 	var/mob/living/carbon/arm_owner = owner
@@ -355,6 +354,7 @@
 		return FALSE
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
+	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
@@ -400,9 +400,6 @@
 	if(can_be_disabled)
 		update_disabled()
 
-	if(length(bodypart_traits))
-		owner.add_traits(bodypart_traits, bodypart_trait_source)
-
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
@@ -415,7 +412,7 @@
 
 /obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
-	var/real_name = src.real_name
+	var/old_real_name = src.real_name
 
 	. = ..()
 
@@ -431,9 +428,9 @@
 	if(eyes)
 		eyes = null
 
-	if(real_name)
-		new_head_owner.real_name = real_name
-	real_name = ""
+	if(old_real_name)
+		new_head_owner.real_name = old_real_name
+	real_name = new_head_owner.real_name
 
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/pill/pill in src)
@@ -445,17 +442,12 @@
 	///Transfer existing hair properties to the new human.
 	if(!special && ishuman(new_head_owner))
 		var/mob/living/carbon/human/sexy_chad = new_head_owner
-		sexy_chad.hairstyle = hair_style
+		sexy_chad.hairstyle = hairstyle
 		sexy_chad.hair_color = hair_color
-		sexy_chad.facial_hair_color = facial_hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
-		if(hair_gradient_style || facial_hair_gradient_style)
-			LAZYSETLEN(sexy_chad.grad_style, GRADIENTS_LEN)
-			LAZYSETLEN(sexy_chad.grad_color, GRADIENTS_LEN)
-			sexy_chad.grad_style[GRADIENT_HAIR_KEY] =  hair_gradient_style
-			sexy_chad.grad_color[GRADIENT_HAIR_KEY] =  hair_gradient_color
-			sexy_chad.grad_style[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_style
-			sexy_chad.grad_color[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_color
+		sexy_chad.facial_hair_color = facial_hair_color
+		sexy_chad.grad_style = gradient_styles?.Copy()
+		sexy_chad.grad_color = gradient_colors?.Copy()
 		sexy_chad.lip_style = lip_style
 		sexy_chad.lip_color = lip_color
 

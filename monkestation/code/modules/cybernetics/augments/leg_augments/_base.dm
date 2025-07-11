@@ -4,9 +4,10 @@
 	zone = BODY_ZONE_R_LEG
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_SMALL
-	encode_info = AUGMENT_NT_LOWLEVEL
 	organ_flags = ORGAN_ROBOTIC
-	var/double_legged = FALSE
+	/// The "base" typepath if this implant needs to be in both legs.
+	/// This is a typepath and not true/false so we can properly check subtypes.
+	var/double_legged_type = null
 
 /obj/item/organ/internal/cyberimp/leg/Initialize()
 	. = ..()
@@ -31,7 +32,7 @@
 
 /obj/item/organ/internal/cyberimp/leg/examine(mob/user)
 	. = ..()
-	. += "<span class='info'>[src] is assembled in the [zone == BODY_ZONE_R_LEG ? "right" : "left"] LEG configuration. You can use a screwdriver to reassemble it.</span>"
+	. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_LEG ? "right" : "left"] LEG configuration. You can use a screwdriver to reassemble it.")
 
 /obj/item/organ/internal/cyberimp/leg/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -43,17 +44,25 @@
 	else
 		zone = BODY_ZONE_R_LEG
 	SetSlotFromZone()
-	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_LEG ? "right" : "left"] leg.</span>")
+	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_LEG ? "right" : "left"] leg."))
 	update_icon()
 
-/obj/item/organ/internal/cyberimp/leg/on_insert(mob/living/carbon/M, special, drop_if_replaced)
+/obj/item/organ/internal/cyberimp/leg/on_insert(mob/living/carbon/organ_owner, special, drop_if_replaced)
 	. = ..()
-	if(!double_legged)
-		on_full_insert(M, special, drop_if_replaced)
-		return
-	on_full_insert(M, special, drop_if_replaced)
+	if(double_legged_type)
+		var/other_leg_zone = zone == BODY_ZONE_L_LEG ? BODY_ZONE_R_LEG : BODY_ZONE_L_LEG
+		var/in_other_leg = FALSE
+		for(var/obj/item/organ/internal/cyberimp/leg/implant as anything in organ_owner.organs)
+			if(implant == src || !istype(implant, double_legged_type))
+				continue
+			if(implant.zone == other_leg_zone)
+				in_other_leg = TRUE
+				break
+		if(!in_other_leg)
+			return
+	on_full_insert(organ_owner, special, drop_if_replaced)
 
-/obj/item/organ/internal/cyberimp/leg/proc/on_full_insert(mob/living/carbon/M, special, drop_if_replaced)
+/obj/item/organ/internal/cyberimp/leg/proc/on_full_insert(mob/living/carbon/organ_owner, special, drop_if_replaced)
 	return
 
 /obj/item/organ/internal/cyberimp/leg/emp_act(severity)
