@@ -882,10 +882,10 @@ generate/load female uniform sprites matching all previously decided variables
 			else
 				var/mutable_appearance/missing_eyes = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
 				my_head.worn_face_offset?.apply_offset(missing_eyes)
-				add_overlay(missing_eyes)
+				add_overlay(missing_eyes)*/
 	update_worn_head()
 	update_worn_mask()
-	*/
+
 
 // Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
 // Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
