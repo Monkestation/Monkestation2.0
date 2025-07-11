@@ -978,13 +978,13 @@
 	icon_state = "lungs-ashwalker"
 	actions_types = list(/datum/action/cooldown/mob_cooldown/fire_breath/oni)
 
-	cold_level_warning_threshold = CELCIUS_TO_KELVIN(1.85 CELCIUS)
-	cold_level_hazard_threshold = CELCIUS_TO_KELVIN(-48.15 CELCIUS)
-	cold_level_danger_threshold = CELCIUS_TO_KELVIN(-128.15 CELCIUS)
+	cold_level_warning_threshold = 275
+	cold_level_hazard_threshold = 225
+	cold_level_danger_threshold = 145
 
-	heat_level_warning_threshold = CELCIUS_TO_KELVIN(126.85 CELCIUS)
-	heat_level_hazard_threshold = CELCIUS_TO_KELVIN(296.85 CELCIUS)
-	heat_level_danger_threshold = CELCIUS_TO_KELVIN(526.85 CELCIUS)
+	heat_level_warning_threshold = 400
+	heat_level_hazard_threshold = 570
+	heat_level_danger_threshold = 800
 
 /datum/action/cooldown/mob_cooldown/fire_breath/oni
 	name = "Oni Breath"
