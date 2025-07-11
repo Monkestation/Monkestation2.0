@@ -138,3 +138,45 @@
   - bugfix: Jacob's ladder now skips the colony and reebe Z-levels.
   EssentialTomato:
   - bugfix: Fixed extreme case of empathy while relocating someone's limb.
+2025-07-06:
+  Absolucy:
+  - admin: 'Added some more Lua/SDQL2 wrappers: _floor(), _ceil(), _typesof(), _uppertext(),
+      _html_encode(), _html_decode(), _url_encode(), and _url_decode()'
+  - bugfix: Fixed the unborgable quirk not actually working.
+  - bugfix: Fixed bloodsuckers being able to spam their coffin to open a bunch of
+      blood thickening prompts to rank up when they really shouldn't be able to.
+  - bugfix: The air on the planet used for the the hermit/colony ghost role will no
+      longer kill you.
+  Cmpwarrior:
+  - rscadd: Added a new AI Core design based off of Tenna (from Deltarune)
+  - bugfix: Removed stray white pixels from some AI core sprites.
+  Fikou:
+  - admin: _generator wrapper for sdql, RandList proc for generators
+2025-07-07:
+  EssentialTomato:
+  - map: Fixed Pubbystation Artifact science access,
+2025-07-09:
+  Absolucy:
+  - qol: 'A few sounds no longer go through walls: grandfather clock ticking, whistles,
+      wumpas, and boulder processing.'
+  QueenReduviidae:
+  - bugfix: Chickens possible mutation scan now includes required items.
+  - bugfix: Pigeons are no longer basically impossible to get.
+  iamcooldan:
+  - bugfix: biogen now actually dispenses water
+2025-07-11:
+  Absolucy:
+  - rscdel: Fully removed cyberlinks from the game. You can just use implants now
+      without having to solve a maze 5 times.
+  - rscdel: The Neuralinked quirk is also gone, as cyberlinks are no more.
+  Addust:
+  - rscadd: Free Miners have been added, based off the ghostrole from Yogstation.
+  Coll6:
+  - bugfix: Uncapped organs can be repaired again like brains.
+  - code_imp: Force maxhealth to default to organ's maxHealth when argument is null.
+  EssentialTomato:
+  - bugfix: Minor hair dye spray fix.
+  Ice-Type:
+  - rscdel: The fireplace no longer makes sound
+  KittyNoodle:
+  - rscadd: Ethereals can now wear underclothes.
