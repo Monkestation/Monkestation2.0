@@ -155,3 +155,28 @@
 2025-07-07:
   EssentialTomato:
   - map: Fixed Pubbystation Artifact science access,
+2025-07-09:
+  Absolucy:
+  - qol: 'A few sounds no longer go through walls: grandfather clock ticking, whistles,
+      wumpas, and boulder processing.'
+  QueenReduviidae:
+  - bugfix: Chickens possible mutation scan now includes required items.
+  - bugfix: Pigeons are no longer basically impossible to get.
+  iamcooldan:
+  - bugfix: biogen now actually dispenses water
+2025-07-11:
+  Absolucy:
+  - rscdel: Fully removed cyberlinks from the game. You can just use implants now
+      without having to solve a maze 5 times.
+  - rscdel: The Neuralinked quirk is also gone, as cyberlinks are no more.
+  Addust:
+  - rscadd: Free Miners have been added, based off the ghostrole from Yogstation.
+  Coll6:
+  - bugfix: Uncapped organs can be repaired again like brains.
+  - code_imp: Force maxhealth to default to organ's maxHealth when argument is null.
+  EssentialTomato:
+  - bugfix: Minor hair dye spray fix.
+  Ice-Type:
+  - rscdel: The fireplace no longer makes sound
+  KittyNoodle:
+  - rscadd: Ethereals can now wear underclothes.
