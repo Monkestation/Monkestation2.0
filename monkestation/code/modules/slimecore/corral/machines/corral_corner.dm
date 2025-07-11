@@ -173,17 +173,32 @@
 	icon_state = "corral_fence"
 	can_atmos_pass = ATMOS_PASS_NO
 	can_astar_pass = CANASTARPASS_ALWAYS_PROC
+	var/static/list/cant_pass_typecache = typecacheof(list(
+		/mob/living/basic/slime,
+		/mob/living/basic/cockroach,
+		/mob/living/basic/xenofauna,
+	))
+
+/obj/structure/corral_fence/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_LIQUIDS_CREATION = PROC_REF(on_liquid_creation),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/corral_fence/CanPass(atom/movable/mover, border_dir)
 	. = ..()
 	if(mover.pulledby)
 		return TRUE
-	if((istype(mover, /mob/living/basic/slime) || ismonkey(mover) || istype(mover, /mob/living/basic/cockroach) || istype(mover, /mob/living/basic/xenofauna)) && !HAS_TRAIT(mover, VACPACK_THROW))
+	if((is_type_in_typecache(mover, cant_pass_typecache) || ismonkey(mover)) && !HAS_TRAIT(mover, VACPACK_THROW))
 		return FALSE
 	return TRUE
-
 
 /obj/effect/corral_fence/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(pass_info.xenofauna_or_slime)
 		return FALSE
 	return TRUE //anything expect slimes can astar pass
+
+/obj/structure/corral_fence/proc/on_liquid_creation(datum/source)
+	SIGNAL_HANDLER
+	return BLOCK_LIQUID_CREATION
