@@ -13,12 +13,7 @@ GLOBAL_VAR(ascended_bloodling)
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
 	. = ..()
 	var/mob/living/basic/bloodling/proper/our_mob = owner
-	var/datum/antagonist/bloodling/antag = IS_BLOODLING(our_mob)
 	our_turf = get_turf(our_mob)
-
-	if(antag.is_ascended)
-		qdel(src)
-		return FALSE
 
 	if(GLOB.ascended_bloodling)
 		to_chat(our_mob, span_noticealien("Someone has already ascended before us..."))
@@ -174,6 +169,7 @@ GLOBAL_VAR(ascended_bloodling)
 	canSmoothWith = SMOOTH_GROUP_FLOOR_BLOODLING
 	layer = HIGH_TURF_LAYER
 	underfloor_accessibility = UNDERFLOOR_HIDDEN
+	desc = "A pulsing mass of flesh. It shivers and writhes at any touch."
 
 	/// Status effect given to anyone who walks on these tiles
 	var/thrall_stat = /datum/status_effect/bloodling_thrall
@@ -182,6 +178,9 @@ GLOBAL_VAR(ascended_bloodling)
 	. = ..()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
+
+	for(var/atom/atom as anything in contents)
+		check_bloodling_elegability(atom)
 
 /turf/open/misc/bloodling/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
@@ -210,14 +209,10 @@ GLOBAL_VAR(ascended_bloodling)
 	if(!iscarbon(mob))
 		return
 
-	if(isnull(mob.key))
-		return
-
 	var/mob/living/carbon/carbon_mob = mob
 
 	if(carbon_mob.stat == DEAD)
-		var/dumbass = carbon_mob.mind.get_ghost(ghosts_with_clients = TRUE)
-		if(!carbon_mob.mind.get_ghost(ghosts_with_clients = TRUE) && !carbon_mob.client)// THIS does not work for some reason
+		if(!carbon_mob.client && !carbon_mob.get_ghost(ghosts_with_clients = TRUE))// THIS does not work for some reason)
 			return
 
 	if(IS_BLOODLING_OR_THRALL(carbon_mob))
@@ -235,7 +230,6 @@ GLOBAL_VAR(ascended_bloodling)
 	duration = -1
 	alert_type = null
 	show_duration = TRUE
-	var/mob/living/basic/bloodling/master
 
 /datum/status_effect/bloodling_thrall/on_apply()
 	to_chat(owner,span_warning("You feel the floor grasp you, stay on the move!"))
@@ -253,6 +247,7 @@ GLOBAL_VAR(ascended_bloodling)
 /datum/status_effect/bloodling_thrall/proc/thrallify()
 	if(owner.stat == DEAD)
 		owner.revive(ADMIN_HEAL_ALL)
+		owner.grab_ghost(force = TRUE)
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = owner.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	var/datum/antagonist/antag = GLOB.ascended_bloodling
