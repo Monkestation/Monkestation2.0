@@ -34,7 +34,7 @@
 		event_flags & TWITCH_ALLOW_DUPLICATE_TARGETS ? (targets += GLOB.alive_player_list) : (targets |= GLOB.alive_player_list)
 
 	if(event_flags & TWITCH_AFFECTS_RANDOM)
-		var/list/living_players = GLOB.alive_player_list
+		var/list/living_players = GLOB.alive_player_list.Copy()
 		var/allow_duplicates = event_flags & TWITCH_ALLOW_DUPLICATE_TARGETS
 		for(var/num in 1 to random_count)
 			allow_duplicates ? (targets += pick_n_take(living_players)) : (targets |= pick_n_take(living_players))
