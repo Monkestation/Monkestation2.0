@@ -3683,6 +3683,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/mechbay)
+"bkw" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "bkB" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/line{
@@ -20591,6 +20596,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "gGD" = (
@@ -26332,15 +26338,33 @@
 /area/station/service/kitchen)
 "iuI" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/structure/rack{
+	pixel_x = 0;
+	pixel_y = 0
 	},
-/obj/item/gun/energy/disabler,
 /obj/item/gun/energy/disabler{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco{
+	pixel_x = 0;
+	pixel_y = -4
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco{
 	pixel_x = 3;
-	pixel_y = -3
+	pixel_y = -7
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = 4;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -42277,6 +42301,12 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "nDw" = (
@@ -46149,16 +46179,7 @@
 /area/station/science/research)
 "oRs" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/rack,
-/obj/item/gun/ballistic/automatic/pistol/paco{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/ballistic/automatic/pistol/paco,
-/obj/item/gun/ballistic/automatic/pistol/paco{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/structure/closet/secure_closet/armory_kiboko,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "oRx" = (
@@ -57609,6 +57630,7 @@
 /obj/item/gun/energy/temperature/security{
 	pixel_y = -3
 	},
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "sKj" = (
@@ -60536,6 +60558,12 @@
 	pixel_y = 6;
 	pixel_x = 6
 	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tBq" = (
@@ -66801,7 +66829,6 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/crowbar/large,
-/obj/item/clothing/suit/armor/laserproof,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -104028,7 +104055,7 @@ ksa
 ksa
 uoo
 ksa
-fEP
+bkw
 ksa
 tFK
 mfE

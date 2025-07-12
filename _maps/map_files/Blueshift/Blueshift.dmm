@@ -6782,7 +6782,6 @@
 /area/station/command/heads_quarters/rd)
 "bqj" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/temperature/security,
 /obj/structure/rack/shelf,
 /obj/structure/cable,
@@ -6790,6 +6789,11 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
+/obj/item/gun/energy/ionrifle{
+	pixel_x = 0;
+	pixel_y = -6
+	},
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -13396,21 +13400,60 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "cBC" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/box/lethalshot{
-	pixel_y = 11
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Lethal"
 	},
 /obj/item/storage/box/lethalshot{
-	pixel_y = 11
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
 	},
 /obj/item/storage/box/lethalshot{
-	pixel_y = -1
+	pixel_x = -2;
+	pixel_y = -2
 	},
-/obj/effect/spawner/random/armory/rubbershot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -25705,13 +25748,27 @@
 /area/station/maintenance/xenobio_disposals)
 "eTe" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/rack/gunrack,
 /obj/machinery/airalarm/directional/south,
-/obj/effect/spawner/armory_spawn/mod_lasers_small,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_x = 0;
+	pixel_y = 7
+	},
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_x = 0;
+	pixel_y = -1
+	},
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_x = 0;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "eTk" = (
@@ -25795,12 +25852,60 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/brig)
 "eUa" = (
-/obj/structure/rack,
-/obj/effect/spawner/random/armory/disablers,
-/obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Non-lethal"
 	},
+/obj/item/storage/box/rubbershot{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/storage/box/rubbershot,
+/obj/item/storage/box/rubbershot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/trimline/red/line,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -47942,16 +48047,37 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science)
 "joA" = (
-/obj/structure/table/reinforced,
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/bulletproof{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/armor/bulletproof{
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/armor/bulletproof{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/helmet/alt{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/clothing/head/helmet/alt{
+	pixel_x = -6
+	},
+/obj/item/clothing/head/helmet/alt{
+	pixel_x = -6;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes,
-/obj/effect/spawner/random/armory/riot_armor,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "joF" = (
@@ -52197,19 +52323,6 @@
 /area/station/science/ordnance)
 "kdL" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
-/obj/item/flashlight/seclite,
-/obj/item/key/security,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
@@ -52217,6 +52330,11 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/crowbar/large,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "kdO" = (
@@ -63797,6 +63915,9 @@
 /obj/effect/turf_decal/trimline/red/end{
 	dir = 1
 	},
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "mrc" = (
@@ -69613,15 +69734,35 @@
 "nzR" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/storage/box/emps{
-	pixel_y = 11
-	},
-/obj/item/gun/energy/ionrifle,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_x = 6;
+	pixel_y = -4
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
@@ -71233,34 +71374,19 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/rack,
 /obj/effect/turf_decal/delivery,
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = 6;
-	pixel_y = -2
-	},
 /obj/structure/sign/poster/official/carwo_magazine/directional/north,
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
+	},
+/obj/item/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/item/storage/fancy/donut_box{
+	pixel_x = 0;
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
@@ -75573,17 +75699,27 @@
 "oGF" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
-/obj/item/melee/baton/security/loaded,
-/obj/item/melee/baton/security/loaded,
-/obj/item/melee/baton/security/loaded,
+/obj/item/melee/baton/security/loaded{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /obj/structure/cable,
-/obj/effect/spawner/random/armory/riot_shield,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/item/key/security{
+	pixel_x = -4;
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/ai_monitored/security/armory)
 "oGG" = (
@@ -76495,18 +76631,31 @@
 "oOP" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/flashbangs{
-	pixel_x = 6;
-	pixel_y = 5
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/item/storage/box/flashes{
+	pixel_x = -6;
+	pixel_y = 0
 	},
 /obj/item/storage/box/teargas{
-	pixel_x = -5;
-	pixel_y = 3
+	pixel_y = 3;
+	pixel_x = -6
 	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = -3;
+	pixel_x = 6
+	},
+/obj/item/storage/box/firingpins{
+	pixel_x = 6
+	},
+/obj/item/storage/box/firingpins{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/item/disk/ammo_workbench/advanced,
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 5
 	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
@@ -81583,14 +81732,28 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "pOl" = (
-/obj/structure/rack/gunrack,
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
-/obj/effect/spawner/armory_spawn/smg,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 5
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/gun/energy/laser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -93232,12 +93395,34 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/newscaster/directional/west,
-/obj/item/disk/ammo_workbench/advanced,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun/dragnet{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/flashlight/seclite{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/flashlight/seclite{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/flashlight/seclite{
+	pixel_x = 5;
+	pixel_y = -5
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
@@ -98890,38 +99075,38 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "tel" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/vest/alt/sec{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/armor/vest/alt/sec{
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/armor/vest/alt/sec{
+	pixel_y = -3;
+	pixel_x = 6
+	},
+/obj/item/clothing/head/helmet/sec{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/clothing/head/helmet/sec{
+	pixel_x = -6
+	},
+/obj/item/clothing/head/helmet/sec{
+	pixel_x = -6;
+	pixel_y = -3
+	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes,
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_y = -1
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/armor/vest/alt/sec{
-	pixel_x = 6;
-	pixel_y = -1
-	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "teo" = (
@@ -106252,16 +106437,38 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/upper)
 "uyZ" = (
-/obj/structure/table/reinforced,
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/riot{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/armor/riot{
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/armor/riot{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/helmet/toggleable/riot{
+	pixel_x = -2;
+	pixel_y = 0
+	},
+/obj/item/clothing/head/helmet/toggleable/riot{
+	pixel_y = 3;
+	pixel_x = -2
+	},
+/obj/item/clothing/head/helmet/toggleable/riot{
+	pixel_y = 6;
+	pixel_x = -2
+	},
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes,
-/obj/effect/spawner/random/armory/bulletproof_armor,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "uzf" = (
@@ -106820,15 +107027,16 @@
 "uEy" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/chemimp{
-	pixel_x = 6;
-	pixel_y = 7
+	pixel_x = 7;
+	pixel_y = 8
 	},
 /obj/item/storage/box/trackimp{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /obj/item/storage/lockbox/loyalty{
-	pixel_y = -5
+	pixel_y = 1;
+	pixel_x = 0
 	},
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -107497,9 +107705,7 @@
 	c_tag = "Armory - Interior"
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/rack/gunrack,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/armory_spawn/mod_lasers_big,
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
 	},
@@ -107507,6 +107713,22 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/rack{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/e_gun{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/gun/energy/e_gun{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/gun/energy/e_gun{
+	pixel_x = -1;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "uLe" = (
@@ -110666,10 +110888,25 @@
 "vrb" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/random/armory/riot_helmet,
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
+	},
+/obj/item/grenade/barrier{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/grenade/barrier{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/grenade/barrier{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/grenade/barrier{
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
@@ -115758,13 +115995,15 @@
 "wne" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/delivery,
-/obj/structure/rack/gunrack,
 /obj/machinery/firealarm/directional/south,
-/obj/effect/spawner/armory_spawn/shotguns,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 5
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/machinery/flasher/portable,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
@@ -120426,10 +120665,25 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/spawner/random/armory/bulletproof_helmet,
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
+	},
+/obj/item/shield/riot{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/item/shield/riot{
+	pixel_x = -1;
+	pixel_y = 0
+	},
+/obj/item/shield/riot{
+	pixel_x = 3;
+	pixel_y = 0
+	},
+/obj/item/shield/riot{
+	pixel_x = 7;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
