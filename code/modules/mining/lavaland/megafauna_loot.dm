@@ -436,7 +436,6 @@
 		var/mob/dead/observer/picked_ghost = pick(candidates)
 		soul.PossessByPlayer(picked_ghost.ckey)
 		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		soul.update_atom_languages()
 		soul.faction = list("[REF(user)]")
 		balloon_alert(user, "the scythe glows up")
 		add_overlay("soulscythe_gem")

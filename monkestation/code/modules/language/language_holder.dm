@@ -5,7 +5,7 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/basic/cortical_borer/cortical_owner = get_atom()
+	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	if(istype(cortical_owner))
 		return cortical_owner.human_host?.get_language_holder()?.has_language(language, spoken)
 
