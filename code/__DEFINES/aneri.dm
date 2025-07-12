@@ -2,8 +2,8 @@
 
 /* This comment also bypasses grep checks */ /var/__aneri_exists
 
-#define ANERI_EXISTS (__dreamluau_exists ||= fexists(DREAMLUAU))
-#define ANERI (world.system_type == MS_WINDOWS ? "aneri.dll" : (__dreamluau ||= __detect_auxtools("libaneri")))
+#define ANERI_EXISTS (__aneri_exists ||= fexists(ANERI))
+#define ANERI (world.system_type == MS_WINDOWS ? "aneri.dll" : (__aneri ||= __detect_auxtools("libaneri")))
 
 // aneri-core
 #define aneri_version(...)	call_ext(ANERI, "byond:aneri_version")()
