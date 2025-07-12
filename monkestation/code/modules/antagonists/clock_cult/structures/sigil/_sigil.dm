@@ -56,7 +56,6 @@
 	if(dispel_check(user))
 		dispel()
 
-
 /// For trap sigils and similar; applies effects when someone/something walks over
 /obj/structure/destructible/clockwork/sigil/proc/on_entered(datum/source, atom/movable/entered_movable)
 	SIGNAL_HANDLER
@@ -142,7 +141,7 @@
 
 /// Put any addtional checks you want to do before dispelling here
 /obj/structure/destructible/clockwork/sigil/proc/dispel_check(mob/user)
-	. = TRUE
+	return IS_CLOCK(user) || do_after(user, 10 SECONDS, src)
 
 #undef SIGIL_INVOCATION_ALPHA
 #undef SIGIL_INVOKED_ALPHA
