@@ -59,6 +59,9 @@ GLOBAL_LIST_EMPTY(floran_leaves_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_fluff_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_tail_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_horns_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_tail_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_wings_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_horns_list) //Monkestation Addition
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",
