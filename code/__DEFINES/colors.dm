@@ -54,6 +54,7 @@
 #define COLOR_CULT_RED "#960000"
 #define COLOR_BUBBLEGUM_RED "#950A0A"
 #define COLOR_CARP_RIFT_RED "#ff330030"
+#define COLOR_STRAWBERRY "#F41955" //moke edit; grace heretic
 
 #define COLOR_YELLOW "#FFFF00"
 #define COLOR_VIVID_YELLOW "#FBFF23"

@@ -83,6 +83,8 @@
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
 #define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Used to track if the host has Eldirtch Strength (for Gracfe Heretic)
+#define TRAIT_ELDRITCH_STRENGTH "eldritch_strength"
 
 // Traits related to food
 /// Trait for Fire Burps
