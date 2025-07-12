@@ -507,3 +507,18 @@
 	suffix = "syndicate_depot.dmm"
 	name = "Syndicate Depot"
 	description = "A small depot ran by the Syndicate sitting out in space, responsible for logistics across the vast reaches of space."
+
+/datum/map_template/ruin/space/freeminer_ship
+	id = "freeminer_ship"
+	suffix = "freeminer_ship.dmm"
+	name = "Free Miner Ship"
+	description = "The location where an independent mining ship left FTL travel a short time ago."
+
+/datum/map_template/ruin/space/freeminer_asteroid
+	id = "freeminer_asteroid"
+	cost = 0
+	suffix = "freeminer_asteroid.dmm"
+	name = "Free Miner Asteroid Cluster"
+	description = "A sizably large cluster of asteroids, frequented by independent miners."
+	always_place = TRUE //its just some fucking rocks man... come on...
+

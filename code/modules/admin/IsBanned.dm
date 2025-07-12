@@ -33,7 +33,7 @@
 	if (GLOB.admin_datums[ckey] || GLOB.deadmins[ckey] || (ckey in GLOB.protected_admins))
 		admin = TRUE
 
-	if (raw_is_mentor(ckey))
+	if (GLOB.mentor_datums[ckey] || GLOB.dementors[ckey] || (ckey in GLOB.protected_mentors))
 		mentor = TRUE
 
 	if(!real_bans_only && !admin && CONFIG_GET(flag/panic_bunker) && !CONFIG_GET(flag/panic_bunker_interview))

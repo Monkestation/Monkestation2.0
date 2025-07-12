@@ -71,7 +71,7 @@
 	var/special_bonus = details?.roundend_monkecoin_bonus
 	if(special_bonus)
 		queue[ckey] += list(list(special_bonus, "Special Bonus"))
-	if(client?.is_mentor())
+	if(!isnull(GLOB.mentor_datums[ckey]) || !isnull(GLOB.dementors[ckey]))
 		if(details?.mob?.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			queue[ckey] += list(list(800, "Mentor Head of Staff Bonus"))
 		else

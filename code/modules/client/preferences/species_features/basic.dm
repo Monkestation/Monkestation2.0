@@ -23,6 +23,7 @@
 	return values
 
 /datum/preference/color/eye_color
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	savefile_key = "eye_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
@@ -54,6 +55,7 @@
 	return random_eye_color()
 
 /datum/preference/choiced/facial_hairstyle
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	savefile_key = "facial_style_name"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -65,7 +67,7 @@
 	return generate_possible_values_for_sprite_accessories_on_head(GLOB.facial_hairstyles_list)
 
 /datum/preference/choiced/facial_hairstyle/apply_to_human(mob/living/carbon/human/target, value)
-	target.facial_hairstyle = value
+	target.set_facial_hairstyle(value, update = FALSE)
 
 /datum/preference/choiced/facial_hairstyle/compile_constant_data()
 	var/list/data = ..()
@@ -75,15 +77,17 @@
 	return data
 
 /datum/preference/color/facial_hair_color
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	savefile_key = "facial_hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/color/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.facial_hair_color = value
+	target.set_facial_haircolor(value, update = FALSE)
 
 /datum/preference/choiced/facial_hair_gradient
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	category = PREFERENCE_CATEGORY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient"
@@ -128,21 +132,20 @@
 	return values
 
 /datum/preference/choiced/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)
-	target.grad_style[GRADIENT_FACIAL_HAIR_KEY] = value
+	target.set_facial_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/facial_hair_gradient/create_default_value()
 	return "None"
 
 /datum/preference/color/facial_hair_gradient
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient_color"
 	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/color/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_color, GRADIENTS_LEN)
-	target.grad_color[GRADIENT_FACIAL_HAIR_KEY] = value
+	target.set_facial_hair_gradient_color(new_color = value, update = FALSE)
 
 /datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
@@ -156,9 +159,10 @@
 	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/color/hair_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.hair_color = value
+	target.set_haircolor(value, update = FALSE)
 
 /datum/preference/choiced/hairstyle
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	savefile_key = "hairstyle_name"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -170,7 +174,7 @@
 	return generate_possible_values_for_sprite_accessories_on_head(GLOB.hairstyles_list)
 
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
-	target.hairstyle = value
+	target.set_hairstyle(value, update = FALSE)
 
 /datum/preference/choiced/hairstyle/compile_constant_data()
 	var/list/data = ..()
@@ -180,6 +184,7 @@
 	return data
 
 /datum/preference/choiced/hair_gradient
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	category = PREFERENCE_CATEGORY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient"
@@ -235,21 +240,20 @@
 	return values
 
 /datum/preference/choiced/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)
-	target.grad_style[GRADIENT_HAIR_KEY] = value
+	target.set_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/hair_gradient/create_default_value()
 	return "None"
 
 /datum/preference/color/hair_gradient
+	priority = PREFERENCE_PRIORITY_BODYPARTS
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient_color"
 	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/color/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_color, GRADIENTS_LEN)
-	target.grad_color[GRADIENT_HAIR_KEY] = value
+	target.set_hair_gradient_color(new_color = value, update = FALSE)
 
 /datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
