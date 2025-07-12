@@ -2,7 +2,7 @@
 	id = "job_itemsets"
 	display_name = "NT Approved Job Item Sets"
 	description = "A list of approved item sets that can be implanted into the crew to allow easier access to their tools."
-	prereq_ids = list("adv_biotech","adv_biotech", "datatheory")
+	prereq_ids = list("adv_biotech","basic_tools", "datatheory")
 	design_ids = list(
 		"ci-set-cook",
 		"ci-set-janitor",
