@@ -47,8 +47,6 @@
 
 /datum/outfit/centcom/ert/generic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	var/obj/item/organ/internal/cyberimp/cyberlink/nt_high/cyberlink = new()
-	cyberlink.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/chest/nutriment/plus/nutriment_pump = new()
 	nutriment_pump.Insert(H, drop_if_replaced = FALSE)
 

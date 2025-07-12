@@ -73,7 +73,6 @@
 		/obj/item/ammo_box/magazine/m12g/stun = 2,
 		/obj/item/ammo_box/magazine/m12g/meteor = 2,
 		/obj/item/autosurgeon/syndicate/nodrop = 1,
-		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
 		/obj/item/clothing/glasses/thermal = 1,
 	),src)
 
@@ -229,7 +228,6 @@
 		/obj/item/reagent_containers/hypospray/medipen/advanced = 1,
 		/obj/item/gun/medbeam = 1,
 		/obj/item/autosurgeon/syndicate/hacked_linked_surgery =1,
-		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
 		/obj/item/clothing/gloves/latex/nitrile = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	),src)

@@ -1153,11 +1153,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 
 
 /datum/controller/subsystem/gamemode/proc/store_roundend_data()
-	var/congealed_string = ""
-	for(var/event_name as anything in triggered_round_events)
-		congealed_string += event_name
-		congealed_string += ","
-	text2file(congealed_string, "data/last_round_events.txt")
+	rustg_file_write(jointext(triggered_round_events, ","), "data/last_round_events.txt")
 
 /datum/controller/subsystem/gamemode/proc/load_roundstart_data()
 	var/massive_string = trim(file2text("data/last_round_events.txt"))

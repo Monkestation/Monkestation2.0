@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "The storyteller should no longer roll high-threat roundstart antags two rounds in a row."
