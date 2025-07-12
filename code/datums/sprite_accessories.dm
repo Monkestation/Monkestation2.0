@@ -1555,6 +1555,31 @@
 	icon_state = "yellowshirt"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/turtleneck_black
+	name = "Turtleneck (Black)"
+	icon_state = "turtleneck_black"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/turtleneck_blue
+	name = "Turtleneck (Blue)"
+	icon_state = "turtleneck_blue"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/turtleneck_grey
+	name = "Turtleneck (Grey)"
+	icon_state = "turtleneck_grey"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/turtleneck_red
+	name = "Turtleneck (Red)"
+	icon_state = "turtleneck_red"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/turtleneck_white
+	name = "Turtleneck (White)"
+	icon_state = "turtleneck_white"
+	gender = NEUTER
+
 ///////////////////////
 // Socks Definitions //
 ///////////////////////
