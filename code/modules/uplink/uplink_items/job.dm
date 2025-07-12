@@ -132,6 +132,13 @@
 	cost = 11
 	restricted_roles = list(JOB_STATION_ENGINEER)
 
+/datum/uplink_item/role_restricted/vendozer
+	name = "The Vendozer blueprint"
+	desc = "A book spirited away from all to hide a great evil. The Vendozer, is yours to wield, if you can craft it."
+	item = /obj/item/book/granter/crafting_recipe/vendozer
+	cost = 16
+	restricted_roles = list(JOB_STATION_ENGINEER)
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
