@@ -1,7 +1,7 @@
 //Blight: Taints nearby humans and in general messes living stuff up.
 /datum/action/cooldown/spell/aoe/revenant/blight
 	name = "Blight"
-	desc = "Taints the area causing nearby living things to waste away."
+	desc = "Taints the area causing nearby living things to waste away.\nLiving beings afflicted with the blight will be gradually weakened, which will be intensified if you are orbiting them."
 	button_icon_state = "blight"
 	cooldown_time = 20 SECONDS
 
@@ -11,7 +11,7 @@
 
 /datum/action/cooldown/spell/aoe/revenant/blight/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
 	for(var/mob/living/mob in victim)
-		if(mob == caster)
+		if(mob == caster || mob.stat == DEAD)
 			continue
 		if(mob.can_block_magic(antimagic_flags))
 			to_chat(caster, span_warning("The spell had no effect on [mob]!"))
@@ -21,13 +21,7 @@
 			to_chat(caster, span_warning("[mob] seems to have holy energy still flowing through them."))
 			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
-		if(iscarbon(mob))
-			if(ishuman(mob))
-				mob.apply_status_effect(/datum/status_effect/revenant_blight) // Applies blight or increase severity.
-			else
-				mob.reagents?.add_reagent(/datum/reagent/toxin/plasma, 5)
-		else
-			mob.adjustToxLoss(5)
+		mob.apply_status_effect(/datum/status_effect/revenant_blight) // Applies blight or increase severity.
 	for(var/obj/structure/spacevine/vine in victim) //Fucking with botanists, the ability.
 		vine.add_atom_colour(COLOR_REVENANT_PLANTBLIGHT, TEMPORARY_COLOUR_PRIORITY)
 		new /obj/effect/temp_visual/revenant(vine.loc)
