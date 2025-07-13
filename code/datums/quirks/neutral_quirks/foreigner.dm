@@ -29,5 +29,5 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	quirk_holder.remove_language(/datum/language/common, TRUE, TRUE, LANGUAGE_ALL)
 	if(ishumanbasic(human_holder))
-		human_holder.grant_language(/datum/language/uncommon, understood = TRUE, spoken = TRUE, source = LANGUAGE_QUIRK)
+		human_holder.grant_language(/datum/language/uncommon, source = LANGUAGE_QUIRK)
 // monkestation edit end
