@@ -12,5 +12,8 @@ export const pixel_size: Feature<number> = {
     4: 'Pixel Perfect 4x',
     5: 'Pixel Perfect 5x',
     6: 'Pixel Perfect 6x',
+    7: 'Pixel Perfect 7x',
+    8: 'Pixel Perfect 8x',
+    9: 'Pixel Perfect 9x',
   }),
 };
