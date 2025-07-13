@@ -6701,18 +6701,25 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "cuY" = (
-/obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
+	},
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 0;
+	pixel_x = 0
+	},
+/obj/machinery/recharger{
+	pixel_y = 0;
+	pixel_x = 9
+	},
+/obj/machinery/recharger{
+	pixel_y = 0;
+	pixel_x = -9
+	},
+/obj/item/screwdriver{
+	pixel_x = 0;
+	pixel_y = 10
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -9635,9 +9642,59 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/starboard)
 "dAr" = (
-/obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Non-lethal"
+	},
+/obj/item/storage/box/rubbershot{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/storage/box/rubbershot,
+/obj/item/storage/box/rubbershot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/magazine/m35/rubber,
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/storage/box/rubbershot{
+	pixel_x = -2;
+	pixel_y = -3
+	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
@@ -11079,6 +11136,20 @@
 	},
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/rack,
+/obj/item/storage/box/chemimp{
+	pixel_x = 0;
+	pixel_y = 8
+	},
+/obj/item/storage/box/trackimp{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = -4;
+	pixel_x = 8
+	},
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "eax" = (
@@ -11375,10 +11446,10 @@
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/hooded/ablative,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "efa" = (
@@ -21334,6 +21405,9 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/baton/security/loaded,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "hBY" = (
@@ -30006,6 +30080,24 @@
 /obj/item/storage/secure/safe/directional/north{
 	name = "armory safe A"
 	},
+/obj/structure/rack,
+/obj/item/storage/box/teargas{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/storage/box/flashes{
+	pixel_x = -10;
+	pixel_y = 0
+	},
+/obj/item/storage/box/firingpins{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/flashbangs{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/gun/grenadelauncher,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "ktZ" = (
@@ -33523,6 +33615,15 @@
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag,
 /obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
 	pixel_y = 6
+	},
+/obj/item/gun/energy/disabler{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/disabler,
+/obj/item/gun/energy/disabler{
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -55729,29 +55830,13 @@
 /turf/open/floor/wood/large,
 /area/station/medical/pathology)
 "tgy" = (
-/obj/structure/rack,
-/obj/item/clothing/glasses/hud/security/sunglasses/gars{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/clothing/glasses/hud/security/sunglasses/gars{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/hud/security/sunglasses{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/clothing/glasses/hud/security/sunglasses{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/motion/directional/west{
 	c_tag = "Armory - Internal"
 	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/structure/closet/secure_closet/armory_kiboko,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tgC" = (
@@ -68272,15 +68357,59 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "xCo" = (
-/obj/structure/rack,
-/obj/item/storage/box/flashes{
+/obj/structure/closet/secure_closet{
+	req_access = list("security");
+	name = "Ammo Locker - Lethal"
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/box/lethalshot,
+/obj/item/storage/box/lethalshot{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
 	pixel_x = 3
 	},
-/obj/item/storage/box/teargas{
-	pixel_x = 1;
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m35{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/gun/grenadelauncher,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
+/obj/item/ammo_box/advanced/s12gauge/buckshot,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
