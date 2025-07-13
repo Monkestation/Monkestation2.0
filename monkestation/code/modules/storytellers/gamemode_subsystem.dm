@@ -303,7 +303,7 @@ SUBSYSTEM_DEF(gamemode)
 		if(!observers)
 			if(!ready_players && !isliving(candidate))
 				continue
-			if(HAS_MIND_TRAIT(candidate, TRAIT_CANT_ROLL_ANTAG))
+			if(isliving(candidate) && HAS_MIND_TRAIT(candidate, TRAIT_CANT_ROLL_ANTAG))
 				continue
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
