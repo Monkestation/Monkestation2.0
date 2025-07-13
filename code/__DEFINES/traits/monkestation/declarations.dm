@@ -83,6 +83,8 @@
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
 #define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW	"joined_as_crew"
 
 // Traits related to food
 /// Trait for Fire Burps
