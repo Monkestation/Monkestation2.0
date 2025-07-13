@@ -14,6 +14,7 @@
 	mask = /obj/item/clothing/mask/gas/slasher2
 	belt = /obj/item/storage/belt/slasher
 	gloves = /obj/item/clothing/gloves/admiral
+	back = /obj/item/storage/backpack/cursed
 
 /datum/antagonist/slasher
 	name = "\improper Slasher"
@@ -65,6 +66,8 @@
 	var/list/seers = list()
 	///this is the time counter for stalking
 	var/time_counter = 0
+	//aggrograb for slasher
+	var/datum/martial_art/slasher_grab/grabart
 
 /datum/antagonist/slasher/on_gain()
 	. = ..() // Call parent first
@@ -97,7 +100,10 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	current_mob.overlay_fullscreen("slasher_prox", /atom/movable/screen/fullscreen/nearby, 1)
-
+	if(ishuman(current_mob))
+		grabart = new(null)
+		var/mob/living/carbon/human/slashmob = current_mob
+		grabart.teach(slashmob)
 	monitor_key = "slasher_monitor_[current_mob.ckey]"
 	tracking_beacon = current_mob.AddComponent(/datum/component/tracking_beacon, monitor_key, null, null, TRUE, "#f3d594")
 	slasher_monitor = current_mob.AddComponent(/datum/component/team_monitor, monitor_key, null, tracking_beacon)
@@ -106,7 +112,6 @@
 	ADD_TRAIT(current_mob, TRAIT_BATON_RESISTANCE, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_CLUMSY, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_DUMB, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_NODEATH, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_SLASHER, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_NO_PAIN_EFFECTS, "slasher")

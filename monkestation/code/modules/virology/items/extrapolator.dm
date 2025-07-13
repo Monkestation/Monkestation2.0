@@ -18,54 +18,15 @@
 	var/using = FALSE
 	var/scan = TRUE
 	var/cooldown
-	var/obj/item/stock_parts/scanning_module/scanner //used for upgrading!
-
-	var/list/stored_varient_types = list()
 
 	var/datum/weakref/user_data
 
 	var/atom/last_attacked_target
 
-/obj/item/extrapolator/Initialize(mapload)
-	. = ..()
-	scanner = new(src)
 
 /obj/item/extrapolator/Destroy()
-	qdel(scanner)
-	scanner = null
 	user_data = null
 	return ..()
-
-/obj/item/extrapolator/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stock_parts/scanning_module))
-		if(!scanner)
-			if(!user.transferItemToLoc(W, src))
-				return
-			scanner = W
-			to_chat(user, span_notice("You install a [scanner.name] in [src]."))
-		else
-			to_chat(user, span_notice("[src] already has a scanner installed."))
-
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(scanner)
-			to_chat(user, span_notice("You remove the [scanner.name] from \the [src]."))
-			scanner.forceMove(drop_location())
-			scanner = null
-	else
-		return ..()
-
-/obj/item/extrapolator/examine(mob/user)
-	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		if(!scanner)
-			. += span_notice("The scanner is missing.")
-		else
-			. += span_notice("A class <b>[scanner.rating]</b> scanning module is installed. It is <i>screwed</i> in place.")
-
-	. += span_notice("List of Stored Varients.")
-	for(var/datum/symptom_varient/varient as anything in stored_varient_types)
-		. += span_notice("[initial(varient.name)] : [stored_varient_types[varient]]")
-
 
 /obj/item/extrapolator/attack(atom/AM, mob/living/user)
 	return
@@ -76,20 +37,15 @@
 		return
 	if(isliving(target) && target != usr)
 		user_data = WEAKREF(target)
-	if(scanner)
-		if(!scan)
-			if(length(stored_varient_types))
-				try_disease_modification(user, target)
-		else
-			switch(target.extrapolator_act(user, src, scan))
-				if(FALSE)
-					if(scan)
-						to_chat(user, "<span class='notice'>[src] fails to return any data</span>")
-				if(TRUE)
-					to_chat(user, span_notice("You store \the [target]'s blood sample in [src]."))
-
+	if(!scan)
+		try_disease_modification(user, target)
 	else
-		to_chat(user, span_warning("[src] has no scanner installed!"))
+		switch(target.extrapolator_act(user, src, scan))
+			if(FALSE)
+				if(scan)
+					to_chat(user, "<span class='notice'>[src] fails to return any data</span>")
+			else
+				to_chat(user, span_notice("You store \the [target]'s blood sample in [src]."))
 
 /obj/item/extrapolator/attack_self(mob/user)
 	. = ..()
@@ -125,8 +81,6 @@
 
 
 /obj/item/extrapolator/proc/try_symptom_change(mob/user, datum/weakref/choice_ref, datum/symptom_varient/new_varient, datum/weakref/symptom_ref)
-	if(!stored_varient_types[new_varient])
-		return
 
 	var/datum/symptom/symptom = symptom_ref.resolve()
 	if(!symptom)
@@ -137,10 +91,6 @@
 		say("ERROR: Symptom is already a varient strain!")
 		return
 
-	stored_varient_types[new_varient]--
-	if(stored_varient_types[new_varient] <= 0)
-		stored_varient_types -= new_varient
-
 	new_varient = new new_varient(symptom, choice)
 
 	symptom.attached_varient = new_varient
@@ -150,14 +100,6 @@
 	var/list/weighted_list = list()
 	for(var/datum/symptom_varient/varient as anything in subtypesof(/datum/symptom_varient))
 		weighted_list[varient] = initial(varient.weight)
-
-	var/datum/symptom_varient/varient = pick_weight(weighted_list)
-
-
-	if(!(varient in stored_varient_types))
-		stored_varient_types[varient] = 1
-	else
-		stored_varient_types[varient]++
 
 /obj/item/extrapolator/ui_interact(mob/user, datum/tgui/ui, should_open = FALSE)
 	. = ..()
@@ -173,8 +115,6 @@
 	var/list/data = list()
 
 	var/list/named_list = list()
-	for(var/datum/symptom_varient/varient as anything in stored_varient_types)
-		named_list |= initial(varient.name)
 
 	var/list/diseases = list()
 	if(istype(last_attacked_target, /obj/item/weapon/virusdish))
@@ -203,11 +143,6 @@
 	switch(action)
 		if("add_varient")
 			var/datum/symptom_varient/new_varient
-			for(var/datum/symptom_varient/listed_varient as anything in stored_varient_types)
-				if(listed_varient.name != params["varient_name"])
-					continue
-				new_varient = listed_varient
-				break
 
 			var/datum/weakref/diease_ref = locate(params["disease_ref"])
 			var/datum/weakref/symptom_ref = locate(params["symptom_ref"])

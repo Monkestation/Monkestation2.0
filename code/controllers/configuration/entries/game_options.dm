@@ -423,6 +423,14 @@
 	default = 64
 	min_val = 0
 
+/datum/config_entry/number/cowcap
+	default = 35
+	min_val = 0
+
+/datum/config_entry/number/pigcap
+	default = 35
+	min_val = 0
+
 /datum/config_entry/number/maxfine
 	default = 1000
 	min_val = 0

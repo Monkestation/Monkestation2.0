@@ -263,8 +263,7 @@
 		playsound(target_human, 'monkestation/code/modules/blueshift/sounds/haircut.ogg', 100)
 
 		if(do_after(user, facial_haircut_duration, target_human))
-			target_human.facial_hairstyle = facial_hair_id
-			target_human.update_body_parts()
+			target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
 			user.visible_message(span_notice("[user] successfully cuts [target_human]'s facial hair!"), span_notice("You successfully cut [target_human]'s facial hair!"))
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 
@@ -575,11 +574,9 @@
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/target_human, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
-		target_human.hairstyle = "Shaved"
-		target_human.update_body_parts()
+		target_human.set_facial_hairstyle("Shaved", update = TRUE)
 	else
-		target_human.hairstyle = "Bald"
-		target_human.update_body_parts()
+		target_human.set_hairstyle("Bald", update = TRUE)
 
 	playsound(loc, 'sound/items/unsheath.ogg', 20, TRUE)
 

@@ -35,41 +35,38 @@
 	. = ..()
 	if(!signs)
 		return
-	. += span_notice("It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.")
+	. += span_notice("It is currently maintaining <b>[length(signs)]/[max_signs]</b> projections.")
 
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	. |= FALSE
-	if(!proximity_flag)
+	if(!proximity_flag || !check_allowed_items(target, not_inside = TRUE))
 		return
-	if(!check_allowed_items(target, not_inside = TRUE))
-		return .
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/turf/target_turf = get_turf(target)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
 	if(target_holosign)
 		qdel(target_holosign)
-		return .
+		return
 	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
-		return .
+		return
 	if(holocreator_busy)
 		to_chat(user, span_notice("[src] is busy creating a hologram."))
-		return .
+		return
 	if(LAZYLEN(signs) >= max_signs)
 		balloon_alert(user, "max capacity!")
-		return .
+		return
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		holocreator_busy = TRUE
 		if(!do_after(user, creation_time, target = target))
 			holocreator_busy = FALSE
-			return .
+			return
 		holocreator_busy = FALSE
 		if(LAZYLEN(signs) >= max_signs)
-			return .
+			return
 		if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //don't try to sneak dense stuff on our tile during the wait.
-			return .
-	target_holosign = create_holosign(target, user)
-	return target_holosign
+			return
+	create_holosign(target, user)
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return

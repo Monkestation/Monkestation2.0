@@ -17,6 +17,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species
 	///If the game needs to manually check your race to do something not included in a proc here, it will use this.
 	var/id
+	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
+	var/examine_limb_id
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
 	/// The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
@@ -29,23 +31,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/visual_gender =TRUE
 	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
-	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
-	var/list/offset_features = list(
-		OFFSET_UNIFORM = list(0,0),
-		OFFSET_ID = list(0,0),
-		OFFSET_GLOVES = list(0,0),
-		OFFSET_GLASSES = list(0,0),
-		OFFSET_EARS = list(0,0),
-		OFFSET_SHOES = list(0,0),
-		OFFSET_S_STORE = list(0,0),
-		OFFSET_FACEMASK = list(0,0),
-		OFFSET_HEAD = list(0,0),
-		OFFSET_FACE = list(0,0),
-		OFFSET_BELT = list(0,0),
-		OFFSET_BACK = list(0,0),
-		OFFSET_SUIT = list(0,0),
-		OFFSET_NECK = list(0,0),
-	)
+
 	///If this species needs special 'fallback' sprites, what is the path to the file that contains them?
 	var/fallback_clothing_path
 	///The maximum number of bodyparts this species can have.
@@ -59,8 +45,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Examine text when the person has cellular damage.
 	var/cellular_damage_desc = DEFAULT_CLONE_EXAMINE_TEXT
-	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
-	var/examine_limb_id
 	///Never, Optional, or Forced digi legs?
 	var/digitigrade_customization = DIGITIGRADE_NEVER
 	/// If your race uses a non standard bloodtype (typepath)
@@ -256,7 +240,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/New()
 	if(!plural_form)
 		plural_form = "[name]\s"
-
+	if(!examine_limb_id)
+		examine_limb_id = id
 	return ..()
 
 /// Gets a list of all species available to choose in roundstart.
@@ -877,8 +862,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_body_parts()
+	human_mob.set_hairstyle(random_hairstyle(human_mob.gender), update = FALSE)
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob,
 /// but will not update the body right away.
@@ -1165,8 +1149,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/go_bald(mob/living/carbon/human/target)
 	if(QDELETED(target)) //may be called from a timer
 		return
-	target.facial_hairstyle = "Shaved"
-	target.hairstyle = "Bald"
+	target.set_facial_hairstyle("Shaved", update = FALSE)
+	target.set_hairstyle("Bald", update = FALSE)
 	target.update_body_parts()
 
 //////////////////

@@ -35,6 +35,8 @@ GLOBAL_VAR(restart_counter)
  *     - SSdbcore.InitializeRound()
  *     - world.SetupLogs()
  *     - load_admins()
+ *     - load_mentors()
+ *     - MentorizeAdmins()
  *     - ...
  *   - Master.Initialize() =>
  *     - (all subsystems) Initialize()
@@ -522,6 +524,7 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 
 	load_admins()
 	load_mentors()
+	MentorizeAdmins()
 
 	load_poll_data()
 

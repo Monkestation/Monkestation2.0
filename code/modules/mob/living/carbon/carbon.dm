@@ -512,7 +512,7 @@
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
-	bite.reagents.trans_to(spew, amount, transfered_by = src)
+	bite.reagents?.trans_to(spew, amount, transfered_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -527,9 +527,12 @@
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
-	..()
+	. = ..()
 	if(dna)
 		dna.real_name = real_name
+	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+	if(my_head)
+		my_head.real_name = real_name
 
 
 /mob/living/carbon/set_body_position(new_value)
@@ -1167,9 +1170,7 @@
 			return
 		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MODIFY_ORGANS])
-		if(!check_rights(NONE))
-			return
-		usr.client.manipulate_organs(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 	if(href_list[VV_HK_MARTIAL_ART])
 		if(!check_rights(NONE))
 			return
