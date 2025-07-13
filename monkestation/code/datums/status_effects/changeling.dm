@@ -101,7 +101,7 @@
 
 /datum/status_effect/changeling_panacea/tick(seconds_between_ticks, times_fired)
 	. = ..()
-	owner.adjustToxLoss(-10 * seconds_between_ticks)
+	owner.adjustToxLoss(-10 * seconds_between_ticks, FALSE, TRUE)
 	owner.adjustCloneLoss(-20 * seconds_between_ticks)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -20 * seconds_between_ticks)
 	owner.adjust_drunk_effect(-10 * seconds_between_ticks)
