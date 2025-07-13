@@ -30,7 +30,7 @@
 	/// The ending index of the entire match in the original string.
 	var/end
 	/// A list containing data for each capture group in the match.
-    /// This includes both named and unnamed captures.
+	/// This includes both named and unnamed captures.
 	var/list/datum/regex_capture_group/captures
 
 /datum/regex_match/New(match, start, end, list/datum/regex_capture_group/captures)
