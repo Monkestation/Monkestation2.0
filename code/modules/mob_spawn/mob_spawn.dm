@@ -241,7 +241,7 @@
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
 	user.mind = null // dissassociate mind, don't let it follow us to the next life
 
-	var/created = create(user)
+	var/mob/living/created = create(user)
 	LAZYREMOVE(ckeys_trying_to_spawn, user_ckey) // We do this AFTER the create() so that we're basically sure that the user won't be in their ghost body anymore, so they can't click on the spawner again.
 
 	if(!created)
@@ -249,6 +249,10 @@
 
 		if(isnull(created)) // If we explicitly return FALSE instead of just not returning a mob, we don't want to spam the admins
 			CRASH("An instance of [type] didn't return anything when creating a mob, this might be broken!")
+	else if(created.mind)
+		ADD_TRAIT(created.mind, TRAIT_CANT_ROLL_ANTAG, GHOST_ROLE_TRAIT)
+	else
+		ADD_TRAIT(created, TRAIT_CANT_ROLL_ANTAG, GHOST_ROLE_TRAIT)
 
 	SEND_SIGNAL(src, COMSIG_GHOSTROLE_SPAWNED, created)
 	check_uses() // Now we check if the spawner should delete itself or not

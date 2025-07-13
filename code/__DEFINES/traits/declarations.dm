@@ -1303,4 +1303,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
 
+/// This mob/mind will never be considered for antag rolls.
+#define TRAIT_CANT_ROLL_ANTAG "cant_roll_antag"
+
 // END TRAIT DEFINES

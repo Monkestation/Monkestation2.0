@@ -288,3 +288,6 @@
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"
+
+/// Trait given by ghost roles.
+#define GHOST_ROLE_TRAIT "ghost_role"
