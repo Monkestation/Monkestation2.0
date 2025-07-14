@@ -110,7 +110,7 @@
 	id = "mech_gygax"
 	display_name = "EXOSUIT: Gygax"
 	description = "Gygax exosuit designs"
-	prereq_ids = list("adv_mecha", "adv_mecha_armor", "mecha")
+	prereq_ids = list("adv_mecha", "adv_mecha_armor",)
 	design_ids = list(
 		"gygax_armor",
 		"gygax_chassis",
