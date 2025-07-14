@@ -743,6 +743,22 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 					event.shared_occurence_type = value
 				if("repeated_mode_adjust")
 					event.repeated_mode_adjust = value
+				if("extra_spawned_events")
+					if(!islist(value) && !isnull(value))
+						stack_trace("extra_spawned_events must be a list or null (tried to set invalid for [event_path])")
+						continue
+					if(!istype(event, /datum/round_event_control/antagonist/solo))
+						stack_trace("tried to set extra_spawned_events for event that isn't a subtype of /datum/round_event_control/antagonist/solo ([event_path])")
+						continue
+					var/datum/round_event_control/antagonist/solo/antag_event = event
+					LAZYNULL(antag_event.extra_spawned_events)
+					var/list/extra_spawned_events = fill_with_ones(value)
+					for(var/key in extra_spawned_events)
+						var/extra_path = text2path(key)
+						if(!extra_path)
+							stack_trace("invalid event typepath '[key]' in extra_spawned_events for [event_path] in events.json")
+							continue
+						LAZYSET(antag_event.extra_spawned_events, extra_path, extra_spawned_events[key])
 
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
