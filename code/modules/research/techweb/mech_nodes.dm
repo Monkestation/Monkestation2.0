@@ -25,7 +25,7 @@
 	starting_node = TRUE
 	display_name = "Basic Exosuit Equipment"
 	description = "Various tools fit for basic mech units"
-	prereq_ids = ("mecha")
+	prereq_ids = list("mecha")
 	design_ids = list(
 		"mech_drill",
 		"mech_extinguisher",
