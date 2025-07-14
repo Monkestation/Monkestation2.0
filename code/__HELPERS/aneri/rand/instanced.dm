@@ -42,25 +42,11 @@
 		CRASH("Attempted to do a pick from a non-list")
 	return ANERI_CALL(instanced_pick)(src, choices)
 
-/datum/rng/proc/pick_n_take(list/choices)
-	RETURN_TYPE(choices[_].type)
-	var/len = length(choices)
-	if(!len)
-		return
-	var/picked = rand(1, len)
-	. = choices[picked]
-	choices.Cut(picked, picked + 1) //Cut is far more efficient that Remove()
-
 /datum/rng/proc/pick_weighted(list/choices)
 	RETURN_TYPE(choices[_].type)
 	if(!islist(choices))
 		CRASH("Attempted to do a weighted pick from a non-list")
 	return ANERI_CALL(instanced_pick_weighted)(src, choices)
-
-/datum/rng/proc/pick_weighted_n_take(list/choices)
-	RETURN_TYPE(choices[_].type)
-	. = pick_weighted(choices)
-	choices -= .
 
 /datum/rng/proc/chance(percent) // "prob" is a reserved word, so we do "chance" instead
 	return ANERI_CALL(instanced_prob)(src, percent)

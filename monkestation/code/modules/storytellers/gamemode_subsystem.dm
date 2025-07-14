@@ -162,14 +162,11 @@ SUBSYSTEM_DEF(gamemode)
 	/// Are we able to run roundstart events
 	var/can_run_roundstart = TRUE
 	var/list/triggered_round_events = list()
-	var/datum/rng/rng
 
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
 	CONFIG_SET(flag/disable_storyteller, TRUE)
 #endif
-	rng = new
-
 	// Populate event pools
 	for(var/track in event_tracks)
 		event_pools[track] = list()
@@ -204,16 +201,12 @@ SUBSYSTEM_DEF(gamemode)
 		return SS_INIT_NO_NEED
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/gamemode/Shutdown()
-	. = ..()
-	QDEL_NULL(rng)
-
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
 	if(SSticker.round_start_time && (world.time - SSticker.round_start_time) >= ROUNDSTART_VALID_TIMEFRAME)
 		can_run_roundstart = FALSE
 	else if(current_roundstart_event && length(current_roundstart_event.preferred_events)) //note that this implementation is made for preferred_events being other roundstart events
 		var/list/preferred_copy = current_roundstart_event.preferred_events.Copy()
-		var/datum/round_event_control/selected_event = rng.pick_weighted(preferred_copy)
+		var/datum/round_event_control/selected_event = pick_weight(preferred_copy)
 		var/player_count = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 		if(ispath(selected_event)) //get the instances if we dont have them
 			current_roundstart_event.preferred_events = list()
@@ -228,7 +221,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/sanity = 0
 		while(!selected_event && length(preferred_copy) && sanity < 100)
 			sanity++
-			selected_event = rng.pick_weighted(preferred_copy)
+			selected_event = pick_weight(preferred_copy)
 			if(!selected_event.can_spawn_event(player_count))
 				preferred_copy -= selected_event
 				selected_event = null
@@ -399,7 +392,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/calc_value = base_amt + (gain_amt * ready_players)
 		calc_value *= roundstart_point_multipliers[track]
 		calc_value *= current_storyteller.starting_point_multipliers[track]
-		calc_value *= (rng.ranged_uint(100 - current_storyteller.roundstart_points_variance, 100 + current_storyteller.roundstart_points_variance) / 100)
+		calc_value *= (rand(100 - current_storyteller.roundstart_points_variance,100 + current_storyteller.roundstart_points_variance)/100)
 		event_track_points[track] = round(calc_value)
 
 	/// If the storyteller guarantees an antagonist roll, add points to make it so.
@@ -696,7 +689,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
 	while(possible.len && goal_weights < 1) // station goal budget is 1
-		var/datum/station_goal/picked = rng.pick_n_take(possible)
+		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)
 		GLOB.station_goals += new picked
 
@@ -780,7 +773,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 		return
 	if(length(GLOB.clients) > MAX_POP_FOR_STORYTELLER_VOTE)
 		secret_storyteller = TRUE
-		selected_storyteller = rng.pick_weighted(get_valid_storytellers(TRUE))
+		selected_storyteller = pick_weight(get_valid_storytellers(TRUE))
 		return
 	SSvote.initiate_vote(/datum/vote/storyteller, "pick round storyteller", forced = TRUE)
 
@@ -796,7 +789,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 	var/added_storytellers = 0
 	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
 		added_storytellers++
-		var/picked_storyteller = rng.pick_weighted(pick_from)
+		var/picked_storyteller = pick_weight(pick_from)
 		final_choices[picked_storyteller] = 0
 		pick_from -= picked_storyteller
 	return final_choices
