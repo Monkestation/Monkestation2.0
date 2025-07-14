@@ -160,13 +160,13 @@
 	. = ..()
 	if(!.)
 		return
-	if(shared_occurence_type == SHARED_HIGH_THREAT)
-		if(name in SSgamemode.last_round_events)
+	var/list/recent_storyteller_events = SSgamemode.recent_storyteller_events
+	if(shared_occurence_type == SHARED_HIGH_THREAT && length(recent_storyteller_events))
+		var/list/last_round = recent_storyteller_events[1]
+		if(type in last_round)
 			return FALSE
-		for(var/datum/round_event_control/antagonist/solo/event as anything in subtypesof(/datum/round_event_control/antagonist/solo))
-			if(event::shared_occurence_type != SHARED_HIGH_THREAT || !event::name)
-				continue
-			if(event::name in SSgamemode.last_round_events)
+		for(var/datum/round_event_control/event as anything in last_round)
+			if(event::shared_occurence_type == shared_occurence_type)
 				return FALSE
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates()

@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(gamemode)
 
 	/// What is our currently desired/selected roundstart event
 	var/datum/round_event_control/antagonist/solo/current_roundstart_event
-	var/list/last_round_events = list()
+	var/list/recent_storyteller_events = list()
 	/// Has a roundstart event been run
 	var/ran_roundstart = FALSE
 	/// Are we able to run roundstart events
@@ -741,6 +741,8 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 					if(!isnull(value))
 						value = "[value]"
 					event.shared_occurence_type = value
+				if("repeated_mode_adjust")
+					event.repeated_mode_adjust = value
 
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
@@ -1035,7 +1037,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 		dat += "<td>[event.earliest_start / (1 MINUTES)] m.</td>" //Minimum time
 		dat += "<td>[assoc_spawn_weight[event] ? "Yes" : "No"]</td>" //Can happen?
 		dat += "<td>[event.return_failure_string(active_players)]</td>" //Why can't happen?
-		var/weight_string = "(new.[event.calculated_weight] /raw.[event.weight])"
+		var/weight_string = "(new.[event.calculated_weight] /raw.[event.get_weight()]/base.[event.weight])"
 		if(assoc_spawn_weight[event])
 			var/percent = round((event.calculated_weight / total_weight) * 100)
 			weight_string = "[percent]% - [weight_string]"
@@ -1153,24 +1155,28 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 
 
 /datum/controller/subsystem/gamemode/proc/store_roundend_data()
-	rustg_file_write(jointext(triggered_round_events, ","), "data/last_round_events.txt")
+	var/max_history = length(CONFIG_GET(number_list/repeated_mode_adjust))
+	recent_storyteller_events.Insert(1, list(triggered_round_events))
+	if(length(recent_storyteller_events) > max_history)
+		recent_storyteller_events.Cut(max_history + 1)
+	rustg_file_write(json_encode(recent_storyteller_events, JSON_PRETTY_PRINT), "data/recent_storyteller_events.json") // pretty-print just to make manually looking at it easier
 
 /datum/controller/subsystem/gamemode/proc/load_roundstart_data()
-	var/massive_string = trim(file2text("data/last_round_events.txt"))
-	if(fexists("data/last_round_events.txt"))
-		fdel("data/last_round_events.txt")
-	if(!massive_string)
+	if(!fexists("data/recent_storyteller_events.json"))
 		return
-	last_round_events = splittext(massive_string, ",")
-
-	if(!length(last_round_events))
-		return
-	for(var/event_name as anything in last_round_events)
-		for(var/datum/round_event_control/listed as anything in control)
-			if(listed.name != event_name)
-				continue
-			listed.occurrences++
-			listed.occurrences++
+	var/recent_json = rustg_file_read("data/recent_storyteller_events.json")
+	if(!recent_json || !rustg_json_is_valid(recent_json))
+		rustg_file_write("\[\]", "data/recent_storyteller_events.json")
+		CRASH("recent_storyteller_events.json was invalid: [recent_json]")
+	var/list/recent = json_decode(recent_json)
+	recent_storyteller_events.Cut()
+	for(var/round = 1 to length(recent))
+		var/list/entries = list()
+		for(var/event in recent[round])
+			var/event_path = text2path(event)
+			if(event_path)
+				entries += event_path
+		recent_storyteller_events += list(entries)
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE

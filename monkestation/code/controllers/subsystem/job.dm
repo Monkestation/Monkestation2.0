@@ -199,7 +199,7 @@
 		if(!roleset.roundstart || !roleset.can_spawn_event(player_count))
 			valid_rolesets -= roleset
 		else
-			actual_valid_rolesets[roleset] = roleset.weight
+			actual_valid_rolesets[roleset] = roleset.get_weight()
 	valid_rolesets = actual_valid_rolesets
 	log_storyteller("p_d_r actual_valid_rolesets", list("rolesets" = english_list(actual_valid_rolesets)))
 
