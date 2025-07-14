@@ -169,10 +169,11 @@
 	)
 
 /datum/status_effect/bloodsucker_sol/on_apply()
-	if(!SSsol.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin))
+	if(!SSsol.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin) || HAS_TRAIT(owner, TRAIT_SHADED))
 		return FALSE
 	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SHADED), PROC_REF(on_owner_shaded))
 	owner.set_pain_mod(id, 1.5)
 	owner.add_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(id)
@@ -200,7 +201,7 @@
 
 /datum/status_effect/bloodsucker_sol/on_remove()
 	UnregisterSignal(SSsol, COMSIG_SOL_END)
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, SIGNAL_ADDTRAIT(TRAIT_SHADED)))
 	owner.unset_pain_mod(id)
 	owner.remove_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter(id)
@@ -230,6 +231,11 @@
 	SIGNAL_HANDLER
 	if(istype(owner.loc, /obj/structure/closet/crate/coffin))
 		qdel(src)
+
+/datum/status_effect/bloodsucker_sol/proc/on_owner_shaded()
+	SIGNAL_HANDLER
+	to_chat(owner, span_boldnotice("The shade protects you from the harsh light of Sol!"), type = MESSAGE_TYPE_INFO)
+	qdel(src)
 
 /atom/movable/screen/alert/status_effect/bloodsucker_sol
 	name = "Solar Flares"
