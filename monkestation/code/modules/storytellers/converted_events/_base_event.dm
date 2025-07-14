@@ -264,7 +264,7 @@
 
 	while(length(weighted_candidates) && length(candidates) < antag_count) //both of these pick_n_take from weighted_candidates so this should be fine
 		if(prompted_picking)
-			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
+			var/picked_ckey = SSgamemode.rng.pick_weighted_n_take(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]
 			if(QDELETED(picked_client))
 				continue
@@ -283,7 +283,7 @@
 					show_candidate_amount = FALSE,
 				)
 		else
-			var/picked_ckey = pick_n_take_weighted(weighted_candidates)
+			var/picked_ckey = SSgamemode.rng.pick_weighted_n_take(weighted_candidates)
 			var/client/picked_client = GLOB.directory[picked_ckey]
 			if(QDELETED(picked_client))
 				continue
@@ -298,7 +298,7 @@
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
 
-		var/mob/candidate = pick_n_take(candidates)
+		var/mob/candidate = SSgamemode.rng.pick_weighted_n_take(candidates)
 		log_storyteller("Antag event spawned mob: [candidate], special role: [candidate.mind?.special_role ? candidate.mind.special_role : "none"]")
 
 		candidate.client?.prefs.reset_antag_rep()
