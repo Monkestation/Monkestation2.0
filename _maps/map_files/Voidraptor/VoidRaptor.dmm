@@ -27229,7 +27229,7 @@
 	pixel_y = 0;
 	pixel_x = 0
 	},
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "hPi" = (

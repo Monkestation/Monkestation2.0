@@ -6793,7 +6793,7 @@
 	pixel_x = 0;
 	pixel_y = -6
 	},
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},

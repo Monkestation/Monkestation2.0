@@ -76029,7 +76029,7 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},

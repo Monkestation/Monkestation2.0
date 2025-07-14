@@ -3491,7 +3491,7 @@
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "atd" = (

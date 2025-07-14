@@ -12125,7 +12125,7 @@
 /obj/effect/turf_decal/trimline/dark/line{
 	dir = 10
 	},
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "dDC" = (

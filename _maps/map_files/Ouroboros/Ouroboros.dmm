@@ -35295,7 +35295,7 @@
 /obj/structure/rack/gunrack,
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/engine,
 /area/station/ai_monitored/security/armory)
 "ktc" = (
