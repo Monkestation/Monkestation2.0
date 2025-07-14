@@ -160,4 +160,4 @@ Des: Removes all images from the mob infected by this embryo
 		for(var/image/I in alien.client?.images)
 			var/searchfor = "infected"
 			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-				qdel(I)
+				alien.client?.images -= I

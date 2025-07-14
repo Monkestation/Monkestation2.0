@@ -556,7 +556,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		else
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
-			investigate_log("shielding turned off due to power loss")
+			investigate_log("shielding turned off due to power loss", INVESTIGATE_ATMOS)
 
 ///return the icon_state component for the canister's indicator light based on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state(air_pressure)
@@ -769,7 +769,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			shielding_powered = !shielding_powered
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
-			usr.investigate_log("turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			usr.investigate_log("turned [shielding_powered ? "on" : "off"] the [src] powered shielding.", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("reaction_suppression")
 			if(!nob_crystal_inserted)
@@ -778,7 +778,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			suppress_reactions = !suppress_reactions
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
-			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.", INVESTIGATE_ATMOS)
 			. = TRUE
 
 	update_appearance()

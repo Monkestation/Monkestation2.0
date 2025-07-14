@@ -35,6 +35,8 @@
 		)
 		return
 	cast_on.apply_status_effect(/datum/status_effect/void_prison, "void_stasis")
+	owner.log_message("used [name] on [key_name(cast_on)]", LOG_ATTACK)
+	cast_on.log_message("was hit by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)
 
 /datum/status_effect/void_prison
 	id = "void_prison"

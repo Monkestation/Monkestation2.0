@@ -126,7 +126,7 @@
 
 	switch(action)
 		if("send_message")
-			var/message = params["message"]
+			var/message = trimtext(params["message"])
 			if(usr.client.holder)
 				usr.client.cmd_admin_pm(initiator, message)
 				return
@@ -139,11 +139,8 @@
 			return
 	return FALSE
 
-/proc/ticket_ui_act(action, T)
-	var/datum/admin_help/ticket = T
-	if(!ticket)
-		return
-	if(!check_rights(NONE))
+/proc/ticket_ui_act(action, datum/admin_help/ticket)
+	if(!ticket || !check_rights(NONE, show_msg = FALSE))
 		return
 	. = TRUE
 	switch(action)
