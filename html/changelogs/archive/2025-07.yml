@@ -190,3 +190,31 @@
   - code_imp: Underlying admin verb system ported to AVD
   - code_imp: Mentors converted to implement AVD system
   - code_imp: Mentor file reading edits and database storing.
+2025-07-13:
+  567Turtle, Absolucy:
+  - rscadd: Added a new species, Onis!
+  - rscadd: Onis have slightly more health, more resistant to wounds, are slightly
+      slower than normal humans, are stunned for slightly longer, and are resistant
+      to heat but much weaker to cold.
+  - rscadd: Onis have a (very much nerfed) fire breath.
+  - bugfix: Fixed bodypart speed modifiers not properly updating when species is set.
+  Absolucy:
+  - admin: Added logging to various heretic spells, such as moon smile.
+  - admin: Added logging for starting a Spess.tv stream with the broadcast camera.
+  - bugfix: Fixed a rare edge-case where you could get rewarded for station goal completion
+      multiple times.
+  - bugfix: Fixed unlinking the launchpad remote not working.
+  - bugfix: (Melbert) Fixes some atmos and record related log messages.
+  - bugfix: (Sealed101) sanity dropping below zero should now properly slowly recover
+      back to zero instead of dropping even further.
+  - sound: (grungussuss) ambience no longer gets cut off for ghosts.
+  - qol: Cleaner slimes will now target trash on top of "blocked" turfs (something
+      with a dense object that it can't cross over) when they can still path right
+      next to it just fine.
+  Ice-Type:
+  - rscadd: Gives NT representatives a good assistant points punchcard.
+  ThePooba:
+  - rscadd: gives slasher an unremoveable backpack you know what you did
+  antlersss:
+  - rscadd: Added new Antlers plushie
+  - bugfix: 100% more Antlers
