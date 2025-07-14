@@ -331,7 +331,7 @@
 	var/datum/round_event_control/triggered_event = locate(event_type) in SSgamemode.control
 	if(wait)
 		log_storyteller("[src] queued extra event [triggered_event] (running in [DisplayTimeText(wait)])")
-		//wait a second to avoid any potential omnitraitor bs
+		//wait a second to avoid any potential omnitraitor bs (it will happen anyways)
 		addtimer(CALLBACK(triggered_event, TYPE_PROC_REF(/datum/round_event_control, run_event), FALSE, null, FALSE, "storyteller"), 1 SECONDS)
 	else
 		log_storyteller("[src] triggered extra event [triggered_event]")
