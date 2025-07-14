@@ -117,6 +117,8 @@ GLOBAL_LIST_EMPTY(jobspawn_overrides)
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)
+GLOBAL_LIST_EMPTY(commando_nukeop_start)
+GLOBAL_LIST_EMPTY(commando_nukeop_leader_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(prisonwarp) //admin prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility) //captured people go here (ninja energy net)

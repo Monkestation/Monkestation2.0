@@ -60,6 +60,10 @@
 	var/weight = 0
 
 /datum/storyteller/process(seconds_per_tick)
+	tick(seconds_per_tick)
+
+// process() has waitfor = FALSE, so use this if you want to wait til it's done doing its thing
+/datum/storyteller/proc/tick(seconds_per_tick)
 	if(!round_started || disable_distribution) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
 		return
 
