@@ -107,6 +107,11 @@ Slimecrossing Potions
 	icon_state = "potblue"
 	var/uses = 2
 
+// monkestation start: allow using on storage items via right clicking or combat mode
+/obj/item/slimepotion/spaceproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+// monkestation end
+
 /obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user, proximity)
 	. = ..()
 	if(!uses)
@@ -150,6 +155,11 @@ Slimecrossing Potions
 	icon_state = "potred"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
+
+// monkestation start: allow using on storage items via right clicking or combat mode
+/obj/item/slimepotion/lavaproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+// monkestation end
 
 /obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)
 	. = ..()

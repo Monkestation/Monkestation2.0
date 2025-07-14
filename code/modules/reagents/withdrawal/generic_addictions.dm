@@ -109,8 +109,7 @@
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	if(affected_human.gender == MALE)
 		to_chat(affected_human, span_warning("Your chin itches."))
-		affected_human.facial_hairstyle = "Beard (Full)"
-		affected_human.update_body_parts()
+		affected_human.set_facial_hairstyle("Beard (Full)", update = TRUE)
 	//Only like gross food
 	var/obj/item/organ/internal/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
@@ -292,3 +291,29 @@
 	affected_carbon.set_jitter_if_lower(30 SECONDS * seconds_per_tick)
 	if(SPT_PROB(15, seconds_per_tick))
 		affected_carbon.emote("cough")
+
+
+//Coffee
+/datum/addiction/coffee
+	name = "coffee"
+	withdrawal_stage_messages = list("You feel a bit woozy...A cup of coffee would help", "You are getting rather drowsy", "Need...Coffee...")
+
+/datum/addiction/coffee/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.apply_status_effect(/datum/status_effect/woozy)
+
+/datum/addiction/coffee/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.apply_status_effect(/datum/status_effect/drowsiness)
+
+/datum/addiction/coffee/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.add_actionspeed_modifier(/datum/actionspeed_modifier/stimulants)
+	affected_carbon.add_movespeed_modifier(/datum/movespeed_modifier/stimulants)
+
+/datum/addiction/coffee/end_withdrawal(mob/living/carbon/affected_carbon)
+	. = ..()
+	affected_carbon.remove_status_effect(/datum/status_effect/woozy)
+	affected_carbon.remove_status_effect(/datum/status_effect/drowsiness)
+	affected_carbon.remove_actionspeed_modifier(ACTIONSPEED_ID_STIMULANTS)
+	affected_carbon.remove_movespeed_modifier(MOVESPEED_ID_STIMULANTS)

@@ -104,11 +104,11 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/syndicatefake
-	name = "black and red space suit replica"
-	icon_state = "syndicate-black-red"
+	name = "red space suit replica" //monkestation edit
+	icon_state = "syndicate" //monkestation edit
 	icon = 'icons/obj/clothing/suits/spacesuit.dmi'
 	worn_icon = 'icons/mob/clothing/suits/spacesuit.dmi'
-	inhand_icon_state = "syndicate-black-red"
+	inhand_icon_state = "space_suit_syndicate" //monkestation edit
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -600,3 +600,22 @@
 /obj/item/clothing/suit/costume/irs/Initialize(mapload)
 	. = ..()
 	allowed += GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/hooded/hotdog
+	name = "hotdog suit"
+	desc = "With great hotdog comes great responsi-bun-ity."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN
+	hoodtype = /obj/item/clothing/head/hooded/hotdog
+
+/obj/item/clothing/head/hooded/hotdog
+	name = "hotdog suit hood"
+	desc = "There's a certain joke to be made here."
+	icon_state = "hotdog"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR

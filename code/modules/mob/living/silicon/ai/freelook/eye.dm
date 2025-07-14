@@ -42,7 +42,7 @@
 	var/list/old_images = hud_list[AI_DETECT_HUD]
 	if(!ai_detector_visible)
 		hud.remove_atom_from_hud(src)
-		QDEL_LIST(old_images)
+		old_images.Cut()
 		return
 
 	if(!length(hud.hud_users))
@@ -65,12 +65,12 @@
 	var/list/new_images = list()
 	var/list/turfs = get_visible_turfs()
 	for(var/T in turfs)
-		var/image/I = (old_images.len > new_images.len) ? old_images[new_images.len + 1] : image(null, T)
+		var/image/I = (length(old_images) > length(new_images)) ? old_images[length(new_images) + 1] : image(null, T)
 		I.loc = T
 		I.vis_contents += hud_obj
 		new_images += I
-	for(var/i in (new_images.len + 1) to old_images.len)
-		qdel(old_images[i])
+	for(var/i in (length(new_images) + 1) to length(old_images))
+		old_images[i] = null
 	hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
@@ -146,7 +146,7 @@
 		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 		hud.remove_atom_from_hud(src)
 		var/list/L = hud_list[AI_DETECT_HUD]
-		QDEL_LIST(L)
+		L.Cut()
 	return ..()
 
 /atom/proc/move_camera_by_click()
@@ -221,7 +221,6 @@
 	eyeobj.setLoc(loc)
 	eyeobj.name = "[name] (AI Eye)"
 	eyeobj.real_name = eyeobj.name
-	eyeobj.update_name_tag() // monkestation edit: name tags
 	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/set_eyeobj_visible(state = TRUE)

@@ -43,8 +43,6 @@
 	/// Particles this obj uses when burning, if any
 	var/burning_particles
 
-	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
-
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
@@ -232,9 +230,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/vv_do_topic(list/href_list)
 	if(!(. = ..()))
 		return
+
 	if(href_list[VV_HK_OSAY])
-		if(check_rights(R_FUN, FALSE))
-			usr.client.object_say(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/object_say, src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))

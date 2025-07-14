@@ -11,7 +11,7 @@
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT //monkestation edit
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -45,7 +45,7 @@
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack,
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
@@ -245,6 +245,8 @@
 	update_item_action_buttons()
 
 /obj/item/clothing/suit/space/ui_action_click(mob/user, actiontype)
+	if(!istype(actiontype, /datum/action/item_action/toggle_spacesuit))
+		return ..()
 	toggle_spacesuit(user)
 
 // let emags override the temperature settings

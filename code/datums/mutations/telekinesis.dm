@@ -27,8 +27,10 @@
 		return
 	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
 
+/* Moved to 'monkestation/code/datums/mutations/telekinesis.dm'
 /datum/mutation/human/telekinesis/get_visual_indicator()
 	return visual_indicators[type][1]
+*/
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
@@ -37,4 +39,5 @@
 		return
 	if(!tkMaxRangeCheck(source, target) || source.z != target.z)
 		return
-	return target.attack_tk(source)
+//	return target.attack_tk(source) // MONKESTATION EDIT OLD
+	return target.attack_tk(source, GET_MUTATION_POWER(src) > 1 ? TRUE : FALSE) // MONKESTATION EDIT NEW

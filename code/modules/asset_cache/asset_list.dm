@@ -1,4 +1,4 @@
-#define ASSET_CROSS_ROUND_CACHE_DIRECTORY "tmp/assets"
+#define ASSET_CROSS_ROUND_CACHE_DIRECTORY "cache/assets"
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
 //Place any asset datums you create in asset_list_items.dm
@@ -64,6 +64,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /// Returns whether or not the asset should attempt to read from cache
 /datum/asset/proc/should_refresh()
 	return !cross_round_cachable || !CONFIG_GET(flag/cache_assets)
+
+/// Simply takes any generated file and saves it to the round-specific /logs folder. Useful for debugging potential issues with spritesheet generation/display.
+/// Only called when the SAVE_SPRITESHEETS config option is uncommented.
+/datum/asset/proc/save_to_logs(file_name, file_location)
+	var/asset_path = "[GLOB.log_directory]/generated_assets/[file_name]"
+	fdel(asset_path) // just in case, sadly we can't use rust_g stuff here.
+	fcopy(file_location, asset_path)
 
 /// If you don't need anything complicated.
 /datum/asset/simple
@@ -198,12 +205,16 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
 		SSassets.transport.register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
-	var/res_name = "spritesheet_[name].css"
-	var/fname = "data/spritesheets/[res_name]"
-	fdel(fname)
-	text2file(generate_css(), fname)
-	SSassets.transport.register_asset(res_name, fcopy_rsc(fname))
-	fdel(fname)
+	var/css_name = "spritesheet_[name].css"
+	var/file_directory = "data/spritesheets/[css_name]"
+	fdel(file_directory)
+	text2file(generate_css(), file_directory)
+	SSassets.transport.register_asset(css_name, fcopy_rsc(file_directory))
+
+	if(CONFIG_GET(flag/save_spritesheets))
+		save_to_logs(file_name = css_name, file_location = file_directory)
+
+	fdel(file_directory)
 
 	if (CONFIG_GET(flag/cache_assets) && cross_round_cachable)
 		write_to_cache()
@@ -249,13 +260,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			continue
 
 		// save flattened version
-		var/fname = "data/spritesheets/[name]_[size_id].png"
-		fcopy(size[SPRSZ_ICON], fname)
-		var/error = rustg_dmi_strip_metadata(fname)
+		var/png_name = "[name]_[size_id].png"
+		var/file_directory = "data/spritesheets/[png_name]"
+		fcopy(size[SPRSZ_ICON], file_directory)
+		var/error = rustg_dmi_strip_metadata(file_directory)
 		if(length(error))
-			stack_trace("Failed to strip [name]_[size_id].png: [error]")
-		size[SPRSZ_STRIPPED] = icon(fname)
-		fdel(fname)
+			stack_trace("Failed to strip [png_name]: [error]")
+		size[SPRSZ_STRIPPED] = icon(file_directory)
+
+		// this is useful here for determining if weird sprite issues (like having a white background) are a cause of what we're doing DM-side or not since we can see the full flattened thing at-a-glance.
+		if(CONFIG_GET(flag/save_spritesheets))
+			save_to_logs(file_name = png_name, file_location = file_directory)
+
+		fdel(file_directory)
 
 /datum/asset/spritesheet/proc/generate_css()
 	var/list/out = list()
@@ -301,9 +318,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		replaced_css = replacetext(replaced_css, find_background_urls.match, "background:url('[asset_url]')")
 		LAZYADD(cached_spritesheets_needed, asset_id)
 
-	var/replaced_css_filename = "data/spritesheets/spritesheet_[name].css"
+	var/finalized_name = "spritesheet_[name].css"
+	var/replaced_css_filename = "data/spritesheets/[finalized_name]"
 	rustg_file_write(replaced_css, replaced_css_filename)
-	SSassets.transport.register_asset("spritesheet_[name].css", replaced_css_filename)
+	SSassets.transport.register_asset(finalized_name, replaced_css_filename)
+
+	if(CONFIG_GET(flag/save_spritesheets))
+		save_to_logs(file_name = finalized_name, file_location = replaced_css_filename)
 
 	fdel(replaced_css_filename)
 
@@ -376,9 +397,17 @@ GLOBAL_LIST_EMPTY(asset_datums)
 // APPARENTLY IT MAKES ICONS IMMUTABLE
 // LOOK INTO USING THE MUTABLE APPEARANCE PATTERN HERE
 /datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
+#ifdef UNIT_TESTS
+	if (I && icon_state && !icon_exists(I, icon_state)) // check the base icon prior to extracting the state we want
+		stack_trace("Tried to insert nonexistent icon_state '[icon_state]' from [I] into spritesheet [name] ([type])")
+		return
+#endif
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
+
+	var/start_usage = world.tick_usage
+
 	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
 	I = ModifyInserted(I)
 	var/size_id = "[I.Width()]x[I.Height()]"
@@ -399,6 +428,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+	SSblackbox.record_feedback("tally", "spritesheet_queued_insert_time", TICK_USAGE_TO_MS(start_usage), name)
 
 /**
  * A simple proc handing the Icon for you to modify before it gets turned into an asset.

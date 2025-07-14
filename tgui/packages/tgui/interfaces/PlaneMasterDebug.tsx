@@ -18,7 +18,7 @@ import { Component, createRef, RefObject } from 'inferno';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
-import { Connections } from './IntegratedCircuit/Connections';
+import { Connection, Connections, Position } from './common/Connections';
 
 enum ConnectionType {
   Relay,
@@ -108,18 +108,6 @@ interface AssocConnected {
 interface AssocString {
   [index: string]: string;
 }
-
-type Position = {
-  x: number;
-  y: number;
-};
-
-type Connection = {
-  color: string;
-  from: Position;
-  to: Position;
-  ref: string;
-};
 
 type PlaneDebugData = {
   our_group: string;
@@ -663,7 +651,7 @@ const DrawAbovePlane = (props) => {
           <MobResetButton />
           <ToggleMirror />
           <VVButton />
-          <RefreshButton />
+          <RebuildButton />
         </>
       )}
       {!!enable_group_view && <GroupDropdown />}
@@ -700,7 +688,7 @@ const PlaneWindow = (props) => {
           <MobResetButton no_position />
           <ToggleMirror no_position />
           <VVButton no_position />
-          <RefreshButton no_position />
+          <RebuildButton no_position />
         </>
       }
     >
@@ -912,7 +900,7 @@ const GroupDropdown = (props) => {
   );
 };
 
-const RefreshButton = (props) => {
+const RebuildButton = (props) => {
   const { act } = useBackend();
   const { no_position } = props;
 
@@ -922,8 +910,8 @@ const RefreshButton = (props) => {
       right={no_position ? '' : '6px'}
       position={no_position ? '' : 'absolute'}
       icon="recycle"
-      onClick={() => act('refresh')}
-      tooltip="Refreshes ALL plane masters. Kinda laggy, but useful"
+      onClick={() => act('Rebuild')}
+      tooltip="Rebuilds ALL plane masters. Kinda laggy, but useful"
     />
   );
 };

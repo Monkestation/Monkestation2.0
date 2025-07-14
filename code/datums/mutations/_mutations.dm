@@ -109,6 +109,7 @@
 	owner = acquirer
 	dna = acquirer.dna
 	dna.mutations += src
+	SEND_SIGNAL(src, COMSIG_MUTATION_GAINED, acquirer)
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
@@ -133,6 +134,7 @@
 	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
 		return TRUE
 	. = FALSE
+	SEND_SIGNAL(src, COMSIG_MUTATION_LOST, owner)
 	if(text_lose_indication && owner.stat != DEAD)
 		to_chat(owner, text_lose_indication)
 	if(visual_indicators.len)
@@ -174,7 +176,7 @@
  * returns an instance of a power if modification was complete
  */
 /datum/mutation/human/proc/modify()
-	if(modified || !power_path || !owner)
+	if(modified || !power_path || QDELETED(owner))
 		return
 	var/datum/action/cooldown/modified_power = locate(power_path) in owner.actions
 	if(!modified_power)

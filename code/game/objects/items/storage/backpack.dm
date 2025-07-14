@@ -30,14 +30,22 @@
 	AddElement(/datum/element/attack_equip)
 
 /obj/item/storage/backpack/equipped(mob/user, slot, initial)
-	if(slot == ITEM_SLOT_BACK)
-		if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
-			slowdown++
 	. = ..()
+	check_belt_satchel(user)
 
 /obj/item/storage/backpack/dropped(mob/user, silent)
 	. = ..()
-	slowdown = initial(slowdown)
+	check_belt_satchel(user)
+
+/obj/item/storage/backpack/proc/check_belt_satchel(mob/user)
+	if(QDELETED(user))
+		return
+	var/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
+	var/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
+	if(istype(back_item, /obj/item/storage/backpack) && istype(belt_item, /obj/item/storage/backpack/satchel))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/belt_satchel)
+	else
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/belt_satchel)
 
 /*
  * Backpack Types
@@ -326,22 +334,6 @@
 	. = ..()
 	atom_storage.max_total_storage = 18
 
-/obj/item/storage/backpack/satchel/equipped(mob/user, slot, initial)
-	. = ..()
-	if(slot == ITEM_SLOT_BELT)
-		ADD_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
-		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
-			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
-			selected_bag.slowdown++
-
-/obj/item/storage/backpack/satchel/dropped(mob/user, silent)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BELT_SATCHEL))
-		REMOVE_TRAIT(user, TRAIT_BELT_SATCHEL, CLOTHING_TRAIT)
-		if(istype(user.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack))
-			var/obj/item/storage/backpack/selected_bag = user.get_item_by_slot(ITEM_SLOT_BACK)
-			selected_bag.slowdown = initial(selected_bag.slowdown)
-
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
@@ -353,6 +345,36 @@
 
 /obj/item/storage/backpack/satchel/fireproof
 	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/backpack/satchel/flowery
+	name = "perfume scented satchel"
+	desc = "It's a very fancy satchel made with fine leather."
+	icon_state = "flowerybag"
+	inhand_icon_state = "flowerybag"
+
+/obj/item/storage/backpack/satchel/wing
+	name = "angel wing satchel"
+	desc = "A uniqe satchel that comes with hidden straps. How many chickens were felled for this look?"
+	icon_state = "angelwing"
+	inhand_icon_state = "satchel"
+
+/obj/item/storage/backpack/satchel/wing/alt
+	name = "devil wing satchel"
+	desc = "A uniqe satchel that comes with hidden straps. How many chickens were felled for this look?"
+	icon_state = "devilwing"
+	inhand_icon_state = "devilwing"
+
+/obj/item/storage/backpack/satchel/blackleather //MONKESTATION EDIT
+	name = "black leather satchel"
+	desc = "It's a fancy satchel made with plastic imitation leather."
+	icon_state = "satchel-blackleather"
+	inhand_icon_state = "satchel-blackleather"
+
+/obj/item/storage/backpack/satchel/retro //MONKESTATION EDIT
+	name = "retro satchel"
+	desc = "A satchel commonly worn during planetary surveys."
+	icon_state = "satchel-retro"
+	inhand_icon_state = "satchel-retro"
 
 /obj/item/storage/backpack/satchel/eng
 	name = "industrial satchel"
@@ -701,12 +723,11 @@
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
 	new /obj/item/mecha_ammo/lmg(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
 	new /obj/item/mecha_ammo/missiles_srm(src)
+	new /obj/item/compression_kit(src)
+	new /obj/item/compression_kit(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
@@ -816,3 +837,14 @@
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/item/storage/backpack/cursed
+	name = "Unremoveable backpack"
+	desc = "A cursed backpack"
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/item/storage/backpack/cursed/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, "slasher")

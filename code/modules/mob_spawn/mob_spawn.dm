@@ -38,6 +38,12 @@
 	if(faction)
 		faction = string_list(faction)
 
+/obj/effect/mob_spawn/Destroy()
+	spawned_mob_ref = null
+	if(istype(outfit))
+		QDEL_NULL(outfit)
+	return ..()
+
 /// Creates whatever mob the spawner makes. Return FALSE if we want to exit from here without doing that, returning NULL will be logged to admins.
 /obj/effect/mob_spawn/proc/create(mob/mob_possessor, newname, is_pref_loaded)
 	var/mob/living/spawned_mob = new mob_type(get_turf(src)) //living mobs only
@@ -130,6 +136,9 @@
 	///This is critical non-policy information about the ghost role. Shown in the spawner menu and after spawning last.
 	var/important_text = ""
 
+	///Trigger "don't be a shit" reminder - should only be disabled for ghostroles that are antagonists.
+	var/dont_be_a_shit = TRUE
+
 	///Show these on spawn? Usually used for hardcoded special flavor
 	var/show_flavor = TRUE
 
@@ -155,7 +164,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	LAZYADD(GLOB.mob_spawners[name], src)
 
-/obj/effect/mob_spawn/Destroy()
+/obj/effect/mob_spawn/ghost_role/Destroy()
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
 	if(!LAZYLEN(spawners))
@@ -285,7 +294,7 @@
 		if(mob_possessor.mind)
 			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
 		else
-			spawned_mob.key = mob_possessor.key
+			spawned_mob.PossessByPlayer(mob_possessor.key)
 	var/datum/mind/spawned_mind = spawned_mob.mind
 	if(spawned_mind)
 		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))
@@ -297,6 +306,8 @@
 			output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
+		if(dont_be_a_shit != FALSE)
+			output_message += "\n[span_adminhelp("DO NOT DIRECTLY INTERFERE WITH OR SABOTAGE THE ROUND ON THE MAIN STATION IN ANY WAY WITHOUT PROVOCATION OR DIRECT ADMIN APPROVAL OR YOU WILL BE BANNED.")]"
 		to_chat(spawned_mob, output_message)
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
@@ -310,6 +321,7 @@
 
 ///these mob spawn subtypes trigger immediately (New or Initialize) and are not player controlled... since they're dead, you know?
 /obj/effect/mob_spawn/corpse
+	density = FALSE //these are pretty much abstract objects that leave a corpse in their place.
 	///when this mob spawn should auto trigger.
 	var/spawn_when = CORPSE_INSTANT
 

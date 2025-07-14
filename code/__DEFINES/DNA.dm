@@ -29,18 +29,16 @@
 
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
-#define DNA_EYE_COLOR_LEFT_BLOCK 4
+#define DNA_GENDER_BLOCK 1
+#define DNA_SKIN_TONE_BLOCK 2
+#define DNA_EYE_COLOR_LEFT_BLOCK 3
 #define DNA_EYE_COLOR_RIGHT_BLOCK 4
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
-#define DNA_FACIAL_HAIRSTYLE_BLOCK 6
-#define DNA_GENDER_BLOCK 5
-#define DNA_HAIR_COLOR_BLOCK 1
-#define DNA_HAIRSTYLE_BLOCK 7
-#define DNA_SKIN_TONE_BLOCK 3
-#define DNA_UNI_IDENTITY_BLOCKS 7
+#define DNA_HAIRSTYLE_BLOCK 5
+#define DNA_HAIR_COLOR_BLOCK 6
+#define DNA_FACIAL_HAIRSTYLE_BLOCK 7
+#define DNA_FACIAL_HAIR_COLOR_BLOCK 8
 
-/// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 20
+#define DNA_UNI_IDENTITY_BLOCKS 8
 
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
@@ -62,6 +60,9 @@
 #define DNA_AVIAN_EARS_BLOCK 18 // NON-MODULE CHANGE
 #define DNA_AVIAN_TAIL_BLOCK 19 // NON-MODULE CHANGE
 #define DNA_FEATHER_COLOR_BLOCK 20 // NON-MODULE CHANGE
+
+/// This number needs to equal the total number of DNA blocks
+#define DNA_FEATURE_BLOCKS 20
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -103,6 +104,8 @@
 #define ORGAN_SLOT_MONSTER_CORE "monstercore"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device" //This one ignores alphabetical order cause the arms should be together
+#define ORGAN_SLOT_RIGHT_ARM_MUSCLE "r_arm_muscle"
+#define ORGAN_SLOT_LEFT_ARM_MUSCLE "l_arm_muscle" //same as above
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_STORAGE_CAVITY "storage_cavity" // monkestation edit
@@ -168,6 +171,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_APPENDIX,
 	ORGAN_SLOT_RIGHT_ARM_AUG,
 	ORGAN_SLOT_LEFT_ARM_AUG,
+	ORGAN_SLOT_LEFT_ARM_MUSCLE,
+	ORGAN_SLOT_RIGHT_ARM_MUSCLE,
 	ORGAN_SLOT_RIGHT_LEG_AUG,
 	ORGAN_SLOT_LEFT_LEG_AUG,
 	ORGAN_SLOT_STOMACH,

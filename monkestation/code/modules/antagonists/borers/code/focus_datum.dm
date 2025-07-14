@@ -45,10 +45,6 @@
 	gain_text = "Your chest begins to slow down..."
 	lose_text = "Your chest begins to heave again..."
 
-/datum/borer_focus/chest/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	host.set_safe_hunger_level()
-	return ..()
-
 /datum/borer_focus/arms
 	name = "arm focus"
 	traits = list(TRAIT_QUICKER_CARRY, TRAIT_QUICK_BUILD, TRAIT_SHOCKIMMUNE)

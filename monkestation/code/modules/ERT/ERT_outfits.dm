@@ -35,7 +35,7 @@
 	suit = /obj/item/clothing/suit/space/ert
 	suit_store = /obj/item/gun/energy/e_gun
 	head = /obj/item/clothing/head/helmet/space/ert
-	belt = /obj/item/tank/jetpack/oxygen/harness
+	belt = /obj/item/tank/jetpack/harness
 	back = /obj/item/storage/backpack/ert/generic
 	backpack_contents = list(
 		/obj/item/storage/medkit/regular = 1,
@@ -47,8 +47,6 @@
 
 /datum/outfit/centcom/ert/generic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	var/obj/item/organ/internal/cyberimp/cyberlink/nt_high/cyberlink = new()
-	cyberlink.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/chest/nutriment/plus/nutriment_pump = new()
 	nutriment_pump.Insert(H, drop_if_replaced = FALSE)
 
@@ -154,6 +152,11 @@
 	additional_radio = /obj/item/encryptionkey/headset_med
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
+/datum/outfit/centcom/ert/generic/medical/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/brain/linked_surgery/serverlink = new()
+	serverlink.Insert(H, drop_if_replaced = FALSE)
+
 /datum/antagonist/ert/generic/medical/blue
 	name = "Code Blue Medical Response Officer"
 	outfit = /datum/outfit/centcom/ert/generic/medical
@@ -188,6 +191,7 @@
 	head = null
 	belt = /obj/item/defibrillator/compact/combat/loaded/nanotrasen
 	back = /obj/item/mod/control/pre_equipped/responsory/generic/medic
+	gloves = /obj/item/clothing/gloves/combat
 	backpack_contents = list(
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/storage/box/medipens = 1,
@@ -197,7 +201,7 @@
 		/obj/item/emergency_bed = 1,
 		/obj/item/healthanalyzer/advanced = 1,
 	)
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/night/pathology
 	r_pocket = /obj/item/holosign_creator/security
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
@@ -207,8 +211,10 @@
 	surgery_toolset.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/eyes/hud/medical/med_hud = new()
 	med_hud.Insert(H, drop_if_replaced = FALSE)
-	var/obj/item/organ/internal/cyberimp/brain/linked_surgery/serverlink = new()
+	var/obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt/serverlink = new()
 	serverlink.Insert(H, drop_if_replaced = FALSE)
+	ADD_TRAIT(H, TRAIT_PERFECT_SURGEON, ROUNDSTART_TRAIT)
+	ADD_TRAIT(H, TRAIT_FASTMED, ROUNDSTART_TRAIT)
 
 /datum/antagonist/ert/generic/security
 	name = "Code Green Security Response Officer"
@@ -318,6 +324,7 @@
 
 	shoes = /obj/item/clothing/shoes/magboots/advance
 	suit_store = /obj/item/gun/energy/e_gun
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	back = /obj/item/storage/backpack/ert/engineer
 	backpack_contents = list(
 		/obj/item/storage/belt/utility/full/powertools = 1,
@@ -429,9 +436,7 @@
 	belt = /obj/item/storage/belt/janitor/full/ert
 	back = /obj/item/mod/control/pre_equipped/responsory/generic/janitor
 	backpack_contents = list(
-		/obj/item/mop/advanced = 1,
 		/obj/item/pushbroom = 1,
-		/obj/item/reagent_containers/spray/drying = 1,
 		/obj/item/grenade/clusterbuster/cleaner = 2,
 		/obj/item/scythe/compact = 1,
 		/obj/item/grenade/clusterbuster/antiweed = 1,
@@ -439,6 +444,13 @@
 	l_hand = /obj/item/storage/bag/trash/bluespace
 	glasses = /obj/item/clothing/glasses/night
 	additional_radio = /obj/item/encryptionkey/heads/hop
+
+/datum/outfit/centcom/ert/generic/janitor/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/organ/internal/cyberimp/eyes/fakehud/science/science_hud = new()
+	science_hud.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/cyberimp/arm/item_set/janitor/janitor_implant = new()
+	janitor_implant.Insert(H, drop_if_replaced = FALSE)
 
 /datum/antagonist/ert/generic/chaplain
 	name = "Code Green Religious Response Officer"
@@ -542,7 +554,7 @@
 	suit = /obj/item/clothing/suit/space/ert/clown
 	suit_store = null
 	head = /obj/item/clothing/head/helmet/space/ert/clown
-	belt = /obj/item/tank/jetpack/oxygen/harness
+	belt = /obj/item/tank/jetpack/harness
 	back = /obj/item/storage/backpack/ert/clown
 	backpack_contents = list(
 		/obj/item/stamp/clown = 1,
@@ -691,7 +703,7 @@
 	)
 	glasses = /obj/item/clothing/glasses/thermal
 	l_pocket = /obj/item/melee/energy/sword/saber/purple //I am going to end to this, once and for all!
-	r_pocket = /obj/item/shield/energy
+	r_pocket = /obj/item/shield/energy/advanced
 	additional_radio = /obj/item/encryptionkey/heads/captain
 	implants = list(/obj/item/implant/krav_maga)
 

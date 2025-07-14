@@ -135,6 +135,7 @@
 	// Yes this code is the same as normal chameleon glasses, but we don't
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
 	. = ..()
@@ -187,6 +188,16 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
+/obj/item/clothing/glasses/hud/security/sunglasses/normal /// Monkestation edit : Adding some substance to the detective role
+	name = "sunglasses"
+	desc = "N/A"
+	icon_state = "sun"
+	inhand_icon_state = "sunglasses"
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/gray
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"

@@ -14,6 +14,8 @@
 	var/max_combined_w_class = 15
 	/// Max amount of items in the storage.
 	var/max_items = 7
+	/// Is nesting same-size storage items allowed?
+	var/big_nesting = FALSE
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
@@ -24,6 +26,8 @@
 /obj/item/mod/module/storage/on_install()
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
+	modstorage.allow_big_nesting = big_nesting
+	modstorage.locked = STORAGE_NOT_LOCKED
 	atom_storage.locked = FALSE
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
@@ -83,6 +87,7 @@
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
 	max_items = 21
+	big_nesting = TRUE
 
 ///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
@@ -99,32 +104,38 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
-	/// Do we stop the wearer from gliding in space.
-	var/stabilizers = FALSE
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	var/datum/callback/get_mover
-	var/datum/callback/check_on_move
+	var/stabilize = TRUE
+	var/thrust_callback
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, PROC_REF(get_user))
-	check_on_move = CALLBACK(src, PROC_REF(allow_thrust))
-	refresh_jetpack()
+	thrust_callback = CALLBACK(src, PROC_REF(allow_thrust))
+	configure_jetpack(stabilize)
 
 /obj/item/mod/module/jetpack/Destroy()
-	get_mover = null
-	check_on_move = null
+	thrust_callback = null
 	return ..()
 
-/obj/item/mod/module/jetpack/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, MOD_ABORT_USE, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
+/**
+ * configures/re-configures the jetpack component
+ *
+ * Arguments
+ * stabilize - Should this jetpack be stabalized
+ */
+/obj/item/mod/module/jetpack/proc/configure_jetpack(stabilize)
+	src.stabilize = stabilize
 
-/obj/item/mod/module/jetpack/proc/set_stabilizers(new_stabilizers)
-	if(stabilizers == new_stabilizers)
-		return
-	stabilizers = new_stabilizers
-	refresh_jetpack()
+	AddComponent( \
+		/datum/component/jetpack, \
+		src.stabilize, \
+		COMSIG_MODULE_TRIGGERED, \
+		COMSIG_MODULE_DEACTIVATED, \
+		MOD_ABORT_USE, \
+		thrust_callback, \
+		/datum/effect_system/trail_follow/ion/grav_allowed \
+	)
 
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
@@ -140,12 +151,12 @@
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
-	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilizers)
+	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilize)
 
 /obj/item/mod/module/jetpack/configure_edit(key, value)
 	switch(key)
 		if("stabilizers")
-			set_stabilizers(text2num(value))
+			configure_jetpack(text2num(value))
 
 /obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
 	if(!use_fuel)
@@ -154,8 +165,45 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mod/module/jetpack/proc/get_user()
-	return mod.wearer
+/// Cooldown to use if we didn't actually launch a jump jet
+#define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
+
+///Jump Jet - Briefly removes the effect of gravity and pushes you up one z-level if possible.
+/obj/item/mod/module/jump_jet
+	name = "MOD ionic jump jet module"
+	desc = "A specialised ionic thruster which provides a short but powerful boost capable of pushing against gravity, \
+		after which time it needs to recharge."
+	icon_state = "jump_jet"
+	module_type = MODULE_USABLE
+	complexity = 3
+	cooldown_time = 30 SECONDS
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	incompatible_modules = list(/obj/item/mod/module/jump_jet)
+
+/obj/item/mod/module/jump_jet/on_use()
+	. = ..()
+	if(!.)
+		return
+	if (DOING_INTERACTION(mod.wearer, mod.wearer))
+		balloon_alert(mod.wearer, "busy!")
+		return
+	balloon_alert(mod.wearer, "launching...")
+	mod.wearer.Shake(duration = 1 SECONDS)
+	if (!do_after(mod.wearer, 1 SECONDS, target = mod.wearer))
+		return FALSE
+	playsound(mod.wearer, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
+	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
+	var/turf/launch_from = get_turf(mod.wearer)
+	if (mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS))
+		launch_from.visible_message(span_warning("[mod.wearer] rockets into the air!"))
+	new /obj/effect/temp_visual/jet_plume(launch_from)
+
+	var/obj/item/mod/module/jetpack/linked_jetpack = locate() in mod.modules
+	if (!isnull(linked_jetpack) && !linked_jetpack.active)
+		linked_jetpack.on_activation()
+	return TRUE
+
+#undef FAILED_ACTIVATION_COOLDOWN
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
@@ -179,8 +227,12 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
+	/// Does this show damage types, body temp, satiety
+	var/display_detailed_vitals = TRUE
+	/// Does this show DNA data
+	var/display_dna = FALSE
 	/// Does this show the round ID and shift time?
-	var/show_time = FALSE
+	var/display_time = FALSE
 	/// Death sound. May or may not be funny. Vareditable at your own risk.
 	var/death_sound = 'sound/effects/flatline3.ogg'
 	/// Death sound volume. Please be responsible with this.
@@ -188,20 +240,22 @@
 
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
-	.["show_time"] = show_time
-	.["statustime"] = station_time_timestamp()
-	.["statusid"] = GLOB.round_id
-	.["statushealth"] = mod.wearer?.health || 0
-	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["statusburn"] = mod.wearer?.getFireLoss() || 0
-	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
-	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
-	.["statustemp"] = mod.wearer?.bodytemperature || 0
-	.["statusnutrition"] = mod.wearer?.nutrition || 0
-	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["statusdna"] = mod.wearer?.dna.unique_enzymes
-	.["statusviruses"] = null
+	.["display_time"] = display_time
+	.["shift_time"] = station_time_timestamp()
+	.["shift_id"] = GLOB.round_id
+	.["health"] = mod.wearer?.health || 0
+	.["health_max"] = mod.wearer?.getMaxHealth() || 0
+	if(display_detailed_vitals)
+		.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
+		.["loss_fire"] = mod.wearer?.getFireLoss() || 0
+		.["loss_tox"] = mod.wearer?.getToxLoss() || 0
+		.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+		.["body_temperature"] = mod.wearer?.bodytemperature || 0
+		.["nutrition"] = mod.wearer?.nutrition || 0
+	if(display_dna)
+		.["dna_unique_identity"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
+		.["dna_unique_enzymes"] = mod.wearer?.dna.unique_enzymes
+	.["viruses"] = null
 	if(!length(mod.wearer?.diseases))
 		return .
 	var/list/viruses = list()
@@ -213,9 +267,21 @@
 		virus_data["maxstage"] = virus.max_stages
 		virus_data["cure"] = virus.cure_text
 		viruses += list(virus_data)
-	.["statusviruses"] = viruses
+	.["viruses"] = viruses
 
 	return .
+
+/obj/item/mod/module/status_readout/get_configuration()
+	. = ..()
+	.["display_detailed_vitals"] = add_ui_configuration("Detailed Vitals", "bool", display_detailed_vitals)
+	.["display_dna"] = add_ui_configuration("DNA Information", "bool", display_dna)
+
+/obj/item/mod/module/status_readout/configure_edit(key, value)
+	switch(key)
+		if("display_detailed_vitals")
+			display_detailed_vitals = text2num(value)
+		if("display_dna")
+			display_dna = text2num(value)
 
 /obj/item/mod/module/status_readout/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
@@ -325,6 +391,12 @@
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
+/obj/item/mod/module/flashlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(active)
+		on_deactivation()
+		return TRUE
+
 /obj/item/mod/module/flashlight/on_process(seconds_per_tick)
 	active_power_cost = base_power * light_outer_range
 	return ..()
@@ -356,6 +428,21 @@
 			mod.wearer.update_clothing(mod.slot_flags)
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
+
+///Like the flashlight module, except the light color is stuck to black and cannot be changed.
+/obj/item/mod/module/flashlight/darkness
+	name = "MOD flashdark module"
+	desc = "A quirky pair of configurable flashdarks installed on the sides of the helmet, \
+		useful for providing darkness at a configurable range."
+	light_color = COLOR_BLACK
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	min_range = 1
+	max_range = 3
+
+/obj/item/mod/module/flashlight/darkness/get_configuration()
+	. = ..()
+	. -= "light_color"
 
 ///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
@@ -683,3 +770,26 @@
 	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 	mod.core.add_charge(power_per_step)
+
+/obj/item/mod/module/shock_absorber
+	name = "MOD shock absorption module"
+	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	icon_state = "no_baton"
+	complexity = 1
+	use_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/shock_absorber)
+
+/obj/item/mod/module/shock_absorber/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, MOD_TRAIT)
+	RegisterSignal(mod.wearer, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(mob_batoned))
+
+/obj/item/mod/module/shock_absorber/on_suit_deactivation(deleting)
+	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, MOD_TRAIT)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_MINOR_SHOCK)
+
+/obj/item/mod/module/shock_absorber/proc/mob_batoned(datum/source)
+	SIGNAL_HANDLER
+	drain_power(use_power_cost)
+	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
+	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
+	sparks.start()

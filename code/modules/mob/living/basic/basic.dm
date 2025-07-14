@@ -96,6 +96,18 @@
 	var/list/weather_immunities
 //MONKESTATION EDIT END
 
+	//MONKESTATION EDIT START - These variables were changed as part of a temperature overhaul by
+	// Borbop, in #3301.
+	// WHEN PORTING THESE OVER:
+	// * `minimum_survivable_temperature` -> `bodytemp_cold_damage_limit`
+	// * `maximum_survivable_temperature` -> `bodytemp_heat_damage_limit`
+	// * If either one has a value of `0`, set it to `-1`.
+	/* //MONKESTATION EDIT ORIGINAL
+	///Minimal body temperature without receiving damage
+	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
+	///Maximal body temperature without receiving damage
+	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
+	*/
 	bodytemp_cold_damage_limit = NPC_DEFAULT_MIN_TEMP
 	bodytemp_heat_damage_limit = NPC_DEFAULT_MAX_TEMP
 	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
@@ -131,7 +143,7 @@
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
 /mob/living/basic/proc/apply_atmos_requirements()
-	if(unsuitable_atmos_damage == 0)
+	if(unsuitable_atmos_damage == 0 || isnull(habitable_atmos))
 		return
 	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
 	habitable_atmos = string_assoc_list(habitable_atmos)
@@ -181,6 +193,7 @@
 /mob/living/basic/death(gibbed)
 	. = ..()
 	if(basic_mob_flags & DEL_ON_DEATH)
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0

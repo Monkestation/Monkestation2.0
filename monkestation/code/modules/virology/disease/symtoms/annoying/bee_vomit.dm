@@ -17,15 +17,21 @@
 	if(prob(20 + (20 * multiplier)))
 		to_chat(mob, span_warning("You feel a buzzing in your throat"))
 
-		addtimer(CALLBACK(src, PROC_REF(spawn_bee), mob), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(spawn_bee), WEAKREF(mob)), 5 SECONDS)
 
-/datum/symptom/bee_vomit/proc/kill_bee(mob/living/basic/bee/bee)
+/datum/symptom/bee_vomit/proc/kill_bee(datum/weakref/bee_ref)
+	var/mob/living/basic/bee/bee = bee_ref.resolve()
+	if(!bee)
+		return
+
 	bee.visible_message(span_warning("The bee falls apart!"), span_warning("You fall apart"))
 	bee.death()
-	sleep(0.1 SECONDS)
-	qdel(bee)
+	QDEL_IN(bee, 0.1 SECONDS)
 
-/datum/symptom/bee_vomit/proc/spawn_bee(mob/living/mob)
+/datum/symptom/bee_vomit/proc/spawn_bee(datum/weakref/mob_ref)
+	var/mob/living/mob = mob_ref.resolve()
+	if(!mob)
+		return
 	var/turf/open/T = get_turf(mob)
 	if(prob(40 + 10 * multiplier))
 		mob.visible_message(span_warning("[mob] coughs out a bee!"),span_danger("You cough up a bee!"))
@@ -36,4 +42,4 @@
 			)
 		var/mob/living/basic/bee/bee = new bee_type(T)
 		if(multiplier < 4)
-			addtimer(CALLBACK(src, PROC_REF(kill_bee), bee), 20 SECONDS * multiplier)
+			addtimer(CALLBACK(src, PROC_REF(kill_bee), WEAKREF(bee)), 20 SECONDS * multiplier)

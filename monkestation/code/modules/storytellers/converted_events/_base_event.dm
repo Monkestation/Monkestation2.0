@@ -64,6 +64,7 @@
 /datum/round_event_control/antagonist
 	checks_antag_cap = TRUE
 	track = EVENT_TRACK_ROLESET
+	dont_spawn_near_roundend = TRUE
 	///list of required roles, needed for this to form
 	var/list/exclusive_roles
 	/// Protected roles from the antag roll. People will not get those roles if a config is enabled
@@ -122,11 +123,10 @@
 
 /datum/round_event_control/antagonist/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
-	if(!check_required())
-		return FALSE
-
 	if(!.)
 		return
+	if(!check_required())
+		return FALSE
 
 /datum/round_event_control/antagonist/solo
 	typepath = /datum/round_event/antagonist/solo
@@ -160,6 +160,14 @@
 	. = ..()
 	if(!.)
 		return
+	if(shared_occurence_type == SHARED_HIGH_THREAT)
+		if(name in SSgamemode.last_round_events)
+			return FALSE
+		for(var/datum/round_event_control/antagonist/solo/event as anything in subtypesof(/datum/round_event_control/antagonist/solo))
+			if(event::shared_occurence_type != SHARED_HIGH_THREAT || !event::name)
+				continue
+			if(event::name in SSgamemode.last_round_events)
+				return FALSE
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates()
 	if(length(candidates) < antag_amt)

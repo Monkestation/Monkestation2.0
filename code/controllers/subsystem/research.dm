@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(research)
 	name = "Research"
 	priority = FIRE_PRIORITY_RESEARCH
-	wait = 10
+	wait = 1 SECONDS
 	init_order = INIT_ORDER_RESEARCH
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
@@ -30,20 +30,26 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_starting = list()
 	///category name = list(node.id = TRUE)
 	var/list/techweb_categories = list()
-	///associative double-layer path = list(id = list(point_type = point_discount))
-	var/list/techweb_boost_items = list()
+	///List of all items that can unlock a node. (node.id = list(items))
+	var/list/techweb_unlock_items = list()
 	///Node ids that should be hidden by default.
 	var/list/techweb_nodes_hidden = list()
 	///Node ids that are exclusive to the BEPIS.
 	var/list/techweb_nodes_experimental = list()
 	///path = list(point type = value)
 	var/list/techweb_point_items = list(
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+		/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	)
 	var/list/errored_datums = list()
-	var/list/point_types = list() //typecache style type = TRUE list
+	///Associated list of all point types that techwebs will have and their respective 'abbreviated' name.
+	var/list/point_types = list(
+		TECHWEB_POINT_TYPE_GENERIC = "Gen. Res.",
+		TECHWEB_POINT_TYPE_NANITES = "Nanite Res."
+	)
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
+	var/list/single_server_income = list(
+		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME,
+	)
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
@@ -69,7 +75,7 @@ SUBSYSTEM_DEF(research)
 	/// Lookup list for ordnance briefers.
 	var/list/ordnance_experiments = list()
 	/// Lookup list for scipaper partners.
-	var/list/scientific_partners = list()
+	var/list/datum/scientific_partner/scientific_partners = list()
 
 	var/list/slime_core_prices = list()
 
@@ -84,7 +90,6 @@ SUBSYSTEM_DEF(research)
 	)
 
 /datum/controller/subsystem/research/Initialize()
-	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	populate_ordnance_experiments()
@@ -117,6 +122,14 @@ SUBSYSTEM_DEF(research)
 			techweb_list.add_point_list(bitcoins)
 
 		techweb_list.last_income = world.time
+
+		if(length(techweb_list.research_queue_nodes))
+			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Attempt to research the first node in queue if possible
+
+			for(var/node_id in techweb_list.research_queue_nodes)
+				var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
+				if(node.is_free(techweb_list)) // Automatically research all free nodes in queue if any
+					techweb_list.research_node(node)
 
 	for(var/core_type in slime_core_prices)
 		var/obj/item/slime_extract/core = core_type
@@ -163,7 +176,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_nodes(clearall = FALSE)
 	if(islist(techweb_nodes) && clearall)
-		QDEL_LIST(techweb_nodes)
+		QDEL_LIST_ASSOC_VAL(techweb_nodes)
 	if(islist(techweb_nodes_starting && clearall))
 		techweb_nodes_starting.Cut()
 	var/list/returned = list()
@@ -186,13 +199,13 @@ SUBSYSTEM_DEF(research)
 	if (!verify_techweb_nodes()) //Verify all nodes have ids and such.
 		stack_trace("Invalid techweb nodes detected")
 	calculate_techweb_nodes()
-	calculate_techweb_boost_list()
+	calculate_techweb_item_unlocking_requirements()
 	if (!verify_techweb_nodes()) //Verify nodes and designs have been crosslinked properly.
 		CRASH("Invalid techweb nodes detected")
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
-		QDEL_LIST(techweb_designs)
+		QDEL_LIST_ASSOC_VAL(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
 		var/datum/design/DN = path
@@ -242,25 +255,15 @@ SUBSYSTEM_DEF(research)
 				N.unlock_ids -= u
 				research_node_id_error(u)
 				. = FALSE
-		for(var/p in N.boost_item_paths)
+		for(var/p in N.required_items_to_unlock)
 			if(!ispath(p))
-				N.boost_item_paths -= p
+				N.required_items_to_unlock -= p
 				WARNING("[p] is not a valid path.")
 				node_boost_error(N.id, "[p] is not a valid path.")
 				. = FALSE
-			var/list/points = N.boost_item_paths[p]
-			if(islist(points))
-				for(var/i in points)
-					if(!isnum(points[i]))
-						WARNING("[points[i]] is not a valid number.")
-						node_boost_error(N.id, "[points[i]] is not a valid number.")
-						. = FALSE
-					else if(!point_types[i])
-						WARNING("[i] is not a valid point type.")
-						node_boost_error(N.id, "[i] is not a valid point type.")
-						. = FALSE
-			else if(!isnull(points))
-				N.boost_item_paths -= p
+			var/list/points = N.required_items_to_unlock[p]
+			if(!isnull(points))
+				N.required_items_to_unlock -= p
 				node_boost_error(N.id, "No valid list.")
 				WARNING("No valid list.")
 				. = FALSE
@@ -314,18 +317,16 @@ SUBSYSTEM_DEF(research)
 			var/datum/techweb_node/prereq_node = techweb_node_by_id(prereq_id)
 			prereq_node.unlock_ids[node.id] = node
 
-/datum/controller/subsystem/research/proc/calculate_techweb_boost_list(clearall = FALSE)
-	if(clearall)
-		techweb_boost_items = list()
+/datum/controller/subsystem/research/proc/calculate_techweb_item_unlocking_requirements()
 	for(var/node_id in techweb_nodes)
 		var/datum/techweb_node/node = techweb_nodes[node_id]
-		for(var/path in node.boost_item_paths)
+		for(var/path in node.required_items_to_unlock)
 			if(!ispath(path))
 				continue
-			if(length(techweb_boost_items[path]))
-				techweb_boost_items[path][node.id] = node.boost_item_paths[path]
+			if(length(techweb_unlock_items[path]))
+				techweb_unlock_items[path][node.id] = node.required_items_to_unlock[path]
 			else
-				techweb_boost_items[path] = list(node.id = node.boost_item_paths[path])
+				techweb_unlock_items[path] = list(node.id = node.required_items_to_unlock[path])
 		CHECK_TICK
 
 /datum/controller/subsystem/research/proc/populate_ordnance_experiments()

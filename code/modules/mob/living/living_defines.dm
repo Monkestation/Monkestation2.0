@@ -96,7 +96,7 @@
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
 
-	/// Time of death
+	///The mob's latest time-of-death, as a station timestamp instead of world.time
 	var/tod = null
 
 	/// Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
@@ -139,7 +139,7 @@
 	var/smoke_delay = 0 ///used to prevent spam with smoke reagent reaction on mob.
 
 	///what icon the mob uses for speechbubbles
-	var/bubble_icon = "default"
+	//var/bubble_icon = "default" //MONKESTATION REMOVAL
 	///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 	var/health_doll_icon
 

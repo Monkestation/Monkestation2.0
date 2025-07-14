@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 //MONKESTATION EDIT START
 /obj/item/clothing/mask/gas/sechailer/equipped(mob/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler))
+	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler), override = TRUE) // "equipped plays fast and loose"
 
 /obj/item/clothing/mask/gas/sechailer/proc/point_handler(mob/pointing_mob, mob/pointed_at)
 	SIGNAL_HANDLER
@@ -226,6 +226,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	custom_price = PAYCHECK_COMMAND * 1.5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/halt)
+	action_slots = ALL
 	COOLDOWN_DECLARE(whistle_cooldown)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
@@ -234,7 +235,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	//user.audible_message("<font color='red' size='5'><b>HALT!</b></font>") monkestation removal
 	user.audible_message("[user] signals on their whistle!") //monkestation edit
-	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
+	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4, ignore_walls = FALSE)
 
 /datum/action/item_action/halt
 	name = "HALT!"
@@ -242,7 +243,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 //MONKESTATION EDIT START
 /obj/item/clothing/mask/whistle/equipped(mob/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler))
+	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler), override = TRUE) // "equipped plays fast and loose"
 
 /obj/item/clothing/mask/whistle/proc/point_handler(mob/pointing_mob, mob/pointed_at)
 	SIGNAL_HANDLER

@@ -61,6 +61,7 @@
 /area/shuttle/escape)
 "bT" = (
 /obj/effect/mob_spawn/corpse/human/clown,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden,
 /turf/open/floor/engine/plasma,
 /area/shuttle/escape/engine)
 "cv" = (
@@ -99,7 +100,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "cX" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/engine)
 "da" = (
@@ -107,6 +109,7 @@
 /obj/machinery/status_display/evac/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/smart/manifold/violet/hidden,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/engine)
 "dw" = (
@@ -149,7 +152,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -347,6 +350,15 @@
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape/engine)
+"nT" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/effect/turf_decal/stripes/red/line,
+/obj/machinery/atmospherics/pipe/smart/manifold/violet/hidden{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape/engine)
 "ow" = (
@@ -374,12 +386,17 @@
 /area/shuttle/escape)
 "qo" = (
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/pizzaparty,
-/obj/effect/spawner/random/food_or_drink/pizzaparty{
-	pixel_y = 15
-	},
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
+	},
+/obj/item/pizzabox/random,
+/obj/item/pizzabox/random{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/item/pizzabox/random{
+	pixel_x = 0;
+	pixel_y = 8
 	},
 /turf/open/floor/eighties,
 /area/shuttle/escape)
@@ -455,9 +472,19 @@
 "vU" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
+"ws" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape/engine)
 "wz" = (
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden{
+	dir = 10
 	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape/engine)
@@ -512,10 +539,10 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/engine)
 "zu" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/violet/hidden{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/engine)
 "zI" = (
@@ -651,7 +678,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/engine)
 "DY" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
 /turf/open/floor/engine/o2,
 /area/shuttle/escape/engine)
 "DZ" = (
@@ -676,6 +705,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape/engine)
 "Fn" = (
@@ -801,6 +831,9 @@
 	pixel_x = -4
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden{
+	dir = 6
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/engine)
 "Hx" = (
@@ -812,6 +845,14 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"Hz" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Shipyard Fuel In"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape/engine)
 "HB" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 4
@@ -821,6 +862,22 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
+"HU" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/effect/turf_decal/stripes/red/line,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Connectors to Fuel Tank";
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape/engine)
+"HX" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape/engine)
 "IG" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -853,11 +910,6 @@
 /area/shuttle/escape)
 "Kf" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
-/obj/item/paper,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -869,8 +921,10 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Lv" = (
-/obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/engine)
 "LA" = (
@@ -1036,6 +1090,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
+"TG" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/effect/turf_decal/stripes/red/line,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape/engine)
 "Ug" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
@@ -1044,6 +1106,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape/engine)
 "Uk" = (
@@ -1111,6 +1174,13 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
+"Xu" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/hidden{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/escape/engine)
 "XA" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
@@ -1265,11 +1335,11 @@ Cw
 Qd
 zs
 Bu
-cX
-cX
+Qd
+Qd
 zu
-cX
-cX
+Qd
+Qd
 wF
 OU
 Qd
@@ -1280,11 +1350,11 @@ Cw
 cH
 Ah
 Bu
-cX
+Qd
 Oi
 Fu
 Oi
-cX
+Qd
 wF
 PV
 cH
@@ -1294,27 +1364,27 @@ Cw
 cH
 rj
 Hh
-Bu
+nT
 cX
 bT
 DY
 Oi
-cX
+Qd
 wF
 aK
 rj
 cH
 "}
 (8,1,1) = {"
-Qd
-Lv
-OL
-Bu
 cX
+Hz
+ws
+HU
+Qd
 Oi
 CD
 zj
-cX
+Qd
 wF
 OL
 Lv
@@ -1324,14 +1394,14 @@ Qd
 cH
 Hd
 OL
-Bu
-cX
-cX
-cX
-cX
-cX
+TG
+Qd
+Qd
+Qd
+Qd
+Qd
 wF
-OL
+Xu
 da
 cH
 "}
@@ -1346,8 +1416,8 @@ Ug
 EM
 EM
 nQ
-OL
-Fq
+ws
+HX
 Qd
 "}
 (11,1,1) = {"

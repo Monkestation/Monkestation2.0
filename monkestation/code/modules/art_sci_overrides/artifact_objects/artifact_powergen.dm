@@ -29,7 +29,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines, null, /datum
 	) //narnar doesnt need power
 
 	valid_type_paths = list(/obj/machinery/power/generator_artifact)
-	research_value = 10000 //Holy moly lucky you!
+	research_value = TECHWEB_TIER_4_POINTS //Holy moly lucky you!
 	activation_message = "begins emitting a faint, droning hum."
 	deactivation_message = "shortcircuits!"
 	COOLDOWN_DECLARE(sideeffect_cooldown)

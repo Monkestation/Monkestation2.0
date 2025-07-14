@@ -150,6 +150,4 @@
 	SIGNAL_HANDLER
 
 	if(ishuman(leaving))
-		var/mob/living/carbon/human/H = leaving
-		var/datum/component/tackler/wrestling_tackler = H.GetComponent(/datum/component/tackler)
-		wrestling_tackler.Destroy()
+		qdel(leaving.GetComponent(/datum/component/tackler))

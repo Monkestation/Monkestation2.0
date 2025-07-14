@@ -1,7 +1,7 @@
 /datum/sprite_accessory/ipc_antennas
 	icon = 'monkestation/icons/mob/species/ipc/ipc_antennas.dmi'
 	palette = /datum/color_palette/generic_colors
-	palette_key = MUTANT_COLOR
+	palette_key = MUTANT_COLOR_SECONDARY
 
 /datum/sprite_accessory/ipc_antennas/none
 	name = "None"
@@ -42,3 +42,39 @@
 /datum/sprite_accessory/ipc_antennas/tv
 	name = "TV Antenna"
 	icon_state = "tvantennae"
+
+/datum/sprite_accessory/ipc_antennas/cross
+	name = "Cross"
+	icon_state = "cross"
+
+/datum/sprite_accessory/ipc_antennas/sidepanels
+	name = "Side Panels"
+	icon_state = "sidepanels"
+
+/datum/sprite_accessory/ipc_antennas/horns
+	name = "Horns"
+	icon_state = "horns"
+
+/datum/sprite_accessory/ipc_antennas/langle
+	name = "Left Angle"
+	icon_state = "langle"
+
+/datum/sprite_accessory/ipc_antennas/rangle
+	name = "Right Angle"
+	icon_state = "rangle"
+
+/datum/sprite_accessory/ipc_antennas/simple
+	name = "Synthetic Horns - Simple"
+	icon_state = "simple_synth"
+
+/datum/sprite_accessory/ipc_antennas/short
+	name = "Synthetic Horns - Short"
+	icon_state = "short_synth"
+
+/datum/sprite_accessory/ipc_antennas/curled
+	name = "Synthetic Horns - Curled"
+	icon_state = "curled_synth"
+
+/datum/sprite_accessory/ipc_antennas/ram
+	name = "Synthetic Horns - Ram"
+	icon_state = "ram_synth"

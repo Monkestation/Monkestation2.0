@@ -132,6 +132,10 @@
 		. += lid
 	. += ..()
 
+/obj/structure/closet/crate/preopen
+	opened = TRUE
+	icon_state = "crateopen"
+
 /obj/structure/closet/crate/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
@@ -286,6 +290,33 @@
 	name = "engineering crate"
 	icon_state = "engi_crate"
 
+/obj/structure/closet/crate/engineering/fundedsatellites
+	name = "budgeted meteor satellites"
+	desc = "The lock seems to respond to Centcom's station goal announcements. CAUTION: Do not attempt to break the lock."
+	secure = TRUE
+	locked = TRUE
+
+/obj/structure/closet/crate/engineering/fundedsatellites/PopulateContents()
+	. = ..()
+	if(GLOB.station_goals.len)
+		for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
+			if(istype(station_goal, /datum/station_goal/station_shield))
+				new /obj/item/paper/crumpled/wehavenomoneyhaha(src)
+				return
+		for(var/i in 1 to 20)
+			new /obj/item/meteor_shield_capsule(src)
+	else
+		new /mob/living/basic/spider/giant(src)
+
+/obj/structure/closet/crate/engineering/fundedsatellites/allowed(user)
+	if(GLOB.station_goals.len)
+		return TRUE
+	return FALSE
+
+/obj/item/paper/crumpled/wehavenomoneyhaha
+	name = "note from Centcom's accounting department"
+	default_raw_text = "We ran out of budget."
+
 /obj/structure/closet/crate/engineering/electrical
 	icon_state = "engi_e_crate"
 
@@ -304,6 +335,18 @@
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
+
+/obj/structure/closet/crate/mod
+	name = "MOD crate"
+	icon_state = "scicrate"
+	base_icon_state = "scicrate"
+
+/obj/structure/closet/crate/mod/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/mod/core/standard(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/neck/link_scryer/loaded(src)
 
 /obj/structure/closet/crate/solarpanel_small
 	name = "budget solar panel crate"

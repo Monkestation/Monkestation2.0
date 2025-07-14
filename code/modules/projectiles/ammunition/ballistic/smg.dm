@@ -24,6 +24,14 @@
 	caliber = CALIBER_45
 	projectile_type = /obj/projectile/bullet/c45
 
+/// Monkestation edit start
+
+/obj/item/ammo_casing/c45/rubber
+	name = ".45 rubber bullet casing"
+	desc = "A .45 rubber bullet casing."
+	projectile_type = /obj/projectile/bullet/c45/rubber
+
+/// Monkestation edit end
 /obj/item/ammo_casing/c45/ap
 	name = ".45 armor-piercing bullet casing"
 	desc = "A .45 bullet casing."
@@ -33,3 +41,9 @@
 	name = ".45 incendiary bullet casing"
 	desc = "A .45 bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c45
+
+/obj/item/ammo_casing/c45/hp
+	name = ".45 hollow-point bullet casing"
+	desc = "A .45 bullet casing"
+	projectile_type = /obj/projectile/bullet/c45/hp
+	advanced_print_req = TRUE

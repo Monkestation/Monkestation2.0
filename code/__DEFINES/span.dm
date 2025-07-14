@@ -113,6 +113,7 @@
 #define span_secradio(str) ("<span class='secradio'>" + str + "</span>")
 #define span_servradio(str) ("<span class='servradio'>" + str + "</span>")
 #define span_singing(str) ("<span class='singing'>" + str + "</span>")
+#define span_slightly_larger(str) ("<span class='slightly_larger'>" + str + "</span>")
 #define span_slime(str) ("<span class='slime'>" + str + "</span>")
 #define span_small(str) ("<span class='small'>" + str + "</span>")
 #define span_smallnotice(str) ("<span class='smallnotice'>" + str + "</span>")
@@ -136,5 +137,7 @@
 // Spans that use embedded tgui components:
 // Sorted alphabetically
 #define span_tooltip(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip\">" + main_text + "</span>")
+// No italics
+#define span_tooltip_alt(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip_alt\">" + main_text + "</span>")
 
 #define span_doyourjobidiot(str) ("<span class='doyourjobidiot'>" + str + "</span>")

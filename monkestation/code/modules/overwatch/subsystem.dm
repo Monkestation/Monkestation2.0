@@ -25,6 +25,15 @@ SUBSYSTEM_DEF(overwatch)
 	Toggle()
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/overwatch/Recover()
+	max_error_count = SSoverwatch.max_error_count
+	is_active = SSoverwatch.is_active
+	error_counter = SSoverwatch.error_counter
+	minimum_player_age = SSoverwatch.minimum_player_age
+	max_ban_count = SSoverwatch.max_ban_count
+	tgui_panel_asn_data = deep_copy_list(SSoverwatch.tgui_panel_asn_data)
+	tgui_panel_wl_data = deep_copy_list(SSoverwatch.tgui_panel_wl_data)
+
 /datum/controller/subsystem/overwatch/stat_entry(msg)
 	return "[is_active ? "ACTIVE" : "OFFLINE"]"
 
@@ -179,7 +188,10 @@ SUBSYSTEM_DEF(overwatch)
 	if(!CheckDBCon())
 		return
 
-	var/datum/db_query/query = SSdbcore.NewQuery("SELECT ckey FROM overwatch_whitelist WHERE ckey = '[ckey]'")
+	var/datum/db_query/query = SSdbcore.NewQuery(
+		"SELECT ckey FROM overwatch_whitelist WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	query.Execute()
 
 	if(query.NextRow())
@@ -438,15 +450,9 @@ SUBSYSTEM_DEF(overwatch)
 		return TRUE
 	return FALSE
 
-/client/proc/Overwatch_toggle()
-	set category = "Server"
-	set name = "Toggle Overwatch"
-
-	if(!check_rights(R_SERVER))
-		return
-
+ADMIN_VERB(Overwatch_toggle, R_SERVER, FALSE, "Toggle Overwatch", "Toggle the overwatch subsystem.", ADMIN_CATEGORY_GAME)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_notice("The Database is not connected!"))
+		to_chat(user, span_notice("The Database is not connected!"))
 		return
 
 	var/overwatch_status = SSoverwatch.Toggle()

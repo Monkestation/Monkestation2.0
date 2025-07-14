@@ -8,7 +8,7 @@
 		/datum/artifact_activator/range
 	)
 
-	research_value = 400
+	research_value = TECHWEB_DISCOUNT_MINOR
 
 	examine_discovered = span_warning("It appears to play smooth jazz, but suddenly.")
 	var/sound_hit_list = list(

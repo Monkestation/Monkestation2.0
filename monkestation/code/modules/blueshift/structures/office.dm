@@ -22,6 +22,7 @@
 	mid_sounds = list('monkestation/code/modules/blueshift/sounds/clock_ticking.ogg' = 1)
 	mid_length = 12 SECONDS
 	volume = 10
+	ignore_walls = FALSE
 
 /obj/structure/grandfatherclock/Initialize(mapload)
 	. = ..()

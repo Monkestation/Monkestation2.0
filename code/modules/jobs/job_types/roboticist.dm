@@ -47,6 +47,7 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
 	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/headset_sci
+	glasses = /obj/item/clothing/glasses/hud/diagnostic
 	l_pocket = /obj/item/modular_computer/pda/roboticist
 
 	backpack = /obj/item/storage/backpack/science
@@ -54,7 +55,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
 	pda_slot = ITEM_SLOT_LPOCKET
-	skillchips = list(/obj/item/skillchip/job/roboticist, /obj/item/skillchip/cyberjacker)
+	skillchips = list(/obj/item/skillchip/job/roboticist)
 
 /datum/outfit/job/roboticist/mod
 	name = "Roboticist (MODsuit)"

@@ -2,8 +2,7 @@
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
@@ -41,16 +40,12 @@
 	icon_state = "brain_implant_antidrop"
 	var/active = FALSE
 	var/list/stored_items = list()
-	implant_color = "#DE7E00"
+	implant_overlay = null
+	implant_color = null
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop/ui_action_click()
-	if(!check_compatibility())
-		active = FALSE
-		return
-
 	active = !active
 
 	if(active)
@@ -104,11 +99,16 @@
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 	stored_items -= source
 
+/obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
+	name = "contraband anti-drop implant"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+
 /obj/item/organ/internal/cyberimp/brain/anti_stun
 	name = "CNS rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	icon_state = "brain_implant_rebooter"
-	implant_color = "#FFFF00"
+	implant_overlay = null
+	implant_color = null
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 	var/static/list/signalCache = list(
@@ -120,7 +120,6 @@
 	)
 
 	var/stun_cap_amount = 40
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_remove(mob/living/carbon/implant_owner)
 	. = ..()
@@ -132,8 +131,6 @@
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER
-	if(!check_compatibility())
-		return
 
 	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
 		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -156,6 +153,10 @@
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 
+/obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
+	name = "contraband CNS rebooter implant"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
+
 //[[[[MOUTH]]]]
 /obj/item/organ/internal/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -166,7 +167,6 @@
 	icon_state = "implant_mask"
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
-	encode_info = AUGMENT_NO_REQ
 	organ_traits = list(TRAIT_ASSISTED_BREATHING)
 
 /obj/item/organ/internal/cyberimp/mouth/breathing_tube/emp_act(severity)
@@ -187,7 +187,13 @@
 		/obj/item/autosurgeon/syndicate/thermal_eyes,
 		/obj/item/autosurgeon/syndicate/xray_eyes,
 		/obj/item/storage/box/syndie_kit/anti_stun,
-		/obj/item/storage/box/syndie_kit/reviver)
+		/obj/item/storage/box/syndie_kit/reviver,
+		/obj/item/storage/box/syndie_kit/razorwire,
+		/obj/item/storage/box/syndie_kit/esword,
+		/obj/item/storage/box/syndie_kit/mantis,
+		/obj/item/storage/box/syndie_kit/laser_arm,
+		/obj/item/storage/box/syndie_kit/deepvien,
+		)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

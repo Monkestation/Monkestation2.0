@@ -6,7 +6,8 @@
 	var/list/ignored = list(
 		/mob/living/carbon,
 		/mob/dview,
-		/mob/oranges_ear
+		/mob/oranges_ear,
+		/mob/living/carbon/human/dummy/mechcomp, // monkestation addition: should not exist outside of interaction components
 	)
 	ignored += typesof(/mob/camera/imaginary_friend)
 	ignored += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)

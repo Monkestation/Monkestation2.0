@@ -58,12 +58,44 @@
 	make_reagent = /datum/reagent/consumable/flour
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
+/datum/design/rice
+	name = "Rice"
+	id = "rice"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 0.6)
+	make_reagent = /datum/reagent/consumable/rice
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
 /datum/design/sugar
 	name = "Sugar"
 	id = "sugar"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
 	make_reagent = /datum/reagent/consumable/sugar
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
+/datum/design/cornmeal
+	name = "Cornmeal"
+	id = "cornmeal"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 1.2)
+	make_reagent = /datum/reagent/consumable/cornmeal
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
+/datum/design/yogurt
+	name = "Yogurt"
+	id = "yogurt"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 1.2)
+	make_reagent = /datum/reagent/consumable/yoghurt
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
+/datum/design/soysauce
+	name = "Soy Sauce"
+	id = "soysauce"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 1.2)
+	make_reagent = /datum/reagent/consumable/soysauce
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/monkey_cube
@@ -81,6 +113,30 @@
 	materials = list(/datum/material/biomass = 3)
 	build_path = /obj/item/food/seaweedsheet
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
+/datum/design/cow_cube
+	name = "Cow Cube"
+	id = "cowcube"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass =SMALL_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/food/monkeycube/cow
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
+/datum/design/pig_cube
+	name = "Pig Cube"
+	id = "pigcube"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass =SMALL_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/food/monkeycube/pig
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
+
+/datum/design/water
+	name = "Water"
+	id = "water"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 0.1)
+	make_reagent = /datum/reagent/water
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
 /datum/design/ez_nut   //easy nut :)
 	name = "E-Z Nutrient"

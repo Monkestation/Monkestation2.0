@@ -77,7 +77,7 @@
 				if(!multitool_check_buffer(user, I))
 					return
 				var/obj/item/multitool/M = I
-				M.buffer = src
+				M.set_buffer(src)
 				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
 				return 1
 
@@ -296,13 +296,13 @@
 			closed = TRUE
 			update_indicator()
 
-/obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src)) //do not attempt to link when already linked
+/obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/launchpad_remote))
+		var/obj/item/launchpad_remote/launch = item
+		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
 			return ..()
-		L.pad = WEAKREF(src)
-		to_chat(user, span_notice("You link [src] to [L]."))
+		launch.pad = WEAKREF(src)
+		to_chat(user, span_notice("You link [src] to [launch]."))
 	else
 		return ..()
 
@@ -378,7 +378,7 @@
 
 /obj/item/launchpad_remote/ui_data(mob/user)
 	var/list/data = list()
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	data["has_pad"] = our_pad ? TRUE : FALSE
 	if(our_pad)
 		data["pad_closed"] = our_pad.closed
@@ -401,14 +401,15 @@
 		return
 	pad.doteleport(user, sending)
 
-/obj/item/launchpad_remote/ui_act(action, params)
+/obj/item/launchpad_remote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	var/obj/machinery/launchpad/briefcase/our_pad = pad?.resolve()
 	if(!our_pad)
 		pad = null
 		return TRUE
+	var/mob/user = ui.user
 	switch(action)
 		if("set_pos")
 			var/new_x = text2num(params["x"])
@@ -431,15 +432,15 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("Confirm", "Abort")) == "I'm Sure")
-				our_pad = null
+			if(tgui_alert(user, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
+				pad = null
 		if("launch")
 			sending = TRUE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 		if("pull")
 			sending = FALSE
-			teleport(usr, our_pad)
+			teleport(user, our_pad)
 			. = TRUE
 
 #undef BEAM_FADE_TIME

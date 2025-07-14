@@ -3,7 +3,7 @@
 	desc = "You feel like something wants to kill you..."
 	mob_trait = TRAIT_PARANOIA
 	value = -8
-	icon = FA_ICON_OPTIN_MONSTER
+	icon = FA_ICON_GHOST
 
 /datum/quirk/extra_sensory_paranoia/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -24,7 +24,7 @@
 
 /datum/challenge/paranoia/on_apply()
 	. = ..()
-	var/mob/living/carbon/human/current_human = host.find_current_mob()
+	var/mob/living/carbon/human/current_human = host.mob
 	if(!ishuman(current_human))
 		return
 	current_human.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
@@ -33,7 +33,7 @@
 /datum/challenge/paranoia/on_process()
 	if(added)
 		return
-	var/mob/living/carbon/human/current_human = host.find_current_mob()
+	var/mob/living/carbon/human/current_human = host.mob
 	if(!ishuman(current_human))
 		return
 	current_human.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)

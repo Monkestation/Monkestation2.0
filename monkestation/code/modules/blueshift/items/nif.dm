@@ -20,7 +20,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot = ORGAN_SLOT_BRAIN_NIF
 	actions_types = list(/datum/action/item_action/nif/open_menu)
-	encode_info = AUGMENT_NO_REQ
 
 	//User Variables
 	///What user is currently linked with the NIF?
@@ -515,6 +514,7 @@
 
 /obj/item/storage/box/nif_ghost_box/ghost_role/PopulateContents()
 	. = ..()
+	new /obj/item/disk/nifsoft_uploader/hivemind(src)
 
 #undef NIF_CALIBRATION_STAGE_1
 #undef NIF_CALIBRATION_STAGE_1_END

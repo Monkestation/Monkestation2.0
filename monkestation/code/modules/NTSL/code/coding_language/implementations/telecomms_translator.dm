@@ -445,6 +445,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		// "But wait, wouldn't floating point mess this up?" You ask.
 		// Nah. That actually can't happen when you multiply by a whole number.
 		// Think about it.
+	freq = sanitize_frequency(freq, free = TRUE)
 	if(isnum(language)) // If the language was a lang bit instead of a datum
 		language = LangBit2Datum(language)
 	if(!islist(spans))

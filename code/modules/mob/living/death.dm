@@ -123,4 +123,6 @@
 	if (client)
 		client.move_delay = initial(client.move_delay)
 
+	persistent_client?.time_of_death = timeofdeath
+
 	return TRUE

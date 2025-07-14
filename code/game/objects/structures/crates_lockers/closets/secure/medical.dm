@@ -75,6 +75,7 @@
 /obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/med(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
 	new /obj/item/computer_disk/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)

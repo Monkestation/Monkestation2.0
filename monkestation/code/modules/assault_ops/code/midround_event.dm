@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/assault_operative
 	name = "Operative Assault"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	antag_flag = ROLE_ASSAULT_OPERATIVE
 	antag_datum = /datum/antagonist/assault_operative
 	typepath = /datum/round_event/antagonist/solo/ghost/assault_operative
@@ -21,7 +21,7 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	base_antags = 3
-	maximum_antags = 4
+	maximum_antags = 5
 	enemy_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
@@ -47,10 +47,7 @@
 /datum/round_event/antagonist/solo/ghost/assault_operative/add_datum_to_mind(datum/mind/antag_mind)
 	var/mob/living/current_mob = antag_mind.current
 	SSjob.FreeRole(antag_mind.assigned_role.title)
-	var/list/items = current_mob.get_equipped_items(TRUE)
-	current_mob.unequip_everything()
-	for(var/obj/item/item as anything in items)
-		qdel(item)
+	current_mob.clear_inventory()
 
 	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/assault_operative))
 	antag_mind.special_role = ROLE_ASSAULT_OPERATIVE

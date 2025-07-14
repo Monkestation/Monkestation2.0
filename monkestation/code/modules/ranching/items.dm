@@ -56,6 +56,13 @@
 					reagents += "[initial(listed_reagent.name)]"
 				var/reagent_string = reagents.Join(" , ")
 				combined_msg += "\t<span class='info'>Required Reagents: [reagent_string]</span>"
+			if(held_mutation.nearby_items.len)
+				var/list/items = list()
+				for(var/item in held_mutation.nearby_items)
+					var/obj/item/listed_item = item
+					items += "[initial(listed_item.name)]"
+				var/item_string = items.Join(" , ")
+				combined_msg += "\t<span class='info'>Required items: [item_string]</span>"
 			if(held_mutation.needed_turfs.len)
 				var/list/turfs = list()
 				for(var/tile in held_mutation.needed_turfs)
@@ -139,6 +146,10 @@
 	var/obj/item/food/first_food
 	///number of food inserted
 	var/food_inserted = 0
+
+/obj/machinery/feed_machine/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 
 /obj/machinery/feed_machine/attacked_by(obj/item/I, mob/living/user)
 	. = ..()

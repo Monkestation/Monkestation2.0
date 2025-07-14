@@ -343,6 +343,10 @@
 /datum/config_entry/string/overflow_job
 	default = JOB_ASSISTANT
 
+/datum/config_entry/flag/spring_enabled
+
+/datum/config_entry/flag/summer_enabled
+
 /datum/config_entry/flag/spooktober_enabled
 
 /datum/config_entry/flag/grey_assistants
@@ -417,6 +421,14 @@
 
 /datum/config_entry/number/ratcap
 	default = 64
+	min_val = 0
+
+/datum/config_entry/number/cowcap
+	default = 35
+	min_val = 0
+
+/datum/config_entry/number/pigcap
+	default = 35
 	min_val = 0
 
 /datum/config_entry/number/maxfine

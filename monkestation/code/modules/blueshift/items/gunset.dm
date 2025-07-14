@@ -48,11 +48,6 @@
 		new extra_to_spawn (src)
 	new /obj/item/storage/fancy/a40mm_box (src)
 
-/obj/item/storage/toolbox/guncase/rocketlauncher
-	name = "rocket launcher gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/rocketlauncher
-	extra_to_spawn = /obj/item/ammo_box/rocket
-
 /obj/item/storage/toolbox/guncase/rocketlauncher/PopulateContents()
 	new weapon_to_spawn (src)
 	new extra_to_spawn (src)
@@ -205,6 +200,24 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag
 	extra_to_spawn = /obj/item/ammo_box/magazine/c980_grenade/starts_empty
 
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull  //monke addition
+	name = "\improper Carwo 'Kiboko' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag
+	extra_to_spawn = /obj/item/ammo_box/magazine/c980_grenade/starts_empty
+
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull/PopulateContents()
+	new weapon_to_spawn (src)
+
+	generate_items_inside(list(
+		/obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag = 1,
+		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 3,
+		/obj/item/ammo_box/c980grenade/shrapnel = 2,
+		/obj/item/ammo_box/c980grenade/smoke = 1,
+		/obj/item/ammo_box/c980grenade/riot = 2,
+		/obj/item/clothing/mask/gas/sechailer/swat = 1,
+	), src)
+
 
 /obj/structure/closet/secure_closet/armory_kiboko
 	name = "heavy equipment locker"
@@ -215,10 +228,8 @@
 	. = ..()
 
 	generate_items_inside(list(
-		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magless = 1,
-		/obj/item/ammo_box/c980grenade = 2,
-		/obj/item/ammo_box/c980grenade/smoke = 1,
-		/obj/item/ammo_box/c980grenade/riot = 1,
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1, //monke edit
+		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1, //monke edit
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko_but_evil
@@ -261,14 +272,14 @@
 	name = "\improper Xhihao 'Bogseo' gunset"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/xhihao_smg/no_mag
-	extra_to_spawn = /obj/item/ammo_box/magazine/c585trappiste_pistol
+	extra_to_spawn = /obj/item/ammo_box/magazine/miecz
 
 /obj/item/storage/toolbox/guncase/skyrat/xhihao_large_case/bogseo/PopulateContents()
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
 		/obj/item/ammo_box/c585trappiste/incapacitator = 2,
-		/obj/item/ammo_casing/c585trappiste = 1,
+		/obj/item/ammo_box/c585trappiste = 1,
 		/obj/item/ammo_box/magazine/c585trappiste_pistol/spawns_empty = 3,
 	), src)
 

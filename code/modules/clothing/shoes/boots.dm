@@ -130,6 +130,9 @@
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
 
+/obj/item/clothing/shoes/workboots/independent //nanotrasen does not make all work boots in existence
+	desc = "A pair of lace-up work boots for the especially blue-collar."
+
 /datum/armor/shoes_workboots
 	bio = 80
 
@@ -167,3 +170,48 @@
 	desc = "A crisp, clean set of boots for working long hours on the beat."
 	icon_state = "aerostatic_boots"
 	inhand_icon_state = null
+
+/obj/item/clothing/shoes/angel
+	name = "angel boots"
+	desc = "Sturdy boots great for strutting around in, also good to hide treats in!"
+	icon_state = "angelboots"
+	inhand_icon_state = "angelboots"
+
+/obj/item/clothing/shoes/angel/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+
+/obj/item/clothing/shoes/devil
+	name = "devil boots"
+	desc = "Sturdy boots great for strutting around in, also good to hide tricks in!"
+	icon_state = "devilboots"
+	inhand_icon_state = "devilboots"
+
+/obj/item/clothing/shoes/devil/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+
+/obj/item/clothing/shoes/pirate
+	name = "pirate boots"
+	desc = "Yarr."
+	icon_state = "pirateboots"
+	inhand_icon_state = null
+
+/obj/item/clothing/shoes/pirate/armored
+	armor_type = /datum/armor/shoes_pirate
+	strip_delay = 40
+	resistance_flags = NONE
+	lace_time = 12 SECONDS
+	body_parts_covered = FEET|LEGS
+
+/datum/armor/shoes_pirate
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 90
+	fire = 70
+	acid = 50

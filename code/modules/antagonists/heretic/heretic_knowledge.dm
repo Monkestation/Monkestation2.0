@@ -33,8 +33,6 @@
 	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
 	var/cost = 0
-	/// If true, adds side path points according to value. Only main branch powers that split into sidepaths should have this.
-	var/adds_sidepath_points = 0
 	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
 	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
 	var/priority = 0
@@ -65,8 +63,6 @@
 
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
-	// Usually zero
-	our_heretic.side_path_points += adds_sidepath_points
 	on_gain(user, our_heretic)
 
 /**
@@ -280,6 +276,7 @@
 	. = ..()
 	our_heretic.heretic_path = route
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
+	SEND_SIGNAL(our_heretic.owner, COMSIG_HERETIC_PATH_CHOSEN, our_heretic, route) // monkestation edit: modularization is dead but i'm marking this so that future ports don't nuke this by accident
 
 /**
  * A knowledge subtype for heretic knowledge
@@ -531,7 +528,7 @@
 	var/mob/living/mob_to_summon
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	summon_ritual_mob(user, loc, mob_to_summon)
+	return summon_ritual_mob(user, loc, mob_to_summon)
 
 /**
  * Creates the ritual mob and grabs a ghost for it
@@ -568,7 +565,7 @@
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = chosen_one.key
+	summoned.PossessByPlayer(chosen_one.key)
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
@@ -737,7 +734,7 @@
  * Checks if the passed human is a valid sacrifice for our ritual.
  */
 /datum/heretic_knowledge/ultimate/proc/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
+	return ((sacrifice.stat == DEAD) && sacrifice.last_mind)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)

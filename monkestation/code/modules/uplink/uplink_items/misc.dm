@@ -30,9 +30,9 @@
 
 /datum/uplink_item/device_tools/plasma_license
 	name = "License to Plasmaflood"
-	desc = "A contract abusing a loophole founud by plasmamen to invade halls with harmful gases \
-			without repricution or warning, garnering no attention from any higher powers. \
-			Has to be signed by purchaser to be consider valid."
+	desc = "A contract abusing a loophole found by plasmamen to invade halls with harmful gases \
+			without repercussion or warning, garnering no attention from any higher powers. \
+			Has to be signed by purchaser to be considered valid."
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	item = /obj/item/card/plasma_license
 	cost = 20
@@ -48,3 +48,40 @@
 	cost = 16 // double the price of stealth implant
 	surplus = 5
 	limited_stock = 1
+
+/datum/uplink_item/device_tools/magboots
+	name = "Blood-Red Magboots"
+	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
+			during gravitational generator failures."
+	item = /obj/item/clothing/shoes/magboots/syndie
+	cost = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/jetpack_harness
+	name = "Jet Harness"
+	desc = "A lightweight tactical jetpack harness, used by those who don't want to be weighed down by traditional jetpacks."
+	item = /obj/item/tank/jetpack/harness
+	cost = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+
+/datum/uplink_item/device_tools/murderbone
+	name = "Corporate Sponsorship for Evil"
+	desc = "Our investors have decided that publicity is good no matter what kind it is. Even for a secretive organization formed \
+			out of a backdoor allegiance between several corporations with vendettas against Nanotrasen. By purchasing and dawning \
+			the provided apparel you will be free from all repercussions of mass crime and mass murder as you advertise the power \
+			of the Syndicate. The provided hat covers crime and the provided cloak covers murder. \
+			Show those Nanotrasen pigs what for in Syndicate sponsored style!"
+	cost = 20
+	lock_other_purchases = TRUE
+	cant_discount = TRUE
+	illegal_tech = FALSE
+	surplus = 0
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/storage/briefcase/evilbundle
+
+/datum/uplink_item/device_tools/hivenode_implanter
+	name = "Hive Node Implanter"
+	desc = "A Xenomorph hive node. When implanted, allows connection to any Xenomorphs in nearby psionic networks."
+	cost = 5 //similar price to binary translator
+	item = /obj/item/autosurgeon/syndicate/organ/hivenode

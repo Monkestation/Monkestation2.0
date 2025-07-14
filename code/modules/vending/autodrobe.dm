@@ -20,7 +20,6 @@
 				/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,
 				/obj/item/clothing/head/bio_hood/plague = 1,
 				/obj/item/clothing/mask/gas/plaguedoctor = 1,
-				/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 				/obj/item/clothing/suit/toggle/owlwings = 1,
 				/obj/item/clothing/under/costume/owl = 1,
 				/obj/item/clothing/mask/gas/owl_mask = 1,
@@ -280,6 +279,7 @@
 		/obj/item/clothing/head/costume/weddingveil = 1,
 		/obj/item/clothing/under/dress/ballgown = 1, //MONKESTATION EDIT ADDITION
 		/obj/item/clothing/under/dress/wlpinafore = 1, //MONKESTATION EDIT ADDITION
+		/obj/item/clothing/under/dress/ribbondress = 1, //MONKESTATION EDIT ADDITION
 		/obj/item/storage/belt/fannypack/cummerbund = 1,
 		/obj/item/clothing/suit/costume/drfreeze_coat = 1,
 		/obj/item/clothing/under/costume/drfreeze = 1,

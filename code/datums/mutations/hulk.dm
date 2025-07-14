@@ -18,7 +18,11 @@
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 	)
+	energy_coeff = 1 // MONKESTATION ADDITION
 
+/datum/mutation/human/hulk/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = list("." = "!"), end_string = "!!", uppercase = TRUE)
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -31,7 +35,6 @@
 	owner.physiology?.cold_mod *= HULK_COLD_DAMAGE_MOD
 	owner.bodytemp_cold_damage_limit += BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(statchange))
 	owner.add_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
@@ -49,7 +52,8 @@
 			INVOKE_ASYNC(src, PROC_REF(scream_attack), source)
 		log_combat(source, target, "punched", "hulk powers")
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-		source.changeNext_move(CLICK_CD_MELEE)
+//		source.changeNext_move(CLICK_CD_MELEE) // MONKESTATION EDIT OLD
+		source.changeNext_move(CLICK_CD_MELEE * (GET_MUTATION_ENERGY(src) * 1.5)) // MONKESTATION EDIT NEW -- I'm sorry
 
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -88,7 +92,9 @@
 		qdel(src)
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
-	if(..())
+//	if(..()) // MONKESTATION EDIT OLD
+	. = ..() // MONKESTATION EDIT NEW
+	if(.) // MONKESTATION EDIT NEW
 		return
 	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
@@ -98,22 +104,9 @@
 	owner.physiology?.cold_mod /= HULK_COLD_DAMAGE_MOD
 	owner.bodytemp_cold_damage_limit -= BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER
 	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 	owner.remove_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
-
-/datum/mutation/human/hulk/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = "[replacetext(message, ".", "!")]!!"
-	speech_args[SPEECH_MESSAGE] = message
-
-	// the reason we don't just uppertext(message) in this proc is so that our hulk speech
-	// can uppercase all other speech moidifiers after they are done (by returning COMPONENT_UPPERCASE_SPEECH)
-	return COMPONENT_UPPERCASE_SPEECH
 
 /// How many steps it takes to throw the mob
 #define HULK_TAILTHROW_STEPS 28

@@ -290,7 +290,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		// Alternative Laugh Hook
-		if(human_user.alternative_laughs.len)
+		if(LAZYLEN(human_user.alternative_laughs))
 			return pick(human_user.alternative_laughs)
 
 		var/obj/item/organ/internal/tongue/tongue = human_user.get_organ_slot(ORGAN_SLOT_TONGUE)
@@ -308,6 +308,12 @@
 	key_third_person = "nods"
 	message = "nods."
 	message_param = "nods at %t."
+
+/datum/emote/living/nodnod
+	key = "nod2"
+	key_third_person = "nodnod"
+	message = "nods their head twice."
+	message_param = "nods twice at %t."
 
 /datum/emote/living/point
 	key = "point"
@@ -626,6 +632,8 @@ monkestation edit end */
 	key = "me"
 	key_third_person = "custom"
 	message = null
+	muzzle_ignore = TRUE // monkestation addition
+	stat_allowed = SOFT_CRIT // monkestation addition
 
 /datum/emote/living/custom/can_run_emote(mob/user, status_check, intentional)
 	. = ..() && intentional
@@ -674,15 +682,6 @@ monkestation edit end */
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
-
-/datum/emote/living/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/inhale
 	key = "inhale"

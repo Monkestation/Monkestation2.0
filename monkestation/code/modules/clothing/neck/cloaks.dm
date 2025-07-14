@@ -170,39 +170,22 @@
 
 /obj/item/clothing/neck/mentorcloak/examine(mob/user)
 	. = ..()
-	if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
-		. += span_warning("Well you can still feel the displeasure from the cloak it feels like \
+	// These checks are generalized. Consider checking for R_MENTOR
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && (isnull(GLOB.mentor_datums[user.client?.ckey]) || isnull(GLOB.dementors[user.client?.ckey])))
+		. += span_warning("While you can still feel the displeasure from the cloak it feels like \
 							it might just let you wear it")
-	if(!user.client?.is_mentor())
-		. += span_warning("You can feel this cloak dispises you for lacking a high enough level of knowledge")
+	if((isnull(GLOB.mentor_datums[user.client?.ckey]) || isnull(GLOB.dementors[user.client?.ckey])))
+		. += span_warning("You can feel this cloak despises you for lacking a high enough level of knowledge")
 
 /obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_NECK)
-		if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
-			to_chat(user, span_notice("I'll let you get way with it this time."))
-		else if(!user.client?.is_mentor())
-			lightningbolt(user)
-			user.dropItemToGround(src)
-			to_chat(user, span_userdanger("No mentor cloak for you!"))
-			return
 		select_cloak_appearance.Grant(user)
-	if(slot & ITEM_SLOT_HANDS)
-		if(user.mind?.has_antag_datum(/datum/antagonist/changeling))
-			to_chat(user, span_notice("You feel it's power flow through your body"))
-		else if(!user.client?.is_mentor())
-			user.cause_pain(FULL_BODY, 20, STAMINA)
-			user.sharp_pain(ARMS, 5, BURN, 20)
-			user.apply_status_effect(/datum/status_effect/confusion)
-			user.apply_status_effect(/datum/status_effect/jitter)
-			user.apply_status_effect(/datum/status_effect/terrified)
-			user.apply_status_effect(/datum/status_effect/temporary_blindness)
-			to_chat(user, span_userdanger("You feel a surge of power hit you like a [span_bolddanger("TRUCK")] draining your stamina instantly"))
 
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
-		select_cloak_appearance.Remove(user)
+		select_cloak_appearance?.Remove(user)
 
 /obj/item/clothing/neck/mentorcloak/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()

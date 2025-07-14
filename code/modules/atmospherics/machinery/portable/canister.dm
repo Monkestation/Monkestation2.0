@@ -490,25 +490,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		deconstruct(TRUE)
 	return TRUE
 
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if((user.istate & ISTATE_HARM))
-		return FALSE
-	if(atom_integrity >= max_integrity)
-		return TRUE
-	if(machine_stat & BROKEN)
-		return TRUE
-	if(!tool.tool_start_check(user, amount=0))
-		return TRUE
-	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
-	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		atom_integrity = min(atom_integrity + 25, max_integrity)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_notice("You've finished repairing [src]."))
-			return TRUE
-		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
-	return TRUE
-
 /obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == internal_cell)
@@ -575,7 +556,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		else
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
-			investigate_log("shielding turned off due to power loss")
+			investigate_log("shielding turned off due to power loss", INVESTIGATE_ATMOS)
 
 ///return the icon_state component for the canister's indicator light based on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state(air_pressure)
@@ -788,7 +769,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			shielding_powered = !shielding_powered
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
-			usr.investigate_log("turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			usr.investigate_log("turned [shielding_powered ? "on" : "off"] the [src] powered shielding.", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("reaction_suppression")
 			if(!nob_crystal_inserted)
@@ -797,7 +778,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			suppress_reactions = !suppress_reactions
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
-			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.", INVESTIGATE_ATMOS)
 			. = TRUE
 
 	update_appearance()

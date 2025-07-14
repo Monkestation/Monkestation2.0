@@ -42,7 +42,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2500, /datum/material/silver = 20000, /datum/material/gold = 1500)
 	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -65,6 +65,20 @@
 	desc = "A surgical procedure that quickly provides highly effective repairs and maintenance to robotic limbs. Is moderately more efficient when the patient is severely damaged."
 	surgery = /datum/surgery/robot_healing/experimental
 	id = "surgery_heal_robot_upgrade_femto"
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/robot_toxheal
+	name = "Clear Corrosive Buildup (Repair Toxins)"
+	desc = "A procedure that removes corrosion and chemical buildup on mechanical components inside of a deactivated synthetic chassis."
+	surgery = /datum/surgery/robot_tox_clean
+	id = "surgery_heal_robot_toxin"
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/robot_oxyheal
+	name = "Clean Components of Debris (Repair Suffocation)"
+	desc = "A procedure that clears the debris from ventilation and temperature regulation systems in a mechanical chassis."
+	surgery = /datum/surgery/robot_oxy_clean
+	id = "surgery_heal_robot_oxy"
 	research_icon_state = "surgery_chest"
 
 /datum/design/cyberimp_sprinter
@@ -93,9 +107,68 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/pathology_goggles
+	name = "Viral Analyzer Goggles"
+	desc = "A pair of goggles fitted with an analyzer for viral particles and reagents."
+	id = "pathology_goggles"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
+	build_path = /obj/item/clothing/glasses/pathology
+	category = list(RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/nv_pathology_goggles
+	name = "Night Vision Viral Analyzer Goggles"
+	desc = "A pair of night vision goggles fitted with an analyzer for viral particles and reagents."
+	id = "nv_pathology_goggles"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = 350)
+	build_path = /obj/item/clothing/glasses/night/pathology
+	category = list(RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/surgery/dna_recovery
 	name = "DNA Recovery"
 	desc = "A surgical procedure which involves using rezadone to salvage a single strand of DNA from the patient, allowing them to be cloned."
 	id = "surgery_dna_recovery"
 	surgery = /datum/surgery/advanced/dna_recovery
 	research_icon_state = "surgery_head"
+
+/datum/design/cyberimp_meson
+	name = "Meson Eyes"
+	desc = "These cybernetic eyes will give you meson vision. Never wonder where the kitchen is again."
+	id = "ci-meson"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 400)
+	build_path = /obj/item/organ/internal/eyes/robotic/meson
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cyberimp_pathology_hud
+	name = "Pathology HUD Implant"
+	desc = "These cybernetic eyes will reveal all the pathogens around you. Germaphobes beware."
+	id = "ci-pathohud"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 50
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/pathology
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cyberimp_science_hud
+	name = "Science HUD Implant"
+	desc = "These cybernetic eyes will reveal the molecular makeup of items upon inspection."
+	id = "ci-scihud"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 50
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/fakehud/science
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL

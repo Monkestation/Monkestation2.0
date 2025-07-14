@@ -1,38 +1,22 @@
-/// The default command report announcement sound.
-#define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
-
 /// Preset central command names to chose from for centcom reports.
 #define CENTCOM_PRESET "Central Command"
 #define SYNDICATE_PRESET "The Syndicate"
 #define WIZARD_PRESET "The Wizard Federation"
 #define CUSTOM_PRESET "Custom Command Name"
 
-/// Verb to change the global command name.
-/client/proc/cmd_change_command_name()
-	set category = "Admin.Events"
-	set name = "Change Command Name"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
+ADMIN_VERB(change_command_name, R_ADMIN, FALSE, "Change Command Name", "Change the name of Central Command.", ADMIN_CATEGORY_EVENTS)
+	var/input = input(user, "Please input a new name for Central Command.", "What?", "") as text | null
 	if(!input)
 		return
 	change_command_name(input)
-	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
-	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
+	message_admins("[key_name_admin(user)] has changed Central Command's name to [input]")
+	log_admin("[key_name(user)] has changed the Central Command name to: [input]")
 
 /// Verb to open the create command report window and send command reports.
-/client/proc/cmd_admin_create_centcom_report()
-	set category = "Admin.Events"
-	set name = "Create Command Report"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Create Command Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/datum/command_report_menu/tgui = new(usr)
-	tgui.ui_interact(usr)
+ADMIN_VERB(create_command_report, R_ADMIN, FALSE, "Create Command Report", "Create a command report to be sent to the station.", ADMIN_CATEGORY_EVENTS)
+	BLACKBOX_LOG_ADMIN_VERB("Create Command Report")
+	var/datum/command_report_menu/tgui = new /datum/command_report_menu(user.mob)
+	tgui.ui_interact(user.mob)
 
 /// Datum for holding the TGUI window for command reports.
 /datum/command_report_menu
@@ -49,7 +33,7 @@
 	/// Whether a copy of the report is printed at every console.
 	var/print_report = TRUE
 	/// The sound that's going to accompany our message.
-	var/played_sound = DEFAULT_ANNOUNCEMENT_SOUND
+	var/played_sound = DEFAULT_COMMANDREPORT_SOUND
 	/// The colour of the announcement when sent
 	var/announcement_color = "default"
 	/// The subheader to include when sending the announcement. Keep blank to not include a subheader
@@ -64,7 +48,7 @@
 		preset_names.Insert(1, command_name())
 
 /datum/command_report_menu/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/command_report_menu/ui_close()
 	qdel(src)
@@ -91,7 +75,7 @@
 /datum/command_report_menu/ui_static_data(mob/user)
 	var/list/data = list()
 	data["command_name_presets"] = preset_names
-	data["announcer_sounds"] = list(DEFAULT_ANNOUNCEMENT_SOUND) + GLOB.announcer_keys
+	data["announcer_sounds"] = list(DEFAULT_COMMANDREPORT_SOUND, DEFAULT_ALERT_SOUND, CUSTOM_ALERT_SOUND) + GLOB.announcer_keys // Monkestation edit - custom alert sounds
 	data["announcement_colors"] = ANNOUNCEMENT_COLORS
 
 	return data
@@ -110,7 +94,19 @@
 
 			command_name = params["updated_name"]
 		if("set_report_sound")
-			played_sound = params["picked_sound"]
+			// monkestation start
+			if (params["picked_sound"] == CUSTOM_ALERT_SOUND)
+				var/soundInput = input(ui_user, "Please pick a sound file to play when you create the command report.", "Pick a Sound File") as null|sound
+				if (isnull(soundInput))
+					to_chat(ui_user, span_danger("No file was selected."))
+					custom_played_sound = null
+					played_sound = DEFAULT_ALERT_SOUND
+				else
+					custom_played_sound = soundInput
+					played_sound = CUSTOM_ALERT_SOUND
+			else
+				played_sound = params["picked_sound"]
+		//monkestation end
 		if("toggle_announce")
 			announce_contents = !announce_contents
 		if("toggle_printing")
@@ -130,7 +126,8 @@
 				to_chat(ui_user, span_danger("You can't send a report with no contents."))
 				return
 			command_report_content = params["report"]
-			send_announcement()
+			var/is_preview = params["preview"] //monkestation edit - report previewing
+			send_announcement(is_preview) //monkestation edit - report previewing
 
 	return TRUE
 
@@ -139,15 +136,28 @@
  *
  * Uses the variables set by the user on our datum as the arguments for the report.
  */
-/datum/command_report_menu/proc/send_announcement()
+/datum/command_report_menu/proc/send_announcement(preview = FALSE)
 	/// Our current command name to swap back to after sending the report.
 	var/original_command_name = command_name()
 	change_command_name(command_name)
 
 	/// The sound we're going to play on report.
 	var/report_sound = played_sound
-	if(played_sound == DEFAULT_ANNOUNCEMENT_SOUND)
-		report_sound = SSstation.announcer.get_rand_report_sound()
+	// monkestation edit start - Custom alert sounds
+	switch(played_sound)
+		if (DEFAULT_COMMANDREPORT_SOUND)
+			report_sound = SSstation.announcer.get_rand_report_sound()
+		if (DEFAULT_ALERT_SOUND)
+			report_sound = SSstation.announcer.get_rand_alert_sound()
+		if (CUSTOM_ALERT_SOUND)
+			if (!isnull(custom_played_sound))
+				report_sound = custom_played_sound
+			else
+				to_chat(ui_user, span_danger("The custom sound you selected was not able to be played. Aborting..."))
+				played_sound = DEFAULT_ALERT_SOUND
+				change_command_name(original_command_name)
+				return
+	// monkestation end
 
 	if(announce_contents)
 		var/chosen_color = announcement_color
@@ -156,18 +166,23 @@
 				chosen_color = "red"
 			else if(command_name == WIZARD_PRESET)
 				chosen_color = "purple"
-		priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color)
+		// monkestation edit start - preview reports, togglable update append
+		if (preview)
+			to_chat(ui_user, "The following is a preview of what the command report will look like for other players.")
+			priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color, append_update = append_update_name, encode_title = sanitize_content, encode_text = sanitize_content, players = list(ui_user))
+		else
+			priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color, append_update = append_update_name, encode_title = sanitize_content, encode_text = sanitize_content)
+		// monkestation edit end
 
-	if(!announce_contents || print_report)
-		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents)
+	if(!preview && (!announce_contents || print_report))
+		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents, sanitize = sanitize_content)
 
 	change_command_name(original_command_name)
 
-	log_admin("[key_name(ui_user)] has created a command report: \"[command_report_content]\", sent from \"[command_name]\" with the sound \"[played_sound]\".")
-	message_admins("[key_name_admin(ui_user)] has created a command report, sent from \"[command_name]\" with the sound \"[played_sound]\"")
+	if (!preview) // monkestation edit - preview reports
+		log_admin("[key_name(ui_user)] has created a command report: \"[command_report_content]\", sent from \"[command_name]\" with the sound \"[played_sound]\".")
+		message_admins("[key_name_admin(ui_user)] has created a command report, sent from \"[command_name]\" with the sound \"[played_sound]\"")
 
-
-#undef DEFAULT_ANNOUNCEMENT_SOUND
 
 #undef CENTCOM_PRESET
 #undef SYNDICATE_PRESET

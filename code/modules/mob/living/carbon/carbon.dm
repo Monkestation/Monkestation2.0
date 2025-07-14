@@ -155,7 +155,8 @@
 	var/power_throw = 0
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
-	if(HAS_TRAIT(src, TRAIT_DWARF))
+//	if(HAS_TRAIT(src, TRAIT_DWARF)) // MONKESTATION EDIT OLD
+	if(HAS_TRAIT(src, TRAIT_DWARF) && !HAS_TRAIT(src, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
 		power_throw--
 	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 		power_throw++
@@ -511,7 +512,7 @@
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
-	bite.reagents.trans_to(spew, amount, transfered_by = src)
+	bite.reagents?.trans_to(spew, amount, transfered_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -526,9 +527,12 @@
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
-	..()
+	. = ..()
 	if(dna)
 		dna.real_name = real_name
+	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+	if(my_head)
+		my_head.real_name = real_name
 
 
 /mob/living/carbon/set_body_position(new_value)
@@ -820,33 +824,30 @@
 	else
 		hud_used.healths.icon_state = "health6"
 
-/mob/living/carbon/update_stamina_hud(shown_stamina_loss)
+/mob/living/carbon/update_stamina_hud() //monkestation edit
 	if(!client || !hud_used?.stamina)
 		return
 
-	var/stam_crit_threshold = maxHealth - crit_threshold
+	//MONKESTATION EDIT START
+	var/current_stamina = stamina.current
 
-	if(stat == DEAD)
+	if(stamina.current <= (0.20 * STAMINA_MAX)) //stamina stun threshold
 		hud_used.stamina.icon_state = "stamina_dead"
+	else if(current_stamina <= (0.30 * STAMINA_MAX)) //exhaustion threshold
+		hud_used.stamina.icon_state = "stamina_crit"
+	else if(current_stamina <= (0.40 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_5"
+	else if(current_stamina <= (0.60 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_4"
+	else if(current_stamina <= (0.70 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_3"
+	else if(current_stamina <= (0.80 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_2"
+	else if(current_stamina <= (0.90 * STAMINA_MAX))
+		hud_used.stamina.icon_state = "stamina_1"
 	else
-
-		if(shown_stamina_loss == null)
-			shown_stamina_loss = stamina.loss
-
-		if(shown_stamina_loss >= stam_crit_threshold)
-			hud_used.stamina.icon_state = "stamina_crit"
-		else if(shown_stamina_loss > maxHealth*0.8)
-			hud_used.stamina.icon_state = "stamina_5"
-		else if(shown_stamina_loss > maxHealth*0.6)
-			hud_used.stamina.icon_state = "stamina_4"
-		else if(shown_stamina_loss > maxHealth*0.4)
-			hud_used.stamina.icon_state = "stamina_3"
-		else if(shown_stamina_loss > maxHealth*0.2)
-			hud_used.stamina.icon_state = "stamina_2"
-		else if(shown_stamina_loss > 0)
-			hud_used.stamina.icon_state = "stamina_1"
-		else
-			hud_used.stamina.icon_state = "stamina_full"
+		hud_used.stamina.icon_state = "stamina_full"
+	//MONKESTATION EDIT STOP
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)
@@ -909,8 +910,6 @@
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
 
 		for(var/obj/item/organ/organ as anything in organs)
-			if(organ.organ_flags & ORGAN_SYNTHETIC)
-				continue
 			organ.apply_organ_damage(excess_healing * -1) //1 excess = 5 organ damage healed
 
 	return ..()
@@ -939,6 +938,11 @@
 	if(heal_flags & HEAL_NEGATIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
+				disease.cure(FALSE)
+
+	if(heal_flags & HEAL_POSTIVE_DISEASES)
+		for(var/datum/disease/disease as anything in diseases)
+			if(disease.severity == DISEASE_SEVERITY_POSITIVE)
 				disease.cure(FALSE)
 
 	if(heal_flags & HEAL_WOUNDS)
@@ -1144,20 +1148,20 @@
 				if("remove")
 					if(BP)
 						BP.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
+						admin_ticket_log("[key_name(usr)] has removed [src]'s [parse_zone(BP.body_zone)]") // MONKESTATION EDIT - tgui tickets
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+						admin_ticket_log("[key_name(usr)] has attempted to modify the bodyparts of [src]") // MONKESTATION EDIT - tgui tickets
 				if("replace")
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
 
 					if(new_bp.replace_limb(src, special = TRUE))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [BP.type] with [new_bp.type]")
+						admin_ticket_log("[key_name(usr)] has replaced [src]'s [BP.type] with [new_bp.type]") // MONKESTATION EDIT - tgui tickets
 						qdel(BP)
 					else
 						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
-						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+						admin_ticket_log("[key_name(usr)] has attempted to modify the bodyparts of [src]") // MONKESTATION EDIT - tgui tickets
 
 	if(href_list[VV_HK_MAKE_AI])
 		if(!check_rights(R_SPAWN))
@@ -1166,9 +1170,7 @@
 			return
 		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MODIFY_ORGANS])
-		if(!check_rights(NONE))
-			return
-		usr.client.manipulate_organs(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 	if(href_list[VV_HK_MARTIAL_ART])
 		if(!check_rights(NONE))
 			return

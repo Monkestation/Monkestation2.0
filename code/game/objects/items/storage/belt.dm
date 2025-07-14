@@ -267,6 +267,7 @@
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
+		/obj/item/device/antibody_scanner //monkestation addition
 	))
 
 /obj/item/storage/belt/medical/paramedic
@@ -431,6 +432,14 @@
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
 		/obj/item/cargo_teleporter, //monkestation edit
+		/obj/item/storage/box/kinetic, //monkestation edit
+		/obj/item/ammo_box/magazine/pksmgmag, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
 	))
 
 
@@ -609,9 +618,9 @@
 
 /obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 30
+	atom_storage.max_slots = 100
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.max_total_storage = 60
+	atom_storage.max_total_storage = 1000 //store every grenade under the sun without issue or remorse
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
@@ -622,6 +631,8 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
+		/obj/item/ammo_casing/a40mm,
+		/obj/item/assembly/signaler,
 	))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
@@ -794,6 +805,7 @@
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
+	icon_state_preview = "sheath-sabre" // monkestation edit: add preview icon state
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY

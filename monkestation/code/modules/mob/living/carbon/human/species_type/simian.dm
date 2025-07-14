@@ -41,12 +41,6 @@
 			SPECIES_PERK_ICON = "skull",
 			SPECIES_PERK_NAME = "Little Monke",
 			SPECIES_PERK_DESC = "You are a weak being, and have less health than most.", // 0.85% health
-		)
-		,list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "hand",
-			SPECIES_PERK_NAME = "Thief",
-			SPECIES_PERK_DESC = "Your monkey instincts force you to steal objects at random.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
@@ -78,7 +72,6 @@
 
 /datum/species/monkey/simian/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
-	human_who_gained_species.gain_trauma(/datum/brain_trauma/severe/kleptomaniac, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/species/monkey/simian/random_name(gender,unique,lastname)
 	if(unique)

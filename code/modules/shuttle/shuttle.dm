@@ -267,7 +267,7 @@
 
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
-		var/sid = SSmapping.config.shuttles[json_key]
+		var/sid = SSmapping.current_map.shuttles[json_key]
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
 			CRASH("json_key:[json_key] value \[[sid]\] resulted in a null shuttle template for [src]")
@@ -665,7 +665,7 @@
 		return SHUTTLE_DHEIGHT_TOO_LARGE
 
 	if(height-dheight > stationary_dock.height-stationary_dock.dheight)
-		return SHUTTLE_HEIGHT_TOO_LARGE
+		return "[SHUTTLE_HEIGHT_TOO_LARGE] [stationary_dock.dheight] vs [dheight] + [height]"
 
 	//check the dock isn't occupied
 	var/currently_docked = stationary_dock.get_docked()

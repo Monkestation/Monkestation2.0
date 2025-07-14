@@ -1,8 +1,17 @@
 /datum/round_event_control/antagonist/solo/brother
+	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother
 	typepath = /datum/round_event/antagonist/solo/brother
-	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG)
+	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG, TAG_CREW_ANTAG)
+	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag
+	weight = 10
+	required_enemies = 1
+	roundstart = TRUE
+	earliest_start = 0 SECONDS
+	base_antags = 2
+	maximum_antags = 4
+	denominator = 30
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
@@ -31,29 +40,25 @@
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
 	)
-	required_enemies = 1
-	weight = 10
-	maximum_antags = 2
-	denominator = 30
-	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag
-
-/datum/round_event_control/antagonist/solo/brother/roundstart
-	name = "Blood Brothers"
-	roundstart = TRUE
-	earliest_start = 0 SECONDS
 	extra_spawned_events = list(
-		/datum/round_event_control/antagonist/solo/traitor/roundstart = 12,
-		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 4,
-		/datum/round_event_control/antagonist/solo/heretic/roundstart = 2,
+		/datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
+		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
+		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
 
-/datum/round_event_control/antagonist/solo/brother/midround
-	name = "Sleeper Agents (Blood Brothers)"
-	prompted_picking = TRUE
-	required_enemies = 2
-
-/datum/round_event/antagonist/solo/brother/add_datum_to_mind(datum/mind/antag_mind)
-	var/datum/team/brother_team/team = new
-	team.add_member(antag_mind)
-	team.forge_brother_objectives()
-	antag_mind.add_antag_datum(/datum/antagonist/brother, team)
+/datum/round_event/antagonist/solo/brother/start()
+	if(length(setup_minds) < 2) // if we somehow only got one BB chosen, despite the fact we asked for 2, fuck it, they just get to be a traitor, and we'll throw the storyteller a bone
+		var/datum/mind/lonely_sap = setup_minds[1]
+		lonely_sap.add_antag_datum(/datum/antagonist/traitor)
+		SSgamemode.point_gain_multipliers[EVENT_TRACK_ROLESET] *= 1.5
+		return
+	while(length(setup_minds))
+		var/amt = 2
+		if(length(setup_minds) == 3) // if there would be one candidate left afterwards, we'll just make this a 3-person team
+			amt++
+		var/datum/team/brother_team/team = new
+		for(var/_ in 1 to amt)
+			team.add_member(pick_n_take(setup_minds))
+		team.update_name()
+		team.forge_brother_objectives()
+		team.notify_whos_who()

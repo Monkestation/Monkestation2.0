@@ -319,6 +319,12 @@
 	laws.supplied[1] = "Do not interfere with the operations of the Syndicate."
 	return TRUE
 
+/mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	set_silence_if_lower(disrupt_duration)
+	balloon_alert(src, "muted!")
+	return TRUE
+
 /**
  * Resets the pAI and any emagged status.
  *
@@ -435,3 +441,6 @@
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
 	leash.set_distance(new_distance)
+
+/mob/living/silicon/pai/get_access()
+	return list(ACCESS_MAINT_TUNNELS) //MONKESTATION EDIT: Add inherent maints access to pAIs

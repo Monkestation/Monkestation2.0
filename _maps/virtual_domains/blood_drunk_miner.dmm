@@ -64,6 +64,12 @@
 /obj/structure/marker_beacon/yellow,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"p" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "q" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -117,6 +123,10 @@
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
+"D" = (
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain/protected_space)
 "G" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -149,6 +159,18 @@
 /obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"M" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"N" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "O" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -167,6 +189,10 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
+"Q" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
 "S" = (
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 6
@@ -178,6 +204,10 @@
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"U" = (
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "W" = (
@@ -958,8 +988,8 @@ a
 a
 a
 a
-a
-a
+U
+N
 c
 c
 c
@@ -1006,8 +1036,8 @@ a
 a
 a
 o
-a
-a
+Q
+D
 c
 c
 c
@@ -1054,8 +1084,8 @@ a
 a
 a
 a
-a
-a
+Q
+D
 c
 c
 c
@@ -1102,8 +1132,8 @@ a
 a
 a
 a
-a
-a
+Q
+D
 c
 c
 c
@@ -1150,8 +1180,8 @@ a
 a
 a
 a
-a
-a
+M
+p
 c
 c
 c

@@ -1,3 +1,4 @@
+
 /datum/armament_entry/company_import/sol_defense
 	category = SOL_DEFENSE_DEFENSE_NAME
 	company_bitflag = CARGO_COMPANY_SOL_DEFENSE
@@ -54,6 +55,8 @@
 
 /datum/armament_entry/company_import/sol_defense/armor_hardened/emt_hardened_vest
 	item_type = /obj/item/clothing/suit/armor/sf_hardened/emt
+
+/*
 
 /datum/armament_entry/company_import/sol_defense/case
 	subcategory = "Weapon Cases"
@@ -122,7 +125,7 @@
 	item_type = /obj/item/gun/ballistic/automatic/sol_grenade_launcher
 	cost = PAYCHECK_COMMAND * 46
 	contraband = TRUE
-
+*/
 /datum/armament_entry/company_import/sol_defense/magazines
 	subcategory = "Magazines"
 	cost = PAYCHECK_CREW
@@ -151,3 +154,4 @@
 	item_type = /obj/item/ammo_box/magazine/c980_grenade/drum/starts_empty
 	cost = PAYCHECK_CREW * 3
 	contraband = TRUE
+

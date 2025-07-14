@@ -113,7 +113,7 @@
 	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange, syndie))
+	set_frequency(sanitize_frequency(frequency, freerange, syndie, radio_host))
 	set_on(on)
 	perform_update_icon = TRUE
 
@@ -128,6 +128,12 @@
 	if(istype(keyslot))
 		QDEL_NULL(keyslot)
 	return ..()
+
+/obj/item/radio/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
+		set_broadcasting(FALSE)
+		return TRUE
 
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
@@ -155,6 +161,9 @@
 
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
+
+	if(!listening)
+		remove_radio_all(src)
 
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
@@ -285,9 +294,10 @@
 		return
 	if(!talking_movable.try_speak(message))
 		return
-
-	if(channel == FREQ_RADIO && !radio_host)
+	//MONKESTATION EDIT START
+	if(istype(get_area(src), /area/centcom/heretic_sacrifice))
 		return
+	//MONKESTATION EDIT STOP
 
 	if(use_command)
 		spans |= SPAN_COMMAND
@@ -315,6 +325,11 @@
 	else
 		freq = frequency
 		channel = null
+
+	// monkestation start: prevent non-radio mics from broadcasting over the radio channel
+	if(freq == FREQ_RADIO && !radio_host)
+		return
+	// monkestation end
 
 	// Nearby active jammers prevent the message from transmitting
 	if(is_within_radio_jammer_range(src) && !syndie)
@@ -411,7 +426,8 @@
 				return TRUE
 	return FALSE
 
-/obj/item/radio/proc/on_recieve_message()
+/obj/item/radio/proc/on_recieve_message(list/data)
+	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
@@ -462,7 +478,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange, syndie))
+				set_frequency(sanitize_frequency(tune, freerange, syndie, radio_host))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE
@@ -627,6 +643,9 @@
 /obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
 	should_be_listening = TRUE
 	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment/speakers/proc/toggle_mute()
+	should_be_listening = !should_be_listening
 
 /obj/item/radio/entertainment/speakers/Initialize(mapload)
 	. = ..()
