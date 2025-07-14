@@ -127,6 +127,7 @@
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
+#define SPECIES_ONI "oni" //Monkestation Addition
 #define SPECIES_SIMIAN "simian" //Monkestation Addition
 #define SPECIES_GOBLIN "goblin" //Monkestation Addition
 #define SPECIES_FLORAN "floran" //Monkestation Addition
@@ -429,8 +430,8 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HELD "held"
 #define OFFSET_ACCESSORY "accessory"
-#define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN 18 //youngest a character can be

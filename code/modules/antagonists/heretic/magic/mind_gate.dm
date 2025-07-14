@@ -39,3 +39,6 @@
 
 	var/mob/living/living_owner = owner
 	living_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 140)
+
+	owner.log_message("used [name] on [key_name(cast_on)]", LOG_ATTACK)
+	cast_on.log_message("was hit by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)
