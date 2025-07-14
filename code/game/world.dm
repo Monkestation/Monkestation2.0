@@ -156,9 +156,9 @@ GLOBAL_VAR(restart_counter)
 #define TICK_INFO_INDEX(...) TICK_INFO_TICK2INDEX(DS2TICKS(world.time))
 
 // Should we intentionally consume cpu time to try to keep SendMaps deltas constant?
-GLOBAL_VAR_INIT(attempt_corrective_cpu, TRUE)
+GLOBAL_VAR_INIT(attempt_corrective_cpu, FALSE)
 // Should we NOT use the corrective cpu threshold to calculate the mc's target cpu?
-GLOBAL_VAR_INIT(use_old_mc_limit, FALSE)
+GLOBAL_VAR_INIT(use_old_mc_limit, TRUE)
 // What value are we attempting to correct cpu TO (autoaccounts for lag, ideally)
 GLOBAL_VAR_INIT(corrective_cpu_threshold, 0)
 // What cpu value are we trying to meet safely
