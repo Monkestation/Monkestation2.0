@@ -117,7 +117,9 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 		user.mind.transfer_to(created_drone, TRUE)
 	else if(isobserver(user))
 		created_drone.PossessByPlayer(user.key)
+		created_drone.mind_initialize()
 	else
+		qdel(created_drone)
 		return
 	created_drone.mind.add_antag_datum(/datum/antagonist/clock_cultist)
 

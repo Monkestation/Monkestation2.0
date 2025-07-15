@@ -99,6 +99,9 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		qdel(src)
 
 /obj/structure/destructible/clockwork/the_ark/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	if(current_state == ARK_STATE_FINAL)
+		return
+
 	. = ..()
 	if(!.)
 		return
