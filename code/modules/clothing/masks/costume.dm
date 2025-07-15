@@ -73,7 +73,6 @@
 /obj/item/clothing/mask/kitsune/AltClick(mob/user)
 	. = ..()
 	weldingvisortoggle(user)
-	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	return TRUE
 
 /obj/item/clothing/mask/joy/manhunt
