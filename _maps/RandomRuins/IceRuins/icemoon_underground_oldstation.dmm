@@ -5213,7 +5213,10 @@
 /obj/item/radio/intercom/directional/east{
 	freerange = 1;
 	name = "Uncommon Channel";
-	frequency = 1363
+	frequency = 1363;
+	freqlock = 1;
+	command = 1;
+	use_command = 1
 	},
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
