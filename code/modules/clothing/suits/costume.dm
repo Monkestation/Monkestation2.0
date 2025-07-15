@@ -431,7 +431,7 @@
 	body_parts_covered = ARMS|HANDS|CHEST|GROIN //the model has a glove on it so protect the hands.
 	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK
-	armor_type = /datum/armor/colonist_clothing
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/costume/xenos
 	name = "xenos suit"
