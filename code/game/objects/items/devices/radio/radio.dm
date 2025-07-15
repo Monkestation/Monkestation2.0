@@ -141,7 +141,7 @@
 	if(new_frequency)
 		frequency = new_frequency
 
-	if((listening && on) || freqlock)
+	if(listening && on)
 		add_radio(src, new_frequency)
 
 /obj/item/radio/proc/recalculateChannels()
@@ -264,7 +264,6 @@
 /obj/item/radio/proc/set_on(new_on)
 
 	on = new_on
-	set_frequency(frequency)
 
 	if(on)
 		set_broadcasting(should_be_broadcasting)//set them to whatever theyre supposed to be
@@ -272,6 +271,8 @@
 	else
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off
 		set_listening(FALSE, actual_setting = FALSE)
+
+	set_frequency(frequency)
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
