@@ -141,7 +141,7 @@
 	if(new_frequency)
 		frequency = new_frequency
 
-	if(listening && on)
+	if((listening && on) || freqlock)
 		add_radio(src, new_frequency)
 
 /obj/item/radio/proc/recalculateChannels()
