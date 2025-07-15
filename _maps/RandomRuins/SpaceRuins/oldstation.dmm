@@ -4512,7 +4512,6 @@
 	freerange = 1;
 	name = "Uncommon Channel";
 	frequency = 1363;
-	freqlock = 1;
 	command = 1;
 	use_command = 1
 	},
