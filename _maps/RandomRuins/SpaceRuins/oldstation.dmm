@@ -4513,7 +4513,9 @@
 	name = "Uncommon Channel";
 	frequency = 1363;
 	command = 1;
-	use_command = 1
+	use_command = 1;
+	freqlock = 1;
+	independent = 1
 	},
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
