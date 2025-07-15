@@ -6,16 +6,14 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	flags = SS_KEEP_TIMING | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME
 
-	///The list of anchoring crystals, value is 0 is uncharged and 1 if charged
 #ifdef UNIT_TESTS
-	var/list/anchoring_crystals = list()
 	var/datum/dimension_theme/clockwork/clock_dimension_theme = new(is_cult = TRUE)
 #else
-	///The list of anchoring crystals, value is 0 is uncharged and 1 if charged
-	var/list/anchoring_crystals
 	///Dimension theme used for transforming turfs
 	var/datum/dimension_theme/clockwork/clock_dimension_theme
 #endif
+	///The list of anchoring crystals, value is 0 is uncharged and 1 if charged
+	var/list/anchoring_crystals = list()
 	///How many charged anchoring crystals are there
 	var/charged_anchoring_crystals = 0
 	///Assoc list of the original names of areas that are valid to summon anchoring crystals keyed to its area
