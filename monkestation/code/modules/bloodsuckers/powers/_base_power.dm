@@ -258,7 +258,7 @@
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
 	if(QDELETED(user))
 		return FALSE
-	if((check_flags & BP_CANT_USE_DURING_SOL) && SSsol.sunlight_active && bloodsuckerdatum_power)
+	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
 		return FALSE
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	if(constant_bloodcost <= 0)
