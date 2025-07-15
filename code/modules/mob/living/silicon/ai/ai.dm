@@ -943,8 +943,6 @@
 	var/jobpart = "Unknown"
 
 	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
-		if(!jobtitles)
-			return
 		if (isliving(speaker))
 			var/mob/living/living_speaker = speaker
 			if(living_speaker.job)
@@ -1228,6 +1226,6 @@
 
 	if(incapacitated())
 		return
-	acceleration = !acceleration
+	jobtitles = !jobtitles
 	to_chat(src, "<b>You are now [jobtitles ? "displaying" : "hiding"] speaker's job titles.</b>")
 #undef CALL_BOT_COOLDOWN
