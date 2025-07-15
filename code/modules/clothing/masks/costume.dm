@@ -49,6 +49,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	adjusted_flags = ITEM_SLOT_HEAD
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_cover = MASKCOVERSMOUTH
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#AA0000"
 	greyscale_config = /datum/greyscale_config/kitsune
@@ -66,6 +69,12 @@
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
 	weldingvisortoggle(user)
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
+
+/obj/item/clothing/mask/kitsune/AltClick(mob/user)
+	. = ..()
+	weldingvisortoggle(user)
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
+	return TRUE
 
 /obj/item/clothing/mask/joy/manhunt
 	name = "smiley mask"
