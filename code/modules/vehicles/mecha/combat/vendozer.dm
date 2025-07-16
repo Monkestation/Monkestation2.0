@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/vendozer
-	desc = "The Ultimate statement of disastisfaction towards the station, the Vendozer wrecks havoc to all that has disgruntled this employee."
+	desc = "The Ultimate statement of dissatisfaction towards the station, the Vendozer wrecks havoc to all that has disgruntled this employee."
 	name = "\proper The Vendozer"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "vendozer"
@@ -74,7 +74,7 @@
 		max_blood = 4)
 
 /obj/vehicle/sealed/mecha/vendozer/admeme
-	desc = "You pissed off god, or corprate, good luck."
+	desc = "You pissed off god, or corporate, good luck."
 	name = "\improper Vendozer, Doom edition"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "vendozer"
