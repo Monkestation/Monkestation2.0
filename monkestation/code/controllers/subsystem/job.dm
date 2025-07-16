@@ -200,7 +200,7 @@
 			valid_rolesets -= roleset
 		else
 			var/weight = roleset.get_weight()
-			log_storyteller("p_d_r [roleset] weight: [weight] (base: [roleset.weight])")
+			log_storyteller("p_d_r [roleset] weight: [weight][roleset.weight != weight ? " (base: [roleset.weight])" : ""]")
 			actual_valid_rolesets[roleset] = weight
 	valid_rolesets = actual_valid_rolesets
 	log_storyteller("p_d_r actual_valid_rolesets: [english_list(actual_valid_rolesets)]")
