@@ -131,6 +131,9 @@
 
 	// Cap increase and decrease
 	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
+	// Boost when returning to equilibrium
+	if(equilibrium_temp < standard_body_temperature - 2 || equilibrium_temp > standard_body_temperature + 2)
+		temp_change *= 3
 
 	adjust_bodytemperature(temp_change * seconds_per_tick) // No use_insulation because we manually account for it
 
