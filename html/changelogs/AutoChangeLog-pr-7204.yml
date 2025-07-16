@@ -1,0 +1,5 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - bugfix: "fixes the nodnod/nod2 emote."
+  - rscdel: "removes the inferior version that was overwriting"
