@@ -1,0 +1,4 @@
+author: "Siro"
+delete-after: True
+changes:
+  - bugfix: "Delay round end will once again delay the round end reboot properly."

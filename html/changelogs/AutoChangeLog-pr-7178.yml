@@ -1,0 +1,5 @@
+author: "BingusSS13"
+delete-after: True
+changes:
+  - bugfix: "The intercoms in Charlie Station's AI core are now functional."
+  - qol: "The uncommon intercom in Charlie Station's AI core now has loud mode."
