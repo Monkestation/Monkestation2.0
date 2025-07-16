@@ -143,6 +143,8 @@ ADMIN_VERB(delay_round_end, R_SERVER, FALSE, "Delay Round End", "Prevent the ser
 
 	SSticker.delay_end = TRUE
 	SSticker.admin_delay_notice = delay_reason
+	if(SSticker.reboot_timer)
+		SSticker.cancel_reboot(user)
 
 	log_admin("[key_name(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	message_admins("[key_name_admin(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
