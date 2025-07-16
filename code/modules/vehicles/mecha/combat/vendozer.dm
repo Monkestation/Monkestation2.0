@@ -74,7 +74,7 @@
 		max_blood = 4)
 
 /obj/vehicle/sealed/mecha/vendozer/admeme
-	desc = "You pissed off god, or corprate, good luck."
+	desc = "You pissed off god, or corporate, good luck."
 	name = "\improper Vendozer, Doom edition"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "vendozer"
