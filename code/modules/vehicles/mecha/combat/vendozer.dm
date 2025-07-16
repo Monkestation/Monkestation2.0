@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/vendozer
-	desc = "The Ultimate statement of disastisfaction towards the station, the Vendozer wrecks havoc to all that has disgruntled this employee."
+	desc = "The Ultimate statement of dissatisfaction towards the station, the Vendozer wrecks havoc to all that has disgruntled this employee."
 	name = "\proper The Vendozer"
 	icon = 'icons/mecha/largetanks.dmi'
 	icon_state = "vendozer"
