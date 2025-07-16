@@ -40,18 +40,18 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wienermobile)
 
 /obj/vehicle/ridden/wienermobile/Bump(mob/living/carbon/human/rammed)
-    . = ..()
-    if(!ishuman(rammed) || !rammed.density || !has_buckled_mobs())
-        return
-    rammed.stamina?.adjust(-crash_dmg_stm)
-    rammed.apply_damage(rand(crash_dmg_low, crash_dmg_high), BRUTE)
-    for(var/mob/living/rider in buckled_mobs)
-        var/paralyze_time = is_driver(rider) ? crash_para_driv : crash_para_pass
-        rider.Paralyze(paralyze_time SECONDS)
-    rammed.Paralyze(crash_para_roadkill SECONDS)
-    rammed.throw_at(get_edge_target_turf(rammed, dir), 1, 1)
-    visible_message(span_danger("[src] crashes into [rammed]!"))
-    playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	. = ..()
+	if(!ishuman(rammed) || !rammed.density || !has_buckled_mobs())
+		return
+	rammed.stamina?.adjust(-crash_dmg_stm)
+	rammed.apply_damage(rand(crash_dmg_low, crash_dmg_high), BRUTE)
+	for(var/mob/living/rider in buckled_mobs)
+		var/paralyze_time = is_driver(rider) ? crash_para_driv : crash_para_pass
+		rider.Paralyze(paralyze_time SECONDS)
+	rammed.Paralyze(crash_para_roadkill SECONDS)
+	rammed.throw_at(get_edge_target_turf(rammed, dir), 1, 1)
+	visible_message(span_danger("[src] crashes into [rammed]!"))
+	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/ridden/wienermobile/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
