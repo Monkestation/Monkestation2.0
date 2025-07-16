@@ -12,89 +12,76 @@
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
 
+	register_context()
+
 /obj/machinery/bouldertech/LateInitialize()
 	. = ..()
 
-/obj/machinery/bouldertech/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-
 /obj/machinery/bouldertech/Destroy()
 	return ..()
+
+/obj/machinery/bouldertech/on_deconstruction(disassembled)
+	// put in code to empty its container
+
+/obj/machinery/bouldertech/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	// override for the specific machine
+
+/obj/machinery/bouldertech/examine(mob/user)
+	. = ..()
 
 /obj/machinery/bouldertech/update_icon_state()
 	. = ..()
 
 /obj/machinery/bouldertech/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
+	return
 
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
+	return
 
 /obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
+	if(default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
+
+/obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
+	if(!anchored)
+		return FALSE
+	return ..()
+
+/obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
+	SIGNAL_HANDLER
+
+/**
+ * Looks for a boost to the machine's efficiency, and applies it if found.
+ * Applied more on the chemistry integration but can be used for other things if desired.
+ */
+/obj/machinery/bouldertech/proc/check_for_boosts()
+	PROTECTED_PROC(TRUE)
+
+/**
+ * Checks if this machine can process this material
+ * Arguments
+ *
+ * * datum/material/mat - the material to process
+ */
+/obj/machinery/bouldertech/proc/can_process_material(datum/material/mat)
+	PROTECTED_PROC(TRUE)
+	return FALSE
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	return ..()
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
+		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(panel_open)
+		balloon_alert(user, "close panel!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
-	return ..()
-
-/obj/machinery/bouldertech/examine(mob/user)
-	. = ..()
-
-/**
- * Accepts a boulder into the machinery, then converts it into minerals.
- * If the boulder can be fully processed by this machine, we take the materials, insert it into the silo, and destroy the boulder.
- * If the boulder has materials left, we make a copy of the boulder to hold the processable materials, take the processable parts, and eject the original boulder.
- * @param chosen_boulder The boulder to being breaking down into minerals.
- */
-/obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
-	return FALSE
-
-/**
- * Accepts a boulder into the machine. Used when a boulder is first placed into the machine.
- * @param new_boulder The boulder to be accepted.
- */
-/obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
-	return FALSE
-
-/**
- * Checks if it can process other exotic items besides boulders.
- * @param item The item to be checked. Returns true if it can be accepted.
- */
-/obj/machinery/bouldertech/proc/check_extras(obj/item/item)
-	return FALSE
-
-/**
- * Ejects a boulder from the machine. Used when a boulder is finished processing, or when a boulder can't be processed.
- * @param drop_turf The location to eject the boulder to. If null, it will eject to the machine's drop_location().
- * @param specific_boulder The boulder to be ejected.
- */
-/obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder, turf/drop_turf = null)
-	return FALSE
-
-/**
- * Getter proc to determine how many boulders are contained in the machine.
- * Also adds their reference to the boulders_contained list.
- */
-/obj/machinery/bouldertech/proc/update_boulder_count()
-	return FALSE
-
-/**
- * Override Getter proc to determine what exotic items are contained in the machine.
- * Override this proc for your machines purposes.
- */
-/obj/machinery/bouldertech/proc/return_extras()
-	return list()
-
-/obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
-	SIGNAL_HANDLER
-
-/**
- * Checks if a custom_material is in a list of processable materials in the machine.
- * @param list/custom_material A list of materials, presumably taken from a boulder. If a material that this machine can process is in this list, it will return true, inclusively.
- */
-/obj/machinery/bouldertech/proc/check_for_processable_materials(list/boulder_mats)
-	return FALSE
+/obj/machinery/bouldertech/process()
+	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
+		return
