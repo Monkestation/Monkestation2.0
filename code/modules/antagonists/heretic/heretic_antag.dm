@@ -71,6 +71,7 @@
 		PATH_COSMIC = "purple",
 		PATH_KNOCK = "yellow",
 		PATH_MOON = "blue",
+		PATH_GRACE = "teal"
 	)
 	var/static/list/path_to_rune_color = list(
 		PATH_START = COLOR_LIME,
@@ -82,6 +83,7 @@
 		PATH_COSMIC = COLOR_PURPLE,
 		PATH_KNOCK = COLOR_YELLOW,
 		PATH_MOON = COLOR_BLUE_LIGHT,
+		PATH_GRACE = COLOR_STRAWBERRY
 	)
 
 /* monkestation removal: sacrifice refactor
