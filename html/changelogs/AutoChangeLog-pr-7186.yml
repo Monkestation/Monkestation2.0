@@ -1,0 +1,5 @@
+author: "BValon"
+delete-after: True
+changes:
+  - rscdel: "Removed \"B166ER\" from ai.txt"
+  - rscdel: "Removed \"Fagor\" from ai.txt"
