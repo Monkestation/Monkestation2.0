@@ -132,7 +132,6 @@
 	// Cap increase and decrease
 	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
 	// Boost when returning to equilibrium
-
 	if(!ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
 		temp_change *= 3
 
