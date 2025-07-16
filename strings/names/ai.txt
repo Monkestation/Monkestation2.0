@@ -61,6 +61,7 @@ H E R B I E
 Hadaly
 HAL 9000
 Huey
+I-Robot
 Irona
 Ironhide
 Jay-Dub
@@ -102,6 +103,7 @@ Revelation
 Ro-Man
 Robbie
 Robot Devil
+Saws-Yall
 S A M
 S H O C K
 S H R O U D
