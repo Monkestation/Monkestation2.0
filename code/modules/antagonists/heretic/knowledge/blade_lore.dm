@@ -109,6 +109,7 @@
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 		/datum/heretic_knowledge/mark/blade_mark,
 		/datum/heretic_knowledge/armor,
+		/datum/heretic_knowledge/void_cloak,
 	)
 	cost = 1
 	route = PATH_BLADE
@@ -251,6 +252,7 @@
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
+		/datum/heretic_knowledge/spell/blood_siphon,
 	)
 	cost = 1
 	route = PATH_BLADE
@@ -378,6 +380,7 @@
 	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
+		/datum/heretic_knowledge/spell/cleave,
 		/datum/heretic_knowledge/ultimate/blade_final,
 		/datum/heretic_knowledge/spell/rust_charge,
 	)

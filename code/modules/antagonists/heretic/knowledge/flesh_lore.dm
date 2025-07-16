@@ -129,6 +129,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/flesh_mark,
 		/datum/heretic_knowledge/void_cloak,
+		/datum/heretic_knowledge/limited_amount/risen_corpse,
 	)
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
@@ -241,6 +242,7 @@
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/rune_carver,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
@@ -281,6 +283,7 @@
 		/datum/heretic_knowledge/ultimate/flesh_final,
 		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/summon/maid_in_mirror,
 	)
 	required_atoms = list(
 		/obj/item/organ/external/tail = 1,
