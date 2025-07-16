@@ -39,37 +39,19 @@
 	add_overlay(image(icon, "wienermobile_cover", ABOVE_MOB_LAYER))
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wienermobile)
 
-/obj/vehicle/ridden/wienermobile/Bump(atom/A)
-	. = ..()
-	if(!A.density || !has_buckled_mobs())
-		return
-	var/mob/living/rider = buckled_mobs[1]
-	var/mob/living/pass1 = buckled_mobs[2]
-	var/mob/living/pass2 = buckled_mobs[3]
-	var/mob/living/pass3 = buckled_mobs[4]
-	var/mob/living/pass4 = buckled_mobs[5]
-	var/mob/living/pass5 = buckled_mobs[6]
-	var/mob/living/pass6 = buckled_mobs[7]
-	var/mob/living/pass7 = buckled_mobs[8]
-	var/mob/living/pass8 = buckled_mobs[9]
-	if(!ishuman(A))
-		return
-	var/mob/living/carbon/human/rammed = A
-	rammed.stamina.adjust(-crash_dmg_stm)
-	rammed.apply_damage(rand(crash_dmg_low,crash_dmg_high), BRUTE)
-	rider.Paralyze(crash_para_driv SECONDS)
-	pass1.Paralyze(crash_para_pass SECONDS)
-	pass2.Paralyze(crash_para_pass SECONDS)
-	pass3.Paralyze(crash_para_pass SECONDS)
-	pass4.Paralyze(crash_para_driv SECONDS)
-	pass5.Paralyze(crash_para_pass SECONDS)
-	pass6.Paralyze(crash_para_pass SECONDS)
-	pass7.Paralyze(crash_para_pass SECONDS)
-	pass8.Paralyze(crash_para_pass SECONDS)
-	rammed.Paralyze(crash_para_roadkill SECONDS)
-	rammed.throw_at(get_edge_target_turf(A, dir), 1, 1)
-	visible_message(span_danger("[src] crashes into [rammed]!"))
-	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+/obj/vehicle/ridden/wienermobile/Bump(mob/living/carbon/human/rammed)
+    . = ..()
+    if(!ishuman(rammed) || !rammed.density || !has_buckled_mobs())
+        return
+    rammed.stamina?.adjust(-crash_dmg_stm)
+    rammed.apply_damage(rand(crash_dmg_low, crash_dmg_high), BRUTE)
+    for(var/mob/living/rider in buckled_mobs)
+        var/paralyze_time = is_driver(rider) ? crash_para_driv : crash_para_pass
+        rider.Paralyze(paralyze_time SECONDS)
+    rammed.Paralyze(crash_para_roadkill SECONDS)
+    rammed.throw_at(get_edge_target_turf(rammed, dir), 1, 1)
+    visible_message(span_danger("[src] crashes into [rammed]!"))
+    playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/ridden/wienermobile/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
