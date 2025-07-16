@@ -147,7 +147,7 @@
 	var/mob/living/victim = src.victim
 	var/limb_name = limb.plaintext_zone
 
-	if((limb.bodypart_flags & BODYPART_UNREMOVABLE) || HAS_TRAIT(victim, TRAIT_GODMODE) | HAS_TRAIT(victim, TRAIT_NODISMEMBER))
+	if((limb.bodypart_flags & BODYPART_UNREMOVABLE) || HAS_TRAIT(victim, TRAIT_GODMODE) || HAS_TRAIT(victim, TRAIT_NODISMEMBER))
 		victim.balloon_alert(user, "cannot decapitate!")
 		return
 
