@@ -8,6 +8,26 @@
 		/datum/stock_part/micro_laser = 1,
 	)
 
+/obj/item/circuitboard/machine/refinery
+	name = "Boulder Refinery"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/bouldertech/refinery
+	req_components = list(
+		/obj/item/assembly/igniter/condenser = 1,
+		/datum/stock_part/manipulator = 2,
+		/datum/stock_part/matter_bin = 2,
+	)
+
+/obj/item/circuitboard/machine/smelter
+	name = "Boulder Smelter"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/bouldertech/refinery/smelter
+	req_components = list(
+		/obj/item/assembly/igniter = 1,
+		/datum/stock_part/manipulator = 2,
+		/datum/stock_part/matter_bin = 2,
+	)
+
 /obj/item/circuitboard/machine/big_manipulator
 	name = "Big Manipulator"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

@@ -20,7 +20,7 @@
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
 	/// Silo link to its materials list.
 	var/datum/component/remote_materials/silo_materials = null
-	/// Mining points held by the machine for miners.
+	/// Mining points held by the machine for miners. If null will not collect points.
 	var/points_held = null
 	///The action verb to display to players
 	var/action = "processing"
@@ -138,13 +138,13 @@
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
 		return FALSE
 
-	//not a valid boulder
+	//not a valid resource
 	if(!istype(new_resource) || QDELETED(new_resource))
 		return FALSE
 
 	//someone is still processing this. Can we generalize this for all objects this machine may take?
 	if(istype(new_resource, /obj/item/boulder) || istype(new_resource, /obj/item/processing))
-		if(new_resource.vars["being_processed"])
+		if(!isnull(new_resource.vars["processed_by"]))
 			return FALSE
 
 	//no space to hold resources
@@ -152,17 +152,16 @@
 	if(length(current_resources) >= resources_held_max)
 		return FALSE
 
-	//did we cooldown enough to accept a boulder
+	//did we cooldown enough to accept a resource
 	return COOLDOWN_FINISHED(src, accept_cooldown)
 
 /**
  * Accepts a resource into the machine. Used when a resource is first placed into the machine.
  * Arguments
  *
- * * obj/item/new_resource - the boulder to accept
+ * * obj/item/new_resource - the resource to accept
  */
 /obj/machinery/bouldertech/proc/accept_resource(obj/item/new_resource)
-	PRIVATE_PROC(TRUE)
 	if(!can_accept_resource(new_resource))
 		return FALSE
 
@@ -175,9 +174,11 @@
 /obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
 	SIGNAL_HANDLER
 
-	if(istype(atom_movable) && can_process_resource(atom_movable))
-		INVOKE_ASYNC(src, PROC_REF(accept_resource), atom_movable)
+	if(can_process_resource(atom_movable))
 		return
+
+	INVOKE_ASYNC(src, PROC_REF(accept_resource), atom_movable)
+
 
 /**
  * Looks for a boost to the machine's efficiency, and applies it if found.
@@ -196,18 +197,19 @@
  */
 /obj/machinery/bouldertech/proc/can_process_material(datum/material/mat)
 	PROTECTED_PROC(TRUE)
+
 	return FALSE
 
 /**
- * Checks if this machine can process this resource object or return a list of what it can process.
+ * Checks if this machine can process this resource object or return a typecache of what it can process.
  * Arguments
  *
  * * obj/item/res - the resource object to process
- * * return_list - returns current processable list if TRUE, will ignore res if TRUE.
+ * * return_typecache - returns current processables typecache if TRUE, will ignore res if TRUE.
  */
-/obj/machinery/bouldertech/proc/can_process_resource(obj/item/res, return_list = FALSE)
+/obj/machinery/bouldertech/proc/can_process_resource(obj/item/res, return_typecache = FALSE)
 	PROTECTED_PROC(TRUE)
-	return return_list ? list() : FALSE
+	return return_typecache ? list() : FALSE
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	if(panel_open)
@@ -313,6 +315,7 @@
 	remove_resource(chosen_boulder)
 
 /**
+ * Accepts an exotic into the machinery, override this to handle nonboulder resource behavior.
  * @param chosen_exotic The exotic resource to be broken down into minerals.
  */
 /obj/machinery/bouldertech/proc/breakdown_exotic(obj/item/chosen_exotic)
@@ -322,19 +325,25 @@
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
 		return
 
-	//var/resources_found = FALSE
+	var/resources_found = FALSE
 	var/resources_processed = resources_processing_count
 	var/list/obj/item/current_resources = typecache_filter_list(contents, can_process_resource(null, TRUE))
 	for(var/obj/item/potential_resource in current_resources)
-		//resources_found = TRUE
 		if(resources_processed <= 0)
 			break //Try again next time
+		resources_found = TRUE
 		resources_processed--
 
 		if(istype(potential_resource, /obj/item/boulder))
-			breakdown_boulder(potential_resource)
+			resources_found = !breakdown_boulder(potential_resource)
 		else
-			breakdown_exotic(potential_resource)
+			resources_found = !breakdown_exotic(potential_resource)
+
+	//when the boulder is removed it plays sound and displays a balloon alert. don't overlap when that happens
+	if(resources_found)
+		playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+		balloon_alert_to_viewers(action)
+
 /**
  * Ejects a resource from the machine. Used when a resource is finished processing, or when a resource can't be processed.
  * Arguments
