@@ -628,6 +628,41 @@
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = list(0)
 
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser
+	name = "johnson and co bluespace coffee synthesiser"
+	desc = "An incredibly complicated, incredibly expensive piece of machinery patented by a certain architecture firm designed for the sole purpose of synthesising enough coffee to preserve the sanity of their clients and staff. Using technology recycled from Nanotrasen's chemical dispensers - renowned for their thermodynamics-defying conversion of electricity into liquid reagents at unparalleled efficiency, spitting in the face of all logic and reason just like everything else they make - it synthesises surprisingly-delicious coffee in bulk with no regards for safety, with a basic laser-based sensor being the only device in the way of this cursed thing pouring out enough coffee to drown out a small planet. In order to avoid weighing 500 tons to carry the necessary power supply for such a dispenser, it has been fitted with a bluespace power-link to several fusion reactors at classified locations. The fact this hasn't been stolen by some hooligan for its immense worth is a miracle already - the fact it's in your hands, even moreso. Cherish it."
+	volume = 140 //less space than the regular bluespace coffeepot but still has more space than the original design. most of the space is the chem dispenser inside
+
+	var/refill_enabled = TRUE //stolen from the advanced mop
+	var/refill_rate = 0.5
+	var/refill_reagent = /datum/reagent/consumable/coffee
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/attack_self(mob/user)
+	refill_enabled = !refill_enabled
+	if(refill_enabled)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj,src)
+	to_chat(user, span_notice("You set the synthesiser switch to the '[refill_enabled ? "ON" : "OFF"]' position."))
+	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/process(seconds_per_tick)
+	var/amadd = min(volume - reagents.total_volume, refill_rate * seconds_per_tick)
+	if(amadd > 0)
+		reagents.add_reagent(refill_reagent, amadd)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/examine(mob/user)
+	. = ..()
+	. += span_notice("The synthesiser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.")
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 ///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube
 	name = "tube"

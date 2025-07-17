@@ -28,11 +28,12 @@ Bridge Assistant
 	departments_list = list(/datum/job_department/command)
 	department_for_prefs = /datum/job_department/captain //hes the only person who is exclusively subordinate to the captain and not running another dept
 
-	family_heirlooms = list(/obj/item/banner/command/mundane)
+	family_heirlooms = list(/obj/item/banner/command/mundane, /obj/item/pen/fountain, /obj/item/stamp/granted, /obj/item/reagent_containers/cup/glass/mug/nanotrasen, /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser)
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 1,
 		/obj/item/pen/fountain = 1,
+		/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser = 1, //HOLY SHIT
 	)
 	rpg_title = "Supreme Lout"
 	alt_titles = list(
