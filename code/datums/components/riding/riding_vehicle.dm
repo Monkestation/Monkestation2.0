@@ -127,7 +127,7 @@
 
 /datum/component/riding/vehicle/wienermobile/handle_specials()
 	. = ..()
-	set_riding_offsets(1, list(TEXT_NORTH = list(-6, 4), TEXT_SOUTH = list(10, 0, 4), TEXT_EAST = list(34, 2), TEXT_WEST = list(-64, 2)))
+	set_riding_offsets(1, list(TEXT_NORTH = list(-6, 4), TEXT_SOUTH = list(10, 0, 4), TEXT_EAST = list(24, 2), TEXT_WEST = list(-64, 2)))
 	set_riding_offsets(2, list(TEXT_NORTH = list(6, 4), 	TEXT_SOUTH = list(-6, 2, 4), TEXT_EAST = list(18, 0, 4), TEXT_WEST = list(-18, 0, 3.9)))
 	set_riding_offsets(3, list(TEXT_NORTH = list(-6, -1), TEXT_SOUTH = list(6, 2, 3.9), TEXT_EAST = list(18, 0, 3.9), TEXT_WEST = list(-18, 0, 4)))
 	set_riding_offsets(4, list(TEXT_NORTH = list(6, -1), TEXT_SOUTH = list(-6, 2, 3.9), TEXT_EAST = list(6, 0, 4), TEXT_WEST = list(-6, 0, 3.9)))
