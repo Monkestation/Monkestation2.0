@@ -291,16 +291,27 @@
 		check_for_boosts()
 		//here we loop through the boulder's ores
 		var/list/rejected_mats = list()
+		var/list/accepted_mats = list()
+		var/new_points_held = 0
 		//Maybe add MOVABLE_PHYSICS_PRECISION for less than 1 efficiency
+		//insert_item
 		for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 			var/quantity = chosen_boulder.custom_materials[possible_mat] * refining_efficiency
 			if(!can_process_material(possible_mat))
 				rejected_mats[possible_mat] = quantity
 				continue
-			if(isnull(silo_materials) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
-				rejected_mats[possible_mat] = quantity
-			else
-				points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
+			accepted_mats[possible_mat] = quantity
+			chosen_boulder.custom_materials -= possible_mat
+			new_points_held = round(new_points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
+
+		var/obj/item/boulder/disposable_boulder = new (src)
+		disposable_boulder.custom_materials = accepted_mats
+		if(isnull(silo_materials) || !silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency))
+			rejected_mats = rejected_mats + accepted_mats
+			qdel(disposable_boulder)
+		else
+			points_held = points_held + new_points_held // put point total here into machine
+			qdel(disposable_boulder)
 
 		use_power(active_power_usage)
 		//puts back materials that couldn't be processed
