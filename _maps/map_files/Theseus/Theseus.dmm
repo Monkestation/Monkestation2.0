@@ -41500,7 +41500,6 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
 /obj/effect/turf_decal/bot,
-/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "mcT" = (
@@ -61237,7 +61236,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/closed/wall,
 /area/station/commons/storage/tools)
@@ -66715,6 +66713,8 @@
 "tuj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "tur" = (
