@@ -21,6 +21,7 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	denominator = 10
 	base_antags = 1 //should scale with pop so its 1 op + 1 for every 10 people ready.
