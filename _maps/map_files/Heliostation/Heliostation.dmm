@@ -40354,6 +40354,19 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
+"ixd" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/command/bridge)
 "ixi" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/medical_all,
@@ -45375,6 +45388,18 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood/tile,
+/area/station/command/bridge)
+"kpw" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 17;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/large,
 /area/station/command/bridge)
 "kpy" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -73088,6 +73113,23 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/solars/port/aft)
+"vaH" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/turf/open/floor/wood/large,
+/area/station/command/bridge)
 "vbd" = (
 /obj/machinery/modular_computer/preset/research,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -80073,6 +80115,7 @@
 /turf/open/space/basic,
 /area/space)
 "xMJ" = (
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet/royalblack,
 /area/station/command/bridge)
 "xMT" = (
@@ -120457,7 +120500,7 @@ nTw
 mvM
 anm
 sSk
-mWw
+vaH
 xWv
 xMJ
 hcy
@@ -120714,7 +120757,7 @@ fWq
 xiN
 anm
 mGY
-mWw
+kpw
 mWw
 yfy
 rgf
@@ -120971,7 +121014,7 @@ cGt
 wyd
 anm
 lQp
-mWw
+ixd
 xWv
 xMJ
 hwb

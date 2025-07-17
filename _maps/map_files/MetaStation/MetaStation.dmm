@@ -10119,6 +10119,11 @@
 "dJX" = (
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/structure/rack,
+/obj/item/storage/secure/briefcase,
+/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/radio/off,
+/obj/item/aicard,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "dKd" = (
@@ -17141,6 +17146,13 @@
 "giA" = (
 /turf/closed/wall/r_wall,
 /area/station/tcommsat/computer)
+"giG" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/landmark/start/bridge_assistant,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "giH" = (
 /obj/machinery/vending/engivend,
 /obj/effect/turf_decal/delivery,
@@ -21408,6 +21420,23 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"hDm" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/multitool,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/wrench,
+/obj/item/assembly/timer,
+/obj/item/assembly/signaler,
+/obj/item/assembly/signaler,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "hDp" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -22481,12 +22510,13 @@
 /area/station/security/lockers)
 "hXK" = (
 /obj/item/radio/intercom/directional/south,
-/obj/structure/rack,
-/obj/item/assembly/signaler,
-/obj/item/assembly/signaler,
-/obj/item/assembly/timer,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 0;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -35974,17 +36004,18 @@
 /area/station/medical/office)
 "mvZ" = (
 /obj/machinery/light/directional/south,
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/obj/item/wrench,
-/obj/item/multitool,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -10;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -36491,15 +36522,33 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mES" = (
-/obj/structure/rack,
-/obj/item/aicard,
-/obj/item/radio/off,
 /obj/machinery/computer/security/telescreen/minisat{
 	dir = 1;
 	pixel_y = -29
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = -15;
+	pixel_y = 4
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 10;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -45572,11 +45621,12 @@
 "pLv" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/firealarm/directional/south,
-/obj/structure/rack,
-/obj/item/storage/secure/briefcase,
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -96938,7 +96988,7 @@ tKN
 aaf
 dsQ
 hfa
-dUj
+giG
 gGy
 hmq
 fUj
@@ -98480,7 +98530,7 @@ tKN
 aaf
 dsQ
 qkA
-dUj
+giG
 qVc
 wNh
 veO
@@ -98998,7 +99048,7 @@ tqI
 gkD
 nXm
 wNh
-veO
+hDm
 duI
 duI
 duI
