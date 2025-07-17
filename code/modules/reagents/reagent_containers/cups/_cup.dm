@@ -634,7 +634,7 @@
 	volume = 140 //less space than the regular bluespace coffeepot but still has more space than the original design. most of the space is the chem dispenser inside
 
 	var/refill_enabled = TRUE //stolen from the advanced mop
-	var/refill_rate = 0.5
+	var/refill_rate = 1
 	var/refill_reagent = /datum/reagent/consumable/coffee
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Initialize(mapload)
