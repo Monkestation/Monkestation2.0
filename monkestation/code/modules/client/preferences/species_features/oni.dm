@@ -7,11 +7,16 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/oni_tail/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.oni_tail_list,
-		"oni_tail",
-		list("BEHIND", "FRONT"),
-	)
+	return assoc_to_keys_features(GLOB.oni_tail_list)
+
+/datum/preference/choiced/oni_tail/icon_for(value)
+	var/datum/sprite_accessory/oni_tail = GLOB.oni_tail_list[value]
+	if(oni_tail.icon_state == null || oni_tail.icon_state == "None")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(oni_tail.icon, "m_oni_tail_[oni_tail.icon_state]_BEHIND")
+	final_icon.Blend(icon(oni_tail.icon, "m_oni_tail_[oni_tail.icon_state]_FRONT"), ICON_OVERLAY)
+	return final_icon
 
 /datum/preference/choiced/oni_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["oni_tail"] = value
@@ -25,11 +30,16 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/oni_wings/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.oni_wings_list,
-		"oni_wings",
-		list("BEHIND", "FRONT"),
-	)
+	return assoc_to_keys_features(GLOB.oni_wings_list)
+
+/datum/preference/choiced/oni_wings/icon_for(value)
+	var/datum/sprite_accessory/oni_wings = GLOB.oni_wings_list[value]
+	if(oni_wings.icon_state == null || oni_wings.icon_state == "None")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(oni_wings.icon, "m_oni_wings_[oni_wings.icon_state]_BEHIND")
+	final_icon.Blend(icon(oni_wings.icon, "m_oni_wings_[oni_wings.icon_state]_FRONT"), ICON_OVERLAY)
+	return final_icon
 
 /datum/preference/choiced/oni_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["oni_wings"] = value
@@ -43,11 +53,16 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/oni_horns/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.oni_horns_list,
-		"oni_horns",
-		list("BEHIND", "FRONT"),
-	)
+	return assoc_to_keys_features(GLOB.oni_horns_list)
+
+/datum/preference/choiced/oni_horns/icon_for(value)
+	var/datum/sprite_accessory/oni_horns = GLOB.oni_horns_list[value]
+	if(oni_horns.icon_state == null || oni_horns.icon_state == "None")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(oni_horns.icon, "m_oni_horns_[oni_horns.icon_state]_BEHIND")
+	final_icon.Blend(icon(oni_horns.icon, "m_oni_horns_[oni_horns.icon_state]_FRONT"), ICON_OVERLAY)
+	return final_icon
 
 /datum/preference/choiced/oni_horns/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["oni_horns"] = value
