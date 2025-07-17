@@ -7541,6 +7541,7 @@
 #include "monkestation\code\modules\factory_type_beat\machinery\atmos_chem\pressurised_reactions\_base.dm"
 #include "monkestation\code\modules\factory_type_beat\machinery\atmos_chem\pressurised_reactions\sulfur.dm"
 #include "monkestation\code\modules\factory_type_beat\mobs\node_drone.dm"
+#include "monkestation\code\modules\factory_type_beat\processing\beacon.dm"
 #include "monkestation\code\modules\factory_type_beat\processing\bouldertech.dm"
 #include "monkestation\code\modules\factory_type_beat\processing\brm.dm"
 #include "monkestation\code\modules\factory_type_beat\processing\checmial_washer.dm"

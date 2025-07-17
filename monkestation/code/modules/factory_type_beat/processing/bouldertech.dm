@@ -297,9 +297,11 @@
 			if(!can_process_material(possible_mat))
 				rejected_mats[possible_mat] = quantity
 				continue
-			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
 			if(isnull(silo_materials) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
 				rejected_mats[possible_mat] = quantity
+			else
+				points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
+
 		use_power(active_power_usage)
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)

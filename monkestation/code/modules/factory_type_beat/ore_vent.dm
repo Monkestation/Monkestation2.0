@@ -1,5 +1,6 @@
 #define MAX_ARTIFACT_ROLL_CHANCE 10
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
+#define MINERALS_PER_BOULDER 3
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -20,13 +21,14 @@
 	var/unique_vent = FALSE
 	/// What icon_state do we use when the ore vent has been tapped?
 	var/icon_state_tapped = "ore_vent_active"
-
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
 	var/list/mineral_breakdown = list()
 	/// What size boulders does this vent produce?
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Reference to this ore vent's NODE drone, to track wave success.
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
+	/// String containing the formatted list of ores that this vent can produce, and who first discovered this vent.
+	var/ore_string = ""
 	/// Associated list of vent size weights to pick from.
 	var/list/ore_vent_options = list(
 		LARGE_VENT_TYPE = 3,
@@ -61,6 +63,7 @@
 	/// We use a timer id or time left to prevent the wave defense from being started multiple times.
 	//vent_timer will be null, timer id, "tr=<time remaining>" or "starting" if that somehow happens.
 	var/vent_timer = null
+	COOLDOWN_DECLARE(manual_vent_cooldown)
 
 /obj/structure/ore_vent/Initialize(mapload)
 	if(mapload)
@@ -102,6 +105,49 @@
 	scan_and_confirm(user)
 	return TRUE
 
+/obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		return
+	if(!discovered)
+		to_chat(user, span_notice("You can't quite find the weakpoint of [src]... Perhaps it needs to be scanned first?"))
+		return
+	to_chat(user, span_notice("You start striking [src] with your golem's fist, attempting to dredge up a boulder..."))
+	for(var/i in 1 to 3)
+		if(do_after(user, boulder_size * 1 SECONDS, src))
+			user.apply_damage(20, STAMINA)
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	produce_boulder(TRUE)
+	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
+
+/obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
+	. = ..()
+	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		return
+	produce_boulder(TRUE)
+
+/obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
+	. = ..()
+	if(tapped)
+		return FALSE
+	if(istype(target, /mob/living/basic/node_drone))
+		return TRUE
+
+/obj/structure/ore_vent/examine(mob/user)
+	. = ..()
+	if(discovered)
+		switch(boulder_size)
+			if(BOULDER_SIZE_SMALL)
+				. += span_notice("This vent produces [span_bold("small")] boulders containing [ore_string]")
+			if(BOULDER_SIZE_MEDIUM)
+				. += span_notice("This vent produces [span_bold("medium")] boulders containing [ore_string]")
+			if(BOULDER_SIZE_LARGE)
+				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
+	else
+		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+
 /**
  * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
  * The materials available are determined by SSore_generation.ore_vent_minerals, which is a list of all minerals that can be contained in ore vents for a given cave generation.
@@ -136,6 +182,17 @@
 		else
 			new_material = pick(GLOB.ore_vent_minerals_lavaland)
 		mineral_breakdown[new_material] = rand(1, 4)
+
+/**
+ * Returns the quantity of mineral sheets in each ore vent's boulder contents roll.
+ * First roll can produce the most ore, with subsequent rolls scaling lower logarithmically.
+ * Inversely scales with ore_floor, so that the first roll is the largest, and subsequent rolls are smaller.
+ * (1 -> from 16 to 7 sheets of materials, and 3 -> from 8 to 6 sheets of materials on a small vent)
+ * This also means a large boulder can highroll a boulder with a full stack of 50 sheets of material.
+ * @params ore_floor The number of minerals already rolled. Used to scale the logarithmic function.
+ */
+/obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
+	return SHEET_MATERIAL_AMOUNT * round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1))
 
 /**
  * Starts the wave defense event, which will spawn a number of lavaland mobs based on the size of the ore vent.
@@ -285,6 +342,13 @@
  * Ore_string is passed to examine().
  */
 /obj/structure/ore_vent/proc/generate_description(mob/user)
+	ore_string = ""
+	var/list/mineral_names = list()
+	for(var/datum/material/resource as anything in mineral_breakdown)
+		mineral_names += initial(resource.name)
+	ore_string = "[english_list(mineral_names)]."
+	if(user)
+		ore_string += "\nThis vent was first discovered by [user]."
 
 /**
  * Adds floating temp_visual overlays to the vent, showcasing what minerals are contained within it.
@@ -307,13 +371,48 @@
 /obj/structure/ore_vent/proc/produce_boulder(apply_cooldown = FALSE)
 	RETURN_TYPE(/obj/item/boulder)
 
+	//cooldown applies only for manual processing by hand
+	if(apply_cooldown && !COOLDOWN_FINISHED(src, manual_vent_cooldown))
+		return
+
+	//produce the boulder
 	var/obj/item/boulder/new_rock
 	if(prob(artifact_chance))
 		new_rock = new /obj/item/boulder/artifact(loc)
 	else
 		new_rock = new /obj/item/boulder(loc)
+	Shake(duration = 1.5 SECONDS)
 
+	//decorate the boulder with materials
+	var/list/mats_list = list()
+	for(var/iteration in 1 to MINERALS_PER_BOULDER)
+		var/datum/material/material = pick_weight(mineral_breakdown)
+		mats_list[material] += ore_quantity_function(iteration)
+	new_rock.set_custom_materials(mats_list)
+
+	//set size & durability
+	new_rock.boulder_size = boulder_size
+	new_rock.durability = rand(2, boulder_size) //randomize durability a bit for some flavor.
+	new_rock.boulder_string = boulder_icon_state
+	new_rock.update_appearance(UPDATE_ICON_STATE)
+
+	//start the cooldown & return the boulder
+	if(apply_cooldown)
+		COOLDOWN_START(src, manual_vent_cooldown, 10 SECONDS)
 	return new_rock
+
+//comes with the station, and is already tapped.
+/obj/structure/ore_vent/starter_resources
+	name = "active ore vent"
+	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
+	tapped = TRUE
+	discovered = TRUE
+	unique_vent = TRUE
+	boulder_size = BOULDER_SIZE_SMALL
+	mineral_breakdown = list(
+		/datum/material/iron = 50,
+		/datum/material/glass = 50,
+	)
 
 /obj/structure/ore_vent/random
 
@@ -441,3 +540,4 @@
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM
+#undef MINERALS_PER_BOULDER
