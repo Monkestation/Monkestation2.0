@@ -38580,10 +38580,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/station/ai_monitored/command/storage/eva)
-"suv" = (
-/obj/effect/landmark/start/scientist,
-/turf/open/floor/iron/dark/corner,
-/area/station/science/xenobiology)
 "suC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -41836,6 +41832,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
@@ -42433,6 +42430,15 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
+"ump" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/station/science/xenobiology)
 "umu" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
@@ -46734,6 +46740,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -65570,7 +65577,7 @@ mfE
 pAk
 fDl
 pUe
-suv
+sxH
 pAk
 sEt
 dZA
@@ -65826,7 +65833,7 @@ lnF
 cyG
 hIj
 kta
-ait
+ump
 mfE
 pAk
 sEt
@@ -68401,7 +68408,7 @@ xMr
 pAk
 uVv
 tbs
-suv
+sxH
 pAk
 fDl
 php
