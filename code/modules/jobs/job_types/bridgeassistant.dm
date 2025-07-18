@@ -7,8 +7,8 @@ Bridge Assistant
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD //talks with command, stop being an admin
 	department_head = list(JOB_CAPTAIN)
 	faction = FACTION_STATION
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the command staff, pursuant to conventional chain of command"
 	minimal_player_age = 7
 	exp_requirements = 300
