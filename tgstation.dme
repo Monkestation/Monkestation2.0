@@ -1919,6 +1919,8 @@
 #include "code\game\area\areas\station\solars.dm"
 #include "code\game\area\areas\station\telecomm.dm"
 #include "code\game\atoms\atom_act.dm"
+#include "code\game\atoms\atom_appearance.dm"
+#include "code\game\atoms\atom_color.dm"
 #include "code\game\atoms\atom_defense.dm"
 #include "code\game\atoms\atoms.dm"
 #include "code\game\atoms\atoms_movable.dm"
