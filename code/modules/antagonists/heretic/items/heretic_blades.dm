@@ -42,17 +42,21 @@
 		else
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 		if(user.has_status_effect(/datum/status_effect/silver_bullet))
+			var/wound_severity = WOUND_SEVERITY_MODERATE
 			if(user.can_feel_pain())
 				to_chat(user, span_userdanger("Something incomprehensible lashes out at you as you escape, filling you with a horrible pain!"))
 				user.cause_pain(BODY_ZONE_CHEST, 50, BRUTE)
 				user.cause_pain(BODY_ZONES_MINUS_CHEST, 40, BRUTE)
 			else
 				to_chat(user, span_userdanger("Something incomprehensible lashes out at you as you escape, tearing your flesh asunder!"))
-				if(iscarbon(user))
-					var/mob/living/carbon/carbon_user = user
-					carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, pick(carbon_user.bodyparts), WOUND_SEVERITY_CRITICAL, wound_source = "bloodsilver blade shatter")
-				else
-					user.take_overall_damage(brute = 50)
+				wound_severity = WOUND_SEVERITY_CRITICAL
+
+			// also apply a wound. if you can't feel pain, the wound is critical instead of moderate.
+			if(iscarbon(user))
+				var/mob/living/carbon/carbon_user = user
+				carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, pick(carbon_user.bodyparts), wound_severity, wound_source = "bloodsilver blade shatter")
+			else
+				user.take_overall_damage(brute = 50)
 			user.Paralyze(5 SECONDS)
 	else
 		to_chat(user,span_warning("You shatter [src]."))
