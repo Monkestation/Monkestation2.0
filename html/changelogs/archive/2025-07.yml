@@ -254,3 +254,45 @@
       have their warning about interfering with station events removed
   - map: Heliostation chem facotry small room now has ventalation.
   - map: Voidraptor blueshield and NT rep office now use their respective accesses
+2025-07-17:
+  Addust:
+  - bugfix: Frontier surplus crates on Sheffield-class free mining vessels have had
+      their security locks removed by Johnson & Co. (free miners no longer lose frontier
+      surplus to dusting)
+  - map: A Johnson & Co engineering team has completely redone the office of the Nanotrasen
+      Representative assigned to Pubby Station, pending more serious works at the
+      site
+  BingusSS13:
+  - bugfix: Radiation storms will no longer affect Charlie Station on Ice Box.
+  Ice-Type:
+  - bugfix: fixes the nodnod/nod2 emote.
+  - rscdel: removes the inferior version that was overwriting
+  Wisemonster:
+  - map: Added rechargers to QM offices
+  notghosti:
+  - rscadd: Add a new AI verb, Hide Jobtitle display, which disables AI's native ability
+      to 'hear' jobtitles.
+  - rscadd: gothic coat can be equipped on the neck slot.
+  - rscadd: gothic coat now actually covers various parts of the body
+  - rscadd: Captains gloves can now transmit sign language
+  - rscadd: Gloves that can transmit sign language on radio now have a description
+      mentioning it on inspect.
+  - qol: Eyepatches can be adjusted with alt click.
+  - qol: Greyscale Kitsune mask can be adjusted by alt clicking the icon.
+  - bugfix: Greyscale kitsune mask now shows beards/faces when in the up postion and
+      hides while put down
+  - bugfix: You can no longer eat through plastic on the greyscale kitsune mask.
+2025-07-18:
+  Absolucy:
+  - map: HelioStation, Lead Poisoning Station, PubbyStation, and Theseus now all properly
+      have XenoDrobe vendors mapped into xenobiology.
+  - map: Lead Poisoning Station now has proper Xenobiologist spawn points.
+  - qol: You can now click on the song URL in the music player widget in chat.
+  - qol: It's now obvious whenever someone can't be decapitated, instead of just wasting
+      time swinging at their head without any feedback.
+  Absolucy, Melbert:
+  - balance: Mobs now have a tiny bit of innate insulation.
+  - balance: Returning to standard body temperature is 3x faster.
+  - balance: Max body temp is limited to ~600 kelvin (330 celsius).
+  steelphoenix4:
+  - bugfix: Fix store not giving you the right lizard plushie
