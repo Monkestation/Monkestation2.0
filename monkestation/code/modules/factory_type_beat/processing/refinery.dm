@@ -17,7 +17,7 @@
 	silo_materials = AddComponent(
 		/datum/component/remote_materials, \
 		mapload, \
-		force_connect = TRUE, \ // Attempt to auto connect the machine to a local ore silo if one is avaliable
+		force_connect = TRUE, /*Attempt to auto connect the machine to a local ore silo if one is avaliable*/ \
 		mat_container_flags = MATCONTAINER_NO_INSERT \
 	)
 
