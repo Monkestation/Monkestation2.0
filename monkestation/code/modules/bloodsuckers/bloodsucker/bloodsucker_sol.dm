@@ -168,6 +168,11 @@
 	/// Is this bloodsucker currently protected from solar flares?
 	var/protected = FALSE
 
+/datum/status_effect/bloodsucker_sol/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	if(!QDELETED(src)) // alert gets created after on_apply, so we have to do an initial update_appearance here
+		linked_alert?.update_appearance(UPDATE_ICON_STATE)
+
 /datum/status_effect/bloodsucker_sol/on_apply()
 	if(!SSsol.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin))
 		return FALSE
