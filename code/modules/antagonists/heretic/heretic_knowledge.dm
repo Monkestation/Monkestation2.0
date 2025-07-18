@@ -40,6 +40,14 @@
 	var/route
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
+	/// Side components needed for rituals, randomly selected
+	var/list/side_ritual_items = list(/obj/item/flashlight/flare/candle = 4)
+	/// Primary components needed for rituals 1-3
+	var/list/low_risk_ritual = list(/obj/item/flashlight/flare/candle = 4)
+	/// Primary components needed for rituals 4-6
+	var/list/med_risk_ritual = list(/obj/item/organ/internal/heart = 2)
+	/// Primary components needed for ritual 7
+	var/list/high_risk_ritual = list(/obj/item/tank/jetpack/oxygen/captain = 1)
 
 /datum/heretic_knowledge/New()
 	if(!mutually_exclusive)

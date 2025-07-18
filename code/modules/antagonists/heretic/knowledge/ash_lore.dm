@@ -39,6 +39,15 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	route = PATH_ASH
+	side_ritual_items = list(
+		/obj/item/organ/internal/liver = 1,
+		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
+		/obj/item/clothing/mask = 1,
+		/obj/item/flashlight/flare/candle = 4,
+	)
+	low_risk_ritual = list(/obj/item/flashlight/flare = 4)
+	med_risk_ritual = list(/obj/item/organ/internal/heart = 2)
+	high_risk_ritual = list(/obj/item/tank = 1)
 
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
