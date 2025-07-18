@@ -60,8 +60,9 @@
 	if(oni_horns.icon_state == null || oni_horns.icon_state == "None")
 		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
 		return invalid_icon
-	var/icon/final_icon = icon(oni_horns.icon, "m_oni_horns_[oni_horns.icon_state]_BEHIND")
-	final_icon.Blend(icon(oni_horns.icon, "m_oni_horns_[oni_horns.icon_state]_FRONT"), ICON_OVERLAY)
+	/*var/icon/final_icon = icon(oni_horns.icon, "m_oni_horns_[oni_horns.icon_state]_BEHIND") // go fix the sprites first
+	final_icon.Blend(icon(oni_horns.icon, "m_oni_horns_[oni_horns.icon_state]_FRONT"), ICON_OVERLAY)*/
+	var/icon/final_icon = icon(oni_horns.icon, "m_oni_horns_[oni_horns.icon_state]_FRONT")
 	return final_icon
 
 /datum/preference/choiced/oni_horns/apply_to_human(mob/living/carbon/human/target, value)

@@ -39,15 +39,18 @@
 
 	var/icon/final_icon = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
+	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+
 	if (sprite_accessory.icon_state != "none")
 		var/icon/body_markings_icon = icon(
 			'icons/mob/species/lizard/lizard_misc.dmi',
 			"m_body_markings_[sprite_accessory.icon_state]_ADJ",
 		)
 
+		body_markings_icon.Blend(COLOR_VIVID_YELLOW, ICON_MULTIPLY)
+
 		final_icon.Blend(body_markings_icon, ICON_OVERLAY)
 
-	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
 	final_icon.Crop(10, 8, 22, 23)
 	final_icon.Scale(26, 32)
 	final_icon.Crop(-2, 1, 29, 32)
