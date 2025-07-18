@@ -1,9 +1,5 @@
 /atom
-	///overlays managed by
-	[update_overlays]
-	[/atom/proc/update_overlays] to prevent removing overlays
-	that weren't added by the same proc.
-	 Single items are stored on their own, not in a list.
+	///overlays managed by[update_overlays][/atom/proc/update_overlays] to prevent removing overlaysthat weren't added by the same proc.Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
 
