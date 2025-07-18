@@ -1929,6 +1929,7 @@
 #include "code\game\atoms\atom_orbit.dm"
 #include "code\game\atoms\atom_storage.dm"
 #include "code\game\atoms\atom_tool_acts.dm"
+#include "code\game\atoms\atom_vv.dm"
 #include "code\game\atoms\atoms.dm"
 #include "code\game\atoms\atoms_movable.dm"
 #include "code\game\gamemodes\events.dm"
