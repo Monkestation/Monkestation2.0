@@ -35,20 +35,25 @@
 	return ..()
 
 /obj/item/melee/sickly_blade/attack_self(mob/living/user)
-	if(user.has_status_effect(/datum/status_effect/silver_bullet))
-		playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
-		to_chat(user, span_userdanger("The silver staining your blood silences your call from shattering [src], filling you with a horrible pain!"))
-		user.cause_pain(BODY_ZONE_CHEST, 50, BRUTE)
-		user.cause_pain(BODY_ZONES_MINUS_CHEST, 40, BRUTE)
-		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
-		qdel(src)
-		return
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 	if(IS_HERETIC_OR_MONSTER(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
 			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message]"))
 		else
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
+		if(user.has_status_effect(/datum/status_effect/silver_bullet))
+			if(user.can_feel_pain())
+				to_chat(user, span_userdanger("Something incomprehensible lashes out at you escape, filling you with a horrible pain!"))
+				user.cause_pain(BODY_ZONE_CHEST, 50, BRUTE)
+				user.cause_pain(BODY_ZONES_MINUS_CHEST, 40, BRUTE)
+			else
+				to_chat(user, span_userdanger("Something incomprehensible lashes out at you as you escape, tearing your flesh asunder!"))
+				if(iscarbon(user))
+					var/mob/living/carbon/carbon_user = user
+					carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, pick(carbon_user.bodyparts), WOUND_SEVERITY_CRITICAL, wound_source = "bloodsilver blade shatter")
+				else
+					user.take_overall_damage(brute = 50)
+			user.Paralyze(5 SECONDS)
 	else
 		to_chat(user,span_warning("You shatter [src]."))
 	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
