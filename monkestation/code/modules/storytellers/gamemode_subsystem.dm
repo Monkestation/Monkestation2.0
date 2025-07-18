@@ -1147,10 +1147,10 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 								return
 							event_track_points[track] = set_pts
 							message_admins("[key_name_admin(usr)] set points of [track] track to [set_pts].")
-							log_admin_private("[key_name(usr)] set points of [track] track to [set_pts].")
+							log_admin("[key_name(usr)] set points of [track] track to [set_pts].")
 						if("next_event")
 							message_admins("[key_name_admin(usr)] invoked next event for [track] track.")
-							log_admin_private("[key_name(usr)] invoked next event for [track] track.")
+							log_admin("[key_name(usr)] invoked next event for [track] track.")
 							event_track_points[track] = point_thresholds[track]
 							if(current_storyteller)
 								current_storyteller.handle_tracks()
