@@ -36609,6 +36609,9 @@
 	pixel_y = -3;
 	pixel_x = 3
 	},
+/obj/item/wrench{
+	pixel_x = 2
+	},
 /turf/open/floor/iron/dark/side,
 /area/station/science/xenobiology/hallway)
 "kKY" = (
@@ -56823,6 +56826,9 @@
 	},
 /obj/item/toy/figure/qm{
 	pixel_y = 2
+	},
+/obj/machinery/recharger{
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)

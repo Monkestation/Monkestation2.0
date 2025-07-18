@@ -7777,6 +7777,7 @@
 "aPM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/freezer,
 /area/station/medical/chemistry)
 "aPN" = (
@@ -39850,6 +39851,9 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/qm)
 "inl" = (
@@ -40319,6 +40323,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "ivS" = (
@@ -75159,6 +75164,9 @@
 /obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
 /turf/open/floor/iron/freezer,
 /area/station/medical/chemistry)

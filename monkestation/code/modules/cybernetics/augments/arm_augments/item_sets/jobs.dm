@@ -11,7 +11,6 @@
 		/obj/item/wirecutters/cyborg,
 		/obj/item/multitool/cyborg,
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/toolset/l
 	zone = BODY_ZONE_L_ARM
@@ -40,7 +39,6 @@
 		/obj/item/circular_saw/augment,
 		/obj/item/surgical_drapes,
 	)
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/surgery/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
@@ -54,7 +52,6 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/surgery/emagged
 	name = "hacked surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm. This one seems to have been tampered with."
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	items_to_create = list(
 		/obj/item/retractor/augment,
 		/obj/item/hemostat/augment,
@@ -74,7 +71,6 @@
 		/obj/item/knife/kitchen,
 		/obj/item/reagent_containers/cup/beaker
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/janitor
 	name = "janitorial toolset implant"
@@ -90,7 +86,6 @@
 		/obj/item/reagent_containers/cup/beaker/large,
 		/obj/item/reagent_containers/spray/cleaner
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/janitor/emag_act()
 	if(obj_flags & EMAGGED)
@@ -113,7 +108,6 @@
 		/obj/item/detective_scanner,
 		/obj/item/lighter
 	)
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/detective/Destroy()
 	on_destruction()
@@ -135,7 +129,6 @@
 		/obj/item/sensor_device,
 		/obj/item/gun/medbeam
 	)
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics
 	name = "atmospherics toolset implant"
@@ -147,7 +140,6 @@
 		/obj/item/crowbar,
 		/obj/item/holosign_creator/atmos
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/combat
 	name = "officer toolset implant"
@@ -158,7 +150,6 @@
 		/obj/item/melee/baton,
 		/obj/item/assembly/flash/armimplant,
 	)
-	encode_info = AUGMENT_TG_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/combat/Initialize(mapload)
 	. = ..()
@@ -168,16 +159,6 @@
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
 		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
-
-/obj/item/organ/internal/cyberimp/arm/item_set/connector
-	name = "universal connection implant"
-	desc = "Special inhand implant that allows you to connect your brain directly into the protocl sphere of implants, which allows for you to hack them and make the compatible."
-	icon = 'monkestation/code/modules/cybernetics/icons/surgery.dmi'
-	icon_state = "hand_implant"
-	implant_overlay = "hand_implant_overlay"
-	implant_color = "#39992d"
-	encode_info = AUGMENT_NO_REQ
-	items_to_create = list(/obj/item/cyberlink_connector)
 
 /obj/item/organ/internal/cyberimp/arm/item_set/botany
 	name = "botany arm implant"
@@ -193,7 +174,6 @@
 		/obj/item/storage/bag/plants,
 		/obj/item/storage/bag/plants/portaseeder
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/barber
 	name = "barber toolset implant"
@@ -206,11 +186,10 @@
 		/obj/item/fur_dyer,
 		/obj/item/dyespray,
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/synth_repair
 	name = "integrated synthetic repair kit"
-	desc = "An ultra stripped down tool kit implant, containing only what you need to fix the most basic damage to a synthetic's exterior, that being a welder and a big coil of cable. Does not require a cyberlink."
+	desc = "An ultra stripped down tool kit implant, containing only what you need to fix the most basic damage to a synthetic's exterior, that being a welder and a big coil of cable."
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	icon_state = "toolkit_engineering"
 	items_to_create = list(
@@ -219,4 +198,3 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/stack/cable_coil,
 	)
-	encode_info = AUGMENT_NO_REQ //its just a welder and a big coil of cable

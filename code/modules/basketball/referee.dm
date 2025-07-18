@@ -35,7 +35,7 @@
 
 /datum/action/innate/timeout/do_ability(mob/living/user, mob/living/carbon/human/target)
 	user.say("FOUL BY [target]!", forced = "whistle")
-	playsound(user, 'sound/misc/whistle.ogg', 30, FALSE, 4)
+	playsound(user, 'sound/misc/whistle.ogg', 30, FALSE, 4, ignore_walls = FALSE)
 
 	new /obj/effect/timestop(get_turf(target), 0, 5 SECONDS, list(user), TRUE, TRUE)
 

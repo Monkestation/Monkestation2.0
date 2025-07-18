@@ -96,6 +96,7 @@
 #define ROLE_BAR_DRONE "Bardrone" // monkestation addition
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
+#define ROLE_FREE_MINER "Free Miner"
 #define ROLE_BEACH_BUM "Beach Bum"
 #define ROLE_BOT "Bot"
 #define ROLE_DERELICT_DRONE "Derelict Drone"

@@ -315,12 +315,6 @@
 	message = "squints."
 	message_param = "squints at %t."
 
-/datum/emote/living/nodnod
-	key = "nodnod"
-	key_third_person = "nodnods"
-	message = "nodnods."
-	message_param = "nodnods at %t."
-
 //The code from 'Start' to 'End' was ported from Russ-station, with permission.
 //All credit to 'bitch fish'
 //Start

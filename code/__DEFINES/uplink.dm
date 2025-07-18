@@ -20,3 +20,6 @@
 /// Typepath used for uplink items which don't actually produce an item (essentially just a placeholder)
 /// Future todo: Make this not necessary / make uplink items support item-less items natively
 #define ABSTRACT_UPLINK_ITEM /obj/item/loot_table_maker
+
+/// Minimal cost for an item to be eligible for a discount
+#define TRAITOR_DISCOUNT_MIN_PRICE 4

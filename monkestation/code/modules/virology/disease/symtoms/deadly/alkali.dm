@@ -56,13 +56,11 @@ Bonus
 	mob.adjust_fire_stacks(get_stacks)
 	mob.take_overall_damage(burn = get_stacks / 2, required_bodytype = BODYTYPE_ORGANIC)
 	if(chems)
-		mob.reagents.add_reagent(/datum/reagent/clf3, 2 * multiplier)
-	return 1
+		mob.reagents?.add_reagent(/datum/reagent/clf3, 2 * multiplier)
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/carbon/mob, datum/disease/acute/disease)
 	var/get_stacks = 8 * multiplier
 	mob.adjust_fire_stacks(get_stacks)
 	mob.take_overall_damage(burn = get_stacks, required_bodytype = BODYTYPE_ORGANIC)
 	if(chems)
-		mob.reagents.add_reagent_list(list(/datum/reagent/napalm = 4 * multiplier, /datum/reagent/clf3 = 4 * multiplier))
-	return 1
+		mob.reagents?.add_reagent_list(list(/datum/reagent/napalm = 4 * multiplier, /datum/reagent/clf3 = 4 * multiplier))
