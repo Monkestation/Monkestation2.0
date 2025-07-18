@@ -316,6 +316,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 /// Handles despawning the player.
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
+	var/mob/living/carbon/human/human_occupant = astype(occupant)
 
 	SSjob.FreeRole(stored_rank)
 
@@ -397,6 +398,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	GLOB.joined_player_list -= stored_ckey
 	GLOB.manifest.general -= crewfile
+
+	if(human_occupant?.account_id)
+		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[human_occupant.account_id]"]
+		if(account)
+			GLOB.lottery_ticket_owners -= account
 
 	handle_objectives()
 	QDEL_NULL(occupant)

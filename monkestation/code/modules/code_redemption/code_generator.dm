@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(stored_codes, list())
 	if(!no_logs)
 		log_game("[usr] generated a new redemption code worth [amount] of coins.")
 		message_admins("[usr] generated a new redemption code worth [amount] of coins.")
-		to_chat(usr, span_big("Your generated code is: [string]"))
+		to_chat(usr, span_big("Your generated code is: [string]"), confidential = TRUE)
 	return string
 
 /proc/generate_loadout_code(choice, no_logs = FALSE)
@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(stored_codes, list())
 	if(!no_logs)
 		log_game("[usr] generated a new redemption code giving a [choice].")
 		message_admins("[usr] generated a new redemption code giving a [choice].")
-		to_chat(usr, span_big("Your generated code is: [string]"))
+		to_chat(usr, span_big("Your generated code is: [string]"), confidential = TRUE)
 	return string
 
 /proc/generate_antag_token_code(choice, no_logs = FALSE)
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(stored_codes, list())
 	if(!no_logs)
 		log_game("[usr] generated a new redemption code giving a [choice] Antag Token.")
 		message_admins("[usr] generated a new redemption code giving a [choice] Antag Token.")
-		to_chat(usr, span_big("Your generated code is: [string]"))
+		to_chat(usr, span_big("Your generated code is: [string]"), confidential = TRUE)
 	return string
 
 /proc/generate_unusual_code(item_choice, effect_choice, no_logs = FALSE)
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(stored_codes, list())
 	if(!no_logs)
 		log_game("[usr] generated a new redemption code giving a [item_choice] with the unusual effect [effect_choice].")
 		message_admins("[usr] generated a new redemption code giving a [item_choice] with the unusual effect [effect_choice].")
-		to_chat(usr, span_big("Your generated code is: [string]"))
+		to_chat(usr, span_big("Your generated code is: [string]"), confidential = TRUE)
 	return string
 
 /proc/generate_code_string()
@@ -215,4 +215,4 @@ GLOBAL_LIST_INIT(stored_codes, list())
 	log_game("[usr] generated [amount] new redemption codes.")
 	message_admins("[usr] generated a new redemption codes.")
 	var/connected_keys = generated_codes.Join(" ,")
-	to_chat(usr, span_big("Your generated codes are: [connected_keys]"))
+	to_chat(usr, span_big("Your generated codes are: [connected_keys]"), confidential = TRUE)

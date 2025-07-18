@@ -618,14 +618,12 @@
 "pQ" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/item/flatpacked_machine,
-/obj/structure/closet/crate/secure{
-	req_access = list("qm");
-	name = "old crate";
-	desc = "An old, dinged-up crate. The lock's been in place for years.";
-	max_integrity = 600
-	},
 /obj/item/flatpacked_machine/organics_ration_printer,
 /obj/item/flatpacked_machine/recycler,
+/obj/structure/closet/crate/engineering{
+	name = "frontier surplus cate";
+	desc = "A rusty steel crate."
+	},
 /turf/open/floor/iron/shuttle/exploration/flat,
 /area/shuttle/ruin/free_miner)
 "pR" = (
