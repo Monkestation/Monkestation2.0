@@ -766,7 +766,6 @@
 		return TRUE
 	return FALSE
 
-
 ///Where atoms should drop if taken from this atom
 /atom/proc/drop_location()
 	var/atom/location = loc
