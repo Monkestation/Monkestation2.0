@@ -1,0 +1,6 @@
+author: "leaKsi, SmArtKar, grungussuss"
+delete-after: True
+changes:
+  - rscadd: "You can now buckle to bar stools."
+  - qol: "Stopping orbiting now automatically breaks you out of auto-observe."
+  - bugfix: "Medibots no longer pointlessly attempt to heal players with \"No Healing\" challenge."

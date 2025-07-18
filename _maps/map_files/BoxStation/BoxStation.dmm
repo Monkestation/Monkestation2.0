@@ -15625,6 +15625,9 @@
 	pixel_y = 7;
 	pixel_x = 3
 	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "fbx" = (
