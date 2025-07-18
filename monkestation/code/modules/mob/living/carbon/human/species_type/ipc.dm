@@ -30,7 +30,6 @@
 
 	mutant_organs = list(
 		/obj/item/organ/internal/cyberimp/arm/item_set/power_cord,
-		/obj/item/organ/internal/cyberimp/cyberlink/nt_low,
 	)
 	external_organs = list(
 		/obj/item/organ/external/antennae/ipc = "None"
@@ -242,9 +241,14 @@
 			return
 		bodypart.limb_id = chassis_of_choice.icon_state
 		bodypart.name = "\improper[chassis_of_choice.name] [parse_zone(bodypart.body_zone)]"
-		bodypart.update_limb()
+		bodypart.should_draw_greyscale = bodypart::should_draw_greyscale
+		bodypart.palette = bodypart::palette
+		bodypart.palette_key = bodypart::palette_key
 		if(chassis_of_choice.palette_key == MUTANT_COLOR)
 			bodypart.should_draw_greyscale = TRUE
+			bodypart.palette = chassis_of_choice.palette
+			bodypart.palette_key = chassis_of_choice.palette_key
+		bodypart.update_limb()
 
 /datum/species/ipc/proc/on_emag_act(mob/living/carbon/human/owner, mob/user)
 	SIGNAL_HANDLER

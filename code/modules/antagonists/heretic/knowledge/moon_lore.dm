@@ -250,7 +250,6 @@
 		amount_of_lunatics++
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	SIGNAL_HANDLER
 
 	visible_hallucination_pulse(
@@ -265,7 +264,7 @@
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
-		new moon_effect(get_turf(carbon_view))
+		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
 		if(carbon_sanity < 30)

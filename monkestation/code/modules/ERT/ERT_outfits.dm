@@ -47,8 +47,6 @@
 
 /datum/outfit/centcom/ert/generic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	var/obj/item/organ/internal/cyberimp/cyberlink/nt_high/cyberlink = new()
-	cyberlink.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/chest/nutriment/plus/nutriment_pump = new()
 	nutriment_pump.Insert(H, drop_if_replaced = FALSE)
 
@@ -705,7 +703,7 @@
 	)
 	glasses = /obj/item/clothing/glasses/thermal
 	l_pocket = /obj/item/melee/energy/sword/saber/purple //I am going to end to this, once and for all!
-	r_pocket = /obj/item/shield/energy
+	r_pocket = /obj/item/shield/energy/advanced
 	additional_radio = /obj/item/encryptionkey/heads/captain
 	implants = list(/obj/item/implant/krav_maga)
 

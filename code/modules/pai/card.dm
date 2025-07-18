@@ -21,6 +21,13 @@
 	/// Prevents a crew member from hitting "request pAI" repeatedly
 	var/request_spam = FALSE
 
+/obj/item/pai_card/Initialize(mapload)
+	. = ..()
+
+	update_appearance()
+	SSpai.pai_card_list += src
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
@@ -64,11 +71,9 @@
 		update_appearance()
 	return ..()
 
-/obj/item/pai_card/Initialize(mapload)
+/obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	update_appearance()
-	SSpai.pai_card_list += src
-	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+	return pai?.on_saboteur(source, disrupt_duration)
 
 /obj/item/pai_card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!"))
@@ -196,7 +201,6 @@
 	var/mob/living/silicon/pai/new_pai = new(src)
 	new_pai.name = candidate.name || pick(GLOB.ninja_names)
 	new_pai.real_name = new_pai.name
-	new_pai.update_name_tag(new_pai.name) // monkestation edit: name tags
 	new_pai.PossessByPlayer(candidate.ckey)
 	set_personality(new_pai)
 	SSpai.candidates -= ckey

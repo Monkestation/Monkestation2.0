@@ -30,13 +30,7 @@ SUBSYSTEM_DEF(memory_stats)
 	return result
 #endif
 
-/client/proc/server_memory_stats()
-	set name = "Server Memory Stats"
-	set category = "Debug"
-	set desc = "Print various statistics about the server's current memory usage (does not work on OpenDream)"
-
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(server_memory_stats, R_DEBUG, FALSE, "Server Memory Stats", "Print various statistics about the server's current memory usage. (does not work on OpenDream)", ADMIN_CATEGORY_DEBUG)
 	var/box_color = "red"
 #ifndef OPENDREAM
 	var/result = SSmemory_stats?.initialized ? span_danger("Error fetching memory statistics!") : span_warning("SSmemory_stats hasn't been initialized yet!")
@@ -47,4 +41,4 @@ SUBSYSTEM_DEF(memory_stats)
 #else
 	var/result = span_danger("Memory statistics not supported on OpenDream, sorry!")
 #endif
-	to_chat(src, fieldset_block("Memory Statistics", result, "boxed_message [box_color]_box"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)
+	to_chat(user, fieldset_block("Memory Statistics", result, "boxed_message [box_color]_box"), avoid_highlighting = TRUE, type = MESSAGE_TYPE_DEBUG, confidential = TRUE)

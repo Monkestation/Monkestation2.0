@@ -1,8 +1,10 @@
+
 /datum/armament_entry/company_import/vitezstvi
 	category = VITEZSTVI_AMMO_NAME
 	company_bitflag = CARGO_COMPANY_VITEZSTVI_AMMO
 
 // Ammo bench and the lethals disk
+
 
 /datum/armament_entry/company_import/vitezstvi/ammo_bench
 	subcategory = "Ammunition Manufacturing Equipment"
@@ -36,6 +38,8 @@
 	item_type = /obj/item/storage/toolbox/guncase/skyrat/empty
 	cost = PAYCHECK_COMMAND * 2
 
+/*
+
 // Boxes of non-shotgun ammo
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes
@@ -50,9 +54,6 @@
 	item_type = /obj/item/ammo_box/c9mm/hp
 	cost = PAYCHECK_CREW * 2
 
-/datum/armament_entry/company_import/vitezstvi/ammo_boxes/peacekeeper_rubber
-	item_type = /obj/item/ammo_box/c9mm/rubber
-
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_lethal
 	item_type = /obj/item/ammo_box/c10mm
 	cost = PAYCHECK_CREW * 2
@@ -60,9 +61,6 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_hp
 	item_type = /obj/item/ammo_box/c10mm/hp
 	cost = PAYCHECK_CREW * 2
-
-/datum/armament_entry/company_import/vitezstvi/ammo_boxes/auto10mm_rubber
-	item_type = /obj/item/ammo_box/c10mm/rubber
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/strilka_lethal
 	item_type = /obj/item/ammo_box/c310_cargo_box
@@ -207,3 +205,4 @@
 	item_type = /obj/item/ammo_box/c980grenade/shrapnel/phosphor
 	contraband = TRUE
 	cost = PAYCHECK_COMMAND * 2
+*/

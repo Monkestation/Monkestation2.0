@@ -81,3 +81,11 @@ SUBSYSTEM_DEF(weather)
 			A = W
 			break
 	return A
+
+ADMIN_VERB(stop_weather, R_DEBUG | R_ADMIN, FALSE, "Stop All Active Weather", "Stop all currently active weather.", ADMIN_CATEGORY_DEBUG) // Probably not needed but added incase.
+	log_admin("[key_name(user)] stopped all currently active weather.")
+	message_admins("[key_name_admin(user)] stopped all currently active weather.")
+	for(var/datum/weather/current_weather as anything in SSweather.processing)
+		if(current_weather in SSweather.processing)
+			current_weather.end()
+	BLACKBOX_LOG_ADMIN_VERB("Stop All Active Weather")

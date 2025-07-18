@@ -43,6 +43,8 @@
 	///If this is a path, this gets created as an object in Initialize.
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
 
+	///If we've been forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 	///If the lamp isn't broken.
 	var/lamp_functional = TRUE
 	///If the lamp is turned on

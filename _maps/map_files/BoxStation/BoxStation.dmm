@@ -5129,10 +5129,8 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 8
 	},
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma{
-	pixel_x = -6;
-	pixel_y = 6
+	amount = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -6097,6 +6095,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "bTK" = (
@@ -15625,6 +15624,9 @@
 /obj/effect/spawner/random/entertainment/coin{
 	pixel_y = 7;
 	pixel_x = 3
+	},
+/obj/machinery/recharger{
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
@@ -31387,21 +31389,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/o_plus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/blood/o_minus,
-/obj/item/reagent_containers/blood/b_plus,
-/obj/item/reagent_containers/blood/b_minus,
-/obj/item/reagent_containers/blood/a_plus,
-/obj/item/reagent_containers/blood/a_minus,
-/obj/item/reagent_containers/blood/lizard,
-/obj/item/reagent_containers/blood/ethereal,
 /obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
@@ -31414,6 +31401,8 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kdO" = (
@@ -31735,7 +31724,9 @@
 	specialfunctions = 4;
 	normaldoorcontrol = 1
 	},
-/obj/structure/filingcabinet,
+/obj/machinery/computer/records/pathology{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "kiC" = (
@@ -33890,6 +33881,10 @@
 /obj/structure/sign/departments/engineering/directional/west,
 /turf/open/space/basic,
 /area/space/nearstation)
+"kTO" = (
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "kUa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -46328,6 +46323,7 @@
 	name = "medical camera"
 	},
 /obj/structure/table,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "oUG" = (
@@ -48694,7 +48690,7 @@
 /area/station/service/hydroponics/garden)
 "pHR" = (
 /turf/open/space/basic,
-/area/shipbreak)
+/area/space/shipbreak)
 "pHW" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
@@ -57458,6 +57454,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "sHr" = (
@@ -73892,10 +73889,8 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 8
 	},
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma{
-	pixel_x = -6;
-	pixel_y = 6
+	amount = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -74008,6 +74003,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/structure/table,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "xQF" = (
@@ -100316,7 +100312,7 @@ uEU
 fxk
 hGH
 jvA
-rFn
+kTO
 rFn
 rFn
 mwn

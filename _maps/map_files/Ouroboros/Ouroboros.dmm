@@ -4534,6 +4534,7 @@
 /area/station/engineering/storage/tcomms)
 "bqn" = (
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bqN" = (
@@ -50374,6 +50375,9 @@
 /area/station/maintenance/starboard/fore)
 "oOC" = (
 /obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/quartermaster)
 "oOH" = (
@@ -68702,6 +68706,7 @@
 /area/station/security/brig/entrance)
 "uot" = (
 /obj/machinery/light/cold/directional/west,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/engine,
 /area/station/science/ordnance)
 "uov" = (

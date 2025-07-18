@@ -29,21 +29,6 @@
 	items_list.Cut()
 	return ..()
 
-/obj/item/organ/internal/cyberimp/arm/item_set/update_implants()
-	if(QDELETED(active_item))
-		return
-
-	if(!check_compatibility())
-		Retract()
-
-	owner.visible_message("<span class='notice'>[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='notice'>[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='hear'>You hear a short mechanical noise.</span>")
-
-	owner.transferItemToLoc(active_item, src, TRUE)
-	active_item = null
-	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
-
 /obj/item/organ/internal/cyberimp/arm/item_set/ui_action_click()
 	if((organ_flags & ORGAN_FAILING) || (!active_item && !contents.len))
 		to_chat(owner, span_warning("The implant doesn't respond. It seems to be broken..."))
@@ -51,26 +36,20 @@
 
 	if(!active_item || (active_item in src))
 		active_item = null
-		if(contents.len == 1)
-			if(!check_compatibility())
-				to_chat(owner, span_warning("Your [src] beeps loudly, it seems its not compatible with your current cyberlink!"))
-				return
+		if(length(contents) == 1)
 			Extend(contents[1])
-		else
-			if(!check_compatibility())
-				to_chat(owner, span_warning("Your [src] beeps loudly, it seems its not compatible with your current cyberlink!"))
-				return
-			var/list/choice_list = list()
-			for(var/datum/weakref/augment_ref in items_list)
-				var/obj/item/augment_item = augment_ref.resolve()
-				if(!augment_item)
-					items_list -= augment_ref
-					continue
-				choice_list[augment_item] = image(augment_item)
-			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
-			if(owner && owner == usr && owner.stat != DEAD && (src in owner.organs) && !active_item && (choice in contents))
-				// This monster sanity check is a nice example of how bad input is.
-				Extend(choice)
+			return
+		var/list/choice_list = list()
+		for(var/datum/weakref/augment_ref in items_list)
+			var/obj/item/augment_item = augment_ref.resolve()
+			if(!augment_item)
+				items_list -= augment_ref
+				continue
+			choice_list[augment_item] = image(augment_item)
+		var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
+		if(owner && owner == usr && owner.stat != DEAD && (src in owner.organs) && !active_item && (choice in contents))
+			// This monster sanity check is a nice example of how bad input is.
+			Extend(choice)
 	else
 		Retract()
 
