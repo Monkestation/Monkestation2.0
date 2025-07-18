@@ -3,3 +3,4 @@
 # You do not need this if you are a server operator! You should instead use the $include system.
 
 #STATIONNAME My Dev World
+CACHE_ASSETS 0
