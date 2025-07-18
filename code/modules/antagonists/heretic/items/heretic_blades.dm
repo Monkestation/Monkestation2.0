@@ -34,7 +34,15 @@
 
 	return ..()
 
-/obj/item/melee/sickly_blade/attack_self(mob/user)
+/obj/item/melee/sickly_blade/attack_self(mob/living/user)
+	if(user.has_status_effect(/datum/status_effect/silver_bullet))
+		playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
+		to_chat(user, span_userdanger("The silver staining your blood silences your call from shattering [src], filling you with a horrible pain!"))
+		user.cause_pain(BODY_ZONE_CHEST, 50, BRUTE)
+		user.cause_pain(BODY_ZONES_MINUS_CHEST, 40, BRUTE)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
+		qdel(src)
+		return
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 	if(IS_HERETIC_OR_MONSTER(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
