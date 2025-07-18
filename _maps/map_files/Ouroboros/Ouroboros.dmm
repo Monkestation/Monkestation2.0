@@ -50375,6 +50375,9 @@
 /area/station/maintenance/starboard/fore)
 "oOC" = (
 /obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/quartermaster)
 "oOH" = (

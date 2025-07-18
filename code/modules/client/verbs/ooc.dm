@@ -147,39 +147,34 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
 
-/client/proc/set_ooc()
+/client/proc/set_ooc() // MONKE EDIT Why were these kept?
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	var/newColor = tgui_color_picker(src, "Please select the new player OOC color.", "OOC color")
+
+ADMIN_VERB(set_ooc_color, R_FUN, FALSE, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
+	var/newColor = input(user, "Please select the new player OOC color.", "OOC color") as color | null
 	if(isnull(newColor))
 		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
-		return
 	var/new_color = sanitize_color(newColor)
-	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
-	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
+	message_admins("[key_name_admin(user)] has set the players' ooc color to [new_color].")
+	log_admin("[key_name_admin(user)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
 
-
-/client/proc/reset_ooc()
+/client/proc/reset_ooc() // MONKE EDIT Why were these kept?
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
-	if(tgui_alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
+
+ADMIN_VERB(reset_ooc_color, R_FUN, FALSE, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
+	if(tgui_alert(user, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
 		return
-	if(!check_rights(R_FUN))
-		message_admins("[usr.key] has attempted to use the Reset Player OOC Color verb!")
-		log_admin("[key_name(usr)] tried to reset player ooc color without authorization.")
-		return
-	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
-	log_admin("[key_name_admin(usr)] has reset player ooc color.")
+	message_admins("[key_name_admin(user)] has reset the players' ooc color.")
+	log_admin("[key_name_admin(user)] has reset player ooc color.")
 	GLOB.OOC_COLOR = null
 
 //Checks admin notice

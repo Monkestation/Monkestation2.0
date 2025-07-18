@@ -6,6 +6,7 @@
 	name = "\improper Oozeling"
 	plural_form = "Oozelings"
 	id = SPECIES_OOZELING
+	examine_limb_id = SPECIES_OOZELING
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	hair_color = "mutcolor"

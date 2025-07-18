@@ -131,11 +131,11 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/water
-	name = "water"
-	id = "Water"
+	name = "Water"
+	id = "water"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.1)
-	build_path = /datum/reagent/water
+	make_reagent = /datum/reagent/water
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
 /datum/design/ez_nut   //easy nut :)
