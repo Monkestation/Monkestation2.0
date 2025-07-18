@@ -95,12 +95,9 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins -= target
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
-	if(owner)
-		rementor(owner)
 	plane_debug = new(src)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
-
 
 /datum/admins/proc/deactivate()
 	if(IsAdminAdvancedProcCall())
@@ -163,8 +160,6 @@ GLOBAL_PROTECT(href_token)
 	owner.init_verbs() //re-initialize the verb list
 	owner.update_special_keybinds()
 	GLOB.admins |= client
-	if(!owner.mentor_datum)
-		owner.mentor_datum_set()
 
 	try_give_profiling()
 	try_give_devtools()
@@ -179,9 +174,6 @@ GLOBAL_PROTECT(href_token)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
 		owner.holder = null
-		GLOB.mentors -= owner
-		owner.mentor_datum?.owner = null
-		owner.mentor_datum = null
 		owner = null
 
 /// Returns the feedback forum thread for the admin holder's owner, as according to DB.
@@ -220,8 +212,15 @@ GLOBAL_PROTECT(href_token)
 
 	return cached_feedback_link
 
+/// Will check to see if rank has at least one of the rights required.
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank_flags()))
+		return FALSE
+	return TRUE
+
+/// Will check to see if rank has exact rights required.
+/datum/admins/proc/check_for_exact_rights(rights_required)
+	if(rights_required && ((rights_required & rank_flags()) != rights_required))
 		return FALSE
 	return TRUE
 
@@ -442,7 +441,7 @@ generally it would be used like so:
 /proc/admin_proc()
 	if(!check_rights(R_ADMIN))
 		return
-	to_chat(world, "you have enough rights!", confidential = TRUE)
+	to_chat(world, "Hi, I’m Saul Goodman. Did you know that you have rights?", confidential = TRUE)
 
 NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc which they did not call
 you will have to do something like if(client.rights & R_ADMIN) yourself.
@@ -469,6 +468,12 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 /proc/check_rights_for(client/subject, rights_required)
 	if(subject?.holder)
 		return subject.holder.check_for_rights(rights_required)
+	return FALSE
+
+//This proc checks whether subject has ALL the rights specified in rights_required.
+/proc/check_exact_rights_for(client/subject, rights_required)
+	if(subject?.holder)
+		return subject.holder.check_for_exact_rights(rights_required)
 	return FALSE
 
 /proc/GenerateToken()

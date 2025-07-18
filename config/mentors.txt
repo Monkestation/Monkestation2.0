@@ -1,0 +1,5 @@
+#List users here to be made mentors with the format: ckey = rank name.
+#Ckey will be converted to ckey format, lowercase with no punctuation except '@'.
+#Rank name will match anything after ' = ' and has no format requirements.
+#Ranks will match to those with the same name in mentor_ranks.txt, if a match isn't found the user won't have any permissions besides None
+#If SQL-based mentor loading is enabled, mentors listed here will always be loaded first and will override any duplicate entries in the database.
