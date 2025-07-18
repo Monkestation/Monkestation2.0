@@ -420,6 +420,7 @@ SUBSYSTEM_DEF(gamemode)
 		return
 	if(halted_storyteller)
 		message_admins("WARNING: Didn't roll roundstart events (including antagonists) due to the storyteller being halted.")
+		log_storyteller("WARNING: Didn't roll roundstart events (including antagonists) due to the storyteller being halted.")
 		return
 	while(TRUE)
 		if(!current_storyteller.handle_tracks())
@@ -1088,6 +1089,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 						message_admins("[key_name_admin(usr)] has cancelled picking a Storyteller.")
 						return
 					message_admins("[key_name_admin(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
+					log_admin("[key_name(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
 					var/new_storyteller_type = name_list[new_storyteller_name]
 					set_storyteller(new_storyteller_type)
 					current_storyteller.round_started = SSticker.HasRoundStarted()
@@ -1095,6 +1097,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 				if("halt_storyteller")
 					halted_storyteller = !halted_storyteller
 					message_admins("[key_name_admin(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")
+					log_admin("[key_name(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")
 				if("vars")
 					var/track = href_list["track"]
 					switch(href_list["var"])
@@ -1124,6 +1127,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 							point_thresholds[track] = new_value
 				if("reload_config_vars")
 					message_admins("[key_name_admin(usr)] reloaded gamemode config vars.")
+					log_admin("[key_name(usr)] reloaded gamemode config vars.")
 					load_config_vars()
 				if("tab")
 					var/tab = href_list["tab"]
@@ -1140,6 +1144,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 							if(forced_next_events[track])
 								var/datum/round_event_control/event = forced_next_events[track]
 								message_admins("[key_name_admin(usr)] removed forced event [event.name] from track [track].")
+								log_admin("[key_name(usr)] removed forced event [event.name] from track [track].")
 								forced_next_events -= track
 						if("set_pts")
 							var/set_pts = input(usr, "New point amount ([point_thresholds[track]]+ invokes event):", "Set points for [track]") as num|null
