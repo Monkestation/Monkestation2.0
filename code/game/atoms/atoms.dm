@@ -62,22 +62,11 @@
 	///Last fingerprints to touch this atom
 	var/fingerprintslast
 
-	//List of datums orbiting this atom
-	var/datum/component/orbiter/orbiters
-
 	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
 	/// The icon state intended to be used for the acid component. Used to override the default acid overlay icon state.
 	var/custom_acid_overlay = null
-
-	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
-	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
-	var/list/datum/material/custom_materials
-	///Bitfield for how the atom handles materials.
-	var/material_flags = NONE
-	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
-	var/material_modifier = 1
 
 	var/datum/wires/wires = null
 
@@ -119,9 +108,6 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
-	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
-	var/list/datum/merger/mergers
-
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
@@ -138,8 +124,6 @@
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself. Must be sorted.
 	var/list/canSmoothWith = null
-	///Reference to atom being orbited
-	var/atom/orbit_target
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
 
@@ -159,8 +143,6 @@
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
 	var/datum/forensics/forensics
 
-	/// the datum handler for our contents - see create_storage() for creation method
-	var/datum/storage/atom_storage
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
 	/// Whether ghosts can see screentips on it
@@ -335,44 +317,6 @@
 		QDEL_NULL(animate_holder)
 
 	return ..()
-
-/// A quick and easy way to create a storage datum for an atom
-/atom/proc/create_storage(
-	max_slots,
-	max_specific_storage,
-	max_total_storage,
-	numerical_stacking = FALSE,
-	allow_quick_gather = FALSE,
-	allow_quick_empty = FALSE,
-	collection_mode = COLLECT_ONE,
-	attack_hand_interact = TRUE,
-	list/canhold,
-	list/canthold,
-	storage_type = /datum/storage,
-)
-
-	if(atom_storage)
-		QDEL_NULL(atom_storage)
-
-	atom_storage = new storage_type(src, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, collection_mode, attack_hand_interact)
-
-	if(canhold || canthold)
-		atom_storage.set_holdable(canhold, canthold)
-
-	return atom_storage
-
-/// A quick and easy way to /clone/ a storage datum for an atom (does not copy over contents, only the datum details)
-/atom/proc/clone_storage(datum/storage/cloning)
-	if(atom_storage)
-		QDEL_NULL(atom_storage)
-
-	atom_storage = new cloning.type(src, cloning.max_slots, cloning.max_specific_storage, cloning.max_total_storage, cloning.numerical_stacking, cloning.allow_quick_gather, cloning.collection_mode, cloning.attack_hand_interact)
-
-	if(cloning.can_hold || cloning.cant_hold)
-		if(!atom_storage.can_hold && !atom_storage.cant_hold) //In the event that the can/can't hold lists are already in place (such as from storage objects added on initialize).
-			atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
-
-	return atom_storage
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)
@@ -1147,69 +1091,6 @@
 /atom/proc/return_temperature()
 	return
 
-/**
- *Tool behavior procedure. Redirects to tool-specific procs by default.
- *
- * You can override it to catch all tool interactions, for use in complex deconstruction procs.
- *
- * Must return  parent proc ..() in the end if overridden
- */
-/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	var/act_result
-	var/signal_result
-
-	var/is_left_clicking = !is_right_clicking
-
-	if(is_left_clicking) // Left click first for sensibility
-		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes)
-		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
-			return TOOL_ACT_SIGNAL_BLOCKING
-		if(processing_recipes.len)
-			process_recipes(user, tool, processing_recipes)
-		if(QDELETED(tool))
-			return TRUE
-	else
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, tool)
-		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
-			return TOOL_ACT_SIGNAL_BLOCKING
-
-	switch(tool_type)
-		if(TOOL_CROWBAR)
-			act_result = is_left_clicking ? crowbar_act(user, tool) : crowbar_act_secondary(user, tool)
-		if(TOOL_MULTITOOL)
-			act_result = is_left_clicking ? multitool_act(user, tool) : multitool_act_secondary(user, tool)
-		if(TOOL_SCREWDRIVER)
-			act_result = is_left_clicking ? screwdriver_act(user, tool) : screwdriver_act_secondary(user, tool)
-		if(TOOL_WRENCH)
-			act_result = is_left_clicking ? wrench_act(user, tool) : wrench_act_secondary(user, tool)
-		if(TOOL_WIRECUTTER)
-			act_result = is_left_clicking ? wirecutter_act(user, tool) : wirecutter_act_secondary(user, tool)
-		if(TOOL_WELDER)
-			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_secondary(user, tool)
-		if(TOOL_ANALYZER)
-			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_secondary(user, tool)
-		if(TOOL_BILLOW)
-			act_result = is_left_clicking ? billow_act(user, tool) : billow_act_secondary(user, tool)
-		if(TOOL_TONG)
-			act_result = is_left_clicking ? tong_act(user, tool) : tong_act_secondary(user, tool)
-		if(TOOL_HAMMER)
-			act_result = is_left_clicking ? hammer_act(user, tool) : hammer_act_secondary(user, tool)
-		if(TOOL_BLOWROD)
-			act_result = is_left_clicking ? blowrod_act(user, tool) : blowrod_act_secondary(user, tool)
-	if(!act_result)
-		return
-
-	// A tooltype_act has completed successfully
-	if(is_left_clicking)
-		log_tool("[key_name(user)] used [tool] on [src] at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_type), src)
-	else
-		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-
 /atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
 	//Only one recipe? use the first
 	if(processing_recipes.len == 1)
@@ -1269,73 +1150,6 @@
 	if(user.mind)
 		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
-//! Tool-specific behavior procs.
-///
-
-/// Called on an object when a tool with crowbar capabilities is used to left click an object
-/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with crowbar capabilities is used to right click an object
-/atom/proc/crowbar_act_secondary(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with multitool capabilities is used to left click an object
-/atom/proc/multitool_act(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with multitool capabilities is used to right click an object
-/atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
-	return
-
-///Check if an item supports a data buffer (is a multitool)
-/atom/proc/multitool_check_buffer(user, obj/item/multitool, silent = FALSE)
-	if(!istype(multitool, /obj/item/multitool))
-		if(user && !silent)
-			to_chat(user, span_warning("[multitool] has no data buffer!"))
-		return FALSE
-	return TRUE
-
-/// Called on an object when a tool with screwdriver capabilities is used to left click an object
-/atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with screwdriver capabilities is used to right click an object
-/atom/proc/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with wrench capabilities is used to left click an object
-/atom/proc/wrench_act(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with wrench capabilities is used to right click an object
-/atom/proc/wrench_act_secondary(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with wirecutter capabilities is used to left click an object
-/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with wirecutter capabilities is used to right click an object
-/atom/proc/wirecutter_act_secondary(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with welder capabilities is used to left click an object
-/atom/proc/welder_act(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with welder capabilities is used to right click an object
-/atom/proc/welder_act_secondary(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with analyzer capabilities is used to left click an object
-/atom/proc/analyzer_act(mob/living/user, obj/item/tool)
-	return
-
-/// Called on an object when a tool with analyzer capabilities is used to right click an object
-/atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
-	return
-
 ///Connect this atom to a shuttle
 /atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
@@ -1343,127 +1157,6 @@
 /atom/proc/intercept_zImpact(list/falling_movables, levels = 1)
 	SHOULD_CALL_PARENT(TRUE)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, falling_movables, levels)
-
-/// Sets the custom materials for an item.
-/atom/proc/set_custom_materials(list/materials, multiplier = 1)
-	if(custom_materials && material_flags & MATERIAL_EFFECTS) //Only runs if custom materials existed at first and affected src.
-		for(var/current_material in custom_materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
-			custom_material.on_removed(src, custom_materials[current_material] * material_modifier, material_flags) //Remove the current materials
-
-	if(!length(materials))
-		custom_materials = null
-		return
-
-	if(material_flags & MATERIAL_EFFECTS)
-		for(var/current_material in materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
-			custom_material.on_applied(src, materials[current_material] * multiplier * material_modifier, material_flags)
-
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
-
-/**
- * Returns the material composition of the atom.
- *
- * Used when recycling items, specifically to turn alloys back into their component mats.
- *
- * Exists because I'd need to add a way to un-alloy alloys or otherwise deal
- * with people converting the entire stations material supply into alloys.
- *
- * Arguments:
- * - flags: A set of flags determining how exactly the materials are broken down.
- */
-/atom/proc/get_material_composition(breakdown_flags=NONE)
-	. = list()
-	if(!(breakdown_flags & BREAKDOWN_INCLUDE_ALCHEMY) && HAS_TRAIT(src, TRAIT_MAT_TRANSMUTED))
-		return
-
-	var/list/cached_materials = custom_materials
-	for(var/mat in cached_materials)
-		var/datum/material/material = GET_MATERIAL_REF(mat)
-		var/list/material_comp = material.return_composition(cached_materials[mat], breakdown_flags)
-		for(var/comp_mat in material_comp)
-			.[comp_mat] += material_comp[comp_mat]
-
-/**
- * Fetches a list of all of the materials this object has of the desired type. Returns null if there is no valid materials of the type
- *
- * Arguments:
- * - [required_material][/datum/material]: The type of material we are checking for
- * - mat_amount: The minimum required amount of material
- */
-/atom/proc/has_material_type(datum/material/required_material, mat_amount = 0)
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	var/materials_of_type
-	for(var/current_material in cached_materials)
-		if(cached_materials[current_material] < mat_amount)
-			continue
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
-		if(!istype(material, required_material))
-			continue
-		LAZYSET(materials_of_type, material, cached_materials[current_material])
-
-	return materials_of_type
-
-/**
- * Fetches a list of all of the materials this object has with the desired material category.
- *
- * Arguments:
- * - category: The category to check for
- * - any_flags: Any bitflags that must be present for the category
- * - all_flags: All bitflags that must be present for the category
- * - no_flags: Any bitflags that must not be present for the category
- * - mat_amount: The minimum amount of materials that must be present
- */
-/atom/proc/has_material_category(category, any_flags=0, all_flags=0, no_flags=0, mat_amount=0)
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	var/materials_of_category
-	for(var/current_material in cached_materials)
-		if(cached_materials[current_material] < mat_amount)
-			continue
-		var/datum/material/material = GET_MATERIAL_REF(current_material)
-		var/category_flags = material?.categories[category]
-		if(isnull(category_flags))
-			continue
-		if(any_flags && !(category_flags & any_flags))
-			continue
-		if(all_flags && (all_flags != (category_flags & all_flags)))
-			continue
-		if(no_flags && (category_flags & no_flags))
-			continue
-		LAZYSET(materials_of_category, material, cached_materials[current_material])
-	return materials_of_category
-
-/**
- * Gets the most common material in the object.
- */
-/atom/proc/get_master_material()
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
-		return null
-
-	var/most_common_material = null
-	var/max_amount = 0
-	for(var/material in cached_materials)
-		if(cached_materials[material] > max_amount)
-			most_common_material = material
-			max_amount = cached_materials[material]
-
-	if(most_common_material)
-		return GET_MATERIAL_REF(most_common_material)
-
-/**
- * Gets the total amount of materials in this atom.
- */
-/atom/proc/get_custom_material_amount()
-	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
-
 
 ///Setter for the `density` variable to append behavior related to its changing.
 /atom/proc/set_density(new_value)
@@ -1598,34 +1291,6 @@
 		usr_client.Click(src, loc, null, mouseparams)
 		return TRUE
 
-/**
- * Recursive getter method to return a list of all ghosts orbitting this atom
- *
- * This will work fine without manually passing arguments.
- * * processed - The list of atoms we've already convered
- * * source - Is this the atom for who we're counting up all the orbiters?
- * * ignored_stealthed_admins - If TRUE, don't count admins who are stealthmoded and orbiting this
- */
-/atom/proc/get_all_orbiters(list/processed, source = TRUE, ignore_stealthed_admins = TRUE)
-	var/list/output = list()
-	if(!processed)
-		processed = list()
-	else if(src in processed)
-		return output
-
-	if(!source)
-		output += src
-
-	processed += src
-	for(var/atom/atom_orbiter as anything in orbiters?.orbiter_list)
-		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
-	return output
-
-/mob/get_all_orbiters(list/processed, source = TRUE, ignore_stealthed_admins = TRUE)
-	if(!source && ignore_stealthed_admins && client?.holder?.fakekey)
-		return list()
-	return ..()
-
 /atom/MouseEntered(location, control, params)
 	SSmouse_entered.hovers[usr.client] = src
 
@@ -1744,17 +1409,6 @@
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
 		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
-
-/// Gets a merger datum representing the connected blob of objects in the allowed_types argument
-/atom/proc/GetMergeGroup(id, list/allowed_types)
-	RETURN_TYPE(/datum/merger)
-	var/datum/merger/candidate
-	if(mergers)
-		candidate = mergers[id]
-	if(!candidate)
-		new /datum/merger(id, allowed_types, src)
-		candidate = mergers[id]
-	return candidate
 
 /**
  * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.
