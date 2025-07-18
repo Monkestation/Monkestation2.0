@@ -55225,10 +55225,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
-"qhe" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/service/hydroponics/chicken)
 "qhf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -130053,7 +130049,7 @@ mZe
 pPf
 xXK
 wrL
-qhe
+lVw
 luE
 smY
 tPT
