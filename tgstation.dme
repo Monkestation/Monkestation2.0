@@ -1922,6 +1922,8 @@
 #include "code\game\atoms\atom_appearance.dm"
 #include "code\game\atoms\atom_color.dm"
 #include "code\game\atoms\atom_defense.dm"
+#include "code\game\atoms\atom_examine.dm"
+#include "code\game\atoms\atom_greyscale.dm"
 #include "code\game\atoms\atoms.dm"
 #include "code\game\atoms\atoms_movable.dm"
 #include "code\game\gamemodes\events.dm"
