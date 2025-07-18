@@ -25,6 +25,7 @@
 	can_unhack = FALSE
 	shy = FALSE
 	flavortext = null
+	pass_flags = PASSTABLE | PASSMOB
 
 	/// The number of telecrystals to put in the drone's uplink
 	var/telecrystal_count = 10

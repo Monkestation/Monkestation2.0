@@ -29,6 +29,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	shy = FALSE
 	///var for in case admins want a cogsarab to stay off reebe for some reason
 	var/stay_on_reebe = TRUE
+	pass_flags = PASSTABLE | PASSMOB
 
 //No you can't go wielding guns like that.
 /mob/living/basic/drone/cogscarab/Initialize(mapload)
