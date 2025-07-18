@@ -660,6 +660,8 @@
 	. = ..()
 	. += span_notice("The synthesiser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.")
 	. += span_notice("You can <b>examine closer</b> to learn a little more about this device.")
+	if(obj_flags & EMAGGED)
+		. += span_notice("A light on the side with the words 'tea mode' under it is flashing.")
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/examine_more(mob/user)
 	. = ..()
@@ -669,6 +671,7 @@
 		Due to the vast amounts of electricity the average dispenser consumes, this device is powered by bluespace link to multiple fusion reactors to save weight. \
 		Even with the many space-saving modifications, the bulk and design of the internal components give it a capacity only marginally better than the standard coffeepot, \
 		and the size of the synthesiser element makes it a bit trickier to store. \
+		Rumours abound of some of these devices being modified to produce tea, but Johnson & Co has refused to make a public statement. \
 		The fact this thing is in your hands is a miracle given how rare it is, as its production run was incredibly small and new units are only produced on-order for the company's high-ranking staff or Nanotrasen officials. \
 		Cherish it. You may never hold one again."
 
@@ -677,6 +680,24 @@
 /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "tea mode disabled")
+		name = "johnson and co bluespace coffee synthesiser"
+		if (emag_card)
+			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. The 'tea mode' light stops flashing."))
+		refill_reagent = /datum/reagent/consumable/coffee
+		obj_flags -= EMAGGED
+		return FALSE
+	obj_flags |= EMAGGED
+	refill_reagent = /datum/reagent/consumable/tea //bri'ish innit
+	name = "johnson and co bluespace tea synthesiser"
+	balloon_alert(user, "tea mode enabled")
+	if (emag_card)
+		to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A light on the side with 'tea mode' written under it starts to flash."))
+	return TRUE
+
 
 ///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube
