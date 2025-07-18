@@ -228,3 +228,57 @@
   - balance: closets no longer ash things inside when broken - crates are unaffected
   - code_imp: Adds a new "ash_chance" variable for crates and lockers that let you
       set the chance to be ashed
+2025-07-16:
+  Absolucy:
+  - bugfix: Clothes that would hide ears/tails now properly hide anime implants too.
+  - bugfix: You can no longer win the lottery after cryoing.
+  BValon:
+  - rscdel: Removed "B166ER" from ai.txt
+  - rscdel: Removed "Fagor" from ai.txt
+  BingusSS13:
+  - bugfix: The intercoms in Charlie Station's AI core are now functional.
+  - qol: The uncommon intercom in Charlie Station's AI core now has loud mode.
+  Ice Type, Absolucy:
+  - bugfix: You now gotta be a crewmember to roll antag
+  Ice-Type:
+  - balance: Miner pens with stimulants now have an equivalent dose of methamphetamine
+      instead
+  - code_imp: Monkestation medipens are no longer in the special monkestation folder
+  - qol: You can now use pixel perfect scaling at higher resolutions
+  LettuceGuardian:
+  - rscadd: Five new turtlenecks to pick out from the undershirt section.
+  Siro:
+  - bugfix: Delay round end will once again delay the round end reboot properly.
+  notghosti:
+  - bugfix: Spiders, borers, syndicate drones, venus human traps, and fugitive hunters
+      have their warning about interfering with station events removed
+  - map: Heliostation chem facotry small room now has ventalation.
+  - map: Voidraptor blueshield and NT rep office now use their respective accesses
+2025-07-17:
+  Addust:
+  - bugfix: Frontier surplus crates on Sheffield-class free mining vessels have had
+      their security locks removed by Johnson & Co. (free miners no longer lose frontier
+      surplus to dusting)
+  - map: A Johnson & Co engineering team has completely redone the office of the Nanotrasen
+      Representative assigned to Pubby Station, pending more serious works at the
+      site
+  BingusSS13:
+  - bugfix: Radiation storms will no longer affect Charlie Station on Ice Box.
+  Ice-Type:
+  - bugfix: fixes the nodnod/nod2 emote.
+  - rscdel: removes the inferior version that was overwriting
+  Wisemonster:
+  - map: Added rechargers to QM offices
+  notghosti:
+  - rscadd: Add a new AI verb, Hide Jobtitle display, which disables AI's native ability
+      to 'hear' jobtitles.
+  - rscadd: gothic coat can be equipped on the neck slot.
+  - rscadd: gothic coat now actually covers various parts of the body
+  - rscadd: Captains gloves can now transmit sign language
+  - rscadd: Gloves that can transmit sign language on radio now have a description
+      mentioning it on inspect.
+  - qol: Eyepatches can be adjusted with alt click.
+  - qol: Greyscale Kitsune mask can be adjusted by alt clicking the icon.
+  - bugfix: Greyscale kitsune mask now shows beards/faces when in the up postion and
+      hides while put down
+  - bugfix: You can no longer eat through plastic on the greyscale kitsune mask.
