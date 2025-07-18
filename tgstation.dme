@@ -6287,7 +6287,6 @@
 #include "monkestation\code\datums\storage\storage.dm"
 #include "monkestation\code\datums\votes\_vote_datum.dm"
 #include "monkestation\code\datums\votes\transfer_vote.dm"
-#include "monkestation\code\datums\weather\weather_types\radiation_storm.dm"
 #include "monkestation\code\datums\wires\airalarm.dm"
 #include "monkestation\code\datums\wires\mod.dm"
 #include "monkestation\code\datums\wires\mulebot.dm"
