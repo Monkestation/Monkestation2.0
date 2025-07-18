@@ -94,7 +94,6 @@ SUBSYSTEM_DEF(mapping)
 	var/list/random_room_spawners = list()
 	var/list/random_engine_spawners = list()
 	var/list/random_bar_spawners = list()
-	var/list/random_arena_spawners = list()
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
@@ -496,24 +495,8 @@ Used by the AI doomsday and the self-destruct nuke.
 
 /datum/controller/subsystem/mapping/proc/load_random_arena()
 	var/start_time = REALTIMEOFDAY
-	for(var/obj/effect/spawner/random_arena_spawner/arena_spawner as() in random_arena_spawners)
-		var/list/possible_arena_templates = list()
-		var/datum/map_template/random_room/random_arena/arena_candidate
-		shuffle_inplace(random_arena_templates)
-		for(var/ID in random_arena_templates)
-			arena_candidate = random_arena_templates[ID]
-			if(arena_candidate.weight == 0)
-				arena_candidate = null
-				continue
-			possible_arena_templates[arena_candidate] = arena_candidate.weight
-		if(possible_arena_templates.len)
-			var/datum/map_template/random_room/random_arena/template = pick_weight(possible_arena_templates)
-			log_world("Loading random arena template [template.name] ([template.type]) at [AREACOORD(arena_spawner)]")
-			template.stationinitload(get_turf(arena_spawner), centered = template.centerspawner)
-		SSmapping.random_arena_spawners -= arena_spawner
-		qdel(arena_spawner)
-	random_arena_spawners = null
-	INIT_ANNOUNCE("Loaded Random Arenas in [(REALTIMEOFDAY - start_time)/10]s!")
+	GLOB.ghost_arena.spawn_random_arena(init = TRUE)
+	INIT_ANNOUNCE("Loaded Random Arenas in [(REALTIMEOFDAY - start_time) / 10]s!")
 /// New Random Bars and Engines Spawning - MonkeStation Edit End
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
@@ -711,33 +694,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		holodeck_templates[holo_template.template_id] = holo_template
 
-//Manual loading of away missions.
-/client/proc/admin_away()
-	set name = "Load Away Mission"
-	set category = "Admin.Events"
-
-	if(!holder || !check_rights(R_FUN))
-		return
-
-
+ADMIN_VERB(load_away_mission, R_FUN, FALSE, "Load Away Mission", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
 	if(!GLOB.the_gateway)
-		if(tgui_alert(usr, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
 			return
 
 	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
 	var/away_name
 	var/datum/space_level/away_level
 	var/secret = FALSE
-	if(tgui_alert(usr, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
+	if(tgui_alert(user, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
 		secret = TRUE
-	var/answer = input("What kind?","Away") as null|anything in possible_options
+	var/answer = input(user, "What kind?","Away") as null | anything in possible_options
 	switch(answer)
 		if("Custom")
-			var/mapfile = input("Pick file:", "File") as null|file
+			var/mapfile = input(user, "Pick file:", "File") as null | file
 			if(!mapfile)
 				return
 			away_name = "[mapfile] custom"
-			to_chat(usr,span_notice("Loading [away_name]..."))
+			to_chat(user,span_notice("Loading [away_name]..."))
 			var/datum/map_template/template = new(mapfile, "Away Mission")
 			away_level = template.load_new_z(secret)
 		else
@@ -749,8 +724,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			else
 				return
 
-	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
-	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")
+	message_admins("Admin [key_name_admin(user)] has loaded [away_name] away mission.")
+	log_admin("Admin [key_name(user)] has loaded [away_name] away mission.")
 	if(!away_level)
 		message_admins("Loading [away_name] failed!")
 		return

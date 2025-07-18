@@ -794,7 +794,7 @@
 	var/oxyloss = suffocator.getOxyLoss()
 	if(oxyloss >= 50)
 		// Suffocating = brain damage
-		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organtype = ORGAN_ORGANIC)
+		suffocator.adjustOrganLoss(ORGAN_SLOT_BRAIN, (oxyloss / MAX_OXYLOSS(suffocator.maxHealth)) * 4, required_organ_flag = ORGAN_ORGANIC)
 	// If mob is at critical health, check if they can be damaged further.
 	if(suffocator.stat >= SOFT_CRIT && HAS_TRAIT(suffocator, TRAIT_NOCRITDAMAGE))
 		return
@@ -894,7 +894,7 @@
 
 	QDEL_IN(holder, breath_particle.lifespan)
 
-/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organtype)
+/obj/item/organ/internal/lungs/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!.)
 		return
@@ -972,6 +972,34 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
+/obj/item/organ/internal/lungs/oni
+	name = "oni lungs"
+	desc = "The lungs of an oni, resistant to heat and able to produce small amounts of flame to be expelled through the mouth."
+	icon_state = "lungs-ashwalker"
+	actions_types = list(/datum/action/cooldown/mob_cooldown/fire_breath/oni)
+
+	cold_level_warning_threshold = 275
+	cold_level_hazard_threshold = 225
+	cold_level_danger_threshold = 145
+
+	heat_level_warning_threshold = 400
+	heat_level_hazard_threshold = 570
+	heat_level_danger_threshold = 800
+
+/datum/action/cooldown/mob_cooldown/fire_breath/oni
+	name = "Oni Breath"
+	button_icon = 'icons/obj/wizard.dmi'
+	button_icon_state = "fireball"
+	desc = "Conjure flames within your lungs, before exhaling them in front of yourself."
+	cooldown_time = 1 MINUTES
+	fire_range = 3
+	fire_sound = 'sound/magic/fireball.ogg'
+	fire_delay = 1.5 DECISECONDS
+	fire_temperature = DRAKE_FIRE_TEMP
+	fire_volume = DRAKE_FIRE_EXPOSURE
+	fire_damage = 10
+	mech_damage = 25
+
 /obj/item/organ/internal/lungs/smoker_lungs
 	name = "smoker lungs"
 	desc = "A pair of lungs that look sickly, a result from smoking a lot."
@@ -985,7 +1013,7 @@
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
 	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
@@ -1020,7 +1048,7 @@
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 
 /obj/item/organ/internal/lungs/lavaland

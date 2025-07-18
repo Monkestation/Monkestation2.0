@@ -135,6 +135,9 @@ SUBSYSTEM_DEF(gamemode)
 	/// Whether the storyteller has been halted
 	var/halted_storyteller = FALSE
 
+	// Used to determine if an admin chosed a storyteller, so it doesnt pick one randomly
+	var/admin_picked_storyteller = FALSE
+
 	/// Ready players for roundstart events.
 	var/ready_players = 0
 	var/active_players = 0
@@ -300,6 +303,10 @@ SUBSYSTEM_DEF(gamemode)
 		if(!observers)
 			if(!ready_players && !isliving(candidate))
 				continue
+
+			if(isliving(candidate) && !HAS_MIND_TRAIT(candidate, TRAIT_JOINED_AS_CREW))
+				continue
+
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
 				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
@@ -500,22 +507,14 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
 	event_frequency_multiplier = 1
 
-/client/proc/forceEvent()
-	set name = "Trigger Event"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceEvent(usr)
+ADMIN_VERB(force_event, R_FUN, FALSE, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceEvent(user.mob)
 
 /datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
 
-/client/proc/forceGamemode()
-	set name = "Open Gamemode Panel"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceGamemode(usr)
+ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemode panel.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceGamemode(user.mob)
 
 /datum/admins/proc/forceGamemode(mob/user)
 	SSgamemode.admin_panel(user)
@@ -827,6 +826,9 @@ SUBSYSTEM_DEF(gamemode)
 	return valid_storytellers
 
 /datum/controller/subsystem/gamemode/proc/init_storyteller()
+	// Don't allow the storyteller to be set if an admin set the storyteller
+	if (admin_picked_storyteller)
+		return
 	set_storyteller(selected_storyteller)
 
 /datum/controller/subsystem/gamemode/proc/set_storyteller(passed_type)
@@ -1070,6 +1072,8 @@ SUBSYSTEM_DEF(gamemode)
 					message_admins("[key_name_admin(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
 					var/new_storyteller_type = name_list[new_storyteller_name]
 					set_storyteller(new_storyteller_type)
+					current_storyteller.round_started = SSticker.HasRoundStarted()
+					admin_picked_storyteller = TRUE
 				if("halt_storyteller")
 					halted_storyteller = !halted_storyteller
 					message_admins("[key_name_admin(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")
@@ -1153,11 +1157,7 @@ SUBSYSTEM_DEF(gamemode)
 
 
 /datum/controller/subsystem/gamemode/proc/store_roundend_data()
-	var/congealed_string = ""
-	for(var/event_name as anything in triggered_round_events)
-		congealed_string += event_name
-		congealed_string += ","
-	text2file(congealed_string, "data/last_round_events.txt")
+	rustg_file_write(jointext(triggered_round_events, ","), "data/last_round_events.txt")
 
 /datum/controller/subsystem/gamemode/proc/load_roundstart_data()
 	var/massive_string = trim(file2text("data/last_round_events.txt"))

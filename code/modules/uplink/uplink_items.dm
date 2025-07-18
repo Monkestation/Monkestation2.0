@@ -3,9 +3,17 @@
 /// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
 /proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
 	var/list/sales = list()
-	var/list/sale_items_copy = sale_items.Copy()
+	var/list/per_category = list()
+
+	for (var/datum/uplink_item/possible_sale as anything in sale_items)
+		if (!(possible_sale.category in per_category))
+			per_category[possible_sale.category] = list()
+		per_category[possible_sale.category] += possible_sale
+
 	for (var/i in 1 to num)
-		var/datum/uplink_item/taken_item = pick_n_take(sale_items_copy)
+		var/datum/uplink_category/item_category = pick(per_category)
+		var/datum/uplink_item/taken_item = pick(per_category[item_category])
+		per_category -= item_category
 		var/datum/uplink_item/uplink_item = new taken_item.type()
 		var/discount = uplink_item.get_discount()
 		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")

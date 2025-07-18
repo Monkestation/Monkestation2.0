@@ -1,7 +1,0 @@
-author: "MrBagHead"
-delete-after: True
-changes:
-  - rscadd: "Added Syndicate Mini-Kits, a 10 TC traitor uplink bundle with 5 random loadouts and a unique box sprite."
-  - rscadd: "Added 'Self-Incinerating Paper' which incinerates after 20 seconds of being read if its armed"
-  - rscadd: "Added Syndicate Pill Canisters with new sprites, including a poisonous variant with cyanide, spewium, amanitin and toxin pills."
-  - rscadd: "Added 'can_be_folded' variable for paper to control if they can be folded."

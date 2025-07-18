@@ -570,6 +570,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	action_slots = ALL
+	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS, TRAIT_FAST_CUFFING)
 
 /datum/armor/gloves_chameleon
 	melee = 10
@@ -579,8 +580,6 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/gloves/chameleon
-	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS, TRAIT_FAST_CUFFING)
 
 /obj/item/clothing/gloves/chameleon/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
@@ -850,6 +849,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/shoes/chameleon/noslip
+	name = "no-slip black shoes"
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	can_be_bloody = FALSE
 

@@ -22,7 +22,7 @@
 
 /datum/armament_entry/company_import/rayne/tools/sledgehammer
 	item_type = /obj/item/melee/sledgehammer
-	cost = PAYCHECK_CREW * 4
+	cost = PAYCHECK_CREW * 10
 
 /datum/armament_entry/company_import/rayne/tools/welder
 	item_type = /obj/item/weldingtool/electric/raynewelder

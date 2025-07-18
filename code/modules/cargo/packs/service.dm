@@ -268,3 +268,12 @@
 	contains = list(/obj/machinery/coffeemaker/impressa)
 	crate_name = "coffeemaker crate"
 	crate_type = /obj/structure/closet/crate/large
+
+
+/// Spare bar sign wallmount
+/datum/supply_pack/service/bar_sign
+	name = "Bar Sign Replacement Kit"
+	desc = "A replacement bar sign, perfect for drawing in customers to your bar, tavern, inn, nightclub, or even coffeehouse!"
+	cost = CARGO_CRATE_VALUE * 14
+	contains = list(/obj/item/wallframe/barsign/all_access)
+	crate_name = "bar sign crate"

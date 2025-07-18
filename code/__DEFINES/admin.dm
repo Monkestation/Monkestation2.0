@@ -23,6 +23,8 @@
 #define BANTYPE_ANY_JOB 9
 
 //Admin Permissions
+/// Used for signifying that all admins can use this regardless of actual permissions
+#define R_NONE NONE
 #define R_BUILD (1<<0)
 #define R_ADMIN (1<<1)
 #define R_BAN (1<<2)
@@ -41,7 +43,7 @@
 
 #define R_DEFAULT R_AUTOADMIN
 
-#define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
+#define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING MONKE EDIT
 
 #define ADMIN_QUE(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
@@ -169,6 +171,14 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 #define INTERVIEW_DENIED "interview_denied"
 /// State when an interview has had no action on it yet
 #define INTERVIEW_PENDING "interview_pending"
+
+/// Used in logging uses of admin verbs (and sometimes some non-admin or debug verbs) to the blackbox
+/// Only pass it a string key, the verb being used.
+#define BLACKBOX_LOG_ADMIN_VERB(the_verb) SSblackbox.record_feedback("tally", "admin_verb", 1, the_verb)
+
+/// MONKE EDIT Used in the logging uses of mentor verbs. Similar to admin.
+/// Only pass it a string key, the verb being used.
+#define BLACKBOX_LOG_MENTOR_VERB(the_verb) SSblackbox.record_feedback("tally", "mentor_verb", 1, the_verb)
 
 //Monke edit for port servers
 #define MRP2_PORT		3122

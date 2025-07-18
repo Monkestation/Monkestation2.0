@@ -15,6 +15,19 @@
 	bio = 30
 	fire = 80
 	acid = 85
+	wound = 10
+
+/datum/armor/space_syndicate_fire
+	melee = 40
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 100
+	acid = 85
+	wound = 10
+
 
 // Don't blame me, blame whoever added this many variations
 GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
@@ -126,7 +139,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black-green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/green
-	name = "black space helmet"
+	name = "black and green space helmet"
 	icon_state = "syndicate-helm-black-green"
 	inhand_icon_state = "syndicate-helm-black-green"
 
@@ -152,12 +165,12 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black medical syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "black space helmet"
+	name = "black medical space helmet"
 	icon_state = "syndicate-helm-black-med"
 	inhand_icon_state = "syndicate-helm-black"
 
 /obj/item/clothing/suit/space/syndicate/black/med
-	name = "green space suit"
+	name = "black medical space suit"
 	icon_state = "syndicate-black-med"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/med
@@ -165,20 +178,25 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black-orange syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/orange
-	name = "black space helmet"
+	name = "black and orange space helmet"
 	icon_state = "syndicate-helm-black-orange"
 	inhand_icon_state = "syndicate-helm-black"
+	armor_type = /datum/armor/space_syndicate_fire
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/syndicate/black/orange
 	name = "black and orange space suit"
 	icon_state = "syndicate-black-orange"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/orange
-
+	armor_type = /datum/armor/space_syndicate_fire
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 //Black-red syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/red
-	name = "black space helmet"
+	name = "black and red space helmet"
 	icon_state = "syndicate-helm-black-red"
 	inhand_icon_state = "syndicate-helm-black-red"
 
@@ -207,12 +225,24 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "black space helmet"
+	name = "black engineering space helmet"
 	icon_state = "syndicate-helm-black-engie"
 	inhand_icon_state = "syndicate-helm-black"
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+
+/obj/item/clothing/head/helmet/space/syndicate/black/engie/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/space/syndicate/black/engie
 	name = "black engineering space suit"
 	icon_state = "syndicate-black-engie"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/engie
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+
+/obj/item/clothing/suit/space/syndicate/black/engie/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)

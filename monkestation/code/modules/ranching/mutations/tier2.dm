@@ -36,7 +36,7 @@
 	chicken_type = /mob/living/basic/chicken/pigeon
 	egg_type = /obj/item/food/egg/pigeon
 	happiness = 30
-	nearby_items = list(/obj/item/radio)
+	nearby_items = list(/obj/item/radio/off)
 	food_requirements = list(/obj/item/food/grown/corn)
 
 	can_come_from_string = "Silkie"

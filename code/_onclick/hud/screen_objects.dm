@@ -206,7 +206,7 @@
 /atom/movable/screen/inventory/MouseExited()
 	..()
 	cut_overlay(object_overlay)
-	QDEL_NULL(object_overlay)
+	object_overlay = null
 
 /atom/movable/screen/inventory/update_icon_state()
 	if(!icon_empty)
@@ -372,6 +372,10 @@
 	screen_loc = ui_acti
 	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/datum/interaction_mode/intents3/intents
+
+/atom/movable/screen/act_intent3/Destroy()
+	intents = null
+	return ..()
 
 /atom/movable/screen/act_intent3/Click(location, control, params)
 	var/list/paramlist = params2list(params)
@@ -822,12 +826,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	if(QDELETED(src))
 		return
 	if(out)
-		animate(src, alpha = 0, time = 30)
+		animate(src, alpha = 0, time = 3 SECONDS)
 	else
 		alpha = 0
-		animate(src, alpha = 255, time = 30)
+		animate(src, alpha = 255, time = 3 SECONDS)
 	if(qdel_after)
-		QDEL_IN(src, 30)
+		QDEL_IN(src, 3 SECONDS)
 
 /atom/movable/screen/splash/Destroy()
 	if(holder)

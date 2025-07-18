@@ -227,13 +227,13 @@ SUBSYSTEM_DEF(garbage)
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
 
+				var/detail = D.dump_harddel_info()
 				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
 				message = "[message] (ref count of [refcount(D)])"
-				log_world(message)
-
-				var/detail = D.dump_harddel_info()
 				if(detail)
+					message = "[message] | [detail]"
 					LAZYADD(I.extra_details, detail)
+				log_world(message)
 
 				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
@@ -358,6 +358,25 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
+/proc/non_datum_qdel(to_delete)
+	var/found_type = "unable to determine type"
+	var/delable = FALSE
+
+	if(islist(to_delete))
+		found_type = "list"
+		delable = TRUE
+
+	if(isnum(to_delete))
+		found_type = "number"
+
+	if(ispath(to_delete))
+		found_type = "typepath"
+
+	if(delable)
+		del(to_delete)
+
+	CRASH("Bad qdel ([found_type])")
+
 /// Should be treated as a replacement for the 'del' keyword.
 ///
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -365,14 +384,10 @@ SUBSYSTEM_DEF(garbage)
 	if(!istype(to_delete))
 		if(isnull(to_delete))
 			return
-		else if(islist(to_delete))
-			stack_trace("Lists should not be directly passed to qdel! You likely want either list.Cut(), QDEL_LIST(list), QDEL_LIST_ASSOC(list), or QDEL_LIST_ASSOC_VAL(list)")
-		else if(to_delete != world)
-			stack_trace("Tried to qdel possibly invalid value: [to_delete]")
 #ifndef DISABLE_DREAMLUAU
 		DREAMLUAU_CLEAR_REF_USERDATA(to_delete)
 #endif
-		del(to_delete)
+		non_datum_qdel(to_delete)
 		return
 
 	var/datum/qdel_item/trash = SSgarbage.items[to_delete.type]

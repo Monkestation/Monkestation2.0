@@ -126,7 +126,7 @@
 
 	switch(action)
 		if("send_message")
-			var/message = params["message"]
+			var/message = trimtext(params["message"])
 			if(usr.client.holder)
 				usr.client.cmd_admin_pm(initiator, message)
 				return
@@ -139,11 +139,8 @@
 			return
 	return FALSE
 
-/proc/ticket_ui_act(action, T)
-	var/datum/admin_help/ticket = T
-	if(!ticket)
-		return
-	if(!check_rights(NONE))
+/proc/ticket_ui_act(action, datum/admin_help/ticket)
+	if(!ticket || !check_rights(NONE, show_msg = FALSE))
 		return
 	. = TRUE
 	switch(action)
@@ -157,9 +154,7 @@
 			if(!ticket.initiator)
 				to_chat(usr, span_warning("Client not found"))
 				return
-			usr.client.VUAP_selected_mob = ticket.initiator.mob
-			usr.client.selectedPlayerCkey = ticket.initiator_ckey
-			usr.client.holder.vuap_open()
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, ticket.initiator.mob)
 			return
 		if("VV")
 			if(!ticket.initiator)
@@ -171,8 +166,7 @@
 			if(!ticket.initiator)
 				to_chat(usr, span_warning("Client not found"))
 				return
-			usr.client.cmd_admin_subtle_message(ticket.initiator.mob)
-			return
+			return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_subtle_message, ticket.initiator.mob)
 		if("FLW")
 			if(!ticket.initiator)
 				to_chat(usr, span_warning("Client not found"))
@@ -180,8 +174,7 @@
 			usr.client.admin_follow(ticket.initiator.mob)
 			return
 		if("CA")
-			usr.client.check_antagonists()
-			return
+			return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_antagonists)
 		if("Reopen")
 			ticket.Reopen()
 			return
@@ -227,7 +220,7 @@
 			if(!ticket.initiator)
 				to_chat(usr, span_warning("Client not found"))
 				return
-			usr.client.holder.show_traitor_panel(ticket.initiator.mob)
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_traitor_panel, ticket.initiator.mob)
 			return
 		if("Logs")
 			if(!ticket.initiator)
@@ -239,8 +232,7 @@
 			if(!ticket.initiator)
 				to_chat(usr, span_warning("Client not found"))
 				return
-			usr.client.smite(ticket.initiator.mob)
-			return
+			return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_smite, ticket.initiator.mob)
 		if("Notes")
 			browse_messages(target_ckey = ticket.initiator_ckey)
 			return

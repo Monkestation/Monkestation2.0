@@ -1388,7 +1388,7 @@
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
-	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organtype = affected_organtype)
+	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organ_flag = affected_organ_flags)
 	if(SPT_PROB(10, seconds_per_tick))
 		drinker.stamina.adjust(-10)
 		drinker.drop_all_held_items()
@@ -1399,7 +1399,7 @@
 			ADD_TRAIT(drinker, paralyzed_limb, type)
 			drinker.stamina.adjust(-10)
 		if(current_cycle > 30)
-			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organtype = affected_organtype)
+			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 			if(current_cycle > 50 && SPT_PROB(7.5, seconds_per_tick))
 				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
 					drinker.set_heartattack(TRUE)
@@ -2084,9 +2084,8 @@
 	if(SPT_PROB(10, seconds_per_tick) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "#cccccc"
-			metabolizer.hair_color = "#cccccc"
-			metabolizer.update_body_parts()
+			metabolizer.set_facial_haircolor("#cccccc", update = FALSE)
+			metabolizer.set_haircolor("#cccccc", update = TRUE)
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
 				if(metabolizer.gender == MALE)

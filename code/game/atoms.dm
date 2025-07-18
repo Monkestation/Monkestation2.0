@@ -393,7 +393,7 @@
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
 	var/turf/p_turf = get_turf(ricocheting_projectile)
-	var/face_direction = get_dir(src, p_turf)
+	var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
 	var/face_angle = dir2angle(face_direction)
 	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.Angle + 180))
 	var/a_incidence_s = abs(incidence_s)
@@ -1219,7 +1219,7 @@
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
-	//SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, dir, newdir)
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, dir, newdir)
 	if(smoothing_flags & SMOOTH_BORDER_OBJECT)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
@@ -1435,14 +1435,14 @@
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
-	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
-		usr.client.cmd_admin_explosion(src)
+	if(href_list[VV_HK_TRIGGER_EXPLOSION])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_explosion, src)
 
-	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
-		usr.client.cmd_admin_emp(src)
+	if(href_list[VV_HK_TRIGGER_EMP])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_emp, src)
 
-	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
-		usr.client.cmd_show_hiddenprints(src)
+	if(href_list[VV_HK_SHOW_HIDDENPRINTS])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_show_hiddenprints, src)
 
 	if(href_list[VV_HK_ARMOR_MOD])
 		var/list/pickerlist = list()
@@ -2166,9 +2166,6 @@
 
 			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
 				var/screentip_images = active_hud.screentip_images
-				// Disable screentip images for clients affected by https://www.byond.com/forum/post/2967731
-				if(ISINRANGE(client?.byond_build, MIN_BYOND_BUILD_DISABLE_SCREENTIP_ICONS, MAX_BYOND_BUILD_DISABLE_SCREENTIP_ICONS))
-					screentip_images = FALSE
 				// LMB and RMB on one line...
 				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
 				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)

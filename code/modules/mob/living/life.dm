@@ -131,6 +131,9 @@
 
 	// Cap increase and decrease
 	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
+	// Boost when returning to equilibrium
+	if(!ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
+		temp_change *= 3
 
 	adjust_bodytemperature(temp_change * seconds_per_tick) // No use_insulation because we manually account for it
 
@@ -168,7 +171,7 @@
  * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
  */
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
-	return reagents.has_reagent(reagent, amount, needs_metabolizing)
+	return reagents?.has_reagent(reagent, amount, needs_metabolizing)
 
 /mob/living/proc/update_damage_hud()
 	return
