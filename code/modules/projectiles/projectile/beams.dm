@@ -30,7 +30,7 @@
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"
-	damage = 32
+	damage = 30
 	range = 30
 	tracer_type = /obj/effect/projectile/tracer/laser/rifle
 	impact_type = /obj/effect/projectile/impact/laser/rifle
@@ -38,6 +38,7 @@
 	hitscan = TRUE
 	tile_dropoff = 1 //This makes ricochets less impactful
 	armour_penetration = -30 //armor is * 130% more effective against it
+	wound_bonus = -15
 	wound_falloff_tile = 3
 	impact_effect_type = null
 	hitscan_light_intensity = 2
