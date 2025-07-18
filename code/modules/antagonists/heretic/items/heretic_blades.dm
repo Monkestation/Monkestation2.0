@@ -43,7 +43,7 @@
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 		if(user.has_status_effect(/datum/status_effect/silver_bullet))
 			if(user.can_feel_pain())
-				to_chat(user, span_userdanger("Something incomprehensible lashes out at you escape, filling you with a horrible pain!"))
+				to_chat(user, span_userdanger("Something incomprehensible lashes out at you as you escape, filling you with a horrible pain!"))
 				user.cause_pain(BODY_ZONE_CHEST, 50, BRUTE)
 				user.cause_pain(BODY_ZONES_MINUS_CHEST, 40, BRUTE)
 			else
