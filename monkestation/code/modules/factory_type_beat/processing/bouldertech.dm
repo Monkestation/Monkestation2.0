@@ -304,7 +304,7 @@
 			chosen_boulder.custom_materials -= possible_mat
 			new_points_held = round(new_points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
 
-		var/obj/item/boulder/disposable_boulder = new (src)
+		var/obj/item/boulder/disposable_boulder = new (src) // Using disposable boulder till tg#76220 fixes insert_amount_mat
 		disposable_boulder.custom_materials = accepted_mats
 		if(isnull(silo_materials) || !silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency))
 			rejected_mats = rejected_mats + accepted_mats
