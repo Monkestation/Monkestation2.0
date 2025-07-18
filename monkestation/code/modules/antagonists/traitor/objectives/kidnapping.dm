@@ -99,6 +99,7 @@
 		/datum/job/head_of_personnel,
 		/datum/job/research_director,
 		/datum/job/nanotrasen_representative,
+		/datum/job/bridge_assistant,
 		// Security
 		/datum/job/detective,
 		/datum/job/security_officer,
