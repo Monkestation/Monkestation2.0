@@ -110,6 +110,8 @@
 	subdepartment_color = COLOR_COMMAND_BLUE
 	minimal_access = list(
 		ACCESS_COMMAND,
+		ACCESS_SECURITY, //console
+		ACCESS_MEDICAL, //console AGAIN
 		ACCESS_EVA,
 		ACCESS_GATEWAY,
 		ACCESS_MAINT_TUNNELS,
