@@ -124,6 +124,9 @@
 	)
 	job = /datum/job/bridge_assistant
 
+/datum/id_trim/job/bridge_assistant/chat_span()
+	return "job__bridgeassistant"
+
 /datum/id_trim/job/atmospheric_technician
 	assignment = "Atmospheric Technician"
 	trim_state = "trim_atmospherictechnician"
