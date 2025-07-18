@@ -77,6 +77,3 @@ Bridge Assistant
 	l_pocket = /obj/item/gun/energy/e_gun/mini
 	r_pocket = /obj/item/assembly/flash/handheld
 	implants = list(/obj/item/implant/mindshield)
-
-
-/datum/outfit/plasmaman/bridge_assistant
