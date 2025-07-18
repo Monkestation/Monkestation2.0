@@ -33470,6 +33470,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "gzf" = (

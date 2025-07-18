@@ -36530,6 +36530,9 @@
 	pixel_y = -3;
 	pixel_x = 3
 	},
+/obj/item/wrench{
+	pixel_x = 2
+	},
 /turf/open/floor/iron/dark/side,
 /area/station/science/xenobiology/hallway)
 "kKY" = (
@@ -64786,15 +64789,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/structure/rack,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 6
-	},
-/obj/item/wrench{
-	pixel_y = 4;
-	pixel_x = -5
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron/dark/corner,
 /area/station/science/xenobiology/hallway)
 "sVT" = (
