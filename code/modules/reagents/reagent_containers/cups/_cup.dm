@@ -630,12 +630,13 @@
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser
 	name = "johnson and co bluespace coffee synthesiser"
-	desc = "An incredibly complicated, incredibly expensive piece of machinery patented by a certain architecture firm designed for the sole purpose of synthesising enough coffee to preserve the sanity of their clients and staff. Using technology recycled from Nanotrasen's chemical dispensers - renowned for their thermodynamics-defying conversion of electricity into liquid reagents at unparalleled efficiency, spitting in the face of all logic and reason just like everything else they make - it synthesises surprisingly-delicious coffee in bulk with no regards for safety, with a basic laser-based sensor being the only device in the way of this cursed thing pouring out enough coffee to drown out a small planet. In order to avoid weighing 500 tons to carry the necessary power supply for such a dispenser, it has been fitted with a bluespace power-link to several fusion reactors at classified locations. The fact this hasn't been stolen by some hooligan for its immense worth is a miracle already - the fact it's in your hands, even moreso. Cherish it."
+	desc = "An incredibly complicated, incredibly expensive piece of machinery patented by a certain architecture firm, based off the bluespace coffeepot. Synthesises fresh coffee with an internal dispenser element."
 	volume = 140 //less space than the regular bluespace coffeepot but still has more space than the original design. most of the space is the chem dispenser inside
 
 	var/refill_enabled = TRUE //stolen from the advanced mop
 	var/refill_rate = 1
 	var/refill_reagent = /datum/reagent/consumable/coffee
+	w_class = WEIGHT_CLASS_NORMAL //its got literally infinite coffee
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Initialize(mapload)
 	. = ..()
@@ -658,6 +659,20 @@
 /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/examine(mob/user)
 	. = ..()
 	. += span_notice("The synthesiser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.")
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this device.")
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/examine_more(mob/user)
+	. = ..()
+
+	. += "This contraption, in essence the synthesiser from a portable chemical dispenser in a coffeepot, \
+		was designed by Johnson & Co for the explicit purpose of keeping their staff and clients awake. \
+		Due to the vast amounts of electricity the average dispenser consumes, this device is powered by bluespace link to multiple fusion reactors to save weight. \
+		Even with the many space-saving modifications, the bulk and design of the internal components give it a capacity only marginally better than the standard coffeepot, \
+		and the size of the synthesiser element makes it a bit trickier to store. \
+		The fact this thing is in your hands is a miracle given how rare it is, as its production run was incredibly small and new units are only produced on-order for the company's high-ranking staff or Nanotrasen officials. \
+		Cherish it. You may never hold one again."
+
+	return .
 
 /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Destroy()
 	STOP_PROCESSING(SSobj, src)
