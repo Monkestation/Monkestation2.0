@@ -3,6 +3,7 @@
 	starting_node = TRUE
 	display_name = "Basic Microfusion Technology"
 	description = "Basic microfusion technology allowing for basic microfusion designs."
+	prereq_ids = list("base")
 	design_ids = list(
 		"basic_microfusion_cell",
 	)
