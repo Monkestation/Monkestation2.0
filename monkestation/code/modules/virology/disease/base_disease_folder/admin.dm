@@ -162,34 +162,20 @@
 
 	return 1
 
-/client/proc/disease_view()
-	set category = "Admin.Debug"
-	set name = "Disease View"
-	set desc = "See disease visuals"
-
-	if(!holder)
-		return
-	if(!mob)
-		return
-	if(isobserver(mob))
-		var/mob/dead/observer/observer = mob
+ADMIN_VERB(disease_view, R_ADMIN, FALSE, "Disease View", "See disease visuals.", ADMIN_CATEGORY_DEBUG)
+	if(isobserver(user.mob))
+		var/mob/dead/observer/observer = user.mob
 		observer.toggle_disease_view() // The trait doesn't work if you're an observer, so this redirects the call to the observer verb.
 		return
-	if(HAS_TRAIT_FROM(mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT))
-		REMOVE_TRAIT(mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
-		to_chat(mob, span_notice("Admin disease view disabled."))
+	if(HAS_TRAIT_FROM(user.mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT))
+		REMOVE_TRAIT(user.mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
+		to_chat(user, span_notice("Admin disease view disabled."))
 	else
-		ADD_TRAIT(mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
-		to_chat(mob, span_notice("Admin disease view enabled."))
+		ADD_TRAIT(user.mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
+		to_chat(user, span_notice("Admin disease view enabled."))
 
-/client/proc/diseases_panel()
-	set category = "Admin.Logging"
-	set name = "Disease Panel"
-	set desc = "See diseases and disease information"
-
-	if(!holder)
-		return
-	holder.diseases_panel()
+ADMIN_VERB(diseases_panel, R_ADMIN, FALSE, "Disease Panel", "See diseases and disease information.", ADMIN_CATEGORY_LOGGING)
+	user.holder.diseases_panel()
 
 /datum/admins/var/viewingID
 

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed xenobio golem mind transfer stuff resulting in you being marked as your own master."

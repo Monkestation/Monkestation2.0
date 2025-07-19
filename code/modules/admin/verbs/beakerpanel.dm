@@ -58,14 +58,9 @@
 		))
 	return container_list
 
-/datum/admins/proc/beaker_panel()
-	set category = "Admin.Events"
-	set name = "Spawn reagent container"
-
-	if(!check_rights(R_ADMIN))
-		return
-	var/datum/beaker_panel/tgui = new(usr)
-	tgui.ui_interact(usr)
+ADMIN_VERB(beaker_panel, R_SPAWN, FALSE, "Spawn Reagent Container", "Spawn a reagent container.", ADMIN_CATEGORY_EVENTS)
+	var/datum/beaker_panel/tgui = new(user.mob)
+	tgui.ui_interact(user.mob)
 
 /datum/beaker_panel
 	var/chemstring
@@ -113,7 +108,7 @@
 		ui.open()
 
 /datum/beaker_panel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_SPAWN)
 
 /datum/beaker_panel/ui_static_data(mob/user)
 	var/list/data = list()

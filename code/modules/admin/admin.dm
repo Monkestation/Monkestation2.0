@@ -58,24 +58,20 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/datum/admins/proc/spawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom"
-	set name = "Spawn"
-
-	if(!check_rights(R_SPAWN) || !object)
+ADMIN_VERB(spawn_atom, R_SPAWN, FALSE, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG, object as text)
+	if(!object)
 		return
 
 	var/list/preparsed = splittext(object,":")
 	var/path = preparsed[1]
 	var/amount = 1
-	if(preparsed.len > 1)
+	if(length(preparsed) > 1) //MONKE EDIT
 		amount = clamp(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
 
 	var/chosen = pick_closest_path(path)
 	if(!chosen)
 		return
-	var/turf/T = get_turf(usr)
+	var/turf/T = get_turf(user.mob)
 
 	if(ispath(chosen, /turf))
 		T.ChangeTurf(chosen)
@@ -84,13 +80,10 @@
 			var/atom/A = new chosen(T)
 			A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] spawned [amount] x [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
 
-/datum/admins/proc/podspawn_atom(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom via supply drop"
-	set name = "Podspawn"
+ADMIN_VERB(spawn_atom_pod, R_SPAWN, FALSE, "PodSpawn", "Spawn an atom via supply drop.", ADMIN_CATEGORY_DEBUG, object as text)
 
 	if(!check_rights(R_SPAWN))
 		return
@@ -98,7 +91,7 @@
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
-	var/turf/target_turf = get_turf(usr)
+	var/turf/target_turf = get_turf(user.mob)
 
 	if(ispath(chosen, /turf))
 		target_turf.ChangeTurf(chosen)
@@ -111,26 +104,19 @@
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user)] pod-spawned [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Podspawn Atom")
 
-/datum/admins/proc/spawn_cargo(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn a cargo crate"
-	set name = "Spawn Cargo"
-
-	if(!check_rights(R_SPAWN))
-		return
-
+ADMIN_VERB(spawn_cargo, R_SPAWN, FALSE, "Spawn Cargo", "Spawn a cargo crate.", ADMIN_CATEGORY_DEBUG, object as text)
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
 	if(!chosen)
 		return
 	var/datum/supply_pack/S = new chosen
 	S.admin_spawned = TRUE
-	S.generate(get_turf(usr))
+	S.generate(get_turf(user.mob))
 
-	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(user.mob)] spawned cargo pack [chosen] at [AREACOORD(user.mob)]")
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Cargo")
 
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"
@@ -163,10 +149,8 @@
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
-/datum/admins/proc/create_or_modify_area()
-	set category = "Debug"
-	set name = "Create or modify area"
-	create_area(usr)
+ADMIN_VERB(create_or_modify_area, R_DEBUG, FALSE, "Create Or Modify Area", "Create of modify an area. wow.", ADMIN_CATEGORY_DEBUG)
+	create_area(user.mob)
 
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)

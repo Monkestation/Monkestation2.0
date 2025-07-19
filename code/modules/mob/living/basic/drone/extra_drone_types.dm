@@ -46,6 +46,7 @@
 	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some upgrades... and now serve an enemy of your former masters."
 	important_text = ""
 	spawner_job_path = /datum/job/ghost_role
+	dont_be_a_shit = FALSE //I feel this goes without question. If were using this its a bus.
 
 /// A version of the syndrone that gets a nuclear uplink, a firearms implant, and 30 TC.
 /mob/living/basic/drone/syndrone/badass
