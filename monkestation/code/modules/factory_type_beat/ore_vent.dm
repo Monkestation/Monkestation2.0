@@ -60,8 +60,11 @@
 	var/boulder_icon_state = "boulder"
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
-	/// We use a timer id or time left to prevent the wave defense from being started multiple times.
-	//vent_timer will be null, timer id, "tr=<time remaining>" or "starting" if that somehow happens.
+	/**
+ 	 * Timer id or time left to prevent the wave defense from being started multiple times.
+	 * vent_timer will be null, a timer id, "tr=<time remaining>" or "starting" if that somehow happens.
+	 * "inf" for infinite duration, for boss fights or special vent tapping requirements.
+ 	 */
 	var/vent_timer = null
 	COOLDOWN_DECLARE(manual_vent_cooldown)
 
@@ -211,7 +214,8 @@
 		spawn_distance_exclude = 3, \
 	)
 
-	vent_timer = addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer, TIMER_STOPPABLE)
+	vent_timer = "tl=" + "[wave_timer]"
+	node.ai_controller?.reset_ai_status()
 	spawning_mobs = TRUE
 	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
@@ -260,10 +264,16 @@
 /**
  * Called when the vent needs to pause or resume the wave progress. Usually called by the node drone.
  */
-/obj/structure/ore_vent/proc/pause_resume_wave()
-	if(!isnull(vent_timer))
-		if(findtext(vent_timer, "tl=", 1, 4))
-			return // setup for later
+/obj/structure/ore_vent/proc/pause_resume_wave(start)
+	var/timeleft = wave_time_remaining()
+	if(!isnull(timeleft))
+		if(start && findtext(vent_timer, "tl=", 1, 4))
+			vent_timer = addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), timeleft, TIMER_STOPPABLE)
+
+		if(!start && timeleft(vent_timer))
+			deltimer(vent_timer)
+			vent_timer = "tl=" + "[timeleft]"
+	return
 
 /**
  * Returns time remaining of the current wave defense.
@@ -271,7 +281,7 @@
  */
 /obj/structure/ore_vent/proc/wave_time_remaining()
 	var/timeleft = null
-	if(!isnull(vent_timer))
+	if(!isnull(vent_timer) && !findtext(vent_timer, "inf"))
 		if(findtext(vent_timer, "tl=", 1, 4))
 			timeleft = text2num(copytext(vent_timer, 4))
 		else
@@ -322,6 +332,7 @@
 	Shake(duration = 3 SECONDS)
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive(src)
+	sleep(2 SECONDS) // Let the drone actually show up.
 	RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
 	add_shared_particles(/particles/smoke/ash)
 
@@ -526,7 +537,7 @@
 		var/mob/living/simple_animal/hostile/megafauna/wendigo/noportal = boss
 		noportal.make_portal = FALSE
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
-	vent_timer = "boss" //Basically forever
+	vent_timer = "inf" //Basically forever
 	//boss.say(boss.summon_line) //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
 
 /obj/structure/ore_vent/boss/icebox

@@ -8,7 +8,6 @@
  * If the drone survives, they will fly away to safety as the vent spawns ores.
  * If the drone dies, the wave defense will fail.
  */
-
 /mob/living/basic/node_drone
 	name = "NODE drone"
 	desc = "Standard in-atmosphere drone, used by Nanotrasen to operate and excavate valuable ore vents."
@@ -45,6 +44,8 @@
 	var/obj/structure/ore_vent/attached_vent = null
 	/// Set when the drone is begining to leave lavaland after the vent is secured.
 	var/escaping = FALSE
+	/// Timer to force the drone to return if it leaves the vent.
+	var/unbuckled_timer = null
 
 /mob/living/basic/node_drone/Initialize(mapload)
 	. = ..()
@@ -55,8 +56,11 @@
 	explosion(origin = src, light_impact_range = 1, smoke = 1)
 
 /mob/living/basic/node_drone/Destroy()
-	attached_vent?.node = null //clean our reference to the vent both ways.
-	attached_vent = null
+	if(!isnull(attached_vent))
+		UnregisterSignal(attached_vent, COMSIG_MOVABLE_BUCKLE)
+		UnregisterSignal(attached_vent, COMSIG_MOVABLE_UNBUCKLE)
+		attached_vent?.node = null //clean our reference to the vent both ways.
+		attached_vent = null
 	return ..()
 
 /mob/living/basic/node_drone/examine(mob/user)
@@ -102,26 +106,31 @@
 		. += "node_progress_1"
 		return
 
-
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
+	src.ai_controller?.set_ai_status(AI_STATUS_OFF) // Turns off Ai if it has one.
 	attached_vent = parent_vent
 	flying_state = FLY_IN_STATE
 	update_appearance(UPDATE_ICON_STATE)
 	pixel_z = 400
 	animate(src, pixel_z = 0, time = 2 SECONDS, easing = QUAD_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
-	src.ai_controller?.set_blackboard_key(BB_CURRENT_HUNTING_TARGET, attached_vent) // Makes it immediately hunt it's parent.
+	RegisterSignal(attached_vent, COMSIG_MOVABLE_BUCKLE, PROC_REF(did_buckle))
+	RegisterSignal(attached_vent, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(did_buckle))
 
 /**
  * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
  */
-/mob/living/basic/node_drone/proc/escape()
+/mob/living/basic/node_drone/proc/escape(failed)
 	var/funny_ending = FALSE
 	flying_state = FLY_OUT_STATE
 	update_appearance(UPDATE_ICON_STATE)
-	if(prob(1) || check_holidays(APRIL_FOOLS))
-		say("I have to go now, my planet needs me.")
-		funny_ending = TRUE
-	visible_message(span_notice("The drone flies away to safety as the vent is secured."))
+	if(!failed)
+		if(prob(1) || check_holidays(APRIL_FOOLS))
+			say("I have to go now, my planet needs me.")
+			funny_ending = TRUE
+		visible_message(span_notice("The drone flies away to safety as the vent is secured."))
+	else
+		visible_message(span_notice("The drone flies away to safety in fear. Next time DEFEND THE DRONE!"))
+	attached_vent?.pause_resume_wave(FALSE)
 	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(2 SECONDS)
 	if(funny_ending)
@@ -130,7 +139,10 @@
 	qdel(src)
 
 /mob/living/basic/node_drone/proc/pre_escape()
+	var/time_out = FALSE
 	if(attached_vent)
+		if(!isnull(attached_vent?.wave_time_remaining()))
+			time_out = TRUE
 		attached_vent = null
 		update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 	src.ai_controller?.set_ai_status(AI_STATUS_OFF) // Turns off Ai if it has one.
@@ -140,8 +152,19 @@
 	if(!escaping)
 		escaping = TRUE
 		flick("mining_node_escape", src)
-		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(escape), time_out), 1.9 SECONDS)
 		return
+
+/mob/living/basic/node_drone/proc/did_buckle(source, mob, was_buckled)
+	SIGNAL_HANDLER
+	if(mob == src)
+		attached_vent?.pause_resume_wave(was_buckled)
+		update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
+		if(was_buckled)
+			deltimer(unbuckled_timer)
+			unbuckled_timer = null
+		else if(isnull(unbuckled_timer))
+			unbuckled_timer = addtimer(CALLBACK(src, PROC_REF(pre_escape)), 5 SECONDS, TIMER_STOPPABLE)
 
 /// The node drone AI controller
 //	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.
@@ -181,11 +204,6 @@
 // node drone behavior for buckling down on a vent.
 /datum/ai_behavior/hunt_target/latch_onto/node_drone
 	hunt_cooldown = 5 SECONDS
-
-/datum/ai_behavior/hunt_target/latch_onto/node_drone/target_caught(mob/living/hunter, obj/hunted)
-	. = ..()
-	if(.)
-		hunter.update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
 // Evasion behavior.
 /datum/ai_planning_subtree/flee_target/node_drone
