@@ -278,3 +278,31 @@
 
 
 	dog_fashion = /datum/dog_fashion/head/reindeer
+
+/obj/item/clothing/head/utility/hardhat/jack
+	name = "carved square pumpkin"
+	desc = "A very square jack o' lantern, with nails included! Believed to ward off laight, but makes you feel as if your taking too long."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "hardhat0_jack"
+	inhand_icon_state = null
+	hat_type = "jack"
+	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	armor_type = /datum/armor/none
+	flags_cover = HEADCOVERSEYES
+	worn_y_offset = 1
+
+	light_system = null
+	light_outer_range = 0
+	light_power = 0
+
+/obj/item/clothing/head/utility/hardhat/jack/update_overlays()
+	. = ..()
+	if(light_on)
+		. += emissive_appearance(icon, "jack-emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/head/utility/hardhat/jack/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(light_on && !isinhands)
+		. += emissive_appearance(icon_file, "jack-emissive", src, alpha = src.alpha)

@@ -232,6 +232,11 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 *	HALLOWEEN
 */
 
+/datum/loadout_item/head/jack
+	name = "Carved Square Pumpkin"
+	item_path = /obj/item/clothing/head/utility/hardhat/jack
+	requires_purchase = FALSE
+
 /datum/loadout_item/head/xenos
 	name = "Xenos Helmet"
 	item_path = /obj/item/clothing/head/costume/xenos
