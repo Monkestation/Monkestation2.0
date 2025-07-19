@@ -12,3 +12,8 @@
 	name = "Amogus Yourself"
 	item_path = /obj/item/effect_granter/amogus
 	item_cost = 300
+
+/datum/store_item/roundstart/jaundice
+	name = "Jaundice Yourself"
+	item_path = /obj/item/effect_granter/jaundice
+	item_cost = 500
