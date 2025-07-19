@@ -6,11 +6,15 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ethereal_horns/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.ethereal_horns_list,
-		"ethereal_horns",
-		list("FRONT"),
-	)
+	return assoc_to_keys_features(GLOB.ethereal_horns_list)
+
+/datum/preference/choiced/ethereal_horns/icon_for(value)
+	var/datum/sprite_accessory/ethereal_horns = GLOB.ethereal_horns_list[value]
+	if(ethereal_horns.icon_state == null || ethereal_horns.icon_state == "none")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(ethereal_horns.icon, "m_ethereal_horns_[ethereal_horns.icon_state]_FRONT")
+	return final_icon
 
 /datum/preference/choiced/ethereal_horns/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ethereal_horns"] = value
@@ -23,11 +27,16 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ethereal_tail/init_possible_values()
-	return possible_values_for_sprite_accessory_list_for_body_part(
-		GLOB.ethereal_tail_list,
-		"ethereal_tail",
-		list("BEHIND"),
-	)
+	return assoc_to_keys_features(GLOB.ethereal_tail_list)
+
+/datum/preference/choiced/ethereal_tail/icon_for(value)
+	var/datum/sprite_accessory/ethereal_tail = GLOB.ethereal_tail_list[value]
+	if(ethereal_tail.icon_state == null || ethereal_tail.icon_state == "none")
+		var/icon/invalid_icon = icon('icons/mob/landmarks.dmi', "x")
+		return invalid_icon
+	var/icon/final_icon = icon(ethereal_tail.icon, "m_ethereal_tail_[ethereal_tail.icon_state]_BEHIND")
+	final_icon.Blend(icon(ethereal_tail.icon, "m_ethereal_tail_[ethereal_tail.icon_state]_FRONT"), ICON_OVERLAY)
+	return final_icon
 
 /datum/preference/choiced/ethereal_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ethereal_tail"] = value
