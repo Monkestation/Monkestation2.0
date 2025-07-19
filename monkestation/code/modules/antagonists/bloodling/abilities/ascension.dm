@@ -111,10 +111,6 @@ GLOBAL_VAR(ascended_bloodling)
 	// Gives em 750 biomass
 	add_biomass(biomass_max - biomass)
 	ascension_datum = new /datum/bloodling_ascension()
-	// Calls the shuttle
-	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
-	// Makes it unable to be recalled
-	SSshuttle.emergency_no_recall = TRUE
 	ascension_datum.ascend(get_turf(src))
 	src.evolution(5)
 	src.gib()
@@ -125,6 +121,8 @@ GLOBAL_VAR(ascended_bloodling)
 	var/turf/start_turf
 
 /datum/bloodling_ascension/proc/ascend(turf)
+	// Calls the shuttle
+	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
 
 	if(isnull(chosen_theme))
 		chosen_theme = new /datum/dimension_theme/bloodling()
