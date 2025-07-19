@@ -49,12 +49,12 @@ GLOBAL_VAR(ascended_bloodling)
 	icon_living = "heart"
 	evolution_level = 6
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
-		/datum/action/cooldown/mob_cooldown/bloodling/infest,
+		/datum/action/cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/infest,
 		/datum/action/cooldown/bloodling/dissonant_shriek,
 		/datum/action/cooldown/spell/aoe/repulse/bloodling,
-		/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass,
-		/datum/action/cooldown/mob_cooldown/bloodling/heal,
+		/datum/action/cooldown/bloodling/transfer_biomass,
+		/datum/action/cooldown/bloodling/heal,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
 	speed = 0

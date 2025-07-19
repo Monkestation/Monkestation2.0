@@ -1,9 +1,9 @@
-/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass
+/datum/action/cooldown/bloodling/transfer_biomass
 	name = "Transfer Biomass"
 	desc = "Transfer biomass to another organism."
 	button_icon_state = "transfer"
 
-/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass/PreActivate(atom/target)
+/datum/action/cooldown/bloodling/transfer_biomass/PreActivate(atom/target)
 	. = ..()
 
 	var/mob/living/mob = target
@@ -16,7 +16,7 @@
 		return FALSE
 	return
 
-/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass/Activate(atom/target)
+/datum/action/cooldown/bloodling/transfer_biomass/Activate(atom/target)
 	. = ..()
 
 	var/mob/living/basic/bloodling/our_mob = owner

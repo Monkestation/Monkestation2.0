@@ -1,10 +1,10 @@
-/datum/action/cooldown/mob_cooldown/bloodling/devour
+/datum/action/cooldown/bloodling/devour
 	name = "Devour Limb"
 	desc = "Allows you to randomly consume a creatures limb. Sets ALL your abilities on a 10 second cooldown"
 	button_icon_state = "devour"
 	cooldown_time = 10 SECONDS
 
-/datum/action/cooldown/mob_cooldown/bloodling/devour/PreActivate(atom/target)
+/datum/action/cooldown/bloodling/devour/PreActivate(atom/target)
 	. = ..()
 	var/mob/living/mob = target
 	if(!iscarbon(mob))
@@ -12,7 +12,7 @@
 		return FALSE
 	return
 
-/datum/action/cooldown/mob_cooldown/bloodling/devour/Activate(atom/target)
+/datum/action/cooldown/bloodling/devour/Activate(atom/target)
 	. = ..()
 	StartCooldown()
 	var/mob/living/basic/bloodling/our_mob = owner
