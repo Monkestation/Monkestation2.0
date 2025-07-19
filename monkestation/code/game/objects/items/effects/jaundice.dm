@@ -1,6 +1,5 @@
 /obj/item/effect_granter/jaundice
 	name = "Jaundice Yourself"
-	desc = "Give yourself a horrible liver problem, and turn a remarkable shade of yellow"
 	icon_state = "jaundice"
 
 /obj/item/effect_granter/jaundice/grant_effect(mob/living/carbon/granter)
