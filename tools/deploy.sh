@@ -52,3 +52,5 @@ cp -r tgui/packages/tgfont/dist/* $1/tgui/packages/tgfont/dist/
 if [ "$(uname -o)" = "Msys" ]; then
 	cp ./*.dll $1/
 fi
+
+cp ./libaneri.so $1/
