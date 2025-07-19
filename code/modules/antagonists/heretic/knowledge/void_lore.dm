@@ -26,7 +26,7 @@
  *   Maid in the Mirror
  *
  * Waltz at the End of Time
- */
+
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the Path of Void to you. \
@@ -50,7 +50,7 @@
 		return FALSE
 
 	return ..()
-
+*/
 /datum/heretic_knowledge/void_grasp
 	name = "Grasp of Void"
 	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
