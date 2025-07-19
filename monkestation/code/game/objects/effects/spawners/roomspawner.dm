@@ -185,3 +185,38 @@
 	name = "Tramstation bar spawner"
 	room_width = 30
 	room_height = 25
+
+/obj/effect/spawner/random_armoury
+	name = "random armoury spawner"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "random_room"
+	dir = NORTH
+	var/room_width = 0
+	var/room_height = 0
+
+/obj/effect/spawner/random_armoury/New(loc, ...)
+	. = ..()
+	if(!isnull(SSmapping.random_armoury_spawners))
+		SSmapping.random_armoury_spawners += src
+
+/obj/effect/spawner/random_armoury/Initialize(mapload)
+	..()
+	if(!mapload)
+		return INITIALIZE_HINT_QDEL
+
+	if(!length(SSmapping.random_armoury_templates))
+		message_admins("Room spawner created with no templates available. This shouldn't happen.")
+		return INITIALIZE_HINT_QDEL
+	var/list/possible_armoury_templates = list()
+	var/datum/map_template/random_room/armoury/armoury_candidate
+	shuffle_inplace(SSmapping.random_armoury_templates)
+	for(var/ID in SSmapping.random_armoury_templates)
+		armoury_candidate = SSmapping.random_armoury_templates[ID]
+		if(armoury_candidate.weight == 0 || room_height != armoury_candidate.template_height || room_width != armoury_candidate.template_width)
+			armoury_candidate = null
+			continue
+		possible_armoury_templates[armoury_candidate] = armoury_candidate.weight
+	if(possible_armoury_templates.len)
+		var/datum/map_template/random_room/random_armoury/template = pick_weight(possible_armoury_templates)
+		template.load(get_turf(src), centered = template.centerspawner)
+	return INITIALIZE_HINT_QDEL

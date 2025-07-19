@@ -90,10 +90,12 @@ SUBSYSTEM_DEF(mapping)
 	var/list/random_bar_templates = list()
 	var/list/random_engine_templates = list()
 	var/list/random_arena_templates = list()
+	var/list/random_armoury_templates = list()
 	///Temporary list, where room spawners are kept roundstart. Not used later.
 	var/list/random_room_spawners = list()
 	var/list/random_engine_spawners = list()
 	var/list/random_bar_spawners = list()
+	var/list/random_armoury_spawners = list()
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
@@ -367,6 +369,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	random_engine_templates = SSmapping.random_engine_templates
 	random_bar_templates = SSmapping.random_bar_templates
 	random_arena_templates = SSmapping.random_arena_templates
+	random_armoury_templates = SSmapping.random_armoury_templates
 
 	current_map = SSmapping.current_map
 
@@ -497,6 +500,27 @@ Used by the AI doomsday and the self-destruct nuke.
 	var/start_time = REALTIMEOFDAY
 	GLOB.ghost_arena.spawn_random_arena(init = TRUE)
 	INIT_ANNOUNCE("Loaded Random Arenas in [(REALTIMEOFDAY - start_time) / 10]s!")
+
+/datum/controller/subsystem/mapping/proc/load_random_armoury()
+	var/start_time = REALTIMEOFDAY
+	for(var/obj/effect/spawner/random_engines/engine_spawner as() in random_engine_spawners)
+		var/list/possible_engine_templates = list()
+		var/datum/map_template/random_room/random_engines/engine_candidate
+		shuffle_inplace(random_engine_templates)
+		for(var/ID in random_engine_templates)
+			engine_candidate = random_engine_templates[ID]
+			if(current_map.map_name != engine_candidate.station_name || engine_candidate.weight == 0 || engine_spawner.room_height != engine_candidate.template_height || engine_spawner.room_width != engine_candidate.template_width)
+				engine_candidate = null
+				continue
+			possible_engine_templates[engine_candidate] = engine_candidate.weight
+		if(possible_engine_templates.len)
+			var/datum/map_template/random_room/random_engines/template = pick_weight(possible_engine_templates)
+			log_world("Loading random engine template [template.name] ([template.type]) at [AREACOORD(engine_spawner)]")
+			template.stationinitload(get_turf(engine_spawner), centered = template.centerspawner)
+		SSmapping.random_engine_spawners -= engine_spawner
+		qdel(engine_spawner)
+	random_engine_spawners = null
+	INIT_ANNOUNCE("Loaded Random Engine in [(REALTIMEOFDAY - start_time)/10]s!")
 /// New Random Bars and Engines Spawning - MonkeStation Edit End
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
