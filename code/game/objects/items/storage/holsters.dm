@@ -94,10 +94,16 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
 		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/r10mm,
 		/obj/item/ammo_box/magazine/m10mm,
+		/obj/item/ammo_box/magazine/m35,
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/m50,
+		/obj/item/ammo_box/magazine/c35sol_pistol,
+		/obj/item/ammo_box/magazine/c585trappiste_pistol,
+		/obj/item/ammo_box/magazine/whispering_jester_45_magazine,
 		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/ballistic/modular/mk_58,
 		/obj/item/ammo_box/c38, // Revolver speedloaders.
 		/obj/item/ammo_box/a357,
 		/obj/item/ammo_box/a762,
