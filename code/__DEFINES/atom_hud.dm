@@ -96,6 +96,7 @@
 #define SECHUD_SYNDICATE_INTERDYNE_HEAD "hudsyndicateinterdynehead"
 
 #define SECHUD_ASSISTANT "hudassistant"
+#define SECHUD_BRIDGEASSISTANT "hudbridgeassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
 #define SECHUD_BARTENDER "hudbartender"
 #define SECHUD_BITRUNNER "hudbitrunner"

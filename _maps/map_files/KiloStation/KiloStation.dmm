@@ -15956,6 +15956,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "faP" = (
@@ -20389,6 +20390,10 @@
 /obj/item/flashlight,
 /obj/item/flashlight,
 /obj/machinery/digital_clock/directional/south,
+/obj/item/storage/medkit/regular{
+	pixel_x = 0;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "gtA" = (
@@ -32146,6 +32151,7 @@
 "jRe" = (
 /obj/structure/cable,
 /obj/structure/chair/office,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "jRm" = (
@@ -42142,7 +42148,6 @@
 /area/station/maintenance/aft)
 "nbu" = (
 /obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/status_display/ai/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Bridge Starboard";
@@ -42153,6 +42158,22 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 10;
+	pixel_y = 1
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -49164,15 +49185,23 @@
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
 /obj/item/folder/white{
-	pixel_x = 6
+	pixel_x = 9;
+	pixel_y = 5
 	},
-/obj/item/storage/medkit/regular,
 /obj/machinery/station_map/engineering/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Bridge Emergency Supplies";
 	name = "command camera"
 	},
 /obj/machinery/light_switch/directional/south,
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/recharger{
+	pixel_x = 3;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pqB" = (
@@ -51078,13 +51107,32 @@
 /area/station/cargo/storage)
 "pXt" = (
 /obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = -3;
+	pixel_y = -12
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = 9;
+	pixel_y = -11
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -10;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -11;
+	pixel_y = 12
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)

@@ -125,6 +125,8 @@
 		/obj/item/storage/backpack/satchel/cap = 1,
 		/obj/item/storage/backpack/duffelbag/captain = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
+	)
+	access_lists["[ACCESS_BLUESHIELD]"] = list(
 
 		// BLUESHIELD
 		/obj/item/clothing/head/beret/blueshield = 1,

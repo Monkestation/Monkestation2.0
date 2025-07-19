@@ -1661,6 +1661,19 @@
 	},
 /obj/structure/sign/departments/aiupload/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 3;
+	pixel_y = 14
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aBf" = (
@@ -6139,6 +6152,14 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 18;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bQh" = (
@@ -9619,6 +9640,7 @@
 	dir = 1;
 	name = "Crew Station"
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cOZ" = (
@@ -12713,6 +12735,7 @@
 	dir = 1;
 	name = "Engineering Station"
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dNb" = (
@@ -41369,6 +41392,23 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table,
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 14;
+	pixel_y = 5
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -2;
+	pixel_y = 1
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "mOZ" = (

@@ -580,6 +580,19 @@
 	name = "Teleporter Room Shutters Control";
 	req_access = list("teleporter")
 	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -6;
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "ajn" = (
@@ -13230,6 +13243,11 @@
 /obj/item/assembly/timer,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"elr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/landmark/start/bridge_assistant,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "elt" = (
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -19949,8 +19967,14 @@
 "gwJ" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/status_display/evac/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -7;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -23959,6 +23983,11 @@
 /obj/item/pai_card,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"hFL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/bridge_assistant,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "hFU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -35549,6 +35578,13 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
+"ltn" = (
+/obj/structure/table/reinforced,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "ltw" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -35667,8 +35703,18 @@
 "luL" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/status_display/ai/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = -4;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -103861,7 +103907,7 @@ snq
 xdx
 lDX
 xdx
-aOQ
+hFL
 dnA
 lDX
 lDX
@@ -104123,9 +104169,9 @@ dnA
 bLC
 pVV
 dyL
-iUz
+cky
 lNT
-iUz
+ltn
 oNk
 dCg
 nAj
@@ -104637,7 +104683,7 @@ awG
 lii
 fFK
 oFj
-iUz
+aOQ
 awG
 aiX
 oNk
@@ -104889,7 +104935,7 @@ snq
 xdx
 lDX
 xdx
-cky
+elr
 awG
 lDX
 lDX

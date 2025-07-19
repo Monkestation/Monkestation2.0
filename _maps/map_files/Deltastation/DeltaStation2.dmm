@@ -21425,6 +21425,27 @@
 "fbO" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = -13;
+	pixel_y = 3
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -2;
+	pixel_y = 0
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 17;
+	pixel_y = 3
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 14;
+	pixel_y = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "fbU" = (
@@ -38912,6 +38933,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "jgt" = (
@@ -45291,6 +45313,19 @@
 "kCV" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -2;
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kDd" = (
@@ -59557,6 +59592,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"nZT" = (
+/obj/machinery/light_switch/directional/south,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table/reinforced,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "nZW" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -138229,7 +138273,7 @@ diL
 cxy
 drj
 bog
-iMg
+nZT
 sQA
 rvb
 aSS
