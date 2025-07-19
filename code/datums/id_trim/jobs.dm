@@ -117,7 +117,6 @@
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_TELEPORTER,
-		ACCESS_WEAPONS,
 	)
 	extra_access = list(ACCESS_RC_ANNOUNCE,)
 	template_access = list(
