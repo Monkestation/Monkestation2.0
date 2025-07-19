@@ -1,0 +1,31 @@
+{
+	"umbrella_closed": [
+		{
+			"type": "icon_state",
+			"icon_state": "umbrella_closed",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"umbrella_on": [
+		{
+			"type": "icon_state",
+			"icon_state": "umbrella_handle",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "umbrella_on",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"umbrella_on_BACK": [
+		{
+			"type": "icon_state",
+			"icon_state": "umbrella_on_BACK",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
