@@ -279,7 +279,7 @@
 	if(!human_who_gained_species.GetComponent(/datum/component/sign_language)) // if they're already capable of signing, don't clobber that
 		signer = human_who_gained_species.AddComponent(/datum/component/sign_language)
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
-	human_who_gained_species.dna.add_mutation(/datum/mutation/clever)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/clever, MUTATION_SOURCE_ACTIVATED)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
 	for(var/datum/mutation/mutation as anything in human_who_gained_species.dna.mutations)
 		mutation.instability = 0
@@ -287,7 +287,10 @@
 	human_who_gained_species.dna.species.name = "Monkey"
 	human_who_gained_species.dna.features["fur"] = COLOR_MONKEY_BROWN
 
-/datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/C)
+/datum/species/monkey/trained/on_species_loss(mob/living/carbon/human/human)
 	. = ..()
+
+	human.dna.remove_mutation(/datum/mutation/clever, MUTATION_SOURCE_ACTIVATED)
+
 	if(!QDELETED(signer))
 		QDEL_NULL(signer)
