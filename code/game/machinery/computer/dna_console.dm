@@ -20,7 +20,7 @@
 #define GENETIC_DAMAGE_ACCURACY_MULTIPLIER 3
 
 /// Special status indicating a scanner occupant is transforming eg. from monkey to human
-#define STATUS_TRANSFORMING 4
+#define STATUS_TRANSFORMING 5
 
 /// Multiplier for how much genetic damage received from DNA Console functionality
 #define GENETIC_DAMAGE_IRGENETIC_DAMAGE_MULTIPLIER 1
@@ -879,7 +879,7 @@
 				return
 
 			// Saving temporary or unobtainable mutations leads to gratuitous abuse
-			if(!(MUTATION_SOURCE_ACTIVATED in mutation.sources))
+			if(length(mutation.sources) && get_mutation_class(mutation) == SCANNER_MUTATION_CLASS_OTHER)
 				say("ERROR: This mutation is anomalous, and cannot be saved.")
 				return
 
