@@ -147,6 +147,10 @@
 	var/mob/living/victim = src.victim
 	var/limb_name = limb.plaintext_zone
 
+	if((limb.bodypart_flags & BODYPART_UNREMOVABLE) || HAS_TRAIT(victim, TRAIT_GODMODE) || HAS_TRAIT(victim, TRAIT_NODISMEMBER))
+		victim.balloon_alert(user, "cannot decapitate!")
+		return
+
 	var/decap_time
 	switch(item.force)
 		if(15 to 24)
@@ -178,7 +182,7 @@
 		if(time_since >= decap_time)
 			break
 	progress.end_progress()
-	if(!limb.dismember(dam_type = item.damtype, sound = FALSE))
+	if(!limb.dismember(dam_type = item.damtype))
 		user.visible_message(span_danger("[user] fails to slice through [victim]'s [limb_name] with \the [item]!"), span_boldnotice("You fail to slice through [victim]'s [limb_name] with \the [item]!"))
 		return TRUE
 	log_combat(user, victim, "beheaded", item)

@@ -38684,7 +38684,7 @@
 	id = "BSdoor";
 	name = "Door Lock";
 	normaldoorcontrol = 1;
-	req_access = list("captain");
+	req_access = list("blueshield");
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet/cyan,
@@ -72901,7 +72901,7 @@
 	normaldoorcontrol = 1;
 	pixel_x = 4;
 	pixel_y = -26;
-	req_access = list("cent_general");
+	req_access = list("nt_rep");
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -81524,6 +81524,9 @@
 	},
 /obj/machinery/status_display/ai/directional/south,
 /obj/structure/table/wood,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/quartermaster)
 "wBy" = (

@@ -79078,6 +79078,9 @@
 	},
 /obj/structure/table/wood,
 /obj/item/modular_computer/laptop,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "ppP" = (

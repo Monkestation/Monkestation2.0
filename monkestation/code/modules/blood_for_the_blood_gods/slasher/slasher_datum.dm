@@ -14,6 +14,7 @@
 	mask = /obj/item/clothing/mask/gas/slasher2
 	belt = /obj/item/storage/belt/slasher
 	gloves = /obj/item/clothing/gloves/admiral
+	back = /obj/item/storage/backpack/cursed
 
 /datum/antagonist/slasher
 	name = "\improper Slasher"
@@ -111,7 +112,6 @@
 	ADD_TRAIT(current_mob, TRAIT_BATON_RESISTANCE, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_CLUMSY, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_DUMB, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_NODEATH, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_SLASHER, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_NO_PAIN_EFFECTS, "slasher")
@@ -260,11 +260,11 @@
 /datum/status_effect/slasher/stalking/tick(seconds_between_ticks, times_fired)
 	if(slasherdatum.stalked_human)
 		for(var/mob/living/mob in view(7, owner))
-			if(mob == owner)
+			if(mob == owner || !mob.mind)
 				continue
 			if(mob.stat == DEAD)
 				slasherdatum.failed_stalking()
-			if(!istype(mob, /mob/living/carbon/human))
+			if(!ishuman(mob))
 				slasherdatum.reset_stalking()
 			if(mob.mind.has_antag_datum(/datum/antagonist/slasher) && slasherdatum.stalked_human == owner)
 				slasherdatum.stalk_precent += (1 / 1.8) //3 minutes, hopefully.

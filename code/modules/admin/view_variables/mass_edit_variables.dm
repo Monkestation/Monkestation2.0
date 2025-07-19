@@ -1,4 +1,4 @@
-/client/proc/cmd_mass_modify_object_variables(atom/A, var_name)
+/client/proc/cmd_mass_modify_object_variables(atom/A, var_name) //MONKE EDIT TODO CONVERT TO AVD tg doesn't no idea why.
 	set category = "Debug"
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"

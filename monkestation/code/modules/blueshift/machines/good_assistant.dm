@@ -156,6 +156,12 @@
 		/obj/item/gbp_puncher = 1,
 	)
 
+/datum/outfit/job/nanotrasen_representative/pre_equip(mob/living/carbon/human/human, visualsOnly)
+	. = ..()
+	backpack_contents += list(
+		/obj/item/gbp_puncher = 1,
+	)
+
 /datum/outfit/job/quartermaster/pre_equip(mob/living/carbon/human/human, visualsOnly)
 	. = ..()
 	backpack_contents += list(
