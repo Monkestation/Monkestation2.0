@@ -118,6 +118,7 @@
 		var/pop_required = mode.min_pop_thresholds[track]
 		if(mode.active_players < pop_required)
 			message_admins("Storyteller failed to pick an event for track of [track] due to insufficient population. (required: [pop_required] active pop for [track]. Current: [mode.active_players])")
+			log_storyteller("Storyteller failed to pick an event for track of [track] due to insufficient population. (required: [pop_required] active pop for [track]. Current: [mode.active_players])")
 			mode.event_track_points[track] *= TRACK_FAIL_POINT_PENALTY_MULTIPLIER
 			return
 		calculate_weights(track)
@@ -184,13 +185,13 @@
 		mode.TriggerEvent(bought_event, forced)
 	else
 		mode.schedule_event(bought_event, 3 MINUTES, total_cost, _forced = forced)
-	SSgamemode.triggered_round_events |= bought_event.name
+	SSgamemode.triggered_round_events |= bought_event.type
 
 /// Calculates the weights of the events from a passed track.
 /datum/storyteller/proc/calculate_weights(track)
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
 	for(var/datum/round_event_control/event as anything in mode.event_pools[track])
-		var/weight_total = event.weight
+		var/weight_total = event.get_weight()
 		/// Apply tag multipliers if able
 		if(tag_multipliers)
 			for(var/tag in tag_multipliers)

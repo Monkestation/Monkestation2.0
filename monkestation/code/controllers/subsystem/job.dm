@@ -188,7 +188,7 @@
 		valid_rolesets = list()
 		valid_rolesets += SSgamemode.event_pools[EVENT_TRACK_ROLESET]
 
-	log_storyteller("p_d_r valid_rolesets", list("rolesets" = english_list(valid_rolesets)))
+	log_storyteller("p_d_r valid_rolesets: [english_list(valid_rolesets)]")
 	valid_rolesets -= SSgamemode.current_roundstart_event
 	var/player_count = 0
 	for(var/job in assigned_players_by_job)
@@ -199,9 +199,11 @@
 		if(!roleset.roundstart || !roleset.can_spawn_event(player_count))
 			valid_rolesets -= roleset
 		else
-			actual_valid_rolesets[roleset] = roleset.weight
+			var/weight = roleset.get_weight()
+			log_storyteller("p_d_r [roleset] weight: [weight][roleset.weight != weight ? " (base: [roleset.weight])" : ""]")
+			actual_valid_rolesets[roleset] = weight
 	valid_rolesets = actual_valid_rolesets
-	log_storyteller("p_d_r actual_valid_rolesets", list("rolesets" = english_list(actual_valid_rolesets)))
+	log_storyteller("p_d_r actual_valid_rolesets: [english_list(actual_valid_rolesets)]")
 
 	if(SSgamemode.current_roundstart_event && (SSgamemode.current_roundstart_event in valid_rolesets))
 		log_storyteller("p_d_r failed, SSgamemode.current_roundstart_event in valid_rolesets")
