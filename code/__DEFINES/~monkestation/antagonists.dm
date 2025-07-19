@@ -7,6 +7,8 @@
 
 /// Checks if the given mob is a slasher.
 #define IS_SLASHER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/slasher))
+/// Checks if the given mob is a Bingle
+#define IS_BINGLE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bingle))
 
 /// List of areas blacklisted from area based traitor objectives
 #define TRAITOR_OBJECTIVE_BLACKLISTED_AREAS list(/area/station/engineering/hallway, \
