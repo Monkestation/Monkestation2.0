@@ -20,3 +20,12 @@
 #define COMSIG_GEIGER_COUNTER_SCAN "geiger_counter_scan"
 	/// If not flagged by any handler, will report the subject as being free of irradiation
 	#define COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL (1 << 0)
+
+/// Sent when something has had something else attempt to irradiate it
+#define COMSIG_ATTEMPT_IRRADIATION "attempt_irradiation"
+	/// Tells the radiation code not to go and apply radiation
+	#define IRRADIATION_BLOCKED (1 << 0)
+/// Sent when a radstorm attempts to have an effect
+#define COMSIG_ATTEMPT_RADSTORM_ACT "attempt_radstorm_act"
+	/// Stops the radstorm going on to do more
+	//#define IRRADIATION_BLOCKED (1 << 0)

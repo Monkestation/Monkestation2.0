@@ -45,18 +45,17 @@
 	if(!prob(40))
 		return
 
+
+
 	if(!ishuman(L))
 		return
 
 	var/mob/living/carbon/human/H = L
-	if(!H.can_mutate() || HAS_TRAIT(H, TRAIT_GODMODE))
+	if(SEND_SIGNAL(H, COMSIG_ATTEMPT_RADSTORM_ACT) & IRRADIATION_BLOCKED)
 		return
 
-	// MONKESTATION ADDITION START
-	if(HAS_TRAIT(H, TRAIT_RADHEALING))
-		H.adjustBruteLoss(-5)
-		H.adjustFireLoss(-5)
-	// MONKESTATION ADDITION END
+	if(!H.can_mutate() || HAS_TRAIT(H, TRAIT_GODMODE))
+		return
 
 	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
 		return
