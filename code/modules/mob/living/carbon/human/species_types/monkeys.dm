@@ -61,15 +61,14 @@
 	. = ..()
 	if(give_monkey_species_effects)
 		passtable_on(human_who_gained_species, SPECIES_TRAIT)
-		human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-		human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
+		human_who_gained_species.dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	human_who_gained_species.update_mob_height()
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	if(give_monkey_species_effects)
 		passtable_off(C, SPECIES_TRAIT)
-		C.dna.remove_mutation(/datum/mutation/human/race)
+		C.dna.remove_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
 	C.update_mob_height()
 
 /datum/species/monkey/update_species_heights(mob/living/carbon/human/holder)
@@ -280,11 +279,11 @@
 	if(!human_who_gained_species.GetComponent(/datum/component/sign_language)) // if they're already capable of signing, don't clobber that
 		signer = human_who_gained_species.AddComponent(/datum/component/sign_language)
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
-	human_who_gained_species.dna.add_mutation(/datum/mutation/human/clever)
+	human_who_gained_species.dna.add_mutation(/datum/mutation/clever)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
-	for(var/datum/mutation/human/mutation as anything in human_who_gained_species.dna.mutations)
-		mutation.mutadone_proof = TRUE
+	for(var/datum/mutation/mutation as anything in human_who_gained_species.dna.mutations)
 		mutation.instability = 0
+	human_who_gained_species.dna.update_instability()
 	human_who_gained_species.dna.species.name = "Monkey"
 	human_who_gained_species.dna.features["fur"] = COLOR_MONKEY_BROWN
 

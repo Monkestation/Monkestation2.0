@@ -10388,7 +10388,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ddm" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green/anticorner{
@@ -77667,7 +77667,7 @@
 	},
 /obj/effect/turf_decal/tile/green/anticorner,
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /turf/open/floor/iron/white,

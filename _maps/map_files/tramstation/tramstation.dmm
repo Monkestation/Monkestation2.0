@@ -46264,7 +46264,7 @@
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
 "nrd" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
@@ -47417,7 +47417,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "nLN" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/machinery/camera/directional/west{

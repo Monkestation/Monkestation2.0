@@ -39080,7 +39080,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "jii" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -39703,7 +39703,7 @@
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office/private_investigators_office)
 "jpB" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},

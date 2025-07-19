@@ -23415,7 +23415,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/newscaster/directional/west,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -38367,7 +38367,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
