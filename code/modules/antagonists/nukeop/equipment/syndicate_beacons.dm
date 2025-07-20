@@ -9,7 +9,7 @@
 	var/static/list/selectable_assets = list(
 		"Elite Monkey Strike Team" = /obj/item/antag_spawner/loadout/monkey_crash,
 		"Ricky's Mauler" = /obj/item/antag_spawner/loadout/monkey_man/ricky,
-		"Syndicate Cyborg Support Pack (Saboteur & Medical)" = /obj/item/storage/box/syndie_kit/cyborg_pack,
+		"Syndicate Medical Cyborg" = /obj/item/antag_spawner/nuke_ops/borg_tele/medical,
 	)
 	return selectable_assets
 
@@ -20,6 +20,3 @@
 		"spawn" = choice_path,
 	))
 
-/obj/item/storage/box/syndie_kit/cyborg_pack/PopulateContents()
-	new /obj/item/antag_spawner/nuke_ops/borg_tele/medical(src)
-	new /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur(src)

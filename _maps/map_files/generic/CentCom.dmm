@@ -32836,11 +32836,6 @@
 /area/centcom/central_command_areas/admin)
 "xYP" = (
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/syndicatedetonator{
-	desc = "This gaudy button can be used to instantly detonate syndicate bombs that have been activated on the station. It is also fun to press.";
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /obj/item/storage/toolbox/syndicate{
 	pixel_x = -1;
 	pixel_y = 16

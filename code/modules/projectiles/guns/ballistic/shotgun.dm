@@ -165,7 +165,7 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
-	projectile_damage_multiplier = 1.4
+	projectile_damage_multiplier = 1.2
 	casing_ejector = TRUE
 	///the type of secondary magazine for the bulldog
 	var/secondary_magazine_type
