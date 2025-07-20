@@ -303,3 +303,10 @@
   - bugfix: Hardcore random pays your score again as non-antag.
   steelphoenix4:
   - bugfix: Fix store not giving you the right lizard plushie
+2025-07-19:
+  ThePooba:
+  - rscadd: Added Missing Barsigns from TG
+  - rscadd: Added Cargo Crate for Wallmount barsign
+  - code_imp: Added some barsign checks
+  Thedragmeme:
+  - map: Updates Icebox's Service and connecting maint areas
