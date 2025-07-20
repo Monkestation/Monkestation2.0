@@ -9,16 +9,11 @@ if [[ $# -eq 2 ]] ; then
   cd $2
 fi
 
-# `$1/data/cassette_storage`` is a monkestation addition
 mkdir -p \
     $1/_maps \
-    $1/data/cassette_storage \
-    $1/icons/effects \
-    $1/icons/mob/clothing \
-    $1/icons/mob/inhands \
-    $1/icons/mob/simple \
-    $1/icons/obj \
-    $1/icons/runtime \
+		$1/data/cassette_storage \
+    $1/data/spritesheets \
+    $1/icons \
     $1/sound/runtime \
     $1/strings \
     $1/tgui/public \
@@ -31,13 +26,8 @@ fi
 
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
-cp -r data/cassette_storage/* $1/data/cassette_storage/ # Monkestation addition
-cp -r icons/effects/* $1/icons/effects/
-cp -r icons/mob/clothing/* $1/icons/mob/clothing/
-cp -r icons/mob/inhands/* $1/icons/mob/inhands/
-cp -r icons/mob/simple/* $1/icons/mob/simple/
-cp -r icons/obj/* $1/icons/obj/
-cp -r icons/runtime/* $1/icons/runtime/
+cp -r data/cassette_storage/* $1/data/cassette_storage/
+cp -r icons/* $1/icons/
 cp -r sound/runtime/* $1/sound/runtime/
 cp -r strings/* $1/strings/
 cp -r tgui/public/* $1/tgui/public/

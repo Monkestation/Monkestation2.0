@@ -653,14 +653,9 @@
 	if(!overflow_job)
 		disabled = TRUE
 		return
-	var/icon/job_icon = get_job_hud_icon(overflow_job, include_unknown = TRUE)
+	var/icon/job_icon = get_job_hud_icon(overflow_job, include_unknown = TRUE)?.scale(16, 16)?.to_icon()
 	if(!job_icon)
 		return
-	var/icon/resized_icon = resize_icon(job_icon, 16, 16)
-	if(!resized_icon)
-		stack_trace("Failed to upscale icon for [overflow_job], upscaling using BYOND!")
-		job_icon.Scale(16, 16)
-		resized_icon = job_icon
-	job_overlay = mutable_appearance(resized_icon)
+	job_overlay = mutable_appearance(job_icon)
 	job_overlay.pixel_x = 8
 	job_overlay.pixel_y = 18

@@ -59,7 +59,7 @@
 	name = "Swarm Beacon Killer"
 	desc = "GET THEM OFF OF ME!"
 	database_id = BOSS_MEDAL_SWARMERS
-	icon = "swarmer"
+	icon_state = "swarmer"
 
 /datum/award/achievement/boss/wendigo_kill
 	name = "Wendigo Killer"
@@ -113,7 +113,7 @@
 	name = "Swarm Beacon Crusher"
 	desc = "GET THEM OFF OF ME!"
 	database_id = BOSS_MEDAL_SWARMERS_CRUSHER
-	icon = "swarmer"
+	icon_state = "swarmer"
 
 /datum/award/achievement/boss/wendigo_crusher
 	name = "Wendigo Crusher"

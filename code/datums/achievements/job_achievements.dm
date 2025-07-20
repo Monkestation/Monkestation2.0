@@ -28,7 +28,7 @@
 	name = "Perfect chemistry blossom"
 	desc = "Passed the chemistry tutorial with perfect purity!"
 	database_id = MEDAL_CHEM_TUT
-	icon = "chem_tut"
+	icon_state = "chem_tut"
 
 //mining
 
