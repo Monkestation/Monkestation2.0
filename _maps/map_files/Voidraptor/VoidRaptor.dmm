@@ -15297,10 +15297,10 @@
 "esP" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/dark_blue/anticorner,
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/secure/safe/caps_spare{
-	base_icon_state = "floorsafe";
-	icon_state = "floorsafe";
-	pixel_y = 5
+	pixel_x = 0;
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/bridge)
