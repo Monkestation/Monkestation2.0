@@ -21,13 +21,13 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(on_eaten))
+	RegisterSignal(new_pawn, COMSIG_LIVING_ATE, PROC_REF(on_eaten))
 
 /datum/ai_controller/basic_controller/mothroach/proc/on_eaten(datum/source)
 	SIGNAL_HANDLER
 	set_blackboard_key(BB_MOTHROACH_NEXT_EAT, world.time + MOTHROACH_EAT_TIMER)
 
-/datum/ai_planning_subtree/find_food/mothroach
+/datum/ai_planning_subtree/find_and_hunt_target/mothroach
 	finding_behavior = /datum/ai_behavior/find_and_set/in_list/mothroach_food
 
 /datum/ai_planning_subtree/find_food/mothroach/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

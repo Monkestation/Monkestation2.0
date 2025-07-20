@@ -13,22 +13,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 
-/obj/machinery/vending/wardrobe/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		return
-	if(GLOB.roaches_deployed || !is_station_level(z) || !prob(MOTHROACH_START_CHANCE))
-		return
-	for(var/count in 1 to rand(1, MAX_MOTHROACH_AMOUNT))
-		new /mob/living/basic/mothroach(src)
-	GLOB.roaches_deployed = TRUE
-
-/obj/machinery/vending/wardrobe/on_dispense(obj/item/clothing/food)
-	if(!istype(food))
-		return
-	for(var/mob/living/basic/mothroach/roach in contents)
-		food.take_damage(food.get_integrity() * 0.5)
-
 /obj/machinery/vending/wardrobe/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	for(var/mob/living/basic/mothroach/roach in contents)
