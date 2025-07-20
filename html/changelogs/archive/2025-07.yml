@@ -294,5 +294,37 @@
   - balance: Mobs now have a tiny bit of innate insulation.
   - balance: Returning to standard body temperature is 3x faster.
   - balance: Max body temp is limited to ~600 kelvin (330 celsius).
+  leaKsi, SmArtKar, grungussuss:
+  - rscadd: You can now buckle to bar stools.
+  - qol: Stopping orbiting now automatically breaks you out of auto-observe.
+  - bugfix: Medibots no longer pointlessly attempt to heal players with "No Healing"
+      challenge.
+  leaKsi, Time-Green:
+  - bugfix: Hardcore random pays your score again as non-antag.
   steelphoenix4:
   - bugfix: Fix store not giving you the right lizard plushie
+2025-07-19:
+  ThePooba:
+  - rscadd: Added Missing Barsigns from TG
+  - rscadd: Added Cargo Crate for Wallmount barsign
+  - code_imp: Added some barsign checks
+  Thedragmeme:
+  - map: Updates Icebox's Service and connecting maint areas
+2025-07-20:
+  Absolucy:
+  - balance: Fire breath now requires your mouth to be uncovered, so a muzzle/mask/etc
+      will stop onis from setting you on fire.
+  - qol: Saying stuff while jaunting (bloodcrawl, space phase, etc) now shows runechat
+      messages.
+  EssentialTomato:
+  - bugfix: Fixed the sprite for the budgeted sat crates.
+  Killermankey:
+  - code_imp: Split atoms.dm file into like 10 seperate files
+  ThePooba:
+  - rscadd: Tackling is now rightclick so you dont break your neck throwing a cigarette
+  - bugfix: TCMB adjusted to correct temperature
+  - bugfix: exodrones work now and arn't shit
+  Thedragmeme:
+  - bugfix: Added the missing clothes vendor for xenobio on Theseus
+  - bugfix: Attempts to make Xenobios power not immediately run out round start.
+  - map: Updated Theseus' Hydroponics and Chicken Ranch
