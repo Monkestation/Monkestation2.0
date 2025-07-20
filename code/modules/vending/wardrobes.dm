@@ -1,8 +1,3 @@
-GLOBAL_VAR_INIT(roaches_deployed, FALSE)
-#define MOTHROACH_START_CHANCE 3
-#define MAX_MOTHROACH_AMOUNT 4
-
-
 /obj/item/vending_refill/wardrobe
 	icon_state = "refill_clothes"
 
@@ -12,12 +7,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	payment_department = NO_FREEBIES
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
-
-/obj/machinery/vending/wardrobe/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	for(var/mob/living/basic/mothroach/roach in contents)
-		roach.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, src) //scatter away!
-		roach.forceMove(drop_location())
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
