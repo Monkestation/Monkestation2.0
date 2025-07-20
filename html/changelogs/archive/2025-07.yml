@@ -310,3 +310,21 @@
   - code_imp: Added some barsign checks
   Thedragmeme:
   - map: Updates Icebox's Service and connecting maint areas
+2025-07-20:
+  Absolucy:
+  - balance: Fire breath now requires your mouth to be uncovered, so a muzzle/mask/etc
+      will stop onis from setting you on fire.
+  - qol: Saying stuff while jaunting (bloodcrawl, space phase, etc) now shows runechat
+      messages.
+  EssentialTomato:
+  - bugfix: Fixed the sprite for the budgeted sat crates.
+  Killermankey:
+  - code_imp: Split atoms.dm file into like 10 seperate files
+  ThePooba:
+  - rscadd: Tackling is now rightclick so you dont break your neck throwing a cigarette
+  - bugfix: TCMB adjusted to correct temperature
+  - bugfix: exodrones work now and arn't shit
+  Thedragmeme:
+  - bugfix: Added the missing clothes vendor for xenobio on Theseus
+  - bugfix: Attempts to make Xenobios power not immediately run out round start.
+  - map: Updated Theseus' Hydroponics and Chicken Ranch
