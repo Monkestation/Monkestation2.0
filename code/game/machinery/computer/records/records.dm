@@ -3,7 +3,7 @@
  */
 /obj/machinery/computer/records
 	/// The character preview view for the UI.
-	var/atom/movable/screen/map_view/char_preview/character_preview_view
+	var/atom/movable/screen/map_view/char_preview/records/character_preview_view
 
 /obj/machinery/computer/records/ui_data(mob/user)
 	var/list/data = list()
@@ -112,7 +112,7 @@
 	if(user.client?.screen_maps[assigned_view])
 		return
 
-	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
+	var/atom/movable/screen/map_view/char_preview/records/new_view = new(null, src)
 	new_view.generate_view(assigned_view)
 	new_view.display_to(user, window)
 	return new_view

@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/favorite_outfits = list()
 
 	/// A preview of the current character
-	var/atom/movable/screen/map_view/char_preview/character_preview_view
+	var/atom/movable/screen/map_view/char_preview/prefs/character_preview_view
 
 	/// A list of instantiated middleware
 	var/list/datum/preference_middleware/middleware = list()
@@ -375,6 +375,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Whether we show current job clothes or nude/loadout only
 	var/show_job_clothes = TRUE
 */
+
+// subtypes that exist solely to distinguish it when harddel'd
+/atom/movable/screen/map_view/char_preview/prefs
+/atom/movable/screen/map_view/char_preview/records
+/atom/movable/screen/map_view/char_preview/credits
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()

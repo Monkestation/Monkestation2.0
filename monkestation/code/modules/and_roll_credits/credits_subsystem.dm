@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(credits)
 		var/datum/client_interface/interface = new(ckey)
 		var/datum/preferences/mocked = new(interface)
 
-		var/atom/movable/screen/map_view/char_preview/appearance = new(null, mocked)
+		var/atom/movable/screen/map_view/char_preview/credits/appearance = new(null, mocked)
 		appearance.update_body()
 		appearance.maptext_width = 120
 		appearance.maptext_x = -42
@@ -115,7 +115,7 @@ SUBSYSTEM_DEF(credits)
 		var/datum/client_interface/interface = new(ckey(ckey))
 		var/datum/preferences/mocked = new(interface)
 
-		var/atom/movable/screen/map_view/char_preview/appearance = new(null, mocked)
+		var/atom/movable/screen/map_view/char_preview/credits/appearance = new(null, mocked)
 		appearance.update_body()
 		appearance.maptext_width = 120
 		appearance.maptext_x = -42
@@ -243,7 +243,7 @@ SUBSYSTEM_DEF(credits)
 		var/client/client = weak.resolve()
 		if(!client)
 			continue
-		var/atom/movable/screen/map_view/char_preview/appearance = new(null, client.prefs)
+		var/atom/movable/screen/map_view/char_preview/credits/appearance = new(null, client.prefs)
 		var/mutable_appearance/preview = new(getFlatIcon(client.mob?.appearance))
 		appearance.appearance = preview.appearance
 		appearance.maptext_width = 120
