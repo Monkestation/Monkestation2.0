@@ -174,7 +174,7 @@
 /obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
 	SIGNAL_HANDLER
 
-	if(can_process_resource(atom_movable))
+	if(!can_process_resource(atom_movable))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(accept_resource), atom_movable)
