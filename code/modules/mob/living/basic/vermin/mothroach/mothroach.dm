@@ -36,6 +36,10 @@
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
+	var/static/list/food_types = list(/obj/item/clothing)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -64,12 +68,18 @@
 	else
 		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
 
-/datum/ai_controller/basic_controller/mothroach
-	blackboard = list()
+/mob/living/basic/mothroach/hungry
+	name = "mothroach?"
+	desc = "This is the adorable by-product of multiple attempts at genetic- WAIT WHY DOES IT HAVE TEETH?!??"
+	icon_state = "chomproach"
+	icon_living = "chomproach"
+	icon_dead = "chomproach_dead"
+	melee_damage_lower = 7
+	melee_damage_upper = 15
+	health = 75
+	maxHealth = 75
+	speed = 0.75
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/mothroach,
-	)
+/mob/living/basic/mothroach/hungry/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_TINY)
