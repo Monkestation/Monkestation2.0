@@ -11,7 +11,7 @@ fi
 
 mkdir -p \
     $1/_maps \
-		$1/data/cassette_storage \
+    $1/data/cassette_storage \
     $1/code/datums/greyscale/json_configs \
     $1/data/spritesheets \
     $1/icons \
@@ -19,8 +19,8 @@ mkdir -p \
     $1/strings \
     $1/tgui/public \
     $1/tgui/packages/tgfont/dist \
-		$1/monkestation/code/modules/blueshift/gags \
-		$1/monkestation/code/modules/donator
+    $1/monkestation/code/modules/blueshift/gags \
+    $1/monkestation/code/modules/donator
 
 if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
@@ -46,5 +46,5 @@ cp -r monkestation/code/modules/donator/* $1/monkestation/code/modules/donator/
 
 #dlls on windows
 if [ "$(uname -o)" = "Msys" ]; then
-	cp ./*.dll $1/
+  cp ./*.dll $1/
 fi
