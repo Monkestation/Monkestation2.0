@@ -105,6 +105,11 @@ GLOBAL_VAR(ascended_bloodling)
 		src.gib()
 		return
 
+	// Calls the shuttle
+	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
+	SSshuttle.emergency_no_recall = TRUE
+	SSshuttle.emergency_call_time = 5 MINUTES
+
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
 	antag.is_ascended = TRUE
 	GLOB.ascended_bloodling = antag
@@ -121,8 +126,6 @@ GLOBAL_VAR(ascended_bloodling)
 	var/turf/start_turf
 
 /datum/bloodling_ascension/proc/ascend(turf)
-	// Calls the shuttle
-	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
 
 	if(isnull(chosen_theme))
 		chosen_theme = new /datum/dimension_theme/bloodling()

@@ -146,6 +146,7 @@
 	if((biomass >= 225) && (evolution_level != 5))
 		evolution(5)
 		return TRUE
+
 	return FALSE
 
 /// Creates the mob for us to then mindswap into
