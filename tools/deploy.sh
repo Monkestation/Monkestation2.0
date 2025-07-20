@@ -18,7 +18,9 @@ mkdir -p \
     $1/sound/runtime \
     $1/strings \
     $1/tgui/public \
-    $1/tgui/packages/tgfont/dist
+    $1/tgui/packages/tgfont/dist \
+		$1/monkestation/code/modules/blueshift/gags \
+		$1/monkestation/code/modules/donator
 
 if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
@@ -34,6 +36,8 @@ cp -r sound/runtime/* $1/sound/runtime/
 cp -r strings/* $1/strings/
 cp -r tgui/public/* $1/tgui/public/
 cp -r tgui/packages/tgfont/dist/* $1/tgui/packages/tgfont/dist/
+cp -r monkestation/code/modules/blueshift/gags/* $1/monkestation/code/modules/blueshift/gags/
+cp -r monkestation/code/modules/donator/* $1/monkestation/code/modules/donator/
 
 #remove .dm files from _maps
 
