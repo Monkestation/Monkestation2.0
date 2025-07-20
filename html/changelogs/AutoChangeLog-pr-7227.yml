@@ -1,0 +1,6 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - rscadd: "Tackling is now rightclick so you dont break your neck throwing a cigarette"
+  - bugfix: "TCMB adjusted to correct temperature"
+  - bugfix: "exodrones work now and arn't shit"

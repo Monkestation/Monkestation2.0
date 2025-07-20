@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Saying stuff while jaunting (bloodcrawl, space phase, etc) now shows runechat messages."

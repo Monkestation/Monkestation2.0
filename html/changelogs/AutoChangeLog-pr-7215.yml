@@ -1,0 +1,6 @@
+author: "Thedragmeme"
+delete-after: True
+changes:
+  - bugfix: "Added the missing clothes vendor for xenobio on Theseus"
+  - bugfix: "Attempts to make Xenobios power not immediately run out round start."
+  - map: "Updated Theseus' Hydroponics and Chicken Ranch"
