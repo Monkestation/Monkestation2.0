@@ -148,7 +148,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		var/mob/living/carbon/human/H = usr
 		if(!(usr in nearby))
 			if(usr.client && usr.machine == src)
-				if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
+				if(H.dna.check_mutation(/datum/mutation/telekinesis))
 					is_in_use = TRUE
 					ui_interact(usr)
 	if (is_in_use)
@@ -230,9 +230,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/vv_do_topic(list/href_list)
 	if(!(. = ..()))
 		return
+
 	if(href_list[VV_HK_OSAY])
-		if(check_rights(R_FUN, FALSE))
-			usr.client.object_say(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/object_say, src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(check_rights(R_DEBUG|R_SERVER))

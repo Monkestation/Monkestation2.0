@@ -218,13 +218,13 @@
 			return FALSE
 
 		if (merge_stacks)
-			if (istype(active_stack) && active_stack.can_merge(item_stack))
+			if (istype(active_stack) && active_stack.can_merge(item_stack, inhand = TRUE))
 				if (item_stack.merge(active_stack))
 					to_chat(usr, span_notice("Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s."))
 					return TRUE
 			else
 				var/obj/item/stack/inactive_stack = get_inactive_held_item()
-				if (istype(inactive_stack) && inactive_stack.can_merge(item_stack))
+				if (istype(inactive_stack) && inactive_stack.can_merge(item_stack, inhand = TRUE))
 					if (item_stack.merge(inactive_stack))
 						to_chat(usr, span_notice("Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s."))
 						return TRUE
@@ -423,26 +423,35 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M)
-	if(M.equip_to_appropriate_slot(src))
-		M.update_held_items()
+/obj/item/proc/equip_to_best_slot(mob/equipper)
+	var/should_prioritize_storage = !isclothing(src) && !(slot_flags & ITEM_SLOT_ON_BODY)
+
+	// if it's not clothing / something that fits into a slot, then prioritize active storage first
+	if(should_prioritize_storage)
+		if(equipper.active_storage?.attempt_insert(src, equipper))
+			return TRUE
+
+	if(equipper.equip_to_appropriate_slot(src))
+		equipper.update_held_items()
 		return TRUE
 	else
 		if(equip_delay_self)
 			return
 
-	if(M.active_storage?.attempt_insert(src, M))
-		return TRUE
+	// if it IS clothing / something that fits into a slot, prioritize inv slots first, then active storage.
+	if(!should_prioritize_storage)
+		if(equipper.active_storage?.attempt_insert(src, equipper))
+			return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
+	var/list/obj/item/possible = list(equipper.get_inactive_held_item(), equipper.get_item_by_slot(ITEM_SLOT_BELT), equipper.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), equipper.get_item_by_slot(ITEM_SLOT_BACK))
 	for(var/i in possible)
 		if(!i)
 			continue
 		var/obj/item/I = i
-		if(I.atom_storage?.attempt_insert(src, M))
+		if(I.atom_storage?.attempt_insert(src, equipper))
 			return TRUE
 
-	to_chat(M, span_warning("You are unable to equip that!"))
+	to_chat(equipper, span_warning("You are unable to equip that!"))
 	return FALSE
 
 
@@ -515,7 +524,7 @@
 	var/list/processing_list = get_equipped_items(include_pockets = TRUE, include_accessories = TRUE) + held_items
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
-	while(i < length(processing_list) )
+	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
 		if(A.atom_storage)
 			var/list/item_stuff = list()

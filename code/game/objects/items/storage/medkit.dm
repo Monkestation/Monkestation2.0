@@ -360,6 +360,11 @@
 	desc = "May or may not contain traces of lead."
 	grind_results = list(/datum/reagent/lead = 10)
 
+/obj/item/storage/medkit/tactical/premium/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 21
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/storage/box/evilmeds, /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset))
+
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
 		return
@@ -379,7 +384,6 @@
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
-		/obj/item/organ/internal/cyberimp/cyberlink/syndicate = 1, //Monkestation addition: unable to use the hacked surgery toolset without this
 	)
 	generate_items_inside(items_inside,src)
 

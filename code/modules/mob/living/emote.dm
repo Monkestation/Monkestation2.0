@@ -315,6 +315,12 @@
 	message = "nods."
 	message_param = "nods at %t."
 
+/datum/emote/living/nodnod
+	key = "nod2"
+	key_third_person = "nodnod"
+	message = "nods their head twice."
+	message_param = "nods twice at %t."
+
 /datum/emote/living/point
 	key = "point"
 	key_third_person = "points"

@@ -58,6 +58,19 @@
 /datum/status_effect/incapacitating/knockdown/tripped
 	id = "tripped"
 
+/datum/status_effect/incapacitating/knockdown/tripped/on_apply()
+	// this is a horrible hack to make it so tripping doesn't drop items.
+	// we just apply nodrop to their held items right before tripping them,
+	// and then immediately remove it after the status effect is applied.
+	// i'm sorry ~Lucy
+	var/list/stupid_horrible_list = list()
+	for(var/obj/item/item in owner.held_items)
+		ADD_TRAIT(item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+		stupid_horrible_list += item
+	. = ..()
+	for(var/obj/item/item in stupid_horrible_list)
+		REMOVE_TRAIT(item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"

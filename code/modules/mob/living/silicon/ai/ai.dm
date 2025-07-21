@@ -117,6 +117,8 @@
 	///Command report cooldown
 	COOLDOWN_DECLARE(command_report_cd) // monkestation edit
 
+	var/jobtitles = TRUE
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -1218,4 +1220,12 @@
 		return ai_voicechanger.say_name
 	return
 
+/mob/living/silicon/ai/verb/jobtitles()
+	set category = "AI Commands"
+	set name = "Toggle Jobtitle Display"
+
+	if(incapacitated())
+		return
+	jobtitles = !jobtitles
+	to_chat(src, "<b>You are now [jobtitles ? "displaying" : "hiding"] speaker's job titles.</b>")
 #undef CALL_BOT_COOLDOWN

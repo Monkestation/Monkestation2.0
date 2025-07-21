@@ -303,6 +303,10 @@ SUBSYSTEM_DEF(gamemode)
 		if(!observers)
 			if(!ready_players && !isliving(candidate))
 				continue
+
+			if(isliving(candidate) && !HAS_MIND_TRAIT(candidate, TRAIT_JOINED_AS_CREW))
+				continue
+
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
 				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
@@ -503,22 +507,14 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
 	event_frequency_multiplier = 1
 
-/client/proc/forceEvent()
-	set name = "Trigger Event"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceEvent(usr)
+ADMIN_VERB(force_event, R_FUN, FALSE, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceEvent(user.mob)
 
 /datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
 
-/client/proc/forceGamemode()
-	set name = "Open Gamemode Panel"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceGamemode(usr)
+ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemode panel.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceGamemode(user.mob)
 
 /datum/admins/proc/forceGamemode(mob/user)
 	SSgamemode.admin_panel(user)
@@ -1161,11 +1157,7 @@ SUBSYSTEM_DEF(gamemode)
 
 
 /datum/controller/subsystem/gamemode/proc/store_roundend_data()
-	var/congealed_string = ""
-	for(var/event_name as anything in triggered_round_events)
-		congealed_string += event_name
-		congealed_string += ","
-	text2file(congealed_string, "data/last_round_events.txt")
+	rustg_file_write(jointext(triggered_round_events, ","), "data/last_round_events.txt")
 
 /datum/controller/subsystem/gamemode/proc/load_roundstart_data()
 	var/massive_string = trim(file2text("data/last_round_events.txt"))

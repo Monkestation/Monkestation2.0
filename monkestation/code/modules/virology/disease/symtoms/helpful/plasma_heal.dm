@@ -13,7 +13,7 @@
 
 /datum/symptom/plasma_heal
 	name = "Plasma Fixation"
-	desc = "The virus draws plasma from the atmosphere and from inside the body to heal and stabilize body temperature."
+	desc = "The disease draws plasma from the atmosphere and from inside the body to heal and stabilize body temperature."
 
 	stage = 1
 	max_multiplier = 5

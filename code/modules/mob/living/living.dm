@@ -743,13 +743,13 @@
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
-	var/list/ret = list()
-	ret |= contents //add our contents
-	for(var/atom/iter_atom as anything in ret.Copy()) //iterate storage objects
-		iter_atom.atom_storage?.return_inv()
-	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
-		ret |= F.contents
-	return ret
+	. = list()
+	. |= contents //add our contents
+	for(var/atom/iter_atom as anything in .) //iterate storage objects
+		if(iter_atom.atom_storage)
+			. |= iter_atom.atom_storage.return_inv()
+	for(var/obj/item/folder/folder in .) //very snowflakey-ly iterate folders
+		. |= folder.contents
 
 /**
  * Returns whether or not the mob can be injected. Should not perform any side effects.
@@ -1353,7 +1353,7 @@
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
-			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
+			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/telekinesis) || !tkMaxRangeCheck(src, target))
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 

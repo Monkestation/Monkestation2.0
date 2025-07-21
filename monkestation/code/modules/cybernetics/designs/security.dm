@@ -24,19 +24,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/cyberlink_tg
-	name = "Terran Cyberware System"
-	desc = "Allows for synchronization of security cybernetic mechanisms."
-	id = "ci-tg"
-	build_type = PROTOLATHE
-	construction_time = 8 SECONDS
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 4000, /datum/material/silver = 2000 , /datum/material/gold = 2000)
-	build_path = /obj/item/organ/internal/cyberimp/cyberlink/terragov
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-
 /datum/design/security_taserset
 	name = "Arm-mounted Taser Arm Implant"
 	desc =  "A powerful cybernetic implant that engrains a advanced taser into the user's arm."
