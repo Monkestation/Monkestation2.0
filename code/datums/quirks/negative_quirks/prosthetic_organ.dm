@@ -1,12 +1,13 @@
-/* /datum/quirk/prosthetic_organ - monkestation disabled for now
+/datum/quirk/prosthetic_organ
 	name = "Prosthetic Organ"
-	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic!"
+	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic! WARNING: This quirk might be extra dangerous on certain species."
 	icon = FA_ICON_LUNGS
 	value = -3
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/storage/organbox)
+	species_blacklist = list(SPECIES_IPC, SPECIES_OOZELING, SPECIES_SATYR)
 	/// The slot to replace, in string form
 	var/slot_string = "organ"
 	/// The original organ from before the prosthetic was applied
@@ -20,6 +21,7 @@
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
 	)
+
 	var/list/possible_organ_slots = organ_slots.Copy()
 	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
 		possible_organ_slots -= ORGAN_SLOT_HEART
@@ -31,6 +33,7 @@
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
 	if(!length(organ_slots)) //what the hell
 		return
+
 	var/organ_slot = pick(possible_organ_slots)
 	var/obj/item/organ/prosthetic
 	switch(organ_slot)
@@ -47,18 +50,17 @@
 			prosthetic = new /obj/item/organ/internal/stomach/cybernetic/surplus
 			slot_string = "stomach"
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
-	<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
+		Removal of these organs is known to be dangerous to the patient as well as the practitioner."
 	old_organ = human_holder.get_organ_slot(organ_slot)
-	if(prosthetic.Insert(human_holder, special = TRUE, drop_if_replaced = TRUE))
-		old_organ.moveToNullspace()
-		STOP_PROCESSING(SSobj, old_organ)
+	prosthetic.Insert(human_holder, special = TRUE)
+	old_organ.moveToNullspace()
+	STOP_PROCESSING(SSobj, old_organ)
 
 /datum/quirk/prosthetic_organ/post_add()
-	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus organ. It is fragile and will easily come apart under duress. \
+	to_chat(quirk_holder, span_bolddanger("Your [slot_string] has been replaced with a surplus organ. It is weak and highly unstable. \
 	Additionally, any EMP will make it stop working entirely."))
 
 /datum/quirk/prosthetic_organ/remove()
 	if(old_organ)
 		old_organ.Insert(quirk_holder, special = TRUE)
 	old_organ = null
- */

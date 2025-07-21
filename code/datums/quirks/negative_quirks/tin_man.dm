@@ -1,12 +1,13 @@
-/* /datum/quirk/tin_man - monkestation disabled for now
+/datum/quirk/tin_man
 	name = "Tin Man"
-	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics."
-	icon = FA_ICON_ROBOT
+	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics. WARNING: This quirk might be extra dangerous on certain species."
+	icon = FA_ICON_USER_GEAR
 	value = -6
 	medical_record_text = "During physical examination, patient was found to have numerous low-budget prosthetic internal organs. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/organbox)
+	species_blacklist = list(SPECIES_IPC, SPECIES_OOZELING, SPECIES_SATYR)
 
 /datum/quirk/tin_man/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -33,6 +34,5 @@
 		new_organ.Insert(human_holder, special = TRUE, drop_if_replaced = FALSE)
 
 /datum/quirk/tin_man/post_add()
-	to_chat(quirk_holder, span_boldannounce("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
+	to_chat(quirk_holder, span_bolddanger("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
 	Additionally, any EMP will make them stop working entirely."))
- */
