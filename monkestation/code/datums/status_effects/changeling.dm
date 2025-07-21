@@ -136,7 +136,7 @@
 	user.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 
 	if(user.has_dna())
-		user.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA), mutadone = TRUE) // DO NOT SET MUTADONE TO FALSE. It removes a lot of things we don't want to.
+		user.dna.remove_all_mutations()
 
 	var/removed_something = FALSE
 	for(var/obj/item/organ/organ as anything in bad_organ_types)

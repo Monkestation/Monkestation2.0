@@ -40,7 +40,7 @@
 
 /obj/item/sequence_scanner/afterattack(obj/object, mob/user, proximity)
 	. = ..()
-	var/obj/machinery/computer/scan_consolenew/console = object
+	var/obj/machinery/computer/dna_console/console = object
 	if(!istype(console) || !proximity)
 		return
 	if(console.stored_research)
@@ -57,7 +57,7 @@
 	//dupe list as scanner could modify target data
 	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
 	var/list/active_mutations = list()
-	for(var/datum/mutation/human/mutation in target.dna.mutations)
+	for(var/datum/mutation/mutation in target.dna.mutations)
 		LAZYOR(buffer, mutation.type)
 		active_mutations.Add(mutation.type)
 
@@ -110,10 +110,10 @@
 	ready = TRUE
 
 /obj/item/sequence_scanner/proc/get_display_name(mutation)
-	var/datum/mutation/human/human_mutation = GET_INITIALIZED_MUTATION(mutation)
-	if(!human_mutation)
+	var/datum/mutation/mutation_instance = GET_INITIALIZED_MUTATION(mutation)
+	if(!mutation_instance)
 		return "ERROR"
 	if(mutation in discovered)
-		return  "[human_mutation.name] ([human_mutation.alias])"
+		return  "[mutation_instance.name] ([mutation_instance.alias])"
 	else
-		return human_mutation.alias
+		return mutation_instance.alias
