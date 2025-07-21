@@ -906,3 +906,10 @@
 	item_path = /obj/item/clothing/suit/peacejacket
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//SethDiedAgain
+/datum/loadout_item/suit/old_lab_coat
+	name = "Lab \"Coat\""
+	item_path = /obj/item/clothing/suit/old_lab_coat
+	donator_only = TRUE
+	requires_purchase = FALSE

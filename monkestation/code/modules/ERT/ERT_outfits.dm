@@ -581,9 +581,7 @@
 	if(visualsOnly)
 		return
 
-	H.dna.add_mutation(/datum/mutation/human/clumsy)
-	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
-		M.mutadone_proof = TRUE
+	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
 	fan.show_to(H)
