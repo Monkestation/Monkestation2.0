@@ -328,3 +328,16 @@
   - bugfix: Added the missing clothes vendor for xenobio on Theseus
   - bugfix: Attempts to make Xenobios power not immediately run out round start.
   - map: Updated Theseus' Hydroponics and Chicken Ranch
+2025-07-21:
+  CannibalHunter:
+  - rscadd: The (Lab "Coat") donator item for SethDiedAgain
+  EssentialTomato:
+  - bugfix: (MTandi) Binary devices no longer ignore the volume of the output pipe
+      network
+  - bugfix: (MTandi) Made 10 MJ & 20 MJ cells properly correspond to tiers 1 & 2 in
+      lathes.
+  - image: (MTandi) Updated cell sprites
+  leaKsi, Ghommie, Melbert, vinylspiders:
+  - refactor: Refactored mutation code backend. Report any issue.
+  notghosti:
+  - balance: Bamboo syringe guns no longer use firing pins

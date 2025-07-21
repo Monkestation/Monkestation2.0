@@ -148,7 +148,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		var/mob/living/carbon/human/H = usr
 		if(!(usr in nearby))
 			if(usr.client && usr.machine == src)
-				if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
+				if(H.dna.check_mutation(/datum/mutation/telekinesis))
 					is_in_use = TRUE
 					ui_interact(usr)
 	if (is_in_use)

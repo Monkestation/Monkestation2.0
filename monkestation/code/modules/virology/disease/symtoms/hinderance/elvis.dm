@@ -13,7 +13,7 @@
 		mouse.icon_living = "mouse_elvis"
 		mouse.icon_dead = "mouse_brown_dead"
 		return
-	mob.dna.add_mutation(/datum/mutation/human/elvis, MUT_EXTRA)
+	mob.dna.add_mutation(/datum/mutation/elvis, MUTATION_SOURCE_GENE_SYMPTOM)
 
 /datum/symptom/elvis/activate(mob/living/carbon/mob)
 	if(!ishuman(mob))
@@ -60,4 +60,4 @@
 			dude.glasses.canremove = 1
 			dude.u_equip(dude.glasses,1)
 	*/
-	mob.dna.remove_mutation(/datum/mutation/human/elvis)
+	mob.dna.remove_mutation(/datum/mutation/elvis, MUTATION_SOURCE_GENE_SYMPTOM)

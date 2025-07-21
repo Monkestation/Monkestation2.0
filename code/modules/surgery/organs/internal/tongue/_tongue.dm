@@ -233,7 +233,7 @@
 	if(prob(10))
 		draw_length += 2
 
-/obj/item/organ/internal/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
+/obj/item/organ/internal/tongue/lizard/New(class, timer, datum/mutation/copymut)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 

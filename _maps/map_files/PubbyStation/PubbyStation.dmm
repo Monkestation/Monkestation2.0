@@ -9693,7 +9693,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "aKA" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -49646,7 +49646,7 @@
 /area/station/security/prison/garden)
 "uaY" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/machinery/light/directional/west,
