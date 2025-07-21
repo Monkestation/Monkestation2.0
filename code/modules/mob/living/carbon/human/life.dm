@@ -12,12 +12,10 @@
 		return FALSE
 
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
-		if(.) //not dead
-
-			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
-				HM.on_life(seconds_per_tick, times_fired)
-
 		if(stat != DEAD)
+			//handle active mutations
+			for(var/datum/mutation/mutation as anything in dna.mutations)
+				mutation.on_life(seconds_per_tick, times_fired)
 			//heart attack stuff
 			handle_heart(seconds_per_tick, times_fired)
 			handle_liver(seconds_per_tick, times_fired)
@@ -30,11 +28,9 @@
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-	update_name_tag(name) // monkestation edit: name tags
 
 	if(stat != DEAD)
 		return TRUE
-
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	var/chest_covered = FALSE
@@ -110,14 +106,3 @@
 		Unconscious(80)
 	// Tissues die without blood circulation
 	adjustBruteLoss(1 * seconds_per_tick)
-
-/mob/living/carbon/human/proc/get_thermal_protection()
-	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-	if(wear_suit)
-		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			thermal_protection += wear_suit.max_heat_protection_temperature
-	if(head)
-		if((head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT))
-			thermal_protection += head.max_heat_protection_temperature
-	thermal_protection = thermal_protection * 0.5
-	return thermal_protection

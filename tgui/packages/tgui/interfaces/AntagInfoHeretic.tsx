@@ -338,16 +338,23 @@ const ResearchInfo = (props) => {
   const { charges } = data;
 
   return (
-    <Stack vertical fill>
-      <Stack.Item fontSize="20px" textAlign="center">
-        You have <b>{charges || 0}</b>&nbsp;
-        <span style={hereticBlue}>
-          knowledge point{charges !== 1 ? 's' : ''}
-        </span>{' '}
-        to spend.
-      </Stack.Item>
+    <Stack justify="space-evenly" height="100%" width="100%">
       <Stack.Item grow>
-        <KnowledgeTree />
+        <Stack vertical height="100%">
+          <Stack.Item fontSize="20px" textAlign="center">
+            You have <b>{charges || 0}</b>&nbsp;
+            <span style={hereticBlue}>
+              knowledge point{charges !== 1 ? 's' : ''}
+            </span>{' '}
+            to spend.
+          </Stack.Item>
+          <Stack.Item grow>
+            <Stack height="100%">
+              <ResearchedKnowledge />
+              <KnowledgeShop />
+            </Stack>
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
     </Stack>
   );

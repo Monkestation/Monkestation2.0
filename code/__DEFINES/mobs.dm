@@ -60,11 +60,6 @@
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
 
-//Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
-#define ORGAN_MINERAL 3 // Used for the plasmaman liver
-
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
@@ -132,11 +127,13 @@
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
+#define SPECIES_ONI "oni" //Monkestation Addition
 #define SPECIES_SIMIAN "simian" //Monkestation Addition
 #define SPECIES_GOBLIN "goblin" //Monkestation Addition
 #define SPECIES_FLORAN "floran" //Monkestation Addition
 #define SPECIES_SATYR "satyr" //Monkestation Addition
 #define SPECIES_TERATOMA "teratoma" //Monkestation Addition
+#define SPECIES_TRAINED_MONKEY "trainedmonkey"
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
@@ -433,8 +430,8 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HELD "held"
 #define OFFSET_ACCESSORY "accessory"
-#define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN 18 //youngest a character can be

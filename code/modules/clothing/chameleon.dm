@@ -389,6 +389,7 @@
 	armor_type = /datum/armor/under_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /datum/armor/under_chameleon
 	melee = 10
@@ -449,6 +450,7 @@
 	resistance_flags = NONE
 	armor_type = /datum/armor/suit_chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /datum/armor/suit_chameleon
 	melee = 10
@@ -507,6 +509,7 @@
 	armor_type = /datum/armor/glasses_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /datum/armor/glasses_chameleon
 	melee = 10
@@ -566,6 +569,8 @@
 	armor_type = /datum/armor/gloves_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
+	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS, TRAIT_FAST_CUFFING)
 
 /datum/armor/gloves_chameleon
 	melee = 10
@@ -575,8 +580,6 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/gloves/chameleon
-	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS, TRAIT_FAST_CUFFING)
 
 /obj/item/clothing/gloves/chameleon/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
@@ -627,6 +630,7 @@
 	armor_type = /datum/armor/head_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /datum/armor/head_chameleon
 	melee = 5
@@ -706,6 +710,7 @@
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /datum/armor/mask_chameleon
 	melee = 5
@@ -794,6 +799,7 @@
 	armor_type = /datum/armor/shoes_chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 /datum/armor/shoes_chameleon
 	melee = 10
@@ -843,6 +849,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/shoes/chameleon/noslip
+	name = "no-slip black shoes"
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	can_be_bloody = FALSE
 
@@ -943,6 +950,7 @@
 /obj/item/radio/headset/chameleon
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 // MONKESTATION ADDITION START
 /obj/item/radio/headset/chameleon/attackby(obj/item/W, mob/user, params)
@@ -1029,6 +1037,7 @@
 
 /obj/item/stamp/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 // MONKESTATION ADDITION START
 /obj/item/stamp/chameleon/attackby(obj/item/W, mob/user, params)
@@ -1073,6 +1082,7 @@
 
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 // MONKESTATION ADDITION START
 /obj/item/clothing/neck/chameleon/attackby(obj/item/W, mob/user, params)

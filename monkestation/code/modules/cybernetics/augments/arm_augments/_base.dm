@@ -5,7 +5,6 @@
 	icon_state = "toolkit_generic"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	encode_info = AUGMENT_NT_LOWLEVEL
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
 	/// Organ slot that the implant occupies for the right arm
@@ -74,7 +73,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/examine(mob/user)
 	. = ..()
-	if(status == ORGAN_ROBOTIC)
+	if(IS_ROBOTIC_ORGAN(src))
 		. += span_info("[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.")
 
 /obj/item/organ/internal/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)

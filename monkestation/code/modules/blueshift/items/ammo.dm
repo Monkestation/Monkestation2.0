@@ -389,7 +389,7 @@
 	name = ".35 Sol Short armor piercing bullet"
 	damage = 13
 	bare_wound_bonus = -30
-	armour_penetration = 20
+	armour_penetration = 30
 
 /obj/item/ammo_box/c35sol/pierce
 	name = "ammo box (.35 Sol Short armor piercing)"
@@ -511,7 +511,7 @@
 	speed = 0.5
 
 	damage = 15
-	armour_penetration = 20
+	armour_penetration = 40
 
 	wound_bonus = -30
 	bare_wound_bonus = -10
@@ -633,7 +633,7 @@
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
 	damage = 45
-	armour_penetration = 50
+	armour_penetration = 60
 	wound_falloff_tile = -2
 	wound_bonus = -45
 	speed = 0.3
@@ -751,7 +751,7 @@
 /obj/projectile/bullet/c27_54cesarzowa
 	name = ".27-54 Cesarzowa piercing bullet"
 	damage = 15
-	armour_penetration = 15
+	armour_penetration = 30
 	wound_bonus = -10
 
 /obj/item/ammo_box/c27_54cesarzowa
@@ -875,7 +875,7 @@
 	icon_state = "gaussphase"
 	speed = 0.4
 	damage = 50
-	armour_penetration = 50
+	armour_penetration = 80
 	wound_bonus = 10
 	bare_wound_bonus = 10
 	demolition_mod = 1.8
@@ -926,16 +926,6 @@
 /obj/item/ammo_box/a40mm/rubber
 	name = "ammo box (40mm rubber slug)"
 	ammo_type = /obj/item/ammo_casing/a40mm/rubber
-
-/obj/item/ammo_box/rocket
-	name = "rocket bouquet (84mm HE)"
-	icon_state = "rocketbundle"
-	ammo_type = /obj/item/ammo_casing/rocket
-	max_ammo = 3
-	multiple_sprites = AMMO_BOX_PER_BULLET
-
-/obj/item/ammo_box/rocket/can_load(mob/user)
-	return FALSE
 
 /obj/item/ammo_box/strilka310
 	name = "stripper clip (.310 Strilka)"
@@ -1008,10 +998,6 @@
 /obj/item/ammo_box/c46x30mm/ap
 	name = "ammo box (4.6x30mm AP)"
 	ammo_type = /obj/item/ammo_casing/c46x30mm/ap
-
-/obj/item/ammo_box/c46x30mm/rubber
-	name = "ammo box (4.6x30mm rubber)"
-	ammo_type = /obj/item/ammo_casing/c46x30mm/rubber
 
 /obj/item/ammo_box/advanced/s12gauge
 	name = "slug ammo box"
@@ -1261,7 +1247,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express
 	name = "express buckshot pellet"
-	damage = 4
+	damage = 3
 	wound_bonus = 0
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
@@ -1273,7 +1259,7 @@
 	desc = "A 12 gauge flechette shell that specializes in ripping unarmored targets apart."
 	icon_state = "fshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/flechette
-	pellets = 8 //8 x 6 = 48 Damage Potential
+	pellets = 6 //6 x 6 = 36 Damage Potential
 	variance = 25
 	custom_materials = AMMO_MATS_SHOTGUN_FLECH
 	advanced_print_req = TRUE

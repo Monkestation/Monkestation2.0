@@ -1,0 +1,19 @@
+{
+
+	"greyscale_scrubs" : [
+		{
+			"type": "icon_state",
+			"icon_state": "greyscale_scrubs",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"greyscale_scrubs_d" : [
+		{
+			"type": "icon_state",
+			"icon_state": "greyscale_scrubs_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

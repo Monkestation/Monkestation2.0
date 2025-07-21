@@ -147,6 +147,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents plasmamen from self-igniting if only their helmet is missing
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
+#define TRAIT_AKIMBO "akimbo"
+#define TRAIT_NO_RECOIL "no_recoil"
 ///Can toss a guns like a badass, causing additional damage/effect to their enemies
 /* #define TRAIT_TOSS_GUN_HARD "toss_gun_hard" */
 /// Species with this trait are genderless
@@ -176,6 +178,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This carbon doesn't metabolize reagents.
 /// This carbon doesn't bleed
 #define TRAIT_NOBLOOD "noblood"
+/// This carbon doesn't get warnings about blood level.
+#define TRAIT_NO_BLEED_WARN "no_bleed_warn"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 // This means the carbon does not have altered bloodloss from having or not having a spleen
@@ -557,9 +561,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait cannot be hit by projectiles, meaning the projectiles will just go through.
 /* #define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles" */
 
-/// Projectile with this trait will always hit the defined zone of a struck living mob.
-#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
-
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
@@ -779,8 +780,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNCATCHABLE "uncatchable"
 /// Fish in this won't die
 #define TRAIT_FISH_SAFE_STORAGE "fish_case"
-/// Stuff that can go inside fish cases
-#define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
+/// Stuff that can go inside fish cases and aquariums
+#define TRAIT_AQUARIUM_CONTENT "aquarium_content"
 /// If the item can be used as a bit.
 #define TRAIT_FISHING_BAIT "fishing_bait"
 /// The quality of the bait. It influences odds of catching fish
@@ -1085,9 +1086,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPINNING "spinning"
 
 /// This limb can't be torn open anymore
-/* #define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure" */
+#define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure"
 /// Trait given if the mob has a cranial fissure.
-/* #define TRAIT_HAS_CRANIAL_FISSURE "has_cranial_fissure" */
+#define TRAIT_HAS_CRANIAL_FISSURE "has_cranial_fissure"
 
 /// Denotes that this id card was given via the job outfit, aka the first ID this player got.
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
@@ -1294,6 +1295,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
+/// Prevents the affected object from opening a loot window via alt click. See atom/AltClick()
+#define TRAIT_ALT_CLICK_BLOCKER "no_alt_click"
 
 /// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
 /// Can either be applied to the attacker or an individual limb.

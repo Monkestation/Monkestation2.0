@@ -30,7 +30,7 @@ Behavior that's still missing from this component that original food items had t
 	var/list/eatverbs
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
-	///Callback to be ran for when you take a bite of something
+	///Callback to be ran for when you take a finish eating something
 	var/datum/callback/on_consume
 	///Callback to be ran for when the code check if the food is liked, allowing for unique overrides for special foods like donuts with cops.
 	var/datum/callback/check_liked
@@ -595,7 +595,7 @@ Behavior that's still missing from this component that original food items had t
 	var/food_quality = get_recipe_complexity()
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
+		if(!isoozeling(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		food_quality += LIKED_FOOD_QUALITY_CHANGE
 
@@ -638,7 +638,8 @@ Behavior that's still missing from this component that original food items had t
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
 
 	on_consume?.Invoke(eater, feeder)
-
+	if (QDELETED(parent)) // might be destroyed by the callback
+		return
 	// monkestation start: food buffs
 	if(food_buffs && ishuman(eater))
 		var/mob/living/carbon/consumer = eater

@@ -67,7 +67,7 @@
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
 	},
-/turf/open/space/basic,
+/turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "lO" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -247,7 +247,7 @@
 "NA" = (
 /obj/structure/window/reinforced/fulltile/ice,
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/space/basic,
+/turf/open/floor/wood/large,
 /area/centcom/tdome/arena/actual)
 "Pb" = (
 /obj/effect/decal/cleanable/dirt,

@@ -140,6 +140,12 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian)
 	if(!length(GLOB.avian_ears_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list)
+	if(!GLOB.oni_tail_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list)
+	if(!GLOB.oni_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_wings_list)
+	if(!GLOB.oni_horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list)
 //Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
@@ -182,6 +188,9 @@
 		"arm_wings" = pick(GLOB.arm_wings_list),
 		"ears_avian" = pick(GLOB.avian_ears_list),
 		"tail_avian" = pick(GLOB.tails_list_avian),
+		"oni_tail" = pick(GLOB.oni_tail_list), //Monkestation Addition
+		"oni_wings" = pick(GLOB.oni_wings_list), //Monkestation Addition
+		"oni_horns" = pick(GLOB.oni_horns_list), //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)
@@ -407,7 +416,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	. = FALSE
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.dna && istype(H.dna.species, species_datum))
+		if(istype(H.dna?.species, species_datum))
 			. = TRUE
 
 /// Returns if the given target is a human. Like, a REAL human.

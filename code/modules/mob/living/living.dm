@@ -43,6 +43,7 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	GLOB.infected_contact_mobs -= src
 	if(imaginary_group)
 		imaginary_group -= src
 		QDEL_LIST(imaginary_group)
@@ -742,13 +743,13 @@
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
-	var/list/ret = list()
-	ret |= contents //add our contents
-	for(var/atom/iter_atom as anything in ret.Copy()) //iterate storage objects
-		iter_atom.atom_storage?.return_inv(ret)
-	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
-		ret |= F.contents
-	return ret
+	. = list()
+	. |= contents //add our contents
+	for(var/atom/iter_atom as anything in .) //iterate storage objects
+		if(iter_atom.atom_storage)
+			. |= iter_atom.atom_storage.return_inv()
+	for(var/obj/item/folder/folder in .) //very snowflakey-ly iterate folders
+		. |= folder.contents
 
 /**
  * Returns whether or not the mob can be injected. Should not perform any side effects.
@@ -1024,7 +1025,7 @@
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
 
-	if(active_storage && !((active_storage.parent?.resolve() in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent?.resolve(),view_only = TRUE)))
+	if(active_storage && !((active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) || CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.hide_contents(src)
 
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
@@ -1352,7 +1353,7 @@
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
-			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
+			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/telekinesis) || !tkMaxRangeCheck(src, target))
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
@@ -1581,8 +1582,6 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_ON_WABBAJACKED, new_mob)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
-	new_mob.update_name_tag(real_name) // monkestation edit: name tags
-
 	// Transfer mind to the new mob (also handles actions and observers and stuff)
 	if(mind)
 		mind.transfer_to(new_mob)
@@ -1795,25 +1794,27 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	//Check the amount of clients exists on the Z level we're leaving from,
-	//this excludes us as we haven't added ourselves to the new z level yet.
+	//this excludes us because at this point we are not registered to any z level.
 	var/old_level_new_clients = (registered_z ? SSmobs.clients_by_zlevel[registered_z].len : null)
 	//No one is left after we're gone, shut off inactive ones
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
 			controller.set_ai_status(AI_STATUS_OFF)
 
-	//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
-	var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
+	if(new_z)
+		//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
+		var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
+
+		//We'll add ourselves to the list now so get_expected_ai_status() will know we're on the z level.
+		SSmobs.clients_by_zlevel[new_z] += src
+
+		if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
+			for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
+				//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
+				//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
+				controller.set_ai_status(controller.get_expected_ai_status())
 
 	registered_z = new_z
-	//We'll add ourselves to the list now so get_expected_ai_status() will know we're on the z level.
-	SSmobs.clients_by_zlevel[registered_z] += src
-
-	if(new_level_old_clients == 0) //No one was here before, wake up all the AIs.
-		for (var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[new_z])
-			//We don't set them directly on, for instances like AIs acting while dead and other cases that may exist in the future.
-			//This isn't a problem for AIs with a client since the client will prevent this from being called anyway.
-			controller.set_ai_status(controller.get_expected_ai_status())
 
 /mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
@@ -2166,6 +2167,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+	refresh_looping_ambience()
+
 
 
 ///Reports the event of the change in value of the buckled variable.

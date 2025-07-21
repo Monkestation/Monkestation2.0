@@ -64,6 +64,14 @@
 	cost = 10
 	surplus = 30 //monkestation edit: from 0 to 30
 
+/datum/uplink_item/implants/hardlight
+	name = "Hardlight Spear Implant"
+	desc = "An implant that allows you to summon and control a hardlight spear. \
+	Adding additional implants to your body will further refine the spear summoning process, allowing you to control up to 5 spears. \
+	Wait a minimum of three seconds between injections. Exact mechanism for spear summoning is classified under Aetherofusion NDA."
+	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
+	cost = 7
+
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
 	uplink_box.name = "Uplink Implant Box"

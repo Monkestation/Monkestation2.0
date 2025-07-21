@@ -17,6 +17,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { setupDrag } from './drag';
 import { focusMap } from './focus';
+
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
 

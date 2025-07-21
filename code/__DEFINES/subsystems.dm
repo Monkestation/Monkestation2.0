@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 27 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 28 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -136,6 +136,7 @@
 #define INIT_ORDER_METRICS 91
 #define INIT_ORDER_OW 90
 #define INIT_ORDER_INPUT 85
+#define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins cant do much without it
 #define INIT_ORDER_SOUNDS 83
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
@@ -184,8 +185,9 @@
 #define INIT_ORDER_XKEYSCORE -10
 #define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_LIGHTING -20
-#define INIT_ORDER_OUTDOOR_EFFECTS -21 //monkestation addition
-#define INIT_ORDER_SHUTTLE -22 //monkestation edit -21 > -22
+#define INIT_ORDER_STARLIGHT -21
+#define INIT_ORDER_OUTDOOR_EFFECTS -22
+#define INIT_ORDER_SHUTTLE -23
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69

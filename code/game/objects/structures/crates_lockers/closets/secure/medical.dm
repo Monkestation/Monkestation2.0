@@ -75,6 +75,7 @@
 /obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/med(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
 	new /obj/item/computer_disk/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
@@ -82,7 +83,6 @@
 	new /obj/item/defibrillator/compact/loaded(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/autosurgeon/medical_hud(src)
-	new /obj/item/autosurgeon/organ/cyberlink_nt_low(src)
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)

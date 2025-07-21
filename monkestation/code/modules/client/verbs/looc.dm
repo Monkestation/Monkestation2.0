@@ -50,7 +50,7 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		if(!CONFIG_GET(flag/looc_enabled))
 			to_chat(src, span_danger("LOOC is disabled."))
 			return
-		if(!GLOB.dooc_allowed && (mob.stat == DEAD) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum)
+		if(!GLOB.dooc_allowed && (mob.stat == DEAD) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum?.check_for_rights(R_MENTOR))
 			to_chat(usr, span_danger("LOOC for dead mobs has been turned off."))
 			return
 		if(CHECK_BITFIELD(prefs.muted, MUTE_OOC))
@@ -62,10 +62,10 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 			to_chat(src, span_danger("Advertising other servers is not allowed."))
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
-		if(mob.stat && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum)
+		if(mob.stat && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum?.check_for_rights(R_MENTOR))
 			to_chat(src, span_danger("You cannot salt in LOOC while unconscious or dead."))
 			return
-		if(isdead(mob) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum)
+		if(isdead(mob) && SSticker.current_state < GAME_STATE_FINISHED && !mentor_datum?.check_for_rights(R_MENTOR))
 			to_chat(src, span_danger("You cannot use LOOC while ghosting."))
 			return
 	if(is_banned_from(ckey, "OOC"))
@@ -109,14 +109,10 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		GLOB.looc_allowed = !GLOB.looc_allowed
 	to_chat(world, "<span class='oocplain bold'>LOOC channel has been globally [GLOB.looc_allowed ? "enabled" : "disabled"].</span>")
 
-/datum/admins/proc/togglelooc()
-	set category = "Server"
-	set name = "Toggle LOOC"
-	if(!check_rights(R_ADMIN))
-		return
+ADMIN_VERB(togglelooc, R_ADMIN, FALSE, "Toggle LOOC", "Shows the range of cameras on the station.", ADMIN_CATEGORY_SERVER)
 	toggle_looc()
-	log_admin("[key_name(usr)] toggled LOOC.")
-	message_admins("[key_name_admin(usr)] toggled LOOC.")
+	log_admin("[key_name(user)] toggled LOOC.")
+	message_admins("[key_name_admin(user)] toggled LOOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle LOOC", "[GLOB.looc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /proc/is_admin_looc_omnipotent(client/admin)

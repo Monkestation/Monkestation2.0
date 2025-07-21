@@ -1,4 +1,4 @@
-import { DmIcon, Icon, Image } from 'tgui-core/components';
+import { DmIcon, Icon, Image } from '../../components';
 
 import { SearchItem } from './types';
 
@@ -12,7 +12,7 @@ type Size = {
   width: number;
 };
 
-export function IconDisplay(props: Props) {
+export const IconDisplay = (props: Props) => {
   const {
     item: { icon, icon_state },
     size: { height, width },
@@ -40,5 +40,5 @@ export function IconDisplay(props: Props) {
     );
   }
 
-  return <Image fixErrors src={icon} height={3} width={3} />;
-}
+  return <Image fixErrors src={icon} height={3} width={3} objectFit="cover" />;
+};

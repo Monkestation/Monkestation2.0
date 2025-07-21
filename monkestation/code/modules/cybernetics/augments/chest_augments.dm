@@ -5,10 +5,9 @@
 	icon_state = "chest_implant"
 	implant_overlay = "chest_implant_overlay"
 	w_class = WEIGHT_CLASS_SMALL
-	encode_info = AUGMENT_NT_LOWLEVEL
 	implant_overlay = "chest_implant_overlay"
 	slot = ORGAN_SLOT_SPINAL
-	var/double_legged = FALSE
+	organ_flags = ORGAN_ROBOTIC
 
 /datum/action/item_action/organ_action/sandy
 	name = "Sandevistan Activation"
@@ -19,7 +18,6 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "sandy"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	actions_types = list(/datum/action/item_action/organ_action/sandy)
 
 	COOLDOWN_DECLARE(in_the_zone)
@@ -29,8 +27,6 @@
 	var/cooldown_time = 45 SECONDS
 
 /obj/item/organ/internal/cyberimp/chest/sandevistan/ui_action_click()
-	if(!check_compatibility())
-		return
 
 	if((organ_flags & ORGAN_FAILING))
 		to_chat(owner, span_warning("The implant doesn't respond. It seems to be broken..."))
@@ -88,7 +84,7 @@
 
 
 /datum/reagent/medicine/brain_healer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
 
 
@@ -98,7 +94,6 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/implants_onmob.dmi'
 	icon_state = "chemvat_back_held"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 	var/obj/item/clothing/mask/chemvat/forced
 	var/obj/item/chemvat_tank/forced_tank
@@ -117,8 +112,6 @@
 	var/mutable_appearance/overlay
 
 /obj/item/organ/internal/cyberimp/chest/chemvat/on_life()
-	if(!check_compatibility())
-		return
 		//Cost of refilling is a little bit of nutrition, some blood and getting jittery
 	if(owner.nutrition > NUTRITION_LEVEL_STARVING && owner.blood_volume > BLOOD_VOLUME_SURVIVE && current_ticks_cooldown > 0)
 
@@ -228,11 +221,8 @@
 	var/synthesizing = 0
 	var/poison_amount = 5
 	slot = ORGAN_SLOT_STOMACH_AID
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/on_life(seconds_per_tick, times_fired)
-	if(!check_compatibility())
-		return
 
 	if(synthesizing)
 		return
@@ -268,7 +258,6 @@
 	implant_overlay = null
 	implant_color = null
 	slot = ORGAN_SLOT_HEART_AID
-	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/revive_cost = 0
 	var/reviving = FALSE
 	COOLDOWN_DECLARE(reviver_cooldown)
@@ -332,8 +321,6 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
-	if(!check_compatibility())
-		return
 	if(!COOLDOWN_FINISHED(src, defib_cooldown) || owner.stat != DEAD || owner.can_defib() != DEFIB_POSSIBLE)
 		return
 	owner.notify_ghost_cloning("You are being revived by [src]!")
@@ -379,7 +366,6 @@
 
 /obj/item/organ/internal/cyberimp/chest/reviver/syndicate
 	name = "contraband reviver implant"
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/chest/thrusters
@@ -394,7 +380,6 @@
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
 
-	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/on = FALSE
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Initialize(mapload)
@@ -418,8 +403,6 @@
 	toggle()
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
-	if(!check_compatibility())
-		return
 	if(on)
 		deactivate()
 	else
@@ -498,7 +481,6 @@
 	desc = "Knocks the socks of the person in front of you!"
 
 	actions_types = list(/datum/action/item_action/organ_action/knockout)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 	COOLDOWN_DECLARE(shoot)
 
@@ -512,8 +494,6 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/knockout/ui_action_click()
-	if(!check_compatibility())
-		return
 
 	if((organ_flags & ORGAN_FAILING))
 		to_chat(owner, span_warning("The implant doesn't respond. It seems to be broken..."))
@@ -567,7 +547,6 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "ccms"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 	visual_implant = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/simple/dualwield

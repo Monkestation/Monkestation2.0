@@ -17,7 +17,7 @@ export const sound_ambience_volume: Feature<number> = {
 export const sound_breathing: FeatureToggle = {
   name: 'Enable breathing sounds',
   category: 'SOUND',
-  description: 'When enabled, hear breathing sounds when using internals.',
+  description: `Ambience refers to the more noticeable ambient sounds that play on occasion.`,
   component: CheckboxInput,
 };
 
@@ -97,7 +97,7 @@ export const sound_ship_ambience_volume: Feature<number> = {
   name: 'Ship ambience volume',
   category: 'SOUND',
   description: `Ship ambience refers to the low ambient buzz that plays on loop.`,
-  component: FeatureSliderInput,
+  component: CheckboxInput,
 };
 
 export const sound_achievement: FeatureChoiced = {

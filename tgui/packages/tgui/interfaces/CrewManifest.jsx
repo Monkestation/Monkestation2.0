@@ -10,7 +10,6 @@ const commandJobs = [
   'Chief Engineer',
   'Research Director',
   'Chief Medical Officer',
-  'Quartermaster',
 ];
 
 export const CrewManifest = (props) => {
