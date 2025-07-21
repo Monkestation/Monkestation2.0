@@ -15,7 +15,7 @@
 		"basic_scanning",
 		"blast",
 		"big_manipulator",
-//		"assembler",
+		"assembler",
 		"manipulator_filter",
 		"manipulator_filter_cargo",
 		"manipulator_filter_internal",

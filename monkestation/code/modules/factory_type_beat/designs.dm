@@ -47,6 +47,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/board/assembler
+	name = "Assembler Board"
+	desc = "The circuit board for an assembler."
+	id = "assembler"
+	build_path = /obj/item/circuitboard/machine/assembler
+	build_type = COLONY_FABRICATOR | IMPRINTER | AWAY_IMPRINTER
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
+
 // Autolathe-able circuitboards for starting with boulder processing machines.
 /datum/design/board/smelter
 	name = "Boulder Smelter Board"
