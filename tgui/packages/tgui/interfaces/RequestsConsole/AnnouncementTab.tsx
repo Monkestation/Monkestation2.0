@@ -1,6 +1,8 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Button, NoticeBox, Section, TextArea, Stack } from '../../components';
-import { RequestsData } from './types';
+import { useState } from 'react';
+import { Button, NoticeBox, Section, TextArea } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
+import type { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();

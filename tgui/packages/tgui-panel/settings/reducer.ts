@@ -30,7 +30,6 @@ const initialState = {
   // Keep these two state vars for compatibility with other servers
   highlightText: '',
   highlightColor: '#ffdd44',
-  coloredNames: true,
   // END compatibility state vars
   highlightSettings: [defaultHighlightSetting.id],
   highlightSettingById: {
@@ -71,44 +70,37 @@ export function settingsReducer(
           return nextState;
         }
 
-      delete payload.view;
-      const nextState = {
-        ...state,
-        ...payload,
-      };
-      nextState.initialized = true;
-      // Lazy init the list for compatibility reasons
-      if (!nextState.highlightSettings) {
-        nextState.highlightSettings = [defaultHighlightSetting.id];
-        nextState.highlightSettingById[defaultHighlightSetting.id] =
-          defaultHighlightSetting;
-      }
-      // Compensating for mishandling of default highlight settings
-      else if (!nextState.highlightSettingById[defaultHighlightSetting.id]) {
-        nextState.highlightSettings = [
-          defaultHighlightSetting.id,
-          ...nextState.highlightSettings,
-        ];
-        nextState.highlightSettingById[defaultHighlightSetting.id] =
-          defaultHighlightSetting;
-      }
-      // Migrate old highlights to include enabled: true
-      Object.keys(nextState.highlightSettingById).forEach((key) => {
-        if (nextState.highlightSettingById[key].enabled === undefined) {
-          nextState.highlightSettingById[key].enabled = true;
+        delete payload.view;
+        const nextState = {
+          ...state,
+          ...payload,
+        };
+        nextState.initialized = true;
+        // Lazy init the list for compatibility reasons
+        if (!nextState.highlightSettings) {
+          nextState.highlightSettings = [defaultHighlightSetting.id];
+          nextState.highlightSettingById[defaultHighlightSetting.id] =
+            defaultHighlightSetting;
         }
-      });
-      // Update the highlight settings for default highlight
-      // settings compatibility
-      const highlightSetting =
-        nextState.highlightSettingById[defaultHighlightSetting.id];
-      highlightSetting.highlightColor = nextState.highlightColor;
-      highlightSetting.highlightText = nextState.highlightText;
+        // Compensating for mishandling of default highlight settings
+        else if (!nextState.highlightSettingById[defaultHighlightSetting.id]) {
+          nextState.highlightSettings = [
+            defaultHighlightSetting.id,
+            ...nextState.highlightSettings,
+          ];
+          nextState.highlightSettingById[defaultHighlightSetting.id] =
+            defaultHighlightSetting;
+        }
 
-      if (nextState.coloredNames === undefined) {
-        nextState.coloredNames = true;
+        // Update the highlight settings for default highlight
+        // settings compatibility
+        const highlightSetting =
+          nextState.highlightSettingById[defaultHighlightSetting.id];
+        highlightSetting.highlightColor = nextState.highlightColor;
+        highlightSetting.highlightText = nextState.highlightText;
+
+        return nextState;
       }
-      return nextState;
     }
 
     case importSettings.type: {

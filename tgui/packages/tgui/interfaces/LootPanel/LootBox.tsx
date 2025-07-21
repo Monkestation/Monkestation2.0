@@ -1,10 +1,10 @@
-import { Button, Stack } from '../..//components';
-import { BooleanLike } from 'common/react';
-import { capitalizeFirst } from 'common/string';
+import { Button, Stack } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { IconDisplay } from './IconDisplay';
-import { SearchGroup, SearchItem } from './types';
+import type { SearchGroup, SearchItem } from './types';
 
 type Data = {
   is_blind: BooleanLike;
@@ -61,7 +61,7 @@ export const LootBox = (props: Props) => {
         <Stack.Item
           lineHeight="34px"
           overflow="hidden"
-          style={{ 'text-overflow': 'ellipsis' }}
+          style={{ textOverflow: 'ellipsis' }}
         >
           {!is_blind && name}
         </Stack.Item>
