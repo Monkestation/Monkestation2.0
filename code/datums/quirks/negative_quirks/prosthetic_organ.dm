@@ -20,6 +20,7 @@
 		ORGAN_SLOT_LUNGS,
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_SPLEEN,
 	)
 
 	var/list/possible_organ_slots = organ_slots.Copy()
@@ -31,6 +32,8 @@
 		possible_organ_slots -= ORGAN_SLOT_LIVER
 	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
+	if(HAS_TRAIT(human_holder, TRAIT_SPLEENLESS_METABOLISM))
+		possible_organ_slots -= ORGAN_SLOT_SPLEEN
 	if(!length(organ_slots)) //what the hell
 		return
 
@@ -49,6 +52,9 @@
 		if(ORGAN_SLOT_STOMACH)
 			prosthetic = new /obj/item/organ/internal/stomach/cybernetic/surplus
 			slot_string = "stomach"
+		if(ORGAN_SLOT_SPLEEN)
+			prosthetic = new /obj/item/organ/internal/spleen/cybernetic/surplus
+			slot_string = "spleen"
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
 		Removal of these organs is known to be dangerous to the patient as well as the practitioner."
 	old_organ = human_holder.get_organ_slot(organ_slot)
