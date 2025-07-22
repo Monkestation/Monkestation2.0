@@ -11,6 +11,7 @@ import {
   SUBJECT_CONCIOUS,
   SUBJECT_DEAD,
   SUBJECT_SOFT_CRIT,
+  SUBJECT_HARD_CRIT,
   SUBJECT_TRANSFORMING,
   SUBJECT_UNCONSCIOUS,
 } from './constants';
@@ -81,7 +82,7 @@ const SubjectStatus = (props) => {
       </Box>
     );
   }
-  if (status === SUBJECT_UNCONSCIOUS) {
+  if (status === SUBJECT_UNCONSCIOUS || status === SUBJECT_HARD_CRIT) {
     return (
       <Box inline color="average">
         Unconscious

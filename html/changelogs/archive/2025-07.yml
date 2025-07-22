@@ -310,3 +310,43 @@
   - code_imp: Added some barsign checks
   Thedragmeme:
   - map: Updates Icebox's Service and connecting maint areas
+2025-07-20:
+  Absolucy:
+  - balance: Fire breath now requires your mouth to be uncovered, so a muzzle/mask/etc
+      will stop onis from setting you on fire.
+  - qol: Saying stuff while jaunting (bloodcrawl, space phase, etc) now shows runechat
+      messages.
+  EssentialTomato:
+  - bugfix: Fixed the sprite for the budgeted sat crates.
+  Killermankey:
+  - code_imp: Split atoms.dm file into like 10 seperate files
+  ThePooba:
+  - rscadd: Tackling is now rightclick so you dont break your neck throwing a cigarette
+  - bugfix: TCMB adjusted to correct temperature
+  - bugfix: exodrones work now and arn't shit
+  Thedragmeme:
+  - bugfix: Added the missing clothes vendor for xenobio on Theseus
+  - bugfix: Attempts to make Xenobios power not immediately run out round start.
+  - map: Updated Theseus' Hydroponics and Chicken Ranch
+2025-07-21:
+  CannibalHunter:
+  - rscadd: The (Lab "Coat") donator item for SethDiedAgain
+  Cmpwarrior:
+  - rscadd: 'Added a "carved square pumpkin" to the loadout selector under hats. Note:
+      The "toggle helmet light" does not actually produce laight.'
+  - rscadd: Cigarettes, cigars, and other smokable items now produce faint amounts
+      of light when lit up.
+  EssentialTomato:
+  - bugfix: (MTandi) Binary devices no longer ignore the volume of the output pipe
+      network
+  - bugfix: (MTandi) Made 10 MJ & 20 MJ cells properly correspond to tiers 1 & 2 in
+      lathes.
+  - image: (MTandi) Updated cell sprites
+  leaKsi, Ghommie, Melbert, vinylspiders:
+  - refactor: Refactored mutation code backend. Report any issue.
+  notghosti:
+  - balance: Bamboo syringe guns no longer use firing pins
+2025-07-22:
+  notghosti:
+  - qol: Evil subtypes of drones no longer have door passthrough, and will have to
+      open the door like anyone normal.

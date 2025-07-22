@@ -44,7 +44,7 @@
 	languages_native = list(/datum/language/buzzwords)
 	var/static/list/speech_replacements = list(new /regex("z+", "g") = "zzz", new /regex("Z+", "g") = "ZZZ", "s" = "z", "S" = "Z")
 
-/obj/item/organ/internal/tongue/fly/New(class, timer, datum/mutation/human/copymut)
+/obj/item/organ/internal/tongue/fly/New(class, timer, datum/mutation/copymut)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
