@@ -1,5 +1,6 @@
+import { Button, Icon, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type IconInfo = {
@@ -41,7 +42,7 @@ const SlotsReel = (props: SlotsReelProps) => {
     <div
       style={{
         display: 'inline-flex',
-        'flex-direction': 'column',
+        flexDirection: 'column',
       }}
     >
       {reel.map((slot, i) => (
@@ -55,7 +56,7 @@ const SlotsTile = (props: SlotsTileProps) => {
   return (
     <div
       style={{
-        'text-align': 'center',
+        textAlign: 'center',
         padding: '1rem',
         margin: '0.5rem',
         display: 'inline-block',
@@ -85,76 +86,67 @@ export const SlotMachine = (props) => {
   } = data;
 
   return (
-    <Window width={400} height={540}>
-      <Window.Content>
-        <Section
-          title="Slots!"
-          style={{ 'justify-content': 'center', 'text-align': 'center' }}
-        >
-          <Section style={{ 'text-align': 'left' }}>
+    <Window>
+      <Section
+        title="Slots!"
+        style={{ justifyContent: 'center', textAlign: 'center' }}
+      >
+        <Section style={{ textAlign: 'left' }}>
+          <p>
+            Only <b>{cost}</b> credit{pluralS(cost)} for a chance to win big!
+          </p>
+          <p>
+            Available prize money:{' '}
+            <b>
+              {money} credit{pluralS(money)}
+            </b>{' '}
+          </p>
+          {paymode === 1 && (
             <p>
-              Only <b>{cost}</b> credit{pluralS(cost)} for a chance to win big!
-            </p>
-            <p>
-              Available prize money:{' '}
+              Current jackpot:{' '}
               <b>
-                {money} credit{pluralS(money)}
-              </b>{' '}
-            </p>
-            {paymode === 1 && (
-              <p>
-                Current jackpot:{' '}
-                <b>
-                  {money + jackpot} credit{pluralS(money + jackpot)}!
-                </b>
-              </p>
-            )}
-            <p>
-              So far people have spun{' '}
-              <b>
-                {plays} time{pluralS(plays)},
-              </b>{' '}
-              and won{' '}
-              <b>
-                {jackpots} jackpot{pluralS(jackpots)}!
+                {money + jackpot} credit{pluralS(money + jackpot)}!
               </b>
             </p>
-          </Section>
-          <hr />
-          <Section
-            style={{
-              'flex-direction': 'row',
-              display: 'flex',
-              'justify-content': 'center',
-            }}
-          >
-            {state.map((reel, i) => {
-              return <SlotsReel key={i} reel={reel} />;
-            })}
-          </Section>
-          <hr />
-          <Section>
-            <Stack vertical>
-              <Stack.Item>
-                <Button
-                  onClick={() => act('spin')}
-                  disabled={rolling || balance < cost}
-                >
-                  Spin!
-                </Button>
-              </Stack.Item>
-              <Stack.Item>
-                <b>Balance: {balance}</b>
-              </Stack.Item>
-              <Stack.Item>
-                <Button onClick={() => act('payout')} disabled={!(balance > 0)}>
-                  Refund balance
-                </Button>
-              </Stack.Item>
-            </Stack>
-          </Section>
+          )}
+          <p>
+            So far people have spun{' '}
+            <b>
+              {plays} time{pluralS(plays)},
+            </b>{' '}
+            and won{' '}
+            <b>
+              {jackpots} jackpot{pluralS(jackpots)}!
+            </b>
+          </p>
         </Section>
-      </Window.Content>
+        <hr />
+        <Section
+          style={{
+            flexDirection: 'row',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          {state.map((reel, i) => {
+            return <SlotsReel key={i} reel={reel} />;
+          })}
+        </Section>
+        <hr />
+        <Button
+          onClick={() => act('spin')}
+          disabled={rolling || balance < cost}
+        >
+          Spin!
+        </Button>
+        <Section>
+          <b>Balance: {balance}</b>
+          <br />
+          <Button onClick={() => act('payout')} disabled={!(balance > 0)}>
+            Refund balance
+          </Button>
+        </Section>
+      </Section>
     </Window>
   );
 };

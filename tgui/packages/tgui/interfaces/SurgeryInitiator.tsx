@@ -1,11 +1,12 @@
 import { sortBy } from 'common/collections';
-import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'common/keycodes';
-import { BooleanLike } from 'common/react';
-import { Component } from 'inferno';
+import { Component } from 'react';
+import { Button, KeyListener, Stack } from 'tgui-core/components';
+import { KEY_DOWN, KEY_ENTER, KEY_UP } from 'tgui-core/keycodes';
+import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Button, KeyListener, Section, Stack } from '../components';
-import { BodyZone, BodyZoneSelector } from '../components/BodyZoneSelector';
 import { Window } from '../layouts';
+import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
 
 type Surgery = {
   name: string;
@@ -18,7 +19,8 @@ type SurgeryInitiatorData = {
   target_name: string;
 };
 
-const sortSurgeries = sortBy((surgery: Surgery) => surgery.name);
+const sortSurgeries = (array: Surgery[]) =>
+  sortBy(array, (surgery) => surgery.name);
 
 type SurgeryInitiatorInnerState = {
   selectedSurgeryIndex: number;
@@ -73,7 +75,7 @@ class SurgeryInitiatorInner extends Component<
 
     return (
       <Window width={400} height={350} title={`Surgery on ${target_name}`}>
-        <Window.Content>
+        <Window.Content scrollable>
           <Stack fill height="100%">
             <Stack.Item width="30%">
               <BodyZoneSelector
@@ -83,28 +85,26 @@ class SurgeryInitiatorInner extends Component<
             </Stack.Item>
 
             <Stack.Item width="95%">
-              <Section fill scrollable>
-                <Stack vertical height="100%">
-                  {surgeries.map((surgery, index) => (
-                    <Button
-                      onClick={() => {
-                        act('start_surgery', {
-                          surgery_name: surgery.name,
-                        });
-                      }}
-                      disabled={surgery.blocked}
-                      selected={index === this.state.selectedSurgeryIndex}
-                      tooltip={
-                        surgery.blocked ? 'Their body is covered!' : undefined
-                      }
-                      key={surgery.name}
-                      fluid
-                    >
-                      {surgery.name}
-                    </Button>
-                  ))}
-                </Stack>
-              </Section>
+              <Stack vertical height="100%">
+                {surgeries.map((surgery, index) => (
+                  <Button
+                    onClick={() => {
+                      act('start_surgery', {
+                        surgery_name: surgery.name,
+                      });
+                    }}
+                    disabled={surgery.blocked}
+                    selected={index === this.state.selectedSurgeryIndex}
+                    tooltip={
+                      surgery.blocked ? 'Their body is covered!' : undefined
+                    }
+                    key={surgery.name}
+                    fluid
+                  >
+                    {surgery.name}
+                  </Button>
+                ))}
+              </Stack>
             </Stack.Item>
           </Stack>
 

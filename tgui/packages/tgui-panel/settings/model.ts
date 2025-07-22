@@ -1,7 +1,7 @@
 /**
  * @file
  */
-import { createUuid } from 'common/uuid';
+import { createUuid } from 'tgui-core/uuid';
 
 export const createHighlightSetting = (obj?: Record<string, any>) => ({
   id: createUuid(),
@@ -10,7 +10,6 @@ export const createHighlightSetting = (obj?: Record<string, any>) => ({
   highlightWholeMessage: true,
   matchWord: false,
   matchCase: false,
-  enabled: true,
   ...obj,
 });
 

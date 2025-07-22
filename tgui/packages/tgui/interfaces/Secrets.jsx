@@ -1,5 +1,4 @@
-import { toFixed } from 'common/math';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Button,
   Flex,
@@ -8,7 +7,10 @@ import {
   RoundGauge,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const TAB2NAME = [
@@ -299,13 +301,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="plus"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Mass Heal everyone"
+              onClick={() => act('mass_heal')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -352,13 +354,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="robot"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Triple AI mode"
+              onClick={() => act('tripleAI')}
+            />
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -423,13 +425,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="house"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Send Shuttle Back"
+              onClick={() => act('send_shuttle_back')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -454,13 +456,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="dollar-sign"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Dpt Order Cooldown"
+              onClick={() => act('department_cooldown_override')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -598,6 +600,32 @@ const FunForYouTab = (props) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
+      <Stack.Item>
+        <Stack fill>
+          <Stack.Item>
+            <NoticeBox danger width={19.6} mb={0}>
+              <Button
+                color="red"
+                icon="comment-slash"
+                fluid
+                content="Tower of Babel"
+                onClick={() => act('towerOfBabel')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+          <Stack.Item>
+            <NoticeBox info width={19.6} mb={0}>
+              <Button
+                color="blue"
+                icon="comment"
+                fluid
+                content="Undo Tower of Babel"
+                onClick={() => act('cureTowerOfBabel')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
     </Stack>
   );
 };
@@ -605,8 +633,9 @@ const FunForYouTab = (props) => {
 export const Secrets = (props) => {
   const { act, data } = useBackend();
   const { is_debugger, is_funmin } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 2);
+  const [tabIndex, setTabIndex] = useState(2);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
+
   return (
     <Window title="Secrets Panel" width={500} height={488} theme="admin">
       <Window.Content>

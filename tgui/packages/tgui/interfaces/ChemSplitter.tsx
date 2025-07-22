@@ -1,6 +1,7 @@
-import { toFixed } from 'common/math';
+import { LabeledList, NumberInput, Section } from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
 import { useBackend } from '../backend';
-import { LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -28,7 +29,7 @@ export const ChemSplitter = (props) => {
                 format={(value) => toFixed(value, 2)}
                 step={0.05}
                 stepPixelSize={4}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_amount', {
                     target: 'straight',
                     amount: value,
@@ -46,7 +47,7 @@ export const ChemSplitter = (props) => {
                 format={(value) => toFixed(value, 2)}
                 step={0.05}
                 stepPixelSize={4}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_amount', {
                     target: 'side',
                     amount: value,

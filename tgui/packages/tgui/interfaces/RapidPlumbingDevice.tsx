@@ -1,10 +1,19 @@
-import { useBackend, useLocalState } from '../backend';
-import { capitalizeAll } from 'common/string';
-import { BooleanLike, classes } from 'common/react';
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { capitalizeAll } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Section, Tabs, Button, LabeledList, Stack, Box } from '../components';
+import { MatterItem, SiloItem } from './RapidConstructionDevice';
 import { ColorItem } from './RapidPipeDispenser';
-import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
   silo_upgraded: BooleanLike;
@@ -22,7 +31,6 @@ type Category = {
 };
 
 type Recipe = {
-  index: number;
   icon: string;
   selected: BooleanLike;
   name: string;
@@ -31,19 +39,16 @@ type Recipe = {
 const PlumbingTypeSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category,
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
             onClick={() => setCategoryName(category.cat_name)}
@@ -52,16 +57,16 @@ const PlumbingTypeSection = (props) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.recipes.map((recipe) => (
+      {shownCategory?.recipes.map((recipe, index) => (
         <Button
-          key={recipe.index}
+          key={index}
           fluid
-          ellipsis
           color="transparent"
           selected={recipe.name === selected_recipe}
           onClick={() =>
             act('recipe', {
-              id: recipe.index,
+              category: shownCategory.cat_name,
+              id: index,
             })
           }
         >
@@ -69,11 +74,10 @@ const PlumbingTypeSection = (props) => {
             inline
             verticalAlign="middle"
             mr="20px"
+            mb="10px"
             className={classes(['plumbing-tgui32x32', recipe.icon])}
             style={{
-              transform: 'scale(1.5) translate(9.5%, 9.5%)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              transform: 'scale(1.3) translate(9.5%, 11.2%)',
             }}
           />
           <span>{capitalizeAll(recipe.name)}</span>
@@ -83,7 +87,6 @@ const PlumbingTypeSection = (props) => {
   );
 };
 
-// MONKESTATION ADDITION -- added context to layer select and useBackend<Data>()
 export const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
   const { piping_layer } = data;
@@ -114,8 +117,6 @@ const LayerIconSection = (props) => {
       className={classes(['plumbing-tgui32x32', layer_icon])}
       style={{
         transform: 'scale(2)',
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'image-rendering': 'pixelated',
       }}
     />
   );

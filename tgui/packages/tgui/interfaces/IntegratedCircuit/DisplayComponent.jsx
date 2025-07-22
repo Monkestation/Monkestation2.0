@@ -1,11 +1,13 @@
-import { Button, Stack, Box } from '../../components';
-import { Component, createRef } from 'inferno';
-import { Port } from './Port';
+import { Component, createRef } from 'react';
+import { Box, Button, Stack } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+
 import { noop } from './constants';
+import { Port } from './Port';
 
 export class DisplayComponent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.ref = createRef();
   }
 
@@ -36,26 +38,37 @@ export class DisplayComponent extends Component {
     return false;
   }
 
-  render(props) {
-    const { component, fixedSize, ...rest } = props;
+  render() {
+    const { component, fixedSize, ...rest } = this.props;
+    const categoryClass = `ObjectComponent__Category__${component.category || 'Unassigned'}`;
     return (
       <Box {...rest}>
         <div ref={this.ref}>
           <Box
-            backgroundColor={component.color || 'blue'}
             py={1}
             px={1}
-            className="ObjectComponent__Titlebar"
+            className={classes(['ObjectComponent__Titlebar', categoryClass])}
           >
             <Stack>
               <Stack.Item grow={1} unselectable="on">
                 {component.name}
               </Stack.Item>
+              {!!component.ui_alerts &&
+                Object.keys(component.ui_alerts).map((icon) => (
+                  <Stack.Item key={icon}>
+                    <Button
+                      icon={icon}
+                      className={categoryClass}
+                      compact
+                      tooltip={component.ui_alerts[icon]}
+                    />
+                  </Stack.Item>
+                ))}
               <Stack.Item>
                 <Button
-                  color="transparent"
                   icon="info"
                   compact
+                  className={categoryClass}
                   tooltip={component.description}
                   tooltipPosition="top"
                 />

@@ -1,5 +1,6 @@
+import { Button, NoticeBox, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type BorgShakerContext = {
@@ -54,6 +55,7 @@ export const BorgShaker = (props) => {
               />
               <Button
                 icon="flask"
+                width="23px"
                 color={
                   data.reagentSearchContainer ===
                   ContainerPreference.InternalBeaker
@@ -69,6 +71,7 @@ export const BorgShaker = (props) => {
               />
               <Button
                 icon="vial"
+                width="24px"
                 tooltip="Search source: Beverage Apparatus"
                 color={
                   data.reagentSearchContainer ===

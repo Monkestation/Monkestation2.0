@@ -1,5 +1,3 @@
-import { BooleanLike } from '../../common/react';
-import { useBackend } from '../backend';
 import {
   Button,
   ColorBox,
@@ -7,7 +5,10 @@ import {
   LabeledList,
   NumberInput,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type EyeColorData = {
@@ -49,7 +50,7 @@ const LightColorDisplay = (props) => {
         value={lightColor}
         width={6}
         maxLength={7}
-        onChange={(_, value) =>
+        onBlur={(value) =>
           act('enter_color', {
             new_color: value,
             to_update: ToUpdate.LightColor,
@@ -83,7 +84,7 @@ const RangeDisplay = (props) => {
         value={range}
         minValue={0}
         maxValue={5}
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('set_range', {
             new_range: value,
           })
@@ -98,11 +99,11 @@ const EyeColorDisplay = (props) => {
   const { eyeColor } = data;
   return (
     <>
-      <LabeledList.Item label="Match Colors">
+      <LabeledList.Item label="Match Color">
         <Button.Checkbox
           checked={eyeColor.mode}
           onClick={() => act('toggle_eye_color')}
-          tooltip="Toggle the eye color mode."
+          tooltip="Toggles whether eyecolor matches the color of the light."
         />
       </LabeledList.Item>
       {!eyeColor.mode && (
@@ -119,13 +120,13 @@ const EyeColorDisplay = (props) => {
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.LeftEye })
               }
-              tooltip="Randomizes the light color."
+              tooltip="Randomizes the eye color."
             />
             <Input
               value={eyeColor.left}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onBlur={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.LeftEye,
@@ -147,13 +148,13 @@ const EyeColorDisplay = (props) => {
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.RightEye })
               }
-              tooltip="Randomizes the light color."
+              tooltip="Randomizes the eye color."
             />
             <Input
               value={eyeColor.right}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onBlur={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.RightEye,

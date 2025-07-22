@@ -21,6 +21,7 @@
 	var/visible_contents = TRUE
 	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
 	var/has_emissive = TRUE
+	layout_prefs_used = /datum/preference/choiced/tgui_layout/smartfridge
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -181,21 +182,25 @@
 	. = list()
 
 	var/listofitems = list()
-	for (var/I in src)
+	for (var/item in src)
 		// We do not vend our own components.
-		if(I in component_parts)
+		if(item in component_parts)
 			continue
 
-		var/atom/movable/O = I
-		if (!QDELETED(O))
-			var/md5name = md5(O.name) // This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
-			if (listofitems[md5name]) // which is fixed in a version we cannot use due to ie8 incompatibility
-				listofitems[md5name]["amount"]++ // The good news is, #30519 made smartfridge UIs non-auto-updating
+		var/atom/movable/atom = item
+		if (!QDELETED(atom))
+			var/key = "[atom.type]-[atom.name]"
+			if (listofitems[key])
+				listofitems[key]["amount"]++
 			else
-				listofitems[md5name] = list("name" = O.name, "type" = O.type, "amount" = 1)
-	sort_list(listofitems)
-
-	.["contents"] = listofitems
+				listofitems[key] = list(
+					"path" = key,
+					"name" = full_capitalize(atom.name),
+					"icon" = atom.icon,
+					"icon_state" = atom.icon_state,
+					"amount" = 1
+					)
+	.["contents"] = sort_list(listofitems)
 	.["name"] = name
 	.["isdryer"] = FALSE
 

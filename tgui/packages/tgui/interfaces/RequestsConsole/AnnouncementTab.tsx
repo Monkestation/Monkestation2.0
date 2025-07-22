@@ -1,11 +1,13 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Button, NoticeBox, Section, TextArea, Stack } from '../../components';
-import { RequestsData } from './types';
+import { useState } from 'react';
+import { Button, NoticeBox, Section, TextArea } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
+import type { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { authentication_data, is_admin_ghost_ai } = data;
-  const [messageText, setMessageText] = useLocalState('messageText', '');
+  const [messageText, setMessageText] = useState('');
   return (
     <Stack vertical fill>
       <Stack.Item grow>
@@ -64,9 +66,7 @@ const AuthenticationNoticeBox = (props) => {
   const { authentication_data, is_admin_ghost_ai } = data;
   return (
     (!authentication_data.announcement_authenticated && !is_admin_ghost_ai && (
-      <NoticeBox warning>
-        {'Swipe your card to authenticate yourself'}
-      </NoticeBox>
-    )) || <NoticeBox info>{'Succesfully authenticated'}</NoticeBox>
+      <NoticeBox>Swipe your card to authenticate yourself</NoticeBox>
+    )) || <NoticeBox info>Successfully authenticated</NoticeBox>
   );
 };

@@ -31,7 +31,6 @@ export const COLORS = {
     service: '#7cc46a',
     centcom: '#00c100',
     other: '#c38312',
-    prisoner: '#FFC2C2', // MONKESTATION EDIT ADDITION
   },
   // Damage type colors
   damageType: {
@@ -49,27 +48,43 @@ export const COLORS = {
 
 // Colors defined in CSS
 export const CSS_COLORS = [
-  'black',
-  'white',
-  'red',
-  'orange',
-  'yellow',
-  'olive',
-  'green',
-  'teal',
-  'blue',
-  'violet',
-  'purple',
-  'pink',
-  'brown',
-  'grey',
-  'amber',
-  'crimson',
-  'good',
   'average',
   'bad',
+  'black',
+  'blue',
+  'brown',
+  'good',
+  'green',
+  'grey',
   'label',
-];
+  'olive',
+  'orange',
+  'pink',
+  'purple',
+  'red',
+  'teal',
+  'transparent',
+  'violet',
+  'white',
+  'yellow',
+] as const;
+
+export enum Direction {
+  NONE = 0,
+  NORTH = 1,
+  SOUTH = 2,
+  EAST = 4,
+  WEST = 8,
+  NORTHEAST = NORTH | EAST,
+  NORTHWEST = NORTH | WEST,
+  SOUTHEAST = SOUTH | EAST,
+  SOUTHWEST = SOUTH | WEST,
+  VERTICAL = NORTH | SOUTH,
+  HORIZONTAL = EAST | WEST,
+  ALL = NORTH | SOUTH | EAST | WEST,
+}
+
+export type CssColor = (typeof CSS_COLORS)[number];
 
 /* IF YOU CHANGE THIS KEEP IT IN SYNC WITH CHAT CSS */
 export const RADIO_CHANNELS = [
@@ -148,16 +163,6 @@ export const RADIO_CHANNELS = [
     freq: 1459,
     color: '#1ecc43',
   },
-  {
-    name: 'Radio',
-    freq: 1361,
-    color: '#FFC0CB',
-  },
-  {
-    name: 'Uncommon',
-    freq: 1363,
-    color: '#78a1b1',
-  },
 ] as const;
 
 const GASES = [
@@ -173,7 +178,7 @@ const GASES = [
     path: '/datum/gas/nitrogen',
     name: 'Nitrogen',
     label: 'N₂',
-    color: 'red',
+    color: 'yellow',
   },
   {
     id: 'co2',
@@ -197,7 +202,7 @@ const GASES = [
     color: 'lightsteelblue',
   },
   {
-    id: 'nob',
+    id: 'hypernoblium',
     path: '/datum/gas/hypernoblium',
     name: 'Hyper-noblium',
     label: 'Hyper-nob',
@@ -232,7 +237,7 @@ const GASES = [
     color: 'mediumpurple',
   },
   {
-    id: 'pluox',
+    id: 'pluoxium',
     path: '/datum/gas/pluoxium',
     name: 'Pluoxium',
     label: 'Pluoxium',

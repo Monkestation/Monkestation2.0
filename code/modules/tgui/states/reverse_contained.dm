@@ -11,7 +11,7 @@
  */
 
 GLOBAL_DATUM_INIT(reverse_contained_state, /datum/ui_state/reverse_contained_state, new)
-
+// XANTODO, check if this is still needed
 /datum/ui_state/reverse_contained_state/can_use_topic(atom/src_object, mob/user)
 	if(!user.contains(src_object))
 		return UI_CLOSE

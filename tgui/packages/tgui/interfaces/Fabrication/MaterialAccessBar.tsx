@@ -1,8 +1,9 @@
 import { sortBy } from 'common/collections';
-import { classes } from 'common/react';
-import { useLocalState } from '../../backend';
-import { Flex, Button, Stack, AnimatedNumber } from '../../components';
-import { formatSiUnit } from '../../format';
+import { useState } from 'react';
+import { AnimatedNumber, Button, Flex } from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { classes } from 'tgui-core/react';
+
 import { MaterialIcon } from './MaterialIcon';
 import { Material } from './Types';
 
@@ -29,6 +30,11 @@ export type MaterialAccessBarProps = {
   availableMaterials: Material[];
 
   /**
+   * Definition of how much units 1 sheet has.
+   */
+  SHEET_MATERIAL_AMOUNT: number;
+
+  /**
    * Invoked when the user requests that a material be ejected.
    */
   onEjectRequested?: (material: Material, quantity: number) => void;
@@ -45,15 +51,16 @@ const LABEL_FORMAT = (value: number) => formatSiUnit(value, 0);
  * fifty sheets.
  */
 export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
-  const { availableMaterials, onEjectRequested } = props;
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT, onEjectRequested } = props;
 
   return (
     <Flex wrap>
-      {sortBy((m: Material) => MATERIAL_RARITY[m.name])(availableMaterials).map(
+      {sortBy(availableMaterials, (m: Material) => MATERIAL_RARITY[m.name]).map(
         (material) => (
-          <Flex.Item key={material.name} grow={1}>
+          <Flex.Item grow basis={4.5} key={material.name}>
             <MaterialCounter
               material={material}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
               onEjectRequested={(quantity) =>
                 onEjectRequested && onEjectRequested(material, quantity)
               }
@@ -67,18 +74,16 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
 
 type MaterialCounterProps = {
   material: Material;
+  SHEET_MATERIAL_AMOUNT: number;
   onEjectRequested: (quantity: number) => void;
 };
 
 const MaterialCounter = (props: MaterialCounterProps) => {
-  const { material, onEjectRequested } = props;
+  const { material, onEjectRequested, SHEET_MATERIAL_AMOUNT } = props;
 
-  const [hovering, setHovering] = useLocalState(
-    `MaterialCounter__${material.name}`,
-    false,
-  );
+  const [hovering, setHovering] = useState(false);
 
-  const canEject = material.amount > 2_000;
+  const sheets = material.amount / SHEET_MATERIAL_AMOUNT;
 
   return (
     <div
@@ -87,10 +92,10 @@ const MaterialCounter = (props: MaterialCounterProps) => {
       className={classes([
         'MaterialDock',
         hovering && 'MaterialDock--active',
-        !canEject && 'MaterialDock--disabled',
+        sheets < 1 && 'MaterialDock--disabled',
       ])}
     >
-      <Stack vertial direction={'column-reverse'}>
+      <Flex direction="column-reverse">
         <Flex
           direction="column"
           textAlign="center"
@@ -98,59 +103,51 @@ const MaterialCounter = (props: MaterialCounterProps) => {
           className="MaterialDock__Label"
         >
           <Flex.Item>
-            <MaterialIcon
-              materialName={material.name}
-              amount={material.amount}
-            />
+            <MaterialIcon materialName={material.name} sheets={sheets} />
           </Flex.Item>
           <Flex.Item>
-            <AnimatedNumber value={material.amount} format={LABEL_FORMAT} />
+            <AnimatedNumber value={sheets} format={LABEL_FORMAT} />
           </Flex.Item>
         </Flex>
         {hovering && (
           <div className={'MaterialDock__Dock'}>
             <Flex vertical direction={'column-reverse'}>
               <EjectButton
-                material={material}
-                available={material.amount}
+                sheets={sheets}
                 amount={5}
                 onEject={onEjectRequested}
               />
               <EjectButton
-                material={material}
-                available={material.amount}
+                sheets={sheets}
                 amount={10}
                 onEject={onEjectRequested}
               />
               <EjectButton
-                material={material}
-                available={material.amount}
+                sheets={sheets}
                 amount={25}
                 onEject={onEjectRequested}
               />
               <EjectButton
-                material={material}
-                available={material.amount}
+                sheets={sheets}
                 amount={50}
                 onEject={onEjectRequested}
               />
             </Flex>
           </div>
         )}
-      </Stack>
+      </Flex>
     </div>
   );
 };
 
 type EjectButtonProps = {
-  material: Material;
-  available: number;
   amount: number;
+  sheets: number;
   onEject: (quantity: number) => void;
 };
 
 const EjectButton = (props: EjectButtonProps) => {
-  const { amount, available, material, onEject } = props;
+  const { amount, sheets, onEject } = props;
 
   return (
     <Button
@@ -158,7 +155,7 @@ const EjectButton = (props: EjectButtonProps) => {
       color={'transparent'}
       className={classes([
         'Fabricator__PrintAmount',
-        amount * 2_000 > available && 'Fabricator__PrintAmount--disabled',
+        amount > sheets && 'Fabricator__PrintAmount--disabled',
       ])}
       onClick={() => onEject(amount)}
     >

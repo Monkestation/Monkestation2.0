@@ -1,9 +1,5 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
-import { useBackend, useLocalState } from '../backend';
+import { ReactNode, useState } from 'react';
 import {
   Box,
   Button,
@@ -11,7 +7,11 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { getGasFromPath } from '../constants';
 import { Window } from '../layouts';
 
@@ -23,21 +23,26 @@ type SMGasMetadata = {
     numeric_data: {
       name: string;
       amount: number;
+      unit: string;
       positive: BooleanLike;
     }[];
   };
 };
 
 type SupermatterProps = {
-  sectionButton?: InfernoNode;
+  sectionButton?: ReactNode;
   uid: number;
   area_name: string;
   integrity: number;
   integrity_factors: { name: string; amount: number }[];
   internal_energy: number;
-  internal_energy_factors: { name: string; amount: number }[];
-  zap_multiplier: number;
-  zap_multiplier_factors: { name: string; amount: number }[];
+  internal_energy_coefficient: number;
+  internal_energy_unit: string;
+  internal_energy_factors: { name: string; amount: number; unit: string }[];
+  zap_transmission: number;
+  zap_transmission_coefficient: number;
+  zap_transmission_unit: string;
+  zap_transmission_factors: { name: string; amount: number; unit: string }[];
   temp_limit: number;
   temp_limit_factors: { name: string; amount: number }[];
   waste_multiplier: number;
@@ -52,8 +57,8 @@ type SupermatterProps = {
 // LabeledList but stack and with a chevron dropdown.
 type SupermatterEntryProps = {
   title: string;
-  content: InfernoNode;
-  detail?: InfernoNode;
+  content: ReactNode;
+  detail?: ReactNode;
   alwaysShowChevron?: boolean;
 };
 const SupermatterEntry = (props: SupermatterEntryProps) => {
@@ -70,7 +75,8 @@ const SupermatterEntry = (props: SupermatterEntryProps) => {
       </Stack.Item>
     );
   }
-  const [activeDetail, setActiveDetail] = useLocalState(title, false);
+  const [activeDetail, setActiveDetail] = useState(false);
+
   return (
     <>
       <Stack.Item>
@@ -99,9 +105,13 @@ export const SupermatterContent = (props: SupermatterProps) => {
     integrity,
     integrity_factors,
     internal_energy,
+    internal_energy_coefficient,
+    internal_energy_unit,
     internal_energy_factors,
-    zap_multiplier,
-    zap_multiplier_factors,
+    zap_transmission,
+    zap_transmission_coefficient,
+    zap_transmission_unit,
+    zap_transmission_factors,
     temp_limit,
     temp_limit_factors,
     waste_multiplier,
@@ -111,11 +121,16 @@ export const SupermatterContent = (props: SupermatterProps) => {
     gas_total_moles,
     gas_metadata,
   } = props;
-  const [allGasActive, setAllGasActive] = useLocalState('allGasActive', false);
-  const gas_composition: [gas_path: string, amount: number][] = flow([
-    !allGasActive && filter(([gas_path, amount]) => amount !== 0),
-    sortBy(([gas_path, amount]) => -amount),
-  ])(Object.entries(props.gas_composition));
+  const [allGasActive, setAllGasActive] = useState(false);
+  let gas_composition = Object.entries(props.gas_composition);
+  if (!allGasActive) {
+    gas_composition = filter(
+      gas_composition,
+      ([gas_path, amount]) => amount !== 0,
+    );
+  }
+  gas_composition = sortBy(gas_composition, ([gas_path, amount]) => -amount);
+
   return (
     <Stack height="100%">
       <Stack.Item grow>
@@ -173,20 +188,21 @@ export const SupermatterContent = (props: SupermatterProps) => {
                     bad: [7000, Infinity],
                   }}
                 >
-                  {toFixed(internal_energy) + ' MeV/cm3'}
+                  {toFixed(internal_energy_coefficient, 3) +
+                    internal_energy_unit}
                 </ProgressBar>
               }
               detail={
                 !!internal_energy_factors.length && (
                   <LabeledList>
-                    {internal_energy_factors.map(({ name, amount }) => (
+                    {internal_energy_factors.map(({ name, amount, unit }) => (
                       <LabeledList.Item
                         key={name}
                         label={name + ' (∆)'}
                         labelWrap
                       >
                         <Box color={amount > 0 ? 'green' : 'red'}>
-                          {toFixed(amount, 2) + ' MeV/cm3'}
+                          {toFixed(amount, 3) + unit}
                         </Box>
                       </LabeledList.Item>
                     ))}
@@ -195,29 +211,31 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Zap Power Multiplier"
+              title="Zap Power Transmission"
               alwaysShowChevron
               content={
                 <ProgressBar
-                  value={zap_multiplier}
+                  value={zap_transmission}
                   minValue={0}
-                  maxValue={5}
+                  maxValue={1e7}
                   ranges={{
-                    good: [1.2, Infinity],
-                    average: [0.8, 1.2],
-                    bad: [-Infinity, 0.8],
+                    teal: [1e7, Infinity],
+                    good: [2e6, 1e7],
+                    average: [1e6, 2e6],
+                    bad: [-Infinity, 1e6],
                   }}
                 >
-                  {toFixed(zap_multiplier, 2) + ' x'}
+                  {toFixed(zap_transmission_coefficient, 2) +
+                    zap_transmission_unit}
                 </ProgressBar>
               }
               detail={
-                !!zap_multiplier_factors.length && (
+                !!zap_transmission_factors.length && (
                   <LabeledList>
-                    {zap_multiplier_factors.map(({ name, amount }) => (
+                    {zap_transmission_factors.map(({ name, amount, unit }) => (
                       <LabeledList.Item key={name} label={name} labelWrap>
                         <Box color={amount > 0 ? 'green' : 'red'}>
-                          {toFixed(amount, 2) + ' x'}
+                          {toFixed(amount, 2) + unit}
                         </Box>
                       </LabeledList.Item>
                     ))}
@@ -372,8 +390,8 @@ export const SupermatterContent = (props: SupermatterProps) => {
                                     }
                                   >
                                     {effect.amount > 0
-                                      ? '+' + effect.amount * 100 + '%'
-                                      : effect.amount * 100 + '%'}
+                                      ? '+' + effect.amount + effect.unit
+                                      : effect.amount + effect.unit}
                                   </LabeledList.Item>
                                 ),
                             )}

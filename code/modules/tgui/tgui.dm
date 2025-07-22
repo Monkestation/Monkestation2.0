@@ -37,8 +37,6 @@
 	var/datum/ui_state/state = null
 	/// Rate limit client refreshes to prevent DoS.
 	COOLDOWN_DECLARE(refresh_cooldown)
-	/// Are byond mouse events beyond the window passed in to the ui
-	var/mouse_hooked = FALSE
 
 /**
  * public
@@ -55,11 +53,9 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
-#ifdef EXTENDED_DEBUG_LOGGING
 	log_tgui(user,
 		"new [interface] fancy [user?.client?.prefs.read_preference(/datum/preference/toggle/tgui_fancy)]",
 		src_object = src_object)
-#endif
 	src.user = user
 	src.src_object = src_object
 	src.window_key = "[REF(src_object)]-main"
@@ -84,7 +80,7 @@
  * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
  */
 /datum/tgui/proc/open()
-	if(!user?.client)
+	if(!user.client)
 		return FALSE
 	if(window)
 		return FALSE
@@ -109,8 +105,6 @@
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
-	if(mouse_hooked)
-		window.set_mouse_macro()
 	SStgui.on_open(src)
 
 	return TRUE
@@ -120,6 +114,10 @@
 		/datum/asset/simple/namespaced/fontawesome))
 	flush_queue |= window.send_asset(get_asset_datum(
 		/datum/asset/simple/namespaced/tgfont))
+	/*
+	flush_queue |= window.send_asset(get_asset_datum(
+		/datum/asset/json/icon_ref_map))
+	*/ //XANTODO Json assets
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		flush_queue |= window.send_asset(asset)
 	if (flush_queue)
@@ -162,18 +160,6 @@
 /**
  * public
  *
- * Enable/disable passing through byond mouse events to the window
- *
- * required value bool Enable/disable hooking.
- */
-/datum/tgui/proc/set_mouse_hook(value)
-	src.mouse_hooked = value
-	//Handle unhooking/hooking on already open windows ?
-
-
-/**
- * public
- *
  * Replace current ui.state with a new one.
  *
  * required state datum/ui_state/state Next state
@@ -204,7 +190,7 @@
  * optional force bool Send an update even if UI is not interactive.
  */
 /datum/tgui/proc/send_full_update(custom_data, force)
-	if(!user?.client || !initialized || closing)
+	if(!user.client || !initialized || closing)
 		return
 	if(!COOLDOWN_FINISHED(src, refresh_cooldown))
 		refreshing = TRUE
@@ -227,7 +213,7 @@
  * optional force bool Send an update even if UI is not interactive.
  */
 /datum/tgui/proc/send_update(custom_data, force)
-	if(!user?.client || !initialized || closing)
+	if(!user.client || !initialized || closing)
 		return
 	var/should_update_data = force || status >= UI_UPDATE
 	window.send_message("update", get_payload(
@@ -246,33 +232,36 @@
 	json_data["config"] = list(
 		"title" = title,
 		"status" = status,
-		"interface" = interface,
+		"interface" = list(
+			"name" = interface,
+			"layout" = user.client.prefs.read_preference(src_object.layout_prefs_used),
+		),
 		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
-			"fancy" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_fancy),
-			"locked" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_lock),
-			"scale" = user.client?.prefs?.read_preference(/datum/preference/toggle/ui_scale),
+			"fancy" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
+			"locked" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_lock),
+			"scale" = user.client.prefs.read_preference(/datum/preference/toggle/ui_scale),
 		),
 		"client" = list(
-			"ckey" = user.client?.ckey,
-			"address" = user.client?.address,
-			"computer_id" = user.client?.computer_id,
+			"ckey" = user.client.ckey,
+			"address" = user.client.address,
+			"computer_id" = user.client.computer_id,
 		),
 		"user" = list(
 			"name" = "[user]",
 			"observer" = isobserver(user),
 		),
 	)
-	var/data = custom_data || with_data && src_object?.ui_data(user)
+	var/data = custom_data || with_data && src_object.ui_data(user)
 	if(data)
 		json_data["data"] = data
-	var/static_data = with_static_data && src_object?.ui_static_data(user)
+	var/static_data = with_static_data && src_object.ui_static_data(user)
 	if(static_data)
 		json_data["static_data"] = static_data
-	if(src_object?.tgui_shared_states)
-		json_data["shared"] = src_object?.tgui_shared_states
+	if(src_object.tgui_shared_states)
+		json_data["shared"] = src_object.tgui_shared_states
 	return json_data
 
 /**
@@ -291,11 +280,9 @@
 		return
 	// Validate ping
 	if(!initialized && world.time - opened_at > TGUI_PING_TIMEOUT)
-#ifdef EXTENDED_DEBUG_LOGGING
 		log_tgui(user, "Error: Zombie window detected, closing.",
 			window = window,
 			src_object = src_object)
-#endif
 		close(can_be_suspended = FALSE)
 		return
 	// Update through a normal call to ui_interact

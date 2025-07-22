@@ -1,7 +1,9 @@
-import { Box, Button, Icon, Input, Section, Table } from '../components';
-import { BooleanLike } from 'common/react';
-import { createSearch } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 
@@ -50,7 +52,7 @@ const jobToColor = (jobId: number) => {
   if (jobId >= 60 && jobId < 200) {
     return COLORS.department.service;
   }
-  if (jobId >= 200 && jobId < 240) {
+  if (jobId >= 200 && jobId < 230) {
     return COLORS.department.centcom;
   }
   return COLORS.department.other;
@@ -144,12 +146,9 @@ const CrewTable = () => {
   const { data } = useBackend<CrewConsoleData>();
   const { sensors } = data;
 
-  const [sortAsc, setSortAsc] = useLocalState<boolean>('sortAsc', true);
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    'searchQuery',
-    '',
-  );
-  const [sortBy, setSortBy] = useLocalState<string>('sortBy', SORT_OPTIONS[0]);
+  const [sortAsc, setSortAsc] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState(SORT_OPTIONS[0]);
 
   const cycleSortBy = () => {
     let idx = SORT_OPTIONS.indexOf(sortBy) + 1;
@@ -187,9 +186,8 @@ const CrewTable = () => {
           </Button>
           <Input
             placeholder="Search for name..."
-            onInput={(e) =>
-              setSearchQuery((e.target as HTMLTextAreaElement).value)
-            }
+            onChange={setSearchQuery}
+            value={searchQuery}
           />
         </>
       }

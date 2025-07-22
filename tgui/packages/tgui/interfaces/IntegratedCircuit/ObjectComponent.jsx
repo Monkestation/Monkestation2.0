@@ -1,12 +1,13 @@
-import { Box, Stack, Button } from '../../components';
-import { Component } from 'inferno';
-import { shallowDiffers } from '../../../common/react';
+import { Component } from 'react';
+import { Box, Button, Stack } from 'tgui-core/components';
+import { classes, shallowDiffers } from 'tgui-core/react';
+
 import { ABSOLUTE_Y_OFFSET, noop } from './constants';
 import { Port } from './Port';
 
 export class ObjectComponent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isDragging: false,
       dragPos: null,
@@ -38,8 +39,8 @@ export class ObjectComponent extends Component {
     if (dragPos) {
       act('set_component_coordinates', {
         component_id: index,
-        rel_x: dragPos.x,
-        rel_y: dragPos.y,
+        rel_x: this.roundToGrid(dragPos.x),
+        rel_y: this.roundToGrid(dragPos.y),
       });
     }
 
@@ -80,6 +81,12 @@ export class ObjectComponent extends Component {
     );
   }
 
+  // Round the units to the grid (bypass if grid mode is off)
+  roundToGrid(input_value) {
+    if (!this.props.gridMode) return input_value;
+    return Math.round(input_value / 10) * 10;
+  }
+
   render() {
     const {
       input_ports,
@@ -88,8 +95,9 @@ export class ObjectComponent extends Component {
       x,
       y,
       index,
-      color = 'blue',
+      category = 'Unassigned',
       removable,
+      ui_alerts,
       ui_buttons,
       locations,
       onPortUpdated = noop,
@@ -98,14 +106,15 @@ export class ObjectComponent extends Component {
       onPortRightClick = noop,
       onPortMouseUp = noop,
       act = noop,
+      gridMode = true,
       ...rest
     } = this.props;
     const { startPos, dragPos } = this.state;
 
     let [x_pos, y_pos] = [x, y];
     if (dragPos && startPos && startPos.x === x_pos && startPos.y === y_pos) {
-      x_pos = dragPos.x;
-      y_pos = dragPos.y;
+      x_pos = this.roundToGrid(dragPos.x);
+      y_pos = this.roundToGrid(dragPos.y);
     }
 
     // Assigned onto the ports
@@ -119,6 +128,7 @@ export class ObjectComponent extends Component {
 
     return (
       <Box
+        className="ObjectComponent"
         position="absolute"
         left={`${x_pos}px`}
         top={`${y_pos}px`}
@@ -128,10 +138,12 @@ export class ObjectComponent extends Component {
         {...rest}
       >
         <Box
-          backgroundColor={color}
           py={1}
           px={1}
-          className="ObjectComponent__Titlebar"
+          className={classes([
+            'ObjectComponent__Titlebar',
+            `ObjectComponent__Category__${category}`,
+          ])}
         >
           <Stack>
             <Stack.Item grow={1} unselectable="on">
@@ -142,8 +154,8 @@ export class ObjectComponent extends Component {
                 <Stack.Item key={icon}>
                   <Button
                     icon={icon}
-                    color="transparent"
                     compact
+                    className={`ObjectComponent__Category__${category}`}
                     onClick={() =>
                       act('perform_action', {
                         component_id: index,
@@ -153,11 +165,22 @@ export class ObjectComponent extends Component {
                   />
                 </Stack.Item>
               ))}
+            {!!ui_alerts &&
+              Object.keys(ui_alerts).map((icon) => (
+                <Stack.Item key={icon}>
+                  <Button
+                    className={`ObjectComponent__Category__${category}`}
+                    icon={icon}
+                    compact
+                    tooltip={ui_alerts[icon]}
+                  />
+                </Stack.Item>
+              ))}
             <Stack.Item>
               <Button
-                color="transparent"
                 icon="info"
                 compact
+                className={`ObjectComponent__Category__${category}`}
                 onClick={(e) =>
                   act('set_examined_component', {
                     component_id: index,
@@ -170,9 +193,9 @@ export class ObjectComponent extends Component {
             {!!removable && (
               <Stack.Item>
                 <Button
-                  color="transparent"
                   icon="times"
                   compact
+                  className={`ObjectComponent__Category__${category}`}
                   onClick={() =>
                     act('detach_component', { component_id: index })
                   }

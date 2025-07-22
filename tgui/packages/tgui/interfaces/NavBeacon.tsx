@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,10 +5,12 @@ import {
   LabeledList,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { BooleanLike } from 'common/react';
 
 export type Data = {
   locked: BooleanLike;
@@ -104,9 +105,9 @@ export const NavBeaconControlSection = (props: DisabledProps) => {
         </LabeledList.Item>
         <LabeledList.Item label="Delivery Direction">
           <Dropdown
-            disabled={props.disabled}
+            disabled={!!props.disabled}
             options={static_controls.direction_options}
-            displayText={controls.delivery_direction || 'none'}
+            selected={controls.delivery_direction}
             onSelected={(value) =>
               act('set_delivery_direction', {
                 direction: value,
