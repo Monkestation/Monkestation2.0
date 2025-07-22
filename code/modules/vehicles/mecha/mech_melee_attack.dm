@@ -79,7 +79,7 @@
 					src.throw_at(throwtarget, 5, 2, src) //one tile further than mushroom punch/psycho brawling
 					selected_zone.receive_damage(dmg, 0, updating_health = TRUE)
 				else if(mecha_attacker.force >= 59) // vendozer
-					Knockdown(3.5 SECONDS)
+					Knockdown(4.5 SECONDS)
 					src.throw_at(throwtarget, 1, 1, src)
 					selected_zone.receive_damage((dmg * 0.15), 0, updating_health = TRUE)
 				playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
