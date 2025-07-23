@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ae" = (
-/obj/machinery/light_switch/directional/west,
 /obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "ak" = (
@@ -214,6 +214,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
+"Fs" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/station/commons/lounge)
 "FK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -403,15 +410,15 @@ Gh
 Bl
 ue
 Bl
+Bl
+Bl
 DJ
-wp
+Fs
 gA
-wp
+Fs
 ae
 Bl
 wM
-Bl
-Bl
 AZ
 Bl
 Bl
@@ -424,9 +431,9 @@ ue
 ue
 ue
 ue
+ue
+ue
 Dy
-ue
-ue
 ue
 ue
 VJ

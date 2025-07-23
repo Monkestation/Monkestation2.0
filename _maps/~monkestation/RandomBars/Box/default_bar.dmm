@@ -21,8 +21,8 @@
 /area/station/service/theater)
 "cD" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "cH" = (
@@ -283,8 +283,8 @@
 /area/station/commons/lounge)
 "DZ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light_switch/directional/west,
-/obj/machinery/light/directional/west,
+/obj/effect/landmark/start/assistant,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "Ea" = (
@@ -455,8 +455,8 @@
 /area/station/commons/lounge)
 "WG" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/chair/stool/bar/directional/west,
-/obj/effect/landmark/start/assistant,
+/obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "XC" = (
@@ -477,15 +477,15 @@ Ca
 tH
 EF
 tH
+tH
+tH
 PD
 cD
-WG
-cD
 DZ
+cD
+WG
 tH
 XC
-tH
-tH
 ei
 tH
 tH
@@ -498,9 +498,9 @@ EF
 EF
 EF
 EF
+EF
+EF
 eq
-EF
-EF
 EF
 EF
 hG

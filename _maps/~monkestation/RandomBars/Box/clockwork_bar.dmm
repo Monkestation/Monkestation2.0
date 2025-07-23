@@ -73,6 +73,13 @@
 /obj/machinery/jukebox,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
+"iM" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
 "jv" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/bronze/flat,
@@ -124,6 +131,11 @@
 "rC" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/light/directional/east,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"sh" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "si" = (
@@ -242,9 +254,10 @@
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "Mm" = (
-/obj/machinery/light_switch/directional/west,
-/obj/machinery/light/directional/west,
 /obj/structure/fluff/clockwork/alloy_shards/small,
+/obj/structure/chair/bronze{
+	dir = 8
+	},
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "MB" = (
@@ -381,15 +394,15 @@ OD
 TL
 qG
 TL
+TL
+TL
 LJ
-LI
-qn
-LI
+iM
 Mm
+iM
+sh
 TL
 PP
-TL
-TL
 Cz
 TL
 TL
@@ -402,9 +415,9 @@ qG
 qG
 qG
 qG
+qG
+qG
 Sf
-qG
-qG
 qG
 qG
 gg

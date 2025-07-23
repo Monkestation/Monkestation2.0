@@ -73,6 +73,10 @@
 /obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
+"iP" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "jB" = (
 /turf/open/misc/dirt/station,
 /area/station/service/theater)
@@ -165,9 +169,9 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "po" = (
-/obj/machinery/light_switch/directional/west,
 /obj/machinery/light/directional/west,
 /obj/structure/flora/bush/jungle/b/style_random,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "py" = (
@@ -377,6 +381,13 @@
 /obj/structure/cable,
 /turf/open/water/jungle,
 /area/station/commons/lounge)
+"NE" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "NP" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Service - Theater";
@@ -402,10 +413,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "OY" = (
-/obj/machinery/light/directional/west,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -455,14 +466,14 @@ nj
 jK
 nj
 OY
-nR
+nj
+iP
+NE
 Oz
-nR
+NE
 po
 nj
 YM
-ir
-nj
 OP
 gM
 CE
@@ -475,9 +486,9 @@ jK
 Bs
 jK
 jK
+jK
+jK
 nI
-jK
-jK
 jK
 jK
 HI
