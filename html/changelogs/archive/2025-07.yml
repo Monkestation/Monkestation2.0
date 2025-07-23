@@ -391,3 +391,6 @@
   notghosti:
   - qol: Evil subtypes of drones no longer have door passthrough, and will have to
       open the door like anyone normal.
+2025-07-23:
+  Draggeru:
+  - bugfix: Adds the missing botany machines to Icebox
