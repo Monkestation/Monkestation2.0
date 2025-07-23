@@ -12,6 +12,8 @@
 			msg += "\"01000001 01001001\"."
 		if(TRACK_INFILTRATOR)
 			msg += "\"vasvygengbefuvc\"."
+		if(TRACK_COMMANDO_NUKE)
+			msg += "\"big_bomb\"."
 		else
 			msg = "Its tracking indicator is blank."
 	. += msg
@@ -50,6 +52,9 @@
 					target = A
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
+		if(TRACK_COMMANDO_NUKE)
+			var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
+			target = nuke
 	..()
 
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
