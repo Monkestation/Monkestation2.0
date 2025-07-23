@@ -2474,6 +2474,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aPr" = (
