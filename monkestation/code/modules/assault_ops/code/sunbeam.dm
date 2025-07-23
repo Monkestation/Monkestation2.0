@@ -170,7 +170,7 @@ ADMIN_VERB(spawn_sunbeam, R_FUN, FALSE, "Spawn Sunbeam", "Spawns an ICARUS sunbe
 		return
 	if(EMERGENCY_IDLE_OR_RECALLED)
 		SSshuttle.emergency.request(
-d			red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_GAMMA)
+			red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_GAMMA)
 		)
 
 #undef SUNBEAM_OBLITERATION_RANGE_FIRE
