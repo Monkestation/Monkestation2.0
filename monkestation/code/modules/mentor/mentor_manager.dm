@@ -44,13 +44,16 @@ GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 	var/client/mentor_client = usr.client
 	if(!mentor_client || !check_mentor_rights_for(mentor_client, R_MENTOR))
 		to_chat(mentor_client, "You are not allowed to be using this mentor-only proc. Please report it.", confidential = TRUE)
+		return
 
 	// Get the request this relates to
 	var/id = params["id"] != null ? num2text(params["id"]) : null
 	if (!id)
 		to_chat(mentor_client, "Failed to find a request ID in your action, please report this.", confidential = TRUE)
 		CRASH("Received an action without a request ID, this shouldn't happen!")
+
 	var/datum/request/request = !id ? null : requests_by_id[id]
+
 	if(isnull(request))
 		return
 
