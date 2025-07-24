@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(hive_exits)
 /obj/structure/beebox/hive/LateInitialize()
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_APID_HIVES)
 	for(var/obj/structure/hive_exit/exit as anything in GLOB.hive_exits)
-		if(exit.linked_hive)
+		if(QDELETED(exit) || exit.linked_hive)
 			continue
 		exit.linked_hive = src
 		linked_exit = exit
@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(hive_exits)
 
 		load_from.load(bottom_left)
 		for(var/obj/structure/hive_exit/exit as anything in GLOB.hive_exits)
-			if(exit.linked_hive)
+			if(QDELETED(exit) || exit.linked_hive)
 				continue
 			exit.linked_hive = src
 			linked_exit = exit
