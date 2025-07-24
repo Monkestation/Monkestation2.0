@@ -48,24 +48,22 @@ GLOBAL_LIST_EMPTY(hive_exits)
 			break
 
 /obj/structure/beebox/hive/Destroy()
-	. = ..()
 	var/turf/turf = get_turf(src)
-	for(var/atom/movable/listed as anything in linked_exit?.atoms_inside)
-		if(isnull(turf))
-			continue
-		listed.forceMove(get_turf(src))
-	var/area/area = get_area(linked_exit)
-	if(area)
-		for(var/atom/movable/movable as anything in area)
-			if(isturf(movable))
-				continue
-			if(isnull(turf))
+	if(turf)
+		for(var/atom/movable/listed as anything in linked_exit?.atoms_inside)
+			if(!QDELETED(listed))
+				listed.forceMove(turf)
+		linked_exit?.atoms_inside?.Cut()
+		for(var/atom/movable/movable as anything in get_area(linked_exit))
+			if(isturf(movable) || QDELETED(movable))
 				continue
 			movable.forceMove(turf)
 
-	linked_exit?.linked_hive = null
-	linked_exit.name = "generic hive exit"
-	linked_exit = null
+	if(linked_exit)
+		linked_exit.linked_hive = null
+		linked_exit.name = "generic hive exit"
+		linked_exit = null
+	return ..()
 
 /obj/structure/beebox/hive/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
