@@ -53,6 +53,7 @@
 	weight = 1
 	max_occurrences = 5
 	track = EVENT_TRACK_MAJOR
+	repeated_mode_adjust = TRUE
 
 /datum/round_event/ghost_role/junior_operative
 	minimum_required = 1

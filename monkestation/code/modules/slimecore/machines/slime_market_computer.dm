@@ -66,7 +66,7 @@ GLOBAL_DATUM(default_slime_market, /obj/machinery/computer/slime_market)
 
 /obj/machinery/computer/slime_market/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/xenobio_market)
+		get_asset_datum(/datum/asset/spritesheet_batched/xenobio_market)
 	)
 
 /obj/machinery/computer/slime_market/ui_interact(mob/user, datum/tgui/ui)

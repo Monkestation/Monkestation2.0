@@ -628,6 +628,77 @@
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = list(0)
 
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser
+	name = "johnson and co bluespace coffee synthesiser"
+	desc = "An incredibly complicated, incredibly expensive piece of machinery patented by a certain architecture firm, based off the bluespace coffeepot. Synthesises fresh coffee with an internal dispenser element."
+	volume = 140 //less space than the regular bluespace coffeepot but still has more space than the original design. most of the space is the chem dispenser inside
+
+	var/refill_enabled = TRUE //stolen from the advanced mop
+	var/refill_rate = 1
+	var/refill_reagent = /datum/reagent/consumable/coffee
+	w_class = WEIGHT_CLASS_NORMAL //its got literally infinite coffee
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/attack_self(mob/user)
+	refill_enabled = !refill_enabled
+	if(refill_enabled)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj,src)
+	to_chat(user, span_notice("You set the synthesiser switch to the '[refill_enabled ? "ON" : "OFF"]' position."))
+	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/process(seconds_per_tick)
+	var/amadd = min(volume - reagents.total_volume, refill_rate * seconds_per_tick)
+	if(amadd > 0)
+		reagents.add_reagent(refill_reagent, amadd)
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/examine(mob/user)
+	. = ..()
+	. += span_notice("The synthesiser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.")
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this device.")
+	if(obj_flags & EMAGGED)
+		. += span_notice("A light on the side with the words 'tea mode' under it is flashing.")
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/examine_more(mob/user)
+	. = ..()
+
+	. += "This contraption, in essence the synthesiser from a portable chemical dispenser in a coffeepot, \
+		was designed by Johnson & Co for the explicit purpose of keeping their staff and clients awake. \
+		Due to the vast amounts of electricity the average dispenser consumes, this device is powered by bluespace link to multiple fusion reactors to save weight. \
+		Even with the many space-saving modifications, the bulk and design of the internal components give it a capacity only marginally better than the standard coffeepot, \
+		and the size of the synthesiser element makes it a bit trickier to store. \
+		Rumours abound of some of these devices being modified to produce tea, but Johnson & Co has refused to make a public statement. \
+		The fact this thing is in your hands is a miracle given how rare it is, as its production run was incredibly small and new units are only produced on-order for the company's high-ranking staff or Nanotrasen officials. \
+		Cherish it. You may never hold one again."
+
+	return .
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "tea mode disabled")
+		name = "johnson and co bluespace coffee synthesiser"
+		if (emag_card)
+			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. The 'tea mode' light stops flashing."))
+		refill_reagent = /datum/reagent/consumable/coffee
+		obj_flags -= EMAGGED
+		return FALSE
+	obj_flags |= EMAGGED
+	refill_reagent = /datum/reagent/consumable/tea //bri'ish innit
+	name = "johnson and co bluespace tea synthesiser"
+	balloon_alert(user, "tea mode enabled")
+	if (emag_card)
+		to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A light on the side with 'tea mode' written under it starts to flash."))
+	return TRUE
+
+
 ///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube
 	name = "tube"

@@ -1,7 +1,7 @@
 //These mutations change your overall "form" somehow, like size
 
 //Epilepsy gives a very small chance to have a seizure every life tick, knocking you unconscious.
-/datum/mutation/human/epilepsy
+/datum/mutation/epilepsy
 	name = "Epilepsy"
 	desc = "A genetic defect that sporadically causes seizures."
 	quality = NEGATIVE
@@ -10,12 +10,12 @@
 	power_coeff = 1
 	energy_coeff = 1 // MONKESTATION ADDITION
 
-/datum/mutation/human/epilepsy/on_life(seconds_per_tick, times_fired)
+/datum/mutation/epilepsy/on_life(seconds_per_tick, times_fired)
 //	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick)) // MONKESTATION EDIT OLD
 	if(SPT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick)) // MONKESTATION EDIT NEW
 		trigger_seizure()
 
-/datum/mutation/human/epilepsy/proc/trigger_seizure()
+/datum/mutation/epilepsy/proc/trigger_seizure()
 	if(owner.stat != CONSCIOUS)
 		return
 	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
@@ -24,23 +24,24 @@
 	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
 	addtimer(CALLBACK(src, PROC_REF(jitter_less)), 90)
 
-/datum/mutation/human/epilepsy/proc/jitter_less()
+/datum/mutation/epilepsy/proc/jitter_less()
 	if(QDELETED(owner))
 		return
 
 	owner.set_jitter(20 SECONDS)
 
-/datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
-	if(..())
+/datum/mutation/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
+	. = ..()
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_FLASHED, PROC_REF(get_flashed_nerd))
 
-/datum/mutation/human/epilepsy/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/epilepsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	UnregisterSignal(owner, COMSIG_MOB_FLASHED)
 
-/datum/mutation/human/epilepsy/proc/get_flashed_nerd()
+/datum/mutation/epilepsy/proc/get_flashed_nerd()
 	SIGNAL_HANDLER
 
 	if(!prob(30))
@@ -49,15 +50,16 @@
 
 
 //Unstable DNA induces random mutations!
-/datum/mutation/human/bad_dna
+/datum/mutation/bad_dna
 	name = "Unstable DNA"
 	desc = "Strange mutation that causes the holder to randomly mutate."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 	locked = TRUE
 
-/datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/bad_dna/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
@@ -78,7 +80,7 @@
 
 
 //Cough gives you a chronic cough that causes you to drop items.
-/datum/mutation/human/cough
+/datum/mutation/cough
 	name = "Cough"
 	desc = "A chronic cough."
 	quality = MINOR_NEGATIVE
@@ -87,7 +89,7 @@
 	power_coeff = 1
 	energy_coeff = 1 // MONKESTATION ADDITION
 
-/datum/mutation/human/cough/on_life(seconds_per_tick, times_fired)
+/datum/mutation/cough/on_life(seconds_per_tick, times_fired)
 //	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS) // MONKESTATION EDIT OLD
 	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick) && owner.stat == CONSCIOUS) // MONKESTATION EDIT NEW
 		owner.drop_all_held_items()
@@ -97,36 +99,37 @@
 			var/turf/target = get_ranged_target_turf(owner, turn(owner.dir, 180), cough_range)
 			owner.throw_at(target, cough_range, GET_MUTATION_POWER(src))
 
-/datum/mutation/human/paranoia
+/datum/mutation/paranoia
 	name = "Paranoia"
 	desc = "Subject is easily terrified, and may suffer from hallucinations."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
 
-/datum/mutation/human/paranoia/on_life(seconds_per_tick, times_fired)
+/datum/mutation/paranoia/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(2.5, seconds_per_tick) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
 			owner.adjust_hallucinations(40 SECONDS)
 
 //Dwarfism shrinks your body and lets you pass tables.
-/datum/mutation/human/dwarfism
+/datum/mutation/dwarfism
 	name = "Dwarfism"
 	desc = "A mutation believed to be the cause of dwarfism."
 	quality = POSITIVE
 	difficulty = 16
 	instability = 5
-	conflicts = list(/datum/mutation/human/gigantism)
+	conflicts = list(/datum/mutation/gigantism)
 	locked = TRUE // Default intert species for now, so locked from regular pool.
 
-/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/dwarfism/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
-/datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	//We're leaving the size traits permanent until someone wants to separate the mutation from customization aspects
@@ -134,25 +137,26 @@
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
-/datum/mutation/human/clumsy
+/datum/mutation/clumsy
 	name = "Clumsiness"
 	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
-/datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/clumsy/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
 
-/datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
 
 
 //Tourettes causes you to randomly stand in place and shout.
-/datum/mutation/human/tourettes
+/datum/mutation/tourettes
 	name = "Tourette's Syndrome"
 	desc = "A chronic twitch that forces the user to scream nonsense." //definitely needs rewriting
 	quality = NEGATIVE
@@ -161,7 +165,7 @@
 	power_coeff = 1 // MONKESTATION ADDITION
 	energy_coeff = 1 // MONKESTATION ADDITION
 
-/datum/mutation/human/tourettes/on_life(seconds_per_tick, times_fired)
+/datum/mutation/tourettes/on_life(seconds_per_tick, times_fired)
 //	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun()) // MONKESTATION EDIT OLD
 	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun()) // MONKESTATION EDIT NEW
 		switch(rand(1, 3))
@@ -177,114 +181,120 @@
 		animate(owner, pixel_x = x_offset, pixel_y = y_offset, time = 1)
 		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
 
-
 //Deafness makes you deaf.
-/datum/mutation/human/deaf
+/datum/mutation/deaf
 	name = "Deafness"
 	desc = "The holder of this genome is completely deaf."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
-/datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/deaf/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
-/datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/deaf/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
-
 //Monified turns you into a monkey.
-/datum/mutation/human/race
+/datum/mutation/race
 	name = "Monkified"
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
-	text_gain_indication = "You feel unusually monkey-like."
-	text_lose_indication = "You feel like your old self."
+	text_gain_indication = span_green("You feel unusually monkey-like.")
+	text_lose_indication = span_notice("You feel like your old self.")
 	quality = NEGATIVE
 	locked = TRUE //Species specific, keep out of actual gene pool
 	var/datum/species/original_species = /datum/species/human
 	var/original_name
 
-/datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/race/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
-	if(!ismonkey(owner))
-		original_species = owner.dna.species.type
-		original_name = owner.real_name
-		//owner.fully_replace_character_name(null, pick(GLOB.random_monkey_names)) handled by monkeyize
-	. = owner.monkeyize()
+	if(ismonkey(owner))
+		return
+	original_species = owner.dna.species.type
+	original_name = owner.real_name
+	owner.monkeyize()
 
-/datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
-		owner.fully_replace_character_name(null, original_name)
-		. = owner.humanize(original_species)
+/datum/mutation/race/on_losing(mob/living/carbon/human/owner)
+	if(owner.stat == DEAD)
+		return
+	. = ..()
+	if(.)
+		return
+	if(QDELETED(owner))
+		return
 
-/datum/mutation/human/glow
+	owner.fully_replace_character_name(null, original_name)
+	owner.humanize(original_species)
+
+/datum/mutation/glow
 	name = "Glowy"
 	desc = "You permanently emit a light with a random color and intensity."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
 	instability = 5
 	power_coeff = 1
-	conflicts = list(/datum/mutation/human/glow/anti)
+	conflicts = list(/datum/mutation/glow/anti)
 	var/glow_power = 2.5
 	var/glow_range = 2.5
 	var/glow_color
 	var/obj/effect/dummy/lighting_obj/moblight/glow
 
-/datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/glow/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	glow_color = get_glow_color()
 	glow = owner.mob_light()
-	modify()
 
 // Override modify here without a parent call, because we don't actually give an action.
-/datum/mutation/human/glow/modify()
+/datum/mutation/glow/setup()
 	if(!glow)
 		return
 
 	glow.set_light_range_power_color(glow_range * GET_MUTATION_POWER(src), glow_power, glow_color)
 
-/datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
 	QDEL_NULL(glow)
 
 /// Returns a color for the glow effect
-/datum/mutation/human/glow/proc/get_glow_color()
+/datum/mutation/glow/proc/get_glow_color()
 	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 
-/datum/mutation/human/glow/anti
+/datum/mutation/glow/anti
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
 	glow_power = -1.5
-	conflicts = list(/datum/mutation/human/glow)
+	conflicts = list(/datum/mutation/glow)
 	locked = TRUE
 
-/datum/mutation/human/glow/anti/get_glow_color()
+/datum/mutation/glow/anti/get_glow_color()
 	return COLOR_BLACK
 
-/datum/mutation/human/strong
+/datum/mutation/strong
 	name = "Strength"
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
 	difficulty = 16
 
-/datum/mutation/human/stimmed
+/datum/mutation/stimmed
 	name = "Stimmed"
 	desc = "The user's chemical balance is more robust."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
 	difficulty = 16
 
-/datum/mutation/human/insulated
+/datum/mutation/insulated
 	name = "Insulated"
 	desc = "The affected person does not conduct electricity."
 	quality = POSITIVE
@@ -293,17 +303,18 @@
 	difficulty = 16
 	instability = 25
 
-/datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/insulated/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
-/datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/insulated/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
-/datum/mutation/human/fire
+/datum/mutation/fire
 	name = "Fiery Sweat"
 	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
 	quality = NEGATIVE
@@ -314,23 +325,24 @@
 	power_coeff = 1
 	energy_coeff = 1 // MONKESTATION ADDITION -- Energizer increases how often fiery sweat happens
 
-/datum/mutation/human/fire/on_life(seconds_per_tick, times_fired)
+/datum/mutation/fire/on_life(seconds_per_tick, times_fired)
 //	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick)) // MONKESTATION EDIT OLD
 	if(SPT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src), seconds_per_tick)) // MONKESTATION EDIT NEW
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.ignite_mob()
 
-/datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/fire/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	owner.physiology.burn_mod *= 0.5
 
-/datum/mutation/human/fire/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/fire/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.physiology.burn_mod *= 2
 
-/datum/mutation/human/badblink
+/datum/mutation/badblink
 	name = "Spatial Instability"
 	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
 	quality = NEGATIVE
@@ -343,7 +355,7 @@
 	power_coeff = 1
 	var/warpchance = 0
 
-/datum/mutation/human/badblink/on_life(seconds_per_tick, times_fired)
+/datum/mutation/badblink/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(warpchance, seconds_per_tick))
 		var/warpmessage = pick(
 		span_warning("With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air."),
@@ -360,7 +372,7 @@
 	else
 		warpchance += 0.0625 * GET_MUTATION_ENERGY(src) * seconds_per_tick
 
-/datum/mutation/human/acidflesh
+/datum/mutation/acidflesh
 	name = "Acidic Flesh"
 	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
 	quality = NEGATIVE
@@ -371,7 +383,7 @@
 	COOLDOWN_DECLARE(msgcooldown)
 
 /* MONKESTATION REMOVAL -- Moved to the monkestation folder
-/datum/mutation/human/acidflesh/on_life(seconds_per_tick, times_fired)
+/datum/mutation/acidflesh/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(13, seconds_per_tick))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
 			to_chat(owner, span_danger("Your acid flesh bubbles..."))
@@ -382,15 +394,16 @@
 			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
 */
 
-/datum/mutation/human/gigantism
+/datum/mutation/gigantism
 	name = "Gigantism"
 	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
-	conflicts = list(/datum/mutation/human/dwarfism)
+	conflicts = list(/datum/mutation/dwarfism)
 
-/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/gigantism/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 /* handled in init_signals.dm
@@ -398,7 +411,7 @@
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 */
 
-/datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
@@ -407,7 +420,7 @@
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 */
 
-/datum/mutation/human/spastic
+/datum/mutation/spastic
 	name = "Spastic"
 	desc = "Subject suffers from muscle spasms."
 	quality = NEGATIVE
@@ -415,17 +428,18 @@
 	text_lose_indication = "<span class='notice'>Your flinching subsides.</span>"
 	difficulty = 16
 
-/datum/mutation/human/spastic/on_acquiring()
-	if(..())
+/datum/mutation/spastic/on_acquiring()
+	. = ..()
+	if(!.)
 		return
 	owner.apply_status_effect(/datum/status_effect/spasms)
 
-/datum/mutation/human/spastic/on_losing()
+/datum/mutation/spastic/on_losing()
 	if(..())
 		return
 	owner.remove_status_effect(/datum/status_effect/spasms)
 
-/datum/mutation/human/extrastun
+/datum/mutation/extrastun
 	name = "Two Left Feet"
 	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
 	quality = NEGATIVE
@@ -433,13 +447,13 @@
 	text_lose_indication = "<span class='notice'>Your right foot feels alright.</span>"
 	difficulty = 16
 
-/datum/mutation/human/extrastun/on_acquiring()
+/datum/mutation/extrastun/on_acquiring()
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
-/datum/mutation/human/extrastun/on_losing()
+/datum/mutation/extrastun/on_losing()
 	. = ..()
 	if(.)
 		return
@@ -447,7 +461,7 @@
 
 /* MONKESTATION REMOVAL -- Moved to the monkestation folder
 ///Triggers on moved(). Randomly makes the owner trip
-/datum/mutation/human/extrastun/proc/on_move()
+/datum/mutation/extrastun/proc/on_move()
 	SIGNAL_HANDLER
 
 	if(prob(99.5)) //The brawl mutation
@@ -458,7 +472,7 @@
 	owner.Knockdown(30)
 */
 
-/datum/mutation/human/martyrdom
+/datum/mutation/martyrdom
 	name = "Internal Martyrdom"
 	desc = "A mutation that makes the body destruct when near death. Not damaging, but very, VERY disorienting."
 	locked = TRUE
@@ -468,19 +482,19 @@
 	synchronizer_coeff = 1 // MONKESTATION ADDITION
 	power_coeff = 1 // MONKESTATION ADDITION
 
-/datum/mutation/human/martyrdom/on_acquiring()
+/datum/mutation/martyrdom/on_acquiring()
 	. = ..()
-	if(.)
-		return TRUE
+	if(!.)
+		return
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(bloody_shower))
 
-/datum/mutation/human/martyrdom/on_losing()
+/datum/mutation/martyrdom/on_losing()
 	. = ..()
 	if(.)
 		return TRUE
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 
-/datum/mutation/human/martyrdom/proc/bloody_shower(datum/source, new_stat)
+/datum/mutation/martyrdom/proc/bloody_shower(datum/source, new_stat)
 	SIGNAL_HANDLER
 
 	if(new_stat != HARD_CRIT)
@@ -516,23 +530,23 @@
 
 		blood_turf.add_liquid(blood.reagent_type, blood_amount)
 		owner.blood_volume = 0
-		remove()
+		dna.remove_mutation(src, sources)
 		return
 	// MONKESTATION ADDITION END
 	owner.investigate_log("has been gibbed by the martyrdom mutation.", INVESTIGATE_DEATHS)
 	owner.gib()
 
-/datum/mutation/human/headless
+/datum/mutation/headless
 	name = "H.A.R.S."
 	desc = "A mutation that makes the body reject the head, the brain receding into the chest. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate non-vital head organs."
 	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = "<span class='warning'>Something feels off.</span>"
 
-/datum/mutation/human/headless/on_acquiring()
+/datum/mutation/headless/on_acquiring()
 	. = ..()
-	if(.)//cant add
-		return TRUE
+	if(!.)
+		return
 
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
@@ -547,7 +561,7 @@
 		qdel(head)
 	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abort_attachment))
 
-/datum/mutation/human/headless/on_losing()
+/datum/mutation/headless/on_losing()
 	. = ..()
 	if(.)
 		return TRUE
@@ -565,7 +579,7 @@
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
 
-/datum/mutation/human/headless/proc/abort_attachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+/datum/mutation/headless/proc/abort_attachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
 	SIGNAL_HANDLER
 
 	if(istype(new_limb, /obj/item/bodypart/head))

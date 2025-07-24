@@ -7777,6 +7777,7 @@
 "aPM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/freezer,
 /area/station/medical/chemistry)
 "aPN" = (
@@ -27263,8 +27264,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/asteroid_magnet{
-	center_x = 219;
-	center_y = 114;
+	center_x = 220;
+	center_y = 115;
 	area_size = 7
 	},
 /turf/open/floor/iron/dark/textured,
@@ -39850,6 +39851,9 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/qm)
 "inl" = (
@@ -40319,6 +40323,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/vending/wardrobe/xeno_wardrobe,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "ivS" = (
@@ -40350,6 +40355,19 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
+"ixd" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/command/bridge)
 "ixi" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/medical_all,
@@ -43043,7 +43061,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "jvO" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/east,
@@ -45371,6 +45389,18 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood/tile,
+/area/station/command/bridge)
+"kpw" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 17;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/large,
 /area/station/command/bridge)
 "kpy" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -60145,7 +60175,7 @@
 /turf/open/floor/carpet/grimey,
 /area/station/commons/vacant_room/office)
 "qaa" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/machinery/camera/directional/east{
@@ -73084,6 +73114,23 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/solars/port/aft)
+"vaH" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/turf/open/floor/wood/large,
+/area/station/command/bridge)
 "vbd" = (
 /obj/machinery/modular_computer/preset/research,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -75159,6 +75206,9 @@
 /obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
 /turf/open/floor/iron/freezer,
 /area/station/medical/chemistry)
@@ -80066,6 +80116,7 @@
 /turf/open/space/basic,
 /area/space)
 "xMJ" = (
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/carpet/royalblack,
 /area/station/command/bridge)
 "xMT" = (
@@ -120450,7 +120501,7 @@ nTw
 mvM
 anm
 sSk
-mWw
+vaH
 xWv
 xMJ
 hcy
@@ -120707,7 +120758,7 @@ fWq
 xiN
 anm
 mGY
-mWw
+kpw
 mWw
 yfy
 rgf
@@ -120964,7 +121015,7 @@ cGt
 wyd
 anm
 lQp
-mWw
+ixd
 xWv
 xMJ
 hwb
@@ -135682,8 +135733,7 @@ boU
 aaa
 aaa
 aaa
-aaa
-aaa
+fUq
 aOd
 aOd
 aOd
@@ -135691,6 +135741,7 @@ aOd
 aOd
 aOd
 aOd
+fUq
 aOd
 aOd
 aOd
@@ -135698,7 +135749,7 @@ aOd
 aOd
 aOd
 aOd
-aOd
+fUq
 aaa
 aak
 cvP
@@ -135939,9 +135990,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -136196,9 +136247,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -136453,9 +136504,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -136710,9 +136761,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -136967,9 +137018,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -137224,9 +137275,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -137481,9 +137532,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -137738,9 +137789,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aOd
+fUq
 wTw
 wTw
 wTw
@@ -137754,7 +137803,9 @@ wTw
 wTw
 wTw
 wTw
-aOd
+wTw
+wTw
+fUq
 aaa
 aaa
 aaa
@@ -137995,9 +138046,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -138252,9 +138303,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -138509,9 +138560,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -138766,9 +138817,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -139023,9 +139074,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
+wTw
+wTw
 wTw
 wTw
 wTw
@@ -139280,22 +139331,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
-aOd
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
 aOd
 aaa
 aaa
@@ -139537,23 +139588,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aOd
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+wTw
+aOd
 aaa
 aaa
 aaa
@@ -139794,23 +139845,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fUq
+aOd
+aOd
+aOd
+aOd
+aOd
+aOd
+aOd
+fUq
+aOd
+aOd
+aOd
+aOd
+aOd
+aOd
+aOd
+fUq
 aaa
 aaa
 aaa
