@@ -582,3 +582,30 @@ ADMIN_VERB(create_mob_worm, R_FUN, FALSE, "Create Mob Worm", "Attach a linked li
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
+
+ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, FALSE, "Clear Legacy Asset Cache", "Clears the legacy asset cache, regenerating it immediately (may cause lag).", ADMIN_CATEGORY_DEBUG)
+	if(!CONFIG_GET(flag/cache_assets))
+		to_chat(user, span_warning("Asset caching is disabled in the config!"))
+		return
+	var/regenerated = 0
+	for(var/datum/asset/target_spritesheet as anything in subtypesof(/datum/asset))
+		if(!initial(target_spritesheet.cross_round_cachable))
+			continue
+		if(target_spritesheet == initial(target_spritesheet._abstract))
+			continue
+		var/datum/asset/asset_datum = GLOB.asset_datums[target_spritesheet]
+		asset_datum.regenerate()
+		regenerated++
+	to_chat(user, span_notice("Regenerated [regenerated] asset\s."))
+
+ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, FALSE, "Clear Smart Asset Cache", "Clear the smart asset cache, causing it to regenerate next round.", ADMIN_CATEGORY_DEBUG)
+	if(!CONFIG_GET(flag/smart_cache_assets))
+		to_chat(user, span_warning("Smart asset caching is disabled in the config!"))
+		return
+	var/cleared = 0
+	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in subtypesof(/datum/asset/spritesheet_batched))
+		if(target_spritesheet == initial(target_spritesheet._abstract))
+			continue
+		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")
+		cleared++
+	to_chat(user, span_notice("Cleared [cleared] asset\s."))

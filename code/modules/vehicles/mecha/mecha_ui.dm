@@ -24,7 +24,7 @@
 	)
 
 /obj/vehicle/sealed/mecha/ui_assets(mob/user)
-	return list(get_asset_datum(/datum/asset/spritesheet/mechaarmor))
+	return list(get_asset_datum(/datum/asset/spritesheet_batched/mechaarmor))
 
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
 	var/list/data = list()

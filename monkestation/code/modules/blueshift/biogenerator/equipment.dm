@@ -16,7 +16,7 @@
 	id = "frontier_med_belt"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 200)
-	build_path = /obj/item/storage/backpack/duffelbag/deforest_medkit
+	build_path = /obj/item/storage/backpack/deforest_medkit
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_AKHTER_EQUIPMENT,

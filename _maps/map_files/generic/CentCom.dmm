@@ -21241,7 +21241,7 @@
 /obj/item/storage/medkit/fire,
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/brute,
-/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked,
+/obj/item/storage/backpack/deforest_medkit/stocked,
 /obj/item/storage/medkit/advanced,
 /obj/item/storage/medkit/civil_defense/stocked,
 /obj/item/storage/medkit/civil_defense/comfort/stocked,
@@ -28586,7 +28586,7 @@
 "qGq" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked,
+/obj/item/storage/backpack/deforest_surgical/stocked,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
@@ -29131,7 +29131,7 @@
 /area/centcom/central_command_areas/admin)
 "rGz" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked,
+/obj/item/storage/backpack/deforest_surgical/stocked,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/small,
@@ -32926,7 +32926,7 @@
 /obj/item/reagent_containers/hypospray/medipen/gore,
 /obj/item/reagent_containers/hypospray/medipen/gore,
 /obj/item/reagent_containers/hypospray/medipen/gore,
-/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked,
+/obj/item/storage/backpack/deforest_medkit/stocked,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},

@@ -402,7 +402,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
-	stored_dna.transfer_identity(new_body, transfer_SE = TRUE)
+	stored_dna.copy_dna(new_body, COPY_DNA_SE|COPY_DNA_SPECIES)
 	new_body.real_name = new_body.dna.real_name
 	new_body.name = new_body.dna.real_name
 	new_body.updateappearance(mutcolor_update = TRUE)

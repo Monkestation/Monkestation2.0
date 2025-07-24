@@ -17,6 +17,7 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "MonkeStation 2.0" // monkestation edit: rebranding
 	fps = 20
+	cache_lifespan = 0
 #ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif

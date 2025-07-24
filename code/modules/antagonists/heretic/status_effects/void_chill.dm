@@ -51,7 +51,7 @@
 		to_chat(owner, span_notice("You feel holy water warming you up."))
 		adjust_stacks(-1)
 	else
-		owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_between_ticks)
+		owner.adjust_bodytemperature(-5 KELVIN * stacks * seconds_between_ticks)
 	if (stacks == 0)
 		owner.remove_status_effect(/datum/status_effect/void_chill)
 
