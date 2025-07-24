@@ -2,7 +2,7 @@
 	name = "Numb"
 	desc = "You can't feel pain at all."
 	icon = FA_ICON_STAR_OF_LIFE
-	value = -4
+	value = -2
 	gain_text = "You feel your body becoming numb."
 	lose_text = "The numbness subsides."
 	medical_record_text = "The patient exhibits congenital hypoesthesia, making them insensitive to pain stimuli."
