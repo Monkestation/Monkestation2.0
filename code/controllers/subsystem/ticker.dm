@@ -351,7 +351,11 @@ SUBSYSTEM_DEF(ticker)
 		SSgamemode.current_storyteller.round_started = TRUE
 		SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
-	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
+	// funny anti-meta strat: artifical delay before fading out splashes if we DIDN'T lazyload anything
+	if(SSgamemode.did_roundstart_lazyload)
+		INVOKE_ASYNC(src, PROC_REF(fade_all_splashes))
+	else
+		addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS)
 
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()

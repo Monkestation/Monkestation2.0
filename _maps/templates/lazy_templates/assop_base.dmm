@@ -1,0 +1,4103 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/item/trench_tool,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/storage/belt/holster/nukie,
+/obj/item/clothing/glasses/night,
+/obj/item/radio/headset/syndicate/alt,
+/obj/structure/closet/syndicate{
+	desc = "It's a personal storage unit for operative gear."
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/cold/directional/north,
+/obj/item/clothing/suit/armor/vest,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"be" = (
+/obj/machinery/chem_dispenser/fullupgrade,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"bI" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/west,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"bK" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/cruiser_dock)
+"bO" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/cruiser_dock)
+"cI" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"cN" = (
+/turf/closed/indestructible/syndicate,
+/area/cruiser_dock)
+"df" = (
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"ds" = (
+/obj/machinery/vending/tool,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"dz" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"dL" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"dQ" = (
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/cruiser_dock)
+"ex" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/structure/shipping_container/cybersun,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"fD" = (
+/obj/structure/chair/plastic,
+/turf/open/floor/iron/smooth,
+/area/cruiser_dock)
+"gh" = (
+/obj/structure/closet/cardboard,
+/mob/living/basic/bot/medbot/nukie/assop{
+	name = "Kahn"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"gz" = (
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/cruiser_dock)
+"gU" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"hq" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"ij" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/showcase/machinery/tv{
+	desc = "Static fills the screen. If you can find the VCR, you might be able to watch those old Heist Movies again.";
+	name = "\improper Static Filled Tube(TM) Television"
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/cruiser_dock)
+"iS" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"je" = (
+/turf/open/floor/iron/smooth_corner,
+/area/cruiser_dock)
+"kj" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"kL" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"kP" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/structure/shipping_container/vitezstvi,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"kS" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"kZ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/cruiser_dock)
+"lf" = (
+/obj/machinery/porta_turret/syndicate/assaultops/internal{
+	system_id = "goldeneyebase"
+	},
+/turf/closed/indestructible/syndicate,
+/area/cruiser_dock)
+"lY" = (
+/turf/open/floor/iron/stairs/left,
+/area/cruiser_dock)
+"mr" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"mt" = (
+/obj/item/trench_tool,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/storage/belt/holster/nukie,
+/obj/item/clothing/glasses/night,
+/obj/item/radio/headset/syndicate/alt,
+/obj/structure/closet/syndicate{
+	desc = "It's a personal storage unit for operative gear."
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/cold/directional/south,
+/obj/item/clothing/suit/armor/vest,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"mL" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 1
+	},
+/area/cruiser_dock)
+"oj" = (
+/obj/machinery/chem_master,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"oY" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 8
+	},
+/area/cruiser_dock)
+"pe" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 4
+	},
+/area/cruiser_dock)
+"pr" = (
+/obj/structure/hedge,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"ps" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"pG" = (
+/obj/structure/signboard{
+	locked = 1;
+	sign_text = "Your armament points is effectively your uplink, use it in-hand!"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"pT" = (
+/turf/open/floor/carpet/red,
+/area/cruiser_dock)
+"qk" = (
+/turf/open/floor/iron/stairs/right,
+/area/cruiser_dock)
+"qz" = (
+/turf/closed/indestructible/opsglass,
+/area/cruiser_dock)
+"qL" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"qR" = (
+/obj/machinery/light/cold/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/cruiser_dock)
+"rb" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"rM" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"rR" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 8
+	},
+/area/cruiser_dock)
+"sc" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"sv" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"sM" = (
+/turf/open/space/basic,
+/area/space)
+"td" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/cruiser_dock)
+"te" = (
+/obj/machinery/suit_storage_unit/industrial/assault_operative,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"tU" = (
+/obj/structure/closet/syndicate{
+	desc = "It's a personal storage unit for operative gear."
+	},
+/obj/item/trench_tool,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/storage/belt/holster/nukie,
+/obj/item/clothing/glasses/night,
+/obj/item/radio/headset/syndicate/alt,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/cold/directional/north,
+/obj/item/clothing/suit/armor/vest,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"uW" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/cruiser_dock)
+"vr" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/structure/shipping_container/kosmologistika,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"vx" = (
+/obj/structure/marker_beacon/teal,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"wl" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"wu" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"xL" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"xS" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 4
+	},
+/area/cruiser_dock)
+"yM" = (
+/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"zQ" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/cruiser_dock)
+"AX" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"Bi" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 8
+	},
+/area/cruiser_dock)
+"Bq" = (
+/turf/open/floor/iron/smooth_edge,
+/area/cruiser_dock)
+"Bz" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/turf/open/floor/iron/smooth,
+/area/cruiser_dock)
+"BG" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"Cu" = (
+/obj/structure/table,
+/turf/open/floor/carpet/red,
+/area/cruiser_dock)
+"CR" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"CU" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/machinery/light/cold/directional/south,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"Dz" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"DI" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"DQ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/smooth,
+/area/cruiser_dock)
+"Es" = (
+/obj/structure/table/glass/plasmaglass,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/science{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"EK" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/cruiser_dock)
+"Fa" = (
+/obj/item/kirbyplants/potty,
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/cruiser_dock)
+"Fj" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/structure/shipping_container/gorlex,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Fn" = (
+/turf/open/floor/iron/stairs/medium,
+/area/cruiser_dock)
+"Fr" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/cruiser_dock)
+"Fs" = (
+/obj/item/mop,
+/obj/structure/mop_bucket,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"FI" = (
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"FK" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"FX" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 11
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Gl" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/machinery/light/cold/directional/west,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"GT" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Base Access"
+	},
+/area/cruiser_dock)
+"Hh" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
+/area/cruiser_dock)
+"Hl" = (
+/obj/effect/landmark/start/assaultop,
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/cruiser_dock)
+"HU" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/cruiser_dock)
+"HZ" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Ie" = (
+/obj/effect/landmark/start/assaultop,
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/cruiser_dock)
+"IE" = (
+/obj/machinery/vending/cigarette/syndicate,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"JG" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 17;
+	height = 13;
+	name = "Goldeneye Satellite Dock";
+	roundstart_template = /datum/map_template/shuttle/goldeneye_cruiser;
+	shuttle_id = "goldeneye_cruiser_dock";
+	width = 27
+	},
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"JT" = (
+/obj/structure/punching_bag,
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"Kn" = (
+/obj/structure/closet/crate/cardboard/tiziran,
+/obj/item/storage/box/tiziran_meats,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Kt" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"Ky" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/machinery/light/cold/directional/east,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"KM" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/machinery/light/cold/directional/south,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"KN" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 1
+	},
+/area/cruiser_dock)
+"Lg" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"Lh" = (
+/obj/structure/table,
+/obj/machinery/coffeemaker,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Li" = (
+/obj/structure/closet/crate/cardboard/mothic,
+/obj/item/storage/box/mothic_rations,
+/obj/item/storage/box/mothic_rations,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"LW" = (
+/obj/structure/closet/l3closet/security,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Mn" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/cruiser_dock)
+"Nc" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/machinery/door/puzzle/keycard/assault_ops_chemistry,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Nu" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/reagent_containers/cup/glass/bottle/champagne,
+/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"NT" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/east,
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"Oi" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Oo" = (
+/obj/item/trench_tool,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/storage/belt/holster/nukie,
+/obj/item/clothing/glasses/night,
+/obj/item/radio/headset/syndicate/alt,
+/obj/structure/closet/syndicate{
+	desc = "It's a personal storage unit for operative gear."
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/item/clothing/suit/armor/vest,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Pq" = (
+/obj/machinery/chem_heater/withbuffer,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"PB" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Qa" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"Qm" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"QJ" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/cruiser_dock)
+"Rb" = (
+/obj/machinery/light/cold/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/cruiser_dock)
+"RB" = (
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/cruiser_dock)
+"RI" = (
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Sl" = (
+/obj/structure/table,
+/obj/item/pizzabox/pineapple,
+/turf/open/floor/carpet/red,
+/area/cruiser_dock)
+"SV" = (
+/obj/structure/sink/kitchen/directional/west,
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"TQ" = (
+/obj/effect/landmark/start/assaultop,
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/cruiser_dock)
+"TZ" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Uh" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 1
+	},
+/area/cruiser_dock)
+"Uz" = (
+/obj/machinery/vending/coffee{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"UF" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/cruiser_dock)
+"UI" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/closed/indestructible/syndicate,
+/area/cruiser_dock)
+"UP" = (
+/obj/effect/spawner/random/vending/colavend,
+/obj/effect/turf_decal/bot_white,
+/obj/structure/sign/poster/contraband/free_drone/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Vm" = (
+/turf/open/floor/iron/smooth,
+/area/cruiser_dock)
+"Vo" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/cruiser_dock)
+"VR" = (
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"Wh" = (
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/cruiser_dock)
+"Wm" = (
+/obj/structure/table/glass/plasmaglass,
+/obj/machinery/reagentgrinder{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = 8;
+	pixel_y = 14
+	},
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"WO" = (
+/obj/effect/turf_decal/box/corners,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"WQ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/cruiser_dock)
+"Yl" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"YI" = (
+/obj/structure/chair/plastic,
+/obj/effect/landmark/start/assaultop,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/cruiser_dock)
+"YZ" = (
+/turf/closed/indestructible/rock,
+/area/cruiser_dock)
+"Zf" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Zl" = (
+/turf/open/misc/asteroid,
+/area/cruiser_dock)
+"Zo" = (
+/obj/structure/table,
+/obj/item/coffee_cartridge{
+	pixel_y = -1
+	},
+/obj/item/coffee_cartridge/fancy{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/coffee_cartridge/fancy{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 5;
+	pixel_y = 20
+	},
+/obj/machinery/light/cold/directional/west,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+"Zt" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"Zx" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/floor/plating,
+/area/cruiser_dock)
+"ZA" = (
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/cruiser_dock)
+"ZM" = (
+/obj/structure/table/glass/plasmaglass,
+/obj/item/storage/box/beakers{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/storage/box/syringes{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/gun/syringe/syndicate,
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/cruiser_dock)
+
+(1,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(2,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(3,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+"}
+(4,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+"}
+(5,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+"}
+(6,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+"}
+(7,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+cN
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+cN
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+"}
+(8,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+"}
+(9,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+YZ
+YZ
+YZ
+sM
+sM
+"}
+(10,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+cN
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+cN
+YZ
+YZ
+YZ
+sM
+"}
+(11,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+Zl
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+Zl
+YZ
+YZ
+YZ
+sM
+"}
+(12,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+Zl
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+vx
+Zl
+YZ
+YZ
+YZ
+YZ
+"}
+(13,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+cN
+vx
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+Zl
+cN
+YZ
+YZ
+YZ
+"}
+(14,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+Zl
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+"}
+(15,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+Zl
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+"}
+(16,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+Zl
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+Zl
+Zl
+cN
+YZ
+YZ
+"}
+(17,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+vx
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+"}
+(18,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+cN
+cN
+cN
+cN
+YZ
+YZ
+Zl
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+vx
+Zl
+YZ
+YZ
+YZ
+YZ
+"}
+(19,1,1) = {"
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+Pq
+ZM
+be
+cN
+cN
+YZ
+Zl
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+Zl
+YZ
+YZ
+YZ
+sM
+"}
+(20,1,1) = {"
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+cN
+oj
+QJ
+UF
+Wm
+cN
+YZ
+cN
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+cN
+YZ
+YZ
+YZ
+sM
+"}
+(21,1,1) = {"
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+xL
+UF
+UF
+UF
+Es
+cN
+YZ
+YZ
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+JG
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Zl
+YZ
+YZ
+YZ
+YZ
+sM
+"}
+(22,1,1) = {"
+YZ
+YZ
+YZ
+YZ
+cN
+cN
+GT
+cN
+cN
+cN
+cN
+cN
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+cN
+LW
+UF
+cN
+qz
+qz
+cN
+cN
+YZ
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+Kt
+BG
+Zt
+df
+AX
+rM
+sc
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+VR
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+"}
+(23,1,1) = {"
+YZ
+YZ
+YZ
+YZ
+cN
+HZ
+Bz
+CR
+lf
+Lh
+Zo
+Oi
+cN
+YZ
+YZ
+YZ
+Zl
+Zl
+Zl
+cN
+qz
+Nc
+lf
+VR
+JT
+VR
+lf
+cN
+cN
+cN
+cN
+Zl
+vx
+Zl
+cN
+cN
+ps
+Lg
+df
+sv
+Yl
+gU
+vx
+Zl
+kP
+vr
+Zl
+Zl
+vx
+Zl
+Zl
+Zl
+Zl
+vx
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+"}
+(24,1,1) = {"
+YZ
+YZ
+YZ
+cN
+cN
+fD
+DQ
+pT
+pT
+pT
+Fr
+FX
+cN
+cN
+rb
+Dz
+Dz
+Dz
+KM
+cN
+ds
+FI
+iS
+VR
+VR
+VR
+qL
+Nu
+Kn
+cN
+rb
+Dz
+Dz
+Dz
+KM
+cN
+kj
+Qa
+df
+Qa
+AX
+gU
+ex
+PB
+FI
+FI
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+cN
+YZ
+YZ
+YZ
+sM
+sM
+sM
+"}
+(25,1,1) = {"
+YZ
+YZ
+YZ
+cN
+bO
+RB
+Mn
+Ie
+Ie
+pT
+EK
+RB
+RB
+mL
+RB
+RB
+RB
+RB
+RB
+lY
+RB
+RB
+WQ
+bK
+bK
+bK
+td
+RB
+RB
+mL
+RB
+RB
+RB
+RB
+RB
+lY
+df
+df
+df
+df
+AX
+gU
+FI
+FI
+kS
+WO
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+"}
+(26,1,1) = {"
+YZ
+YZ
+YZ
+cN
+kj
+gz
+YI
+Sl
+Cu
+Cu
+uW
+gz
+df
+KN
+gz
+gz
+gz
+gz
+gz
+Fn
+df
+gz
+gz
+gz
+gz
+gz
+gz
+gz
+df
+KN
+gz
+gz
+gz
+gz
+gz
+Fn
+df
+Zf
+Fj
+PB
+AX
+gU
+kS
+WO
+Zl
+Zl
+YZ
+YZ
+cN
+YZ
+YZ
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+"}
+(27,1,1) = {"
+YZ
+YZ
+YZ
+cN
+ij
+HU
+Vo
+Hl
+pT
+TQ
+kZ
+Wh
+Fa
+Uh
+Wh
+Wh
+Wh
+Wh
+Wh
+qk
+Wh
+Wh
+Wh
+Hh
+gz
+je
+Wh
+Wh
+Wh
+Uh
+Wh
+Wh
+Wh
+Wh
+Wh
+qk
+df
+FI
+FI
+FI
+AX
+gU
+Zl
+Zl
+Zl
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+"}
+(28,1,1) = {"
+YZ
+YZ
+YZ
+cN
+cN
+UP
+DQ
+pT
+pT
+pT
+Fr
+Uz
+cN
+cN
+FK
+kL
+kL
+kL
+CU
+cN
+Fs
+SV
+hq
+Bq
+gz
+dQ
+Li
+RI
+gh
+cN
+FK
+kL
+kL
+kL
+CU
+cN
+kj
+cI
+cI
+WO
+AX
+gU
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(29,1,1) = {"
+YZ
+YZ
+YZ
+YZ
+cN
+yM
+qR
+dL
+lf
+DI
+Rb
+IE
+cN
+YZ
+YZ
+Zl
+Zl
+YZ
+YZ
+UI
+cN
+cN
+lf
+Bq
+df
+dQ
+lf
+cN
+cN
+cN
+YZ
+Zl
+Zl
+YZ
+YZ
+cN
+wu
+wu
+wu
+wu
+Qm
+gU
+Zl
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(30,1,1) = {"
+YZ
+YZ
+YZ
+YZ
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+Bi
+rR
+oY
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+kL
+kL
+kL
+kL
+wl
+Zl
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(31,1,1) = {"
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+Gl
+Bq
+gz
+dQ
+bI
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+Zl
+Zl
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(32,1,1) = {"
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+Zl
+dz
+Bq
+gz
+dQ
+gU
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(33,1,1) = {"
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+Zl
+dz
+Bq
+gz
+dQ
+gU
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(34,1,1) = {"
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+dz
+Bq
+gz
+dQ
+gU
+Zl
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(35,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+Ky
+Bq
+gz
+dQ
+NT
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(36,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+pe
+zQ
+xS
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(37,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+cN
+cN
+Bq
+df
+dQ
+cN
+cN
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(38,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+pr
+TZ
+Bq
+gz
+dQ
+TZ
+pr
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(39,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+cN
+tU
+Vm
+Bq
+gz
+dQ
+Vm
+mt
+cN
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(40,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+cN
+te
+Vm
+Bq
+gz
+dQ
+Vm
+te
+cN
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(41,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+cN
+lf
+mr
+Bq
+pG
+dQ
+mr
+lf
+cN
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(42,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+cN
+te
+Vm
+Bq
+gz
+dQ
+Vm
+te
+cN
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(43,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+cN
+af
+Vm
+Bq
+gz
+dQ
+Vm
+mt
+cN
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(44,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+cN
+pr
+TZ
+Bq
+gz
+dQ
+TZ
+pr
+cN
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(45,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+cN
+cN
+cN
+te
+df
+te
+cN
+cN
+cN
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(46,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+cN
+Oo
+ZA
+TZ
+cN
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(47,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+cN
+cN
+cN
+cN
+cN
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(48,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(49,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}
+(50,1,1) = {"
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+YZ
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+sM
+"}

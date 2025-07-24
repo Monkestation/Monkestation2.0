@@ -116,3 +116,15 @@
 /datum/lazy_template/abductor_ship
 	key = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS
 	map_name = "abductor_ships"
+
+/datum/lazy_template/assop_base
+	key = LAZY_TEMPLATE_KEY_ASSOPBASE
+	map_name = "assop_base"
+
+/datum/lazy_template/commando_base
+	key = LAZY_TEMPLATE_KEY_COMMANDOBASE
+	map_name = "commando_base"
+
+/datum/lazy_template/apid_hives
+	key = LAZY_TEMPLATE_KEY_APID_HIVES
+	map_name = "apid_hives"

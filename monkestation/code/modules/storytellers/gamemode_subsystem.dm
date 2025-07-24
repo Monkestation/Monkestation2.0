@@ -163,6 +163,10 @@ SUBSYSTEM_DEF(gamemode)
 	var/can_run_roundstart = TRUE
 	var/list/triggered_round_events = list()
 
+	/// Did a roundstart antag lazyload?
+	/// This is just so we can reduce the chance of metaing by having a slight artifical delay before fadeout if something DIDN'T lazyload.
+	var/did_roundstart_lazyload = FALSE
+
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
 	CONFIG_SET(flag/disable_storyteller, TRUE)

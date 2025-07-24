@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(hive_exits, list())
+GLOBAL_LIST_EMPTY(hive_exits)
 
 /obj/structure/beebox/hive
 	name = "generic hive"
@@ -10,16 +10,21 @@ GLOBAL_LIST_INIT(hive_exits, list())
 	var/obj/structure/hive_exit/linked_exit
 	var/stored_honey = 0
 	var/current_stat = "potency"
+	var/created_name
 
 /obj/structure/beebox/hive/Initialize(mapload, created_name)
-	. = ..()
+	..()
+	src.created_name = created_name
 	ADD_TRAIT(src, TRAIT_BANNED_FROM_CARGO_SHUTTLE, INNATE_TRAIT) // womp womp
 
 	name = "[created_name]'s hive"
 	for(var/i = 1 to 3)
-		var/obj/item/honey_frame/HF = new(src)
-		honey_frames += HF
+		honey_frames += new /obj/item/honey_frame(src)
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/beebox/hive/LateInitialize()
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_APID_HIVES)
 	for(var/obj/structure/hive_exit/exit as anything in GLOB.hive_exits)
 		if(exit.linked_hive)
 			continue

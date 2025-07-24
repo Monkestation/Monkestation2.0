@@ -970,6 +970,9 @@ ADMIN_VERB(load_away_mission, R_FUN, FALSE, "Load Away Mission", "Load a specifi
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
 
+	if(!SSticker.setup_done)
+		SSgamemode.did_roundstart_lazyload = TRUE
+
 	UNTIL(initialized)
 	var/static/lazy_loading = FALSE
 	UNTIL(!lazy_loading)

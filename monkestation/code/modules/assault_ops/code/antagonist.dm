@@ -177,6 +177,7 @@
 	return TRUE
 
 /datum/antagonist/assault_operative/proc/move_to_spawnpoint()
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ASSOPBASE)
 	var/team_number = 1
 	if(assault_team)
 		team_number = assault_team.members.Find(owner)

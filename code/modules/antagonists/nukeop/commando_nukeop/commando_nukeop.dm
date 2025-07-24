@@ -32,6 +32,7 @@
 
 /// Gets the position we spawn at
 /datum/antagonist/nukeop/commando/get_spawnpoint()
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_COMMANDOBASE)
 	var/team_number = 1
 	if(nuke_team)
 		team_number = nuke_team.members.Find(owner)

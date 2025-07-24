@@ -319,6 +319,14 @@
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		add_datum_to_mind(antag_mind, antag_mind.current)
 
+/datum/round_event/antagonist/solo/proc/hide_setup_minds()
+	for(var/datum/mind/mind in setup_minds)
+		var/mob/living/current = astype(mind.current)
+		if(QDELETED(current))
+			continue
+		current.invisibility = INVISIBILITY_MAXIMUM
+		current.add_traits(list(TRAIT_NO_TRANSFORM, TRAIT_MUTE, TRAIT_EMOTEMUTE), type) // no screaming!
+
 /datum/round_event/antagonist/solo/proc/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.add_antag_datum(antag_datum)
 
