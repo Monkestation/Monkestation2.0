@@ -100,7 +100,7 @@
 		located.mutant_color = "#FFFFFF"
 
 	human_target.update_body(is_creating = TRUE)
-
+	human_target.maxHealth -= 20
 	slasherdatum.souls_sucked++
 
 	// lets make their machette stronger

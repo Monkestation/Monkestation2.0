@@ -6871,7 +6871,6 @@
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\recall_machette.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\slasher_regenerate.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\soul_steal.dm"
-#include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\stalk_target.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\terror_screech.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\components\see_as_something.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\components\team_monitor.dm"
