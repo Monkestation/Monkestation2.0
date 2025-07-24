@@ -53,13 +53,13 @@ GLOBAL_LIST_EMPTY(hive_exits)
 		for(var/atom/movable/listed as anything in linked_exit?.atoms_inside)
 			if(!QDELETED(listed))
 				listed.forceMove(turf)
-		linked_exit?.atoms_inside?.Cut()
 		for(var/atom/movable/movable as anything in get_area(linked_exit))
 			if(isturf(movable) || QDELETED(movable))
 				continue
 			movable.forceMove(turf)
 
 	if(linked_exit)
+		linked_exit.atoms_inside?.Cut()
 		linked_exit.linked_hive = null
 		linked_exit.name = "generic hive exit"
 		linked_exit = null
