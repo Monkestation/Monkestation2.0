@@ -6940,7 +6940,18 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/machinery/coffeemaker/impressa,
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 13;
+	pixel_y = 12
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 13;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "azh" = (
@@ -6954,12 +6965,16 @@
 	},
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen{
-	pixel_x = -4;
-	pixel_y = 2
+	pixel_x = 10;
+	pixel_y = 9
 	},
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen{
-	pixel_x = 7;
-	pixel_y = 9
+	pixel_x = 11;
+	pixel_y = 6
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -33936,6 +33951,14 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"gSo" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/bridge_assistant,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "gSH" = (
 /turf/closed/wall,
 /area/station/service/lawoffice)
@@ -41563,6 +41586,14 @@
 /obj/structure/table/glass,
 /obj/item/storage/box/coffeepack{
 	pixel_y = 6
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 7;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -85076,7 +85107,7 @@ aaa
 aaa
 rjN
 arI
-qYF
+gSo
 atS
 syK
 syK
@@ -87132,7 +87163,7 @@ aaa
 aaa
 aqI
 arQ
-qYF
+gSo
 atV
 axc
 axc

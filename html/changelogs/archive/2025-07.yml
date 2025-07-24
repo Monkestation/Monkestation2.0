@@ -331,6 +331,11 @@
 2025-07-21:
   CannibalHunter:
   - rscadd: The (Lab "Coat") donator item for SethDiedAgain
+  Cmpwarrior:
+  - rscadd: 'Added a "carved square pumpkin" to the loadout selector under hats. Note:
+      The "toggle helmet light" does not actually produce laight.'
+  - rscadd: Cigarettes, cigars, and other smokable items now produce faint amounts
+      of light when lit up.
   EssentialTomato:
   - bugfix: (MTandi) Binary devices no longer ignore the volume of the output pipe
       network
@@ -341,3 +346,64 @@
   - refactor: Refactored mutation code backend. Report any issue.
   notghosti:
   - balance: Bamboo syringe guns no longer use firing pins
+2025-07-22:
+  Absolucy:
+  - balance: Various antag events (especially roundstart high-threat antags) are now
+      weighted less if any have occurred in the past few rounds.
+  Absolucy, Constellado:
+  - rscadd: Added umbrellas!
+  - rscadd: Umbrellas can be bought at a ClothesMate, or crafted with 3 cloth and
+      an iron rod.
+  - balance: Sol is now deadly once again for bloodsuckers - they will burn if unprotected
+      during Sol.
+  - balance: Bloodsuckers will now be fully protected from Sol if they hide in a locker
+      or cover themselves with an umbrella, tho.
+  - bugfix: Hopefully fixed Venture favorite vassals not being able to some of the
+      powers they're given.
+  Absolucy, itsmeowdev:
+  - refactor: Optimized spritesheet asset generation greatly using rustg IconForge,
+      greatly reducing post-initialization lag as well as reducing init times and
+      saving server computation.
+  - config: Added 'smart' asset caching, for batched rustg IconForge spritesheets.
+      It is persistent and suitable for use on local, with automatic invalidation.
+  - qol: Optimized GAGS using rust-g IconForge, reducing worst-case generation time
+      to 1ms.
+  - admin: Added admin verbs - Debug -> Clear Smart/Legacy Asset Cache for spritesheets.
+  - bugfix: (LT3) Fixed opening character preferences menu before subsystem is initialized
+  Addust:
+  - rscadd: Nanotrasen has begun hiring bridge assistants in duos to defend fireaxes
+      and fetch coffee.
+  - map: Johnson & Co has installed coffee machines on the bridges of all in-service
+      stations.
+  LettuceGuardian:
+  - rscadd: Empty detective holsters and whetstones can now be found in the black
+      market.
+  - balance: Adjusted the price of the default black market holster to 200-300 credits.
+  - image: Adjusted the grey, black, red and blue turtleneck sprites.
+  Tractor Maam:
+  - spellcheck: the regular Hardlight Spear Implant will not use the Commanding Hardlight
+      Spear Implant's information when inside a implant pad.
+  V2LenKagamine:
+  - bugfix: asteroid area slightly larger to fix thing
+  Wisemonster:
+  - balance: rReduced heretic's void chill temperature loss from -12 kelvin per tick,
+      to -5 kelvin per tick
+  notghosti:
+  - qol: Evil subtypes of drones no longer have door passthrough, and will have to
+      open the door like anyone normal.
+2025-07-23:
+  Draggeru:
+  - bugfix: Adds the missing botany machines to Icebox
+2025-07-24:
+  Absolucy:
+  - bugfix: Fixed binary translator keys being invisible.
+  JupiterJaeden:
+  - bugfix: Setting arrest status with the records console now immediately updates
+      sechud visuals.
+  - bugfix: Ninja security record hacks now immediately update sechud visuals.
+  antlersss:
+  - balance: reduced slowdown of heavy-duty medical kits by 75%
+  notghosti:
+  - map: Icebox service will no longer depower
+  - rscadd: ICARUS Weapons System Ignition Now triggers a unrecallable shuttle.
+  - rscadd: ICARUS Weapons System Ignition now auto elevates to Gamma alert.
