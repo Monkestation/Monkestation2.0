@@ -9,8 +9,7 @@ MENTOR_VERB(mentor_requests, R_MENTOR, FALSE, "Mentor Manager", "Open the mentor
 GLOBAL_DATUM_INIT(mentor_requests, /datum/request_manager/mentor, new)
 
 /datum/request_manager/mentor/ui_state(mob/user)
-	//return GLOB.always_state
-	return EXPLICIT_MENTOR_STATE(R_MENTOR | R_HEADMENTOR)
+	return MENTOR_STATE(R_MENTOR)
 
 /datum/request_manager/mentor/pray(client/C, message, is_chaplain)
 	return

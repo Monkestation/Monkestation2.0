@@ -217,7 +217,7 @@ GLOBAL_PROTECT(protected_mentor_ranks)
 		new /datum/mentors(mentor_ranks_from_rank_name(mentor_rank), ckey(mentor_key), force_active = FALSE, protected = TRUE)
 
 	if(!CONFIG_GET(flag/mentor_legacy_system) || dbfail)
-		var/datum/db_query/query_load_mentors = SSdbcore.NewQuery("SELECT ckey, `rank`FROM [format_table_name("mentor")] ORDER BY `rank`")
+		var/datum/db_query/query_load_mentors = SSdbcore.NewQuery("SELECT ckey, `rank` FROM [format_table_name("mentor")] ORDER BY `rank`")
 		if(!query_load_mentors.Execute())
 			message_admins("Error loading mentors from database. Loading from backup.")
 			log_sql("Error loading mentors from database. Loading from backup.")
