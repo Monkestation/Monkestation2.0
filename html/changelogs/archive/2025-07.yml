@@ -303,3 +303,107 @@
   - bugfix: Hardcore random pays your score again as non-antag.
   steelphoenix4:
   - bugfix: Fix store not giving you the right lizard plushie
+2025-07-19:
+  ThePooba:
+  - rscadd: Added Missing Barsigns from TG
+  - rscadd: Added Cargo Crate for Wallmount barsign
+  - code_imp: Added some barsign checks
+  Thedragmeme:
+  - map: Updates Icebox's Service and connecting maint areas
+2025-07-20:
+  Absolucy:
+  - balance: Fire breath now requires your mouth to be uncovered, so a muzzle/mask/etc
+      will stop onis from setting you on fire.
+  - qol: Saying stuff while jaunting (bloodcrawl, space phase, etc) now shows runechat
+      messages.
+  EssentialTomato:
+  - bugfix: Fixed the sprite for the budgeted sat crates.
+  Killermankey:
+  - code_imp: Split atoms.dm file into like 10 seperate files
+  ThePooba:
+  - rscadd: Tackling is now rightclick so you dont break your neck throwing a cigarette
+  - bugfix: TCMB adjusted to correct temperature
+  - bugfix: exodrones work now and arn't shit
+  Thedragmeme:
+  - bugfix: Added the missing clothes vendor for xenobio on Theseus
+  - bugfix: Attempts to make Xenobios power not immediately run out round start.
+  - map: Updated Theseus' Hydroponics and Chicken Ranch
+2025-07-21:
+  CannibalHunter:
+  - rscadd: The (Lab "Coat") donator item for SethDiedAgain
+  Cmpwarrior:
+  - rscadd: 'Added a "carved square pumpkin" to the loadout selector under hats. Note:
+      The "toggle helmet light" does not actually produce laight.'
+  - rscadd: Cigarettes, cigars, and other smokable items now produce faint amounts
+      of light when lit up.
+  EssentialTomato:
+  - bugfix: (MTandi) Binary devices no longer ignore the volume of the output pipe
+      network
+  - bugfix: (MTandi) Made 10 MJ & 20 MJ cells properly correspond to tiers 1 & 2 in
+      lathes.
+  - image: (MTandi) Updated cell sprites
+  leaKsi, Ghommie, Melbert, vinylspiders:
+  - refactor: Refactored mutation code backend. Report any issue.
+  notghosti:
+  - balance: Bamboo syringe guns no longer use firing pins
+2025-07-22:
+  Absolucy:
+  - balance: Various antag events (especially roundstart high-threat antags) are now
+      weighted less if any have occurred in the past few rounds.
+  Absolucy, Constellado:
+  - rscadd: Added umbrellas!
+  - rscadd: Umbrellas can be bought at a ClothesMate, or crafted with 3 cloth and
+      an iron rod.
+  - balance: Sol is now deadly once again for bloodsuckers - they will burn if unprotected
+      during Sol.
+  - balance: Bloodsuckers will now be fully protected from Sol if they hide in a locker
+      or cover themselves with an umbrella, tho.
+  - bugfix: Hopefully fixed Venture favorite vassals not being able to some of the
+      powers they're given.
+  Absolucy, itsmeowdev:
+  - refactor: Optimized spritesheet asset generation greatly using rustg IconForge,
+      greatly reducing post-initialization lag as well as reducing init times and
+      saving server computation.
+  - config: Added 'smart' asset caching, for batched rustg IconForge spritesheets.
+      It is persistent and suitable for use on local, with automatic invalidation.
+  - qol: Optimized GAGS using rust-g IconForge, reducing worst-case generation time
+      to 1ms.
+  - admin: Added admin verbs - Debug -> Clear Smart/Legacy Asset Cache for spritesheets.
+  - bugfix: (LT3) Fixed opening character preferences menu before subsystem is initialized
+  Addust:
+  - rscadd: Nanotrasen has begun hiring bridge assistants in duos to defend fireaxes
+      and fetch coffee.
+  - map: Johnson & Co has installed coffee machines on the bridges of all in-service
+      stations.
+  LettuceGuardian:
+  - rscadd: Empty detective holsters and whetstones can now be found in the black
+      market.
+  - balance: Adjusted the price of the default black market holster to 200-300 credits.
+  - image: Adjusted the grey, black, red and blue turtleneck sprites.
+  Tractor Maam:
+  - spellcheck: the regular Hardlight Spear Implant will not use the Commanding Hardlight
+      Spear Implant's information when inside a implant pad.
+  V2LenKagamine:
+  - bugfix: asteroid area slightly larger to fix thing
+  Wisemonster:
+  - balance: rReduced heretic's void chill temperature loss from -12 kelvin per tick,
+      to -5 kelvin per tick
+  notghosti:
+  - qol: Evil subtypes of drones no longer have door passthrough, and will have to
+      open the door like anyone normal.
+2025-07-23:
+  Draggeru:
+  - bugfix: Adds the missing botany machines to Icebox
+2025-07-24:
+  Absolucy:
+  - bugfix: Fixed binary translator keys being invisible.
+  JupiterJaeden:
+  - bugfix: Setting arrest status with the records console now immediately updates
+      sechud visuals.
+  - bugfix: Ninja security record hacks now immediately update sechud visuals.
+  antlersss:
+  - balance: reduced slowdown of heavy-duty medical kits by 75%
+  notghosti:
+  - map: Icebox service will no longer depower
+  - rscadd: ICARUS Weapons System Ignition Now triggers a unrecallable shuttle.
+  - rscadd: ICARUS Weapons System Ignition now auto elevates to Gamma alert.

@@ -772,3 +772,11 @@
 	name = "scrubs"
 	icon_file = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	json_config = 'monkestation/code/modules/donator/code/greyscale/greyscale_scrubs_worn.json'
+
+/obj/item/clothing/suit/old_lab_coat
+	name = "lab \"coat\""
+	desc = "It seems to be a puffer coat with a leather apron sewn under it. It smells faintly of chemicals and metal."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "old_lab_coat"
+	worn_icon_state = "old_lab_coat"

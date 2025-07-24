@@ -400,10 +400,10 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/teleporter
 
-/obj/item/circuitboard/computer/scan_consolenew
+/obj/item/circuitboard/computer/dna_console
 	name = "DNA Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/scan_consolenew
+	build_path = /obj/machinery/computer/dna_console
 
 /obj/item/circuitboard/computer/mechpad
 	name = "Mecha Orbital Pad Console"

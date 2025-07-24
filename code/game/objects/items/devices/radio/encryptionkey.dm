@@ -2,7 +2,7 @@
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset."
 	icon = 'icons/obj/radio.dmi'
-	icon_state = "cypherkey_basic"
+	icon_state = "cypher_base"
 	w_class = WEIGHT_CLASS_TINY
 	/// Can this radio key access the binary radio channel?
 	var/translate_binary = FALSE
@@ -40,7 +40,7 @@
 
 /obj/item/encryptionkey/binary
 	name = "binary translator key"
-	icon_state = "cypherkey_basic"
+	icon_state = "cypher_base"
 	translate_binary = TRUE
 	translated_language = /datum/language/machine
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
