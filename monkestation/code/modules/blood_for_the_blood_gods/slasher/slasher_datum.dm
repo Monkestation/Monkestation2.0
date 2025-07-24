@@ -35,7 +35,10 @@
 	var/souls_sucked = 0
 	///our cached brute_mod
 	var/cached_brute_mod = 0
-
+	/// the mob we are stalking
+	var/mob/living/carbon/human/stalked_human
+	/// how close we are in % to finishing stalking
+	var/stalk_precent = 0
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/slasher/powers = list()
 
@@ -57,7 +60,8 @@
 	var/list/mobs_with_fullscreens = list()
 	///this is our list of refs over 100 fear
 	var/list/total_fear = list()
-
+	///this is our list of tracked people
+	var/list/tracked = list()
 	///this is our list of seers
 	var/list/seers = list()
 
@@ -318,6 +322,16 @@
 			return
 	stage_change(weak, stage, old_stage)
 
+
+/datum/antagonist/slasher/proc/stage_change(datum/weakref/weak, new_stage, last_stage)
+	fear_stages[weak] = new_stage
+
+	if(new_stage >= 3)
+		try_add_tracker(weak)
+	if(new_stage >= 4)
+		try_add_seer(weak)
+
+
 /datum/antagonist/slasher/proc/return_feared_people(range, value)
 	var/list/mobs = list()
 	for(var/datum/weakref/weak_ref as anything in fears)
@@ -328,6 +342,25 @@
 			continue
 		mobs += mob
 	return mobs
+
+/datum/antagonist/slasher/proc/try_add_tracker(datum/weakref/weak)
+	if(weak in tracked)
+		return
+	tracked += weak
+
+	var/mob/living/living = weak.resolve()
+
+	var/datum/component/tracking_beacon/beacon = living.AddComponent(/datum/component/tracking_beacon, monitor_key, null, null, TRUE, "#f3d594")
+	slasher_monitor.add_to_tracking_network(beacon)
+
+	RegisterSignal(living, COMSIG_LIVING_TRACKER_REMOVED, PROC_REF(remove_tracker))
+
+/datum/antagonist/slasher/proc/remove_tracker(mob/living/source, frequency)
+	if(frequency != monitor_key)
+		return
+
+	tracked -= WEAKREF(source)
+	slasher_monitor.update_all_directions()
 
 /datum/antagonist/slasher/proc/try_add_seer(datum/weakref/weak)
 	if(weak in seers)
