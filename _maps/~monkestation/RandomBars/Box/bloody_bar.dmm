@@ -1,9 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ae" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/light_switch/directional/west,
-/turf/open/floor/cult,
-/area/station/commons/lounge)
 "ak" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -20,6 +15,35 @@
 /area/station/commons/lounge)
 "cT" = (
 /obj/machinery/vending/cigarette,
+/turf/open/floor/cult,
+/area/station/commons/lounge)
+"dh" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/station/commons/lounge)
+"eh" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/wood{
+	dir = 8
+	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "em" = (
@@ -72,6 +96,15 @@
 "gA" = (
 /obj/structure/chair/wood{
 	dir = 8
+	},
+/turf/open/floor/cult,
+/area/station/commons/lounge)
+"gF" = (
+/obj/machinery/light/directional/west,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
@@ -206,23 +239,27 @@
 /obj/machinery/jukebox,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"DJ" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/cult,
-/area/station/commons/lounge)
 "DZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"Fs" = (
-/obj/effect/landmark/start/hangover,
-/obj/structure/chair/wood{
+"FK" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"FK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+"FO" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/cult,
@@ -285,6 +322,19 @@
 	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
+"If" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/cult,
+/area/station/commons/lounge)
 "Iy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -334,6 +384,16 @@
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
+/turf/open/floor/cult,
+/area/station/commons/lounge)
+"SM" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Uu" = (
@@ -411,12 +471,12 @@ Bl
 ue
 Bl
 Bl
-DJ
-Fs
-gA
-Fs
-ae
-Bl
+gF
+If
+eh
+FO
+dh
+SM
 Bl
 wM
 AZ
@@ -433,7 +493,7 @@ ue
 ue
 ue
 Dy
-ue
+Dy
 ue
 ue
 VJ

@@ -50,7 +50,7 @@
 
 	category = EVENT_CATEGORY_INVASION
 	description = "A junior nuclear operative infiltrates the station."
-	weight = 1
+	weight = 0
 	max_occurrences = 5
 	track = EVENT_TRACK_MAJOR
 	repeated_mode_adjust = TRUE

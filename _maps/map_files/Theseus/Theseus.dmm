@@ -8001,7 +8001,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked,
+/obj/item/storage/backpack/deforest_surgical/stocked,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "csQ" = (

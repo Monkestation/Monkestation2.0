@@ -391,3 +391,42 @@
   notghosti:
   - qol: Evil subtypes of drones no longer have door passthrough, and will have to
       open the door like anyone normal.
+2025-07-23:
+  Draggeru:
+  - bugfix: Adds the missing botany machines to Icebox
+2025-07-24:
+  Absolucy:
+  - bugfix: Fixed binary translator keys being invisible.
+  JupiterJaeden:
+  - bugfix: Setting arrest status with the records console now immediately updates
+      sechud visuals.
+  - bugfix: Ninja security record hacks now immediately update sechud visuals.
+  antlersss:
+  - balance: reduced slowdown of heavy-duty medical kits by 75%
+  notghosti:
+  - map: Icebox service will no longer depower
+  - rscadd: ICARUS Weapons System Ignition Now triggers a unrecallable shuttle.
+  - rscadd: ICARUS Weapons System Ignition now auto elevates to Gamma alert.
+2025-07-25:
+  Absolucy:
+  - map: MetaStation's singularity/tesla engine is now fully surrounded by reinforced
+      walls (like every other station with a singulo/tesla), so that a single piece
+      of stray space dust won't end the round early.
+  Absolucy, Acantharctia, SmArtKar:
+  - rscadd: Added the Analgesia quirk, which makes you (almost) unable to perceive
+      how much your injuries hurt, and prevents you seeing the damage overlay when
+      damaged. Better keep a close eye on your health.
+  Ice-Type:
+  - map: Box station's kitchen is now much bigger and more usable, space selflessly
+      donated from the lathe room.
+  Killermankey:
+  - rscadd: Vendozer, Traitor super trash tank that you must craft
+  - rscadd: Hotdog bus, currently admin only.
+  - bugfix: Vehicles can now take bullets for their drivers like its supposed to.
+      Which was broken before (underlying code was fixed. Not every vehicle.)
+  Wisemonster:
+  - balance: Increased the weight gain of lone ops (not junior ops) by 5x
+  - balance: Major events can no longer roll junior ops (unsecure disks will still
+      spawn them)
+  - balance: Junior ops spawn time from an unsecure disk increased from 10-20 minutes
+      to 15-25
