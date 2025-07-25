@@ -136,7 +136,7 @@
 			message_admins("Storyteller failed to pick an event for track of [track].")
 			mode.event_track_points[track] *= TRACK_FAIL_POINT_PENALTY_MULTIPLIER
 			return
-		picked_event = pick_weight(valid_events)
+		picked_event = experimental_pick_weight(valid_events)
 		if(!picked_event)
 			if(length(valid_events))
 				var/added_string = ""

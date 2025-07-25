@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(gamemode)
 		can_run_roundstart = FALSE
 	else if(current_roundstart_event && length(current_roundstart_event.preferred_events)) //note that this implementation is made for preferred_events being other roundstart events
 		var/list/preferred_copy = current_roundstart_event.preferred_events.Copy()
-		var/datum/round_event_control/selected_event = pick_weight(preferred_copy)
+		var/datum/round_event_control/selected_event = experimental_pick_weight(preferred_copy)
 		var/player_count = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 		if(ispath(selected_event)) //get the instances if we dont have them
 			current_roundstart_event.preferred_events = list()
@@ -221,7 +221,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/sanity = 0
 		while(!selected_event && length(preferred_copy) && sanity < 100)
 			sanity++
-			selected_event = pick_weight(preferred_copy)
+			selected_event = experimental_pick_weight(preferred_copy)
 			if(!selected_event.can_spawn_event(player_count))
 				preferred_copy -= selected_event
 				selected_event = null
@@ -796,7 +796,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 		return
 	if(length(GLOB.clients) > MAX_POP_FOR_STORYTELLER_VOTE)
 		secret_storyteller = TRUE
-		selected_storyteller = pick_weight(get_valid_storytellers(TRUE))
+		selected_storyteller = experimental_pick_weight(get_valid_storytellers(TRUE))
 		return
 	SSvote.initiate_vote(/datum/vote/storyteller, "pick round storyteller", forced = TRUE)
 
@@ -812,7 +812,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 	var/added_storytellers = 0
 	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
 		added_storytellers++
-		var/picked_storyteller = pick_weight(pick_from)
+		var/picked_storyteller = experimental_pick_weight(pick_from)
 		final_choices[picked_storyteller] = 0
 		pick_from -= picked_storyteller
 	return final_choices

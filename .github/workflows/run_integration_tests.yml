@@ -53,6 +53,9 @@ jobs:
       - name: Install dreamluau
         run: |
           bash tools/ci/install_dreamluau.sh
+      - name: Compile pick_weight_test
+        run: |
+          g++ -m32 -std=c++17 -O3 -fPIC -shared -I"tools/pick_weight_test" "tools/pick_weight_test/pick_weight_test.cpp" -L"$HOME/BYOND/byond/bin" -lbyond -o "libpick_weight_test.so"
       - name: Run Tests
         id: run_tests
         run: |
