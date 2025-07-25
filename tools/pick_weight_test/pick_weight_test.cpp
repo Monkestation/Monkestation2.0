@@ -41,8 +41,10 @@ extern "C" BYOND_EXPORT CByondValue pick(u4c n, CByondValue v[]) {
 		case 0:
 			// retval = CByondValue{0, 0, 0, 0, 0};
 			ret_idx = 0;
+			break;
 		case 1:
 			ret_idx = 1;
+			break;
 		default:
 			std::uniform_int_distribution<> distr(1, len);
 			ret_idx = distr(rng);
