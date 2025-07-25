@@ -102,4 +102,4 @@
 	name = "vessel's boots"
 	desc = "* Boots, they appear to be a replica of the ones a legendary vessel wore while saving the world."
 	icon_state = "kris_boots"
-	inhand_icon_state = null
+	inhand_icon_state = null 
