@@ -27,5 +27,5 @@
 	. = ..()
 	if(mob.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin, 1))
 		if(mob.has_reagent(/datum/reagent/medicine/c2/convermol, 1))
-			if(prob(5))
+			if(prob(2.5))
 				cure()
