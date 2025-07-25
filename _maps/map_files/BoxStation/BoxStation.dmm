@@ -18639,7 +18639,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/structure/table,
 /obj/item/toy/figure/chef,
 /obj/machinery/button/door/directional/north{
 	name = "Interior Shutters Control";
@@ -24053,7 +24052,6 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
-/obj/structure/closet/secure_closet/barber,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -37050,7 +37048,10 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/structure/table,
+/obj/structure/table{
+	pixel_x = 0;
+	pixel_y = 0
+	},
 /obj/item/knife/kitchen{
 	pixel_x = -2
 	},
@@ -57388,7 +57389,6 @@
 	pixel_y = 0
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/structure/table,
 /turf/open/floor/wood,
 /area/station/service/bar)
 "sEf" = (
