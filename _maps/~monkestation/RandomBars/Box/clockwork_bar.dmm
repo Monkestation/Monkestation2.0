@@ -255,6 +255,7 @@
 /area/station/commons/lounge)
 "Mm" = (
 /obj/structure/fluff/clockwork/alloy_shards/small,
+/obj/effect/landmark/start/hangover,
 /obj/structure/chair/bronze{
 	dir = 8
 	},
@@ -395,12 +396,12 @@ TL
 qG
 TL
 TL
-TL
 LJ
 iM
+qn
 Mm
-iM
 sh
+TL
 TL
 PP
 Cz
@@ -416,8 +417,8 @@ qG
 qG
 qG
 qG
-qG
 Sf
+qG
 qG
 qG
 gg

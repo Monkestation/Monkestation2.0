@@ -5052,9 +5052,6 @@
 /area/station/science/breakroom)
 "bDJ" = (
 /obj/machinery/vending/barbervend,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = 5
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -25026,6 +25023,14 @@
 	dir = 4
 	},
 /area/station/engineering/shipbreaker_hut)
+"hXl" = (
+/obj/machinery/button/door/directional/east{
+	id = "bar_sec_shutters";
+	name = "Bar Shutters Control";
+	req_access = list("bar")
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
 "hXt" = (
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
@@ -51470,7 +51475,9 @@
 /obj/item/radio/intercom/directional/west,
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks{
-	dir = 4
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /turf/open/floor/wood,
 /area/station/service/bar)
@@ -56630,6 +56637,9 @@
 /obj/machinery/firealarm/directional/east{
 	pixel_y = -5
 	},
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -59846,7 +59856,8 @@
 /obj/structure/table,
 /obj/item/toy/figure/chef,
 /obj/machinery/button/door/directional/north{
-	name = "Interior Shutters Control"
+	name = "Interior Shutters Control";
+	id = "kitchen_interior_shutters"
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -72697,11 +72708,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "xsm" = (
-/obj/machinery/button/door/directional/east{
-	id = "bar_sec_shutters";
-	name = "Bar Shutters Control";
-	req_access = list("bar")
-	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Service - Bar";
 	name = "service camera"
@@ -96806,7 +96812,7 @@ nvt
 sHs
 kZc
 pVn
-fZB
+hXl
 xsm
 jKE
 sHs

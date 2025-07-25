@@ -169,9 +169,7 @@
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "po" = (
-/obj/machinery/light/directional/west,
 /obj/structure/flora/bush/jungle/b/style_random,
-/obj/machinery/light_switch/directional/west,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "py" = (
@@ -311,6 +309,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"Du" = (
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "EB" = (
@@ -466,13 +469,13 @@ nj
 jK
 nj
 OY
-nj
 iP
 NE
 Oz
 NE
-po
+Du
 nj
+po
 YM
 OP
 gM
@@ -487,8 +490,8 @@ Bs
 jK
 jK
 jK
-jK
 nI
+jK
 jK
 jK
 HI
