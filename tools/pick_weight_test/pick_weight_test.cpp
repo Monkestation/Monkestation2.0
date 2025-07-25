@@ -60,7 +60,7 @@ extern "C" BYOND_EXPORT CByondValue pick(u4c n, CByondValue v[]) {
 		ByondValue_SetNum(&idx, (float)ret_idx);
 		Byond_ReadListIndex(&v[0], &idx, &retval);
 		ByondValue_IncRef(&retval);
-		ByondValue_DecRef(&retval);
+		// ByondValue_DecRef(&retval);
 	}
 
 	ByondValue_DecRef(&v[0]);
@@ -97,7 +97,7 @@ extern "C" BYOND_EXPORT CByondValue pick_weight(u4c n, CByondValue v[]) {
 	ByondValue_SetNum(&idx_value, (float)idx);
 	Byond_ReadListIndex(&v[0], &idx_value, &retval);
 	ByondValue_IncRef(&retval);
-	ByondValue_DecRef(&retval);
+	// ByondValue_DecRef(&retval);
 	ByondValue_DecRef(&v[0]);
 
 	return retval;
