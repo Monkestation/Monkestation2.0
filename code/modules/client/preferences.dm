@@ -221,10 +221,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	switch (action)
-		// monkestation start: please get rid of this asap
-		if ("update_body")
-			character_preview_view?.update_body()
-		// monkestation end
 		if ("change_slot")
 			// Save existing character
 			save_character()
