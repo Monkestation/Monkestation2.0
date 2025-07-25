@@ -725,10 +725,10 @@
 
 	else if(href_list["adminplayeropts"])
 		//return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, locate(href_list["adminplayeropts"]))
-		var/mob/M = locate(href_list["adminplayeropts"])
-		usr.client.VUAP_selected_mob = M
-		usr.client.selectedPlayerCkey = M.ckey
-		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal)
+		var/mob/selected_mob = locate(href_list["adminplayeropts"])
+		usr.client.VUAP_selected_mob = selected_mob
+		usr.client.selectedPlayerCkey = selected_mob.ckey
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, selected_mob)
 
 	else if(href_list["ppbyckey"])
 		var/target_ckey = href_list["ppbyckey"]
