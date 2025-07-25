@@ -36,19 +36,29 @@ extern "C" BYOND_EXPORT CByondValue pick(u4c n, CByondValue v[]) {
 	}
 
 	auto len = items.size();
-	CByondValue retval;
+	size_t ret_idx = 0;
 	switch (len) {
 		case 0:
-			retval = CByondValue{0, 0, 0, 0, 0};
+			// retval = CByondValue{0, 0, 0, 0, 0};
+			ret_idx = 0;
 		case 1:
-			retval = items[0];
+			ret_idx = 1;
 		default:
 			std::uniform_int_distribution<> distr(1, len);
-			retval = items[distr(rng) - 1];
+			ret_idx = distr(rng);
 	}
 
 	for (CByondValue& item : items) {
 		ByondValue_DecRef(&item);
+	}
+
+	CByondValue retval = CByondValue{0, 0, 0, 0, 0};
+	if (ret_idx != 0) {
+		CByondValue idx;
+		ByondValue_SetNum(&idx, (float)ret_idx);
+		Byond_ReadListIndex(&v[0], &idx, &retval);
+		ByondValue_IncRef(&retval);
+		ByondValue_DecRef(&retval);
 	}
 
 	ByondValue_DecRef(&v[0]);
@@ -80,7 +90,13 @@ extern "C" BYOND_EXPORT CByondValue pick_weight(u4c n, CByondValue v[]) {
 	for (CByondValue& item : items) {
 		ByondValue_DecRef(&item);
 	}
+	CByondValue retval;
+	CByondValue idx_value;
+	ByondValue_SetNum(&idx_value, (float)idx);
+	Byond_ReadListIndex(&v[0], &idx_value, &retval);
+	ByondValue_IncRef(&retval);
+	ByondValue_DecRef(&retval);
 	ByondValue_DecRef(&v[0]);
 
-	return items[idx];
+	return retval;
 }
