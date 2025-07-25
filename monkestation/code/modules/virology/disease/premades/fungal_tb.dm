@@ -20,7 +20,7 @@
 
 /datum/disease/acute/premade/fungal_tb/after_add()
 	. = ..()
-	antigen = null
+	antigen = list(ANTIGEN_IG)
 	stage = 4
 
 /datum/disease/acute/premade/fungal_tb/activate(mob/living/mob, starved, seconds_per_tick)
