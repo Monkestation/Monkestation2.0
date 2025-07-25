@@ -1,5 +1,5 @@
 /datum/quirk/numb
-	name = "Numb"
+	name = "Analgesia"
 	desc = "You can't feel pain at all."
 	icon = FA_ICON_STAR_OF_LIFE
 	value = -2
