@@ -2390,9 +2390,6 @@
 /area/station/maintenance/starboard/fore)
 "aOA" = (
 /obj/machinery/vending/barbervend,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = 5
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -8575,27 +8572,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"cLT" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Service - Bar";
-	name = "service camera"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/button/door/directional/east{
-	id = "bar_sec_shutters";
-	name = "Bar Shutters Control";
-	req_access = list("bar")
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Service - Bar";
-	name = "service camera"
-	},
-/turf/open/floor/wood,
-/area/station/service/bar)
 "cLY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -18660,18 +18636,14 @@
 	name = "Interior Shutters Control";
 	id = "kitchen_interior_shutters"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
 /obj/structure/table,
 /obj/item/toy/figure/chef,
 /obj/machinery/button/door/directional/north{
-	name = "Interior Shutters Control"
+	name = "Interior Shutters Control";
+	id = "kitchen_interior_shutters"
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -24081,15 +24053,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/closet/secure_closet/barber,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -5
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -24560,11 +24524,6 @@
 	id = "bar_sec_shutters";
 	name = "Bar Shutters Control";
 	req_access = list("bar")
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /turf/open/floor/wood,
 /area/station/service/bar)
@@ -47019,6 +46978,10 @@
 /obj/machinery/firealarm/directional/south{
 	pixel_x = -5
 	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Service - Bar";
+	name = "service camera"
+	},
 /turf/open/floor/wood,
 /area/station/service/bar)
 "peS" = (
@@ -57424,16 +57387,8 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/item/radio/intercom/directional/west,
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks{
-	dir = 4
-	},
 /turf/open/floor/wood,
 /area/station/service/bar)
 "sEf" = (
@@ -96867,7 +96822,7 @@ sHs
 kZc
 pVn
 hNC
-cLT
+fZB
 peO
 sHs
 nus

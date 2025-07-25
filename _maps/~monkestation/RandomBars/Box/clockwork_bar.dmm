@@ -53,11 +53,6 @@
 /area/station/commons/lounge)
 "gN" = (
 /obj/machinery/light/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "hB" = (
@@ -162,21 +157,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
-"wm" = (
-/obj/structure/chair/bronze{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/landmark/start/hangover,
-/obj/structure/chair/bronze{
-	dir = 8
-	},
-/turf/open/floor/bronze,
-/area/station/commons/lounge)
 "xT" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -238,12 +218,6 @@
 /obj/structure/chair/bronze{
 	dir = 8
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/light/directional/west,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "Hc" = (
@@ -252,15 +226,7 @@
 /obj/structure/chair/bronze{
 	dir = 8
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/fluff/clockwork/alloy_shards/small,
-/obj/structure/chair/bronze{
-	dir = 8
-	},
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "Ie" = (
@@ -282,16 +248,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/bronze,
-/area/station/commons/lounge)
-"KC" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/light/directional/west,
-/obj/machinery/light_switch/directional/west,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "LI" = (
@@ -328,15 +284,6 @@
 "Pd" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/light_switch/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/landmark/start/hangover,
-/obj/structure/chair/bronze{
-	dir = 8
-	},
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "Pz" = (
@@ -452,10 +399,10 @@ TL
 TL
 gN
 GA
-wm
+qn
 Hc
 Pd
-KC
+TL
 TL
 PP
 Cz
@@ -472,7 +419,7 @@ qG
 qG
 qG
 Sf
-Sf
+qG
 qG
 qG
 gg
