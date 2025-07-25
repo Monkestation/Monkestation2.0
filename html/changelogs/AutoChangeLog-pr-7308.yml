@@ -1,0 +1,4 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - bugfix: "fixes subpar construction work in the box station kitchen"

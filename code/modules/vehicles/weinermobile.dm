@@ -16,18 +16,16 @@
 	cover_amount = 45
 	armor_type = /datum/armor/weeweenor
 	var/crash_all = FALSE
-	move_force = MOVE_FORCE_VERY_STRONG
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	move_force = MOVE_FORCE_NORMAL
+	move_resist = MOVE_FORCE_NORMAL
 	integrity_failure = 0.2
-	var/crash_dmg_high = 25
-	var/crash_dmg_low = 10
-	var/crash_dmg_stm = 50
-	var/crash_para_driv = 1.5
-	var/crash_para_pass = 0.3
-	var/crash_para_roadkill = 0.7
+	var/crash_dmg_stm = 10
+	var/crash_para_driv = 2
+	var/crash_para_pass = 0.5
+	var/crash_para_roadkill = 0.5
 
 /datum/armor/weeweenor
-	melee = 10
+	melee = 20
 	bullet = 10
 	laser = 10
 	energy = 10
@@ -44,12 +42,10 @@
 	if(!ishuman(rammed) || !rammed.density || !has_buckled_mobs())
 		return
 	rammed.stamina?.adjust(-crash_dmg_stm)
-	rammed.apply_damage(rand(crash_dmg_low, crash_dmg_high), BRUTE)
 	for(var/mob/living/rider in buckled_mobs)
 		var/paralyze_time = is_driver(rider) ? crash_para_driv : crash_para_pass
 		rider.Paralyze(paralyze_time SECONDS)
 	rammed.Paralyze(crash_para_roadkill SECONDS)
-	rammed.throw_at(get_edge_target_turf(rammed, dir), 1, 1)
 	visible_message(span_danger("[src] crashes into [rammed]!"))
 	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
