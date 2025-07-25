@@ -94,7 +94,7 @@ extern "C" BYOND_EXPORT CByondValue pick_weight(u4c n, CByondValue v[]) {
 	}
 	CByondValue retval;
 	CByondValue idx_value;
-	ByondValue_SetNum(&idx_value, (float)idx);
+	ByondValue_SetNum(&idx_value, (float)idx + 1);
 	Byond_ReadListIndex(&v[0], &idx_value, &retval);
 	ByondValue_IncRef(&retval);
 	// ByondValue_DecRef(&retval);
