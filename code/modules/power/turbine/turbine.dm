@@ -402,7 +402,7 @@
 /obj/machinery/power/turbine/core_rotor/examine(mob/user)
 	. = ..()
 	if(!panel_open)
-		. += span_notice("[EXAMINE_HINT("screw")] open its panel to change cable layer.")
+		. += span_notice("[EXAMINE_HINT("Screw")] open its panel to change cable layer.")
 
 /obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
 	if(!panel_open)
