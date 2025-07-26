@@ -1,6 +1,5 @@
 GLOBAL_VAR(dj_broadcast)
-GLOBAL_VAR(dj_booth)
-
+GLOBAL_DATUM(dj_booth, /obj/machinery/cassette/dj_station)
 
 /obj/item/clothing/ears
 	//can we be used to listen to radio?
@@ -8,9 +7,9 @@ GLOBAL_VAR(dj_booth)
 
 /obj/machinery/cassette/dj_station
 	name = "Cassette Player"
-	desc = "Plays Space Music Board approved cassettes for anyone in the station to listen to "
+	desc = "Plays Space Music Board approved cassettes for anyone in the station to listen to."
 
-	icon = 'monkestation/code/modules/cassettes/icons/radio_station.dmi'
+	icon = 'icons/obj/cassettes/radio_station.dmi'
 	icon_state = "cassette_player"
 
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
@@ -19,7 +18,7 @@ GLOBAL_VAR(dj_booth)
 	anchored = TRUE
 	density = TRUE
 	var/broadcasting = FALSE
-	var/obj/item/device/cassette_tape/inserted_tape
+	var/obj/item/cassette_tape/inserted_tape
 	var/time_left = 0
 	var/current_song_duration = 0
 	var/list/people_with_signals = list()
@@ -36,14 +35,13 @@ GLOBAL_VAR(dj_booth)
 /obj/machinery/cassette/dj_station/Initialize(mapload)
 	. = ..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
-	GLOB.dj_booth = src
 	register_context()
-	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
+	if(QDELETED(GLOB.dj_booth))
+		GLOB.dj_booth = src
 
 /obj/machinery/cassette/dj_station/Destroy()
 	if(GLOB.dj_booth == src)
 		GLOB.dj_booth = null
-	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /obj/machinery/cassette/dj_station/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -108,9 +106,9 @@ GLOBAL_VAR(dj_booth)
 	stop_broadcast(TRUE)
 
 /obj/machinery/cassette/dj_station/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/device/cassette_tape))
+	if(!istype(weapon, /obj/item/cassette_tape))
 		return
-	var/obj/item/device/cassette_tape/attacked = weapon
+	var/obj/item/cassette_tape/attacked = weapon
 	if(!attacked.approved_tape)
 		to_chat(user, span_warning("The [src] smartly rejects the bootleg cassette tape"))
 		return
@@ -133,7 +131,7 @@ GLOBAL_VAR(dj_booth)
 			if(broadcasting)
 				stop_broadcast(TRUE)
 
-/obj/machinery/cassette/dj_station/proc/insert_tape(obj/item/device/cassette_tape/CTape)
+/obj/machinery/cassette/dj_station/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(inserted_tape || !istype(CTape))
 		return
 
@@ -165,9 +163,13 @@ GLOBAL_VAR(dj_booth)
 	active_listeners = list()
 
 	if(!soft)
-		for(var/mob/living/carbon/anything in people_with_signals)
-			UnregisterSignal(anything, list(COMSIG_CARBON_UNEQUIP_EARS, COMSIG_CARBON_EQUIP_EARS, COMSIG_MOVABLE_Z_CHANGED, COMSIG_QDELETING))
-		people_with_signals.Cut()
+		for(var/mob/living/carbon/anything as anything in people_with_signals)
+			if(!istype(anything))
+				continue
+			UnregisterSignal(anything, COMSIG_CARBON_UNEQUIP_EARS)
+			UnregisterSignal(anything, COMSIG_CARBON_EQUIP_EARS)
+			UnregisterSignal(anything, COMSIG_MOVABLE_Z_CHANGED)
+		people_with_signals = list()
 
 /obj/machinery/cassette/dj_station/proc/start_broadcast()
 	var/choice = tgui_input_list(usr, "Choose which song to play.", "[src]", current_namelist)
@@ -193,7 +195,6 @@ GLOBAL_VAR(dj_booth)
 				RegisterSignal(anything, COMSIG_CARBON_UNEQUIP_EARS, PROC_REF(stop_solo_broadcast))
 				RegisterSignal(anything, COMSIG_CARBON_EQUIP_EARS, PROC_REF(check_solo_broadcast))
 				RegisterSignal(anything, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_solo_broadcast))
-				RegisterSignal(anything, COMSIG_QDELETING, PROC_REF(on_listener_delete))
 				people_with_signals |= anything
 
 			if(!(anything.client in active_listeners))
@@ -267,7 +268,7 @@ GLOBAL_VAR(dj_booth)
 		return
 
 	waiting_for_yield = TRUE
-	if(findtext(current_playlist[pl_index], GLOB.is_http_protocol))
+	if(is_http_protocol(current_playlist[pl_index]))
 		///invoking youtube-dl
 		var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 		///the input for ytdl handled by the song list
@@ -342,7 +343,6 @@ GLOBAL_VAR(dj_booth)
 		RegisterSignal(new_player, COMSIG_CARBON_UNEQUIP_EARS, PROC_REF(stop_solo_broadcast))
 		RegisterSignal(new_player, COMSIG_CARBON_EQUIP_EARS, PROC_REF(check_solo_broadcast))
 		RegisterSignal(new_player, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_solo_broadcast))
-		RegisterSignal(new_player, COMSIG_QDELETING, PROC_REF(on_listener_delete))
 		people_with_signals |= new_player
 
 	if(!broadcasting)
@@ -375,9 +375,3 @@ GLOBAL_VAR(dj_booth)
 
 	pl_index++
 	start_playing(active_listeners)
-
-/obj/machinery/cassette/dj_station/proc/on_listener_delete(datum/listener)
-	SIGNAL_HANDLER
-	people_with_signals -= listener
-	UnregisterSignal(listener, list(COMSIG_CARBON_UNEQUIP_EARS, COMSIG_CARBON_EQUIP_EARS, COMSIG_MOVABLE_Z_CHANGED, COMSIG_QDELETING))
-	stop_solo_broadcast(listener)

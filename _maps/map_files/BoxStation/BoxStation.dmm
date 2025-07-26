@@ -3004,6 +3004,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
+"aYe" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Medical - Pathology, Isolation, Cell 1";
+	name = "medical camera";
+	network = list("ss13","medbay")
+	},
+/obj/structure/table,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "aYn" = (
 /obj/effect/spawner/random/structure/table,
 /obj/item/poster/random_official,
@@ -5134,19 +5144,6 @@
 /obj/item/hatchet,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
-"bFJ" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 9
-	},
-/obj/structure/table/reinforced/rglass,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 2
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "bFK" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -5995,6 +5992,26 @@
 /obj/effect/spawner/random/food_or_drink/snack,
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/entry)
+"bRM" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/item/reagent_containers/blood{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/blood{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/blood{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "bRX" = (
 /obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron/showroomfloor,
@@ -6846,6 +6863,86 @@
 "cgm" = (
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
+"cgB" = (
+/obj/structure/sign/painting/library_private{
+	pixel_y = -32
+	},
+/obj/structure/table/wood,
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/toy/figure/curator,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "cgC" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/item/radio/intercom/directional/south,
@@ -7847,6 +7944,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"czh" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Medical - Pathology, Isolation, Cell 2";
+	network = list("ss13","medbay");
+	name = "medical camera"
+	},
+/obj/structure/table,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "czt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -12941,6 +13048,20 @@
 	dir = 1
 	},
 /area/station/commons/locker)
+"efn" = (
+/obj/structure/table,
+/obj/item/toy/figure/qm{
+	pixel_x = -7
+	},
+/obj/effect/spawner/random/entertainment/coin{
+	pixel_y = 7;
+	pixel_x = 3
+	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/qm)
 "efo" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -15579,20 +15700,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/engineering/shipbreaker_hut)
-"fbw" = (
-/obj/structure/table,
-/obj/item/toy/figure/qm{
-	pixel_x = -7
-	},
-/obj/effect/spawner/random/entertainment/coin{
-	pixel_y = 7;
-	pixel_x = 3
-	},
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
 "fbx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -18077,6 +18184,19 @@
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"fRH" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 2
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "fRK" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
@@ -21553,54 +21673,6 @@
 /obj/machinery/quantum_server,
 /turf/open/floor/iron/dark,
 /area/station/security/bitden)
-"gSC" = (
-/obj/structure/sign/painting/library_private{
-	pixel_y = -32
-	},
-/obj/structure/table/wood,
-/obj/item/device/cassette_tape/friday{
-	pixel_y = 2;
-	pixel_x = 9
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/toy/figure/curator,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "gSE" = (
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
@@ -31404,26 +31476,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/ordnance/storage)
-"kdK" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 4
-	},
-/obj/item/reagent_containers/blood{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/blood{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/blood{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/closet/crate/freezer/blood,
-/obj/machinery/iv_drip,
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "kdO" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
@@ -31727,27 +31779,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/brown/visible,
 /turf/open/space/basic,
 /area/space/nearstation)
-"kix" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/button/door/directional/west{
-	id = "medbay_desk_shutters";
-	name = "Front Desk Shutters Control";
-	req_access = list("medical");
-	pixel_y = -5
-	},
-/obj/machinery/button/door/directional/west{
-	id = "medbay_foyer";
-	name = "Medbay Doors Bolt Control";
-	req_access = list("medical");
-	pixel_y = 5;
-	specialfunctions = 4;
-	normaldoorcontrol = 1
-	},
-/obj/machinery/computer/records/pathology{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/office)
 "kiC" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/newscaster/directional/west,
@@ -33890,10 +33921,6 @@
 /obj/structure/sign/departments/engineering/directional/west,
 /turf/open/space/basic,
 /area/space/nearstation)
-"kTO" = (
-/obj/structure/closet/crate/engineering/fundedsatellites,
-/turf/open/floor/plating,
-/area/station/engineering/main)
 "kUa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -40041,6 +40068,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/restrooms)
+"mQX" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 2
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "mQZ" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -46390,16 +46430,6 @@
 /obj/item/t_scanner,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/break_room)
-"oUD" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Medical - Pathology, Isolation, Cell 2";
-	network = list("ss13","medbay");
-	name = "medical camera"
-	},
-/obj/structure/table,
-/obj/item/restraints/handcuffs,
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "oUG" = (
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -67273,6 +67303,27 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"vEs" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/button/door/directional/west{
+	id = "medbay_desk_shutters";
+	name = "Front Desk Shutters Control";
+	req_access = list("medical");
+	pixel_y = -5
+	},
+/obj/machinery/button/door/directional/west{
+	id = "medbay_foyer";
+	name = "Medbay Doors Bolt Control";
+	req_access = list("medical");
+	pixel_y = 5;
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/machinery/computer/records/pathology{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/office)
 "vEu" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/computer/crew{
@@ -73650,6 +73701,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/library/artgallery)
+"xHe" = (
+/obj/structure/closet/crate/engineering/fundedsatellites,
+/turf/open/floor/plating,
+/area/station/engineering/main)
 "xHf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -74035,19 +74090,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
-"xOa" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5
-	},
-/obj/structure/table/reinforced/rglass,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 2
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "xOf" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 4
@@ -74150,16 +74192,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
-"xQC" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Medical - Pathology, Isolation, Cell 1";
-	name = "medical camera";
-	network = list("ss13","medbay")
-	},
-/obj/structure/table,
-/obj/item/restraints/handcuffs,
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "xQF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -88867,7 +88899,7 @@ fUs
 jEi
 bnl
 qJD
-fbw
+efn
 qqU
 xeM
 aKM
@@ -100468,7 +100500,7 @@ uEU
 fxk
 hGH
 jvA
-kTO
+xHe
 rFn
 rFn
 mwn
@@ -112761,7 +112793,7 @@ lbf
 qOH
 hKA
 nQN
-kix
+vEs
 joj
 tYH
 hPf
@@ -115879,7 +115911,7 @@ aoo
 iza
 qeH
 tbb
-kdK
+bRM
 qGi
 oqK
 nPt
@@ -116395,7 +116427,7 @@ rtJ
 bUc
 sPW
 gOr
-xQC
+aYe
 kFe
 khD
 xpG
@@ -117414,7 +117446,7 @@ aIN
 cfU
 iyC
 ldS
-xOa
+mQX
 gGe
 llg
 nIN
@@ -117928,7 +117960,7 @@ vjR
 fek
 mkP
 ldS
-bFJ
+fRH
 whA
 qlC
 nIN
@@ -117937,7 +117969,7 @@ hQX
 bUc
 sPW
 gOr
-oUD
+czh
 kFe
 khD
 bfQ
@@ -123823,7 +123855,7 @@ xZm
 gji
 dOL
 nVc
-gSC
+cgB
 nBE
 nep
 mhc
