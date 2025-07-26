@@ -49,8 +49,8 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 		return TRUE
 
 	// staff/donators/mentors can choose whatever pronouns they want given, you know, we trust them to use them like a normal person
-	if (usr && (is_admin(usr) || usr.client.is_mentor() || usr.persistent_client.patreon.is_donator()))
-		to_chat(usr, span_notice("Gentle reminder that since you are staff, you can set this field however you like. But please use it in good faith."))
+	if (usr && (is_admin(usr) || is_mentor(usr) || usr.persistent_client.patreon.is_donator()))
+		to_chat(usr, span_notice("Gentle reminder that since you are staff/donator, you can set this field however you like. But please use it in good faith."))
 		log_game("OOC pronouns set by [usr] ([usr.ckey]) to: [value]")
 		return TRUE
 
@@ -58,7 +58,6 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 	if (length(pronouns) > MAX_PRONOUNS)
 		to_chat(usr, span_warning("You can only set up to [MAX_PRONOUNS] different pronouns."))
 		return FALSE
-
 
 	for (var/pronoun in pronouns)
 		// pronouns can end in "self" or "selfs" so allow those
