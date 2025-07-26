@@ -63,7 +63,10 @@
 
 
 /datum/component/customizable_reagent_holder/Destroy(force)
-	QDEL_NULL(top_overlay)
+	if(top_overlay)
+		var/atom/atom_parent = parent
+		atom_parent.cut_overlay(top_overlay)
+		top_overlay = null
 	return ..()
 
 
