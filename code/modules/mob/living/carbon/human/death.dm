@@ -57,6 +57,9 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab.")
 	to_chat(src, boxed_message(death_block))
 
+	if(client)
+		client << link("play.monkestation.com:1541")
+
 /mob/living/carbon/human/proc/get_cause_of_death(probable_cause)
 	switch(probable_cause)
 		// This should all be refactored later it's a bit of a mess ngl
