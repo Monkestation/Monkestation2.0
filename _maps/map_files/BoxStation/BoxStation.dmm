@@ -24052,6 +24052,9 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -25642,6 +25645,16 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"ikW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "ikX" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning{
 	dir = 1
@@ -25876,8 +25889,7 @@
 	dir = 1
 	},
 /obj/machinery/chem_master/condimaster{
-	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
-	name = "HoochMaster Deluxe"
+	name = "CondiMaster Neo"
 	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -41751,7 +41763,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 6
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -47904,13 +47916,6 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/secondary/exit/departure_lounge)
-"puT" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/icecream_vat,
-/turf/open/floor/iron/kitchen,
-/area/station/service/kitchen)
 "puX" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -59583,7 +59588,15 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/food_cart,
+/obj/structure/table,
+/obj/item/food/grown/wheat{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/food/grown/tomato{
+	pixel_y = -1;
+	pixel_x = -11
+	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "tnQ" = (
@@ -60670,9 +60683,7 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "tCb" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo"
-	},
+/obj/machinery/food_cart,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "tCc" = (
@@ -61742,6 +61753,9 @@
 /obj/item/paper_bin,
 /obj/structure/table,
 /obj/machinery/light/directional/north,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "tWp" = (
@@ -71082,6 +71096,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/icecream_vat,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "wOJ" = (
@@ -92705,7 +92720,7 @@ ioq
 wEt
 wEt
 wEt
-puT
+fvO
 pEY
 iix
 pff
@@ -95284,7 +95299,7 @@ lIY
 hlT
 oLg
 tWm
-oEc
+ikW
 cOa
 bnl
 cTK
