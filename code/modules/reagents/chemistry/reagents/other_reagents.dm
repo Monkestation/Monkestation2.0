@@ -1366,6 +1366,13 @@
 
 /datum/reagent/fuel/on_mob_life(mob/living/carbon/victim, seconds_per_tick, times_fired)
 	victim.adjustToxLoss(0.5 * seconds_per_tick, FALSE, required_biotype = affected_biotype)
+	if(isipc(victim))
+		var/booze_power = 35
+		if(HAS_TRAIT(victim, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+			booze_power *= 0.7
+		if(HAS_TRAIT(victim, TRAIT_LIGHT_DRINKER))
+			booze_power *= 2
+		victim.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 	..()
 	return TRUE
 
