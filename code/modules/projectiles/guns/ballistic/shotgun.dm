@@ -88,7 +88,7 @@
 	worn_icon_state = "cshotgun"
 	w_class = WEIGHT_CLASS_HUGE
 	semi_auto = TRUE
-	projectile_damage_multiplier = 1.4
+	projectile_damage_multiplier = 1.2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	/// If defined, the secondary tube is this type, if you want different shell loads
 	var/alt_accepted_magazine_type
@@ -165,7 +165,7 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
-	projectile_damage_multiplier = 1.4
+	projectile_damage_multiplier = 1.2
 	casing_ejector = TRUE
 	///the type of secondary magazine for the bulldog
 	var/secondary_magazine_type

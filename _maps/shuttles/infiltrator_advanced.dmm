@@ -1204,13 +1204,6 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "da" = (
-/obj/item/sbeacondrop/bomb{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/sbeacondrop/bomb{
-	pixel_x = -4
-	},
 /obj/structure/table/reinforced,
 /obj/item/radio/headset/syndicate/alt{
 	pixel_x = 4;
@@ -1294,10 +1287,6 @@
 "dj" = (
 /obj/item/grenade/syndieminibomb{
 	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/grenade/syndieminibomb{
-	pixel_x = -4;
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,

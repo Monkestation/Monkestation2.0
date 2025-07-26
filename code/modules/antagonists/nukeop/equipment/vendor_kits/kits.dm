@@ -52,7 +52,7 @@
 	name = "Heavy Assault Trooper (Easy)"
 	description = "Lock down tight areas and take bullets for the team. \
 		Weapons: Bulldog Autoshotgun, energy sword, and energy shield. \
-		Utility: Thermal goggles and anti-drop implant."
+		Utility: Thermal goggles."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-green-dark"
 	set_items = list(
@@ -71,8 +71,6 @@
 		/obj/item/ammo_box/magazine/m12g/slug = 2,
 		/obj/item/ammo_box/magazine/m12g/bioterror = 2,
 		/obj/item/ammo_box/magazine/m12g/stun = 2,
-		/obj/item/ammo_box/magazine/m12g/meteor = 2,
-		/obj/item/autosurgeon/syndicate/nodrop = 1,
 		/obj/item/clothing/glasses/thermal = 1,
 	),src)
 
