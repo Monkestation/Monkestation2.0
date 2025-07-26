@@ -6,12 +6,13 @@
 	biomass_max = 200
 	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
-		/datum/action/cooldown/mob_cooldown/bloodling/devour,
+		/datum/action/cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/devour,
 		/datum/action/cooldown/spell/aoe/repulse/bloodling,
-		/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass,
+		/datum/action/cooldown/bloodling/transfer_biomass,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
+
 /mob/living/basic/bloodling/minion/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)

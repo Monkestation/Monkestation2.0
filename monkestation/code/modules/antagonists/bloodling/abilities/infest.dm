@@ -1,4 +1,4 @@
-/datum/action/cooldown/mob_cooldown/bloodling/infest
+/datum/action/cooldown/bloodling/infest
 	name = "Infest"
 	desc = "Allows you to infest a living creature, turning them into a thrall. Can be used on mindshielded people but it takes longer. Costs 75 biomass."
 	button_icon_state = "infest"
@@ -6,7 +6,7 @@
 	/// If we are currently infesting
 	var/is_infesting = FALSE
 
-/datum/action/cooldown/mob_cooldown/bloodling/infest/PreActivate(atom/target)
+/datum/action/cooldown/bloodling/infest/PreActivate(atom/target)
 	. = ..()
 
 	if(is_infesting)
@@ -30,15 +30,15 @@
 		return FALSE
 	return
 
-/datum/action/cooldown/mob_cooldown/bloodling/infest/Activate(atom/target)
+/datum/action/cooldown/bloodling/infest/Activate(atom/target)
 	. = ..()
 
 	var/mob/living/mob = target
 	var/infest_time = 15 SECONDS
 
-	// If they are standing on the ascended bloodling tiles it takes 1/3rd of the time to infest them
+	// If they are standing on the ascended bloodling tiles it takes 1/5th of the time to infest them
 	if(isturf(get_turf(mob), /turf/open/misc/bloodling))
-		infest_time = 10 SECONDS
+		infest_time = infest_time / 5
 
 	if(iscarbon(mob))
 		var/mob/living/carbon/human/carbon_mob = target

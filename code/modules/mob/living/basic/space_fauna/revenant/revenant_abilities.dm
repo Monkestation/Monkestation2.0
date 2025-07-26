@@ -206,6 +206,12 @@
 			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
 			bot.bot_cover_flags |= BOT_COVER_OPEN
 			bot.emag_act(caster)
+	for(var/mob/living/basic/bot/bot in victim)
+		if(!(bot.bot_access_flags & BOT_COVER_EMAGGED))
+			new /obj/effect/temp_visual/revenant(bot.loc)
+			bot.bot_access_flags |= BOT_CONTROL_PANEL_OPEN
+			bot.bot_access_flags |= BOT_MAINTS_PANEL_OPEN
+			bot.emag_act(caster)
 	for(var/mob/living/carbon/human/human in victim)
 		if(human == caster)
 			continue
@@ -228,6 +234,65 @@
 		new /obj/effect/temp_visual/revenant(cyborg.loc)
 		cyborg.spark_system.start()
 		cyborg.emp_act(EMP_HEAVY)
+
+/datum/action/cooldown/spell/aoe/revenant/malfunction/get_things_to_cast_on(atom/center)
+	var/static/list/target_typecache
+	if(isnull(target_typecache))
+		// you know we really need a flag to indicate if something supports emag interactions or not
+		// but i am not in a state to open that can of worms right now. ~Lucy
+		target_typecache = zebra_typecacheof(list(
+			/mob/living/simple_animal/bot = TRUE,
+			/mob/living/basic/bot = TRUE,
+			/mob/living/carbon/human = TRUE,
+			/mob/living/silicon/robot = TRUE,
+			/obj = TRUE,
+			// these aren't worth wasting time on
+			/obj/effect = FALSE,
+			/obj/machinery/atmospherics/pipe = FALSE,
+			/obj/structure/cable = FALSE,
+			/obj/item/trash = FALSE,
+			/obj/item/paper = FALSE,
+			/obj/item/folder = FALSE,
+			/obj/item/pen = FALSE,
+			/obj/item/paper_bin = FALSE,
+			/obj/item/clipboard = FALSE,
+			/obj/item/stamp = FALSE,
+			/obj/structure/desk_bell = FALSE,
+			/obj/structure/filingcabinet = FALSE,
+			/obj/structure/ghost_critter_spawn = FALSE, // this really needs to be an /obj/effect or something
+			// most toys can't be emagged (with a few exceptions)
+			/obj/item/toy = FALSE,
+			/obj/item/toy/nuke = TRUE,
+			/obj/item/toy/minimeteor = TRUE,
+			/obj/item/toy/intento = TRUE,
+			// disposals pipes can't really be emagged, but loafers can!
+			/obj/structure/disposalpipe = FALSE,
+			/obj/structure/disposalpipe/loafer = TRUE,
+			// same with plumbing stuff, with the exception of growing vats
+			/obj/machinery/duct = FALSE,
+			/obj/machinery/plumbing = FALSE,
+			/obj/machinery/plumbing/growing_vat = TRUE,
+			// you cannot emag (most) furniture
+			/obj/structure/chair = FALSE,
+			/obj/structure/bed = FALSE,
+			/obj/structure/table = FALSE,
+			/obj/structure/rack = FALSE,
+			// that's a window.
+			/obj/structure/window = FALSE,
+			/obj/structure/window_sill = FALSE,
+			/obj/structure/grille = FALSE,
+			// no singuloosing or whatever
+			/obj/machinery/power/smes = FALSE,
+			/obj/machinery/power/apc = FALSE,
+		))
+
+
+	. = list()
+	for(var/turf/turf in RANGE_TURFS(aoe_radius, center))
+		for(var/atom/thing as anything in turf)
+			if(target_typecache[thing.type] && !HAS_TRAIT(thing, TRAIT_TRASH_ITEM))
+				. += turf
+				break
 
 /* monkestation removal: reimplemented in [monkestation\code\modules\mob\living\basic\space_fauna\revenant\revenant_abilities.dm]
 //Blight: Infects nearby humans and in general messes living stuff up.

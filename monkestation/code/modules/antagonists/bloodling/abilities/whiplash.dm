@@ -6,6 +6,7 @@
 	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
 	button_icon_state = "whiplash"
 	sound = 'sound/magic/tail_swing.ogg'
+	shared_cooldown = MOB_SHARED_COOLDOWN_1
 
 	spell_requirements = NONE
 

@@ -1,3 +1,5 @@
+GLOBAL_VAR(ascended_bloodling)
+
 /datum/action/cooldown/bloodling/ascension
 	name = "Ascend"
 	desc = "We spread our wings across the station...Mass consumption is required. Costs 500 Biomass and takes 5 minutes for you to ascend. Your presence will be alerted to the crew. Fortify the hive."
@@ -11,10 +13,10 @@
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
 	. = ..()
 	var/mob/living/basic/bloodling/proper/our_mob = owner
-	var/datum/antagonist/bloodling/antag = IS_BLOODLING(our_mob)
 	our_turf = get_turf(our_mob)
 
-	if(antag.is_ascended)
+	if(GLOB.ascended_bloodling)
+		to_chat(our_mob, span_noticealien("Someone has already ascended before us..."))
 		qdel(src)
 		return FALSE
 
@@ -47,12 +49,12 @@
 	icon_living = "heart"
 	evolution_level = 6
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
-		/datum/action/cooldown/mob_cooldown/bloodling/infest,
+		/datum/action/cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/infest,
 		/datum/action/cooldown/bloodling/dissonant_shriek,
 		/datum/action/cooldown/spell/aoe/repulse/bloodling,
-		/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass,
-		/datum/action/cooldown/mob_cooldown/bloodling/heal,
+		/datum/action/cooldown/bloodling/transfer_biomass,
+		/datum/action/cooldown/bloodling/heal,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
 	speed = 0
@@ -97,8 +99,20 @@
 	update_health_hud()
 
 /mob/living/basic/bloodling/proper/ascending/proc/ascend()
+	if(GLOB.ascended_bloodling)
+		to_chat(src, span_noticealien("There is not enough matter here for ascension... Unworthy..."))
+		src.evolution(5)
+		src.gib()
+		return
+
+	// Calls the shuttle
+	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
+	SSshuttle.emergency_no_recall = TRUE
+	SSshuttle.emergency_call_time = 5 MINUTES
+
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
 	antag.is_ascended = TRUE
+	GLOB.ascended_bloodling = antag
 	// Gives em 750 biomass
 	add_biomass(biomass_max - biomass)
 	ascension_datum = new /datum/bloodling_ascension()
@@ -112,10 +126,6 @@
 	var/turf/start_turf
 
 /datum/bloodling_ascension/proc/ascend(turf)
-	// Calls the shuttle
-	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
-	// Makes it unable to be recalled
-	SSshuttle.emergency_no_recall = TRUE
 
 	if(isnull(chosen_theme))
 		chosen_theme = new /datum/dimension_theme/bloodling()
@@ -160,21 +170,18 @@
 	canSmoothWith = SMOOTH_GROUP_FLOOR_BLOODLING
 	layer = HIGH_TURF_LAYER
 	underfloor_accessibility = UNDERFLOOR_HIDDEN
-	var/mob/living/basic/bloodling/master
+	desc = "A pulsing mass of flesh. It shivers and writhes at any touch."
+
+	/// Status effect given to anyone who walks on these tiles
+	var/thrall_stat = /datum/status_effect/bloodling_thrall
 
 /turf/open/misc/bloodling/Initialize(mapload)
 	. = ..()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	for(var/datum/antagonist/antag in GLOB.antagonists)
-		if(!IS_BLOODLING(antag.owner.current))
-			continue
-		master = antag.owner.current
-		break
+
+	for(var/atom/atom as anything in contents)
+		check_bloodling_elegability(atom)
 
 /turf/open/misc/bloodling/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
@@ -190,8 +197,12 @@
 
 	underlay_appearance.transform = transform
 
-/turf/open/misc/bloodling/proc/on_entered(datum/source, atom/movable/arrived)
-	SIGNAL_HANDLER
+/turf/open/misc/bloodling/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	check_bloodling_elegability(arrived)
+
+/// Takes the arrived atom as an argument and checks if they are eligable to be turned into a thrall
+/turf/open/misc/bloodling/proc/check_bloodling_elegability(atom/movable/arrived)
 	if(!isliving(arrived))
 		return
 
@@ -200,8 +211,55 @@
 		return
 
 	var/mob/living/carbon/carbon_mob = mob
-	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
-	thrall.set_master(master)
+
+	if(carbon_mob.stat == DEAD)
+		if(!carbon_mob.client && !carbon_mob.get_ghost(ghosts_with_clients = TRUE))// THIS does not work for some reason)
+			return
+
+	if(IS_BLOODLING_OR_THRALL(carbon_mob))
+		return
+
+	if(!GLOB.ascended_bloodling)
+		return
+
+	carbon_mob.apply_status_effect(thrall_stat)
+
+// The status effect given to people who walk on the tiles
+/datum/status_effect/bloodling_thrall
+	id = "Thrallification"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = -1
+	alert_type = null
+	show_duration = TRUE
+
+/datum/status_effect/bloodling_thrall/on_apply()
+	to_chat(owner,span_warning("You feel the floor grasp you, stay on the move!"))
+	addtimer(CALLBACK(src, PROC_REF(thrallify)), 10 SECONDS, TIMER_STOPPABLE)
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(signal_destroy))
+
+	if(!GLOB.ascended_bloodling)
+		qdel(src)
+
+	return TRUE
+
+/datum/status_effect/bloodling_thrall/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
+
+/datum/status_effect/bloodling_thrall/proc/thrallify()
+	if(owner.stat == DEAD)
+		owner.revive(ADMIN_HEAL_ALL)
+		owner.grab_ghost(force = TRUE)
+
+	var/datum/antagonist/changeling/bloodling_thrall/thrall = owner.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
+	var/datum/antagonist/antag = GLOB.ascended_bloodling
+	thrall.set_master(antag.owner.current)
+	qdel(src)
+
+// Signal handler for our movement destruction
+/datum/status_effect/bloodling_thrall/proc/signal_destroy()
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/dimension_theme/bloodling
 	icon = 'icons/obj/food/meat.dmi'

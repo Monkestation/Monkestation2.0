@@ -1,10 +1,10 @@
-/datum/action/cooldown/mob_cooldown/bloodling/give_life
+/datum/action/cooldown/bloodling/give_life
 	name = "Give Life"
 	desc = "Bestow the gift of life onto the ignorant. Costs 20 biomass."
 	button_icon_state = "give_life"
 	biomass_cost = 20
 
-/datum/action/cooldown/mob_cooldown/bloodling/give_life/PreActivate(atom/target)
+/datum/action/cooldown/bloodling/give_life/PreActivate(atom/target)
 	. = ..()
 
 	if(!ismob(target))
@@ -21,7 +21,7 @@
 		return FALSE
 	return
 
-/datum/action/cooldown/mob_cooldown/bloodling/give_life/Activate(atom/target)
+/datum/action/cooldown/bloodling/give_life/Activate(atom/target)
 	. = ..()
 
 	var/mob/living/target_mob = target

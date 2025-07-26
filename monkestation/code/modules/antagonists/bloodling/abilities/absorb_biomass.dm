@@ -1,7 +1,8 @@
-/datum/action/cooldown/mob_cooldown/bloodling/absorb
+/datum/action/cooldown/bloodling/absorb
 	name = "Absorb Biomass"
 	desc = "Allows you to absorb a dead carbon or living mob close to you."
 	button_icon_state = "absorb"
+	shared_cooldown = NONE
 	/// If the bloodling is currently absorbing
 	var/is_absorbing = FALSE
 	/// Items we can absorb
@@ -10,7 +11,7 @@
 		/obj/item/food,
 	)
 
-/datum/action/cooldown/mob_cooldown/bloodling/absorb/PreActivate(atom/target)
+/datum/action/cooldown/bloodling/absorb/PreActivate(atom/target)
 	. = ..()
 
 	if(owner == target)
@@ -43,7 +44,7 @@
 	owner.balloon_alert(owner, "only works on dead carbons!")
 	return FALSE
 
-/datum/action/cooldown/mob_cooldown/bloodling/absorb/Activate(atom/target)
+/datum/action/cooldown/bloodling/absorb/Activate(atom/target)
 	. = ..()
 	var/mob/living/basic/bloodling/our_mob = owner
 	/// How long it takes to absorb something
@@ -66,7 +67,7 @@
 	var/mob/living/mob_to_absorb = target
 
 	// This prevents the mob from being dragged away from the bloodling during the process
-	mob_to_absorb.AddComponentFrom(REF(src), /datum/component/leash, our_mob, 1)
+	mob_to_absorb.AddComponent(/datum/component/leash, owner = our_mob, distance = 1)
 
 	if(!iscarbon(mob_to_absorb))
 		biomass_gain = max(mob_to_absorb.getMaxHealth() * 0.5, biomass_gain)
@@ -92,7 +93,7 @@
 
 	owner.balloon_alert(mob_to_absorb, "[owner] attempts to infest you!")
 	if(!do_after(owner, absorb_time, mob_to_absorb))
-		mob_to_absorb.RemoveComponentSource(REF(src), /datum/component/leash)
+		qdel(mob_to_absorb.GetComponent(/datum/component/leash))
 		is_absorbing = FALSE
 		return FALSE
 
