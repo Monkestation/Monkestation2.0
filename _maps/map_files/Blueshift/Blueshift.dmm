@@ -26705,7 +26705,7 @@
 "fcE" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fcK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32814,7 +32814,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "goT" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -39830,7 +39830,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hJf" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -41310,7 +41310,7 @@
 	req_access = list("research")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hWZ" = (
 /obj/structure/table,
 /obj/item/pai_card,
@@ -43660,7 +43660,7 @@
 "ivy" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ivB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/north,
@@ -48715,7 +48715,7 @@
 	network = list("ss13","xeno","rd")
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jvL" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -61909,7 +61909,7 @@
 /obj/item/beacon,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "lXp" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/structure/cable,
@@ -62029,7 +62029,7 @@
 "lYu" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "lYx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
@@ -64627,7 +64627,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "mzC" = (
 /obj/machinery/power/shieldwallgen/anchored{
 	shield_range = 14
@@ -82743,7 +82743,7 @@
 "qaH" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qaJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/east,
@@ -89043,7 +89043,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rkv" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 8
@@ -92515,6 +92515,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"rTd" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "rTv" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -92877,7 +92880,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rXO" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -96456,7 +96459,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "sHB" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -99652,7 +99655,7 @@
 	},
 /obj/structure/liquid_barrier,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tme" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
@@ -120060,6 +120063,9 @@
 "xdU" = (
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"xeg" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "xep" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/cable,
@@ -122929,7 +122935,7 @@
 /area/station/cargo/miningoffice)
 "xHP" = (
 /turf/open/floor/circuit/green,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xHQ" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/signaler{
@@ -219560,13 +219566,13 @@ gTi
 vOt
 fDT
 fDT
-fDT
-fDT
-fDT
-fDT
-fDT
-fDT
-fDT
+xeg
+xeg
+xeg
+xeg
+xeg
+xeg
+xeg
 iVF
 iVF
 gLc
@@ -219817,13 +219823,13 @@ bDn
 bDn
 xoO
 qgS
-fDT
-euU
-euU
+xeg
+rTd
+rTd
 jvA
-euU
-euU
-fDT
+rTd
+rTd
+xeg
 gLc
 gLc
 gLc
@@ -220079,8 +220085,8 @@ goS
 xHP
 xHP
 xHP
-euU
-fDT
+rTd
+xeg
 gLc
 gLc
 gLc
@@ -220337,7 +220343,7 @@ qaH
 lXo
 xHP
 fcE
-fDT
+xeg
 gLc
 gLc
 gLc
@@ -220593,8 +220599,8 @@ rXM
 xHP
 xHP
 xHP
-euU
-fDT
+rTd
+xeg
 gLc
 gLc
 gLc
@@ -220845,13 +220851,13 @@ spq
 bDn
 xoO
 icO
-fDT
+xeg
 hJb
-euU
-euU
-euU
+rTd
+rTd
+rTd
 ivy
-fDT
+xeg
 gLc
 gLc
 gLc
@@ -221102,13 +221108,13 @@ keX
 boj
 fUs
 fDT
-fDT
-fDT
+xeg
+xeg
 lYu
-fDT
-fDT
-fDT
-fDT
+xeg
+xeg
+xeg
+xeg
 gLc
 gLc
 jaI
