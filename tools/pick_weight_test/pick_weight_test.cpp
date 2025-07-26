@@ -89,14 +89,11 @@ extern "C" BYOND_EXPORT CByondValue pick_weight(u4c n, CByondValue v[]) {
 	std::discrete_distribution<size_t> dist(weights.begin(), weights.end());
 	auto idx = dist(rng);
 
-	for (CByondValue& item : items) {
-		ByondValue_DecRef(&item);
+	CByondValue retval = items[idx];
+	for (auto idx2 = 0; idx2 < items.size(); idx2++) {
+		if (idx != idx2)
+			ByondValue_DecRef(&items[idx2]);
 	}
-	CByondValue retval;
-	CByondValue idx_value;
-	ByondValue_SetNum(&idx_value, (float)idx + 1);
-	Byond_ReadListIndex(&v[0], &idx_value, &retval);
-	ByondValue_IncRef(&retval);
 	// ByondValue_DecRef(&retval);
 	ByondValue_DecRef(&v[0]);
 
