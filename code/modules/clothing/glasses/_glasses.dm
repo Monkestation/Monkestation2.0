@@ -717,3 +717,9 @@
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
 	inhand_icon_state = null
+
+/obj/item/clothing/glasses/ralsei
+	name = "Prince's Glasses"
+	desc = "Green coloured glasses... There are patches of fur in the hinges."
+	icon_state = "ralsei_glasses"
+	inhand_icon_state = null

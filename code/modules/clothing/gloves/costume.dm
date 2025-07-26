@@ -34,3 +34,9 @@
 	desc = "Well crafted white gloves, all the better to serve tea with."
 	icon_state = "butlergloves"
 	inhand_icon_state = "butlergloves"
+
+/obj/item/clothing/gloves/kris
+	name = "vessel's gauntlets"
+	desc = "* Gauntlets, they appear to be replicas of the ones the legendary Vessel wore while saving the world."
+	icon_state = "kris_gloves"
+	inhand_icon_state = null

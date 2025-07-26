@@ -97,3 +97,9 @@
 	icon_state = "starflats"
 	inhand_icon_state = "starflats"
 	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/kris
+	name = "vessel's boots"
+	desc = "* Boots, they appear to be a replica of the ones a legendary vessel wore while saving the world."
+	icon_state = "kris_boots"
+	inhand_icon_state = null 
