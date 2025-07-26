@@ -40,6 +40,8 @@
 	/// A list of traits that should stop this quirk from processing.
 	/// Signals for adding and removing this trait will automatically be added to `process_update_signals`.
 	var/list/no_process_traits
+	// List of species that cannot choose this quirk
+	var/list/species_blacklist
 
 /datum/quirk/New()
 	. = ..()
@@ -197,6 +199,8 @@
 
 /// If a quirk is able to be selected for the mob's species
 /datum/quirk/proc/is_species_appropriate(datum/species/mob_species)
+	if(LAZYLEN(species_blacklist) && (mob_species.id in species_blacklist))
+		return FALSE
 	if(mob_trait in GLOB.species_prototypes[mob_species].inherent_traits)
 		return FALSE
 	return TRUE
