@@ -200,6 +200,7 @@ SUBSYSTEM_DEF(ticker)
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
+			SStitle.update_init_text()
 			// MONKESTATION EDIT START - lobby notices
 			if (length(config.lobby_notices))
 				config.ShowLobbyNotices(world)
@@ -229,6 +230,7 @@ SUBSYSTEM_DEF(ticker)
 			if(timeLeft <= 300 && !tipped)
 				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
+				SStitle.update_init_text()
 
 			if(timeLeft <= 0)
 				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)

@@ -111,6 +111,7 @@
 		return generate_terrain_with_biomes(turfs, generate_in)
 
 	var/start_time = REALTIMEOFDAY
+	SStitle.add_init_text("[type]gen", "> [name]: Generation", "<font color='yellow'>LOADING</font>")
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
@@ -125,9 +126,8 @@
 		if(gen_turf.turf_flags & NO_RUINS)
 			new_turf.turf_flags |= NO_RUINS
 
-	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
-	to_chat(world, span_boldannounce("[message]"))
-	log_world(message)
+	SStitle.add_init_text("[type]gen", "> [name]: Generation", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
+	log_world("[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!")
 
 
 /**
@@ -217,6 +217,7 @@
 	var/mobs_allowed = (generate_in.area_flags & MOB_SPAWN_ALLOWED) && length(mob_spawn_list)
 	var/megas_allowed = (generate_in.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && length(megafauna_spawn_list)
 
+	SStitle.add_init_text("[type]fill", "> [name]: Population", "<font color='yellow'>LOADING</font>")
 	var/start_time = REALTIMEOFDAY
 	SSore_generation.ore_vent_minerals = (SSore_generation.ore_vent_minerals_default).Copy()
 
@@ -296,9 +297,8 @@
 				spawned_something = TRUE
 		CHECK_TICK
 
-	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
-	to_chat(world, span_boldannounce("[message]"))
-	log_world(message)
+	SStitle.add_init_text("[type]fill", "> [name]: Population", "<font color='green'>DONE</font>", (REALTIMEOFDAY - start_time) / (1 SECONDS))
+	log_world("[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!")
 
 
 /**
