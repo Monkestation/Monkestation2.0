@@ -65,6 +65,7 @@ SUBSYSTEM_DEF(plexora)
 	default_headers = list(
 		"Content-Type" = "application/json",
 		"Authorization" = AUTH_HEADER,
+		"User-Agent" = get_useragent("SSplexora"),
 	)
 
 	// Do a ping test to check if Plexora is actually running

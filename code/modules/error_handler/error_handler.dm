@@ -153,14 +153,13 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		to_chat(world, span_alertwarning("[main_line]"), type = MESSAGE_TYPE_DEBUG)
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
-	// monkestation start: structured runtime logging
 	log_runtime("runtime error: [E.name]\n[E.desc]", list(
 		"file" = "[E.file || "unknown"]",
 		"line" = E.line,
 		"name" = "[E.name]",
 		"desc" = "[E.desc]"
 	))
-	// monkestation end
+	send_to_glitchtip(E)
 #endif
 
 #undef ERROR_USEFUL_LEN

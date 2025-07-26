@@ -3873,6 +3873,7 @@
 #include "code\modules\emote_panel\emote_panel.dm"
 #include "code\modules\error_handler\error_handler.dm"
 #include "code\modules\error_handler\error_viewer.dm"
+#include "code\modules\error_handler\glitchtip.dm"
 #include "code\modules\escape_menu\details.dm"
 #include "code\modules\escape_menu\dimmer.dm"
 #include "code\modules\escape_menu\escape_menu.dm"
