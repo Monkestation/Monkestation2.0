@@ -121,8 +121,25 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
+/datum/component/riding/vehicle/hoverdog
+	keytype = /obj/item/key/hoverdog
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+	vehicle_move_delay = 1.1
+
+/datum/component/riding/vehicle/hoverdog/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 11), TEXT_SOUTH = list(0, 11), TEXT_EAST = list(0, 11), TEXT_WEST = list( 0, 11)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	set_vehicle_dir_offsets(NORTH, -48, -48)
+	set_vehicle_dir_offsets(SOUTH, -48, -48)
+	set_vehicle_dir_offsets(EAST, -48, -48)
+	set_vehicle_dir_offsets(WEST, -48, -48)
+
 /datum/component/riding/vehicle/wienermobile
-	vehicle_move_delay = 1.30
+	vehicle_move_delay = 1.29
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 
 /datum/component/riding/vehicle/wienermobile/handle_specials()
