@@ -33,7 +33,7 @@
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
-
+#define BINGLE_PIT_TRAIT "bingle_pit"
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
