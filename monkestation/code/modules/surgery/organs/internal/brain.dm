@@ -484,6 +484,8 @@ ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use t
 	icon_state = "posibrain-ipc"
 	/// The last time (in ticks) a message about brain damage was sent. Don't touch.
 	var/last_message_time = 0
+	/// The innate action for reconfiguring limbs
+	var/datum/action/innate/reconfigure_limbs/reconfigure
 
 /obj/item/organ/internal/brain/synth/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
@@ -495,6 +497,15 @@ ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use t
 	if(HAS_TRAIT(user_human, TRAIT_REVIVES_BY_HEALING) && user_human.health > SYNTH_BRAIN_WAKE_THRESHOLD)
 		if(!HAS_TRAIT(user_human, TRAIT_DEFIB_BLACKLISTED))
 			user_human.revive(FALSE)
+	if(!reconfigure && is_species(user_human, /datum/species/ipc))
+		reconfigure = new
+		reconfigure.Grant(user_human)
+
+/obj/item/organ/internal/brain/synth/Remove(mob/living/carbon/brain_owner)
+	. = .. ()
+	if(reconfigure)
+		reconfigure.Remove(brain_owner)
+		QDEL_NULL(reconfigure)
 
 /obj/item/organ/internal/brain/synth/emp_act(severity) // EMP act against the posi, keep the cap far below the organ health
 	. = ..()
