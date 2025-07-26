@@ -33,6 +33,7 @@
 	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	rad_insulation = RAD_EXTREME_INSULATION
+	can_change_cable_layer = TRUE
 	///Stores the loaded tank instance
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	///The amount of energy that is currently inside the machine before being converted to electricity
@@ -48,7 +49,7 @@
 	//Multiplier for tanks and gases insidee
 	var/power_coeff = 1
 
-/obj/machinery/power/rad_collector/anchored/Initialize(mapload) 
+/obj/machinery/power/rad_collector/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 
@@ -58,6 +59,12 @@
 
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
+
+/obj/machinery/power/rad_collector/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unanchor first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/rad_collector/should_have_node()
 	return anchored
