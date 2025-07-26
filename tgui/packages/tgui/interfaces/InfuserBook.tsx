@@ -68,7 +68,7 @@ const TIER2TIERDATA: TierData[] = [
   },
 ];
 
-export const InfuserBook = (props, context) => {
+export const InfuserBook = (props) => {
   const { data, act } = useBackend<DnaInfuserData>();
   const { entries } = data;
 

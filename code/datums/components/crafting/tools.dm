@@ -46,3 +46,13 @@
 	)
 	result = /obj/item/pickaxe/improvised
 	category = CAT_TOOLS
+
+/datum/crafting_recipe/makeshift_radio_jammer
+	name = "Makeshift Radio Jammer"
+	result = /obj/item/jammer/makeshift
+	reqs = list(
+		/obj/item/universal_scanner = 1,
+		/obj/item/encryptionkey = 1,
+		/obj/item/stack/cable_coil = 5,
+	)
+	category = CAT_TOOLS

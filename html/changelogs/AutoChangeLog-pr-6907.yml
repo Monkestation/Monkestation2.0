@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - code_imp: "Improved how stabilized cerulean and oil extracts trigger on death, allowing them to properly work for oozelings and such."

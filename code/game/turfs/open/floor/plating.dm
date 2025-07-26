@@ -38,7 +38,7 @@
 		. += span_notice("It looks like the dents could be <i>welded</i> smooth.")
 		return
 	if(attachment_holes)
-		. += span_notice("There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.")
+		. += span_notice("There are a few attachment holes for a new <i>tile</i>, reinforcement <i>rods</i> or a <i>plastitanium sheet</i>.")
 	else
 		. += span_notice("You might be able to build ontop of it with some <i>tiles</i>...")
 	if(upgradable)
@@ -69,6 +69,26 @@
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 						R.use(2)
 						to_chat(user, span_notice("You reinforce the floor."))
+					return
+		else if(istype(C, /obj/item/stack/sheet/mineral/plastitanium) && attachment_holes)
+			if(broken || burnt)
+				if(!iscyborg(user))
+					to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+				else
+					to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.")) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
+				return
+			var/obj/item/stack/sheet/mineral/plastitanium/Lorem = C
+			if (Lorem.get_amount() < 1)
+				to_chat(user, span_warning("You are literally holding nothing."))
+				return
+			else
+				to_chat(user, span_notice("You begin insulating the floor..."))
+				if(do_after(user, 30, target = src))
+					if (Lorem.get_amount() >= 1 && !istype(src, /turf/open/floor/engine/insulation))
+						PlaceOnTop(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
+						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+						Lorem.use(1)
+						to_chat(user, span_notice("You insulate the floor."))
 					return
 		else if(istype(C, /obj/item/stack/tile))
 			if(!broken && !burnt)

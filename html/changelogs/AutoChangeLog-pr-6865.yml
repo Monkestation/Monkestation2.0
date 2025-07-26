@@ -1,0 +1,6 @@
+author: "Melbert, TheColorCyan"
+delete-after: True
+changes:
+  - rscdel: "Heretic side path points are gone"
+  - balance: "Void pull stun radius and aoe reduced, cooldown increased"
+  - balance: "Blood siphon recieved major cooldown increase"

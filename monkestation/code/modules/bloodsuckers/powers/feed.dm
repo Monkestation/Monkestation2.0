@@ -1,4 +1,4 @@
-#define FEED_NOTICE_RANGE 2
+#define FEED_NOTICE_RANGE 5
 #define FEED_DEFAULT_TIMER (10 SECONDS)
 
 /datum/action/cooldown/bloodsucker/feed
@@ -60,7 +60,6 @@
 	if(!QDELETED(feed_target))
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
 		to_chat(user, span_notice("You slowly release [feed_target]."))
-		to_chat(feed_target, span_warning("Huh? What just happened? You don't remember the last few moments"))
 		if(feed_target.stat == DEAD && !started_alive)
 			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 			bloodsuckerdatum_power.AddHumanityLost(10)
@@ -91,6 +90,7 @@
 
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
 	started_alive = (feed_target.stat < HARD_CRIT)
+	to_chat(feed_target, span_userdanger("[owner] begins slipping [owner.p_their()] fangs into you!"))
 	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE))
 		owner.balloon_alert(owner, "feed stopped")
 		DeactivatePower()
@@ -119,6 +119,8 @@
 			bloodsuckerdatum_power.give_masquerade_infraction()
 			break
 
+	to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments")))
+	feed_target.Immobilize(2 SECONDS)
 	owner.add_traits(list(TRAIT_MUTE, TRAIT_IMMOBILIZED), FEED_TRAIT)
 	return ..()
 
@@ -227,7 +229,7 @@
 	for(var/mob/living/near_targets in oview(1, owner))
 		if(!owner.Adjacent(near_targets))
 			continue
-		if(near_targets.stat)
+		if(near_targets.stat < DEAD)
 			close_living_mobs |= near_targets
 		else
 			close_dead_mobs |= near_targets

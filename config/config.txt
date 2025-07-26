@@ -9,6 +9,7 @@ $include interviews.txt
 $include lua.txt
 $include auxtools.txt
 $include plexora.txt
+$include map_vote.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -135,9 +136,6 @@ HOSTEDBY Yournamehere
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
-
-## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
-CHECK_RANDOMIZER
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
@@ -572,3 +570,7 @@ CONFIG_ERRORS_RUNTIME
 ## Tgui payloads larger than the 2kb limit for BYOND topic requests are split into roughly 1kb chunks and sent in sequence.
 ## This config option limits the maximum chunk count for which the server will accept a payload, default is 32
 TGUI_MAX_CHUNK_COUNT 32
+
+# The URL for webmaps.
+# $map will be replaced with the current map's name (with spaces removed)
+WEBMAP_URL https://maps.monkestation.com/maps/Monkestation/$map

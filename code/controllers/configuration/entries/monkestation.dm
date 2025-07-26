@@ -33,6 +33,8 @@
 /datum/config_entry/string/issue_slug
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/mentor_legacy_system
+
 /datum/config_entry/flag/looc_enabled
 
 /datum/config_entry/flag/log_storyteller

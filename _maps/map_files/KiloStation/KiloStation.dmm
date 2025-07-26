@@ -6374,7 +6374,7 @@
 /area/station/service/kitchen)
 "bZt" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/trimline/dark/filled/line{
 	dir = 6
 	},
@@ -10603,7 +10603,7 @@
 	id = "shitbreaker"
 	},
 /obj/machinery/shipbreaker,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "dom" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11192,7 +11192,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/north,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "dxm" = (
 /obj/structure/sign/warning/secure_area,
@@ -13239,6 +13239,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination/common/bitrunner,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/bitden)
 "ege" = (
@@ -14321,7 +14322,7 @@
 	},
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "ezX" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -32561,7 +32562,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "jXM" = (
 /obj/effect/turf_decal/box,
@@ -42253,7 +42254,7 @@
 	id = "shitbreaker"
 	},
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "nex" = (
 /obj/machinery/door/firedoor,
@@ -52149,6 +52150,8 @@
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 5
 	},
+/obj/machinery/requests_console/auto_name/directional/east,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison)
 "qpp" = (
@@ -69502,7 +69505,7 @@
 /obj/machinery/conveyor{
 	id = "shitbreaker"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "vMG" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -76872,7 +76875,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "yaO" = (
-/obj/machinery/media/jukebox,
+/obj/machinery/jukebox,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)

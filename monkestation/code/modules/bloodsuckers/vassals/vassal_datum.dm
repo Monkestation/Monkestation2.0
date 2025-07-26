@@ -31,6 +31,7 @@
 	current_mob.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
 	current_mob.clear_mood_event("vampcandle")
 	add_team_hud(current_mob)
+	current_mob.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
 
 /datum/antagonist/vassal/add_team_hud(mob/target)
 	QDEL_NULL(team_hud_ref)
@@ -58,6 +59,7 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	current_mob.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
+	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
 
 /datum/antagonist/vassal/pre_mindshield(mob/implanter, mob/living/mob_override)
 	return COMPONENT_MINDSHIELD_PASSED
@@ -76,7 +78,7 @@
 
 /datum/antagonist/vassal/on_gain()
 	RegisterSignal(owner.current, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
+	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	/// Enslave them to their Master
 	if(!master || !istype(master, master))
 		return
@@ -100,7 +102,7 @@
 
 /datum/antagonist/vassal/on_removal()
 	UnregisterSignal(owner.current, COMSIG_ATOM_EXAMINE)
-	UnregisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN)
+	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
 	//Free them from their Master
 	if(!QDELETED(master?.owner))
 		if(special_type && master.special_vassals[special_type])

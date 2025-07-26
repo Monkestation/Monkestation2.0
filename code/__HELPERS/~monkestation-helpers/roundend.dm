@@ -1,51 +1,61 @@
 /datum/controller/subsystem/ticker/proc/save_tokens()
 	rustg_file_write(json_encode(GLOB.saved_token_values), "[GLOB.log_directory]/tokens.json")
 
-/datum/controller/subsystem/ticker/proc/distribute_rewards()
+/datum/controller/subsystem/ticker/proc/calculate_rewards()
+	. = list()
+	for(var/client/client as anything in GLOB.clients)
+		calculate_rewards_for_client(client, .)
+
+/datum/controller/subsystem/ticker/proc/distribute_rewards(list/coin_rewards)
 	var/hour = round((world.time - SSticker.round_start_time) / 36000)
 	var/minute = round(((world.time - SSticker.round_start_time) - (hour * 36000)) / 600)
 	var/added_xp = round(25 + (minute ** 0.85))
-	for(var/client/client as anything in GLOB.clients)
-		distribute_rewards_to_client(client, added_xp)
+	for(var/ckey in coin_rewards)
+		distribute_rewards_to_client(ckey, added_xp, coin_rewards[ckey])
 
-/datum/controller/subsystem/ticker/proc/distribute_rewards_to_client(client/client, added_xp)
+/datum/controller/subsystem/ticker/proc/distribute_rewards_to_client(ckey, added_xp, list/rewards)
+	var/client/client = GLOB.directory[ckey]
+	if(!client)
+		return
+	for(var/reward in rewards)
+		var/amount = reward[1]
+		var/reason = reward[2]
+		client?.prefs?.adjust_metacoins(ckey, amount, reason)
+	if(client?.mob?.mind?.assigned_role)
+		add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
+
+/datum/controller/subsystem/ticker/proc/calculate_rewards_for_client(client/client, list/queue)
 	if(!istype(client) || QDELING(client))
 		return
-	var/datum/persistent_client/details = client.persistent_client
-	if(!QDELETED(client?.prefs))
-		var/round_end_bonus = 75
-
-		// Patreon Flat Roundend Bonus
-		if((details?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))
-			round_end_bonus += DONATOR_ROUNDEND_BONUS
-
-		// Twitch Flat Roundend Bonus
-		if((details?.twitch?.has_access(ACCESS_TWITCH_SUB_TIER_1)))
-			round_end_bonus += DONATOR_ROUNDEND_BONUS
-
-		client?.prefs?.adjust_metacoins(client?.ckey, round_end_bonus, "Played a Round")
-
-		if(world.port == MRP2_PORT)
-			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Monkey 2 Seeding Subsidies")
-		var/special_bonus = details?.roundend_monkecoin_bonus
-		if(special_bonus)
-			client?.prefs?.adjust_metacoins(client?.ckey, special_bonus, "Special Bonus")
-		// WHYYYYYY
-		if(QDELETED(client))
-			return
-		if(client?.is_mentor())
-			client?.prefs?.adjust_metacoins(client?.ckey, 500, "Mentor Bonus")
-		// WHYYYYYYYYYYYYYYYY
-		if(QDELETED(client))
-			return
-		if(client?.mob?.mind?.assigned_role)
-			add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
-
-	if(QDELETED(client))
+	var/ckey = client?.ckey
+	if(!ckey)
 		return
+	var/datum/persistent_client/details = client.persistent_client
+	var/round_end_bonus = 75
+
+	// Patreon Flat Roundend Bonus
+	if((details?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))
+		round_end_bonus += DONATOR_ROUNDEND_BONUS
+
+	// Twitch Flat Roundend Bonus
+	if((details?.twitch?.has_access(ACCESS_TWITCH_SUB_TIER_1)))
+		round_end_bonus += DONATOR_ROUNDEND_BONUS
+
+	LAZYINITLIST(queue[ckey])
+
+	queue[ckey] += list(list(round_end_bonus, "Played a Round"))
+
+	if(world.port == MRP2_PORT)
+		queue[ckey] += list(list(500, "MRP2 Seeding Subsidies"))
+	var/special_bonus = details?.roundend_monkecoin_bonus
+	if(special_bonus)
+		queue[ckey] += list(list(special_bonus, "Special Bonus"))
+	if(client?.is_mentor())
+		queue[ckey] += list(list(500, "Mentor Bonus"))
+
 	var/list/applied_challenges = details?.applied_challenges
 	if(LAZYLEN(applied_challenges))
-		var/mob/living/client_mob = client?.mob
+		var/mob/living/client_mob = details?.mob
 		if(!istype(client_mob) || QDELING(client_mob) || client_mob?.stat == DEAD)
 			return
 		var/total_payout = 0
@@ -54,7 +64,7 @@
 				continue
 			total_payout += listed_challenge.challenge_payout
 		if(total_payout)
-			client?.prefs?.adjust_metacoins(client?.ckey, total_payout, "Challenge rewards")
+			queue[ckey] += list(list(total_payout, "Challenge Rewards"))
 
 /datum/controller/subsystem/ticker/proc/refund_cassette()
 	if(!length(GLOB.cassette_reviews))

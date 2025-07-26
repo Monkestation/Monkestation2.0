@@ -57,7 +57,6 @@
 /obj/item/organ/internal/eyes/jelly
 	name = "photosensitive eyespots"
 	zone = BODY_ZONE_CHEST
-	organ_flags = ORGAN_UNREMOVABLE
 
 /obj/item/organ/internal/eyes/roundstartslime
 	name = "photosensitive eyespots"

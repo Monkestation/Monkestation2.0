@@ -1,0 +1,5 @@
+author: "Loiosh42"
+delete-after: True
+changes:
+  - balance: "AP has been rebalanced from a flat reduction to a percentage of armor reduction"
+  - balance: "Bogseo is now semi-auto burst instead of full-auto burst"

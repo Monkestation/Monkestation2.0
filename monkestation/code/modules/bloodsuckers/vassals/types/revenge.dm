@@ -35,10 +35,10 @@
 
 /datum/antagonist/vassal/revenge/on_gain()
 	. = ..()
-	RegisterSignal(master, BLOODSUCKER_FINAL_DEATH, PROC_REF(on_master_death))
+	RegisterSignal(master, COMSIG_BLOODSUCKER_FINAL_DEATH, PROC_REF(on_master_death))
 
 /datum/antagonist/vassal/revenge/on_removal()
-	UnregisterSignal(master, BLOODSUCKER_FINAL_DEATH)
+	UnregisterSignal(master, COMSIG_BLOODSUCKER_FINAL_DEATH)
 	return ..()
 
 /datum/antagonist/vassal/revenge/ui_static_data(mob/user)

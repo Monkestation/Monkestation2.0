@@ -228,6 +228,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 //All
 #define CLUSTER_CHECK_ALL 30 //!Don't let anything cluster, like, at all
 
+/// Checks the job changes in the map config for the passed change key.
+#define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.current_map.job_changes?[job]?[change]
+
 //monkestation start
 #define ZTRAIT_OSHAN "OshanTrait"
 
