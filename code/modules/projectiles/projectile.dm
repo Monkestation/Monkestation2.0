@@ -763,7 +763,7 @@
 	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
 		return TRUE
 
-	if((expanded_bounce = TRUE) && (A.flags_ricochet & (RICOCHET_HARD || RICOCHET_SHINY)))
+	if(expanded_bounce && (A.flags_ricochet & (RICOCHET_HARD | RICOCHET_SHINY)))
 		return TRUE
 
 	return FALSE
