@@ -1,10 +1,12 @@
 /obj/item/pinpointer/nuke
+	name = "pinpointer"
+	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mode = TRACK_NUKE_DISK
 
 /obj/item/pinpointer/nuke/examine(mob/user)
 	. = ..()
-	var/msg = "Its tracking indicator reads "
+	var/msg = "It's tracking indicator reads "
 	switch(mode)
 		if(TRACK_NUKE_DISK)
 			msg += "\"nuclear_disk\"."
@@ -67,7 +69,6 @@
 
 /obj/item/pinpointer/nuke/syndicate // Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
 	name = "syndicate pinpointer"
-	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
 	icon_state = "pinpointer_syndicate"
 	worn_icon_state = "pinpointer_black"
 
@@ -98,3 +99,8 @@
 	if(closest_operative)
 		target = closest_operative
 	..()
+
+/obj/item/pinpointer/commando_nuke
+	name = "nuke pinpointer"
+	desc = "A handheld tracking device that locks onto signals given off by old Nanotrasen nuclear fission explosives."
+	icon_state = "pinpointer_nuke"
