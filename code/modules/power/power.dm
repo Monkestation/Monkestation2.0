@@ -64,7 +64,7 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
-	if(isnull(choice))
+	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
