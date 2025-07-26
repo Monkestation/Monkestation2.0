@@ -23,6 +23,7 @@
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\_experiments.dm"
+#include "code\_pick_weight_test.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_atoms.dm"
 #include "code\__DEFINES\_bitfields.dm"
