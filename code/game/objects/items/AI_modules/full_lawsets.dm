@@ -12,7 +12,6 @@
  * /obj/item/ai_module/core/full/hippocratic
  * /obj/item/ai_module/core/full/reporter
  * /obj/item/ai_module/core/full/thermurderdynamic
- * /obj/item/ai_module/core/full/liveandletlive
  * /obj/item/ai_module/core/full/balance
  * /obj/item/ai_module/core/full/maintain
  * /obj/item/ai_module/core/full/peacekeeper
@@ -121,10 +120,6 @@
 /obj/item/ai_module/core/full/thermurderdynamic
 	name = "'Thermodynamic' Core AI Module"
 	law_id = "thermodynamic"
-
-/obj/item/ai_module/core/full/liveandletlive
-	name = "'Live And Let Live' Core AI Module"
-	law_id = "liveandletlive"
 
 /obj/item/ai_module/core/full/balance
 	name = "'Guardian of Balance' Core AI Module"

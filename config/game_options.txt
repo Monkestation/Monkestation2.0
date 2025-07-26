@@ -265,7 +265,6 @@ RANDOM_LAWS corporate
 ## Quirky laws. Shouldn't cause too much harm
 #RANDOM_LAWS hippocratic
 #RANDOM_LAWS maintain
-#RANDOM_LAWS liveandletlive
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
@@ -298,7 +297,6 @@ LAW_WEIGHT robocop,5
 LAW_WEIGHT corporate,5
 LAW_WEIGHT hippocratic,5
 LAW_WEIGHT maintain,5
-LAW_WEIGHT liveandletlive,5
 LAW_WEIGHT peacekeeper,5
 LAW_WEIGHT ten_commandments,5
 LAW_WEIGHT nutimov,5

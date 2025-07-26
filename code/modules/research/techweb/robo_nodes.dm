@@ -98,7 +98,6 @@
 		"ten_commandments_module",
 		"hippocratic_module",
 		"maintain_module",
-		"liveandletlive_module",
 		"reporter_module",
 		"hulkamania_module",
 		"peacekeeper_module",

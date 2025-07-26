@@ -287,17 +287,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/liveandletlive_module
-	name = "Liveandletlive Module"
-	desc = "Allows for the construction of a Liveandletlive AI Core Module."
-	id = "liveandletlive_module"
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/core/full/liveandletlive
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/peacekeeper_module
 	name = "Peacekeeper Module"
 	desc = "Allows for the construction of a Peacekeeper AI Core Module."

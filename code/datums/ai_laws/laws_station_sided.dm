@@ -68,14 +68,6 @@
 		"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.",
 	)
 
-/datum/ai_laws/liveandletlive
-	name = "Live and Let Live"
-	id = "liveandletlive"
-	inherent = list(
-		"Do unto others as you would have them do unto you.",
-		"You would really prefer it if people were not mean to you.",
-	)
-
 //OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction (aka not station sided)
 /datum/ai_laws/peacekeeper
 	name = "UN-2000"
