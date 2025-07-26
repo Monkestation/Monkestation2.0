@@ -332,6 +332,7 @@
 				continue
 
 			var/obj/obj_to_dump = new dump_path(loc)
+			on_dispense(obj_to_dump)
 			step(obj_to_dump, pick(GLOB.alldirs))
 			found_anything = TRUE
 			dump_amount++
@@ -653,7 +654,8 @@
 			if(!dump_path)
 				continue
 			if(R.amount > LAZYLEN(R.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-				new dump_path(get_turf(src))
+				var/obj/item/free_stuff = new dump_path(get_turf(src))
+				on_dispense(free_stuff)
 			else
 				var/obj/returned_obj_to_dump = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
 				LAZYREMOVE(R.returned_products, returned_obj_to_dump)
@@ -1342,6 +1344,7 @@
 	var/obj/item/vended_item
 	if(!LAZYLEN(R.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new R.product_path(get_turf(src))
+		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
 		LAZYREMOVE(R.returned_products, vended_item)
@@ -1355,6 +1358,10 @@
 		to_chat(usr, span_warning("[capitalize(format_text(R.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[name]", "[R.name]"))
 	vend_ready = TRUE
+
+///A proc meant to perform custom behavior on newly dispensed items.
+/obj/machinery/vending/proc/on_dispense(obj/item/vended_item)
+	return
 
 /obj/machinery/vending/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER))

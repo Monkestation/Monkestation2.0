@@ -237,6 +237,7 @@
 #include "trait_addition_and_removal.dm"
 #include "traitor.dm"
 #include "trick_weapon_icons.dm"
+#include "turf_icons.dm"
 #include "tutorial_sanity.dm"
 #include "unit_test.dm"
 #include "vendor_boards.dm"

@@ -170,8 +170,17 @@
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
 	icon_state = "tea"
-	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
+	list_reagents = list(/datum/reagent/consumable/hot_coco = 20, /datum/reagent/consumable/sugar = 5)
 	drink_type = SUGAR
+	resistance_flags = FREEZE_PROOF
+	custom_price = PAYCHECK_CREW * 1.2
+
+/obj/item/reagent_containers/cup/glass/mug/britcup/bogril
+	name = "Bogril"
+	desc = "A piping hot meaty drink, reminiscent of broth."
+	icon_state = "britcup"
+	list_reagents = list(/datum/reagent/consumable/bogril = 20, /datum/reagent/consumable/nutriment/protein = 5)
+	drink_type = MEAT
 	resistance_flags = FREEZE_PROOF
 	custom_price = PAYCHECK_CREW * 1.2
 

@@ -29,13 +29,13 @@
 /// kPa
 #define ONE_ATMOSPHERE 101.325
 /// -270.3degC
-#define TCMB 2.7
+#define TCMB CELCIUS_TO_KELVIN(-270.45 CELCIUS)
 /// 0degC
-#define T0C 273.15
+#define T0C CELCIUS_TO_KELVIN(0 CELCIUS)
 /// 20degC
-#define T20C 293.15
+#define T20C CELCIUS_TO_KELVIN(20 CELCIUS)
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
-#define COLD_ROOM_TEMP 259.15
+#define COLD_ROOM_TEMP CELCIUS_TO_KELVIN(-14 CELCIUS)
 
 /**
  *I feel the need to document what happens here. Basically this is used

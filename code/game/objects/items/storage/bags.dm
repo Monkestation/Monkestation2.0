@@ -21,6 +21,7 @@
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
+	storage_type = /datum/storage/bag
 
 /obj/item/storage/bag/Initialize(mapload)
 	. = ..()
