@@ -25,6 +25,7 @@
 	starting_node = TRUE
 	display_name = "Basic Exosuit Equipment"
 	description = "Various tools fit for basic mech units"
+	prereq_ids = list("mecha")
 	design_ids = list(
 		"mech_drill",
 		"mech_extinguisher",
@@ -35,7 +36,7 @@
 	id = "clown"
 	display_name = "Clown Technology"
 	description = "Honk?!"
-	prereq_ids = list("base")
+	prereq_ids = list("base", "mecha")
 	design_ids = list(
 		"air_horn",
 		"borg_transform_clown",
@@ -63,7 +64,7 @@
 	id = "mecha_odysseus"
 	display_name = "EXOSUIT: Odysseus"
 	description = "Odysseus exosuit designs"
-	prereq_ids = list("base")
+	prereq_ids = list("mecha")
 	design_ids = list(
 		"odysseus_chassis",
 		"odysseus_head",
@@ -82,7 +83,7 @@
 	id = "mecha_clarke"
 	display_name = "EXOSUIT: Clarke"
 	description = "Clarke exosuit designs"
-	prereq_ids = list("engineering")
+	prereq_ids = list("engineering", "mecha")
 	design_ids = list(
 		"clarke_chassis",
 		"clarke_head",
@@ -98,7 +99,7 @@
 	id = "adv_mecha"
 	display_name = "Advanced Exosuits"
 	description = "For when you just aren't Gundam enough."
-	prereq_ids = list("adv_robotics")
+	prereq_ids = list("adv_robotics", "mecha")
 	design_ids = list(
 		"mech_repair_droid",
 	)
@@ -109,7 +110,7 @@
 	id = "mech_gygax"
 	display_name = "EXOSUIT: Gygax"
 	description = "Gygax exosuit designs"
-	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	prereq_ids = list("adv_mecha", "adv_mecha_armor",)
 	design_ids = list(
 		"gygax_armor",
 		"gygax_chassis",
@@ -193,7 +194,7 @@
 	id = "basic_plasma"
 	display_name = "Basic Plasma Research"
 	description = "Research into the mysterious and dangerous substance, plasma."
-	prereq_ids = list("engineering")
+	prereq_ids = list("engineering", "mech_tools")
 	design_ids = list(
 		"mech_generator",
 	)
@@ -213,7 +214,7 @@
 	id = "adv_mecha_tools"
 	display_name = "Advanced Exosuit Equipment"
 	description = "Tools for high level mech suits"
-	prereq_ids = list("adv_mecha")
+	prereq_ids = list("adv_mecha", "mech_tools")
 	design_ids = list(
 		"mech_rcd",
 		"mech_thrusters",
@@ -224,7 +225,7 @@
 	id = "med_mech_tools"
 	display_name = "Medical Exosuit Equipment"
 	description = "Tools for high level mech suits"
-	prereq_ids = list("adv_biotech", "mecha_odysseus")
+	prereq_ids = list("adv_biotech", "mecha_odysseus", "mech_tools")
 	design_ids = list(
 		"mech_medi_beam",
 		"mech_sleeper",
@@ -260,7 +261,7 @@
 	id = "mech_carbine"
 	display_name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("exotic_ammo")
+	prereq_ids = list("exotic_ammo", "mech_tools")
 	design_ids = list(
 		"mech_carbine",
 		"mech_carbine_ammo",
@@ -271,7 +272,7 @@
 	id = "mmech_ion"
 	display_name = "Exosuit Weapon (MKIV Ion Heavy Cannon)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("electronic_weapons", "emp_adv")
+	prereq_ids = list("electronic_weapons", "emp_adv", "mech_tools")
 	design_ids = list(
 		"mech_ion",
 	)
@@ -281,7 +282,7 @@
 	id = "mech_tesla"
 	display_name = "Exosuit Weapon (MKI Tesla Cannon)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("electronic_weapons", "adv_power")
+	prereq_ids = list("electronic_weapons", "adv_power", "mech_tools")
 	design_ids = list(
 		"mech_tesla",
 	)
@@ -291,7 +292,7 @@
 	id = "mech_laser"
 	display_name = "Exosuit Weapon (CH-PS \"Immolator\" Laser)"
 	description = "A basic piece of mech weaponry"
-	prereq_ids = list("beam_weapons")
+	prereq_ids = list("beam_weapons", "mech_tools")
 	design_ids = list(
 		"mech_laser",
 	)
@@ -301,7 +302,7 @@
 	id = "mech_laser_heavy"
 	display_name = "Exosuit Weapon (CH-LC \"Solaris\" Laser Cannon)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("adv_beam_weapons")
+	prereq_ids = list("adv_beam_weapons", "mech_tools")
 	design_ids = list(
 		"mech_laser_heavy",
 	)
@@ -321,7 +322,7 @@
 	id = "mech_grenade_launcher"
 	display_name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("chemical_weapons")
+	prereq_ids = list("chemical_weapons", "mech_tools")
 	design_ids = list(
 		"mech_grenade_launcher",
 		"mech_grenade_launcher_ammo",
@@ -332,7 +333,7 @@
 	id = "mech_missile_rack"
 	display_name = "Exosuit Weapon (BRM-6 Missile Rack)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("chemical_weapons")
+	prereq_ids = list("chemical_weapons", "mech_tools")
 	design_ids = list(
 		"mech_missile_rack",
 		"mech_missile_rack_ammo",
@@ -343,7 +344,7 @@
 	id = "clusterbang_launcher"
 	display_name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("chemical_weapons")
+	prereq_ids = list("chemical_weapons", "mech_tools")
 	design_ids = list(
 		"clusterbang_launcher",
 		"clusterbang_launcher_ammo",
@@ -354,7 +355,7 @@
 	id = "mech_teleporter"
 	display_name = "Exosuit Module (Teleporter Module)"
 	description = "An advanced piece of mech Equipment"
-	prereq_ids = list("micro_bluespace")
+	prereq_ids = list("micro_bluespace", "mech_tools")
 	design_ids = list(
 		"mech_teleporter",
 	)
@@ -364,7 +365,7 @@
 	id = "mech_wormhole_gen"
 	display_name = "Exosuit Module (Localized Wormhole Generator)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("bluespace_travel")
+	prereq_ids = list("bluespace_travel", "mech_tools")
 	design_ids = list(
 		"mech_wormhole_gen",
 	)
@@ -385,7 +386,7 @@
 	id = "mech_diamond_drill"
 	display_name = "Exosuit Diamond Drill"
 	description = "A diamond drill fit for a large exosuit"
-	prereq_ids = list("adv_mining")
+	prereq_ids = list("adv_mining", "mech_tools")
 	design_ids = list(
 		"mech_diamond_drill",
 	)
