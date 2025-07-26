@@ -1530,9 +1530,9 @@ MONKESTATION REMOVAL END */
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	/// The bloodiest wound that the patient has will have its blood_flow reduced by about half this much each second
-	var/clot_rate = 0.3
+	var/clot_rate = 0
 	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
-	var/passive_bleed_modifier = 0.7
+	var/passive_bleed_modifier = 0.2
 	/// For tracking when we tell the person we're no longer bleeding
 	var/was_working
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1575,7 +1575,7 @@ MONKESTATION REMOVAL END */
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
 		return
 
 	if(SPT_PROB(7.5, seconds_per_tick))
@@ -1625,3 +1625,40 @@ MONKESTATION REMOVAL END */
 	required_drink_type = /datum/reagent/medicine/coagulant/seraka_extract
 	name = "glass of seraka extract"
 	desc = "Deeply savoury, bitter, and makes your blood clot up in your veins. A great drink, all things considered."
+
+/datum/reagent/medicine/coagulant/extreme
+	name = "Insta-Clot"
+	description = "A dark red substance that halves bleeding and closes wounds extremely quickly. Its clotting power does come with the drawback of it wrecking the heart of the user. An overdose will quickly kill the user"
+	color = "#4b0b0be8"
+	taste_description = "dense, rotten blood"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	clot_rate = 0.4
+	passive_bleed_modifier = 0.5
+	overdose_threshold = 5
+
+
+/datum/reagent/medicine/coagulant/extreme/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/obj/item/organ/internal/heart/our_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/spleen/our_spleen = affected_mob.get_organ_slot(ORGAN_SLOT_SPLEEN)
+	if(prob(50))
+		our_heart.apply_organ_damage(2)
+		our_spleen.apply_organ_damage(2)
+		to_chat(affected_mob, span_danger("You feel an uncomfortable squeeze on your organs!"))
+
+/datum/reagent/medicine/coagulant/extreme/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	var/obj/item/organ/internal/heart/our_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/spleen/our_spleen = affected_mob.get_organ_slot(ORGAN_SLOT_SPLEEN)
+	if(HAS_TRAIT(affected_mob, TRAIT_NOBLOOD))
+		return
+	if(prob(25))
+		our_heart.apply_organ_damage(6) //Pray this kills you first
+		to_chat(affected_mob, span_danger("You feel your clotted blood shredding your heart!"))
+	else
+		var/blood_addition = 20
+		affected_mob.blood_volume = affected_mob.blood_volume + blood_addition //Eventually will cause you to pop like a balloon at 2150 blood or about 8.3 units of the stuff over 166 cycles.
+		if(prob(20))
+			to_chat(affected_mob, span_danger("Your blood feels like hot fire!"))
+		our_spleen.apply_organ_damage(1)
+
+
