@@ -54,6 +54,7 @@
 	var/datum/team/nuclear/nuke_team
 
 /datum/round_event/antagonist/solo/nuclear_operative/start()
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/datum/mind/most_experienced = get_most_experienced(setup_minds, required_role) || setup_minds[1]
 	prepare(most_experienced)
 	var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(leader_antag_type)

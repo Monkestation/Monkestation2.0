@@ -1,0 +1,2340 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aE" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"bt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"bI" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"bX" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/cola,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"bY" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"ci" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/cigarette/syndicate,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"cr" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"dj" = (
+/obj/structure/lattice/catwalk,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"er" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"es" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/south,
+/obj/structure/rack,
+/obj/item/chair/plastic{
+	pixel_x = 0;
+	pixel_y = 5
+	},
+/obj/item/chair/plastic{
+	pixel_x = 0;
+	pixel_y = 9
+	},
+/obj/item/chair/plastic{
+	pixel_x = 0;
+	pixel_y = 13
+	},
+/obj/item/chair/plastic{
+	pixel_x = 0;
+	pixel_y = 17
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"eu" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"fN" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"ga" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/gun/ballistic/rocketlauncher{
+	pixel_x = -8;
+	pixel_y = 20
+	},
+/obj/item/ammo_casing/caseless/rocket{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/ammo_casing/caseless/rocket{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/ammo_casing/caseless/rocket{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/ammo_casing/caseless/rocket/heap{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"gF" = (
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"gL" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"hm" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"ib" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+"iy" = (
+/obj/machinery/station_map/syndicate,
+/turf/closed/indestructible/syndicate,
+/area/centcom/syndicate_mothership/firebase_trident)
+"jm" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"jE" = (
+/obj/structure/lattice/catwalk,
+/obj/item/storage/backpack/duffelbag/clown/syndie{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"kB" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit,
+/obj/item/defibrillator/loaded,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+"kO" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"li" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"lk" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"lY" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/syndicatedetonator{
+	desc = "This gaudy button can be used to instantly detonate syndicate bombs that have been activated on the station. It is also fun to press.";
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/syndicate{
+	pixel_x = -1;
+	pixel_y = 16
+	},
+/obj/item/clothing/mask/chameleon{
+	pixel_x = 13;
+	pixel_y = -1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"mA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"mU" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"nG" = (
+/obj/machinery/light/floor/has_bulb/warm,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"on" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/lattice/catwalk,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"oo" = (
+/obj/item/pai_card{
+	pixel_x = 14;
+	pixel_y = 0
+	},
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/toy/nuke{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/toy/cards/deck/syndicate{
+	pixel_x = -2;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"oL" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"pp" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"qt" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"qC" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/machinery/light/warm/dim/directional/south,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"qP" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/pen/fourcolor{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"rf" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"rQ" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"rT" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"sC" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north,
+/obj/machinery/vending/donkweaponry,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"sK" = (
+/obj/structure/lattice/catwalk,
+/obj/item/storage/box/syndie_kit/centcom_costume{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"tB" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"tJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/katana/cursed{
+	desc = "A gift from your benefactors.";
+	force = 20
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"tL" = (
+/obj/item/clothing/head/cone,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"tR" = (
+/obj/structure/sign/poster/contraband/clown/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"tV" = (
+/obj/machinery/atmospherics/components/binary/pump,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"uc" = (
+/turf/closed/indestructible/syndicate,
+/area/centcom/syndicate_mothership/firebase_trident)
+"ut" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"uu" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"uL" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 4
+	},
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"uV" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+"vm" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/landmark/start/commando_nukeop,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"vB" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/flashlight/lantern/syndicate{
+	pixel_x = 10;
+	pixel_y = 9
+	},
+/obj/item/stack/spacecash/c200{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/stack/spacecash/c500{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/stack/spacecash/c20{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/stack/spacecash/c20{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/stack/spacecash/c100{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"vQ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"vT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/yellow,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"wa" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+"wj" = (
+/obj/item/clothing/head/utility/hardhat/orange{
+	pixel_x = 5;
+	pixel_y = -9
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"wr" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	icon_state = "siding_thinplating_new_corner"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"wA" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/robot_debris/old,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"wG" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"xf" = (
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"xn" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/nuclearbomb/commando,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+"xq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/yellow,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"xv" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"xQ" = (
+/obj/machinery/light/warm/directional/west,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"yF" = (
+/obj/machinery/atmospherics/components/unary/thermomachine,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"zu" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"zz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"zD" = (
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ae" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ag" = (
+/obj/docking_port/stationary/firebase_trident{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"An" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/donkweaponry,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"As" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/machinery/holopad/secure/hacked,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"AA" = (
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Bw" = (
+/obj/structure/lattice/catwalk,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Spots-The-Operative"
+	},
+/obj/item/binoculars{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Bx" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"BG" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"BH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/gun/energy/ionrifle,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"BJ" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	icon_state = "siding_thinplating_corner"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"CK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"Dq" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Dy" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"DT" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/obj/machinery/computer/shuttle/syndicate/alt/recall,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"FP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/communist_state/directional/north,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"GE" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/shipping_container/gorlex/red,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"GS" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/critter,
+/mob/living/basic/carp/pet/cayenne{
+	name = "Paprika"
+	},
+/obj/item/slimepotion/slime/sentience/nuclear{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ic" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Jd" = (
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ji" = (
+/obj/effect/decal/cleanable/glass/plastitanium/screws,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Jl" = (
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ku" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"KH" = (
+/turf/open/floor/iron/dark/textured,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ld" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/warm/dim/directional/north,
+/obj/machinery/vending/donkweaponry,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Lk" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"Lw" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/storage/box/donkpockets/donkpocketberry{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/storage/box/donkpockets/donkpockethonk{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/storage/box/donkpockets/donkpocketpizza{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/storage/box/donkpockets/donkpocketspicy{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/storage/box/donkpockets/donkpocketteriyaki{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Mn" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"MA" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"MR" = (
+/obj/item/tank/internals/plasma/full{
+	pixel_x = -11;
+	pixel_y = 5
+	},
+/obj/item/tank/internals/oxygen{
+	pixel_x = 12;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Nf" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/shipping_container/interdyne,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident)
+"NH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Oj" = (
+/turf/closed/indestructible/rock,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Pm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"PC" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"PE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"PS" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/landmark/start/commando_nukeop,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"RP" = (
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Se" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/food/syndicake{
+	pixel_y = 7;
+	pixel_x = 0
+	},
+/obj/item/food/syndicake{
+	pixel_y = 2;
+	pixel_x = 7
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Si" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"SJ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"SO" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Uh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"Um" = (
+/obj/effect/landmark/start/commando_nukeop_leader,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/syndicate_mothership/firebase_trident)
+"UX" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Base Access"
+	},
+/area/centcom/syndicate_mothership/firebase_trident)
+"Vf" = (
+/turf/open/space/basic,
+/area/space)
+"Vg" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/newscaster/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"VC" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"VY" = (
+/obj/item/pickaxe/drill/jackhammer{
+	pixel_x = 15;
+	pixel_y = -7
+	},
+/obj/item/transfer_valve{
+	pixel_x = -5
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Wb" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Wr" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Xk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/sign/poster/contraband/donk_co/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Xo" = (
+/obj/structure/chair/plastic,
+/obj/effect/landmark/start/commando_nukeop,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"XX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ys" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/canister_frame/machine/finished_canister_frame,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Yx" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"YG" = (
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/firebase_trident/hangar)
+"YN" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"YS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Ze" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Zk" = (
+/obj/structure/cable,
+/obj/item/stack/cable_coil{
+	pixel_x = 11;
+	pixel_y = -9
+	},
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Zm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Zu" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid,
+/area/centcom/syndicate_mothership/firebase_trident)
+"Zv" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/firebase_trident)
+"ZB" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/firebase_trident)
+"ZI" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/cardboard,
+/obj/item/storage/backpack/duffelbag/syndie,
+/obj/item/storage/backpack/duffelbag/syndie,
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/backpack/duffelbag/syndie{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/firebase_trident)
+
+(1,1,1) = {"
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(2,1,1) = {"
+Vf
+Vf
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(3,1,1) = {"
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(4,1,1) = {"
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+uc
+uc
+uc
+uc
+uc
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(5,1,1) = {"
+Oj
+Oj
+Oj
+uc
+uc
+xf
+xf
+uc
+uc
+UX
+uc
+uc
+uc
+uc
+uc
+uc
+wG
+bX
+ci
+uc
+uc
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(6,1,1) = {"
+Oj
+uc
+uc
+uc
+Ic
+YS
+YS
+BJ
+kO
+aE
+Si
+uL
+Jd
+tR
+pp
+xQ
+NH
+NH
+bt
+es
+uc
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(7,1,1) = {"
+Oj
+uc
+Ld
+Xk
+gL
+ib
+ib
+bY
+Ku
+Mn
+SO
+SJ
+ib
+ib
+oL
+Jd
+PS
+PS
+wr
+qC
+uc
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(8,1,1) = {"
+Oj
+uc
+An
+XX
+Jd
+wa
+ZI
+bY
+MA
+Ze
+zu
+SJ
+Lw
+xn
+oL
+Xo
+oo
+qP
+bY
+KH
+uc
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(9,1,1) = {"
+Oj
+uc
+An
+XX
+Jd
+uV
+uV
+VC
+rf
+gF
+Zv
+SJ
+kB
+GS
+Jd
+Xo
+Se
+lY
+As
+Um
+iy
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+"}
+(10,1,1) = {"
+Oj
+uc
+sC
+XX
+Jd
+Jd
+oL
+PC
+qt
+bI
+lk
+rT
+Jd
+Jd
+Jd
+Xo
+vB
+ga
+bY
+KH
+uc
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+"}
+(11,1,1) = {"
+Oj
+uc
+Ld
+Pm
+Vg
+nG
+vQ
+Dy
+Dy
+Dy
+Dy
+Dy
+Dy
+Bx
+nG
+Zm
+vm
+vm
+PC
+Wr
+uc
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+"}
+(12,1,1) = {"
+Oj
+uc
+tJ
+BH
+uc
+DT
+Dq
+RP
+Jl
+Jl
+Jl
+Jl
+Jl
+BG
+Zu
+mU
+ut
+mU
+mU
+ZB
+uc
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+"}
+(13,1,1) = {"
+Oj
+uc
+YN
+Dy
+Dy
+Dq
+dj
+dj
+dj
+dj
+dj
+dj
+dj
+Jl
+BG
+Dy
+Dy
+Dy
+Dy
+Dy
+Dq
+Jl
+RP
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+"}
+(14,1,1) = {"
+Oj
+uc
+li
+Lk
+Uh
+li
+Lk
+vT
+zz
+zz
+zz
+vT
+Lk
+li
+li
+Lk
+li
+li
+Lk
+li
+li
+Lk
+PE
+uc
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+"}
+(15,1,1) = {"
+Oj
+fN
+YG
+YG
+uu
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+"}
+(16,1,1) = {"
+Oj
+xv
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+uu
+rQ
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+"}
+(17,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+uu
+YG
+YG
+YG
+uu
+YG
+YG
+YG
+mA
+mA
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+"}
+(18,1,1) = {"
+Oj
+fN
+YG
+uu
+uu
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+mA
+mA
+YG
+YG
+YG
+YG
+YG
+rQ
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+"}
+(19,1,1) = {"
+Oj
+xv
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+uu
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+uu
+uu
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+"}
+(20,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+uu
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+"}
+(21,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+rQ
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+"}
+(22,1,1) = {"
+Oj
+xv
+YG
+YG
+YG
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+"}
+(23,1,1) = {"
+Oj
+fN
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+uu
+mA
+uu
+YG
+YG
+uu
+YG
+YG
+mA
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+"}
+(24,1,1) = {"
+Oj
+fN
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+rQ
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+"}
+(25,1,1) = {"
+Oj
+xv
+YG
+YG
+uu
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+"}
+(26,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+uu
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+"}
+(27,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+rQ
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+"}
+(28,1,1) = {"
+Oj
+xv
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+mA
+YG
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+"}
+(29,1,1) = {"
+Oj
+fN
+YG
+YG
+uu
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+YG
+er
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+"}
+(30,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+rQ
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+"}
+(31,1,1) = {"
+Oj
+xv
+YG
+YG
+uu
+YG
+YG
+YG
+YG
+YG
+YG
+uu
+uu
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+er
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+"}
+(32,1,1) = {"
+Oj
+fN
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+mA
+YG
+YG
+YG
+uu
+er
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+"}
+(33,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+YG
+mA
+YG
+mA
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+mA
+YG
+YG
+YG
+YG
+rQ
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+"}
+(34,1,1) = {"
+Oj
+xv
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+Ag
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+er
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(35,1,1) = {"
+Oj
+fN
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+YG
+uu
+YG
+YG
+YG
+YG
+er
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(36,1,1) = {"
+Oj
+uc
+FP
+tB
+CK
+CK
+tB
+xq
+on
+on
+on
+xq
+tB
+CK
+CK
+tB
+CK
+CK
+tB
+CK
+CK
+tB
+CK
+uc
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(37,1,1) = {"
+Oj
+Oj
+cr
+eu
+eu
+eu
+dj
+dj
+dj
+dj
+dj
+dj
+dj
+tL
+Jl
+RP
+Jl
+Jl
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(38,1,1) = {"
+Oj
+Oj
+eu
+GE
+eu
+Nf
+Ys
+Ae
+Yx
+Zk
+wj
+VY
+MR
+RP
+tL
+Jl
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(39,1,1) = {"
+Oj
+Oj
+jE
+eu
+eu
+eu
+wA
+tV
+jm
+AA
+hm
+zD
+Jl
+Jl
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(40,1,1) = {"
+Oj
+Oj
+sK
+eu
+Bw
+eu
+Wb
+yF
+Ji
+Jl
+RP
+Jl
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(41,1,1) = {"
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(42,1,1) = {"
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}
+(43,1,1) = {"
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+Vf
+"}

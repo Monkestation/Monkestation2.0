@@ -44,6 +44,10 @@
 	excute_round_end_reports = TRUE
 	var/static/datum/team/assault_operatives/assault_team
 
+/datum/round_event/antagonist/solo/assault_operative/setup()
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ASSOPBASE)
+	return ..()
+
 /datum/round_event/antagonist/solo/assault_operative/add_datum_to_mind(datum/mind/antag_mind)
 	var/mob/living/current_mob = antag_mind.current
 	SSjob.FreeRole(antag_mind.assigned_role.title)

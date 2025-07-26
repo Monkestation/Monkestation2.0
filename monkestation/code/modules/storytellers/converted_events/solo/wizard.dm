@@ -29,16 +29,10 @@
 	max_occurrences = 1
 	event_icon_state = "wizard"
 
-/datum/round_event_control/antagonist/solo/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(!length(GLOB.wizardstart))
-		return FALSE
-
 /datum/round_event/antagonist/solo/wizard
 
 /datum/round_event/antagonist/solo/wizard/add_datum_to_mind(datum/mind/antag_mind)
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_WIZARDDEN)
 	var/mob/living/current_mob = antag_mind.current
 	SSjob.FreeRole(antag_mind.assigned_role.title)
 	current_mob.clear_inventory()
