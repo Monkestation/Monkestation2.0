@@ -40,7 +40,7 @@
 
 /obj/item/encryptionkey/binary
 	name = "binary translator key"
-	icon_state = "cypher_basic"
+	icon_state = "cypher_base"
 	translate_binary = TRUE
 	translated_language = /datum/language/machine
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
