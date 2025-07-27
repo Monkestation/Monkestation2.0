@@ -417,7 +417,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /atom/movable/screen/map_view/char_preview/Destroy()
 	QDEL_NULL(body)
-	preferences?.character_preview_view = null
+	if(preferences?.character_preview_view == src)
+		preferences.character_preview_view = null
 	preferences = null
 	return ..()
 
