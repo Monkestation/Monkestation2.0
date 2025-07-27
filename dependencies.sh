@@ -25,4 +25,4 @@ export DREAMLUAU_REPO="tgstation/dreamluau"
 #dreamluau git tag
 export DREAMLUAU_VERSION=0.1.3
 
-export ANERI_VERSION="80c19318fb8682f7e5fec3fea653a7c10402b450"
+export ANERI_VERSION="fff06736d82a1b8817eac62f562d726604947be3"
