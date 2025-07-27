@@ -286,15 +286,7 @@
 
 #define rustg_json_is_valid(text) (RUSTG_CALL(RUST_G, "json_is_valid")(text) == "true")
 
-//#define rustg_log_write(fname, text, format) RUSTG_CALL(RUST_G, "log_write")(fname, text, format)
-/proc/rustg_log_write(fname, text, format)
-#if !defined(OPENDREAM) && !defined(SPACEMAN_DMM) && DM_BUILD >= 1649
-	var/static/__loaded
-	return call_ext(__loaded ||= load_ext(RUST_G, "log_write"))(fname, text, format)
-#else
-	return call_ext(RUST_G, "log_write")(fname, text, format)
-#endif
-
+#define rustg_log_write(fname, text, format) RUSTG_CALL(RUST_G, "log_write")(fname, text, format)
 /proc/rustg_log_close_all() return RUSTG_CALL(RUST_G, "log_close_all")()
 
 #define rustg_noise_get_at_coordinates(seed, x, y) RUSTG_CALL(RUST_G, "noise_get_at_coordinates")(seed, x, y)
