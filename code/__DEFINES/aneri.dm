@@ -48,10 +48,13 @@
 #define aneri_rmdir(path) ANERI_CALL(rmdir)(path)
 
 // aneri-logger
-//#define aneri_log_write(path, message, format) ANERI_CALL(log_write)(path, message, format)
+#if !defined(OPENDREAM) && !defined(SPACEMAN_DMM)
 /proc/aneri_log_write(path, message, format) // just for profiling purposes
 	var/static/__loaded
 	return call_ext(__loaded ||= load_ext(ANERI, "byond:log_write"))(path, message, format)
+#else
+#define aneri_log_write(path, message, format) ANERI_CALL(log_write)(path, message, format)
+#endif
 #define aneri_log_close_all(...) ANERI_CALL(log_close_all)()
 
 // aneri-regex
