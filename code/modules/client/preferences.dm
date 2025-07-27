@@ -94,7 +94,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///have we finished loading
 	var/loaded = FALSE
 
+	/// Is the UI currently "locked" and can't be re-opened?
+	var/locked = FALSE
+	/// Timer ID of the "unlock timer"
+	var/unlock_timer_id
+
 /datum/preferences/Destroy(force)
+	acquire_lock()
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
@@ -156,6 +162,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(SSearly_assets.initialized != INITIALIZATION_INNEW_REGULAR)
 		return
 
+	if(locked)
+		testing("Tried to open prefs UI while it was locked ([world.time])")
+		return
+	else if(!loaded)
+		to_chat(user, span_warning("Your preferences haven't finished loading yet, wait a moment!"))
+		return
+
+	acquire_lock()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
@@ -163,6 +177,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 		character_preview_view.display_to(user, ui.window)
+	release_lock()
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
@@ -301,9 +316,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return FALSE
 
 /datum/preferences/ui_close(mob/user)
+	testing("Closing preferences UI ([world.time])")
+	acquire_lock()
 	save_character()
 	save_preferences()
 	QDEL_NULL(character_preview_view)
+	release_lock()
 
 /datum/preferences/Topic(href, list/href_list)
 	. = ..()
@@ -315,6 +333,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		update_static_data(usr)
 		ui_interact(usr)
 		return TRUE
+
+/datum/preferences/proc/acquire_lock()
+	locked = TRUE
+	if(unlock_timer_id)
+		deltimer(unlock_timer_id)
+		unlock_timer_id = null
+	testing("Preferences UI locked ([world.time])")
+
+/datum/preferences/proc/release_lock(after = 0.5 SECONDS)
+	if(locked && !QDELETED(src))
+		unlock_timer_id = addtimer(CALLBACK(src, PROC_REF(finish_unlock)), after, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+		testing("About to unlock preferences UI ([world.time])")
+
+/datum/preferences/proc/finish_unlock()
+	locked = FALSE
+	unlock_timer_id = null
+	testing("Preferences UI unlocked ([world.time])")
 
 /datum/preferences/proc/create_character_preview_view(mob/user)
 	character_preview_view = new(null, src)
