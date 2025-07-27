@@ -7309,7 +7309,7 @@
 /area/ruin/space/ks13/security/court)
 "Qc" = (
 /obj/structure/table,
-/obj/effect/spawner/random/maintenance,
+/obj/machinery/ecto_sniffer,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "Qd" = (
