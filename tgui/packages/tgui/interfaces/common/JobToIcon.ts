@@ -316,6 +316,7 @@ const ALTTITLES = {
   // Xenobiologist -
   Cytologist: BASEICONS['Xenobiologist'],
   Cryptozoologist: BASEICONS['Xenobiologist'],
+  'Slime Mage': BASEICONS['Xenobiologist'],
 } as const;
 
 // Combine the Base icons and ALt titles

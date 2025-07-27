@@ -440,10 +440,28 @@
   Absolucy:
   - bugfix: Fixed runechat emote/looc icons being too big.
   - bugfix: Fixed screentip icons having awkward spacing.
+  - rscadd: 'Added a new alternate job title for xenobiologist: "Slime Mage"'
+  BanementI:
+  - bugfix: Fixed the DJ law board to actually include laws.
+  BingusSS13:
+  - map: Added an ectoscopic sniffer to Charlie Station and KS13
+  - bugfix: Cut cable pieces on maps like KS13 (The Derelict) are no longer invisible.
+  - map: Most airlocks in KS13's engineering are now named.
+  - bugfix: Fixed access on the windoors in KS13's engineering.
+  - map: Added cut cables to KS13's engineering.
+  - map: Very minor change to KS13's engineering hallway area.
+  EssentialTomato, SyncIt21:
+  - bugfix: Cable layers 1 & 3 can now be used by machine's like emitters, smes, tesla
+      coil, particle collector & turbine.
+  - bugfix: Terminals (smes & apc) can operate on different cable layers by installing
+      them with right click.
   Ice-Type:
   - map: Cleans up the box station kitchen, further
   JohnFulpWillard:
   - balance: Monkeys and Simians can now be gendered.
+  - rscadd: You can opt out of having your character's ckey revealed at the credits.
+  Kapu1178:
+  - rscadd: The Detective's Fedora grants the ability to investigate - with style.
   WeLoveCastingSpells:
   - rscadd: Added 3 new costumes to the Autodrobe.. Kris, Susie, Ralsei.
   leaKsi:
@@ -451,3 +469,9 @@
   notghosti:
   - map: Thesues does not start with two professional RCD's
   - map: Blueshift pathology will not depower
+  - rscadd: 'More research nodes use the base nodes as a starting point. (No effect
+      one actual research)
+
+      add; Tier  4 Bluespace part exchange devices now have bluespace beakers'
+  - rscdel: Engineering lathe can no long print antibody scanners and test tubes.
+  - balance: Basic security tech is now a prerequisite to actual security technologies.
