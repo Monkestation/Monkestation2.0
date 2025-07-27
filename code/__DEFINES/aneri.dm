@@ -50,7 +50,8 @@
 // aneri-logger
 //#define aneri_log_write(path, message, format) ANERI_CALL(log_write)(path, message, format)
 /proc/aneri_log_write(path, message, format) // just for profiling purposes
-	return ANERI_CALL(log_write)(path, message, format)
+	var/static/__loaded
+	return call_ext(__loaded ||= load_ext(ANERI, "byond:log_write"))(path, message, format)
 #define aneri_log_close_all(...) ANERI_CALL(log_close_all)()
 
 // aneri-regex
