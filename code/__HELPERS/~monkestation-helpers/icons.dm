@@ -4,7 +4,7 @@
 /// You really shouldn't use this TOO often, as it has to copy the icon to a temporary png file,
 /// resize it, fcopy_rsc the resized png, and then create a new /icon from said png.
 /// Cache the output where possible.
-/proc/resize_icon(icon/icon, width, height, resize_type = RUSTG_RESIZE_NEAREST) as /icon
+/proc/resize_icon(icon/icon, width, height, resize_type = "nearest") as /icon
 	RETURN_TYPE(/icon)
 	SHOULD_BE_PURE(TRUE)
 
