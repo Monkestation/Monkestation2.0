@@ -73,10 +73,6 @@
 /obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
-"iP" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/grass,
-/area/station/commons/lounge)
 "jB" = (
 /turf/open/misc/dirt/station,
 /area/station/service/theater)
@@ -96,6 +92,11 @@
 "lY" = (
 /obj/structure/bonfire/prelit,
 /turf/open/misc/dirt/jungle,
+/area/station/commons/lounge)
+"ml" = (
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
 /area/station/commons/lounge)
 "mB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -166,12 +167,6 @@
 "pg" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/leavy/style_random,
-/turf/open/floor/grass,
-/area/station/commons/lounge)
-"po" = (
-/obj/machinery/light/directional/west,
-/obj/structure/flora/bush/jungle/b/style_random,
-/obj/machinery/light_switch/directional/west,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "py" = (
@@ -257,6 +252,10 @@
 	},
 /turf/open/floor/grass,
 /area/station/commons/lounge)
+"xE" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "xK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -313,14 +312,36 @@
 	},
 /turf/open/floor/grass,
 /area/station/commons/lounge)
+"Dr" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "EB" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
 /turf/open/floor/grass,
 /area/station/commons/lounge)
+"EV" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/station/commons/lounge)
 "FS" = (
 /obj/structure/table/wood,
+/turf/open/floor/grass,
+/area/station/commons/lounge)
+"GQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "GX" = (
@@ -381,13 +402,6 @@
 /obj/structure/cable,
 /turf/open/water/jungle,
 /area/station/commons/lounge)
-"NE" = (
-/obj/effect/landmark/start/hangover,
-/obj/structure/chair/wood{
-	dir = 8
-	},
-/turf/open/floor/grass,
-/area/station/commons/lounge)
 "NP" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Service - Theater";
@@ -406,19 +420,8 @@
 	},
 /turf/open/floor/grass,
 /area/station/commons/lounge)
-"OP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/flora/bush/large/style_random,
-/turf/open/floor/grass,
-/area/station/commons/lounge)
-"OY" = (
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/flowers_br/style_random,
+"OT" = (
+/obj/structure/flora/bush/jungle/b/style_random,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "QO" = (
@@ -465,16 +468,16 @@ Ub
 nj
 jK
 nj
-OY
-nj
-iP
-NE
+Dr
+xE
+EV
 Oz
-NE
-po
+EV
+ml
+OT
 nj
 YM
-OP
+GQ
 gM
 CE
 yJ
@@ -487,8 +490,8 @@ Bs
 jK
 jK
 jK
-jK
 nI
+jK
 jK
 jK
 HI

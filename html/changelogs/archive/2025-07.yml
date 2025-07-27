@@ -430,3 +430,9 @@
       spawn them)
   - balance: Junior ops spawn time from an unsecure disk increased from 10-20 minutes
       to 15-25
+2025-07-26:
+  Ice-Type:
+  - bugfix: fixes subpar construction work in the box station kitchen
+  ThePooba:
+  - bugfix: Crashing the wienermobile now just knowcks you over and doesnt hurt  or
+      throw you

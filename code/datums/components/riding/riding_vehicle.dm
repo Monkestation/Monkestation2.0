@@ -122,7 +122,7 @@
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/vehicle/wienermobile
-	vehicle_move_delay = 1.29
+	vehicle_move_delay = 1.30
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 
 /datum/component/riding/vehicle/wienermobile/handle_specials()
