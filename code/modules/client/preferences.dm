@@ -424,6 +424,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /// Updates the currently displayed body
 /atom/movable/screen/map_view/char_preview/proc/update_body()
+	if(QDELETED(src))
+		return
 	if (isnull(body))
 		create_body()
 	else
@@ -432,6 +434,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	appearance = preferences.render_new_preview_appearance(body/*, show_job_clothes*/)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
+	if(QDELETED(src))
+		return
 	QDEL_NULL(body)
 	body = new
 
