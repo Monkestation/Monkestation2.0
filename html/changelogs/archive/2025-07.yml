@@ -436,3 +436,18 @@
   ThePooba:
   - bugfix: Crashing the wienermobile now just knowcks you over and doesnt hurt  or
       throw you
+2025-07-27:
+  Absolucy:
+  - bugfix: Fixed runechat emote/looc icons being too big.
+  - bugfix: Fixed screentip icons having awkward spacing.
+  Ice-Type:
+  - map: Cleans up the box station kitchen, further
+  JohnFulpWillard:
+  - balance: Monkeys and Simians can now be gendered.
+  WeLoveCastingSpells:
+  - rscadd: Added 3 new costumes to the Autodrobe.. Kris, Susie, Ralsei.
+  leaKsi:
+  - bugfix: Mentors can once again use Mentor Manager menu and their mentor cloaks.
+  notghosti:
+  - map: Thesues does not start with two professional RCD's
+  - map: Blueshift pathology will not depower
