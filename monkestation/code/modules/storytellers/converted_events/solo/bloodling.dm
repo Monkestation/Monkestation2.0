@@ -19,7 +19,7 @@
 	)
 	restricted_roles = list(
 		JOB_AI,
-		JOB_CYBORG
+		JOB_CYBORG,
 	)
 	enemy_roles = list(
 		JOB_CAPTAIN,
@@ -41,11 +41,6 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	max_occurrences = 1
-
-/datum/round_event_control/antagonist/solo/bloodling/midround
-	name = "Awakened Parasite"
-	prompted_picking = TRUE
-	required_enemies = 8
 
 /datum/round_event/antagonist/solo/bloodling/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.special_role = ROLE_BLOODLING
