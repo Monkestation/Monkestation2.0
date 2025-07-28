@@ -1,5 +1,5 @@
 import { Button, ColorBox, Flex, Section, Stack } from '../components';
-import { BooleanLike } from '../react';
+import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
