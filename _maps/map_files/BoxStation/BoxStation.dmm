@@ -60075,9 +60075,6 @@
 	dir = 5
 	},
 /obj/structure/table,
-/obj/item/airlock_painter/decal/tile{
-	pixel_y = 9
-	},
 /obj/item/airlock_painter{
 	pixel_y = 3
 	},
