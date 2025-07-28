@@ -675,6 +675,8 @@
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
+	slowdown = 1
+	item_flags = SLOWS_WHILE_IN_HAND
 	var/obj/machinery/microwave/held_microwave
 	var/destroying = FALSE
 	var/datum/component/two_handed/two_handed_component
