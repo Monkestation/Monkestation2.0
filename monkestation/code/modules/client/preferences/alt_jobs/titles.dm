@@ -404,4 +404,5 @@
 		"Xenobiologist",
 		"Cytologist",
 		"Cryptozoologist",
+		"Slime Mage",
 	)

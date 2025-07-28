@@ -25,7 +25,7 @@
 	id = "mod_advanced"
 	display_name = "Advanced Modular Suits"
 	description = "More advanced modules, to improve modular suits."
-	prereq_ids = list("robotics")
+	prereq_ids = list("mod","robotics")
 	design_ids = list(
 		"mod_visor_diaghud",
 		"mod_gps",

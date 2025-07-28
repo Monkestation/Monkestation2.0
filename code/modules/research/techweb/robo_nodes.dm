@@ -14,7 +14,7 @@
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
 	description = "Machines using actual neural networks to simulate human lives."
-	prereq_ids = list("neural_programming", "robotics")
+	prereq_ids = list("neural_programming", "robotics", "cyborg")
 	design_ids = list(
 		"mmi_posi",
 	)

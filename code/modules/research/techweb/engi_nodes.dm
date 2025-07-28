@@ -64,7 +64,7 @@
 	id = "adv_engi"
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
-	prereq_ids = list("engineering", "emp_basic")
+	prereq_ids = list("engineering", "emp_basic", "basic_tools")
 	design_ids = list(
 		"HFR_core",
 		"HFR_corner",
