@@ -276,8 +276,10 @@ ADMIN_VERB(log_viewer_new, R_ADMIN | R_DEBUG, FALSE, "View Round Logs", "View th
 	category_instance.category_header = category_header
 	init_category_file(category_instance, category_header)
 
+/*
 /datum/log_holder/proc/human_readable_timestamp()
 	return rustg_formatted_timestamp("%Y-%m-%d %H:%M:%S%.3f")
+*/
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
