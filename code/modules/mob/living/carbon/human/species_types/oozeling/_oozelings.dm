@@ -55,6 +55,8 @@
 	var/list/extra_actions = list()
 	/// Instances of all actions given to this oozeling.
 	var/list/actions_given = list()
+	/// Cooldown for balloon alerts when being melted by water.
+	COOLDOWN_DECLARE(melt_alert_cooldown)
 
 /datum/species/oozeling/Destroy(force)
 	QDEL_LIST(actions_given)
@@ -62,12 +64,14 @@
 
 /datum/species/oozeling/on_species_gain(mob/living/carbon/slime, datum/species/old_species)
 	. = ..()
+	RegisterSignal(slime, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_reagent_expose))
 	for(var/action_type in default_actions + extra_actions)
 		var/datum/action/action = new action_type(src)
 		action.Grant(slime)
 		actions_given += action
 
 /datum/species/oozeling/on_species_loss(mob/living/carbon/former_slime)
+	UnregisterSignal(former_slime, COMSIG_ATOM_EXPOSE_REAGENTS)
 	QDEL_LIST(actions_given)
 	. = ..()
 	former_slime.blood_volume = clamp(former_slime.blood_volume, BLOOD_VOLUME_SAFE, BLOOD_VOLUME_NORMAL)
@@ -120,6 +124,72 @@
 ///////
 /// CHEMICAL HANDLING
 /// Here's where slimes heal off plasma and where they hate drinking water.
+
+// values shamelessly stolen from `get_insulation()`
+#define WATER_PROTECTION_HEAD 0.3
+#define WATER_PROTECTION_CHEST 0.2
+#define WATER_PROTECTION_GROIN 0.1
+#define WATER_PROTECTION_LEG (0.075 * 2)
+#define WATER_PROTECTION_FOOT (0.025 * 2)
+#define WATER_PROTECTION_ARM (0.075 * 2)
+#define WATER_PROTECTION_HAND (0.025 * 2)
+
+/// Multiplier for how much blood is lost when sprayed with water.
+/datum/species/oozeling/proc/water_damage_multiplier(mob/living/carbon/human/slime)
+	. = 1
+
+	var/protection_flags = NONE
+	for(var/obj/item/clothing/worn in slime.get_equipped_items())
+		if(worn.clothing_flags & THICKMATERIAL)
+			protection_flags |= worn.body_parts_covered
+
+	var/missing_limbs = FULL_BODY
+	for(var/obj/item/bodypart/limb in slime.bodyparts)
+		missing_limbs &= ~limb.body_part
+
+	protection_flags |= missing_limbs
+
+	if(protection_flags)
+		if(protection_flags & HEAD)
+			. -= WATER_PROTECTION_HEAD
+		if(protection_flags & CHEST)
+			. -= WATER_PROTECTION_CHEST
+		if(protection_flags & GROIN)
+			. -= WATER_PROTECTION_GROIN
+		if(protection_flags & LEGS)
+			. -= WATER_PROTECTION_LEG
+		if(protection_flags & FEET)
+			. -= WATER_PROTECTION_FOOT
+		if(protection_flags & ARMS)
+			. -= WATER_PROTECTION_ARM
+		if(protection_flags & HANDS)
+			. -= WATER_PROTECTION_HAND
+
+	return clamp(FLOOR(., 0.1), 0, 1)
+
+#undef WATER_PROTECTION_HEAD
+#undef WATER_PROTECTION_CHEST
+#undef WATER_PROTECTION_GROIN
+#undef WATER_PROTECTION_LEG
+#undef WATER_PROTECTION_FOOT
+#undef WATER_PROTECTION_ARM
+#undef WATER_PROTECTION_HAND
+
+/datum/species/oozeling/proc/on_reagent_expose(mob/living/carbon/human/slime, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
+	SIGNAL_HANDLER
+	// if all your limbs are covered by thickmaterial clothing, then it will protect you from water.
+	var/water_multiplier = water_damage_multiplier(slime)
+	if(water_multiplier <= 0)
+		to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
+		return COMPONENT_NO_EXPOSE_REAGENTS
+	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
+		to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+		return COMPONENT_NO_EXPOSE_REAGENTS
+	slime.blood_volume = max(slime.blood_volume - (30 * water_multiplier), 0)
+	if(COOLDOWN_FINISHED(src, melt_alert_cooldown))
+		to_chat(slime, span_danger("The water causes you to melt away!"))
+		slime.balloon_alert(slime, "water melts you!")
+		COOLDOWN_START(src, melt_alert_cooldown, 1 SECONDS)
 
 /datum/species/oozeling/handle_chemical(datum/reagent/chem, mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	// slimes use plasma to fix wounds, and if they have enough blood, organs
