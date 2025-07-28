@@ -17,6 +17,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/mark_datum_mapview,
 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/reload_admins,
+	/client/proc/reload_mentors, /*monkestation addition Reload mentors*/
 	/client/proc/requests,
 	/client/proc/secrets,
 	/client/proc/review_cassettes, /*monkestation addition Opens the Cassette Review menu*/
@@ -102,6 +103,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_view_range, /*changes how far we can see*/
 	/client/proc/cmd_admin_law_panel,
 	// monkestation verbs start
+	/client/proc/cmd_admin_heal_oozeling,
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
 	/client/proc/log_viewer_new,
@@ -164,7 +166,9 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/summon_ert,
 	/client/proc/summon_twitch_event, //monkestation addition
 	/client/proc/toggle_nuke,
+	/client/proc/toggle_junior_op, //monkestation addition
 	/client/proc/toggle_random_events,
+	/client/proc/toggle_crew_cc_comms, //monkestation addition
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel, /client/proc/spawn_mixtape,)) //Monkestation Addition: mixtape spawner
@@ -183,12 +187,12 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/toggleAI,
 // Client procs
 	/client/proc/adminchangemap,
+	/client/proc/admin_revert_map,
 	/client/proc/cmd_admin_delete, /*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_debug_force_del_all,
 	/client/proc/cmd_debug_hard_del_all,
 	/client/proc/everyone_random,
-	/client/proc/forcerandomrotate,
 	/client/proc/generate_job_config,
 	/client/proc/panicbunker,
 	/client/proc/toggle_cdn,
@@ -268,6 +272,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_puzzgrids,
 	/client/proc/view_runtimes,
 	// monkestation verbs: debugger tools
+	/client/proc/count_instances,
 	/client/proc/log_viewer_new,
 	/client/proc/getserverlogs_debug,
 	/client/proc/getcurrentlogs_debug,

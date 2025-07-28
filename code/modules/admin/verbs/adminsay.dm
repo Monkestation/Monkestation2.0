@@ -9,6 +9,8 @@
 	if(!msg)
 		return
 
+	SSplexora.relay_admin_say(src, msg)
+
 	if(findtext(msg, "@") || findtext(msg, "#"))
 		var/list/link_results = check_asay_links(msg)
 		if(length(link_results))

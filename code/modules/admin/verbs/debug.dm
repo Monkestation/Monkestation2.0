@@ -201,7 +201,7 @@
 	var/mob/adminmob = mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.key = key
+	M.PossessByPlayer(key)
 	init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
@@ -228,7 +228,7 @@
 		return
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.ckey = newkey.key
+	M.PossessByPlayer(newkey.key)
 	M.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
@@ -511,10 +511,13 @@
 		return
 	M.revive(ADMIN_HEAL_ALL)
 
-	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
+	// MONKESTATION EDIT START - tgui tickets
+	var/log_msg = "[key_name(usr)] healed / revived [key_name(M)]"
+	log_admin(log_msg)
 	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
 	message_admins(msg)
-	admin_ticket_log(M, msg)
+	admin_ticket_log(M, log_msg)
+	// MONKESTATION EDIT END
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvenate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
@@ -549,7 +552,9 @@
 	for(var/datum/station_goal/S in GLOB.station_goals)
 		dat += "[S.name] - <a href='byond://?src=[REF(S)];[HrefToken()];announce=1'>Announce</a> | <a href='byond://?src=[REF(S)];[HrefToken()];remove=1'>Remove</a><br>"
 	dat += "<br><a href='byond://?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
-	usr << browse(dat, "window=goals;size=400x400")
+	var/datum/browser/browser = new(usr, "goals", "Modify Goals", 400, 400)
+	browser.set_content(dat)
+	browser.open()
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"
@@ -880,13 +885,15 @@
 	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
 	var/second_queue = generate_timer_source_output(SStimer.second_queue)
 
-	usr << browse({"
+	var/datum/browser/browser = new(usr, "check_timer_sources", "Timer Sources", 700, 700)
+	browser.set_content({"
 		<h3>bucket_list</h3>
 		[bucket_list_output]
 
 		<h3>second_queue</h3>
 		[second_queue]
-	"}, "window=check_timer_sources;size=700x700")
+	"})
+	browser.open()
 
 /proc/generate_timer_source_output(list/datum/timedevent/events)
 	var/list/per_source = list()

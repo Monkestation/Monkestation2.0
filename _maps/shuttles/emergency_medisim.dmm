@@ -292,7 +292,7 @@
 	pixel_y = 9
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/chasm,
+/turf/open/chasm/true,
 /area/shuttle/escape/simulation)
 "ll" = (
 /obj/item/scalpel{
@@ -1121,7 +1121,7 @@
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape/simulation)
 "TE" = (
-/turf/open/chasm,
+/turf/open/chasm/true,
 /area/shuttle/escape/simulation)
 "TI" = (
 /obj/item/binoculars,
@@ -1191,7 +1191,7 @@
 /obj/structure/fluff/big_chain{
 	pixel_y = 9
 	},
-/turf/open/chasm,
+/turf/open/chasm/true,
 /area/shuttle/escape/simulation)
 "WA" = (
 /obj/structure/closet/crate/large,

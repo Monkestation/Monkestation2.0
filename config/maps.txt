@@ -13,6 +13,11 @@ Format:
 	votable (is this map votable)
 endmap
 
+map heliostation
+	minplayers 25
+	votable
+endmap
+
 map metastation
 	#default
 	minplayers 5
@@ -69,5 +74,14 @@ map ouroboros
 	votable
 endmap
 
+map pubbystation
+	votable
+endmap
+
 map graveyard
+endmap
+
+map leadpoisoningstation
+	votable
+	minplayers 40
 endmap

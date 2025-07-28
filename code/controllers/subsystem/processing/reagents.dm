@@ -5,7 +5,7 @@ PROCESSING_SUBSYSTEM_DEF(reagents)
 	init_order = INIT_ORDER_REAGENTS
 	priority = FIRE_PRIORITY_REAGENTS
 	wait = 0.25 SECONDS //You might think that rate_up_lim has to be set to half, but since everything is normalised around seconds_per_tick, it automatically adjusts it to be per second. Magic!
-	flags = SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	///What time was it when we last ticked
 	var/previous_world_time = 0

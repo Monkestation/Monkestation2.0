@@ -53,6 +53,8 @@
 	var/list/innate_powers = list()
 	/// Associated list of all powers we have evolved / bought from the emporium. [path] = [instance of path]
 	var/list/purchased_powers = list()
+	/// The amount of offspring spawned from the changling. To prevent refreshing the amount by buying the power again.
+	var/births = 0
 
 	/// The voice we're mimicing via the changeling voice ability.
 	var/mimicing = ""
@@ -147,12 +149,10 @@
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
 
-		lingchemdisplay = new /atom/movable/screen/ling/chems()
-		lingchemdisplay.hud = hud_used
+		lingchemdisplay = new /atom/movable/screen/ling/chems(null, hud_used)
 		hud_used.infodisplay += lingchemdisplay
 
-		lingstingdisplay = new /atom/movable/screen/ling/sting()
-		lingstingdisplay.hud = hud_used
+		lingstingdisplay = new /atom/movable/screen/ling/sting(null, hud_used)
 		hud_used.infodisplay += lingstingdisplay
 
 		hud_used.show_hud(hud_used.hud_version)
@@ -187,12 +187,10 @@
 
 	var/datum/hud/ling_hud = owner.current.hud_used
 
-	lingchemdisplay = new
-	lingchemdisplay.hud = ling_hud
+	lingchemdisplay = new(null, ling_hud)
 	ling_hud.infodisplay += lingchemdisplay
 
-	lingstingdisplay = new
-	lingstingdisplay.hud = ling_hud
+	lingstingdisplay = new(null, ling_hud)
 	ling_hud.infodisplay += lingstingdisplay
 
 	ling_hud.show_hud(ling_hud.hud_version)

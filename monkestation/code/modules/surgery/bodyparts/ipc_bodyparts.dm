@@ -6,6 +6,8 @@
 	icon_state = "synth_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	head_flags = HEAD_HAIR |  HEAD_LIPS | HEAD_EYECOLOR | HEAD_LIPS
@@ -30,9 +32,12 @@
 	icon_state = "synth_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	bodypart_traits = list(TRAIT_LIMBATTACHMENT)
+	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	body_damage_coeff = 1	//IPC Chest at default	///Monkestation Edit
 	max_damage = 250	//Default: 200 ///Monkestation Edit
 	brute_modifier = 1.2 // Monkestation Edit
@@ -42,7 +47,7 @@
 
 	disabling_threshold_percentage = 1
 
-	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
+	biological_state = (BIO_ROBOTIC)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
@@ -54,6 +59,8 @@
 	icon_state = "synth_l_arm"
 	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit
@@ -78,6 +85,8 @@
 	icon_state = "synth_r_arm"
 	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit
@@ -102,6 +111,8 @@
 	icon_state = "synth_l_leg"
 	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit
@@ -124,6 +135,8 @@
 	icon_state = "synth_r_leg"
 	flags_1 = CONDUCT_1
 	should_draw_greyscale = FALSE
+	palette = /datum/color_palette/generic_colors
+	palette_key = MUTANT_COLOR
 	biological_state = BIO_ROBOTIC | BIO_JOINTED | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	brute_modifier = 1.2 // Monkestation Edit

@@ -1,8 +1,8 @@
 SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
-	wait = 2
+	wait = 0
 	init_order = INIT_ORDER_LIGHTING
-	flags = SS_TICKER
+	flags = SS_HIBERNATE
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.
@@ -11,10 +11,17 @@ SUBSYSTEM_DEF(lighting)
 	var/allow_duped_corners = FALSE
 #endif
 
+/datum/controller/subsystem/lighting/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, sources_queue),
+		NAMEOF(src, corners_queue),
+		NAMEOF(src, objects_queue),
+	)
+
 /datum/controller/subsystem/lighting/stat_entry(msg)
 	msg = "L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]"
 	return ..()
-
 
 /datum/controller/subsystem/lighting/Initialize()
 	if(!initialized)
@@ -38,7 +45,7 @@ SUBSYSTEM_DEF(lighting)
 		i += 1
 
 		var/datum/light_source/L = queue[i]
-		L.update_corners()
+		L?.update_corners()
 		if(!QDELETED(L))
 			L.needs_update = LIGHTING_NO_UPDATE
 		else
@@ -66,8 +73,9 @@ SUBSYSTEM_DEF(lighting)
 		i += 1
 
 		var/datum/lighting_corner/C = queue[i]
-		C.needs_update = FALSE //update_objects() can call qdel if the corner is storing no data
-		C.update_objects()
+		if(!QDELETED(C))
+			C.needs_update = FALSE //update_objects() can call qdel if the corner is storing no data
+			C.update_objects()
 
 		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
 		if(init_tick_checks)

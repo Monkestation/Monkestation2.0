@@ -115,3 +115,27 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
+
+// Chasm that doesn't do any z-level nonsense and just kills/stores whoever steps into it.
+/turf/open/chasm/true
+	desc = "There's nothing at the bottom. Absolutely nothing."
+	baseturfs = /turf/open/chasm/true
+
+/turf/open/chasm/true/apply_components(mapload)
+	AddComponent(/datum/component/chasm, null, mapload) //Don't pass anything for below_turf.
+
+/turf/open/chasm/true/no_smooth
+	smoothing_flags = NONE
+
+/turf/open/chasm/true/no_smooth/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/attackby(obj/item/item, mob/user, params, area/area_restriction)
+	if(istype(item, /obj/item/stack/rods))
+		return
+	else if (istype(item, /obj/item/stack/tile/iron) || istype(item, /obj/item/stack/tile/material) && item.has_material_type(/datum/material/iron))
+		return
+	return ..()

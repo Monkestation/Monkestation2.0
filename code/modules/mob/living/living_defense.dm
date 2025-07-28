@@ -11,7 +11,7 @@
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armour_penetration)
-		our_armor = max(0, our_armor - armour_penetration)
+		our_armor = armour_penetration == 100 ? 0 : 100 * max(our_armor - armour_penetration, 0) / (100 - armour_penetration)
 		if(penetrated_text)
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else
@@ -212,8 +212,18 @@
 				emote("scream", intentional=FALSE)
 			//MONKESTATION EDIT END
 			return
+
 		var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
-		apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+		//MONKESTATION EDIT START
+		if(istype(AM, /obj/item/slasher_machette))
+			if(istype(thrown_by) && IS_SLASHER(thrown_by)) // Must be slasher must have a mind and slasher antag datum.
+				apply_damage(5, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+			else
+				return // Cancels the damage. Hope this works and doesn't cause a runtime.
+		else
+			apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+		//MONKESTATION EDIT END
+
 		if(QDELETED(src)) //Damage can delete the mob.
 			return
 		if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
@@ -560,13 +570,13 @@
  */
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
-	var/image/gloveimg = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
-	gloveimg.pixel_y = 10 // should line up with head
-	gloveimg.pixel_x = 10
-	flick_overlay_global(gloveimg, GLOB.clients, 10)
+	var/mutable_appearance/glove_appearance = mutable_appearance('icons/effects/effects.dmi', "slapglove")
+	glove_appearance.pixel_y = 10 // should line up with head
+	glove_appearance.pixel_x = 10
+	var/atom/movable/flick_visual/glove = slapped.flick_overlay_view(glove_appearance, 1 SECONDS)
 
 	// And animate the attack!
-	animate(gloveimg, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 10, pixel_z = 0, time = 3)
+	animate(glove, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 10, pixel_z = 0, time = 3)
 	animate(time = 1)
 	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 

@@ -278,6 +278,7 @@
 			equip_by_category[key] -= path
 
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
+	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -300,7 +301,7 @@
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
 	QDEL_NULL(ui_view)
-	QDEL_NULL(trackers)
+	QDEL_LIST(trackers)
 	QDEL_NULL(chassis_camera)
 
 	GLOB.mechas_list -= src //global mech list

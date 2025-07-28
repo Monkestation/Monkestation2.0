@@ -6,7 +6,7 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
-	research_value = 1000
+	research_value = TECHWEB_DISCOUNT_MINOR * 2
 
 	type_name = "Explosive Effect"
 	examine_discovered = span_warning("It appears to explode.")

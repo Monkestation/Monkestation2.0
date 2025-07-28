@@ -19,6 +19,9 @@ SUBSYSTEM_DEF(server_maint)
 	world.hub_password = "" //quickly! before the hubbies see us.
 
 /datum/controller/subsystem/server_maint/Initialize()
+	if (fexists("tmp/"))
+		fdel("tmp/")
+
 	if (CONFIG_GET(flag/hub))
 		world.update_hub_visibility(TRUE)
 	//Keep in mind, because of how delay works adding a list here makes each list take wait * delay more time to clear
@@ -53,30 +56,38 @@ SUBSYSTEM_DEF(server_maint)
 			cleanup_ticker = 0
 
 	var/list/currentrun = src.currentrun
+
+/*
 	var/round_started = SSticker.HasRoundStarted()
 
 	var/kick_inactive = CONFIG_GET(flag/kick_inactive)
 	var/afk_period
 	if(kick_inactive)
 		afk_period = CONFIG_GET(number/afk_period)
-	for(var/I in currentrun)
-		var/client/C = I
-		//handle kicking inactive players
-		if(round_started && kick_inactive && !C.holder && C.is_afk(afk_period))
-			var/cmob = C.mob
-			if (!isnewplayer(cmob) || !SSticker.queued_players.Find(cmob))
-				log_access("AFK: [key_name(C)]")
-				to_chat(C, span_userdanger("You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span><br><span class='danger'>You may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>."))
-				QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
-				continue
+*/
+	for(var/client/client as anything in currentrun)
 
-		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
-			winset(C, null, "command=.update_ping+[num2text(world.time+world.tick_lag*TICK_USAGE_REAL/100, 32)]")
+// this is kicking people for some weird incomprehensible reason, despite the fact we don't even have afk kicking enabled in our config, so I'm just fully commenting this code out. ~Lucy
+/*
+		//handle kicking inactive players
+		if(round_started && kick_inactive && !client.holder && client.is_afk(afk_period))
+			var/cmob = client.mob
+			if (!isnewplayer(cmob) || !SSticker.queued_players.Find(cmob))
+				log_access("AFK: [key_name(client]")
+				to_chat(client, span_userdanger("You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span><br><span class='danger'>You may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>."))
+				QDEL_IN(client, 1) //to ensure they get our message before getting disconnected
+				continue
+*/
+
+		if (!(!client || world.time - client.connection_time < PING_BUFFER_TIME || client.inactivity >= (wait - 1)))
+			winset(client, null, "command=.update_ping+[num2text(world.time + world.tick_lag * TICK_USAGE_REAL / 100, 32)]")
 
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
 
 /datum/controller/subsystem/server_maint/Shutdown()
+	if (fexists("tmp/"))
+		fdel("tmp/")
 	kick_clients_in_lobby(span_boldannounce("The round came to an end with you in the lobby."), TRUE) //second parameter ensures only afk clients are kicked
 	var/server = CONFIG_GET(string/server)
 	for(var/thing in GLOB.clients)

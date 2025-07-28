@@ -214,6 +214,7 @@
 	return ..()
 
 /obj/item/modular_computer/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	if(computer_id_slot)
 		return computer_id_slot
 	return ..()
@@ -849,3 +850,35 @@
 ///Returns a string of what to send at the end of messenger's messages.
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
+
+/// Returns how relevant the current security level is:
+#define ALERT_RELEVANCY_SAFE 0 /// * 0: User is not in immediate danger and not needed for some station-critical task.
+#define ALERT_RELEVANCY_WARN 1 /// * 1: Danger is around, but the user is not directly needed to handle it.
+#define ALERT_RELEVANCY_PERTINENT 2 /// * 2: Danger is around and the user is responsible for handling it.
+/obj/item/modular_computer/proc/get_security_level_relevancy()
+	switch(SSsecurity_level.get_current_level_as_number()) // all-hands-on-deck situations, everyone is responsible for combatting a threat
+		if(SEC_LEVEL_DELTA, SEC_LEVEL_RED, SEC_LEVEL_EPSILON, SEC_LEVEL_GAMMA, SEC_LEVEL_LAMBDA,)
+			return ALERT_RELEVANCY_PERTINENT
+		if(SEC_LEVEL_AMBER) // Ongoing medical threat. Medical staff are to contribute.
+			if((ACCESS_SECURITY in computer_id_slot?.access) || (ACCESS_MEDICAL in computer_id_slot?.access))
+				return ALERT_RELEVANCY_PERTINENT
+			else
+				return ALERT_RELEVANCY_WARN
+		if(SEC_LEVEL_YELLOW) // Ongoing engineering issues. Engineering staff are to contribute.
+			if((ACCESS_SECURITY in computer_id_slot?.access) || (ACCESS_ENGINEERING in computer_id_slot?.access))
+				return ALERT_RELEVANCY_PERTINENT
+			else
+				return ALERT_RELEVANCY_WARN
+		if(SEC_LEVEL_BLUE) // suspected threat. security needs to be alert and possibly preparing for it, no further concerns
+			if(ACCESS_SECURITY in computer_id_slot?.access)
+				return ALERT_RELEVANCY_PERTINENT
+			else
+				return ALERT_RELEVANCY_WARN
+		if(SEC_LEVEL_GREEN) // no threats, no concerns
+			return ALERT_RELEVANCY_SAFE
+
+	return 0
+
+#undef ALERT_RELEVANCY_SAFE
+#undef ALERT_RELEVANCY_WARN
+#undef ALERT_RELEVANCY_PERTINENT

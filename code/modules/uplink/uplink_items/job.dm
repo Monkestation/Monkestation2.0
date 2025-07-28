@@ -297,7 +297,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/reagent_containers/syringe/spider_extract
 	cost = 10
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_XENOBIOLOGIST) //Monkestation edit: xenobiology
 	surplus = 10
 
 /datum/uplink_item/role_restricted/blastcannon
@@ -324,7 +324,8 @@
 	name = "Boom Boots"
 	desc = "The pinnacle of clown footwear technology.  Fit for only the loudest and proudest! \
 			Fully functional hydraulic clown shoes with anti-slip technology.  Anyone who tries \
-			to remove these from your person will be in for an explosive surprise, to boot. "
+			to remove these from your person will be in for an explosive surprise, to boot. \
+			Remember to activate them for the fun to begin. "
 	item = /obj/item/clothing/shoes/magboots/boomboots
 	cost = 20
 	restricted_roles = list(JOB_CLOWN)

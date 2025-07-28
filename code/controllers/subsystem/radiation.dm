@@ -1,12 +1,18 @@
 SUBSYSTEM_DEF(radiation)
 	name = "Radiation"
-	flags = SS_BACKGROUND | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 
 	wait = 0.5 SECONDS
 
 	/// A list of radiation sources (/datum/radiation_pulse_information) that have yet to process.
 	/// Do not interact with this directly, use `radiation_pulse` instead.
 	var/list/datum/radiation_pulse_information/processing = list()
+
+/datum/controller/subsystem/radiation/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, processing),
+	)
 
 /datum/controller/subsystem/radiation/fire(resumed)
 	while (processing.len)
@@ -124,6 +130,14 @@ SUBSYSTEM_DEF(radiation)
 
 	if (HAS_TRAIT(target, TRAIT_IRRADIATED) && !HAS_TRAIT(target, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK))
 		return FALSE
+
+	// MONKESTATION ADDITION START -- Is this what they call "jank"?
+	var/mob/living/living_target = target
+	if(istype(living_target))
+		if(HAS_TRAIT(target, TRAIT_RADHEALING))
+			living_target.adjustBruteLoss(-5)
+			living_target.adjustFireLoss(-5)
+	// MONKESTATION ADDITION END
 
 	if (HAS_TRAIT(target, TRAIT_RADIMMUNE))
 		return FALSE

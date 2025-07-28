@@ -5,7 +5,7 @@
 	weight = ARTIFACT_VERYRARE/5 //Super rare
 	activation_message = "tears open the fabric of reality!"
 
-	research_value = 10000
+	research_value = TECHWEB_TIER_4_POINTS
 
 	type_name = "Its a Secret to Everybody"
 

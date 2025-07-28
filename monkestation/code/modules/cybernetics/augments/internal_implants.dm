@@ -2,8 +2,7 @@
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
@@ -199,7 +198,13 @@
 		/obj/item/autosurgeon/syndicate/thermal_eyes,
 		/obj/item/autosurgeon/syndicate/xray_eyes,
 		/obj/item/storage/box/syndie_kit/anti_stun,
-		/obj/item/storage/box/syndie_kit/reviver)
+		/obj/item/storage/box/syndie_kit/reviver,
+		/obj/item/storage/box/syndie_kit/razorwire,
+		/obj/item/storage/box/syndie_kit/esword,
+		/obj/item/storage/box/syndie_kit/mantis,
+		/obj/item/storage/box/syndie_kit/laser_arm,
+		/obj/item/storage/box/syndie_kit/deepvien,
+		)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

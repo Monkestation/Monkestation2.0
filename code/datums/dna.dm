@@ -115,7 +115,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		destination.dna.mutation_index = mutation_index
 		destination.dna.default_mutation_genes = default_mutation_genes
 	if(transfer_species)
-		destination.set_species(species.type, icon_update=0)
+		destination.set_species(species.type, icon_update = FALSE)
+		destination.dna.species.copy_properties_from(species)
+
+	destination.dna.body_height = body_height
+	destination.dna.update_body_height()
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -128,14 +132,18 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.color_palettes = color_palettes.Copy()
 	//if the new DNA has a holder, transform them immediately, otherwise save it
 	if(new_dna.holder)
-		new_dna.holder.set_species(species.type, icon_update = 0)
+		new_dna.holder.set_species(species.type, icon_update = FALSE)
 	else
 		new_dna.species = new species.type
+	new_dna.species.copy_properties_from(species)
 	new_dna.real_name = real_name
 	// Mutations aren't gc managed, but they still aren't templates
 	// Let's do a proper copy
 	for(var/datum/mutation/human/mutation in mutations)
 		new_dna.add_mutation(mutation, mutation.class, mutation.timeout)
+
+	new_dna.body_height = body_height
+	new_dna.update_body_height()
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
@@ -234,10 +242,22 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
 /datum/dna/proc/generate_dna_blocks()
+/* MONKESTATION EDIT OLD
 	var/bonus
 	if(species?.inert_mutation)
 		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
+*/
+	// MONKESTATION EDIT NEW START
+	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
+	if(species?.inert_mutation)
+		if(islist(species.inert_mutation))
+			var/list/inert_mutations = species.inert_mutation
+			for(var/mutation as anything in inert_mutations)
+				mutations_temp += GET_INITIALIZED_MUTATION(mutation)
+		else
+			mutations_temp += GET_INITIALIZED_MUTATION(species.inert_mutation)
+	// MONKESTATION EDIT NEW END
 	if(!LAZYLEN(mutations_temp))
 		return
 	mutation_index.Cut()

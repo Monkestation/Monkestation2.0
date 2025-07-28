@@ -228,7 +228,7 @@
 /obj/effect/particle_effect/fluid/foam/firefighting
 	name = "firefighting foam"
 	lifetime = 20 //doesn't last as long as normal foam
-	result_type = /obj/effect/decal/cleanable/plasma
+	//result_type = /obj/effect/decal/cleanable/plasma: monkestation removal
 	allow_duplicate_results = FALSE
 	slippery_foam = FALSE
 	/// The amount of plasma gas this foam has absorbed. To be deposited when the foam dissipates.
@@ -246,7 +246,7 @@
 		return
 
 	var/obj/effect/hotspot/hotspot = locate() in location
-	if(!(hotspot && location.air))
+	if(!location.air) //monkestation edit: doesnt require a hotspot
 		return
 
 	QDEL_NULL(hotspot)
@@ -261,12 +261,17 @@
 	air.garbage_collect()
 	location.air_update_turf(FALSE, FALSE)
 
+//MONKESTATION EDIT START
 /obj/effect/particle_effect/fluid/foam/firefighting/make_result()
-	var/atom/movable/deposit = ..()
-	if(istype(deposit) && deposit.reagents && absorbed_plasma > 0)
-		deposit.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
-		absorbed_plasma = 0
-	return deposit
+	. = ..()
+	if(absorbed_plasma > 5)
+		var/turf/open/exposed_turf = loc
+		var/obj/effect/decal/cleanable/plasma/reagentdecal = new(exposed_turf)
+		reagentdecal = locate() in exposed_turf
+		if(reagentdecal)
+			reagentdecal.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
+			absorbed_plasma = 0
+//MONKESTATION EDIT STOP
 
 /obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, seconds_per_tick)
 	if(!istype(foaming))
@@ -451,6 +456,22 @@
 		potential_tinder.extinguish_mob()
 	for(var/obj/item/potential_tinder in location)
 		potential_tinder.extinguish()
+
+/datum/effect_system/fluid_spread/foam/metal/resin/halon
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/// A variant of resin foam that is created from halon combustion. It does not dissolve in heat to allow the gas to spread before foaming.
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive) // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return FALSE // Doesn't dissolve in heat.
+
+/obj/effect/particle_effect/fluid/foam/metal/resin/halon/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	return // Doesn't dissolve in heat.
 
 /datum/effect_system/fluid_spread/foam/dirty
 	effect_type = /obj/effect/particle_effect/fluid/foam/dirty

@@ -12,7 +12,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 /datum/station_goal/bluespace_cannon/get_report()
 	return list(
 		"<blockquote>Our military presence is inadequate in your sector.",
-		"We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.",
+		"We need you to construct BSA-[rand(1,99)] Artillery position aboard your station,",
+		"and test-fire it to ensure it is fully functional.",
 		"",
 		"Base parts are available for shipping via cargo.",
 		"-Nanotrasen Naval Command</blockquote>",
@@ -22,14 +23,6 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	//Unlock BSA parts
 	var/datum/supply_pack/engineering/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/bsa]
 	P.special_enabled = TRUE
-
-/datum/station_goal/bluespace_cannon/check_completion()
-	if(..())
-		return TRUE
-	var/obj/machinery/bsa/full/B = locate()
-	if(B && !B.machine_stat)
-		return TRUE
-	return FALSE
 
 /obj/machinery/bsa
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
@@ -54,7 +47,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
 	var/obj/item/multitool/M = I
-	M.buffer = src
+	M.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
@@ -71,7 +64,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
 	var/obj/item/multitool/M = I
-	M.buffer = src
+	M.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
 	return TRUE
 
@@ -94,11 +87,11 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		if(istype(M.buffer, /obj/machinery/bsa/back))
 			back_ref = WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.buffer = null
+			M.set_buffer(null)
 		else if(istype(M.buffer, /obj/machinery/bsa/front))
 			front_ref = WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.buffer = null
+			M.set_buffer(null)
 	else
 		to_chat(user, span_warning("[I]'s data buffer is empty!"))
 	return TRUE
@@ -255,6 +248,12 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
 		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].", LOG_GAME)
 
+	complete_goal()
+
+/// Marks the BSA station goal as completed.
+/obj/machinery/bsa/full/proc/complete_goal()
+	var/datum/station_goal/bluespace_cannon/bsa_goal = locate() in GLOB.station_goals
+	bsa_goal?.completed = TRUE
 
 /obj/machinery/bsa/full/proc/reload()
 	ready = FALSE
@@ -331,7 +330,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return
 	var/list/gps_locators = list()
 	for(var/datum/component/gps/G in GLOB.GPS_list) //nulls on the list somehow
-		if(G.tracking)
+		if(G.tracking && G.bsa_targetable) // monkestation edit: bsa_targetable
 			gps_locators[G.gpstag] = G
 
 	var/list/options = gps_locators
@@ -360,6 +359,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return pick(get_area_turfs(target))
 	else if(istype(target, /datum/component/gps))
 		var/datum/component/gps/G = target
+		// monkestation start: bsa_targetable sanity check
+		if(!G.bsa_targetable)
+			CRASH("BSA tried to fire at [G.gpstag] ([G.parent]), despite bsa_targetable being set to false")
+		// monkestation end
 		return get_turf(G.parent)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)

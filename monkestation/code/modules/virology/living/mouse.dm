@@ -39,10 +39,8 @@
 		disease.AddToGoggleView(src)
 
 /mob/living/basic/mouse/Destroy()
-	. = ..()
-	if(src in GLOB.infected_contact_mobs)
-		GLOB.infected_contact_mobs -= src
 	QDEL_NULL(immune_system)
+	return ..()
 
 /mob/living/basic/mouse/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
@@ -59,7 +57,7 @@
 
 /mob/living/basic/mouse/Life(seconds_per_tick, times_fired)
 	. = ..()
-	handle_virus_updates(seconds_per_tick)
+	handle_virus_updates(seconds_per_tick, times_fired)
 
 	breath_airborne_diseases()
 

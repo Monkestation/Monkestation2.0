@@ -52,8 +52,6 @@
 			human.update_body()
 			head.update_icon_dropped()
 
-	human.set_safe_hunger_level()
-
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/human)
 	. = ..()
 
@@ -152,7 +150,7 @@
 
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = NONE
+	organ_flags = ORGAN_ORGANIC //not vital
 
 /obj/item/organ/internal/tongue/dullahan
 	zone = "abstract"

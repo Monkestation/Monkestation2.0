@@ -53,6 +53,8 @@
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
 	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
+	///If this limb should have emissive overlays
+	var/is_emissive = FALSE
 
 	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/body_zone
@@ -70,26 +72,26 @@
 	var/speed_modifier = 0
 
 	// Limb disabling variables
+	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
+	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
 	///Handles limb disabling by damage. If 0 (0%), a limb can't be disabled via damage. If 1 (100%), it is disabled at max limb damage. Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
 	var/disabling_threshold_percentage = 0
-	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
-	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
 
 	// Damage state variables
-
 	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
 	var/body_damage_coeff = 1
-	///Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
-	var/brutestate = 0
-	var/burnstate = 0
 	///The current amount of brute damage the limb has
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
 	var/burn_dam = 0
 	///The maximum brute OR burn damage a bodypart can take. Once we hit this cap, no more damage of either type!
 	var/max_damage = 0
+
+	///Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
+	var/brutestate = 0
+	var/burnstate = 0
 
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
@@ -348,7 +350,7 @@
 		check_list += "\t <a href='byond://?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
 	if(current_gauze)
-		check_list += span_notice("\t There is some <a href='?src=[REF(examiner)];gauze_limb=[REF(src)]'>[current_gauze.name]</a> wrapped around your [name].")
+		check_list += span_notice("\t There is some <a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[current_gauze.name]</a> wrapped around your [name].")
 
 
 /obj/item/bodypart/blob_act()
@@ -474,6 +476,11 @@
 			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
+	var/datum/species/owner_species = owner.dna?.species
+	if(owner_species)
+		dmg_multi *= (100 - owner_species.armor) / 100 // species.armor is a 0-100 percentage of damage reduction, so we have to convert that to a 0-1 multiplier
+		brute *= owner_species.brutemod
+		burn *= owner_species.burnmod
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_multi * burn_modifier, 0), DAMAGE_PRECISION)
 
@@ -654,11 +661,6 @@
 	if(burn)
 		set_burn_dam(round(max(burn_dam - burn, 0), DAMAGE_PRECISION))
 
-	if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING) && !HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED)) //monkestation edit
-		if(owner.health > 0)
-			owner.revive(0)
-			owner.cure_husk(0) // If it has REVIVESBYHEALING, it probably can't be cloned. No husk cure.
-
 	if(owner)
 		if(can_be_disabled)
 			update_disabled()
@@ -666,8 +668,9 @@
 			owner.updatehealth()
 
 		//monkestation edit start
-		if(owner.stat == DEAD && HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
-			if(!HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
+		if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
+			owner.cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
+			if(owner.stat == DEAD && !HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
 				owner.revive(FALSE)
 		//monkestation edit end
 
@@ -1037,8 +1040,9 @@
 		// For some reason this was applied as an overlay on the aux image and limb image before.
 		// I am very sure that this is unnecessary, and i need to treat it as part of the return list
 		// to be able to mask it proper in case this limb is a leg.
+	if(!is_husked)
+		var/atom/location = loc || owner || src
 		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-			var/atom/location = loc || owner || src
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
 			. += limb_em_block
@@ -1047,7 +1051,16 @@
 				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 				aux_em_block.dir = image_dir
 				. += aux_em_block
-		//EMISSIVE CODE END
+		if(is_emissive)
+			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
+			limb_em.dir = image_dir
+			. += limb_em
+
+			if(aux_zone)
+				var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
+				aux_em.dir = image_dir
+				. += aux_em
+	//EMISSIVE CODE END
 
 		//No need to handle leg layering if dropped, we only face south anyways
 	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))

@@ -106,7 +106,7 @@
 
 /obj/projectile/bullet/a223/ap
 	name = ".277 armor-piercing bullet"
-	armour_penetration = 60
+	armour_penetration = 75
 
 /*
 *	.34 ACP
@@ -217,9 +217,9 @@
 
 /obj/projectile/bullet/strilka310
 	name = ".310 Strilka bullet"
-	damage = 60
+	damage = 55    //-5 from mosin
 	armour_penetration = 10
-	wound_bonus = -45
+	wound_bonus = -50  //-5 from mosin
 	wound_falloff_tile = 0
 
 /obj/projectile/bullet/strilka310/surplus
@@ -569,6 +569,7 @@
 /obj/item/ammo_box/advanced
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	multiload = FALSE
+	w_class = WEIGHT_CLASS_NORMAL //used to be tiny tee hee
 
 /*
 *	9mm

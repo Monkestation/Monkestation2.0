@@ -11,18 +11,23 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 	"cached_ref",
 	"weak_reference",
 	"cooldowns",
-	"__auxtools_weakref_id",
 	"tag",
 	"type",
 	"parent_type",
 	"owner",
 	"vars",
 	"stored_character_slot_index",
+	"demo_last_appearance",
+	"demo_last_loc",
 ))
 
 /obj/item/organ/internal/brain
 	/// The modular persistence data for a character.
 	var/datum/modular_persistence/modular_persistence
+
+/obj/item/organ/internal/brain/Destroy()
+	QDEL_NULL(modular_persistence)
+	return ..()
 
 /// Saves the contents of the modular persistence datum for the player's client to their file.
 /datum/controller/subsystem/persistence/proc/save_modular_persistence()

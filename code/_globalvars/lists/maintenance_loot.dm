@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/trash/candle = 1,
 
 		/obj/item/c_tube = 1,
-		/obj/item/disk/data = 1,
+		/obj/item/disk/data/random = 1, // monkestation edit: use random dna data disks
 		/obj/item/folder/yellow = 1,
 		/obj/item/hand_labeler = 1,
 		/obj/item/paper = 1,
@@ -136,7 +136,9 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/grenade/chem_grenade/cleaner = 1,
 		/obj/item/lead_pipe = 1,
 		/obj/item/reagent_containers/cup/beaker = 1,
+/* monkestation removal: we don't use ph or purity
 		/obj/item/reagent_containers/cup/bottle/random_buffer = 2,
+monkestation end */
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
@@ -206,8 +208,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 
 //monkestation edit start
 	list(//artifacts
-		/obj/effect/artifact_spawner = 4,
-		/obj/item/a_gift/anything/wiz_name = 2,
+		/obj/effect/artifact_spawner = 6,
+		//Sorry Lucy, I stole your gifts. ~MCP.
+		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
+		/obj/item/implanter/dust = 2,
+		/obj/item/clothing/mask/facehugger/toy = 1, //Heheh ~MCP :3
+		/obj/effect/spawner/random/livingplush = 2,
 		) = 8,
 //monkestation edit end
 
@@ -326,6 +332,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//equipment
 		/obj/item/clothing/glasses/hud/security = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
+		/obj/item/clothing/gloves/color/black/security = 1,
 		/obj/item/clothing/gloves/color/yellow = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
 		/obj/item/clothing/head/helmet/toggleable/justice = 1,
@@ -369,6 +376,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
 		/obj/item/seeds/tree/money = 1, //monkestation edit
+		/obj/item/disk/design_disk/fss = 1, //monkestation edit
 		) = 1,
 
 ))
@@ -380,7 +388,6 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,
-		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
 		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/shadowcloak = 1,
 		/obj/item/spear/grey_tide = 1,
@@ -392,8 +399,8 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			) = 1,
 		*/ // MONKESTATION EDIT END
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
-		/obj/item/gun/magic/wand/polymorph = 1, //monkestation edit
-		/obj/item/organ/internal/butt/atomic = 1, //monkestation edit
+		/obj/item/organ/internal/butt/atomic = 1,
+		/obj/item/a_gift/anything/wiz_name = 1, //Here's your
 	))
 
 
@@ -407,7 +414,7 @@ GLOBAL_LIST_INIT(maint_fauna, list(//fauna: there be critters living in yer main
 #define maint_common_weight 4497 //monkestation edit: from 4500 to 4497
 #define maint_uncommon_weight 900
 #define maint_rarity_weight 99
-#define maint_oddity_weight 4 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg, monkestation edit: from 1 to 4
+#define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 #define maint_fauna_weight 150 //monkestation edit: adds friendly maintenance bees, also allows for other maintenance fauna to be coded in.
 

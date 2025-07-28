@@ -118,6 +118,12 @@
 		/obj/item/ammo_box/c38 = 2,
 	), src)
 
+/obj/item/storage/belt/holster/detective/bis/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/gun/ballistic/revolver/c38 = 1,
+		/obj/item/ammo_box/c38 = 2,
+	), src)
+
 /obj/item/storage/belt/holster/detective/full/ert
 	name = "marine's holster"
 	desc = "Wearing this makes you feel badass, but you suspect it's just a repainted detective's holster from the NT surplus."

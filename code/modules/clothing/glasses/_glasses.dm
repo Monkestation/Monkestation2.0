@@ -160,10 +160,6 @@
 	fire = 80
 	acid = 100
 
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return 1
-
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
@@ -270,7 +266,7 @@
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
-	icon_state = "glasses"
+	icon_state = "glasses_regular"
 	inhand_icon_state = "glasses"
 	clothing_traits = list(TRAIT_NEARSIGHTED_CORRECTED)
 
@@ -324,19 +320,19 @@
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
-	icon_state = "jamjar_glasses"
-	inhand_icon_state = "jamjar_glasses"
+	icon_state = "glasses_jamjar"
+	inhand_icon_state = "glasses_jamjar"
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
-	icon_state = "hipster_glasses"
+	icon_state = "glasses_hipster"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/regular/circle
 	name = "circle glasses"
 	desc = "Why would you wear something so controversial yet so brave?"
-	icon_state = "circle_glasses"
+	icon_state = "glasses_circle"
 	inhand_icon_state = null
 
 //Here lies green glasses, so ugly they died. RIP
@@ -511,6 +507,7 @@
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 // MONKESTATION ADDITION START
 /obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/W, mob/user, params)
@@ -660,7 +657,7 @@
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
 	desc = "Shows you know how to sew a lapel and center a back vent."
-	icon_state = "binoclard_lenses"
+	icon_state = "glasses_binoclard"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman

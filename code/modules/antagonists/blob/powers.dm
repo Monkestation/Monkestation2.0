@@ -115,29 +115,29 @@
 	if(!blob)
 		to_chat(src, span_warning("There is no blob here!"))
 		balloon_alert(src, "no blob here!")
-		return FALSE
+		return null
 	if(!istype(blob, /obj/structure/blob/normal))
 		to_chat(src, span_warning("Unable to use this blob, find a normal one."))
 		balloon_alert(src, "need normal blob!")
-		return FALSE
+		return null
 	if(needs_node)
 		var/area/area = get_area(src)
 		if(!(area.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
 			to_chat(src, span_warning("This type of blob must be placed on the station!"))
 			balloon_alert(src, "can't place off-station!")
-			return FALSE
+			return null
 		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, tile)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, tile)))
 			to_chat(src, span_warning("You need to place this blob closer to a node or core!"))
 			balloon_alert(src, "too far from node or core!")
-			return FALSE //handholdotron 2000
+			return null //handholdotron 2000
 	if(min_separation)
 		for(var/obj/structure/blob/other_blob in orange(min_separation, tile))
 			if(other_blob.type == blobstrain)
 				to_chat(src, span_warning("There is a similar blob nearby, move more than [min_separation] tiles away from it!"))
 				other_blob.balloon_alert(src, "too close!")
-				return FALSE
+				return null
 	if(!can_buy(price))
-		return FALSE
+		return null
 	var/obj/structure/blob/node = blob.change_to(blobstrain, src)
 	return node
 

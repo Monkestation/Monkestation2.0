@@ -12,11 +12,11 @@
 ///How much time Sol can be 'off' by, keeping the time inconsistent.
 #define TIME_BLOODSUCKER_SOL_DELAY 90
 
-SUBSYSTEM_DEF(sunlight)
+SUBSYSTEM_DEF(sol)
 	name = "Sol"
 	can_fire = FALSE
-	wait = 2 SECONDS
-	flags = SS_NO_INIT | SS_BACKGROUND | SS_TICKER
+	wait = 20 // ticks, not seconds (so this runs every second, actually)
+	flags = SS_NO_INIT | SS_BACKGROUND | SS_TICKER | SS_KEEP_TIMING
 
 	///If the Sun is currently out our not.
 	var/sunlight_active = FALSE
@@ -25,7 +25,13 @@ SUBSYSTEM_DEF(sunlight)
 	///If Bloodsucker levels for the night has been given out yet.
 	var/issued_XP = FALSE
 
-/datum/controller/subsystem/sunlight/fire(resumed = FALSE)
+/datum/controller/subsystem/sol/Recover()
+	can_fire = SSsol.can_fire
+	sunlight_active = SSsol.sunlight_active
+	time_til_cycle = SSsol.time_til_cycle
+	issued_XP = SSsol.issued_XP
+
+/datum/controller/subsystem/sol/fire(resumed = FALSE)
 	time_til_cycle--
 	if(sunlight_active)
 		if(time_til_cycle > 0)
@@ -77,7 +83,7 @@ SUBSYSTEM_DEF(sunlight)
 				vassal_warning_message = span_userdanger("Solar flares bombard the station with UV light!"),
 			)
 
-/datum/controller/subsystem/sunlight/proc/warn_daylight(danger_level, vampire_warning_message, vassal_warning_message)
+/datum/controller/subsystem/sol/proc/warn_daylight(danger_level, vampire_warning_message, vassal_warning_message)
 	SEND_SIGNAL(src, COMSIG_SOL_WARNING_GIVEN, danger_level, vampire_warning_message, vassal_warning_message)
 
 #undef TIME_BLOODSUCKER_SOL_DELAY

@@ -610,13 +610,20 @@
 	var/amount_random_reagents = rand(lower, upper)
 	for(var/i in 1 to amount_random_reagents)
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
-		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
+		var/datum/plant_gene/reagent/R = new(pick_reagent(), random_amount) // monkestation edit: pick_reagent proc
 		if(R.can_add(src))
 			if(!R.try_upgrade_gene(src))
 				genes += R
 		else
 			qdel(R)
 	reagents_from_genes()
+
+// monkestation start: pick_reagent proc
+/// Returns a random reagent ID.
+/// Just a wrapper around [get_random_reagent_id] by default, this exists so subtypes can override it.
+/obj/item/seeds/proc/pick_reagent()
+	return get_random_reagent_id()
+// monkestation end
 
 /obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
 	var/amount_random_traits = rand(lower, upper)

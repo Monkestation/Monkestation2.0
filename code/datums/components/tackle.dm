@@ -270,7 +270,8 @@
 		defense_mod += 1
 	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
 		defense_mod -= 2
-	if(HAS_TRAIT(target, TRAIT_DWARF))
+//	if(HAS_TRAIT(target, TRAIT_DWARF)) // MONKESTATION EDIT OLD
+	if(HAS_TRAIT(target, TRAIT_DWARF) && !HAS_TRAIT(target, TRAIT_STABLE_DWARF)) // MONKESTATION EDIT NEW
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_GIANT))
 		defense_mod += 2
@@ -320,7 +321,7 @@
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
 		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(!sacker_moth_wing || sacker_moth_wing.burnt)
+		if(!istype(sacker_moth_wing) || sacker_moth_wing.burnt)
 			attack_mod -= 2
 	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(sacker_wing)

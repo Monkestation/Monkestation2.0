@@ -32,6 +32,7 @@
 				/obj/item/clothing/head/cowboy/white = 1,
 				/obj/item/clothing/head/cowboy/grey = 1,
 				/obj/item/clothing/head/costume/sombrero/green = 1,
+				/obj/item/clothing/head/hats/fez = 3, //MONKESTATION ADDITION
 			),
 		),
 
@@ -71,6 +72,7 @@
 				/obj/item/clothing/under/dress/wlpinafore = 2, //MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/dress/ribbondress = 2, //MONKESTATION EDIT ADDITION
 				/obj/item/clothing/under/dress/skirt/plaid = 4,
+				/obj/item/clothing/under/costume/donatorgrayscaleturtleneck/nondonator = 4, //MONKESTATION ADDITION
 				/obj/item/clothing/under/dress/skirt/turtleskirt = 4,
 				/obj/item/clothing/under/misc/overalls = 2,
 				/obj/item/clothing/under/pants/camo = 2,

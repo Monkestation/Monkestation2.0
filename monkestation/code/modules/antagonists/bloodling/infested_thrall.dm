@@ -14,7 +14,7 @@
 	var/master = null
 
 /datum/antagonist/changeling/bloodling_thrall/purchase_power(datum/action/changeling/sting_path)
-	if(istype(sting_path, /datum/action/changeling/fakedeath))
+	if(istype(sting_path, /datum/action/changeling/fakedeath) || istype(sting_path, /datum/action/changeling/headcrab))
 		to_chat(owner.current, span_warning("We are unable to evolve that ability"))
 		return FALSE
 	return ..()
@@ -34,6 +34,9 @@
 /datum/antagonist/changeling/bloodling_thrall/proc/set_master(mob/living/basic/bloodling/master)
 	to_chat(owner, span_info("Your master is [master], they have granted you this gift. Obey their commands. Praise be the living flesh."))
 	src.master = master
+	add_team_hud(owner.current)
+	add_team_hud(owner.current, /datum/antagonist/bloodling)
+	add_team_hud(owner.current, /datum/antagonist/infested_thrall)
 
 /datum/antagonist/changeling/bloodling_thrall/forge_objectives()
 	var/datum/objective/bloodling_thrall/serve_objective = new
@@ -73,3 +76,6 @@
 /datum/antagonist/infested_thrall/proc/set_master(mob/living/basic/bloodling/master)
 	to_chat(owner, span_info("Your master is [master], they have granted you this gift. Obey their commands. Praise be the living flesh."))
 	src.master = master
+	add_team_hud(owner.current)
+	add_team_hud(owner.current, /datum/antagonist/bloodling)
+	add_team_hud(owner.current, /datum/antagonist/changeling/bloodling_thrall)

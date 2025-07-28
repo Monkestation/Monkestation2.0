@@ -13,7 +13,7 @@ GLOBAL_DATUM(escape_menu_details, /atom/movable/screen/escape_menu/details)
 	maptext_height = 100
 	maptext_width = 200
 
-/atom/movable/screen/escape_menu/details/Initialize(mapload)
+/atom/movable/screen/escape_menu/details/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 
 	update_text()
@@ -35,7 +35,7 @@ GLOBAL_DATUM(escape_menu_details, /atom/movable/screen/escape_menu/details)
 		<span style='text-align: right; line-height: 0.7'>
 			Round ID: [GLOB.round_id || "Unset"]<br />
 			Round Time: [ROUND_TIME()]<br />
-			Map: [SSmapping.config?.map_name || "Loading..."]<br />
+			Map: [SSmapping.current_map?.map_name || "Loading..."]<br />
 			Time Dilation: [round(SStime_track.time_dilation_current,1)]%<br />
 		</span>
 	"}

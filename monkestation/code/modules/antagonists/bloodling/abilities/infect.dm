@@ -9,6 +9,8 @@
 	var/is_infecting = FALSE
 
 /datum/action/cooldown/bloodling_infect/Activate(atom/target)
+	. = ..()
+
 	if(is_infecting)
 		owner.balloon_alert(owner, "already infecting!")
 		return
@@ -47,22 +49,14 @@
 		carbon_mob.revive(ADMIN_HEAL_ALL)
 
 	if(!carbon_mob.mind)
-		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-			"Would you like to be a [carbon_mob] servant of [owner]?",
-			ROLE_BLOODLING_THRALL,
-			ROLE_BLOODLING_THRALL,
-			10 SECONDS,
-			carbon_mob,
-			POLL_IGNORE_SHUTTLE_DENIZENS,
-			alert_pic = carbon_mob
-		)
+		var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_BLOODLING_THRALL, poll_time = 10 SECONDS, checked_target = carbon_mob, alert_pic = carbon_mob, role_name_text = "Bloodling Thrall")
 
-		if(!LAZYLEN(candidates))
+		if(!LAZYLEN(chosen_one))
 			is_infecting = FALSE
 			return FALSE
 
-		var/mob/dead/observer/chosen = pick(candidates)
-		carbon_mob.key = chosen.key
+		carbon_mob.ghostize(FALSE)
+		carbon_mob.key = chosen_one.key
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	thrall.set_master(owner)
@@ -73,9 +67,8 @@
 	owner.mind.transfer_to(bloodling)
 
 	old_body.gib()
-
 	var/datum/antagonist/bloodling_datum = IS_BLOODLING(bloodling)
-	for(var/datum/objective/objective in bloodling_datum.objectives)
+	for(var/datum/objective/objective in  bloodling_datum.objectives)
 		objective.update_explanation_text()
 
 	playsound(get_turf(bloodling), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)

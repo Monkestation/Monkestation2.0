@@ -21,7 +21,7 @@
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(seconds_per_tick, times_fired)
-		handle_virus_updates(seconds_per_tick)
+		handle_virus_updates(seconds_per_tick, times_fired)
 
 		. = ..()
 		if(QDELETED(src))
@@ -121,6 +121,7 @@
 	// Breathe from air
 	else
 		breath = get_breath_from_surroundings(environment, BREATH_VOLUME)
+		breath_airborne_diseases()
 
 	check_breath(breath, skip_breath)
 
@@ -381,22 +382,31 @@
 //Stomach//
 ///////////
 
-/mob/living/carbon/get_fullness()
-	var/fullness = nutrition
+/mob/living/carbon/get_fullness(only_consumable)
+	. = ..()
 
 	var/obj/item/organ/internal/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly) //nothing to see here if we do not have a stomach
-		return fullness
+		return .
 
-	for(var/bile in belly.reagents.reagent_list)
-		var/datum/reagent/bits = bile
-		if(istype(bits, /datum/reagent/consumable))
-			var/datum/reagent/consumable/goodbit = bile
-			fullness += goodbit.nutriment_factor * goodbit.volume / goodbit.metabolization_rate
+	for(var/datum/reagent/bits as anything in belly.reagents.reagent_list)
+		if(!bits.metabolization_rate)
 			continue
-		fullness += 0.6 * bits.volume / bits.metabolization_rate //not food takes up space
+		// hack to get around stomachs having 5u stomach lining reagent ugugugu
+		var/effective_volume = bits.volume
+		if(belly.food_reagents[bits.type])
+			effective_volume -= belly.food_reagents[bits.type]
+		if(effective_volume <= 0)
+			continue
+		if(istype(bits, /datum/reagent/consumable))
+			var/datum/reagent/consumable/goodbit = bits
+			. += goodbit.nutriment_factor * effective_volume / goodbit.metabolization_rate
+			continue
+		if(!only_consumable)
+			continue
+		. += 0.6 * effective_volume / bits.metabolization_rate //not food takes up space
 
-	return fullness
+	return .
 
 /mob/living/carbon/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	. = ..()
@@ -452,7 +462,7 @@
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
+	if(!heart || IS_ROBOTIC_ORGAN(heart))
 		return FALSE
 	return TRUE
 
@@ -479,7 +489,7 @@
 	return TRUE
 
 /mob/living/carbon/proc/set_heartattack(status)
-	if(!can_heartattack())
+	if(status && !can_heartattack())
 		return FALSE
 
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)

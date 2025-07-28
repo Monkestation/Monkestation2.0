@@ -74,14 +74,32 @@
 	ADD_TRAIT(parent, TRAIT_SLIME_DUST_IMMUNE, "trait")
 	parent.recompile_ai_tree()
 	RegisterSignals(parent, reset_signals, PROC_REF(reset_target))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
 /datum/slime_trait/cleaner/on_remove(mob/living/basic/slime/parent)
 	. = ..()
+	UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
 	UnregisterSignal(parent, reset_signals)
 	parent.slime_flags &= ~(CLEANER_SLIME | PASSIVE_SLIME)
 	parent.recompile_ai_tree()
 	qdel(parent.GetComponent(/datum/component/pollution_scrubber))
 	REMOVE_TRAIT(parent, TRAIT_SLIME_DUST_IMMUNE, "trait")
+
+/datum/slime_trait/cleaner/proc/on_unarmed_attack(mob/living/parent, atom/target, proximity, modifiers)
+	var/target_is_dissolvable = \
+		is_type_in_typecache(target, cleanable_decals) \
+		|| is_type_in_typecache(target, cleanable_blood) \
+		|| is_type_in_typecache(target, huntable_pests) \
+		|| is_type_in_typecache(target, huntable_trash) \
+		|| HAS_TRAIT(target, TRAIT_TRASH_ITEM)
+
+	if(target_is_dissolvable)
+		parent.balloon_alert_to_viewers("cleaned")
+		parent.visible_message(span_notice("[parent] dissolves \the [target]."))
+		SEND_SIGNAL(parent, COMSIG_MOB_FEED, target, 20)
+		qdel(target) // Sent to the shadow realm to never be seen again
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	// Otherwise, allow the attack to proceed as normal.
 
 /datum/slime_trait/cleaner/proc/reset_target(datum/source)
 	SIGNAL_HANDLER

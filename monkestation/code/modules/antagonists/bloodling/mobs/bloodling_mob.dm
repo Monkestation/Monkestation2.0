@@ -13,7 +13,6 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	speed = 2.8
-	environment_smash = ENVIRONMENT_SMASH_NONE
 	mob_biotypes = MOB_ORGANIC
 	speak_emote = list("spews")
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
@@ -28,8 +27,10 @@
 	var/biomass_max = 1
 	/// The abilities this bloodling starts with
 	var/list/initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/absorb,
 	)
+	/// A list containing our created abilties
+	var/list/our_abilties = list()
 
 /mob/living/basic/bloodling/Initialize(mapload)
 	. = ..()
@@ -56,13 +57,14 @@
 	for(var/datum/action/path as anything in initial_powers)
 		var/datum/action/bloodling_action = new path()
 		bloodling_action.Grant(src)
+		our_abilties += bloodling_action
 
 //////////////////// The actual bloodling mob ////////////////////
 /mob/living/basic/bloodling/proper
 	name = "mass of flesh"
 	desc = "An abomination of some spawn. A mess of tendrils, mouths and chitin, whatever created it was not merciful."
-	maxHealth = INFINITE // Bloodlings have unlimited health, instead biomass acts as their health
-	health = INFINITE
+	maxHealth = SHORT_REAL_LIMIT // Bloodlings have unlimited health, instead biomass acts as their health
+	health = SHORT_REAL_LIMIT
 	sight = SEE_SELF|SEE_MOBS
 	hud_type = /datum/hud/bloodling
 
@@ -114,11 +116,14 @@
 	if(biomass <= 0)
 		gib()
 	// Damage is based on biomass, and handled here
-	obj_damage = biomass * 0.2
+	obj_damage = biomass * 0.5
 	// less than 5 damage would be very bad
 	if(biomass > 50)
 		melee_damage_lower = biomass * 0.1
 		melee_damage_upper = biomass * 0.1
+	// Should refresh our abilities
+	for(var/datum/action/cooldown/ability in src.our_abilties)
+		ability.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	update_health_hud()
 	check_evolution()
 
@@ -141,6 +146,7 @@
 	if((biomass >= 225) && (evolution_level != 5))
 		evolution(5)
 		return TRUE
+
 	return FALSE
 
 /// Creates the mob for us to then mindswap into
@@ -190,6 +196,9 @@
 		mind.transfer_to(new_bloodling)
 	// Runs = instead of add_biomass because the tier 1 bloodling has 50 biomass to start with
 	new_bloodling.biomass = biomass
+	for(var/datum/action/cooldown/ability in new_bloodling.our_abilties)
+		ability.build_all_button_icons(UPDATE_BUTTON_STATUS)
+
 	qdel(src)
 
 /mob/living/basic/bloodling/proper/Destroy()
@@ -203,7 +212,7 @@
 	icon_dead = "bloodling_stage_1_dead"
 	evolution_level = 1
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/absorb,
 		/datum/action/cooldown/sneak/bloodling,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
@@ -220,9 +229,9 @@
 	icon_dead = "bloodling_stage_2_dead"
 	evolution_level = 2
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/absorb,
 		/datum/action/cooldown/sneak/bloodling,
-		/datum/action/cooldown/mob_cooldown/bloodling/infest,
+		/datum/action/cooldown/bloodling/infest,
 		/datum/action/cooldown/bloodling/build,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
@@ -238,10 +247,10 @@
 	icon_dead = "bloodling_stage_3_dead"
 	evolution_level = 3
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
-		/datum/action/cooldown/mob_cooldown/bloodling/infest,
+		/datum/action/cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/infest,
 		/datum/action/cooldown/bloodling/build,
-		/datum/action/cooldown/mob_cooldown/bloodling/devour,
+		/datum/action/cooldown/bloodling/devour,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
 	speed = 1.5
@@ -252,15 +261,15 @@
 	icon_dead = "bloodling_stage_4_dead"
 	evolution_level = 4
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
-		/datum/action/cooldown/mob_cooldown/bloodling/infest,
+		/datum/action/cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/infest,
 		/datum/action/cooldown/bloodling/build,
-		/datum/action/cooldown/mob_cooldown/bloodling/devour,
+		/datum/action/cooldown/bloodling/devour,
 		/datum/action/cooldown/bloodling/dissonant_shriek,
 		/datum/action/cooldown/spell/aoe/repulse/bloodling,
-		/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass,
-		/datum/action/cooldown/mob_cooldown/bloodling/heal,
-		/datum/action/cooldown/mob_cooldown/bloodling/give_life,
+		/datum/action/cooldown/bloodling/transfer_biomass,
+		/datum/action/cooldown/bloodling/heal,
+		/datum/action/cooldown/bloodling/give_life,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
 	speed = 2
@@ -271,16 +280,16 @@
 	icon_dead = "bloodling_stage_4_dead"
 	evolution_level = 5
 	initial_powers = list(
-		/datum/action/cooldown/mob_cooldown/bloodling/absorb,
+		/datum/action/cooldown/bloodling/absorb,
 		/datum/action/cooldown/bloodling/ascension,
-		/datum/action/cooldown/mob_cooldown/bloodling/infest,
+		/datum/action/cooldown/bloodling/infest,
 		/datum/action/cooldown/bloodling/build,
-		/datum/action/cooldown/mob_cooldown/bloodling/devour,
+		/datum/action/cooldown/bloodling/devour,
 		/datum/action/cooldown/bloodling/dissonant_shriek,
 		/datum/action/cooldown/spell/aoe/repulse/bloodling,
-		/datum/action/cooldown/mob_cooldown/bloodling/transfer_biomass,
-		/datum/action/cooldown/mob_cooldown/bloodling/heal,
-		/datum/action/cooldown/mob_cooldown/bloodling/give_life,
+		/datum/action/cooldown/bloodling/transfer_biomass,
+		/datum/action/cooldown/bloodling/heal,
+		/datum/action/cooldown/bloodling/give_life,
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
 	speed = 2.5

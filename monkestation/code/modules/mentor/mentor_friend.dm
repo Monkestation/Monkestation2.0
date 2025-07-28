@@ -37,7 +37,7 @@
 		return
 
 	var/mob/camera/imaginary_friend/mentor/mentorfriend = new(get_turf(mentee), mentee)
-	mentorfriend.key = usr.key
+	mentorfriend.PossessByPlayer(usr.key)
 
 	log_admin("[key_name(mentorfriend)] started being the imaginary friend of [key_name(mentee)].")
 	message_admins("[key_name(mentorfriend)] started being the imaginary friend of [key_name(mentee)].")
@@ -158,9 +158,9 @@
 		return
 
 	var/mob/camera/imaginary_friend/mentor/mentorfriend = new(get_turf(friend_owner), friend_owner)
-	mentorfriend.key = usr.key
+	mentorfriend.PossessByPlayer(usr.key)
 
-	admin_ticket_log(friend_owner, "[key_name_admin(C)] became an imaginary friend of [key_name(friend_owner)]")
+	admin_ticket_log(friend_owner, "[key_name(C)] became an imaginary friend of [key_name(friend_owner)]")
 	log_admin("[key_name(mentorfriend)] started being imaginary friend of [key_name(friend_owner)].")
 	message_admins("[key_name(mentorfriend)] started being the imaginary friend of [key_name(friend_owner)].")
 

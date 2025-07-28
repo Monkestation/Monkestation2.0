@@ -1061,7 +1061,7 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
 	},
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
@@ -1433,7 +1433,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
@@ -2242,7 +2242,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/duct,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2426,7 +2426,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "Lg" = (
@@ -3003,7 +3003,7 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
 	},
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -3021,7 +3021,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/lounge)

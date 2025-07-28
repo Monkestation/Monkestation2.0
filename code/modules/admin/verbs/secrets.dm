@@ -54,19 +54,23 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")
-			var/dat = "<meta charset='UTF-8'><B>Admin Log<HR></B>"
+			var/dat
 			for(var/l in GLOB.admin_activities)
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_activities.len)
 				dat += "No-one has done anything this round!"
-			holder << browse(dat, "window=admin_log")
+			var/datum/browser/browser = new(holder, "admin_log", "Admin Logs", 600, 500)
+			browser.set_content(dat)
+			browser.open()
 		if("show_admins")
-			var/dat = "<meta charset='UTF-8'><B>Current admins:</B><HR>"
+			var/dat
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank_names()]<br>"
-				holder << browse(dat, "window=showadmins;size=600x500")
+				var/datum/browser/browser = new(holder, "showadmins", "Current admins", 600, 500)
+				browser.set_content(dat)
+				browser.open()
 		//Buttons for debug.
 		if("maint_access_engiebrig")
 			if(!is_debugger)
@@ -349,17 +353,17 @@ monkestation end */
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Break All Lights"))
 			message_admins("[key_name_admin(holder)] broke all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
+			for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 				L.break_light_tube()
-				stoplag()
+				CHECK_TICK
 		if("whiteout")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Fix All Lights"))
 			message_admins("[key_name_admin(holder)] fixed all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
+			for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 				L.fix()
-				stoplag()
+				CHECK_TICK
 		if("customportal")
 			if(!is_funmin)
 				return
@@ -569,7 +573,7 @@ monkestation end */
 				chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
 				nerd = new /mob/living/basic/drone/classic(spawnpoint)
-				nerd.key = chosen_candidate.key
+				nerd.PossessByPlayer(chosen_candidate.key)
 				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--
 
@@ -627,7 +631,7 @@ monkestation end */
 			var/mob/chosen = players[1]
 			if (chosen.client)
 				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
-				spawnedMob.key = chosen.key
+				spawnedMob.PossessByPlayer(chosen.key)
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
 			var/mob/living/carbon/human/H = spawnedMob
@@ -705,7 +709,6 @@ monkestation end */
 			if(ROLE_NIGHTMARE)
 				var/datum/antagonist/nightmare/antag_datum = new
 				assign_admin_objective_and_antag(player, antag_datum)
-				player.set_species(/datum/species/shadow/nightmare)
 
 	else if(isAI(player))
 		var/datum/antagonist/malf_ai/antag_datum = new

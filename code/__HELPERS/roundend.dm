@@ -219,7 +219,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
 
-	INVOKE_ASYNC(world, TYPE_PROC_REF(/world, flush_byond_tracy)) // monkestation edit: byond-tracy
+	INVOKE_ASYNC(Tracy, TYPE_PROC_REF(/datum/tracy, flush)) // monkestation edit: byond-tracy
 
 	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
 		roundend_callbacks.InvokeAsync()
@@ -227,15 +227,17 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
 
+	var/list/rewards = calculate_rewards()
+
 	popcount = gather_roundend_feedback()
 
 	for(var/client/C in GLOB.clients)
-		if(!C?.credits)
-			C?.RollCredits()
 		C?.playtitlemusic(40)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
+
+	RollCredits()
 
 	display_report(popcount)
 
@@ -297,12 +299,11 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
-	save_datums() // we care about this for now
 
 	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
 	save_tokens()
 	refund_cassette()
-	distribute_rewards()
+	distribute_rewards(rewards)
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	var/datum/discord_embed/embed = format_roundend_embed("<@&999008528595419278>")
@@ -360,7 +361,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	request.begin_async()
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
-	world.flush_byond_tracy() // monkestation edit: byond-tracy
+	Tracy.flush() // monkestation edit: byond-tracy
 	if(ready_for_reboot)
 		if(GLOB.station_was_nuked)
 			Reboot("Station destroyed by Nuclear Device.", "nuke")
@@ -408,7 +409,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	if(GLOB.round_id)
 		var/statspage = CONFIG_GET(string/roundstatsurl)
-		var/info = statspage ? "<a href='?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
+		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
@@ -690,15 +691,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	for(var/datum/team/active_teams as anything in all_teams)
 		//check if we should show the team
 		if(!active_teams.show_roundend_report)
+			all_teams -= active_teams
 			continue
-		//remove the team's individual antag reports, if the team actually shows up in the report.
-		for(var/datum/mind/team_minds as anything in active_teams.members)
-			if(!istype(team_minds))
-				stack_trace("Non-mind ([team_minds?.type]) found in team.members!")
-				continue
-			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
-				all_antagonists -= team_minds.antag_datums
-
 		result += active_teams.roundend_report()
 		result += " "//newline between teams
 		CHECK_TICK
@@ -710,6 +704,10 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	for(var/datum/antagonist/antagonists in all_antagonists)
 		if(!antagonists.show_in_roundend)
+			continue
+		// if the antag datum is associated with a team that appeared in the report, skip it.
+		var/datum/team/antag_team = antagonists.get_team()
+		if(!isnull(antag_team) && (antag_team in all_teams))
 			continue
 		if(antagonists.roundend_category != currrent_category)
 			if(previous_category)
@@ -736,7 +734,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 /datum/controller/subsystem/ticker/proc/give_show_report_button(client/C)
 	var/datum/action/report/R = new
-	C.player_details.player_actions += R
+	C.persistent_client.player_actions += R
 	R.Grant(C.mob)
 	to_chat(C,"<span class='infoplain'><a href='byond://?src=[REF(R)];report=1'>Show roundend report again</a></span>")
 

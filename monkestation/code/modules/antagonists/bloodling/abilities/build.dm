@@ -21,6 +21,8 @@
 	return TRUE
 
 /datum/action/cooldown/bloodling/build/Activate(atom/target)
+	. = ..()
+
 	var/choice = tgui_input_list(owner, "Select a shape to mold", "Flesh Construction", structures)
 	if(isnull(choice) || QDELETED(src) || QDELETED(owner) || !check_for_duplicate() || !IsAvailable(feedback = TRUE))
 		return FALSE

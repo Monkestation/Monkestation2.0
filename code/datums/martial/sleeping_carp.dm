@@ -13,7 +13,7 @@
 	var/deflect_cooldown = 3 SECONDS //monke edit start
 	var/deflect_stamcost = 15 //how much stamina it costs per bullet deflected
 	var/log_name = "Sleeping Carp"
-	var/damage = 20
+	var/damage = 30
 	var/kick_speed = 0 //how fast you get punted into the stratosphere on launchkick
 	var/wounding = 0 //whether or not you get wounded by the attack
 	var/zone_message = "" //string for where the attack is targetting
@@ -51,13 +51,15 @@
 		return TRUE
 	return FALSE
 
-///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch
+///Gnashing Teeth: Harm Harm, consistent 25 force punch on every second harm punch
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/attacker, mob/living/defender, set_damage = TRUE)
 	if(set_damage)
-		damage = 20
+		damage = 25
 		wounding = 0
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
+	//This var is ripped from beestation. Credit to whomever made it, it checks the armour on the attacked part so the damage can account for it
+	var/def_check = defender.getarmor(affecting, MELEE)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("precisely kick", "brutally chop", "cleanly hit", "viciously slam")
 	defender.visible_message(
@@ -68,17 +70,18 @@
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 	playsound(defender, 'sound/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
 	log_combat(attacker, defender, "strong punched ([log_name])") //monke edit
-	defender.apply_damage(damage, attacker.get_attack_type(), affecting, wound_bonus = wounding)
+	defender.apply_damage(damage, attacker.get_attack_type(), affecting, wound_bonus = wounding, blocked = def_check)
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/attacker, mob/living/defender, set_damage = TRUE)
 	//monke edit start
 	if(set_damage)
-		damage = 15
+		damage = 20
 		kick_speed = 4
 		wounding = CANT_WOUND
 		zone_message = "chest"
 		zone = BODY_ZONE_CHEST
+	var/def_check = defender.getarmor(BODY_ZONE_CHEST, MELEE)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	defender.visible_message(
 		span_warning("[attacker] kicks [defender] square in the [zone_message], sending [defender.p_them()] flying!"),
@@ -90,7 +93,7 @@
 	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', vol = 50, vary = TRUE, extrarange = -1)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.throw_at(throw_target, 7, kick_speed, attacker)
-	defender.apply_damage(damage, attacker.get_attack_type(), zone, wound_bonus = wounding)
+	defender.apply_damage(damage, attacker.get_attack_type(), zone, wound_bonus = wounding, blocked = def_check)
 	log_combat(attacker, defender, "launchkicked ([log_name])") //monke edit end
 	return
 
@@ -98,7 +101,7 @@
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/attacker, mob/living/defender, set_damage = TRUE)
 	//monke edit start
 	if(set_damage)
-		stamina_damage = 100
+		stamina_damage = -100
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', vol = 50, vary = TRUE, extrarange = -1)
 	if(defender.body_position == STANDING_UP)
@@ -174,6 +177,7 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
+	var/def_check = defender.getarmor(affecting, MELEE)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
 	defender.visible_message(
@@ -182,7 +186,7 @@
 		)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"), type = MESSAGE_TYPE_COMBAT)
 
-	defender.apply_damage(rand(10,15), attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND)
+	defender.apply_damage(rand(10,15), attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND, blocked = def_check)
 	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "punched ([log_name]])") //monke edit
 	return MARTIAL_ATTACK_SUCCESS

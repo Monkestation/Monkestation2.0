@@ -178,3 +178,7 @@
 /// Orders mobs by health
 /proc/cmp_mob_health(mob/living/mob_a, mob/living/mob_b)
 	return mob_b.health - mob_a.health
+
+/// Orders cameras by their `c_tag` ascending
+/proc/cmp_camera_ctag_asc(obj/machinery/camera/a, obj/machinery/camera/b)
+	return sorttext(b.c_tag, a.c_tag)

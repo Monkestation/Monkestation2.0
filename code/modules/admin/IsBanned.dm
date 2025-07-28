@@ -19,7 +19,6 @@
 
 	var/admin = FALSE
 	var/mentor = FALSE
-	var/supporter = FALSE
 	var/ckey = ckey(key)
 
 	var/client/C = GLOB.directory[ckey]
@@ -36,9 +35,6 @@
 
 	if (raw_is_mentor(ckey))
 		mentor = TRUE
-
-	if (get_patreon_rank(ckey) > 0)
-		supporter = TRUE
 
 	if(!real_bans_only && !admin && CONFIG_GET(flag/panic_bunker) && !CONFIG_GET(flag/panic_bunker_interview))
 		var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
@@ -86,6 +82,7 @@
 	if(!real_bans_only && !C && extreme_popcap)
 		var/popcap_value = GLOB.clients.len
 		if(popcap_value >= extreme_popcap && !GLOB.joined_player_list.Find(ckey))
+			var/supporter = get_patreon_rank(ckey) > 0
 			if (admin || mentor || supporter)
 				var/msg = "Popcap Login: [ckey] - Is a(n) [admin ? "admin" : mentor ? "mentor" : supporter ? "patreon supporter" : "???"], therefore allowed passed the popcap of [extreme_popcap] - [popcap_value] clients connected"
 				log_access(msg)

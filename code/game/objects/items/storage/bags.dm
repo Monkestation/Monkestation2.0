@@ -524,10 +524,6 @@
 		/obj/item/stack/biomass // monke: make science bags able to hold biomass cubes
 		))
 
-/*
- *  Construction bag (for engineering, holds stock parts and electronics)
- */
-
 /obj/item/storage/bag/construction
 	name = "construction bag"
 	icon = 'icons/obj/tools.dmi'
@@ -535,27 +531,12 @@
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/construction/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 100
-	atom_storage.max_slots = 50
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.set_holdable(list(
-		/obj/item/assembly,
-		/obj/item/circuitboard,
-		/obj/item/electronics,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/stock_parts,
-		/obj/item/wallframe/camera,
-		))
+	storage_type = /datum/storage/bag/construction
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
-	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
@@ -574,27 +555,69 @@
 		new /obj/item/ammo_casing/caseless/harpoon(src)
 
 /obj/item/storage/bag/rebar_quiver
-	name = "Rebar Storage Quiver"
-	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
+	name = "rebar quiver"
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "rebar_quiver"
 	worn_icon_state = "rebar_quiver"
 	inhand_icon_state = "rebar_quiver"
 	desc = "A oxygen tank cut in half, used for holding sharpened rods for the rebar crossbow."
-	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/bag/rebar_quiver
 
-/obj/item/storage/bag/rebar_quiver/Initialize(mapload)
+/obj/item/storage/bag/rebar_quiver/syndicate
+	icon_state = "syndie_quiver_0"
+	worn_icon_state = "syndie_quiver_0"
+	inhand_icon_state = "holyquiver"
+	base_icon_state = "syndie_quiver"
+	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
+		Clearly a better design than a cut up oxygen tank..."
+	slot_flags = ITEM_SLOT_NECK
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	actions_types = list(/datum/action/item_action/reload_rebar)
+	storage_type = /datum/storage/bag/rebar_quiver/syndicate
+
+/obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
-	atom_storage.max_slots = 10
-	atom_storage.max_total_storage = 15
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/rebar,
-		/obj/item/ammo_casing/rebar/syndie,
-		/obj/item/ammo_casing/rebar/healium,
-		/obj/item/ammo_casing/rebar/hydrogen,
-		/obj/item/ammo_casing/rebar/zaukerite,
-		/obj/item/ammo_casing/rebar/paperball,
-		))
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()
+	for(var/to_fill in 1 to 20)
+		new /obj/item/ammo_casing/rebar/syndie(src)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/update_icon_state()
+	. = ..()
+	switch(contents.len)
+		if(0)
+			icon_state = "[base_icon_state]" + "_0"
+		if(1 to 7)
+			icon_state = "[base_icon_state]" + "_1"
+		if(8 to 13)
+			icon_state = "[base_icon_state]" + "_2"
+		if(14 to 20)
+			icon_state = "[base_icon_state]" + "_3"
+
+/obj/item/storage/bag/rebar_quiver/syndicate/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/reload_rebar))
+		reload_held_rebar(user)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/proc/reload_held_rebar(mob/user)
+	if(!contents.len)
+		user.balloon_alert(user, "no bolts left!")
+		return
+	var/obj/held_item = user.get_active_held_item()
+	if(!istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
+		user.balloon_alert(user, "no held crossbow!")
+		return
+	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
+	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
+		user.balloon_alert(user, "no more room!")
+		return
+	if(!do_after(user, 1.2 SECONDS, user, IGNORE_USER_LOC_CHANGE))
+		return
+
+	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
+	held_crossbow.attackby(ammo_to_load, user)
 
 #undef ORE_BAG_BALOON_COOLDOWN

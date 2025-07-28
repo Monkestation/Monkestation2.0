@@ -247,6 +247,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	visible_message(span_notice("[user] fixes some of the dents on [src]."))
 
 /mob/living/silicon/robot/crowbar_act(mob/living/user, obj/item/tool)
+	if((user.istate & ISTATE_HARM) && usr != src) //MONKESTATION ADDITION
+		return FALSE
 	. = TRUE
 	if(opened)
 		to_chat(user, span_notice("You close the cover."))

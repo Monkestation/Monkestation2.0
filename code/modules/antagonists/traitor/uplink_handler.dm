@@ -123,6 +123,20 @@
 	on_update()
 	return TRUE
 
+/datum/uplink_handler/proc/purchase_raw_tc(mob/user, amount, atom/movable/source)
+	if(shop_locked)
+		return FALSE
+	if(telecrystals < amount)
+		return FALSE
+
+	telecrystals -= amount
+	var/tcs = new /obj/item/stack/telecrystal(user.drop_location(), amount)
+	user.put_in_hands(tcs)
+
+	log_uplink("[key_name(user)] purchased [amount] raw telecrystals from [source]'s uplink")
+	on_update()
+	return TRUE
+
 /** Generates objectives for this uplink handler
  * forced_types - an assoc list of objective types that when passed will always be generated first if possible to generate, value is how many of that type to generate
  */

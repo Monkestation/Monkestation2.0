@@ -1,7 +1,7 @@
 /// The subsystem used to tick [/datum/ai_movement] instances. Handling the movement of individual AI instances
 MOVEMENT_SUBSYSTEM_DEF(ai_movement)
 	name = "AI movement"
-	flags = SS_BACKGROUND|SS_TICKER
+	flags = SS_TICKER /* | SS_HIBERNATE */
 	priority = FIRE_PRIORITY_NPC_MOVEMENT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_AI_MOVEMENT
@@ -12,6 +12,9 @@ MOVEMENT_SUBSYSTEM_DEF(ai_movement)
 /datum/controller/subsystem/movement/ai_movement/Initialize()
 	SetupAIMovementInstances()
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/movement/ai_movement/Recover()
+	SetupAIMovementInstances()
 
 /datum/controller/subsystem/movement/ai_movement/proc/SetupAIMovementInstances()
 	movement_types = list()

@@ -298,6 +298,8 @@
 #define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
 ///called from base of /obj/item/radio/proc/talk_into(): (atom/movable/M, message, channel)
 #define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
+///called from base of /obj/item/radio/proc/on_receive_messgae(): (list/data)
+#define COMSIG_RADIO_RECEIVE_MESSAGE "radio_receive_message"
 
 // /obj/item/pen signals
 
@@ -471,3 +473,9 @@
 
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
 #define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"
+
+///Sent from /obj/item/skillchip/on_implant()
+#define COMSIG_SKILLCHIP_IMPLANTED "skillchip_implanted"
+
+///Sent from /obj/item/skillchip/on_remove()
+#define COMSIG_SKILLCHIP_REMOVED "skillchip_removed"

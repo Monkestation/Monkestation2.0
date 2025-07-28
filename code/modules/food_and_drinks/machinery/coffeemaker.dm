@@ -527,7 +527,7 @@
 
 /obj/machinery/coffeemaker/impressa/Destroy()
 	QDEL_NULL(coffeepot)
-	QDEL_NULL(coffee)
+	QDEL_LIST(coffee)
 	return ..()
 
 /obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)

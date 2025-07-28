@@ -1,6 +1,6 @@
 /datum/artifact_fault/death
 	name = "Instant Death Fault"
-	trigger_chance = 50 //God forbid this actually rolls on a touch artifact,like it did during my testing.
+	trigger_chance = 50 //God forbid this actually rolls on a touch artifact, like it did during my testing.
 	visible_message = "blows someone up with mind."
 	inspect_warning = list(
 		span_danger("The grim reapers scythe seems to be reflected in its surface!"),
@@ -8,7 +8,7 @@
 		span_danger("I'd bet 50/50 someone dies if this turns on!")
 	)
 
-	research_value = 10000 //Wow, this would make a fucking amazing weapon
+	research_value = TECHWEB_TIER_4_POINTS //Wow, this would make a fucking amazing weapon
 
 	weight = ARTIFACT_VERYRARE
 /datum/artifact_fault/death/on_trigger()

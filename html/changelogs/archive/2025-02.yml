@@ -386,3 +386,411 @@
   - bugfix: People with fear now appropriately lose it if the slasher isn't in range.
   distributivgesetz:
   - qol: Made reading text with the PDA retro theme a bit more accessible.
+2025-02-16:
+  Absolucy:
+  - admin: Added a new function in Lua scripting, SS13.check_tick, to avoid causing
+      too much lag during loops and such.
+  - bugfix: (TheRyeGuyWhoWillNowDie) Being revived with a cyber-heart now properly
+      restarts the cyber heart.
+  - bugfix: Heart worms will now self-cure if the victim no longer needs a heart.
+  Absolucy, PowerfulBacon, itsmeowdev:
+  - rscadd: Players now get 5 minutes to valentine on Valentine's Day, by sending
+      a valentine's card to them.
+  - rscadd: If two players send a card to each other, they will immediately assigned
+      as each other's valentine.
+  - rscadd: The usual random valentine assignment stuff will happen after 5 minutes.
+  - qol: Valentine's messages are now big and bold for clarity.
+  - qol: Clarified the valentine's announcement, saying that you can choose a valentine
+      with the card.
+  Gw0sty:
+  - rscadd: Telecommunications Admin is no longer an unobtainable trim.
+  - rscadd: Roboticists now wear fingerless gloves.
+  - rscdel: Black gloves are removed from Robovendor.
+  - qol: '''Forum'' has now been renamed to ''Discord''.'
+  - bugfix: Intradyne Pirates will now no longer wear outfits beyond comprehension.
+  - bugfix: Blueshields PDA's will now be forced to be imprinted roundstart as standard
+      policy of Nanotrasen.
+  - spellcheck: '''assualt'' have been changed to ''assault''. Words are hard in my
+      defence.'
+  MichiRecRoom:
+  - bugfix: The maintenance area connecting the Detective's Office and the Courtroom
+      on Blueshift is now properly marked as maintenance - and thus, is radiation-shielded.
+  MichiRecRoom, Vekter:
+  - bugfix: Changed the color of entertainment radio to be darker
+2025-02-18:
+  BingusSS13:
+  - qol: You can make hollow windows using RCDs again.
+  KnigTheThrasher:
+  - rscadd: NIF hivemind is back, this time it's not broken
+  - balance: NIF hivemind can't be used in crit or when your hands are tied up, you
+      use the keyboard to communicate
+  Mqiib:
+  - bugfix: Fixed drake and knight lizard horns being invisible from behind
+  Shoddd:
+  - rscadd: Added a new map, Heliostation, originally from FulpStation.
+  SirNightKnight:
+  - balance: computers can now be used as cover, firing a projectile over them is
+      now possible, while they may block projectiles if you are not adjacent to them
+      when firing.
+  - bugfix: computer laptops will not block projectiles.
+  - qol: If it meows, it hates getting sprayed with water.
+  - qol: Assembly crafting Vims now requires an emergency oxygen tank that will be
+      used as life support for the pilot.
+2025-02-19:
+  Absolucy:
+  - admin: Fixed admin logging for antag token approval/rejection not properly showing
+      the name of the antag.
+  - qol: Ghost critters and AFK players no longer count as "viewers" for bloodsucker-related
+      abilities that care about that.
+  - qol: Bloodsuckers can now designate created on-station areas as their lair.
+  - balance: The Masquerade ability for bloodsuckers will now be disabled during Sol,
+      or if they go unconscious or into crit. Despite the confusing naming, this is
+      mostly unrelated to the "breaking the masquerade" mechanic. I just can't come
+      up with a better name for it.
+  - bugfix: Fixed low-level Predatory Lunge not working at all.
+  - qol: Examining a persuasion rack as a bloodsucker will now tell you how many more
+      vassals you can create.
+  - bugfix: Hopefully avoided more weird edge-cases with persuasion racks that could
+      cause issues.
+  - qol: Using a tool on a persuasion rack as a bloodsucker, while off combat mode/harm
+      intent, with someone buckled, will now use that tool to torture, instead of
+      requiring you to click with your offhand.
+  - bugfix: Candelabrums now properly disable when unbolted.
+  - rscadd: Added a cool emissive overlay to candelabrums while lit.
+  - bugfix: Bloodsuckers can now properly toggle candelabrums from a range, like their
+      description says.
+  - qol: Bloodsuckers will no longer relay "forced" speech (i.e malkavian ramblings)
+      when using the blood throne.
+  - bugfix: The "Open Menu" button in the escape menu should work properly for all
+      maps.
+  - rscadd: The ticker component is now obtainable from the mechcomp vendor.
+  - refactor: Rewrote the ticker component to be less janky and use a proper processor.
+  - bugfix: The flusher component can no longer flush ghosts or camera eyes.
+  - rscadd: Added the ThinkTronic MechComp Dispenser Supply Crate to cargo.
+  Absolucy, wraith-54321:
+  - balance: Clockwork slabs no longer shock non-cultists when picked up, instead
+      shocking them if they try to use it in-hand.
+  - balance: Slightly reduced the damage done by clockwork item shocks from 25 to
+      20.
+  MichiRecRoom:
+  - code_imp: Alt job titles will be sanitized the next time your character data is
+      loaded. Most people will be unaffected - but if you used an alt job title that
+      was previously removed or renamed, you may find that said job title is no longer
+      applied. Sorry!
+  MichiRecRoom, Ghommie:
+  - bugfix: (Ghommie) Fixed a few harddel issues with mob spawns that caused charred
+      corpses fished from lavaland to create an invisible blockade.
+  - bugfix: (Ghommie) Fixed being able to fish up mobs that have fallen in totally
+      different z-levels with a rescue hook (i.e. from bitrunning domains to lavaland).
+  RikuTheKiller:
+  - bugfix: People who have the "no blood" trait don't show up as crushed juice pouches
+      on examine if they were physically drained of blood before getting the trait.
+2025-02-20:
+  Absolucy:
+  - rscadd: The comically large spoon can now be used as a shovel.
+2025-02-21:
+  Absolucy:
+  - bugfix: The ticker component now repeats properly.
+  Absolucy, That0nePerson:
+  - rscadd: Clockwork Cult's Kindle spell now applies a new clockwork-themed slurring
+      effect, instead of the blood cult-themed slurring.
+  - rscadd: 'Added Rat''vander Cocktail: A drink that makes you slur like the Nar''sour,
+      but clock-cult styled. Explodes if mixed with Nar''sour. It is made with 5u
+      wine, 5u triple sec, 1u sugar, 1u iron, and 0.6u copper for 10u of the drink.'
+  - spellcheck: Fixed a typo in the visible message when someone is converted to the
+      clockwork cult.
+  Absolucy, TiviPlus:
+  - code_imp: Optimized some icon code.
+  Addust:
+  - rscadd: Syndicate depots have begun tracking internal and external activities
+      automatically with a modified Nanotrasen black-box, that can be stolen by explorers
+      and sold for a notable sum.
+  - rscadd: Syndicate depots have had some refits to assist this.
+  - rscadd: Syndicate encryption keys and agent cards found in space may be sold to
+      CentCom for analysis.
+  - rscadd: Syndicate outpost self-destruct devices have been refitted with a warning
+      system to alert the base's crew if they're armed.
+  BingusSS13:
+  - rscadd: The abandoned infiltrator now has it's own area.
+  - bugfix: You can now place an APC on the abandoned infiltrator.
+  - bugfix: The blast door button on the abandoned infiltrator now requires syndicate
+      access.
+  - qol: The airlock electronics on the abandoned infiltrator are now preset with
+      the name "Medical" and syndicate access.
+  - qol: Moves the walls between the cockpit and hallway on the abandoned infiltrator
+      up by one tile for consistency with the version of the infiltrator it was based
+      on.
+  - qol: Extends the abandoned infiltrator area to cover the missing sections of the
+      ship.
+  Gw0sty:
+  - rscadd: The Hermit dislikes noncrew antagonists now.
+  - rscadd: The Sleeper enjoys positive events.
+  - rscadd: The Brute has a weight, and an minimum pop.
+  - code_imp: Code blocked out a unnecessary obsession event.
+  - qol: Prisoners are now eligible for high threat antagonists that would be kidnapped
+      from their job even ways
+  - bugfix: Events now have at the very least, more accurate tags and tracks, for
+      storytellers to use.
+  - bugfix: Updated threat list of various antagonists
+  - rscadd: 'ERT Code: Yellow has been initialized'
+  - bugfix: Real Death Ripleys will have SPECOPS access. As normal civilians should
+      not pilot nor know what the existence of anything I said is.
+  - rscadd: Assault operative weapons now have weapon authentication implants and
+      their guns the corresponding firing pins.
+  - rscdel: Security can no longer order Borer cages
+  - balance: Medical Borer Crates now comes with three cages.
+  - code_imp: Chief Medical Officer, Medical Doctors, Chemists, and Brig Physicians
+      are now classified as the new enemies for Cortical Borers to spawn
+  - qol: Immunity scanners can be stored in medical toolbelts and surgical medkits
+  - balance: PENLITE can create 6, instead of 3 barriers.
+  MichiRecRoom:
+  - bugfix: Floran characters should no longer float hats above their head, if you
+      set their hairstyle to one that vertically offsets hats before switching to
+      Floran.
+  - bugfix: Some shipbreaking templates had invalid map paths, and thus it was possible
+      to get a blank ship - this has been fixed.
+  - bugfix: If you found that this PR broke shipbreaking during its testmerge phase,
+      you'd be right. That's been fixed.
+  MichiRecRoom, lizardqueenlexi, Higgin, mc-oofert:
+  - refactor: (lizardqueenlexi) Pirate NPCs now use the basic mob framework. They'll
+      be a little smarter in combat, and if you're wearing your ID they'll siphon
+      your bank account with every melee attack! Beware! Please report any bugs.
+  - bugfix: (mc-oofert) After a raid on the local drug mafia in the sector by TerraGov,
+      the Russian Mobsters no longer have access to easy drugs and as a result are
+      no longer 24/7 running faster than the average spaceman.
+  Shoddd:
+  - bugfix: Several heliostation fixes and qol
+  TheColorCyan:
+  - rscadd: manhunt mask is now purchaseable in the loadout store
+  ThePooba:
+  - rscadd: more ruins
+  Veth-s:
+  - bugfix: fixed some of slashers stuff i hope to god
+  Wisemonster:
+  - balance: Reduced the time it takes for an unsecure disk to start increasing lone
+      op weight (5 minutes, down from 8.3)
+  - balance: Lone ops now have a minimum weight of 1
+  Ziiro:
+  - refactor: Refactored the way silicon emotes are handled in silicons, robots, and
+      synthetic voiceboxes
+  - bugfix: synthetic voiceboxes can *beep again!
+  destrucktoid:
+  - balance: Borers can no longer be squashed by walking over them
+  - balance: Borers now have a bigger sprite.
+  wraith-54321:
+  - bugfix: Enables new zombies
+2025-02-22:
+  Absolucy:
+  - balance: The malf AI intercom honk (Percussive Intercomm Interference) no longer
+      stacks with multiple intercoms on a single person, which could instantly deafen
+      people in an unlucky spot.
+  - balance: The intercom honk also won't affect people who can't hear anyways.
+  - balance: The intercom honk now doesn't affect people in spaced areas unless they're
+      right next to the intercom, like how sound usually works.
+  - balance: The intercom honk now only affects Z-levels connected to the AI's z-level
+      (i.e an on-station AI will only affect station intercoms)
+  - bugfix: Being a team antagonist will no longer hide all of your other antagonist
+      roles from the roundend report, i.e a BB+traitor will properly show as both
+      a BB and a traitor in the roundend report.
+  - bugfix: You no longer whack window sills with glass sheets when building windows
+      on them.
+  - bugfix: Window sills will no longer create nonexistent/negative stacks of glass.
+  - bugfix: You can now create plastitanium glass windows on window sills.
+  - qol: You can now walk to another window sill while already standing a window sill.
+  - qol: Flying/floating mobs can now pass window sills.
+  - rscadd: Window sills now elevate you while standing on them.
+  Gw0sty:
+  - rscadd: Limb Grower design for spleens
+  Shoddd:
+  - balance: rebalanced pain quirk values with pain being mostly gone
+  Ziiro:
+  - bugfix: IPC Cyberkinetics Chassis (Greyscale) now accepts Mutant colors
+  - rscadd: IPC Antenna options now accept Secondary Mutant colors
+2025-02-23:
+  Absolucy:
+  - bugfix: The balloon alerts when building on a window sill will now actually say
+      what you're doing, instead of just your name and nothing else.
+  - bugfix: Revenge Vassals can now properly bring ex-Vassals back into the fold with
+      the "Help Vassal" ability.
+  - bugfix: Fixed some various minor errors.
+  BebeYoshi:
+  - bugfix: Reality Dissociation Syndrome properly works now.
+  Shoddd:
+  - bugfix: tundra moth limbs have proper names
+  - bugfix: heliostation has a egg incubator now
+  Snack-Max:
+  - rscadd: Two New Hairstyles, Long Undercut and Alpaca
+  - bugfix: Updated Long Sidecut
+2025-02-24:
+  MissClassyPineapple:
+  - rscadd: Adds the Caffeine dependence quirk. Get to drinking that coffee.
+  - rscadd: Makes coffee mildly addictive.
+  - rscadd: Coffee addiction.
+  Sorenon:
+  - qol: Boxed roundstart / latejoin job information.
+  - qol: Captain gets a little bit more information about how their radio works roundstart.
+  - bugfix: Fixed roundstart players not getting radio information.
+  - rscadd: Added Alcoholic as a negative quirk.
+  - rscadd: Added a toggle to the DRG Miner Training quirk skillchip and some checks
+      to see which (if any) radio channel should be used
+  - rscadd: added large scarves to the loadout store
+  - qol: shrunk the choice beacon item to be pocket sized
+  - bugfix: fixed the top few pixels of anime implant ears getting trimmed for tallest
+      humans
+  - bugfix: fixed QMs showing up on lifeline's blueshield mode
+  - bugfix: fixed missing / disabled legs slowing down flying players
+  - bugfix: fixed the number displayed number of bullets in fingerguns not decreasing
+  - bugfix: fixed the speen emote not making sound
+  - bugfix: fixed latejoin borgs with an AI connection being told they were unlinked
+  - bugfix: fixed the muzzle preventing custom emotes
+  - bugfix: fixed players being unable to resist to get out of vents/scrubbers while
+      ventcrawling
+  - bugfix: fixed seclights being unattachable to the lawbringer
+  - balance: 'Honorbound no longer cares about innocence when it comes to
+
+      lesser creatures. They can still be considered unready in some cases.'
+  - balance: 'Attacking a cultist with a halo or a nuclear operative first
+
+      instantly makes THEM guilty, allowing further attacks.'
+  - balance: More favor for converting someone to the honorbound rules
+  - rscadd: 'Fundamentally Evil quirk. You might act normal, but you know deep
+
+      down that you totally don''t give a shit about anyone but yourself.
+
+      Empaths better watch out.'
+  - rscadd: 'Players who choose to be evil via the quirk menu will be reminded
+
+      at roundstart that this doesn''t exempt them from server rules.'
+2025-02-25:
+  Absolucy:
+  - balance: Bluespace artillery cannons can no longer target oozeling cores.
+  Absolucy, LemonInTheDark:
+  - map: added a map specific changelog entry
+  DexeeXI:
+  - balance: 'Blueshift: all prison ''exterior'' walls are now properly rwalls.'
+  - balance: 'Blueshift: Removed several items that were comically easy to get and
+      ruin the balance of the map.'
+  - balance: 'Blueshift: added two additional chargers to sec''s meeting room as there
+      is a comically short number of available chargers outside of the armory for
+      officers to use while in the brig.'
+  Gw0sty:
+  - qol: Gave ranching its own unique room subtype
+  - bugfix: Heliostation pathology should have functional Airlocks.
+  - bugfix: Theseus has a increased request console network
+  MissClassyPineapple:
+  - balance: Completely rebalanced the temperature guns.
+  - rscadd: new firemode on the temperature guns
+  - bugfix: Plastic panels no longer allows for easy material duplication.
+  - bugfix: Scream for Me now works. It creates a number of severely bleeding wounds
+      and pain.
+  - bugfix: Syndicate EMP kits now contain EMP grenades and the EMP implanter again.
+  - rscadd: Added a reminder to the victim of a bloodsucker feeding, that they won't
+      remember this happening.
+  - bugfix: No more pixelshift dancing exploits.
+  - bugfix: Memento Mori will now dust you if you would otherwise die as a bloodsucker.
+      It does not appreciate being tricked.
+  - rscadd: CMOs now get an autosurgeon for an NT 1.0 cyberlink in their locker so
+      their medical hud implants will have full functionality once more.
+  - bugfix: Secrets on Blueshift
+  - rscadd: Roosters added to ranching on Heliostation.
+  - bugfix: Unlocked the fridges in perma on Heliostation.
+  Mqiib:
+  - balance: Flashbangs only get a guaranteed stun on the same tile, not adjacent
+      tiles.
+  RikuTheKiller:
+  - bugfix: Liquids should run much faster now.
+  Shoddd:
+  - balance: ethereal blood immobilizes instead of knockdown stuns
+  - bugfix: plates breaking inside of walls
+  Sorenon:
+  - image: Space lizard, carp, slime and snake plushies have been resprited and set
+      up to support GAGS.
+  - rscadd: Added Goblin Noses
+  - bugfix: You can no longer manipulate "None" organs
+  - rscadd: Added the ability to attach HUD glasses to security helmets, with security
+      hardsuit helmets having an unremovable sec HUD.
+  - rscadd: Most prebuilt modsuits now start with their department's relevant HUD
+      module
+  - qol: The Warden's locker now has a garment bag
+  - rscadd: Adds Food Allergies as a -2 quirk. You can select which food you're allergic
+      to or rock a random option.
+  flleeppyy:
+  - admin: added "Reload Mentors" verb.
+2025-02-26:
+  Absolucy:
+  - bugfix: Disabled music playback on BYOND 516 for the time being, to prevent random
+      chat crashes, until the issue is properly fixed.
+  - bugfix: Structural weakpoint explosions no longer blow up shuttles.
+  - bugfix: Washing forged items no longer removes the material color.
+  - bugfix: AI-controlled basic mobs will no longer somehow attack people who are
+      ventcrawling or jaunting.
+  - bugfix: (Hatterhat) Basic mobs no longer have the (unintended) ability to shoot
+      out of containers, like bluespace body bags.
+  - balance: You can no longer simultaneously filter sand through as many seed meshes
+      as you can reach.
+  - refactor: Refactored some code relating to fluffy tongue.
+  - balance: Pro-tagonista Syndrome now inflicts the victim with fluffy tongue, instead
+      of just randomly appending an poorly spaced "Nyaa~" to 20% of their messages.
+  DexeeXI:
+  - balance: The PKA shockwave does 1/8th the damage from before, down from 40 to
+      5. Brings the point blank damage usage down to where it should be.
+  Gw0sty:
+  - rscadd: Alien tools are printable in mechfabs
+  - rscadd: Multirack chargers are now researchable.
+  - qol: Reorganized Research design categorization.
+  - balance: Alien engineering tools are now no longer useable for alien biotech.
+  - bugfix: Mech LMG's are no longer considered a mining mech design.
+  - rscadd: Daisy the library pet rabbit has settled in on all stations.
+  - rscadd: Walter the Blueshields dog is now biting criminals legs on all stations.
+  - rscadd: Bardrones programing has led it to infest Maintenace bars and similar
+      areas when none others are present. Leading to its presence on all stations.
+  - rscadd: Armory Tac Lockers has been suppplied to the rest of the stations.
+  - rscadd: Syndicate has received an unspecified bonus, suit storages now come with
+      space suits.
+  - qol: Blueshields have received unexpected budget cuts. They are now only afford
+      one modsuit in their suit storages
+  - balance: Armory Tac Lockers are now openable by Armory access or NT Rep, instead
+      of Cap access
+  - bugfix: Deleted a Paradox Daisy from existance. Hopefully the right one.
+  - bugfix: Walter will now no longer transcend the plane and exist invisibly in ours.
+  - bugfix: Dirk, the robotics dog now has gained its true name.
+  - code_imp: Modulzatized suit storage clothes.
+  Snack-Max:
+  - bugfix: quick fix long sidecut
+  Wernerses:
+  - balance: Reduced the cost of Catalytic Inhibitor Serum from 20 TC to 17 TC
+  Ziiro:
+  - bugfix: The IPC posibrains are now stored in the chest.
+  - bugfix: The IPC "Change Display" action now allows you to also change the color.
+  - bugfix: IPC tongues have been moved from the head to the mouth
+  - bugfix: IPC tongues now have have no tastes - liked, disliked, or toxic. (previously
+      was inheriting human tastes)
+  - balance: IPCs now speak more languages to resume their role as a universal translator
+  - rscadd: Robotic limbs now spark when struck by objects with enough force
+  - rscadd: 9 new IPC monitor screens (And RedText has been to RGB) ported from Shiptest
+  - rscadd: 10 new IPC antennas ported from Shiptest
+  - rscadd: 2 new IPC chassis ported from Shiptest
+  - rscadd: IPCs now have gender identity.
+  - rscadd: IPCs now have gendered laughs if applicable
+  flleeppyy:
+  - bugfix: Clarify wording for opening lootboxes on in the lobby menu
+2025-02-27:
+  Absolucy:
+  - bugfix: Void Cloaks now ACTUALLY properly hide blades and such in the suit storage
+      from the wearer's sprite.
+  - rscdel: Removes pH buffers from maints loot (we have pH and purity disabled anyways)
+  Absolucy, Aylong, Holoo-1, JohnFulpWillard:
+  - bugfix: More UI fixes for BYOND 516.
+  MichiRecRoom:
+  - bugfix: The Debug Cassette Tape shouldn't appear as much anymore, as we now make
+      three attempts to load a random cassette ID (for random cassettes).
+  - admin: You will be notified if a cassette fails to load (after three attempts
+      for a random cassette, or one for a specific cassette).
+  Snack-Max:
+  - bugfix: long sidecut
+  Sorenon:
+  - bugfix: greyscale colors will now update on the mob when modifying them via the
+      VV menu
+  leaKsi:
+  - refactor: Credits have been slightly refactored. This should result in increased
+      perfomance during the end of the round.

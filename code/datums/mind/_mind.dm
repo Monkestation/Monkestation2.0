@@ -21,7 +21,7 @@
 	- When creating a new mob which will be a new IC character (e.g. putting a shade in a construct or randomly selecting
 		a ghost to become a xeno during an event). Simply assign the key or ckey like you've always done.
 
-			new_mob.key = key
+			new_mob.PossessByPlayer(key)
 
 		The Login proc will handle making a new mind for that mobtype (including setting up stuff like mind.name). Simple!
 		However if you want that mind to have any special properties like being a traitor etc you will have to do that
@@ -117,7 +117,7 @@
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	QDEL_NULL(antag_hud)
-	QDEL_LIST(memories)
+	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
 	QDEL_NULL(language_holder)
@@ -206,7 +206,7 @@
 	transfer_martial_arts(new_character)
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
-		new_character.key = key //now transfer the key to link the client to our new body
+		new_character.PossessByPlayer(key) //now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
@@ -561,16 +561,18 @@
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,
 /// or for when someone's recieving a job they'd really want to be greeted to.
-/datum/mind/proc/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client)
+/// monkestation edit: added "chosen_title" argument
+/datum/mind/proc/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client, chosen_title)
 	. = set_assigned_role(new_role)
 	if(assigned_role != new_role)
 		return
 
-	to_chat(incoming_client || src, span_infoplain("<b>You are the [new_role.title].</b>"))
-
-	var/related_policy = get_policy(new_role.title)
-	if(related_policy)
-		to_chat(incoming_client || src, related_policy)
+	// monkestation edit start
+	// var/intro_message = new_role.get_spawn_message() original
+	var/intro_message = new_role.get_spawn_message(chosen_title)
+	// monkestation edit end
+	if(incoming_client && intro_message)
+		to_chat(incoming_client, intro_message)
 
 /mob/proc/sync_mind()
 	mind_initialize() //updates the mind (or creates and initializes one if one doesn't exist)

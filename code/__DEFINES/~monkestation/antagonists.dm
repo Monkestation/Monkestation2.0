@@ -1,9 +1,12 @@
 // Monster Hunter stuff
-#define upgraded_val(x,y) ( CEILING((x * (1.07 ** y)), 1) )
+#define UPGRADED_VAL(x,y) ( CEILING((x * (1.07 ** y)), 1) )
 #define CALIBER_BLOODSILVER "bloodsilver"
 
 ///Whether a mob is a Monster Hunter
 #define IS_MONSTERHUNTER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/monsterhunter))
+
+/// Checks if the given mob is a slasher.
+#define IS_SLASHER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/slasher))
 
 /// List of areas blacklisted from area based traitor objectives
 #define TRAITOR_OBJECTIVE_BLACKLISTED_AREAS list(/area/station/engineering/hallway, \

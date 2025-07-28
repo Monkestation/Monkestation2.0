@@ -20,6 +20,7 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
+	action_slots = ALL
 
 	var/super_throw = FALSE
 	var/gun_flags = NONE
@@ -73,6 +74,7 @@
 	var/ammo_y_offset = 0
 
 	var/pb_knockback = 0
+	var/pbk_gentle = FALSE
 
 /obj/item/gun/Initialize(mapload)
 	. = ..()
@@ -200,7 +202,7 @@
 				if(pb_knockback > 0 && ismob(pbtarget))
 					var/mob/PBT = pbtarget
 					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
-					PBT.throw_at(throw_target, pb_knockback, 2)
+					PBT.throw_at(throw_target, pb_knockback, 2, gentle = pbk_gentle)
 			else if(!tk_firing(user))
 				user.visible_message(
 						span_danger("[user] fires [src]!"),
@@ -326,7 +328,7 @@
 
 /obj/item/gun/throw_impact(mob/living/carbon/target, datum/thrownthing/throwing_datum)
 	. = ..()
-	if(super_throw)
+	if(super_throw && istype(target))
 		target.apply_damage((src.w_class * 7.5), BRUTE, attacking_item = src)
 		target.Knockdown((w_class) SECONDS)
 		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)

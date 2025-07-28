@@ -119,6 +119,6 @@
 	icon_state = "cyber_implants"
 
 /obj/item/storage/box/shield_blades/PopulateContents()
-	new /obj/item/autosurgeon/organ/cyberlink_nt_low(src)
+	new /obj/item/autosurgeon/organ/cyberlink_terragov(src)
 	new /obj/item/autosurgeon/organ/shield_blade(src)
 	new /obj/item/autosurgeon/organ/shield_blade/l(src)

@@ -84,6 +84,9 @@
 		/datum/reagent/medicine/atropine = 5
 	)
 
+/obj/item/organ/internal/cyberimp/leg/chemplant/drugs/l
+	zone = BODY_ZONE_L_LEG
+
 /obj/item/organ/internal/cyberimp/leg/chemplant/emergency
 	name = "deep emergency chemical infuser"
 	desc = "Dangerous implant used by the syndicate to reinforce their assault forces that go on suicide missions."

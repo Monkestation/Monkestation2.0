@@ -36,9 +36,10 @@
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
-	if (isdummy(src))
-		return
 	mob_mood = new /datum/mood(src)
+
+/mob/living/carbon/human/dummy/setup_mood()
+	return
 
 /// This proc is for holding effects applied when a mob is missing certain organs
 /// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
@@ -58,7 +59,6 @@
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
-	QDEL_LIST(bioware)
 	GLOB.human_list -= src
 
 	if (mob_mood)
@@ -408,8 +408,10 @@
 				if(WANTED_PAROLE)
 					threatcount += 2
 
-	//Check for dresscode violations
-	if(istype(head, /obj/item/clothing/head/wizard))
+	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
+		threatcount += 2
+
+	if(istype(wear_neck, /obj/item/clothing/neck/cloak/syndicate))
 		threatcount += 2
 
 	//Check for nonhuman scum
@@ -669,46 +671,10 @@
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
-
 	// Updates the health bar, also sends signal
 	. = ..()
-
-	// Updates the health doll
-	if(!hud_used.healthdoll)
-		return
-
-	hud_used.healthdoll.cut_overlays()
-	if(stat == DEAD)
-		hud_used.healthdoll.icon_state = "healthdoll_DEAD"
-		return
-
-	hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-	for(var/obj/item/bodypart/body_part as anything in bodyparts)
-		var/icon_num = 0
-
-		if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
-			continue
-
-		var/damage = body_part.burn_dam + body_part.brute_dam
-		var/comparison = (body_part.max_damage/5)
-		if(damage)
-			icon_num = 1
-		if(damage > (comparison))
-			icon_num = 2
-		if(damage > (comparison*2))
-			icon_num = 3
-		if(damage > (comparison*3))
-			icon_num = 4
-		if(damage > (comparison*4))
-			icon_num = 5
-		if(has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
-			icon_num = 0
-		if(icon_num)
-			hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
-	for(var/t in get_missing_limbs()) //Missing limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
-	for(var/t in get_disabled_limbs()) //Disabled limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
+	// Handles changing limb colors and stuff
+	hud_used.healthdoll?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -802,7 +768,7 @@
 		var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 		if(result)
 			var/newtype = GLOB.species_list[result]
-			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")
+			admin_ticket_log("[key_name(usr)] has modified the bodyparts of [src] to [result]") // MONKESTATION EDIT - tgui tickets
 			set_species(newtype)
 
 /mob/living/carbon/human/limb_attack_self()
@@ -910,16 +876,6 @@
 	if(diff < 0) //Taking damage, not healing
 		return diff * physiology.stamina_mod * physiology.temp_stamina_mod
 	return diff
-
-/mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return FALSE
-	return ..()
-
-/mob/living/carbon/human/set_nutrition(change) //Seriously fuck you oldcoders.
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return FALSE
-	return ..()
 
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
@@ -1034,17 +990,14 @@
 /mob/living/carbon/human/species/oozeling
 	race = /datum/species/oozeling
 
-/mob/living/carbon/human/species/jelly
-	race = /datum/species/jelly
+/mob/living/carbon/human/species/oozeling/stargazer
+	race = /datum/species/oozeling/stargazer
 
-/mob/living/carbon/human/species/jelly/slime
-	race = /datum/species/jelly/slime
+/mob/living/carbon/human/species/oozeling/slime
+	race = /datum/species/oozeling/slime
 
-/mob/living/carbon/human/species/jelly/stargazer
-	race = /datum/species/jelly/stargazer
-
-/mob/living/carbon/human/species/jelly/luminescent
-	race = /datum/species/jelly/luminescent
+/mob/living/carbon/human/species/oozeling/luminescent
+	race = /datum/species/oozeling/luminescent
 
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
