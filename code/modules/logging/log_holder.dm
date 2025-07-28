@@ -277,12 +277,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN | R_DEBUG, FALSE, "View Round Logs", "View th
 	init_category_file(category_instance, category_header)
 
 /datum/log_holder/proc/human_readable_timestamp()
-#if !defined(OPENDREAM) && !defined(SPACEMAN_DMM) && DM_BUILD >= 1649
-	var/static/__loaded
-	return call_ext(__loaded ||= load_ext(RUST_G, "formatted_timestamp"))("%Y-%m-%d %H:%M:%S%.3f")
-#else
 	return rustg_formatted_timestamp("%Y-%m-%d %H:%M:%S%.3f")
-#endif
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.
