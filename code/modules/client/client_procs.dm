@@ -576,7 +576,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && (isnull(GLOB.mentor_datums[ckey]) || isnull(GLOB.dementors[ckey]))&& !is_admin(src))
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -882,7 +882,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(string)
 				string += ", "
 			string += "Mobile Hostspot IP"
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && (isnull(GLOB.mentor_datums[ckey]) || isnull(GLOB.dementors[ckey])) && !is_admin(src))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 

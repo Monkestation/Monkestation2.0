@@ -1,0 +1,4 @@
+author: "ancient-engineer"
+delete-after: True
+changes:
+  - rscadd: "Added Cretaceous Speed as a floorpill name"

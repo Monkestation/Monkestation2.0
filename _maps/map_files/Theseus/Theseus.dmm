@@ -48823,7 +48823,6 @@
 /obj/machinery/airalarm/directional/north,
 /mob/living/basic/parrot/poly,
 /obj/machinery/camera/autoname/directional/east,
-/obj/item/construction/rcd/ce,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
 "ojM" = (
