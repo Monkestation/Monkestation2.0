@@ -55,8 +55,10 @@
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
 		if(TRACK_COMMANDO_NUKE)
-			var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
-			target = nuke
+			for(var/obj/machinery/nuclearbomb/commando/bombue as anything in GLOB.nuke_list)
+				if(bombue.timing || bombue.exploding)
+					target = bombue
+					break
 	..()
 
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
@@ -104,3 +106,9 @@
 	name = "nuke pinpointer"
 	desc = "A handheld tracking device that locks onto signals given off by old Nanotrasen nuclear fission explosives."
 	icon_state = "pinpointer_nuke"
+
+/obj/item/pinpointer/commando_nuke/scan_for_target()
+	target = null
+	var/obj/machinery/nuclearbomb/commando/tracked_nuke = locate(/obj/machinery/nuclearbomb/commando) in GLOB.nuke_list
+	target = tracked_nuke
+	..()

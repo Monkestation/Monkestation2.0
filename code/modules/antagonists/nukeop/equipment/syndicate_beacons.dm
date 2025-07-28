@@ -7,9 +7,10 @@
 
 /obj/item/choice_beacon/commando_support/generate_display_names()
 	var/static/list/selectable_assets = list(
-		"Elite Monkey Strike Team" = /obj/item/antag_spawner/loadout/monkey_crash,
-		"Ricky's Mauler" = /obj/item/antag_spawner/loadout/monkey_man/ricky,
-		"Syndicate Medical Cyborg" = /obj/item/antag_spawner/nuke_ops/borg_tele/medical,
+		"Elite Monkey Strike Team (Distraction/Sabotage)" = /obj/item/antag_spawner/loadout/monkey_crash,
+		"Ricky's Mauler (Defensive)" = /obj/item/antag_spawner/loadout/monkey_man/ricky,
+		"Syndicate Medical Cyborg (Support)" = /obj/item/antag_spawner/nuke_ops/borg_tele/medical,
+		"Missile Targeter (Offensive)" = /obj/item/missile_targeter,
 	)
 	return selectable_assets
 

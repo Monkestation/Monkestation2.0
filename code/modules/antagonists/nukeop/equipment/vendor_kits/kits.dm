@@ -39,7 +39,7 @@
 		/obj/item/clothing/suit/space/syndicate/green = 1,
 		/obj/item/tank/jetpack/harness = 1,
 		/obj/item/gun/ballistic/automatic/rostokov = 1,
-		/obj/item/ammo_box/magazine/rostokov9mm = 4,
+		/obj/item/ammo_box/magazine/rostokov9mm = 5,
 		/obj/item/melee/energy/sword/saber = 1,
 		/obj/item/grenade/c4 = 4,
 		/obj/item/grenade/flashbang = 2,
@@ -70,7 +70,6 @@
 		/obj/item/ammo_box/magazine/m12g = 2,
 		/obj/item/ammo_box/magazine/m12g/slug = 2,
 		/obj/item/ammo_box/magazine/m12g/bioterror = 2,
-		/obj/item/ammo_box/magazine/m12g/stun = 2,
 		/obj/item/clothing/glasses/thermal = 1,
 	),src)
 
@@ -92,10 +91,10 @@
 		/obj/item/tank/jetpack/harness = 1,
 		/obj/item/gun/ballistic/rifle/sniper_rifle/syndicate = 1,
 		/obj/item/suppressor = 1,
-		/obj/item/ammo_box/magazine/sniper_rounds = 3,
+		/obj/item/ammo_box/magazine/sniper_rounds = 2,
 		/obj/item/ammo_box/magazine/sniper_rounds/disruptor = 2,
 		/obj/item/ammo_box/magazine/sniper_rounds/penetrator = 1,
-		/obj/item/ammo_box/magazine/sniper_rounds/marksman = 2,
+		/obj/item/ammo_box/magazine/sniper_rounds/marksman = 1,
 		/obj/item/storage/box/teargas = 2,
 		/obj/item/clothing/glasses/thermal = 1,
 	),src)
@@ -133,7 +132,7 @@
 	),src)
 
 /datum/voucher_set/syndicate/kit/scout
-	name = "Scout (Very Hard)"
+	name = "Scout (Medium)"
 	description = "Use your cloak to get around the station and access areas harder to reach by the rest of the team without going unnoticed. \
 		Weapons: PP-96 SMG and energy sword. \
 		Utility: Suppressor, cryptographic sequencer, airlock authentication override card, disk pinpointer, experimental Syndicate teleporter, cloaker belt, and security HUD night vision goggles."
@@ -233,8 +232,8 @@
 /datum/voucher_set/syndicate/kit/engineer
 	name = "Engineer (Medium)"
 	description = "Secure the decryption zone, repair the nuke, and provide cover for the rest of the team. \
-		Weapons: PP-96 SMG. \
-		Utility: Full toolbelt with combat wrench, 9mm deployable turret, industrial RCD, advanced fire extinguisher, combat forcefield projector, circuit skillchip, and diagnostic HUD night vision goggles."
+		Weapons: PP-96 SMG and X4 (in toolbox). \
+		Utility: Full toolbelt with combat wrench, 9mm deployable turret, advanced fire extinguisher, combat forcefield projector, circuit skillchip, and diagnostic HUD night vision goggles."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-black-engie"
 	set_items = list(
@@ -249,7 +248,6 @@
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 1,
 		/obj/item/ammo_box/magazine/plastikov9mm/red = 2,
 		/obj/item/storage/belt/utility/syndicate = 1,
-		/obj/item/construction/rcd/combat = 1,
 		/obj/item/extinguisher/advanced = 1,
 		/obj/item/forcefield_projector/combat = 1,
 		/obj/item/storage/toolbox/emergency/turret/nukie/explosives = 1,

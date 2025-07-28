@@ -70,7 +70,7 @@
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	if(world.time >= next_announce)
 		var/area/our_area = get_area(src)
-		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()]", "Nuclear Operations Command", sound_override = 'sound/misc/notice1.ogg', should_play_sound = TRUE, color_override = "red")
+		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()].", "Nuclear Operations Command", sound_override = 'sound/misc/notice1.ogg', should_play_sound = TRUE, color_override = "red")
 		next_announce += NUKE_ANNOUNCE_INTERVAL
 	if(world.time >= grant_announce && !grant_given)
 		priority_announce(
