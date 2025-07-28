@@ -8515,6 +8515,7 @@
 #include "monkestation\code\modules\storytellers\converted_events\event_overrides.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\blob_infection.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodcult.dm"
+#include "monkestation\code\modules\storytellers\converted_events\solo\bloodling.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodsuckers.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\brother.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\changeling.dm"
