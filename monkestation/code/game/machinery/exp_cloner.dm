@@ -150,7 +150,7 @@
 	if(!isnull(preview))
 		return preview
 	var/mob/living/carbon/human/dummy/preview_dummy = generate_or_wait_for_human_dummy(REF(src))
-	clone_dna.transfer_identity(preview_dummy, transfer_SE = FALSE, transfer_species = TRUE)
+	clone_dna.copy_dna(preview_dummy.dna, COPY_DNA_SPECIES)
 	preview_dummy.set_cloned_appearance()
 	preview_dummy.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	preview = getFlatIcon(preview_dummy)

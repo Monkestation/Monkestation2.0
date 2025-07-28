@@ -5,6 +5,7 @@
 	antag_datum = /datum/antagonist/nukeop/commando
 	typepath = /datum/round_event/antagonist/solo/commando_operative
 	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -21,6 +22,7 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	denominator = 10
 	base_antags = 1 //should scale with pop so its 1 op + 1 for every 10 people ready.

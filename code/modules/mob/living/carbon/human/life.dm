@@ -12,12 +12,10 @@
 		return FALSE
 
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
-		if(.) //not dead
-
-			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
-				HM.on_life(seconds_per_tick, times_fired)
-
 		if(stat != DEAD)
+			//handle active mutations
+			for(var/datum/mutation/mutation as anything in dna.mutations)
+				mutation.on_life(seconds_per_tick, times_fired)
 			//heart attack stuff
 			handle_heart(seconds_per_tick, times_fired)
 			handle_liver(seconds_per_tick, times_fired)
@@ -33,7 +31,6 @@
 
 	if(stat != DEAD)
 		return TRUE
-
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	var/chest_covered = FALSE

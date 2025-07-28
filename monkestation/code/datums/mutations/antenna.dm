@@ -1,8 +1,8 @@
-/datum/mutation/human/antenna
+/datum/mutation/antenna
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/antenna/modify()
+/datum/mutation/antenna/setup()
 	. = ..()
 	if(owner && GET_MUTATION_SYNCHRONIZER(src) < 1)
 		owner.update_mutations_overlay()
@@ -28,10 +28,10 @@
 	linked_radio.radio.keyslot = new lucky_winner
 	linked_radio.radio.recalculateChannels()
 
-/datum/mutation/human/antenna/get_visual_indicator()
+/datum/mutation/antenna/get_visual_indicator()
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1) // Stealth
 		return FALSE
 	return visual_indicators[type][1]
 
-/datum/mutation/human/mindreader
+/datum/mutation/mindreader
 	energy_coeff = 1

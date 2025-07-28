@@ -33,7 +33,7 @@
 /obj/item/chicken_scanner/proc/chicken_scan(mob/living/carbon/human/user, mob/living/basic/chicken/scanned_chicken)
 	if(scan_mode)
 		for(var/mutation in scanned_chicken.mutation_list)
-			var/datum/mutation/ranching/chicken/held_mutation = new mutation
+			var/datum/ranching_mutation/chicken/held_mutation = new mutation
 			var/list/combined_msg = list()
 			combined_msg += "\t<span class='notice'>[initial(held_mutation.egg_type.name)]</span>"
 			if(held_mutation.happiness)

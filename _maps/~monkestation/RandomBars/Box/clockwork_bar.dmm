@@ -51,6 +51,10 @@
 	},
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
+"gN" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
 "hB" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /turf/open/floor/bronze,
@@ -209,6 +213,22 @@
 /obj/effect/spawner/structure/window/bronze,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
+"GA" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Hc" = (
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
 "Ie" = (
 /obj/structure/sign/poster/contraband/clown/directional/west,
 /obj/structure/table/bronze,
@@ -237,16 +257,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
-"LJ" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/bronze,
-/area/station/commons/lounge)
-"Mm" = (
-/obj/machinery/light_switch/directional/west,
-/obj/machinery/light/directional/west,
-/obj/structure/fluff/clockwork/alloy_shards/small,
-/turf/open/floor/bronze,
-/area/station/commons/lounge)
 "MB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -270,6 +280,11 @@
 /area/station/commons/lounge)
 "OD" = (
 /turf/closed/wall/mineral/bronze,
+/area/station/commons/lounge)
+"Pd" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/bronze,
 /area/station/commons/lounge)
 "Pz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -381,15 +396,15 @@ OD
 TL
 qG
 TL
-LJ
-LI
+TL
+gN
+GA
 qn
-LI
-Mm
+Hc
+Pd
+TL
 TL
 PP
-TL
-TL
 Cz
 TL
 TL
@@ -402,8 +417,8 @@ qG
 qG
 qG
 qG
-Sf
 qG
+Sf
 qG
 qG
 qG

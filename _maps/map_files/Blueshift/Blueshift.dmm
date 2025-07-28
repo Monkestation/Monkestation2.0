@@ -7386,6 +7386,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad/secure,
 /obj/machinery/station_map/engineering/directional/north,
+/obj/item/beacon,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bwi" = (
@@ -16891,7 +16892,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -23520,6 +23521,31 @@
 /obj/structure/flora/bush/grassy/style_2,
 /turf/open/floor/grass,
 /area/station/medical/patients_rooms)
+"ezu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 0;
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
+/area/station/command/bridge)
 "ezv" = (
 /obj/machinery/button/ignition/incinerator/atmos{
 	pixel_x = 8;
@@ -32051,7 +32077,23 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/beacon,
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -9;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -13;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -16;
+	pixel_y = 12
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "gir" = (
@@ -35256,7 +35298,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "gOb" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/structure/window/spawner/directional/west{
@@ -58213,6 +58255,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "llO" = (
@@ -79078,6 +79124,9 @@
 	},
 /obj/structure/table/wood,
 /obj/item/modular_computer/laptop,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
 "ppP" = (
@@ -92031,6 +92080,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "rOe" = (
@@ -94437,6 +94487,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "sot" = (
@@ -222733,7 +222784,7 @@ rBP
 qyf
 rOc
 tVq
-llN
+ezu
 tYB
 gjF
 cZC

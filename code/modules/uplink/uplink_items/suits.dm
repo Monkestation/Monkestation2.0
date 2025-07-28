@@ -81,6 +81,7 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	progression_minimum = 90 MINUTES
 	cost = 16
+	cant_discount = TRUE
 
 /datum/uplink_item/suits/modsuit/Wraith
 	name = "MODsuit wraith cloaking module"
