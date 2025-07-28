@@ -1,27 +1,27 @@
-/datum/mutation/human/xray
+/datum/mutation/xray
 	name = "Perfect X-ray Vision"
 
-/datum/mutation/human/laser_eyes
-	conflicts = list(/datum/mutation/human/laser_eyes/unstable, /datum/mutation/human/laser_eyes/unstable/syndicate)
+/datum/mutation/laser_eyes
+	conflicts = list(/datum/mutation/laser_eyes/unstable, /datum/mutation/laser_eyes/unstable/syndicate)
 	power_coeff = 1
 	energy_coeff = 1
 
 /// Laser eyes made by a geneticist
-/datum/mutation/human/laser_eyes/unstable
+/datum/mutation/laser_eyes/unstable
 	name = "Unstable Laser Eyes"
 	desc = "Reflects concentrated light back from the eyes, however this mutation is very unstable and causes damage to the user."
 	instability = 60
-	conflicts = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/laser_eyes/unstable/syndicate)
+	conflicts = list(/datum/mutation/laser_eyes, /datum/mutation/laser_eyes/unstable/syndicate)
 	synchronizer_coeff = 1
 	var/shots_left = 4
 	var/cooldown
 
-/datum/mutation/human/laser_eyes/unstable/Destroy(force)
+/datum/mutation/laser_eyes/unstable/Destroy(force)
 	if(shots_left != 4)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/datum/mutation/human/laser_eyes/unstable/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
+/datum/mutation/laser_eyes/unstable/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
 	if(!(source.istate & ISTATE_HARM))
 		return
 
@@ -56,7 +56,7 @@
 	else
 		source.adjustFireLoss(backfire_damage)
 
-/datum/mutation/human/laser_eyes/unstable/process(seconds_per_tick)
+/datum/mutation/laser_eyes/unstable/process(seconds_per_tick)
 	cooldown += seconds_per_tick
 	if(cooldown >= 5)
 		shots_left++
@@ -70,13 +70,13 @@
 		STOP_PROCESSING(SSobj, src)
 		cooldown = 0
 
-/datum/mutation/human/laser_eyes/unstable/syndicate
+/datum/mutation/laser_eyes/unstable/syndicate
 	name = "Stabilized Laser Eyes"
 	desc = "Reflects concentrated light back from the eyes, this strain of the mutation is high-quality, yet still causes the user to take damage on use."
-	conflicts = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/laser_eyes/unstable)
+	conflicts = list(/datum/mutation/laser_eyes, /datum/mutation/laser_eyes/unstable)
 	instability = 40
 
-/datum/mutation/human/meson_vision
+/datum/mutation/meson_vision
 	name = "Meson Visual Enhancement"
 	desc = "A mutation that manipulates the subject's eyes in a way that makes them able to see behind walls to a limited degree."
 	locked = TRUE
@@ -85,15 +85,15 @@
 	text_lose_indication = span_notice("The amount of information reaching your eyes fades...")
 	instability = 20
 
-/datum/mutation/human/meson_vision/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/meson_vision/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	owner.add_traits(list(TRAIT_MADNESS_IMMUNE, TRAIT_MESON_VISION), GENETIC_MUTATION)
 	owner.update_sight()
 
-/datum/mutation/human/meson_vision/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/meson_vision/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -101,7 +101,7 @@
 	owner.remove_traits(list(TRAIT_MADNESS_IMMUNE, TRAIT_MESON_VISION), GENETIC_MUTATION)
 	owner.update_sight()
 
-/datum/mutation/human/night_vision
+/datum/mutation/night_vision
 	name = "Scotopic Visual Enhancement"
 	desc = "A mutation that manipulates the subject's eyes in a way that makes them able to see in the dark."
 	locked = TRUE
@@ -110,9 +110,9 @@
 	text_lose_indication = span_notice("The ambient light level returns to normal...")
 	instability = 25
 
-/datum/mutation/human/night_vision/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/night_vision/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	ADD_TRAIT(owner, TRAIT_NIGHT_VISION, GENETIC_MUTATION)
@@ -122,7 +122,7 @@
 
 	owner.update_sight()
 
-/datum/mutation/human/night_vision/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/night_vision/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -134,7 +134,7 @@
 
 	owner.update_sight()
 
-/datum/mutation/human/flash_protection
+/datum/mutation/flash_protection
 	name = "Protected Cornea"
 	desc = "A mutation that causes reinforcement to subject's eyes, allowing them to protect against disorientation from bright flashes via distributing excessive photons hitting the subject's eyes."
 	locked = TRUE
@@ -143,24 +143,21 @@
 	text_lose_indication = span_notice("Lights begin glaring again...")
 	instability = 30
 
-/datum/mutation/human/flash_protection/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner)
-		return TRUE
+/datum/mutation/flash_protection/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
+		return
 
 	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if(IS_ROBOTIC_ORGAN(eyes))
-		return TRUE
-
-	. = ..()
-	if(.)
-		return
+		return FALSE
 
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(eye_implanted))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(eye_removed))
 	if(eyes)
 		eyes.flash_protect = FLASH_PROTECTION_FLASH
 
-/datum/mutation/human/flash_protection/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/flash_protection/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -170,7 +167,7 @@
 	if(eyes)
 		eyes.flash_protect = initial(eyes.flash_protect)
 
-/datum/mutation/human/flash_protection/proc/eye_implanted(mob/living/source, obj/item/organ/gained, special)
+/datum/mutation/flash_protection/proc/eye_implanted(mob/living/source, obj/item/organ/gained, special)
 	SIGNAL_HANDLER
 
 	var/obj/item/organ/internal/eyes/eyes = gained
@@ -182,7 +179,7 @@
 
 	eyes.flash_protect = FLASH_PROTECTION_FLASH
 
-/datum/mutation/human/flash_protection/proc/eye_removed(mob/living/source, obj/item/organ/removed, special)
+/datum/mutation/flash_protection/proc/eye_removed(mob/living/source, obj/item/organ/removed, special)
 	SIGNAL_HANDLER
 
 	var/obj/item/organ/internal/eyes/eyes = removed
@@ -191,19 +188,19 @@
 
 	eyes.flash_protect = initial(eyes.flash_protect)
 
-/datum/mutation/human/xray
-	conflicts = list(/datum/mutation/human/weaker_xray, /datum/mutation/human/weaker_xray/syndicate)
+/datum/mutation/xray
+	conflicts = list(/datum/mutation/weaker_xray, /datum/mutation/weaker_xray/syndicate)
 
-/datum/mutation/human/weaker_xray
+/datum/mutation/weaker_xray
 	name = "X-Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls at the cost of their eye health."
 	locked = TRUE
 	power_path = /datum/action/cooldown/toggle_xray
 	instability = 60
-	conflicts = list(/datum/mutation/human/xray, /datum/mutation/human/weaker_xray/syndicate)
+	conflicts = list(/datum/mutation/xray, /datum/mutation/weaker_xray/syndicate)
 	synchronizer_coeff = 1
 
-/datum/mutation/human/weaker_xray/modify()
+/datum/mutation/weaker_xray/setup()
 	. = ..()
 	if(!.)
 		return
@@ -319,11 +316,11 @@
 		toggle = !toggle
 		toggle_off()
 
-/datum/mutation/human/weaker_xray/syndicate
+/datum/mutation/weaker_xray/syndicate
 	name = "Refined X-Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls at the cost of their eye health. This one seems to be high-quality making it more stable."
 	instability = 40
-	conflicts = list(/datum/mutation/human/xray, /datum/mutation/human/weaker_xray)
+	conflicts = list(/datum/mutation/xray, /datum/mutation/weaker_xray)
 
 // Colorblindness stuff begins
 
@@ -343,7 +340,7 @@
 /datum/client_colour/genetic/blue
 	colour = list(rgb(253,23,0), rgb(117,236,255), rgb(0,86,89))
 
-/datum/mutation/human/colorblindness
+/datum/mutation/colorblindness
 	name = "Genetic achromatopy"
 	desc = "This genetic sequence makes the subject occipital lobe not interpret color, rendering the patient completely colorblind."
 	quality = MINOR_NEGATIVE
@@ -352,35 +349,35 @@
 	instability = 5
 	var/color_typepath = /datum/client_colour/monochrome/colorblind/genetic
 
-/datum/mutation/human/colorblindness/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/colorblindness/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	owner.add_client_colour(color_typepath)
 
-/datum/mutation/human/colorblindness/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/colorblindness/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
 
 	owner.remove_client_colour(color_typepath)
 
-/datum/mutation/human/colorblindness/red
+/datum/mutation/colorblindness/red
 	name = "Protanopia"
 	desc = "Causes severe damage to the red spectrum of the subjects eyes, causing red-green colorblindness."
 	text_gain_indication = span_warning("You feel your eyes hurt as red begins to blend together with green.")
 	text_lose_indication = span_notice("You can start seeing red and green seperatelly again.")
 	color_typepath = /datum/client_colour/genetic/red
 
-/datum/mutation/human/colorblindness/green
+/datum/mutation/colorblindness/green
 	name = "Deuteranopia"
 	desc = "Causes severe damage to the green spectrum of the subjects eyes, causing green-red colorblindness."
 	text_gain_indication = span_warning("You feel your eyes hurt as green begins to blend together with red.")
 	text_lose_indication = span_notice("You can start seeing green and red seperatelly again.")
 	color_typepath = /datum/client_colour/genetic/green
 
-/datum/mutation/human/colorblindness/blue
+/datum/mutation/colorblindness/blue
 	name = "Tritanopia"
 	desc = "Causes severe damage to the blue spectrum of the subjects eyes, causing blue-green colorblindness."
 	text_gain_indication = span_warning("You feel your eyes hurt as blue begins to blend together with green.")

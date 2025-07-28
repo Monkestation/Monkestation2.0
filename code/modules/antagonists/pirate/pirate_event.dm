@@ -18,6 +18,7 @@
 	tags = list(TAG_COMBAT, TAG_COMMUNAL, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 //monkestation edit end
 
 /datum/round_event_control/pirates/preRunEvent()

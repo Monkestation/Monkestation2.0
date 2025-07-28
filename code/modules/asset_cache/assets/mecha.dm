@@ -1,5 +1,5 @@
-/datum/asset/spritesheet/mechaarmor
+/datum/asset/spritesheet_batched/mechaarmor
 	name = "mechaarmor"
 
-/datum/asset/spritesheet/mechaarmor/create_spritesheets()
-	InsertAll("", 'icons/ui_icons/mecha/armor.dmi')
+/datum/asset/spritesheet_batched/mechaarmor/create_spritesheets()
+	insert_all_icons("", 'icons/ui_icons/mecha/armor.dmi')
