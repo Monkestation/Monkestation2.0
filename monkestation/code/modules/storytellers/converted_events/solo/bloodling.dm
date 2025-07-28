@@ -1,7 +1,8 @@
 /datum/round_event_control/antagonist/solo/bloodling
+	name = "Bloodling"
+	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG)
 	antag_flag = ROLE_BLOODLING
 	antag_datum = /datum/antagonist/bloodling
-	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG)
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
@@ -39,3 +40,7 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	max_occurrences = 1
+
+/datum/round_event/antagonist/solo/bloodling/add_datum_to_mind(datum/mind/antag_mind)
+	antag_mind.special_role = ROLE_BLOODLING
+	antag_mind.add_antag_datum(antag_datum)

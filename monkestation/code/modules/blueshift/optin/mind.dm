@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(optin_forcing_midround_antag_categories, list(
 
 /// If a player has any of these enabled ON SPAWN, they are forced to use a minimum of OPT_IN_ANTAG_ENABLED_LEVEL antag optin for the rest of the round.
 GLOBAL_LIST_INIT(optin_forcing_on_spawn_antag_categories, list(
+	ROLE_BLOODLING,
 	ROLE_BROTHER,
 	ROLE_CHANGELING,
 	ROLE_CULTIST,
