@@ -3,6 +3,7 @@
 	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG)
 	antag_flag = ROLE_BLOODLING
 	antag_datum = /datum/antagonist/bloodling
+	typepath = /datum/round_event/antagonist/solo/bloodling
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
@@ -40,6 +41,11 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	max_occurrences = 1
+
+/datum/round_event_control/antagonist/solo/bloodling/midround
+	name = "Awakened Parasite"
+	prompted_picking = TRUE
+	required_enemies = 8
 
 /datum/round_event/antagonist/solo/bloodling/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.special_role = ROLE_BLOODLING
