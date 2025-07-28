@@ -291,10 +291,10 @@
 	return GLOB.blood_types[/datum/blood_type/xenomorph]
 
 /mob/living/carbon/human/get_blood_type()
-	if(!has_dna() || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
+	if(!dna || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return null
-	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
-		return GLOB.blood_types[/datum/blood_type/clown]
+	/*if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
+		return GLOB.blood_types[/datum/blood_type/clown]*/
 	if(dna.species.exotic_bloodtype)
 		return GLOB.blood_types[dna.species.exotic_bloodtype]
 	return GLOB.blood_types[dna.human_blood_type]
