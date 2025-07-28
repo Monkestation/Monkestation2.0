@@ -677,6 +677,7 @@
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
 	var/obj/machinery/microwave/held_microwave
 	var/destroying = FALSE
+	var/datum/component/two_handed/two_handed_component
 
 /obj/item/microwave_holder/Initialize(mapload, obj/machinery/microwave/michaelwave, held_state, lh_icon, rh_icon, held_force, held_throwforce)
 	if(held_state)
@@ -690,7 +691,7 @@
 	if(held_throwforce)
 		throwforce = held_throwforce
 	deposit(michaelwave)
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = force, force_wielded = force)
+	two_handed_component = AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = force, force_wielded = force)
 	. = ..()
 
 /obj/item/microwave_holder/Destroy()
@@ -713,12 +714,16 @@
 /obj/item/microwave_holder/on_thrown(mob/living/carbon/user, atom/target)
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
+
+	if(two_handed_component)
+		two_handed_component.unwield(user, FALSE, FALSE)
+
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You set [src] down gently on the ground."))
 		release()
 		return
 
-	var/mob/living/throw_microwave = held_microwave
+	var/obj/machinery/microwave/throw_microwave = held_microwave
 	release()
 	return throw_microwave
 
@@ -732,7 +737,7 @@
 		if(del_on_release && !destroying)
 			qdel(src)
 		return FALSE
-	var/mob/living/released_microwave = held_microwave
+	var/obj/machinery/microwave/released_microwave = held_microwave
 	held_microwave = null // stops the held microwave from being release()'d twice.
 	if(isliving(loc))
 		var/mob/living/microwave_carrier = loc
