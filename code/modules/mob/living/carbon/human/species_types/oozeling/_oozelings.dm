@@ -187,6 +187,8 @@
 
 /datum/species/oozeling/proc/on_reagent_expose(mob/living/carbon/human/slime, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
+	if(!(locate(/datum/reagent/water) in reagents)) // we only care if we're exposed to water (duh)
+		return NONE
 	// if all your limbs are covered by thickmaterial clothing, then it will protect you from water.
 	var/water_multiplier = water_damage_multiplier(slime)
 	if(water_multiplier <= 0)
@@ -200,6 +202,7 @@
 		to_chat(slime, span_danger("The water causes you to melt away!"))
 		slime.balloon_alert(slime, "water melts you!")
 		COOLDOWN_START(src, melt_alert_cooldown, 1 SECONDS)
+	return NONE
 
 /datum/species/oozeling/handle_chemical(datum/reagent/chem, mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	// slimes use plasma to fix wounds, and if they have enough blood, organs
