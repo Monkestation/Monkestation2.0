@@ -17,7 +17,7 @@
 	id = "botany"
 	display_name = "Botanical Engineering"
 	description = "Botanical tools"
-	prereq_ids = list("biotech")
+	prereq_ids = list("biotech", "basic_tools")
 	design_ids = list(
 		/* "diskplantgene", */ // monkestation edit: move to roundstart tech
 		"biogenerator",
