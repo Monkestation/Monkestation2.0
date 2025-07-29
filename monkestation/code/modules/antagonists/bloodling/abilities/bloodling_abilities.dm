@@ -32,9 +32,6 @@
 
 /datum/action/cooldown/bloodling/PreActivate(atom/target)
 	var/mob/living/basic/bloodling/our_mob = owner
-	. = ..()
-	if(!.)
-		return FALSE
 	// Since bloodlings evolve it may result in them or their abilities going away
 	// so we can just return true here
 	if(QDELETED(src) || QDELETED(owner))
@@ -45,7 +42,9 @@
 
 	if(biomass_cap)
 		return TRUE
-
+	. = ..()
+	if(!.)
+		return FALSE
 	our_mob.add_biomass(-biomass_cost)
 
 	return TRUE

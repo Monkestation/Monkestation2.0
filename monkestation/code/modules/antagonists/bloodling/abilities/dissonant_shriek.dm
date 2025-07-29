@@ -3,6 +3,7 @@
 	desc = "We release a sound that disrupts nearby electronics. Costs 20 biomass."
 	button_icon_state = "dissonant_shriek"
 	biomass_cost = 30
+	click_to_activate = FALSE
 
 /datum/action/cooldown/bloodling/dissonant_shriek/Activate(atom/target)
 	. = ..()

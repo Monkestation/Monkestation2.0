@@ -28,6 +28,7 @@
 	desc = "A pool of biomass and primordial soup, you hear a faint chittering from it."
 	max_integrity = 100
 	icon_state = "ratwarren"
+	anchored = TRUE
 	///the minimum time it takes for a rat to spawn
 	var/minimum_rattime = 1 MINUTES
 	///the maximum time it takes for a rat to spawn

@@ -9,6 +9,7 @@
 	var/list/absorbable_types = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/item/food,
+		/obj/item/organ/internal,
 	)
 
 /datum/action/cooldown/bloodling/absorb/PreActivate(atom/target)
@@ -50,16 +51,17 @@
 	/// How long it takes to absorb something
 	var/absorb_time = 5 SECONDS
 	/// How much biomass is gained from absorbing something
-	var/biomass_gain = 10
+	var/biomass_gain = 3
 
 	our_mob.balloon_alert(our_mob, "You begin absorbing [target]!")
 
 	if(is_type_in_list(target, absorbable_types))
+		biomass_gain = 3
 		our_mob.add_biomass(biomass_gain)
 		qdel(target)
 		our_mob.visible_message(
-			span_alertalien("[our_mob] wraps its tendrils around [target]. It absorbs it!"),
-			span_noticealien("You wrap your tendrils around [target] and absorb it!"),
+			span_alertalien("[our_mob] wraps quickly engulfs [target]. It absorbs it!"),
+			span_noticealien("You quickly engulf [target] and absorb it!"),
 		)
 		playsound(our_mob, 'sound/items/eatfood.ogg', 20)
 		return TRUE
