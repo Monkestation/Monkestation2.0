@@ -4,20 +4,6 @@
 	if(HAS_TRAIT(src, TRAIT_MOVE_FLYING))//Flying?
 		return
 
-	var/turf/T = get_turf(src)
-
-	//Virus Dishes aren't toys, handle with care, especially when they're open.
-	for(var/obj/effect/decal/cleanable/virusdish/dish in T)
-		dish.infection_attempt(src)
-
-	for(var/obj/item/weapon/virusdish/dish in T)
-		if (dish.open && dish.contained_virus)
-			dish.infection_attempt(src, dish.contained_virus)
-
-	var/obj/item/weapon/virusdish/dish = locate() in held_items
-	if (dish && dish.open && dish.contained_virus)
-		dish.infection_attempt(src, dish.contained_virus)
-
 	//Now to check for stuff that's on the floor
 	var/block = 0
 	var/bleeding = 0
@@ -28,15 +14,23 @@
 		block = check_contact_sterility(BODY_ZONE_LEGS)
 		bleeding = check_bodypart_bleeding(BODY_ZONE_LEGS)
 
-
 	var/static/list/viral_cleanable_types = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/vomit,
-		)
+	)
 
-	for(var/obj/effect/decal/cleanable/C in T)
-		if (is_type_in_list(C,viral_cleanable_types))
-			assume_contact_diseases(C.diseases, C, block, bleeding)
+	var/obj/item/weapon/virusdish/held_dish = locate() in held_items
+	if(held_dish?.open && held_dish.contained_virus)
+		held_dish.infection_attempt(src, held_dish.contained_virus)
+
+	for(var/thing in loc)
+		if(istype(thing, /obj/item/weapon/virusdish))
+			var/obj/item/weapon/virusdish/dish = thing
+			if(dish?.open && dish.contained_virus)
+				dish.infection_attempt(src, dish.contained_virus)
+		else if(is_type_in_list(thing, viral_cleanable_types))
+			var/obj/effect/decal/cleanable/yucky = thing
+			assume_contact_diseases(yucky.diseases, yucky, block, bleeding)
 
 	return FALSE
 
@@ -53,19 +47,20 @@
 
 //Blocked is whether clothing prevented the spread of contact/blood
 /mob/living/proc/assume_contact_diseases(list/disease_list, atom/source, blocked=0, bleeding=0)
-	if (istype(disease_list) && disease_list.len > 0)
-		for(var/datum/disease/acute/V as anything in disease_list)
-			if (!V)
-				message_admins("[key_name(src)] is trying to assume contact diseases from touching \a [source], but the disease_list contains an ID ([V.uniqueID]-[V.subID]) that isn't associated to an actual disease datum! Ping Dwasint about it please.")
-				return
-			if(!blocked && V.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-				infect_disease(V, notes="(Contact, from [source])")
-			/*
-			else if(suitable_colony() && V.spread & SPREAD_COLONY)
-				infect_disease(V, notes="(Colonized, from [source])")
-			*/
-			else if(!blocked && bleeding && (V.spread_flags & DISEASE_SPREAD_BLOOD))
-				infect_disease(V, notes="(Blood, from [source])")
+	if(!length(disease_list))
+		return
+	for(var/datum/disease/acute/V as anything in disease_list)
+		if (!V)
+			message_admins("[key_name(src)] is trying to assume contact diseases from touching \a [source], but the disease_list contains an ID ([V.uniqueID]-[V.subID]) that isn't associated to an actual disease datum! Ping Dwasint about it please.")
+			return
+		if(!blocked && V.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			infect_disease(V, notes="(Contact, from [source])")
+		/*
+		else if(suitable_colony() && V.spread & SPREAD_COLONY)
+			infect_disease(V, notes="(Colonized, from [source])")
+		*/
+		else if(!blocked && bleeding && (V.spread_flags & DISEASE_SPREAD_BLOOD))
+			infect_disease(V, notes="(Blood, from [source])")
 
 //Called in Life() by humans (in handle_breath.dm), monkeys and mice
 /mob/living/proc/breath_airborne_diseases()//only tries to find Airborne spread diseases. Blood and Contact ones are handled by find_nearby_disease()
@@ -111,10 +106,11 @@
 						infect_disease(V, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
 
 /mob/living/proc/handle_virus_updates(seconds_per_tick, times_fired)
-	if(HAS_TRAIT(src, TRAIT_GODMODE))
-		return 0
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_VIRUSIMMUNE))
+		return FALSE
 
-	find_nearby_disease()//getting diseases from blood/mucus/vomit splatters and open dishes
+	if(stat != DEAD && isopenturf(loc)) // if we're dead or inside a locker/body bag/etc, don't bother
+		find_nearby_disease()//getting diseases from blood/mucus/vomit splatters and open dishes
 
 	activate_diseases(seconds_per_tick, times_fired)
 
