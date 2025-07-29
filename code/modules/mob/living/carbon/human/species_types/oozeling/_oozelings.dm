@@ -55,8 +55,11 @@
 	var/list/extra_actions = list()
 	/// Instances of all actions given to this oozeling.
 	var/list/actions_given = list()
-	/// Cooldown for balloon alerts when being melted by water.
-	COOLDOWN_DECLARE(melt_alert_cooldown)
+	/// Cooldown for balloon alerts when being melted from water exposure.
+	COOLDOWN_DECLARE(water_alert_cooldown)
+	/// Cooldown for balloon alerts when being melted from being dripping wet.
+	COOLDOWN_DECLARE(wet_alert_cooldown)
+
 
 /datum/species/oozeling/Destroy(force)
 	QDEL_LIST(actions_given)
@@ -105,14 +108,15 @@
 	if(!wetness)
 		return
 
-	if(wetness.stacks > (DAMAGE_WATER_STACKS))
+	if(wetness.stacks > DAMAGE_WATER_STACKS)
 		slime.blood_volume = max(slime.blood_volume - (2 * seconds_per_tick), 0)
-		if (SPT_PROB(25, seconds_per_tick))
+		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
-
-	if(wetness.stacks > (REGEN_WATER_STACKS) && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
+			slime.balloon_alert(slime, "water is diluting you, you need to dry off!")
+	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
 		slime.blood_volume = max(slime.blood_volume - (1 * seconds_per_tick), 0)
+		slime.balloon_alert(slime, "you're dripping wet!")
 
 //////
 /// DEATH OF BODY SECTION
@@ -201,10 +205,10 @@
 		to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	slime.blood_volume = max(slime.blood_volume - (30 * water_multiplier), 0)
-	if(COOLDOWN_FINISHED(src, melt_alert_cooldown))
+	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		to_chat(slime, span_danger("The water causes you to melt away!"))
 		slime.balloon_alert(slime, "water melts you!")
-		COOLDOWN_START(src, melt_alert_cooldown, 1 SECONDS)
+		COOLDOWN_START(src, water_alert_cooldown, 1 SECONDS)
 	return NONE
 
 /datum/species/oozeling/handle_chemical(datum/reagent/chem, mob/living/carbon/human/slime, seconds_per_tick, times_fired)
