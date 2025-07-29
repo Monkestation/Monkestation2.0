@@ -189,11 +189,14 @@
 	SIGNAL_HANDLER
 	if(!(locate(/datum/reagent/water) in reagents)) // we only care if we're exposed to water (duh)
 		return NONE
-	// if all your limbs are covered by thickmaterial clothing, then it will protect you from water.
-	var/water_multiplier = water_damage_multiplier(slime)
-	if(water_multiplier <= 0)
-		to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
-		return COMPONENT_NO_EXPOSE_REAGENTS
+	var/water_multiplier = 1
+	// thick clothing won't protect you if you just drink or inject tho
+	if(methods & ~(INGEST|INJECT))
+		// if all your limbs are covered by thickmaterial clothing, then it will protect you from water.
+		water_multiplier = water_damage_multiplier(slime)
+		if(water_multiplier <= 0)
+			to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
+			return COMPONENT_NO_EXPOSE_REAGENTS
 	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
 		to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return COMPONENT_NO_EXPOSE_REAGENTS
