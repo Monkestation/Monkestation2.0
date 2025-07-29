@@ -193,6 +193,8 @@
 	SIGNAL_HANDLER
 	if(!(locate(/datum/reagent/water) in reagents)) // we only care if we're exposed to water (duh)
 		return NONE
+	if(HAS_TRAIT(slime, TRAIT_GODMODE)) // we're [title card]
+		return NONE
 	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
 	if(methods & ~(INGEST|INJECT))
