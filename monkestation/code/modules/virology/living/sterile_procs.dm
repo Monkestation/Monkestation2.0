@@ -25,7 +25,7 @@
 		checks = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	if(body_part == BODY_ZONE_ARMS)
 		checks = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-	
+
 	for(var/item in checks)
 		for (var/thing in clothing_to_check)
 			var/obj/item/cloth = thing
@@ -72,10 +72,10 @@
 		for (var/thing in clothing_to_check)
 			var/obj/item/cloth = thing
 			if(!cloth)
-				if(bodypart.get_modified_bleed_rate())	
+				if(bodypart.cached_bleed_rate)
 					return TRUE
 			else if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
-				if(bodypart.get_modified_bleed_rate())	
+				if(bodypart.cached_bleed_rate)
 					return TRUE
 	return bleeding
 
