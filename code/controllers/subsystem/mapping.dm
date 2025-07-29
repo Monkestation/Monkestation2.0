@@ -132,10 +132,9 @@ SUBSYSTEM_DEF(mapping)
 	require_area_resort()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
-	var/start_time
 
 #ifndef LOWMEMORYMODE
-	start_time = REALTIMEOFDAY
+	var/start_time = REALTIMEOFDAY
 	SStitle.add_init_text("Empty Space", "> Space", "<font color='yellow'>LOADING...</font>")
 	// Create space ruin levels
 	while (space_levels_so_far < current_map.space_ruin_levels)

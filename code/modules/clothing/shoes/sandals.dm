@@ -24,3 +24,10 @@
 	desc = "A well maid pair of sandals that appear to have been made with gold."
 	icon_state = "gildedsandals"
 	inhand_icon_state = "gildedsandals"
+
+/obj/item/clothing/shoes/sandal/alt
+	desc = "A pair of shiny black wooden sandals."
+	name = "black sandals"
+	icon_state = "blacksandals"
+	inhand_icon_state = "blacksandals"
+
