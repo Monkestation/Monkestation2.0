@@ -225,7 +225,7 @@
 		return
 	crafting = TRUE
 
-	if(length(get_remaining_requirements(amt)) || !machine_do_after_visable(src, chosen_recipe.time * speed_multiplier * 3 * amt))
+	if(length(get_remaining_requirements(amt)) || !machine_do_after_visable(src, chosen_recipe.time * speed_multiplier * 3))
 		crafting = FALSE
 		return
 
