@@ -22,7 +22,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	//AddComponent(/datum/component/hovering_information, /datum/hover_data/assembler)
+	AddComponent(/datum/component/hovering_information, /datum/hover_data/assembler)
 	register_context()
 
 	if(!length(legal_crafting_recipes))
@@ -34,16 +34,24 @@
 	if(!locate_servo)
 		return FALSE
 	speed_multiplier = 1 / locate_servo.tier
+	return TRUE
 
-/obj/machinery/assembler/Destroy()
+/obj/machinery/assembler/on_deconstruction(disassembled)
 	chosen_recipe = null
 	empty_machine()
-	return ..()
 
 /obj/machinery/assembler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Select a recipe."
+		context[SCREENTIP_CONTEXT_RMB] = "Restart crafting."
+	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+	else if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+
 	if(chosen_recipe)
 		var/processable = "Accepts: "
 		var/list/named_reqs = list()
@@ -61,6 +69,14 @@
 		for(var/atom/atom as anything in chosen_recipe.reqs)
 			. += span_notice("[initial(atom.name)]: [chosen_recipe.reqs[atom]]")
 
+	if(anchored)
+		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+	else
+		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(panel_open)
+		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+
 /obj/machinery/assembler/proc/create_recipes()
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
 		if(initial(recipe.non_craftable) || !initial(recipe.always_available))
@@ -69,14 +85,54 @@
 
 /obj/machinery/assembler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	var/datum/crafting_recipe/choice = tgui_input_list(user, "Choose a recipe", name, legal_crafting_recipes)
-	if(!choice || (choice && chosen_recipe ==  choice))
+	if(modifiers["left"] == "1")
+		var/datum/crafting_recipe/choice = tgui_input_list(user, "Choose a recipe", name, legal_crafting_recipes)
+		if(!choice || (choice && chosen_recipe ==  choice))
+			return
+		chosen_recipe = choice
+		empty_machine()
+
+/obj/machinery/assembler/attackby(obj/item/attacking_item, mob/user, params)
+	if(check_item(attacking_item))
+		. = TRUE
+		attacking_item.forceMove(src)
+		crafting_inventory += attacking_item
+		balloon_alert_to_viewers("accepted")
 		return
-	chosen_recipe = choice
-	empty_machine()
+	balloon_alert_to_viewers("cannot accept!")
+	return ..()
+
+/obj/machinery/assembler/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	balloon_alert(user, "Starting crafting process!")
+	check_recipe_state()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/assembler/wrench_act(mob/living/user, obj/item/tool)
+	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
+
+/obj/machinery/assembler/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
+
+/obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
 
 /obj/machinery/assembler/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored || !chosen_recipe)
+	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
+		return FALSE
+
+	if(!chosen_recipe)
 		return FALSE
 
 	if(!check_item(mover))
@@ -90,7 +146,7 @@
 
 /obj/machinery/assembler/proc/accept_item(atom/movable/atom_movable)
 	if(!chosen_recipe || QDELETED(atom_movable) || !check_item(atom_movable))
-		return
+		return FALSE
 
 	atom_movable.forceMove(src)
 	crafting_inventory += atom_movable
@@ -98,17 +154,27 @@
 	return TRUE
 
 /obj/machinery/assembler/can_drop_off(atom/movable/target)
+	if(!check_item(target))
+		return FALSE
+	return TRUE
 
 /obj/machinery/assembler/proc/check_item(atom/movable/atom_movable)
 	if(!chosen_recipe)
 		return FALSE
 
+	//Add item blacklist in here
 	if(isstack(atom_movable))
 		var/obj/item/stack/stack = atom_movable
 		if(!(stack.merge_type in chosen_recipe.reqs))
 			return FALSE
-	else if(!(atom_movable.type in chosen_recipe.reqs))
-		return FALSE
+	else
+		var/check =  FALSE
+		for(var/req_type in chosen_recipe.reqs)
+			if(istype(atom_movable, req_type))
+				check = TRUE
+				break
+		if(!check)
+			return check
 
 	var/list/remaining_space = get_remaining_requirements(ASSEMBLER_MAX_CRAFTS)
 
@@ -116,9 +182,18 @@
 	if(isstack(atom_movable))
 		var/obj/item/stack/stack = atom_movable
 		return stack.merge_type in remaining_space
-	return atom_movable.type in remaining_space
+	else
+		var/check =  FALSE
+		for(var/req_type in chosen_recipe.reqs)
+			if(istype(atom_movable, req_type))
+				check = TRUE
+				break
+		return check
 
 /obj/machinery/assembler/proc/check_recipe_state()
+	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
+		return FALSE
+
 	if(!chosen_recipe)
 		return
 
@@ -146,10 +221,12 @@
 				if(remaining_reqs[stack.merge_type] <= 0)
 					remaining_reqs -= stack.merge_type
 		else
-			if(item.type in remaining_reqs)
-				remaining_reqs[item.type]--
-				if(remaining_reqs[item.type] <= 0)
-					remaining_reqs -= item.type
+			for(var/req_type in remaining_reqs)
+				if(istype(item, req_type))
+					remaining_reqs[req_type]--
+					if(remaining_reqs[req_type] <= 0)
+						remaining_reqs -= req_type
+					break // already counted dont need to look at the other req_types
 
 	return remaining_reqs
 
@@ -157,11 +234,11 @@
 	if(crafting)
 		return
 
-	RefreshParts()
+	if(!RefreshParts())
+		return
 
 	if(!machine_do_after_visable(src, chosen_recipe.time * speed_multiplier * 3))
 		crafting = FALSE
-		addtimer(CALLBACK(src, PROC_REF(check_recipe_state)), 1 SECOND) // Attempt to craft in a second if we were interupted.
 		return
 
 	crafting = TRUE
@@ -169,7 +246,10 @@
 	var/list/parts = list()
 	for(var/obj/item/req as anything in requirements)
 		for(var/obj/item/item as anything in crafting_inventory)
-			if(isstack(item))
+			if(!length(requirements))
+				break // We already satisfied the requirements don't check other items.
+
+			if(isstack(item) && (req in requirements))
 				var/obj/item/stack/stack = item
 				if(stack.merge_type == req)
 					if(stack.is_zero_amount(TRUE)) // How this happened who knows delete it..
@@ -191,11 +271,15 @@
 							continue
 					if(requirements[stack.merge_type] <= 0)
 						requirements -= stack.merge_type
-			else if(istype(item, req))
-				requirements[item.type]--
+			else if(istype(item, req) && (req in requirements))
+				requirements[req]--
 				parts += item
-				if(requirements[item.type] <= 0)
-					requirements -= item.type
+				if(requirements[req] <= 0)
+					requirements -= req
+
+	if(length(requirements))
+		crafting = FALSE
+		return
 
 	var/atom/movable/new_craft
 	if(ispath(chosen_recipe.result, /obj/item/stack))
@@ -220,3 +304,33 @@
 
 /datum/hover_data/assembler/New(datum/component/hovering_information, atom/parent)
 	. = ..()
+	recipe_icon = new(null)
+	recipe_icon.maptext_width = 64
+	recipe_icon.maptext_y = 32
+	recipe_icon.maptext_x = -41
+	recipe_icon.alpha = 125
+
+/datum/hover_data/assembler/setup_data(obj/machinery/assembler/source, mob/enterer)
+	. = ..()
+	if(!source.chosen_recipe)
+		return
+	if(last_type != source.chosen_recipe.result)
+		update_image(source)
+	var/image/new_image = new(source)
+	new_image.appearance = recipe_icon.appearance
+	SET_PLANE_EXPLICIT(new_image, new_image.plane, source)
+	if(!isturf(source.loc))
+		new_image.loc = source.loc
+	else
+		new_image.loc = source
+	add_client_image(new_image, enterer.client)
+
+/datum/hover_data/assembler/proc/update_image(obj/machinery/assembler/source)
+	if(!source.chosen_recipe)
+		return
+	last_type = source.chosen_recipe.result
+
+	var/atom/atom = source.chosen_recipe.result
+
+	recipe_icon.icon = initial(atom.icon)
+	recipe_icon.icon_state = initial(atom.icon_state)
