@@ -475,3 +475,16 @@
       add; Tier  4 Bluespace part exchange devices now have bluespace beakers'
   - rscdel: Engineering lathe can no long print antibody scanners and test tubes.
   - balance: Basic security tech is now a prerequisite to actual security technologies.
+2025-07-29:
+  ThePooba:
+  - rscadd: Added flan, 5 caramel, 5 cream, 5 eggyolk gets you 20 flan, put it in
+      a drink cup for  pretty sprite
+  - rscadd: Ported the donks from TG donk plush and donk vendor, donk vendor and BODA
+      vendor now spawn in maints. boda vendor also has a new cola, Space Boda!
+  - rscadd: more lizard food, korta burgers, updated some food sprites.
+  - rscadd: added Bogril (its bovril available in the coffee vendor)
+  - balance: Ported fix for Knock heretics ID card deleting itself
+  - code_imp: Iconchecker fixes, 90% less jerma tiles from damaged floors maybe
+  - balance: Turned the weinermobile into a Hover Dog with a key
+  ancient-engineer:
+  - rscadd: Added Cretaceous Speed as a floorpill name
