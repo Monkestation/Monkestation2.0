@@ -5,7 +5,7 @@
 	biomass_cost = 20
 
 /datum/action/cooldown/bloodling/give_life/PreActivate(atom/target)
-	. = ..()
+
 
 	if(!ismob(target))
 		owner.balloon_alert(owner, "only works on mobs!")
@@ -19,17 +19,17 @@
 	if(iscarbon(mob_target))
 		owner.balloon_alert(owner, "doesn't work on carbons!")
 		return FALSE
-	return
+	..()
 
 /datum/action/cooldown/bloodling/give_life/Activate(atom/target)
-	. = ..()
+	..()
 
 	var/mob/living/target_mob = target
 	var/mob/living/basic/bloodling/proper/our_bloodling = owner
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_BLOODLING_THRALL, poll_time = 10 SECONDS, checked_target = target_mob, alert_pic = target_mob, role_name_text = "Bloodling Thrall")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice("Bloodling Thrall")]?", check_jobban = ROLE_BLOODLING_THRALL, poll_time = 10 SECONDS, checked_target = target_mob, alert_pic = target_mob, role_name_text = "Bloodling Thrall")
 
-	if(!LAZYLEN(chosen_one))
+	if(isnull(chosen_one))
 		owner.balloon_alert(owner, "[target_mob] rejects your generous gift...for now...")
 		our_bloodling.add_biomass(20)
 		return FALSE
@@ -40,4 +40,10 @@
 	target_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	playsound(get_turf(target_mob), 'sound/effects/pray_chaplain.ogg')
 	return TRUE
+
+		var/datum/mind/servant_mind = new /datum/mind()
+		var/datum/antagonist/magic_servant/servant_antagonist = new
+		servant_mind.transfer_to(human_servant)
+		servant_antagonist.setup_master(user)
+		servant_mind.add_antag_datum(servant_antagonist)
 

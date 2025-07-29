@@ -9,6 +9,7 @@
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 5 SECONDS
 	text_cooldown = TRUE
+	var/always_useable = FALSE
 	click_to_activate = TRUE
 	// The biomass cost of the ability
 	var/biomass_cost = 0
@@ -24,7 +25,7 @@
 		return FALSE
 
 	var/mob/living/basic/bloodling/our_mob = owner
-	if(our_mob.biomass <= biomass_cost)
+	if(our_mob.biomass <= biomass_cost && !always_useable)
 		return FALSE
 
 	// Hardcoded for the bloodling biomass system. So it will not function on non-bloodlings
@@ -39,6 +40,7 @@
 
 	if(click_to_activate && our_mob.biomass < biomass_cost)
 		unset_click_ability(owner, refund_cooldown = TRUE)
+
 	..()
 
 	if(biomass_cap)
