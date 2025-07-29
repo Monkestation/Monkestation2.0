@@ -6,7 +6,7 @@
 	circuit = /obj/item/circuitboard/machine/assembler
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	anchored = TRUE
-	density = TRUE
+	//density = TRUE
 
 	var/speed_multiplier = 1
 	var/bulk_craft_storage = 1
