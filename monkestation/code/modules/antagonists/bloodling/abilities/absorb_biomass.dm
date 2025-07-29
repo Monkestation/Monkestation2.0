@@ -13,7 +13,6 @@
 	)
 
 /datum/action/cooldown/bloodling/absorb/PreActivate(atom/target)
-	. = ..()
 
 	if(owner == target)
 		return FALSE

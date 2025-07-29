@@ -39,12 +39,11 @@
 
 	if(click_to_activate && our_mob.biomass < biomass_cost)
 		unset_click_ability(owner, refund_cooldown = TRUE)
+	..()
 
 	if(biomass_cap)
 		return TRUE
-	. = ..()
-	if(!.)
-		return FALSE
+
 	our_mob.add_biomass(-biomass_cost)
 
 	return TRUE
