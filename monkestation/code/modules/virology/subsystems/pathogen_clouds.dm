@@ -58,8 +58,6 @@ SUBSYSTEM_DEF(pathogen_clouds)
 					core.viruses |= virus.Copy()
 					core.modified = TRUE
 				qdel(cloud)
-				if(MC_TICK_CHECK)
-					return
 			if(MC_TICK_CHECK)
 				return
 		current_run_level = RUN_TYPE_CORES
