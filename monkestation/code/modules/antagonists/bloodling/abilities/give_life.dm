@@ -6,44 +6,48 @@
 
 /datum/action/cooldown/bloodling/give_life/PreActivate(atom/target)
 
-
 	if(!ismob(target))
-		owner.balloon_alert(owner, "only works on mobs!")
+		owner.balloon_alert(owner, "Only works on mobs!")
 		return FALSE
-
 	var/mob/living/mob_target = target
-	if(mob_target.mind && !mob_target.stat == DEAD)
-		owner.balloon_alert(owner, "only works on non-sentient alive mobs!")
+
+	if(!istype(target, /mob/living/basic/bloodling/minion))
+		owner.balloon_alert(owner, "Must target one of our own flesh minions!")
 		return FALSE
 
-	if(iscarbon(mob_target))
-		owner.balloon_alert(owner, "doesn't work on carbons!")
+	if(mob_target.mind && !mob_target.stat == DEAD)
+		owner.balloon_alert(owner, "Only works on non-sentient alive mobs!")
 		return FALSE
+
 	..()
 
 /datum/action/cooldown/bloodling/give_life/Activate(atom/target)
-	..()
 
 	var/mob/living/target_mob = target
-	var/mob/living/basic/bloodling/proper/our_bloodling = owner
+	if(target_mob.ckey) //only works on animals that aren't player controlled
+		target_mob.balloon_alert(target_mob, "Already sentient!")
+		return
+	..()
+	target_mob.balloon_alert(target_mob, "giving sentience to flesh...")
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice("Bloodling Thrall")]?", check_jobban = ROLE_BLOODLING_THRALL, poll_time = 10 SECONDS, checked_target = target_mob, alert_pic = target_mob, role_name_text = "Bloodling Thrall")
+	var/mob/living/basic/bloodling/proper/our_bloodling = owner
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice("Bloodling Thrall")]?",
+	check_jobban = ROLE_BLOODLING_THRALL, poll_time = 10 SECONDS,
+	checked_target = target_mob,
+	alert_pic = target_mob,
+	role_name_text = "Bloodling Thrall",
+	)
 
 	if(isnull(chosen_one))
 		owner.balloon_alert(owner, "[target_mob] rejects your generous gift...for now...")
 		our_bloodling.add_biomass(20)
 		return FALSE
 
-	target_mob.ghostize(FALSE)
+	target_mob.ghostize()
+	target_mob.PossessByPlayer(chosen_one.key)
+	target_mob.mind.enslave_mind_to_creator(owner)
+	var/datum/antagonist/infested_thrall/bloodling_minion = target_mob.mind.add_antag_datum(/datum/antagonist/infested_thrall)
+	bloodling_minion.set_master(owner)
+
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(target_mob)])")
-	target_mob.key = chosen_one.key
-	target_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
-	playsound(get_turf(target_mob), 'sound/effects/pray_chaplain.ogg')
 	return TRUE
-
-		var/datum/mind/servant_mind = new /datum/mind()
-		var/datum/antagonist/magic_servant/servant_antagonist = new
-		servant_mind.transfer_to(human_servant)
-		servant_antagonist.setup_master(user)
-		servant_mind.add_antag_datum(servant_antagonist)
-

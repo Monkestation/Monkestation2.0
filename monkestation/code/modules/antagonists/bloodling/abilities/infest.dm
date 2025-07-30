@@ -7,7 +7,6 @@
 	var/is_infesting = FALSE
 
 /datum/action/cooldown/bloodling/infest/PreActivate(atom/target)
-	. = ..()
 
 	if(is_infesting)
 		owner.balloon_alert(owner, "already infesting!")
@@ -28,6 +27,7 @@
 	if(alive_mob.stat == DEAD)
 		owner.balloon_alert(owner, "doesn't work on dead mobs!")
 		return FALSE
+	..()
 	return
 
 /datum/action/cooldown/bloodling/infest/Activate(atom/target)

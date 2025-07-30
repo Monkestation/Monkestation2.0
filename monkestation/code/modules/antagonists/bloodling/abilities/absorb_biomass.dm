@@ -10,9 +10,9 @@
 	var/list/absorbable_types = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/item/food,
-		/obj/item/organ/internal,
-		/obj/item/bodypart/leg/,
-		/obj/item/bodypart/arm/,
+		/obj/item/organ,
+		/obj/item/bodypart/leg,
+		/obj/item/bodypart/arm,
 	)
 
 /datum/action/cooldown/bloodling/absorb/PreActivate(atom/target)
@@ -56,7 +56,12 @@
 	var/biomass_gain = 3
 
 	if(is_type_in_list(target, absorbable_types))
-		biomass_gain = 3
+		if(istype(target, /obj/effect/decal/cleanable/blood))
+			biomass_gain = 1
+		else if(istype(target, /obj/item/organ))\
+			biomass_gain = 3
+		else //if an arm or leg
+			biomass_gain = 5
 		our_mob.add_biomass(biomass_gain)
 		qdel(target)
 		our_mob.visible_message(

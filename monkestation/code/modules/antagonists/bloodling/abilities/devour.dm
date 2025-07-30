@@ -5,16 +5,14 @@
 	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/bloodling/devour/PreActivate(atom/target)
-	. = ..()
+
 	var/mob/living/mob = target
 	if(!iscarbon(mob))
 		owner.balloon_alert(owner, "only works on carbons!")
 		return FALSE
-	return
+	..()
 
 /datum/action/cooldown/bloodling/devour/Activate(atom/target)
-	. = ..()
-	StartCooldown()
 	var/mob/living/basic/bloodling/our_mob = owner
 	var/list/candidate_for_removal = list()
 	var/mob/living/carbon/carbon_target = target
@@ -30,6 +28,8 @@
 		candidate_for_removal += bodypart.body_zone
 
 	if(!length(candidate_for_removal))
+		..()
+		our_mob.visible_message(span_alertalien("They have no more limbs..."))
 		return FALSE
 
 	var/limb_to_remove = pick(candidate_for_removal)
@@ -40,8 +40,8 @@
 
 	target_part.dismember()
 	qdel(target_part)
-	our_mob.add_biomass(15)
-
+	our_mob.add_biomass(4)
+	..()
 	our_mob.visible_message(
 		span_alertalien("[our_mob] snaps its maw over [target]s [target_part] and swiftly devours it!"),
 		span_noticealien("You devour [target]s [target_part]!"),
