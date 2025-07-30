@@ -254,6 +254,8 @@
 				break
 			// eat the stuff if we're going to move into it so it doesn't mess up our movement
 			for(var/atom/thing_on_turf in current_turf.contents)
+				if(thing_on_turf == parent || QDELETED(thing_on_turf))
+					continue
 				consume(src, thing_on_turf)
 			consume(src, current_turf)
 
