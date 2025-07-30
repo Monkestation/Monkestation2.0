@@ -39,7 +39,7 @@
 	chat_color = "#FFDC9B"
 
 	egg_type = /obj/item/food/egg
-	mutation_list = list(/datum/mutation/ranching/chicken/spicy, /datum/mutation/ranching/chicken/brown)
+	mutation_list = list(/datum/ranching_mutation/chicken/spicy, /datum/ranching_mutation/chicken/brown)
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
@@ -160,7 +160,7 @@
 		adjust_happiness(-1, user)
 
 /mob/living/basic/chicken/attackby(obj/item/given_item, mob/user, params)
-	for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+	for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 		if(!length(mutation.nearby_items))
 			continue
 		if(given_item.type in mutation.nearby_items)
@@ -210,7 +210,7 @@
 	eggs_left += rand(0, 2)
 	current_feed_amount++
 	total_times_eaten ++
-	for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+	for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 		if(!istype(mutation))
 			continue
 
@@ -227,7 +227,7 @@
 			listed_reagent.feed_interaction(src, listed_reagent.volume, user)
 			consumed_reagents |= listed_reagent.type
 
-			for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+			for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 				if(!istype(mutation))
 					continue
 
@@ -239,7 +239,7 @@
 		var/obj/item/food/listed_food = new listed_item
 		consumed_food |= listed_food.type
 
-		for(var/datum/mutation/ranching/mutation as anything in created_mutations)
+		for(var/datum/ranching_mutation/mutation as anything in created_mutations)
 			if(!istype(mutation))
 				continue
 

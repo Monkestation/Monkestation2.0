@@ -129,6 +129,45 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/yukata
+	name = "black yukata"
+	desc = "A comfortable black cotton yukata inspired by traditional designs, perfect for a non-formal setting."
+	icon_state = "yukata1"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/costume/yukata/green
+	name = "green yukata"
+	desc = "A comfortable green cotton yukata inspired by traditional designs, perfect for a non-formal setting."
+	icon_state = "yukata2"
+
+/obj/item/clothing/under/costume/yukata/white
+	name = "white yukata"
+	desc = "A comfortable white cotton yukata inspired by traditional designs, perfect for a non-formal setting."
+	icon_state = "yukata3"
+
+/obj/item/clothing/under/costume/kimono
+	name = "black kimono"
+	desc = "A luxurious black silk kimono with traditional flair, ideal for elegant festive occasions."
+	icon_state = "kimono1"
+	inhand_icon_state = "yukata1"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/costume/kimono/red
+	name = "red kimono"
+	desc = "A luxurious red silk kimono with traditional flair, ideal for elegant festive occasions."
+	icon_state = "kimono2"
+	inhand_icon_state = "kimono2"
+
+/obj/item/clothing/under/costume/kimono/purple
+	name = "purple kimono"
+	desc = "A luxurious purple silk kimono with traditional flair, ideal for elegant festive occasions."
+	icon_state = "kimono3"
+	inhand_icon_state = "kimono3"
+
 /obj/item/clothing/under/costume/villain
 	name = "villain suit"
 	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
@@ -365,4 +404,20 @@
 	icon_state = "martial_arts_gi"
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/susie
+	name = "Rude Jacket"
+	desc = "A replica of the black and purple jacket a legendary lizard wore while saving the world."
+	worn_icon_digitigrade = 'icons/mob/species/misc/digitigrade.dmi'
+	icon_state = "susie"
+	inhand_icon_state = null
+	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/obj/item/clothing/under/costume/kris
+	name = "Vessel's Armor"
+	desc = "* It appears to be the replica of the armor a legendary vessel wore while saving the world.."
+	icon_state = "kris_armor"
+	inhand_icon_state = null
 	can_adjust = FALSE

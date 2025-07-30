@@ -1261,6 +1261,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/table,
+/obj/machinery/ecto_sniffer,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "eD" = (
@@ -4511,7 +4512,11 @@
 /obj/item/radio/intercom/directional/east{
 	freerange = 1;
 	name = "Uncommon Channel";
-	frequency = 1363
+	frequency = 1363;
+	command = 1;
+	use_command = 1;
+	freqlock = 1;
+	independent = 1
 	},
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
