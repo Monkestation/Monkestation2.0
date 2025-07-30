@@ -273,9 +273,9 @@
 	speed = 2
 
 /mob/living/basic/bloodling/proper/tier5
-	icon_state = "bloodling_stage_4"
-	icon_living = "bloodling_stage_4"
-	icon_dead = "bloodling_stage_4_dead"
+	icon_state = "bloodling_stage_5"
+	icon_living = "bloodling_stage_5"
+	icon_dead = "bloodling_stage_5_dead"
 	evolution_level = 5
 	initial_powers = list(
 		/datum/action/cooldown/bloodling/absorb,

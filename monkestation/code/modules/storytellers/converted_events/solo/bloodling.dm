@@ -32,7 +32,7 @@
 	required_enemies = 5
 	weight = 4
 	max_occurrences = 0
-	maximum_antags = 2
+	maximum_antags = 1
 	min_players = 45
 	denominator = 30
 
