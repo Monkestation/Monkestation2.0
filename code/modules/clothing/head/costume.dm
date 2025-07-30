@@ -228,3 +228,10 @@
 	desc = "A stunning tiara that still looks good even with its questionable authenticity."
 	icon_state = "tiara"
 	inhand_icon_state = "tiara"
+
+
+/obj/item/clothing/head/costume/hairpin
+	name = "fancy hairpin"
+	desc = "A delicate hairpin normally paired with traditional clothing"
+	icon_state = "hairpin_fancy"
+	inhand_icon_state = "hairpin_fancy"

@@ -45,7 +45,7 @@
 		//MONKESTATION EDIT START
 		unsecured_timer = new(src)
 		unsecured_timer.start()
-		junior_lone_operative_trigger_time = (15 + rand(-5, 5)) * 60 //15 minutes + -5 to 5 minutes
+		junior_lone_operative_trigger_time = (20 + rand(-5, 5)) * 60 //35 minutes + -5 to 5 minutes
 		can_trigger_junior_operative = TRUE
 		GLOB.nuke_disk_list += src
 		//MONKESTATION EDIT STOP
@@ -79,7 +79,7 @@
 		if(istype(comfort_item, /obj/item/bedsheet) || istype(comfort_item, /obj/structure/bed))
 			disk_comfort_level++
 
-	if(last_move < world.time - 300 SECONDS && prob((world.time - 300 SECONDS - last_move)*0.0001)) //monkestation edit: weight will start increasing at 5 minutes unsecure, rather than 8.3
+	if(last_move < world.time - 300 SECONDS && prob((world.time - 300 SECONDS - last_move)*0.0005)) //monkestation edit: weight will start increasing at 5 minutes unsecure, rather than 8.3
 		var/datum/round_event_control/operative/loneopmode = locate(/datum/round_event_control/operative) in SSgamemode.control
 		if(istype(loneopmode) && loneopmode.occurrences < loneopmode.max_occurrences)
 			loneopmode.checks_antag_cap = (loneopmode.get_weight() < 3)

@@ -201,6 +201,8 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 
+#define isbingle(A) (istype(A, /mob/living/basic/bingle))
+
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
