@@ -217,7 +217,7 @@
 			tile.singularity_pull(parent, singularity_size)
 
 		for (var/atom/movable/thing as anything in tile)
-			if(thing == parent)
+			if(thing == parent || QDELETED(thing))
 				continue
 			if (in_consume_range)
 				consume(src, thing)
