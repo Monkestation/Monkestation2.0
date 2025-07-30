@@ -116,3 +116,7 @@
 /datum/lazy_template/abductor_ship
 	key = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS
 	map_name = "abductor_ships"
+
+/datum/lazy_template/bingle_pit
+	key = LAZY_TEMPLATE_KEY_BINGLE_PIT
+	map_name = "bingle_pit"
