@@ -180,3 +180,9 @@
 	desc = "A plushie of a clown king!"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "clown_king"
+
+/obj/item/toy/plush/ellie_valentine
+	name = "ellie valentine plush"
+	desc = "A hug from this doll ensures your day is better- it loves you all and MonkeStation!"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "ellie_valentine"

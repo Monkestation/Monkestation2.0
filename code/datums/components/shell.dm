@@ -339,7 +339,7 @@
 		COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY,
 		COMSIG_CIRCUIT_PRE_POWER_USAGE,
 	))
-	if(attached_circuit.loc == parent || (!QDELETED(attached_circuit) && attached_circuit.loc == null))
+	if(!QDELETED(attached_circuit) && (attached_circuit.loc == parent || isnull(attached_circuit.loc)))
 		var/atom/parent_atom = parent
 		attached_circuit.forceMove(parent_atom.drop_location())
 

@@ -666,6 +666,9 @@
 /datum/config_entry/flag/cache_assets
 	default = TRUE
 
+/datum/config_entry/flag/smart_cache_assets
+	default = TRUE
+
 /datum/config_entry/flag/save_spritesheets
 	default = FALSE
 
@@ -703,6 +706,14 @@
 
 /datum/config_entry/flag/vpn_kick
 	default = FALSE
+
+/// If admins with +DEBUG can initialize byond-tracy midround.
+/datum/config_entry/flag/allow_tracy_start
+	protection = CONFIG_ENTRY_LOCKED
+
+/// If admins with +DEBUG can queue byond-tracy to run the next round.
+/datum/config_entry/flag/allow_tracy_queue
+	protection = CONFIG_ENTRY_LOCKED
 
 /**
  * Tgui ui_act payloads larger than 2kb are split into chunks a maximum of 1kb in size.

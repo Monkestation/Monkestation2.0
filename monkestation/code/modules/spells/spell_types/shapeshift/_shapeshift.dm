@@ -8,4 +8,3 @@
 	if(istype(new_form) && keep_name)
 		new_form.real_name = caster.real_name
 		new_form.name = caster.real_name
-		new_form.update_name_tag()

@@ -5,29 +5,21 @@
 	biomass_cost = 50
 
 /datum/action/cooldown/bloodling/heal/PreActivate(atom/target)
-
-	var/mob/living/target_mob = target
-	if(!ismob(target_mob))
-		owner.balloon_alert(owner, "Must target living being!")
-		return FALSE
-	/*
-	if(!iscarbon(target_mob))
-		owner.balloon_alert(owner, "Must target a carbon being!")
-		return FALSE
-	*/
-
-	if(!IS_BLOODLING_OR_THRALL(target_mob))
-		owner.balloon_alert(owner, "Only works on your thralls!")
-		return FALSE
 	. = ..()
+
+	if(!ismob(target))
+		return FALSE
+
+	var/mob/living/targetted_mob = target
+	if(!iscarbon(targetted_mob))
+		return FALSE
+
+	if(!IS_BLOODLING_THRALL(targetted_mob))
+		return FALSE
 	return
 
 /datum/action/cooldown/bloodling/heal/Activate(atom/target)
-
-	if(!IsAvailable(feedback = TRUE))
-		return FALSE
-
-	..()
+	. = ..()
 
 	var/mob/living/carbon/carbon_mob = target
 	if(!do_after(owner, 2 SECONDS))
@@ -38,10 +30,10 @@
 	carbon_mob.adjustToxLoss(-40)
 	carbon_mob.adjustFireLoss(-40)
 	carbon_mob.adjustOxyLoss(-40)
-	playsound(get_turf(carbon_mob), 'monkestation/sound/effects/fleshyheal.ogg', 55)
+	playsound(get_turf(carbon_mob), 'sound/magic/staff_healing.ogg', 30)
 
 	if(carbon_mob.stat != DEAD)
-		return FALSE
+		return TRUE
 
 	carbon_mob.revive()
 	// Any oxygen damage they suffered whilst in crit

@@ -197,6 +197,11 @@
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
+/obj/item/clothing/glasses/eyepatch/AltClick(mob/user)
+	. = ..()
+	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
+	user.update_worn_glasses()
+
 /obj/item/clothing/glasses/eyepatch/medical
 	name = "medical eyepatch"
 	desc = "Used by space weeaboos to pretend their eye isn't there, and crewmembers who actually lost their eye to pretend their eye is there."
@@ -711,4 +716,10 @@
 	name = "Phantom Thief Mask"
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
+	inhand_icon_state = null
+
+/obj/item/clothing/glasses/ralsei
+	name = "Prince's Glasses"
+	desc = "Green coloured glasses... There are patches of fur in the hinges."
+	icon_state = "ralsei_glasses"
 	inhand_icon_state = null

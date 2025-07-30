@@ -82,6 +82,11 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /*
 *	MISC
 */
+
+/datum/loadout_item/mask/griddle_toast
+	name = "Griddle Toast"
+	item_path = /obj/item/food/griddle_toast
+
 /datum/loadout_item/mask/fake_mustache
 	name = "Fake Moustache"
 	item_path = /obj/item/clothing/mask/fakemoustache
@@ -133,6 +138,7 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 /datum/loadout_item/mask/manhunt
 	name = "Smiley Mask"
 	item_path = /obj/item/clothing/mask/joy/manhunt
+
 /*
 *	DONATOR
 */

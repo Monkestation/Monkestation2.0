@@ -19,7 +19,7 @@
 	id = "weaponry"
 	display_name = "Weapon Development Technology"
 	description = "Our researchers have found new ways to weaponize just about everything now."
-	prereq_ids = list("engineering")
+	prereq_ids = list("engineering", "sec_basic")
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
@@ -42,15 +42,16 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = TECHWEB_TIER_1_POINTS)
 
-/datum/techweb_node/explosive_weapons
-	id = "explosive_weapons"
-	display_name = "Explosive & Pyrotechnical Weaponry"
+/datum/techweb_node/chemical_weapons
+	id = "chemical_weapons"
+	display_name = "Chemical Weaponry"
 	description = "If the light stuff just won't do it."
 	prereq_ids = list("adv_weaponry")
 	design_ids = list(
 		"adv_grenade",
 		"large_grenade",
 		"pyro_grenade",
+		"piercesyringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 

@@ -6,6 +6,7 @@
 	name = "\improper Oozeling"
 	plural_form = "Oozelings"
 	id = SPECIES_OOZELING
+	examine_limb_id = SPECIES_OOZELING
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	hair_color = "mutcolor"
@@ -27,7 +28,7 @@
 
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_bloodtype = /datum/blood_type/slime
-	inert_mutation = /datum/mutation/human/acid_touch
+	inert_mutation = /datum/mutation/acid_touch
 	burnmod = 0.6 // = 3/5x generic burn damage
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage

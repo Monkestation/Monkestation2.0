@@ -33,6 +33,11 @@
 	mood_change = 10
 	timeout = 6 MINUTES
 
+/datum/mood_event/daylight
+	description = span_boldwarning("I have been scorched by the unforgiving rays of the sun.")
+	mood_change = -6
+	timeout = 6 MINUTES
+
 ///Candelabrum's mood event to non Bloodsucker/Vassals
 /datum/mood_event/vampcandle
 	description = span_boldwarning("Something is making your mind feel... loose.")

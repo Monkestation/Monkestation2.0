@@ -21,7 +21,6 @@
 	name = "harvester"
 	desc = "A mass of flesh with two large scything talons."
 
-	attack_sound = "sound/weapons/bladeslice.ogg"
 	icon_state = "harvester"
 	icon_living = "harvester"
 	icon_dead = "harvester_dead"
@@ -30,7 +29,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = 0.5
-	wound_bonus = -20
+	wound_bonus = -40
 	bare_wound_bonus = 5
 	sharpness = SHARP_EDGED
 

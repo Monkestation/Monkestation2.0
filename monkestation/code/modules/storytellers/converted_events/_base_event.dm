@@ -160,6 +160,14 @@
 	. = ..()
 	if(!.)
 		return
+	var/list/recent_storyteller_events = SSgamemode.recent_storyteller_events
+	if(shared_occurence_type == SHARED_HIGH_THREAT && length(recent_storyteller_events))
+		var/list/last_round = recent_storyteller_events[1]
+		if(type in last_round)
+			return FALSE
+		for(var/datum/round_event_control/event as anything in last_round)
+			if(event::shared_occurence_type == shared_occurence_type)
+				return FALSE
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates()
 	if(length(candidates) < antag_amt)
@@ -305,13 +313,7 @@
 
 	setup = TRUE
 	control.generate_image(picked_mobs)
-	if(LAZYLEN(extra_spawned_events))
-		var/event_type = pick_weight(extra_spawned_events)
-		if(!event_type)
-			return
-		var/datum/round_event_control/triggered_event = locate(event_type) in SSgamemode.control
-		//wait a second to avoid any potential omnitraitor bs
-		addtimer(CALLBACK(triggered_event, TYPE_PROC_REF(/datum/round_event_control, run_event), FALSE, null, FALSE, "storyteller"), 1 SECONDS)
+	spawn_extra_events()
 
 /datum/round_event/antagonist/solo/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
@@ -320,11 +322,20 @@
 /datum/round_event/antagonist/solo/proc/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.add_antag_datum(antag_datum)
 
-/datum/round_event/antagonist/solo/proc/spawn_extra_events()
+/datum/round_event/antagonist/solo/proc/spawn_extra_events(wait = 1 SECONDS)
 	if(!LAZYLEN(extra_spawned_events))
 		return
-	var/datum/round_event_control/event = pick_weight(extra_spawned_events)
-	event?.run_event(random = FALSE, event_cause = "storyteller")
+	var/datum/round_event_control/event_type = pick_weight(extra_spawned_events)
+	if(!event_type)
+		return
+	var/datum/round_event_control/triggered_event = locate(event_type) in SSgamemode.control
+	if(wait)
+		log_storyteller("[src] queued extra event [triggered_event] (running in [DisplayTimeText(wait)])")
+		//wait a second to avoid any potential omnitraitor bs (it will happen anyways)
+		addtimer(CALLBACK(triggered_event, TYPE_PROC_REF(/datum/round_event_control, run_event), FALSE, null, FALSE, "storyteller"), wait)
+	else
+		log_storyteller("[src] triggered extra event [triggered_event]")
+		triggered_event.run_event(random = FALSE, event_cause = "storyteller")
 
 /datum/round_event/antagonist/solo/proc/create_human_mob_copy(turf/create_at, mob/living/carbon/human/old_mob, qdel_old_mob = TRUE)
 	if(!old_mob?.client)

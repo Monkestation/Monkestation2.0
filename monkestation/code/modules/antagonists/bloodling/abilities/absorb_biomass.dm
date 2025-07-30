@@ -1,18 +1,15 @@
 /datum/action/cooldown/bloodling/absorb
 	name = "Absorb Biomass"
-	desc = "Allows you to absorb a dead carbons close to you. Can also absorb blood, loose limbs and organs."
+	desc = "Allows you to absorb a dead carbon or living mob close to you."
 	button_icon_state = "absorb"
 	shared_cooldown = NONE
-	always_useable = TRUE
 	/// If the bloodling is currently absorbing
 	var/is_absorbing = FALSE
 	/// Items we can absorb
 	var/list/absorbable_types = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/item/food,
-		/obj/item/organ,
-		/obj/item/bodypart/leg,
-		/obj/item/bodypart/arm,
+		/obj/item/organ/internal,
 	)
 
 /datum/action/cooldown/bloodling/absorb/PreActivate(atom/target)
@@ -48,20 +45,17 @@
 	return FALSE
 
 /datum/action/cooldown/bloodling/absorb/Activate(atom/target)
-	..()
+	. = ..()
 	var/mob/living/basic/bloodling/our_mob = owner
 	/// How long it takes to absorb something
 	var/absorb_time = 5 SECONDS
 	/// How much biomass is gained from absorbing something
 	var/biomass_gain = 3
 
+	our_mob.balloon_alert(our_mob, "You begin absorbing [target]!")
+
 	if(is_type_in_list(target, absorbable_types))
-		if(istype(target, /obj/effect/decal/cleanable/blood))
-			biomass_gain = 1
-		else if(istype(target, /obj/item/organ))\
-			biomass_gain = 3
-		else //if an arm or leg
-			biomass_gain = 5
+		biomass_gain = 3
 		our_mob.add_biomass(biomass_gain)
 		qdel(target)
 		our_mob.visible_message(
@@ -71,7 +65,6 @@
 		playsound(our_mob, 'sound/items/eatfood.ogg', 20)
 		return TRUE
 
-	our_mob.balloon_alert(our_mob, "You begin absorbing [target]!")
 	var/mob/living/mob_to_absorb = target
 
 	// This prevents the mob from being dragged away from the bloodling during the process
