@@ -25,6 +25,9 @@
 	current_directive = new_directive
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[current_directive]'.")
 	owner.log_message("set its directive to: '[current_directive]'.", LOG_GAME)
+	if(isspider(owner))
+		var/mob/living/basic/spider/spider_owner = owner
+		spider_owner.directive = new_directive
 	StartCooldown()
 
 /**
@@ -62,6 +65,7 @@
 	var/my_message = format_message(user,message)
 	for(var/mob/living/basic/spider as anything in GLOB.spidermobs)
 		to_chat(spider, my_message)
+		spider.balloon_alert(spider, "new command!")
 	for(var/ghost in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(ghost, user)
 		to_chat(ghost, "[link] [my_message]")
