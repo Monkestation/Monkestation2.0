@@ -1,8 +1,8 @@
-/datum/mutation/human/dwarfism
+/datum/mutation/dwarfism
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/dwarfism/modify()
+/datum/mutation/dwarfism/setup()
 	. = ..()
 	if(isnull(owner))
 		return
@@ -12,7 +12,7 @@
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
 		ADD_TRAIT(owner, TRAIT_STABLE_DWARF, GENETIC_MUTATION)
 
-/datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/dwarfism/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -22,7 +22,7 @@
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
 		REMOVE_TRAIT(owner, TRAIT_STABLE_DWARF, GENETIC_MUTATION)
 
-/datum/mutation/human/strong
+/datum/mutation/strong
 	instability = 25
 	power_coeff = 1
 	var/list/affected_limbs = list(
@@ -32,15 +32,15 @@
 		BODY_ZONE_R_LEG = null,
 	)
 
-/datum/mutation/human/strong/Destroy()
+/datum/mutation/strong/Destroy()
 	for(var/body_part as anything in affected_limbs)
 		if(!isnull(affected_limbs[body_part]))
 			unregister_limb(null, affected_limbs[body_part])
 	return ..()
 
-/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/strong/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	ADD_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
@@ -53,7 +53,7 @@
 
 		register_limb(owner, limb, initial = TRUE)
 
-/datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/strong/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -67,7 +67,7 @@
 
 		unregister_limb(owner, limb)
 
-/datum/mutation/human/strong/modify()
+/datum/mutation/strong/setup()
 	. = ..()
 	if(isnull(owner) || GET_MUTATION_POWER(src) == 1)
 		return
@@ -77,7 +77,7 @@
 		limb.unarmed_damage_low += ((2 * GET_MUTATION_POWER(src)) - 2) // Bit cursed? Yep. Works with any mutation power? Yep.
 		limb.unarmed_damage_high += ((2 * GET_MUTATION_POWER(src)) - 2)
 
-/datum/mutation/human/strong/proc/register_limb(mob/living/carbon/human/owner, obj/item/bodypart/new_limb, special, initial = FALSE)
+/datum/mutation/strong/proc/register_limb(mob/living/carbon/human/owner, obj/item/bodypart/new_limb, special, initial = FALSE)
 	SIGNAL_HANDLER
 	if(new_limb.body_zone == BODY_ZONE_HEAD || new_limb.body_zone == BODY_ZONE_CHEST)
 		return
@@ -92,7 +92,7 @@
 	new_limb.unarmed_damage_low += (2 * GET_MUTATION_POWER(src))
 	new_limb.unarmed_damage_high += (2 * GET_MUTATION_POWER(src))
 
-/datum/mutation/human/strong/proc/unregister_limb(mob/living/carbon/human/owner, obj/item/bodypart/lost_limb, special)
+/datum/mutation/strong/proc/unregister_limb(mob/living/carbon/human/owner, obj/item/bodypart/lost_limb, special)
 	SIGNAL_HANDLER
 	if(lost_limb.body_zone == BODY_ZONE_HEAD || lost_limb.body_zone == BODY_ZONE_CHEST)
 		return
@@ -102,28 +102,28 @@
 	lost_limb.unarmed_damage_low -= (2 * GET_MUTATION_POWER(src))
 	lost_limb.unarmed_damage_high -= (2 * GET_MUTATION_POWER(src))
 
-/datum/mutation/human/strong/proc/limb_gone(obj/item/bodypart/deleted_limb)
+/datum/mutation/strong/proc/limb_gone(obj/item/bodypart/deleted_limb)
 	SIGNAL_HANDLER
 	if(affected_limbs[deleted_limb.body_zone])
 		affected_limbs[deleted_limb.body_zone] = null
 		UnregisterSignal(deleted_limb, COMSIG_QDELETING)
 
-/datum/mutation/human/stimmed
+/datum/mutation/stimmed
 	instability = 20
 	power_coeff = 1
 
-/datum/mutation/human/stimmed/on_life(seconds_per_tick, times_fired)
+/datum/mutation/stimmed/on_life(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 		return
 
 	owner.reagents.remove_all(GET_MUTATION_POWER(src) * REM * seconds_per_tick)
 
-/datum/mutation/human/acidflesh
+/datum/mutation/acidflesh
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
 
-/datum/mutation/human/acidflesh/on_life(seconds_per_tick, times_fired)
+/datum/mutation/acidflesh/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(13 / GET_MUTATION_ENERGY(src), seconds_per_tick))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
 			to_chat(owner, span_danger("Your acid flesh bubbles..."))
@@ -134,36 +134,39 @@
 			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
 
 // you can't become double-giant
-/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/acquirer)
-	if(acquirer && HAS_TRAIT_FROM(acquirer, TRAIT_GIANT, QUIRK_TRAIT))
-		return TRUE
-	return ..()
+/datum/mutation/gigantism/on_acquiring(mob/living/carbon/human/acquirer)
+	. = ..()
+	if(!.)
+		return
 
-/datum/mutation/human/gigantism
+	if(acquirer && HAS_TRAIT_FROM(acquirer, TRAIT_GIANT, QUIRK_TRAIT))
+		return FALSE
+
+/datum/mutation/gigantism
 	power_coeff = 1
 	var/datum/component/tackling_component
 
-/datum/mutation/human/gigantism/Destroy()
+/datum/mutation/gigantism/Destroy()
 	tackling_component = null
 	return ..()
 
-/datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/gigantism/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(. || GET_MUTATION_POWER(src) <= 1)
 		return
 	QDEL_NULL(tackling_component)
 
-/datum/mutation/human/gigantism/modify()
+/datum/mutation/gigantism/setup()
 	. = ..()
 	if(owner && GET_MUTATION_POWER(src) > 1) // Psst, the tackling component's stats are just copied from the gorilla gloves, but doubled stamina cost
 		tackling_component = owner.AddComponent(/datum/component/tackler, stamina_cost = 60, base_knockdown = 1.25 SECONDS, range = 5, speed = 1, skill_mod = 2, min_distance = 0)
 
-/datum/mutation/human/spastic
+/datum/mutation/spastic
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
 
-/datum/mutation/human/spastic/modify()
+/datum/mutation/spastic/setup()
 	. = ..()
 	if(isnull(owner))
 		return
@@ -174,13 +177,13 @@
 		status_effect.mutation_power = GET_MUTATION_POWER(src)
 		status_effect.mutation_energy = GET_MUTATION_ENERGY(src)
 
-/datum/mutation/human/extrastun
+/datum/mutation/extrastun
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
 
 /// Triggers on moved(). Randomly makes the owner trip
-/datum/mutation/human/extrastun/proc/on_move()
+/datum/mutation/extrastun/proc/on_move()
 	SIGNAL_HANDLER
 
 	if(prob(99.25 + (0.25 * GET_MUTATION_SYNCHRONIZER(src) / GET_MUTATION_ENERGY(src)))) // The brawl mutation
@@ -190,19 +193,21 @@
 	to_chat(owner, span_danger("You trip over your own feet."))
 	owner.Knockdown((3 SECONDS) * GET_MUTATION_POWER(src))
 
-/datum/mutation/human/headless
+/datum/mutation/headless
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/headless/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/headless/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner))
-		return TRUE
+		return FALSE
 
-	if(locate(/obj/item/organ/internal/ears/cat/super) in owner.get_organ_slot(ORGAN_SLOT_EARS))
-		return TRUE
+	var/obj/item/organ/internal/ears/cat/super/ears = owner.get_organ_slot(ORGAN_SLOT_EARS)
+	if(ears && istype(ears))
+		return FALSE
+
 	. = ..()
 
-/datum/mutation/human/headless/modify()
+/datum/mutation/headless/setup()
 	. = ..()
 	if(isnull(owner))
 		return
@@ -217,7 +222,7 @@
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1) // Keep in mind, when getting HARS we are guaranteed at LEAST 15 brute damage
 		chest.heal_damage(5 / GET_MUTATION_SYNCHRONIZER(src))
 
-/datum/mutation/human/radproof
+/datum/mutation/radproof
 	name = "Radproof"
 	desc = "Adapts the host's body to be better suited at preventing cancer caused by radioactivity at the expense of it's ability to handle toxic matter."
 	quality = POSITIVE
@@ -226,15 +231,15 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/radproof/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/radproof/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	ADD_TRAIT(owner, TRAIT_RADIMMUNE, GENETIC_MUTATION)
 	owner.physiology?.tox_mod *= 1.5
 
-/datum/mutation/human/radproof/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/radproof/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -246,7 +251,7 @@
 	if(GET_MUTATION_POWER(src) > 1)
 		REMOVE_TRAIT(owner, TRAIT_RADHEALING, GENETIC_MUTATION)
 
-/datum/mutation/human/radproof/modify()
+/datum/mutation/radproof/setup()
 	. = ..()
 	if(isnull(owner))
 		return
@@ -256,7 +261,7 @@
 	if(GET_MUTATION_POWER(src) > 1)
 		ADD_TRAIT(owner, TRAIT_RADHEALING, GENETIC_MUTATION)
 
-/datum/mutation/human/thickskin
+/datum/mutation/thickskin
 	name = "Thick skin"
 	desc = "The user's skin acquires a leathery texture, and becomes more resilient to harm."
 	quality = POSITIVE
@@ -266,9 +271,9 @@
 	difficulty = 18
 	power_coeff = 1
 
-/datum/mutation/human/thickskin/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/thickskin/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	var/datum/armor/owner_armor = owner.get_armor()
@@ -277,7 +282,7 @@
 	armorlist[BULLET] += 10
 	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
 
-/datum/mutation/human/thickskin/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/thickskin/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -291,12 +296,12 @@
 	if(GET_MUTATION_POWER(src) > 1)
 		REMOVE_TRAIT(owner, TRAIT_EMBED_RESISTANCE, GENETIC_MUTATION)
 
-/datum/mutation/human/thickskin/modify()
+/datum/mutation/thickskin/setup()
 	. = ..()
 	if(owner && GET_MUTATION_POWER(src) > 1)
 		ADD_TRAIT(owner, TRAIT_EMBED_RESISTANCE, GENETIC_MUTATION)
 
-/datum/mutation/human/hypermarrow
+/datum/mutation/hypermarrow
 	name = "Hyperactive Bone Marrow"
 	desc = "A mutation that stimulates the subject's bone marrow causes it to work three times faster than usual."
 	quality = POSITIVE
@@ -307,17 +312,19 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/hypermarrow/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/hypermarrow/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
-		RegisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(gain_blood))
+		return
 
-/datum/mutation/human/hypermarrow/on_losing(mob/living/carbon/human/owner)
+	RegisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(gain_blood))
+
+/datum/mutation/hypermarrow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		UnregisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
-/datum/mutation/human/hypermarrow/proc/gain_blood(mob/living/carbon/human/gene_owner, seconds_per_tick, times_fired)
+/datum/mutation/hypermarrow/proc/gain_blood(mob/living/carbon/human/gene_owner, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER // Btw the signal sender handles if our owner gets the no_blood trait after being injected
 	if(gene_owner.stat == DEAD)
 		return
@@ -326,28 +333,30 @@
 		gene_owner.blood_volume += (2 * GET_MUTATION_POWER(src) * seconds_per_tick - 1)
 		gene_owner.adjust_nutrition((GET_MUTATION_POWER(src) * GET_MUTATION_SYNCHRONIZER(src) * seconds_per_tick - 0.8) * HUNGER_FACTOR)
 
-/datum/mutation/human/bloodyhell // Technically could be easily made a child of bone marrow, but signals dont like that.
+/datum/mutation/bloodyhell // Technically could be easily made a child of bone marrow, but signals dont like that.
 	name = "Polycythemia"
 	desc = "A mutation that stimulates the subjects bone marrow's blood production capability and removes the subject's bone marrow's usual safeties against overproducing blood."
 	quality = NEGATIVE
 	text_gain_indication = span_warning("For a brief moment you feel a pain in your heart as you feel it beating faster.")
 	text_lose_indication = span_notice("You feel your heart slowing down to its usual speed.")
 	instability = 15
-	conflicts = list(/datum/mutation/human/anemia)
+	conflicts = list(/datum/mutation/anemia)
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/bloodyhell/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/bloodyhell/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
-		RegisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(gain_blood))
+		return
 
-/datum/mutation/human/bloodyhell/on_losing(mob/living/carbon/human/owner)
+	RegisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(gain_blood))
+
+/datum/mutation/bloodyhell/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		UnregisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
-/datum/mutation/human/bloodyhell/proc/gain_blood(mob/living/carbon/human/gene_owner, seconds_per_tick, times_fired)
+/datum/mutation/bloodyhell/proc/gain_blood(mob/living/carbon/human/gene_owner, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 	if(gene_owner.stat == DEAD)
 		return
@@ -363,27 +372,29 @@
 	if(gene_owner.blood_volume < BLOOD_VOLUME_MAXIMUM)
 		gene_owner.blood_volume += (2 * GET_MUTATION_POWER(src) * GET_MUTATION_SYNCHRONIZER(src) * seconds_per_tick)
 
-/datum/mutation/human/anemia
+/datum/mutation/anemia
 	name = "Anemia"
 	desc = "This mutation causes damage to the oxygen carrying properties of blood cells to a high degree in the subject."
 	quality = NEGATIVE
 	text_gain_indication = span_warning("You feel slightly woozy for a moment.") // No lose indicator, its a slow recovery
 	instability = 10
-	conflicts = list(/datum/mutation/human/bloodyhell)
+	conflicts = list(/datum/mutation/bloodyhell)
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/anemia/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/anemia/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
-		RegisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(lose_blood))
+		return
 
-/datum/mutation/human/anemia/on_losing(mob/living/carbon/human/owner)
+	RegisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(lose_blood))
+
+/datum/mutation/anemia/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		UnregisterSignal(owner, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 
-/datum/mutation/human/anemia/proc/lose_blood(mob/living/carbon/human/gene_owner, seconds_per_tick, times_fired)
+/datum/mutation/anemia/proc/lose_blood(mob/living/carbon/human/gene_owner, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 	if(gene_owner.stat == DEAD)
 		return
@@ -391,7 +402,7 @@
 	if(gene_owner.blood_volume > BLOOD_VOLUME_SAFE - (75 * GET_MUTATION_POWER(src) * GET_MUTATION_SYNCHRONIZER(src)))
 		gene_owner.blood_volume -= (seconds_per_tick)
 
-/datum/mutation/human/densebones
+/datum/mutation/densebones
 	name = "Bone Densification"
 	desc = "A mutation that gives the subject a rare form of increased bone density, making their entire body slightly more resilient to low kinetic blows."
 	quality = POSITIVE
@@ -401,9 +412,9 @@
 	difficulty = 16
 	power_coeff = 1
 
-/datum/mutation/human/densebones/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/densebones/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	var/datum/armor/owner_armor = owner.get_armor()
@@ -412,7 +423,7 @@
 	armorlist[WOUND] += 10
 	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
 
-/datum/mutation/human/densebones/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/densebones/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -426,12 +437,12 @@
 	if(GET_MUTATION_POWER(src) > 1)
 		REMOVE_TRAIT(owner, TRAIT_HARDLY_WOUNDED, GENETIC_MUTATION)
 
-/datum/mutation/human/densebones/modify()
+/datum/mutation/densebones/setup()
 	. = ..()
 	if(owner && GET_MUTATION_POWER(src) > 1)
 		ADD_TRAIT(owner, TRAIT_HARDLY_WOUNDED, GENETIC_MUTATION)
 
-/datum/mutation/human/cerebral
+/datum/mutation/cerebral
 	name = "Cerebral Neuroplasticity"
 	desc = "A mutation that reorganizes the subject's brain, giving them more stamina while allowing for a slightly quicker recovery speed if exhausted."
 	locked = TRUE
@@ -441,15 +452,15 @@
 	instability = 60
 	power_coeff = 1
 
-/datum/mutation/human/cerebral/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/cerebral/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	owner.physiology?.stamina_mod *= 0.7
 	owner.physiology?.stun_mod *= 0.85
 
-/datum/mutation/human/cerebral/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/cerebral/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -460,50 +471,50 @@
 		owner.physiology?.stamina_mod /= 0.85
 		owner.physiology?.stun_mod /= 0.925
 
-/datum/mutation/human/cerebral/modify()
+/datum/mutation/cerebral/setup()
 	. = ..()
 	if(owner && GET_MUTATION_POWER(src) > 1)
 		owner.physiology?.stamina_mod *= 0.85
 		owner.physiology?.stun_mod *= 0.925
 
-/datum/mutation/human/fat
+/datum/mutation/fat
 	name = "Obesity"
 	desc = "A strange mutation that forces the body to rapidly produce lipid tissue."
 	quality = NEGATIVE
 	text_gain_indication = span_notice("You feel blubbery and lethargic!")
 	text_lose_indication = span_notice("You feel fit!")
 
-/datum/mutation/human/fat/on_life(seconds_per_tick, times_fired)
+/datum/mutation/fat/on_life(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(owner, TRAIT_STASIS) || owner.stat == DEAD)
 		return
 
 	if(owner.nutrition <= NUTRITION_LEVEL_FAT)
 		owner.nutrition += 25 * seconds_per_tick
 
-/datum/mutation/human/horned
+/datum/mutation/horned
 	name = "Horns"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("A pair of horns erupt from your head.")
 	text_lose_indication = span_notice("Your horns crumble away into nothing.")
 
-/datum/mutation/human/horned/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/horned/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner)) // Parent checks this, but we want to be safe when doing get_organ_slot
-		return TRUE
+		return FALSE
 
 	// First time something does get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS) btw, for very understandable reasons
 	var/obj/item/organ/external/horns/owner_horns = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
 	if(owner_horns)
-		return TRUE // Lets not de-horn people with horns, that'd be very rude
+		return FALSE // Lets not de-horn people with horns, that'd be very rude
 
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	var/obj/item/organ/external/horns/horns = new()
 	horns.Insert(owner)
 
-/datum/mutation/human/horned/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/horned/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -513,7 +524,7 @@
 	if(owner_horns)
 		qdel(owner_horns)
 
-/datum/mutation/human/no_fingerprints
+/datum/mutation/no_fingerprints
 	name = "Invisible Fingerprints"
 	desc = "Subjects finger tips melt into a singular smooth structure, causing their fingerprints to be impossible to detect."
 	quality = POSITIVE
@@ -521,21 +532,21 @@
 	text_lose_indication = span_notice("Your fingers no longer feel numb.")
 	instability = 10
 
-/datum/mutation/human/no_fingerprints/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/no_fingerprints/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	ADD_TRAIT(owner, TRAIT_NO_FINGERPRINTS, GENETIC_MUTATION)
 
-/datum/mutation/human/no_fingerprints/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/no_fingerprints/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
 
 	REMOVE_TRAIT(owner, TRAIT_NO_FINGERPRINTS, GENETIC_MUTATION)
 
-/datum/mutation/human/no_breath
+/datum/mutation/no_breath
 	name = "Automatic Respiration"
 	desc = "Subjects lungs begin to recycle CO2 into oxygen aided with melting the subjects airpipe shut making them have no need for air."
 	quality = POSITIVE
@@ -544,21 +555,21 @@
 	instability = 30
 	difficulty = 14
 
-/datum/mutation/human/no_breath/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/no_breath/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	ADD_TRAIT(owner, TRAIT_NOBREATH, GENETIC_MUTATION)
 
-/datum/mutation/human/no_breath/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/no_breath/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
 
 	REMOVE_TRAIT(owner, TRAIT_NOBREATH, GENETIC_MUTATION)
 
-/datum/mutation/human/dizzy
+/datum/mutation/dizzy
 	name = "Dizzy"
 	desc = "Causes the subjects cerebellum to shut down in certain places causing dizzyness."
 	quality = NEGATIVE
@@ -569,12 +580,12 @@
 	power_coeff = 1
 	energy_coeff = 1
 
-/datum/mutation/human/dizzy/on_life(seconds_per_tick, times_fired)
+/datum/mutation/dizzy/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(2.5 / GET_MUTATION_ENERGY(src), seconds_per_tick))
 		to_chat(owner, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
 		owner.adjust_dizzy_up_to(1 MINUTE * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 3 MINUTES)
 
-/datum/mutation/human/ear_cancer
+/datum/mutation/ear_cancer
 	name = "Tinnitus"
 	desc = "Causes the subjects to constantly hear a ringing noise."
 	quality = MINOR_NEGATIVE
@@ -583,7 +594,7 @@
 	instability = 5
 	synchronizer_coeff = 1
 
-/datum/mutation/human/ear_cancer/on_life(seconds_per_tick, times_fired)
+/datum/mutation/ear_cancer/on_life(seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/ears/ears = owner.get_organ_slot(ORGAN_SLOT_EARS) // RIP THEM OUT TO STOP THE NOISE
 	if(ears && SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick))
 		to_chat(owner, span_warning("Your ears start to ring!"))

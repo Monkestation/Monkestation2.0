@@ -18,6 +18,7 @@
 	tags = list(TAG_COMBAT, TAG_COMMUNAL, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 //monkestation edit end
 
 /datum/round_event_control/pirates/preRunEvent()
@@ -27,6 +28,7 @@
 
 //monkestation edit note: this list was out dated due to TG not using it so I put all the pirate types in it
 /datum/round_event/pirates
+	fakeable = FALSE
 	///admin chosen pirate team
 	var/list/datum/pirate_gang/gang_list
 

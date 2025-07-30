@@ -193,6 +193,16 @@
 	desc = "A neckpiece for a maid costume, it smells faintly of disappointment."
 	icon_state = "maid_neck"
 
+/obj/item/clothing/neck/kris
+	name = "vessel's ascot"
+	desc = "* A replica of the ascot a vessel wore while saving the world."
+	icon_state = "kris_ascot"
+
+/obj/item/clothing/neck/ralsei
+	name = "prince's scarf"
+	desc = "A fluffy scarf, it smells of cake."
+	icon_state = "ralsei_scarf"
+
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."

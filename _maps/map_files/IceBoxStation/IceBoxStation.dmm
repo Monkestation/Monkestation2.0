@@ -1661,6 +1661,19 @@
 	},
 /obj/structure/sign/departments/aiupload/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_x = 3;
+	pixel_y = 14
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "aBf" = (
@@ -2461,6 +2474,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "aPr" = (
@@ -6139,6 +6153,14 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 5
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 18;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bQh" = (
@@ -9619,6 +9641,7 @@
 	dir = 1;
 	name = "Crew Station"
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "cOZ" = (
@@ -12713,6 +12736,7 @@
 	dir = 1;
 	name = "Engineering Station"
 	},
+/obj/effect/landmark/start/bridge_assistant,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "dNb" = (
@@ -21269,6 +21293,7 @@
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
 	},
+/obj/machinery/composters,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gAD" = (
@@ -32043,12 +32068,6 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
-"jTf" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/service/hydroponics/chicken)
 "jTg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/green/filled/warning{
@@ -41369,6 +41388,23 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/structure/table,
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_x = 14;
+	pixel_y = 5
+	},
+/obj/item/storage/fancy/coffee_cart_rack{
+	pixel_x = -2;
+	pixel_y = 1
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "mOZ" = (
@@ -42710,6 +42746,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/structure/bookcase/manuals/botany,
 /turf/open/floor/wood,
 /area/station/service/hydroponics/chicken)
 "niN" = (
@@ -47715,6 +47752,7 @@
 	pixel_y = -3;
 	pixel_x = -5
 	},
+/obj/machinery/splicer,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "oDn" = (
@@ -48477,7 +48515,7 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
 "oPP" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -55343,6 +55381,7 @@
 	pixel_y = 3
 	},
 /obj/item/hand_labeler,
+/obj/machinery/plantgenes,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "qXF" = (
@@ -175545,7 +175584,7 @@ cWm
 cWm
 olJ
 cEk
-jTf
+olJ
 kum
 gjq
 gjq

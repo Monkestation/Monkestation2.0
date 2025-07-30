@@ -30,7 +30,7 @@
 		CRASH("Failed to find valid job to pick for overflow!")
 	chosen_job_name = lowertext(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/job_icons)
+	var/datum/asset/spritesheet_batched/job_icons/sheet = get_asset_datum(/datum/asset/spritesheet_batched/job_icons)
 	icon_tag = sheet.icon_tag(sanitize_css_class_name(lowertext(picked_job.config_tag || picked_job.title)))
 	if(icon_tag)
 		icon_tag = "<span style='vertical-align: middle'>[icon_tag]</span> " // vertically align and add a space to the end
@@ -52,7 +52,7 @@
 	if(!picked_job || !notified)
 		return
 	var/client/client = get_player_client(target)
-	client?.tgui_panel?.window?.send_asset(get_asset_datum(/datum/asset/spritesheet/job_icons))
+	client?.tgui_panel?.window?.send_asset(get_asset_datum(/datum/asset/spritesheet_batched/job_icons))
 	to_chat(
 		target = client,
 		html = boxed_message(span_big(span_info("Current overflow role is [icon_tag][span_name(html_encode(picked_job.title))], make sure to check your job preferences!"))),

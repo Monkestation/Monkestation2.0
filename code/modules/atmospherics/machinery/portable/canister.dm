@@ -327,28 +327,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		valve_timer = world.time + (timer_set SECONDS)
 	update_appearance()
 
-/obj/machinery/portable_atmospherics/canister/proto
-	name = "prototype canister"
-	greyscale_config = /datum/greyscale_config/prototype_canister
-	greyscale_colors = "#ffffff#a50021#ffffff"
-
-/obj/machinery/portable_atmospherics/canister/proto/default
-	name = "prototype canister"
-	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
-	volume = 5000
-	max_integrity = 300
-	temperature_resistance = 2000 + T0C
-	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
-	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
-	prototype = TRUE
-
-/obj/machinery/portable_atmospherics/canister/proto/default/oxygen
-	name = "prototype canister"
-	desc = "A prototype canister for a prototype bike, what could go wrong?"
-	gas_type = /datum/gas/oxygen
-	filled = 1
-	release_pressure = ONE_ATMOSPHERE*2
-
 /**
  * Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
  * Used for canisters spawned in maps and by admins
