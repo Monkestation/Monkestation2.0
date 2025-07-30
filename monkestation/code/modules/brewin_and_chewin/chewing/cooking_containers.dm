@@ -111,9 +111,8 @@
 	if(!tracker)
 		if(lower_quality_on_fail)
 			for (var/obj/item/contained in contents)
-				contained?:food_quality -= lower_quality_on_fail
-		else
-			tracker = new /datum/chewin_cooking/recipe_tracker(src)
+				contained.food_quality -= lower_quality_on_fail
+		tracker = new /datum/chewin_cooking/recipe_tracker(src)
 
 	var/return_value = 0
 	switch(tracker.process_item_wrap(I, user))
@@ -149,8 +148,7 @@
 				to_chat(user, "You can't make the same decision twice!")
 
 	if(tracker && !tracker.recipe_started)
-		qdel(tracker)
-		tracker = null
+		QDEL_NULL(tracker)
 	return return_value
 
 //TODO: Handle the contents of the container being ruined via burning.
