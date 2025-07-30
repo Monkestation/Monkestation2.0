@@ -10,15 +10,17 @@
 	if(!ismob(target_mob))
 		owner.balloon_alert(owner, "Must target living being!")
 		return FALSE
-
+	/*
 	if(!iscarbon(target_mob))
 		owner.balloon_alert(owner, "Must target a carbon being!")
 		return FALSE
+	*/
 
 	if(!IS_BLOODLING_OR_THRALL(target_mob))
 		owner.balloon_alert(owner, "Only works on your thralls!")
 		return FALSE
-	..()
+	. = ..()
+	return
 
 /datum/action/cooldown/bloodling/heal/Activate(atom/target)
 
@@ -39,7 +41,7 @@
 	playsound(get_turf(carbon_mob), 'monkestation/sound/effects/fleshyheal.ogg', 55)
 
 	if(carbon_mob.stat != DEAD)
-		return TRUE
+		return FALSE
 
 	carbon_mob.revive()
 	// Any oxygen damage they suffered whilst in crit

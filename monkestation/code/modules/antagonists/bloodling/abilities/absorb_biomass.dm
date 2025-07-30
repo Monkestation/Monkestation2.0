@@ -48,7 +48,7 @@
 	return FALSE
 
 /datum/action/cooldown/bloodling/absorb/Activate(atom/target)
-	. = ..()
+	..()
 	var/mob/living/basic/bloodling/our_mob = owner
 	/// How long it takes to absorb something
 	var/absorb_time = 5 SECONDS

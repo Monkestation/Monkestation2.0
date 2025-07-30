@@ -3,6 +3,7 @@
 	desc = "Bestow the gift of life onto the ignorant. Costs 20 biomass."
 	button_icon_state = "give_life"
 	biomass_cost = 20
+	cooldown_time = 15 SECONDS
 
 /datum/action/cooldown/bloodling/give_life/PreActivate(atom/target)
 
@@ -18,7 +19,6 @@
 	if(mob_target.mind && !mob_target.stat == DEAD)
 		owner.balloon_alert(owner, "Only works on non-sentient alive mobs!")
 		return FALSE
-
 	..()
 
 /datum/action/cooldown/bloodling/give_life/Activate(atom/target)
@@ -26,7 +26,7 @@
 	var/mob/living/target_mob = target
 	if(target_mob.ckey) //only works on animals that aren't player controlled
 		target_mob.balloon_alert(target_mob, "Already sentient!")
-		return
+		return FALSE
 	..()
 	target_mob.balloon_alert(target_mob, "giving sentience to flesh...")
 
@@ -48,6 +48,5 @@
 	target_mob.mind.enslave_mind_to_creator(owner)
 	var/datum/antagonist/infested_thrall/bloodling_minion = target_mob.mind.add_antag_datum(/datum/antagonist/infested_thrall)
 	bloodling_minion.set_master(owner)
-
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(target_mob)])")
 	return TRUE
