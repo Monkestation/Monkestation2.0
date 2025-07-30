@@ -1,3 +1,4 @@
+#define FORMAT_BIO_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd1212'>[round(charges)]</font></div>")
 /mob/living/basic/bloodling
 	name = "abstract bloodling"
 	desc = "A disgusting mass of code and flesh. Report this as an issue if you see it."
@@ -103,12 +104,9 @@
 	if(evolution_level > 4)
 		biomass_next_evo = biomass_max
 
-	if(hud_used?.action_intent)
-		hud_used.action_intent.maptext = MAPTEXT("Your biomass: [biomass] / [biomass_next_evo] \n")
-		hud_used.action_intent.maptext_height = 400
-		hud_used.action_intent.maptext_width = 400
-		hud_used.action_intent.maptext_y = 64
-		hud_used.action_intent.maptext_x = -64
+	if(hud_used?.bloodling_bio_display)
+		hud_used.bloodling_bio_display.maptext = FORMAT_BIO_TEXT(biomass)
+		//add a thing to say outta whut for next evo
 
 // Bloodlings health and damage needs updating when biomass is added
 /mob/living/basic/bloodling/proper/add_biomass(amount)
