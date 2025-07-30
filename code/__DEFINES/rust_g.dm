@@ -277,14 +277,14 @@
 ///     "error" = "[A string, empty if there were no errors.]"
 /// )
 /// In the case of an unrecoverable panic from within Rust, this function ONLY returns a string containing the error.
-#define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(__rustg_iconforge_generate ||= load_ext(RUST_G, "iconforge_generate"))(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
+#define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Returns a job_id for use with rustg_iconforge_check()
-#define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(__rustg_iconforge_generate_async ||= load_ext(RUST_G, "iconforge_generate_async"))(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
+#define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Returns the status of an async job_id, or its result if it is completed. See RUSTG_JOB DEFINEs.
-#define rustg_iconforge_check(job_id) RUSTG_CALL(__rustg_iconforge_check ||= load_ext(RUST_G, "iconforge_check"))("[job_id]")
+#define rustg_iconforge_check(job_id) RUSTG_CALL(RUST_G, "iconforge_check")("[job_id]")
 /// Clears all cached DMIs and images, freeing up memory.
 /// This should be used after spritesheets are done being generated.
-#define rustg_iconforge_cleanup RUSTG_CALL(__rustg_iconforge_cleanup ||= load_ext(RUST_G, "iconforge_cleanup"))
+#define rustg_iconforge_cleanup RUSTG_CALL(RUST_G, "iconforge_cleanup")
 /// Takes in a set of hashes, generate inputs, and DMI filepaths, and compares them to determine cache validity.
 /// input_hash: xxh64 hash of "sprites" from the cache.
 /// dmi_hashes: xxh64 hashes of the DMIs in a spritesheet, given by `rustg_iconforge_generate` with `hash_icons` enabled. From the cache.
@@ -302,24 +302,15 @@
 /// JSON Config schema: https://hackmd.io/@tgstation/GAGS-Layer-Types
 /// Adding dirs or frames (via blending larger icons) to icons with more than 1 dir or 1 frame is not supported.
 /// Returns "OK" if successful, otherwise, returns a string containing the error.
-#define rustg_iconforge_load_gags_config(config_path, config_json, config_icon_path) RUSTG_CALL(__rustg_iconforge_load_gags_config ||= load_ext(RUST_G, "iconforge_load_gags_config"))("[config_path]", config_json, config_icon_path)
+#define rustg_iconforge_load_gags_config(config_path, config_json, config_icon_path) RUSTG_CALL(RUST_G, "iconforge_load_gags_config")("[config_path]", config_json, config_icon_path)
 /// Given a config_path (previously loaded by rustg_iconforge_load_gags_config), and a string of hex colors formatted as "#ff00ff#ffaa00"
 /// Outputs a DMI containing all of the states within the config JSON to output_dmi_path, creating any directories leading up to it if necessary.
 /// Returns "OK" if successful, otherwise, returns a string containing the error.
-#define rustg_iconforge_gags(config_path, colors, output_dmi_path) RUSTG_CALL(__rustg_iconforge_gags ||= load_ext(RUST_G, "iconforge_gags"))("[config_path]", colors, output_dmi_path)
+#define rustg_iconforge_gags(config_path, colors, output_dmi_path) RUSTG_CALL(RUST_G, "iconforge_gags")("[config_path]", colors, output_dmi_path)
 /// Returns a job_id for use with rustg_iconforge_check()
-#define rustg_iconforge_load_gags_config_async(config_path, config_json, config_icon_path) RUSTG_CALL(__rustg_iconforge_load_gags_config_async ||= load_ext(RUST_G, "iconforge_load_gags_config_async"))("[config_path]", config_json, config_icon_path)
+#define rustg_iconforge_load_gags_config_async(config_path, config_json, config_icon_path) RUSTG_CALL(RUST_G, "iconforge_load_gags_config_async")("[config_path]", config_json, config_icon_path)
 /// Returns a job_id for use with rustg_iconforge_check()
-#define rustg_iconforge_gags_async(config_path, colors, output_dmi_path) RUSTG_CALL(__rustg_iconforge_gags_async ||= load_ext(RUST_G, "iconforge_gags_async"))("[config_path]", colors, output_dmi_path)
-
-GLOBAL_REAL_VAR(__rustg_iconforge_generate)
-GLOBAL_REAL_VAR(__rustg_iconforge_generate_async)
-GLOBAL_REAL_VAR(__rustg_iconforge_check)
-GLOBAL_REAL_VAR(__rustg_iconforge_cleanup)
-GLOBAL_REAL_VAR(__rustg_iconforge_load_gags_config)
-GLOBAL_REAL_VAR(__rustg_iconforge_gags)
-GLOBAL_REAL_VAR(__rustg_iconforge_load_gags_config_async)
-GLOBAL_REAL_VAR(__rustg_iconforge_gags_async)
+#define rustg_iconforge_gags_async(config_path, colors, output_dmi_path) RUSTG_CALL(RUST_G, "iconforge_gags_async")("[config_path]", colors, output_dmi_path)
 
 #define RUSTG_ICONFORGE_BLEND_COLOR "BlendColor"
 #define RUSTG_ICONFORGE_BLEND_ICON "BlendIcon"
