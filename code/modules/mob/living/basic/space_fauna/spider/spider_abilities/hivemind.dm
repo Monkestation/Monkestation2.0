@@ -64,11 +64,13 @@
 /datum/action/cooldown/mob_cooldown/command_spiders/proc/spider_command(mob/living/user, message)
 	var/my_message = format_message(user,message)
 	for(var/mob/living/basic/spider as anything in GLOB.spidermobs)
-		to_chat(spider, my_message)
-		spider.balloon_alert(spider, "new command!")
+		var/is_own_message = spider == user
+		to_chat(spider, my_message, type = MESSAGE_TYPE_RADIO, avoid_highlighting = is_own_message)
+		if(!is_own_message)
+			spider.balloon_alert(spider, "new command!")
 	for(var/ghost in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(ghost, user)
-		to_chat(ghost, "[link] [my_message]")
+		to_chat(ghost, "[link] [my_message]", type = MESSAGE_TYPE_RADIO)
 	user.log_talk(message, LOG_SAY, tag = "spider command")
 
 /**
