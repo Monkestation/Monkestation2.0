@@ -190,7 +190,7 @@
 /obj/effect/overlay/hatch_overlays/Destroy(force)
 	. = ..()
 	stored_client?.images -= image
-	QDEL_NULL(image)
+	image = null
 	stored_client = null
 
 /obj/effect/overlay/hatch_overlays/update_overlays()
