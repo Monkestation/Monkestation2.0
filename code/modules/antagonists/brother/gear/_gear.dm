@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT_TYPED(bb_gear, /datum/bb_gear, init_bb_gear())
 	var/desc
 	var/spawn_path
 	var/preview_path
+	var/pop_lock = 0
 	var/static/list/icon/cached_previews
 
 /datum/bb_gear/proc/summon(mob/living/summoner, datum/team/brother_team/team)
@@ -30,6 +31,8 @@ GLOBAL_LIST_INIT_TYPED(bb_gear, /datum/bb_gear, init_bb_gear())
 /proc/init_bb_gear()
 	. = list()
 	for(var/datum/bb_gear/gear as anything in subtypesof(/datum/bb_gear))
+		if(SSgamemode.get_correct_popcount() < gear.pop_lock)
+			return
 		var/name = gear::name
 		if(istext(name))
 			.[name] = new gear
