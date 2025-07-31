@@ -1764,6 +1764,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	ammo_type = /obj/item/ammo_casing/magic/sickly_blade_toy
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	item_flags = NEEDS_PERMIT
+	var/trash_type = /obj/effect/decal/cleanable/plastic
 
 /obj/item/gun/magic/sickly_blade_toy/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, span_warning("The [name] grumbles quietly. It is not yet ready to fire again!"))
@@ -1772,6 +1773,15 @@ GLOBAL_LIST_EMPTY(intento_players)
 	if((IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
 		to_chat(user, span_danger("You feel a pulse of the old gods lash out at your mind, laughing how you're using a fake blade!"))
 	return ..()
+
+/obj/item/gun/magic/sickly_blade_toy/attack_self(mob/living/user)
+	to_chat(user,span_warning("You shatter [src]. It was a REALLY cheap replica after all."))
+	playsound(src, SFX_SHATTER, 70, TRUE)
+	var/datum/effect_system/spark_spread/sparks = new()
+	sparks.set_up(3, 1, src)
+	sparks.start()
+	new trash_type(user.loc)
+	qdel(src)
 
 /obj/item/gun/magic/sickly_blade_toy/rust_toy
 	name = "rustic replica blade"
