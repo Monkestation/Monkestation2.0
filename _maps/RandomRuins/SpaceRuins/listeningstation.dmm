@@ -605,10 +605,6 @@
 	pixel_y = -3
 	},
 /obj/item/airlock_painter/decal,
-/obj/item/airlock_painter/decal/tile{
-	pixel_x = -1;
-	pixel_y = -3
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation/support)
 "qD" = (
