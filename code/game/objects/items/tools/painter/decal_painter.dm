@@ -24,6 +24,8 @@
 	set_category(GLOB.paintable_decals[1])
 
 /obj/item/airlock_painter/decal/afterattack(atom/interacting_with, mob/living/user, list/modifiers)
+	if(get_dist(user, interacting_with) > 1)
+		return NONE
 	if(isfloorturf(interacting_with) && use_paint(user))
 		paint_floor(interacting_with)
 		return TRUE
