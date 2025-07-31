@@ -17,12 +17,6 @@ SUBSYSTEM_DEF(ore_generation)
 	 * If we call cave_generation more than once, we copy a list from the lists in lists/ores_spawned.dm
 	 */
 	var/list/ore_vent_minerals = list()
-	/// A tracker of how many of each ore vent size we have in the game. Useful for tracking purposes.
-	var/list/ore_vent_sizes = list(
-		LARGE_VENT_TYPE = 0,
-		MEDIUM_VENT_TYPE = 0,
-		SMALL_VENT_TYPE = 0,
-	)
 
 /datum/controller/subsystem/ore_generation/Initialize()
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
@@ -38,11 +32,43 @@ SUBSYSTEM_DEF(ore_generation)
 			else
 				stallbreaker++
 				if(stallbreaker >= length(possible_vents))
-					return SS_INIT_SUCCESS //We've done all we can here.
+					break //We've done all we can here. break inner loop
 				continue
 		if(stallbreaker >= length(possible_vents))
 			break //We've done all we can here. break outer loop
 
+	/// Handles roundstart logging
+	logger.Log(
+		LOG_CATEGORY_CAVE_GENERATION,
+		"Ore Generation spawned the following ores based on vent proximity",
+		list(
+			"[ORE_WALL_FAR]" = GLOB.post_ore_random["[ORE_WALL_FAR]"],
+			"[ORE_WALL_LOW]" = GLOB.post_ore_random["[ORE_WALL_LOW]"],
+			"[ORE_WALL_MEDIUM]" = GLOB.post_ore_random["[ORE_WALL_MEDIUM]"],
+			"[ORE_WALL_HIGH]" = GLOB.post_ore_random["[ORE_WALL_HIGH]"],
+			"[ORE_WALL_VERY_HIGH]" = GLOB.post_ore_random["[ORE_WALL_VERY_HIGH]"],
+		),
+	)
+	logger.Log(
+		LOG_CATEGORY_CAVE_GENERATION,
+		"Ore Generation spawned the following ores randomly",
+		list(
+			"[ORE_WALL_FAR]" = GLOB.post_ore_manual["[ORE_WALL_FAR]"],
+			"[ORE_WALL_LOW]" = GLOB.post_ore_manual["[ORE_WALL_LOW]"],
+			"[ORE_WALL_MEDIUM]" = GLOB.post_ore_manual["[ORE_WALL_MEDIUM]"],
+			"[ORE_WALL_HIGH]" = GLOB.post_ore_manual["[ORE_WALL_HIGH]"],
+			"[ORE_WALL_VERY_HIGH]" = GLOB.post_ore_manual["[ORE_WALL_VERY_HIGH]"],
+		),
+	)
+	logger.Log(
+		LOG_CATEGORY_CAVE_GENERATION,
+		"Ore Generation spawned the following vent sizes",
+		list(
+			"large" = LAZYACCESS(GLOB.ore_vent_sizes, LARGE_VENT_TYPE),
+			"medium" = LAZYACCESS(GLOB.ore_vent_sizes, MEDIUM_VENT_TYPE),
+			"small" = LAZYACCESS(GLOB.ore_vent_sizes, SMALL_VENT_TYPE),
+		),
+	)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
