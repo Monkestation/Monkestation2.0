@@ -25,6 +25,7 @@
  * Fake heretic codex
  * Fake Pierced Reality
  * Intento
+ * Heretic Replica Blades
  */
 /obj/item/toy
 	throwforce = 0
@@ -1739,6 +1740,9 @@ GLOBAL_LIST_EMPTY(intento_players)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
+/*
+ * Heretic Replica Blades
+ */
 /obj/item/gun/magic/sickly_blade_toy
 	name = "plastic replica blade"
 	desc = "A sickly green crescent blade, decorated with a plastic eye. You feel like this was cheaply made. A Donk Co logo is on the hilt."
