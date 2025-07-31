@@ -389,8 +389,8 @@
 		stock_parts += scanmod
 	if(capacitor)
 		stock_parts += capacitor
-	if(servo)
-		stock_parts += servo
+	if(manipulator)
+		stock_parts += manipulator
 
 	if(length(stock_parts))
 		var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)

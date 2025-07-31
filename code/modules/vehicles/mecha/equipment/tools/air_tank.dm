@@ -83,7 +83,7 @@
 	if(cabin_pressure < release_pressure)
 		tank_air.release_gas_to(cabin_air, release_pressure)
 	if(cabin_pressure)
-		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, /datum/gas/carbon_dioxide)
+		cabin_air.pump_gas_to(external_air, PUMP_MAX_PRESSURE, "co2")
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/process_pump(seconds_per_tick)
 	if(!tank_pump_active)

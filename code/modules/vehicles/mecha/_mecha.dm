@@ -51,7 +51,7 @@
 	var/obj/item/stock_parts/scanning_module/scanmod
 	/// Keeps track of the mech's capacitor
 	var/obj/item/stock_parts/capacitor/capacitor
-	/// Keeps track of the mech's servo motor
+	/// Keeps track of the mech's manipulator motor
 	var/obj/item/stock_parts/manipulator/manipulator
 	///Contains flags for the mecha
 	var/mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
@@ -73,6 +73,7 @@
 	///Whether the cabin exchanges gases with the environment
 	var/cabin_sealed = FALSE
 	///Internal air mix datum
+	var/datum/gas_mixture/cabin_air
 	///Volume of the cabin
 	var/cabin_volume = TANK_STANDARD_VOLUME * 3
 
@@ -458,7 +459,7 @@
 		if(manipulator)
 			. += span_notice("Micro-manipulators reduce movement power usage by [100 - round(100 / manipulator.rating)]%")
 		else
-			. += span_warning("It's missing a micro-servo.")
+			. += span_warning("It's missing a micro-manipulator.")
 		if(capacitor)
 			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
 		else
@@ -566,7 +567,6 @@
 				cabin_air.temperature -= delta_temperature
 
 /obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
-
 	for(var/mob/living/occupant as anything in occupants)
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
@@ -801,4 +801,72 @@
 		set_light_on(FALSE)
 		return COMSIG_SABOTEUR_SUCCESS
 
+/// Apply corresponding accesses
+/obj/vehicle/sealed/mecha/proc/update_access()
+	req_access = one_access ? list() : accesses
+	req_one_access = one_access ? accesses : list()
 
+/// Electrocute user from power celll
+/obj/vehicle/sealed/mecha/proc/shock(mob/living/user)
+	if(!istype(user) || get_charge() < 1)
+		return FALSE
+	do_sparks(5, TRUE, src)
+	return electrocute_mob(user, cell, src, 0.7, TRUE)
+
+/// Toggle mech overclock with a button or by hacking
+/obj/vehicle/sealed/mecha/proc/toggle_overclock(forced_state = null)
+	if(!isnull(forced_state))
+		if(overclock_mode == forced_state)
+			return
+		overclock_mode = forced_state
+	else
+		overclock_mode = !overclock_mode
+	log_message("Toggled overclocking.", LOG_MECHA)
+	if(overclock_mode)
+		movedelay = movedelay / overclock_coeff
+		visible_message(span_notice("[src] starts heating up, making humming sounds."))
+	else
+		movedelay = initial(movedelay)
+		visible_message(span_notice("[src] cools down and the humming stops."))
+	update_energy_drain()
+
+/// Update the energy drain according to parts and status
+/obj/vehicle/sealed/mecha/proc/update_energy_drain()
+	if(manipulator)
+		step_energy_drain = initial(step_energy_drain) / manipulator.rating
+	else
+		step_energy_drain = 2 * initial(step_energy_drain)
+	if(overclock_mode)
+		step_energy_drain *= overclock_coeff
+
+	if(capacitor)
+		phasing_energy_drain = initial(phasing_energy_drain) / capacitor.rating
+		melee_energy_drain = initial(melee_energy_drain) / capacitor.rating
+		light_energy_drain = initial(light_energy_drain) / capacitor.rating
+	else
+		phasing_energy_drain = initial(phasing_energy_drain)
+		melee_energy_drain = initial(melee_energy_drain)
+		light_energy_drain = initial(light_energy_drain)
+
+/// Toggle lights on/off
+/obj/vehicle/sealed/mecha/proc/toggle_lights(forced_state = null, mob/user)
+	if(!(mecha_flags & HAS_LIGHTS))
+		if(user)
+			balloon_alert(user, "mech has no lights!")
+		return
+	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < light_energy_drain)
+		if(user)
+			balloon_alert(user, "no power for lights!")
+		return
+	mecha_flags ^= LIGHTS_ON
+	set_light_on(mecha_flags & LIGHTS_ON)
+	playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
+	log_message("Toggled lights [(mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
+	for(var/mob/occupant as anything in occupants)
+		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_lights) in occupant.actions
+		if(mecha_flags & LIGHTS_ON)
+			act.button_icon_state = "mech_lights_on"
+		else
+			act.button_icon_state = "mech_lights_off"
+		balloon_alert(occupant, "toggled lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
+		act.build_all_button_icons()

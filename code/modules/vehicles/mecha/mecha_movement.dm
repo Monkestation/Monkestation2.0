@@ -92,8 +92,8 @@
 		missing_parts += "power cell"
 	if(isnull(capacitor))
 		missing_parts += "capacitor"
-	if(isnull(servo))
-		missing_parts += "micro-servo"
+	if(isnull(manipulator))
+		missing_parts += "micro-manipulator"
 	if(length(missing_parts))
 		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
@@ -206,9 +206,6 @@
 			tally = 0
 		else	// Otherwise, start the tally after cutting that gap out.
 			tally -= encumbrance_gap
-
-	if(leg_overload_mode)	// At the end, because this would normally just make the mech *slower* since tally wasn't starting at 0.
-		tally = min(1, round(tally/2))
 
 //	return max(1, round(tally, 0.1))	// Round the total to the nearest 10th. Can't go lower than 1 tick. Even humans have a delay longer than that.
 	return movedelay + round(tally, 0.1)
