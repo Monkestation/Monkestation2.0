@@ -17,7 +17,9 @@
 	wreckage = /obj/structure/mecha_wreckage/steam_helios
 	max_occupants = 2
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 0,
 		MECHA_ARMOR = 1,
 	)
@@ -41,26 +43,17 @@
 	acid = 100
 
 //cant put new parts in
-/obj/vehicle/sealed/mecha/steam_helios/add_cell()
+/obj/vehicle/sealed/mecha/steam_helios/populate_parts()
 	cell = new /obj/item/stock_parts/cell/clock(src)
-
-/obj/vehicle/sealed/mecha/steam_helios/add_scanmod()
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic/clock(src) //walking is free
-
-/obj/vehicle/sealed/mecha/steam_helios/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic/clock(src)
+	manipulator = new /obj/item/stock_parts/manipulator/pico(src)
+	update_part_values()
 
 //kinda lame to lose it to a single heretic clicking it once
 /obj/vehicle/sealed/mecha/steam_helios/rust_heretic_act()
 	visible_message(span_warning("\The [src] glows for a second, but is uneffected by the magic!"))
 	return
-
-//restricted to servants only
-/obj/vehicle/sealed/mecha/steam_helios/operation_allowed(mob/checked_mob)
-	return IS_CLOCK(checked_mob)
-
-/obj/vehicle/sealed/mecha/steam_helios/internals_access_allowed(mob/checked_mob)
-	return IS_CLOCK(checked_mob)
 
 /obj/vehicle/sealed/mecha/steam_helios/get_mecha_occupancy_state()
 	var/driver_present = driver_amount() != 0

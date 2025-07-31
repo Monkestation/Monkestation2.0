@@ -5,6 +5,7 @@
 	base_icon_state = "phazon"
 	allow_diagonal_movement = TRUE
 	movedelay = 2
+	step_energy_drain = 4
 	step_energy_drain = 3
 	max_integrity = 200
 	armor_type = /datum/armor/mecha_phazon
@@ -17,7 +18,9 @@
 	mech_type = EXOSUIT_MODULE_PHAZON
 	force = 15
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)

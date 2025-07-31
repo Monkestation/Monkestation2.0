@@ -16,8 +16,7 @@
 	fast_pressure_step_in = 1.75
 	slow_pressure_step_in = 3
 	step_energy_drain = 6
-	operation_req_access = list(ACCESS_MECH_ENGINE)
-	internals_req_access = list(ACCESS_CENT_GENERAL)
+	accesses = list(ACCESS_CENT_GENERAL)
 
 /datum/armor/mecha_ripley/engineering
 	melee = 40
