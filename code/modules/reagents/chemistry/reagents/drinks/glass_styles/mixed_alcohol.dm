@@ -118,6 +118,13 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "manlydorfglass"
 
+/datum/glass_style/drinking_glass/honeybee_mead
+	required_drink_type = /datum/reagent/consumable/ethanol/honeybee_mead
+	name = "Honeybee Mead"
+	desc = "Mead sweetened and flavoured with lemon served in a bee shaped mug."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "honeybeemead"
+
 /datum/glass_style/drinking_glass/longislandicedtea
 	required_drink_type = /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
