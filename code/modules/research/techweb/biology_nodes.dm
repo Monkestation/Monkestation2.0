@@ -10,6 +10,7 @@
 		"scan_console",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 // Botany root node
 
@@ -36,3 +37,4 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = TECHWEB_DISCOUNT_MINOR * 3,
 								/datum/experiment/scanning/random/plants/wild = TECHWEB_DISCOUNT_MINOR * 3)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
