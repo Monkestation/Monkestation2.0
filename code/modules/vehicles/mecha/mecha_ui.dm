@@ -36,10 +36,10 @@
 	data["cabin_pressure_hazard_min"]  = HAZARD_LOW_PRESSURE
 	data["cabin_pressure_warning_max"]  = WARNING_HIGH_PRESSURE
 	data["cabin_pressure_hazard_max"]  = HAZARD_HIGH_PRESSURE
-	data["cabin_temp_warning_min"]  = BODYTEMP_COLD_WARNING_1 + 10 - T0C
-	data["cabin_temp_hazard_min"]  = BODYTEMP_COLD_WARNING_1 - T0C
-	data["cabin_temp_warning_max"]  = BODYTEMP_HEAT_WARNING_1 - 27 - T0C
-	data["cabin_temp_hazard_max"]  = BODYTEMP_HEAT_WARNING_1 - T0C
+	data["cabin_temp_warning_min"]  = BODYTEMP_COLD_WARNING_1 - 20 - T0C
+	data["cabin_temp_hazard_min"]  = BODYTEMP_COLD_WARNING_1 - 50 - T0C
+	data["cabin_temp_warning_max"]  = BODYTEMP_HEAT_WARNING_1 + 10 - T0C
+	data["cabin_temp_hazard_max"]  = BODYTEMP_HEAT_WARNING_1 + 30 - T0C
 	data["one_atmosphere"]  = ONE_ATMOSPHERE
 
 	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
