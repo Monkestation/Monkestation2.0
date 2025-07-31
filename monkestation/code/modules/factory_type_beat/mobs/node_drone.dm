@@ -40,7 +40,7 @@
 
 	/// What status do we currently track for icon purposes?
 	var/flying_state = NEUTRAL_STATE
-	/// Weakref to the vent the drone is currently attached to. < Is this actually a weakref?
+	/// Weakref to the vent the drone is currently attached to.
 	var/obj/structure/ore_vent/attached_vent = null
 	/// Set when the drone is begining to leave lavaland after the vent is secured.
 	var/escaping = FALSE
@@ -138,7 +138,7 @@
 		visible_message(span_notice("...or maybe not."))
 	qdel(src)
 
-/mob/living/basic/node_drone/proc/pre_escape()
+/mob/living/basic/node_drone/proc/pre_escape(success)
 	var/time_out = FALSE
 	if(attached_vent)
 		if(!isnull(attached_vent?.wave_time_remaining()))

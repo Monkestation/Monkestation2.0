@@ -128,8 +128,7 @@
 /obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
 	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		return
-	produce_boulder(TRUE)
+		produce_boulder(TRUE)
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
@@ -150,6 +149,11 @@
 				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
 	else
 		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+
+/obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(is_type_in_list(held_item, scanning_equipment))
+		context[SCREENTIP_CONTEXT_LMB] = "Scan vent"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
