@@ -1826,7 +1826,8 @@ GLOBAL_LIST_EMPTY(intento_players)
 				if(HAS_TRAIT(hat, TRAIT_NODROP))
 					return BULLET_ACT_BLOCK
 				if(istype(hat, /obj/item/clothing/head))
-					if(hat.clothing_flags & SNUG_FIT)
+					var/obj/item/clothing/head/hat_head = hat
+					if(hat_head.clothing_flags & SNUG_FIT)
 						return BULLET_ACT_BLOCK
 				if(victim.dropItemToGround(hat))
 					hat.visible_message(span_warning("[hat] is yanked off [victim]'s head by the toy hook!"))
