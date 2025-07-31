@@ -177,3 +177,41 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sickly_flesh_blade_toy
+	name = "Flesh-Like Replica Blade"
+	result = /obj/item/gun/magic/sickly_blade_toy/flesh_toy
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/food/meat/slab = 2,
+		/obj/item/stack/sheet/plastic = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/fishing_hook = 1,
+	)
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sickly_ash_blade_toy
+	name = "Metallic Replica Blade"
+	result = /obj/item/gun/magic/sickly_blade_toy/ash_toy
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 3,
+		/obj/item/match = 1,
+		/obj/item/stack/sheet/plastic = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/fishing_hook = 1,
+	)
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sickly_rust_blade_toy
+	name = "Rustic Replica Blade"
+	result = /obj/item/gun/magic/sickly_blade_toy/rust_toy
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 3,
+		/datum/reagent/water = 50,
+		/obj/item/stack/sheet/plastic = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/fishing_hook = 1,
+	)
+	category = CAT_WEAPON_MELEE
