@@ -77,13 +77,13 @@
 
 	var/list/current_resources = typecache_filter_list(contents, can_process_resource(null, TRUE))
 	. += span_notice("Storage capacity = <b>[length(current_resources)]/[resources_held_max] resources</b>.")
-	. += span_notice("Can process upto <b>[resources_processing_count] resources</b> at a time.")
+	. += span_notice("Can process up to <b>[resources_processing_count] resources</b> at a time.")
 
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
 	else
 		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
 
@@ -251,7 +251,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, "anchor it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(panel_open)
 		balloon_alert(user, "close panel!")
