@@ -296,13 +296,13 @@
 		//Maybe add MOVABLE_PHYSICS_PRECISION for less than 1 efficiency
 		//insert_item
 		for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
-			var/quantity = chosen_boulder.custom_materials[possible_mat] * refining_efficiency
+			var/quantity = chosen_boulder.custom_materials[possible_mat]
 			if(!can_process_material(possible_mat))
 				rejected_mats[possible_mat] = quantity
 				continue
 			accepted_mats[possible_mat] = quantity
 			chosen_boulder.custom_materials -= possible_mat
-			new_points_held = round(new_points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
+			new_points_held = round(new_points_held + ((quantity * refining_efficiency) * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
 
 		var/obj/item/boulder/disposable_boulder = new (src) // Using disposable boulder till tg#76220 fixes insert_amount_mat
 		disposable_boulder.custom_materials = accepted_mats
@@ -315,7 +315,7 @@
 
 		use_power(active_power_usage)
 		//puts back materials that couldn't be processed
-		chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)
+		chosen_boulder.set_custom_materials(rejected_mats)
 		//break the boulder down if we have processed all its materials
 		if(!length(chosen_boulder.custom_materials))
 			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
