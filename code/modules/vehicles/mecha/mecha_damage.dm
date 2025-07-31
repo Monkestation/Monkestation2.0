@@ -102,6 +102,8 @@
 				to_chat(occupants, "[icon2html(src, occupants)][span_boldnotice("Internal fire extinguished.")]")
 			if(MECHA_CABIN_AIR_BREACH)
 				to_chat(occupants, "[icon2html(src, occupants)][span_boldnotice("Cabin breach has been sealed.")]")
+			if(MECHA_INT_CONTROL_LOST)
+				to_chat(occupants, "[icon2html(src, occupants)][span_boldnotice("Control module reactivated.")]")
 			if(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(occupants, "[icon2html(src, occupants)][span_boldnotice("Internal capacitor has been reset successfully.")]")
 	internal_damage &= ~int_dam_flag

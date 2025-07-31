@@ -42,7 +42,7 @@
 	data["cabin_temp_hazard_max"]  = BODYTEMP_HEAT_WARNING_1 + 30 - T0C
 	data["one_atmosphere"]  = ONE_ATMOSPHERE
 
-	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
+	data["sheet_material_amount"] = SHEET_MATERIAL_AMOUNT
 	//map of relevant flags to check tgui side, not every flag needs to be here
 	data["mechflag_keys"] = list(
 		"ID_LOCK_ON" = ID_LOCK_ON,
