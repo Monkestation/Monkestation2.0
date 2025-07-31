@@ -8,6 +8,7 @@
 	icon = 'monkestation/code/modules/factory_type_beat/icons/ore.dmi'
 	throw_range = 2
 	throw_speed = 0.5
+	slowdown = 1.5
 	drag_slowdown = 1.5 // It's still a big rock.
 
 	/// When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
@@ -33,6 +34,12 @@
 	if(held_item?.tool_behaviour == TOOL_MINING || HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
 		return CONTEXTUAL_SCREENTIP_SET
+	else if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		if(isbasicmob(user))
+			context[SCREENTIP_CONTEXT_LMB] = "Crush boulder into ore"
+		else
+			context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/boulder/examine(mob/user)
 	. = ..()
@@ -57,9 +64,9 @@
 			icon_state = "[boulder_string]_small"
 
 /obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
 	if(istype(mover, /obj/item/boulder)) //This way, boulders can only go one at a time on conveyor belts, but everyone else can go through.
 		return FALSE
+	return ..()
 
 /obj/item/boulder/attack_self(mob/user, list/modifiers)
 	. = ..()
@@ -71,7 +78,7 @@
 
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
@@ -86,6 +93,13 @@
 		manual_process(weapon, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
+
+/obj/item/boulder/attack_basic_mob(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
 
 /**
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
@@ -139,8 +153,10 @@
 /**
  * This function is called while breaking boulders manually, and drops ore based on the boulder's mineral content.
  * Quantity of ore spawned here is 1 less than if the boulder was processed by a machine, but clamped at 10 maximum, 1 minimum.
+ *
+ * target_destination: Optional - Sets the location directly instead of dropping it
  */
-/obj/item/boulder/proc/convert_to_ore()
+/obj/item/boulder/proc/convert_to_ore(atom/target_destination)
 	for(var/datum/material/picked in custom_materials)
 		var/obj/item/stack/ore/cracked_ore // Take the associated value and convert it into ore stacks...
 		var/quantity = clamp(round((custom_materials[picked] - SHEET_MATERIAL_AMOUNT)/SHEET_MATERIAL_AMOUNT), 1, 10) //but less resources than if they processed it by hand.
@@ -148,8 +164,11 @@
 		if(isnull(cracked_ore_type))
 			stack_trace("boulder found containing material type [picked.type] with no set ore_type")
 			continue
-		cracked_ore = new cracked_ore_type (drop_location(), quantity)
-		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore)
+		var/atom/ore_destination = drop_location()
+		if(target_destination)
+			ore_destination = target_destination
+		cracked_ore = new cracked_ore_type (ore_destination, quantity)
+		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore.type)
 
 /// Moves boulder contents to the drop location, and then deletes the boulder.
 /obj/item/boulder/proc/break_apart()
