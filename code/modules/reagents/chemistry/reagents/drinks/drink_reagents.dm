@@ -894,6 +894,7 @@
 	if(affected_mob.getFireLoss() && SPT_PROB(10, seconds_per_tick))
 		affected_mob.heal_bodypart_damage(0, 1)
 		. = TRUE
+	..()
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
