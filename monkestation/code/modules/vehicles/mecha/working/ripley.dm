@@ -6,6 +6,8 @@
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/thrusters, /obj/item/mecha_parts/mecha_equipment/ejector, /obj/item/mecha_parts/mecha_equipment/extinguisher),
 	)
 	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,

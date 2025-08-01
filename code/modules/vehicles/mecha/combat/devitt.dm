@@ -26,6 +26,8 @@
 	)
 	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP
 	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 0,
 		MECHA_POWER = 1, // you can put an engine in it, wow!
 		MECHA_ARMOR = 0,

@@ -304,6 +304,8 @@
 	max_integrity = 500
 	encumbrance_gap = 5
 	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 2,
 		MECHA_ARMOR = 3,
