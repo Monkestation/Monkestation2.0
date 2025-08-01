@@ -30,42 +30,41 @@
 	icon_state = on ? "[icon_state]1" : icon_state
 
 /obj/item/mcobject/graviton_accelerator/proc/turn_on()
+	set waitfor = FALSE
 	if(on || !COOLDOWN_FINISHED(src, cd))
 		return
 
 	on = TRUE
-	update_appearance(UPDATE_ICON_STATE)
-	INVOKE_ASYNC(src, PROC_REF(yeet_everything_on_tile))
-	addtimer(CALLBACK(src, PROC_REF(turn_off)), 2 SECONDS)
-
-/obj/item/mcobject/graviton_accelerator/proc/yeet_everything_on_tile()
-	while(on)
-		for(var/atom/movable/thing as anything in loc.contents - src)
-			if(!on)
-				return
-			if(QDELETED(thing))
-				continue
-			if(ismob(thing))
-				if(!isliving(thing))
-					continue
-			else if(isobj(thing))
-				if(iseffect(thing))
-					continue
+	update_icon_state()
+	spawn(-1)
+		while(on)
+			if(length(loc.contents) > 1)
+				for(var/atom/movable/AM as anything in loc.contents - src)
+					if(!on)
+						return
+					if(ismob(AM) && !isliving(AM))
+						continue
+					if(iseffect(AM))
+						continue
+					yeet(AM)
+					CHECK_TICK
+				stoplag(1 SECONDS)
 			else
-				continue
-			yeet(thing)
-			CHECK_TICK_LOW
-		CHECK_TICK_LOW
+				stoplag()
 
-/obj/item/mcobject/graviton_accelerator/proc/turn_off()
+	sleep(2 SECONDS)
 	on = FALSE
-	update_appearance(UPDATE_ICON_STATE)
+	update_icon_state()
 	COOLDOWN_START(src, cd, 1 SECONDS)
 
 /obj/item/mcobject/graviton_accelerator/proc/on_entered(source, atom/movable/thing)
-	SIGNAL_HANDLER
-	if(on)
-		addtimer(CALLBACK(src, PROC_REF(yeet), thing), 0.2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	set waitfor = FALSE
+
+	if(!on)
+		return
+
+	sleep(0.2 SECONDS)
+	yeet(thing)
 
 /obj/item/mcobject/graviton_accelerator/proc/yeet(atom/movable/thing)
 	if(thing.anchored)
