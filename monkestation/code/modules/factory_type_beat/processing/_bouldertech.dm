@@ -45,7 +45,7 @@
 	silo_materials = null
 	return ..()
 
-/obj/machinery/bouldertech/on_deconstruction(disassembled)
+/obj/machinery/bouldertech/on_deconstruction()
 	var/list/current_resources = typecache_filter_list(contents, can_process_resource(null, TRUE))
 	if(length(current_resources))
 		for(var/obj/item/resource in current_resources)
@@ -67,7 +67,10 @@
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
 		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
 	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		if(istype(src, /obj/machinery/bouldertech/flatpack))
+			context[SCREENTIP_CONTEXT_LMB] = "Repack Machine"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()
@@ -84,8 +87,12 @@
 	else
 		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
 	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+
 	if(panel_open)
-		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+		if(istype(src, /obj/machinery/bouldertech/flatpack))
+			. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] back into its pack.")
+		else
+			. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
 
 /obj/machinery/bouldertech/update_icon_state()
 	. = ..()
