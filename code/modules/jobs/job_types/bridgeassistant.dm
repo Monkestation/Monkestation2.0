@@ -30,12 +30,6 @@ Bridge Assistant
 
 	family_heirlooms = list(/obj/item/banner/command/mundane, /obj/item/pen/fountain, /obj/item/stamp/granted, /obj/item/reagent_containers/cup/glass/mug/nanotrasen, /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser)
 
-/datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
-	. = ..()
-	var/mob/living/carbon/bridgie = spawned
-	if(istype(bridgie))
-		bridgie.gain_trauma(/datum/brain_trauma/special/axedoration)
-
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 1,
 		/obj/item/pen/fountain = 1,
@@ -53,6 +47,12 @@ Bridge Assistant
 	job_flags = STATION_JOB_FLAGS
 
 	voice_of_god_power = 1.1 //SIR CAN YOU PLEASE GET AWAY FROM THE FIREAXE
+
+/datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	var/mob/living/carbon/bridgie = spawned
+	if(istype(bridgie))
+		bridgie.gain_trauma(/datum/brain_trauma/special/axedoration)
 
 /obj/item/modular_computer/pda/bridge_assistant
 	name = "bridge assistant PDA"
