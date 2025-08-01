@@ -110,7 +110,7 @@
 
 	if(wetness.stacks > DAMAGE_WATER_STACKS)
 		slime.blood_volume = max(slime.blood_volume - (2 * seconds_per_tick), 0)
-		slime.balloon_alert(slime, "water is diluting you, you need to dry off!")
+		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
 	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
