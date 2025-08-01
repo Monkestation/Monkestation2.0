@@ -113,7 +113,9 @@
 	COOLDOWN_DECLARE(search_cooldown)
 
 /datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		chassis.balloon_alert(owner, "on cooldown!")
