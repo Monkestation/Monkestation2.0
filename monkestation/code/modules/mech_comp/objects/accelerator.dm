@@ -68,6 +68,8 @@
 		addtimer(CALLBACK(src, PROC_REF(yeet), thing), 0.2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/mcobject/graviton_accelerator/proc/yeet(atom/movable/thing)
-	if(thing.anchored || thing.loc != loc || !thing.has_gravity())
+	if(thing.anchored)
+		return
+	if(!thing.has_gravity())
 		return
 	thing.safe_throw_at(get_edge_target_turf(src, dir), 8, 3)
