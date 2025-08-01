@@ -12,6 +12,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)
 
 /datum/techweb_node/extreme_office
 	id = "extreme_office"
@@ -25,6 +26,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)
 
 /datum/techweb_node/spec_eng
 	id = "spec_eng"
@@ -38,6 +40,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/aus_security
 	id = "aus_security"
@@ -51,6 +54,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/interrogation
 	id = "interrogation"
@@ -64,6 +68,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/sticky_advanced
 	id = "sticky_advanced"
@@ -76,6 +81,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)
 
 /datum/techweb_node/tackle_advanced
 	id = "tackle_advanced"
@@ -89,6 +95,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mod_experimental
 	id = "mod_experimental"
@@ -102,3 +109,4 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)

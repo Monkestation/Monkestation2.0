@@ -488,3 +488,14 @@
   - balance: Turned the weinermobile into a Hover Dog with a key
   ancient-engineer:
   - rscadd: Added Cretaceous Speed as a floorpill name
+2025-07-30:
+  Veth, Robert Mcsteal (killermankey), absolucy:
+  - rscadd: The bingle tide is here to put you in the pit, Choc.
+  Wisemonster:
+  - spellcheck: Renamed "Target stage" in the disease splicer to "Target slot".
+  leaKsi, Ghommie:
+  - bugfix: False anomaly alarms now work.
+  notghosti:
+  - map: Theseus Ordnance burn chamber will now properly pressurize
+  - map: Cleaned up roundstart turfs on blueshift
+  - map: Blueshift shipbreaking now has a roof
