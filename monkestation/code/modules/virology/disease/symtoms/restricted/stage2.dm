@@ -221,7 +221,7 @@
 	return
 
 /datum/symptom/toxolysis/proc/Heal(mob/living/M, datum/disease/advance/A, actual_power)
-	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
+	for(var/datum/reagent/R in M.reagents?.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.type, actual_power)
 		if(food_conversion)
 			M.adjust_nutrition(0.3)
