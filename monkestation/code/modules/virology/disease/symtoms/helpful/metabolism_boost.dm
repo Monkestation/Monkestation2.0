@@ -8,7 +8,7 @@
 	severity = 0
 
 /datum/symptom/metabolism/activate(mob/living/carbon/mob)
-	if(!iscarbon(mob))
+	if(!iscarbon(mob) || !mob.reagents)
 		return
 
 	mob.reagents.metabolize(mob, (multiplier * 0.5) * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
