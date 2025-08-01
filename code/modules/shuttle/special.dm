@@ -177,7 +177,6 @@
 
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
-	default_storage = null
 	flavortext = \
 	"\n<big><span class='warning'>LAW EXPLANATION FOR BAR DRONES</span></big>\n"+\
 	"<span class='notice'>As a bar drone your goal is to provide a fun interactive experience for other players visiting the bar*. </span>\n"+\

@@ -38,6 +38,7 @@
 #define POLL_IGNORE_SPECTRAL_BLADE "spectralblade"
 #define POLL_IGNORE_SHUTTLE_DENIZENS "shuttledenizen"
 #define POLL_IGNORE_DEFECTIVECLONE "defectiveclone"
+#define POLL_IGNORE_BINGLE "bingle"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
@@ -98,6 +99,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
 	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",
 	POLL_IGNORE_BOTS = "Bots",
+	POLL_IGNORE_BINGLE = "Bingle",
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

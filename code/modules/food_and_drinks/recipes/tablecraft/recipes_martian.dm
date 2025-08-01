@@ -141,6 +141,7 @@
 		/obj/item/food/boiledrice = 1,
 		/obj/item/food/egg = 1,
 		/datum/reagent/consumable/soysauce = 3,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/egg_fried_rice
 	category = CAT_MARTIAN

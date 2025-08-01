@@ -16,8 +16,8 @@
 
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
 	bodytemp_normal = (BODYTEMP_NORMAL + 50)
-	temperature_homeostasis_speed = 3
-	temperature_normalization_speed = 3
+	temperature_homeostasis_speed = 2
+	temperature_normalization_speed = 1
 
 	siemens_coeff = 0.5 //They thrive on energy
 	payday_modifier = 1
@@ -34,7 +34,7 @@
 
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
-	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
+	bodytemp_cold_damage_limit = 283 KELVIN // about 10c
 	hair_color = "fixedmutcolor"
 	hair_alpha = 180
 	facial_hair_alpha = 180

@@ -10,6 +10,7 @@
 	)
 	contraband = list(
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/cola = 20,
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/space_bola = 20,
 	)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/sovietsoda
