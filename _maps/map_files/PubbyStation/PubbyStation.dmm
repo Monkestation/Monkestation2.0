@@ -17054,24 +17054,13 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "brz" = (
-/obj/item/circular_saw,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/razor{
-	pixel_y = 5
-	},
 /obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
-	},
-/obj/item/cautery{
-	pixel_x = 5;
-	pixel_y = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -17091,7 +17080,6 @@
 /area/station/science/robotics/lab)
 "brC" = (
 /obj/item/clothing/gloves/latex,
-/obj/item/surgical_drapes,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
@@ -17375,8 +17363,6 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "bta" = (
-/obj/item/retractor,
-/obj/item/hemostat,
 /obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
@@ -17384,6 +17370,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/surgery_tray,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "btb" = (

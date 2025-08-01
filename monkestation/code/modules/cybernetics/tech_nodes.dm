@@ -15,6 +15,7 @@
 		"ci-set-flash",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/job_approved_item_set/New()
 	..()
@@ -32,6 +33,8 @@
 		"ci-set-taser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
+
 
 /datum/techweb_node/security_authorized_implants/New()
 	..()
