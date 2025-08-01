@@ -49,7 +49,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 30
 	atom_storage.max_slots = 30
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear))
+	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear, /obj/item/badmin_stone)) //Monkestation Edit
 	atom_storage.supports_smart_equip = FALSE
 	RegisterSignal(atom_storage, COMSIG_STORAGE_DUMP_POST_TRANSFER, PROC_REF(post_insertion))
 
