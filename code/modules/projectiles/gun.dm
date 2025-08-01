@@ -473,7 +473,7 @@
 	return
 
 /obj/item/gun/attack_atom(obj/O, mob/living/user, params)
-	if((user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY))
+	if((user.istate & (ISTATE_HARM | ISTATE_SECONDARY)))
 		if(bayonet)
 			O.attackby(bayonet, user)
 			return
