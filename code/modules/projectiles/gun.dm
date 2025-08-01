@@ -464,7 +464,7 @@
 	semicd = FALSE
 
 /obj/item/gun/attack(mob/M, mob/living/user)
-	if((user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY)) //Flogging
+	if((user.istate & (ISTATE_HARM | ISTATE_SECONDARY))) //Flogging
 		if(bayonet)
 			M.attackby(bayonet, user)
 			return
