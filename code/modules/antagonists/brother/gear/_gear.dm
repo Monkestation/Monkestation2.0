@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT_TYPED(bb_gear, /datum/bb_gear, init_bb_gear())
 	var/desc
 	var/spawn_path
 	var/preview_path
+	var/player_minimum
 	var/static/list/icon/cached_previews
 
 /datum/bb_gear/proc/summon(mob/living/summoner, datum/team/brother_team/team)
@@ -13,6 +14,11 @@ GLOBAL_LIST_INIT_TYPED(bb_gear, /datum/bb_gear, init_bb_gear())
 		"style" = STYLE_SYNDICATE,
 		"spawn" = spawn_path
 	))
+
+/datum/bb_gear/proc/is_available()
+	if(player_minimum && (player_minimum > SSgamemode.get_correct_popcount()))
+		return FALSE
+	return TRUE
 
 /datum/bb_gear/proc/preview() as /mutable_appearance
 	if(LAZYACCESS(cached_previews, type))
