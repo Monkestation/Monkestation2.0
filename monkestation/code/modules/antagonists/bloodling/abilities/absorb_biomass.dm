@@ -2,6 +2,7 @@
 	name = "Absorb Biomass"
 	desc = "Allows you to absorb a dead mobs close to you. Can also absorb blood, loose limbs and organs."
 	button_icon_state = "absorb"
+	cooldown_time = 2 SECONDS
 	shared_cooldown = NONE
 	always_useable = TRUE
 	/// If the bloodling is currently absorbing

@@ -38,11 +38,13 @@
 	var/span = "noticealien"
 	if(!message)
 		return
+	var/my_message = "<span class='[span]'><b>Hivespeak: [title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span> <br>"
+
 	if(user.mind && IS_BLOODLING(user))
 		span = "alertalien"
-		title = "Bloodling the"
+		title = "Bloodling"
+		my_message ="<span class='[span]'><b>Hivespeak: [title]:</b> [message]</span> <br>"
 
-	var/my_message = "<span class='[span]'><b>Hivespeak: [title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span> <br>"
 	for(var/player in GLOB.player_list)
 		var/mob/reciever = player
 		if(IS_BLOODLING_OR_THRALL(reciever))

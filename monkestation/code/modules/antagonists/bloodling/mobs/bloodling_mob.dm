@@ -36,6 +36,7 @@
 /mob/living/basic/bloodling/Initialize(mapload)
 	. = ..()
 	create_abilities()
+	ADD_TRAIT(src, TRAIT_TRUE_NIGHT_VISION, INNATE_TRAIT)
 	AddElement(/datum/element/death_drops, loot)
 
 /mob/living/basic/bloodling/get_status_tab_items()

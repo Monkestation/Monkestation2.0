@@ -30,6 +30,7 @@
 		innate_ability.on_purchase(owner.current, TRUE)
 	var/datum/action/cooldown/bloodling_hivespeak/hivetalk = new()
 	hivetalk.Grant(owner.current)
+	handle_clown_mutation(owner.current, "Your newfound abilities allow you to overcome your clown nature.")
 
 /datum/antagonist/changeling/bloodling_thrall/proc/set_master(mob/living/basic/bloodling/master)
 	to_chat(owner, span_info("Your master is [master], they have granted you this gift. Obey their commands. Praise be the living flesh."))

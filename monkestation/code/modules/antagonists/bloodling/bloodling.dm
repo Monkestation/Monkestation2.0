@@ -23,6 +23,7 @@
 		return ..()
 	var/datum/action/cooldown/bloodling_infect/infect = new /datum/action/cooldown/bloodling_infect()
 	infect.Grant(our_mob)
+	handle_clown_mutation(our_mob, "Though this form may be that of a clown you will not stoop to the level of a fool.")
 
 	add_team_hud(our_mob, /datum/antagonist/changeling/bloodling_thrall)
 	add_team_hud(our_mob, /datum/antagonist/infested_thrall)
