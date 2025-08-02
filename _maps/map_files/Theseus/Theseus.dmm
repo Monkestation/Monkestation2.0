@@ -69336,6 +69336,7 @@
 	dir = 4
 	},
 /obj/structure/table,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/cable_coil{
 	pixel_x = -1;

@@ -72356,6 +72356,7 @@
 /area/station/commons/storage/primary)
 "wrE" = (
 /obj/structure/table/reinforced,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/stack/sheet/glass/fifty{
 	pixel_x = 2
 	},

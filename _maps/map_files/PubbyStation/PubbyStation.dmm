@@ -42386,6 +42386,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"ooD" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/disposal/incinerator)
 "ooI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -48720,6 +48725,7 @@
 "tlU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible,
 /obj/structure/table/reinforced,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/stack/cable_coil{
 	pixel_x = -3;
 	pixel_y = 3
@@ -95733,7 +95739,7 @@ usl
 atF
 usl
 oib
-yjt
+ooD
 ryS
 ryS
 ryS

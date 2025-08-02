@@ -41933,6 +41933,7 @@
 "iZy" = (
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/structure/cable,
+/obj/machinery/electrolyzer,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/disposal/incinerator)
 "iZK" = (
@@ -60155,6 +60156,7 @@
 	dir = 5
 	},
 /obj/structure/table,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/cable,

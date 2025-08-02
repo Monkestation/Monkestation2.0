@@ -56526,7 +56526,7 @@
 /obj/effect/turf_decal/box/red,
 /obj/structure/sign/warning/hot_temp/directional/north,
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/canister/bz,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 9
@@ -63985,7 +63985,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/box,
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos)
 "rOQ" = (
@@ -73466,6 +73466,7 @@
 "uqH" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/stack/sheet/rglass{
 	amount = 20;
 	pixel_x = 2;
@@ -78316,7 +78317,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/box,
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos)
 "vIv" = (

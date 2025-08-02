@@ -11729,10 +11729,10 @@
 /area/station/hallway/secondary/entry)
 "dzd" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/upper)
 "dzf" = (
@@ -16257,8 +16257,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ePt" = (
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/upper)
 "ePv" = (
@@ -17272,10 +17272,10 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/execution/education)
 "fdJ" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/small,
 /area/station/science/ordnance)
 "fdV" = (
@@ -30925,10 +30925,6 @@
 /obj/structure/chair,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
-"jfL" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/engine,
-/area/station/engineering/atmos/upper)
 "jfO" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -68816,6 +68812,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/hfr_box/body/fuel_input{
 	pixel_y = 14
 	},
@@ -79909,13 +79906,6 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
-"xBV" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/atmos/upper)
 "xBZ" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/firealarm/directional/east,
@@ -174784,7 +174774,7 @@ vAv
 kHq
 iae
 wjZ
-jfL
+ePt
 ePt
 snu
 dHr
@@ -175298,7 +175288,7 @@ auy
 jIV
 vnj
 qet
-xBV
+dzd
 dzd
 snu
 iZy

@@ -68825,6 +68825,7 @@
 /area/station/medical/pharmacy)
 "xJK" = (
 /obj/structure/table,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)

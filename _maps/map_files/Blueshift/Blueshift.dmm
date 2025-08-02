@@ -16269,6 +16269,10 @@
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating/airless,
 /area/station/engineering/atmos/upper)
+"dcy" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron,
+/area/station/engineering/atmos/test_chambers)
 "dcJ" = (
 /obj/structure/window/spawner/directional/north,
 /obj/structure/closet/athletic_mixed,
@@ -44419,6 +44423,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "iDa" = (
@@ -165347,7 +165352,7 @@ bmP
 laI
 aCo
 vwS
-sQQ
+dcy
 byz
 eGO
 vLv
@@ -165604,7 +165609,7 @@ fth
 slR
 cIK
 vwS
-sQQ
+dcy
 vLv
 vLv
 vLv

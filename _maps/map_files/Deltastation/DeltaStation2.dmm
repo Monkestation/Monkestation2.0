@@ -71227,6 +71227,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light/directional/south,
+/obj/item/flatpacked_machine/stirling_generator,
 /obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 20;
