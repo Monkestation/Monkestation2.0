@@ -84,4 +84,5 @@
 		var/obj/item/stack/stack = target
 		stack.use(1)
 		return
+	eater.log_message("has eaten [target]!", LOG_ATTACK)
 	qdel(target)
