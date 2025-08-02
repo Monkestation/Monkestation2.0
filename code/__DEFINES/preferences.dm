@@ -134,7 +134,7 @@
 
 // Playtime is tracked in minutes
 /// The time needed to unlock hardcore random mode in preferences
-#define PLAYTIME_HARDCORE_RANDOM 0 // 2 hours
+#define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
 /// The time needed to unlock the gamer cloak in preferences
 #define PLAYTIME_VETERAN 300000 // 5,000 hours
 
