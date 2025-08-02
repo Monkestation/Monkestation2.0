@@ -2776,14 +2776,9 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "aEJ" = (
-/obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath{
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/breath,
 /obj/structure/sign/warning/no_smoking/directional/north,
+/obj/machinery/lathe/tablesaw,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "aEP" = (
@@ -6966,6 +6961,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
+/obj/machinery/lathe/workstation,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "bEP" = (
@@ -8517,6 +8513,7 @@
 /obj/item/book/manual/wiki/engineering_construction{
 	pixel_x = -3
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "bUz" = (
@@ -11211,11 +11208,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "cCn" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/vending/engivend,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "cCp" = (
@@ -17892,9 +17888,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "ekM" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/trash_pile,
+/obj/machinery/lathe/furnace,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "ekR" = (
@@ -18129,14 +18124,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/clothing/head/cone,
-/obj/item/clothing/head/cone,
-/obj/item/clothing/head/cone,
-/obj/item/clothing/head/cone,
 /obj/structure/sign/poster/official/moth_delam/directional/south,
+/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "enX" = (
@@ -20610,6 +20600,7 @@
 "eQJ" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/lathe/tailor,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eQK" = (
@@ -21375,11 +21366,12 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science/xenobiology)
 "fbt" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/machinery/station_map/engineering/directional/south,
+/obj/machinery/vending/mechcomp,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "fbu" = (
@@ -26061,9 +26053,8 @@
 /turf/open/space,
 /area/station/solars/starboard/aft)
 "geR" = (
-/obj/machinery/vending/engivend,
-/obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/official/moth_hardhat/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "geU" = (
@@ -27725,10 +27716,10 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "gxY" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/newscaster/directional/west,
+/obj/machinery/lathe/drophammer,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "gyf" = (
@@ -30130,6 +30121,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/station_engineer,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "hcW" = (
@@ -31160,9 +31152,9 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "hoR" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/lathe/tailor,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "hoT" = (
@@ -44308,6 +44300,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/lathe,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "kpP" = (
@@ -44451,10 +44444,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "ksd" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/lathe/drillpress,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "ksf" = (
@@ -55449,6 +55442,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen/abandoned)
+"mXJ" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/lathe/tablesaw,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "mXQ" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66500,7 +66500,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "pJm" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/requests_console/directional/south{
 	assistance_requestable = 1;
 	department = "Engineering";
@@ -66508,7 +66507,7 @@
 	supplies_requestable = 1
 	},
 /obj/structure/sign/poster/official/do_not_question/directional/east,
-/obj/item/kirbyplants/random,
+/obj/machinery/lathe/furnace,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pJo" = (
@@ -67694,7 +67693,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/vending/mechcomp,
+/obj/machinery/lathe/drophammer,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pWe" = (
@@ -70033,7 +70032,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical,
-/obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "qAQ" = (
@@ -87205,10 +87203,9 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/hallway/secondary/exit/departure_lounge)
 "uFs" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate,
+/obj/machinery/lathe,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
 "uFv" = (
@@ -102388,11 +102385,7 @@
 /area/station/engineering/atmos/project)
 "ylS" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ylT" = (
@@ -128524,7 +128517,7 @@ gRE
 bEN
 ogj
 jaZ
-ogj
+mXJ
 tqo
 grl
 iJU

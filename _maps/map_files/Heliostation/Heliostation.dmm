@@ -26781,7 +26781,7 @@
 	name = "Exponential Entrophy";
 	pixel_x = 9
 	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "dbi" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -30271,6 +30271,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ezQ" = (
@@ -32013,7 +32014,7 @@
 "fkK" = (
 /obj/machinery/space_heater/improvised_chem_heater,
 /obj/structure/sign/poster/contraband/random/directional/north,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "flb" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
@@ -32345,8 +32346,7 @@
 /area/station/science/research)
 "fsF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/mess,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "ftd" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -32893,12 +32893,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "fCS" = (
-/obj/structure/bed,
-/obj/effect/spawner/random/maintenance,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron,
+/obj/machinery/lathe,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "fDX" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -39861,8 +39861,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "ins" = (
-/obj/effect/spawner/random/engineering/tank,
-/turf/open/floor/plating,
+/obj/machinery/lathe/drillpress,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "inu" = (
 /obj/structure/disposalpipe/segment{
@@ -46863,7 +46866,7 @@
 	},
 /obj/item/lighter/greyscale,
 /obj/item/reagent_containers/blood/random,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "kTA" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -47046,7 +47049,7 @@
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/dropper,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "kXe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -48166,10 +48169,11 @@
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "lww" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
-/obj/structure/rack,
-/turf/open/floor/plating,
+/obj/machinery/lathe/tablesaw,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "lwy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -57947,10 +57951,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "pfZ" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/directional/east,
+/obj/machinery/lathe/tailor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
+/area/station/maintenance/aft/lesser)
 "pgc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -58443,9 +58449,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/pathology)
 "pqf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/graffiti,
-/turf/open/floor/iron/showroomfloor,
+/obj/machinery/lathe/furnace,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "pqL" = (
 /obj/effect/turf_decal/stripes/line,
@@ -62206,9 +62215,10 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/station/maintenance/department/science/xenobiology)
 "qNG" = (
-/obj/effect/spawner/random/structure/girder{
-	spawn_loot_chance = 80
+/obj/machinery/door/airlock/maintenance{
+	name = "Engineering Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "qNV" = (
@@ -63931,7 +63941,11 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "rtO" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
+/obj/machinery/lathe/drillpress,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "rtS" = (
 /obj/machinery/door/firedoor,
@@ -67207,6 +67221,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"sMS" = (
+/obj/machinery/lathe/workstation,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Engineering - Engine SE";
+	network = list("ss13","engineering","engine")
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/aft/lesser)
 "sMV" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -67351,10 +67376,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "sQi" = (
-/obj/structure/rack,
-/obj/item/bot_assembly/medbot,
-/obj/effect/spawner/random/medical/minor_healing,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "sQu" = (
 /obj/structure/disposalpipe/segment,
@@ -68951,6 +68973,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/security/upper)
+"ttf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft/lesser)
 "tti" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 4
@@ -71016,9 +71046,9 @@
 /turf/open/floor/carpet/grimey,
 /area/station/command/heads_quarters/ce)
 "uje" = (
-/obj/effect/spawner/random/maintenance,
 /obj/structure/sink/kitchen/directional/south,
-/turf/open/floor/plating,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "ujm" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -74848,9 +74878,8 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/department/medical)
 "vKn" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/showroomfloor,
-/area/station/maintenance/aft/lesser)
+/turf/closed/wall,
+/area/space)
 "vKu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -77616,10 +77645,8 @@
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "wOm" = (
-/obj/effect/spawner/random/trash/hobo_squat,
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "wOr" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -80413,7 +80440,7 @@
 "xRN" = (
 /obj/item/circuitboard/machine/chem_master,
 /obj/structure/frame/machine,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
 "xRU" = (
 /obj/structure/lattice/catwalk,
@@ -110095,7 +110122,7 @@ cCZ
 gmd
 jap
 ezN
-pfZ
+gmd
 eOp
 eOp
 gmd
@@ -110352,7 +110379,7 @@ cCZ
 cCZ
 cCZ
 cCZ
-cCZ
+ttf
 cCZ
 cyo
 cyo
@@ -110609,9 +110636,9 @@ kHY
 daG
 kXd
 kTu
-lww
-kHY
-aaa
+fsF
+sQi
+vKn
 aak
 aaa
 aaa
@@ -110864,11 +110891,11 @@ kHY
 pmQ
 kHY
 xRN
-pqf
+fsF
+fsF
+fsF
+ins
 vKn
-fBc
-kHY
-aaa
 aak
 aaa
 aaa
@@ -111121,11 +111148,11 @@ kHY
 wOr
 kHY
 fkK
-fBc
-wuL
+fsF
 sQi
-kHY
-aaa
+sQi
+pqf
+vKn
 aak
 aak
 aak
@@ -111378,11 +111405,11 @@ kHY
 kHY
 kHY
 uje
-wuL
-fBc
-ins
-kHY
-aaa
+sQi
+fsF
+sQi
+lww
+vKn
 aak
 aaa
 aaa
@@ -111637,9 +111664,9 @@ kHY
 kHY
 rtO
 fsF
-wuL
-kHY
-aaa
+sQi
+pfZ
+vKn
 aak
 aaa
 aaa
@@ -111894,9 +111921,9 @@ txr
 kHY
 fCS
 wOm
-fBc
-kHY
-aaa
+fsF
+sMS
+vKn
 aak
 aaa
 aaa
@@ -112153,7 +112180,7 @@ kHY
 kHY
 qNG
 kHY
-aaa
+vKn
 aak
 aaa
 aaa
