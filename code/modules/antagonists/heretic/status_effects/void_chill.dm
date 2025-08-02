@@ -38,6 +38,7 @@
 /datum/status_effect/void_chill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
 	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
+	owner.bodytemperature = BODYTEMP_NORMAL
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
 

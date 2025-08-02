@@ -10998,7 +10998,6 @@
 "dme" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/item/airlock_painter/decal/tile,
 /obj/item/airlock_painter/decal,
 /obj/machinery/requests_console/auto_name/directional/south,
 /obj/effect/turf_decal/bot,

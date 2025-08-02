@@ -234,6 +234,17 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/meat
 
+
+/turf/open/indestructible/bingle
+	desc = "The floor of a bingle pit, its blue and unbreakable."
+	icon = 'icons/turf/floors/bingle.dmi'
+	icon_state = "carpet_orange-0"
+	footstep = FOOTSTEP_MEAT
+	barefootstep = FOOTSTEP_MEAT
+	clawfootstep = FOOTSTEP_MEAT
+	heavyfootstep = FOOTSTEP_MEAT
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 /turf/open/indestructible/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS
 

@@ -1,0 +1,69 @@
+2025-08-01:
+  Absolucy:
+  - qol: Spiders will now see their directive (if they have one) in their Status panel.
+  - qol: Setting a directive as a broodmother spider also sets the directive for yourself.
+  - qol: Spiders will now get a balloon alert notifying them of any commands from
+      the broodmother.
+  - bugfix: (Comxy) Spider types get properly checked again.
+  - balance: Oozelings are now protected from water by thick clothing, such as modsuits.
+  - qol: Added a balloon alert for oozelings when water melts them.
+  - bugfix: fixed bridge assistant being broken.
+  Bomberman66Dev, TheColorCyan:
+  - bugfix: Clarke ore box now has a less confusing dump contents button.
+  JupiterJaeden:
+  - bugfix: Conga lines no longer break when going up or down on stairs, ladders,
+      or in zero-g.
+  - qol: You can now pull people and items up and down with you in zero-g.
+  - balance: There is now a 1 second delay to moving up/down in zero-g.
+  - code_imp: mob/verb/up() and mob/verb/down() cleanup
+  Melbert, TheColorCyan:
+  - refactor: Refactored the decal painter, report any missing decals or ones that
+      come out weird.
+  - rscdel: Tile sprayer is dead. Its functionality has been merged with the decal
+      painter.
+  - qol: A bunch of decals have been added to the decal painter. Style to your heart's
+      content.
+  MrBagHead:
+  - rscadd: Added toy variants of three different heretic blades Flesh-Like, Metallic,
+      and Rustic which all can steal hats. They are all available in the Donksoft
+      Toy Vendor and have their own crafting recipes under melee weapons.
+  Shod, Fikou:
+  - rscadd: The Bridge Assistant now has a duty-sworn axe protection brain trauma.
+  Shoddd:
+  - rscdel: Removed brotherly connections pop up on inspecting
+  ThePooba:
+  - rscadd: gyas (turf for gasgiant)
+  - bugfix: i forgor a braket
+  Tractor Maam:
+  - bugfix: Egg Fried Rice no longer creates a bowl out of nowhere, the recipe requires
+      a bowl to create.
+  - rscadd: Holding a crutch halves the chance of your leg giving out with the "weak
+      motor nerve signal" brain trauma, did you know you can switch to walk to cut
+      the fall chance in third?
+  Wisemonster:
+  - rscadd: Automated announcement systems now announce researched nodes to their
+      respective departments. You can stop this by either disabling the announcement
+      systems or by using a multitool on the circuitboard of the console you're researching
+      nodes from.
+  - balance: Subdermal implant research, NT approved security implants, and  advanced
+      ballistics are now announced over security comms when researched
+  - balance: 'Cyber implants are now announced over security and engineering when
+      researched
+
+      balance; Advanced cyber implants are now announced over engineering when researched'
+  - balance: Job approved item sets and Computer consoles are now announced over all/most
+      comms when researched, respectively.
+  - balance: Cloning and IPC parts are announced over science when researched
+  - balance: Linked surgery is now announced over science and medical when researched
+  Xander3359:
+  - balance: Void chill fixes your bodytemp when it expires
+  notghosti:
+  - map: Heliostation robotics now has a surgerical tray
+  - map: Pubbystation robotics now has a surgerical tray
+  - map: Double leaded shuttle now have airlocks that would align, it still crashes
+      into the station.
+  - map: Medism shuttle will now better align with its airlocks to the station.
+  - map: Luxury shuttle will now allow the poors into the shuttle without letting
+      them breach into the rich areas.
+  throwawayuseless:
+  - rscadd: Chrome Tongued! Get a robotic voicebox today.

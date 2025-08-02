@@ -5477,6 +5477,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"bdn" = (
+/turf/open/floor/iron/shuttle/evac/airless,
+/area/space)
 "bdo" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/office,
@@ -8970,7 +8973,7 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "bLL" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/department/security/lower)
 "bLP" = (
 /obj/structure/cable,
@@ -29709,7 +29712,7 @@
 /area/station/cargo/miningdock)
 "fIN" = (
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "fIR" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -30128,7 +30131,7 @@
 "fNe" = (
 /obj/item/clothing/head/collectable/welding,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/department/security/lower)
 "fNf" = (
 /obj/structure/stairs/south,
@@ -45484,7 +45487,7 @@
 "iPd" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/department/security/lower)
 "iPj" = (
 /obj/structure/cable,
@@ -59475,6 +59478,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"lyd" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/department/security/lower)
 "lyv" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hallup12";
@@ -63155,7 +63162,7 @@
 /area/station/hallway/primary/upper)
 "miT" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "miV" = (
 /obj/item/knife/shiv,
@@ -74197,6 +74204,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/explab)
+"orN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/port/fore)
 "orP" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 1
@@ -76027,7 +76038,7 @@
 "oKj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/department/security/lower)
 "oKk" = (
 /obj/effect/spawner/random/trash/moisture,
@@ -97763,6 +97774,9 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"sUE" = (
+/turf/open/floor/iron/shuttle/arrivals/airless,
+/area/space)
 "sUJ" = (
 /obj/structure/window/spawner/directional/east,
 /obj/effect/turf_decal/delivery,
@@ -98656,6 +98670,11 @@
 	},
 /turf/open/floor/wood,
 /area/station/common/pool/sauna)
+"tbM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/department/security/lower)
 "tbS" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -108676,7 +108695,7 @@
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "floor7-old"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/department/security/lower)
 "uWv" = (
 /turf/open/floor/iron/dark/side{
@@ -112746,7 +112765,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/department/security/lower)
 "vJI" = (
 /obj/machinery/door/airlock/security/glass{
@@ -118210,6 +118229,9 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"wKl" = (
+/turf/open/floor/engine/hull/reinforced,
+/area/space)
 "wKx" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -126005,7 +126027,7 @@
 	pixel_y = -9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/department/security/lower)
 "ylh" = (
 /turf/open/floor/iron/smooth,
@@ -145942,8 +145964,8 @@ hfg
 klp
 jlt
 rKn
-eKa
-eKa
+eom
+eom
 rKn
 kXs
 uGZ
@@ -146199,8 +146221,8 @@ hfg
 hfg
 hfg
 rKn
-kbf
-eKa
+orN
+eom
 uYe
 eKa
 bnL
@@ -146443,7 +146465,7 @@ oKj
 vJG
 bLL
 bLL
-ltN
+lyd
 bLL
 mQV
 jlt
@@ -146456,8 +146478,8 @@ tYr
 fZI
 xJH
 eom
-eKa
-eKa
+eom
+eom
 rKn
 eKa
 rYT
@@ -146696,11 +146718,11 @@ xUe
 xsC
 tYr
 bLL
-ltN
+lyd
 iPd
 oKj
-frJ
-ltN
+tbM
+lyd
 bLL
 gUL
 mQV
@@ -146956,7 +146978,7 @@ lSv
 lSv
 gLI
 lSv
-ltN
+lyd
 cDn
 cDn
 mjG
@@ -147213,8 +147235,8 @@ riE
 cKc
 waW
 lSv
-ltN
-ltN
+lyd
+lyd
 fNe
 tzi
 hQE
@@ -147471,7 +147493,7 @@ bfk
 waW
 lSv
 ylg
-frJ
+tbM
 uWm
 mjG
 fVV
@@ -214443,13 +214465,13 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+wKl
+wKl
+wKl
+wKl
+wKl
+wKl
 ulx
 ulx
 ulx
@@ -214700,13 +214722,13 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+bdn
+bdn
+bdn
+bdn
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -214957,13 +214979,13 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+bdn
+sUE
+sUE
+sUE
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -215214,13 +215236,13 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+bdn
+sUE
+sUE
+sUE
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -215470,14 +215492,14 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+wKl
+bdn
+sUE
+sUE
+sUE
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -215727,14 +215749,14 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+bdn
+bdn
+sUE
+sUE
+sUE
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -215984,14 +216006,14 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+bdn
+bdn
+sUE
+sUE
+sUE
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -216241,14 +216263,14 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+bdn
+bdn
+sUE
+sUE
+sUE
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -216498,14 +216520,14 @@ ulx
 ulx
 ulx
 ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+wKl
+bdn
+bdn
+bdn
+bdn
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -216756,13 +216778,13 @@ nvJ
 nvJ
 nvJ
 nvJ
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+wKl
+wKl
+wKl
+bdn
+bdn
+wKl
 ulx
 ulx
 ulx
@@ -217016,10 +217038,10 @@ nvJ
 nvJ
 nvJ
 ulx
-ulx
-ulx
-ulx
-ulx
+wKl
+wKl
+wKl
+wKl
 ulx
 ulx
 ulx

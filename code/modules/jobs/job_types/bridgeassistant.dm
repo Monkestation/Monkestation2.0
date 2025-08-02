@@ -48,6 +48,12 @@ Bridge Assistant
 
 	voice_of_god_power = 1.1 //SIR CAN YOU PLEASE GET AWAY FROM THE FIREAXE
 
+/datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	var/mob/living/carbon/bridgie = spawned
+	if(istype(bridgie))
+		bridgie.gain_trauma(/datum/brain_trauma/special/axedoration)
+
 /obj/item/modular_computer/pda/bridge_assistant
 	name = "bridge assistant PDA"
 	greyscale_colors = "#374f7e#a92323"

@@ -35232,7 +35232,7 @@
 /area/station/command/heads_quarters/nt_rep)
 "loc" = (
 /obj/machinery/light/small/directional/south,
-/obj/vehicle/sealed/mecha/working/ripley/cargo,
+/obj/vehicle/sealed/mecha/ripley/cargo,
 /turf/open/floor/iron/recharge_floor,
 /area/station/cargo/warehouse)
 "loe" = (
@@ -60076,9 +60076,6 @@
 	dir = 5
 	},
 /obj/structure/table,
-/obj/item/airlock_painter/decal/tile{
-	pixel_y = 9
-	},
 /obj/item/airlock_painter{
 	pixel_y = 3
 	},

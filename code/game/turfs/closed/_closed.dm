@@ -398,3 +398,14 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_WALLS
+
+/turf/closed/indestructible/bingle
+	name = "Bingle Pit wall"
+	desc = "Its blue... Thats about all you can tell from it, cant destroy it."
+	icon = 'icons/turf/walls/bingle.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS
+
