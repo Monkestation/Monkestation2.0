@@ -253,6 +253,7 @@
 			var/turf/drop_turf = get_turf(target)
 			if(drop_turf)
 				target_organ.forceMove(drop_turf)
+			target_organ.on_surgical_removal(user, target, target_zone, tool)
 			target.regenerate_icons()
 		else
 			display_results(
