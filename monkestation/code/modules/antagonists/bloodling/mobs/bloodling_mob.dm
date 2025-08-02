@@ -8,7 +8,7 @@
 	maxHealth = 50
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	melee_attack_cooldown = 0.8 SECONDS
+	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -21,6 +21,12 @@
 	faction = list(FACTION_BLOODLING)
 	pass_flags = PASSTABLE
 	attack_sound = 'sound/effects/attackblob.ogg'
+
+	// This adds a red tinted nightvision
+	lighting_cutoff_red = 40
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 30
+
 	/// Loot this mob drops on death.
 	var/list/loot = list(/obj/effect/gibspawner/generic)
 	/// The amount of biomass our bloodling has
@@ -37,7 +43,6 @@
 /mob/living/basic/bloodling/Initialize(mapload)
 	. = ..()
 	create_abilities()
-	ADD_TRAIT(src, TRAIT_TRUE_NIGHT_VISION, INNATE_TRAIT)
 	AddElement(/datum/element/death_drops, loot)
 
 /mob/living/basic/bloodling/get_status_tab_items()
