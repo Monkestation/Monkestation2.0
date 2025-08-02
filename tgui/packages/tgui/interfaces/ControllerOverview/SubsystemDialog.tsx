@@ -13,7 +13,7 @@ type Props = {
   onClose: () => void;
 };
 
-export function SubsystemDialog(props: Props) {
+export const SubsystemDialog = (props: Props) => {
   const { subsystem, onClose } = props;
   const {
     cost_ms,
@@ -66,4 +66,4 @@ export function SubsystemDialog(props: Props) {
       </Stack>
     </Modal>
   );
-}
+};

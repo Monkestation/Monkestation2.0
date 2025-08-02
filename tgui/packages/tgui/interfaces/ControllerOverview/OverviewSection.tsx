@@ -2,7 +2,7 @@ import { useBackend } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 import { ControllerData } from './types';
 
-export function OverviewSection(props) {
+export const OverviewSection = (props) => {
   const { act, data } = useBackend<ControllerData>();
   const { fast_update, map_cpu, subsystems = [], world_time } = data;
 
@@ -54,4 +54,4 @@ export function OverviewSection(props) {
       </Stack>
     </Section>
   );
-}
+};

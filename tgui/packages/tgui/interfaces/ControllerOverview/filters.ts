@@ -25,7 +25,10 @@ type Action =
   | { type: FilterAction.Query; payload: string }
   | { type: FilterAction.Update; payload: Partial<FilterState> };
 
-export function filterReducer(state: FilterState, action: Action): FilterState {
+export const filterReducer = (
+  state: FilterState,
+  action: Action,
+): FilterState => {
   switch (action.type) {
     case FilterAction.Inactive:
       return { ...state, inactive: action.payload };
@@ -42,4 +45,4 @@ export function filterReducer(state: FilterState, action: Action): FilterState {
     default:
       return state;
   }
-}
+};

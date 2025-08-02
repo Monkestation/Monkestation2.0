@@ -1,5 +1,3 @@
-import { Dispatch } from 'react';
-
 import { useBackend } from '../../backend';
 import {
   Button,
@@ -14,13 +12,13 @@ import { SortType, SubsystemData } from './types';
 
 type Props = {
   max: number;
-  setSelected: Dispatch<SubsystemData>;
+  setSelected: (newValue: SubsystemData) => void;
   showBars: boolean;
   sortType: SortType;
   subsystem: SubsystemData;
 };
 
-export function SubsystemRow(props: Props) {
+export const SubsystemRow = (props: Props) => {
   const { act } = useBackend();
   const { max, setSelected, showBars, sortType, subsystem } = props;
   const { can_fire, doesnt_fire, initialized, name, ref } = subsystem;
@@ -104,4 +102,4 @@ export function SubsystemRow(props: Props) {
       </Table.Cell>
     </Table.Row>
   );
-}
+};
