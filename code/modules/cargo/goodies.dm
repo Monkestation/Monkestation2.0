@@ -45,6 +45,26 @@
 	cost = PAYCHECK_COMMAND * 1.75
 	contains = list(/obj/item/knife/combat/survival)
 
+/datum/supply_pack/goody/hunterslugs
+	name = "12 Gauge Hunter Slugs"
+	desc = "12 Gauge shells designed to put down most lavaland xenofauna in a single shot. Make sure to take a combative stance before firing."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/ammo_box/advanced/s12gauge/hunter)
+
+/datum/supply_pack/goody/barkeep_single
+	name = "Double Barrel Single-Pack"
+	desc = "Lost your lupara in a brawl fight? Drunken haze? Simply want a dedicated 'shot'gun? We got you, as long as you pay the fee."
+	cost = PAYCHECK_COMMAND * 12
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel, /obj/item/storage/belt/bandolier)
+
+/datum/supply_pack/goody/pump_single
+	name = "Pump Shotgun Single-Pack"
+	desc = "A respectable pump action shotgun, to restock armoury supplies. Comes with a bandolier."
+	cost = PAYCHECK_COMMAND * 15
+	access_view = ACCESS_ARMORY
+	contains = list(/obj/item/gun/ballistic/shotgun/riot, /obj/item/storage/belt/bandolier)
+
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."

@@ -169,6 +169,9 @@
 /obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/sol_rifle/evil/unrestricted
+	pin = /obj/item/firing_pin
+
 // SolFed shotgun (this was gonna be in a proprietary shotgun shell type outside of 12ga at some point, wild right?)
 
 /obj/item/gun/ballistic/shotgun/riot/sol
@@ -238,6 +241,8 @@
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
 
+/obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 // Low caliber grenade launcher (fun & games)
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher
@@ -339,6 +344,9 @@
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 /*
 *	QM Sporter Rifle
@@ -608,6 +616,9 @@
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 // Trappiste high caliber pistol in .585
 
@@ -1067,6 +1078,9 @@
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 /// File location for the long gun's speech
 #define LONG_MOD_LASER_SPEECH "nova/long_modular_laser.json"

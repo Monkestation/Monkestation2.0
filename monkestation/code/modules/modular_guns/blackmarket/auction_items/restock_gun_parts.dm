@@ -47,3 +47,33 @@
 	price_max = CARGO_CRATE_VALUE * 4
 	stock_max = 3
 	availability_prob = 90
+
+/datum/market_item/ammo/m45
+	name = ".45 APC Mag"
+	desc = "Fits into standard 1911s."
+	item = /obj/item/ammo_box/magazine/m45
+
+	price_min = CARGO_CRATE_VALUE * 3.4
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_max = 1
+	availability_prob = 90
+
+/datum/market_item/ammo/c35sol
+	name = ".35 Short Box"
+	desc = "A box of .35 Short."
+	item = /obj/item/ammo_box/c35sol
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.75
+	stock_max = 3
+	availability_prob = 70
+
+/datum/market_item/ammo/c585trappiste
+	name = ".585 Trappiste Box"
+	desc = "A box of .585 Trappiste"
+	item = /obj/item/ammo_box/c585trappiste
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.75
+	stock_max = 3
+	availability_prob = 70

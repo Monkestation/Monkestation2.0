@@ -9,9 +9,9 @@
 		of rubbershot shotgun shells, two boxes of buckshot, and one of each special .38 speedloaders."
 	cost = CARGO_CRATE_VALUE * 8
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/storage/box/beanbag = 2,
-					/obj/item/storage/box/rubbershot = 2,
-					/obj/item/storage/box/lethalshot = 2,
+	contains = list(/obj/item/ammo_box/advanced/s12gauge/bean = 2,
+					/obj/item/ammo_box/advanced/s12gauge/rubber = 2,
+					/obj/item/ammo_box/advanced/s12gauge/buckshot = 2,
 					/obj/item/ammo_box/c38/trac,
 					/obj/item/ammo_box/c38/hotshot,
 					/obj/item/ammo_box/c38/iceblox,
