@@ -118,6 +118,7 @@
 	icon = 'icons/hud/lobby/character_setup.dmi'
 	icon_state = "character_setup_disabled"
 	base_icon_state = "character_setup"
+	enabled = FALSE
 
 /atom/movable/screen/lobby/button/character_setup/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -371,6 +372,7 @@
 	icon_state = "settings_disabled"
 	base_icon_state = "settings"
 	screen_loc = "TOP:-126,CENTER:-10"
+	enabled = FALSE
 
 /atom/movable/screen/lobby/button/settings/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()

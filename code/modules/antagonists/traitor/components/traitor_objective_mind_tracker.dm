@@ -33,7 +33,7 @@
 		parent.UnregisterSignal(current_registered_target, signals)
 
 	for(var/signal in signals)
-		parent.RegisterSignal(target.current, signal, signals[signal])
+		parent.RegisterSignal(target.current, signal, signals[signal], override = TRUE)
 
 /datum/component/traitor_objective_mind_tracker/proc/delete_self()
 	SIGNAL_HANDLER

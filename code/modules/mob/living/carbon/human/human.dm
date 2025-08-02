@@ -842,11 +842,11 @@
 /mob/living/carbon/human/proc/update_damage_movespeed()
 	var/health_deficiency = max((maxHealth - health), staminaloss)
 	if(health_deficiency >= 40)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_deficiency / 25)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = health_deficiency / 75)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = health_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
 	if(diff < 0) //Taking damage, not healing

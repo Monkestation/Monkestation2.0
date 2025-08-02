@@ -93,8 +93,7 @@
 	var/temp_bleed = 0
 	//Bleeding out
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
-		temp_bleed += iter_bleed_rate * seconds_per_tick
+		temp_bleed += iter_part.cached_bleed_rate * seconds_per_tick
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
 			iter_part.adjustBleedStacks(-1, 0)
@@ -129,7 +128,7 @@
 	var/bleed_amt = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/iter_bodypart = X
-		bleed_amt += iter_bodypart.get_modified_bleed_rate()
+		bleed_amt += iter_bodypart.cached_bleed_rate
 	return bleed_amt
 
 /mob/living/carbon/human/get_bleed_rate()
@@ -291,10 +290,10 @@
 	return GLOB.blood_types[/datum/blood_type/xenomorph]
 
 /mob/living/carbon/human/get_blood_type()
-	if(!has_dna() || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
+	if(!dna || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return null
-	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
-		return GLOB.blood_types[/datum/blood_type/clown]
+	/*if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
+		return GLOB.blood_types[/datum/blood_type/clown]*/
 	if(dna.species.exotic_bloodtype)
 		return GLOB.blood_types[dna.species.exotic_bloodtype]
 	return GLOB.blood_types[dna.human_blood_type]

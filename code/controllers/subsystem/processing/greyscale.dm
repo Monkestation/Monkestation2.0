@@ -14,7 +14,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 	var/list/datum/greyscale_layer/layer_types = list()
 #ifdef USE_RUSTG_ICONFORGE_GAGS
 	/// Cache containing a list of [UID (config path + colors)] -> [DMI file / RSC object] in the tmp directory from iconforge
-	var/list/gags_cache = list()
+	var/alist/gags_cache = alist()
 #endif
 
 /datum/controller/subsystem/processing/greyscale/Initialize()

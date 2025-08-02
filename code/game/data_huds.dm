@@ -581,13 +581,13 @@ Diagnostic HUDs!
 /atom/proc/get_cached_width()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX

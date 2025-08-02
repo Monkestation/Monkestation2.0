@@ -69,8 +69,11 @@ export class ServerPreferencesFetcher extends Component<
         <br />
         (Your character data is OK, this is a UI error)
         <br />
-        Contact a maintainer or create an issue report by pressing Report Issue
-        in the top right of the game window.
+        Try refreshing the preferences window with F5, or closing and reopening
+        it.
+        <br />
+        If that fails, then contact a maintainer or create an issue report by
+        pressing Report Issue in the top right of the game window.
         <br />
         <Box
           textAlign="left"

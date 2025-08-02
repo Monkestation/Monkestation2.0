@@ -923,13 +923,12 @@ generate/load female uniform sprites matching all previously decided variables
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
 /mob/living/carbon/human/proc/apply_height_offsets(image/appearance, upper_torso)
-	var/height_to_use = num2text(mob_height)
 	var/final_offset = 0
 	switch(upper_torso)
 		if(UPPER_BODY)
-			final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
+			final_offset = GLOB.human_heights_to_offsets[mob_height][1]
 		if(LOWER_BODY)
-			final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
+			final_offset = GLOB.human_heights_to_offsets[mob_height][2]
 		else
 			return
 
@@ -943,7 +942,7 @@ generate/load female uniform sprites matching all previously decided variables
 //MONKESTATION EDIT START
 	// Pick a displacement mask depending on the height of the icon, ?x48 icons are used for features which would otherwise get clipped when tall players use them
 	// Note: Due to how this system works it's okay to use a mask which is wider than the appearence but NOT okay if the mask is thinner, taller or shorter
-	var/dims = get_icon_dimensions(appearance.icon)
+	var/alist/dims = get_icon_dimensions(appearance.icon)
 	var/icon_width = dims["width"]
 	var/icon_height = dims["height"]
 
@@ -959,7 +958,7 @@ generate/load female uniform sprites matching all previously decided variables
 	// Move the filter up if the image has been moved down, and vice versa
 	var/adjust_y = -appearance.pixel_y - parent_adjust_y
 
-	var/static/list/cached_masks = list()
+	var/static/alist/cached_masks = alist()
 	var/list/masks = cached_masks[mask_icon]
 	if(isnull(masks))
 		cached_masks[mask_icon] = masks = list(

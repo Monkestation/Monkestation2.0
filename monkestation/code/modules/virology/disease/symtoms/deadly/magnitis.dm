@@ -8,7 +8,7 @@
 	max_chance = 20
 
 /datum/symptom/magnitis/activate(mob/living/carbon/mob)
-	if(mob.reagents.has_reagent(/datum/reagent/iron))
+	if(mob.reagents?.has_reagent(/datum/reagent/iron))
 		return
 
 	var/intensity = 1 + (count > 10) + (count > 20)

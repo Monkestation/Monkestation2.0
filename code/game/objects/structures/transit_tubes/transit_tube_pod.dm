@@ -178,7 +178,7 @@
 
 
 /obj/structure/transit_tube_pod/relaymove(mob/living/user, direction)
-	if(!user.client || moving)
+	if((ismob(user) && !user.client) || moving)
 		return
 
 	for(var/obj/structure/transit_tube/station/station in loc)

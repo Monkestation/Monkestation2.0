@@ -274,20 +274,25 @@
 		obj.uncover_target()
 		to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
 		update_static_data_for_all_viewers()
-		var/datum/antagonist/heretic/heretic_target = IS_HERETIC(obj.target.current)
-		if(heretic_target)
-			description = "Your target, [heretic_target.owner.current.real_name], follows the [heretic_target.heretic_path], dear hunter."
-		else
-			description = "O' hunter, your target [obj.target.current.real_name] bears these lethal abilities: "
-			var/list/abilities = list()
-			for(var/datum/action/ability as anything in obj.target.current.actions)
-				if(!is_type_in_typecache(ability, monster_abilities))
-					continue
-				abilities |= "[ability.name]"
-			description += english_list(abilities)
+		var/datum/mind/target = obj.target
+		if(target)
+			var/mob/target_body = target.current
+			var/target_name = target.name || target_body?.real_name || target_body?.name
+			var/datum/antagonist/heretic/heretic_target = target.has_antag_datum(/datum/antagonist/heretic)
+			if(heretic_target)
+				description = "Your target, [target_name], follows the [heretic_target.heretic_path], dear hunter."
+			else
+				description = "O' hunter, your target [target_name] bears these lethal abilities: "
+				var/list/abilities = list()
+				for(var/datum/action/ability as anything in target_body?.actions)
+					if(!is_type_in_typecache(ability, monster_abilities))
+						continue
+					abilities |= "[ability.name]"
+				description += english_list(abilities)
 
 	rabbits_spotted++
-	to_chat(owner.current, span_boldnotice("[description]"))
+	if(description)
+		to_chat(owner.current, span_boldnotice("[description]"))
 
 /datum/objective/hunter
 	name = "hunt monster"

@@ -676,16 +676,16 @@
 /// Assoc list of all heights, cast to strings, to """"tuples"""""
 /// The first """tuple""" index is the upper body offset
 /// The second """tuple""" index is the lower body offset
-GLOBAL_LIST_INIT(human_heights_to_offsets, list(
-	"[MONKEY_HEIGHT_DWARF]" = list(-9, -3),
-	"[MONKEY_HEIGHT_MEDIUM]" = list(-7, -4),
-	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
-	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
-	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
-	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
-	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
-	"[HUMAN_HEIGHT_TALLER]" = list(2, 1),
-	"[HUMAN_HEIGHT_TALLEST]" = list(3, 2),
+GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
+	MONKEY_HEIGHT_DWARF = list(-9, -3),
+	MONKEY_HEIGHT_MEDIUM = list(-7, -4),
+	HUMAN_HEIGHT_DWARF = list(-5, -4),
+	HUMAN_HEIGHT_SHORTEST = list(-2, -1),
+	HUMAN_HEIGHT_SHORT = list(-1, -1),
+	HUMAN_HEIGHT_MEDIUM = list(0, 0),
+	HUMAN_HEIGHT_TALL = list(1, 1),
+	HUMAN_HEIGHT_TALLER = list(2, 1),
+	HUMAN_HEIGHT_TALLEST = list(3, 2),
 ))
 
 // Mob Overlays Indexes
