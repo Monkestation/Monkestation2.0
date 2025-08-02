@@ -3,10 +3,14 @@
 	desc = "Allows you to randomly consume a creatures limb. Sets ALL your abilities on a 10 second cooldown"
 	button_icon_state = "devour"
 	cooldown_time = 10 SECONDS
+	cast_range
 
 /datum/action/cooldown/bloodling/devour/PreActivate(atom/target)
 
 	var/mob/living/mob = target
+	if(get_dist(usr, target) > 1)
+		owner.balloon_alert(owner, "Too Far!")
+		return FALSE
 	if(!iscarbon(mob))
 		owner.balloon_alert(owner, "only works on carbons!")
 		return FALSE

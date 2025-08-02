@@ -1,6 +1,6 @@
 /datum/action/cooldown/bloodling/absorb
 	name = "Absorb Biomass"
-	desc = "Allows you to absorb a dead carbons close to you. Can also absorb blood, loose limbs and organs."
+	desc = "Allows you to absorb a dead mobs close to you. Can also absorb blood, loose limbs and organs."
 	button_icon_state = "absorb"
 	shared_cooldown = NONE
 	always_useable = TRUE
@@ -22,6 +22,10 @@
 
 	if(is_absorbing)
 		owner.balloon_alert(owner, "Already absorbing!")
+		return FALSE
+
+	if(get_dist(usr, target) > 1)
+		owner.balloon_alert(owner, "Too Far!")
 		return FALSE
 
 	if(is_type_in_list(target, absorbable_types))
