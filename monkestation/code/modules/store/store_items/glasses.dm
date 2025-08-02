@@ -56,6 +56,11 @@ GLOBAL_LIST_INIT(store_glasses, generate_store_items(/datum/store_item/glasses))
 	name = "Red Glasses"
 	item_path = /obj/item/clothing/glasses/red
 
+/datum/store_item/glasses/salesman
+	name = "Dealmaker"
+	item_path = /obj/item/clothing/glasses/salesman
+	item_cost = 10000
+
 /*
 *	MISC
 */

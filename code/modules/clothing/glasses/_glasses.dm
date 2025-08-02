@@ -666,7 +666,7 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman
-	name = "colored glasses"
+	name = "Dealmaker"
 	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'."
 	icon_state = "salesman"
 	inhand_icon_state = "salesman"
