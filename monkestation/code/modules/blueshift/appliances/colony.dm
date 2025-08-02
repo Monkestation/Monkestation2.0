@@ -666,6 +666,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cell_charger_multi/wall_mounted, 29)
 	circuit = null
 	max_n_of_items = 5
 	efficiency = 2
+	held_state = "frontier"
 /obj/machinery/microwave/frontier_printed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
