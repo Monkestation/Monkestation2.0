@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: "Cyber actors can no longer access crew records from meta central"
