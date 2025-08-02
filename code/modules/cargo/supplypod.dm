@@ -109,6 +109,17 @@
 	set_density(TRUE)
 	update_appearance()
 
+/obj/structure/closet/supplypod/syndicate_missile
+	name = "missile"
+	desc = "If you are seeing this, run."
+	specialised = TRUE
+	effectMissile = TRUE
+	style = STYLE_RED_MISSILE
+	explosionSize = list(3, 6, 12, 12)
+	effectGib = TRUE
+	damage = 500
+	delays = list(POD_TRANSIT = 100, POD_FALLING = 5, POD_OPENING = 30, POD_LEAVING = 30)
+
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
 	bluespace = TRUE
