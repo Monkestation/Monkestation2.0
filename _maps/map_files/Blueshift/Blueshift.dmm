@@ -47025,6 +47025,12 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
+"jeS" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/table/reinforced,
+/obj/item/flatpacked_machine/stirling_generator,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/hfr_room)
 "jeT" = (
 /obj/structure/table,
 /obj/item/storage/fancy/coffee_condi_display{
@@ -168445,7 +168451,7 @@ ePG
 lnM
 ylh
 qLp
-eAs
+jeS
 fvp
 nuy
 nuy
