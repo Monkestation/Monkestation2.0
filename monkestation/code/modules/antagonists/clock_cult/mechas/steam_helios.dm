@@ -47,8 +47,14 @@
 	cell = new /obj/item/stock_parts/cell/clock(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic/clock(src) //walking is free
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic/clock(src)
-	manipulator = new /obj/item/stock_parts/manipulator/pico(src)
+	manipulator = new /obj/item/stock_parts/manipulator/femto/clock(src)
 	update_part_values()
+
+//Only clock cultists can enter the mech
+/obj/vehicle/sealed/mecha/steam_helios/mob_try_enter(mob/M)
+	if (!IS_CLOCK(M))
+		return
+	return ..()
 
 //kinda lame to lose it to a single heretic clicking it once
 /obj/vehicle/sealed/mecha/steam_helios/rust_heretic_act()
@@ -88,7 +94,9 @@
 	return ..()
 
 /datum/action/vehicle/sealed/mecha/judicial_mark/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_JUDICIAL_MARK))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_JUDICIAL_MARK)
@@ -146,7 +154,9 @@
 	var/discharge_cooldown = 45 SECONDS
 
 /datum/action/vehicle/sealed/mecha/steam_discharge/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE)
