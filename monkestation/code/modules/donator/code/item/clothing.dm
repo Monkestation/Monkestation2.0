@@ -780,3 +780,48 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "old_lab_coat"
 	worn_icon_state = "old_lab_coat"
+
+/obj/item/clothing/glasses/hud/security/aviators
+	name = "Security Aviators"
+	desc = "Cyberneticly enhanced aviators with a security HUD."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "aviators-sec"
+	flash_protect = FLASH_PROTECTION_FLASH
+
+/obj/item/clothing/glasses/hud/health/aviators
+	name = "Medical Aviators"
+	desc = "Cyberneticly enhanced aviators with a health HUD."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "aviators-health"
+
+/obj/item/clothing/glasses/hud/diagnostic/aviators
+	name = "Diagnostic Aviators"
+	desc = "Cyberneticly enhanced aviators with a diagnostic HUD."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "aviators-diagnostic"
+
+/obj/item/clothing/glasses/meson/aviators
+	name = "Meson Aviators"
+	desc = "Cyberneticly enhanced aviators with a MESON scanner."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "aviators-meson"
+
+/obj/item/clothing/glasses/hud/science/aviators
+	name = "Science Aviator"
+	desc = "Cyberneticly enhanced aviators with a science HUD."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "aviators-science"
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
+
+/obj/item/clothing/suit/robo_trenchcoat
+	name = "Robotics trench Coat"
+	desc = "It seems to be a puffer coat with a leather apron sewn under it. It smells faintly of chemicals and metal."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "robo-trenchcoat"
+	worn_icon_state = "robo-trenchcoat"

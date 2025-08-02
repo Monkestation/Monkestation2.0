@@ -140,3 +140,8 @@
 	name = "short clown"
 	default_name = "short clown"
 	donator_pet = /mob/living/basic/pet/theclown_clownpet
+
+/obj/item/choice_beacon/pet/donator/cyber_husky
+	name ="Cyber Husky"
+	default_name = "Cyber Husky"
+	donator_pet = /mob/living/basic/pet/cyber_husky
