@@ -62,13 +62,16 @@
 	thrall.set_master(owner)
 
 	carbon_mob.balloon_alert(owner, "[carbon_mob] successfully infected!")
-	// Removes vow if they have it, since it will be re-added and auto trigger otherwise on every mind swap
-	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in owner.actions
-	if(vow)
-		vow.Remove(owner.mind)
 
 	var/mob/living/basic/bloodling/proper/tier1/bloodling = new /mob/living/basic/bloodling/proper/tier1/(old_body.loc)
 	owner.mind.transfer_to(bloodling)
+
+	// TEMP TESTMERGE CODE START
+	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in bloodling.actions
+	if(vow)
+		vow.Remove(bloodling)
+	// TEMP TESTMERGE CODE END
+
 
 	old_body.gib()
 	var/datum/antagonist/bloodling_datum = IS_BLOODLING(bloodling)

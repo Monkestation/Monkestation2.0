@@ -8,6 +8,7 @@
 	maxHealth = 50
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	melee_attack_cooldown = 0.8 SECONDS
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -197,6 +198,12 @@
 	new_bloodling.biomass = biomass
 	for(var/datum/action/cooldown/ability in new_bloodling.our_abilties)
 		ability.build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+	// TEMP TESTMERGE CODE START
+	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in new_bloodling.actions
+	if(vow)
+		vow.Remove(new_bloodling)
+	// TEMP TESTMERGE CODE END
 
 	qdel(src)
 
