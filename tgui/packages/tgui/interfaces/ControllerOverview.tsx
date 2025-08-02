@@ -1,8 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
-import { useMemo, useState } from 'react';
 
-import { useBackend } from '../backend';
+import { useLocalState, useBackend } from '../backend';
 import {
   Button,
   Collapsible,
@@ -142,23 +141,25 @@ export const ControllerOverview = () => {
   const { act, data } = useBackend<ControllerData>();
   const { world_time, map_cpu, subsystems, fast_update } = data;
 
-  const [filterName, setFilterName] = useState('');
-  const [sortBy, setSortBy] = useState(SubsystemSortBy.NAME);
-  const [sortAscending, setSortAscending] = useState<boolean>(true);
+  const [filterName, setFilterName] = useLocalState('filterName', '');
+  const [sortBy, setSortBy] = useLocalState('sortBy', SubsystemSortBy.NAME);
+  const [sortAscending, setSortAscending] = useLocalState<boolean>(
+    'sortAscending',
+    true,
+  );
 
-  let filteredSubsystems = useMemo(() => {
-    if (!filterName) {
-      return subsystems;
-    }
+  const search = createSearch(
+    filterName,
+    (subsystem: SubsystemData) => subsystem.name,
+  );
 
-    return subsystems.filter(() =>
-      createSearch(filterName, (subsystem: SubsystemData) => subsystem.name),
-    );
-  }, [filterName, subsystems]);
+  let filteredSubsystems = subsystems.filter((subsystem) => search(subsystem));
 
-  let sortedSubsystems = useMemo(() => {
-    return sortSubsystemBy(filteredSubsystems, sortBy, sortAscending);
-  }, [sortBy, sortAscending, filteredSubsystems]);
+  let sortedSubsystems = sortSubsystemBy(
+    filteredSubsystems,
+    sortBy,
+    sortAscending,
+  );
 
   const overallUsage = subsystems.reduce(
     (acc, subsystem) => acc + subsystem.tick_usage,
@@ -170,75 +171,81 @@ export const ControllerOverview = () => {
   );
 
   return (
-    <Window>
+    <Window width={400} height={600}>
       <Window.Content>
-        <Section title="Master Overview">
-          <Stack vertical>
-            <Stack.Item>World Time: {world_time}</Stack.Item>
-            <Stack.Item>Map CPU: {map_cpu.toFixed(2)}%</Stack.Item>
-            <Stack.Item>
-              Overall Usage: {(overallUsage * 0.01).toFixed(2)}%
-            </Stack.Item>
-            <Stack.Item>
-              Overall Overrun: {(overallOverrun * 0.01).toFixed(2)}%
-            </Stack.Item>
-          </Stack>
-        </Section>
-        <Section
-          title="Filtering/Sorting"
-          buttons={
-            <Button
-              tooltip="Fast Update"
-              icon="fast-forward"
-              color={fast_update ? 'good' : 'bad'}
-              onClick={() => {
-                act('toggle_fast_update');
-              }}
-            />
-          }
-        >
-          <Input
-            placeholder="Filter by name"
-            value={filterName}
-            onChange={(e, value) => setFilterName(value)}
-          />
-          <Button
-            icon="trash"
-            tooltip="Reset filter"
-            onClick={() => setFilterName('')}
-            disabled={filterName === undefined}
-          />
-          <Dropdown
-            options={Object.values(SubsystemSortBy)}
-            selected={sortBy}
-            onSelected={(value) => setSortBy(value as SubsystemSortBy)}
-          />
-          <Stack>
-            <Stack.Item>
+        <Stack vertical fill>
+          <Stack.Item>
+            <Section title="Master Overview">
+              <Stack vertical>
+                <Stack.Item>World Time: {world_time}</Stack.Item>
+                <Stack.Item>Map CPU: {map_cpu.toFixed(2)}%</Stack.Item>
+                <Stack.Item>
+                  Overall Usage: {(overallUsage * 0.01).toFixed(2)}%
+                </Stack.Item>
+                <Stack.Item>
+                  Overall Overrun: {(overallOverrun * 0.01).toFixed(2)}%
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section
+              title="Filtering/Sorting"
+              buttons={
+                <Button
+                  tooltip="Fast Update"
+                  icon="fast-forward"
+                  color={fast_update ? 'good' : 'bad'}
+                  onClick={() => {
+                    act('toggle_fast_update');
+                  }}
+                />
+              }
+            >
+              <Input
+                placeholder="Filter by name"
+                value={filterName}
+                onChange={(e, value) => setFilterName(value)}
+              />
               <Button
-                selected={sortAscending}
-                onClick={() => setSortAscending(true)}
-              >
-                Ascending
-              </Button>
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                selected={!sortAscending}
-                onClick={() => setSortAscending(false)}
-              >
-                Descending
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Section>
-        <Section title="Subsystem Overview" scrollable>
-          <Stack vertical>
-            {sortedSubsystems.map((subsystem) => (
-              <SubsystemView key={subsystem.ref} data={subsystem} />
-            ))}
-          </Stack>
-        </Section>
+                icon="trash"
+                tooltip="Reset filter"
+                onClick={() => setFilterName('')}
+                disabled={filterName === undefined}
+              />
+              <Dropdown
+                options={Object.values(SubsystemSortBy)}
+                selected={sortBy}
+                onSelected={(value) => setSortBy(value as SubsystemSortBy)}
+              />
+              <Stack>
+                <Stack.Item>
+                  <Button
+                    selected={sortAscending}
+                    onClick={() => setSortAscending(true)}
+                  >
+                    Ascending
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    selected={!sortAscending}
+                    onClick={() => setSortAscending(false)}
+                  >
+                    Descending
+                  </Button>
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section title="Subsystem Overview" scrollable fill>
+              {sortedSubsystems.map((subsystem) => (
+                <SubsystemView data={subsystem} key={subsystem.ref} />
+              ))}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
