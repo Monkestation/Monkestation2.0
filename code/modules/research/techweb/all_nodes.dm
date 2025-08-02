@@ -213,6 +213,7 @@
 		"large_beaker",
 		"medicalbed",
 		"mmi_m",
+		"monketech_translator",
 		"operating",
 		"petri_dish",
 		"pillbottle",
