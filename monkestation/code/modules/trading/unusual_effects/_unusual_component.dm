@@ -9,6 +9,8 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	var/round_id = 0
 	///the particle spewer component path
 	var/particle_path = /datum/component/particle_spewer/confetti
+	///the particle spewer component
+	var/datum/component/particle_spewer/spewer
 	/// The original owners name
 	var/original_owner_ckey = "dwasint"
 	/// the slot this item goes in used when creating the particle itself
@@ -38,11 +40,10 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 		unusual_number = "[GLOB.total_unusuals_per_type["[particle_path]"]]"
 
 
-	source_object.AddComponent(src.particle_path)
+	spewer = source_object.AddComponent(src.particle_path)
 
 	if(!length(parsed_variables))
-		var/datum/component/particle_spewer/created = source_object.GetComponent(/datum/component/particle_spewer)
-		unusual_description = created.unusual_description
+		unusual_description = spewer.unusual_description
 
 	if(!length(parsed_variables))
 		switch(unusual_number)
@@ -58,6 +59,10 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 				source_object.name = "unusual [unusual_description] [source_object.name]"
 
 	save_unusual_data()
+
+/datum/component/unusual_handler/Destroy(force)
+	QDEL_NULL(spewer)
+	return ..()
 
 /datum/component/unusual_handler/RegisterWithParent()
 	. = ..()

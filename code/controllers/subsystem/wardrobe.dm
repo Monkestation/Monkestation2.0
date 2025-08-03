@@ -50,6 +50,7 @@ SUBSYSTEM_DEF(wardrobe)
 	load_outfits()
 	load_species()
 	load_storage_contents()
+	load_loadout_items()
 	hard_refresh_queue()
 	stock_hit = 0
 	stock_miss = 0
@@ -249,6 +250,9 @@ SUBSYSTEM_DEF(wardrobe)
 		do_on_insert.Invoke()
 		do_on_insert.object = null
 
+	// remove any unusual effects
+	qdel(object.GetComponent(/datum/component/unusual_handler))
+
 	object.moveToNullspace()
 	stock_info[WARDROBE_STOCK_CONTENTS] += object
 
@@ -351,3 +355,14 @@ SUBSYSTEM_DEF(wardrobe)
 		for(var/datum/a_really_small_box as anything in somehow_more_boxes)
 			canonize_type(a_really_small_box)
 		qdel(another_crate)
+
+/datum/controller/subsystem/wardrobe/proc/load_loadout_items()
+	for(var/obj/item/item_path as anything in GLOB.all_loadout_datums)
+		if(!ispath(item_path))
+			continue
+		var/datum/loadout_item/loadout_item = GLOB.all_loadout_datums[item_path]
+		if(!loadout_item?.preload)
+			continue
+		for(var/i = 1 to 5)
+			canonize_type(item_path)
+		CHECK_TICK
