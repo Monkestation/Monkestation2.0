@@ -19,7 +19,7 @@ export const DiseaseSplicer = (props) => {
     dish_name,
     memorybank,
     dish_error,
-    target_stage,
+    target_slot,
   } = data;
   return (
     <Window width={475} height={300}>
@@ -79,18 +79,18 @@ export const DiseaseSplicer = (props) => {
                 />
               </LabeledList.Item>
             )}
-            <LabeledList.Item label={'Targeted Stage'}>
+            <LabeledList.Item label={'Targeted Slot'}>
               <Slider
                 width="70%"
                 minValue={1}
                 maxValue={4}
                 step={1}
                 stepPixelSize={50}
-                value={target_stage}
-                onDrag={(e, stage) => act('target_stage', { stage })}
-                onChange={(e, stage) => act('target_stage', { stage })}
+                value={target_slot}
+                onDrag={(e, stage) => act('target_slot', { stage })}
+                onChange={(e, stage) => act('target_slot', { stage })}
               >
-                {target_stage}
+                {target_slot}
               </Slider>
               <Button
                 color="green"

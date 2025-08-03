@@ -180,7 +180,6 @@
 		"spade",
 		"spraycan",
 		"spraycan_gun", // MONKESTATION ADDITION (monkestation/code/game/objects/items/spraycan_gun.dm)
-		"tile_sprayer",
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",

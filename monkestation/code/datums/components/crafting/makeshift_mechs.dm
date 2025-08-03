@@ -1,6 +1,6 @@
 /datum/crafting_recipe/lockermech
 	name = "Locker Mech"
-	result = /obj/vehicle/sealed/mecha/working/ripley/lockermech
+	result = /obj/vehicle/sealed/mecha/ripley/lockermech
 	reqs = list(/obj/item/stack/cable_coil = 20,
 				/obj/item/stack/sheet/iron = 10,
 				/obj/item/storage/toolbox = 2, // For feet

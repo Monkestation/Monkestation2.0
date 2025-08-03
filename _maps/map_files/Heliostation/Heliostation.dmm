@@ -39173,8 +39173,6 @@
 /area/station/science/xenobiology)
 "hZI" = (
 /obj/item/storage/box/bodybags,
-/obj/item/clothing/mask/surgical,
-/obj/item/razor,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -48489,13 +48487,12 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lDt" = (
-/obj/item/hemostat,
-/obj/item/retractor,
-/obj/item/cautery,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
 /obj/structure/table/reinforced,
+/obj/item/razor,
+/obj/item/clothing/mask/surgical,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "lDu" = (
@@ -67232,17 +67229,13 @@
 /turf/open/floor/iron/smooth,
 /area/station/science/robotics/lab)
 "sNC" = (
-/obj/item/surgical_drapes,
-/obj/item/circular_saw,
-/obj/item/scalpel{
-	pixel_y = 15
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /obj/machinery/light/no_nightlight/directional/east,
 /obj/structure/table/reinforced,
 /obj/structure/cable,
+/obj/item/surgery_tray,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "sNL" = (
