@@ -1,41 +1,23 @@
 /mob/living/proc/check_contact_sterility(body_part)
-	return 0
-
-/mob/living/carbon/human/check_contact_sterility(body_part)
-	var/list/clothing_to_check = list(
-		wear_mask,
-		w_uniform,
-		head,
-		wear_suit,
-		back,
-		gloves,
-		handcuffed,
-		legcuffed,
-		belt,
-		shoes,
-		wear_mask,
-		glasses,
-		ears,
-		wear_id)
-
-	var/list/checks = list(body_part)
-	if(body_part == BODY_ZONE_EVERYTHING)
-		checks = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD)
-	if(body_part == BODY_ZONE_LEGS)
-		checks = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	if(body_part == BODY_ZONE_ARMS)
-		checks = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-
-	for(var/item in checks)
-		for (var/thing in clothing_to_check)
-			var/obj/item/cloth = thing
-			if(isnull(cloth))
-				continue
-			var/list/coverage = cover_flags2body_zones(cloth.body_parts_covered)
-			if((item in coverage) && prob(cloth.get_armor_rating(BIO)))
-				return TRUE
 	return FALSE
 
+/mob/living/carbon/human/check_contact_sterility(body_part)
+	var/check_flags
+	if(body_part == BODY_ZONE_EVERYTHING)
+		check_flags = FULL_BODY
+	else if(body_part == BODY_ZONE_LEGS)
+		check_flags = LEGS | FEET
+	else if(body_part == BODY_ZONE_ARMS)
+		check_flags = ARMS | HANDS
+	else
+		check_flags = body_zone2cover_flags(body_part)
+
+	for(var/obj/item/cloth as anything in get_equipped_items())
+		if(QDELETED(cloth))
+			continue
+		if((cloth.body_parts_covered & check_flags) && prob(cloth.get_armor_rating(BIO)))
+			return TRUE
+	return FALSE
 
 /mob/living/proc/check_bodypart_bleeding(zone)
 	return FALSE
