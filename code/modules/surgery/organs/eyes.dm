@@ -453,9 +453,9 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	deactivate(eye_owner, close_ui = TRUE)
-	QDEL_NULL(eyes_overlay)
-	QDEL_NULL(eyes_overlay_left)
-	QDEL_NULL(eyes_overlay_right)
+	eyes_overlay = null
+	eyes_overlay_left = null
+	eyes_overlay_right = null
 	if(!QDELETED(eye))
 		eye.forceMove(src)
 	return ..()
