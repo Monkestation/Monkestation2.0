@@ -251,6 +251,7 @@
 	duration = 2 SECONDS // will get refreshed whenever the timestop processes
 	status_type = STATUS_EFFECT_REFRESH
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = null
 	var/static/list/timestop_traits = list(
 		TRAIT_MUTE,
 		TRAIT_EMOTEMUTE,
