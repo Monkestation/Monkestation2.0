@@ -44,11 +44,7 @@
 		is_infecting = FALSE
 		return FALSE
 
-	if(carbon_mob.stat == DEAD)
-		// This cures limbs and anything, the target is made a changeling through this process anyhow
-		carbon_mob.revive(ADMIN_HEAL_ALL)
-
-	if(!carbon_mob.mind)
+	if(!carbon_mob.mind  || !carbon_mob.client)
 		var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 			check_jobban = ROLE_BLOODLING_THRALL,
 			poll_time = 10 SECONDS,
@@ -57,12 +53,16 @@
 			role_name_text = "Bloodling Thrall",
 			)
 
-		if(!LAZYLEN(chosen_one))
+		if(isnull(chosen_one))
 			is_infecting = FALSE
 			return FALSE
 
 		carbon_mob.ghostize(FALSE)
 		carbon_mob.PossessByPlayer(chosen_one.key)
+
+	if(carbon_mob.stat == DEAD)
+		// This cures limbs and anything, the target is made a changeling through this process anyhow
+		carbon_mob.revive(ADMIN_HEAL_ALL)
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	thrall.set_master(owner)
