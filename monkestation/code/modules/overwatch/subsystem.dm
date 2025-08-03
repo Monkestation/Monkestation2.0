@@ -398,7 +398,7 @@ SUBSYSTEM_DEF(overwatch)
 		if(!postponed)
 			C.log_client_to_db_connection_log()
 		log_access("Overwatch: Failed Login: [C.key]/[C.ckey]([C.address])([C.computer_id]) failed to pass ASN ban check.")
-		cached_asn_bans |= C.ckey
+		cached_asn_bans |= C.address
 		qdel(C)
 		return
 
