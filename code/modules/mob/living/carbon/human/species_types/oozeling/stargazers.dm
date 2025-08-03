@@ -152,7 +152,7 @@
 
 /datum/action/innate/link_minds/proc/try_link()
 	var/mob/living/living_target = owner.pulling
-	if(!isliving(living_target) || (iscarbon(living_target) && owner.grab_state < GRAB_AGGRESSIVE && (living_target.status_flags & CANPUSH) && !HAS_TRAIT(living_target, TRAIT_PUSHIMMUNE)))
+	if(!isliving(living_target) || issilicon(living_target) || (iscarbon(living_target) && owner.grab_state < GRAB_AGGRESSIVE && (living_target.status_flags & CANPUSH) && !HAS_TRAIT(living_target, TRAIT_PUSHIMMUNE)))
 		to_chat(owner, span_warning("You need to aggressively grab someone to link minds!"))
 		return
 
