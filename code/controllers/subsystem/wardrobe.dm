@@ -7,7 +7,7 @@
 /// Fuck you goonstation
 SUBSYSTEM_DEF(wardrobe)
 	name = "Wardrobe"
-	wait = 10 // This is more like a queue then anything else
+	wait = 1 SECONDS // This is more like a queue then anything else
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // We're going to fill up our cache while players sit in the lobby
 	/// How much to cache outfit items
