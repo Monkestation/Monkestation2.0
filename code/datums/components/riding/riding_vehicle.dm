@@ -139,7 +139,6 @@
 	set_vehicle_dir_offsets(WEST, -48, -48)
 
 /datum/component/riding/vehicle/kingschariot
-	keytype = /obj/item/key/kingschariot
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 	vehicle_move_delay = 1
 
