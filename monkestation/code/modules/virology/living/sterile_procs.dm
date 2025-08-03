@@ -41,43 +41,34 @@
 	return FALSE
 
 /mob/living/carbon/human/check_bodypart_bleeding(zone)
-	var/bleeding = FALSE
-	var/list/clothing_to_check = list(
-		wear_mask,
-		w_uniform,
-		head,
-		wear_suit,
-		back,
-		gloves,
-		handcuffed,
-		legcuffed,
-		belt,
-		shoes,
-		wear_mask,
-		glasses,
-		ears,
-		wear_id)
-	var/list/checks = list(zone)
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		return FALSE
+
+	var/list/checks
 	if(zone == BODY_ZONE_EVERYTHING)
 		checks = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_R_ARM, BODY_ZONE_HEAD)
-	if(zone == BODY_ZONE_LEGS)
+	else if(zone == BODY_ZONE_LEGS)
 		checks = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	if(zone == BODY_ZONE_ARMS)
+	else if(zone == BODY_ZONE_ARMS)
 		checks = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	else
+		checks = islist(zone) ? zone : list(zone)
 
-	for(var/item in checks)
-		var/obj/item/bodypart/bodypart = get_bodypart(item)
-		if(!bodypart)
-			return FALSE
-		for (var/thing in clothing_to_check)
-			var/obj/item/cloth = thing
-			if(!cloth)
-				if(bodypart.cached_bleed_rate)
-					return TRUE
-			else if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
-				if(bodypart.cached_bleed_rate)
-					return TRUE
-	return bleeding
+	var/bleeding_flags = NONE
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		if((limb.body_zone in checks) && limb.cached_bleed_rate)
+			bleeding_flags |= limb.body_part
+
+	if(!bleeding_flags)
+		return FALSE
+
+	for(var/obj/item/cloth as anything in get_equipped_items())
+		if(QDELETED(cloth))
+			continue
+		if(prob(cloth.get_armor_rating(BIO)))
+			bleeding_flags &= ~cloth.body_parts_covered
+
+	return !!bleeding_flags
 
 /mob/living/proc/check_airborne_sterility()
 	return 0
