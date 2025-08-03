@@ -1,6 +1,6 @@
 /datum/action/cooldown/bloodling_infect
 	name = "Infect"
-	desc = "Allows us to make someone our thrall, this consumes our host body and reveals our true form."
+	desc = "Allows us to make someone our thrall, this consumes our host body and reveals our true form. You will be VERY vulnerable when you initially reach this form."
 	background_icon = 'monkestation/icons/mob/actions/backgrounds.dmi'
 	background_icon_state = "bg_bloodling"
 	button_icon = 'monkestation/code/modules/antagonists/bloodling/sprites/bloodling_abilities.dmi'
@@ -49,17 +49,24 @@
 		carbon_mob.revive(ADMIN_HEAL_ALL)
 
 	if(!carbon_mob.mind)
-		var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_BLOODLING_THRALL, poll_time = 10 SECONDS, checked_target = carbon_mob, alert_pic = carbon_mob, role_name_text = "Bloodling Thrall")
+		var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+			check_jobban = ROLE_BLOODLING_THRALL,
+			poll_time = 10 SECONDS,
+			checked_target = carbon_mob,
+			alert_pic = carbon_mob,
+			role_name_text = "Bloodling Thrall",
+			)
 
 		if(!LAZYLEN(chosen_one))
 			is_infecting = FALSE
 			return FALSE
 
 		carbon_mob.ghostize(FALSE)
-		carbon_mob.key = chosen_one.key
+		carbon_mob.PossessByPlayer(chosen_one.key)
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	thrall.set_master(owner)
+	carbon_mob.mind.enslave_mind_to_creator(owner)
 
 	carbon_mob.balloon_alert(owner, "[carbon_mob] successfully infected!")
 
