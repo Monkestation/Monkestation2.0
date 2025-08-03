@@ -53,12 +53,11 @@
 	return !!bleeding_flags
 
 /mob/living/proc/check_airborne_sterility()
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/check_airborne_sterility()
-	var/block = FALSE
 	if (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && prob(wear_mask.get_armor_rating(BIO)))
-		block = TRUE
+		return TRUE
 	if (head && (head.flags_cover & HEADCOVERSMOUTH) && prob(head.get_armor_rating(BIO)))
-		block = TRUE
-	return block
+		return TRUE
+	return FALSE
