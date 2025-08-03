@@ -249,6 +249,7 @@
 /datum/status_effect/time_stopped
 	id = "time_stopped"
 	duration = 2 SECONDS // will get refreshed whenever the timestop processes
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REFRESH
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = null
