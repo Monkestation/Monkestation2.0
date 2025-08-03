@@ -138,6 +138,20 @@
 	set_vehicle_dir_offsets(EAST, -48, -48)
 	set_vehicle_dir_offsets(WEST, -48, -48)
 
+/datum/component/riding/vehicle/kingschariot
+	keytype = /obj/item/key/kingschariot
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
+	vehicle_move_delay = 1
+
+/datum/component/riding/vehicle/kingschariot/handle_specials()
+	. = ..()
+	set_riding_offsets(1, list(TEXT_NORTH = list(-4, 2), TEXT_SOUTH = list(4, 0, 4), TEXT_EAST = list(6, 4), TEXT_WEST = list(-6, 4)))
+	set_riding_offsets(2, list(TEXT_NORTH = list(4, 2), 	TEXT_SOUTH = list(-4, 0, 4), TEXT_EAST = list(6, 4, 4), TEXT_WEST = list(-6, 4)))
+	set_vehicle_dir_offsets(NORTH, -48, -48)
+	set_vehicle_dir_offsets(SOUTH, -48, -48)
+	set_vehicle_dir_offsets(EAST, -48, -48)
+	set_vehicle_dir_offsets(WEST, -48, -48)
+
 /datum/component/riding/vehicle/wienermobile
 	vehicle_move_delay = 1.29
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
