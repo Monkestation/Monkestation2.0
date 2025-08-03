@@ -23,7 +23,7 @@
 	return FALSE
 
 /mob/living/carbon/human/check_bodypart_bleeding(zone)
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || blood_volume <= 0)
 		return FALSE
 
 	var/list/checks
