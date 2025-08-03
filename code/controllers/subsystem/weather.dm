@@ -31,6 +31,8 @@ SUBSYSTEM_DEF(weather)
 					weather.weather_act(act_on)
 			if(MC_TICK_CHECK)
 				return
+	else
+		currentrun = null
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
