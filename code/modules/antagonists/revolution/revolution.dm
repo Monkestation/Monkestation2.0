@@ -187,6 +187,7 @@
 	job_rank = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
+	hardcore_random_bonus = TRUE
 
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE

@@ -169,7 +169,6 @@
 	///Ability
 	var/datum/action/cooldown/lay_gumball/gumball_ability
 
-
 /mob/living/basic/pet/gumball_goblin/Initialize(mapload)
 	. = ..()
 	gumball_ability = new()
@@ -346,3 +345,89 @@
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Mrsmall_theclown")
 
+/mob/living/basic/pet/cyber_husky
+	name = "Cyber Husky"
+	desc = "Whos a good cyber dog? You are!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "robodoggo"
+	icon_living = "robodoggo"
+	icon_dead = "robodoggo-dead"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("AdamCoal")
+	///Ability
+	var/datum/action/cooldown/change_hud/change_hud_ability
+
+/mob/living/basic/pet/cyber_husky/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+	change_hud_ability = new()
+	change_hud_ability.Grant(src)
+	var/mutable_appearance/overlay = mutable_appearance(icon, "robodoggo-glasses-dia")
+	src.add_overlay(overlay)
+
+///switches the amimal huds
+/datum/action/cooldown/change_hud
+	name = "change_hud"
+	desc = "Changes your HUD type."
+	cooldown_time = 2 SECONDS
+	button_icon_state = "aviators-diagnostic"
+	var/current_hud = 3
+	button_icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
+
+/datum/action/cooldown/change_hud/Activate(atom/target)
+	. = ..()
+
+	if(current_hud == 1)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-med")
+		usr.add_overlay(overlay)
+		button_icon_state = "aviators-health"
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_MEDICAL_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 2)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_MEDICAL_HUD, ACTION_TRAIT)
+		button_icon_state = "aviators-diagnostic"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-dia")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 3)
+		current_hud++
+		REMOVE_TRAIT(usr, TRAIT_DIAGNOSTIC_HUD, ACTION_TRAIT)
+		button_icon_state = "aviators-meson"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-meson")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		usr.sight |= SEE_TURFS
+		StartCooldown()
+		return
+	if(current_hud == 4)
+		current_hud++
+		usr.sight &= ~SEE_TURFS
+		button_icon_state = "aviators-science"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo-glasses-sci")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_REAGENT_SCANNER, ACTION_TRAIT)
+		StartCooldown()
+		return
+	if(current_hud == 5)
+		current_hud = 1
+		REMOVE_TRAIT(usr, TRAIT_REAGENT_SCANNER, ACTION_TRAIT)
+		button_icon_state = "aviators-sec"
+		var/mutable_appearance/overlay = mutable_appearance(usr.icon, "robodoggo")
+		usr.add_overlay(overlay)
+		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+		ADD_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
+		StartCooldown()
+		return
