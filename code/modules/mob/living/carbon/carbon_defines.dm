@@ -118,3 +118,7 @@
 	COOLDOWN_DECLARE(bleeding_message_cd)
 
 	var/next_smell = 0 /// Cooldown for the next smell
+
+	/// List of "sources" for render locks.
+	var/list/render_locks
+	var/list/queued_renders

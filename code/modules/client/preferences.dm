@@ -489,6 +489,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = list()
 	character.dna.apply_color_palettes(src)
 
+	if(icon_updates)
+		character.acquire_render_lock("apply_prefs_to")
 	var/species_type = read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
@@ -501,8 +503,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.real_name = character.real_name
 
 	if(icon_updates)
+		character.release_render_lock("apply_prefs_to")
+	/*
+	if(icon_updates)
 		character.icon_render_keys = list()
 		character.update_body(is_creating = TRUE)
+	*/
 
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.

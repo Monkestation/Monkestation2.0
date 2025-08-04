@@ -1,4 +1,7 @@
 /mob/living/carbon/human/update_clothing(slot_flags)
+	if(render_locks)
+		queued_renders[DEFERRED_CLOTHES] |= slot_flags
+		return
 	if(slot_flags & ITEM_SLOT_BACK)
 		update_worn_back()
 	if(slot_flags & ITEM_SLOT_MASK)
@@ -32,7 +35,14 @@
 	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
 		update_pockets()
 
-	/// Updates features and clothing attached to a specific limb with limb-specific offsets
+/mob/living/carbon/update_transform(resize)
+	if(render_locks)
+		queued_renders[DEFERRED_TRANSFORM] = TRUE
+	else
+		return ..()
+
+
+/// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)
 	switch(feature_key)
 		if(OFFSET_UNIFORM)
@@ -88,6 +98,9 @@
 	update_body_parts()
 
 /mob/living/carbon/update_body(is_creating = FALSE)
+	if(render_locks)
+		queued_renders[DEFERRED_BODY] |= is_creating
+		return
 	dna?.species.handle_body(src) //This calls `handle_mutant_bodyparts` which calls `update_mutant_bodyparts()`. Don't double call!
 	update_body_parts(is_creating)
 
@@ -272,11 +285,14 @@
 /mob/living/carbon/regenerate_icons()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
+	if(render_locks)
+		queued_renders[DEFERRED_FULL_REGEN] = TRUE
+		return TRUE
 	icon_render_keys = list() //Clear this bad larry out
 	update_held_items()
 	update_worn_handcuffs()
 	update_worn_legcuffs()
-	update_body()
+	update_body(is_creating = TRUE)
 	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/carbon/update_held_items()
@@ -327,6 +343,9 @@
 	return GLOB.fire_appearances[fire_icon]
 
 /mob/living/carbon/update_damage_overlays()
+	if(render_locks)
+		queued_renders[DEFERRED_BODY] |= FALSE
+		return
 	remove_overlay(DAMAGE_LAYER)
 
 	var/mutable_appearance/damage_overlay
@@ -345,6 +364,9 @@
 	apply_overlay(DAMAGE_LAYER)
 
 /mob/living/carbon/update_wound_overlays()
+	if(render_locks)
+		queued_renders[DEFERRED_BODY] |= FALSE
+		return
 	remove_overlay(WOUND_LAYER)
 
 	var/mutable_appearance/wound_overlay
@@ -360,6 +382,7 @@
 	apply_overlay(WOUND_LAYER)
 
 /mob/living/carbon/update_worn_mask()
+	TRY_QUEUE_RENDER(ITEM_SLOT_MASK)
 	remove_overlay(FACEMASK_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -377,6 +400,7 @@
 	apply_overlay(FACEMASK_LAYER)
 
 /mob/living/carbon/update_worn_neck()
+	TRY_QUEUE_RENDER(ITEM_SLOT_NECK)
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -391,6 +415,7 @@
 	apply_overlay(NECK_LAYER)
 
 /mob/living/carbon/update_worn_back()
+	TRY_QUEUE_RENDER(ITEM_SLOT_BACK)
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
@@ -404,6 +429,9 @@
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_worn_legcuffs()
+	if(render_locks)
+		queued_renders[DEFERRED_CUFFS] = TRUE
+		return
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
@@ -412,6 +440,7 @@
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /mob/living/carbon/update_worn_head()
+	TRY_QUEUE_RENDER(ITEM_SLOT_HEAD)
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -429,6 +458,9 @@
 
 
 /mob/living/carbon/update_worn_handcuffs()
+	if(render_locks)
+		queued_renders[DEFERRED_CUFFS] = TRUE
+		return
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
@@ -479,6 +511,10 @@
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
+	if(render_locks)
+		queued_renders[DEFERRED_BODY] |= TRUE
+		return
+
 	update_damage_overlays()
 	update_wound_overlays()
 	var/list/needs_update = list()
@@ -649,3 +685,73 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	new_leg_appearance_lower.dir = image_dir
 	. += new_leg_appearance_lower
 	return .
+
+/mob/living/carbon/update_appearance(updates = ALL)
+	if(render_locks)
+		queued_renders[DEFERRED_APPEARANCE] |= updates
+		return NONE
+	return ..()
+
+/mob/living/carbon/proc/acquire_render_lock(source)
+	if(!source)
+		CRASH("Attempted to acquire render lock without a source")
+	testing("added render lock from [source]")
+	if(render_locks)
+		render_locks |= source
+	else
+		render_locks = list(source)
+		queued_renders = new /list(TOTAL_DEFER_OPTIONS)
+
+/mob/living/carbon/proc/release_render_lock(source)
+	if(!source)
+		CRASH("Attempted to release render lock without a source")
+	if(!render_locks)
+		return
+	// manually re-implement LAZYREMOVE here to avoid double checking for list validity
+	render_locks -= source
+	testing("released render lock from [source]")
+	if(!length(render_locks))
+		render_locks = null
+		if(queued_renders)
+			perform_queued_renders()
+
+/mob/living/carbon/proc/perform_queued_renders()
+	if(render_locks)
+		return
+	var/list/queue = queued_renders
+	if(!queue)
+		return
+
+	testing("queue: [json_encode(queue)]")
+	if(queue[DEFERRED_FULL_REGEN])
+		queued_renders = null
+		regenerate_icons()
+		testing("DEFERRED_FULL_REGEN")
+		return
+	icon_render_keys = list()
+	if(queue[DEFERRED_HELD_ITEMS])
+		update_held_items()
+		testing("DEFERRED_HELD_ITEMS")
+	if(queue[DEFERRED_CUFFS])
+		update_worn_handcuffs()
+		update_worn_legcuffs()
+		testing("DEFERRED_CUFFS")
+	if(!isnull(queue[DEFERRED_BODY])) // the value is the update_body arg
+		update_body(queue[DEFERRED_BODY])
+		testing("DEFERRED_BODY ([queue[DEFERRED_BODY]])")
+	if(queue[DEFERRED_APPEARANCE])
+		update_appearance(queue[DEFERRED_APPEARANCE]) // update_appearance flags
+		testing("DEFERRED_APPEARANCE [queue[DEFERRED_APPEARANCE]]")
+	if(queue[DEFERRED_CLOTHES])
+		update_clothing(queue[DEFERRED_CLOTHES]) // clothing slot flags
+		testing("DEFERRED_CLOTHES [queue[DEFERRED_CLOTHES]]")
+	if(queue[DEFERRED_TRANSFORM])
+		update_transform()
+		testing("DEFERRED_TRANSFORM")
+	if(queue[DEFERRED_MUTATIONS_OVERLAY])
+		update_mutations_overlay()
+		testing("DEFERRED_MUTATIONS_OVERLAY")
+	if(queue[DEFERRED_DAMAGE_OVERLAYS])
+		update_damage_overlays()
+		testing("DEFERRED_DAMAGE_OVERLAYS")
+	queued_renders = null

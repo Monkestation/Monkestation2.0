@@ -88,6 +88,7 @@ There are several things that need to be remembered:
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
 /mob/living/carbon/human/update_worn_undersuit()
+	TRY_QUEUE_RENDER(ITEM_SLOT_ICLOTHING)
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
@@ -147,6 +148,7 @@ There are several things that need to be remembered:
 	update_mutant_bodyparts()
 
 /mob/living/carbon/human/update_worn_id()
+	TRY_QUEUE_RENDER(src)
 	remove_overlay(ID_LAYER)
 
 	if(client && hud_used)
@@ -173,6 +175,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_worn_gloves()
+	TRY_QUEUE_RENDER(ITEM_SLOT_GLOVES)
 	remove_overlay(GLOVES_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1])
@@ -223,6 +226,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_worn_glasses()
+	TRY_QUEUE_RENDER(ITEM_SLOT_EYES)
 	remove_overlay(GLASSES_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -256,6 +260,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_inv_ears()
+	TRY_QUEUE_RENDER(ITEM_SLOT_EARS)
 	remove_overlay(EARS_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -288,6 +293,7 @@ There are several things that need to be remembered:
 	apply_overlay(EARS_LAYER)
 
 /mob/living/carbon/human/update_worn_neck()
+	TRY_QUEUE_RENDER(ITEM_SLOT_NECK)
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -318,6 +324,7 @@ There are several things that need to be remembered:
 	apply_overlay(NECK_LAYER)
 
 /mob/living/carbon/human/update_worn_shoes()
+	TRY_QUEUE_RENDER(ITEM_SLOT_FEET)
 	remove_overlay(SHOES_LAYER)
 
 	if(num_legs < 2)
@@ -378,6 +385,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_suit_storage()
+	TRY_QUEUE_RENDER(ITEM_SLOT_SUITSTORE)
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(client && hud_used)
@@ -397,6 +405,7 @@ There are several things that need to be remembered:
 	apply_overlay(SUIT_STORE_LAYER)
 
 /mob/living/carbon/human/update_worn_head()
+	TRY_QUEUE_RENDER(ITEM_SLOT_HEAD)
 	remove_overlay(HEAD_LAYER)
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
@@ -437,6 +446,7 @@ There are several things that need to be remembered:
 	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_worn_belt()
+	TRY_QUEUE_RENDER(ITEM_SLOT_BELT)
 	remove_overlay(BELT_LAYER)
 
 	if(client && hud_used)
@@ -467,6 +477,7 @@ There are several things that need to be remembered:
 	apply_overlay(BELT_LAYER)
 
 /mob/living/carbon/human/update_worn_oversuit()
+	TRY_QUEUE_RENDER(ITEM_SLOT_OCLOTHING)
 	remove_overlay(SUIT_LAYER)
 
 	if(client && hud_used)
@@ -527,6 +538,7 @@ There are several things that need to be remembered:
 			update_observer_view(r_store)
 
 /mob/living/carbon/human/update_worn_mask()
+	TRY_QUEUE_RENDER(ITEM_SLOT_MASK)
 	remove_overlay(FACEMASK_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -569,6 +581,7 @@ There are several things that need to be remembered:
 	update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
 
 /mob/living/carbon/human/update_worn_back()
+	TRY_QUEUE_RENDER(ITEM_SLOT_BACK)
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
