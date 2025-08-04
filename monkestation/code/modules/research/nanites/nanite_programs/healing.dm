@@ -38,7 +38,7 @@
 
 /datum/nanite_program/temperature/enable_passive_effect()
 	. = ..()
-	host_mob.add_homeostasis_level(REF(src), host_mob.standard_body_temperature, 2.5 KELVIN)
+	host_mob.add_homeostasis_level(REF(src), host_mob.standard_body_temperature, 2.5 KELVIN, TRUE, TRUE)
 
 /datum/nanite_program/temperature/disable_passive_effect()
 	. = ..()
