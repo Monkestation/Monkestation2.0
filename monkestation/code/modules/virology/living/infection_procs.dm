@@ -5,32 +5,23 @@
 		return
 
 	//Now to check for stuff that's on the floor
-	var/block = 0
-	var/bleeding = 0
-	if (body_position == LYING_DOWN)
-		block = check_contact_sterility(BODY_ZONE_EVERYTHING)
-		bleeding = check_bodypart_bleeding(BODY_ZONE_EVERYTHING)
-	else
-		block = check_contact_sterility(BODY_ZONE_LEGS)
-		bleeding = check_bodypart_bleeding(BODY_ZONE_LEGS)
 
-	var/static/list/viral_cleanable_types = list(
-		/obj/effect/decal/cleanable/blood,
-		/obj/effect/decal/cleanable/vomit,
-	)
+	var/checked = FALSE
+	var/block
+	var/bleeding
 
-	var/obj/item/weapon/virusdish/held_dish = locate() in held_items
-	if(held_dish?.open && held_dish.contained_virus)
-		held_dish.infection_attempt(src, held_dish.contained_virus)
-
-	for(var/thing in loc)
-		if(istype(thing, /obj/item/weapon/virusdish))
-			var/obj/item/weapon/virusdish/dish = thing
-			if(dish?.open && dish.contained_virus)
-				dish.infection_attempt(src, dish.contained_virus)
-		else if(is_type_in_list(thing, viral_cleanable_types))
-			var/obj/effect/decal/cleanable/yucky = thing
-			assume_contact_diseases(yucky.diseases, yucky, block, bleeding)
+	for(var/obj/effect/decal/cleanable/yucky in loc)
+		if(!length(yucky.diseases))
+			continue
+		if(!checked)
+			if(body_position == LYING_DOWN)
+				block = check_contact_sterility(BODY_ZONE_EVERYTHING)
+				bleeding = check_bodypart_bleeding(BODY_ZONE_EVERYTHING)
+			else
+				block = check_contact_sterility(BODY_ZONE_LEGS)
+				bleeding = check_bodypart_bleeding(BODY_ZONE_LEGS)
+			checked = TRUE
+		assume_contact_diseases(yucky.diseases, yucky, block, bleeding)
 
 	return FALSE
 
