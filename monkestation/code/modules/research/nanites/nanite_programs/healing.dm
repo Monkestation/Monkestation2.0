@@ -26,16 +26,17 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(host_mob.bodytemperature > (host_mob.bodytemp_cold_damage_limit) && host_mob.bodytemperature < (host_mob.bodytemp_heat_damage_limit))
+	if(ISINRANGE_EX(host_mob.bodytemperature, host_mob.bodytemp_cold_damage_limit, host_mob.bodytemp_heat_damage_limit))
 		return FALSE
 	return ..()
 
-/datum/nanite_program/temperature/active_effect()
-	var/target_temp = host_mob.standard_body_temperature
-	if(host_mob.bodytemperature > target_temp)
-		host_mob.adjust_bodytemperature(-2.5 KELVIN, target_temp)
-	else if(host_mob.bodytemperature < (target_temp + 1))
-		host_mob.adjust_bodytemperature(2.5 KELVIN, 0, target_temp)
+/datum/nanite_program/temperature/enable_passive_effect()
+	. = ..()
+	host_mob.add_homeostasis_level(REF(src), host_mob.standard_body_temperature, 2.5 KELVIN)
+
+/datum/nanite_program/temperature/disable_passive_effect()
+	. = ..()
+	host_mob.remove_homeostasis_level(REF(src))
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
