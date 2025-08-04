@@ -49,3 +49,7 @@
 	our_mob.add_biomass(-biomass_cost)
 
 	return TRUE
+
+/datum/action/cooldown/bloodling/Activate(atom/target)
+	. = ..()
+	unset_click_ability(owner, refund_cooldown = FALSE)

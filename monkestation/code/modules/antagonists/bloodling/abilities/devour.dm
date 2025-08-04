@@ -1,8 +1,8 @@
 /datum/action/cooldown/bloodling/devour
 	name = "Devour Limb"
-	desc = "Allows you to randomly consume a creatures limb. Sets ALL your abilities on a 10 second cooldown"
+	desc = "Allows you to randomly consume a creatures limb. Sets ALL your abilities on a 5 second cooldown"
 	button_icon_state = "devour"
-	cooldown_time = 10 SECONDS
+	cooldown_time = 5 SECONDS
 	cast_range
 
 /datum/action/cooldown/bloodling/devour/PreActivate(atom/target)

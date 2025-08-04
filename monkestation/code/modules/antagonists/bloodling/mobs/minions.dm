@@ -45,8 +45,8 @@
 	icon_state = "tank"
 	icon_living = "tank"
 	icon_dead = "tank_dead"
-	health = 200
-	maxHealth = 200
+	health = 300
+	maxHealth = 300
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	speed = 2.5
+	speed = 2
