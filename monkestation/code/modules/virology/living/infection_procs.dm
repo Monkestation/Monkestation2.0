@@ -58,18 +58,12 @@
 	if (!check_airborne_sterility() && isturf(loc))//checking for sterile mouth protections
 		breath_airborne_diseases_from_clouds()
 
-		var/turf/T = get_turf(src)
-		var/list/breathable_cleanable_types = list(
-			/obj/effect/decal/cleanable/blood,
-			/obj/effect/decal/cleanable/vomit,
-			)
-
-		for(var/obj/effect/decal/cleanable/C in T)
-			if (is_type_in_list(C,breathable_cleanable_types))
-				if(istype(C.diseases,/list) && C.diseases.len > 0)
-					for(var/datum/disease/acute/V as anything in C.diseases)
-						if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
-							infect_disease(V, notes="(Airborne, from [C])")
+		for(var/obj/effect/decal/cleanable/C in loc)
+			if (!length(C.diseases))
+				continue
+			for(var/datum/disease/acute/V as anything in C.diseases)
+				if(V.spread_flags & DISEASE_SPREAD_AIRBORNE)
+					infect_disease(V, notes="(Airborne, from [C])")
 		/*
 		for(var/obj/effect/rune/R in T)
 			if(istype(R.virus2,/list) && R.virus2.len > 0)
@@ -84,17 +78,15 @@
 			spread_airborne_diseases()
 
 /mob/living/proc/breath_airborne_diseases_from_clouds()
-	for(var/turf/T in range(1, src))
-		var/sanity = 0
-		for(var/obj/effect/pathogen_cloud/cloud in T.contents)
-			if(sanity > 10)
-				break
-			sanity++ //anything more than 10 and you aint getting air really
-			if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
-				if (Adjacent(cloud))
-					for (var/datum/disease/acute/V in cloud.viruses)
-						//if (V.spread & SPREAD_AIRBORNE)	//Anima Syndrome allows for clouds of non-airborne viruses
-						infect_disease(V, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
+	var/sanity = 0
+	for(var/obj/effect/pathogen_cloud/cloud in range(1, src))
+		if(sanity > 10)
+			break
+		sanity++ //anything more than 10 and you aint getting air really
+		if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
+			for (var/datum/disease/acute/V in cloud.viruses)
+				//if (V.spread & SPREAD_AIRBORNE)	//Anima Syndrome allows for clouds of non-airborne viruses
+				infect_disease(V, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
 
 /mob/living/proc/handle_virus_updates(seconds_per_tick, times_fired)
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_VIRUSIMMUNE))
