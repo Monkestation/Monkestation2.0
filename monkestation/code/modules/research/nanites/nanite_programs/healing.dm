@@ -26,7 +26,13 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(ISINRANGE_EX(host_mob.bodytemperature, host_mob.bodytemp_cold_damage_limit, host_mob.bodytemp_heat_damage_limit))
+	if(host_mob.bodytemperature > host_mob.bodytemp_heat_damage_limit)
+		if(HAS_TRAIT(host_mob, TRAIT_RESISTHEAT))
+			return FALSE
+	else if(host_mob.bodytemperature < host_mob.bodytemp_cold_damage_limit)
+		if(HAS_TRAIT(host_mob, TRAIT_RESISTCOLD))
+			return FALSE
+	else
 		return FALSE
 	return ..()
 
