@@ -28,6 +28,10 @@
 			continue
 		innate_powers += innate_ability
 		innate_ability.on_purchase(owner.current, TRUE)
+	// Grants them regen to start with
+	var/datum/action/changeling/regenerate/regen = new()
+	innate_powers += regen
+	regen.on_purchase(owner.current, TRUE)
 	var/datum/action/cooldown/bloodling_hivespeak/hivetalk = new()
 	hivetalk.Grant(owner.current)
 	handle_clown_mutation(owner.current, "Your newfound abilities allow you to overcome your clown nature.")

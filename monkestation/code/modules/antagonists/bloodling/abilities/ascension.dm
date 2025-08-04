@@ -6,6 +6,7 @@ GLOBAL_VAR(ascended_bloodling)
 	button_icon_state = "ascend"
 	biomass_cost = 500
 	biomass_cap = TRUE
+	click_to_activate = FALSE
 
 	var/list/responses = list("Yes", "No")
 	var/turf/our_turf
@@ -35,7 +36,8 @@ GLOBAL_VAR(ascended_bloodling)
 		return FALSE
 
 	to_chat(our_mob, span_noticealien("You grow a chrysalis to begin the change..."))
-	priority_announce("ALERT: LEVEL 4 BIOHAZARD MORPHING IN [get_area_name(our_mob)]. STOP IT AT ALL COSTS.", "Biohazard")
+	priority_announce("ALERT: level 4 biohazard morphing in [get_area_name(our_mob)]. All personell must stop the ascension. 5 minutes remain before morphing finishes.", "Biohazard Alert")
+	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
 	playsound(our_turf, 'sound/effects/blobattack.ogg', 60)
 	our_mob.evolution(6)
 	return TRUE
@@ -64,6 +66,8 @@ GLOBAL_VAR(ascended_bloodling)
 
 /mob/living/basic/bloodling/proper/ascending/Initialize(mapload)
 	. = ..()
+	// Can't leave
+	SSshuttle.registerHostileEnvironment(src)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(ascend)), 5 MINUTES)
 
@@ -106,7 +110,7 @@ GLOBAL_VAR(ascended_bloodling)
 		return
 
 	// Calls the shuttle
-	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. ORGANISM CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
+	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. BLOODLING CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
 	SSshuttle.emergency_no_recall = TRUE
 	SSshuttle.emergency_call_time = 5 MINUTES
 

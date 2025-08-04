@@ -42,6 +42,15 @@
 	if(isnull(target_part))
 		return FALSE
 
+	our_mob.visible_message(
+		span_alertalien("[our_mob] holds its maw over [target]s [target_part] and prepares to devour it!"),
+		span_noticealien("You prepare to devour [target]s [target_part]!"),
+	)
+
+	if(!do_after(owner, 1 SECOND, carbon_target))
+		to_chat(our_mob, span_noticealien("They flee before you can snap your jaws..."))
+		return FALSE
+
 	target_part.dismember()
 	qdel(target_part)
 	our_mob.add_biomass(4)
