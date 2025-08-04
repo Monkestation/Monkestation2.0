@@ -185,8 +185,9 @@
 	eye_color_right = initial(eye_color_right)
 
 /obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
+	var/before = damage
 	. = ..()
-	if(!owner)
+	if(!owner || before == damage)
 		return
 	apply_damaged_eye_effects()
 
