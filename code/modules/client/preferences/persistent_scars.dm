@@ -9,4 +9,3 @@
 
 	// actually we're storing this bc cryopods ~Lucy
 	target.persistent_scars = value
-	return
