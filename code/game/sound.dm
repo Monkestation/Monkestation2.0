@@ -172,11 +172,13 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
-	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
-		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
 
-	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-		sound_to_use.volume *= 0
+	var/list/volume_mixer = client?.prefs?.channel_volume
+	if("[CHANNEL_MASTER_VOLUME]" in volume_mixer)
+		sound_to_use.volume *= volume_mixer["[CHANNEL_MASTER_VOLUME]"] * 0.01
+
+	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
+		return
 
 	if(vary)
 		if(frequency)
@@ -214,7 +216,6 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			sound_to_use.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
-		var/list/volume_mixer = client?.prefs?.channel_volume
 		if((channel in GLOB.used_sound_channels) || (mixer_channel in GLOB.used_sound_channels))
 			var/used_channel = 0
 			if(channel in GLOB.used_sound_channels)
