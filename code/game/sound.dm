@@ -231,8 +231,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			if("[mixer_channel]" in volume_mixer)
 				sound_to_use.volume *= (volume_mixer["[mixer_channel]"] * 0.01)
 
-		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
-			return //No sound
+		// if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
+		//	return //No sound
 
 		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
 		sound_to_use.x = dx * distance_multiplier
