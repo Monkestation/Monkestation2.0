@@ -199,11 +199,24 @@
 	WRITE_FILE(F["scar[char_index]-[scar_index]"], sanitize_text(valid_scars))
 
 /// Save any scars we have to our designated slot, then write our current slot so that the next time we call [/mob/living/carbon/human/proc/increment_scar_slot] (the next round we join), we'll be there
-/mob/living/carbon/human/proc/save_persistent_scars(nuke = FALSE)
-	if(!ckey || !mind?.original_character_slot_index || !client?.prefs.read_preference(/datum/preference/toggle/persistent_scars))
+/mob/living/carbon/human/proc/save_persistent_scars(nuke = FALSE, target_ckey)
+	if(!target_ckey)
+		target_ckey = ckey
+	if(!target_ckey || !mind?.original_character_slot_index)
 		return
 
-	var/path = "data/player_saves/[ckey[1]]/[ckey]/scars.sav"
+	var/persistent_scars_enabled = persistent_scars
+	if(isnull(persistent_scars_enabled))
+		if(client)
+			persistent_scars_enabled = client?.prefs?.read_preference(/datum/preference/toggle/persistent_scars)
+		else
+			var/client/user_client = GLOB.directory[target_ckey]
+			persistent_scars_enabled = user_client?.prefs?.read_preference(/datum/preference/toggle/persistent_scars)
+
+	if(!persistent_scars_enabled)
+		return
+
+	var/path = "data/player_saves/[target_ckey[1]]/[target_ckey]/scars.sav"
 	var/savefile/F = new /savefile(path)
 	var/char_index = mind.original_character_slot_index
 	var/scar_index = mind.current_scar_slot_index || F["current_scar_index"] || 1
