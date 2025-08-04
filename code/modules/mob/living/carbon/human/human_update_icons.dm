@@ -148,7 +148,7 @@ There are several things that need to be remembered:
 	update_mutant_bodyparts()
 
 /mob/living/carbon/human/update_worn_id()
-	TRY_QUEUE_RENDER(src)
+	TRY_QUEUE_RENDER(ITEM_SLOT_ID)
 	remove_overlay(ID_LAYER)
 
 	if(client && hud_used)
