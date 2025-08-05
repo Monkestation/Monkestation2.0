@@ -1114,6 +1114,7 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"shameless" = 'sound/announcer/vox_fem/shameless.ogg',
 	"shard" = 'sound/announcer/vox_fem/shard.ogg',
 	"she" = 'sound/announcer/vox_fem/she.ogg',
+	"shell" = 'sound/announcer/vox_fem/shell.ogg',
 	"shield" = 'sound/announcer/vox_fem/shield.ogg',
 	"shift" = 'sound/announcer/vox_fem/shift.ogg',
 	"shifts" = 'sound/announcer/vox_fem/shifts.ogg',
