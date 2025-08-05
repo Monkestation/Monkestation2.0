@@ -117,8 +117,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if(!mixer_channel)
 		mixer_channel = guess_mixer_channel(soundin)
 
-	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
-		return
+	/*if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		return*/
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
