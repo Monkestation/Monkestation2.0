@@ -1246,6 +1246,7 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"tesla" = 'sound/announcer/vox_fem/tesla.ogg',
 	"tesloose" = 'sound/announcer/vox_fem/tesloose.ogg',
 	"test" = 'sound/announcer/vox_fem/test.ogg',
+	"testremove" = 'sound/announcer/vox_fem/testremove.ogg',
 	"testremoveme" = 'sound/announcer/vox_fem/amber.ogg',
 	"text" = 'sound/announcer/vox_fem/text.ogg',
 	"thank" = 'sound/announcer/vox_fem/thank.ogg',
