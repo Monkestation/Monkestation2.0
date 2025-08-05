@@ -670,9 +670,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cell_charger_multi/wall_mounted, 29)
 /obj/machinery/microwave/frontier_printed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-	AddComponent(/datum/component/throwable_structure, held_w_class = WEIGHT_CLASS_HUGE, \
-											held_state = "microwave_frontier", held_force = 14, throw_force = 20, held_slowdown = 1, \
-											impact_sound = 'sound/effects/bang.ogg')
+	AddComponent(/datum/component/throwable_structure, held_state = "microwave_frontier", \
+											held_force = 14, throw_force = 20, held_slowdown = 1, impact_sound = 'sound/effects/bang.ogg')
 
 /obj/machinery/microwave/frontier_printed/RefreshParts()
 	. = ..()

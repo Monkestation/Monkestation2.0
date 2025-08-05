@@ -1,7 +1,6 @@
 // Let's you pick up and throw structures
 /datum/component/throwable_structure
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // Only one of the component can exist on an object
-	var/held_w_class = WEIGHT_CLASS_HUGE //Weight class of holder
 	var/held_lh = 'icons/mob/inhands/structure_held_lh.dmi' //Left hand icon
 	var/held_rh = 'icons/mob/inhands/structure_held_rh.dmi' //Right hand icon
 	var/held_state = "" //Icon state of inhand
@@ -10,12 +9,10 @@
 	var/held_slowdown = 0 //Slowdonw while held
 	var/impact_sound = 'sound/effects/bang.ogg' //Impact Sound
 
-/datum/component/throwable_structure/Initialize(held_w_class=WEIGHT_CLASS_HUGE, held_state="", \
-										held_force=0, throw_force=0, held_slowdown=0, impact_sound='sound/effects/bang.ogg')
+/datum/component/throwable_structure/Initialize(held_state="", held_force=0, throw_force=0, held_slowdown=0, impact_sound='sound/effects/bang.ogg')
 	if(!istype(parent, /obj/structure) && !istype(parent, /obj/machinery))
 		return COMPONENT_INCOMPATIBLE
 
-	src.held_w_class = held_w_class
 	src.held_state = held_state
 	src.held_force = held_force
 	src.throw_force = throw_force
@@ -23,13 +20,10 @@
 	src.impact_sound = impact_sound
 
 // Inherit the new values passed to the component
-/datum/component/throwable_structure/InheritComponent(datum/component/throwable_structure/new_comp, original, held_w_class, \
-											held_state, held_force, throw_force, held_slowdown, \
-											impact_sound)
+/datum/component/throwable_structure/InheritComponent(datum/component/throwable_structure/new_comp, original, \
+											held_state, held_force, throw_force, held_slowdown, impact_sound)
 	if(!original)
 		return
-	if(held_w_class)
-		src.held_w_class = held_w_class
 	if(held_state)
 		src.held_state = held_state
 	if(held_force)
@@ -68,7 +62,7 @@
 /datum/component/throwable_structure/proc/on_mouse_drop(datum/source, atom/dropping, mob/user)
 	SIGNAL_HANDLER
 	var/obj/structure_interact = parent
-	if(dropping == usr && structure_interact.Adjacent(user))
+	if(dropping == user && structure_interact.Adjacent(user))
 		if(structure_interact.anchored || structure_interact.flags_1 & NODECONSTRUCT_1)
 			return
 		if(!user.can_perform_action(structure_interact, NEED_DEXTERITY|NEED_HANDS))
@@ -79,13 +73,13 @@
 	var/obj/structure_interact = parent
 	if(!ishuman(user))
 		return
-	if(!user.get_empty_held_indexes())
+	if(user.get_num_held_items())
 		to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
 	user.visible_message(span_notice("[user] starts picking up [parent]!"), span_notice("You start picking up [parent]..."))
 	if(!do_after(user, 3 SECONDS, target = parent))
 		return FALSE
-	if(structure_interact.anchored || !structure_interact.Adjacent(user))
+	if(structure_interact.anchored || !structure_interact.Adjacent(user) || user.get_num_held_items())
 		return FALSE
 	structure_pickup(user)
 	return TRUE

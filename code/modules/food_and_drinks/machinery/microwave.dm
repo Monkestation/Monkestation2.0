@@ -55,9 +55,8 @@
 	create_reagents(100)
 	soundloop = new(src, FALSE)
 	update_appearance(UPDATE_ICON)
-	AddComponent(/datum/component/throwable_structure, held_w_class = WEIGHT_CLASS_HUGE, \
-											held_state = "microwave_standard", held_force = 14, throw_force = 20, held_slowdown = 1, \
-											impact_sound = 'sound/effects/bang.ogg')
+	AddComponent(/datum/component/throwable_structure, held_state = "microwave_standard", \
+											held_force = 14, throw_force = 20, held_slowdown = 1, impact_sound = 'sound/effects/bang.ogg')
 
 /obj/machinery/microwave/Exited(atom/movable/gone, direction)
 	if(gone in ingredients)
