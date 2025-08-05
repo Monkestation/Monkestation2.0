@@ -1307,6 +1307,7 @@
 #include "code\datums\components\temporary_body.dm"
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
+#include "code\datums\components\throwable_structure.dm"
 #include "code\datums\components\tippable.dm"
 #include "code\datums\components\toggle_attached_clothing.dm"
 #include "code\datums\components\toggle_suit.dm"
