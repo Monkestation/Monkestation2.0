@@ -364,8 +364,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
-	if(ishuman(mob_occupant))
-		var/mob/living/carbon/human/human_occupant = mob_occupant
+	if(human_occupant)
 		human_occupant.save_persistent_scars(target_ckey = human_occupant.ckey || stored_ckey)
 
 	mob_occupant.ghostize(can_reenter_corpse = FALSE)
