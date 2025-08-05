@@ -7,6 +7,6 @@
 /datum/action/cooldown/slasher/creepy_breathing/Activate(atom/target)
 	. = ..()
 	if(isliving(owner))
-		owner.emote("breathes in")
+		owner.emote("breathein")
 		sleep(2 SECONDS)
-		owner.emote("breathes out")
+		owner.emote("breatheout")

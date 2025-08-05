@@ -506,7 +506,7 @@
 	audio_cooldown = 1.5 SECONDS
 
 /datum/emote/living/breathein/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/weh.ogg'
+	return 'monkestation/sound/voice/breathein.ogg'
 
 /datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
 	return ..() && IS_SLASHER(user)
@@ -521,11 +521,8 @@
 	audio_cooldown = 1.5 SECONDS
 
 /datum/emote/living/breatheout/get_sound(mob/living/user)
-	return 'monkestation/sound/voice/weh.ogg'
+	return 'monkestation/sound/voice/breatheout.ogg'
 
 /datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
-	return ..() && islizard(user)
+	return ..() && IS_SLASHER(user)
 //End
-
-/datum/emote/living/meow/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	return ..() && is_cat_enough(user, include_all_anime = TRUE)
