@@ -495,4 +495,37 @@
 
 /datum/emote/spin/speen/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/speen.ogg'
+
+/datum/emote/living/breathein
+	key = "breathein"
+	key_third_person = "breathes in."
+	message = "breathe in"
+	message_mime = "exageratedly breathes in."
+	message_param = "breathes in at %t."
+	emote_type = EMOTE_AUDIBLE
+	audio_cooldown = 1.5 SECONDS
+
+/datum/emote/living/breathein/get_sound(mob/living/user)
+	return 'monkestation/sound/voice/weh.ogg'
+
+/datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
+	return ..() && IS_SLASHER(user)
+
+/datum/emote/living/breatheout
+	key = "breatheout"
+	key_third_person = "breathes out."
+	message = "breathe out"
+	message_mime = "exageratedly breathes out."
+	message_param = "breathes out at %t."
+	emote_type = EMOTE_AUDIBLE
+	audio_cooldown = 1.5 SECONDS
+
+/datum/emote/living/breatheout/get_sound(mob/living/user)
+	return 'monkestation/sound/voice/weh.ogg'
+
+/datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
+	return ..() && islizard(user)
 //End
+
+/datum/emote/living/meow/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+	return ..() && is_cat_enough(user, include_all_anime = TRUE)

@@ -10,9 +10,9 @@
 	. = ..()
 	if(owner.stat == DEAD)
 		return
-	var/turf/spikespot = get_turf(target)
-	if(!isspaceturf(spikespot) && !spikespot.density)
+	var/turf/spikespot = get_turf(owner)
+	if(!isspaceturf(spikespot) && !spikespot.is_blocked_turf(exclude_mobs = TRUE))
 		return
-	if(do_after(target, 5 SECONDS))
-		new /obj/structure/kitchenspike
+	if(do_after(owner, 5 SECONDS))
+		new /obj/structure/kitchenspike(spikespot)
 

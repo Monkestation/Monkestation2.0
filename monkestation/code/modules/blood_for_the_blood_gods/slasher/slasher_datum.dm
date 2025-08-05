@@ -402,7 +402,7 @@
 
 /datum/objective/slasher/harvest_souls
 	name = "Harvest Souls"
-	explanation_text = "Harvest souls by stalking your targets and feasting on their fear."
+	explanation_text = "Harvest souls from the dead to increase your power."
 	admin_grantable = TRUE
 
 /datum/objective/slasher/soulsteal
