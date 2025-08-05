@@ -3,7 +3,7 @@
 
 /obj/vehicle/ridden/kingschariot
 	name = "The Kings Chariot"
-	desc = "It is foretold that it cannot be stoped, we beg you to try."
+	desc = "It is foretold that it cannot be stopped, we beg you to try."
 	icon = 'icons/obj/car.dmi'
 	icon_state = "kingschariot"
 	layer = LYING_MOB_LAYER
