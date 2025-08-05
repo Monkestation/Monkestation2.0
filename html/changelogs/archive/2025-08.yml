@@ -108,3 +108,6 @@
       them!
   - qol: (Time-Green) Redtexting as antag with hardcore random score will pay you
       default points, instead of none (normal survival rules)
+2025-08-05:
+  Shoddd:
+  - bugfix: you can no longer torpor in frenzy
