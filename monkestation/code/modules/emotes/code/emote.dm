@@ -504,6 +504,7 @@
 	message_param = "breathes in at %t."
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
 
 /datum/emote/living/breathein/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/breathein.ogg'
@@ -519,10 +520,11 @@
 	message_param = "breathes out at %t."
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
 
 /datum/emote/living/breatheout/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/breatheout.ogg'
 
-/datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
+/datum/emote/living/breatheout/can_run_emote(mob/user, status_check, intentional)
 	return ..() && IS_SLASHER(user)
 //End

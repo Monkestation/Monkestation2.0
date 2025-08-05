@@ -1,17 +1,9 @@
-/datum/outfit/slasher/slasher1
+/datum/outfit/slasher/slasher
 	name = "Slasher Outfit"
 	suit = /obj/item/clothing/suit/apron/slasher
 	uniform = /obj/item/clothing/under/slasher
-	shoes = /obj/item/clothing/shoes/slasher_shoes
-	mask = /obj/item/clothing/mask/gas/slasher
-	belt = /obj/item/storage/belt/slasher
-
-/datum/outfit/slasher/slasher2
-	name = "Slasher Outfit"
-	suit = /obj/item/clothing/suit/apron/slasher2
-	uniform = /obj/item/clothing/under/slasher
 	shoes = /obj/item/clothing/shoes/admiral
-	mask = /obj/item/clothing/mask/gas/slasher2
+	mask = /obj/item/clothing/mask/gas/slasher
 	belt = /obj/item/storage/belt/slasher
 	gloves = /obj/item/clothing/gloves/admiral
 	back = /obj/item/storage/backpack/cursed
@@ -25,12 +17,14 @@
 	antag_hud_name = "slasher"
 	show_name_in_check_antagonists = TRUE
 	hud_icon = 'monkestation/icons/mob/slasher.dmi'
-	preview_outfit = /datum/outfit/slasher/slasher2
+	preview_outfit = /datum/outfit/slasher/slasher
 	show_to_ghosts = TRUE
 	var/give_objectives = TRUE
 	var/datum/action/cooldown/slasher/active_action = null
 	///the linked machette that the slasher can summon even if destroyed and is unique to them
 	var/obj/item/slasher_machette/linked_machette
+	/// the linked apron for increasing his armor values on soul succ
+	var/obj/item/clothing/suit/apron/slasher/linked_apron
 	///rallys the amount of souls effects are based on this
 	var/souls_sucked = 0
 	///our cached brute_mod
@@ -141,6 +135,7 @@
 	var/mob/living/carbon/human/human = current_mob
 	if(istype(human))
 		human.equipOutfit(/datum/outfit/slasher/slasher2)
+		linked_apron = human.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	cached_brute_mod = human.dna.species.brutemod
 	current_mob.alpha = 150
 	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)

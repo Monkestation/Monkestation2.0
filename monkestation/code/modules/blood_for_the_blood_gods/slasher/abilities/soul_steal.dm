@@ -103,7 +103,16 @@
 	human_target.maxHealth -= 20
 	slasherdatum.souls_sucked++
 
+
 	// lets make their machette stronger
 	slasherdatum.linked_machette.force += 2
 	slasherdatum.linked_machette.throwforce += 2
+
+	if(slasherdatum.souls_sucked > 17)
+		slasherdatum.linked_apron.armor_type = /datum/armor/slasher/level3
+	else if(slasherdatum.souls_sucked > 11)
+		slasherdatum.linked_apron.armor_type = /datum/armor/slasher/level2
+	else if(slasherdatum.souls_sucked > 5)
+		slasherdatum.linked_apron.armor_type = /datum/armor/slasher/level1
+
 	return COMPONENT_HOSTILE_NO_ATTACK
