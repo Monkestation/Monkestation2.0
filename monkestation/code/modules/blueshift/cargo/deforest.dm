@@ -36,6 +36,6 @@
 	access = ACCESS_MEDICAL
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
-		/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked,
-		/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked,
+		/obj/item/storage/backpack/deforest_medkit/stocked,
+		/obj/item/storage/backpack/deforest_surgical/stocked,
 	)

@@ -60,6 +60,9 @@
 	)
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
 	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/tank/jetpack,
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/restraints/handcuffs,
@@ -67,24 +70,20 @@
 		/obj/item/melee/baton,
 		/obj/item/melee/energy/sword,
 		/obj/item/shield/energy,
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
 		/obj/item/gun,
-		/obj/item/tank/jetpack/oxygen,
-		/obj/item/tank/jetpack/harness,
 		/obj/item/storage/belt/holster/detective,
 		/obj/item/storage/belt/holster/nukie,
 		/obj/item/storage/belt/holster/energy,
 	)
 	armor_type = /datum/armor/hardsuit/juggernaut
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/juggernaut
+	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/juggernaut
 	cell = /obj/item/stock_parts/cell/super
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 5
 	light_power = 1
 	light_on = FALSE
 	light_color = LIGHT_COLOR_GREEN
-	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit,/datum/action/item_action/toggle_suit_flashlight)
+	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_suit_flashlight)
 	slowdown = 2
 	strip_delay = 70
 
@@ -96,10 +95,7 @@
 	var/on = FALSE
 
 /obj/item/clothing/suit/space/hardsuit/juggernaut/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/toggle_suit_flashlight))
-		on = !on
-		set_light_on(on)
-	if(istype(actiontype, /datum/action/item_action/toggle_spacesuit))
-		toggle_spacesuit(user)
-	else if(istype(actiontype, /datum/action/item_action/toggle_helmet))
-		ToggleHelmet()
+	if(!istype(actiontype, /datum/action/item_action/toggle_suit_flashlight))
+		return ..()
+	on = !on
+	set_light_on(on)

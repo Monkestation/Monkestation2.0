@@ -27,6 +27,7 @@
 		"pocket_heater", // monkestation edit
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/bitrunning
 	id = "bitrunning"
@@ -40,6 +41,7 @@
 		"bitrunning_order", //MONKESTATION ADDITION
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/adv_mining
 	id = "adv_mining"
@@ -54,3 +56,4 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SUPPLY)

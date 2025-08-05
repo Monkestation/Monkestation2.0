@@ -14,7 +14,7 @@
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
 	description = "Machines using actual neural networks to simulate human lives."
-	prereq_ids = list("neural_programming", "robotics")
+	prereq_ids = list("neural_programming", "robotics", "cyborg")
 	design_ids = list(
 		"mmi_posi",
 	)
@@ -32,6 +32,7 @@
 		"exoscanner_console",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/adv_bots
 	id = "adv_bots"
@@ -83,6 +84,7 @@
 		"remove_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/ai_adv
 	id = "ai_adv"
@@ -113,6 +115,7 @@
 		"purge_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_COMMAND)
 
 //Any kind of point adjustment needs to happen before SSresearch sets up the whole node tree, it gets cached
 /datum/techweb_node/ai/New()

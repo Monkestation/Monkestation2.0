@@ -1474,9 +1474,9 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/static/list/icon_states_cache
 	if(isnull(icon_states_cache))
 #ifdef PRELOAD_ICON_EXISTS_CACHE
-		icon_states_cache = load_icon_exists_cache() || list()
+		icon_states_cache = load_icon_exists_cache() || alist()
 #else
-		icon_states_cache = list()
+		icon_states_cache = alist()
 #endif
 	// monkestation end
 	if(isnull(file) || isnull(state))
@@ -1491,15 +1491,14 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	// monkestation end
 
 	if(isnull(icon_states_cache[file]))
-		icon_states_cache[file] = list()
-/* commented out until i figure out why this is borked
-		if(isfile(file) && length(file_string)) // ensure that it's actually a file, and not a runtime icon
+		icon_states_cache[file] = alist()
+		var/file_string = "[file]"
+		if(length(file_string) && file_string != "/icon") // ensure that it's actually a file, and not a runtime icon
 			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
 				icon_states_cache[file][istate] = TRUE
 		else // Otherwise, we have to use the slower BYOND proc
-*/
-		for(var/istate in icon_states(file))
-			icon_states_cache[file][istate] = TRUE
+			for(var/istate in icon_states(file))
+				icon_states_cache[file][istate] = TRUE
 
 	return !isnull(icon_states_cache[file][state])
 
@@ -1511,7 +1510,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(icon_exists(file, state))
 		return TRUE
 
-	var/static/list/screams = list()
+	var/static/alist/screams = alist()
 	if(!isnull(screams[file]))
 		screams[file] = TRUE
 		stack_trace("State [state] in file [file] does not exist.")

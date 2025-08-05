@@ -1,4 +1,4 @@
-/datum/mutation/human/wings
+/datum/mutation/wings
 	name = "Strengthened Wings"
 	desc = "Subject's wing muscle volume rapidly increases, effect only observed in naturally winged subjects."
 	locked = TRUE
@@ -8,16 +8,16 @@
 	species_allowed = list(SPECIES_MOTH, SPECIES_TUNDRA, SPECIES_APID, SPECIES_ORNITHID)
 	instability = 15
 
-/datum/mutation/human/wings/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/wings/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner)) // Parent checks this, but we want to be safe when doing get_organ_slot
-		return TRUE
+		return FALSE
 
 	var/obj/item/organ/external/wings/functional/external_wings = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(external_wings && istype(external_wings))
-		return TRUE // You dont need us
+		return FALSE // You dont need us
 
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	var/datum/reagent/flightpotion/juice = new()
@@ -26,7 +26,7 @@
 	if(external_wings) // These are the old wings, instead of being dropped onto the ground we store them
 		external_wings.forceMove(owner)
 
-/datum/mutation/human/wings/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/wings/on_losing(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner)) // See above
 		return TRUE
 

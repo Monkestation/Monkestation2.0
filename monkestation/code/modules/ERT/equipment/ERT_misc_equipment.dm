@@ -296,7 +296,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/c4(src)
 
-/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/elite
+/obj/vehicle/sealed/mecha/ripley/deathripley/real/elite
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
@@ -318,7 +318,7 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster, /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster),
 	)
 
-/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/elite/generate_actions()
+/obj/vehicle/sealed/mecha/ripley/deathripley/real/elite/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)

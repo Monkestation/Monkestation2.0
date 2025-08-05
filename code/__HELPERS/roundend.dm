@@ -205,16 +205,28 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
-	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
+	if(human_mob.mind && (length(human_mob.mind.antag_datums) > 0))
 		for(var/datum/antagonist/antag_datums as anything in human_mob.mind.antag_datums)
+			if(!antag_datums.hardcore_random_bonus) //don't give bonuses to dumb stuff like revs or hypnos
+				continue
 			if(initial(antag_datums.can_assign_self_objectives) && !antag_datums.can_assign_self_objectives)
-				return FALSE // You don't get a prize if you picked your own objective, you can't fail those
+				continue // You don't get a prize if you picked your own objective, you can't fail those
+
+			var/greentexted = TRUE
 			for(var/datum/objective/objective_datum as anything in antag_datums.objectives)
 				if(!objective_datum.check_completion())
-					return FALSE
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
-	else if(considered_escaped(human_mob))
+					greentexted = FALSE
+					break
+
+			if(greentexted)
+				var/score = round(human_mob.hardcore_survival_score * 2)
+				player_client.give_award(/datum/award/score/hardcore_random, human_mob, score)
+				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
+				return
+
+	if(considered_escaped(human_mob.mind))
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+		log_admin("[player_client] gained [round(human_mob.hardcore_survival_score)] hardcore random points.")
 
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
@@ -656,7 +668,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		if(!ishuman(i))
 			continue
 		var/mob/living/carbon/human/human_player = i
-		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
+		if(!human_player.hardcore_survival_score || !considered_escaped(human_player.mind) || human_player.stat == DEAD) ///gotta escape nerd
 			continue
 		if(!human_player.mind)
 			continue
@@ -878,6 +890,59 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 				return
 			qdel(query_update_everything_ranks)
 		qdel(query_check_everything_ranks)
+
+//MONKE EDIT START
+/datum/controller/subsystem/ticker/proc/save_mentor_data()
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Mentor rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		return
+	if(CONFIG_GET(flag/mentor_legacy_system)) //we're already using legacy system so there's nothing to save
+		return
+	else if(load_mentors(TRUE)) //returns true if there was a database failure and the backup was loaded from
+		return
+	sync_mentor_ranks_with_db()
+	var/list/sql_mentors = list()
+	for(var/i in GLOB.protected_mentors)
+		var/datum/mentors/A = GLOB.protected_mentors[i]
+		sql_mentors += list(list("ckey" = A.target, "rank" = A.rank_names()))
+
+	SSdbcore.MassInsert(format_table_name("mentor"), sql_mentors, duplicate_key = TRUE)
+	var/datum/db_query/query_mentor_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("mentor")] a ON p.ckey = a.ckey SET p.lastmentorrank = a.rank")
+	query_mentor_rank_update.Execute()
+	qdel(query_mentor_rank_update)
+
+	//json format backup file generation stored per server
+	var/json_file = file("data/mentors_backup.json")
+	var/list/file_data = list(
+		"ranks" = list(),
+		"mentors" = list(),
+		"connections" = list(),
+	)
+	for(var/datum/mentor_rank/R in GLOB.mentor_ranks)
+		file_data["ranks"]["[R.name]"] = list()
+		file_data["ranks"]["[R.name]"]["include rights"] = R.include_rights
+		file_data["ranks"]["[R.name]"]["exclude rights"] = R.exclude_rights
+		file_data["ranks"]["[R.name]"]["can edit rights"] = R.can_edit_rights
+
+	for(var/mentor_ckey in GLOB.mentor_datums + GLOB.dementors)
+		var/datum/mentors/mentor = GLOB.mentor_datums[mentor_ckey]
+
+		if(!mentor)
+			mentor = GLOB.dementors[mentor_ckey]
+			if (!mentor)
+				continue
+
+		file_data["mentors"][mentor_ckey] = mentor.rank_names()
+
+		if (mentor.owner)
+			file_data["connections"][mentor_ckey] = list(
+				"cid" = mentor.owner.computer_id,
+				"ip" = mentor.owner.address,
+			)
+
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+//MONK EDIT END
 
 /datum/controller/subsystem/ticker/proc/cheevo_report()
 	var/list/parts = list()

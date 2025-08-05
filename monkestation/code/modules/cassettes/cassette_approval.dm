@@ -142,26 +142,16 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 #undef ADMIN_OPEN_REVIEW
 
 // Handles UI to manage cassettes.
-/client/proc/review_cassettes() //Creates a verb for admins to open up the ui
-	set name = "Review Cassettes"
-	set desc = "Review this rounds cassettes."
-	set category = "Admin.Game"
-	if(!check_rights(R_FUN))
-		return
-	new /datum/review_cassettes(usr)
+ADMIN_VERB(review_cassettes, R_FUN, FALSE, "Review Cassettes", "Review this rounds cassettes.", ADMIN_CATEGORY_GAME)
+	new /datum/review_cassettes(user.mob)
 
 /datum/review_cassettes
-	var/client/holder //client of whoever is using this datum
-	var/is_funmin = FALSE
 
-/datum/review_cassettes/New(user)//user can either be a client or a mob due to byondcode(tm)
-	holder = get_player_client(user)
-	is_funmin = check_rights(R_FUN)
-	ui_interact(holder.mob)//datum has a tgui component, here we open the window
+/datum/review_cassettes/New(mob/user)
+	ui_interact(user)//datum has a tgui component, here we open the window
 
-/datum/review_cassettes/ui_status(mob/user, datum/ui_state/state)
-	return (user.client == holder && is_funmin) ? UI_INTERACTIVE : UI_CLOSE
-
+/datum/review_cassettes/ui_state(mob/user)
+	return ADMIN_STATE(R_FUN)
 
 /datum/review_cassettes/ui_close()// Don't leave orphaned datums laying around. Hopefully this handles timeouts?
 	qdel(src)
@@ -218,5 +208,3 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 		var/datum/cassette_review/cassette = GLOB.cassette_reviews[tape_id]
 		cassette.ui_interact(ui.user)
 		return
-
-

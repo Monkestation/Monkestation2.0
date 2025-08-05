@@ -379,6 +379,29 @@
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/rdconsole
+	var/silence_announcements = FALSE
+
+/obj/item/circuitboard/computer/rdconsole/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured to [silence_announcements ? "silence" : "announce"] researched nodes on radio.")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "board mode is broken!")
+		return
+	silence_announcements = !silence_announcements
+	balloon_alert(user, "announcements [silence_announcements ? "enabled" : "disabled"]")
+
+/obj/item/circuitboard/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	silence_announcements = FALSE
+	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
+	return TRUE
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"
@@ -400,10 +423,10 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/teleporter
 
-/obj/item/circuitboard/computer/scan_consolenew
+/obj/item/circuitboard/computer/dna_console
 	name = "DNA Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/scan_consolenew
+	build_path = /obj/machinery/computer/dna_console
 
 /obj/item/circuitboard/computer/mechpad
 	name = "Mecha Orbital Pad Console"

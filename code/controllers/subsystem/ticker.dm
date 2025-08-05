@@ -200,6 +200,7 @@ SUBSYSTEM_DEF(ticker)
 			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
+			SStitle.update_init_text()
 			// MONKESTATION EDIT START - lobby notices
 			if (length(config.lobby_notices))
 				config.ShowLobbyNotices(world)
@@ -229,6 +230,7 @@ SUBSYSTEM_DEF(ticker)
 			if(timeLeft <= 300 && !tipped)
 				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
+				SStitle.update_init_text()
 
 			if(timeLeft <= 0)
 				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
@@ -347,8 +349,9 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
-	SSgamemode.current_storyteller.round_started = TRUE
-	SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+	if(!CONFIG_GET(flag/disable_storyteller))
+		SSgamemode.current_storyteller.round_started = TRUE
+		SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
 	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
 
@@ -816,6 +819,7 @@ SUBSYSTEM_DEF(ticker)
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
 	update_everything_flag_in_db()
+	save_mentor_data() //MONKE EDIT
 	if(!round_end_sound)
 		round_end_sound = choose_round_end_song()
 	///The reference to the end of round sound that we have chosen.

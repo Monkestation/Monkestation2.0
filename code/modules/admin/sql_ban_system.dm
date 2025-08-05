@@ -360,6 +360,7 @@
 				ROLE_MONSTERHUNTER,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
+				ROLE_COMMANDO_OPERATIVE,
 				ROLE_OVERTHROW,
 				ROLE_REV,
 				ROLE_REVENANT,
@@ -373,6 +374,7 @@
 				ROLE_WIZARD,
 				BAN_OPFOR,
 				ROLE_ASSAULT_OPERATIVE,
+				ROLE_BINGLE,
 			),
 		)
 		for(var/department in long_job_lists)

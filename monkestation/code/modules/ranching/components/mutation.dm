@@ -31,7 +31,7 @@
 			return
 		if(prob(instability))
 			var/list/real_mutations = list()
-			for(var/datum/mutation/ranching/mutation as anything in parent_animal.created_mutations)
+			for(var/datum/ranching_mutation/mutation as anything in parent_animal.created_mutations)
 				var/value = 100
 				if(!mutation.cycle_requirements(parent_animal))
 					continue
@@ -39,7 +39,7 @@
 				real_mutations[mutation] = value
 
 			if(length(real_mutations))
-				var/datum/mutation/ranching/chicken/picked_mutation = pick_weight(real_mutations)
+				var/datum/ranching_mutation/chicken/picked_mutation = pick_weight(real_mutations)
 				layed_egg = new picked_mutation.egg_type(source_turf)
 				layed_egg.possible_mutations |= picked_mutation
 				if(layed_egg.type != parent_animal.egg_type)
@@ -70,14 +70,14 @@
 	else
 		if(prob(instability))
 			var/list/real_mutations = list()
-			for(var/datum/mutation/ranching/mutation as anything in parent_animal.created_mutations)
+			for(var/datum/ranching_mutation/mutation as anything in parent_animal.created_mutations)
 				var/value = 100
 				if(!mutation.cycle_requirements(parent_animal))
 					continue
 				real_mutations |= mutation
 				real_mutations[mutation] = value
 			if(length(real_mutations))
-				var/datum/mutation/ranching/picked_mutation = pick_weight(real_mutations)
+				var/datum/ranching_mutation/picked_mutation = pick_weight(real_mutations)
 				child = new picked_mutation.baby(source_turf)
 			else
 				child = new parent_animal.child_type(source_turf)

@@ -55,6 +55,11 @@ ADMIN_LEGACY_SYSTEM
 ## Comment this out to stop locally connected clients from being given the almost full access !localhost! admin rank
 ENABLE_LOCALHOST_RANK
 
+## Comment this out if you want to use the SQL based mentor system, the legacy system uses mentors.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
+MENTOR_LEGACY_SYSTEM
+
 ## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
@@ -465,6 +470,12 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
 
+## Threshold (in deciseconds) for real time between ticks before we start dumping profiles
+DRIFT_DUMP_THRESHOLD 40
+
+## How long to wait (in deciseconds) after a profile dump before logging another tickdrift sourced one
+DRIFT_PROFILE_DELAY 150
+
 ## Uncomment to enable global ban DB using the provided URL. The API should expect to receive a ckey at the end of the URL.
 ## More API details can be found here: https://centcom.melonmesa.com
 #CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search
@@ -526,6 +537,14 @@ MOTD motd.txt
 ## but enabled on production (the default).
 CACHE_ASSETS 0
 
+## Enables 'smart' asset caching, for assets that support it.
+## This is a type of asset cache that automatically invalidates itself based on inputs to the asset generation.
+## The cache is stored in `data/spritesheets/smart_cache/`.
+## It lowers the generation cost and is safe to enable on development and production.
+## This cache is only cleared by the game or manually, but it shouldn't affect the results.
+## This setting is independent of `CACHE_ASSETS`, they do not affect each other whatsoever.
+SMART_CACHE_ASSETS
+
 ## If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
 ## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
 ## Will only seek to waste disk space if ran on production.
@@ -566,6 +585,12 @@ CONFIG_ERRORS_RUNTIME
 #MINIMUM_ACCOUNT_AGE
 ## The age in days if minimum account age is on
 #MINIMUM_AGE
+
+## Uncomment to allow admins with +DEBUG to start the byond-tracy profiler during the round.
+#ALLOW_TRACY_START
+
+## Uncomment to allow admins with +DEBUG to queue the next round to run the byond-tracy profiler.
+#ALLOW_TRACY_QUEUE
 
 ## Tgui payloads larger than the 2kb limit for BYOND topic requests are split into roughly 1kb chunks and sent in sequence.
 ## This config option limits the maximum chunk count for which the server will accept a payload, default is 32

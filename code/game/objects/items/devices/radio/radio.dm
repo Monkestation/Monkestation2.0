@@ -129,6 +129,12 @@
 		QDEL_NULL(keyslot)
 	return ..()
 
+/obj/item/radio/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
+		set_broadcasting(FALSE)
+		return TRUE
+
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
@@ -265,6 +271,8 @@
 	else
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off
 		set_listening(FALSE, actual_setting = FALSE)
+
+	set_frequency(frequency)
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)

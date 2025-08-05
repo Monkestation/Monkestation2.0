@@ -3,6 +3,7 @@
 	desc = "An odd sort of microphone that looks grown, rather than built."
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "ears-clock"
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/ears/jelly
 	name = "core audiosomes"

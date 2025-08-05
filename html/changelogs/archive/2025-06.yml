@@ -375,3 +375,144 @@
   flleeppyy:
   - bugfix: Setting storytellers should now actually set, before the round starts
   - bugfix: Storytellers changed after roundstart will now tick instead of doing nothing
+2025-06-22:
+  Absolucy:
+  - balance: Reworked the curator's whip.
+  - balance: Instead of instantly disarming both hands with each attack, you need
+      to target an arm, and it will yank the item out of that hand.
+  - balance: The curator's whip can also trip people who are 2-3 tiles away. Tripping
+      someone does not drop their items, and doesn't qualify for shovestuns.
+  - balance: The curator's whip does not deal damage and has a longer click/attack
+      cooldown when it trips/disarms someone.
+  - balance: The curator's whip now causes very slight pain from normal attacks (it's
+      a whip, of course it's gonna sting)
+  - balance: Curator's whip no longer bypasses shields / block chance.
+  - sound: Halved the base volume of the Black Mesa Source Military VOX voice.
+  Salted-Zen:
+  - rscadd: reworked the protokinetic shotgun into a limited ammo powerhouse, with
+      three new shells specifically made just for it.
+  SirNightKnight:
+  - rscadd: The Syndicate has opened up the Banana Department to sponsor their agent
+      with monkey field agents.
+  - rscadd: Firebase Trident has opened up in the sector to launch Syndicate commando
+      raids on surround Nanotrasen stations.
+  - rscadd: ' added the combat forcefield projector. Like the normal forcefield projector
+      but it has more integrity, regens faster, more shields, and the shield can be
+      shot through like a barricade.'
+  - rscadd: added the Rostokov 9mm carbine.
+  - rscadd: added a refurbished version of the PP smg that fires 9mm in 2 shot bursts.
+  - qol: more examine feedback for nuclear devices (deconstruction/arming state)
+  - qol: all nuclear operatives now know the Syndicate's codewords.
+  - qol: primitives can now use mechs if they have the clever mutation.
+  - balance: The combat energy shield (The one you hold) now functions as a normal
+      shield (it used to only protect you against energy projectiles and nothing else).
+      It loses guaranteed energy projectile deflection, but still reflects the projectile
+      so on a block.
+  - balance: ' buffed L6 saw damage from 30 to 45 per shot.'
+  - balance: ' buffed combat wrench damage to 18.
+
+      balance : all subtypes of nuclear operative get a skillchip  removing recoil.'
+  - balance: ' nukie mech ammo bags now have bluespace compression kits so you can
+      carry the ammo easier. The Mauler bag now costs 8 TC instead of 6 and lost it''s
+      scattershot ammo as the Mauler doesn''t use scattershot.'
+  - balance: nukie deployable turrets now fire 9mm but fire a bit slower than a normal
+      deployable turret.
+  - balance: dark orange syndie space suits now have fire protection.
+  - balance: engineering syndie space suits now have fire & radiation protection.
+  - balance: syndie space suits now have some wounding protection.
+  - bugfix: fixed nuclear devices not showing the overlays for deconstruction states
+      and lights for arming state properly.
+  - bugfix: fixed some bugs with combat wrenches working when off, removed their blood
+      overlay.
+  - bugfix: fixed an inhand sprite issue with morphine pens.
+  - bugfix: fixed an inhand sprite issue with the L6 saw.
+  - bugfix: fixed bulldog mag overlays.
+  - bugfix: fixed a runtime relating to firing a gun without a magazine.
+  - map: added Firebase Trident to the CentComm Z level.
+  - map: made some changes to the advanced infiltrator shuttle.
+  - spellcheck: fixed several naming issues with syndie space suits.
+  - code_imp: ' reworked the cloaker belt. Kept the recharge in darkness and drain
+      in light mechanic. Besides that it works similar to the ninja cloak now and
+      has a more consistent invisibility effect. Also gave it a new sprite that indicates
+      what the charge is and made it a belt subtype with 4 storage slots.'
+  - code_imp: nuked a bunch of Blueshift projectile changes that were overwriting
+      the base files.
+2025-06-23:
+  Absolucy:
+  - rscadd: (Hatterhat) The SC/FISHER disruptor pistol, a very compact, permanently
+      silenced energy gun, is now stocked in Nanotrasen-accessible black markets with
+      a price generally somewhere between 400 and 800 credits. Aspiring users are
+      warned that it's really bad for trying to actually kill people. Caveat emptor.
+  - rscadd: (Ghommie) Added saboteur interactions with radios, pAIs, turrets, secbots
+      and APCs.
+  - rscadd: (Hatterhat) Guns now have a dry_fire_sound_volume variable, allowing for
+      guns to be less loud when trying to fire while empty.
+  - bugfix: (Hatterhat) Closets and crates now properly count as structures for pass
+      flags again.
+  - refactor: (SmArtKar) Refactored a lot of speech modifiers to use a component instead
+      of copied over code.
+  - rscadd: (EnterTheJake) The Wraith Cloaking Module is now available in the uplink,
+      costs 3 TC.
+  - bugfix: (Xander3359) Infiltrator suit now hides moth wings/antenna.
+  - bugfix: (Xander3359) hidden moth wings are no longer capable of flight.
+  - bugfix: Voice Activator circuit components now properly decode messages, meaning
+      apostrophes and such no longer make the message look weird.
+  - balance: Voice Activator circuit components can now only understand roundstart
+      languages - languages such as codespeak, xenomorph, blah-tongue, shadowtongue,
+      etc will not be translated.
+  - rscadd: Silver forged weapons now deal bonus damage against bloodsuckers, werewolves,
+      and the vampire species.
+  Xander3359:
+  - rscadd: Added a jetpack upgrade module to cargo/mining vendor which allows you
+      to attach a jetpack to your hardsuit
+  - image: added sprite for the jetpack upgrade module
+  - refactor: hardsuits use the attached clothing component
+  - code_imp: splits up departmental hardsuits into their own files
+2025-06-25:
+  ThePooba:
+  - rscadd: 4 new donator only summer jobs and also a hotdog suit
+2025-06-26:
+  Absolucy:
+  - bugfix: Pyro slimes (and slimes in general) no longer die in plasma fires.
+  Absolucy, Ghommie:
+  - bugfix: Meat and other bloody things will not spread blood forever.
+2025-06-27:
+  Absolucy:
+  - bugfix: Fixed the UIs for the xenobio market and slime pen controller being cut
+      off at the bottom.
+  F-e-r-n:
+  - bugfix: 'Gave bulldog the damage mod as promised
+
+      :cl:'
+  Xander3359:
+  - rscadd: Cargo teleporter can hold fulton charges. Load it up with a fulton, and
+      right click to use it
+  - qol: Quick equipping something while you have an open storage will prioritize
+      that storage
+  - balance: Explorer EVA box can hold medium sized items
+  - bugfix: Premium Tactical Medkit can hold more of the items it spawns with
+  - rscadd: Combat hyposprays can draw reagents with right click
+2025-06-29:
+  Absolucy:
+  - map: Added mechcomp vendors to engineering and science on Pubby Station.
+  Shoddd:
+  - bugfix: auspex now properly wounds
+  - bugfix: auspex description now accurate
+  - code_imp: frenzy now uses strong grab trait rather than martial arts
+2025-06-30:
+  Absolucy:
+  - bugfix: Fixed colonies being enabled causing space explorers to accidentally trespass
+      upon the domain of gods.
+  EssentialTomato:
+  - bugfix: Fixed being able to spam scanners on ore vents for more points.
+  Xander3359:
+  - bugfix: fixed a disposal pipe in pubby medbay
+  konovic:
+  - bugfix: Fixed gorilla suit and dinojammies disappearing when toggling the hood
+  notghosti:
+  - rscadd: Unmarked takbok has received a recolored sprite
+  - rscadd: Takbok kit comes with hollowpoint rounds.
+  - balance: Unmarked takbok unwielded recoil has been nerfed (1.6 -> 2) Time to fire
+      reduced (0.8 -> 0.6)  and damage multiplier 1 -> 1.3)
+  - spellcheck: fixed a few typos in relation to the unmarked takbok
+  - rscdel: Disables the unique AI station trait

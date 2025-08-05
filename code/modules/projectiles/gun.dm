@@ -28,6 +28,7 @@
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
 	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
+	var/dry_fire_sound_volume = 30
 	var/suppressed = null //whether or not a message is displayed when fired
 	var/can_suppress = FALSE
 	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
@@ -169,7 +170,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	balloon_alert_to_viewers("*click*")
-	playsound(src, dry_fire_sound, 30, TRUE)
+	playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
 
 /obj/item/gun/proc/fire_sounds()
 	if(suppressed)
@@ -228,6 +229,8 @@
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
 		return ..() //if they're out of range, just shootem.
+	if (user.istate & ISTATE_HARM)
+		return SECONDARY_ATTACK_CALL_NORMAL //continue attack chain for melee attack, we dont want to hold up
 	if(!can_hold_up)
 		return ..()
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
@@ -261,7 +264,7 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || (user.istate & ISTATE_HARM)) //melee attack
+		if(!ismob(target) || (user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY)) //melee attack
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
@@ -304,7 +307,8 @@
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))
-				bonus_spread += dual_wield_spread
+				if(!(HAS_TRAIT(H, TRAIT_AKIMBO)))
+					bonus_spread += dual_wield_spread
 				loop_counter++
 				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
 
@@ -460,7 +464,7 @@
 	semicd = FALSE
 
 /obj/item/gun/attack(mob/M, mob/living/user)
-	if((user.istate & ISTATE_HARM)) //Flogging
+	if((user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY)) //Flogging
 		if(bayonet)
 			M.attackby(bayonet, user)
 			return
@@ -469,7 +473,7 @@
 	return
 
 /obj/item/gun/attack_atom(obj/O, mob/living/user, params)
-	if((user.istate & ISTATE_HARM))
+	if((user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY))
 		if(bayonet)
 			O.attackby(bayonet, user)
 			return

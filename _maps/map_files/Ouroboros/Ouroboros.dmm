@@ -22598,7 +22598,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/box,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/south,
@@ -50375,6 +50375,9 @@
 /area/station/maintenance/starboard/fore)
 "oOC" = (
 /obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/quartermaster)
 "oOH" = (
@@ -59255,7 +59258,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms/room5)
 "rya" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
@@ -80459,7 +80462,7 @@
 /turf/open/floor/iron/edge,
 /area/station/service/janitor)
 "xIP" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{

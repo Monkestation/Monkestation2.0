@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(plexora)
 
 	// MUST INCREMENT BY ONE FOR EVERY CHANGE MADE TO PLEXORA
 	var/version_increment_counter = 2
-	var/plexora_is_alive = FALSE
+	var/plexora_is_alive = null // this gets set to TRUE or FALSE during is_plexora_alive, it's just initially null to so logging works properly without spamming
 	var/vanderlin_available = FALSE
 	var/base_url = ""
 	var/enabled = TRUE
@@ -108,9 +108,11 @@ SUBSYSTEM_DEF(plexora)
 	UNTIL_OR_TIMEOUT(request.is_complete(), 10 SECONDS)
 	var/datum/http_response/response = request.into_response()
 	if (response.errored)
-		plexora_is_alive = FALSE
-		log_admin("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
-		CRASH("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
+		// avoid spamming logs
+		if (isnull(plexora_is_alive) || plexora_is_alive)
+			plexora_is_alive = FALSE
+			log_admin("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
+			CRASH("Failed to check if Plexora is alive! She probably isn't. Check config on both sides")
 	else
 		var/list/json_body = json_decode(response.body)
 		if (json_body["version_increment_counter"] != version_increment_counter)
@@ -127,12 +129,13 @@ SUBSYSTEM_DEF(plexora)
 	var/datum/world_topic/status/status_handler = new()
 	var/list/status = status_handler.Run()
 
-	http_request(
+	var/datum/http_request/status_request = http_request(
 		RUSTG_HTTP_METHOD_POST,
 		"[base_url]/status",
 		json_encode(status),
 		default_headers
-	).begin_async()
+	)
+	status_request.fire_and_forget()
 
 /datum/controller/subsystem/plexora/proc/notify_shutdown(restart_type_override)
 	var/static/server_restart_sent = FALSE
@@ -374,8 +377,7 @@ SUBSYSTEM_DEF(plexora)
 		"data" = data,
 	))
 
-/datum/controller/subsystem/plexora/proc/http_basicasync(path, list/body) as /datum/http_request
-	RETURN_TYPE(/datum/http_request)
+/datum/controller/subsystem/plexora/proc/http_basicasync(path, list/body)
 	if(!enabled) return
 
 	var/datum/http_request/request = new(
@@ -385,8 +387,7 @@ SUBSYSTEM_DEF(plexora)
 		default_headers,
 		"tmp/response.json"
 	)
-	request.begin_async()
-	return request
+	request.fire_and_forget()
 
 /datum/world_topic/plx_announce
 	keyword = "PLX_announce"

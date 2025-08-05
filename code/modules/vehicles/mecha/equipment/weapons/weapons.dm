@@ -568,3 +568,16 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/mininuke
+	name = "mininuke"
+	desc = "shouldn't see this unless an admin spawned it, you might survive firing this in the vendozer? It has 100 bomb armor but who fucking knows!"
+	icon_state = "mecha_light_tank_cannon"
+	projectile = /obj/projectile/bullet/rocket/mininuke
+	projectiles = 100000000
+	projectiles_cache = 10000000
+	projectiles_cache_max = 100000000
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+	mech_flags = EXOSUIT_MODULE_TANK

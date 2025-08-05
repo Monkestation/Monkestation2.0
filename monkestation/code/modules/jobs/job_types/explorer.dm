@@ -81,3 +81,4 @@
 /obj/item/storage/box/emergency_eva/explorer/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(exception_hold_list = list(/obj/item/tank/jetpack/mining, /obj/item/clothing/suit/space/hardsuit/mining))
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL

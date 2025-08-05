@@ -41,3 +41,9 @@
 	name = ".45 incendiary bullet casing"
 	desc = "A .45 bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c45
+
+/obj/item/ammo_casing/c45/hp
+	name = ".45 hollow-point bullet casing"
+	desc = "A .45 bullet casing"
+	projectile_type = /obj/projectile/bullet/c45/hp
+	advanced_print_req = TRUE

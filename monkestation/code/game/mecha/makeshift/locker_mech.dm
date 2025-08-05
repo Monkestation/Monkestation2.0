@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/mecha/working/ripley/lockermech
+/obj/vehicle/sealed/mecha/ripley/lockermech
 	desc = "A locker with stolen wires, struts, electronics and airlock servos crudely assembled into something that resembles the functions of a mech."
 	name = "Locker Mech"
 	icon = 'monkestation/icons/mecha/makeshift_mechs.dmi'

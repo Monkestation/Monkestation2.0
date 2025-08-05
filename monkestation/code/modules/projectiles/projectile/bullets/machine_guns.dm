@@ -114,3 +114,8 @@
 	name = ".22 LR \"peashooter\" round"
 	damage = 4
 	wound_bonus = -10
+
+/obj/projectile/bullet/peashooter/minigun
+	name = ".22 LR round"
+	damage = 6
+	wound_bonus = -5
