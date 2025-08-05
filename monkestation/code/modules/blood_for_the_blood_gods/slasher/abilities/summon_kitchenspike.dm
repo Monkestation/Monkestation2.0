@@ -4,7 +4,7 @@
 
 	button_icon_state = "summon_machete"
 
-	cooldown_time = 600 SECONDS
+	cooldown_time = 6 SECONDS
 
 /datum/action/cooldown/slasher/summon_kitchenspike/Activate(atom/target)
 	. = ..()

@@ -499,7 +499,7 @@
 /datum/emote/living/breathein
 	key = "breathein"
 	key_third_person = "breathes in."
-	message = "breathe in"
+	message = "breathes in."
 	message_mime = "exageratedly breathes in."
 	message_param = "breathes in at %t."
 	emote_type = EMOTE_AUDIBLE
@@ -514,7 +514,7 @@
 /datum/emote/living/breatheout
 	key = "breatheout"
 	key_third_person = "breathes out."
-	message = "breathe out"
+	message = "breathes out."
 	message_mime = "exageratedly breathes out."
 	message_param = "breathes out at %t."
 	emote_type = EMOTE_AUDIBLE
