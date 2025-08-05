@@ -22,7 +22,7 @@
 	Heal(mob, effectiveness)
 
 /datum/symptom/water_heal/proc/CanHeal(mob/living/M)
-	if(!M)
+	if(!iscarbon(M))
 		return 1
 	var/base = 0
 	if(M.fire_stacks < 0)

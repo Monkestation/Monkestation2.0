@@ -33,6 +33,8 @@
 	REMOVE_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 
 /datum/symptom/coma/proc/CanHeal(mob/living/victim)
+	if(!iscarbon(victim))
+		return FALSE
 	if(HAS_TRAIT(victim, TRAIT_DEATHCOMA))
 		return multiplier
 	if(victim.IsSleeping())

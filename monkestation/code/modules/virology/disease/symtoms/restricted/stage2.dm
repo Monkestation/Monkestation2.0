@@ -160,6 +160,8 @@
 		return current_heal_level
 
 /datum/symptom/starlight/proc/CanHeal(mob/living/carbon/mob)
+	if(!iscarbon(mob))
+		return FALSE
 	var/mob/living/affected_mob = mob
 	var/turf/turf_of_mob = get_turf(affected_mob)
 	switch(CanTileHeal(turf_of_mob, FALSE))
