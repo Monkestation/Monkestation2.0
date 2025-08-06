@@ -94,8 +94,8 @@
 	word = lowertext(word)
 
 	var/datum/vox_voice/used_vox_voice = GLOB.vox_voices[/datum/vox_voice/normal::name]
-	if(used_vox_voice.words[word])
-		var/sound_file = used_vox_voice.words[word]
+	if(used_vox_voice.sounds[word])
+		var/sound_file = used_vox_voice.sounds[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
