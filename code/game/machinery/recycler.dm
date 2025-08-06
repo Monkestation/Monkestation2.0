@@ -113,9 +113,9 @@
 	if(border_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/AM)
+/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(eat), AM)
+	INVOKE_ASYNC(src, PROC_REF(eat), enterer)
 
 /obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
