@@ -149,10 +149,6 @@
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return TRUE
-
 			// SAFETY: eject_sheets checks for valid mats
 			materials.eject_sheets(material, amount)
 
@@ -391,10 +387,6 @@
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return TRUE
-
 			// SAFETY: eject_sheets checks for valid mats
 			materials.eject_sheets(material, amount)
 
