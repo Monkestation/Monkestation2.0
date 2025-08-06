@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - balance: "Assault Operatives sunbeam will now set the alert level to Delta"

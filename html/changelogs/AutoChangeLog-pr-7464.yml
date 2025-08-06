@@ -1,0 +1,8 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscadd: "Xenobio slime vacuum can recycle the fauna that it spawns (instead of having to kill them)"
+  - qol: "Select the creature you want to spawn by right clicking the nozzle, then dispense it with right clicking"
+  - bugfix: "Slime vac can damage revenants when it's in ghost buster mode"
+  - bugfix: "Slime vac no longer has infinite range when recycling monkeys"
+  - qol: "Slime vac, Nozzle, and recycler now display their biomass on examine"

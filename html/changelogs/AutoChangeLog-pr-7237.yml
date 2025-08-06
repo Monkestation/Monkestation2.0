@@ -1,0 +1,4 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - rscadd: "Adds \"Jaundice yourself\" to the roundstart monkecoin shop, that turns you skin yellow."

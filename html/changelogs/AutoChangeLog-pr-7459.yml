@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - rscadd: "A warrant console has been added to the outside of box's security"

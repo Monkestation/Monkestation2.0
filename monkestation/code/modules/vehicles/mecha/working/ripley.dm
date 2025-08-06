@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/mecha/working/ripley/mk2/engineering
+/obj/vehicle/sealed/mecha/ripley/mk2/engineering
 	equip_by_category = list(
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/rcd,
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
@@ -10,7 +10,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	armor_type = /datum/armor/working_ripley/engineering
+	armor_type = /datum/armor/mecha_ripley/engineering
 	movedelay = 1.5 //Move speed, lower is faster.
 	lights_power = 7
 	fast_pressure_step_in = 1.75
@@ -19,7 +19,7 @@
 	operation_req_access = list(ACCESS_MECH_ENGINE)
 	internals_req_access = list(ACCESS_CENT_GENERAL)
 
-/datum/armor/working_ripley/engineering
+/datum/armor/mecha_ripley/engineering
 	melee = 40
 	bullet = 20
 	laser = 20

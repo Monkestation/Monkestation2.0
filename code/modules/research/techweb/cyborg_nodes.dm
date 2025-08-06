@@ -19,6 +19,7 @@
 		"robocontrol",
 		"sflash",
 	)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upg_engiminer
 	id = "cyborg_upg_engiminer"
@@ -34,6 +35,7 @@
 		"borg_upgrade_hypermod",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upg_med
 	id = "cyborg_upg_med"
@@ -50,6 +52,7 @@
 		"borg_upgrade_surgicaltools", //Monke edit: Might need to move this one to the same research node as cybernetic surgical toolset for balance.
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upg_util
 	id = "cyborg_upg_util"
@@ -67,6 +70,7 @@
 		"borg_upgrade_clamp", //monkestation edit
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/cyborg_upg_util/New()
 	. = ..()
@@ -88,6 +92,7 @@
 		"locator",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/cyber_implants
 	id = "cyber_implants"
@@ -108,6 +113,7 @@
 		"nif_standard",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/cyber_implants/New()
 	..()
@@ -127,6 +133,7 @@
 		"ci-xray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/combat_cyber_implants/New()
 	..()
@@ -146,6 +153,7 @@
 		"ci-sprinter", //monkestation addition:
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/adv_cyber_implants/New()
 	..()
@@ -167,6 +175,7 @@
 		"cybernetic_spleen_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber_organs/New()
 	..()
@@ -188,6 +197,7 @@
 		"cybernetic_spleen_tier3"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber_organs_upgraded/New()
 	..()
