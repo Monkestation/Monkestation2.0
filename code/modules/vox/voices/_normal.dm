@@ -1,6 +1,11 @@
 #ifdef AI_VOX
 // This file is prefixed with a _ so it's always the first in the list.
 
+// Regex for collecting a list of ogg files
+// (([a-zA-Z,.]+)\.ogg)
+
+// For vim
+// :%s/\(\(.*\)\.ogg\)/"\2" = 'sound\/announcer\/vox_fem\/\1',/g
 /datum/vox_voice/normal
 	name = VOX_NORMAL
 	sounds = list(
@@ -690,6 +695,7 @@
 		"jesus" = 'sound/announcer/vox_fem/jesus.ogg',
 		"job" = 'sound/announcer/vox_fem/job.ogg',
 		"jobs" = 'sound/announcer/vox_fem/jobs.ogg',
+		"john" = 'sound/announcer/vox_fem/john.ogg',
 		"johnson" = 'sound/announcer/vox_fem/johnson.ogg',
 		"jolly" = 'sound/announcer/vox_fem/jolly.ogg',
 		"juliet" = 'sound/announcer/vox_fem/juliet.ogg',
@@ -752,6 +758,7 @@
 		"loop" = 'sound/announcer/vox_fem/loop.ogg',
 		"loose" = 'sound/announcer/vox_fem/loose.ogg',
 		"lot" = 'sound/announcer/vox_fem/lot.ogg',
+		"love" = 'sound/announcer/vox_fem/love.ogg',
 		"lower" = 'sound/announcer/vox_fem/lower.ogg',
 		"lowest" = 'sound/announcer/vox_fem/lowest.ogg',
 		"lusty" = 'sound/announcer/vox_fem/lusty.ogg',
@@ -1242,8 +1249,6 @@
 		"tesla" = 'sound/announcer/vox_fem/tesla.ogg',
 		"tesloose" = 'sound/announcer/vox_fem/tesloose.ogg',
 		"test" = 'sound/announcer/vox_fem/test.ogg',
-		"testremove" = 'sound/announcer/vox_fem/testremove.ogg',
-		"testremoveme" = 'sound/announcer/vox_fem/amber.ogg',
 		"text" = 'sound/announcer/vox_fem/text.ogg',
 		"thank" = 'sound/announcer/vox_fem/thank.ogg',
 		"thanks" = 'sound/announcer/vox_fem/thanks.ogg',
