@@ -1,0 +1,4 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - balance: "advanced robot limbs no longer have rng damage or knockdown."
