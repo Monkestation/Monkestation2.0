@@ -228,7 +228,7 @@
 	for(var/i in 1 to amount)
 		new path(get_turf(src))
 
-	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[initial(name)]", "[initial(path.name)]"))
+	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 	finalize_build()
 
 /obj/machinery/rnd/production/proc/build_efficiency(path)
