@@ -50,6 +50,8 @@
 	var/particle_blending = BLEND_DEFAULT
 	/// our animate_holder
 	var/datum/animate_holder/animate_holder
+	/// If the effect is currently paused.
+	var/paused = FALSE
 
 /datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0, random_bursts = 0)
 	. = ..()
@@ -85,7 +87,7 @@
 		START_PROCESSING(SSactualfastprocess, src)
 	RegisterSignal(source_object, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_equip_offsets))
 	RegisterSignal(source_object, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(reset_offsets))
-	RegisterSignal(source_object, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(source_object, COMSIG_MOVABLE_MOVED, PROC_REF(update_processing))
 
 	if(lifetime)
 		QDEL_IN(src, lifetime)
@@ -104,7 +106,7 @@
 	return ..()
 
 /datum/component/particle_spewer/process(seconds_per_tick)
-	if(!get_turf(source_object))
+	if(!get_turf(source_object) || paused)
 		return PROCESS_KILL
 	if(spawn_interval != 1)
 		count++
@@ -113,15 +115,12 @@
 	count = 0
 	spawn_particles()
 
-/// Stops animating if the parent is in nullspace.
-/datum/component/particle_spewer/proc/on_move(atom/movable/mover, atom/oldloc, direction)
+/datum/component/particle_spewer/proc/update_processing()
 	SIGNAL_HANDLER
-	if(QDELETED(src) || QDELETED(source_object) || !processes)
-		return
-	if(get_turf(source_object))
-		START_PROCESSING(SSactualfastprocess, src)
-	else
+	if(QDELETED(src) || QDELETED(source_object) || !processes || !get_turf(source_object) || paused)
 		STOP_PROCESSING(SSactualfastprocess, src)
+	else
+		START_PROCESSING(SSactualfastprocess, src)
 
 /datum/component/particle_spewer/proc/spawn_particles(atom/movable/mover, turf/target)
 	var/burstees = burst_amount
