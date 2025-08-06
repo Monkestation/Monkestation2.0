@@ -64,7 +64,10 @@
 
 #define MATERIAL_SOURCE(mat) "[mat.name]_material"
 
-
+///Special return values of [/datum/component/material_container/insert_item]
+#define MATERIAL_INSERT_ITEM_NO_MATS -1
+#define MATERIAL_INSERT_ITEM_NO_SPACE -2
+#define MATERIAL_INSERT_ITEM_FAILURE 0
 
 // Slowdown values.
 /// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of plasteel.

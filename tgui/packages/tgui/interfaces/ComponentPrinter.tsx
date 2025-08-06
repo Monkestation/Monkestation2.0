@@ -109,7 +109,7 @@ const Recipe = (props: RecipeProps) => {
           ])}
           onClick={() =>
             canPrint && act('print', { designId: design.id, amount: 1 })
-          }>
+          }
         >
           <div className="FabricatorRecipe__Icon">
             <Box

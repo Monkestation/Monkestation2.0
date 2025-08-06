@@ -569,8 +569,8 @@
  * [material][datum/material]: type of sheets present in this container to extract
  * [target][atom]: drop location
  */
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, atom/target = null)
-	if(!M.sheet_type)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null)
+	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
 		return 0
@@ -578,19 +578,19 @@
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
-	if(materials[M] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
-		sheet_amt = round(materials[M] / SHEET_MATERIAL_AMOUNT)
+	if(materials[material] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
+		sheet_amt = round(materials[material] / SHEET_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
-		new M.sheet_type(target, MAX_STACK_SIZE, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		new material.sheet_type(target, MAX_STACK_SIZE, null, list((material) = SHEET_MATERIAL_AMOUNT))
 		count += MAX_STACK_SIZE
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= MAX_STACK_SIZE
 		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets)
 	if(sheet_amt >= 1)
-		new M.sheet_type(target, sheet_amt, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		new material.sheet_type(target, sheet_amt, null, list((material) = SHEET_MATERIAL_AMOUNT))
 		count += sheet_amt
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets)
 	return count
 

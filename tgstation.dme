@@ -1356,6 +1356,7 @@
 #include "code\datums\components\fantasy\suffixes.dm"
 #include "code\datums\components\food\decomposition.dm"
 #include "code\datums\components\food\edible.dm"
+#include "code\datums\components\food\ice_cream_holder.dm"
 #include "code\datums\components\material\material_container.dm"
 #include "code\datums\components\material\remote_materials.dm"
 #include "code\datums\components\pet_commands\fetch.dm"
