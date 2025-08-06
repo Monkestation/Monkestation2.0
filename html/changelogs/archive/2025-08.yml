@@ -108,3 +108,19 @@
       them!
   - qol: (Time-Green) Redtexting as antag with hardcore random score will pay you
       default points, instead of none (normal survival rules)
+2025-08-05:
+  Shoddd:
+  - bugfix: you can no longer torpor in frenzy
+2025-08-06:
+  TheColorCyan:
+  - qol: (scriptis) techfabs now use sheets(TM) as the default unit of measurement
+  - bugfix: (scriptis) mechfab icons aren't perpetually gray
+  - balance: (JohnFulpWillard) Machines (such as ORM and Techfabs) will no longer
+      unsync from Ore silos when it moves Z-level, instead it will prevent materials
+      from being used, as if it was on hold.
+  - bugfix: (JohnFulpWillard) Fixes whiteships with silos on them disconencting upon
+      moving
+  - bugfix: (Helg2) autolathe, protolathe, mech fabricator and component printers
+      material capacity are now in 20 times less, as intended.
+  - bugfix: (Helg2) protolathe material menu now should display material ejecting
+      correctly.
