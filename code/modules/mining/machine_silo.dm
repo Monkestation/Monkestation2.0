@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/holds = list()
 	/// List of all components that are sharing ores with this silo.
 	var/list/datum/component/remote_materials/ore_connected_machines = list()
+	/// Material Container
+	var/datum/component/material_container/materials
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
@@ -31,7 +33,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/datum/material/bluespace,
 		/datum/material/plastic,
 		)
-	AddComponent(/datum/component/material_container, materials_list, INFINITY, MATCONTAINER_NO_INSERT, allowed_items=/obj/item/stack)
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		materials_list, \
+		INFINITY, \
+		MATCONTAINER_NO_INSERT, \
+		allowed_items = /obj/item/stack \
+	)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 
@@ -43,15 +51,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		mats.disconnect_from(src)
 
 	ore_connected_machines = null
-
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.retrieve_all()
+	materials = null
 
 	return ..()
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/living/user, obj/item/stack/I, breakdown_flags=NONE)
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	// stolen from /datum/component/material_container/proc/OnAttackBy
 	if((user.istate & ISTATE_HARM))
 		return
 	if(I.item_flags & ABSTRACT)
@@ -91,7 +95,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	popup.open()
 
 /obj/machinery/ore_silo/proc/generate_ui()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
