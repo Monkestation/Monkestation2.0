@@ -207,8 +207,8 @@
 	/// Conversion list of type to name for the examine of the nozzle
 	var/static/list/name_of_mobs = list(
 		/mob/living/carbon/human/species/monkey = "monkey",
-		/mob/living/basic/cockroach/rockroach = "rock roache",
-		/mob/living/basic/cockroach/iceroach = "ice roache",
+		/mob/living/basic/cockroach/rockroach = "rock roach",
+		/mob/living/basic/cockroach/iceroach = "ice roach",
 		/mob/living/basic/xenofauna/meatbeast = "meat beast",
 		/mob/living/basic/xenofauna/diyaab = "diyaab",
 		/mob/living/basic/xenofauna/thinbug = "thin bug",
@@ -534,14 +534,14 @@
 
 /obj/item/vacuum_nozzle/proc/bust_the_ghost()
 	while(check_busting())
-		if(!do_after(pack.ghost_buster, 0.5 SECONDS, target = pack.ghost_busting, extra_checks = CALLBACK(src, PROC_REF(check_busting), timed_action_flags = IGNORE_TARGET_LOC_CHANGE|IGNORE_USER_LOC_CHANGE)))
+		if(!do_after(pack.ghost_buster, 0.5 SECONDS, target = pack.ghost_busting, extra_checks = CALLBACK(src, PROC_REF(check_busting)), timed_action_flags = IGNORE_TARGET_LOC_CHANGE|IGNORE_USER_LOC_CHANGE))
 			pack.ghost_busting = null
 			pack.ghost_buster = null
 			QDEL_NULL(pack.busting_beam)
 			return
 
-		pack.ghost_busting.adjustHealth(5)
-		pack.ghost_busting.reveal(0.5 SECONDS, TRUE)
+		pack.ghost_busting.adjust_health(5)
+		pack.ghost_busting.apply_status_effect(/datum/status_effect/revenant/revealed, 0.5 SECONDS)
 
 /obj/item/vacuum_nozzle/proc/check_busting()
 	if(isnull(pack.ghost_busting?.loc) || QDELING(pack.ghost_busting))
