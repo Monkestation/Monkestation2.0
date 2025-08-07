@@ -4,7 +4,7 @@
 	id = "extrapolator"
 	build_path = /obj/item/extrapolator
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT*1.5)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT*1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
