@@ -25,11 +25,7 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
 		connect_techweb(SSresearch.science_tech)
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
@@ -317,11 +313,7 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
