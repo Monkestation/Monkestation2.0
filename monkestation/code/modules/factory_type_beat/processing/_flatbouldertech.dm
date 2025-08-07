@@ -36,3 +36,9 @@
 			/datum/material/plastic,
 		)
 	return is_type_in_list(possible_mat, processable_materials)
+
+/obj/machinery/bouldertech/flatpack/breakdown_boulder(obj/item/boulder/chosen_boulder)
+	return FALSE
+
+/obj/machinery/bouldertech/flatpack/breakdown_exotic(obj/item/chosen_exotic)
+	return FALSE

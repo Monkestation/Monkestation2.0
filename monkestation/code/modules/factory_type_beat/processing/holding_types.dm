@@ -10,6 +10,45 @@
 	///When a refinery machine is working on this resource, we'll set this. Re reset when the process is finished, but the resource may still be refined/operated on further.
 	var/obj/machinery/processed_by = null
 
+/obj/item/processing/proc/set_colors()
+	var/list/color_amounts = list()
+	var/total_amount = 0
+	var/alpha_sum = 0
+	for(var/datum/material/material as anything in custom_materials)
+		var/color = material.greyscale_colors
+		var/amount = custom_materials[material]
+		var/mat_alpha = material.alpha
+		// Add color and amount to the list
+		color_amounts[color] += amount // Accumulate if same color appears
+		// Add to total
+		total_amount += amount
+		alpha_sum += mat_alpha * amount
+
+	if(total_amount <= 0)
+		return
+
+	// Normalize weights
+	var/list/weighted_colors = list()
+	for(var/color in color_amounts)
+		var/weight = color_amounts[color] / total_amount
+		var/rounded_weight = round(weight, MOVABLE_PHYSICS_PRECISION)
+
+		weighted_colors[color] = rounded_weight
+
+	var/final_color = BlendMultipleRGB(weighted_colors)
+	if(isnull(final_color))
+		return
+
+	// Calculate final alpha as weighted average
+	var/final_alpha = clamp(round(alpha_sum / total_amount, 1), 0, 255)
+
+	color = final_color
+	alpha = final_alpha
+
+/obj/item/processing/refined_dust
+	name = "refined dust"
+	desc = "After being enriched it has turned into some concentrated refined dust."
+
 /**
  * Extra boulder types that add bonuses or have different minerals not generated from ssoregen.
  */

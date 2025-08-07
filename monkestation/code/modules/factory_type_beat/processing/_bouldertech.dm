@@ -281,7 +281,7 @@
  * @param chosen_boulder The boulder to be broken down into minerals.
  */
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	if(QDELETED(chosen_boulder))
 		return FALSE
@@ -339,7 +339,7 @@
  * @param chosen_exotic The exotic resource to be broken down into minerals.
  */
 /obj/machinery/bouldertech/proc/breakdown_exotic(obj/item/chosen_exotic)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 /obj/machinery/bouldertech/process()
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
@@ -371,7 +371,7 @@
  * * obj/item/specific_resource - the resource to remove
  */
 /obj/machinery/bouldertech/proc/remove_resource(obj/item/specific_resource)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 	if(QDELETED(specific_resource))
 		return TRUE
 
@@ -394,7 +394,7 @@
  * * obj/item/boulder/specific_boulder - the boulder to handle and remove
  */
 /obj/machinery/bouldertech/proc/boulder_removal(obj/item/boulder/specific_boulder)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 	//Reset durability to little random lower value cause we have crushed it so many times
 	var/size = specific_boulder.boulder_size
 	if(size == BOULDER_SIZE_SMALL)
@@ -412,9 +412,9 @@
  * * obj/item/specific_resource - the resource to handle and remove
  */
 /obj/machinery/bouldertech/proc/exotic_removal(obj/item/specific_resource)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 	if(istype(specific_resource, /obj/item/processing))
-		var/obj/item/processing/mat_holder
-		mat_holder.processed_by = src //so we don't take in the boulder again after we just ejected it
+		var/obj/item/processing/mat_holder = specific_resource
+		mat_holder.processed_by = src //so we don't take in the exotic again after we just ejected it
 		mat_holder.forceMove(drop_location())
 		mat_holder.processed_by = null //now since move is done we can safely clear the reference
