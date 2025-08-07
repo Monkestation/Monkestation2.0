@@ -1,5 +1,5 @@
 /mob/living/carbon/human/Initialize(mapload)
-	acquire_render_lock("human init")
+	// acquire_render_lock("human init")
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -16,7 +16,7 @@
 	create_carbon_reagents()
 	set_species(dna.species.type)
 
-	release_render_lock("human init")
+	// release_render_lock("human init")
 
 	prepare_huds() //Prevents a nasty runtime on human init
 
