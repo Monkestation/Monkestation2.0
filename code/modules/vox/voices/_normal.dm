@@ -168,6 +168,7 @@
 		"blob" = 'sound/announcer/vox_fem/blob.ogg',
 		"blocked" = 'sound/announcer/vox_fem/blocked.ogg',
 		"blood" = 'sound/announcer/vox_fem/blood.ogg',
+		"bloodsucker" = 'sound/announcer/vox_fem/bloodsucker.ogg'
 		"bloodling" = 'sound/announcer/vox_fem/bloodling.ogg',
 		"bloop" = 'sound/announcer/vox_fem/bloop.ogg',
 		"blue" = 'sound/announcer/vox_fem/blue.ogg',
