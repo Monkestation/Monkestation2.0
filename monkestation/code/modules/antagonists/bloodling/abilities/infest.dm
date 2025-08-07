@@ -34,7 +34,6 @@
 	. = ..()
 
 	var/mob/living/mob = target
-	var/resist = owner.move_resist
 	var/infest_time = 15 SECONDS
 
 	// If they are standing on the ascended bloodling tiles it takes 1/5th of the time to infest them
@@ -50,10 +49,10 @@
 
 		owner.balloon_alert(carbon_mob, "[owner] attempts to infest you!")
 		is_infesting = TRUE
-		owner.move_resist = INFINITY
+		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
 		if(!do_after(owner, infest_time))
 			is_infesting = FALSE
-			owner.move_resist = resist
+			REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
 			return FALSE
 
 		is_infesting = FALSE
@@ -62,16 +61,16 @@
 
 	else
 		is_infesting = TRUE
-		owner.move_resist = INFINITY
+		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
 		if(!do_after(owner, infest_time))
 			is_infesting = FALSE
-			owner.move_resist = resist
+			REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
 			return FALSE
 
 		is_infesting = FALSE
 		var/datum/antagonist/infested_thrall/thrall = mob.mind.add_antag_datum(/datum/antagonist/infested_thrall)
 		thrall.set_master(owner)
 
-	owner.move_resist = resist
+	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, src)
 	playsound(get_turf(mob), 'sound/items/drink.ogg', 30)
 	return TRUE
