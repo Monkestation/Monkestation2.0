@@ -169,7 +169,7 @@
 		"blocked" = 'sound/announcer/vox_fem/blocked.ogg',
 		"blood" = 'sound/announcer/vox_fem/blood.ogg',
 		"bloodling" = 'sound/announcer/vox_fem/bloodling.ogg',
-		"bloodsucker" = 'sound/announcer/vox_fem/bloodsucker.ogg'
+		"bloodsucker" = 'sound/announcer/vox_fem/bloodsucker.ogg',
 		"bloop" = 'sound/announcer/vox_fem/bloop.ogg',
 		"blue" = 'sound/announcer/vox_fem/blue.ogg',
 		"blueberry" = 'sound/announcer/vox_fem/blueberry.ogg',
