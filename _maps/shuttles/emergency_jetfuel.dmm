@@ -1,0 +1,1045 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bo" = (
+/obj/effect/abstract/fire/big_fire,
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bT" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"cI" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"dg" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/escape)
+"dp" = (
+/obj/effect/abstract/fire/big_fire,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"ex" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"eB" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"fd" = (
+/obj/effect/abstract/fire/big_fire,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"gY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"hj" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"hV" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood,
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"jk" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/template_noop,
+/area/shuttle/escape)
+"kE" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"lR" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"mc" = (
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"ms" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"nM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"ol" = (
+/obj/machinery/power/shuttle_engine/huge{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"oz" = (
+/obj/effect/abstract/fire/big_fire,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"oR" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"pF" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"qI" = (
+/obj/effect/abstract/fire/big_fire,
+/turf/open/openspace,
+/area/template_noop)
+"sz" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"uF" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"vd" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/openspace,
+/area/template_noop)
+"wQ" = (
+/obj/effect/mob_spawn/corpse/human/bridgeofficer,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"xp" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/openspace,
+/area/template_noop)
+"xY" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"ym" = (
+/obj/machinery/power/shuttle_engine/large{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"yw" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape/brig)
+"zj" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"zq" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/template_noop,
+/area/template_noop)
+"AJ" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"CC" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape/brig)
+"CH" = (
+/obj/effect/mob_spawn/corpse/human/bridgeofficer,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"CO" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"DG" = (
+/obj/effect/gibspawner/human,
+/turf/open/openspace,
+/area/template_noop)
+"Ff" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Fi" = (
+/obj/effect/gibspawner/human,
+/turf/template_noop,
+/area/template_noop)
+"FF" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/abstract/fire/big_fire,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Hs" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Ij" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"II" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"IS" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Jh" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/openspace,
+/area/shuttle/escape)
+"Ji" = (
+/turf/template_noop,
+/area/shuttle/escape)
+"KD" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/openspace,
+/area/template_noop)
+"KS" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"LI" = (
+/obj/docking_port/mobile/emergency{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"LK" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Mg" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Mj" = (
+/obj/effect/abstract/fire/big_fire,
+/turf/open/openspace,
+/area/shuttle/escape)
+"Mw" = (
+/obj/effect/abstract/fire/big_fire,
+/turf/template_noop,
+/area/template_noop)
+"MD" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Nj" = (
+/obj/effect/gibspawner/human,
+/turf/template_noop,
+/area/shuttle/escape)
+"NM" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/shuttle/escape)
+"Oq" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/gibspawner/human,
+/turf/open/openspace,
+/area/template_noop)
+"Oy" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/openspace,
+/area/template_noop)
+"OV" = (
+/turf/template_noop,
+/area/template_noop)
+"Pc" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/template_noop,
+/area/template_noop)
+"Ps" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Pw" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Qp" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood,
+/turf/template_noop,
+/area/template_noop)
+"Rt" = (
+/obj/effect/decal/cleanable/blood,
+/turf/template_noop,
+/area/template_noop)
+"RI" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/gibspawner/human,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"RL" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"SO" = (
+/turf/open/openspace,
+/area/shuttle/escape)
+"Th" = (
+/turf/open/openspace,
+/area/template_noop)
+"XF" = (
+/obj/effect/abstract/fire/big_fire,
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/template_noop)
+"XR" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/template_noop)
+"XX" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape/brig)
+"Yy" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Th
+Th
+Th
+Th
+OV
+OV
+Rt
+OV
+Mw
+OV
+OV
+OV
+OV
+"}
+(2,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+Ji
+Ji
+Mg
+Ji
+OV
+OV
+Pc
+OV
+DG
+Th
+OV
+OV
+Qp
+XR
+zq
+OV
+OV
+OV
+Pc
+OV
+OV
+"}
+(3,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+LK
+ym
+CO
+FF
+bT
+oz
+lR
+dg
+dg
+Mg
+Mg
+OV
+OV
+OV
+OV
+Mw
+Rt
+Th
+XR
+XR
+XR
+Mw
+OV
+OV
+OV
+OV
+Mw
+"}
+(4,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+LK
+LK
+CO
+MD
+lR
+Ji
+dg
+Ji
+Ji
+SO
+SO
+Mw
+OV
+Th
+Th
+OV
+OV
+Th
+Th
+vd
+Th
+Th
+Th
+Oy
+OV
+OV
+OV
+"}
+(5,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Mg
+Mg
+Mg
+lR
+oR
+MD
+oR
+zj
+Ji
+SO
+SO
+DG
+Th
+KD
+Th
+OV
+OV
+Pc
+qI
+Th
+DG
+Th
+Th
+Th
+qI
+Rt
+OV
+"}
+(6,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Mg
+lR
+oz
+lR
+zj
+oz
+lR
+zj
+MD
+Mg
+Th
+Th
+Th
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Pc
+qI
+Th
+Th
+KD
+"}
+(7,1,1) = {"
+OV
+OV
+OV
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+zj
+lR
+ex
+lR
+ex
+lR
+ex
+lR
+Mg
+Ji
+dg
+Mg
+Mg
+Mg
+Mg
+Mg
+Ji
+Ji
+OV
+Rt
+OV
+OV
+OV
+Th
+Th
+"}
+(8,1,1) = {"
+OV
+OV
+Mg
+Mg
+Mg
+nM
+gY
+eB
+kE
+lR
+Ij
+ex
+oz
+ex
+dg
+Ji
+Ji
+lR
+cI
+Ps
+Mg
+MD
+lR
+lR
+lR
+jk
+SO
+NM
+XR
+XR
+Mw
+Rt
+Th
+Th
+"}
+(9,1,1) = {"
+OV
+OV
+LK
+LK
+ol
+XX
+IS
+dp
+hj
+MD
+lR
+ex
+lR
+ex
+bT
+Ff
+wQ
+fd
+lR
+dg
+Mg
+Ji
+Ji
+Ji
+Ji
+Nj
+SO
+SO
+XR
+Yy
+OV
+Fi
+OV
+Rt
+"}
+(10,1,1) = {"
+OV
+OV
+LK
+LK
+LK
+CC
+mc
+RI
+II
+lR
+Ps
+Ps
+lR
+zj
+MD
+Ps
+lR
+LI
+as
+Mg
+dg
+dg
+lR
+Pw
+cI
+Ji
+MD
+Mg
+OV
+KD
+Oy
+Th
+Pc
+OV
+"}
+(11,1,1) = {"
+OV
+OV
+LK
+LK
+LK
+yw
+dp
+xY
+pF
+zj
+bT
+KS
+zj
+hV
+lR
+bo
+MD
+CH
+Mg
+Mg
+MD
+Ji
+Ji
+SO
+SO
+Ji
+Ji
+Ji
+OV
+Th
+OV
+OV
+OV
+OV
+"}
+(12,1,1) = {"
+OV
+OV
+Mg
+Mg
+Mg
+Hs
+ms
+RL
+uF
+lR
+oz
+Ff
+lR
+ex
+lR
+oz
+Ji
+Ji
+Mg
+lR
+Ji
+SO
+SO
+Pw
+SO
+Ji
+Mg
+SO
+Th
+Th
+Pc
+OV
+Mw
+OV
+"}
+(13,1,1) = {"
+OV
+OV
+OV
+Mg
+Mg
+Mg
+Mg
+Mg
+Mg
+AJ
+lR
+dg
+SO
+dg
+SO
+oR
+MD
+Mg
+Mg
+Ji
+Ji
+NM
+Mg
+Ji
+Mg
+Mg
+Mg
+OV
+Mw
+OV
+OV
+Rt
+OV
+zq
+"}
+(14,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Mg
+zj
+MD
+lR
+lR
+dg
+SO
+SO
+Ji
+Ji
+OV
+OV
+zq
+XR
+OV
+OV
+zq
+OV
+OV
+OV
+Pc
+Rt
+Th
+Th
+Mw
+OV
+"}
+(15,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Mg
+Mg
+Mg
+lR
+bo
+zj
+sz
+lR
+Mj
+SO
+SO
+Rt
+Pc
+OV
+XR
+XR
+Pc
+OV
+Mw
+XR
+XR
+Fi
+OV
+Th
+Th
+OV
+OV
+"}
+(16,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+LK
+ym
+CO
+Ps
+Jh
+SO
+MD
+Pw
+lR
+MD
+Mg
+Fi
+XR
+XR
+XR
+XF
+XR
+OV
+Pc
+Oq
+XR
+XR
+OV
+OV
+Th
+Pc
+OV
+"}
+(17,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+LK
+LK
+CO
+zj
+lR
+dg
+dg
+lR
+Ji
+Ji
+Ji
+Pc
+OV
+XR
+Oy
+OV
+Rt
+Rt
+OV
+OV
+XR
+Th
+xp
+Mw
+Rt
+OV
+Rt
+"}
+(18,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Mg
+Mg
+Mg
+Mg
+Mg
+Ji
+Ji
+Ji
+Mg
+Ji
+OV
+OV
+Mw
+XR
+XR
+Th
+Qp
+Oy
+Th
+Th
+OV
+Mw
+OV
+OV
+OV
+OV
+OV
+"}
+(19,1,1) = {"
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+OV
+Mw
+OV
+OV
+OV
+OV
+Mw
+Mw
+Fi
+Th
+OV
+OV
+qI
+Th
+Th
+Th
+OV
+Rt
+Pc
+OV
+OV
+"}
