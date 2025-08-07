@@ -719,6 +719,7 @@
 #include "code\_onclick\hud\rendering\plane_masters\parallax.dm"
 #include "code\_onclick\hud\rendering\plane_masters\pipecrawl.dm"
 #include "code\_onclick\hud\rendering\plane_masters\simple_plane_masters.dm"
+#include "code\_onclick\hud\rendering\plane_masters\weather.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\controller.dm"
 #include "code\controllers\failsafe.dm"
