@@ -15,6 +15,8 @@
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
+	///Boolean on whether the ORM can claim points without being connected to an ore silo.
+	var/requires_silo = TRUE
 	/// The current amount of unclaimed points in the machine
 	var/points = 0
 	/// Smelted ore's amount is multiplied by this
@@ -22,7 +24,18 @@
 	/// Increases the amount of points the miners gain
 	var/point_upgrade = 1
 	/// Details how many credits each smelted ore is worth
-	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
+	var/static/list/ore_values = list(
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
+		/datum/material/plasma = 15,
+		/datum/material/silver = 16,
+		/datum/material/gold = 18,
+		/datum/material/titanium = 30,
+		/datum/material/uranium = 30,
+		/datum/material/diamond = 50,
+		/datum/material/bluespace = 50,
+		/datum/material/bananium = 60,
+	)
 	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
 	var/console_notify_timer
 	/// References the alloys the smelter can create
@@ -30,14 +43,29 @@
 	/// Linkage to the ORM silo
 	var/datum/component/remote_materials/materials
 
+/obj/machinery/mineral/ore_redemption/offstation
+	circuit = /obj/item/circuitboard/machine/ore_redemption/offstation
+	requires_silo = FALSE
+
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	//mat_container_signals is for reedeming points from local storage if silo is not required
+	var/list/local_signals = null
+	if(!requires_silo)
+		local_signals = list(
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, local_redeem_points)
+		)
+	materials = AddComponent( \
+		/datum/component/remote_materials, \
+		mapload, \
+		mat_container_signals = local_signals \
+	)
 
-	RegisterSignal(src, COMSIG_MATCONTAINER_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, redeem_points))
+	//for reedeming points from items inserted into ore silo
+	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, silo_redeem_points))
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	stored_research = null
@@ -62,7 +90,12 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
-/obj/machinery/mineral/ore_redemption/proc/redeem_points(obj/machinery/mineral/ore_redemption/machine, container, obj/item/stack/ore/gathered_ore)
+/obj/machinery/mineral/ore_redemption/proc/silo_redeem_points(obj/machinery/mineral/ore_redemption/machine, container, obj/item/stack/ore/gathered_ore)
+	SIGNAL_HANDLER
+
+	local_redeem_points(container, gathered_ore)
+
+/obj/machinery/mineral/ore_redemption/proc/local_redeem_points(container, obj/item/stack/ore/gathered_ore)
 	SIGNAL_HANDLER
 
 	if(istype(gathered_ore) && gathered_ore.refined_type)
@@ -151,7 +184,7 @@
 		if(isnull(gathered_ore.refined_type))
 			continue
 
-		if(materials.mat_container.insert_item(gathered_ore, ore_multiplier, context = src) <= 0)
+		if(materials.insert_item(gathered_ore, ore_multiplier) <= 0)
 			unload_mineral(gathered_ore) //if rejected unload
 
 		SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
@@ -235,9 +268,9 @@
 	data["disconnected"] = null
 	if (!mat_container)
 		data["disconnected"] = "Local mineral storage is unavailable"
-	else if (!materials.silo)
+	else if (!materials.silo && requires_silo)
 		data["disconnected"] = "No ore silo connection is available; storing locally"
-	else if (!materials.check_z_level())
+	else if (!materials.check_z_level() && requires_silo)
 		data["disconnected"] = "Unable to connect to ore silo, too far away"
 	else if (materials.on_hold())
 		data["disconnected"] = "Mineral withdrawal is on hold"
@@ -267,22 +300,26 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
+			//requires silo but silo not in range
+			if(requires_silo && !materials.check_z_level())
+				return FALSE
+
+			//no ID
 			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
-			if(!materials.check_z_level())
-				return TRUE
+			if(isnull(user_id_card))
+				to_chat(usr, span_warning("No valid ID detected."))
+				return FALSE
+
+			//we have points
 			if(points)
-				if(user_id_card)
-					user_id_card.registered_account.mining_points += points
-					GLOB.lavaland_points_generated += points //monkestation edit
-					points = 0
-				else
-					to_chat(usr, span_warning("No valid ID detected."))
-			else
-				to_chat(usr, span_warning("No points to claim."))
-			return TRUE
+				user_id_card.registered_account.mining_points += points
+				points = 0
+				return TRUE
+
+			return FALSE
 		if("Release")
 			if(!mat_container)
 				return
