@@ -245,8 +245,7 @@
 
 /datum/antagonist/bloodsucker/proc/handle_starving() // I am thirsty for blood!
 	// Nutrition - The amount of blood is how full we are.
-	if(!isoozeling(owner.current))
-		owner.current.set_nutrition(min(bloodsucker_blood_volume, NUTRITION_LEVEL_FED))
+	owner.current.set_nutrition(min(bloodsucker_blood_volume, NUTRITION_LEVEL_FED))
 
 	// BLOOD_VOLUME_GOOD: [336] - Pale
 //	handled in bloodsucker_integration.dm
