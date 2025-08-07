@@ -695,7 +695,9 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 /mob/living/carbon/proc/acquire_render_lock(source)
 	if(!source)
 		CRASH("Attempted to acquire render lock without a source")
-	testing("added render lock from [source]")
+#if defined(UNIT_TESTS) || defined(TESTING)
+	log_world("acquired render lock ([source])")
+#endif
 	if(render_locks)
 		render_locks |= source
 	else
@@ -709,7 +711,9 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 		return
 	// manually re-implement LAZYREMOVE here to avoid double checking for list validity
 	render_locks -= source
-	testing("released render lock from [source]")
+#if defined(UNIT_TESTS) || defined(TESTING)
+	log_world("released render lock ([source])")
+#endif
 	if(!length(render_locks))
 		render_locks = null
 		if(queued_renders)
