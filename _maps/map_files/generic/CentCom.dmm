@@ -20013,6 +20013,27 @@
 	},
 /turf/open/floor/bitrunning_transport,
 /area/centcom)
+"bNa" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/medical3{
+	name = "Medical Kits locker";
+	locked = 0
+	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/backpack/deforest_medkit/stocked,
+/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/civil_defense/stocked,
+/obj/item/storage/medkit/civil_defense/comfort/stocked,
+/obj/item/storage/medkit/frontier/stocked,
+/obj/item/storage/medkit/combat_surgeon/stocked,
+/obj/item/storage/medkit/tactical/premium,
+/turf/open/floor/iron/white/textured,
+/area/centcom/central_command_areas/medical)
 "bNV" = (
 /obj/machinery/light/directional/east{
 	dir = 2
@@ -21229,27 +21250,6 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom)
-"dRP" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 1
-	},
-/obj/structure/closet/secure_closet/medical3{
-	name = "Medical Kits locker";
-	locked = 0
-	},
-/obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/toxin,
-/obj/item/storage/medkit/brute,
-/obj/item/storage/backpack/deforest_medkit/stocked,
-/obj/item/storage/medkit/advanced,
-/obj/item/storage/medkit/civil_defense/stocked,
-/obj/item/storage/medkit/civil_defense/comfort/stocked,
-/obj/item/storage/medkit/frontier/stocked,
-/obj/item/storage/medkit/combat_surgeon/stocked,
-/obj/item/storage/medkit/tactical/premium,
-/turf/open/floor/iron/white/textured,
-/area/centcom/central_command_areas/medical)
 "dSg" = (
 /turf/closed/indestructible/opsglass,
 /area/centcom/syndicate_mothership/expansion_bulldozer)
@@ -24208,6 +24208,31 @@
 /obj/item/toy/plush/carpplushie,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/adminroom)
+"iJo" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/wood,
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/cassette_tape/blank{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/open/floor/wood/parquet,
+/area/centcom/central_command_areas/arcade)
 "iJy" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -24287,6 +24312,13 @@
 /obj/machinery/light/street_lamp,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/admin)
+"iPy" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/backpack/deforest_surgical/stocked,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/white/small,
+/area/centcom/central_command_areas/medical)
 "iPD" = (
 /obj/machinery/button/door/directional/north{
 	name = "Emergency Assistants Fuck Off Button";
@@ -25574,6 +25606,15 @@
 	},
 /turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/admin)
+"kYR" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/table/reinforced/rglass,
+/obj/item/storage/backpack/deforest_surgical/stocked,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white/small,
+/area/centcom/central_command_areas/medical)
 "kZM" = (
 /obj/structure/flora/bush/sparsegrass/style_2,
 /obj/effect/turf_decal/sand/plating,
@@ -26471,31 +26512,6 @@
 /obj/structure/falsewall/wood,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/admin)
-"mPL" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_x = 7;
-	pixel_y = 0
-	},
-/turf/open/floor/wood/parquet,
-/area/centcom/central_command_areas/arcade)
 "mQh" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/red,
@@ -28583,15 +28599,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
-"qGq" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/deforest_surgical/stocked,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/white/small,
-/area/centcom/central_command_areas/medical)
 "qGw" = (
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
@@ -29129,13 +29136,6 @@
 	},
 /turf/open/floor/sandy_dirt,
 /area/centcom/central_command_areas/admin)
-"rGz" = (
-/obj/structure/table/reinforced/rglass,
-/obj/item/storage/backpack/deforest_surgical/stocked,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/white/small,
-/area/centcom/central_command_areas/medical)
 "rHE" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -32565,6 +32565,28 @@
 /obj/machinery/coffeemaker/impressa,
 /turf/open/floor/carpet/royalblue,
 /area/centcom/central_command_areas/admin)
+"xAq" = (
+/obj/structure/decorative/shelf,
+/obj/item/food/drug/moon_rock,
+/obj/item/food/drug/moon_rock,
+/obj/item/food/drug/saturnx,
+/obj/item/reagent_containers/crackbrick,
+/obj/item/reagent_containers/crackbrick,
+/obj/item/reagent_containers/crack,
+/obj/item/reagent_containers/cocaine,
+/obj/item/reagent_containers/cocaine,
+/obj/item/reagent_containers/cocainebrick,
+/obj/item/reagent_containers/cocainebrick,
+/obj/item/clothing/mask/cigarette/pipe/crackpipe,
+/obj/item/reagent_containers/hypospray/medipen/gore,
+/obj/item/reagent_containers/hypospray/medipen/gore,
+/obj/item/reagent_containers/hypospray/medipen/gore,
+/obj/item/storage/backpack/deforest_medkit/stocked,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "xAF" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -32910,28 +32932,6 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/evacuation)
-"yfS" = (
-/obj/structure/decorative/shelf,
-/obj/item/food/drug/moon_rock,
-/obj/item/food/drug/moon_rock,
-/obj/item/food/drug/saturnx,
-/obj/item/reagent_containers/crackbrick,
-/obj/item/reagent_containers/crackbrick,
-/obj/item/reagent_containers/crack,
-/obj/item/reagent_containers/cocaine,
-/obj/item/reagent_containers/cocaine,
-/obj/item/reagent_containers/cocainebrick,
-/obj/item/reagent_containers/cocainebrick,
-/obj/item/clothing/mask/cigarette/pipe/crackpipe,
-/obj/item/reagent_containers/hypospray/medipen/gore,
-/obj/item/reagent_containers/hypospray/medipen/gore,
-/obj/item/reagent_containers/hypospray/medipen/gore,
-/obj/item/storage/backpack/deforest_medkit/stocked,
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "ygD" = (
 /obj/machinery/light/directional/south,
 /turf/open/water/arena,
@@ -69141,7 +69141,7 @@ aPq
 aPq
 aPq
 aPq
-mPL
+iJo
 aFR
 aaa
 aaa
@@ -69557,7 +69557,7 @@ aYP
 nDJ
 aOn
 qja
-yfS
+xAq
 nYA
 jNS
 qja
@@ -75484,7 +75484,7 @@ awe
 hBi
 aaH
 afg
-qGq
+kYR
 amQ
 aGN
 amQ
@@ -76003,7 +76003,7 @@ bGO
 aNb
 twO
 awe
-dRP
+bNa
 aKq
 amr
 dVW
@@ -76512,7 +76512,7 @@ awe
 agl
 wLl
 aWv
-rGz
+iPy
 ayj
 aNb
 cyp
