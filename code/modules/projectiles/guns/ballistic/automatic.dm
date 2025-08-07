@@ -422,7 +422,7 @@
 
 /obj/item/gun/ballistic/automatic/minigun22/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS, TRUE, 0.1, 0.08, 5 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
 
 /**
  * Weak uzi for syndicate chimps. It comes in a 4 TC kit.

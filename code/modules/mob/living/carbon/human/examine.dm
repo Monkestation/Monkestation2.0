@@ -291,7 +291,7 @@
 		var/list/obj/item/bodypart/grasped_limbs = list()
 
 		for(var/obj/item/bodypart/body_part as anything in bodyparts)
-			if(body_part.get_modified_bleed_rate())
+			if(body_part.cached_bleed_rate)
 				bleeding_limbs += body_part
 			if(body_part.grasped_by)
 				grasped_limbs += body_part

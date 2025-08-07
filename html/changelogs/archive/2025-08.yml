@@ -108,3 +108,80 @@
       them!
   - qol: (Time-Green) Redtexting as antag with hardcore random score will pay you
       default points, instead of none (normal survival rules)
+2025-08-05:
+  Shoddd:
+  - bugfix: you can no longer torpor in frenzy
+2025-08-06:
+  TheColorCyan:
+  - qol: (scriptis) techfabs now use sheets(TM) as the default unit of measurement
+  - bugfix: (scriptis) mechfab icons aren't perpetually gray
+  - balance: (JohnFulpWillard) Machines (such as ORM and Techfabs) will no longer
+      unsync from Ore silos when it moves Z-level, instead it will prevent materials
+      from being used, as if it was on hold.
+  - bugfix: (JohnFulpWillard) Fixes whiteships with silos on them disconencting upon
+      moving
+  - bugfix: (Helg2) autolathe, protolathe, mech fabricator and component printers
+      material capacity are now in 20 times less, as intended.
+  - bugfix: (Helg2) protolathe material menu now should display material ejecting
+      correctly.
+2025-08-07:
+  Absolucy:
+  - qol: You can no longer use the pocket watch to broadcast annoying flashy text
+      over the radio.
+  - bugfix: Tried to fix some lag?
+  - rscadd: You can now toggle particle effects from unusuals on/off.
+  - bugfix: Fixed the preferences and character setup menu buttons being greyed out
+      if you logged in after they became ready to use.
+  - bugfix: Fixed being able to cause weird duplicate prefs windows to open if you
+      spam-clicked the prefs button.
+  - bugfix: Fixed splitting as a slimeperson getting you stuck in a randomized human
+      body instead.
+  - bugfix: Fixed oozelings only losing 27 blood instead of 30 when sprayed with water
+      without any sort of protection.
+  - bugfix: (Sealed101) fixed hand tele portals that have been deleted in the process
+      of opening a new portal pair clogging up hand tele's portal pair list. If you
+      try to create portals that would end up like this (i.e. on an active teleporter
+      hub), the hand tele will indicate that.
+  - bugfix: (SmArtKar) Fixed portable atmospheric machines trying to add themselves
+      to SSair queue when destroyed.
+  - code_imp: (timothymtorres) Remove dead code from gas canisters.
+  - bugfix: (Redbert) Fixes issue that causes hypernob reaction to sometimes not work.
+  - bugfix: (Pickle-Coding) Prevents an erroneous temperature share when the air falls
+      below superconduction requirements.
+  - bugfix: (Pickle-Coding) Fixes HFR moderator leaking not leaking properly when
+      a part is cracked.
+  Ice-Type:
+  - rscadd: Adds "Jaundice yourself" to the roundstart monkecoin shop, that turns
+      you skin yellow.
+  - balance: advanced robot limbs no longer have rng damage or knockdown.
+  Killermankey:
+  - rscadd: Adds a pickup truck (/obj/vehicle/ridden/kingschariot)
+  LettuceGuardian:
+  - rscadd: Various pallets of SolFed weapons have dissapeared off their local warehouses.
+      Unrelated, theres now new offerings available in the black market!
+  - rscadd: Hunter slugs, double barrel and pump action shotguns are now available
+      in the goodie section of cargo.
+  - rscadd: Unrestricted variants for every SolFed evil reskin
+  - qol: Hunter slugs and trench tools now fit in explorer webbing.
+  - qol: Seccie ammo crates from cargo no longer contain their old shotgun ammo boxes,
+      having the advanced shotgun ammo boxes instead.
+  - balance: Lowered the price of the insul gloves crate to 1000 credits, you aren't
+      paying for an ethereal fourth pair of gloves anymore!
+  MrBagHead:
+  - rscadd: A Science/Medical Techfab Recipe for MonkeTech AutoTranslators for 5k
+      Iron and 3k Glass
+  Shoddd:
+  - balance: comically large spoon's wound bonus is now 10
+  Wisemonster:
+  - balance: Standardizes pathology on Heliostation, Icebox, and Theseus
+  - rscadd: A warrant console has been added to the outside of box's security
+  - balance: Assault Operatives sunbeam will now set the alert level to Delta
+  - balance: Standardized Box's, Meta's, and Tram's patho
+  Xander3359:
+  - rscadd: Xenobio slime vacuum can recycle the fauna that it spawns (instead of
+      having to kill them)
+  - qol: Select the creature you want to spawn by right clicking the nozzle, then
+      dispense it with right clicking
+  - bugfix: Slime vac can damage revenants when it's in ghost buster mode
+  - bugfix: Slime vac no longer has infinite range when recycling monkeys
+  - qol: Slime vac, Nozzle, and recycler now display their biomass on examine

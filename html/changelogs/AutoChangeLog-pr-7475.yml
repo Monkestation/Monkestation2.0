@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Bingle pits now count an amount of items in a stack, rather than counting a whole stack as a single item."
+  - bugfix: "Bingle pits now swallow objects that they expand into instead of just deleting them."
