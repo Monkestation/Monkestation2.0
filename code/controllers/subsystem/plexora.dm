@@ -233,14 +233,14 @@ SUBSYSTEM_DEF(plexora)
 		"prefix" = prefix,
 		"key" = user.key,
 		"message" = message,
-		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
 	))
 
 /datum/controller/subsystem/plexora/proc/relay_admin_say(client/user, message)
 	http_basicasync("relay_admin_say", list(
 		"key" = user.key,
 		"message" = message,
-		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
 	))
 
 // note: recover_all_SS_and_recreate_master to force mc shit
@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(plexora)
 		"msg_raw" = msg_raw,
 		"opened_at" = rustg_unix_timestamp(),
 		"replay_pass" = CONFIG_GET(string/replay_password),
-		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
 		"admin_ckey" = admin_ckey,
 	))
 
@@ -351,7 +351,7 @@ SUBSYSTEM_DEF(plexora)
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
 		"opened_at" = rustg_unix_timestamp(),
-		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
 		"replay_pass" = CONFIG_GET(string/replay_password),
 		"message" = ticket.message,
 	))
@@ -366,7 +366,7 @@ SUBSYSTEM_DEF(plexora)
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
 		"timestamp" = rustg_unix_timestamp(),
-		"icon_b64" = icon2base64(getFlatIcon(frommob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(frommob, SOUTH, no_anim = TRUE)),
 		"message" = msg,
 	))
 

@@ -161,7 +161,7 @@
 		if(!istype(human_to_rename))
 			continue
 		var/first_name = human_to_rename.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
-		var/chosen_name = "[syndicate_name] [first_name] "
+		var/chosen_name = "[syndicate_name] [first_name]"
 		human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
 
 /datum/team/nuclear/commando/get_result()

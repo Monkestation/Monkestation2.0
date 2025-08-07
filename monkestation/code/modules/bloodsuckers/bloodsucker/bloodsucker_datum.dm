@@ -91,6 +91,7 @@
 	var/static/list/always_traits = list(
 		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
 		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
+		TRAIT_OOZELING_NO_CANNIBALIZE, // prevents weird softlocks
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
@@ -105,7 +106,6 @@
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NO_BLEED_WARN,
 		TRAIT_NO_MIRROR_REFLECTION,
-		TRAIT_OOZELING_NO_CANNIBALIZE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_SLEEPIMMUNE,

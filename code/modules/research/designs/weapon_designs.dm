@@ -83,7 +83,7 @@
 	name = "Buckshot Shell"
 	id = "buckshot_shell"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -96,7 +96,7 @@
 	id = "slug_shell"
 	desc = "A 12g slug shell"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO

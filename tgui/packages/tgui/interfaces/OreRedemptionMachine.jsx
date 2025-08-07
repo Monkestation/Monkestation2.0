@@ -18,7 +18,7 @@ import { formatSiUnit } from '../format';
 
 export const OreRedemptionMachine = (props) => {
   const { act, data } = useBackend();
-  const { unclaimedPoints, materials, user } = data;
+  const { disconnected, unclaimedPoints, materials, user } = data;
   const [tab, setTab] = useSharedState('tab', 1);
   const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const [compact, setCompact] = useSharedState('compact', false);
@@ -76,7 +76,8 @@ export const OreRedemptionMachine = (props) => {
                 <Button
                   ml={2}
                   content="Claim"
-                  disabled={unclaimedPoints === 0}
+                  disabled={unclaimedPoints === 0 || disconnected}
+                  tooltip={disconnected}
                   onClick={() => act('Claim')}
                 />
               </Box>

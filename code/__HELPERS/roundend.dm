@@ -205,16 +205,28 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
-	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
+	if(human_mob.mind && (length(human_mob.mind.antag_datums) > 0))
 		for(var/datum/antagonist/antag_datums as anything in human_mob.mind.antag_datums)
+			if(!antag_datums.hardcore_random_bonus) //don't give bonuses to dumb stuff like revs or hypnos
+				continue
 			if(initial(antag_datums.can_assign_self_objectives) && !antag_datums.can_assign_self_objectives)
-				return FALSE // You don't get a prize if you picked your own objective, you can't fail those
+				continue // You don't get a prize if you picked your own objective, you can't fail those
+
+			var/greentexted = TRUE
 			for(var/datum/objective/objective_datum as anything in antag_datums.objectives)
 				if(!objective_datum.check_completion())
-					return FALSE
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
-	else if(considered_escaped(human_mob.mind))
+					greentexted = FALSE
+					break
+
+			if(greentexted)
+				var/score = round(human_mob.hardcore_survival_score * 2)
+				player_client.give_award(/datum/award/score/hardcore_random, human_mob, score)
+				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
+				return
+
+	if(considered_escaped(human_mob.mind))
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+		log_admin("[player_client] gained [round(human_mob.hardcore_survival_score)] hardcore random points.")
 
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
@@ -656,7 +668,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		if(!ishuman(i))
 			continue
 		var/mob/living/carbon/human/human_player = i
-		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
+		if(!human_player.hardcore_survival_score || !considered_escaped(human_player.mind) || human_player.stat == DEAD) ///gotta escape nerd
 			continue
 		if(!human_player.mind)
 			continue
