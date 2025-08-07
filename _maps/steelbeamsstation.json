@@ -1,0 +1,80 @@
+{
+	"version": 1,
+	"map_name": "SteelBeamsStation",
+	"map_path": "map_files/twintowerstation",
+	"map_file": "steelbeamsstation.dmm",
+	"space_ruin_levels": 10,
+	"shuttles": {
+		"cargo": "cargo_nova",
+		"whiteship": "whiteship_blueshift",
+		"emergency": "emergency_nova"
+	},
+	"traits": [
+		{
+			"Up": true,
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Up": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross",
+			"No Parallax": true
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	]
+}
