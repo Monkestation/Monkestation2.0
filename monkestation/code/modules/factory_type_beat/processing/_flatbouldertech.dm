@@ -14,6 +14,7 @@
 /obj/machinery/bouldertech/flatpack/deconstruct(disassembled)
 	if(disassembled && !isnull(machine))
 		var/obj/item/flatpacked_machine/flatmachine = new machine(src.loc)
+
 	return ..() /// Must be called last or machine won't spawn before src is qdel.
 
 /obj/machinery/bouldertech/flatpack/can_process_material(datum/material/possible_mat)
