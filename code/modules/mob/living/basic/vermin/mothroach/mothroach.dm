@@ -36,7 +36,7 @@
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
-	var/static/list/food_types = list(/obj/item/clothing, /obj/item/)
+	var/static/list/food_types = list(/obj/item/clothing)
 	AddElement(/datum/element/basic_eating, heal_amt = 5, food_types = food_types)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
