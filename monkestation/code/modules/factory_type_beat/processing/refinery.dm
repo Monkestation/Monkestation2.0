@@ -52,6 +52,7 @@
 	if(!length(processable_resources))
 		processable_resources = typecacheof(list(
 			/obj/item/boulder,
+			/obj/item/processing/refined_dust,
 			),
 			only_root_path = TRUE
 		)

@@ -58,6 +58,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/enricher
+	name = "Enrichment Chamber"
+	desc = "Flat pack machine that extracts more resources from boulders and dust."
+	id = "enricher"
+	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/flatpacked_machine/ore_processing/enricher
+	category = list(
+		RND_CATEGORY_INITIAL,
+		FABRICATOR_SUBCATEGORY_MATERIALS,
+	)
+	construction_time = 10 SECONDS
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
 // Autolathe-able circuitboards for starting with boulder processing machines.
 /datum/design/board/smelter
 	name = "Boulder Smelter Board"

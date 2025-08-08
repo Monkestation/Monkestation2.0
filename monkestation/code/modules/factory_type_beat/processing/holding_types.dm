@@ -18,9 +18,7 @@
 		var/color = material.greyscale_colors
 		var/amount = custom_materials[material]
 		var/mat_alpha = material.alpha
-		// Add color and amount to the list
 		color_amounts[color] += amount // Accumulate if same color appears
-		// Add to total
 		total_amount += amount
 		alpha_sum += mat_alpha * amount
 
@@ -48,6 +46,12 @@
 /obj/item/processing/refined_dust
 	name = "refined dust"
 	desc = "After being enriched it has turned into some concentrated refined dust."
+
+/obj/item/processing/dirty_dust
+	name = "dirty dust"
+	desc = "After crushing some clumps we are left with this. Still contaminated with residue and needs enriching."
+	icon = 'monkestation/icons/obj/items/drugs.dmi'
+	icon_state = "crack"
 
 /**
  * Extra boulder types that add bonuses or have different minerals not generated from ssoregen.

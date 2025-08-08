@@ -54,6 +54,12 @@
 /obj/machinery/bouldertech/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = CONTEXTUAL_SCREENTIP_SET
 
+	var/list/acceptables = list()
+	for(var/obj/item/resource as anything in can_process_resource(return_typecache = TRUE))
+		acceptables += resource.name
+	if(length(acceptables))
+		context[SCREENTIP_CONTEXT_MISC] = "Machine accepts: " + english_list(acceptables)
+
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Resource"
 		return
@@ -340,6 +346,52 @@
  */
 /obj/machinery/bouldertech/proc/breakdown_exotic(obj/item/chosen_exotic)
 	PROTECTED_PROC(TRUE)
+
+	if(QDELETED(chosen_exotic))
+		return FALSE
+	if(chosen_exotic.loc != src)
+		return FALSE
+
+	if(istype(chosen_exotic, /obj/item/processing/refined_dust))
+		var/obj/item/processing/exotic = chosen_exotic
+		if(!exotic.processed_by)
+			check_for_boosts()
+			//here we loop through the boulder's ores
+			var/list/rejected_mats = list()
+			var/list/accepted_mats = list()
+			var/new_points_held = 0
+
+			for(var/datum/material/possible_mat as anything in exotic.custom_materials)
+				var/quantity = exotic.custom_materials[possible_mat]
+				if(!can_process_material(possible_mat))
+					rejected_mats[possible_mat] = quantity
+					continue
+				accepted_mats[possible_mat] = quantity
+				exotic.custom_materials -= possible_mat
+				new_points_held = round(new_points_held + ((quantity * refining_efficiency) * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
+
+			var/obj/item/boulder/disposable_boulder = new (src) // Using disposable boulder till tg#76220 fixes insert_amount_mat
+			disposable_boulder.custom_materials = accepted_mats
+			if(isnull(silo_materials) || !silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency))
+				rejected_mats = rejected_mats + accepted_mats
+				qdel(disposable_boulder)
+			else
+				points_held = points_held + new_points_held // put point total here into machine
+				qdel(disposable_boulder)
+
+			use_power(active_power_usage)
+			//puts back materials that couldn't be processed
+			exotic.set_custom_materials(rejected_mats)
+			exotic.set_colors() // Set new dust color
+			//break the exotic down if we have processed all its materials
+			if(!length(exotic.custom_materials))
+				playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				qdel(exotic)
+				return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
+			exotic.processed_by = src
+		//eject the boulder since we are done with it
+		remove_resource(exotic)
+	return FALSE
 
 /obj/machinery/bouldertech/process()
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
