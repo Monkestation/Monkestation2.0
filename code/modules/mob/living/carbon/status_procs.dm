@@ -77,8 +77,8 @@
 	return brain?.gain_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience, ignore_flags = NONE)
-	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN, ignore_flags)
-	return brain?.cure_trauma_type(brain_trauma_type, resilience)
+	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	return brain?.cure_trauma_type(brain_trauma_type, resilience, ignore_flags)
 
 /mob/living/carbon/proc/cure_all_traumas(resilience, ignore_flags = NONE)
 	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
