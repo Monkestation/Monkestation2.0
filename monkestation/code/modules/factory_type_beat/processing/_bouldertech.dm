@@ -43,13 +43,11 @@
 
 /obj/machinery/bouldertech/Destroy()
 	silo_materials = null
-	return ..()
-
-/obj/machinery/bouldertech/on_deconstruction()
 	var/list/current_resources = typecache_filter_list(contents, can_process_resource(null, TRUE))
 	if(length(current_resources))
 		for(var/obj/item/resource in current_resources)
 			remove_resource(current_resources)
+	return ..()
 
 /obj/machinery/bouldertech/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = CONTEXTUAL_SCREENTIP_SET

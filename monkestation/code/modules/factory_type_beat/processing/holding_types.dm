@@ -40,7 +40,7 @@
 	// Calculate final alpha as weighted average
 	var/final_alpha = clamp(round(alpha_sum / total_amount, 1), 0, 255)
 
-	color = final_color
+	add_atom_colour(final_color, FIXED_COLOUR_PRIORITY)
 	alpha = final_alpha
 
 /obj/item/processing/refined_dust
@@ -57,6 +57,11 @@
 	name = "ore clumps"
 	desc = "After being purified we are left with some clumps of ore. It needs to be crushed."
 	icon_state = "clump"
+
+/obj/item/processing/shards
+	name = "ore shards"
+	desc = "After being filled with chemicals and shattered we are left with some shards of ores. That need to be baked."
+	icon_state = "shard"
 
 /**
  * Extra boulder types that add bonuses or have different minerals not generated from ssoregen.

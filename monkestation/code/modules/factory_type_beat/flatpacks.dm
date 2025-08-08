@@ -8,3 +8,7 @@
 /obj/item/flatpacked_machine/ore_processing/enricher
 	name = "flat-packed enrichment chamber"
 	type_to_deploy = /obj/machinery/bouldertech/flatpack/enricher
+
+/obj/item/flatpacked_machine/ore_processing/purification_chamber
+	name = "flat-packed purification chamber"
+	type_to_deploy = /obj/machinery/bouldertech/flatpack/purification_chamber
