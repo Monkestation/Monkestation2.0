@@ -266,9 +266,10 @@
 
 /datum/action/item_action/chameleon/change/process()
 	if(world.time > emp_timer)
-		STOP_PROCESSING(SSprocessing, src)
-		return
-	random_look(owner)
+		return PROCESS_KILL
+	var/atom/atom_target = target
+	if(atom_target.loc)
+		random_look(owner)
 
 /datum/action/item_action/chameleon/change/proc/apply_job_data(datum/job/job_datum)
 	return

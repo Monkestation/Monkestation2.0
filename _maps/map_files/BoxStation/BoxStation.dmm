@@ -4426,6 +4426,10 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/light/directional/south,
 /obj/machinery/duct,
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "bva" = (
@@ -40842,9 +40846,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
 	},
-/obj/structure/reagent_dispensers/plumbed{
-	dir = 4
-	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "ngl" = (
@@ -71934,6 +71937,7 @@
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/computer/warrant,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "xft" = (
@@ -117683,9 +117687,9 @@ aIN
 xaE
 yjJ
 ldS
-nIN
-nIN
-nIN
+sPW
+sPW
+sPW
 nIN
 xEZ
 rtJ

@@ -422,7 +422,9 @@ SUBSYSTEM_DEF(garbage)
 			SSgarbage.Queue(to_delete)
 		if (QDEL_HINT_IWILLGC)
 			to_delete.gc_destroyed = world.time
+#ifndef DISABLE_DEMOS
 			SSdemo.mark_destroyed(to_delete) // monkestation edit: replays
+#endif
 			return
 		if (QDEL_HINT_LETMELIVE) //qdel should let the object live after calling destory.
 			if(!force)
@@ -442,10 +444,14 @@ SUBSYSTEM_DEF(garbage)
 
 			SSgarbage.Queue(to_delete)
 		if (QDEL_HINT_HARDDEL) //qdel should assume this object won't gc, and queue a hard delete
+#ifndef DISABLE_DEMOS
 			SSdemo.mark_destroyed(to_delete) // monkestation edit: replays
+#endif
 			SSgarbage.Queue(to_delete, GC_QUEUE_HARDDELETE)
 		if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
+#ifndef DISABLE_DEMOS
 			SSdemo.mark_destroyed(to_delete) // monkestation edit: replays
+#endif
 			SSgarbage.HardDelete(to_delete, override = TRUE)
 		#ifdef REFERENCE_TRACKING
 		if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
@@ -462,7 +468,9 @@ SUBSYSTEM_DEF(garbage)
 			#endif
 			trash.no_hint++
 			SSgarbage.Queue(to_delete)
+#ifndef DISABLE_DEMOS
 	// monkestation start: replays
 	if(to_delete)
 		SSdemo?.mark_destroyed(to_delete)
 	// monkestation end: replays
+#endif

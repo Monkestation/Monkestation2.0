@@ -70,7 +70,7 @@
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	if(world.time >= next_announce)
 		var/area/our_area = get_area(src)
-		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()]", "Nuclear Operations Command", sound_override = 'sound/misc/notice1.ogg', should_play_sound = TRUE, color_override = "red")
+		minor_announce("[get_time_left()] SECONDS UNTIL DECRYPTION COMPLETION. LOCATION: [our_area.get_original_area_name()].", "Nuclear Operations Command", sound_override = 'sound/misc/notice1.ogg', should_play_sound = TRUE, color_override = "red")
 		next_announce += NUKE_ANNOUNCE_INTERVAL
 	if(world.time >= grant_announce && !grant_given)
 		priority_announce(
@@ -371,8 +371,8 @@
 
 	previous_level = SSsecurity_level.get_current_level_as_number()
 	detonation_timer = world.time + (timer_set * 10)
-	for(var/obj/item/pinpointer/nuke/syndicate/nuke_pointer in GLOB.pinpointer_list)
-		nuke_pointer.switch_mode_to(TRACK_INFILTRATOR)
+	for(var/obj/item/pinpointer/nuke/nuke_pointer in GLOB.pinpointer_list)
+		nuke_pointer.switch_mode_to(TRACK_COMMANDO_NUKE)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
 
@@ -403,6 +403,8 @@
 /obj/machinery/nuclearbomb/commando/disarm_nuke(mob/disarmer, change_level_back = FALSE)
 	. = ..()
 	SSshuttle.clearHostileEnvironment(src)
+	if(SSsecurity_level.get_current_level_as_number() <= SEC_LEVEL_DELTA)
+		SSsecurity_level.set_level(previous_level)
 
 #undef NUKE_ANNOUNCE_INTERVAL
 

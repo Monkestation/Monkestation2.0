@@ -604,3 +604,112 @@ effective or pretty fucking useless.
 			COOLDOWN_START(src, acquire_target_cooldown, 10 SECONDS)
 			target(M)
 			return
+
+/obj/item/missile_targeter
+	name = "missile targeter"
+	desc = "A one time use targeter for calling a missile to bomb the designated target. Radius from epicenter: 12 meters."
+	desc_controls = "Alt-Click the device to fire the missile."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "missile_targeter_0"
+	inhand_icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	var/used = FALSE
+	var/target_mode_on = FALSE
+	var/targeting = FALSE //are we currently targetting
+	var/missile_firing = FALSE
+	var/obj/effect/abstract/targetting_laser/target_laser
+	var/turf/designated_target
+
+
+/obj/item/missile_targeter/proc/check_usability(mob/user)
+	if(used)
+		balloon_alert(user, "out of charge!")
+		return FALSE
+	return TRUE
+
+/obj/item/missile_targeter/attack_self(mob/user)
+	if(!(check_usability(user)))
+		return
+	toggle_targetting_mode(user)
+
+/obj/item/missile_targeter/proc/toggle_targetting_mode(mob/user)
+	target_mode_on = !target_mode_on
+	balloon_alert(user, "targetting [target_mode_on ? "on" : "off"]")
+	update_icon_state()
+
+/obj/item/missile_targeter/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!(check_usability(user)))
+		return
+	if(!target_mode_on)
+		balloon_alert(user, "targeting mode off!")
+		return
+	if(!check_allowed_items(target, not_inside = TRUE))
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	var/turf/targeted_turf = get_turf(target)
+	if(targeted_turf.density)
+		balloon_alert(user, "target has to be in the open!")
+		return
+	if(targeted_turf == designated_target)
+		balloon_alert(user, "already being targeted!")
+		return
+	if(targeting)
+		balloon_alert(user, "already targetting!")
+		return
+
+	targeting = TRUE
+
+	if(!do_after(user, 3 SECONDS, target = target))
+		targeting = FALSE
+		return
+	designated_target = targeted_turf
+	if(target_laser)
+		qdel(target_laser)
+	target_laser = new /obj/effect/abstract/targetting_laser(designated_target)
+	playsound(src, 'sound/machines/chime.ogg', 30, TRUE)
+	targeting = FALSE
+
+/obj/item/missile_targeter/update_icon_state()
+	. = ..()
+	if(missile_firing)
+		icon_state = "missile_targeter_2"
+		return
+	if(used)
+		icon_state = "missile_targeter_3"
+		return
+	if(target_mode_on)
+		icon_state = "missile_targeter_1"
+		return
+	icon_state = "missile_targeter_0"
+
+/obj/item/missile_targeter/AltClick(mob/living/user)
+	if(!(check_usability(user)))
+		return
+	if(!designated_target)
+		balloon_alert(user, "no target designated!")
+		return
+
+	missile_firing = TRUE
+	update_icon_state()
+	if(target_laser)
+		qdel(target_laser)
+	var/obj/structure/closet/supplypod/syndicate_missile/new_missile = new()
+	new /obj/effect/pod_landingzone(designated_target, new_missile)
+	used = TRUE
+	to_chat(user, span_userdanger("The [name] vibrates and lets out an ominous alarm."))
+	playsound(src, 'sound/machines/warning-buzzer.ogg', 30, TRUE)
+	var/area/our_area = get_area(designated_target)
+	if(is_station_level(designated_target.z))
+		minor_announce("MISSILE ON COLLISION COURSE. COLLISION POINT: [our_area.get_original_area_name()]. ETA: 10 SECONDS.", "Priority Alert", sound_override = 'sound/misc/missile_warn.ogg', should_play_sound = TRUE, color_override = "red")
+	sleep(10 SECONDS)
+	missile_firing = FALSE
+	update_icon_state()
+
+/obj/effect/abstract/targetting_laser
+	icon_state = "impact_laser"
+	light_outer_range = 2
+	light_power = 1
+	light_color = COLOR_SOFT_RED
