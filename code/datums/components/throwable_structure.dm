@@ -6,22 +6,24 @@
 	var/held_state = "" //Icon state of inhand
 	var/held_force = 0 //Held attack damage
 	var/throw_force = 0 //Throw damage
+	var/throw_knockdown = 0 //Throw knockdown
 	var/held_slowdown = 0 //Slowdonw while held
 	var/impact_sound = 'sound/effects/bang.ogg' //Impact Sound
 
-/datum/component/throwable_structure/Initialize(held_state="", held_force=0, throw_force=0, held_slowdown=0, impact_sound='sound/effects/bang.ogg')
+/datum/component/throwable_structure/Initialize(held_state="", held_force=0, throw_force=0, throw_knockdown=0, held_slowdown=0, impact_sound='sound/effects/bang.ogg')
 	if(!istype(parent, /obj/structure) && !istype(parent, /obj/machinery))
 		return COMPONENT_INCOMPATIBLE
 
 	src.held_state = held_state
 	src.held_force = held_force
 	src.throw_force = throw_force
+	src.throw_knockdown = throw_knockdown
 	src.held_slowdown = held_slowdown
 	src.impact_sound = impact_sound
 
 // Inherit the new values passed to the component
 /datum/component/throwable_structure/InheritComponent(datum/component/throwable_structure/new_comp, original, \
-											held_state, held_force, throw_force, held_slowdown, impact_sound)
+											held_state, held_force, throw_force, throw_knockdown, held_slowdown, impact_sound)
 	if(!original)
 		return
 	if(held_state)
@@ -30,6 +32,8 @@
 		src.held_force = held_force
 	if(throw_force)
 		src.throw_force = throw_force
+	if(throw_knockdown)
+		src.throw_knockdown = throw_knockdown
 	if(held_slowdown)
 		src.held_slowdown = held_slowdown
 	if(impact_sound)
@@ -53,17 +57,17 @@
 			carbon_target.take_bodypart_damage(throw_force, 0, check_armor = TRUE, wound_bonus = 5)
 		else
 			living_target.apply_damage(throw_force, BRUTE, blocked = blocked, forced = FALSE, attack_direction = get_dir(get_turf(parent), living_target))
-		living_target.Knockdown(1.5 SECONDS)
+		if(throw_knockdown)
+			living_target.Knockdown(throw_knockdown)
 		playsound(parent, impact_sound, 40)
 	else
 		playsound(hit_atom, 'sound/weapons/genhit.ogg',80 , TRUE, -1)
-	return
 
 /datum/component/throwable_structure/proc/on_mouse_drop(datum/source, atom/dropping, mob/user)
 	SIGNAL_HANDLER
 	var/obj/structure_interact = parent
 	if(dropping == user && structure_interact.Adjacent(user))
-		if(structure_interact.anchored || structure_interact.flags_1 & NODECONSTRUCT_1)
+		if(structure_interact.anchored || (structure_interact.flags_1 & NODECONSTRUCT_1))
 			return
 		if(!user.can_perform_action(structure_interact, NEED_DEXTERITY|NEED_HANDS))
 			return
@@ -71,8 +75,6 @@
 
 /datum/component/throwable_structure/proc/structure_try_pickup(mob/living/user)
 	var/obj/structure_interact = parent
-	if(!ishuman(user))
-		return
 	if(user.get_num_held_items())
 		to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
@@ -123,7 +125,6 @@
 	. = ..()
 
 /obj/item/structure_holder/Destroy()
-	destroying = TRUE
 	if(held_structure)
 		release(FALSE)
 	return ..()
@@ -143,8 +144,7 @@
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
 
-	if(two_handed_component)
-		two_handed_component.unwield(user, FALSE, FALSE)
+	two_handed_component?.unwield(user, FALSE, FALSE)
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You set [src] down gently on the ground."))
@@ -162,17 +162,18 @@
 
 /obj/item/structure_holder/proc/release(del_on_release = TRUE)
 	if(!held_structure)
-		if(del_on_release && !destroying)
+		if(del_on_release && !QDELING(src))
 			qdel(src)
 		return FALSE
 	var/obj/released_structure = held_structure
 	held_structure = null // stops the held structure from being release()'d twice.
-	if(isliving(loc))
+	if(isliving(loc) && !QDELING(src))
 		var/mob/living/structure_carrier = loc
 		structure_carrier.dropItemToGround(src)
-	released_structure.forceMove(drop_location())
-	released_structure.setDir(SOUTH)
-	if(del_on_release && !destroying)
+	if(!QDELING(released_structure))
+		released_structure.forceMove(drop_location())
+		released_structure.setDir(SOUTH)
+	if(del_on_release && !QDELING(src))
 		qdel(src)
 	return TRUE
 
