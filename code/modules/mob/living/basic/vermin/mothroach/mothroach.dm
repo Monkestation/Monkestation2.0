@@ -36,10 +36,9 @@
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
-	var/static/list/food_types = list(/obj/item/clothing)
-	AddElement(/datum/element/basic_eating, food_types = food_types)
+	var/static/list/food_types = list(/obj/item/clothing, /obj/item/)
+	AddElement(/datum/element/basic_eating, heal_amt = 5, food_types = food_types)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -76,10 +75,53 @@
 	icon_dead = "chomproach_dead"
 	melee_damage_lower = 7
 	melee_damage_upper = 15
+	attack_verb_continuous = "gnaws"
+	attack_verb_simple = "chomp"
+	mob_size = MOB_SIZE_SMALL
 	health = 75
 	maxHealth = 75
 	speed = 0.75
+	melee_attack_cooldown = 1 SECONDS  ///half of standard
+	ai_controller = /datum/ai_controller/basic_controller/hungrymothroach
 
 /mob/living/basic/mothroach/hungry/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_TINY)
+	AddElement(/datum/element/ai_flee_while_injured)
+	AddElement(/datum/element/ai_retaliate)
+
+
+/datum/ai_controller/basic_controller/mothroach
+	blackboard = list(
+		BB_ALWAYS_IGNORE_FACTION = TRUE,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/random_speech/mothroach,
+	)
+
+/datum/ai_controller/basic_controller/hungrymothroach ///Totally not crab AI
+	blackboard = list(
+		BB_ALWAYS_IGNORE_FACTION = TRUE,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
+		/datum/ai_planning_subtree/target_retaliate/to_flee,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/random_speech/mothroach,
+	)
