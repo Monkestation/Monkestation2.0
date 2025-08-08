@@ -217,6 +217,7 @@
 		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
 		if(inserted > 0)
 			. += inserted
+			inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
 			var/message = null
 
 			//stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
@@ -231,11 +232,11 @@
 				//was this the original item in the players hand? put what's left back in the player's hand
 				if(!isnull(original_item))
 					user.put_in_active_hand(original_item)
-					message = "Only [inserted] amount of [item_name] was consumed by [parent]."
+					message = "Only [inserted] sheets of [item_name] was consumed by [parent]."
 
 			//collect all messages to print later
 			if(!message)
-				message = "[item_name] worth [inserted] material was consumed by [parent]."
+				message = "[item_name] worth [inserted] sheets was consumed by [parent]."
 			if(inserts[message])
 				inserts[message] += 1
 			else

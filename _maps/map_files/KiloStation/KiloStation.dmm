@@ -7386,6 +7386,8 @@
 	desc = "Used to grind things up into raw materials and liquids.";
 	pixel_y = 5
 	},
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "clQ" = (
@@ -41811,6 +41813,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/disease2/centrifuge,
+/obj/item/storage/box/tube,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "mVL" = (
@@ -51236,9 +51239,6 @@
 "qao" = (
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/latex,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/dropper,
 /obj/structure/reagent_dispensers/wall/virusfood/directional/south,
@@ -51254,6 +51254,8 @@
 	pixel_y = 8;
 	pixel_x = -11
 	},
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "qas" = (
@@ -71845,6 +71847,9 @@
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "wuv" = (

@@ -1,17 +1,9 @@
-/datum/outfit/slasher/slasher1
+/datum/outfit/slasher/slasher
 	name = "Slasher Outfit"
 	suit = /obj/item/clothing/suit/apron/slasher
 	uniform = /obj/item/clothing/under/slasher
-	shoes = /obj/item/clothing/shoes/slasher_shoes
-	mask = /obj/item/clothing/mask/gas/slasher
-	belt = /obj/item/storage/belt/slasher
-
-/datum/outfit/slasher/slasher2
-	name = "Slasher Outfit"
-	suit = /obj/item/clothing/suit/apron/slasher2
-	uniform = /obj/item/clothing/under/slasher
 	shoes = /obj/item/clothing/shoes/admiral
-	mask = /obj/item/clothing/mask/gas/slasher2
+	mask = /obj/item/clothing/mask/gas/slasher
 	belt = /obj/item/storage/belt/slasher
 	gloves = /obj/item/clothing/gloves/admiral
 	back = /obj/item/storage/backpack/cursed
@@ -25,12 +17,14 @@
 	antag_hud_name = "slasher"
 	show_name_in_check_antagonists = TRUE
 	hud_icon = 'monkestation/icons/mob/slasher.dmi'
-	preview_outfit = /datum/outfit/slasher/slasher2
+	preview_outfit = /datum/outfit/slasher/slasher
 	show_to_ghosts = TRUE
 	var/give_objectives = TRUE
 	var/datum/action/cooldown/slasher/active_action = null
 	///the linked machette that the slasher can summon even if destroyed and is unique to them
 	var/obj/item/slasher_machette/linked_machette
+	/// the linked apron for increasing his armor values on soul succ
+	var/obj/item/clothing/suit/apron/slasher/linked_apron
 	///rallys the amount of souls effects are based on this
 	var/souls_sucked = 0
 	///our cached brute_mod
@@ -64,8 +58,7 @@
 	var/list/tracked = list()
 	///this is our list of seers
 	var/list/seers = list()
-	///this is the time counter for stalking
-	var/time_counter = 0
+
 	//aggrograb for slasher
 	var/datum/martial_art/slasher_grab/grabart
 
@@ -141,7 +134,8 @@
 
 	var/mob/living/carbon/human/human = current_mob
 	if(istype(human))
-		human.equipOutfit(/datum/outfit/slasher/slasher2)
+		human.equipOutfit(/datum/outfit/slasher/slasher)
+		linked_apron = human.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	cached_brute_mod = human.dna.species.brutemod
 	current_mob.alpha = 150
 	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
@@ -177,7 +171,7 @@
 	. = ..()
 	to_chat(owner.current, span_userdanger("The time is ripe to hunt for souls."))
 	to_chat(owner.current, span_announce("You are a vengeful spirit that feeds on fear. <b>Stick to maintenance, the darkness reveals us but is our greatest friend</b>."))
-	to_chat(owner.current, span_announce("Stalk targets to instill fear! You will gain their souls after stalking, turning them a pallid white."))
+
 	to_chat(owner.current, span_announce("Claim the souls of the fallen, the more souls you have, the sharper your blade."))
 	to_chat(owner.current, span_announce("Reject the light, it hides you but makes you vulnerable."))
 	owner.current.playsound_local(null, 'monkestation/sound/ambience/antag/slasher.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
@@ -232,140 +226,9 @@
 		mobs_with_fullscreens -= held_ref
 		human.regenerate_icons()
 
-
-
-/datum/status_effect/slasher/stalking
-	id = "slasher_stalkee"
-	duration = STATUS_EFFECT_PERMANENT
-	show_duration = FALSE
-	tick_interval = 1 SECONDS
-	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = null
-
-	var/datum/antagonist/slasher/slasherdatum
-
-/datum/status_effect/slasher/stalking/on_creation(mob/living/new_owner, datum/antagonist/slasher/set_slasherdatum)
-	. = ..()
-	if(!.)
-		return FALSE
-	slasherdatum = set_slasherdatum
-
-/datum/status_effect/slasher/stalking/on_apply()
-	. = ..()
-
-/datum/status_effect/slasher/stalking/on_remove()
-	. = ..()
-
-
-/datum/status_effect/slasher/stalking/tick(seconds_between_ticks, times_fired)
-	if(slasherdatum.stalked_human)
-		for(var/mob/living/mob in view(7, owner))
-			if(mob == owner || !mob.mind)
-				continue
-			if(mob.stat == DEAD)
-				slasherdatum.failed_stalking()
-			if(!ishuman(mob))
-				slasherdatum.reset_stalking()
-			if(mob.mind.has_antag_datum(/datum/antagonist/slasher) && slasherdatum.stalked_human == owner)
-				slasherdatum.stalk_precent += (1 / 1.8) //3 minutes, hopefully.
-				slasherdatum.increase_fear(owner, 1)
-			if(slasherdatum.stalk_precent >= 100)
-				slasherdatum.finish_stalking()
-
 /datum/status_effect/slasher
 	id = "slasher"
 	alert_type = null
-
-/datum/status_effect/slasher/stalker
-	id = "slashing_stalking"
-	duration = STATUS_EFFECT_PERMANENT
-	show_duration = FALSE
-	tick_interval = 1 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/slasher/stalker
-	status_type = STATUS_EFFECT_UNIQUE
-	var/datum/antagonist/slasher/slasherdatum
-
-/datum/status_effect/slasher/stalking/on_creation(mob/living/new_owner, datum/antagonist/slasher/set_slasherdatum)
-	. = ..()
-	if(!.)
-		return FALSE
-	slasherdatum = set_slasherdatum
-
-/datum/status_effect/slasher/stalker/on_apply()
-	. = ..()
-	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
-	to_chat(owner, span_notice("You begin stalking your target, [slasherdatum.stalked_human], who is a [slasherdatum.stalked_human.job]"))
-
-/atom/movable/screen/alert/status_effect/slasher/stalker
-	name = "Stalking"
-	desc = "You are stalking your target..."
-	icon = 'goon/icons/mob/slasher.dmi'
-	icon_state = "slasher_possession"
-	clickable_glow = TRUE
-
-/atom/movable/screen/alert/status_effect/slasher/stalker/Click()
-	. = ..()
-	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
-	if(!slasherdatum.stalked_human)
-		return
-	var/stalk_progress = round(slasherdatum.stalk_precent)
-	to_chat(owner, span_notice("Your victim is [stalk_progress]% stalked. More is needed..."))
-
-
-/datum/antagonist/slasher/proc/reset_stalking()
-	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
-	stalked_human.clear_alert("slashing_stalkee")
-	owner.current.clear_alert("slashing_stalker")
-	QDEL_NULL(stalked_human.tracking_beacon)
-	var/mob/living/carbon/human/human = owner.current
-	var/datum/component/team_monitor/owner_monitor = human.team_monitor
-	owner_monitor.hide_hud()
-	reset_fear(stalked_human)
-	stalked_human = null
-	var/datum/action/cooldown/slasher/stalk_target/power = locate() in powers
-	power.StartCooldown(1)
-	to_chat(owner, span_notice("Your target is no longer spookable..."))
-
-/datum/antagonist/slasher/proc/finish_stalking()
-	to_chat(owner, span_boldwarning("You have finished spooking your victim, and have harvested part of their soul!"))
-	if(linked_machette)
-		linked_machette.force += 4
-		linked_machette.throwforce += 4
-	stalked_human.soul_sucked = TRUE
-	if(HAS_TRAIT(stalked_human, TRAIT_USES_SKINTONES))
-		stalked_human.skin_tone = "albino"
-		stalked_human.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
-	else
-		var/datum/color_palette/generic_colors/located = stalked_human.dna.color_palettes[/datum/color_palette/generic_colors]
-		located.mutant_color = "#FFFFFF"
-	to_chat(stalked_human, span_warning("YOU FEEL COLD, AS IF YOUR SOUL HAS BEEN RIPPED FROM YOUR BODY."))
-	stalked_human.apply_damage(100, damagetype = BRUTE, spread_damage = TRUE)
-	stalked_human.set_jitter_if_lower(10 SECONDS)
-	stalked_human.emote("scream")
-	stalked_human.say("AAAAAAHHHH!!!", forced = "soulsucked")
-	souls_sucked++
-	if(stalked_human?.tracking_beacon)
-		QDEL_NULL(stalked_human.tracking_beacon)
-		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
-		owner_monitor?.hide_hud(owner)
-	stalked_human.remove_status_effect(/datum/status_effect/slasher/stalking)
-	stalked_human.clear_alert("slashing_stalkee")
-	reset_fear(stalked_human)
-	stalked_human = null
-
-
-/datum/antagonist/slasher/proc/failed_stalking()
-	to_chat(owner, span_boldwarning("You let your victim be taken before it was time!"))
-	if(linked_machette)
-		linked_machette.force -= 5
-		linked_machette.throwforce -= 5
-	if(stalked_human && stalked_human.tracking_beacon)
-		QDEL_NULL(stalked_human.tracking_beacon)
-		var/datum/component/team_monitor/owner_monitor = owner.current.team_monitor
-		owner_monitor.hide_hud(owner)
-		owner.current.clear_alert("slashing_stalking")
-		reset_fear(stalked_human)
-	stalked_human = null
 
 /datum/antagonist/slasher/proc/check_attack(mob/living/attacking_person, mob/living/attacked_mob)
 	SIGNAL_HANDLER
@@ -534,7 +397,7 @@
 
 /datum/objective/slasher/harvest_souls
 	name = "Harvest Souls"
-	explanation_text = "Harvest souls by stalking your targets and feasting on their fear."
+	explanation_text = "Harvest souls from the dead to increase your power."
 	admin_grantable = TRUE
 
 /datum/objective/slasher/soulsteal

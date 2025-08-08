@@ -195,7 +195,7 @@
 
 /// Reads layer configurations to take out some useful overall information
 /datum/greyscale_config/proc/ReadMetadata()
-	var/list/icon_dimensions = get_icon_dimensions(icon_file)
+	var/alist/icon_dimensions = get_icon_dimensions(icon_file)
 	height = icon_dimensions["width"]
 	width = icon_dimensions["height"]
 

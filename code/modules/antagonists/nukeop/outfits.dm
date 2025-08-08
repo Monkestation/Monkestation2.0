@@ -208,8 +208,8 @@
 
 	shoes = /obj/item/clothing/shoes/combat/swat
 	belt = /obj/item/gun/ballistic/automatic/pistol
-	l_pocket = /obj/item/pinpointer/area_pinpointer
-	r_pocket = /obj/item/reagent_containers/pill/patch/advanced
+	l_pocket = /obj/item/pinpointer/commando_nuke
+	r_pocket = /obj/item/pinpointer/area_pinpointer/station_locked
 	backpack_contents = list(
 		/obj/item/syndicate_voucher/kit = 1,
 	)

@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - image: "Regenerative extracts now have a unique sprite for their screen alert, instead of reusing the legion core alert. Sprite by Salted Zen."

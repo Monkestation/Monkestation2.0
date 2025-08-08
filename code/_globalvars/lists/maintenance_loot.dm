@@ -211,9 +211,9 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		//Sorry Lucy, I stole your gifts. ~MCP.
 		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
 		/obj/item/implanter/dust = 3,
-		/obj/machinery/vending/sovietsoda = 3,
-		/obj/machinery/vending/donksnack = 3,
-		/obj/machinery/vending/hotdog = 4,
+		/obj/item/vending_refill/sovietsoda = 3,
+		/obj/item/vending_refill/donksnackvendor = 3,
+		/obj/item/vending_refill/hotdog = 4,
 		/obj/item/clothing/mask/facehugger/toy = 2, //Heheh ~MCP :3
 		/obj/effect/spawner/random/livingplush = 4,
 		) = 8,

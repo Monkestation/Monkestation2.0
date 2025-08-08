@@ -1828,7 +1828,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/projectile/sickly_blade_toy/dragging/on_hit(atom/movable/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(!ismovable(target) || target.anchored || ismachinery(target) || !firer)
+	if(!ismovable(target) || target.anchored || ismachinery(target) || !firer || target.move_resist > MOVE_FORCE_NORMAL)
 		return BULLET_ACT_BLOCK
 
 	var/mob/living/user = firer
