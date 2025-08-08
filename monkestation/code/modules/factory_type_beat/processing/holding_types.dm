@@ -53,6 +53,11 @@
 	icon = 'monkestation/icons/obj/items/drugs.dmi'
 	icon_state = "crack"
 
+/obj/item/processing/clumps
+	name = "ore clumps"
+	desc = "After being purified we are left with some clumps of ore. It needs to be crushed."
+	icon_state = "clump"
+
 /**
  * Extra boulder types that add bonuses or have different minerals not generated from ssoregen.
  */
