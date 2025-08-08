@@ -177,6 +177,8 @@
       Iron and 3k Glass
   Shoddd:
   - balance: comically large spoon's wound bonus is now 10
+  Tostah:
+  - balance: Commando operatives now provided syndicate modsuits and modules
   Wisemonster:
   - balance: Standardizes pathology on Heliostation, Icebox, and Theseus
   - rscadd: A warrant console has been added to the outside of box's security
@@ -191,3 +193,36 @@
   - bugfix: Slime vac no longer has infinite range when recycling monkeys
   - qol: Slime vac, Nozzle, and recycler now display their biomass on examine
   - balance: TGMC armor vest protects from space temp
+2025-08-08:
+  Absolucy:
+  - image: Regenerative extracts now have a unique sprite for their screen alert,
+      instead of reusing the legion core alert. Sprite by Salted Zen.
+  EssentialTomato:
+  - rscadd: You can now pick up and throw microwaves.
+  Killermankey:
+  - rscadd: Robert McPlushie
+  SirNightKnight:
+  - rscadd: added the missile targeter. it calls down an explosive missile after a
+      10 second announced warning.
+  - qol: commando ops now have a pinpointer that tracks their nuke.
+  - qol: nuclear disk pinpointers now point toward the commando nuke once it's armed.
+  - balance: lowered the damage of the rostokov and refurbished plastikov.
+  - balance: rebalanced some commando operative kits. the engineer kit no longer has
+      an RCD.
+  - balance: rebalanced the command op team support beacon. the borg pack is just
+      a syndicate medical borg now. added a missile targeter to the selection.
+  - balance: the bulldog now has a 1.2 damage multiplier instead of 1.4.
+  - balance: the combat compact shotgun now has a 1.2 damage multiplier instead of
+      1.4.
+  - balance: syndicate space suits now have a combined slowdown of 0.50 split between
+      the suit and helmet
+  - bugfix: commando ops now have proper end round report outcomes.
+  - sound: added missile_warn.ogg to the file.
+  - map: removed most of the extra bombs from the commando shuttle. mainly the two
+      syndicate bomb beacons.
+  ThePooba:
+  - rscadd: Slasher now gets an ability to breathe in and out with emote and custom
+      sounds -(spooky)
+  - rscadd: Slasher now can summon a meat spike for spiking his victims on really
+      cool and original idea 10/10
+  - rscadd: Gets miore armour with more souls
