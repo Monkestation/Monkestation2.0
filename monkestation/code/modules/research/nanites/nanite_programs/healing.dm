@@ -73,7 +73,7 @@
 		return ..()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if ( C.has_trauma_type( resilience = TRAUMA_RESILIENCE_BASIC) )
+		if (C.has_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF))
 			return ..()
 	return FALSE
 
@@ -81,7 +81,7 @@
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
-		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 
 /datum/nanite_program/blood_restoring
 	name = "Blood Regeneration"
@@ -191,7 +191,7 @@
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
-		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 
 /datum/nanite_program/defib
 	name = "Defibrillation"
