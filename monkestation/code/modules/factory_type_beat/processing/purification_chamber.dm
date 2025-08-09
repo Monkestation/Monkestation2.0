@@ -17,7 +17,7 @@
 
 /obj/machinery/bouldertech/flatpack/purification_chamber/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(. == CONTEXTUAL_SCREENTIP_SET)
+	if(. == CONTEXTUAL_SCREENTIP_SET && !panel_open && anchored)
 		if(isnull(oxygen_input))
 			context[SCREENTIP_CONTEXT_ALT_LMB] = "Deploy oxygen port"
 		else
@@ -25,6 +25,8 @@
 
 /obj/machinery/bouldertech/flatpack/purification_chamber/AltClick(mob/user)
 	. = ..()
+	if(panel_open)
+		return
 	if(oxygen_input)
 		disconnect(FALSE)
 

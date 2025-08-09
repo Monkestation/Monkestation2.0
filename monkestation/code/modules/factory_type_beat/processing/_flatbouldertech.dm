@@ -4,10 +4,21 @@
 
 	/// Pack to return when deconstructed with crowbar.
 	var/obj/item/flatpacked_machine/ore_processing/machine
+	var/datum/component/simple_rotation/rotation
+
+/obj/machinery/bouldertech/flatpack/Destroy()
+	QDEL_NULL(rotation)
+	return ..()
+
 
 /obj/machinery/bouldertech/flatpack/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), tool))
 		update_appearance(UPDATE_ICON_STATE)
+		if(panel_open)
+			rotation = AddComponent(/datum/component/simple_rotation)
+		else
+			QDEL_NULL(rotation)
+
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return
 

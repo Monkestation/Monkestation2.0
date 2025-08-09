@@ -63,6 +63,11 @@
 	desc = "After being filled with chemicals and shattered we are left with some shards of ores. That need to be baked."
 	icon_state = "shard"
 
+/obj/item/processing/crystals
+	name = "ore crystals"
+	desc = "After crystalizing some clean slurry we have crystals. They need to be split apart."
+	icon_state = "crystal"
+
 /**
  * Extra boulder types that add bonuses or have different minerals not generated from ssoregen.
  */
