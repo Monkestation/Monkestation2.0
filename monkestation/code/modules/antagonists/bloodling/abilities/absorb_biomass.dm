@@ -64,7 +64,7 @@
 		if(istype(target, /obj/effect/decal/cleanable/blood))
 			biomass_gain = 1
 
-		else if(istype(target, /obj/item/organ))\
+		else if(istype(target, /obj/item/organ))
 			var/obj/item/organ/organ = target
 			if(!(organ.organ_flags & ORGAN_ORGANIC))
 				our_mob.balloon_alert(our_mob, "[target] is not organic!")
