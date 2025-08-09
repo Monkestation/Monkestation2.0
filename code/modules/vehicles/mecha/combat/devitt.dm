@@ -11,7 +11,7 @@
 	bumpsmash = TRUE
 	stepsound = 'sound/vehicles/driving-noise.ogg'
 	turnsound = 'sound/vehicles/driving-noise.ogg'
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
+	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE //can't strafe bruv
 	armor_type = /datum/armor/devitt //its neigh on immune to bullets, but explosives and melee will ruin it.
 	internal_damage_threshold = 35 //Its old but no electronics
 	wreckage = /obj/structure/mecha_wreckage/devitt
@@ -26,6 +26,8 @@
 	)
 	max_occupants = 2 //driver+gunner, otherwise this thing would be gods OP
 	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 0,
 		MECHA_POWER = 1, // you can put an engine in it, wow!
 		MECHA_ARMOR = 0,
@@ -41,11 +43,10 @@
 	acid = 0
 
 // better parts since TC
-/obj/vehicle/sealed/mecha/marauder/add_cell()
+/obj/vehicle/sealed/mecha/marauder/populate_parts()
 	cell = new /obj/item/stock_parts/cell/super(src)
-
-/obj/vehicle/sealed/mecha/devitt/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
+	update_part_values()
 
 // trying to add multi crew 2, deisel boogaloo
 // yes I am just ripping this from the savannah ivanov how did you know?
