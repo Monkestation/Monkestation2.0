@@ -113482,7 +113482,7 @@
 "vOS" = (
 /obj/structure/rack,
 /obj/item/tank/internals/anesthetic,
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /obj/item/storage/box/bodybags,
 /obj/item/storage/box/gloves{
 	pixel_x = 3;
