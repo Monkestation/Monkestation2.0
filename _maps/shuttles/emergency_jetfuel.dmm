@@ -28,6 +28,19 @@
 /obj/effect/abstract/fire/big_fire,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"dJ" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"dT" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"eg" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "ex" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -43,6 +56,11 @@
 /obj/effect/abstract/fire/big_fire,
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"fA" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/template_noop,
 /area/shuttle/escape)
 "gY" = (
 /obj/structure/chair/comfy/shuttle{
@@ -95,6 +113,11 @@
 /obj/effect/gibspawner/human,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"nQ" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/door/window/left/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "ol" = (
 /obj/machinery/power/shuttle_engine/huge{
 	dir = 1
@@ -119,9 +142,20 @@
 /obj/effect/abstract/fire/big_fire,
 /turf/open/openspace,
 /area/template_noop)
+"ss" = (
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "sz" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"ue" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "uF" = (
@@ -137,6 +171,8 @@
 /obj/effect/mob_spawn/corpse/human/bridgeofficer,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/glass,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "xp" = (
@@ -161,6 +197,17 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/brig)
+"yE" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"yQ" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "zj" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/mineral/titanium,
@@ -185,6 +232,7 @@
 "CH" = (
 /obj/effect/mob_spawn/corpse/human/bridgeofficer,
 /obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "CO" = (
@@ -207,9 +255,21 @@
 /obj/effect/gibspawner/human,
 /turf/template_noop,
 /area/template_noop)
+"Fq" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "FF" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /obj/effect/abstract/fire/big_fire,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Hp" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Hs" = (
@@ -219,6 +279,10 @@
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"HT" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Ij" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /obj/effect/decal/cleanable/glass,
@@ -229,6 +293,7 @@
 	name = "Emergency Shuttle Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "IS" = (
@@ -247,6 +312,11 @@
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/openspace,
 /area/template_noop)
+"KO" = (
+/obj/effect/abstract/fire/big_fire,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "KS" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -281,6 +351,11 @@
 /obj/effect/gibspawner/human,
 /turf/template_noop,
 /area/shuttle/escape)
+"No" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "NM" = (
 /obj/structure/lattice,
 /turf/open/openspace,
@@ -310,6 +385,11 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"PT" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/window/left/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Qp" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /obj/effect/decal/cleanable/blood,
@@ -337,11 +417,22 @@
 "Th" = (
 /turf/open/openspace,
 /area/template_noop)
+"WF" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "XF" = (
 /obj/effect/abstract/fire/big_fire,
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/template_noop)
+"XQ" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "XR" = (
 /obj/structure/lattice,
 /turf/open/openspace,
@@ -440,7 +531,7 @@ OV
 OV
 OV
 LK
-ym
+LK
 CO
 FF
 bT
@@ -475,10 +566,10 @@ OV
 OV
 OV
 OV
-LK
+ym
 LK
 CO
-MD
+ss
 lR
 Ji
 dg
@@ -514,7 +605,7 @@ OV
 Mg
 Mg
 Mg
-lR
+HT
 oR
 MD
 oR
@@ -549,8 +640,8 @@ OV
 OV
 OV
 Mg
-lR
-oz
+No
+KO
 lR
 zj
 oz
@@ -629,14 +720,14 @@ ex
 dg
 Ji
 Ji
-lR
-cI
-Ps
+eg
+Hp
+Fq
 Mg
-MD
-lR
-lR
-lR
+ss
+HT
+HT
+HT
 jk
 SO
 NM
@@ -652,7 +743,7 @@ OV
 OV
 LK
 LK
-ol
+LK
 XX
 IS
 dp
@@ -666,7 +757,7 @@ bT
 Ff
 wQ
 fd
-lR
+dJ
 dg
 Mg
 Ji
@@ -694,13 +785,13 @@ mc
 RI
 II
 lR
-Ps
-Ps
+WF
+nQ
 lR
 zj
 MD
 Ps
-lR
+PT
 LI
 as
 Mg
@@ -722,7 +813,7 @@ OV
 (11,1,1) = {"
 OV
 OV
-LK
+ol
 LK
 LK
 yw
@@ -736,11 +827,11 @@ zj
 hV
 lR
 bo
-MD
+XQ
 CH
 Mg
 Mg
-MD
+ss
 Ji
 Ji
 SO
@@ -767,7 +858,7 @@ RL
 uF
 lR
 oz
-Ff
+yE
 lR
 ex
 lR
@@ -775,7 +866,7 @@ oz
 Ji
 Ji
 Mg
-lR
+HT
 Ji
 SO
 SO
@@ -803,7 +894,7 @@ Mg
 Mg
 AJ
 lR
-dg
+fA
 SO
 dg
 SO
@@ -837,8 +928,8 @@ OV
 OV
 OV
 Mg
-zj
-MD
+ue
+dT
 lR
 lR
 dg
@@ -874,7 +965,7 @@ OV
 Mg
 Mg
 Mg
-lR
+HT
 bo
 zj
 sz
@@ -908,9 +999,9 @@ OV
 OV
 OV
 LK
-ym
+LK
 CO
-Ps
+Fq
 Jh
 SO
 MD
@@ -943,10 +1034,10 @@ OV
 OV
 OV
 OV
-LK
+ym
 LK
 CO
-zj
+yQ
 lR
 dg
 dg

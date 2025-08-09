@@ -31,6 +31,17 @@
 	icon_state = "command"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
+// NT Rep area for steel beam
+/area/station/command/heads_quarters/nt_rep_pent
+	name = "Nanotrasen Representative's Penthouse Private wing"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "nt_rep"
+
+/area/station/command/heads_quarters/nt_rep_pub
+	name = "Nanotrasen Representative's Penthouse Public wing"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "nt_rep"
+
 /*
 * Command Head Areas
 */

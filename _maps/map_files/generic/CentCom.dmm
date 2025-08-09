@@ -3446,9 +3446,8 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "ajn" = (
-/obj/effect/turf_decal/stripes/end,
 /obj/machinery/conveyor/inverted{
-	dir = 10;
+	dir = 6;
 	id = "XCCQMLoad2"
 	},
 /turf/open/floor/iron,
@@ -3644,8 +3643,8 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/obj/machinery/conveyor/inverted{
-	dir = 6;
+/obj/machinery/conveyor{
+	dir = 1;
 	id = "XCCQMLoad2"
 	},
 /turf/open/floor/iron,
@@ -7089,14 +7088,6 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/borbop)
 "atf" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "XCCQMLoad2";
-	pixel_x = 6
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
 /obj/structure/railing{
 	dir = 1
 	},
@@ -9728,21 +9719,6 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
 "azS" = (
-/obj/machinery/conveyor_switch/oneway{
-	dir = 8;
-	id = "XCCQMLoad";
-	pixel_x = 6
-	},
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
 "azT" = (
@@ -10193,13 +10169,6 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin_hangout)
 "aBg" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
-	},
-/obj/structure/railing{
-	layer = 3.1
-	},
 /obj/effect/turf_decal/siding/dark{
 	dir = 10
 	},
@@ -13335,6 +13304,10 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
 "aJM" = (
@@ -13828,11 +13801,15 @@
 	},
 /area/centcom/syndicate_mothership/control)
 "aKX" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
 /obj/effect/turf_decal/siding/dark/corner{
 	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/obj/structure/railing{
+	layer = 3.1
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
@@ -22901,6 +22878,13 @@
 /obj/machinery/computer/communications,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/admin)
+"gPJ" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "XCCQMLoad"
+	},
+/turf/open/space/basic,
+/area/centcom/central_command_areas/supply)
 "gPN" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4;
@@ -22962,6 +22946,20 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating/rust,
 /area/centcom/central_command_areas/adminroom)
+"gUS" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "XCCQMLoad";
+	pixel_x = 6
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/supply)
 "gWc" = (
 /obj/effect/turf_decal/caution/red{
 	pixel_y = -15
@@ -29182,6 +29180,13 @@
 	dir = 4
 	},
 /area/cruiser_dock)
+"rJG" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "XCCQMLoad2";
+	pixel_x = 6
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "rKS" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/defibrillator/compact/loaded{
@@ -30916,6 +30921,13 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/admin)
+"uPV" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2"
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "uPY" = (
 /obj/structure/sign{
 	name = "wall";
@@ -31856,6 +31868,13 @@
 /obj/machinery/light/floor/has_bulb/warm,
 /turf/open/ballpit,
 /area/centcom/central_command_areas/admin)
+"wpz" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "XCCQMLoad2"
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "wpD" = (
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/adminroom)
@@ -56714,11 +56733,11 @@ aaa
 aaa
 aaa
 aaa
+aad
 aaa
 aaa
 aaa
-aaa
-aaa
+avo
 aaa
 aaa
 aaa
@@ -56971,13 +56990,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiX
+ajk
+ajr
+aiX
+ajr
+ajI
+aIh
 aaa
 aaa
 aaa
@@ -57228,13 +57247,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ajb
+ajl
+ajs
+aiX
+ajs
+ajJ
+aZo
 aaa
 aaa
 aaa
@@ -57485,13 +57504,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiX
+ajm
+ajr
+aiX
+ajr
+ajK
+aIh
 aaa
 aaa
 aaa
@@ -57741,14 +57760,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiF
+aiF
+uPV
+aaF
+aPC
+aaj
+gPJ
+aIh
 aaa
 aaa
 aaa
@@ -57999,13 +58018,13 @@ kpH
 kpH
 kpH
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+awM
+uPV
+afQ
+avK
+aac
+gPJ
+aIh
 aaa
 aaa
 aaa
@@ -58256,13 +58275,13 @@ uHB
 vFv
 cYr
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+rJG
+uPV
+aCj
+aGC
+gUS
+gPJ
+aIh
 aaa
 aaa
 aaa
@@ -58513,13 +58532,13 @@ uFf
 xQP
 wTG
 kpH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+awM
+uPV
+awM
+awM
+awM
+gPJ
+aIh
 aaa
 aaa
 aaa
@@ -58770,15 +58789,15 @@ uRb
 sRa
 bhS
 kpH
+awM
+uPV
+awM
+awM
+awM
+gPJ
+aIh
 aaa
 aaa
-aaa
-aaa
-aad
-aaa
-aaa
-aaa
-avo
 aaa
 aaa
 aaa
@@ -59027,17 +59046,17 @@ qNR
 gUv
 wdA
 kpH
-aaa
-aaa
-aaa
-aaa
-aiX
-ajk
-ajr
-aiX
-ajr
-ajI
+awM
+uPV
+awM
+awM
+awM
+gPJ
 aIh
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -59284,17 +59303,17 @@ ptP
 jUo
 sHS
 kpH
+awM
+uPV
+awM
+awM
+awM
+gPJ
+aIh
 aaa
 aaa
 aaa
 aaa
-ajb
-ajl
-ajs
-aiX
-ajs
-ajJ
-aZo
 aaa
 aaa
 aaa
@@ -59541,16 +59560,16 @@ kpH
 oBb
 kpH
 kpH
-aaa
 aiF
-aiN
-aiX
-aiX
-ajm
-ajr
-aiX
-ajr
-ajK
+aiF
+awM
+awM
+awM
+gPJ
+aIh
+aIh
+aIh
+aIh
 aIh
 aIh
 aIh
@@ -59802,11 +59821,11 @@ aaa
 aiF
 aiO
 aiO
-ajc
+awM
 ajn
-aaF
-aPC
-aaj
+wpz
+wpz
+wpz
 ajL
 ajc
 ajc
@@ -60061,11 +60080,11 @@ aHk
 aHk
 atf
 aBg
-afQ
-avK
-aac
-arW
 azS
+azS
+azS
+arW
+aEE
 aEE
 agq
 abC
@@ -60318,9 +60337,9 @@ aDX
 aGC
 aJL
 aKX
-aCj
-aGC
-aNi
+azS
+azS
+azS
 awd
 aDE
 awM

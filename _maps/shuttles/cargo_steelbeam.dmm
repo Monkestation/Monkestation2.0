@@ -7,6 +7,16 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/shuttle/supply)
+"d" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "cargoloadL"
+	},
+/turf/open/floor/iron,
+/area/shuttle/supply)
 "e" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "cargoloadR"
@@ -14,6 +24,16 @@
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"i" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "cargoloadR"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
@@ -63,14 +83,15 @@
 "w" = (
 /turf/open/floor/iron,
 /area/shuttle/supply)
-"B" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "cargoloadL"
+"x" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/stripes/corner,
-/obj/docking_port/mobile/supply{
-	dir = 4
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"B" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
@@ -88,14 +109,17 @@
 /area/shuttle/supply)
 "E" = (
 /obj/machinery/light/directional/west,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "G" = (
 /turf/template_noop,
 /area/template_noop)
+"H" = (
+/obj/docking_port/mobile/supply{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
 "I" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -112,19 +136,24 @@
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "L" = (
-/obj/machinery/button/door/directional/west{
-	id = "cargoloadR";
-	name = "Loading Doors";
-	pixel_y = 9;
-	pixel_x = 8
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "cargoloadR"
 	},
-/turf/closed/wall/mineral/titanium,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/shuttle/supply)
 "M" = (
 /obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"N" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 6
+	dir = 8
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "Q" = (
@@ -137,9 +166,17 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "R" = (
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"T" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/door/poddoor/shutters{
+	id = "cargoloadL"
 	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
@@ -161,41 +198,88 @@
 
 (1,1,1) = {"
 G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+H
+J
+J
+J
+d
+T
 J
 J
 J
 J
-U
-B
-Q
+J
+J
 J
 J
 U
 a
+Q
+J
+G
+G
+G
+G
+G
+G
+"}
+(2,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+J
+J
+J
+J
+u
+N
+D
+C
+q
+D
+N
+D
+D
+D
+D
+m
+D
+C
+q
+x
+J
+J
+J
+J
 J
 J
 G
 "}
-(2,1,1) = {"
-J
-J
-u
-m
-D
-C
-q
-D
-m
-D
-C
-q
-E
-J
-J
-"}
 (3,1,1) = {"
+G
+G
+G
+G
+G
 J
 J
+J
+w
+E
+q
 C
 w
 w
@@ -206,13 +290,42 @@ w
 w
 w
 w
+w
+w
+w
+w
+w
 q
-X
-s
+C
+E
+w
+E
+w
+J
+J
 "}
 (4,1,1) = {"
+G
+G
+G
+G
 J
 J
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
 w
 w
 w
@@ -228,8 +341,27 @@ X
 s
 "}
 (5,1,1) = {"
+G
+G
+G
 J
 J
+E
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
 w
 w
 w
@@ -245,9 +377,10 @@ X
 s
 "}
 (6,1,1) = {"
+G
+G
+G
 J
-J
-p
 w
 w
 w
@@ -257,41 +390,421 @@ w
 w
 w
 w
-o
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
 X
 s
 "}
 (7,1,1) = {"
+G
+G
 J
 J
-I
-R
-K
-p
-o
-K
-R
-K
 w
-o
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+X
+s
+"}
+(8,1,1) = {"
+G
+G
+J
+E
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
 M
+w
+M
+w
 J
 J
 "}
-(8,1,1) = {"
+(9,1,1) = {"
+G
+J
+J
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+J
+J
+J
+J
+J
+J
+G
+"}
+(10,1,1) = {"
+G
+G
+J
+M
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+E
+w
+E
+w
+J
+J
+"}
+(11,1,1) = {"
+G
+G
+J
+J
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+X
+s
+"}
+(12,1,1) = {"
+G
+G
+G
+J
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+X
+s
+"}
+(13,1,1) = {"
+G
+G
+G
+J
+J
+M
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+X
+s
+"}
+(14,1,1) = {"
+G
+G
+G
+G
+J
+J
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+X
+s
+"}
+(15,1,1) = {"
+G
+G
+G
+G
+G
+J
+J
+J
+w
+M
+o
+p
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+w
+o
+p
+M
+w
+M
+w
+J
+J
+"}
+(16,1,1) = {"
+G
+G
+G
+G
+G
+G
 G
 J
 J
 J
 J
-e
-j
+I
+K
+K
+p
+o
+K
+R
+K
+K
+K
+K
+R
+K
+w
+o
+B
+J
+J
+J
+J
+J
+J
+G
+"}
+(17,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+J
+J
+J
+J
 L
+i
+J
+J
+J
+J
+J
+J
 J
 J
 e
 j
 J
 J
+G
+G
+G
+G
+G
 G
 "}
