@@ -7952,8 +7952,8 @@
 "avo" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 8;
-	height = 7;
+	dwidth = 10;
+	height = 34;
 	json_key = "cargo";
 	name = "CentCom";
 	shuttle_id = "cargo_away";
