@@ -41,6 +41,7 @@
 		span_noticealien("You devour [target]s [target_part]!"),
 	)
 	playsound(our_mob, 'sound/magic/demon_attack1.ogg', 80)
+	StartCooldownOthers(5 SECONDS)
 	return TRUE
 
 /datum/action/cooldown/bloodling/devour/proc/find_limb(mob/living/carbon/carbon_target)

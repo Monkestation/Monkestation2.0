@@ -7,7 +7,7 @@
 	background_icon_state = "button_bg"
 	shared_cooldown = MOB_SHARED_COOLDOWN_1
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	cooldown_time = 5 SECONDS
+	cooldown_time = 0 SECONDS
 	text_cooldown = TRUE
 	var/always_useable = FALSE
 	click_to_activate = TRUE
@@ -37,6 +37,10 @@
 	// so we can just return true here
 	if(QDELETED(src) || QDELETED(owner))
 		return TRUE
+
+	if(our_mob.movement_type & VENTCRAWLING)
+		our_mob.balloon_alert(our_mob, "can't use abilities in pipes!")
+		return FALSE
 
 	if(click_to_activate && our_mob.biomass < biomass_cost)
 		unset_click_ability(owner, refund_cooldown = TRUE)

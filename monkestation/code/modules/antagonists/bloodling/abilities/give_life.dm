@@ -4,6 +4,7 @@
 	button_icon_state = "give_life"
 	biomass_cost = 20
 	cooldown_time = 15 SECONDS
+	shared_cooldown = NONE
 
 /datum/action/cooldown/bloodling/give_life/PreActivate(atom/target)
 

@@ -49,6 +49,10 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return TRUE
 
+	if(our_mob.movement_type & VENTCRAWLING)
+		our_mob.balloon_alert(our_mob, "can't use abilities in pipes!")
+		return FALSE
+
 	our_mob.add_biomass(-biomass_cost)
 
 	return TRUE
