@@ -35,7 +35,7 @@ If you have > 135 toxin damage and dont have spleenless/liverless metabolism you
 	var/operated = FALSE //whether the spleens been repaired with surgery and can be fixed again or not
 	var/internal_blood_buffer_max = 24 //a buffer that hold blood unside the spleen, when you get low on blood it releases this and takes a while to regenerate it fully
 	var/stored_blood = 24 //current blood in your spleen buffer
-	var/toxResistance = -0.2 //how much the spleen will heal when you are messed up from toxins (damages iteself in process)
+	var/toxResistance = -0.2 //how much the spleen will heal when you are messed up from toxins (damages iteself in process), does nothing when 0
 	var/toxLimit = 135 //how high tox can get before spleen starts sacrificing itself to heal it
 
 /obj/item/organ/internal/spleen/Initialize(mapload)
@@ -92,10 +92,12 @@ If you have > 135 toxin damage and dont have spleenless/liverless metabolism you
 /obj/item/organ/internal/spleen/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(damage > 99)
-
 		return
+	if(toxResistance == 0)
+		return
+
 	var/mob/living/carbon/organ_owner = src.owner
-	if(!HAS_TRAIT(src, TRAIT_SPLEENLESS_METABOLISM && !HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM)))
+	if(!HAS_TRAIT(organ_owner, TRAIT_SPLEENLESS_METABOLISM) && !HAS_TRAIT(organ_owner, TRAIT_LIVERLESS_METABOLISM))
 		if(organ_owner.getToxLoss() >= toxLimit)
 			if(!isnull(organ_owner.dna.species.mutantliver) && !organ_owner.get_organ_slot(ORGAN_SLOT_LIVER))
 				var/obj/item/organ/organ = organ_owner.get_organ_slot(ORGAN_SLOT_LIVER)
@@ -156,6 +158,25 @@ If you have > 135 toxin damage and dont have spleenless/liverless metabolism you
 	stored_blood = 50
 	toxResistance = -0.7
 	toxLimit = 99
+
+/obj/item/organ/internal/spleen/cybernetic/surplus
+	name = "surplus prosthetic spleen"
+	desc = "A small plastic blood bag shaped like a spleen. It lacks any toxin cleaning or blood generating capabilities. \
+		Offer no protection against EMPs."
+	icon_state = "spleen-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
+
+	blood_regen_mult = 0
+	internal_blood_buffer_max = 15
+	stored_blood = 15
+	toxResistance = 0
+
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/spleen/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/internal/spleen/cybernetic/emp_act(severity)
 	. = ..()
