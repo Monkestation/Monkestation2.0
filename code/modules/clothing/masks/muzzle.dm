@@ -48,6 +48,9 @@
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
 
+/datum/armor/muzzle_breath
+	bio = 100
+
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
 	. += "[span_notice("Use it on someone while not in combat mode to tape their mouth closed!")]"

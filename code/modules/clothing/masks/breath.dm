@@ -56,9 +56,11 @@
 	armor_type = /datum/armor/breath_muzzle
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
 
+/*
 /obj/item/clothing/mask/breath/muzzle/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/muffles_speech)
+*/
 
 /obj/item/clothing/mask/breath/muzzle/attack_paw(mob/user, list/modifiers)
 	if(iscarbon(user))
@@ -68,9 +70,9 @@
 			return
 	return ..()
 
-/obj/item/clothing/mask/breath/muzzle/examine_tags(mob/user)
+/obj/item/clothing/mask/breath/muzzle/examine(mob/user) // TODO: examine_tags
 	. = ..()
-	.["surgical"] = "Does not block surgery on covered bodyparts."
+	. += "Does not block surgery on covered bodyparts."
 
 /datum/armor/breath_muzzle
 	bio = 100

@@ -137,6 +137,7 @@
 				user.stop_pulling()
 	return ..()
 
+/* // Currently table flipping does not yet exist
 /obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(!istype(user) || !user.can_interact_with(src))
@@ -155,6 +156,7 @@
 	if(do_after(user, max_integrity * 0.25, src))
 		unflip_table()
 	return
+*/
 
 /obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
 	if (movable_entity == table) //Thing is not the table
@@ -816,7 +818,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Attach tank"
 			. |= CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/table/optable/atom_deconstruct(disassembled)
+/obj/structure/table/optable/deconstruct(disassembled, wrench_disassembly) // This should be atom_deconstruct()
 	. = ..()
 	var/atom/drop_loc = drop_location()
 	if (!drop_loc)
@@ -834,9 +836,6 @@
 	else if (breath_mask.loc)
 		UnregisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED)
 	breath_mask = null
-
-/obj/structure/table/optable/make_climbable()
-	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
@@ -898,14 +897,15 @@
 	SIGNAL_HANDLER
 	update_appearance()
 
-/obj/structure/table/optable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/structure/table/optable/attackby(obj/item/tool, mob/living/user, params)
+	. = ..()
 	if (istype(tool, /obj/item/clothing/mask/breath))
 		if (breath_mask && breath_mask != tool)
 			balloon_alert(user, "mask already attached!")
-			return ITEM_INTERACT_BLOCKING
+			return TOOL_ACT_SIGNAL_BLOCKING
 
 		if (!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_BLOCKING
+			return TOOL_ACT_SIGNAL_BLOCKING
 
 		if (breath_mask != tool)
 			breath_mask = tool
@@ -915,35 +915,35 @@
 		balloon_alert(user, "mask attached")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		update_appearance()
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	if (!istype(tool, /obj/item/tank))
 		return NONE
 
 	if (air_tank)
 		balloon_alert(user, "tank already attached!")
-		return ITEM_INTERACT_BLOCKING
+		return TOOL_ACT_SIGNAL_BLOCKING
 
 	var/obj/item/tank/as_tank = tool
 	if (!as_tank.tank_holder_icon_state)
 		balloon_alert(user, "does not fit!")
-		return ITEM_INTERACT_BLOCKING
+		return TOOL_ACT_SIGNAL_BLOCKING
 
 	if (!user.transferItemToLoc(tool, src))
-		return ITEM_INTERACT_BLOCKING
+		return TOOL_ACT_SIGNAL_BLOCKING
 
 	air_tank = as_tank
 	balloon_alert(user, "tank attached")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	update_appearance()
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/table/optable/screwdriver_act(mob/living/user, obj/item/tool)
 	if (!breath_mask)
 		return NONE
 
 	if (breath_mask.loc != src)
-		return ITEM_INTERACT_BLOCKING
+		return TOOL_ACT_SIGNAL_BLOCKING
 
 	breath_mask.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
@@ -953,14 +953,14 @@
 		user.put_in_hands(breath_mask)
 	breath_mask = null
 	update_appearance()
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/table/optable/wrench_act(mob/living/user, obj/item/tool)
 	if (!air_tank)
 		return NONE
 	balloon_alert(user, "detaching the tank...")
 	if (!tool.use_tool(src, user, 3 SECONDS))
-		return ITEM_INTERACT_BLOCKING
+		return TOOL_ACT_SIGNAL_BLOCKING
 	air_tank.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "tank detached")
@@ -970,7 +970,7 @@
 		patient.close_externals()
 	air_tank = null
 	update_appearance()
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/table/optable/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()
@@ -1011,8 +1011,9 @@
 	update_appearance()
 	return TRUE
 
-/obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
-	if (over != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+/obj/structure/table/optable/MouseDrop_T(mob/living/dropping, mob/living/user)
+	. = ..()
+	if (dropping != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
 		return
 
 	if (!air_tank)
@@ -1030,7 +1031,7 @@
 	if (!do_after(user, 4 SECONDS, patient))
 		return
 
-	if (!air_tank || patient != over || !patient.can_breathe_internals())
+	if (!air_tank || patient != dropping || !patient.can_breathe_internals())
 		return
 
 	patient.open_internals(air_tank, is_external = TRUE)
