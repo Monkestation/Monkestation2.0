@@ -7,6 +7,7 @@
 	map_dir = "_maps/virtual_domains"
 	map_name = "None"
 	key = "Virtual Domain"
+	place_on_top = TRUE
 
 	/// Whether to tell observers this map is being used
 	var/announce_to_ghosts = FALSE

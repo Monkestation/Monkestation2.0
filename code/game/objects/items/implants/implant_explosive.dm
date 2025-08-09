@@ -8,8 +8,12 @@
 	var/medium = 0.8
 	var/heavy = 0.4
 	var/delay = 7
+	///If the delay is equal or lower to MICROBOMB_DELAY (0.7 sec), the explosion will be instantaneous.
+	var/instant_explosion = TRUE
 	var/popup = FALSE // is the DOUWANNABLOWUP window open?
 	var/active = FALSE
+	///Will this implant notify ghosts when activated?
+	var/notify_ghosts = TRUE
 
 /obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -53,8 +57,8 @@
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
-//If the delay is short, just blow up already jeez
-	if(delay <= 7)
+	//If the delay is shorter or equal to the default delay, just blow up already jeez
+	if(delay <= delay && instant_explosion)
 		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
 		if(imp_in)
 			imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
@@ -86,15 +90,15 @@
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 
-	notify_ghosts(
-		"[imp_in] is about to detonate their explosive implant!",
-		source = src,
-		action = NOTIFY_ORBIT,
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
-		ghost_sound = 'sound/machines/warning-buzzer.ogg',
-		header = "Tick Tick Tick...",
-		notify_volume = 75,
-	)
+	if(notify_ghosts)
+		notify_ghosts(
+			"[imp_in] is about to detonate their explosive implant!",
+			source = src,
+			header = "Tick Tick Tick...",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			ghost_sound = 'sound/machines/warning-buzzer.ogg',
+			notify_volume = 75,
+		)
 
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
@@ -121,6 +125,13 @@
 	medium = 8
 	heavy = 4
 	delay = 70
+
+/obj/item/implant/explosive/deathmatch
+	name = "deathmatch microbomb implant"
+	delay = 0.5 SECONDS
+	actions_types = null
+	instant_explosion = FALSE
+	notify_ghosts = FALSE
 
 /obj/item/implanter/explosive
 	name = "implanter (microbomb)"
