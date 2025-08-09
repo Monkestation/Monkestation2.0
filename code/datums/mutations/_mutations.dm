@@ -156,6 +156,9 @@
 	return
 
 /mob/living/carbon/human/update_mutations_overlay()
+	if(render_locks)
+		queued_renders[DEFERRED_MUTATIONS_OVERLAY] = TRUE
+		return
 	for(var/datum/mutation/mutation as anything in dna.mutations)
 		if(mutation.species_allowed && !mutation.species_allowed.Find(dna.species.id))
 			dna.remove_mutation(mutation, mutation.sources) //shouldn't have that mutation at all

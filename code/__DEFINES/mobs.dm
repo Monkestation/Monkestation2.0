@@ -975,6 +975,23 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Flag which stops you from attacking while observed
 #define NO_OBSERVED_ATTACKS (1<<2)
 
+#define TRY_QUEUE_RENDER(slot) \
+	if(render_locks) { \
+		queued_renders[DEFERRED_CLOTHES] |= slot; \
+		return; \
+	};
+
+#define TOTAL_DEFER_OPTIONS 9
+#define DEFERRED_FULL_REGEN 1
+#define DEFERRED_HELD_ITEMS 2
+#define DEFERRED_CUFFS 3
+#define DEFERRED_BODY 4
+#define DEFERRED_APPEARANCE 5
+#define DEFERRED_CLOTHES 6
+#define DEFERRED_TRANSFORM 7
+#define DEFERRED_MUTATIONS_OVERLAY 8
+#define DEFERRED_DAMAGE_OVERLAYS 9
+
 
 //Reagent Metabolization flags, defines the type of reagents that affect this mob
 #define PROCESS_ORGANIC 1		//Only processes reagents with "ORGANIC" or "ORGANIC | SYNTHETIC"
