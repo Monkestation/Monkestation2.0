@@ -36,9 +36,14 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(can_interact(user))
-		set_on(!on)
-		balloon_alert(user, "turned [on ? "on" : "off"]")
-		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		if(overclocked && is_obscured())
+			set_on(FALSE)
+			balloon_alert(user, "automatically disabled, clear any obstructions!")
+			investigate_log("was automatically disabled due to being obscured while overclocked", INVESTIGATE_ATMOS)
+		else
+			set_on(!on)
+			balloon_alert(user, "turned [on ? "on" : "off"]")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
 	return ..()
 
@@ -93,12 +98,32 @@
 	if(overclocked)//Some of the gas from the mixture leaks to the environment when overclocked
 		var/turf/open/T = loc
 		if(istype(T))
-			var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
-			T.assume_air(leaked)
+			if(!is_obscured())
+				var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
+				T.assume_air(leaked)
+			else
+				set_on(FALSE)
+				update_appearance()
+				investigate_log("was automatically disabled due to trying to leak onto a blocked turf", INVESTIGATE_ATMOS)
 
 	air2.merge(removed)
 
 	update_parents()
+
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/is_obscured()
+	for(var/obj/thing in get_turf(src))
+		switch(thing.can_atmos_pass)
+			if(ATMOS_PASS_YES)
+				continue
+			if(ATMOS_PASS_NO)
+				return TRUE
+			if(ATMOS_PASS_PROC)
+				if(thing.can_atmos_pass() != ATMOS_PASS_YES)
+					return TRUE
+			if(ATMOS_PASS_DENSITY)
+				if(thing.density)
+					return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
@@ -157,12 +182,17 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/multitool_act(mob/living/user, obj/item/I)
 	if(!overclocked)
+		if(is_obscured())
+			to_chat(user, span_warning("You cannot disable the pressure limits on the pump while its obscured!"))
+			overclocked = FALSE
+			update_icon()
+			return TRUE
 		overclocked = TRUE
-		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
+		to_chat(user, span_warning("The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits."))
 		update_icon()
 	else
 		overclocked = FALSE
-		to_chat(user, "The pump quiets down as you turn its limiters back on.")
+		to_chat(user, span_name("The pump quiets down as you turn its limiters back on."))
 		update_icon()
 	return TRUE
 
