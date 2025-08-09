@@ -617,6 +617,63 @@ world
 
 	return isnull(alpha) ? rgb(r, g, b) : rgb(r, g, b, alpha)
 
+/**
+ * Takes a weighted color list and blends them together based on weight.
+ */
+/proc/BlendMultipleRGB(list/weighted_colors)
+	if(!length(weighted_colors))
+		return null
+
+	// If only one color, return it directly
+	if(length(weighted_colors) == 1)
+		var/color = weighted_colors[1]
+		var/list/rgb = ReadRGB(color)
+		if(length(rgb) > 3)
+			return rgb(rgb[1], rgb[2], rgb[3], rgb[4]) // Return RGBA
+		else
+			return rgb(rgb[1], rgb[2], rgb[3]) // Return RGB
+
+	var/r_sum = 0
+	var/g_sum = 0
+	var/b_sum = 0
+	var/a_sum = 0
+	var/usealpha = FALSE
+	for(var/color in weighted_colors)
+		// Parse color into RGB(A) components
+		var/list/rgb = ReadRGB(color)
+		var/weight = weighted_colors[color]
+
+		if(isnull(weight) || weight < 0)
+			continue
+
+		// Add weighted contribution to each channel
+		r_sum += rgb[1] * weight
+		g_sum += rgb[2] * weight
+		b_sum += rgb[3] * weight
+		// Handle alpha if present
+		if(length(rgb) > 3)
+			usealpha = TRUE
+			a_sum += rgb[4] * weight
+		else
+			a_sum += 255 * weight // Default alpha if none provided
+
+	// Round final sums to nearest integer
+	var/r = round(r_sum, 1)
+	var/g = round(g_sum, 1)
+	var/b = round(b_sum, 1)
+	var/alpha = usealpha ? round(a_sum, 1) : null
+
+	// Clamp values to 0-255 range
+	r = clamp(r, 0, 255)
+	g = clamp(g, 0, 255)
+	b = clamp(b, 0, 255)
+	if(usealpha)
+		alpha = clamp(alpha, 0, 255)
+
+	if(isnull(alpha))
+		return rgb(r, g, b)
+	return rgb(r, g, b, alpha)
+
 /proc/BlendRGBasHSV(rgb1, rgb2, amount)
 	return HSVtoRGB(RGBtoHSV(rgb1), RGBtoHSV(rgb2), amount)
 
