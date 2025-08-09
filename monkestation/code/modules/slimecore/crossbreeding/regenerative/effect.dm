@@ -78,22 +78,10 @@
 		owner.nutrition = min(owner.nutrition + blood_restore, nutrition_heal_cap)
 
 /datum/status_effect/regenerative_extract/proc/heal_organs(heal_amt)
-	var/static/list/ignored_traumas
-	if(!ignored_traumas)
-		ignored_traumas = typecacheof(list(
-			/datum/brain_trauma/hypnosis,
-			/datum/brain_trauma/special/obsessed,
-			/datum/brain_trauma/severe/split_personality/brainwashing,
-		))
 	var/mob/living/carbon/carbon_owner = owner
 	for(var/obj/item/organ/organ in carbon_owner.organs)
 		organ.apply_organ_damage(-heal_amt)
-	// stupid manual trauma curing code, so you can't just remove trauma-based antags with one click
-	var/obj/item/organ/internal/brain/brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	for(var/datum/brain_trauma/trauma as anything in shuffle(brain?.traumas))
-		if(!is_type_in_typecache(trauma, ignored_traumas) && trauma.resilience <= TRAUMA_RESILIENCE_MAGIC)
-			qdel(trauma)
-			return
+	carbon_owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_MAGIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 
 /datum/status_effect/regenerative_extract/proc/heal_wounds()
 	var/mob/living/carbon/carbon_owner = owner

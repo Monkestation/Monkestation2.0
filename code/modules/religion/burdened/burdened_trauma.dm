@@ -5,7 +5,7 @@
 	scan_desc = "damaged frontal lobe"
 	gain_text = span_notice("You feel burdened!")
 	lose_text = span_warning("You no longer feel the need to burden yourself!")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// goes from 0 to 9 (but can be beyond 9, just does nothing) and gives rewards. increased by disabling yourself with debuffs
 	var/burden_level = 0
 

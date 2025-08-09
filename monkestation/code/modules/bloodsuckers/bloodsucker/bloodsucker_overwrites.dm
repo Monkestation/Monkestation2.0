@@ -32,7 +32,7 @@
 	return ..()
 
 // Used when analyzing a Bloodsucker, Masquerade will hide brain traumas (Unless you're a Beefman)
-/mob/living/carbon/get_traumas()
+/mob/living/carbon/get_traumas(ignore_flags = NONE)
 	if(QDELETED(mind))
 		return ..()
 	if(IS_BLOODSUCKER(src) && HAS_TRAIT(src, TRAIT_MASQUERADE))
