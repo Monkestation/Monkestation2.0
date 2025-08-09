@@ -16754,8 +16754,9 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
 "iaN" = (
-/obj/item/stack/sheet/plasteel/fifty,
 /obj/structure/table,
+/obj/item/flatpacked_machine/stirling_generator,
+/obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "iaR" = (
@@ -27293,6 +27294,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
+/obj/machinery/electrolyzer,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nbc" = (
