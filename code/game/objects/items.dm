@@ -267,8 +267,6 @@
 		if(damtype == BRUTE)
 			hitsound = SFX_SWING_HIT
 
-	add_weapon_description()
-
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
@@ -410,6 +408,10 @@
 	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
+	if(!(item_flags & WEAPON_DESCRIPTION_INITIALIZED))
+		add_weapon_description()
+		item_flags |= WEAPON_DESCRIPTION_INITIALIZED
+
 	. = ..()
 
 	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
