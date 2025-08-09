@@ -25,6 +25,30 @@
 #define CHANNEL_SILICON_EMOTES 1002
 // monkestation end
 
+/// This is the lowest volume that can be used by playsound otherwise it gets ignored
+/// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible
+/// This is to prevent sound being spammed at really low volumes due to distance calculations
+/// Recommend setting this to anywhere from 10-3 (or 0 to disable any sound minimum volume restrictions)
+/// Ex. For a 70 volume sound, 17 tile range, 3 exponent, 2 falloff_distance:
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 0 for the above will result in 17x17 radius (289 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 5 for the above will result in 14x14 radius (196 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 10 for the above will result in 11x11 radius (121 turfs)
+#define SOUND_AUDIBLE_VOLUME_MIN 3
+
+/* Calculates the max distance of a sound based on audible volume
+ *
+ * Note - you should NEVER pass in a volume that is lower than SOUND_AUDIBLE_VOLUME_MIN otherwise distance will be insanely large (like +250,000)
+ *
+ * Arguments:
+ * * volume: The initial volume of the sound being played
+ * * max_distance: The range of the sound in tiles (technically not real max distance since the furthest areas gets pruned due to SOUND_AUDIBLE_VOLUME_MIN)
+ * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
+ * Returns: The max distance of a sound based on audible volume range
+ */
+#define CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(volume, max_distance, falloff_distance, falloff_exponent)\
+	floor(((((-(max(max_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / volume) * (SOUND_AUDIBLE_VOLUME_MIN - volume)) ** falloff_exponent) + falloff_distance))
+
 /* Calculates the volume of a sound based on distance
  *
  * https://www.desmos.com/calculator/sqdfl8ipgf
