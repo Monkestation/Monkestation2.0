@@ -65,6 +65,11 @@
 		)
 	return return_typecache ? processable_resources : is_type_in_typecache(res, processable_resources)
 
+/obj/machinery/bouldertech/flatpack/purification_chamber/CanAllowThrough(atom/movable/mover, border_dir)
+	if(border_dir != turn_cardinal(src.dir, 90))
+		return FALSE
+	return ..()
+
 /obj/machinery/bouldertech/flatpack/purification_chamber/proc/disconnect(destroyed = FALSE)
 	if(!QDELETED(oxygen_input))
 		UnregisterSignal(oxygen_input, COMSIG_QDELETING)
