@@ -1206,3 +1206,11 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/inspector_booth
+	name = "Machine Design (Inspector Booth)"
+	desc = "The circuit board for an inspector booth."
+	id = "inspector_booth"
+	build_path = /obj/item/circuitboard/machine/inspector_booth
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
