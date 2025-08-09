@@ -18,7 +18,7 @@
 			return
 	return ..()
 
-/obj/item/clothing/mask/muzzle/breath
+/obj/item/clothing/mask/breath/muzzle
 	name = "surgery mask"
 	desc = "To silence those pesky patients before putting them under."
 	icon_state = "breathmuzzle"
