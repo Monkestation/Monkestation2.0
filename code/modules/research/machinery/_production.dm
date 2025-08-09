@@ -38,7 +38,7 @@
 	. = ..()
 
 	cached_designs = list()
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 
 	AddComponent(
 		/datum/component/payment, \
