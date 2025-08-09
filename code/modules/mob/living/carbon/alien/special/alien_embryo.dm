@@ -11,6 +11,8 @@
 	var/bursting = FALSE
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
+// If the embryo is neutered, it cannot evolve into a drone, and then eventually into a queen.
+	var/neutered = FALSE
 
 /obj/item/organ/internal/body_egg/alien_embryo/Initialize(mapload)
 	. = ..()
@@ -117,7 +119,7 @@
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, cut_overlay), overlay), 0.7 SECONDS) // monkestation edit: just use a timer to always ensure the overlay is removed
 
 	var/atom/xeno_loc = get_turf(owner)
-	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
+	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc, neutered) //monkestation edit: The value is true if it cant evolve into a drone. False if it can.
 	new_xeno.PossessByPlayer(ghost.key)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
@@ -161,3 +163,7 @@ Des: Removes all images from the mob infected by this embryo
 			var/searchfor = "infected"
 			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 				alien.client?.images -= I
+
+/obj/item/organ/internal/body_egg/alien_embryo/neutered
+	name = "neutered alien embryo"
+	neutered = TRUE
