@@ -30,6 +30,18 @@
 	item_path = /obj/item/storage/belt/mining
 	cost_per_order = 500
 
+/datum/orderable_item/mining/ashduelist
+	item_path = /obj/item/storage/backpack/ashduelist
+	cost_per_order = 1000
+
+/datum/orderable_item/mining/rockspider
+	item_path = /obj/item/storage/backpack/rockspider
+	cost_per_order = 1000
+
+/datum/orderable_item/mining/trenchjockey
+	item_path = /obj/item/storage/backpack/trenchjockey
+	cost_per_order = 1000
+
 /datum/orderable_item/mining/point_card
 	item_path = /obj/item/card/mining_point_card
 	cost_per_order = 500
@@ -57,6 +69,18 @@
 /datum/orderable_item/mining/crusher/claw //MONKE EDIT
 	item_path = /obj/item/kinetic_crusher/claw
 	cost_per_order = 1250
+
+/datum/orderable_item/mining/crusher/knife
+	item_path = /obj/item/gun/magic/crusherknives
+	cost_per_order = 1250
+
+/datum/orderable_item/mining/crusher/sickle
+	item_path = /obj/item/kinetic_crusher/sickle
+	cost_per_order = 1250
+
+/datum/orderable_item/mining/crusher/pilebunker
+	item_path = /obj/item/kinetic_crusher/pilebunker
+	cost_per_order = 2000 //this thing outputs 500 damage, yeah its more expensive
 
 /datum/orderable_item/mining/resonator
 	item_path = /obj/item/resonator

@@ -32,33 +32,71 @@
 	desc = "A case containing a PKShotgun along with four lethal shells and eight mining shells."
 	cost_per_order = 2500
 
-/datum/orderable_item/accelerator/magbox/small //monkestation edit
-	item_path = /obj/item/storage/box/kinetic/small
-	desc = "A case containing two seperate magazines for the PKSMG."
-	cost_per_order = 150
 
-/datum/orderable_item/accelerator/magbox //monkestation edit
+/datum/orderable_item/accelerator/gun/pksmg/sparemags //monkestation edit
 	item_path = /obj/item/storage/box/kinetic
 	desc = "A box containing seven magazines for the PKSMG that also fits in explorer webbing."
 	cost_per_order = 500
 
 
-/datum/orderable_item/accelerator/shellbox //monkestation edit
+/datum/orderable_item/accelerator/gun/pkshotgun/spareshells //monkestation edit
 	item_path = /obj/item/storage/box/kinetic/shotgun
 	desc = "A box containing ten Magnum Kinetic Buckshot shells for the PKShotgun. Fits in explorer webbing."
 	cost_per_order = 500
 
-/datum/orderable_item/accelerator/shellbox/rockbreaker //monkestation edit
+/datum/orderable_item/accelerator/gun/pkshotgun/spareshells/rockbreaker //monkestation edit
 	item_path = /obj/item/storage/box/kinetic/shotgun/rockbreaker
 	desc = "A box containing twenty Rockbreaker shells for the PKShotgun, designed to destroy masses of rock but do very little damage to fauna. Fits in explorer webbing."
 	cost_per_order = 300
 
-/datum/orderable_item/accelerator/shellbox/sniperslug //monkestation edit
+/datum/orderable_item/accelerator/gun/pkshotgun/spareshells/slugs //monkestation edit
 	item_path = /obj/item/storage/box/kinetic/shotgun/sniperslug
 	desc = "A box containing ten 50 BMG Slug shells for the PKShotgun. Still penetrates rock walls but not fauna. Trades potential damage for range and reliability. Fits in explorer webbing."
 	cost_per_order = 650
 
+/datum/orderable_item/accelerator/gun/miningrevolver
+	item_path = /obj/item/storage/box/kinetic/govmining/bigcase
+	cost_per_order = 1750
 
+/datum/orderable_item/accelerator/gun/miningrevolver/spareshells
+	item_path = /obj/item/storage/box/kinetic/govmining
+	cost_per_order = 650
+
+/datum/orderable_item/accelerator/gun/fenrir
+	item_path = /obj/item/storage/box/kinetic/autoshotgun/bigcase
+	cost_per_order = 2000
+
+/datum/orderable_item/accelerator/gun/fenrir/spareshells
+	item_path = /obj/item/storage/box/kinetic/autoshotgun
+	cost_per_order = 650
+
+/datum/orderable_item/accelerator/gun/fenrir/sparemags
+	item_path = /obj/item/storage/box/kinetic/autoshotgun/smallcase
+	cost_per_order = 1000
+
+/datum/orderable_item/accelerator/gun/slab
+	item_path = /obj/item/storage/box/kinetic/grenadelauncher/bigcase
+	cost_per_order = 2500
+
+/datum/orderable_item/accelerator/gun/slab/spareshells
+	item_path = /obj/item/storage/box/kinetic/grenadelauncher
+	cost_per_order = 1000
+
+/datum/orderable_item/accelerator/gun/hellhound
+	item_path = /obj/item/storage/box/kinetic/kineticlmg/bigcase
+	cost_per_order = 3000
+
+/datum/orderable_item/accelerator/gun/hellhound/spareshells
+	item_path = /obj/item/storage/box/kinetic/kineticlmg
+	cost_per_order = 1000
+
+/datum/orderable_item/accelerator/gun/jdj
+	item_path = /obj/item/storage/box/kinetic/minerjdj/bigcase
+	cost_per_order = 75000 //75,000 POINT COST BECAUSE THIS THING DOES 1,000 DAMAGE WHICH IS A TON
+
+/datum/orderable_item/accelerator/gun/jdj/spareshells
+	item_path = /obj/item/storage/box/kinetic/minerjdj
+	cost_per_order = 50000
 
 /datum/orderable_item/accelerator/range
 	item_path = /obj/item/borg/upgrade/modkit/range

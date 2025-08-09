@@ -112,3 +112,96 @@
 			span_userdanger("You look around after realizing you're still here, then proceed to choke yourself to death with [src]!"))
 		sleep(2 SECONDS)
 		return OXYLOSS
+
+// 40mm Kinetic Grenade Launcher Hell Yeah
+
+#define CALIBER_40MM_KINETIC "40mm Kinetic Grenade" //the ammo type (so it doesnt fit anywhere else)
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic
+	desc = "Frankly we have no idea how the boys in Mining Research put this one together, \
+	but we can only assume it was more illegal gun parts. Using the usual Proto Kinetic Acceleration \
+	technology, the 'Slab' is a six round rotary grenade launcher, featuring extra heavy explosive 40mm \
+	payloads. It does heavy damage on a direct hit to the natural landscape and natural fauna, however due to \
+	hardiness of most fauna, the blast leaves something to be desired."
+	name = "Proto-Kinetic 'Slab' Grenade Launcher"
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
+	eject_sound = 'sound/weapons/gun/l6/l6_door.ogg'
+	worn_icon_state = "protoklauncher"
+	base_pixel_x = -5
+	pixel_x = -5
+	slot_flags = ITEM_SLOT_BACK
+	icon_state = "protoklauncher"
+	inhand_icon_state = "protoklauncher"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher/kinetic
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	pin = /obj/item/firing_pin/wastes
+
+/obj/item/ammo_box/magazine/internal/grenadelauncher/kinetic
+	name = "kinetic rotary grenade launcher"
+	ammo_type = /obj/item/ammo_casing/a40mm/kinetic
+	caliber = CALIBER_40MM_KINETIC
+	max_ammo = 6
+
+/obj/item/ammo_casing/a40mm/kinetic
+	name = "40mm Kinetic Grenade"
+	desc = "A 40mm explosive grenade modified with Proto Kinetic technology."
+	caliber = CALIBER_40MM_KINETIC
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "40mmkinetic"
+	projectile_type = /obj/projectile/bullet/a40mm/kinetic
+
+/obj/projectile/bullet/a40mm/kinetic
+	name ="40mm kinetic grenade"
+	desc = "OH SHIT!!!"
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	icon_state = "bolter"
+	damage = 100
+	range = 25
+
+/obj/projectile/bullet/a40mm/kinetic/payload(atom/target)
+	explosion(target, devastation_range = 0, heavy_impact_range = 4, light_impact_range = 0, flame_range = 1, flash_range = 1, adminlog = FALSE, explosion_cause = src)
+
+/obj/item/storage/box/kinetic/grenadelauncher/bigcase //box containing the  launcher and a spare box of grenades
+	name = "'Slab' grenade launcher case"
+	desc = "A mining gun case containing a six round rotary 'Slab' grenade launcher, and a box of spare grenades."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	icon_state = "miner_case"
+	w_class = WEIGHT_CLASS_BULKY
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/grenadelauncher/bigcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 2
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/grenadelauncher/bigcase/PopulateContents() //populate
+
+		new /obj/item/gun/ballistic/revolver/grenadelauncher/kinetic (src)
+		new /obj/item/storage/box/kinetic/grenadelauncher (src)
+
+/obj/item/storage/box/kinetic/grenadelauncher //box containing 12 spare 40mm kinetic shells for the 'Slab' grenade launcher
+	name = "40mm Kinetic Grenade Box"
+	desc = "A small box containing 12 spare 40mm Kinetic Grenades for the 'Slab' Grenade Launcher. Despite everything, it fits in explorer webbing."
+	icon_state = "40mmk_box"
+	illustration = ""
+
+/obj/item/storage/box/kinetic/grenadelauncher/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 12
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 12
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/a40mm/kinetic
+	))
+
+/obj/item/storage/box/kinetic/grenadelauncher/PopulateContents() //populate
+	for(var/i in 1 to 12)
+		new /obj/item/ammo_casing/a40mm/kinetic (src)

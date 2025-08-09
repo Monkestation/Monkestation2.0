@@ -388,3 +388,36 @@
 		playsound(get_turf(src), "sound/creatures/monkey/monkey_screech_[rand(1,7)].ogg", 75, TRUE)
 		return FALSE
 	return TRUE
+
+//Wastes firing pin - restricts a weapon to only outside when mining - based on area defines not z-level
+/obj/item/firing_pin/wastes
+	name = "Wastes firing pin"
+	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon."
+	fail_message = "Wastes check failed! - Try getting further from the station first."
+	pin_hot_swappable = FALSE
+	pin_removable = FALSE
+	var/list/wastes = list( //locations you CAN use this
+		/area/icemoon/surface/outdoors,
+		/area/icemoon/underground/unexplored,
+		/area/icemoon/underground/explored,
+
+		/area/lavaland/surface/outdoors,
+
+		/area/ocean/generated,
+		/area/ocean/generated_above,
+
+		/area/ruin,
+
+		/area/centcom/central_command_areas //can be used mostly anywhere on centcom, mainly for admins.
+	)
+	var/list/blacklist = list( //Locations you CANNOT use things with this pin specifically, for stuff like ghost role ruins.
+
+	//this is empty for now... however if some locations become a problem... consider this blacklist a threat...
+	)
+
+/obj/item/firing_pin/wastes/pin_auth(mob/living/user)
+	if(!istype(user) || is_type_in_list(get_area(user), blacklist))
+		return FALSE
+	if (is_type_in_list(get_area(user), wastes)|| SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
+		return TRUE
+	return FALSE
