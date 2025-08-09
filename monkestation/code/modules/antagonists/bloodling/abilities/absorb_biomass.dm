@@ -63,10 +63,24 @@
 	if(is_type_in_list(target, absorbable_types))
 		if(istype(target, /obj/effect/decal/cleanable/blood))
 			biomass_gain = 1
+
 		else if(istype(target, /obj/item/organ))\
+			var/obj/item/organ/organ = target
+			if(!(organ.organ_flags & ORGAN_ORGANIC))
+				our_mob.balloon_alert(our_mob, "[target] is not organic!")
+				return FALSE
 			biomass_gain = 3
-		else //if an arm or leg
+
+		else if(istype(target, /obj/item/bodypart))
+			var/obj/item/bodypart/part = target
+			if(part.biological_state & BIO_WIRED)
+				our_mob.balloon_alert(our_mob, "[target] is not organic!")
+				return FALSE
 			biomass_gain = 5
+
+		else // Food
+			biomass_gain = 2
+
 		our_mob.add_biomass(biomass_gain)
 		qdel(target)
 		our_mob.visible_message(
