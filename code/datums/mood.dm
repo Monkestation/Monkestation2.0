@@ -77,9 +77,9 @@
 		if(MOOD_LEVEL_SAD4)
 			set_sanity(sanity - 0.3 * seconds_per_tick, SANITY_INSANE)
 		if(MOOD_LEVEL_SAD3)
-			set_sanity(sanity - 0.15 * seconds_per_tick, SANITY_INSANE)
+			set_sanity(sanity - 0.15 * seconds_per_tick, SANITY_CRAZY)
 		if(MOOD_LEVEL_SAD2)
-			set_sanity(sanity - 0.1 * seconds_per_tick, SANITY_CRAZY)
+			set_sanity(sanity - 0.1 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_SAD1)
 			set_sanity(sanity - 0.05 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_NEUTRAL)
@@ -330,7 +330,7 @@
 			if(0 to NUTRITION_LEVEL_STARVING)
 				msg += span_boldwarning("I'm starving!\n")
 
-	var/drunkness = mob_parent.get_timed_status_effect_duration(/datum/status_effect/inebriated)
+	var/drunkness = mob_parent.get_drunk_amount()
 	if(drunkness >= 1)
 		msg += span_notice("My current drunkenness: ")
 		switch(drunkness)
@@ -496,7 +496,7 @@
 			sanity_level = SANITY_LEVEL_GREAT
 
 	// Crazy or insane = add some uncommon hallucinations
-	if(sanity_level >= SANITY_CRAZY)
+	if(sanity_level >= SANITY_LEVEL_CRAZY)
 		mob_parent.apply_status_effect(/datum/status_effect/hallucination/sanity)
 	else
 		mob_parent.remove_status_effect(/datum/status_effect/hallucination/sanity)
