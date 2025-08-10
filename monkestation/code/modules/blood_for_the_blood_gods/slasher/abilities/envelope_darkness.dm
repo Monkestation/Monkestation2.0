@@ -14,7 +14,7 @@
 	desc = "Phase through doors and windows like a classic horror monster, but you cannot pass through walls."
 	button_icon_state = "incorporealize"
 	check_flags = AB_CHECK_CONSCIOUS
-	cooldown_time = 120 SECONDS
+	cooldown_time = 100 SECONDS
 
 	/// Sound played when entering the jaunt
 	var/enter_sound = 'monkestation/sound/effects/slasher_jauntstart.ogg'

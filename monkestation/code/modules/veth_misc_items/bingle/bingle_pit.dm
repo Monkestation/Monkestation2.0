@@ -168,25 +168,34 @@ GLOBAL_LIST(bingle_mobs)
 		to_chat(victim, span_warning("The pit has not swallowed enough items to accept creatures yet!"))
 		return FALSE
 	victim.add_traits(list(TRAIT_FALLING_INTO_BINGLE_HOLE, TRAIT_NO_TRANSFORM), REF(src))
-	item_value_consumed += 10
+	item_value_consumed += get_item_value(victim)
 	// Only animate if we're actually swallowing
 	animate_falling_into_pit(victim)
 	// Delay the actual movement to let animation play
 	addtimer(CALLBACK(src, PROC_REF(finish_swallow_mob), victim), 1 SECONDS)
 	return TRUE
 
+/obj/structure/bingle_hole/proc/get_item_value(thing)
+	if(isliving(thing))
+		return 10
+	else if(isstack(thing))
+		var/obj/item/stack/stack = thing
+		return stack.amount
+	else
+		return 1
+
 /obj/structure/bingle_hole/proc/swallow_obj(obj/thing)
 	if(!isobj(thing))
 		return FALSE
 	ADD_TRAIT(thing, TRAIT_FALLING_INTO_BINGLE_HOLE, REF(src))
-	item_value_consumed++
+	item_value_consumed += get_item_value(thing)
 	for(var/atom/movable/content as anything in thing.get_all_contents(HOLOGRAM_1) - thing) // ensure holograms are ignored!!
 		if(QDELETED(content) || HAS_TRAIT(content, TRAIT_FALLING_INTO_BINGLE_HOLE) || isbrain(content))
 			continue
 		if(isliving(content) || is_type_in_typecache(content, swallow_blacklist))
 			content.forceMove(content.drop_location())
 		else if(isobj(content))
-			item_value_consumed++
+			item_value_consumed += get_item_value(content)
 	// Only animate if we're actually swallowing
 	animate_falling_into_pit(thing)
 	// Delay the actual movement to let animation play
@@ -348,8 +357,7 @@ GLOBAL_LIST(bingle_mobs)
 			if(new_size > 3)
 				for(var/obj/thing in T)
 					if(thing.density && isstructure(thing) && !istype(thing, /obj/structure/bingle_pit_overlay))
-						qdel(thing)
-						item_value_consumed++
+						swallow(thing)
 				// Remove wall turf itself, if present
 				if(iswallturf(T))
 					T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)

@@ -943,7 +943,7 @@
 	requires_purchase = FALSE
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
-/datum/loadout_item/glasses/diagnostic_aviators
+/datum/loadout_item/glasses/meson_Aviators
 	name = "Meson Aviators"
 	item_path = /obj/item/clothing/glasses/meson/aviators
 	donator_only = TRUE

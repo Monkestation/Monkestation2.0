@@ -38,10 +38,15 @@
 	var/client/client = GLOB.directory[ckey]
 	if(!client)
 		return
+	var/total_amount = 0
 	for(var/reward in rewards)
 		var/amount = reward[1]
 		var/reason = reward[2]
-		client?.prefs?.adjust_metacoins(ckey, amount, reason)
+		total_amount += amount
+		to_chat(client, span_rose(span_bold("[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]")))
+	// don't do separate SQL queries for each reward, just add all the coins at once lol
+	if(total_amount)
+		client?.prefs?.adjust_metacoins(ckey, total_amount, reason = "roundend rewards", announces = FALSE)
 	if(client?.mob?.mind?.assigned_role)
 		add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
 
