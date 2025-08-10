@@ -35,6 +35,16 @@
 /datum/armament_entry/company_import/donk/food/teriyaki_pockets
 	item_type = /obj/item/storage/box/donkpockets/donkpocketteriyaki
 
+/datum/armament_entry/company_import/donk/food/donk_vendor
+	item_type = /obj/item/circuitboard/machine/vending/donksnackvendor
+	contraband = TRUE
+	cost = PAYCHECK_COMMAND * 3
+
+/datum/armament_entry/company_import/donk/food/donk_vendor_refill
+	item_type = /obj/item/vending_refill/donksnackvendor
+	contraband = TRUE
+	cost = PAYCHECK_COMMAND * 5
+
 // Random donk toy items, fake jumpsuits, balloons, so on
 
 // Donk merch gives you more interest than other items, buy donk bling and get company interest faster!
