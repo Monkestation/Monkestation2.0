@@ -631,7 +631,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/screwbolt = 8,
 		/obj/item/stack/machining_intermediates/smallwire = 10,
-		/obj/item/machining_intermediates/hardenedexosuit_part = 1,
+		/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part = 1,
 		/obj/item/machining_intermediates/suitsensors = 1,
 	)
 	upgrade_tier_required = 3
@@ -644,7 +644,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/screwbolt = 4,
 		/obj/item/stack/machining_intermediates/steel = 10,
-		/obj/item/machining_intermediates/hardenedexosuit_plate = 1,
+		/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate = 1,
 		/obj/item/stack/sheet/mineral/gold = 2,
 		/obj/item/stack/sheet/mineral/silver = 2,
 		/obj/item/stack/sheet/mineral/titanium = 8,
