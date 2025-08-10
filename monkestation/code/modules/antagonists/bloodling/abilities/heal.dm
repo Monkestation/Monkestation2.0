@@ -7,14 +7,14 @@
 /datum/action/cooldown/bloodling/heal/PreActivate(atom/target)
 
 	var/mob/living/target_mob = target
+
+	if(get_dist(usr, target) > 1)
+		owner.balloon_alert(owner, "Too Far!")
+		return FALSE
+
 	if(!ismob(target_mob))
 		owner.balloon_alert(owner, "Must target living being!")
 		return FALSE
-	/*
-	if(!iscarbon(target_mob))
-		owner.balloon_alert(owner, "Must target a carbon being!")
-		return FALSE
-	*/
 
 	if(!IS_BLOODLING_OR_THRALL(target_mob))
 		owner.balloon_alert(owner, "Only works on your thralls!")

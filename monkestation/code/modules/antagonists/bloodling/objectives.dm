@@ -6,7 +6,7 @@
 
 /datum/objective/bloodling_ascend/update_explanation_text()
 	..()
-	explanation_text = "Ascend as the ultimate being"
+	explanation_text = "Ascend as the ultimate being. You must begin your ascension in either Hydroponics or Bridge."
 
 /datum/objective/bloodling_ascend/check_completion()
 	var/datum/antagonist/bloodling/bloodling = IS_BLOODLING(owner.current)

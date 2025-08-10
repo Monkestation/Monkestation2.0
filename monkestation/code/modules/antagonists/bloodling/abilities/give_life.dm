@@ -7,10 +7,14 @@
 	shared_cooldown = NONE
 
 /datum/action/cooldown/bloodling/give_life/PreActivate(atom/target)
+	if(get_dist(usr, target) > 1)
+		owner.balloon_alert(owner, "Too Far!")
+		return FALSE
 
 	if(!ismob(target))
 		owner.balloon_alert(owner, "Only works on mobs!")
 		return FALSE
+
 	var/mob/living/mob_target = target
 
 	if(!istype(target, /mob/living/basic/bloodling/minion))

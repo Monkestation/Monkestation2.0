@@ -12,7 +12,6 @@ GLOBAL_VAR(ascended_bloodling)
 	var/turf/our_turf
 
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
-	. = ..()
 	var/mob/living/basic/bloodling/proper/our_mob = owner
 	our_turf = get_turf(our_mob)
 
@@ -25,7 +24,13 @@ GLOBAL_VAR(ascended_bloodling)
 		to_chat(our_mob, span_noticealien("There is not enough matter here for ascension... Unworthy..."))
 		return FALSE
 
-	return
+	var/area/our_area = get_area(our_turf)
+
+	if(!istype(our_area, /area/station/command/bridge) || !istype(our_area, /area/station/service/hydroponics))
+		to_chat(our_mob, span_noticealien("You can only begin ascension in Hydroponics or Bridge."))
+		return FALSE
+
+	return ..()
 
 /datum/action/cooldown/bloodling/ascension/Activate(atom/target)
 	var/mob/living/basic/bloodling/proper/our_mob = owner

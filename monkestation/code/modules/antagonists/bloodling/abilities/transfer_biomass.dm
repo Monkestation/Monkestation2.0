@@ -9,6 +9,10 @@
 	if(mob == owner)
 		return FALSE
 
+	if(get_dist(usr, target) > 1)
+		owner.balloon_alert(owner, "Too Far!")
+		return FALSE
+
 	if(!istype(mob, /mob/living/basic/bloodling))
 		owner.balloon_alert(owner, "only works on bloodlings!")
 		return FALSE

@@ -12,6 +12,10 @@
 		owner.balloon_alert(owner, "already infesting!")
 		return FALSE
 
+	if(get_dist(usr, target) > 1)
+		owner.balloon_alert(owner, "Too Far!")
+		return FALSE
+
 	if(!ismob(target))
 		owner.balloon_alert(owner, "doesn't work on non-mobs!")
 		return FALSE
