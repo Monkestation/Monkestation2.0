@@ -223,6 +223,9 @@
 	inhand_icon_state = "medkit-ointment"
 	damagetype_healed = BURN
 
+/obj/item/storage/medkit/fire/get_medbot_skin()
+	return "burn"
+
 /obj/item/storage/medkit/fire/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!"))
 	return FIRELOSS
@@ -248,6 +251,8 @@
 	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
+/obj/item/storage/medkit/toxin/get_medbot_skin()
+	return "tox"
 
 /obj/item/storage/medkit/toxin/PopulateContents()
 	if(empty)
@@ -267,6 +272,9 @@
 	icon_state = "medkit_o2"
 	inhand_icon_state = "medkit-o2"
 	damagetype_healed = OXY
+
+/obj/item/storage/medkit/o2/get_medbot_skin()
+	return "oxy"
 
 /obj/item/storage/medkit/o2/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -288,6 +296,9 @@
 	icon_state = "medkit_brute"
 	inhand_icon_state = "medkit-brute"
 	damagetype_healed = BRUTE
+
+/obj/item/storage/medkit/brute/get_medbot_skin()
+	return "brute"
 
 /obj/item/storage/medkit/brute/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -313,6 +324,9 @@
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = HEAL_ALL_DAMAGE
 
+/obj/item/storage/medkit/advanced/get_medbot_skin()
+	return "advanced"
+
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
 		return
@@ -329,6 +343,9 @@
 	icon_state = "medkit_tactical"
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/tactical/get_medbot_skin()
+	return "bezerk"
 
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
@@ -354,6 +371,11 @@
 		/obj/item/cautery = 1,
 	)
 	generate_items_inside(items_inside,src)
+
+/// Gets what skin (icon_state) this medkit uses for a medbot
+/obj/item/storage/medkit/proc/get_medbot_skin()
+	return "generic"
+
 
 /obj/item/storage/medkit/tactical/premium
 	name = "premium tactical medical kit"
@@ -460,16 +482,7 @@
 		return
 
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
-	if (istype(src, /obj/item/storage/medkit/fire))
-		medbot_assembly.set_skin("ointment")
-	else if (istype(src, /obj/item/storage/medkit/toxin))
-		medbot_assembly.set_skin("tox")
-	else if (istype(src, /obj/item/storage/medkit/o2))
-		medbot_assembly.set_skin("o2")
-	else if (istype(src, /obj/item/storage/medkit/brute))
-		medbot_assembly.set_skin("brute")
-	else if (istype(src, /obj/item/storage/medkit/advanced))
-		medbot_assembly.set_skin("advanced")
+	medbot_assembly.set_skin(get_medbot_skin())
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
 	medbot_assembly.robot_arm = bodypart.type
