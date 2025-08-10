@@ -45,16 +45,6 @@
 	desc = "A soft armor plate, used for reinforcing armor."
 	icon_state = "softarmor"
 
-/obj/item/machining_intermediates/hardenedexosuit_part
-	name = "hardened exosuit part"
-	desc = "A hardened part for an exosuit, used for reinforcing exosuits."
-	icon_state = "hardenedexosuit_part"
-
-/obj/item/machining_intermediates/hardenedexosuit_plate
-	name = "hardened exosuit plate"
-	desc = "A hardened plate for an exosuit, used for reinforcing exosuits."
-	icon_state = "hardenedexosuit_plate"
-
 /obj/item/machining_intermediates/insulation
 	name = "insulation"
 	desc = "Insulation material, used for insulating various items."

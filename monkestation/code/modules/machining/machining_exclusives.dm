@@ -7,8 +7,6 @@
 	worn_icon_state = "pulsepack"
 	icon_state = "holsteredp"
 	inhand_icon_state = "backpack"
-	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/energy/pulse/makeshift/gun
@@ -167,27 +165,63 @@
 
 //mecha armor plates
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part
-	name = "Hardened Exosuit Part (Ranged Weaponry)"
+	name = "Hardened Exosuit Part"
 	desc = "Hardened internal parts that boosts the maximum exosuit internal integrity of an exosuit, it appears to be custom-made"
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "shield"
 	protect_name = "Extra Integrity"
+	icon = 'monkestation/icons/obj/machining_intermediates.dmi'
+	icon_state = "hardenedexosuit_part"
 	armor_mod = /datum/armor/mecha_equipment_parts
 	var/extra_integrity_mod = 1.25
 	var/applied_integrity
 
+/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part/forged
+	name = "Forged Exosuit Part"
+	desc = "Forged internal parts that greatly boosts the maximum exosuit internal integrity of an exosuit, it appears to be custom-made"
+	extra_integrity_mod = 1.5
+
 /datum/armor/mecha_equipment_parts
-	melee = 5
+	melee = 5 //very minimal armor, the integrity is the main reason you'd want it
 
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
-	for(var/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part/part in chassis)
-		return FALSE //no doubles
+	for(var/obj/item/item in mech.equip_by_category[MECHA_ARMOR])
+		if(istype(item, src))
+			to_chat(user, span_warning("[mech] already has custom internal parts! Uninstall them before applying."))
+			return FALSE
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
-	applied_integrity = initial(chassis.max_integrity) * extra_integrity_mod
+	applied_integrity = initial(chassis.max_integrity) * (extra_integrity_mod - 1)
 	chassis.max_integrity += applied_integrity
 
 /obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part/detach(atom/moveto)
 	. = ..()
 	chassis.max_integrity -= applied_integrity
+
+/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate
+	name = "Hardened Exosuit Part"
+	desc = "Hardened armoured plates that hardens the protection of an exosuit, it appears to be custom-made"
+	icon = 'monkestation/icons/obj/machining_intermediates.dmi'
+	icon_state = "hardenedexosuit_plate"
+	armor_mod = /datum/armor/mecha_machined_armor
+
+/datum/armor/mecha_machined_armor
+	melee = 15
+	laser = 15
+	bullet = 15
+	energy = 15
+
+/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate/forged
+	name = "Forged Exosuit Part"
+	desc = "Forged armoured plates that greatly hardens the protection of an exosuit, it appears to be custom-made"
+	icon = 'monkestation/icons/obj/machining_intermediates.dmi'
+	icon_state = "hardenedexosuit_plate"
+	armor_mod = /datum/armor/mecha_machined_armor_forged
+
+/datum/armor/mecha_machined_armor_forged
+	melee = 25
+	laser = 25
+	bullet = 25
+	energy = 25
