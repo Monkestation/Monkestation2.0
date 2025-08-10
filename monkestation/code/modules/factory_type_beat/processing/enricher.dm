@@ -12,6 +12,7 @@
 	if(!length(processable_resources))
 		processable_resources = typecacheof(list(
 			/obj/item/boulder,
+			/obj/item/boulder/artifact,
 			/obj/item/processing/dirty_dust,
 			),
 			only_root_path = TRUE

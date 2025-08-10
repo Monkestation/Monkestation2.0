@@ -68,6 +68,10 @@
 	desc = "After crystalizing some clean slurry we have crystals. They need to be split apart."
 	icon_state = "crystal"
 
+/datum/reagent/brine
+	name = "Brine"
+	restricted = TRUE
+
 /**
  * Extra boulder types that add bonuses or have different minerals not generated from ssoregen.
  */

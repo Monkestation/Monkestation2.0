@@ -19,9 +19,9 @@
 	. = ..()
 	if(. == CONTEXTUAL_SCREENTIP_SET && !panel_open && anchored)
 		if(isnull(oxygen_input))
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Deploy oxygen port"
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Deploy oxygen pump"
 		else
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Disconnect oxygen port"
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Disconnect oxygen pump"
 
 /obj/machinery/bouldertech/flatpack/purification_chamber/AltClick(mob/user)
 	. = ..()
@@ -37,7 +37,7 @@
 		if(EAST, WEST)
 			options = list("East", "West")
 
-	var/side = text2dir(tgui_input_list(user, "Choose a side to try and deploy the tank on", "[name]", options))
+	var/side = text2dir(tgui_input_list(user, "Choose a side to try and deploy the pump on", "[name]", options))
 	if(!side)
 		return
 
@@ -58,6 +58,7 @@
 	if(!length(processable_resources))
 		processable_resources = typecacheof(list(
 				/obj/item/boulder,
+				/obj/item/boulder/artifact,
 				/obj/item/processing/shards,
 				/datum/gas/oxygen,
 			),
@@ -89,15 +90,14 @@
 	if(oxygen_input)
 		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
 		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
+	else
+		return TRUE
 
 	if(oxygen_moles < REQUIRED_OXYGEN_MOLES)
-		return FALSE
+		return TRUE
 
 	if(chosen_boulder.durability > 0)
-		if(oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES))
-			chosen_boulder.durability -= 1
-		else
-			return FALSE
+		chosen_boulder.durability -= 1
 		if(chosen_boulder.durability > 0)
 			return FALSE
 
@@ -123,6 +123,7 @@
 			chosen_boulder.break_apart()
 		else
 			src.remove_resource(chosen_boulder)
+		oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
 		return TRUE
 	return FALSE
 
@@ -137,14 +138,13 @@
 	if(oxygen_input)
 		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
 		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
+	else
+		return TRUE
 
 	if(oxygen_moles < REQUIRED_OXYGEN_MOLES)
-		return FALSE
+		return TRUE
 
 	if(istype(chosen_exotic, /obj/item/processing/shards))
-		if(!oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES))
-			return FALSE
-
 		var/obj/item/processing/exotic = chosen_exotic
 		if(!exotic.processed_by)
 			check_for_boosts()
@@ -168,14 +168,15 @@
 			else
 				exotic.set_colors()
 				src.remove_resource(exotic)
+			oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
 			return TRUE
 	return FALSE
 
 #undef REQUIRED_OXYGEN_MOLES
 
 /obj/machinery/portable_atmospherics/purification_input
-	name = "external purification oxygen tank"
-	desc = "Pumps pure oxygen into the purification chamber. Can take oxygen tanks but an atmos network is recommended."
+	name = "external purification oxygen pump"
+	desc = "Pumps pure oxygen into the purification chamber. Can take oxygen tanks but an atmospherics network is recommended."
 	icon = 'monkestation/code/modules/factory_type_beat/icons/mining_machines.dmi'
 	icon_state = "air_pump"
 	pressure_resistance = 7 * ONE_ATMOSPHERE
