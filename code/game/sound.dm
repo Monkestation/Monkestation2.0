@@ -34,8 +34,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_SILICON_EMOTES,
 ))
 
-GLOBAL_LIST_EMPTY(cached_mixer_channels)
-
+GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 
 /proc/guess_mixer_channel(soundin)
 	var/sound_text_string
@@ -62,6 +61,18 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
 	else
 		return FALSE
+
+/// Calculates the "adjusted" volume for a user's volume mixer
+/proc/calculate_mixed_volume(user, volume, mixer_channel)
+	. = volume
+	var/client/client = CLIENT_FROM_VAR(user)
+	var/list/channels = client?.prefs?.channel_volume
+	if(!channels)
+		return volume
+	if("[CHANNEL_MASTER_VOLUME]" in channels)
+		. *= channels["[CHANNEL_MASTER_VOLUME]"] * 0.01
+	if(mixer_channel && ("[mixer_channel]" in channels))
+		. *= channels["[mixer_channel]"] * 0.01
 
 ///Default override for echo
 /sound
@@ -117,8 +128,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if(!mixer_channel)
 		mixer_channel = guess_mixer_channel(soundin)
 
-	/*if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
-		return*/
+	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		return
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
@@ -173,10 +184,6 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
 
-	var/list/volume_mixer = client?.prefs?.channel_volume
-	if("[CHANNEL_MASTER_VOLUME]" in volume_mixer)
-		sound_to_use.volume *= volume_mixer["[CHANNEL_MASTER_VOLUME]"] * 0.01
-
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
 		return
 
@@ -216,23 +223,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			sound_to_use.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
-		if((channel in GLOB.used_sound_channels) || (mixer_channel in GLOB.used_sound_channels))
-			var/used_channel = 0
-			if(channel in GLOB.used_sound_channels)
-				used_channel = channel
-				mixer_channel = channel
-			else
-				used_channel = mixer_channel
-			if("[used_channel]" in volume_mixer)
-				sound_to_use.volume *= (volume_mixer["[used_channel]"] * 0.01)
-
-		else if(!mixer_channel)
-			mixer_channel = guess_mixer_channel(soundin)
-			if("[mixer_channel]" in volume_mixer)
-				sound_to_use.volume *= (volume_mixer["[mixer_channel]"] * 0.01)
-
-		// if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
-		//	return //No sound
+		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
+			return //No sound
 
 		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
 		sound_to_use.x = dx * distance_multiplier
@@ -263,6 +255,14 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
+
+	if(!mixer_channel)
+		if(channel in GLOB.used_sound_channels)
+			mixer_channel = channel
+		else
+			mixer_channel = guess_mixer_channel(soundin)
+
+	sound_to_use.volume = calculate_mixed_volume(src, sound_to_use.volume, mixer_channel)
 
 	SEND_SOUND(src, sound_to_use)
 
