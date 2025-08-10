@@ -6,7 +6,7 @@
 	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
 	worn_icon_state = "pulsepack"
 	icon_state = "holsteredp"
-	inhand_icon_state = "backpack"
+	inhand_icon_state = "pepperbackpacksec" //close enough
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/energy/pulse/makeshift/gun
