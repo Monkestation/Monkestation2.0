@@ -187,6 +187,8 @@
 		var/mob/living/carbon/human/human = held.resolve()
 		if(!human)
 			fear_stages -= held
+			heartbeats -= held
+			mobs_with_fullscreens -= held
 			continue
 
 		if(stage >= 1)
