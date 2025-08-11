@@ -23,79 +23,6 @@
 		/datum/ai_planning_subtree/minebot_mining,
 		/datum/ai_planning_subtree/locate_dead_humans,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
-
-/datum/ai_planning_subtree/launch_missiles
-
-/datum/ai_planning_subtree/launch_missiles/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/missile_ability = controller.blackboard[BB_MINEBOT_MISSILE_ABILITY]
-	if(!missile_ability?.IsAvailable())
-		return
-	if(!controller.blackboard_key_exists(BB_MINEBOT_MISSILE_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/clear_bombing_zone, BB_MINEBOT_MISSILE_TARGET, /obj/effect/temp_visual/minebot_target, 7)
-		return
-	controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target, BB_MINEBOT_MISSILE_ABILITY, BB_MINEBOT_MISSILE_TARGET)
-	return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/ai_behavior/find_and_set/clear_bombing_zone
-
-/datum/ai_behavior/find_and_set/clear_bombing_zone/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	for(var/obj/effect/temp_visual/minebot_target/target in oview(search_range, controller.pawn))
-		if(isclosedturf(get_turf(target)))
-			continue
-		return target
-	return null
-
-/datum/ai_planning_subtree/befriend_miners/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(!controller.blackboard_key_exists(BB_MINER_FRIEND))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/miner_to_befriend, BB_MINER_FRIEND)
-		return
-	controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_MINER_FRIEND)
-
-/datum/ai_behavior/find_and_set/miner_to_befriend
-
-/datum/ai_behavior/find_and_set/miner_to_befriend/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
-		if(HAS_TRAIT(target, TRAIT_ROCK_STONER))
-			return target
-	return null
-
-/datum/ai_planning_subtree/defend_node/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/target = controller.blackboard[BB_DRONE_DEFEND]
-	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_DRONE_DEFEND, /mob/living/basic/node_drone)
-		return
-	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.faction.Find(REF(target)))
-		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_DRONE_DEFEND)
-		return
-	if(target.health < (target.maxHealth * 0.75) && controller.blackboard[BB_MINEBOT_REPAIR_DRONE])
-		controller.queue_behavior(/datum/ai_behavior/repair_drone, BB_DRONE_DEFEND)
-		return SUBTREE_RETURN_FINISH_PLANNING
-
-/datum/ai_behavior/repair_drone
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-
-/datum/ai_behavior/repair_drone/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/turf/target = controller.blackboard[target_key]
-	if(isnull(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/repair_drone/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/mob/living/living_pawn = controller.pawn
-	living_pawn.say("REPAIRING [target]!")
-	living_pawn.UnarmedAttack(target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-/datum/ai_behavior/repair_drone/finish_action(datum/ai_controller/controller, success, target_key)
-	. = ..()
-	if(!success)
-		controller.clear_blackboard_key(target_key)
 
 ///find dead humans and report their location on the radio
 /datum/ai_planning_subtree/locate_dead_humans/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -144,15 +71,6 @@
 	if(!(living_pawn.istate & ISTATE_HARM)) //we are not on attack mode
 		return
 	return ..()
-/datum/ai_behavior/basic_ranged_attack/minebot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
-	. = ..()
-	minimum_distance = controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE] ?  controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE] : initial(minimum_distance)
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/mob/living/living_pawn = controller.pawn
-	if(get_dist(living_pawn, target) <= minimum_distance)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 ///mine walls if we are on automated mining mode
 /datum/ai_planning_subtree/minebot_mining/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
