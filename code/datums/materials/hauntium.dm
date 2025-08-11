@@ -7,7 +7,7 @@
 	starlight_color = COLOR_ALMOST_BLACK
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/hauntium
-	value_per_unit = 0.05
+	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.25
 	//pretty good but only the undead can actually make use of these modifiers
 	strength_modifier = 1.2
