@@ -49,17 +49,18 @@
 			dust.custom_materials[material] = quantity * refining_efficiency
 			chosen_boulder.custom_materials -= material
 
-		if(!isnull(dust) && !length(dust.custom_materials))
+		use_power(active_power_usage)
+		if(!length(dust.custom_materials))
 			qdel(dust)
+		else
+			dust.set_colors()
+			src.remove_resource(dust)
 
-		dust.set_colors()
-		src.remove_resource(dust)
 		if(!length(chosen_boulder.custom_materials))
 			chosen_boulder.break_apart()
-		else
-			src.remove_resource(chosen_boulder)
-		return TRUE
-	return FALSE
+			return TRUE
+		chosen_boulder.processed_by = src
+	src.remove_resource(chosen_boulder)
 
 /obj/machinery/bouldertech/flatpack/enricher/breakdown_exotic(obj/item/chosen_exotic)
 
@@ -82,15 +83,15 @@
 				dust.custom_materials[material] = quantity
 				exotic.custom_materials -= material
 
-				if(!isnull(dust) && !length(dust.custom_materials))
+				if(!length(dust.custom_materials))
 					qdel(dust)
-					continue
-				dust.set_colors()
-				src.remove_resource(dust)
+				else
+					dust.set_colors()
+					src.remove_resource(dust)
+			use_power(active_power_usage)
 			if(!length(exotic.custom_materials))
 				qdel(exotic)
-			else
-				exotic.set_colors()
-				src.remove_resource(exotic)
-			return TRUE
-	return FALSE
+				return TRUE
+			exotic.processed_by = src
+			exotic.set_colors()
+		src.remove_resource(chosen_exotic)

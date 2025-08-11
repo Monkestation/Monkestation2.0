@@ -42,15 +42,16 @@
 				dust.custom_materials[material] = quantity
 				exotic.custom_materials -= material
 
-				if(!isnull(dust) && !length(dust.custom_materials))
+				if(!length(dust.custom_materials))
 					qdel(dust)
-					continue
-				dust.set_colors()
-				src.remove_resource(dust)
+				else
+					dust.set_colors()
+					src.remove_resource(dust)
+
+			use_power(active_power_usage)
 			if(!length(exotic.custom_materials))
 				qdel(exotic)
-			else
-				exotic.set_colors()
-				src.remove_resource(exotic)
-			return TRUE
-	return FALSE
+				return TRUE
+			exotic.processed_by = src
+			exotic.set_colors()
+		src.remove_resource(exotic)
