@@ -85,3 +85,9 @@ map leadpoisoningstation
 	votable
 	minplayers 40
 endmap
+
+
+map steelbeamsstation
+	votable
+	minplayers 40
+endmap
