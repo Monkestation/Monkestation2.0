@@ -72,9 +72,9 @@
 	power_in_use = TRUE // Lock us into this ability until it successfully fires off. Otherwise, we pay the blood even if we fail.
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		FireSecondaryTargetedPower(target, modifiers)
+		FireSecondaryTargetedPower(target_atom, modifiers)
 	else
-		FireTargetedPower(target, modifiers)
+		FireTargetedPower(target_atom, modifiers)
 	// Skip this part so we can return TRUE right away.
 	if(power_activates_immediately)
 		power_activated_sucessfully() // Mesmerize pays only after success.

@@ -71,15 +71,12 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/auspex/ActivatePower(trigger_flags)
-	. = ..()
+	..()
 	owner.AddElement(/datum/element/digitalcamo)
 	animate(owner, alpha = 15, time = 2 SECONDS)
-	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/auspex/DeactivatePower(deactivate_flags)
-	. = ..()
-	if(!.)
-		return FALSE
+	..()
 	animate(owner, alpha = 255, time = 2 SECONDS)
 	owner.RemoveElement(/datum/element/digitalcamo)
 

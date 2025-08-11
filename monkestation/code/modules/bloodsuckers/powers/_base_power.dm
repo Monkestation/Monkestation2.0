@@ -46,13 +46,15 @@
 
 // Modify description to add cost.
 /datum/action/cooldown/bloodsucker/New(Target)
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	update_desc()
-	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(on_sol_warning))
+	desc = get_power_desc()
 
 /datum/action/cooldown/bloodsucker/Destroy()
+	SHOULD_CALL_PARENT(TRUE)
+	if(active)
+		DeactivatePower()
 	bloodsuckerdatum_power = null
-	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
 	return ..()
 
 /datum/action/cooldown/bloodsucker/proc/on_sol_warning(datum/source, danger_level, vampire_warning_message, vassal_warning_message)
@@ -71,17 +73,6 @@
 	. = constant ? constant_bloodcost : bloodcost
 	if(bloodsuckerdatum_power && sol_multiplier && SSsol.sunlight_active)
 		. *= sol_multiplier
-
-/datum/action/cooldown/bloodsucker/proc/update_desc(rebuild = TRUE)
-	desc = initial(desc)
-	if(bloodcost > 0)
-		desc += "<br><br><b>COST:</b> [bloodcost] Blood"
-	if(constant_bloodcost > 0)
-		desc += "<br><br><b>CONSTANT COST:</b><i> [name] costs [constant_bloodcost] Blood maintain active.</i>"
-	if(power_flags & BP_AM_SINGLEUSE)
-		desc += "<br><br><b>SINGLE USE:</br><i> [name] can only be used once per night.</i>"
-	if(rebuild)
-		build_all_button_icons(UPDATE_BUTTON_NAME)
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
@@ -140,7 +131,8 @@
 
 /datum/action/cooldown/bloodsucker/proc/upgrade_power()
 	SHOULD_CALL_PARENT(TRUE)
-	DeactivatePower()
+	if(active)
+		DeactivatePower()
 	if(level_current == -1) // -1 means it doesn't rank up ever
 		return FALSE
 	level_current++
@@ -223,6 +215,7 @@
 	bloodsuckerdatum_power.update_hud()
 
 /datum/action/cooldown/bloodsucker/proc/ActivatePower(trigger_flags)
+	SHOULD_CALL_PARENT(TRUE)
 	active = TRUE
 	if(power_flags & BP_AM_TOGGLE)
 		START_PROCESSING(SSprocessing, src)
@@ -233,15 +226,16 @@
 
 /datum/action/cooldown/bloodsucker/proc/DeactivatePower()
 	if(!active) //Already inactive? Return
-		return
+		return FALSE
 	if(power_flags & BP_AM_TOGGLE)
 		STOP_PROCESSING(SSprocessing, src)
 	if(power_flags & BP_AM_SINGLEUSE)
 		remove_after_use()
-		return
+		return TRUE
 	active = FALSE
 	StartCooldown()
 	build_all_button_icons()
+	return TRUE
 
 ///Used by powers that are continuously active (That have BP_AM_TOGGLE flag)
 /datum/action/cooldown/bloodsucker/process(seconds_per_tick)
@@ -293,12 +287,14 @@
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/cooldown/bloodsucker/proc/html_power_explanation()
-	return replacetext_char(html_encode(trimtext(power_explanation)), "\n", "<br>")
+	var/list/explanation = get_power_explanation()
+	explanation = explanation.Join("\n ")
+	return replacetext_char(html_encode(trimtext(explanation)), "\n", "<br>")
 
 /datum/action/cooldown/bloodsucker/proc/get_power_explanation()
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
-	if(level_current != -1)
+	if(level_current != 0)
 		. += "LEVEL: [level_current] [name]:"
 	else
 		. += "(Inherent Power) [name]:"
@@ -306,7 +302,7 @@
 	. += get_power_explanation_extended()
 
 /datum/action/cooldown/bloodsucker/proc/get_power_explanation_extended()
-	return list()
+	return power_explanation
 
 /datum/action/cooldown/bloodsucker/proc/get_power_desc()
 	SHOULD_CALL_PARENT(TRUE)

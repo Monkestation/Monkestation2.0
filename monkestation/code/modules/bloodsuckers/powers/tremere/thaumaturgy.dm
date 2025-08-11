@@ -40,6 +40,8 @@
 	var/shot_cooldown = 0
 	var/datum/weakref/blood_shield
 	var/obj/projectile/magic/arcane_barrage/bloodsucker/magic_9ball
+	var/speed = 3
+	var/pixel_speed = 0.2
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/Grant()
 	charges = get_max_charges()
@@ -81,7 +83,7 @@
 	. += "The cooldown increases by [DisplayTimeText(THAUMATURGY_COOLDOWN_PER_CHARGE)] per charge used, and each blast costs [THAUMATURGY_BLOOD_COST_PER_CHARGE] blood."
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/ActivatePower(mob/target)
-	. = ..()
+	..()
 	charges = get_max_charges()
 	toggle_blood_shield(TRUE)
 	return TRUE
@@ -119,9 +121,7 @@
 		)
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/DeactivatePower(deactivate_flags)
-	. = ..()
-	if(!.)
-		return
+	..()
 	var/used_charges = get_max_charges() - charges
 	toggle_blood_shield(FALSE)
 	if(used_charges > 0)
@@ -137,8 +137,8 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/get_blood_bolt_damage()
 	if(level_current >= THAUMATURGY_EXTRA_DAMAGE_LEVEL)
-		return 40
-	return 20
+		return 25
+	return 15
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/get_max_charges()
 	return level_current * 2
@@ -153,6 +153,7 @@
 	. = ..()
 	if(next_use_time - world.time <= 0)
 		button.maptext = MAPTEXT_TINY_UNICODE(span_center("[charges]/[get_max_charges()]"))
+		button.maptext_x = -10
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/FireSecondaryTargetedPower(atom/target, params)
 	if(shot_cooldown > world.time)
@@ -185,6 +186,8 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/handle_shot(mob/user, atom/target)
 	magic_9ball = new(get_turf(user))
+	magic_9ball.speed = speed
+	magic_9ball.pixel_speed_multiplier = pixel_speed
 	magic_9ball.firer = user
 	magic_9ball.power_ref = WEAKREF(src)
 	magic_9ball.damage = get_blood_bolt_damage()
@@ -220,7 +223,7 @@
 	damage = 1
 	wound_bonus = 20
 	armour_penetration = 30
-	speed = 0.6
+	speed = 3
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	range = 30
 	armor_flag = LASER

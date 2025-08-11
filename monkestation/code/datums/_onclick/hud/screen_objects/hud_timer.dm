@@ -142,9 +142,9 @@
 
 /atom/movable/screen/text/screen_timer/attached
 	maptext_x = 0
-	maptext_y = 16
+	maptext_y = 32
 	maptext_height = 32
-	maptext_width = 32
+	maptext_width = 64
 	var/following_object
 	var/image/text_image
 

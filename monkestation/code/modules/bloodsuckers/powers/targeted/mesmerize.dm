@@ -140,6 +140,7 @@
 	COOLDOWN_START(src, mesmerize_cooldown, mesmerize_delay)
 	if(!do_after(user, mesmerize_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target)))
 		StartCooldown(cooldown_time * 0.5)
+		DeactivatePower()
 		return
 	// Can't quite time it here, but oh well
 	to_chat(mesmerized_target, "[src]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]...")

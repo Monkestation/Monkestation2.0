@@ -19,6 +19,8 @@
 	background_icon_state = "tremere_power_off"
 	active_background_icon_state = "tremere_power_on"
 	base_background_icon_state = "tremere_power_off"
+	button_icon = 'monkestation/icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
+	background_icon = 'monkestation/icons/bloodsuckers/actions_tremere_bloodsucker.dmi'
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_DURING_SOL
 	level_current = 1
 	button_icon_state = "power_dominate"
@@ -77,19 +79,16 @@
 	. = ..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/ActivatePower(atom/target)
-	. = ..()
+	..()
 	if(level_current >= DOMINATE_XRAY_LEVEL)
 		ADD_TRAIT(owner, TRAIT_XRAY_VISION, DOMINATE_TRAIT)
 	for(var/hudtype in datahuds)
 		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
 		data_hud.show_to(owner)
 	owner.update_sight()
-	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/DeactivatePower(deactivate_flags)
-	. = ..()
-	if(!.)
-		return
+	..()
 	if(level_current >= DOMINATE_XRAY_LEVEL)
 		REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, DOMINATE_TRAIT)
 	for(var/hudtype in datahuds)
@@ -108,8 +107,7 @@
 				owner.balloon_alert(owner, "too far to revive!")
 			else
 				owner.balloon_alert(owner, "too far to vassal!")
-		return TRUE
-	return ..()
+	..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/attempt_ghoulize(mob/living/target, mob/living/user)
 	owner.face_atom(target)
@@ -138,7 +136,7 @@
 		return FALSE
 	if(!bloodsuckerdatum_power.make_vassal(target))
 		owner.balloon_alert(owner, "not a valid target for vassalizing!.")
-		return
+		return FALSE
 
 	/*if(IS_MONSTERHUNTER(target))
 		to_chat(target, span_notice("Their body refuses to react..."))
@@ -181,28 +179,20 @@
 			if(!vassal?.owner?.current)
 				continue
 			show_to += vassal.owner.current
+
 	new /atom/movable/screen/text/screen_timer/attached(null, show_to, timer_id, "Dies in ${timer}", null, null, target)
-	new /atom/movable/screen/text/screen_timer(null, target, timer_id, "You die in ${timer}")
+	new /atom/movable/screen/text/screen_timer(null, show_to, timer_id, "You die in ${timer}")
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/on_antag_datum_removal(datum/antagonist/vassal, mob/living/thrall, timer_id)
 	end_possession(thrall, timer_id)
 
-// /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/remove_vassal(mob/living/vassal)
-// 	for(var/vassals_ref in vassals)
-// 		var/mob/vassal = vassals_ref?.Resolve()
-// 		if(!vassal || vassal != user)
-// 			continue
-// 		vassals -= vassals_ref
-// 		return TRUE
-// 	return FALSE
-
-/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/is_vassal(mob/living/user)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/is_vassal(mob/living/target)
 	for(var/datum/weakref/vassal_ref in vassals)
 		var/mob/vassal = vassal_ref?.resolve()
-		if(!vassal || vassal != user)
+		if(isnull(vassal) || vassal != target)
 			continue
 		return vassal_ref
-	return FALSE
+	return null
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/end_possession(mob/living/user, timer_id, datum/weakref/vassal_ref)
 	if(timer_id)
@@ -210,7 +200,7 @@
 	if(!user)
 		CRASH("[src] end_possession called with no user!")
 	vassal_ref = vassal_ref ? vassal_ref : is_vassal(user)
-	if(!vassal_ref)
+	if(isnull(vassal_ref))
 		return
 	user.remove_traits(list(TRAIT_MUTE, TRAIT_DEAF), DOMINATE_TRAIT)
 	if(!HAS_TRAIT(user, TRAIT_NOBLOOD))
