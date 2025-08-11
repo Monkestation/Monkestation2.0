@@ -69,11 +69,11 @@
 #define DATA_HUD_DIAGNOSTIC_BASIC 5
 #define DATA_HUD_DIAGNOSTIC_ADVANCED 6
 #define DATA_HUD_ABDUCTOR 7
-#define DATA_HUD_AI_DETECT 9
-#define DATA_HUD_FAN 10
-#define DATA_HUD_PERMIT 11 //monkestation edit
-#define DATA_HUD_SENSORS 12 //monkestation edit
-#define DATA_HUD_CREW 13 //monkestation edit
+#define DATA_HUD_AI_DETECT 8
+#define DATA_HUD_FAN 9
+#define DATA_HUD_PERMIT 10 //monkestation edit
+#define DATA_HUD_SENSORS 11 //monkestation edit
+#define DATA_HUD_CREW 12 //monkestation edit
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
