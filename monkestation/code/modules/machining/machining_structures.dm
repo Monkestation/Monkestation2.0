@@ -308,7 +308,7 @@
 
 	if(to_make_path)
 		load_recipe(new to_make_path)
-	playsound(src, operating_sound)
+	playsound(src, operating_sound, 100, TRUE)
 
 /obj/machinery/lathe/attackby(obj/item/interacted_item, mob/user, params)
 	. = ..()
@@ -403,6 +403,7 @@
 	desc = "A workstation used to gather and assemble parts."
 	icon_state = "workstation"
 	machinery_type = MACHINING_WORKSTATION
+	operating_sound = 'sound/items/screwdriver.ogg'
 
 /obj/machinery/lathe/furnace
 	name = "furnace"
@@ -415,24 +416,28 @@
 	desc = "A tablesaw used to cut wood and other materials."
 	icon_state = "tablesaw"
 	machinery_type = MACHINING_TABLESAW
+	operating_sound = 'sound/weapons/chainsawhit.ogg'
 
 /obj/machinery/lathe/drophammer
 	name = "drophammer"
 	desc = "A drophammer used to forge metal and other materials."
 	icon_state = "drophammer"
 	machinery_type = MACHINING_DROPHAMMER
+	operating_sound = 'sound/effects/picaxe3.ogg'
 
 /obj/machinery/lathe/tailor
 	name = "tailor"
 	desc = "A tailor used to sew and craft clothing and other fabric items."
 	icon_state = "tailorstation"
 	machinery_type = MACHINING_TAILOR
+	operating_sound = 'sound/items/screwdriver.ogg'
 
 /obj/machinery/lathe/drillpress
 	name = "drill press"
 	desc = "A drill press used to drill holes in metal and other materials."
 	icon_state = "drillpress"
 	machinery_type = MACHINING_DRILLPRESS
+	operating_sound = 'sound/weapons/drill.ogg'
 
 
 /*
