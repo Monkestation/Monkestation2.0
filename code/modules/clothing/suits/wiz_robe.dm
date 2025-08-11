@@ -107,11 +107,8 @@
 	allowed = list(
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
-		// parent type allowed items
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
-		/obj/item/tank/jetpack/oxygen/captain,
-		/obj/item/storage/belt/holster,
 	)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
