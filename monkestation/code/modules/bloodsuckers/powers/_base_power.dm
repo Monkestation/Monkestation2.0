@@ -138,9 +138,18 @@
 		return FALSE
 	return TRUE
 
-///Called when the Power is upgraded.
 /datum/action/cooldown/bloodsucker/proc/upgrade_power()
+	SHOULD_CALL_PARENT(TRUE)
+	DeactivatePower()
+	if(level_current == -1) // -1 means it doesn't rank up ever
+		return FALSE
 	level_current++
+	on_power_upgrade()
+	return TRUE
+
+/datum/action/cooldown/bloodsucker/proc/on_power_upgrade()
+	SHOULD_CALL_PARENT(TRUE)
+	desc = get_power_desc()
 
 ///Checks if the Power is available to use.
 /datum/action/cooldown/bloodsucker/proc/can_use(mob/living/carbon/user, trigger_flags)
@@ -199,9 +208,9 @@
 /datum/action/cooldown/bloodsucker/is_action_active()
 	return active
 
-/datum/action/cooldown/bloodsucker/proc/pay_cost()
+/datum/action/cooldown/bloodsucker/proc/pay_cost(cost_override = 0)
 	// Non-bloodsuckers will pay in other ways.
-	var/bloodcost = get_blood_cost()
+	var/bloodcost = cost_override ? cost_override : get_blood_cost()
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
@@ -285,3 +294,36 @@
 
 /datum/action/cooldown/bloodsucker/proc/html_power_explanation()
 	return replacetext_char(html_encode(trimtext(power_explanation)), "\n", "<br>")
+
+/datum/action/cooldown/bloodsucker/proc/get_power_explanation()
+	SHOULD_CALL_PARENT(TRUE)
+	. = list()
+	if(level_current != -1)
+		. += "LEVEL: [level_current] [name]:"
+	else
+		. += "(Inherent Power) [name]:"
+
+	. += get_power_explanation_extended()
+
+/datum/action/cooldown/bloodsucker/proc/get_power_explanation_extended()
+	return list()
+
+/datum/action/cooldown/bloodsucker/proc/get_power_desc()
+	SHOULD_CALL_PARENT(TRUE)
+	var/new_desc = ""
+	if(level_current != -1)
+		new_desc += "<br><b>LEVEL:</b> [level_current]"
+	else
+		new_desc += "<br><b>(Inherent Power)</b>"
+	if(bloodcost > 0)
+		new_desc += "<br><br><b>COST:</b> [bloodcost] Blood"
+	if(constant_bloodcost > 0)
+		new_desc += "<br><br><b>CONSTANT COST:</b><i> [name] costs [constant_bloodcost] blood per second to keep it active.</i>"
+	if(power_flags & BP_AM_SINGLEUSE)
+		new_desc += "<br><br><br>SINGLE USE:</br><i> [name] can only be used once per night.</i>"
+	new_desc += "<br><br><b>DESCRIPTION:</b> [get_power_desc_extended()]"
+	new_desc += "<br>"
+	return new_desc
+
+/datum/action/cooldown/bloodsucker/proc/get_power_desc_extended()
+	return initial(desc)

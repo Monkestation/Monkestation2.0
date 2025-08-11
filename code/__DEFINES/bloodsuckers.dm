@@ -143,6 +143,7 @@
 #define DANGER_LEVEL_SOL_ROSE 4
 #define DANGER_LEVEL_SOL_ENDED 5
 
+
 /**
  * Clan defines
  *
@@ -177,3 +178,6 @@
 
 //Used in bloodsucker_life.dm
 #define MARTIALART_FRENZYGRAB "frenzy grabbing"
+
+/// The level needed to complete the Tremere objective.
+#define TREMERE_OBJECTIVE_POWER_LEVEL 5
