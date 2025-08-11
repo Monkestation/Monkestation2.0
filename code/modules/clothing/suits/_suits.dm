@@ -9,7 +9,7 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/tank/jetpack/oxygen/captain,
 		/obj/item/storage/belt/holster,
-		)
+	)
 	armor_type = /datum/armor/none
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'

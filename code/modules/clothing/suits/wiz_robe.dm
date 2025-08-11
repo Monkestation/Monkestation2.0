@@ -104,7 +104,15 @@
 	inhand_icon_state = "wizrobe"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/suit_wizrobe
-	allowed = list(/obj/item/teleportation_scroll, /obj/item/highfrequencyblade/wizard)
+	allowed = list(
+		/obj/item/teleportation_scroll,
+		/obj/item/highfrequencyblade/wizard,
+		// parent type allowed items
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/storage/belt/holster,
+	)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
 	equip_delay_other = 50
