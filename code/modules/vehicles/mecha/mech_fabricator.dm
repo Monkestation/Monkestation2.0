@@ -93,7 +93,7 @@
 			do_sparks(1, FALSE, src)
 			authorization_override = TRUE //just in case it wasn't already for some reason. keycard reader is busted.
 			return
-		if(ACCESS_COMMAND in card.access)
+		if((ACCESS_COMMAND in card.access))
 			if(!authorization_override)
 				authorization_override = TRUE
 				to_chat(user, span_warning("You override the safety protocols on the [src], removing access restrictions from this terminal."))
@@ -117,7 +117,7 @@
 		if(isliving(user))
 			var/mob/living/living_user = user
 			id_card = living_user.get_idcard(hand_first = TRUE)
-			return ACCESS_COMMAND in id_card.access
+			return (ACCESS_COMMAND in id_card.access)
 	return issilicon(user)
 
 
@@ -480,7 +480,7 @@
 
 		//they can have a tiny bit of non-lethal weapons. as a treat
 		if(is_combat_design && !combat_parts_allowed)
-			if(!(design in blue_alert_designs && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE))
+			if(!((design in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE))
 
 				continue
 	//monkestation edit end
