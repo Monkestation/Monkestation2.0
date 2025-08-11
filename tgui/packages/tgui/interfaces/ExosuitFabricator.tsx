@@ -11,6 +11,11 @@ import { BooleanLike, classes } from 'common/react';
 
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
+  authorization: BooleanLike;
+  alert_level: Number;
+  combat_parts_allowed: BooleanLike;
+  emagged: BooleanLike;
+  silicon_user: BooleanLike;
 };
 
 export const ExosuitFabricator = (props) => {
@@ -62,6 +67,7 @@ export const ExosuitFabricator = (props) => {
             </Stack>
           </Stack.Item>
           <Stack.Item width="420px">
+            <Authorization width="420" />
             <Queue availableMaterials={availableMaterials} />
           </Stack.Item>
         </Stack>
@@ -328,4 +334,57 @@ const QueueList = (props: { availableMaterials: MaterialMap }) => {
         ))}
     </>
   );
+};
+
+const Authorization = (props, context) => {
+  const { data } = useBackend<ExosuitFabricatorData>();
+  const auth_override = data.authorization;
+  const alert_level = data.alert_level;
+  const combat_parts_allowed = data.combat_parts_allowed;
+  const emagged = data.emagged;
+
+  return (
+    <Section width="420px" style={{ 'white-space': 'pre-wrap' }}>
+      <b>
+        {'User: '}
+        <span
+          style={!combat_parts_allowed ? 'color:#ff0000' : 'color:#00ff00'}
+          font-style:bold
+        >
+          {!combat_parts_allowed
+            ? 'Unauthorized'
+            : !emagged
+              ? 'Authorized'
+              : garbleText(
+                  'ALERT: ROOTKIT_DEV_OVERRIDE RUNNING IN LIVE ENVIROMENT',
+                )}
+        </span>
+      </b>
+      <br />
+      Combat ready designs are{' '}
+      {combat_parts_allowed ? 'available' : 'unavailable'}.
+      <br />
+      {auth_override
+        ? 'Authorization overriden by a command-level card.\n'
+        : ''}
+      {alert_level < 2 ? '' : 'Credible threat to the station in effect!\n'}
+    </Section>
+  );
+};
+
+const garbleText = (text) => {
+  return text
+    .split('')
+    .map((char) => {
+      if (Math.random() < 0.5) {
+        // Randomly replace with ascii symbol or change case
+        if (Math.random() < 0.5) {
+          return String.fromCharCode(33 + Math.floor(Math.random() * 30));
+        } else {
+          return Math.random() < 0.5 ? char.toUpperCase() : char.toLowerCase();
+        }
+      }
+      return char;
+    })
+    .join('');
 };

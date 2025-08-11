@@ -52,6 +52,28 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
+	//monkestation edit start
+	/// Controls whether or not the more dangerous designs have been unlocked by a head's id manually, rather than alert level unlocks
+	var/authorization_override = FALSE
+	/// Tracks whether the station is in full danger mode to unlock combat mechs
+	var/red_alert = FALSE
+	/// ID card of the person using the machine for the purpose of tracking access
+	var/obj/item/card/id/id_card = new()
+	/// Combined boolean value of red alert, auth override, and the users access for the sake of smaller if statements. if this is true, combat parts are available
+	var/combat_parts_allowed = FALSE
+	var/list/combat_parts = list(
+		RND_CATEGORY_MECHFAB_DURAND,
+		RND_CATEGORY_MECHFAB_HONK,
+		RND_CATEGORY_MECHFAB_PHAZON,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		)
+	var/list/blue_alert_designs = list( //sec can have disabler
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
+	)
+	//monke edit end
+
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		connect_techweb(SSresearch.science_tech)
@@ -61,6 +83,54 @@
 	if(stored_research)
 		update_menu_tech()
 	return ..()
+
+//monke edit start
+/obj/machinery/mecha_part_fabricator/attackby(obj/item/object, mob/living/user, params)
+	if(istype(object, /obj/item/card/id))
+		var/obj/item/card/id/card = object
+		if(obj_flags & EMAGGED)
+			to_chat(user, span_warning("The authentification slot spits sparks at you and the display reads scrambled text!"))
+			do_sparks(1, FALSE, src)
+			authorization_override = TRUE //just in case it wasn't already for some reason. keycard reader is busted.
+			return
+		if(ACCESS_COMMAND in card.access)
+			if(!authorization_override)
+				authorization_override = TRUE
+				to_chat(user, span_warning("You override the safety protocols on the [src], removing access restrictions from this terminal."))
+			else
+				authorization_override = FALSE
+				to_chat(user, span_notice("You reengage the safety protocols on the [src], restoring access restrictions to this terminal."))
+			update_static_data(user)
+		return
+	return ..()
+
+/// Updates the various authorization checks used to determine if combat parts are available to the current user
+/obj/machinery/mecha_part_fabricator/proc/check_auth_changes(mob/user)
+	red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+	if(combat_parts_allowed != (authorization_override || red_alert || head_or_sillicon(user)))
+		combat_parts_allowed = (authorization_override || red_alert || head_or_sillicon(user))
+		update_static_data(user)
+
+/// made as a lazy check to allow silicons full access always
+/obj/machinery/mecha_part_fabricator/proc/head_or_sillicon(mob/user)
+	if(!issilicon(user))
+		if(isliving(user))
+			var/mob/living/living_user = user
+			id_card = living_user.get_idcard(hand_first = TRUE)
+			return ACCESS_COMMAND in id_card.access
+	return issilicon(user)
+
+
+/obj/machinery/mecha_part_fabricator/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning("[src] has no functional safeties to emag."))
+		return
+	do_sparks(1, FALSE, src)
+	to_chat(user, span_notice("You short out [src]'s safeties."))
+	authorization_override = TRUE
+	obj_flags |= EMAGGED
+	update_static_data(user)
+//monke edit end
 
 /obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
@@ -371,6 +441,12 @@
 	)
 
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user, datum/tgui/ui)
+	//monnkestation edit start
+	if(!allowed(user) && !combat_parts_allowed && !isobserver(user))
+		to_chat(user, span_warning("You do not have the proper credentials to operate this device"))
+		return
+	//monkestation edit end
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ExosuitFabricator")
@@ -383,8 +459,31 @@
 	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
+	//monkestation edit start
 	for(var/datum/design/design in cached_designs)
 		var/list/cost = list()
+
+		/*
+		Essentially, For all categories in the design node, check if there is a banned string (from banned_categories).
+		If it is, and it isn't just something supported by combat mechs like auto repair droid,
+		skip them
+		*/
+		var/is_combat_design = FALSE
+		for(var/categories in design.category) // may allah forgive me for this insolence upon nature (okay this was way worse, I cleaned it as best I could)
+			for(var/banned_categories in combat_parts)
+				if(findtext(categories, banned_categories) && !findtext(categories, RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT)) // for I have sinned
+					is_combat_design = TRUE
+
+		//further cleans up anything in-betweens
+		if(ispath(design.build_path, /obj/item/mecha_parts/mecha_equipment/weapon) || ispath(design.build_path, /obj/item/mecha_ammo))
+			is_combat_design = TRUE
+
+		//they can have a tiny bit of non-lethal weapons. as a treat
+		if(is_combat_design && !combat_parts_allowed)
+			if(!(design in blue_alert_designs && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE))
+
+				continue
+	//monkestation edit end
 
 		for(var/datum/material/material in design.materials)
 			cost[material.name] = get_resource_cost_w_coeff(design, material)
@@ -408,6 +507,7 @@
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
 
+	check_auth_changes(user) //monkestation edit
 	data["materials"] = rmat.mat_container?.ui_data()
 	data["queue"] = list()
 	data["processing"] = process_queue
@@ -431,6 +531,14 @@
 			"processing" = FALSE,
 			"timeLeft" = get_construction_time_w_coeff(design.construction_time) / 10
 		))
+
+	//monkestation edit start
+	data["authorization"] = authorization_override
+	data["alert_level"] = SSsecurity_level.get_current_level_as_number()
+	data["combat_parts_allowed"] = combat_parts_allowed
+	data["emagged"] = (obj_flags & EMAGGED)
+	data["silicon_user"] = issilicon(user)
+	//monkestation edit end
 
 	return data
 
