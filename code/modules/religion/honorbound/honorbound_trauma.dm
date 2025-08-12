@@ -8,7 +8,7 @@
 	scan_desc = "damaged frontal lobe"
 	gain_text = span_notice("You feel honorbound!")
 	lose_text = span_warning("You feel unshackled from your code of honor!")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// list of guilty people
 	var/list/guilty = list()
 

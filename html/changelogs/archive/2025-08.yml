@@ -259,3 +259,39 @@
   - rscadd: (SmArtKar) You can now attach anesthetic tanks and breathing masks to
       surgical tables.
   - bugfix: (Melbert) You can operate through surgical masks again
+2025-08-11:
+  EssentialTomato:
+  - bugfix: Fixed chameleon hats not changing hairstyles and some other hairstyle
+      related stuff.
+  Wisemonster:
+  - bugfix: The automated announcement system once more announces new arrivals to
+      the station.
+2025-08-12:
+  Absolucy:
+  - refactor: (timothymtorres) Sound has been heavily optimized and will now ignore
+      low volume sounds from far away.
+  - admin: (timothymtorres) Add debugging sound earmuffs to admin equipment inside
+      the debug box. Wear them to determine a sounds max range, distance, volume,
+      and sound name. Highly recommended to walk otherwise you will get spammed with
+      footstep sounds.
+  - bugfix: (grungussuss, Melbert) After 4 years, computer sound loop now works properly.
+  - qol: Stargazers can now slime link basic/simple mobs using a normal grab.
+  - bugfix: Hotspots/fire from ash drakes, explosions, and fire breath should no longer
+      last more than a couple of seconds.
+  - refactor: Slightly refactored brain trauma.
+  - balance: Nanites and viruses can no longer cure an obsession or hypnosis.
+  - map: The centcom firing range floors are now indestructible.
+  - balance: Revenge Vassals now also resist mindshields, just like Favorite Vassals.
+  Absolucy, Maximal08, FlufflesTheDog:
+  - qol: Using a multitool inhand tells you where the area APC is.
+  Aniantan, Bomberman66Dev:
+  - rscadd: Ported the surplus prosthetic organ quirks from TG. Select few species
+      cannot use them, however.
+  Ben10Omintrix:
+  - bugfix: moving away from the surgery table with its mask no longer causes lag
+  ThePooba:
+  - bugfix: less monkeycoins from roundend for mentors and fixed donator monkecoins
+  - balance: also buffed slasher again so i didnt forgor
+  notghosti:
+  - bugfix: Contractor bundles should now still be purchasable after an objective
+      times out
