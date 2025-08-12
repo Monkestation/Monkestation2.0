@@ -6,40 +6,34 @@
 	max_chance = 33
 	severity = 0
 	var/passive_message = span_notice("You feel tingling on your skin as light passes over it.")
+	COOLDOWN_DECLARE(heal_msg_cooldown)
 
-/datum/symptom/darkness/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/darkness/activate(mob/living/mob, datum/disease/acute/disease)
 	. = ..()
 	switch(round(multiplier))
 		if(4, 5, 6, 7, 8)
 			if(!CanHeal(mob))
 				return
-			if(passive_message_condition(mob))
+			if(mob.getBruteLoss() || mob.getFireLoss())
 				to_chat(mob, passive_message)
 			Heal(mob, multiplier)
 		else
 			multiplier = min(multiplier + 0.1, max_multiplier)
 
 /datum/symptom/darkness/proc/CanHeal(mob/living/carbon/mob)
-	var/light_amount = 0
 	if(isturf(mob.loc)) //else, there's considered to be no light
 		var/turf/mob_turf = mob.loc
-		light_amount = min(1, mob_turf.get_lumcount()) - 0.5
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			return power
-
-/datum/symptom/darkness/proc/Heal(mob/living/carbon/victim, actual_power)
-	var/heal_amt = 2 * actual_power
-	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE, required_bodytype = BODYTYPE_ORGANIC)
-	if(!length(parts))
-		return
-	if(prob(5))
-		to_chat(victim, span_notice("The darkness soothes and mends your wounds."))
-	var/brute_heal = heal_amt / length(parts)
-	var/burn_heal = brute_heal * 0.5
-	victim.heal_overall_damage(brute = brute_heal, burn = burn_heal, required_bodytype = BODYTYPE_ORGANIC)
+		if(mob_turf.is_softly_lit())
+			return TRUE
+		var/light_amount = min(1, mob_turf.get_lumcount()) - 0.5
+		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+			return FALSE
 	return TRUE
 
-/datum/symptom/darkness/proc/passive_message_condition(mob/living/victim)
-	if(victim.getBruteLoss() || victim.getFireLoss())
-		return TRUE
-	return FALSE
+/datum/symptom/darkness/proc/Heal(mob/living/carbon/victim, actual_power)
+	var/old_health = victim.health
+	victim.heal_overall_damage(brute = actual_power * 2, burn = actual_power, required_bodytype = BODYTYPE_ORGANIC)
+	if(victim.health > old_health && COOLDOWN_FINISHED(src, heal_msg_cooldown))
+		to_chat(victim, span_notice("The darkness soothes and mends your wounds."))
+		COOLDOWN_START(src, heal_msg_cooldown, 25 SECONDS)
+	return TRUE

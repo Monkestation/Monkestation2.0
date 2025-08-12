@@ -5,6 +5,7 @@
 	antag_datum = /datum/antagonist/nukeop/commando
 	typepath = /datum/round_event/antagonist/solo/commando_operative
 	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -21,6 +22,7 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	denominator = 10
 	base_antags = 1 //should scale with pop so its 1 op + 1 for every 10 people ready.
@@ -78,32 +80,23 @@
 /datum/round_event/antagonist/solo/nuclear_operative/round_end_report()
 	var/result = nuke_team.get_result()
 	switch(result)
-		if(NUKE_RESULT_FLUKE)
-			SSticker.mode_result = "loss - syndicate nuked - disk secured"
-			SSticker.news_report = NUKE_SYNDICATE_BASE
 		if(NUKE_RESULT_NUKE_WIN)
 			SSticker.mode_result = "win - syndicate nuke"
-			SSticker.news_report = STATION_DESTROYED_NUKE
-		if(NUKE_RESULT_NOSURVIVORS)
-			SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
 			SSticker.news_report = STATION_DESTROYED_NUKE
 		if(NUKE_RESULT_WRONG_STATION)
 			SSticker.mode_result = "halfwin - blew wrong station"
 			SSticker.news_report = NUKE_MISS
 		if(NUKE_RESULT_WRONG_STATION_DEAD)
-			SSticker.mode_result = "halfwin - blew wrong station - did not evacuate in time"
+			SSticker.mode_result = "halfwin - blew wrong station - syndi team dead"
 			SSticker.news_report = NUKE_MISS
 		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
-			SSticker.mode_result = "loss - evacuation - disk secured - syndi team dead"
+			SSticker.mode_result = "loss - evacuation - syndi team dead"
 			SSticker.news_report = OPERATIVES_KILLED
 		if(NUKE_RESULT_CREW_WIN)
-			SSticker.mode_result = "loss - evacuation - disk secured"
+			SSticker.mode_result = "loss - evacuation"
 			SSticker.news_report = OPERATIVES_KILLED
-		if(NUKE_RESULT_DISK_LOST)
-			SSticker.mode_result = "halfwin - evacuation - disk not secured"
-			SSticker.news_report = OPERATIVE_SKIRMISH
-		if(NUKE_RESULT_DISK_STOLEN)
-			SSticker.mode_result = "halfwin - detonation averted"
+		if(NUKE_RESULT_HIJACK_NO_DISK)
+			SSticker.mode_result = "halfwin - evacuation hijacked"
 			SSticker.news_report = OPERATIVE_SKIRMISH
 		else
 			SSticker.mode_result = "halfwin - interrupted"

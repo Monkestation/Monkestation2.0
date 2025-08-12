@@ -48,7 +48,7 @@
 		return
 	var/mob/living/carbon/human/user = owner
 	to_chat(user, span_notice("You return to your old form."))
-	originalDNA.transfer_identity(user)
+	originalDNA.copy_dna(user, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
 	user.real_name = originalname
 	user.updateappearance(mutcolor_update=1)
 	//user.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.

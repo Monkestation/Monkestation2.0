@@ -55,20 +55,24 @@
 			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 		. += span_notice("It's power line can be changed with a [EXAMINE_HINT("multitool")].")
 
-/obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
-	if(can_change_cable_layer)
-		return cable_layer_act(user, tool)
+///does the required checks to see if this machinery layer can be changed
+/obj/machinery/power/proc/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	return can_change_cable_layer
 
-/// Called on multitool_act when we can change cable layers, override to add more conditions
-/obj/machinery/power/proc/cable_layer_act(mob/living/user, obj/item/tool)
+/obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
+	if(!can_change_cable_layer || !cable_layer_change_checks(user, tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
 	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
 	balloon_alert(user, "now operating on the [choice]")
-	return
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
+	return multitool_act(user, tool)
 
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
@@ -470,7 +474,7 @@
 ///////////////////////////////////////////////
 
 // return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_ALL)
+/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_1)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)

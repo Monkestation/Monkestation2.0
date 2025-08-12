@@ -103,7 +103,9 @@ SUBSYSTEM_DEF(atoms)
 				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, TRUE, mapload_arg)
 				PROFILE_INIT_ATOM_END(A)
+#ifndef DISABLE_DEMOS
 		SSdemo.mark_multiple_new(atoms) // monkestation edit: replays
+#endif
 	else
 		#ifdef TESTING
 		count = 0
@@ -124,7 +126,9 @@ SUBSYSTEM_DEF(atoms)
 					stoplag()
 					if(mapload_source)
 						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
+#ifndef DISABLE_DEMOS
 		SSdemo.mark_multiple_new(atoms_to_mark) // monkestation edit: replays
+#endif
 
 	testing("Initialized [count] atoms")
 
@@ -229,14 +233,14 @@ SUBSYSTEM_DEF(atoms)
 	BadInitializeCalls = SSatoms.BadInitializeCalls
 
 /datum/controller/subsystem/atoms/proc/setupGenetics()
-	var/list/mutations = subtypesof(/datum/mutation/human)
+	var/list/mutations = subtypesof(/datum/mutation)
 	shuffle_inplace(mutations)
 	for(var/A in subtypesof(/datum/generecipe))
 		var/datum/generecipe/GR = A
 		GLOB.mutation_recipes[initial(GR.required)] = initial(GR.result)
 	for(var/i in 1 to LAZYLEN(mutations))
 		var/path = mutations[i] //byond gets pissy when we do it in one line
-		var/datum/mutation/human/B = new path ()
+		var/datum/mutation/B = new path ()
 		B.alias = "Mutation [i]"
 		GLOB.all_mutations[B.type] = B
 		GLOB.full_sequences[B.type] = generate_gene_sequence(B.blocks)

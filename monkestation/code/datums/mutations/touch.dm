@@ -17,7 +17,7 @@
 	return TRUE
 // Previous comment ends here
 
-/datum/mutation/human/shock/far
+/datum/mutation/shock/far
 	name = "Extended Shock Touch"
 	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others at range."
 	text_gain_indication = span_notice("You feel unlimited power flow through your hands.")
@@ -40,10 +40,10 @@
 		return
 	return ..(target, user, TRUE, click_parameters) //call the parent, forcing proximity = TRUE so even distant things are considered nearby
 
-/datum/mutation/human/lay_on_hands
-	conflicts = list(/datum/mutation/human/lay_on_hands/syndicate)
+/datum/mutation/lay_on_hands
+	conflicts = list(/datum/mutation/lay_on_hands/syndicate)
 
-/datum/mutation/human/lay_on_hands/syndicate
+/datum/mutation/lay_on_hands/syndicate
 	name = "Corrupted Mending Touch"
 	desc = "A genetic sequence thats highly corrupted sharing some nucleotides with mending touch, use is not advised."
 	quality = POSITIVE
@@ -51,7 +51,7 @@
 	text_gain_indication = span_notice("Your hand feels strange.")
 	text_lose_indication = span_notice("Your hand feels secular once more.")
 	power_path = /datum/action/cooldown/spell/touch/lay_on_hands/syndicate
-	conflicts = list(/datum/mutation/human/lay_on_hands)
+	conflicts = list(/datum/mutation/lay_on_hands)
 	instability = 50
 
 /datum/action/cooldown/spell/touch/lay_on_hands/syndicate

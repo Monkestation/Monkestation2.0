@@ -86,7 +86,7 @@
 // #define TIMER_DEBUG
 
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
-//#define DO_NOT_DEFER_ASSETS
+// #define DO_NOT_DEFER_ASSETS
 
 /// If this is uncommented, Autowiki will generate edits and shut down the server.
 /// Prefer the autowiki build target instead.
@@ -110,6 +110,11 @@
 // Get rid of this whenever it does have support.
 #ifdef OPENDREAM_REAL
 #define DISABLE_DREAMLUAU
+#endif
+
+//#define DISABLE_DEMOS
+#ifdef UNIT_TESTS
+#define DISABLE_DEMOS
 #endif
 
 /// If this is uncommented, force our verb processing into just the 2% of a tick

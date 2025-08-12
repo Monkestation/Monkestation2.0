@@ -247,7 +247,7 @@
 
 				investigate_log("has been set from [target_record.wanted_status] to [new_status] via HUD by [key_name(human_user)].", INVESTIGATE_RECORDS)
 				target_record.wanted_status = new_status
-				sec_hud_set_security_status()
+				update_matching_security_huds(target_record.name)
 				return
 
 			if(href_list["view"])
@@ -511,7 +511,7 @@
 #undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna?.check_mutation(/datum/mutation/human/hulk))
+	if(dna?.check_mutation(/datum/mutation/hulk))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
@@ -653,9 +653,9 @@
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
-		for(var/datum/mutation/human/existing_mutation in dna.mutations)
+		for(var/datum/mutation/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE)
-				dna.remove_mutation(existing_mutation.name)
+				dna.remove_mutation(existing_mutation.name, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
 	return ..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
@@ -697,21 +697,22 @@
 			return
 
 		var/list/options = list("Clear"="Clear")
-		for(var/x in subtypesof(/datum/mutation/human))
-			var/datum/mutation/human/mut = x
+		for(var/x in subtypesof(/datum/mutation))
+			var/datum/mutation/mut = x
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
 
 		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sort_list(options)
 		if(result)
 			if(result == "Clear")
-				dna.remove_all_mutations()
+				for(var/datum/mutation/mutation as anything in dna.mutations)
+					dna.remove_mutation(mutation, mutation.sources)
 			else
 				var/mut = options[result]
 				if(dna.check_mutation(mut))
 					dna.remove_mutation(mut)
 				else
-					dna.add_mutation(mut)
+					dna.add_mutation(mut, MUTATION_SOURCE_VV)
 	if(href_list[VV_HK_MOD_QUIRKS])
 		if(!check_rights(R_SPAWN))
 			return
@@ -841,11 +842,11 @@
 /mob/living/carbon/human/proc/update_damage_movespeed()
 	var/health_deficiency = max((maxHealth - health), staminaloss)
 	if(health_deficiency >= 40)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, multiplicative_slowdown = health_deficiency / 25)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = health_deficiency / 75)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = health_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
+		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
 	if(diff < 0) //Taking damage, not healing

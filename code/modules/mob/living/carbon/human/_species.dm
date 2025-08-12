@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///A fixed hair color that's independent of the mcolor feature in DNA.
 	var/fixed_hair_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
-	var/inert_mutation = /datum/mutation/human/dwarfism
+	var/inert_mutation = /datum/mutation/dwarfism
 	///Used to set the mob's death_sound upon species change
 	var/death_sound
 	///Special sound for grabbing
@@ -592,7 +592,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
-		C.dna.remove_mutation(inert_mutation)
+		C.dna.remove_mutation(inert_mutation, MUTATION_SOURCE_ACTIVATED)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		// MONKESTATION EDIT START
@@ -1099,7 +1099,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdosed = TRUE
 		chem.overdose_start(affected)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
-	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, affected, seconds_per_tick, times_fired)
+	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.

@@ -1474,9 +1474,9 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/static/list/icon_states_cache
 	if(isnull(icon_states_cache))
 #ifdef PRELOAD_ICON_EXISTS_CACHE
-		icon_states_cache = load_icon_exists_cache() || list()
+		icon_states_cache = load_icon_exists_cache() || alist()
 #else
-		icon_states_cache = list()
+		icon_states_cache = alist()
 #endif
 	// monkestation end
 	if(isnull(file) || isnull(state))
@@ -1491,15 +1491,14 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	// monkestation end
 
 	if(isnull(icon_states_cache[file]))
-		icon_states_cache[file] = list()
-/* commented out until i figure out why this is borked
-		if(isfile(file) && length(file_string)) // ensure that it's actually a file, and not a runtime icon
+		icon_states_cache[file] = alist()
+		var/file_string = "[file]"
+		if(length(file_string) && file_string != "/icon") // ensure that it's actually a file, and not a runtime icon
 			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
 				icon_states_cache[file][istate] = TRUE
 		else // Otherwise, we have to use the slower BYOND proc
-*/
-		for(var/istate in icon_states(file))
-			icon_states_cache[file][istate] = TRUE
+			for(var/istate in icon_states(file))
+				icon_states_cache[file][istate] = TRUE
 
 	return !isnull(icon_states_cache[file][state])
 
@@ -1511,7 +1510,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(icon_exists(file, state))
 		return TRUE
 
-	var/static/list/screams = list()
+	var/static/alist/screams = alist()
 	if(!isnull(screams[file]))
 		screams[file] = TRUE
 		stack_trace("State [state] in file [file] does not exist.")
@@ -1519,19 +1518,19 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return FALSE
 
 /// Cache of the width and height of icon files, to avoid repeating the same expensive operation
-GLOBAL_LIST_EMPTY(icon_dimensions)
+GLOBAL_DATUM_INIT(icon_dimensions, /alist, alist())
 
 /// Returns a list containing the width and height of an icon file
-/proc/get_icon_dimensions(icon_path)
+/proc/get_icon_dimensions(icon_path) as /alist
 	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
 	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
 	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
 	if (!isfile(icon_path) || !length("[icon_path]"))
 		var/icon/my_icon = icon(icon_path)
-		return list("width" = my_icon.Width(), "height" = my_icon.Height())
+		return alist("width" = my_icon.Width(), "height" = my_icon.Height())
 	if (isnull(GLOB.icon_dimensions[icon_path]))
 		var/icon/my_icon = icon(icon_path)
-		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
+		GLOB.icon_dimensions[icon_path] = alist("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
 
 /// Strips all underlays on a different plane from an appearance.

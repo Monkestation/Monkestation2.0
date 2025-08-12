@@ -74,7 +74,7 @@
 /obj/machinery/autolathe/proc/handle_designs(list/designs)
 	var/list/output = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	for(var/design_id in designs)
@@ -142,8 +142,8 @@
 
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 /obj/machinery/autolathe/ui_act(action, list/params)
@@ -343,7 +343,7 @@
 	. = ..()
 	var/mat_capacity = 0
 	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
-		mat_capacity += new_matter_bin.tier * 75000
+		mat_capacity += new_matter_bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_capacity
 

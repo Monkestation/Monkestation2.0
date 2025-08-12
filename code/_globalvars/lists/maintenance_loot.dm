@@ -51,8 +51,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
 
 		/obj/item/airlock_painter = 1,
-		/obj/item/airlock_painter/decal = 1,
-		/obj/item/airlock_painter/decal/tile = 1,
+		/obj/item/airlock_painter/decal = 2,
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/rack_parts = 1,
 		/obj/item/shard = 1,
@@ -211,9 +210,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/effect/artifact_spawner = 6,
 		//Sorry Lucy, I stole your gifts. ~MCP.
 		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
-		/obj/item/implanter/dust = 2,
-		/obj/item/clothing/mask/facehugger/toy = 1, //Heheh ~MCP :3
-		/obj/effect/spawner/random/livingplush = 2,
+		/obj/item/implanter/dust = 3,
+		/obj/item/vending_refill/sovietsoda = 3,
+		/obj/item/vending_refill/donksnackvendor = 3,
+		/obj/item/vending_refill/hotdog = 4,
+		/obj/item/clothing/mask/facehugger/toy = 2, //Heheh ~MCP :3
+		/obj/effect/spawner/random/livingplush = 4,
 		) = 8,
 //monkestation edit end
 
@@ -228,6 +230,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/storage/box/clown = 1,
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/book/granter/crafting_recipe/death_sandwich = 1,
+		/obj/item/book/granter/crafting_recipe/donk_secret_recipe = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -412,9 +415,9 @@ GLOBAL_LIST_INIT(maint_fauna, list(//fauna: there be critters living in yer main
 //Maintenance loot spawner pools
 #define maint_trash_weight 4500
 #define maint_common_weight 4497 //monkestation edit: from 4500 to 4497
-#define maint_uncommon_weight 900
+#define maint_uncommon_weight 1400
 #define maint_rarity_weight 99
-#define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
+#define maint_oddity_weight 2 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 #define maint_fauna_weight 150 //monkestation edit: adds friendly maintenance bees, also allows for other maintenance fauna to be coded in.
 

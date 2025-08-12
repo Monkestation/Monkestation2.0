@@ -105,11 +105,8 @@
 		add_to_alive_mob_list()
 	set_focus(src)
 	prepare_huds()
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	update_config_movespeed()
@@ -1108,7 +1105,7 @@
 	if (Adjacent(A))
 		return TRUE
 	var/datum/dna/mob_dna = has_dna()
-	if(mob_dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(src, A))
+	if(mob_dna?.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, A))
 		return TRUE
 
 	//range check

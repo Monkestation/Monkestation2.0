@@ -17,17 +17,7 @@
 	return ..()
 
 /datum/nanite_program/regenerative/active_effect()
-	if(iscarbon(host_mob))
-		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, required_bodytype = BODYTYPE_ORGANIC)
-		if(!parts.len)
-			return
-		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(0.5/parts.len, 0.5/parts.len, null, BODYTYPE_ORGANIC))
-				host_mob.update_damage_overlays()
-	else
-		host_mob.adjustBruteLoss(-0.5, TRUE)
-		host_mob.adjustFireLoss(-0.5, TRUE)
+	host_mob.heal_overall_damage(brute = 0.5, burn = 0.5, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
@@ -36,16 +26,23 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(host_mob.bodytemperature > (host_mob.bodytemp_cold_damage_limit) && host_mob.bodytemperature < (host_mob.bodytemp_heat_damage_limit))
+	if(host_mob.bodytemperature > host_mob.bodytemp_heat_damage_limit)
+		if(HAS_TRAIT(host_mob, TRAIT_RESISTHEAT))
+			return FALSE
+	else if(host_mob.bodytemperature < host_mob.bodytemp_cold_damage_limit)
+		if(HAS_TRAIT(host_mob, TRAIT_RESISTCOLD))
+			return FALSE
+	else
 		return FALSE
 	return ..()
 
-/datum/nanite_program/temperature/active_effect()
-	var/target_temp = host_mob.standard_body_temperature
-	if(host_mob.bodytemperature > target_temp)
-		host_mob.adjust_bodytemperature(-2.5 KELVIN, target_temp)
-	else if(host_mob.bodytemperature < (target_temp + 1))
-		host_mob.adjust_bodytemperature(2.5 KELVIN, 0, target_temp)
+/datum/nanite_program/temperature/enable_passive_effect()
+	. = ..()
+	host_mob.add_homeostasis_level(REF(src), host_mob.standard_body_temperature, 2.5 KELVIN, TRUE, TRUE)
+
+/datum/nanite_program/temperature/disable_passive_effect()
+	. = ..()
+	host_mob.remove_homeostasis_level(REF(src))
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
