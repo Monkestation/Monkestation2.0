@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 27 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 28 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -136,6 +136,7 @@
 #define INIT_ORDER_METRICS 91
 #define INIT_ORDER_OW 90
 #define INIT_ORDER_INPUT 85
+#define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins cant do much without it
 #define INIT_ORDER_SOUNDS 83
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
@@ -209,8 +210,10 @@
 #define FIRE_PRIORITY_AMBIENCE 10
 #define FIRE_PRIORITY_GLOWSHROOMS 10
 #define FIRE_PRIORITY_MEMORY_STATS 10
+#define FIRE_PRIORITY_STARLIGHT 10
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
+#define FIRE_PRIORITY_POLLUTION 18
 #define FIRE_PRIORITY_WET_FLOORS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20

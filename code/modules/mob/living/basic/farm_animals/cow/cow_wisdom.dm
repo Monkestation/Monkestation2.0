@@ -9,6 +9,7 @@
 	///How much experience this cow will grant.
 	var/granted_experience
 
+
 /mob/living/basic/cow/wisdom/Initialize(mapload, granted_wisdom, granted_experience = 500)
 	. = ..()
 	src.granted_wisdom = granted_wisdom

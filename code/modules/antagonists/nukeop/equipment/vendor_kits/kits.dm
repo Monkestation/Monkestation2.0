@@ -35,11 +35,9 @@
 
 /obj/item/storage/box/syndie_kit/assault_trooper/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/green = 1,
-		/obj/item/clothing/suit/space/syndicate/green = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/traitor = 1,
 		/obj/item/gun/ballistic/automatic/rostokov = 1,
-		/obj/item/ammo_box/magazine/rostokov9mm = 4,
+		/obj/item/ammo_box/magazine/rostokov9mm = 5,
 		/obj/item/melee/energy/sword/saber = 1,
 		/obj/item/grenade/c4 = 4,
 		/obj/item/grenade/flashbang = 2,
@@ -52,7 +50,7 @@
 	name = "Heavy Assault Trooper (Easy)"
 	description = "Lock down tight areas and take bullets for the team. \
 		Weapons: Bulldog Autoshotgun, energy sword, and energy shield. \
-		Utility: Thermal goggles and anti-drop implant."
+		Utility: Thermal goggles."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-green-dark"
 	set_items = list(
@@ -61,19 +59,13 @@
 
 /obj/item/storage/box/syndie_kit/heavy_assault_trooper/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/green/dark = 1,
-		/obj/item/clothing/suit/space/syndicate/green/dark = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/traitor = 1,
 		/obj/item/shield/energy = 1,
 		/obj/item/melee/energy/sword/saber = 1,
 		/obj/item/gun/ballistic/shotgun/bulldog = 1,
 		/obj/item/ammo_box/magazine/m12g = 2,
 		/obj/item/ammo_box/magazine/m12g/slug = 2,
 		/obj/item/ammo_box/magazine/m12g/bioterror = 2,
-		/obj/item/ammo_box/magazine/m12g/stun = 2,
-		/obj/item/ammo_box/magazine/m12g/meteor = 2,
-		/obj/item/autosurgeon/syndicate/nodrop = 1,
-		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
 		/obj/item/clothing/glasses/thermal = 1,
 	),src)
 
@@ -90,15 +82,13 @@
 
 /obj/item/storage/box/syndie_kit/sniper/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/black/green = 1,
-		/obj/item/clothing/suit/space/syndicate/black/green = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/elite = 1,
 		/obj/item/gun/ballistic/rifle/sniper_rifle/syndicate = 1,
 		/obj/item/suppressor = 1,
-		/obj/item/ammo_box/magazine/sniper_rounds = 3,
+		/obj/item/ammo_box/magazine/sniper_rounds = 2,
 		/obj/item/ammo_box/magazine/sniper_rounds/disruptor = 2,
 		/obj/item/ammo_box/magazine/sniper_rounds/penetrator = 1,
-		/obj/item/ammo_box/magazine/sniper_rounds/marksman = 2,
+		/obj/item/ammo_box/magazine/sniper_rounds/marksman = 1,
 		/obj/item/storage/box/teargas = 2,
 		/obj/item/clothing/glasses/thermal = 1,
 	),src)
@@ -116,9 +106,8 @@
 
 /obj/item/storage/box/syndie_kit/infiltrator/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/blue = 1,
-		/obj/item/clothing/suit/space/syndicate/blue = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/traitor = 1,
+		/obj/item/mod/module/chameleon = 1,
 		/obj/item/mod/control/pre_equipped/infiltrator = 1,
 		/obj/item/gun/ballistic/revolver/syndicate = 1,
 		/obj/item/ammo_box/a357 = 2,
@@ -136,7 +125,7 @@
 	),src)
 
 /datum/voucher_set/syndicate/kit/scout
-	name = "Scout (Very Hard)"
+	name = "Scout (Medium)"
 	description = "Use your cloak to get around the station and access areas harder to reach by the rest of the team without going unnoticed. \
 		Weapons: PP-96 SMG and energy sword. \
 		Utility: Suppressor, cryptographic sequencer, airlock authentication override card, disk pinpointer, experimental Syndicate teleporter, cloaker belt, and security HUD night vision goggles."
@@ -148,9 +137,7 @@
 
 /obj/item/storage/box/syndie_kit/scout/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/black/blue = 1,
-		/obj/item/clothing/suit/space/syndicate/black/blue = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/traitor = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 1,
 		/obj/item/suppressor = 1,
 		/obj/item/ammo_box/magazine/plastikov9mm/red = 2,
@@ -176,9 +163,7 @@
 
 /obj/item/storage/box/syndie_kit/grenadier/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/black = 1,
-		/obj/item/clothing/suit/space/syndicate/black = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/elite = 1,
 		/obj/item/gun/ballistic/shotgun/china_lake/restricted = 1,
 		/obj/item/storage/belt/grenade/grenadier = 1,
 		/obj/item/clothing/glasses/sunglasses/big = 1,
@@ -218,27 +203,22 @@
 
 /obj/item/storage/box/syndie_kit/medic/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/black/med = 1,
-		/obj/item/clothing/suit/space/syndicate/black/med = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/traitor = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 1,
 		/obj/item/ammo_box/magazine/plastikov9mm/red = 2,
-		/obj/item/storage/medkit/combat = 1,
+		/obj/item/storage/medkit/tactical/premium = 1,
 		/obj/item/storage/medkit/combat/surgery = 1,
-		/obj/item/defibrillator/compact/combat/loaded = 1,
 		/obj/item/reagent_containers/hypospray/medipen/advanced = 1,
 		/obj/item/gun/medbeam = 1,
 		/obj/item/autosurgeon/syndicate/hacked_linked_surgery =1,
-		/obj/item/autosurgeon/syndicate/cyberlink_syndicate = 1,
 		/obj/item/clothing/gloves/latex/nitrile = 1,
-		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	),src)
 
 /datum/voucher_set/syndicate/kit/engineer
 	name = "Engineer (Medium)"
 	description = "Secure the decryption zone, repair the nuke, and provide cover for the rest of the team. \
-		Weapons: PP-96 SMG. \
-		Utility: Full toolbelt with combat wrench, 9mm deployable turret, industrial RCD, advanced fire extinguisher, combat forcefield projector, circuit skillchip, and diagnostic HUD night vision goggles."
+		Weapons: PP-96 SMG and X4 (in toolbox). \
+		Utility: Full toolbelt with combat wrench, 9mm deployable turret, advanced fire extinguisher, combat forcefield projector, circuit skillchip, and diagnostic HUD night vision goggles."
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	icon_state = "syndicate-helm-black-engie"
 	set_items = list(
@@ -247,13 +227,10 @@
 
 /obj/item/storage/box/syndie_kit/engineer/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/black/engie = 1,
-		/obj/item/clothing/suit/space/syndicate/black/engie = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/control/pre_equipped/traitor = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 1,
 		/obj/item/ammo_box/magazine/plastikov9mm/red = 2,
 		/obj/item/storage/belt/utility/syndicate = 1,
-		/obj/item/construction/rcd/combat = 1,
 		/obj/item/extinguisher/advanced = 1,
 		/obj/item/forcefield_projector/combat = 1,
 		/obj/item/storage/toolbox/emergency/turret/nukie/explosives = 1,
@@ -276,9 +253,7 @@
 
 /obj/item/storage/box/syndie_kit/leader/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/clothing/head/helmet/space/syndicate/black/red = 1,
-		/obj/item/clothing/suit/space/syndicate/black/red = 1,
-		/obj/item/tank/jetpack/harness = 1,
+		/obj/item/mod/module/energy_shield = 1,
 		/obj/item/gun/ballistic/automatic/plastikov/refurbished = 2,
 		/obj/item/ammo_box/magazine/plastikov9mm/red = 2,
 		/obj/item/wrench/combat = 1,

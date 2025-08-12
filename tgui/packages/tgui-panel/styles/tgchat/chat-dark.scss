@@ -971,6 +971,10 @@ em {
   border-bottom: 1px dashed;
 }
 
+.tooltip_alt {
+  border-bottom: 1px dashed;
+}
+
 .fieldset_legend {
   position: relative;
   max-width: 95%;
@@ -1395,6 +1399,7 @@ $border-width-px: $border-width * 1px;
 $job-colors: (
   // Command
   'rawcommand': #99afe9,
+  'bridgeassistant': #99afe9,
   'captain': #ecc478,
   'actingcaptain': #ecc478,
   // Service

@@ -853,7 +853,7 @@
 /datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
 	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion))
+	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion), override = TRUE)
 
 /datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
 	UnregisterSignal(living_holder, COMSIG_QDELETING)
@@ -989,14 +989,14 @@
 	color = "#800000"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet chocolate"
+	taste_description = "chocolate and cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/chocolatepudding
 	required_drink_type = /datum/reagent/consumable/chocolatepudding
-	name = "chocolate pudding"
-	desc = "Tasty."
+	name = "Chocolate Pudding"
+	desc = "Chocolate pudding in a clear cup with soft whipping cream and chocolate sprinkles."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "chocolatepudding"
 
@@ -1006,15 +1006,48 @@
 	color = "#FAFAD2"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet vanilla"
+	taste_description = "vanilla and happiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/vanillapudding
 	required_drink_type = /datum/reagent/consumable/vanillapudding
-	name = "vanilla pudding"
-	desc = "Tasty."
+	name = "Vanilla Pudding"
+	desc = "Vanilla pudding in a clear cup with a dollop of icing shaped like a baby bunny on top."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "vanillapudding"
+
+/datum/reagent/consumable/flan
+	name = "Flan"
+	description = "A carefully constructed caramel pudding."
+	color = "#ce6f30"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "caramel custard"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/flan
+	required_drink_type = /datum/reagent/consumable/flan
+	name = "Flan"
+	desc = "Tasty and caramelly."
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "flan"
+
+/datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	description = "Cherry pudding in a clear cup with icing and a cherry on top."
+	color = "#bd4138"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "Cherry with a cherry on top"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
+/datum/glass_style/drinking_glass/cherrypudding
+	required_drink_type = /datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	desc = "A sweet creamy treat"
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "cherrypudding"
 
 /datum/reagent/consumable/laughsyrup
 	name = "Laughin' Syrup"

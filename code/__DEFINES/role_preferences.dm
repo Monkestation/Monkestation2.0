@@ -51,6 +51,8 @@
 #define ROLE_MONSTERHUNTER "Monster Hunter"
 #define ROLE_TERATOMA "Teratoma"
 #define ROLE_JUNIOR_LONE_OPERATIVE "Junior Lone Operative"
+#define ROLE_BINGLE "Bingle"
+#define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -96,6 +98,7 @@
 #define ROLE_BAR_DRONE "Bardrone" // monkestation addition
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
+#define ROLE_FREE_MINER "Free Miner"
 #define ROLE_BEACH_BUM "Beach Bum"
 #define ROLE_BOT "Bot"
 #define ROLE_DERELICT_DRONE "Derelict Drone"
@@ -179,6 +182,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_OPFOR_CANDIDATE = 0,
 	ROLE_TERATOMA = 0,
 	ROLE_JUNIOR_LONE_OPERATIVE = 0,
+	ROLE_BINGLE = 0,
 //monkestation edit end
 
 	// Latejoin

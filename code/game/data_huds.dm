@@ -366,6 +366,23 @@ Security HUDs! Basic mode shows only the job.
 
 	set_hud_image_active(WANTED_HUD)
 
+//Utility functions
+
+/**
+ * Updates the visual security huds on all mobs in GLOB.human_list that match the name passed to it.
+ */
+/proc/update_matching_security_huds(perp_name)
+	for (var/mob/living/carbon/human/h as anything in GLOB.human_list)
+		if (h.get_face_name(h.get_id_name("")) == perp_name)
+			h.sec_hud_set_security_status()
+
+/**
+ * Updates the visual security huds on all mobs in GLOB.human_list
+ */
+/proc/update_all_security_huds()
+	for(var/mob/living/carbon/human/h as anything in GLOB.human_list)
+		h.sec_hud_set_security_status()
+
 /***********************************************
 Diagnostic HUDs!
 ************************************************/
@@ -564,13 +581,13 @@ Diagnostic HUDs!
 /atom/proc/get_cached_width()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX

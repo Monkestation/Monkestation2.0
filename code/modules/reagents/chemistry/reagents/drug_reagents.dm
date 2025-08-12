@@ -123,9 +123,8 @@
 		if(!istype(affected_mob.dna.species, /datum/species/human/krokodil_addict))
 			to_chat(affected_mob, span_userdanger("Your skin falls off easily!"))
 			var/mob/living/carbon/human/affected_human = affected_mob
-			affected_human.facial_hairstyle = "Shaved"
-			affected_human.hairstyle = "Bald"
-			affected_human.update_body_parts() // makes you loose hair as well
+			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
+			affected_human.set_hairstyle("Bald", update = FALSE)
 			affected_mob.set_species(/datum/species/human/krokodil_addict)
 			affected_mob.adjustBruteLoss(50 * REM, FALSE, required_bodytype = affected_bodytype) // holy shit your skin just FELL THE FUCK OFF
 	..()
@@ -208,6 +207,14 @@
 	affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	. = TRUE
+
+/datum/reagent/drug/methamphetamine/robo
+	name = "Positronic Excitement Salts"
+	description = "An experimental excitement chemical for synthetic life, this produces a similar effect to methamphetamine, but on robots."
+	metabolized_traits = list(TRAIT_ANALGESIA)
+	safe = TRUE
+	process_flags = SYNTHETIC
+	color = "#FAFAFA"
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"

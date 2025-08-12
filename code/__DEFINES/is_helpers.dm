@@ -32,7 +32,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/lava,
 	/turf/open/water,
 	/turf/open/openspace,
-	/turf/open/space/openspace
+	/turf/open/space/openspace,
+	/turf/open/gas,
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -98,6 +99,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isoozeling(A) (is_species(A, /datum/species/oozeling))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
+#define isoni(A) (is_species(A, /datum/species/oni)) //Monkestation Addition
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
@@ -199,7 +201,9 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
+#define isspider(A) (istype(A, /mob/living/basic/spider))
+
+#define isbingle(A) (istype(A, /mob/living/basic/bingle))
 
 
 //Misc mobs

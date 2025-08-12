@@ -21,6 +21,7 @@
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
+	storage_type = /datum/storage/bag
 
 /obj/item/storage/bag/Initialize(mapload)
 	. = ..()
@@ -611,7 +612,7 @@
 		user.balloon_alert(user, "no held crossbow!")
 		return
 	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
-	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
+	if(length(held_crossbow.magazine.stored_ammo) >= held_crossbow.magazine.max_ammo)
 		user.balloon_alert(user, "no more room!")
 		return
 	if(!do_after(user, 1.2 SECONDS, user, IGNORE_USER_LOC_CHANGE))

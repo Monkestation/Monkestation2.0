@@ -65,4 +65,7 @@
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(target_bodypart)
 
+	owner.log_message("used [name] on [key_name(cast_on)]", LOG_ATTACK)
+	cast_on.log_message("was hit by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)
+
 	return TRUE

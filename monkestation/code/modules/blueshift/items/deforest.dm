@@ -801,8 +801,8 @@
 	)
 	generate_items_inside(items_inside,src)
 
-// Big medical kit that can be worn like a bag, holds a LOT of medical items but works like a duffelbag
-/obj/item/storage/backpack/duffelbag/deforest_medkit
+// Big medical kit that can be worn like a bag, holds a LOT of medical items but slows you down slightly
+/obj/item/storage/backpack/deforest_medkit
 	name = "satchel medical kit"
 	desc = "A large orange satchel able to hold just about any piece of small medical equipment you could think of, you can even wear it on your back or belt!"
 	icon = 'monkestation/code/modules/blueshift/icons/deforest/storage.dmi'
@@ -815,8 +815,9 @@
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
+	slowdown = 0.25
 
-/obj/item/storage/backpack/duffelbag/deforest_medkit/Initialize(mapload)
+/obj/item/storage/backpack/deforest_medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 21
@@ -859,9 +860,9 @@
 		/obj/item/bodybag,
 	))
 
-/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked
+/obj/item/storage/backpack/deforest_medkit/stocked
 
-/obj/item/storage/backpack/duffelbag/deforest_medkit/stocked/PopulateContents()
+/obj/item/storage/backpack/deforest_medkit/stocked/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi = 1,
@@ -885,8 +886,8 @@
 	generate_items_inside(items_inside,src)
 
 
-// Big surgical kit that can be worn like a bag, holds 14 normal items (more than what a backpack can do!) but works like a duffelbag
-/obj/item/storage/backpack/duffelbag/deforest_surgical
+// Big surgical kit that can be worn like a bag, holds 14 normal items (more than what a backpack can do!) but slows you down slightly
+/obj/item/storage/backpack/deforest_surgical
 	name = "first responder surgical kit"
 	desc = "A large bag able to hold all the surgical tools and first response healing equipment you can think of, you can even wear it!"
 	icon = 'monkestation/code/modules/blueshift/icons/deforest/storage.dmi'
@@ -899,8 +900,9 @@
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
+	slowdown = 0.25
 
-/obj/item/storage/backpack/duffelbag/deforest_surgical/Initialize(mapload)
+/obj/item/storage/backpack/deforest_surgical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 14
 	atom_storage.max_total_storage = 14 * WEIGHT_CLASS_NORMAL
@@ -959,9 +961,9 @@
 		/obj/item/bodybag,
 	))
 
-/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked
+/obj/item/storage/backpack/deforest_surgical/stocked
 
-/obj/item/storage/backpack/duffelbag/deforest_surgical/stocked/PopulateContents()
+/obj/item/storage/backpack/deforest_surgical/stocked/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,

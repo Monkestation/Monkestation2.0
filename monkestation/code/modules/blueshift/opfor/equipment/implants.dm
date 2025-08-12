@@ -11,12 +11,6 @@
 	description = "A skillchip that, when installed, allows the user to recognise cyborg wire layouts and understand their functionality at a glance."
 
 //Implants
-/datum/opposing_force_equipment/implants/cyberlink_nt_high
-	name = "NT-High Cyberlink"
-	admin_note = "Needed to run any non illegal cyberware"
-	item_type = /obj/item/autosurgeon/organ/cyberlink_nt_high
-
-
 /datum/opposing_force_equipment/implants/xray
 	name = "Contraband X-Ray Eyes"
 	item_type = /obj/item/autosurgeon/syndicate/xray_eyes
@@ -88,11 +82,6 @@
 	item_type = /obj/item/implanter/explosive
 	description = "An implanter that will make you explode on death in a decent-sized explosion."
 */
-/datum/opposing_force_equipment/implants_illegal/cybersun
-	item_type = /obj/item/autosurgeon/syndicate/cyberlink_syndicate
-	name = "Cybersun Cybernetics Access System"
-	admin_note = "Needed to use any illegal cybernetics."
-	description = "Cybersun's patented cyberlink, equipped to run more nefarious and dangerous cyberware. Invisible to medical huds, and comes with a single use autosurgeon."
 
 /datum/opposing_force_equipment/implants_illegal/emp
 	name = "EMP Implant"

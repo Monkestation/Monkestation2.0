@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(gamemode)
 
 	/// What is our currently desired/selected roundstart event
 	var/datum/round_event_control/antagonist/solo/current_roundstart_event
-	var/list/last_round_events = list()
+	var/list/recent_storyteller_events = list()
 	/// Has a roundstart event been run
 	var/ran_roundstart = FALSE
 	/// Are we able to run roundstart events
@@ -303,6 +303,10 @@ SUBSYSTEM_DEF(gamemode)
 		if(!observers)
 			if(!ready_players && !isliving(candidate))
 				continue
+
+			if(isliving(candidate) && !HAS_MIND_TRAIT(candidate, TRAIT_JOINED_AS_CREW))
+				continue
+
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
 				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
@@ -416,6 +420,7 @@ SUBSYSTEM_DEF(gamemode)
 		return
 	if(halted_storyteller)
 		message_admins("WARNING: Didn't roll roundstart events (including antagonists) due to the storyteller being halted.")
+		log_storyteller("WARNING: Didn't roll roundstart events (including antagonists) due to the storyteller being halted.")
 		return
 	while(TRUE)
 		if(!current_storyteller.handle_tracks())
@@ -503,22 +508,14 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
 	event_frequency_multiplier = 1
 
-/client/proc/forceEvent()
-	set name = "Trigger Event"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceEvent(usr)
+ADMIN_VERB(force_event, R_FUN, FALSE, "Trigger Event", "Forces an event to occur.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceEvent(user.mob)
 
 /datum/admins/proc/forceEvent(mob/user)
 	SSgamemode.event_panel(user)
 
-/client/proc/forceGamemode()
-	set name = "Open Gamemode Panel"
-	set category = "Admin.Events"
-	if(!holder ||!check_rights(R_FUN))
-		return
-	holder.forceGamemode(usr)
+ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemode panel.", ADMIN_CATEGORY_EVENTS) // TG PORT
+	user.holder.forceGamemode(user.mob)
 
 /datum/admins/proc/forceGamemode(mob/user)
 	SSgamemode.admin_panel(user)
@@ -749,6 +746,24 @@ SUBSYSTEM_DEF(gamemode)
 					if(!isnull(value))
 						value = "[value]"
 					event.shared_occurence_type = value
+				if("repeated_mode_adjust")
+					event.repeated_mode_adjust = value
+				if("extra_spawned_events")
+					if(!islist(value) && !isnull(value))
+						stack_trace("extra_spawned_events must be a list or null (tried to set invalid for [event_path])")
+						continue
+					if(!istype(event, /datum/round_event_control/antagonist/solo))
+						stack_trace("tried to set extra_spawned_events for event that isn't a subtype of /datum/round_event_control/antagonist/solo ([event_path])")
+						continue
+					var/datum/round_event_control/antagonist/solo/antag_event = event
+					LAZYNULL(antag_event.extra_spawned_events)
+					var/list/extra_spawned_events = fill_with_ones(value)
+					for(var/key in extra_spawned_events)
+						var/extra_path = text2path(key)
+						if(!extra_path)
+							stack_trace("invalid event typepath '[key]' in extra_spawned_events for [event_path] in events.json")
+							continue
+						LAZYSET(antag_event.extra_spawned_events, extra_path, extra_spawned_events[key])
 
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
@@ -1043,7 +1058,7 @@ SUBSYSTEM_DEF(gamemode)
 		dat += "<td>[event.earliest_start / (1 MINUTES)] m.</td>" //Minimum time
 		dat += "<td>[assoc_spawn_weight[event] ? "Yes" : "No"]</td>" //Can happen?
 		dat += "<td>[event.return_failure_string(active_players)]</td>" //Why can't happen?
-		var/weight_string = "(new.[event.calculated_weight] /raw.[event.weight])"
+		var/weight_string = "(new.[event.calculated_weight] /raw.[event.get_weight()]/base.[event.weight])"
 		if(assoc_spawn_weight[event])
 			var/percent = round((event.calculated_weight / total_weight) * 100)
 			weight_string = "[percent]% - [weight_string]"
@@ -1074,6 +1089,7 @@ SUBSYSTEM_DEF(gamemode)
 						message_admins("[key_name_admin(usr)] has cancelled picking a Storyteller.")
 						return
 					message_admins("[key_name_admin(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
+					log_admin("[key_name(usr)] has chosen [new_storyteller_name] as the new Storyteller.")
 					var/new_storyteller_type = name_list[new_storyteller_name]
 					set_storyteller(new_storyteller_type)
 					current_storyteller.round_started = SSticker.HasRoundStarted()
@@ -1081,6 +1097,7 @@ SUBSYSTEM_DEF(gamemode)
 				if("halt_storyteller")
 					halted_storyteller = !halted_storyteller
 					message_admins("[key_name_admin(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")
+					log_admin("[key_name(usr)] has [halted_storyteller ? "HALTED" : "un-halted"] the Storyteller.")
 				if("vars")
 					var/track = href_list["track"]
 					switch(href_list["var"])
@@ -1110,6 +1127,7 @@ SUBSYSTEM_DEF(gamemode)
 							point_thresholds[track] = new_value
 				if("reload_config_vars")
 					message_admins("[key_name_admin(usr)] reloaded gamemode config vars.")
+					log_admin("[key_name(usr)] reloaded gamemode config vars.")
 					load_config_vars()
 				if("tab")
 					var/tab = href_list["tab"]
@@ -1126,6 +1144,7 @@ SUBSYSTEM_DEF(gamemode)
 							if(forced_next_events[track])
 								var/datum/round_event_control/event = forced_next_events[track]
 								message_admins("[key_name_admin(usr)] removed forced event [event.name] from track [track].")
+								log_admin("[key_name(usr)] removed forced event [event.name] from track [track].")
 								forced_next_events -= track
 						if("set_pts")
 							var/set_pts = input(usr, "New point amount ([point_thresholds[track]]+ invokes event):", "Set points for [track]") as num|null
@@ -1133,10 +1152,10 @@ SUBSYSTEM_DEF(gamemode)
 								return
 							event_track_points[track] = set_pts
 							message_admins("[key_name_admin(usr)] set points of [track] track to [set_pts].")
-							log_admin_private("[key_name(usr)] set points of [track] track to [set_pts].")
+							log_admin("[key_name(usr)] set points of [track] track to [set_pts].")
 						if("next_event")
 							message_admins("[key_name_admin(usr)] invoked next event for [track] track.")
-							log_admin_private("[key_name(usr)] invoked next event for [track] track.")
+							log_admin("[key_name(usr)] invoked next event for [track] track.")
 							event_track_points[track] = point_thresholds[track]
 							if(current_storyteller)
 								current_storyteller.handle_tracks()
@@ -1161,28 +1180,28 @@ SUBSYSTEM_DEF(gamemode)
 
 
 /datum/controller/subsystem/gamemode/proc/store_roundend_data()
-	var/congealed_string = ""
-	for(var/event_name as anything in triggered_round_events)
-		congealed_string += event_name
-		congealed_string += ","
-	text2file(congealed_string, "data/last_round_events.txt")
+	var/max_history = length(CONFIG_GET(number_list/repeated_mode_adjust))
+	recent_storyteller_events.Insert(1, list(triggered_round_events))
+	if(length(recent_storyteller_events) > max_history)
+		recent_storyteller_events.Cut(max_history + 1)
+	rustg_file_write(json_encode(recent_storyteller_events, JSON_PRETTY_PRINT), "data/recent_storyteller_events.json") // pretty-print just to make manually looking at it easier
 
 /datum/controller/subsystem/gamemode/proc/load_roundstart_data()
-	var/massive_string = trim(file2text("data/last_round_events.txt"))
-	if(fexists("data/last_round_events.txt"))
-		fdel("data/last_round_events.txt")
-	if(!massive_string)
+	if(!fexists("data/recent_storyteller_events.json"))
 		return
-	last_round_events = splittext(massive_string, ",")
-
-	if(!length(last_round_events))
-		return
-	for(var/event_name as anything in last_round_events)
-		for(var/datum/round_event_control/listed as anything in control)
-			if(listed.name != event_name)
-				continue
-			listed.occurrences++
-			listed.occurrences++
+	var/recent_json = rustg_file_read("data/recent_storyteller_events.json")
+	if(!recent_json || !rustg_json_is_valid(recent_json))
+		rustg_file_write("\[\]", "data/recent_storyteller_events.json")
+		CRASH("recent_storyteller_events.json was invalid: [recent_json]")
+	var/list/recent = json_decode(recent_json)
+	recent_storyteller_events.Cut()
+	for(var/round = 1 to length(recent))
+		var/list/entries = list()
+		for(var/event in recent[round])
+			var/event_path = text2path(event)
+			if(event_path)
+				entries += event_path
+		recent_storyteller_events += list(entries)
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE

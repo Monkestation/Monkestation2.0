@@ -121,31 +121,26 @@
 	mid_length = 6.7 SECONDS
 	volume = 100
 	extra_range = 25
-
-/client/proc/spawn_sunbeam()
-	set category = "Admin.Fun"
-	set name = "Spawn Sunbeam"
-	set desc = "Spawns an ICARUS sunbeam at your location and sends it towards a target."
-
-	var/mob/living/target_mob = tgui_input_list(usr, "Select a mob", "Mob", GLOB.mob_living_list)
+ADMIN_VERB(spawn_sunbeam, R_FUN, FALSE, "Spawn Sunbeam", "Spawns an ICARUS sunbeam at your location and sends it towards a target.", ADMIN_CATEGORY_FUN)
+	var/mob/living/target_mob = tgui_input_list(user, "Select a mob", "Mob", GLOB.mob_living_list)
 
 	if(!target_mob)
 		return
 
-	var/edit_ranges = tgui_alert(usr, "Change beam specifications?", "Beam Specifications", list("Yes", "No"))
+	var/edit_ranges = tgui_alert(user, "Change beam specifications?", "Beam Specifications", list("Yes", "No"))
 
 	if(edit_ranges == "Yes")
-		var/edit_range_fire = tgui_input_number(usr, "Fire range in tiles", "Fire Range", SUNBEAM_OBLITERATION_RANGE_FIRE, 20, 0)
-		var/edit_range_flatten = tgui_input_number(usr, "Flatten range in tiles", "Flatten Range", SUNBEAM_OBLITERATION_RANGE_FLATTEN, 20, 0)
-		var/edit_cooldown = tgui_input_number(usr, "Cooldown in seconds", "Cooldown", SUNBEAM_OBLITERATION_COOLDOWN, 20, 0)
-		var/edit_movement_cooldown = tgui_input_number(usr, "Movement cooldown in seconds", "Movement Cooldown", SUNBEAM_MOVEMENT_COOLDOWN, 20, 0)
-		var/edit_scale_x = tgui_input_number(usr, "Scale X", "Scale X", SUNBEAM_DEFAULT_SCALE_X, 20, 0)
-		var/edit_scale_y = tgui_input_number(usr, "Scale Y", "Scale Y", SUNBEAM_DEFAULT_SCALE_Y, 20, 0)
+		var/edit_range_fire = tgui_input_number(user, "Fire range in tiles", "Fire Range", SUNBEAM_OBLITERATION_RANGE_FIRE, 20, 0)
+		var/edit_range_flatten = tgui_input_number(user, "Flatten range in tiles", "Flatten Range", SUNBEAM_OBLITERATION_RANGE_FLATTEN, 20, 0)
+		var/edit_cooldown = tgui_input_number(user, "Cooldown in seconds", "Cooldown", SUNBEAM_OBLITERATION_COOLDOWN, 20, 0)
+		var/edit_movement_cooldown = tgui_input_number(user, "Movement cooldown in seconds", "Movement Cooldown", SUNBEAM_MOVEMENT_COOLDOWN, 20, 0)
+		var/edit_scale_x = tgui_input_number(user, "Scale X", "Scale X", SUNBEAM_DEFAULT_SCALE_X, 20, 0)
+		var/edit_scale_y = tgui_input_number(user, "Scale Y", "Scale Y", SUNBEAM_DEFAULT_SCALE_Y, 20, 0)
 
-		new /obj/effect/sunbeam(usr, target_mob, edit_movement_cooldown, edit_cooldown, edit_range_fire, edit_range_flatten, edit_scale_x, edit_scale_y)
+		new /obj/effect/sunbeam(user.mob, target_mob, edit_movement_cooldown, edit_cooldown, edit_range_fire, edit_range_flatten, edit_scale_x, edit_scale_y)
 		return
 
-	new /obj/effect/sunbeam(usr, target_mob)
+	new /obj/effect/sunbeam(user.mob, target_mob)
 
 
 /datum/round_event_control/icarus_sunbeam
@@ -169,6 +164,14 @@
 	var/turf/end_turf = get_edge_target_turf(get_safe_random_station_turf_equal_weight(), turn(startside, 180))
 	var/turf/start_turf = spaceDebrisStartLoc(startside, end_turf.z)
 	new /obj/effect/sunbeam(start_turf, end_turf)
+	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	SSshuttle.admin_emergency_no_recall = TRUE
+	if(SSshuttle.emergency?.mode == SHUTTLE_DISABLED || EMERGENCY_PAST_POINT_OF_NO_RETURN)
+		return
+	if(EMERGENCY_IDLE_OR_RECALLED)
+		SSshuttle.emergency.request(
+			red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_DELTA)
+		)
 
 #undef SUNBEAM_OBLITERATION_RANGE_FIRE
 #undef SUNBEAM_OBLITERATION_RANGE_FLATTEN

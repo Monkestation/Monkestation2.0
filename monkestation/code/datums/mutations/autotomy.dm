@@ -1,7 +1,7 @@
-/datum/mutation/human/self_amputation
+/datum/mutation/self_amputation
 	power_coeff = 1
 
-/datum/mutation/human/self_amputation/modify()
+/datum/mutation/self_amputation/setup()
 	. = ..()
 	if(!.)
 		return
@@ -12,7 +12,7 @@
 	if(GET_MUTATION_POWER(src) > 1)
 		ADD_TRAIT(owner, TRAIT_LIMBATTACHMENT, GENETIC_MUTATION)
 
-/datum/mutation/human/self_amputation/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/self_amputation/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return

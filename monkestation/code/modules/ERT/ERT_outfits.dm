@@ -47,8 +47,6 @@
 
 /datum/outfit/centcom/ert/generic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	var/obj/item/organ/internal/cyberimp/cyberlink/nt_high/cyberlink = new()
-	cyberlink.Insert(H, drop_if_replaced = FALSE)
 	var/obj/item/organ/internal/cyberimp/chest/nutriment/plus/nutriment_pump = new()
 	nutriment_pump.Insert(H, drop_if_replaced = FALSE)
 
@@ -583,9 +581,7 @@
 	if(visualsOnly)
 		return
 
-	H.dna.add_mutation(/datum/mutation/human/clumsy)
-	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
-		M.mutadone_proof = TRUE
+	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
 	fan.show_to(H)

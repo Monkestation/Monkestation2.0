@@ -38,9 +38,12 @@
 	var/skin_tone = "caucasian1" //Skin tone
 
 	var/lip_style = null //no lipstick by default- arguably misleading, as it could be used for general makeup
-	var/lip_color = "white"
+	var/lip_color = COLOR_WHITE
 
 	var/age = 30 //Player's age
+
+	/// Which body type to use
+	var/physique = MALE
 
 	//consider updating /mob/living/carbon/human/copy_clothing_prefs() if adding more of these
 	var/underwear = "Nude" //Which underwear the player wants
@@ -75,14 +78,16 @@
 	var/account_id
 
 	var/hardcore_survival_score = 0
-	/// Which body type to use
-	var/physique = MALE
 
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0
 
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
+
+	/// If persistent scars are enabled for this human or not.
+	/// Normally set by `/datum/preference/toggle/persistent_scars/apply_to_human`.
+	var/persistent_scars
 
 	/// Base height of the mob, modified by stuff like dwarfism or species
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM

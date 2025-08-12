@@ -25,7 +25,6 @@ export const PageButton = <P extends unknown>(props: {
       selected={pageIsActive}
       onClick={() => {
         props.setPage(props.page);
-        act('update_body');
       }}
     >
       {props.children}

@@ -837,3 +837,14 @@
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/item/storage/backpack/cursed
+	name = "Dirty Duffelbag"
+	desc = "A cursed backpack"
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/item/storage/backpack/cursed/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, "slasher")

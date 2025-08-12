@@ -140,6 +140,12 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian)
 	if(!length(GLOB.avian_ears_list))
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list)
+	if(!GLOB.oni_tail_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list)
+	if(!GLOB.oni_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_wings_list)
+	if(!GLOB.oni_horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list)
 //Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
@@ -182,6 +188,9 @@
 		"arm_wings" = pick(GLOB.arm_wings_list),
 		"ears_avian" = pick(GLOB.avian_ears_list),
 		"tail_avian" = pick(GLOB.tails_list_avian),
+		"oni_tail" = pick(GLOB.oni_tail_list), //Monkestation Addition
+		"oni_wings" = pick(GLOB.oni_wings_list), //Monkestation Addition
+		"oni_horns" = pick(GLOB.oni_horns_list), //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)
@@ -471,8 +480,10 @@ GLOBAL_LIST_EMPTY(species_list)
 // Automatically gives the class deadsay to the whole message (message + source)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
 	message = span_deadsay("[source][span_linkify(message)]")
+#ifndef DISABLE_DEMOS
 	if(!admin_only)
 		SSdemo.write_chat_global(message)
+#endif
 
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT

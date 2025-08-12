@@ -152,7 +152,7 @@
 					else
 						render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pupils narrow.</span>\n"//they're okay :D
 
-					if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray))
+					if(M.dna && M.dna.check_mutation(/datum/mutation/xray))
 						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] pupils give an eerie glow!</span>\n"//mob has X-ray vision
 
 				//display our packaged information in an examine block for easy reading

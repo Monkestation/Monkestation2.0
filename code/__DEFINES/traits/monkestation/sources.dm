@@ -46,3 +46,5 @@
 #define TRAIT_SLASHER "slasher_trait"
 /// Source trait for zombies
 #define ZOMBIE_TRAIT "zombie_trait"
+/// Source trait for the Bingle
+#define TRAIT_BINGLE "bingle_trait"

@@ -468,3 +468,51 @@
   - image: added sprite for the jetpack upgrade module
   - refactor: hardsuits use the attached clothing component
   - code_imp: splits up departmental hardsuits into their own files
+2025-06-25:
+  ThePooba:
+  - rscadd: 4 new donator only summer jobs and also a hotdog suit
+2025-06-26:
+  Absolucy:
+  - bugfix: Pyro slimes (and slimes in general) no longer die in plasma fires.
+  Absolucy, Ghommie:
+  - bugfix: Meat and other bloody things will not spread blood forever.
+2025-06-27:
+  Absolucy:
+  - bugfix: Fixed the UIs for the xenobio market and slime pen controller being cut
+      off at the bottom.
+  F-e-r-n:
+  - bugfix: 'Gave bulldog the damage mod as promised
+
+      :cl:'
+  Xander3359:
+  - rscadd: Cargo teleporter can hold fulton charges. Load it up with a fulton, and
+      right click to use it
+  - qol: Quick equipping something while you have an open storage will prioritize
+      that storage
+  - balance: Explorer EVA box can hold medium sized items
+  - bugfix: Premium Tactical Medkit can hold more of the items it spawns with
+  - rscadd: Combat hyposprays can draw reagents with right click
+2025-06-29:
+  Absolucy:
+  - map: Added mechcomp vendors to engineering and science on Pubby Station.
+  Shoddd:
+  - bugfix: auspex now properly wounds
+  - bugfix: auspex description now accurate
+  - code_imp: frenzy now uses strong grab trait rather than martial arts
+2025-06-30:
+  Absolucy:
+  - bugfix: Fixed colonies being enabled causing space explorers to accidentally trespass
+      upon the domain of gods.
+  EssentialTomato:
+  - bugfix: Fixed being able to spam scanners on ore vents for more points.
+  Xander3359:
+  - bugfix: fixed a disposal pipe in pubby medbay
+  konovic:
+  - bugfix: Fixed gorilla suit and dinojammies disappearing when toggling the hood
+  notghosti:
+  - rscadd: Unmarked takbok has received a recolored sprite
+  - rscadd: Takbok kit comes with hollowpoint rounds.
+  - balance: Unmarked takbok unwielded recoil has been nerfed (1.6 -> 2) Time to fire
+      reduced (0.8 -> 0.6)  and damage multiplier 1 -> 1.3)
+  - spellcheck: fixed a few typos in relation to the unmarked takbok
+  - rscdel: Disables the unique AI station trait

@@ -266,9 +266,10 @@
 
 /datum/action/item_action/chameleon/change/process()
 	if(world.time > emp_timer)
-		STOP_PROCESSING(SSprocessing, src)
-		return
-	random_look(owner)
+		return PROCESS_KILL
+	var/atom/atom_target = target
+	if(atom_target.loc)
+		random_look(owner)
 
 /datum/action/item_action/chameleon/change/proc/apply_job_data(datum/job/job_datum)
 	return
@@ -570,6 +571,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	action_slots = ALL
+	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS, TRAIT_FAST_CUFFING)
 
 /datum/armor/gloves_chameleon
 	melee = 10
@@ -579,8 +581,6 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/gloves/chameleon
-	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS, TRAIT_FAST_CUFFING)
 
 /obj/item/clothing/gloves/chameleon/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour != TOOL_MULTITOOL)

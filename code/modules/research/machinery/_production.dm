@@ -115,8 +115,8 @@
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
@@ -129,10 +129,15 @@
 		ui.open()
 
 /obj/machinery/rnd/production/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data
+	if(isnull(materials.mat_container))
+		data = list()
+	else
+		data = materials.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	var/max_multiplier
@@ -209,7 +214,7 @@
 		var/total_storage = 0
 
 		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 75000
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 

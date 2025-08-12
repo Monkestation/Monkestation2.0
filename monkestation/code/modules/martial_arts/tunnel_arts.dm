@@ -192,7 +192,7 @@
 	if(!(khan_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
 	var/datum/dna/dna = khan_user.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(dna?.check_mutation(/datum/mutation/hulk)) //NO HULK
 		return FALSE
 	if(!isturf(khan_user.loc)) //NO MOTHERFLIPPIN MECHS!
 		return FALSE
