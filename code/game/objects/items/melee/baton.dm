@@ -87,6 +87,10 @@
  * TL;DR: [/baton_attack()] -> [/finalize_baton_attack()] -> [/baton_effect()] -> [/set_batoned()]
  */
 /obj/item/melee/baton/attack(mob/living/target, mob/living/user, params)
+	if(isganymede(user))
+		user.visible_message(span_danger("[user] accidentally crushes [src] in their hand!"))
+		qdel(src)
+		return
 	add_fingerprint(user)
 	var/list/modifiers = params2list(params)
 	switch(baton_attack(target, user, modifiers))

@@ -19,8 +19,10 @@
 	var/antimagic_flags = NONE
 	///if true, immune atoms moving ends the timestop instead of duration.
 	var/channelled = FALSE
-	/// hides time icon effect and mutes sound
+	///hides time icon effect and mutes sound
 	var/hidden = FALSE
+	///Sound to use when destroying and creating timestop
+	var/start_sound = 'sound/magic/timeparadox2.ogg' //Monkestation Edition
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE, silent = FALSE) //Immune atoms assoc list atom = TRUE
 	. = ..()
