@@ -253,6 +253,16 @@
 	result = /obj/item/food/snowcones/rainbow
 	category = CAT_ICE
 
+/datum/crafting_recipe/food/pineapple_sc
+	name = "Pineapple snowcone"
+	reqs = list(
+		/obj/item/reagent_containers/food/drinks/sillycup = 1,
+		/datum/reagent/consumable/ice = 15,
+		/datum/reagent/consumable/pineapplejuice = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/snowcones/pineapple
+	category = CAT_ICE
+
 //////////////////////////POPSICLES///////////////////////
 
 // This section includes any frozen treat served on a stick.

@@ -293,6 +293,21 @@
 	foodtypes = FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/reagent_containers/food/snacks/pineappleslice/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/reagent_containers/food/snacks/pineappleslice/grilled, rand(10 SECONDS, 15 SECONDS), TRUE)
+
+/obj/item/reagent_containers/food/snacks/pineappleslice/grilled
+	name = "grilled pineapple slice"
+	desc = "A grilled piece of juicy pineapple. Complete with tantilizing grill marks."
+	icon_state = "grilled_pineapple"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
+	tastes = list("pineapple" = 1)
+	foodtype = FRUIT | PINEAPPLE
+
+/obj/item/reagent_containers/food/snacks/pineappleslice/grilled/MakeGrillable() //so it burns after it grills
+	AddComponent(/datum/component/grillable, /obj/item/reagent_containers/food/snacks/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
+
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
