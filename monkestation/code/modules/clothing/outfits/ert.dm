@@ -33,7 +33,7 @@
 	if(visualsOnly)
 		return
 	if(H.dna)
-		H.dna.add_mutation(/datum/mutation/human/hulk/revenger)
+		H.dna.add_mutation(/datum/mutation/hulk)
 		H.update_body_parts()
 	var/datum/martial_art/wrestling/wrestling = new
 	wrestling.teach(H)
