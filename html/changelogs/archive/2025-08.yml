@@ -194,6 +194,13 @@
   - qol: Slime vac, Nozzle, and recycler now display their biomass on examine
   - balance: TGMC armor vest protects from space temp
 2025-08-08:
+  Absolucy:
+  - image: Regenerative extracts now have a unique sprite for their screen alert,
+      instead of reusing the legion core alert. Sprite by Salted Zen.
+  EssentialTomato:
+  - rscadd: You can now pick up and throw microwaves.
+  Killermankey:
+  - rscadd: Robert McPlushie
   SirNightKnight:
   - rscadd: added the missile targeter. it calls down an explosive missile after a
       10 second announced warning.
@@ -219,3 +226,43 @@
   - rscadd: Slasher now can summon a meat spike for spiking his victims on really
       cool and original idea 10/10
   - rscadd: Gets miore armour with more souls
+2025-08-09:
+  Absolucy:
+  - balance: The Analgesia quirk is now -4 points instead of -2.
+  - qol: Cryoing now saves persistent scars.
+  - bugfix: Made some more minor server-side performance improvements.
+  - bugfix: Searching in the alt-click loot panel now properly updates as yout ype.
+  - bugfix: (Melbert) Fixed drunkness mood printout.
+  - bugfix: (SmArtKar) Being at low sanity will actually give your hallucinations
+      as intended.
+  - balance: (Melbert) Mood threshold to become "crazy" changed from -7 (one moderately
+      bad event) to -15 (two moderately bad events).
+  - bugfix: Scissors now properly give haircuts again.
+  Loiosh42:
+  - balance: Adds a single Wylom anti-mech rifle to the heavy armaments locker
+  - map: Armories across all maps now have more consistent equipment
+  ThePooba:
+  - bugfix: diagnostics huds now show up in loadout
+2025-08-10:
+  Absolucy:
+  - bugfix: Bloodsuckers now properly exit Frenzy if given enough blood while dead.
+  - bugfix: Fixed mice with Nocturnal Regeneration spamming runtime errors.
+  - bugfix: Nocturnal Regeneration now heals the proper amount.
+  Absolucy, mc-oofert:
+  - code_imp: Movement Subsystem no longer is a background subsystem. This means that
+      you should no longer get stuck after slipping on oil during instances of high
+      usage.
+  BanementI:
+  - rscadd: Adds 150 brand new vox fem words. You can now refer to the crew by their
+      species, with more technical jargon and a fittingly colourful vocabulary.
+  Xander3359:
+  - rscadd: (SmArtKar) You can now attach anesthetic tanks and breathing masks to
+      surgical tables.
+  - bugfix: (Melbert) You can operate through surgical masks again
+2025-08-11:
+  EssentialTomato:
+  - bugfix: Fixed chameleon hats not changing hairstyles and some other hairstyle
+      related stuff.
+  Wisemonster:
+  - bugfix: The automated announcement system once more announces new arrivals to
+      the station.

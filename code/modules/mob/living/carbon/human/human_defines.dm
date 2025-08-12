@@ -85,6 +85,10 @@
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
 
+	/// If persistent scars are enabled for this human or not.
+	/// Normally set by `/datum/preference/toggle/persistent_scars/apply_to_human`.
+	var/persistent_scars
+
 	/// Base height of the mob, modified by stuff like dwarfism or species
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
 	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()
