@@ -417,7 +417,7 @@
 
 /obj/item/clothing/under/costume/kris
 	name = "Vessel's Armor"
-	desc = "* It appears to be the replica of the armor a legendary vessel wore while saving the world.."
+	desc = "* It appears to be the replica of the armor a legendary vessel wore while saving the world."
 	icon_state = "kris_armor"
 	inhand_icon_state = null
 	can_adjust = FALSE
