@@ -452,7 +452,8 @@
 		playsound(victim.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
 		carbon_brain.forceMove(turf)
 		victim.visible_message(span_danger("[victim] turns to ash from the electrical shock!"))
-		victim.dust()
+		victim.death()
+		victim.become_husk(BURN)
 		drained_hp = PN.netexcess * 0.1
 
 	log_combat(source, victim, "electrocuted")
