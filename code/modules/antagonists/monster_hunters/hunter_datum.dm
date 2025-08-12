@@ -47,8 +47,6 @@
 	current_mob.add_traits(granted_traits, HUNTER_TRAIT)
 	current_mob.update_sight()
 	current_mob.faction |= FACTION_RABBITS
-	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(setup_bnuuy_images))
-	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(update_bnnuy_visibility))
 
 /datum/antagonist/monsterhunter/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -56,7 +54,6 @@
 	current_mob.remove_traits(granted_traits, HUNTER_TRAIT)
 	current_mob.faction -= FACTION_RABBITS
 	current_mob.update_sight()
-	UnregisterSignal(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_MOVED))
 
 /datum/antagonist/monsterhunter/on_gain()
 	owner.special_role = ROLE_MONSTERHUNTER
@@ -106,20 +103,6 @@
 		QDEL_NULL(wonderland_template)
 		message_admins("Failed to load Wonderland z-level!")
 		CRASH("Failed to load Wonderland z-level!")
-
-/datum/antagonist/monsterhunter/proc/setup_bnuuy_images()
-	SIGNAL_HANDLER
-	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
-		if(QDELETED(bnnuy))
-			continue
-		owner.current?.client?.images |= bnnuy.hunter_image
-
-/datum/antagonist/monsterhunter/proc/update_bnnuy_visibility(mob/living/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
-		if(QDELETED(bnnuy))
-			continue
-		bnnuy.update_mouse_opacity(source)
 
 /datum/antagonist/monsterhunter/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()

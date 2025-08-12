@@ -13,6 +13,8 @@
 	var/datum/dimension_theme/theme
 	/// Effect displaying on the anomaly to represent the theme.
 	var/mutable_appearance/theme_icon
+	/// If set, it will always use this theme path instead of a random one.
+	var/forced_theme_path
 
 /obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
@@ -46,7 +48,7 @@
  */
 /obj/effect/anomaly/dimensional/proc/prepare_area(new_theme_path)
 	if (!new_theme_path)
-		new_theme_path = pick(subtypesof(/datum/dimension_theme))
+		new_theme_path = forced_theme_path || pick(subtypesof(/datum/dimension_theme))
 	theme = new new_theme_path()
 	apply_theme_icon()
 

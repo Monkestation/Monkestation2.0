@@ -75,10 +75,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	immortal = TRUE
 	drops_core = FALSE
 	relocations_left = -1
-
-/obj/effect/anomaly/dimensional/wonderland/Initialize(mapload, new_lifespan, drops_core)
-	INVOKE_ASYNC(src, PROC_REF(prepare_area), /datum/dimension_theme/wonderland)
-	return ..()
+	forced_theme_path = /datum/dimension_theme/wonderland
 
 /obj/effect/anomaly/dimensional/wonderland/relocate()
 	var/datum/anomaly_placer/placer = new()
@@ -86,6 +83,11 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	var/turf/new_turf = placer.findValidTurf(new_area)
 	src.forceMove(new_turf)
 	prepare_area(new_theme_path = /datum/dimension_theme/wonderland)
+
+/obj/effect/anomaly/dimensional/wonderland/rift
+	lifespan = 90 SECONDS
+	immortal = FALSE
+	relocations_left = 0
 
 /obj/structure/wonderland_rift
 	name = "Wonderland Door"
