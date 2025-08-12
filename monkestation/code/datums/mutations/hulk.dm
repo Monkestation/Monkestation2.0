@@ -39,9 +39,3 @@
 	armorlist[BULLET] -= (10 * GET_MUTATION_POWER(src))
 
 	owner.set_armor(owner_armor.generate_new_with_specific(armorlist))
-
-/datum/mutation/human/hulk/revenger
-	mutadone_proof = TRUE
-
-/datum/mutation/human/hulk/revenger/on_life()
-	return
