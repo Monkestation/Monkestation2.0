@@ -67,9 +67,6 @@
 		user.buckled.unbuckle_mob(src, force=TRUE)
 
 /datum/action/cooldown/bloodsucker/fortitude/DeactivatePower()
-	. = ..()
-	if(!.)
-		return
 	if(ishuman(owner) && (IS_BLOODSUCKER(owner) || IS_VASSAL(owner)))
 		var/mob/living/carbon/human/bloodsucker_user = owner
 		bloodsucker_user.physiology.brute_mod /= fortitude_resist

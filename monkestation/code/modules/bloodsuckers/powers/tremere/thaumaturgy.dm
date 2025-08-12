@@ -27,7 +27,6 @@
 	// custom cooldown handling based on charges
 	power_flags = BP_AM_STATIC_COOLDOWN
 	bloodcost = 5
-	constant_bloodcost = 0
 	// 5 seconds per charge
 	cooldown_time = 10 SECONDS
 	prefire_message = "Right click where you wish to fire."
@@ -153,7 +152,7 @@
 	. = ..()
 	if(next_use_time - world.time <= 0)
 		button.maptext = MAPTEXT_TINY_UNICODE(span_center("[charges]/[get_max_charges()]"))
-		button.maptext_x = -10
+		button.maptext_x = -6
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/FireSecondaryTargetedPower(atom/target, params)
 	if(shot_cooldown > world.time)
@@ -243,7 +242,7 @@
 			return ..()
 	if(istype(target, /obj/machinery/door) && bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
 		var/obj/machinery/door/hit_airlock = target
-		hit_airlock.open(2)
+		hit_airlock.open(BYPASS_DOOR_CHECKS)
 		qdel(src)
 		return ..()
 	if(ismob(target))

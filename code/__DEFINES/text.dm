@@ -25,9 +25,6 @@
 /// Small size. (ie: context subtooltips, spell delays) - Size options: 12pt 24pt.
 #define MAPTEXT_TINY_UNICODE(text) {"<span style='font-family: \"TinyUnicode\"; font-size: 12pt; line-height: 0.75; -dm-text-outline: 1px black'>[##text]</span>"}
 
-/// Small size. (ie: context subtooltips, spell delays) - Size options: 12pt 24pt.
-#define MAPTEXT_TINY_UNICODE(text) {"<span style='font-family: \"TinyUnicode\"; font-size: 12pt; line-height: 0.75; -dm-text-outline: 1px black'>[##text]</span>"}
-
 /// Smallest size. (ie: whisper runechat) - Size options: 6pt 12pt 18pt.
 #define MAPTEXT_SPESSFONT(text) {"<span style='font-family: \"Spess Font\"; font-size: 6pt; line-height: 1.4; -dm-text-outline: 1px black'>[##text]</span>"}
 

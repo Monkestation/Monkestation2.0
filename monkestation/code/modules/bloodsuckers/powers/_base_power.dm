@@ -69,8 +69,11 @@
 		to_chat(owner, span_userdanger("Sol burdens your body, [name] now costs more blood to upkeep!"), type = MESSAGE_TYPE_WARNING)
 
 /// Gets the current cost of the ability, accounting for `sol_multiplier` during Sol.
-/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE)
-	. = constant ? constant_bloodcost : bloodcost
+/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE, cost_override = null)
+	if(isnull(cost_override))
+		. = constant ? constant_bloodcost : bloodcost
+	else
+		. = cost_override
 	if(bloodsuckerdatum_power && sol_multiplier && SSsol.sunlight_active)
 		. *= sol_multiplier
 
@@ -202,7 +205,7 @@
 
 /datum/action/cooldown/bloodsucker/proc/pay_cost(cost_override = 0)
 	// Non-bloodsuckers will pay in other ways.
-	var/bloodcost = cost_override ? cost_override : get_blood_cost()
+	var/bloodcost = get_blood_cost(cost_override)
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))

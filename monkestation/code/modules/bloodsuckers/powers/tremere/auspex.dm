@@ -19,7 +19,8 @@
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = TREMERE_CAN_BUY
 	bloodcost = 10
-	constant_bloodcost = 1
+	sol_multiplier = 4
+	constant_bloodcost = 2
 	cooldown_time = 12 SECONDS
 	target_range = 2
 	power_activates_immediately = FALSE
