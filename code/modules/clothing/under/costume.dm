@@ -424,6 +424,6 @@
 
 /obj/item/clothing/under/costume/dio
 	name = "flamboyant turtleneck"
-	desc = "Looking at this REALLY makes you want to reject your humanity.."
+	desc = "Looking at this REALLY makes you want to reject your humanity."
 	icon_state = "dio_turtleneck"
 	can_adjust = FALSE
