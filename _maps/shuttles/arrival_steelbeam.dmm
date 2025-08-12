@@ -12,7 +12,7 @@
 "d" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/docking_port/mobile/arrivals{
-	dir = 2
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/arrival)

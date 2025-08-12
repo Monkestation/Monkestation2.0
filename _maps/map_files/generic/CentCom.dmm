@@ -22883,7 +22883,7 @@
 	dir = 8;
 	id = "XCCQMLoad"
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "gPN" = (
 /obj/effect/turf_decal/weather/dirt{
