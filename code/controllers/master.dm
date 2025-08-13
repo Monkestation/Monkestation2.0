@@ -468,7 +468,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	else
 		SStitle.remove_init_text(subsystem.type)
 
-	log_world("[message_prefix] [seconds] second\s!")
+	if(message_prefix)
+		log_world("[message_prefix] [seconds] second\s!")
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel
