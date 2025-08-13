@@ -2179,6 +2179,7 @@
 
 /datum/glass_style/has_foodtype/soup/saimin
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/saimin
+	icon = 'icons/obj/food/martian.dmi'
 	name = "saimin"
 	icon_state = "saimin"
 	drink_type = VEGETABLES | GRAIN
