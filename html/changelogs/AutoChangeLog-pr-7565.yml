@@ -1,0 +1,5 @@
+author: "BingusSS13"
+delete-after: True
+changes:
+  - qol: "Service borgs can now hold beakers, bottles, and coffeepots."
+  - bugfix: "Service borgs are now capable of cooking eggs on griddles, let's get cracking!"
