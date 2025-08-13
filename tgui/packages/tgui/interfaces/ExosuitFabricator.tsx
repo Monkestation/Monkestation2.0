@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { FabricatorData, MaterialMap } from './Fabrication/Types';
+import { FabricatorData, MaterialMap, Design } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Tooltip } from '../components';
@@ -18,21 +18,12 @@ type ExosuitFabricatorData = FabricatorData & {
   silicon_user: BooleanLike;
 };
 
-export type ExosuitDesign = {
-  name: string;
-  desc: string;
-  cost: MaterialMap;
-  id: string;
-  categories: string[];
-  icon: string;
-  constructionTime: number;
-  maxmult: number;
-  craftable: BooleanLike; // this is the odd one out. other than that the others are the same as normal
+type ExosuitDesign = Design & {
+  craftable: BooleanLike;
 };
 
 export const ExosuitFabricator = (props) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
-
   const availableMaterials: MaterialMap = {};
 
   for (const material of data.materials) {
@@ -50,7 +41,13 @@ export const ExosuitFabricator = (props) => {
                   designs={Object.values(data.designs)}
                   availableMaterials={availableMaterials}
                   buildRecipeElement={(design, availableMaterials) => (
-                    <Recipe available={availableMaterials} design={design} />
+                    <Recipe
+                      available={availableMaterials}
+                      design={{
+                        ...design,
+                        craftable: (design as any).craftable ?? true, // fallback if missing
+                      }}
+                    />
                   )}
                   categoryButtons={(category) => (
                     <Button
