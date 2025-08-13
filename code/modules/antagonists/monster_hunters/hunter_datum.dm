@@ -72,9 +72,7 @@
 		card.moveToNullspace()
 		grant_drop_ability(card)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
-	for(var/i in 1 to 5)
-		var/turf/rabbit_hole = get_safe_random_station_turf_equal_weight()
-		rabbits += new /obj/effect/bnnuy(rabbit_hole, src)
+	spawn_rifts()
 	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
 	gun_holder.drop_gun = TRUE
 	var/datum/action/cooldown/spell/track_monster/track = new
@@ -90,6 +88,43 @@
 	to_chat(owner.current, span_userdanger("Your hunt has ended: You enter retirement once again, and are no longer a Monster Hunter."))
 	owner.special_role = null
 	return ..()
+
+/datum/antagonist/monsterhunter/proc/spawn_rifts(amount = 5)
+	// these areas are kinda just fucked up ngl
+	var/list/forbidden_areas = typesof(
+		/area/station/engineering/atmospherics_engine,
+		/area/station/engineering/supermatter,
+		/area/station/science/ordnance,
+		/area/station/security/prison,
+	)
+	// this is really dumb but radstorm protected_areas is generally a good source of "maints areas that are technically department subtypes"
+	var/datum/weather/rad_storm/wtf = new
+	for(var/area_type in wtf.protected_areas)
+		forbidden_areas |= typesof(area_type)
+	QDEL_NULL(wtf)
+	var/list/departments = list()
+	for(var/base_area in list(
+		/area/station/engineering,
+		/area/station/medical,
+		/area/station/science,
+		/area/station/security,
+		/area/station/service,
+		/area/station/command,
+		/area/station/hallway,
+		/area/station/cargo,
+	))
+		var/list/department = (typesof(base_area) - forbidden_areas) & GLOB.the_station_areas
+		if(length(department))
+			departments[department] = amount
+	for(var/i = 1 to amount)
+		var/list/department = pick_weight(departments)
+		var/turf/target_turf = get_safe_random_station_turf(department)
+		if(!target_turf)
+			target_turf = get_safe_random_station_turf()
+			stack_trace("Failed to get safe turf in [department] areas, using random safe station turf")
+		else
+			departments[department]-- // reduce chance of them spawning in same department
+		rabbits += new /obj/effect/bnnuy(target_turf, src)
 
 /datum/antagonist/monsterhunter/proc/load_wonderland()
 	var/static/wonderland_loaded = FALSE
