@@ -48,10 +48,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/Remove()
 	. = ..()
-	var/shield = blood_shield?.resolve()
-	if(shield)
-		QDEL_NULL(shield)
-
+	QDEL_NULL(blood_shield)
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/on_power_upgrade()
 	cooldown_time = get_max_charges() * THAUMATURGY_COOLDOWN_PER_CHARGE
 	bloodcost = get_max_charges() * THAUMATURGY_BLOOD_COST_PER_CHARGE

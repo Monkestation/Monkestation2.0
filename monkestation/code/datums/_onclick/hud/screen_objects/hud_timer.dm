@@ -74,16 +74,15 @@
 		return
 	if(!islist(mobs))
 		mobs = list(mobs)
-	for(var/player in mobs)
+	for(var/mob/player in mobs)
 		// when the player is a weakref, assume it's the same pointer that we use in the timer_mobs list
-		var/datum/weakref/found_weakref
-		if(istype(player, /datum/weakref))
-			var/datum/weakref/ref = player
-			found_weakref = ref
+		var/datum/weakref/found_weakref = player
+		if(istype(found_weakref))
+			found_weakref = player
 		// otherwise we have to search through and resolve each one and compare it
 		else
 			for(var/datum/weakref/possible_match as anything in timer_mobs)
-				if(player == possible_match.resolve())
+				if(IS_WEAKREF_OF(player, possible_match))
 					found_weakref = possible_match
 					break
 		timer_mobs -= found_weakref

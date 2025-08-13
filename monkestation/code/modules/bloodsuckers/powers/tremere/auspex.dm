@@ -103,7 +103,8 @@
 			continue
 		if(level_current >= AUSPEX_BLEED_LEVEL)
 			var/obj/item/bodypart/bodypart = pick(living_mob.bodyparts)
-			bodypart.force_wound_upwards(/datum/wound/slash/flesh/critical)
+			var/severity = pick(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
+			living_mob.cause_wound_of_type_and_severity(WOUND_SLASH, bodypart, severity, wound_source = "auspex")
 			living_mob.adjustBruteLoss(15)
 		if(level_current >= AUSPEX_KNOCKDOWN_LEVEL)
 			living_mob.Knockdown(10 SECONDS, ignore_canstun = TRUE)
