@@ -36,8 +36,6 @@
 ///MASSIVELY speeding up finding references.
 //#define FAST_REFERENCE_TRACKING
 
-//#define TRACK_QDEL_CALL_STACK
-
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -73,8 +71,6 @@
 #define GC_FAILURE_HARD_LOOKUP
 // use fast reftracking
 #define FAST_REFERENCE_TRACKING
-// track qdel call stacks
-#define TRACK_QDEL_CALL_STACK
 #endif // REFERENCE_DOING_IT_LIVE
 
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
