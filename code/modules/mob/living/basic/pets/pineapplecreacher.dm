@@ -13,8 +13,10 @@
 	response_disarm_simple = "shove aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = NO_SPAWN
 	can_be_held = FALSE
+	density = FALSE
 	melee_damage_lower = 3
 	melee_damage_upper = 3
 	attack_verb_continuous = "bludgeons"

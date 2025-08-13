@@ -111,7 +111,7 @@
 /datum/crafting_recipe/food/pineapple_rice
 	name = "Hawaiian pineapple rice"
 	reqs = list(
-		/obj/item/food/snacks/grown/pineapple = 1,
+		/obj/item/food/grown/pineapple = 1,
 		/datum/reagent/consumable/rice = 5
 	)
 	result = /obj/item/food/salad/pineapple_rice

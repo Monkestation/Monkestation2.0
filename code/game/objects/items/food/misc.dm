@@ -300,10 +300,10 @@
 	name = "grilled pineapple slice"
 	desc = "A grilled piece of juicy pineapple. Complete with tantilizing grill marks."
 	icon_state = "grilled_pineapple"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
-	foodtype = FRUIT | PINEAPPLE
+	foodtypes = FRUIT | PINEAPPLE
 
 /obj/item/food/pineappleslice/grilled/make_grillable() //so it burns after it grills
 	AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)

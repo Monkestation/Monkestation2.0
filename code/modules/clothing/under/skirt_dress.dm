@@ -179,5 +179,5 @@
 	desc =  "A plastic coconut bra combined with a synthetic grass skirt, inspired by Hawaiian hula dancers. Somewhat less revealing than tradition."
 	body_parts_covered = GROIN
 	can_adjust = FALSE
-	icon_state = hulaskirt
-	inhand_icon_state = hulaskirt
+	icon_state = "hulaskirt"
+	inhand_icon_state = "hulaskirt"

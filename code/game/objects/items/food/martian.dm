@@ -251,7 +251,7 @@
 		/datum/reagent/consumable/nutriment = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 16,
 	)
-	tastes = list("rice" = 2, "pineapple" = 3, "chili" = 1, "citrus" = 1 "veggies" = 1)
+	tastes = list("rice" = 2, "pineapple" = 3, "chili" = 1, "citrus" = 1, "veggies" = 1)
 	foodtypes = GRAIN | FRUIT | PINEAPPLE | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 

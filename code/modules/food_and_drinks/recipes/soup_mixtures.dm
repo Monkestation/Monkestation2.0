@@ -2181,12 +2181,12 @@
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/saimin
 	name = "saimin"
 	icon_state = "saimin"
-	drink_type = EGG | VEGETABLES | GRAIN
+	drink_type = VEGETABLES | GRAIN
 
-/datum/chemical_reaction/food/soup/budae_jjigae
+/datum/chemical_reaction/food/soup/saimin
 	required_reagents = list(
 		/datum/reagent/water = 10,
-		/datum/reagemt/soysauce = 5,
+		/datum/reagent/consumable/soysauce = 5,
 	)
 	required_ingredients = list(
 		/obj/item/food/boiledegg = 1,
