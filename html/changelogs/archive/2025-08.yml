@@ -292,6 +292,23 @@
   ThePooba:
   - bugfix: less monkeycoins from roundend for mentors and fixed donator monkecoins
   - balance: also buffed slasher again so i didnt forgor
+  Wernerses:
+  - map: Added the missing disk compartamentalizer to Icebox Botany
+  - map: Added heated nesting boxes to some maps that did not have it before
+  - map: Replaced all ranching railings with reinforced thin glass walls and windoors
+      for easy access for simians
+  - map: Chicken nest boxes are now all close to windoors for easy access to eggs
   notghosti:
   - bugfix: Contractor bundles should now still be purchasable after an objective
       times out
+2025-08-13:
+  ThePooba:
+  - balance: jugg + minigun costs less
+  - balance: suit and minigun less slowdown
+  - balance: suit has more armor for lasers
+  - balance: minigun more damage shoots slower slightly less loud because it huwts
+      my ears
+  ancient-engineer:
+  - bugfix: fixed attacking a mirror giving you /datum/component/ instead of /datum/component/omen
+  notghosti:
+  - code_imp: Nuked sentient disease code.

@@ -57,7 +57,8 @@
 	if(!ckey)
 		return
 	var/datum/persistent_client/details = client.persistent_client
-	var/round_end_bonus = 75
+
+	var/round_end_bonus = 100
 	var/dono_bonus
 
 	// Patreon Flat Roundend Bonus
@@ -68,7 +69,8 @@
 		dono_bonus += DONATOR_ROUNDEND_BONUS
 	if(details?.patreon?.has_access(ACCESS_NUKIE_RANK))
 		dono_bonus += DONATOR_ROUNDEND_BONUS
-	queue[ckey] += list(list(dono_bonus, "Donator Bonus! Thank you!"))
+	if(dono_bonus > 0)
+		queue[ckey] += list(list(dono_bonus, "Donator Bonus! Thank you!"))
 
 	LAZYINITLIST(queue[ckey])
 

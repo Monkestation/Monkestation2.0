@@ -15240,10 +15240,6 @@
 "dIK" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/freezerchamber)
-"dIN" = (
-/obj/structure/railing,
-/turf/open/floor/sandy_dirt,
-/area/station/service/hydroponics/chicken)
 "dIO" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
@@ -16412,7 +16408,8 @@
 /area/station/hallway/primary/tram/left)
 "eaX" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing,
+/obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "eaZ" = (
@@ -28467,7 +28464,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
 "hUC" = (
-/obj/machinery/egg_incubator,
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -39154,10 +39150,7 @@
 /area/station/maintenance/starboard/lesser)
 "ldt" = (
 /obj/structure/cable,
-/obj/structure/nestbox,
-/obj/structure/railing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "ldy" = (
@@ -45111,6 +45104,13 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
+"mZl" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/mob/living/basic/chicken/brown{
+	forced_gender = "female"
+	},
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "mZt" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -48935,9 +48935,8 @@
 /area/station/medical/medbay/central)
 "ojl" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "ojH" = (
@@ -51243,6 +51242,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"oXw" = (
+/obj/structure/cable,
+/obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "oXz" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -55176,9 +55181,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "qfk" = (
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "qfv" = (
@@ -59199,11 +59203,11 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "rpG" = (
-/obj/structure/railing,
-/obj/structure/window/reinforced/spawner/directional/east,
-/mob/living/basic/chicken/brown{
-	forced_gender = "female"
+/obj/machinery/door/window/right/directional/west{
+	name = "Ranch";
+	dir = 2
 	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "rpJ" = (
@@ -64159,7 +64163,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "sUm" = (
-/obj/structure/railing,
+/obj/machinery/door/window/right/directional/west{
+	name = "Ranch";
+	dir = 2
+	},
 /mob/living/basic/chicken{
 	forced_gender = "female"
 	},
@@ -67137,7 +67144,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "tQj" = (
-/obj/structure/nestbox,
+/obj/machinery/door/window/right/directional/west{
+	name = "Ranch";
+	dir = 4
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "tQq" = (
@@ -74283,8 +74293,9 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "vSB" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/nestbox,
+/obj/machinery/door/window/right/directional/west{
+	name = "Ranch"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "vSI" = (
@@ -75223,6 +75234,11 @@
 	},
 /turf/open/floor/stone,
 /area/station/smithing)
+"wih" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/egg_incubator,
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "wip" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -79526,7 +79542,7 @@
 /area/station/maintenance/port/aft)
 "xEE" = (
 /obj/structure/cable,
-/obj/structure/railing,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "xET" = (
@@ -112038,9 +112054,9 @@ aac
 aac
 aac
 kbg
-tQj
+tka
 pHO
-xEE
+oXw
 ntf
 ldt
 wjX
@@ -112295,13 +112311,13 @@ aac
 aac
 aac
 kbg
-kBz
+mZl
 kBz
 rpG
 eVz
 ojl
-kBz
-kBz
+tQj
+wih
 jgl
 gtw
 xxS
@@ -112553,7 +112569,7 @@ aac
 aac
 kbg
 mvT
-dIN
+hUC
 eVz
 eVz
 eVz
@@ -113066,7 +113082,7 @@ aac
 aac
 aac
 kbg
-vSB
+kBz
 eaX
 eVz
 rCo
@@ -113838,7 +113854,7 @@ aac
 aac
 kbg
 qfk
-qfk
+vSB
 tqI
 wwg
 bzk
@@ -114351,7 +114367,7 @@ aac
 aac
 aac
 kbg
-tQj
+tka
 fDr
 kyb
 nSi
