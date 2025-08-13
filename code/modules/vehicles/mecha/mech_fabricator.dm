@@ -441,12 +441,6 @@
 	)
 
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user, datum/tgui/ui)
-	//monnkestation edit start
-	if(!allowed(user) && !combat_parts_allowed && !isobserver(user))
-		to_chat(user, span_warning("You do not have the proper credentials to operate this device"))
-		return
-	//monkestation edit end
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ExosuitFabricator")
@@ -459,7 +453,6 @@
 	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
-	//monkestation edit start
 	for(var/datum/design/design in cached_designs)
 		var/list/cost = list()
 
@@ -468,22 +461,7 @@
 		If it is, and it isn't just something supported by combat mechs like auto repair droid,
 		skip them
 		*/
-		var/is_combat_design = FALSE
-		for(var/categories in design.category) // may allah forgive me for this insolence upon nature (okay this was way worse, I cleaned it as best I could)
-			for(var/banned_categories in combat_parts)
-				if(findtext(categories, banned_categories) && !findtext(categories, RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT)) // for I have sinned
-					is_combat_design = TRUE
-
-		//further cleans up anything in-betweens
-		if(ispath(design.build_path, /obj/item/mecha_parts/mecha_equipment/weapon) || ispath(design.build_path, /obj/item/mecha_ammo))
-			is_combat_design = TRUE
-
-		//they can have a tiny bit of non-lethal weapons. as a treat
-		if(is_combat_design && !combat_parts_allowed)
-			if(!((design in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE))
-
-				continue
-	//monkestation edit end
+		var/is_combat_design = weapon_lock_check(design)
 
 		for(var/datum/material/material in design.materials)
 			cost[material.name] = get_resource_cost_w_coeff(design, material)
@@ -497,12 +475,28 @@
 			"id" = design.id,
 			"categories" = design.category,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = get_construction_time_w_coeff(design.construction_time)
+			"constructionTime" = get_construction_time_w_coeff(design.construction_time),
+			"craftable" = !is_combat_design
 		)
 
 	data["designs"] = designs
 
 	return data
+
+/obj/machinery/mecha_part_fabricator/proc/weapon_lock_check(var/datum/design/design)
+	var/is_combat_design = FALSE
+
+	for(var/categories in design.category) // may allah forgive me for this insolence upon nature (okay this was way worse, I cleaned it as best I could)
+		for(var/banned_categories in combat_parts)
+			if(findtext(categories, banned_categories) && !findtext(categories, RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT)) // for I have sinned
+				is_combat_design = TRUE
+
+	//they can have a tiny bit of non-lethal weapons. as a treat
+	if(is_combat_design && !combat_parts_allowed)
+		if((design in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
+			is_combat_design = FALSE
+
+	return is_combat_design
 
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
@@ -568,6 +562,9 @@
 					continue
 
 				var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+				if(weapon_lock_check(design))
+					balloon_alert(usr, "unauthorized!")
+					continue
 
 				if(!(design.build_type & MECHFAB) || design.id != design_id)
 					continue

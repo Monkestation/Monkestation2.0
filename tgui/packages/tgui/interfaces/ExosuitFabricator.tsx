@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+import { FabricatorData, MaterialMap } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Tooltip } from '../components';
@@ -16,6 +16,18 @@ type ExosuitFabricatorData = FabricatorData & {
   combat_parts_allowed: BooleanLike;
   emagged: BooleanLike;
   silicon_user: BooleanLike;
+};
+
+export type ExosuitDesign = {
+  name: string;
+  desc: string;
+  cost: MaterialMap;
+  id: string;
+  categories: string[];
+  icon: string;
+  constructionTime: number;
+  maxmult: number;
+  craftable: BooleanLike; // this is the odd one out. other than that the others are the same as normal
 };
 
 export const ExosuitFabricator = (props) => {
@@ -76,7 +88,7 @@ export const ExosuitFabricator = (props) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }) => {
+const Recipe = (props: { design: ExosuitDesign; available: MaterialMap }) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
   const { design, available } = props;
 
@@ -86,7 +98,10 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
   );
 
   return (
-    <div className="FabricatorRecipe">
+    <Box
+      className="FabricatorRecipe"
+      backgroundColor={design.craftable ? undefined : 'rgba(255, 0, 0, 0.15)'}
+    >
       <Tooltip content={design.desc} position="right">
         <div
           className={classes([
@@ -153,7 +168,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
           <Icon name="play" />
         </div>
       </Tooltip>
-    </div>
+    </Box>
   );
 };
 
@@ -359,9 +374,17 @@ const Authorization = (props, context) => {
                   'ALERT: ROOTKIT_DEV_OVERRIDE RUNNING IN LIVE ENVIROMENT',
                 )}
         </span>
+        <Tooltip
+          content={
+            'Designs marked in red are classified as combat-level designs. Gain access from a Command member or an elevated threat level to print them.'
+          }
+          position="right"
+        >
+          <Icon name="question-circle" />
+        </Tooltip>
       </b>
       <br />
-      Combat ready designs are{' '}
+      Combat-level designs are{' '}
       {combat_parts_allowed ? 'available' : 'unavailable'}.
       <br />
       {auth_override
