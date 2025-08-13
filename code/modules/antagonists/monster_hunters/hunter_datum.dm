@@ -90,6 +90,16 @@
 	return ..()
 
 /datum/antagonist/monsterhunter/proc/spawn_rifts(amount = 5)
+	var/list/base_areas = list(
+		/area/station/engineering,
+		/area/station/medical,
+		/area/station/science,
+		/area/station/security,
+		/area/station/service,
+		/area/station/command,
+		/area/station/hallway,
+		/area/station/cargo,
+	)
 	// these areas are kinda just fucked up ngl
 	var/list/forbidden_areas = typesof(
 		/area/station/engineering/atmospherics_engine,
@@ -103,16 +113,7 @@
 		forbidden_areas |= typesof(area_type)
 	QDEL_NULL(wtf)
 	var/list/departments = list()
-	for(var/base_area in list(
-		/area/station/engineering,
-		/area/station/medical,
-		/area/station/science,
-		/area/station/security,
-		/area/station/service,
-		/area/station/command,
-		/area/station/hallway,
-		/area/station/cargo,
-	))
+	for(var/base_area in base_areas)
 		var/list/department = (typesof(base_area) - forbidden_areas) & GLOB.the_station_areas
 		if(length(department))
 			departments[department] = amount
