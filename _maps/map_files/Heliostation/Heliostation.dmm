@@ -27414,9 +27414,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "doo" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /mob/living/basic/chicken{
 	forced_gender = "female"
 	},
@@ -32748,14 +32746,8 @@
 /area/station/engineering/break_room)
 "fAO" = (
 /obj/structure/sign/warning/gas_mask/directional/north,
-/obj/structure/railing/wooden_fencing{
-	dir = 4;
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/mob/living/basic/chicken{
-	forced_gender = "female"
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "fAZ" = (
@@ -36009,7 +36001,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology/isolation)
 "gSt" = (
-/obj/structure/nestbox,
 /mob/living/basic/chicken{
 	forced_gender = "female"
 	},
@@ -50959,10 +50950,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "mAR" = (
-/obj/structure/railing/wooden_fencing/gate{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 8;
-	pixel_x = -4;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /mob/living/basic/chicken{
 	forced_gender = "female"
@@ -51902,15 +51894,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "mUz" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 1
-	},
-/obj/structure/railing/wooden_fencing{
-	dir = 4
-	},
-/mob/living/basic/chicken{
-	forced_gender = "male"
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "mUB" = (
@@ -52790,9 +52776,7 @@
 /area/station/service/hydroponics)
 "nmH" = (
 /obj/structure/sign/warning/fire/directional/east,
-/obj/structure/railing/wooden_fencing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /mob/living/basic/chicken{
 	forced_gender = "female"
 	},
@@ -55847,9 +55831,6 @@
 	dir = 8
 	},
 /area/station/science/robotics/mechbay)
-"otr" = (
-/turf/open/floor/sandy_dirt,
-/area/station/service/hydroponics/chicken)
 "ots" = (
 /obj/structure/sink/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -63053,8 +63034,10 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "reH" = (
-/obj/structure/nestbox,
 /obj/machinery/light/directional/south,
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "reR" = (
@@ -68564,9 +68547,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "tkH" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "tkU" = (
@@ -70010,10 +69991,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tLZ" = (
-/obj/structure/railing/wooden_fencing/gate{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 8;
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -7
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
@@ -73248,10 +73230,11 @@
 /area/station/science/xenobiology)
 "vcU" = (
 /obj/machinery/light_switch/directional/south,
-/obj/structure/railing/wooden_fencing/gate{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 8;
-	pixel_x = -4;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
@@ -73421,12 +73404,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/bridge)
 "vgk" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 1
-	},
-/mob/living/basic/chicken{
-	forced_gender = "male"
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "vgo" = (
@@ -106064,7 +106043,7 @@ vPj
 dBL
 uGE
 fAO
-otr
+uJc
 mUz
 uJc
 uGE

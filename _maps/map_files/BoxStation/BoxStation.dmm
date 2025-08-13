@@ -22514,6 +22514,16 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
+"hjw" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "hjB" = (
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
@@ -40811,6 +40821,18 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/chapel/office)
+"neR" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "neW" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -47148,6 +47170,14 @@
 "pht" = (
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/storage)
+"phw" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "pia" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -56817,7 +56847,6 @@
 /area/station/science/genetics/cloning)
 "srQ" = (
 /obj/machinery/light/directional/south,
-/obj/structure/nestbox,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "srS" = (
@@ -63984,7 +64013,6 @@
 /area/station/service/abandoned_gambling_den)
 "uGS" = (
 /obj/machinery/light/directional/north,
-/obj/structure/nestbox,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "uHc" = (
@@ -71853,6 +71881,12 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/iron/dark,
 /area/station/security/execution)
+"xdu" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "xdw" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -90440,11 +90474,11 @@ nJa
 xqS
 pff
 aSR
-guH
+hjw
 sXx
 ohF
 vBm
-aBL
+neR
 aSR
 bnl
 wgX
@@ -90697,11 +90731,11 @@ nJa
 xqS
 pff
 knA
-pfJ
+xdu
 sXx
 ohF
 vBm
-eaL
+phw
 knA
 bnl
 epc

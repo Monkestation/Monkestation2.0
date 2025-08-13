@@ -214,8 +214,6 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
-#define issentientdisease(A) (istype(A, /mob/camera/disease))
-
 #define iscameramob(A) (istype(A, /mob/camera))
 
 #define isaicamera(A) (istype(A, /mob/camera/ai_eye))

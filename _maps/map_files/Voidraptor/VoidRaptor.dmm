@@ -1796,8 +1796,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/railing{
-	dir = 8
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
@@ -12769,9 +12770,7 @@
 "dLi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
-/obj/structure/railing{
-	pixel_y = -5
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "dLk" = (
@@ -13998,6 +13997,7 @@
 /area/station/service/chapel/funeral)
 "ebv" = (
 /obj/machinery/light/directional/south,
+/obj/machinery/egg_incubator,
 /turf/open/floor/wood,
 /area/station/service/hydroponics/chicken)
 "ebz" = (
@@ -15987,6 +15987,11 @@
 	dir = 1
 	},
 /area/station/ai_monitored/security/armory)
+"eEo" = (
+/obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "eEp" = (
 /obj/machinery/recharger{
 	pixel_y = 4
@@ -16917,9 +16922,7 @@
 	},
 /area/station/engineering/power_room)
 "eQw" = (
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "eQx" = (
@@ -28702,13 +28705,9 @@
 /turf/open/floor/iron/white/textured_edge,
 /area/station/medical/storage)
 "ikN" = (
-/obj/structure/railing{
-	pixel_y = -5
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "ila" = (
@@ -38887,8 +38886,9 @@
 /turf/open/floor/iron/textured,
 /area/station/science/ordnance/storage)
 "kVo" = (
-/obj/structure/railing{
-	pixel_y = -5
+/obj/machinery/door/window/right/directional/west{
+	name = "Ranch";
+	dir = 2
 	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
@@ -43129,6 +43129,12 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/corrections_officer)
+"mca" = (
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "mcu" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -45092,11 +45098,11 @@
 /turf/open/floor/iron/freezer,
 /area/station/medical/chemistry)
 "mFR" = (
-/obj/structure/railing,
-/obj/structure/railing{
+/obj/machinery/door/window/right/directional/west{
+	name = "Ranch";
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "mGv" = (
 /obj/structure/cable,
@@ -48832,9 +48838,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/science/research/abandoned)
 "nGX" = (
-/obj/structure/railing{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "nGY" = (
@@ -54070,12 +54074,11 @@
 	},
 /area/station/hallway/secondary/command)
 "pdg" = (
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/basic/chicken{
 	forced_gender = "female"
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "pdh" = (
@@ -65927,12 +65930,10 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/command/storage/eva)
 "sqd" = (
-/obj/structure/railing{
-	pixel_y = -5
-	},
 /mob/living/basic/chicken/brown{
 	forced_gender = "male"
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "sqo" = (
@@ -77479,6 +77480,10 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/medical/treatment_center)
+"vuc" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "vud" = (
 /turf/open/floor/iron/textured,
 /area/station/maintenance/aft)
@@ -80380,6 +80385,9 @@
 /area/station/security/detectives_office)
 "wkm" = (
 /obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "wkK" = (
@@ -127979,7 +127987,7 @@ pzh
 jpR
 fop
 pdg
-mFR
+eKx
 azq
 eQw
 jpR
@@ -128235,9 +128243,9 @@ nuL
 vRf
 jpR
 aWR
-wkm
-mFR
-fop
+eEo
+eKx
+mca
 iAj
 jpR
 wtQ
@@ -128492,9 +128500,9 @@ hGr
 pzh
 jpR
 lhZ
-fop
+kVo
+eKx
 mFR
-wkm
 aWR
 jpR
 aqi
@@ -128749,9 +128757,9 @@ pzh
 mLy
 jpR
 fop
-fop
-mFR
-fop
+vuc
+eKx
+wkm
 gSF
 jpR
 uKN
