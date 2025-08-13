@@ -18,7 +18,7 @@
 	update_appearance()
 	return ..()
 
-/obj/item/borg/apparatus/cooking/proc/on_attack(atom/atom, mob/living/user, params, mode)
+/obj/item/borg/apparatus/cooking/pre_attack(atom/atom, mob/living/user, params)
 	if(!stored)
 		var/itemcheck = FALSE
 		for(var/storable_type in storable)
@@ -33,21 +33,10 @@
 			update_appearance()
 			return TRUE
 		else
-			return FALSE
+			return ..()
 	else
-		if(mode)
-			stored.pre_attack(atom, user, params)
-			atom.attackby(stored, user, params)
-		else
-			stored.pre_attack_secondary(atom, user, params)
-			atom.attackby_secondary(stored, user, params)
+		stored.melee_attack_chain(user, atom, params)
 		return TRUE
-
-/obj/item/borg/apparatus/cooking/pre_attack(atom/atom, mob/living/user, params)
-	return on_attack(atom, user, params, TRUE) || ..()
-
-/obj/item/borg/apparatus/cooking/pre_attack_secondary(atom/atom, mob/living/user, params)
-	return on_attack(atom, user, params, FALSE) || ..()
 
 /obj/item/borg/apparatus/cooking/examine()
 	. = ..()
