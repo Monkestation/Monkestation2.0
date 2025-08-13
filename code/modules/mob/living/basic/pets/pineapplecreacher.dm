@@ -13,6 +13,7 @@
 	response_disarm_simple = "shove aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+	gender = NEUTER
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = NO_SPAWN
 	can_be_held = FALSE
@@ -25,7 +26,7 @@
 	attack_vis_effect = ATTACK_EFFECT_SMASH
 	ai_controller = /datum/ai_controller/basic_controller/pcreacher
 
-/mob/living/basic/pet/fox/Initialize(mapload)
+/mob/living/basic/pet/pcreacher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "rumbles gleefully!")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_HEAVY)
