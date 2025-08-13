@@ -9,9 +9,12 @@
 	suicide_cry = "FOR THE MASTER!!"
 	genetic_points = 5
 	total_genetic_points = 5
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
 
 	// This thralls master
 	var/master = null
+	// The team datum
+	var/datum/team/bloodling/bling_team
 
 /datum/antagonist/changeling/bloodling_thrall/purchase_power(datum/action/changeling/sting_path)
 	if(istype(sting_path, /datum/action/changeling/fakedeath) || istype(sting_path, /datum/action/changeling/headcrab))
@@ -37,8 +40,10 @@
 	handle_clown_mutation(owner.current, "Your newfound abilities allow you to overcome your clown nature.")
 
 /datum/antagonist/changeling/bloodling_thrall/proc/set_master(mob/living/basic/bloodling/master)
+	var/datum/antagonist/bloodling/bling = IS_BLOODLING(master)
 	to_chat(owner, span_info("Your master is [master], they have granted you this gift. Obey their commands. Praise be the living flesh."))
 	src.master = master
+	bling_team = bling.bling_team
 	add_team_hud(owner.current)
 	add_team_hud(owner.current, /datum/antagonist/bloodling)
 	add_team_hud(owner.current, /datum/antagonist/infested_thrall)
@@ -57,9 +62,12 @@
 	antag_hud_name = "infested_thrall"
 	hijack_speed = 0
 	suicide_cry = "FOR THE MASTER!!"
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
 
 	// This thralls master
 	var/master = null
+	// The team datum
+	var/datum/team/bloodling/bling_team
 
 /datum/antagonist/infested_thrall/on_gain()
 	forge_objectives()
@@ -79,8 +87,10 @@
 		serve_objective.update_explanation_text()
 
 /datum/antagonist/infested_thrall/proc/set_master(mob/living/basic/bloodling/master)
+	var/datum/antagonist/bloodling/bling = IS_BLOODLING(master)
 	to_chat(owner, span_info("Your master is [master], they have granted you this gift. Obey their commands. Praise be the living flesh."))
 	src.master = master
+	bling_team = bling.bling_team
 	add_team_hud(owner.current)
 	add_team_hud(owner.current, /datum/antagonist/bloodling)
 	add_team_hud(owner.current, /datum/antagonist/changeling/bloodling_thrall)

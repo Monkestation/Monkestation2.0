@@ -19,6 +19,7 @@
 	martyr_compatible = TRUE
 	admin_grantable = FALSE
 	explanation_text = "Serve your master!"
+	completed = TRUE
 
 /datum/objective/bloodling_thrall/update_explanation_text()
 	..()
@@ -27,3 +28,16 @@
 		explanation_text = "Serve your master [our_owner.master]!"
 	else
 		explanation_text = "Serve your master!"
+
+/datum/objective/aid_ascending_bloodling
+	name = "aid ascension"
+	martyr_compatible = TRUE
+	admin_grantable = FALSE
+	explanation_text = "Ensure that the bloodling ascends"
+	var/datum/team/bloodling/bling_team
+
+/datum/objective/aid_ascending_bloodling/check_completion()
+	var/datum/antagonist/bloodling/bloodling = bling_team.master
+	if (!bloodling.is_ascended)
+		return FALSE
+	return TRUE

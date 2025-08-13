@@ -6556,6 +6556,7 @@
 #include "monkestation\code\modules\antagonists\bloodling\bloodling.dm"
 #include "monkestation\code\modules\antagonists\bloodling\bloodling_hud.dm"
 #include "monkestation\code\modules\antagonists\bloodling\bloodling_structures.dm"
+#include "monkestation\code\modules\antagonists\bloodling\bloodling_team.dm"
 #include "monkestation\code\modules\antagonists\bloodling\infested_thrall.dm"
 #include "monkestation\code\modules\antagonists\bloodling\objectives.dm"
 #include "monkestation\code\modules\antagonists\bloodling\abilities\absorb_biomass.dm"

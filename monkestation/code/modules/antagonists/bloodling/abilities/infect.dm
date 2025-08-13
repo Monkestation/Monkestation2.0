@@ -45,13 +45,17 @@
 		return FALSE
 
 	if(!carbon_mob.mind  || !carbon_mob.client)
-		var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-			check_jobban = ROLE_BLOODLING_THRALL,
-			poll_time = 10 SECONDS,
-			checked_target = carbon_mob,
-			alert_pic = carbon_mob,
-			role_name_text = "Bloodling Thrall",
-			)
+		var/mob/chosen_one = null
+		if(carbon_mob.stat == DEAD)
+			chosen_one = carbon_mob.get_ghost(ghosts_with_clients = TRUE)
+			if(!carbon_mob.client && !chosen_one)
+				chosen_one = SSpolling.poll_ghosts_for_target(
+					check_jobban = ROLE_BLOODLING_THRALL,
+					poll_time = 10 SECONDS,
+					checked_target = carbon_mob,
+					alert_pic = carbon_mob,
+					role_name_text = "Bloodling Thrall",
+					)
 
 		if(isnull(chosen_one))
 			is_infecting = FALSE

@@ -9,9 +9,12 @@
 	suicide_cry = "CONSUME!! CLAIM!! THERE WILL BE ANOTHER!!"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoBloodling"
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
 
 	// If this bloodling is ascended or not
 	var/is_ascended = FALSE
+	// The team datum
+	var/datum/team/bloodling/bling_team
 
 /datum/antagonist/bloodling/on_gain()
 	forge_objectives()
@@ -25,8 +28,20 @@
 	infect.Grant(our_mob)
 	handle_clown_mutation(our_mob, "Though this form may be that of a clown you will not stoop to the level of a fool.")
 
-	add_team_hud(our_mob, /datum/antagonist/changeling/bloodling_thrall)
+	for(var/datum/antagonist/bloodling/bling in GLOB.antagonists)
+		if(!bling.owner)
+			continue
+		if(bling.bling_team)
+			bling_team = bling.bling_team
+			add_team_hud(our_mob)
+			return ..()
+
+	bling_team = new /datum/team/bloodling
+	bling_team.setup_objectives()
+	bling_team.master = src
 	add_team_hud(our_mob, /datum/antagonist/infested_thrall)
+	add_team_hud(our_mob, /datum/antagonist/changeling/bloodling_thrall)
+
 	return ..()
 
 /datum/antagonist/bloodling/forge_objectives()

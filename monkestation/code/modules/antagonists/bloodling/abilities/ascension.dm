@@ -26,8 +26,8 @@ GLOBAL_VAR(ascended_bloodling)
 
 	var/area/our_area = get_area(our_turf)
 
-	if(!istype(our_area, /area/station/command/bridge) || !istype(our_area, /area/station/service/hydroponics))
-		to_chat(our_mob, span_noticealien("You can only begin ascension in Hydroponics or Bridge."))
+	if(!istype(our_area, /area/station/command/bridge))
+		to_chat(our_mob, span_noticealien("You can only begin ascension in Bridge."))
 		return FALSE
 
 	return ..()
@@ -222,7 +222,7 @@ GLOBAL_VAR(ascended_bloodling)
 	var/mob/living/carbon/carbon_mob = mob
 
 	if(carbon_mob.stat == DEAD)
-		if(!carbon_mob.client && !carbon_mob.get_ghost(ghosts_with_clients = TRUE))// THIS does not work for some reason)
+		if(!carbon_mob.client && !carbon_mob.get_ghost(ghosts_with_clients = TRUE))
 			return
 
 	if(IS_BLOODLING_OR_THRALL(carbon_mob))
