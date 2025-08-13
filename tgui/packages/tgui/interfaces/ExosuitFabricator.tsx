@@ -373,7 +373,7 @@ const Authorization = (props, context) => {
         </span>
         <Tooltip
           content={
-            'Designs marked in red are classified as combat-level designs. Gain access from a Command member or an elevated threat level to print them.'
+            'Designs marked in red are classified as combat-level designs. Gain access from a Command member or an elevated station threat level to print them.'
           }
           position="right"
         >

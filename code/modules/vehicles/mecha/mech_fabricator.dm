@@ -483,9 +483,8 @@
 
 	return data
 
-/obj/machinery/mecha_part_fabricator/proc/weapon_lock_check(var/datum/design/design)
+/obj/machinery/mecha_part_fabricator/proc/weapon_lock_check(datum/design/design)
 	var/is_combat_design = FALSE
-
 	for(var/categories in design.category) // may allah forgive me for this insolence upon nature (okay this was way worse, I cleaned it as best I could)
 		for(var/banned_categories in combat_parts)
 			if(findtext(categories, banned_categories) && !findtext(categories, RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT)) // for I have sinned
