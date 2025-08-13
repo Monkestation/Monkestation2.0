@@ -125,3 +125,51 @@
 /area/station/construction/storage_wing
 	name = "\improper Storage Wing"
 	icon_state = "storage_wing"
+
+// steelbeamstation
+
+/area/station/engineering/supermatter/control_room
+	name = "\improper 2 Mile Island NPP Control Room"
+	icon_state = "engine"
+
+/area/station/engineering/a2MINPP/exterior
+	name = "\improper 2 Mile Island NPP Exterior"
+	icon_state = "engine"
+
+/area/station/engineering/a2MINPP/interior
+	name = "\improper 2 Mile Island NPP Interior"
+	icon_state = "engine"
+
+/area/station/engineering/a2MINPP/staff_room
+	name = "\improper 2 Mile Island NPP Staff Room"
+	icon_state = "engine_lobby"
+
+/area/station/engineering/a2MINPP/smes
+	name = "\improper 2 Mile Island NPP SMES Room"
+	icon_state = "engine_smes"
+
+/area/station/engineering/supermatter/one
+	name = "\improper Supermatter Reactor No1"
+	icon_state = "engine_sm"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/engineering/supermatter/two
+	name = "\improper Supermatter Reactor No2"
+	icon_state = "engine_sm"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/engineering/supermatter/roomone
+	name = "\improper Supermatter Engine Room No1"
+	icon_state = "engine_sm_room"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/station/engineering/supermatter/roomtwo
+	name = "\improper Supermatter Engine Room No2"
+	icon_state = "engine_sm_room"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/station/engineering/a2MINPP/staging
+	name = "\improper 2 Mile Island NPP Reactor Staging Room"
+	icon_state = "engine_smes"

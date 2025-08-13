@@ -155,3 +155,84 @@
 /area/station/commons/storage/mining
 	name = "\improper Public Mining Storage"
 	icon_state = "mining_storage"
+
+
+// Steel Beam Station (yes theres a ridiculous ammount)
+
+// the tower itself
+/area/station/commons/westtower/a1stfloor/hallway
+	name = "\improper Western Tower Entrance"
+	icon_state = "commons"
+
+/area/station/commons/westtower/a2ndfloor/hallway
+	name = "\improper Western Tower 2nd Floor"
+	icon_state = "commons"
+
+/area/station/commons/westtower/a3rdfloor/hallway
+	name = "\improper Western Tower 3rd Floor"
+	icon_state = "commons"
+
+/area/station/commons/westtower/a5thfloor/hallway
+	name = "\improper Western Tower 5th Floor"
+	icon_state = "commons"
+
+/area/station/commons/westtower/a6thfloor/hallway
+	name = "\improper Western Tower 6th Floor"
+	icon_state = "commons"
+
+/area/station/commons/easttower/a1stfloor/hallway
+	name = "\improper Eastern Tower Entrance"
+	icon_state = "commons"
+
+/area/station/commons/easttower/a2ndfloor/hallway
+	name = "\improper Eastern Tower 2nd Floor"
+	icon_state = "commons"
+
+/area/station/commons/easttower/a7ndfloor/hallway
+	name = "\improper Eastern Tower 7nd Floor"
+	icon_state = "commons"
+
+// tower maints
+
+
+/area/station/commons/westtower/maintenence/a4thfloor/hallway
+	name = "\improper Western Tower 4th Floor"
+	icon_state = "aftmaint"
+
+/area/station/commons/easttower/maintenence/a5thfloor/hallway
+	name = "\improper Eastern Tower 4th Floor"
+	icon_state = "aftmaint"
+
+/area/station/commons/easttower/maintenence/a8thfloor/hallway
+	name = "\improper Eastern Tower 8th Floor"
+	icon_state = "aftmaint"
+
+// subway
+
+/area/station/commons/subway/northstation
+	name = "\improper North Subway platform"
+	icon_state = "commons"
+
+/area/station/commons/subway/southstation
+	name = "\improper South Subway platform"
+	icon_state = "commons"
+
+/area/station/commons/subway/track
+	name = "\improper Subway tunnel"
+	icon_state = "commons"
+
+// dockyards
+
+/area/station/commons/dockyards/apartments
+	name = "\improper dockside housing"
+	icon_state = "apartment1"
+
+
+
+
+
+
+
+
+
+
