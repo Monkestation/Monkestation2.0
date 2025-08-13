@@ -8,7 +8,7 @@
 	circuit = /obj/item/circuitboard/machine/industrial_lathe
 	layer = BELOW_OBJ_LAYER
 
-	//what type of machining machine this is
+	///what type of machining machine this is
 	var/machinery_type = MACHINING_LATHE
 
 	///Recipe that the stuff is currently set to make
@@ -36,9 +36,6 @@
 
 	///sounds for machines
 	var/operating_sound = 'sound/items/welder.ogg'
-
-/obj/machinery/lathe/Initialize(mapload)
-	. = ..()
 
 /obj/machinery/lathe/examine(mob/user)
 	. = ..()
@@ -285,9 +282,10 @@
 		var/gain_array = list(MACHINING_DELAY_VERY_FAST, MACHINING_DELAY_FAST, MACHINING_DELAY_NORMAL, MACHINING_DELAY_SLOW, MACHINING_DELAY_VERY_SLOW)
 		usr?.mind?.adjust_experience(/datum/skill/machinist, gain_array[clamp(to_make.upgrade_tier_required, 1, 5)])
 		spawn_item()
-	else
-		audible_message(span_notice("You look as manipulators on [src] start working on the design document..."))
-		addtimer(CALLBACK(src, PROC_REF(spawn_item)), to_make.crafting_time * speed_mod)
+		return
+
+	audible_message(span_notice("You look as manipulators on [src] start working on the design document..."))
+	addtimer(CALLBACK(src, PROC_REF(spawn_item)), to_make.crafting_time * speed_mod)
 
 /obj/machinery/lathe/proc/spawn_item()
 	if(!to_make)

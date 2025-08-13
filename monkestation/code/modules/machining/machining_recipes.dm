@@ -22,13 +22,11 @@
 	for(var/atom in GLOB.machining_recipes_atoms)
 		add_atom_icon(atom, id++)
 
-// base object for all machining recipes
+//base object for all machining recipes
 /datum/machining_recipe
-	/// in-game display name
-	/// Optional, if not set uses result name
+	//in-game display name. Optional, if not set uses result name
 	var/name
-	/// description displayed in game
-	/// Optional, if not set uses result desc
+	///description displayed in game. Optional, if not set uses result desc
 	var/desc
 	///type paths of items consumed associated with how many are needed
 	var/list/reqs = list()
@@ -59,7 +57,7 @@
 		desc = initial(atom_result.desc)
 
 
-/// Additional UI data to be passed to the crafting UI for this recipe
+///Additional UI data to be passed to the crafting UI for this recipe
 /datum/machining_recipe/proc/crafting_ui_data()
 	return list()
 

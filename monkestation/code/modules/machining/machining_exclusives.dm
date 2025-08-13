@@ -209,6 +209,13 @@
 	icon_state = "hardenedexosuit_plate"
 	armor_mod = /datum/armor/mecha_machined_armor
 
+/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
+	for(var/obj/item/item in mech.equip_by_category[MECHA_ARMOR])
+		if(istype(item, src))
+			to_chat(user, span_warning("[mech] already has custom internal parts! Uninstall them before applying."))
+			return FALSE
+	return ..()
+
 /datum/armor/mecha_machined_armor
 	melee = 15
 	laser = 15
@@ -219,8 +226,15 @@
 	name = "Forged Exosuit Part"
 	desc = "Forged armoured plates that greatly hardens the protection of an exosuit, it appears to be custom-made"
 	icon = 'monkestation/icons/obj/machining_intermediates.dmi'
-	icon_state = "hardenedexosuit_plate"
+	icon_state = "forgedexosuit_plate"
 	armor_mod = /datum/armor/mecha_machined_armor_forged
+
+/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_plate/forged/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
+	for(var/obj/item/item in mech.equip_by_category[MECHA_ARMOR])
+		if(istype(item, src))
+			to_chat(user, span_warning("[mech] already has custom internal parts! Uninstall them before applying."))
+			return FALSE
+	return ..()
 
 /datum/armor/mecha_machined_armor_forged
 	melee = 25
