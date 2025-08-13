@@ -73,6 +73,10 @@
 	#endif
 #endif
 
+#ifdef TRACK_QDEL_CALL_STACK
+	var/list/qdel_call_stack
+#endif
+
 	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
 	// Create and destroy is weird and I wanna cover my bases
 	var/harddel_deets_dumped = FALSE

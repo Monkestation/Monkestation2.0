@@ -239,6 +239,17 @@ SUBSYSTEM_DEF(garbage)
 				if(detail)
 					message = "[message] | [detail]"
 					LAZYADD(I.extra_details, detail)
+				#ifdef TRACK_QDEL_CALL_STACK
+				var/list/call_stack = D.qdel_call_stack
+				if(call_stack)
+					var/call_amt = length(call_stack)
+					var/list/readable_call_stack = new /list(call_amt)
+					for(var/idx = 1 to call_amt)
+						var/list/info = call_stack[idx]
+						if(info)
+							readable_call_stack[idx] = " - [info["proc"]] @ [info["file"]]:[info["line"]]"
+					message = "[message]\n[jointext(readable_call_stack, "\n")]"
+				#endif
 				log_world(message)
 
 				#ifdef TESTING
@@ -288,6 +299,10 @@ SUBSYSTEM_DEF(garbage)
 
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
+
+	#ifdef TRACK_QDEL_CALL_STACK
+	D.qdel_call_stack = dump_call_stack(skip = 2)
+	#endif
 
 	var/list/queue = queues[level]
 	queue[++queue.len] = list(queue_time, D, D.gc_destroyed) // not += for byond reasons
@@ -480,3 +495,24 @@ SUBSYSTEM_DEF(garbage)
 		SSdemo?.mark_destroyed(to_delete)
 	// monkestation end: replays
 #endif
+
+#ifdef TRACK_QDEL_CALL_STACK
+#if DM_BUILD >= 1661 && !defined(OPENDREAM) && !defined(SPACEMAN_DMM)
+/proc/dump_call_stack(skip = 2)
+	var/iters = -skip // start at -2 so we skip this proc and qdel()
+	. = list()
+	for(var/callee/p = caller, p, p = p.caller)
+		iters++
+		if(iters <= 0)
+			continue
+		else if(iters >= 10)
+			break
+		var/proc_name = "[p.proc.type]"
+		if(findtext(proc_name, "/datum/controller/master"))
+			break
+		. += list(list("proc" = proc_name, "file" = "[p.file]", "line" = p.line))
+#else
+/proc/dump_call_stack(skip)
+	return null
+#endif //#if DM_BUILD >= 1661 && !defined(OPENDREAM) && !defined(SPACEMAN_DMM)
+#endif //ifdef TRACK_QDEL_CALL_STACK
