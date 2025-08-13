@@ -27,6 +27,7 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/bnnuy_rift, "bnnuy_rift", hunter_image, hunter_antag.owner)
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
+	monitor = new(src, 7)
 
 /obj/effect/bnnuy/Destroy(force)
 	QDEL_NULL(monitor)
