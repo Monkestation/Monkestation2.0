@@ -1,7 +1,7 @@
 #define IS_FINITE__UNSAFE(a) (!isinf(a) && !isnan(a))
 #define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
 
-#define IS_SAFE_NUM(a) (isnum(a) && !IS_INF__UNSAFE(a) && IS_FINITE__UNSAFE(a))
+#define IS_SAFE_NUM(a) IS_FINITE(a)
 
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 // This file is quadruple wrapped for your pleasure
