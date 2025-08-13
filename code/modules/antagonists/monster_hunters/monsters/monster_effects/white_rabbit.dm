@@ -14,6 +14,8 @@
 	var/being_used = FALSE
 	/// Is this rabbit selected to drop the gun?
 	var/drop_gun = FALSE
+	/// Proximity monitor that gives the hunter x-ray vision
+	var/datum/proximity_monitor/bnnuy_monitor/monitor
 
 /obj/effect/bnnuy/Initialize(mapload, datum/antagonist/monsterhunter/hunter)
 	. = ..()
@@ -27,6 +29,7 @@
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
 
 /obj/effect/bnnuy/Destroy(force)
+	QDEL_NULL(monitor)
 	hunter_antag?.rabbits -= src
 	hunter_antag = null
 	return ..()
@@ -93,3 +96,37 @@
 
 /datum/atom_hud/alternate_appearance/basic/bnnuy_rift/mobShouldSee(mob/target)
 	return !isobserver(target) && target.mind == hunter_mind
+
+// stolen from heretic rework lol
+/datum/proximity_monitor/bnnuy_monitor
+	/// Cooldown before we can give the hunter xray
+	COOLDOWN_DECLARE(xray_cooldown)
+
+/datum/proximity_monitor/bnnuy_monitor/on_entered(atom/source, mob/living/arrived, turf/old_loc)
+	. = ..()
+	if(!isliving(arrived) || !COOLDOWN_FINISHED(src, xray_cooldown))
+		return
+	var/obj/effect/bnnuy/bnnuy = host
+	if(arrived.mind == bnnuy.hunter_antag.owner && arrived.client)
+		arrived.apply_status_effect(/datum/status_effect/temporary_xray)
+		arrived.playsound_local(get_turf(bnnuy), 'monkestation/sound/effects/rabbitlocator.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE, falloff_distance = 0)
+		COOLDOWN_START(src, xray_cooldown, 3 MINUTES)
+
+/**
+ * Effectively grants a temporary form of x-ray with a cooldown period.
+ */
+/datum/status_effect/temporary_xray
+	id = "temp xray"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	duration = 10 SECONDS
+	show_duration = TRUE
+
+/datum/status_effect/temporary_xray/on_apply()
+	owner.add_traits(list(TRAIT_XRAY_VISION, TRAIT_TRUE_NIGHT_VISION), TRAIT_STATUS_EFFECT(id))
+	owner.update_sight()
+	return TRUE
+
+/datum/status_effect/temporary_xray/on_remove()
+	owner.remove_traits(list(TRAIT_XRAY_VISION, TRAIT_TRUE_NIGHT_VISION), TRAIT_STATUS_EFFECT(id))
+	owner.update_sight()
