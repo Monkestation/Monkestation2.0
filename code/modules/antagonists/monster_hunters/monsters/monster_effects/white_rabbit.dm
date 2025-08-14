@@ -108,7 +108,7 @@
 	if(!isliving(arrived) || !COOLDOWN_FINISHED(src, xray_cooldown))
 		return
 	var/obj/effect/bnnuy/bnnuy = host
-	if(arrived.mind == bnnuy.hunter_antag.owner && arrived.client)
+	if(arrived.mind == bnnuy.hunter_antag.owner && arrived.client && !arrived.has_status_effect(/datum/status_effect/temporary_xray))
 		arrived.apply_status_effect(/datum/status_effect/temporary_xray)
 		arrived.playsound_local(get_turf(bnnuy), 'monkestation/sound/effects/rabbitlocator.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE, falloff_distance = 0)
 		COOLDOWN_START(src, xray_cooldown, 3 MINUTES)
