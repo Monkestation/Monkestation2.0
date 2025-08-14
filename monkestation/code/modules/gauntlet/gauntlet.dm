@@ -882,9 +882,9 @@ GLOBAL_VAR_INIT(telescroll_time, 0)
 /obj/item/badmin_gauntlet/for_badmins/assembled/Initialize()
 	. = ..()
 	for(var/stone in subtypesof(/obj/item/badmin_stone))
-		var/obj/item/badmin_stone/stone = new stone(src)
-		stones += stone
-		var/datum/component/stationloving/stationloving = stone.GetComponent(/datum/component/stationloving)
+		var/obj/item/badmin_stone/badminstone = new stone(src)
+		stones += badminstone
+		var/datum/component/stationloving/stationloving = badminstone.GetComponent(/datum/component/stationloving)
 		if(stationloving)
 			qdel(stationloving)
 	spells += new /datum/action/cooldown/spell/infinity/snap
