@@ -308,11 +308,11 @@ GLOBAL_VAR_INIT(telescroll_time, 0)
 			if(do_after(user, 15, target = target_turf))
 				playsound(target_turf, 'sound/effects/bang.ogg', 50, 1)
 				user.visible_message(span_danger("[user] punches down [target_turf]!"))
-				target_turf.ScrapeAway()
+				target_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		else
 			playsound(target_turf, 'sound/effects/bang.ogg', 50, 1)
 			user.visible_message(span_danger("[user] punches down [target_turf]!"))
-			target_turf.ScrapeAway()
+			target_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else if(istype(target, /obj/structure/closet))
 		var/obj/structure/closet/target_closet = target
 		. = TRUE
@@ -803,7 +803,7 @@ GLOBAL_VAR_INIT(telescroll_time, 0)
 	if(!gauntlet || !istype(gauntlet))
 		return
 	var/prompt = alert("Are you REALLY sure you'd like to erase half the life in the universe?", "SNAP?", "YES!", "No")
-	if(prompt == "YES!")
+	if(prompt == "YES!" && !QDELETED(src))
 		if(living_caster.stat <= SOFT_CRIT)
 			living_caster.say("You should've gone for the head...")
 		living_caster.visible_message(span_userdanger("[living_caster] raises their Badmin Gauntlet into the air, and... <i>snap.</i>"))
@@ -813,6 +813,7 @@ GLOBAL_VAR_INIT(telescroll_time, 0)
 				var/mob/living/living = mob
 				living.flash_act()
 		GLOB.gauntlet_snapped = TRUE
+		gauntlet.spells -= src
 		gauntlet.do_the_snap()
 		src.Remove(living_caster)
 		SSshuttle.emergency_no_recall = TRUE
@@ -877,3 +878,14 @@ GLOBAL_VAR_INIT(telescroll_time, 0)
 
 /obj/item/badmin_gauntlet/for_badmins
 	badmin = TRUE
+
+/obj/item/badmin_gauntlet/for_badmins/assembled/Initialize()
+	. = ..()
+	for(var/stone in subtypesof(/obj/item/badmin_stone))
+		var/obj/item/badmin_stone/stone = new stone(src)
+		stones += stone
+		var/datum/component/stationloving/stationloving = stone.GetComponent(/datum/component/stationloving)
+		if(stationloving)
+			qdel(stationloving)
+	spells += new /datum/action/cooldown/spell/infinity/snap
+	update_icon()

@@ -177,6 +177,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			selectable_races[initial(species_type.name)] = species_type
 	selectable_races = sort_list(selectable_races)
 
+/obj/structure/mirror/magic/attack_hand(mob/user)
+	if(locate(/obj/item/badmin_gauntlet) in user)
+		to_chat(user, span_notice("The badmin gauntlet interferes with the magic mirror. It won't work."))
+		return
+	return ..()
+
 /obj/structure/mirror/magic/mirror_act(mob/user)
 	var/mob/living/carbon/human/amazed_human = user
 

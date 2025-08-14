@@ -6470,7 +6470,6 @@
 #include "monkestation\code\game\objects\structures\elevation.dm"
 #include "monkestation\code\game\objects\structures\fireaxe.dm"
 #include "monkestation\code\game\objects\structures\gravestones.dm"
-#include "monkestation\code\game\objects\structures\mirror.dm"
 #include "monkestation\code\game\objects\structures\tables_racks.dm"
 #include "monkestation\code\game\objects\structures\trash_pile.dm"
 #include "monkestation\code\game\objects\structures\window.dm"
