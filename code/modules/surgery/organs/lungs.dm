@@ -1040,6 +1040,19 @@
 	cold_level_hazard_threshold = CELCIUS_TO_KELVIN(-133.15 CELCIUS)
 	cold_level_danger_threshold = CELCIUS_TO_KELVIN(-173.15 CELCIUS)
 
+/obj/item/organ/internal/lungs/cybernetic/surplus
+	name = "surplus prosthetic lungs"
+	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
+		Offer no protection against EMPs."
+	icon_state = "lungs-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/lungs/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)

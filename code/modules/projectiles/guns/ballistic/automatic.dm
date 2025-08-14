@@ -407,13 +407,13 @@
 	icon = 'icons/obj/weapons/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	inhand_icon_state = "minigun"
-	slowdown = 1
+	slowdown = 0.4
 	fire_sound = 'sound/weapons/gun/minigun10burst.ogg'
-	fire_sound_volume = 60
+	fire_sound_volume = 50
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/minigun22
-	fire_delay = 0.4
+	fire_delay = 0.5
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()

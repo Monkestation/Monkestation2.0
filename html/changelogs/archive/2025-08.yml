@@ -266,3 +266,53 @@
   Wisemonster:
   - bugfix: The automated announcement system once more announces new arrivals to
       the station.
+2025-08-12:
+  Absolucy:
+  - refactor: (timothymtorres) Sound has been heavily optimized and will now ignore
+      low volume sounds from far away.
+  - admin: (timothymtorres) Add debugging sound earmuffs to admin equipment inside
+      the debug box. Wear them to determine a sounds max range, distance, volume,
+      and sound name. Highly recommended to walk otherwise you will get spammed with
+      footstep sounds.
+  - bugfix: (grungussuss, Melbert) After 4 years, computer sound loop now works properly.
+  - qol: Stargazers can now slime link basic/simple mobs using a normal grab.
+  - bugfix: Hotspots/fire from ash drakes, explosions, and fire breath should no longer
+      last more than a couple of seconds.
+  - refactor: Slightly refactored brain trauma.
+  - balance: Nanites and viruses can no longer cure an obsession or hypnosis.
+  - map: The centcom firing range floors are now indestructible.
+  - balance: Revenge Vassals now also resist mindshields, just like Favorite Vassals.
+  Absolucy, Maximal08, FlufflesTheDog:
+  - qol: Using a multitool inhand tells you where the area APC is.
+  Aniantan, Bomberman66Dev:
+  - rscadd: Ported the surplus prosthetic organ quirks from TG. Select few species
+      cannot use them, however.
+  Ben10Omintrix:
+  - bugfix: moving away from the surgery table with its mask no longer causes lag
+  ThePooba:
+  - bugfix: less monkeycoins from roundend for mentors and fixed donator monkecoins
+  - balance: also buffed slasher again so i didnt forgor
+  Wernerses:
+  - map: Added the missing disk compartamentalizer to Icebox Botany
+  - map: Added heated nesting boxes to some maps that did not have it before
+  - map: Replaced all ranching railings with reinforced thin glass walls and windoors
+      for easy access for simians
+  - map: Chicken nest boxes are now all close to windoors for easy access to eggs
+  notghosti:
+  - bugfix: Contractor bundles should now still be purchasable after an objective
+      times out
+2025-08-13:
+  ThePooba:
+  - balance: jugg + minigun costs less
+  - balance: suit and minigun less slowdown
+  - balance: suit has more armor for lasers
+  - balance: minigun more damage shoots slower slightly less loud because it huwts
+      my ears
+  ancient-engineer:
+  - bugfix: fixed attacking a mirror giving you /datum/component/ instead of /datum/component/omen
+  notghosti:
+  - code_imp: Nuked sentient disease code.
+2025-08-14:
+  BingusSS13:
+  - qol: Service borgs can now hold beakers, bottles, and coffeepots.
+  - bugfix: Service borgs are now capable of cooking eggs on griddles, let's get cracking!

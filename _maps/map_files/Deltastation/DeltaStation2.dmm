@@ -8730,7 +8730,9 @@
 /area/station/science/circuits)
 "bWL" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/railing{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 4
 	},
 /turf/open/floor/sandy_dirt,
@@ -12774,7 +12776,10 @@
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
 "cVt" = (
-/obj/structure/railing,
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics")
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "cVx" = (
@@ -19656,6 +19661,9 @@
 "eGr" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/light/directional/east,
+/mob/living/basic/chicken{
+	forced_gender = "female"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "eGs" = (
@@ -21372,9 +21380,6 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
-/mob/living/basic/chicken{
-	forced_gender = "male"
-	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "fam" = (
@@ -23625,7 +23630,8 @@
 /area/station/maintenance/disposal/incinerator)
 "fzD" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "fzF" = (
@@ -36618,9 +36624,8 @@
 /area/station/medical/medbay)
 "iBc" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/nestbox,
 /mob/living/basic/chicken{
-	forced_gender = "female"
+	forced_gender = "male"
 	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -42662,6 +42667,9 @@
 "jVg" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "jVj" = (
@@ -44260,9 +44268,8 @@
 /area/station/service/hydroponics)
 "kmy" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "kmE" = (
@@ -46596,7 +46603,6 @@
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
 "kSi" = (
-/obj/structure/nestbox,
 /obj/machinery/light/directional/west,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
@@ -53635,11 +53641,6 @@
 	},
 /turf/open/floor/iron/edge,
 /area/station/hallway/primary/central/aft)
-"mBG" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/nestbox,
-/turf/open/floor/sandy_dirt,
-/area/station/service/hydroponics/chicken)
 "mBQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/east{
@@ -79461,11 +79462,10 @@
 /area/station/service/theater)
 "sLc" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/railing{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 8
-	},
-/mob/living/basic/chicken{
-	forced_gender = "male"
 	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -82873,6 +82873,9 @@
 /area/station/science/robotics/lab)
 "tCH" = (
 /obj/machinery/light/directional/west,
+/mob/living/basic/chicken/brown{
+	forced_gender = "female"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "tCI" = (
@@ -93092,12 +93095,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vZQ" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/mob/living/basic/chicken/brown{
-	forced_gender = "female"
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "vZV" = (
@@ -130958,7 +130957,7 @@ qgU
 qgU
 pAd
 doY
-mBG
+kaw
 tCH
 doY
 qsn
@@ -131210,7 +131209,7 @@ isH
 nVF
 doY
 doY
-wFr
+wRJ
 doY
 doY
 maW
