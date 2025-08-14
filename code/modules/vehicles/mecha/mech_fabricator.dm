@@ -74,6 +74,10 @@
 	)
 	//monke edit end
 
+/obj/machinery/mecha_part_fabricator/emagged
+	obj_flags = parent_type::obj_flags | EMAGGED
+	authorization_override = TRUE
+
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		connect_techweb(SSresearch.science_tech)
