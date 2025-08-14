@@ -31,6 +31,7 @@
 	UNREGISTER_POLLUTION(src)
 	if(my_turf?.pollution == src)
 		my_turf.pollution = null
+	my_turf = null
 	return ..()
 
 /datum/pollution/proc/touch_act(mob/living/carbon/victim)
