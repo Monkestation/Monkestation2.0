@@ -50,6 +50,6 @@
 
 	user.temporarilyRemoveItemFromInventory(attire)
 
-	sharp_dresser.equip_to_slot_if_possible(attire, attire.slot_flags)
+	sharp_dresser.equip_to_slot_if_possible(attire, attire.slot_flags, bypass_equip_delay_self = TRUE)
 
 	return finish_equip_mob(attire, sharp_dresser, user)
