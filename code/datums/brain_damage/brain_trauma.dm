@@ -12,9 +12,9 @@
 	var/gain_text = span_notice("You feel traumatized.")
 	var/lose_text = span_notice("You no longer feel traumatized.")
 	var/can_gain = TRUE
-	var/random_gain = TRUE //can this be gained through random traumas?
 	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
-	var/clonable = TRUE // will this transfer if the brain is cloned?
+	/// Flags for this trauma. See `TRAUMA_X` defines.
+	var/trauma_flags = TRAUMA_DEFAULT_FLAGS
 
 /datum/brain_trauma/Destroy()
 	// Handles our references with our brain
@@ -25,9 +25,9 @@
 	return ..()
 
 /datum/brain_trauma/proc/on_clone()
-	if(clonable)
+	if(trauma_flags & TRAUMA_CLONEABLE)
 		return new type
-		
+
 //Called on life ticks
 /datum/brain_trauma/proc/on_life(seconds_per_tick, times_fired)
 	return

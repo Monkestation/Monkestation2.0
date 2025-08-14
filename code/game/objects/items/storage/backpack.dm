@@ -839,7 +839,7 @@
 	new /obj/item/flashlight/seclite(src)
 
 /obj/item/storage/backpack/cursed
-	name = "Unremoveable backpack"
+	name = "Dirty Duffelbag"
 	desc = "A cursed backpack"
 	icon_state = "duffel-explorer"
 	inhand_icon_state = "duffel-explorer"

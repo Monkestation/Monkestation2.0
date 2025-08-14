@@ -245,6 +245,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 
+	if(address in SSoverwatch?.cached_asn_bans)
+		log_access("Overwatch: [ckey] denied due to cached ASN ban ([address])")
+		return null
+
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 

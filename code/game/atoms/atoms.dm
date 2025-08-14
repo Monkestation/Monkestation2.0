@@ -168,10 +168,12 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
+#ifndef DISABLE_DEMOS
 		// monkestation start: replays
 		if(!(flags_1 & DEMO_IGNORE_1))
 			SSdemo.mark_new(src)
 		// monkestation end
+#endif
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -240,7 +242,8 @@
 	// This MUST come after atom_integrity is set above, as if old materials get removed,
 	// atom_integrity is checked against max_integrity and can BREAK the atom.
 	// The integrity to max_integrity ratio is still preserved.
-	set_custom_materials(custom_materials)
+	if(custom_materials)
+		set_custom_materials(custom_materials)
 
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)

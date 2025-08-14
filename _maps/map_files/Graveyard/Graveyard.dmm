@@ -3330,10 +3330,11 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "blV" = (
-/obj/structure/railing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/bush/flowers_br/style_random,
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "bme" = (
@@ -5391,6 +5392,12 @@
 /obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"cbu" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/nestbox,
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "cbz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced,
@@ -11098,6 +11105,11 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"enm" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "eno" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/siding/dark{
@@ -18080,10 +18092,9 @@
 /area/station/construction/storage_wing)
 "gZb" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "gZu" = (
@@ -20414,7 +20425,9 @@
 /turf/open/floor/iron,
 /area/graveyard/bunker/engineering)
 "hRV" = (
-/obj/structure/railing{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 1
 	},
 /turf/open/floor/sandy_dirt,
@@ -22433,12 +22446,12 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
 "iKl" = (
-/obj/structure/railing{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 1
 	},
-/mob/living/basic/chicken{
-	forced_gender = "male"
-	},
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "iKm" = (
@@ -28423,7 +28436,6 @@
 /turf/open/floor/iron/dark,
 /area/graveyard/bunker/security)
 "lbE" = (
-/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "lbP" = (
@@ -39210,9 +39222,7 @@
 /area/station/cargo/quartermaster)
 "pht" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/railing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /mob/living/basic/chicken/brown{
 	forced_gender = "female"
 	},
@@ -49626,6 +49636,10 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"tqk" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "tqm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54852,10 +54866,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/graveyard/bunker/security)
 "vqr" = (
-/obj/structure/railing{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "vqv" = (
@@ -58670,6 +58683,15 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/hallway/primary/aft)
+"wPj" = (
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
+	dir = 1
+	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics/chicken)
 "wPt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -175092,7 +175114,7 @@ jou
 kJg
 sJE
 kJg
-iKl
+hRV
 lbE
 cqY
 lxN
@@ -175864,7 +175886,7 @@ piW
 tiG
 kJg
 ocx
-blV
+iKl
 lbE
 cqY
 apW
@@ -176121,7 +176143,7 @@ kJg
 pYz
 kJg
 kJg
-hRV
+tqk
 fXn
 cqY
 apW
@@ -176634,7 +176656,7 @@ kqi
 kJg
 vvp
 kJg
-vqr
+wPj
 lbE
 cqY
 lxN
@@ -176891,7 +176913,7 @@ wvB
 kJg
 vvp
 kJg
-blV
+cbu
 djz
 cqY
 ulW
@@ -177405,7 +177427,7 @@ hzX
 oPS
 nsj
 gLN
-hRV
+enm
 vHb
 lil
 xQi
@@ -177919,7 +177941,7 @@ iEq
 iSH
 itz
 oPS
-hRV
+tqk
 lil
 vkh
 xQi
@@ -178176,7 +178198,7 @@ bvN
 ity
 oPS
 oPS
-hRV
+tqk
 vHb
 lil
 xQi

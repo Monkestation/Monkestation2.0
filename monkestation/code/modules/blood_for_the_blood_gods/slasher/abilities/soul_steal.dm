@@ -12,7 +12,7 @@
 
 	cooldown_time = 20 SECONDS // maximum cooldown you can have for eating souls
 
-	var/sucking_time = 4 SECONDS // how long should we suck for?
+	var/sucking_time = 5 SECONDS // how long should we suck for?
 
 	var/quick_eater = FALSE // used in an activate() check to see if they recently ate a soul
 
@@ -100,10 +100,18 @@
 		located.mutant_color = "#FFFFFF"
 
 	human_target.update_body(is_creating = TRUE)
-
+	human_target.maxHealth -= 20
 	slasherdatum.souls_sucked++
+
 
 	// lets make their machette stronger
 	slasherdatum.linked_machette.force += 2
 	slasherdatum.linked_machette.throwforce += 2
+
+	if(slasherdatum.souls_sucked == 18)
+		slasherdatum.linked_apron.set_armor(/datum/armor/slasher/level3)
+	else if(slasherdatum.souls_sucked == 12)
+		slasherdatum.linked_apron.set_armor(/datum/armor/slasher/level2)
+	else if(slasherdatum.souls_sucked == 6)
+		slasherdatum.linked_apron.set_armor(/datum/armor/slasher/level1)
 	return COMPONENT_HOSTILE_NO_ATTACK

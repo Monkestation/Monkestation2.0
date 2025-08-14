@@ -27,6 +27,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	var/held_state = "microwave_standard"
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
 	/// How dirty is it?
@@ -55,6 +56,8 @@
 	create_reagents(100)
 	soundloop = new(src, FALSE)
 	update_appearance(UPDATE_ICON)
+	AddComponent(/datum/component/throwable_structure, held_state = held_state, held_force = 14, \
+											throw_force = 20, throw_knockdown = 1.5 SECONDS, held_slowdown = 1, impact_sound = 'sound/effects/bang.ogg')
 
 /obj/machinery/microwave/Exited(atom/movable/gone, direction)
 	if(gone in ingredients)

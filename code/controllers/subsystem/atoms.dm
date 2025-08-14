@@ -103,7 +103,9 @@ SUBSYSTEM_DEF(atoms)
 				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, TRUE, mapload_arg)
 				PROFILE_INIT_ATOM_END(A)
+#ifndef DISABLE_DEMOS
 		SSdemo.mark_multiple_new(atoms) // monkestation edit: replays
+#endif
 	else
 		#ifdef TESTING
 		count = 0
@@ -124,7 +126,9 @@ SUBSYSTEM_DEF(atoms)
 					stoplag()
 					if(mapload_source)
 						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
+#ifndef DISABLE_DEMOS
 		SSdemo.mark_multiple_new(atoms_to_mark) // monkestation edit: replays
+#endif
 
 	testing("Initialized [count] atoms")
 

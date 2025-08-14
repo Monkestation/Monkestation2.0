@@ -147,7 +147,7 @@
 		if(worn.clothing_flags & THICKMATERIAL)
 			protection_flags |= worn.body_parts_covered
 
-	var/missing_limbs = FULL_BODY
+	var/missing_limbs = FULL_BODY & ~(CHEST|GROIN)
 	for(var/obj/item/bodypart/limb in slime.bodyparts)
 		var/bodypart_flags = limb.body_part
 		// stupid thing needed because arms/legs don't include the hand/foot flags.

@@ -75,10 +75,10 @@
 	return ..()
 
 /datum/status_effect/frenzy/tick()
-	var/mob/living/carbon/human/user = owner
-	if(!bloodsuckerdatum?.frenzied)
+	if(!bloodsuckerdatum?.frenzied || bloodsuckerdatum.bloodsucker_blood_volume >= FRENZY_THRESHOLD_EXIT)
+		qdel(src)
 		return
-	user.adjustFireLoss(1.5 + (bloodsuckerdatum.humanity_lost / 10))
+	owner.take_overall_damage(burn = 1.5 + (bloodsuckerdatum.humanity_lost / 10))
 
 /datum/movespeed_modifier/bloodsucker_frenzy
 	multiplicative_slowdown = -0.4
