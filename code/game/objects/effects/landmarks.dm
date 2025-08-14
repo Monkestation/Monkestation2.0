@@ -309,7 +309,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/thanos
 	name = "thanos start"
 
-/obj/effect/landmark/start/thanos/Initialize()
+/obj/effect/landmark/start/thanos/Initialize(mapload)
 	..()
 	GLOB.thanos_start += loc
 	return INITIALIZE_HINT_QDEL
@@ -317,7 +317,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/thanos_portal
 	name = "thanos portal"
 
-/obj/effect/landmark/start/thanos_portal/Initialize()
+/obj/effect/landmark/start/thanos_portal/Initialize(mapload)
 	..()
 	GLOB.thanos_portal += loc
 	return INITIALIZE_HINT_QDEL
