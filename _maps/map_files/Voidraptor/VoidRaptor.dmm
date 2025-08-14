@@ -36094,6 +36094,9 @@
 	dir = 6
 	},
 /obj/effect/landmark/start/security_officer,
+/obj/structure/desk_bell/departmental/security{
+	desc = "The cornerstone of any customer service job. Ringing it sends an announcement to the relevant radio channel. This one is oddly dusty and unused."
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -48177,13 +48180,13 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/structure/desk_bell{
-	pixel_x = -7;
-	pixel_y = 8
-	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Engineering Desk";
 	req_access = list("engineering")
+	},
+/obj/structure/desk_bell/departmental/engineering{
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/lobby)
@@ -55421,10 +55424,6 @@
 /obj/item/folder/white{
 	pixel_x = -4
 	},
-/obj/structure/desk_bell{
-	pixel_x = 6;
-	pixel_y = 1
-	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Medbay Front Desk";
 	req_access = list("medical")
@@ -55433,6 +55432,10 @@
 	id = "paramed_dispatch_desk";
 	name = "Desk Shutters";
 	dir = 8
+	},
+/obj/structure/desk_bell/departmental/medical{
+	pixel_x = 6;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/lobby)
@@ -58356,9 +58359,6 @@
 /area/station/security/prison/garden)
 "qhz" = (
 /obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Head of Personnel's Desk";
@@ -58371,6 +58371,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/window/right/directional/west{
 	name = "Head of Personnel's Desk"
+	},
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_x = 7
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/hop)
@@ -58564,9 +58567,6 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/structure/desk_bell{
-	pixel_x = -6
-	},
 /obj/machinery/door/window/left/directional/west{
 	name = "Research Lab Desk";
 	req_access = list("science")
@@ -58575,6 +58575,9 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
 	name = "Research and Development Shutter"
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -6
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/lab)
@@ -74373,9 +74376,6 @@
 "uzc" = (
 /obj/structure/table,
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
-	pixel_x = -8
-	},
 /obj/item/folder/yellow{
 	pixel_x = 3;
 	pixel_y = 4
@@ -74387,6 +74387,9 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Cargo Desk";
 	req_access = list("cargo")
+	},
+/obj/structure/desk_bell/departmental/supply{
+	pixel_x = -8
 	},
 /turf/open/floor/iron/textured,
 /area/station/cargo/office)

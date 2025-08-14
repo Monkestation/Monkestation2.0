@@ -9871,9 +9871,6 @@
 	id = "hopflash"
 	},
 /obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = -6
-	},
 /obj/machinery/door/window/left/directional/north{
 	dir = 8;
 	name = "Reception"
@@ -9887,6 +9884,7 @@
 	name = "Privacy Shutters";
 	dir = 8
 	},
+/obj/structure/desk_bell/departmental/command/hop,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/hop)
 "dgK" = (
@@ -20176,7 +20174,8 @@
 	id = "genetics_shutters";
 	name = "Genetics Shutters"
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/science{
+	bell_location = "Genetics Desk";
 	pixel_x = 7
 	},
 /turf/open/floor/iron/white/textured,
@@ -22161,7 +22160,7 @@
 	name = "Medbay Front Desk Shutters";
 	dir = 8
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/medical{
 	pixel_x = -6
 	},
 /turf/open/floor/iron/white/textured,
@@ -23784,10 +23783,7 @@
 	id = "brig_post";
 	name = "Security Shutters"
 	},
-/obj/structure/desk_bell{
-	pixel_y = 2;
-	pixel_x = 6
-	},
+/obj/structure/desk_bell/departmental/security,
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
 "hDv" = (
@@ -46677,8 +46673,8 @@
 	id = "rad_shutters";
 	name = "RaD Shutters"
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = 6
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lab)
@@ -49687,11 +49683,11 @@
 	name = "Cargo Desk Shutters";
 	dir = 1
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7;
-	pixel_y = 7
-	},
 /obj/item/papercutter,
+/obj/structure/desk_bell/departmental/supply{
+	pixel_y = 7;
+	pixel_x = 7
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/office)
 "pXY" = (
@@ -68816,10 +68812,7 @@
 	name = "Engineering Shutters";
 	dir = 8
 	},
-/obj/structure/desk_bell{
-	pixel_y = 10;
-	pixel_x = -6
-	},
+/obj/structure/desk_bell/departmental/engineering,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/break_room)
 "wcj" = (

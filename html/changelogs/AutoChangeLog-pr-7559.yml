@@ -1,0 +1,7 @@
+author: "Tractor Maam"
+delete-after: True
+changes:
+  - rscadd: "Departmental Bells have replaced the desk bells at the front desk of every station. These bells ring onto the respective department channel when rung (60 second cooldown.)"
+  - rscadd: "All bells can now be anchored with a wrench left click."
+  - rscadd: "Maps that did not contain a bell for certain departments have been updated."
+  - image: "desk bells have had their sprites replaced with Yogstation ones."
