@@ -120,7 +120,7 @@
 	id = "temp xray"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
-	duration = 10 SECONDS
+	duration = 8 SECONDS
 	show_duration = TRUE
 
 /datum/status_effect/temporary_xray/on_apply()
