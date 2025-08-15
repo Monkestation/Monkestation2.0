@@ -17973,7 +17973,7 @@
 /area/station/service/library)
 "nPQ" = (
 /obj/machinery/camera/directional/east{
-	c_tag = ssss
+	c_tag = null
 	},
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
