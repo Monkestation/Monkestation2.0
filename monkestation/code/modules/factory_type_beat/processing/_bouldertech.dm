@@ -434,7 +434,7 @@
 	else
 		exotic_removal(specific_resource)
 
-	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /**
