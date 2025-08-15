@@ -6380,6 +6380,9 @@
 	name = "Brig Desk";
 	req_access = list("brig_entrance")
 	},
+/obj/structure/desk_bell/departmental/security{
+	pixel_x = -8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "awR" = (
@@ -8948,6 +8951,10 @@
 	layer = 2.9
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_y = 9;
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "aGz" = (
@@ -12335,9 +12342,13 @@
 	pixel_x = 9;
 	pixel_y = 4
 	},
-/obj/machinery/door/window/right/directional/north{
+/obj/structure/desk_bell/departmental/supply{
+	pixel_x = -6
+	},
+/obj/machinery/door/window/right/directional/south{
 	req_access = list("shipping")
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "aWu" = (
@@ -16590,6 +16601,9 @@
 	name = "Research Shutters"
 	},
 /obj/item/folder/white,
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -8
+	},
 /turf/open/floor/plating,
 /area/station/science/research)
 "bqd" = (
@@ -21922,6 +21936,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
+/obj/structure/desk_bell/departmental/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
 "bOO" = (
@@ -50080,6 +50095,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
+/obj/structure/desk_bell/departmental/medical{
+	pixel_x = 9
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "ulu" = (
