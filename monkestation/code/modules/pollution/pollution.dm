@@ -26,7 +26,6 @@
 		if(LAZYLEN(managed_overlay.vis_locs) == 0)
 			qdel(managed_overlay)
 		managed_overlay = null
-	REMOVE_POLLUTION_CURRENTRUN(src)
 	SET_UNACTIVE_POLLUTION(src)
 	UNREGISTER_POLLUTION(src)
 	if(my_turf?.pollution == src)
