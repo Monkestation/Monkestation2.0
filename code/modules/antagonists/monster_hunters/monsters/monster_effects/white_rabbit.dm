@@ -10,8 +10,6 @@
 	var/real_icon_state = "bnnuy-rift"
 	/// The antag datum of the monster hunter that can see us.
 	var/datum/antagonist/monsterhunter/hunter_antag
-	/// Has the rabbit already whispered?
-	var/being_used = FALSE
 	/// Is this rabbit selected to drop the gun?
 	var/drop_gun = FALSE
 	/// Proximity monitor that gives the hunter x-ray vision
@@ -25,8 +23,8 @@
 	var/image/hunter_image = image(icon, src, real_icon_state, OBJ_LAYER)
 	SET_PLANE_EXPLICIT(hunter_image, ABOVE_LIGHTING_PLANE, src)
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/bnnuy_rift, "bnnuy_rift", hunter_image, hunter_antag.owner)
-	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
+	AddElement(/datum/element/block_turf_fingerprints)
 	monitor = new(src, 7)
 
 /obj/effect/bnnuy/Destroy(force)
@@ -38,18 +36,34 @@
 /obj/effect/bnnuy/examine(mob/user)
 	. = ..()
 	if(hunter_antag)
-		. += span_info("You have found [hunter_antag.rabbits_spotted] out of 5 rabbits.")
+		. += span_info("Use your hunter weapon in order to tear open the rift. ") + span_warning("This will be visible to anyone nearby!")
+		. += span_info("You have opened [hunter_antag.rabbits_spotted] out of 5 rifts.")
+
+/obj/effect/bnnuy/attackby(obj/item/weapon, mob/user, params)
+	if(user.mind != hunter_antag.owner)
+		if(isobserver(user))
+			return
+		else
+			CRASH("Someone who wasn't a hunter or an observer clicked a wonderland rift??")
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+	if(!istype(weapon, /obj/item/melee/trick_weapon))
+		to_chat(user, span_warning("You must use your hunter weapon in order to tear open the wonderland rift!"))
+		return
+	balloon_alert(user, "opening rift!")
+	user.visible_message(span_danger("[user] stabs \the [weapon] into the ground, beginning to slice through something unseen!"))
+	if(!do_after(user, 10 SECONDS, src))
+		return
+	user.visible_message(span_danger("[user] plunges \the [weapon] deep into the ground, tearing it open!"), span_notice("You plunge \the [weapon] deep into the ground, slicing open the rift to the wonderland!"))
+	open_rift(user)
+	SEND_SIGNAL(hunter_antag, COMSIG_GAIN_INSIGHT)
+	qdel(src)
 
 /obj/effect/bnnuy/attack_hand(mob/living/user, list/modifiers)
 	if(user?.mind != hunter_antag.owner)
 		return SECONDARY_ATTACK_CALL_NORMAL
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(being_used)
-		return
-	being_used = TRUE
-	open_rift(user)
-	SEND_SIGNAL(hunter_antag, COMSIG_GAIN_INSIGHT)
-	qdel(src)
+	to_chat(user, span_warning("You must use your hunter weapon in order to tear open the wonderland rift!"))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/effect/bnnuy/proc/verify_user_can_see(mob/user)
 	return (user?.mind == hunter_antag.owner)
@@ -68,13 +82,12 @@
 	if(length(extra_logs) > 0)
 		msg += ", which dropped [english_list(extra_logs)]"
 	user.log_message(msg, LOG_GAME)
-	// spawn a wonderland rift right here in 20-60 seconds
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_new), /obj/effect/anomaly/dimensional/wonderland/rift, get_turf(src), null, FALSE), rand(20 SECONDS, 1 MINUTES))
+	new /obj/effect/anomaly/dimensional/wonderland/rift(get_turf(src), null, FALSE)
 	var/rabbit_amount = max(rand(hunter_antag.rabbits_spotted, hunter_antag.rabbits_spotted + 2), 2)
 	// spawn (benign) rabbits randomly around the station
 	for(var/i = 1 to rabbit_amount)
 		var/turf/target_turf = get_safe_random_station_turf_equal_weight()
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_new), /obj/effect/wonderland_rabbit_enter, target_turf), rand(5 SECONDS, 30 SECONDS))
+		new /obj/effect/wonderland_rabbit_enter(target_turf)
 
 /obj/effect/bnnuy/proc/give_gun(mob/living/user)
 	user.put_in_hands(new /obj/item/gun/ballistic/revolver/hunter_revolver(drop_location()))
