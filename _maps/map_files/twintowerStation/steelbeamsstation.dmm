@@ -11129,7 +11129,7 @@
 "iJP" = (
 /obj/machinery/door/poddoor{
 	id = "ScramR";
-	name = "SCRAM door"
+	name = "SCRAM Door"
 	},
 /turf/open/openspace{
 	initial_gas_mix = null
@@ -15742,7 +15742,7 @@
 /area/station/science/ordnance/burnchamber)
 "lYb" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "2MI NPP Back door"
+	name = "2MI NPP Back Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/structure/cable,
@@ -17973,6 +17973,7 @@
 /area/station/service/library)
 "nPQ" = (
 /obj/machinery/camera/directional/east{
+	c_tag = ssss
 	},
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
@@ -18564,7 +18565,7 @@
 "ojQ" = (
 /obj/machinery/door/poddoor{
 	id = "ScramL";
-	name = "SCRAM door"
+	name = "SCRAM Door"
 	},
 /turf/open/openspace,
 /area/station/engineering/supermatter/one)
@@ -24325,11 +24326,6 @@
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
-"sAM" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/iron/textured,
-/area/station/cargo/office)
 "sBz" = (
 /obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark,
@@ -27015,7 +27011,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/navigate_destination/chemfactory,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
@@ -130339,7 +130334,7 @@ bZk
 bZk
 lGQ
 lGQ
-sAM
+wWr
 bCl
 oat
 bkQ
@@ -130596,7 +130591,7 @@ bZk
 bZk
 lGQ
 lGQ
-sAM
+wWr
 nEd
 ece
 lGQ
@@ -130853,7 +130848,7 @@ bZk
 bZk
 lGQ
 lGQ
-sAM
+wWr
 nEd
 ece
 lGQ
@@ -131110,7 +131105,7 @@ bZk
 bZk
 lGQ
 lGQ
-sAM
+wWr
 nEd
 rFe
 ece
