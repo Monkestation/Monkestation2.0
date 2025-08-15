@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers, /datum/computer_file/program/messenger)
 		return
 
 	GLOB.pda_messengers[messenger_ref] = messenger
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MESSENGER_ADDED, messenger)
 
 /// Unregisters an NTMessenger instance from the pda_messengers table.
 /proc/remove_messenger(datum/computer_file/program/messenger/messenger)
@@ -27,6 +28,7 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers, /datum/computer_file/program/messenger)
 		return
 
 	GLOB.pda_messengers.Remove(messenger_ref)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MESSENGER_REMOVED, messenger)
 
 /// Gets all messengers, sorted by their name
 /proc/get_messengers_sorted_by_name()
