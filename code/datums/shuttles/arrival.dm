@@ -41,3 +41,4 @@
 /datum/map_template/shuttle/arrival/steelbeam
 	suffix = "steelbeam"
 	name = "arrival shuttle (steelbeam)"
+

@@ -10500,7 +10500,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ikO" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /obj/structure/railing/wooden_fencing{
 	dir = 4;
 	pixel_x = 0;
@@ -17973,7 +17973,6 @@
 /area/station/service/library)
 "nPQ" = (
 /obj/machinery/camera/directional/east{
-	c_tag = ssss
 	},
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
@@ -21820,10 +21819,6 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/large,
 /area/station/engineering/a2MINPP/exterior)
-"qxr" = (
-/obj/structure/ladder,
-/turf/open/floor/iron/smooth_large,
-/area/station/outside)
 "qxS" = (
 /obj/structure/fence{
 	dir = 8
@@ -23369,7 +23364,6 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "rKv" = (
-/obj/structure/stairs/south,
 /obj/structure/stairs/south,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
@@ -27877,13 +27871,6 @@
 /obj/machinery/porta_turret/ai,
 /turf/open/floor/iron,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"uQz" = (
-/obj/structure/railing,
-/obj/structure/stairs/west,
-/obj/structure/railing,
-/obj/structure/stairs/west,
-/turf/open/floor/plating,
-/area/station/maintenance/central/lesser)
 "uQH" = (
 /obj/structure/railing{
 	dir = 4
@@ -30312,7 +30299,7 @@
 /turf/open/floor/iron,
 /area/station/command/teleporter)
 "wLz" = (
-/obj/machinery/hydroponics/soil,
+/obj/machinery/growing/soil,
 /turf/open/misc/dirt/station,
 /area/station/outside)
 "wLN" = (
@@ -129755,7 +129742,7 @@ dzP
 rDx
 rDx
 rDx
-nFa
+rDx
 rDx
 rDx
 rDx
@@ -195291,7 +195278,7 @@ bNQ
 bNQ
 bNQ
 bNQ
-nAQ
+bNQ
 bNQ
 bNQ
 bNQ
@@ -196852,7 +196839,7 @@ bEq
 wjc
 agq
 blQ
-uQz
+bNl
 bEq
 mxz
 jou
@@ -260827,7 +260814,7 @@ bNQ
 bNQ
 bNQ
 qcx
-nAQ
+bNQ
 bNQ
 bNQ
 bNQ
@@ -326363,7 +326350,7 @@ bNQ
 bNQ
 bNQ
 bNQ
-nAQ
+bNQ
 bNQ
 bNQ
 bNQ
@@ -391899,7 +391886,7 @@ bNQ
 bNQ
 bNQ
 bNQ
-nAQ
+bNQ
 bNQ
 bNQ
 bNQ
@@ -457435,7 +457422,7 @@ bNQ
 bNQ
 bNQ
 qcx
-nAQ
+bNQ
 bNQ
 bNQ
 bNQ
@@ -522971,7 +522958,7 @@ kcS
 kcS
 kcS
 eaV
-qxr
+kcS
 khF
 kcS
 riQ
