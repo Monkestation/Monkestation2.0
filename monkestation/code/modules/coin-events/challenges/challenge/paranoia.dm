@@ -32,7 +32,7 @@
 
 /datum/challenge/paranoia/on_remove()
 	. = ..()
-	current_human.cure_trauma_type(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
+	astype(host.mob, /mob/living/carbon)?.cure_trauma_type(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/challenge/paranoia/process()
 	if(added)
