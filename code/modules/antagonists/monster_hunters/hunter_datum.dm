@@ -29,6 +29,7 @@
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_HARDLY_WOUNDED,
 	)
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
