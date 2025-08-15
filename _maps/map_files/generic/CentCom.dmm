@@ -7957,7 +7957,7 @@
 	json_key = "cargo";
 	name = "CentCom";
 	shuttle_id = "cargo_away";
-	width = 20
+	width = 34
 	},
 /turf/open/space/basic,
 /area/space)
