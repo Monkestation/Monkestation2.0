@@ -52,6 +52,7 @@ SUBSYSTEM_DEF(pollution)
 	if(pollution_task == POLLUTION_TASK_PROCESS)
 		if(!resumed)
 			current_run = active_pollution.Copy()
+			processed_this_run.Cut()
 		current_run_cache = current_run
 		while(length(current_run_cache))
 			var/datum/pollution/pollution = current_run_cache[length(current_run_cache)]
