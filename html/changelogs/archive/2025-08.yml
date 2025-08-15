@@ -316,3 +316,12 @@
   BingusSS13:
   - qol: Service borgs can now hold beakers, bottles, and coffeepots.
   - bugfix: Service borgs are now capable of cooking eggs on griddles, let's get cracking!
+  Tractor Maam:
+  - rscadd: Departmental Bells have replaced the desk bells at the front desk of every
+      station. These bells ring onto the respective department channel when rung (60
+      second cooldown.)
+  - rscadd: All bells can now be anchored with a wrench left click.
+  - rscadd: Maps that did not contain a bell for certain departments have been updated.
+  - image: desk bells have had their sprites replaced with Yogstation ones.
+  Wisemonster:
+  - balance: Lone Op's minimum/starting weight decreased to 0
