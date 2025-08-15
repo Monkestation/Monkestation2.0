@@ -421,7 +421,7 @@
 	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 	organ_owner.AddElement(/datum/element/tenacious)
 
-obj/item/organ/internal/brain/lizard
+/obj/item/organ/internal/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
 	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
