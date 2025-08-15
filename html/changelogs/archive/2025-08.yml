@@ -325,3 +325,11 @@
   - image: desk bells have had their sprites replaced with Yogstation ones.
   Wisemonster:
   - balance: Lone Op's minimum/starting weight decreased to 0
+2025-08-15:
+  leaKsi:
+  - bugfix: (SmArtKar) Putting people you're fireman carrying into contractor pods
+      no longer sends both of you to zelda's shadow realm.
+  - bugfix: (Sealed101) Fixed equipping straight jackets onto people with attack-equip
+      then equipping another jacket through the equip window causing magical jacket
+      consumption into the recipient's contents.
+  - bugfix: Monkification no longer magically changes your ID/PDA name.
