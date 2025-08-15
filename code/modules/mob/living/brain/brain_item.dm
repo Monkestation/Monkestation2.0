@@ -424,7 +424,7 @@
 /obj/item/organ/internal/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
-	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_TACKLING_TAILED_DEFENDER)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
