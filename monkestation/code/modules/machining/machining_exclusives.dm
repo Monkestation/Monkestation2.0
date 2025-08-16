@@ -129,7 +129,9 @@
 	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/energy/pulse/makeshift/Destroy()
-	QDEL_NULL(ammo_pack)
+	//we do this check as a precaution (read: pass checks) since the backpack itself should have already deleted this
+	if(!QDELETED(ammo_pack))
+		qdel(ammo_pack)
 	return ..()
 
 /obj/item/gun/energy/pulse/makeshift/attack_self(mob/living/user)
