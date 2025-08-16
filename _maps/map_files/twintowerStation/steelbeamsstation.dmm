@@ -38760,7 +38760,7 @@
 "uVf" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/on{
 	dir = 4;
-	filter_type = list(nitrogen)
+	filter_type = list(/datum/gas/nitrogen)
 	},
 /turf/open/floor/plastic,
 /area/station/engineering/a2MINPP/staging)
