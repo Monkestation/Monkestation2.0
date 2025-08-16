@@ -108,6 +108,29 @@
 	result = /obj/item/food/salad/hawaiian_fried_rice
 	category = CAT_MARTIAN
 
+/datum/crafting_recipe/food/pineapple_rice
+	name = "Hawaiian pineapple rice"
+	reqs = list(
+		/obj/item/food/grown/pineapple = 1,
+		/datum/reagent/consumable/rice = 5
+	)
+	result = /obj/item/food/salad/pineapple_rice
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/pineapple_friedrice
+	name = "Hawaiian pineapple fried rice"
+	reqs = list(
+		/obj/item/food/grown/pineapple = 1,
+		/obj/item/food/boiledrice = 5,
+		/obj/item/food/pineappleslice/grilled = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/carrot = 1,
+		/datum/reagent/consumable/lemonjuice = 1,
+		/datum/reagent/consumable/limejuice = 1
+	)
+	result = /obj/item/food/salad/pineapple_friedrice
+	category = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/ketchup_fried_rice
 	name = "Ketchup fried rice"
 	reqs = list(

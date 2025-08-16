@@ -676,6 +676,13 @@
 	light_outer_range = 7 //luminosity when on
 	light_system = OVERLAY_LIGHT
 
+/obj/item/flashlight/lantern/pineapple
+	name = "pineapp-o'-lantern"
+	desc = "A lantern, in a pineapple."
+	icon_state = "pineappolantern"
+	inhand_icon_state = "pineappolantern"
+	light_outer_range = 5
+
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
