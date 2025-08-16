@@ -27,7 +27,7 @@
 	item_flags = XENOMORPH_HOLDABLE
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
-
+	var/neutered = FALSE // if the facehugger is able to create a queen
 	var/sterile = FALSE
 	var/real = TRUE //0 for the toy, 1 for real. Sure I could istype, but fuck that.
 	var/strength = 5
@@ -54,13 +54,13 @@
 
 /obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if((stat == CONSCIOUS && !sterile) && !isalien(user))
+	if((stat == CONSCIOUS && !sterile && !neutered) && !isalien(user))
 		if(Leap(user))
 			return COMSIG_LIVING_CANCEL_PULL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
-	if((stat == CONSCIOUS && !sterile) && !isalien(user))
+	if((stat == CONSCIOUS && !sterile && !neutered) && !isalien(user))
 		if(Leap(user))
 			return
 	. = ..()
@@ -81,6 +81,8 @@
 			. += span_boldannounce("[src] seems to be active!")
 	if (sterile)
 		. += span_boldannounce("It looks like the proboscis has been removed.")
+	if (neutered)
+		. += span_boldannounce("It looks like the proboscis is full of a green fluid.")
 
 /obj/item/clothing/mask/facehugger/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 300)
@@ -146,6 +148,8 @@
 
 /obj/item/clothing/mask/facehugger/proc/Leap(mob/living/hit_mob)
 	//check if not carbon/alien/has facehugger already/ect.
+	if(neutered)
+		return FALSE //neutered facehuggers can't leap
 	if(!valid_to_attach(hit_mob))
 		return FALSE
 	var/mob/living/carbon/target = hit_mob
@@ -183,7 +187,7 @@
 	addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
 
 
-	if(!sterile)
+	if(!sterile && !neutered)
 		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
 		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
 
@@ -213,7 +217,10 @@
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
-			new /obj/item/organ/internal/body_egg/alien_embryo(target)
+			if(neutered)
+				new /obj/item/organ/internal/body_egg/alien_embryo/neutered(target)
+			else
+				new /obj/item/organ/internal/body_egg/alien_embryo(target)
 			target.log_message("was impregnated by a facehugger", LOG_GAME)
 			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
 			if(target.stat != DEAD && istype(target.buckled, /obj/structure/bed/nest)) //Handles toggling the nest sustenance status effect if the user was already buckled to a nest.
@@ -269,8 +276,8 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
-	sterile = TRUE
+	desc = "The Research Director's pet, a facehugger. Its tail falls limp behind it, and its proboscis is full of a glowing green fluid. It acts sluggish, as if its tired."
+	neutered = TRUE
 
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
