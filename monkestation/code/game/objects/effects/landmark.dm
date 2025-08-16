@@ -137,8 +137,8 @@
 	icon = 'monkestation/icons/mob/landmarks.dmi'
 	icon_state = "Brig Physician"
 
-/obj/effect/landmark/start/nanotrasen_representative
-	name = "Nanotrasen Representative"
+/obj/effect/landmark/start/corporate_liaison
+	name = "Corporate Liaison"
 	icon_state = "Nanotrasen Representative"
 
 /obj/effect/landmark/start/blueshield

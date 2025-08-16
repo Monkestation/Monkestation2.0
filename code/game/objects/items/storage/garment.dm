@@ -38,6 +38,11 @@
 	name = "quartermasters's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the quartermaster."
 
+/obj/item/storage/bag/garment/corporate_liaison
+	name = "corporate liaisons's garment bag"
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the corporate liaison."
+
+/obj/item/storage/bag/garment/liaison/PopulateContents()
 /obj/item/storage/bag/garment/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL

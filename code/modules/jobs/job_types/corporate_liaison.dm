@@ -1,5 +1,5 @@
-/datum/job/nanotrasen_representative
-	title = JOB_NANOTRASEN_REPRESENTATIVE
+/datum/job/corporate_liaison
+	title = JOB_CORPORATE_LIAISON
 	description = "Ensure company interests and report whether Standard Operating Procedure is upheld onboard the station, and get out as soon as you can when it inevitably falls apart. You do not have the authority to give orders, except to the blueshield."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("CentCom")
@@ -11,27 +11,27 @@
 	minimal_player_age = 30
 	exp_requirements = 3000
 	exp_required_type = EXP_TYPE_CREW
-	exp_required_type_department = EXP_TYPE_CENTRAL_COMMAND
+	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
-	config_tag = "NANOTRASEN_REPRESENTATIVE"
+	config_tag = "CORPORATE_LIAISON"
 
 	allow_bureaucratic_error = FALSE
 	allow_overflow = FALSE
 
-	outfit = /datum/outfit/job/nanotrasen_representative
-	plasmaman_outfit = /datum/outfit/plasmaman/centcom_official
+	outfit = /datum/outfit/job/corporate_liaison
+	plasmaman_outfit = /datum/outfit/plasmaman
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_CMD
 
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
-	display_order = JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE
+	display_order = JOB_DISPLAY_ORDER_CORPORATE_LIAISON
 	bounty_types = CIV_JOB_BASIC
 	departments_list = list(
-		/datum/job_department/central_command,
 		/datum/job_department/command,
 		)
+	department_for_prefs = /datum/job_department/captain
 
 	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/lighter, /obj/item/reagent_containers/cup/glass/flask)
 
@@ -50,24 +50,23 @@
 	voice_of_god_power = 1.4 //Command staff has authority
 
 	alt_titles = list(
-		"Nanotrasen Representative",
 		"Corporate Liaison",
 		"Nanotrasen Fax Operater",
 		"Nanotrasen Official",
 		"Nanotrasen Informant",
 	)
-	job_tone = "incoming message"
+	job_tone = "glory to Nanotrasen!"
 
-/datum/outfit/job/nanotrasen_representative
-	name = "Nanotrasen Representative"
-	jobtype = /datum/job/nanotrasen_representative
+/datum/outfit/job/corporate_liaison
+	name = "Corporate Liaison"
+	jobtype = /datum/job/corporate_liaison
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/job/nanotrasen_representative
-	uniform = /obj/item/clothing/under/rank/centcom/nanotrasen_representative
-	suit = /obj/item/clothing/suit/armor/vest/nanotrasen_representative
-	head = /obj/item/clothing/head/hats/nanotrasen_representative
+	id_trim = /datum/id_trim/job/corporate_liaison
+	uniform = /obj/item/clothing/under/rank/centcom/corporate_liaison
+	suit = /obj/item/clothing/suit/armor/vest
+	head = /obj/item/clothing/head/soft/nt
 	backpack_contents = list(
-		/obj/item/stamp/centcom = 1,
+		/obj/item/stamp/nt = 1,
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/folder/blue = 1,
 	)
@@ -76,7 +75,7 @@
 	r_pocket = /obj/item/modular_computer/pda/heads/ntrep
 	l_hand = /obj/item/storage/secure/briefcase/cash
 	glasses = /obj/item/clothing/glasses/sunglasses
-	ears = /obj/item/radio/headset/headset_cent/representative
+	ears = /obj/item/radio/headset/headset_cent/corporate_liaison
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
 

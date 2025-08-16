@@ -368,18 +368,18 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	worn_icon_state = "cent_headset_alt"
 	keyslot2 = null
 
-//monkestation addition start:
-/obj/item/radio/headset/headset_cent/representative
-	name = "\improper Representative headset"
-	desc = "A headset used by the lower ranking members of Central Command."
+/obj/item/radio/headset/headset_cent/corporate_liaison
+	name = "\improper  the corporate liaison's headset"
+	desc = "A headset used by Nanotrasen officials. Has access to the Central Command radio frequency."
+	icon_state = "com_headset"
+	worn_icon_state = "com_headset"
 	keyslot = /obj/item/encryptionkey/headset_com
 	keyslot2 = null
 
-/obj/item/radio/headset/headset_cent/representative/Initialize(mapload)
+/obj/item/radio/headset/headset_cent/liaison/Initialize(mapload)
 	. = ..()
 	keyslot2 = new /obj/item/encryptionkey/headset_cent/crew(src)
 	src.recalculateChannels()
-//monkestation addition end
 
 /obj/item/radio/headset/headset_cent/alt/Initialize(mapload)
 	. = ..()

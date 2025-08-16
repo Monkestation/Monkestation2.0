@@ -144,6 +144,13 @@
 	fire = 20
 	acid = 50
 
+/obj/item/clothing/head/soft/nt
+	name = "\improper Nanotrasen  cap"
+	desc = "It's a baseball hat in a tasteless white colour with the Nanotrasen logo embroidered on the front. Glory to Nanotrasen!"
+	icon_state = "ntsoft"
+	soft_type = "nt"
+	dog_fashion = null
+
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."

@@ -28,7 +28,7 @@
 	new /obj/item/storage/photo_album/personal(src)
 	new /obj/item/assembly/flash(src)
 	new /obj/item/bedsheet/centcom(src)
-	new /obj/item/storage/bag/garment/nanotrasen_representative(src)
+	new /obj/item/storage/bag/garment/liaison(src)
 	new /obj/item/circuitboard/machine/fax(src)
 
 /obj/structure/closet/preopen

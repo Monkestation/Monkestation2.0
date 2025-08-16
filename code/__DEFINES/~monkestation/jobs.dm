@@ -2,7 +2,7 @@
 
 #define JOB_SIGNAL_TECHNICIAN "Signal Technician"
 
-#define JOB_NANOTRASEN_REPRESENTATIVE "Nanotrasen Representative"
+#define JOB_CORPORATE_LIAISON "Corporate Liaison"
 
 #define JOB_LATEJOIN_BARBER "Barber"
 

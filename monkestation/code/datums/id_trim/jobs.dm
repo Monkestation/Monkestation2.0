@@ -104,7 +104,7 @@
 		)
 	job = /datum/job/shaft_miner
 
-/datum/id_trim/job/nanotrasen_representative
+/datum/id_trim/job/corporate_liaison
 	assignment = "Nanotrasen Representative"
 	trim_state = "trim_centcom"
 	department_color = COLOR_CENTCOM_BLUE
@@ -123,7 +123,7 @@
 		)
 	template_access = list(
 		)
-	job = /datum/job/nanotrasen_representative
+	job = /datum/job/corporate_liaison
 
 /datum/id_trim/job/signal_technician
 	assignment = JOB_SIGNAL_TECHNICIAN

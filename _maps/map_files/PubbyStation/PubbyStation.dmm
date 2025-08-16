@@ -32987,7 +32987,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "gbT" = (
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -40507,7 +40507,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "mDp" = (
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /obj/machinery/button/door/directional/north{
 	id = "ntrep_bedroom_windows"
 	},
@@ -47469,7 +47469,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/iron/kitchen/small,
 /area/station/command/heads_quarters/nt_rep)
 "sqi" = (
@@ -50541,7 +50541,7 @@
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
 "uBl" = (
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /obj/structure/chair/comfy/carp{
 	dir = 1
 	},
