@@ -5,7 +5,7 @@
 	typepath = /datum/round_event/antagonist/solo/obsessed
 	restricted_roles = list(
 		JOB_CAPTAIN,
-		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_CORPORATE_LIAISON,
 		JOB_BLUESHIELD,
 		JOB_HEAD_OF_PERSONNEL,
 		JOB_CHIEF_ENGINEER,

@@ -21314,7 +21314,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/floor/has_bulb,
-/obj/structure/closet/secure_closet/nanotrasen_representative{
+/obj/structure/closet/secure_closet/corporate_liaison{
 	req_access = list("nt_rep")
 	},
 /obj/item/clothing/head/costume/flowery,

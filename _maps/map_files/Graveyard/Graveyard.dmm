@@ -45854,7 +45854,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "rRD" = (
@@ -56736,7 +56736,7 @@
 /obj/structure/bed/double,
 /obj/item/bedsheet/centcom/double,
 /obj/structure/sign/poster/official/no_erp/directional/east,
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "wcO" = (

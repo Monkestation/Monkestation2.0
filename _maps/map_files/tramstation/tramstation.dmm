@@ -23894,7 +23894,7 @@
 	c_tag = "Secure - Nuclear Storage";
 	network = list("ss13","secure")
 	},
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "gwy" = (
@@ -30371,7 +30371,7 @@
 	dir = 4;
 	name = "Premium Cozy Chair"
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "iyc" = (

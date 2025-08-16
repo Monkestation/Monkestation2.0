@@ -51581,7 +51581,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /obj/item/clothing/accessory/medal/gold/ordom,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/heads_quarters/nt_rep)
@@ -75611,7 +75611,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "uTD" = (

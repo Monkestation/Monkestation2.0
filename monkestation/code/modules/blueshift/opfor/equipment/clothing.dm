@@ -136,23 +136,6 @@
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
 
-/datum/opposing_force_equipment/clothing_sol/dogginos
-	name = "Dogginos Courier"
-	description = "You're just doing your job."
-	item_type = /obj/item/storage/backpack/satchel/leather/dogginos
-
-/obj/item/storage/backpack/satchel/leather/dogginos/PopulateContents()
-	new /obj/item/clothing/under/pizza(src)
-	new /obj/item/clothing/suit/pizzaleader(src)
-	new /obj/item/clothing/suit/toggle/jacket/hoodie/pizza(src)
-	new /obj/item/clothing/head/pizza(src)
-	new /obj/item/clothing/head/soft/red(src)
-	new /obj/item/clothing/glasses/regular/betterunshit(src)
-	new /obj/item/clothing/mask/fakemoustache/italian(src)
-	new /obj/item/clothing/shoes/sneakers/red(src)
-	new /obj/item/radio/headset/headset_cent/impostorsr(src)
-	new /obj/item/card/id/advanced/chameleon(src)
-
 /obj/item/card/id/advanced/chameleon/impostorsr
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_COMMAND) //I didn't know i had to say this but you're not supposed to shoot your 'superior' just because they do not have access to the bridge
 

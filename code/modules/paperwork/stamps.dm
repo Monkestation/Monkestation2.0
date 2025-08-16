@@ -31,6 +31,11 @@
 	icon_state = "stamp-law"
 	dye_color = DYE_LAW
 
+/obj/item/stamp/nt
+	name = "Nanotrasen rubber stamp"
+	icon_state = "stamp-nt"
+	dye_color = DYE_BLUE
+
 /obj/item/stamp/head
 
 /obj/item/stamp/head/Initialize(mapload)

@@ -19720,7 +19720,7 @@
 /area/station/maintenance/department/medical)
 "bWq" = (
 /obj/machinery/light/directional/north,
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "bWt" = (
@@ -48690,7 +48690,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "lIu" = (
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /obj/structure/chair/office,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)

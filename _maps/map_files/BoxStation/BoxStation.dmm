@@ -10438,7 +10438,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "dqb" = (
@@ -24460,7 +24460,7 @@
 /obj/structure/sign/flag/nanotrasen/directional/east,
 /obj/structure/bed/double,
 /obj/item/bedsheet/centcom/double,
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "hMJ" = (
@@ -30662,7 +30662,7 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/nt_rep)
 "jPZ" = (
@@ -33353,7 +33353,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/iron/kitchen,
 /area/station/command/heads_quarters/nt_rep)
 "kKm" = (
@@ -56163,7 +56163,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "shV" = (
@@ -62855,7 +62855,7 @@
 "uof" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "uol" = (

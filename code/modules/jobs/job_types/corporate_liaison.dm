@@ -11,7 +11,7 @@
 	minimal_player_age = 30
 	exp_requirements = 3000
 	exp_required_type = EXP_TYPE_CREW
-	exp_required_type_department = EXP_TYPE_CENTRAL_COMMAND
+	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CORPORATE_LIAISON"
 
@@ -31,6 +31,7 @@
 	departments_list = list(
 		/datum/job_department/command,
 		)
+	department_for_prefs = /datum/job_department/captain
 
 	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/lighter, /obj/item/reagent_containers/cup/glass/flask)
 
@@ -61,11 +62,11 @@
 	jobtype = /datum/job/corporate_liaison
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/job/corporate_liaison
-	uniform = /obj/item/clothing/under/rank/centcom/liaison
-	suit = /obj/item/clothing/suit/armor/vest/alt
+	uniform = /obj/item/clothing/under/rank/centcom/corporate_liaison
+	suit = /obj/item/clothing/suit/armor/vest
 	head = /obj/item/clothing/head/soft/nt
 	backpack_contents = list(
-		/obj/item/stamp/centcom = 1,
+		/obj/item/stamp/nt = 1,
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/folder/blue = 1,
 	)
@@ -74,7 +75,7 @@
 	r_pocket = /obj/item/modular_computer/pda/heads/ntrep
 	l_hand = /obj/item/storage/secure/briefcase/cash
 	glasses = /obj/item/clothing/glasses/sunglasses
-	ears = /obj/item/radio/headset/headset_cent/liaison
+	ears = /obj/item/radio/headset/headset_cent/corporate_liaison
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
 

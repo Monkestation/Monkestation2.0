@@ -5,12 +5,36 @@
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
+	/// Is our taser charged and ready to fire
+	var/taser_charge = FALSE
+	COOLDOWN_DECLARE(charge_duration)
 
 //MONKESTATION EDIT START
 /obj/item/gun/energy/taser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
-	if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE))
+	if(!taser_charge)
+		playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
+		if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = src))
+			taser_charge = TRUE
+			COOLDOWN_START(src, charge_duration, 5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(discharge)), 5.10 SECONDS)
+			balloon_alert(user, "taser charged!")
+	else
+		taser_charge = FALSE
 		return ..()
+
+/obj/item/gun/energy/taser/proc/discharge()
+	if(!taser_charge)
+		return
+	if(!COOLDOWN_FINISHED(src, charge_duration))
+		return
+	if(chambered)
+		var/obj/item/ammo_casing/energy/shot = chambered
+		cell.use(shot.e_cost)//... drain the cell cell
+		chambered = null //either way, released the prepared shot
+		recharge_newshot() //try to charge a new shot
+		fire_sounds()
+		update_appearance()
+	taser_charge = FALSE
 
 /obj/item/gun/energy/taser/old
 	name = "old taser gun"
@@ -23,7 +47,7 @@
 /obj/item/gun/energy/taser/old/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(prob(50))
 		do_sparks(rand(3, 4), FALSE, src)
-		to_chat(user, span_warning("[user]'s taser jams, sputtering acid onto [user]!"))
+		visible_message(span_danger("[user]'s taser jams, sputtering acid onto [user]!"))
 		target = user //get tased
 		user.apply_damage(24, BURN, spread_damage = TRUE, wound_bonus = 10)
 		user.apply_damage(150, STAMINA)
@@ -46,11 +70,11 @@
 //MONKESTATION EDIT START
 /obj/item/gun/energy/e_gun/advtaser/evil
 	pin = /obj/item/firing_pin/implant/pindicate
-	
+
 /obj/item/gun/energy/e_gun/advtaser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(select == 1)
 		playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
-		if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE))
+		if(do_after(user, 1 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = src))
 			return ..()
 	else
 		return ..()

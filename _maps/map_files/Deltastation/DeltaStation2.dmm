@@ -49979,7 +49979,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "lIl" = (
@@ -100465,7 +100465,7 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "xMu" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xMy" = (

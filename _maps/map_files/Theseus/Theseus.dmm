@@ -19502,7 +19502,7 @@
 	},
 /obj/machinery/camera/autoname/directional/north,
 /obj/structure/cable,
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /obj/structure/chair/comfy{
 	color = "#596479";
 	dir = 8
@@ -27387,7 +27387,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "idx" = (
@@ -50956,7 +50956,7 @@
 /area/station/security/interrogation)
 "oSE" = (
 /obj/machinery/light/warm/directional/south,
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "oSI" = (

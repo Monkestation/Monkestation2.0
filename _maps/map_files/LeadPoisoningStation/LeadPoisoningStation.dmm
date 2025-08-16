@@ -10959,7 +10959,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "fsh" = (
-/obj/structure/closet/secure_closet/nanotrasen_representative,
+/obj/structure/closet/secure_closet/corporate_liaison,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "fsq" = (
@@ -19690,7 +19690,7 @@
 	dir = 4;
 	name = "Premium Cozy Chair"
 	},
-/obj/effect/landmark/start/nanotrasen_representative,
+/obj/effect/landmark/start/corporate_liaison,
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},

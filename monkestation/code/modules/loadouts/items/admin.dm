@@ -31,21 +31,21 @@
 /datum/loadout_item/head/cent_admiral_hat  //
 	name = "Centcom Admiral's Campaign hat"
 	item_path = /obj/item/clothing/head/hats/warden/drill/centcom_admiral
-	restricted_roles = list(JOB_NANOTRASEN_REPRESENTATIVE)
+	restricted_roles = list(JOB_CORPORATE_LIAISON)
 	requires_purchase = FALSE
 	admin_only = TRUE
 
 /datum/loadout_item/suit/cent_admiral_jacket  //
 	name = "Centcom Admiral's Coat"
 	item_path = /obj/item/clothing/suit/armor/centcom_admiral
-	restricted_roles = list(JOB_NANOTRASEN_REPRESENTATIVE)
+	restricted_roles = list(JOB_CORPORATE_LIAISON)
 	requires_purchase = FALSE
 	admin_only = TRUE
 
 /datum/loadout_item/under/miscellaneous/cent_admiral  //
 	name = "Centcom Admiral's Uniform"
 	item_path = /obj/item/clothing/under/rank/centcom/admiral
-	restricted_roles = list(JOB_NANOTRASEN_REPRESENTATIVE)
+	restricted_roles = list(JOB_CORPORATE_LIAISON)
 	requires_purchase = FALSE
 	admin_only = TRUE
 
