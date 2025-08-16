@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+import { FabricatorData, MaterialMap, Design } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Tooltip } from '../components';
@@ -11,11 +11,19 @@ import { BooleanLike, classes } from 'common/react';
 
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
+  authorization: BooleanLike;
+  alert_level: Number;
+  combat_parts_allowed: BooleanLike;
+  emagged: BooleanLike;
+  silicon_user: BooleanLike;
+};
+
+type ExosuitDesign = Design & {
+  craftable: BooleanLike;
 };
 
 export const ExosuitFabricator = (props) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
-
   const availableMaterials: MaterialMap = {};
 
   for (const material of data.materials) {
@@ -33,7 +41,13 @@ export const ExosuitFabricator = (props) => {
                   designs={Object.values(data.designs)}
                   availableMaterials={availableMaterials}
                   buildRecipeElement={(design, availableMaterials) => (
-                    <Recipe available={availableMaterials} design={design} />
+                    <Recipe
+                      available={availableMaterials}
+                      design={{
+                        ...design,
+                        craftable: (design as any).craftable ?? true, // fallback if missing
+                      }}
+                    />
                   )}
                   categoryButtons={(category) => (
                     <Button
@@ -62,6 +76,7 @@ export const ExosuitFabricator = (props) => {
             </Stack>
           </Stack.Item>
           <Stack.Item width="420px">
+            <Authorization width="420" />
             <Queue availableMaterials={availableMaterials} />
           </Stack.Item>
         </Stack>
@@ -70,7 +85,7 @@ export const ExosuitFabricator = (props) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }) => {
+const Recipe = (props: { design: ExosuitDesign; available: MaterialMap }) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
   const { design, available } = props;
 
@@ -80,7 +95,10 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
   );
 
   return (
-    <div className="FabricatorRecipe">
+    <Box
+      className="FabricatorRecipe"
+      backgroundColor={design.craftable ? undefined : 'rgba(255, 0, 0, 0.15)'}
+    >
       <Tooltip content={design.desc} position="right">
         <div
           className={classes([
@@ -147,7 +165,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
           <Icon name="play" />
         </div>
       </Tooltip>
-    </div>
+    </Box>
   );
 };
 
@@ -328,4 +346,65 @@ const QueueList = (props: { availableMaterials: MaterialMap }) => {
         ))}
     </>
   );
+};
+
+const Authorization = (props, context) => {
+  const { data } = useBackend<ExosuitFabricatorData>();
+  const auth_override = data.authorization;
+  const alert_level = data.alert_level;
+  const combat_parts_allowed = data.combat_parts_allowed;
+  const emagged = data.emagged;
+
+  return (
+    <Section width="420px" style={{ 'white-space': 'pre-wrap' }}>
+      <b>
+        {'User: '}
+        <span
+          style={!combat_parts_allowed ? 'color:#ff0000' : 'color:#00ff00'}
+          font-style:bold
+        >
+          {!combat_parts_allowed
+            ? 'Unauthorized'
+            : !emagged
+              ? 'Authorized'
+              : garbleText(
+                  'ALERT: ROOTKIT_DEV_OVERRIDE RUNNING IN LIVE ENVIROMENT',
+                )}
+        </span>
+        <Tooltip
+          content={
+            'Designs marked in red are classified as combat-level designs. Gain access from a Command member or an elevated station threat level to print them.'
+          }
+          position="right"
+        >
+          <Icon name="question-circle" />
+        </Tooltip>
+      </b>
+      <br />
+      Combat-level designs are{' '}
+      {combat_parts_allowed ? 'available' : 'unavailable'}.
+      <br />
+      {auth_override
+        ? 'Authorization overriden by a command-level card.\n'
+        : ''}
+      {alert_level < 2 ? '' : 'Credible threat to the station in effect!\n'}
+    </Section>
+  );
+};
+
+const garbleText = (text) => {
+  return text
+    .split('')
+    .map((char) => {
+      if (Math.random() < 0.5) {
+        // Randomly replace with ascii symbol or change case
+        if (Math.random() < 0.5) {
+          return String.fromCharCode(33 + Math.floor(Math.random() * 30));
+        } else {
+          return Math.random() < 0.5 ? char.toUpperCase() : char.toLowerCase();
+        }
+      }
+      return char;
+    })
+    .join('');
 };

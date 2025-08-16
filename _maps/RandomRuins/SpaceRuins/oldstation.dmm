@@ -6502,7 +6502,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Gv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/mecha_part_fabricator,
+/obj/machinery/mecha_part_fabricator/emagged,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "Gz" = (
