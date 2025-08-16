@@ -92,7 +92,8 @@
 
 	next_crash = world.time + 10
 	var/mob/living/rider = buckled_mobs[1]
-	rider.stamina.adjust(-instability*6)
+	var/tony_hawk = HAS_TRAIT(rider, TRAIT_PRO_SKATER) ? 0.5 : 1
+	rider.stamina.adjust(-instability* 6 * tony_hawk)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
 	if(!iscarbon(rider) || rider.stamina.loss >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
@@ -105,11 +106,11 @@
 			return
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
+		if((!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat))) && tony_hawk != 0.5)
 			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
 		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
-		rider.Paralyze(8 SECONDS)
+		rider.Paralyze((8 * tony_hawk) SECONDS)
 		if(iscarbon(bumped_thing))
 			var/mob/living/carbon/victim = bumped_thing
 			var/grinding_mulitipler = 1
@@ -131,7 +132,8 @@
 		return
 
 	var/mob/living/skater = buckled_mobs[1]
-	skater.stamina.adjust(-instability*0.3)
+	var/tony_hawk = HAS_TRAIT(skater, TRAIT_PRO_SKATER) ? 0.5 : 1
+	skater.stamina.adjust(-instability * 0.3 * tony_hawk)
 	if(skater.stamina.loss >= 100)
 		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
@@ -139,7 +141,7 @@
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 		skater.throw_at(throw_target, 2, 2)
 		visible_message(span_danger("[skater] loses [skater.p_their()] footing and slams on the ground!"))
-		skater.Paralyze(4 SECONDS)
+		skater.Paralyze((4 * tony_hawk) SECONDS)
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
@@ -147,15 +149,15 @@
 	var/turf/location = get_turf(src)
 
 	if(location)
-		if(prob(25))
+		if(prob(25 / tony_hawk)) //pro skaters are extra radical
 			location.hotspot_expose(1000,1000)
 			sparks.start() //the most radical way to start plasma fires
 	for(var/mob/living/carbon/victim in location)
 		if(victim.body_position == LYING_DOWN)
 			playsound(location, 'sound/items/trayhit2.ogg', 40)
 			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = victim.get_random_valid_zone(even_weights = TRUE), wound_bonus = 20)
-			victim.Paralyze(1.5 SECONDS)
-			skater.stamina.adjust(-instability)
+			victim.Paralyze((1.5 / tony_hawk) SECONDS)
+			skater.stamina.adjust(-instability * tony_hawk)
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 1)
 
