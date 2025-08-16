@@ -31,3 +31,11 @@
 	requires_power = TRUE
 	ambience_index = AMBIENCE_MINING
 	outdoors = TRUE
+
+/*
+* Steel beam areas
+*/
+
+/area/station/outside
+	name = "\improper Outside towers"
+	icon_state = "outside"

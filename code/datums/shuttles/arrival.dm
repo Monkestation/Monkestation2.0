@@ -37,3 +37,8 @@
 /datum/map_template/shuttle/arrival/premiumleaded
 	suffix = "premiumleaded"
 	name = "arrival shuttle (premiumlead)"
+
+/datum/map_template/shuttle/arrival/steelbeam
+	suffix = "steelbeam"
+	name = "arrival shuttle (steelbeam)"
+

@@ -181,6 +181,14 @@
 	credit_cost = CARGO_CRATE_VALUE * 5
 	occupancy_limit = "9999"
 
+/datum/map_template/shuttle/emergency/jetfuel
+	suffix = "jetfuel"
+	name = "Jet Fuel Emergency Shuttle"
+	description = "Instead of sending a shuttle, we hired a passenger ship to fly in a path that will interscept your station, they do not know this."
+	admin_notes = "It is set to purposfully crash into the station, with alot of corpses."
+	credit_cost = CARGO_CRATE_VALUE * 5
+	occupancy_limit = "9999"
+
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
 	name = "Snappop(tm)!"
