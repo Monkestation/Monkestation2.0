@@ -38,7 +38,7 @@
 	merge_type = /obj/item/stack/scrap/electronics
 	icon_state = "scrap_electronics"
 	desc = "Piles of scrap electronics crowbarred out of ships. You can't seem to find the gibber board in this mess."
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/gold = 100)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT)
 	point_value = 20
 
 /obj/item/stack/scrap/framing
@@ -47,7 +47,7 @@
 	merge_type = /obj/item/stack/scrap/framing
 	icon_state = "ship_framing"
 	desc = "Silver-Titanium alloy I-beams used in the construction of ships. Whoever designed this must have owned a silver mining planet."
-	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/titanium = 100)
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
 	point_value = 30
 
 /obj/item/stack/scrap/plasma
@@ -65,7 +65,7 @@
 	merge_type = /obj/item/stack/scrap/core
 	icon_state = "ship_core"
 	desc = "A radioactive core of a nuclear thruster. Make sure there's no assistants under your ship with a reciprocating saw."
-	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT, /datum/material/iron = 100)
+	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	point_value = 45
 
 /obj/item/stack/scrap/crystalline_matrix
@@ -74,5 +74,5 @@
 	merge_type = /obj/item/stack/scrap/crystalline_matrix
 	icon_state = "crystalline_matrix"
 	desc = "A crystalline matrix used in immense calculations to sheer ships. AGI by 2520!"
-	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = 100)
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT)
 	point_value = 100

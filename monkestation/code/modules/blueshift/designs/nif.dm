@@ -5,7 +5,7 @@
 	build_path = /obj/item/organ/internal/cyberimp/brain/nif/standard
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 8 SECONDS
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 4000, /datum/material/silver = 2000 , /datum/material/gold = 2000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT , /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS
 	)

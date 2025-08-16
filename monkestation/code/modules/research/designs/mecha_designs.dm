@@ -4,7 +4,7 @@
 	id = "mech_light_amplification"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/light_amplification
-	materials = list(/datum/material/iron=4000,/datum/material/glass = 2000,/datum/material/uranium = 2000,/datum/material/silver=2000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2,/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = SHEET_MATERIAL_AMOUNT, /datum/material/silver=SHEET_MATERIAL_AMOUNT)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,

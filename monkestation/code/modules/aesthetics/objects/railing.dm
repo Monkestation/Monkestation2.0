@@ -3,14 +3,14 @@
 	icon_state = "railing0-1"
 
 	obj_flags = IGNORE_DENSITY | CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
-	custom_materials = list(/datum/material/iron = 100)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 	var/neighbor_status = list() ///list of smoothing we need doing
 	var/standard_smoothing = TRUE
 
 /obj/structure/railing/wood
-	custom_materials = list(/datum/material/wood = 100)
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT)
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()

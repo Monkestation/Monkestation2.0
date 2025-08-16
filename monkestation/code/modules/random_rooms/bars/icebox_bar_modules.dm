@@ -10,7 +10,7 @@
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/fake_abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
-	custom_materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 
 /turf/open/floor/mineral/fake_abductor/Initialize(mapload)
 	. = ..()

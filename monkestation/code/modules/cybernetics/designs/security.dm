@@ -4,7 +4,7 @@
 	id = "ci-set-mantis"
 	build_type = PROTOLATHE
 	construction_time = 3 SECONDS
-	materials = list(/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/mantis
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
@@ -17,7 +17,7 @@
 	id = "ci-set-combat"
 	build_type = PROTOLATHE
 	construction_time = 3 SECONDS
-	materials = list(/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/combat
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
@@ -30,7 +30,7 @@
 	id = "ci-set-taser"
 	build_type = PROTOLATHE
 	construction_time = 3 SECONDS
-	materials = list(/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/gun/taser
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
@@ -43,7 +43,7 @@
 	id = "ci-set-flash"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 3 SECONDS
-	materials = list(/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1,)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1,)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/flash
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT

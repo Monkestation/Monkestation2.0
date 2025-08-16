@@ -81,7 +81,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "p" = (
-/obj/item/circuitboard/machine/ore_redemption,
+/obj/item/circuitboard/machine/ore_redemption/offstation,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/mineral/titanium/purple,
