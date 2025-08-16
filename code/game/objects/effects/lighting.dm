@@ -25,7 +25,7 @@
 	if(duration)
 		QDEL_IN(src, duration)
 
-/obj/effect/dummy/lighting_obj/moblight
+/obj/effect/dummy/lightinog_obj/moblight
 	name = "mob lighting"
 
 /obj/effect/dummy/lighting_obj/moblight/Initialize(mapload, range, power, color, duration)

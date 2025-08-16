@@ -106,6 +106,8 @@
 
 /datum/nanite_program/mindshield/enable_passive_effect()
 	. = ..()
+	if(IS_DARKSPAWN_OR_THRALL(host_mob))
+		return
 	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev, TRUE)) //won't work if on a rev, to avoid having implanted revs.
 		ADD_TRAIT(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT)
 		host_mob.sec_hud_set_implants()

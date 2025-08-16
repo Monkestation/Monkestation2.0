@@ -25,3 +25,7 @@
 	med_hud_set_status()
 
 	update_fov_client()
+
+
+	if(GLOB.sacrament_done)
+		AddComponent(/datum/component/shadowlands)

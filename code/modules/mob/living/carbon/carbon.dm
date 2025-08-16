@@ -53,6 +53,8 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
+		return
 	var/hurt = TRUE
 	var/extra_speed = 0
 	if(throwingdatum.thrower != src)

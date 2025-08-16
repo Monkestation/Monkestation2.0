@@ -405,6 +405,7 @@
 		force = on_damage
 		damtype = BURN
 		update_brightness()
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 
 /obj/item/flashlight/flare/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -491,6 +492,13 @@
 
 /obj/item/flashlight/flare/get_temperature()
 	return on * heat
+
+//fire isn't one light source, it's several constantly appearing and disappearing... or something
+/obj/item/flashlight/flare/proc/on_light_eater(atom/source, datum/light_eater)
+	SIGNAL_HANDLER
+	if(light_on)
+		visible_message("The enduring flickering of \the [src] refuses to fade.")
+	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/item/flashlight/flare/candle
 	name = "red candle"

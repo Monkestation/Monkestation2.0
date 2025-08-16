@@ -39,6 +39,7 @@
 #define POLL_IGNORE_SHUTTLE_DENIZENS "shuttledenizen"
 #define POLL_IGNORE_DEFECTIVECLONE "defectiveclone"
 #define POLL_IGNORE_BINGLE "bingle"
+#define POLL_IGNORE_DARKSPAWN_PSYCHE "darkspawn_psyche"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(

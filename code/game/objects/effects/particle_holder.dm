@@ -1,3 +1,11 @@
+/obj/emitter
+	appearance_flags = LONG_GLIDE | KEEP_APART | TILE_BOUND | PIXEL_SCALE
+	layer = ABOVE_ALL_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+
+/// If we're inside something inside a mob, display off that mob too
+#define PARTICLE_ATTACH_MOB (1<<0)
 ///objects can only have one particle on them at a time, so we use these abstract effects to hold and display the effects. You know, so multiple particle effects can exist at once.
 ///also because some objects do not display particles due to how their visuals are built
 /obj/effect/abstract/particle_holder
@@ -9,15 +17,22 @@
 	/// See \code\__DEFINES\particles.dm
 	var/particle_flags = NONE
 
+	var/list/emitters = list()
+
+	var/atom/parent
+
 /obj/effect/abstract/particle_holder/Initialize(mapload, particle_path = /particles/smoke, particle_flags = NONE)
 	. = ..()
 	if(!loc)
 		stack_trace("particle holder was created with no loc!")
 		return INITIALIZE_HINT_QDEL
 	// We assert this isn't an /area
+	parent = loc
+	loc = null
 
 	src.particle_flags = particle_flags
-	particles = new particle_path
+	if(particle_path)
+		particles = new particle_path()
 	// /atom doesn't have vis_contents, /turf and /atom/movable do
 	var/atom/movable/lie_about_areas = loc
 	lie_about_areas.vis_contents += src
@@ -29,7 +44,9 @@
 	on_move(loc, null, NORTH)
 
 /obj/effect/abstract/particle_holder/Destroy(force)
-	particles = null
+	QDEL_NULL(emitters)
+	QDEL_NULL(particles)
+	parent = null
 	return ..()
 
 /// Non movables don't delete contents on destroy, so we gotta do this
@@ -57,4 +74,5 @@
 
 /// Sets the particles position to the passed coordinates
 /obj/effect/abstract/particle_holder/proc/set_particle_position(x = 0, y = 0, z = 0)
-	particles.position = list(x, y, z)
+	if(particles)
+		particles.position = list(x, y, z)

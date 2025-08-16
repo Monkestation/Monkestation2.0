@@ -195,6 +195,15 @@
 	worn_icon_state = "swordon"
 	menu_description = "A sharp weapon which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
+/obj/item/nullrod/claymore/glowing/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+
+/obj/item/nullrod/claymore/glowing/proc/on_light_eater(atom/source, datum/light_eater)
+	SIGNAL_HANDLER
+	visible_message("The undying glow of \the [src] refuses to fade.")
+	return COMPONENT_BLOCK_LIGHT_EATER
+
 /obj/item/nullrod/claymore/katana
 	name = "\improper Hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."

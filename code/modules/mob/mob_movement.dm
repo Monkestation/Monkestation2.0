@@ -88,9 +88,9 @@
 		return FALSE
 
 	var/mob/living/L = mob //Already checked for isliving earlier
-	if(L.incorporeal_move && !is_secret_level(mob.z)) //Move though walls
-		Process_Incorpmove(direct)
-		return FALSE
+	/*if(L.incorporeal_move && !is_secret_level(mob.z)) //Move though walls
+		Process_Incorpmove(direct) - Moved into a walking component for darkspawn
+		return FALSE */
 
 	if(mob.remote_control) //we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
@@ -114,6 +114,10 @@
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
+
+	var/handled = SEND_SIGNAL(L, COMSIG_PROCESS_MOVE, direct) //yogs start - movement components
+	if(handled)
+		return FALSE//yogs end
 
 	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
 		return FALSE

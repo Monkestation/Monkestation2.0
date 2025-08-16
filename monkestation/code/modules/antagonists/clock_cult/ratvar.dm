@@ -236,7 +236,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	var/clockwork = FALSE
 
 /obj/machinery/computer/ratvar_act()
-	if(!clockwork)
+	if(!clockwork && !special_appearance)
 		clockwork = TRUE
 		icon_screen = "ratvar[rand(1, 3)]"
 		icon_keyboard = "ratvar_key[rand(1, 2)]"

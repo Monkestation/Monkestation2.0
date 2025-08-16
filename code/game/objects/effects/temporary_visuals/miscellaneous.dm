@@ -284,7 +284,7 @@
 	icon_state = "3"
 	light_outer_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
-	duration = 10
+	duration = 1 SECONDS
 
 /obj/effect/temp_visual/revenant
 	name = "spooky lights"
@@ -293,7 +293,17 @@
 /obj/effect/temp_visual/revenant/cracks
 	name = "glowing cracks"
 	icon_state = "purplecrack"
-	duration = 6
+	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/revenant/cracks/glow
+
+/obj/effect/temp_visual/revenant/cracks/glow/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/temp_visual/revenant/cracks/glow/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src)
 
 /obj/effect/temp_visual/gravpush
 	name = "gravity wave"

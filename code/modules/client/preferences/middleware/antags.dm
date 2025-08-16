@@ -131,6 +131,7 @@
 		ROLE_JUNIOR_LONE_OPERATIVE = /datum/antagonist/nukeop/lone/junior,
 		ROLE_COMMANDO_OPERATIVE = /datum/antagonist/nukeop/commando,
 		ROLE_COMMANDO_OPERATIVE_MIDROUND = /datum/antagonist/nukeop/commando,
+		ROLE_DARKSPAWN = /datum/antagonist/darkspawn
 		// monkestation end
 	)
 

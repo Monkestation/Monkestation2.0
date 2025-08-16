@@ -22,10 +22,12 @@
 	owner.incorporeal_move = FALSE
 	owner.update_appearance(UPDATE_ICON)
 	owner.update_mob_action_buttons()
+	qdel(owner.GetComponent(/datum/component/walk/jaunt))
 
 /datum/status_effect/revenant/revealed/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_REVENANT_REVEALED, TRAIT_STATUS_EFFECT(id))
-
+	if (!owner.GetComponent(/datum/component/walk/jaunt))
+		owner.AddComponent(/datum/component/walk/jaunt)
 	owner.incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	owner.invisibility = INVISIBILITY_REVENANT
 	owner.update_appearance(UPDATE_ICON)

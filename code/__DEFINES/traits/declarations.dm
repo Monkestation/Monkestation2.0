@@ -140,6 +140,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
+/// protects the holder from throw_impact
+#define TRAIT_IMPACTIMMUNE "impact_immunity"
 /// This carbon doesn't show an overlay when they have no brain
 #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 #define TRAIT_NOFIRE "nonflammable"
@@ -151,6 +153,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_RECOIL "no_recoil"
 ///Can toss a guns like a badass, causing additional damage/effect to their enemies
 /* #define TRAIT_TOSS_GUN_HARD "toss_gun_hard" */
+///Prevent species from changing while they have the trait
+#define TRAIT_SPECIESLOCK "species_lock"
 /// Species with this trait are genderless
 #define TRAIT_AGENDER "agender"
 /// Species with this trait have a blood clan mechanic
@@ -1313,5 +1317,22 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
+
+///Darkspawn traits
+///lets darkspawns walk through weak light
+#define TRAIT_DARKSPAWN_LIGHTRES "darkspawn_lightres"
+///lets darkspawns walk through any light
+#define TRAIT_DARKSPAWN_CREEP "darkspawn_creep"
+///permanently reduces the lucidity gained from future succs
+#define TRAIT_DARKSPAWN_DEVOURED "darkspawn_devoured"
+///disable psi regeneration (make sure to remove it after some time)
+#define TRAIT_DARKSPAWN_PSIBLOCK "darkspawn_psiblock"
+///make aoe ally buff abilities also affect allied darkspawns
+#define TRAIT_DARKSPAWN_BUFFALLIES "darkspawn_allybuff"
+///revives the darkspawn if they're dead and in the dark
+#define TRAIT_DARKSPAWN_UNDYING "darkspawn_undying"
+
+///reduces the cooldown of all used /datum/action/cooldown by 25%
+#define TRAIT_FAST_COOLDOWNS "short_spell_cooldowns"
 
 // END TRAIT DEFINES
