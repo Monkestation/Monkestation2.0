@@ -5,6 +5,13 @@
 
 #define OLD_MAN_HENDERSON_DRUNKENNESS 41
 
+#define BLUESPACE_STONE "bluespace stone"
+#define SUPERMATTER_STONE "supermatter stone"
+#define CLOWN_STONE "clown stone"
+#define LAG_STONE "lag stone"
+#define GHOST_STONE "ghost stone"
+#define SYNDIE_STONE "syndie stone"
+
 /// Path for the byond-memorystats dll
 #define MEMORYSTATS_DLL_PATH (world.system_type == MS_WINDOWS ? "memorystats.dll" : "./libmemorystats.so")
 
