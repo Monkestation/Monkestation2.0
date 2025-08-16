@@ -122,12 +122,12 @@
 	var/obj/item/pulsepack/ammo_pack
 
 /obj/item/gun/energy/pulse/makeshift/Initialize(mapload)
+	. = ..()
 	if(!istype(loc, /obj/item/pulsepack)) //We should spawn inside an ammo pack so let's use that one.
 		return INITIALIZE_HINT_QDEL //No pack, no gun
 	ammo_pack = loc
 	AddElement(/datum/element/update_icon_blocker)
 	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
-	return ..()
 
 /obj/item/gun/energy/pulse/makeshift/Destroy()
 	QDEL_NULL(ammo_pack)
