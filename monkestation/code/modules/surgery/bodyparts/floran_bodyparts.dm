@@ -16,6 +16,7 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	burn_modifier = 1.8
+	bodypart_traits = list(TRAIT_NO_UNDERWEAR)
 
 /obj/item/bodypart/arm/left/floran
 	icon_greyscale = 'monkestation/icons/mob/species/floran/bodyparts.dmi'

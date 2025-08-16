@@ -217,11 +217,13 @@
 */
 	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN | HEAD_HAIR
 //MONKESTATION ADDITION END
+	bodypart_traits = list(TRAIT_ANTENNAE)
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 	wing_types = list(/obj/item/organ/external/wings/functional/fly)
+	bodypart_traits = list(TRAIT_TACKLING_FRAIL_ATTACKER)
 
 /obj/item/bodypart/arm/left/fly
 	limb_id = SPECIES_FLYPERSON
