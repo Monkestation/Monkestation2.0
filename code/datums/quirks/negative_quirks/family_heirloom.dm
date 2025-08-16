@@ -6,9 +6,11 @@
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES | QUIRK_MOODLET_BASED
+	mail_goodies = list(/obj/item/storage/secure/briefcase)
 	/// A weak reference to our heirloom.
 	var/datum/weakref/heirloom
-	mail_goodies = list(/obj/item/storage/secure/briefcase)
+	/// If we had the heirloom the last time we checked or not
+	var/last_has_heirloom
 
 /datum/quirk/item_quirk/family_heirloom/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -57,16 +59,21 @@
 /datum/quirk/item_quirk/family_heirloom/process()
 	var/obj/family_heirloom = heirloom?.resolve()
 
-	if(family_heirloom && (family_heirloom in quirk_holder.get_all_contents()))
+	var/has_heirloom = family_heirloom && quirk_holder.contains(family_heirloom)
+	if(has_heirloom == last_has_heirloom && !isnull(last_has_heirloom))
+		return
+	if(has_heirloom)
 		quirk_holder.clear_mood_event("family_heirloom_missing")
 		quirk_holder.add_mood_event("family_heirloom", /datum/mood_event/family_heirloom)
 	else
 		quirk_holder.clear_mood_event("family_heirloom")
 		quirk_holder.add_mood_event("family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+	last_has_heirloom = has_heirloom
 
 /datum/quirk/item_quirk/family_heirloom/remove()
 	quirk_holder.clear_mood_event("family_heirloom_missing")
 	quirk_holder.clear_mood_event("family_heirloom")
+	last_has_heirloom = null
 
 /datum/quirk/item_quirk/family_heirloom/clone_data()
 	return heirloom

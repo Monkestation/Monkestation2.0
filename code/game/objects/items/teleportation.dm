@@ -206,7 +206,7 @@
 			if (about_to_replace_location)
 				UnregisterSignal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
 
-		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
+		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target), override = TRUE)
 
 		last_portal_location = WEAKREF(teleport_location)
 

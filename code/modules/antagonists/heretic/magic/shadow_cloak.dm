@@ -155,7 +155,7 @@
 /datum/status_effect/shadow_cloak/on_remove()
 	// Remove image
 	owner.remove_alt_appearance(id)
-	QDEL_NULL(cloak_image)
+	cloak_image = null
 	// Remove traits and modifiers
 	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)

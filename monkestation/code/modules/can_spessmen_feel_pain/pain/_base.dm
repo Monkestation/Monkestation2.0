@@ -529,7 +529,7 @@
 		var/has_pain = FALSE
 		var/just_cant_feel_anything = !parent.can_feel_pain()
 		var/no_recent_pain = COOLDOWN_FINISHED(src, time_since_last_pain_loss)
-		for(var/part in shuffle(body_zones))
+		for(var/part in body_zones)
 			var/obj/item/bodypart/checked_bodypart = body_zones[part]
 			if(QDELETED(checked_bodypart))
 				continue

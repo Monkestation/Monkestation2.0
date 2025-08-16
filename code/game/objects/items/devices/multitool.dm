@@ -52,8 +52,8 @@
 
 	COOLDOWN_START(src, next_apc_scan, 2 SECONDS)
 
-	var/area/local_area = get_area(src)
-	var/obj/machinery/power/apc/power_controller = local_area.apc
+	var/area/local_area = get_area(user)
+	var/obj/machinery/power/apc/power_controller = local_area?.apc
 	if(!power_controller)
 		user.balloon_alert(user, "couldn't find apc!")
 		return
