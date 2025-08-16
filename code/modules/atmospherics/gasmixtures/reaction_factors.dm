@@ -207,3 +207,12 @@
 		"Nuclear Particles" = "This reaction emits extremely high energy nuclear particles, up to [2 * PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM] per second per unique gas mixture.",
 		"Temperature" = "Can only occur between [PN_BZASE_MIN_TEMP] - [PN_BZASE_MAX_TEMP] kelvin.",
 	)
+
+/datum/gas_reaction/hexaneformation/init_factors()
+	factor = list(
+		/datum/gas/bz = "[MINIMUM_MOLE_COUNT] moles of BZ need to be present for the reaction to occur. BZ is consumed at 1/20th of the hydrogen used.",
+		/datum/gas/hydrogen = "[MINIMUM_MOLE_COUNT * 20] moles of hydrogen need to be present for the reaction to occur.",
+		/datum/gas/hexane = "Hexane is formed at a rate that scales with the temperature.",
+		"Temperature" = "Can only occur between [HEXANE_FORMATION_MIN_TEMPERATURE] - [HEXANE_FORMATION_MAX_TEMPERATURE] kelvin. Higher temperature increases hexane formation rate.",
+		"Energy" = "[HEXANE_FORMATION_ENERGY] joules of energy is consumed per mole of hexane formed.",
+	)

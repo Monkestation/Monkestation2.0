@@ -308,6 +308,13 @@ const GASES = [
     label: 'Nitrium',
     color: 'brown',
   },
+  {
+    id: 'hexane',
+    path: '/datum/gas/hexane',
+    name: 'Hexane',
+    label: 'Hexane',
+    color: 'plum',
+  },
 ] as const;
 
 // Returns gas label based on gasId

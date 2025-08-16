@@ -244,6 +244,11 @@
 	overlay_color = "#022e00"
 	spawn_id = /datum/gas/antinoblium
 
+/obj/machinery/atmospherics/miner/hexane
+	name = "\improper Hexane Gas Miner"
+	overlay_color = "#943d98"
+	spawn_id = /datum/gas/hexane
+
 #undef GASMINER_POWER_NONE
 #undef GASMINER_POWER_STATIC
 #undef GASMINER_POWER_MOLES

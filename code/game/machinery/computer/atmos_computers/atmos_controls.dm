@@ -108,6 +108,11 @@
 	circuit = /obj/item/circuitboard/computer/atmos_control/antinoblium_tank
 	atmos_chambers = list(ATMOS_GAS_MONITOR_ANTINOBLIUM = "Antinoblium Supply")
 
+/obj/machinery/computer/atmos_control/hexane_tank
+	name = "Hexane Supply Control"
+	circuit = /obj/item/circuitboard/computer/atmos_control/hexane_tank
+	atmos_chambers = list(ATMOS_GAS_MONITOR_HEXANE = "Hexane Supply")
+
 /obj/machinery/computer/atmos_control/mix_tank
 	name = "Mix Chamber Control"
 	circuit = /obj/item/circuitboard/computer/atmos_control/mix_tank

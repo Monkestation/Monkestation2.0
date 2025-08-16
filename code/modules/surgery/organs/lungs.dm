@@ -59,6 +59,8 @@
 	var/healium_sleep_min = 6
 	///Minimum amount of helium to affect speech
 	var/helium_speech_min = 5
+	///Minimum amount of hexane to get the reagent
+	var/hexane_effect_min = 3
 	///Whether these lungs react negatively to miasma
 	var/suffers_miasma = TRUE
 	// Vars for N2O/healium induced euphoria, stun, and sleep.
@@ -159,6 +161,7 @@
 	add_gas_reaction(/datum/gas/healium, while_present = PROC_REF(consume_healium), on_loss = PROC_REF(lose_healium))
 	add_gas_reaction(/datum/gas/helium, while_present = PROC_REF(consume_helium), on_loss = PROC_REF(lose_helium))
 	add_gas_reaction(/datum/gas/hypernoblium, while_present = PROC_REF(consume_hypernoblium))
+	add_gas_reaction(/datum/gas/hexane, while_present = PROC_REF(consume_hexane))
 	if(suffers_miasma)
 		add_gas_reaction(/datum/gas/miasma, while_present = PROC_REF(too_much_miasma), on_loss = PROC_REF(safe_miasma))
 	add_gas_reaction(/datum/gas/nitrous_oxide, while_present = PROC_REF(too_much_n2o), on_loss = PROC_REF(safe_n2o))
@@ -478,6 +481,13 @@
 	if (hypernob_pp > gas_stimulation_min)
 		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/hypernoblium)
 		breather.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
+
+// Gain hexane effects if we have enough of the stuff
+/obj/item/organ/internal/lungs/proc/consume_hexane(mob/living/carbon/breather, datum/gas_mixture/breath, hexane_pp, old_hexane_pp)
+	breathe_gas_volume(breath, /datum/gas/hexane)
+	if (hexane_pp > hexane_effect_min)
+		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/hexane)
+		breather.reagents.add_reagent(/datum/reagent/hexane, max(0, 1 - existing))
 
 /// Breathing in the stink gas
 /obj/item/organ/internal/lungs/proc/too_much_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, miasma_pp, old_miasma_pp)

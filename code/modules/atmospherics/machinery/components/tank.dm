@@ -498,6 +498,9 @@
 /obj/machinery/atmospherics/components/tank/antinoblium
 	gas_type = /datum/gas/antinoblium
 
+/obj/machinery/atmospherics/components/tank/hexane
+	gas_type = /datum/gas/hexane
+
 ///////////////////////////////////////////////////////////////////
 // Tank Frame Structure
 

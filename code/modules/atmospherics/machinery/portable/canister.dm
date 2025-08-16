@@ -26,7 +26,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
 		"helium" = /obj/machinery/portable_atmospherics/canister/helium,
 		"antinoblium" = /obj/machinery/portable_atmospherics/canister/antinoblium,
-		"halon" = /obj/machinery/portable_atmospherics/canister/halon
+		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
+		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
 	))
 
 /obj/machinery/portable_atmospherics/canister
@@ -277,6 +278,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009a00#006600"
+
+/obj/machinery/portable_atmospherics/canister/hexane
+	name = "Hexane canister"
+	gas_type = /datum/gas/hexane
+	filled = 1
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#943d98#fd89fd"
 
 // Special canisters below here
 

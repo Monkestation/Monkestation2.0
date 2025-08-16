@@ -286,6 +286,10 @@
 	name = "antinoblium filter"
 	filter_type = list(/datum/gas/antinoblium)
 
+/obj/machinery/atmospherics/components/trinary/filter/atmos/hexane
+	name = "hexane filter"
+	filter_type = list(/datum/gas/hexane)
+
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
 	icon_state = "filter_on-0_f"
 	flipped = TRUE
@@ -349,6 +353,9 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/antinoblium
 	name = "antinoblium filter"
 	filter_type = list(/datum/gas/antinoblium)
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/hexane
+	name = "hexane filter"
+	filter_type = list(/datum/gas/hexane)
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 

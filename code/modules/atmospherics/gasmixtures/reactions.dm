@@ -554,8 +554,8 @@
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/oxygen, air)
 		var/amount_decomposed = 0.4 * bz_formed * nitrous_oxide_decomposed_factor
-		cached_gases[/datum/gas/nitrogen] += amount_decomposed
-		cached_gases[/datum/gas/oxygen] += 0.5 * amount_decomposed
+		cached_gases[/datum/gas/nitrogen][MOLES] += amount_decomposed
+		cached_gases[/datum/gas/oxygen][MOLES] += 0.5 * amount_decomposed
 
 	ASSERT_GAS(/datum/gas/bz, air)
 	cached_gases[/datum/gas/bz][MOLES] += bz_formed * (1-nitrous_oxide_decomposed_factor)
@@ -754,6 +754,44 @@
 		air.temperature = max(((temperature * old_heat_capacity - energy_consumed)/new_heat_capacity), TCMB)
 	return REACTING
 
+/**
+ * Hexane formation:
+ *
+ * Creates Hexane using Hydrogen and BZ at a very specific temperature
+*/
+/datum/gas_reaction/hexaneformation
+	priority_group = PRIORITY_FORMATION
+	name = "Hexane Formation"
+	id = "hexaneformation"
+	desc = "Production of hexane from hydrogen and BZ at a very specific temperature."
+
+/datum/gas_reaction/hexaneformation/init_reqs()
+	requirements = list(
+		/datum/gas/bz = MINIMUM_MOLE_COUNT,
+		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT * 20,
+		"MIN_TEMP" = HEXANE_FORMATION_MIN_TEMPERATURE,
+		"MAX_TEMP" = HEXANE_FORMATION_MAX_TEMPERATURE,
+	)
+
+/datum/gas_reaction/hexaneformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/heat_efficiency = min(temperature * 0.01, cached_gases[/datum/gas/hydrogen][MOLES] * INVERSE(5), cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.25))
+	if (heat_efficiency <= 0 || (cached_gases[/datum/gas/hydrogen][MOLES] - (heat_efficiency * 5) < 0 ) || (cached_gases[/datum/gas/bz][MOLES] - (heat_efficiency * 0.25) < 0))
+		return NO_REACTION
+
+	var/old_heat_capacity = air.heat_capacity()
+	ASSERT_GAS(/datum/gas/hexane, air)
+	cached_gases[/datum/gas/hydrogen][MOLES] -= heat_efficiency * 5
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficiency * 0.25
+	cached_gases[/datum/gas/hexane][MOLES] += heat_efficiency * 5.25
+
+	SET_REACTION_RESULTS(heat_efficiency * 5.25)
+	var/energy_consumed = heat_efficiency * HEXANE_FORMATION_ENERGY
+	var/new_heat_capacity = air.heat_capacity()
+	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+		air.temperature = max(((temperature * old_heat_capacity - energy_consumed) / new_heat_capacity), TCMB)
+	return REACTING
 
 /**
  * Hyper-Noblium Formation:

@@ -182,6 +182,10 @@
 	name = "\improper Antinoblium floor"
 	initial_gas_mix = ATMOS_TANK_ANTINOBLIUM
 
+/turf/open/floor/engine/hexane
+	name = "\improper Hexane floor"
+	initial_gas_mix = ATMOS_TANK_HEXANE
+
 /turf/open/floor/engine/air
 	name = "air floor"
 	initial_gas_mix = ATMOS_TANK_AIRMIX

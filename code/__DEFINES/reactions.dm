@@ -164,6 +164,14 @@
 /// The amount of energy 2.5 moles of freon forming from plasma, CO2, and BZ consumes.
 #define FREON_FORMATION_ENERGY 100
 
+// Hexane:
+/// The minimum temperature hexane can form at
+#define HEXANE_FORMATION_MIN_TEMPERATURE 450
+/// The maximum temperature hexane can form at
+#define HEXANE_FORMATION_MAX_TEMPERATURE 465
+/// The amount of energy hexane formation uses per mole
+#define HEXANE_FORMATION_ENERGY 600
+
 // H-Nob:
 /// The maximum temperature hyper-noblium can form from tritium and nitrogen at.
 #define NOBLIUM_FORMATION_MIN_TEMP TCMB

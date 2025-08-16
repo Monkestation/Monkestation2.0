@@ -152,6 +152,10 @@
 	name = "Antinoblium Supply Control"
 	build_path = /obj/machinery/computer/atmos_control/antinoblium_tank
 
+/obj/item/circuitboard/computer/atmos_control/hexane_tank
+	name = "Hexane Supply Control"
+	build_path = /obj/machinery/computer/atmos_control/hexane_tank
+
 /obj/item/circuitboard/computer/auxiliary_base
 	name = "Auxiliary Base Management Console"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

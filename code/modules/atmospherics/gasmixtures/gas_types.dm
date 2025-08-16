@@ -285,6 +285,17 @@
 	base_value = 10
 	desc = "We still don't know what it does, but it sells for a lot."
 
+/datum/gas/hexane
+	id = "hexane"
+	specific_heat = 5
+	name = "Hexane"
+	dangerous = TRUE
+	gas_overlay = "hexane"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 200
+	base_value = 2
+	desc = "Powerful neutron absorber. Used in highly radioactive environments."
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

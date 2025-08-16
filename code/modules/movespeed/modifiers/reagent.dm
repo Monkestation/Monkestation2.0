@@ -33,6 +33,9 @@ MONKESTATION REMOVAL END */
 /datum/movespeed_modifier/reagent/halon
 	multiplicative_slowdown = 1.8
 
+/datum/movespeed_modifier/reagent/hexane
+	multiplicative_slowdown = 1.5
+
 /datum/movespeed_modifier/reagent/hypernoblium
 	multiplicative_slowdown = 0.5
 
