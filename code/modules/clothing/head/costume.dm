@@ -235,3 +235,9 @@
 	desc = "A delicate hairpin normally paired with traditional clothing"
 	icon_state = "hairpin_fancy"
 	inhand_icon_state = "hairpin_fancy"
+
+/obj/item/clothing/head/costume/dio
+	name = "flamboyant headband"
+	desc = "A green metal headband in the shape of a heart."
+	icon_state = "dio_headband"
+	inhand_icon_state = null
