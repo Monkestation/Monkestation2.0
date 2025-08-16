@@ -11,9 +11,12 @@
 	inhand_icon_state = "pepperbackpacksec" //close enough
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
+	///The actual gun that you draw when you use it
 	var/obj/item/gun/energy/pulse/makeshift/gun
+	///batteries of the pulsepack
 	var/obj/item/stock_parts/cell/pulsepack/battery
-	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
+	///whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
+	var/armed = FALSE
 	var/overheat = 0
 	var/overheat_max = 1
 	var/heat_diffusion = 0.13
@@ -26,9 +29,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/pulsepack/Destroy()
-	if(!QDELETED(gun))
-		qdel(gun)
-	gun = null
+	QDEL_NULL(gun)
 	QDEL_NULL(battery)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -36,22 +37,23 @@
 /obj/item/pulsepack/process(seconds_per_tick)
 	overheat = max(0, overheat - heat_diffusion * seconds_per_tick)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pulsepack/attack_hand(mob/living/carbon/user, list/modifiers)
-	if(src.loc == user)
-		if(!armed)
-			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
-				armed = TRUE
-				if(!user.put_in_hands(gun))
-					armed = FALSE
-					to_chat(user, span_warning("You need a free hand to hold the gun!"))
-					return
-				update_appearance()
-				user.update_worn_back()
-		else
-			to_chat(user, span_warning("You are already holding the gun!"))
-	else
-		..()
+	if(loc != user)
+		return
+	if(armed)
+		to_chat(user, span_warning("You are already holding the gun!"))
+		return
+
+	if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
+		armed = TRUE
+		if(!user.put_in_hands(gun))
+			armed = FALSE
+			to_chat(user, span_warning("You need a free hand to hold the gun!"))
+			return
+		update_appearance()
+		user.update_worn_back()
+
+	return ..()
 
 /obj/item/pulsepack/attackby(obj/item/W, mob/user, params)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
@@ -70,16 +72,16 @@
 	if(armed)
 		return
 	if(iscarbon(usr))
-		var/mob/M = usr
+		var/mob/user = usr
 
 		if(!over_object)
 			return
 
-		if(!M.incapacitated())
+		if(!user.incapacitated())
 
 			if(istype(over_object, /atom/movable/screen/inventory/hand))
-				var/atom/movable/screen/inventory/hand/H = over_object
-				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+				var/atom/movable/screen/inventory/hand/user_hand = over_object
+				M.putItemFromInventoryInHandIfPossible(src, user_hand.held_index)
 
 
 /obj/item/pulsepack/update_icon_state()
@@ -94,7 +96,7 @@
 	if(user)
 		to_chat(user, span_notice("You attach the [gun.name] to the [name]."))
 	else
-		src.visible_message(span_warning("The [gun.name] snaps back onto the [name]!"))
+		visible_message(span_warning("The [gun.name] snaps back onto the [name]!"))
 	update_appearance()
 	user.update_worn_back()
 
@@ -116,6 +118,7 @@
 	cell_type = /obj/item/stock_parts/cell/pulsepack
 	item_flags = SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
+	///the backpack we are linked to
 	var/obj/item/pulsepack/ammo_pack
 
 /obj/item/gun/energy/pulse/makeshift/Initialize(mapload)
@@ -127,20 +130,18 @@
 	return ..()
 
 /obj/item/gun/energy/pulse/makeshift/Destroy()
-	if(!QDELETED(ammo_pack))
-		qdel(ammo_pack)
-	ammo_pack = null
+	QDEL_NULL(ammo_pack)
 	return ..()
 
 /obj/item/gun/energy/pulse/makeshift/attack_self(mob/living/user)
 	return
 
 /obj/item/gun/energy/pulse/makeshift/dropped(mob/user)
-	SHOULD_CALL_PARENT(FALSE)
-	if(ammo_pack)
-		ammo_pack.attach_gun(user)
-	else
+	if(!ammo_pack)
 		qdel(src)
+		return
+	ammo_pack.attach_gun(user)
+	return ..()
 
 /obj/item/gun/energy/pulse/makeshift/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
