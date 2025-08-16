@@ -29,7 +29,10 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/pulsepack/Destroy()
-	QDEL_NULL(gun)
+	//we do this check as a precaution (read: pass checks) since the backpack itself should have already deleted this
+	if(!QDELETED(gun))
+		qdel(gun)
+	gun = null
 	QDEL_NULL(battery)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
