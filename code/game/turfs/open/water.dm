@@ -36,3 +36,9 @@
 //Same turf, but instead used in the Beach Biodome
 /turf/open/water/beach/biodome
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
+//Same turf, but instead used in the steelbeam
+/turf/open/water/sewage
+	icon_state = "sewage"
+	desc = "literal tons of shit, piss, and other types of filth from the station, you do not want to touch this."
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
