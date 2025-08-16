@@ -28,6 +28,8 @@
 		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOSOFTCRIT,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_HARDLY_WOUNDED,
 	)
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
@@ -47,8 +49,6 @@
 	current_mob.add_traits(granted_traits, HUNTER_TRAIT)
 	current_mob.update_sight()
 	current_mob.faction |= FACTION_RABBITS
-	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(setup_bnuuy_images))
-	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(update_bnnuy_visibility))
 
 /datum/antagonist/monsterhunter/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -56,7 +56,6 @@
 	current_mob.remove_traits(granted_traits, HUNTER_TRAIT)
 	current_mob.faction -= FACTION_RABBITS
 	current_mob.update_sight()
-	UnregisterSignal(current_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOVABLE_MOVED))
 
 /datum/antagonist/monsterhunter/on_gain()
 	owner.special_role = ROLE_MONSTERHUNTER
@@ -75,9 +74,7 @@
 		card.moveToNullspace()
 		grant_drop_ability(card)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
-	for(var/i in 1 to 5)
-		var/turf/rabbit_hole = get_safe_random_station_turf_equal_weight()
-		rabbits += new /obj/effect/bnnuy(rabbit_hole, src)
+	spawn_rifts()
 	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
 	gun_holder.drop_gun = TRUE
 	var/datum/action/cooldown/spell/track_monster/track = new
@@ -94,6 +91,44 @@
 	owner.special_role = null
 	return ..()
 
+/datum/antagonist/monsterhunter/proc/spawn_rifts(amount = 5)
+	var/list/base_areas = list(
+		/area/station/engineering,
+		/area/station/medical,
+		/area/station/science,
+		/area/station/security,
+		/area/station/service,
+		/area/station/command,
+		/area/station/hallway,
+		/area/station/cargo,
+	)
+	// these areas are kinda just fucked up ngl
+	var/list/forbidden_areas = typesof(
+		/area/station/engineering/atmospherics_engine,
+		/area/station/engineering/supermatter,
+		/area/station/science/ordnance,
+		/area/station/security/prison,
+	)
+	// this is really dumb but radstorm protected_areas is generally a good source of "maints areas that are technically department subtypes"
+	var/datum/weather/rad_storm/wtf = new
+	for(var/area_type in wtf.protected_areas)
+		forbidden_areas |= typesof(area_type)
+	QDEL_NULL(wtf)
+	var/list/departments = list()
+	for(var/base_area in base_areas)
+		var/list/department = (typesof(base_area) - forbidden_areas) & GLOB.the_station_areas
+		if(length(department))
+			departments[department] = amount
+	for(var/i = 1 to amount)
+		var/list/department = pick_weight(departments)
+		var/turf/target_turf = get_safe_random_station_turf(department)
+		if(!target_turf)
+			target_turf = get_safe_random_station_turf()
+			stack_trace("Failed to get safe turf in [department] areas, using random safe station turf")
+		else
+			departments[department]-- // reduce chance of them spawning in same department
+		rabbits += new /obj/effect/bnnuy(target_turf, src)
+
 /datum/antagonist/monsterhunter/proc/load_wonderland()
 	var/static/wonderland_loaded = FALSE
 	if(wonderland_loaded)
@@ -106,20 +141,6 @@
 		QDEL_NULL(wonderland_template)
 		message_admins("Failed to load Wonderland z-level!")
 		CRASH("Failed to load Wonderland z-level!")
-
-/datum/antagonist/monsterhunter/proc/setup_bnuuy_images()
-	SIGNAL_HANDLER
-	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
-		if(QDELETED(bnnuy))
-			continue
-		owner.current?.client?.images |= bnnuy.hunter_image
-
-/datum/antagonist/monsterhunter/proc/update_bnnuy_visibility(mob/living/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-	for(var/obj/effect/bnnuy/bnnuy as anything in rabbits)
-		if(QDELETED(bnnuy))
-			continue
-		bnnuy.update_mouse_opacity(source)
 
 /datum/antagonist/monsterhunter/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
