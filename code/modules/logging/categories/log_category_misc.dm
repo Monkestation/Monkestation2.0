@@ -59,3 +59,6 @@
 
 /datum/log_category/silo
 	category = LOG_CATEGORY_SILO
+
+/datum/log_category/cave_generation
+	category = LOG_CATEGORY_CAVE_GENERATION
