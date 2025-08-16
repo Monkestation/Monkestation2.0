@@ -80,7 +80,7 @@
 	pixel_y = base_pixel_y + rand(-8, 8)
 
 	if(default_raw_text)
-		add_raw_text(default_raw_text)
+		add_raw_text(default_raw_text, advanced_html = TRUE)
 
 	update_appearance()
 

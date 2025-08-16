@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"map_name": "Biodome",
+	"map_path": "map_files/biodome",
+	"map_file": "biodome.dmm",
+	"shuttles": {
+		"emergency": "emergency_meta",
+		"ferry": "ferry_fancy",
+		"cargo": "cargo_biodome",
+		"whiteship": "whiteship_box"
+	},
+	"traits": [
+		{
+			"Up": true,
+			"Baseturf": "/turf/open/misc/asteroid/airless",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
+		},
+		"Captain": {
+			"special_charter": "asteroid"
+		}
+	}
+}

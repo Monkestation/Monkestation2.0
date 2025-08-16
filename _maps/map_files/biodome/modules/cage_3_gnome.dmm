@@ -1,0 +1,88 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/light/warm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/flora/bush/leavy/style_random,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"d" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 6
+	},
+/obj/item/fishing_rod,
+/turf/open/floor/iron/terracotta/herringbone,
+/area/station/maintenance/aft/upper)
+"i" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 6
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/terracotta/herringbone,
+/area/station/maintenance/aft/upper)
+"j" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/modular_map_connector,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"k" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"n" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/basic/garden_gnome,
+/obj/structure/flora/bush/pointy/style_random,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"q" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/terracotta/herringbone,
+/area/station/maintenance/aft/upper)
+"H" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"N" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/flora/bush/leavy/style_random,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"R" = (
+/obj/structure/flora/bush/leafy,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"T" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/thinplating/terracotta,
+/mob/living/basic/garden_gnome,
+/turf/open/floor/iron/terracotta/herringbone,
+/area/station/maintenance/aft/upper)
+"W" = (
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner,
+/mob/living/basic/garden_gnome,
+/turf/open/floor/iron/terracotta/herringbone,
+/area/station/maintenance/aft/upper)
+
+(1,1,1) = {"
+q
+T
+a
+"}
+(2,1,1) = {"
+W
+d
+j
+"}
+(3,1,1) = {"
+i
+H
+N
+"}
+(4,1,1) = {"
+k
+R
+n
+"}

@@ -68,7 +68,7 @@
 	smoke_visuals = new(source, /particles/impact_smoke)
 	smoke_visuals.particles.position = list(position_offset, position_offset)
 	smoke_visuals.particles.velocity = list(x_component_smoke, y_component_smoke)
-	if(debris && !((ENERGY == P.armor_flag) || (BULLET == P.armor_flag)))
+	if(debris && !((ENERGY == P.armor_flag) || (LASER == P.armor_flag)))
 		debris_visuals = new(source, /particles/debris)
 		debris_visuals.particles.position = generator(GEN_CIRCLE, position_offset, position_offset)
 		debris_visuals.particles.velocity = list(x_component, y_component)
