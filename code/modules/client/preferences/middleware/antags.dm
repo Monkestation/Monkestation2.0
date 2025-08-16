@@ -125,6 +125,7 @@
 		ROLE_SLASHER = /datum/antagonist/slasher,
 		ROLE_FLORIDA_MAN = /datum/antagonist/florida_man,
 		ROLE_BINGLE = /datum/antagonist/bingle,
+		ROLE_BLOODLING = /datum/antagonist/bloodling,
 		ROLE_TERATOMA = /datum/antagonist/teratoma,
 		ROLE_ASSAULT_OPERATIVE = /datum/antagonist/assault_operative,
 		ROLE_PLAGUERAT = /datum/antagonist/plague_rat,
