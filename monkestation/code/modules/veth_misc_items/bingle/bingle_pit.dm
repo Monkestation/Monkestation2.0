@@ -24,13 +24,14 @@ GLOBAL_LIST(bingle_mobs)
 	var/list/pit_overlays = list()
 	var/last_bingle_spawn_value = 0
 	var/last_bingle_poll_value = 0
-	var/max_pit_size = 80 // Maximum size (80x80) for the pit
+	var/max_pit_size = 40 // Maximum size (40x40) for the pit
 	var/datum/component/aura_healing/aura_healing
 	var/static/datum/team/bingles/bingle_team
 	/// Typecache of things that won't be swallowed by the pit.
 	var/static/list/swallow_blacklist
 	/// Cooldown for taking bomb damage - basically a cheat solution to handle it taking damage for each tile from one bomb.
 	COOLDOWN_DECLARE(bomb_cooldown)
+	var/announcement_made = FALSE
 
 /obj/structure/bingle_hole/Initialize(mapload)
 	..()
@@ -120,12 +121,12 @@ GLOBAL_LIST(bingle_mobs)
 /obj/structure/bingle_hole/process(seconds_per_tick)
 	// Only spawn a new bingle for each 30 item value milestone, and only once per milestone
 	// Calculate how many bingles should exist based on current item value
-	var/target_bingle_count = round(item_value_consumed / 30)
-	var/current_bingle_count = round(last_bingle_spawn_value / 30)
+	var/target_bingle_count = round(item_value_consumed / 50)
+	var/current_bingle_count = round(last_bingle_spawn_value / 50)
 
 	// If we need more bingles, spawn one
 	if(target_bingle_count > current_bingle_count)
-		last_bingle_spawn_value = target_bingle_count * 30
+		last_bingle_spawn_value = target_bingle_count * 50
 		INVOKE_ASYNC(src, PROC_REF(spawn_bingle_from_ghost))
 
 	// Pit grows every 100 item value - calculate target size
@@ -362,7 +363,9 @@ GLOBAL_LIST(bingle_mobs)
 				if(iswallturf(T))
 					T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					item_value_consumed++
-
+				if(!announcement_made)
+					priority_announce("The blue tide has been detected upon [station_name()]. All personnel must stop the consumption of the station.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+					announcement_made = TRUE
 	current_pit_size = new_size
 	aura_healing.range = max(round(new_size / 2, 1) + 2, 3)
 
