@@ -10571,8 +10571,8 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "baS" = (
-/obj/effect/spawner/random/vending/colavend,
 /obj/machinery/status_display/evac/directional/east,
+/obj/machinery/vending/access/command,
 /turf/open/floor/wood/large,
 /area/station/command/bridge)
 "baT" = (
@@ -51120,6 +51120,7 @@
 	name = "AI Solar Control"
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/solars/starboard/aft)
 "mED" = (
@@ -106723,11 +106724,11 @@ aaa
 aaa
 aaa
 aaP
-aaa
-aaa
-aaa
-aaa
 ldx
+aaa
+aaa
+aaa
+aaa
 aaP
 aaa
 aak
