@@ -1,0 +1,18 @@
+{
+	"version": 1,
+	"map_name": "Cerestation",
+	"map_path": "map_files/Cerestation",
+	"map_file": "cerestation.dmm",
+	"shuttles": {
+		"arrival": "arrival_box",
+		"emergency": "emergency_cere",
+		"ferry": "ferry_fancy",
+		"cargo": "cargo_box",
+		"whiteship": "whiteship_cere"
+	},
+	"traits": [
+		{
+			"Baseturf": "/turf/open/floor/plating/asteroid/airless"
+		}
+	]
+}
