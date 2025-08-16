@@ -23845,7 +23845,7 @@
 "nmn" = (
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "Permavator";
-	preset_destination_names = list("2"="Perma""10"="Security")
+	preset_destination_names = list("2"="Perma","10"="Security")
 	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
