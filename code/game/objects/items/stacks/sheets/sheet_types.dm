@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	return BRUTELOSS
 
 /obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
-	if(get_amount() < 1)
+	if(is_zero_amount(delete_if_zero = TRUE))
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/rods/two/new_item = new(user.loc)
@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
-	if(get_amount() < 1)
+	if(is_zero_amount(delete_if_zero = TRUE))
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)

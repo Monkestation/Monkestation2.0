@@ -333,3 +333,17 @@
       then equipping another jacket through the equip window causing magical jacket
       consumption into the recipient's contents.
   - bugfix: Monkification no longer magically changes your ID/PDA name.
+2025-08-16:
+  Absolucy:
+  - map: Fixed missing disposals pipes in Tramstation's engineering SMES room.
+  - bugfix: Bloodsuckers and Changelings now have the "no healing" challenge removed.
+  Absolucy, JohnFulpWillard:
+  - admin: Admins can now link a URL for maps, used to give feedback on said maps.
+      Accessible through the roundend report, escape menu, and stat panel.
+  - qol: You can now directly go to the webmap of maps from the stat panel (assuming
+      it's set in config).
+  EssentialTomato:
+  - bugfix: (Synclt21) Failing to equip a dual handed item should properly clear out
+      all status effects related to equipping it, for e.g. remove the action button
+      from chainsaw
+  - bugfix: Fixed beach bar floors not giving back the right tiles.
