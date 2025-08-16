@@ -38,8 +38,6 @@
 	overheat = max(0, overheat - heat_diffusion * seconds_per_tick)
 
 /obj/item/pulsepack/attack_hand(mob/living/carbon/user, list/modifiers)
-	if(loc != user)
-		return
 	if(armed)
 		to_chat(user, span_warning("You are already holding the gun!"))
 		return
@@ -52,14 +50,15 @@
 			return
 		update_appearance()
 		user.update_worn_back()
+		return
 
-	return ..()
+	return . = ..()
 
-/obj/item/pulsepack/attackby(obj/item/W, mob/user, params)
-	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
+/obj/item/pulsepack/attackby(obj/item/weapon, mob/user, params)
+	if(weapon == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else
-		..()
+		return ..()
 
 
 /obj/item/pulsepack/dropped(mob/user)
@@ -81,7 +80,7 @@
 
 			if(istype(over_object, /atom/movable/screen/inventory/hand))
 				var/atom/movable/screen/inventory/hand/user_hand = over_object
-				M.putItemFromInventoryInHandIfPossible(src, user_hand.held_index)
+				user.putItemFromInventoryInHandIfPossible(src, user_hand.held_index)
 
 
 /obj/item/pulsepack/update_icon_state()
