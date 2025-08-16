@@ -23,6 +23,7 @@
 	resistance_flags = NONE
 	max_integrity = 300
 	var/shoulder_carry = FALSE
+	var/satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel //added this variable so that you can change the movespeed penalty a backpack gives if paired with a satchel
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
@@ -43,9 +44,9 @@
 	var/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
 	var/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
 	if(istype(back_item, /obj/item/storage/backpack) && istype(belt_item, /obj/item/storage/backpack/satchel))
-		user.add_movespeed_modifier(/datum/movespeed_modifier/belt_satchel)
+		user.add_movespeed_modifier(satchel_movespeed_modifier)
 	else
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/belt_satchel)
+		user.remove_movespeed_modifier(satchel_movespeed_modifier)
 
 /*
  * Backpack Types
@@ -848,3 +849,113 @@
 /obj/item/storage/backpack/cursed/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, "slasher")
+
+// Special Mining Backpacks
+
+/obj/item/storage/backpack/rockspider
+	name = "Rockspider Pack"
+	desc = "A surprisingly flexible and durable bag, capable of carrying up to three mining guns at once, for those who prowl the wastes with a passion for marksmanship. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
+	icon_state = "rockspider"
+	inhand_icon_state = "backpack"
+	satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel/light
+
+/obj/item/storage/backpack/rockspider/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
+	atom_storage.set_holdable(list(
+		/obj/item/gun/ballistic/automatic/proto/pksmg/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/rifle/minerjdj,
+		/obj/item/gun/ballistic/revolver/govmining,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave,
+	))
+	atom_storage.max_total_storage = 100
+
+/obj/item/storage/backpack/ashduelist
+	name = "Ashen Duelist Pack"
+	desc = "A bag with a mount and holster, capable of carrying any crusher type weapon and a gun, for the aspiring duelist who needs a bit more than just a blade. Due to its flexibility, it doesn't interfere with movement as badly as most bags when paired with a satchel."
+	icon_state = "ashenduelist"
+	inhand_icon_state = "backpack"
+	satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel/light
+
+/obj/item/storage/backpack/ashduelist/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
+	atom_storage.set_holdable(list(
+		/obj/item/gun/ballistic/automatic/proto/pksmg/autoshotgun,
+		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
+		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
+		/obj/item/gun/ballistic/rifle/minerjdj,
+		/obj/item/gun/ballistic/revolver/govmining,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/glock,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/railgun,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/repeater,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave,
+		/obj/item/kinetic_crusher,
+		/obj/item/kinetic_crusher/machete,
+		/obj/item/kinetic_crusher/spear,
+		/obj/item/kinetic_crusher/hammer,
+		/obj/item/kinetic_crusher/claw,
+		/obj/item/kinetic_crusher/pilebunker,
+		/obj/item/gun/magic/crusherknives,
+		/obj/item/kinetic_crusher/sickle,
+	))
+	atom_storage.max_total_storage = 100
+
+/obj/item/storage/backpack/trenchjockey
+	name = "Trench Jockey Pack"
+	desc = "A exceptionally spacious bag full of slots and pouches for different kinds of ammunition, for those who really need more than just one extra round. Despite its weight, it fits incredibly well with a satchel, and does not hinder your movement as much as a regular backpack would."
+	icon_state = "trenchjockey"
+	inhand_icon_state = "backpack"
+	satchel_movespeed_modifier = /datum/movespeed_modifier/belt_satchel/light
+
+/obj/item/storage/backpack/trenchjockey/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 14 //TWO whole rows to fill with ammo, this should be PLENTY, if you run out you either spent way to long on lavaland and should go touch grass, or you have a TREMENDOUS skill issue
+	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
+	atom_storage.set_holdable(list( //all the ammo for mining guns can be stored in here, but nothing else.
+		/obj/item/ammo_box/magazine/pksmgmag,
+		/obj/item/storage/box/kinetic,
+		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_casing/shotgun/hydrakinetic,
+		/obj/item/storage/box/kinetic/autoshotgun,
+		/obj/item/storage/box/kinetic/autoshotgun/smallcase,
+		/obj/item/ammo_casing/a762/kinetic,
+		/obj/item/ammo_box/a762/kinetic,
+		/obj/item/storage/box/kinetic/kineticlmg,
+		/obj/item/ammo_casing/a40mm/kinetic,
+		/obj/item/storage/box/kinetic/grenadelauncher,
+		/obj/item/ammo_casing/govmining,
+		/obj/item/ammo_box/govmining,
+		/obj/item/storage/box/kinetic/govmining,
+		/obj/item/ammo_casing/minerjdj,
+		/obj/item/ammo_casing/shotgun/kinetic,
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug,
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker,
+		/obj/item/storage/box/kinetic/shotgun,
+		/obj/item/storage/box/kinetic/shotgun/sniperslug,
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker
+	),
+	list( //cant hold these
+		/obj/item/storage/box/kinetic/govmining/bigcase,
+		/obj/item/storage/box/kinetic/autoshotgun/bigcase,
+		/obj/item/storage/box/kinetic/kineticlmg/bigcase,
+		/obj/item/storage/box/kinetic/grenadelauncher/bigcase,
+		/obj/item/storage/box/kinetic/minerjdj/bigcase, //just incase...
+		/obj/item/storage/box/kinetic/shotgun/bigcase,
+		/obj/item/storage/box/pksmg //also just incase...
+	))
+
+	atom_storage.max_total_storage = 100
