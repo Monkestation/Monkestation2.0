@@ -501,6 +501,14 @@
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
+
+/obj/machinery/disease2/centrifuge/attack_ai(mob/user)
+	if(!panel_open)
+		return attack_hand(user)
+
+/obj/machinery/disease2/centrifuge/attack_robot(mob/user)
+	return attack_ai(user)
+
 #undef CENTRIFUGE_LIGHTSPECIAL_OFF
 #undef CENTRIFUGE_LIGHTSPECIAL_BLINKING
 #undef CENTRIFUGE_LIGHTSPECIAL_ON
