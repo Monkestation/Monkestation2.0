@@ -135,6 +135,7 @@
 	//we do this check as a precaution (read: pass checks) since the backpack itself should have already deleted this
 	if(!QDELETED(ammo_pack))
 		qdel(ammo_pack)
+	ammo_pack = null
 	return ..()
 
 /obj/item/gun/energy/pulse/makeshift/attack_self(mob/living/user)
