@@ -7663,6 +7663,24 @@
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"eyP" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/docking_port/stationary{
+	dwidth = 9;
+	height = 34;
+	name = " emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 19;
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/station/service/bar)
 "ezc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -19640,7 +19658,7 @@
 	charge = 5e+006;
 	name = "Reactor 1 Emitters";
 	outputting = 0;
-	output_level = 10
+	output_level = 1000
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/large,
@@ -38376,24 +38394,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"uJk" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 8
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/docking_port/stationary{
-	dwidth = 9;
-	height = 34;
-	name = " emergency evac bay";
-	shuttle_id = "emergency_home";
-	width = 19;
-	dir = 4
-	},
-/turf/open/floor/plastic,
-/area/station/service/bar)
 "uJl" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -41775,7 +41775,7 @@
 	charge = 5e+006;
 	name = "Reactor 2 Emitters";
 	outputting = 0;
-	output_level = 10
+	output_level = 1000
 	},
 /turf/open/floor/iron/large,
 /area/station/engineering/supermatter/control_room)
@@ -526608,7 +526608,7 @@ hsu
 mPV
 eNX
 vTz
-uJk
+eyP
 ruM
 qgm
 alc
