@@ -484,10 +484,10 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		message = copytext(message, 2)
 		if(generation == 0) //Hivequeens demand attention.
 			for(var/borer in GLOB.cortical_borers)
-				to_chat(borer, span_purplelarge("<b>Cortical Hivemind: [src] chorused, \"[message]\"</b>"))
+				to_chat(borer, span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"))
 			for(var/mob/dead_mob in GLOB.dead_mob_list)
 				var/link = FOLLOW_LINK(dead_mob, src)
-				to_chat(dead_mob, span_purplelarge("[link] <b>Cortical Hivemind: [src] chorused, \"[message]\"</b>"))
+				to_chat(dead_mob, span_purplelarge("[link] <b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"))
 		else
 			for(var/borer in GLOB.cortical_borers)
 				to_chat(borer, span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>"))
@@ -499,8 +499,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	//this is when they speak normally
 	if(human_host.is_willing_host(human_host))
-		to_chat(human_host, span_purplelarge("Cortical Link: [src] chorused, \"[message]\"")) // Only make it loud to the hosts and the worm to not flood anyone elses chat
-		to_chat(src, span_purplelarge("Cortical Link: [src] chorused, \"[message]\""))
+		to_chat(human_host, span_purplelarge("Cortical Link: [src] choruses, \"[message]\"")) // Only make it loud to the hosts and the worm to not flood anyone elses chat
+		to_chat(src, span_purplelarge("Cortical Link: [src] choruses, \"[message]\""))
 	else
 		to_chat(human_host, span_purple("Cortical Link: [src] sings, \"[message]\""))
 		to_chat(src, span_purple("Cortical Link: [src] sings, \"[message]\""))
