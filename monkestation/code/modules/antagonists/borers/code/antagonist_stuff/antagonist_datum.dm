@@ -139,4 +139,4 @@
 
 // Lets the borers see who is a willing host
 /datum/antagonist/cortical_borer/apply_innate_effects(mob/living/mob_override)
-	add_team_hud(owner, /datum/antagonist/willing_host)
+	add_team_hud(mob_override || owner.current)

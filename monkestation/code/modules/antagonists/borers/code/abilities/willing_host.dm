@@ -16,10 +16,9 @@
 	if(!.)
 		return FALSE
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	for(var/ckey_check in GLOB.willing_hosts)
-		if(ckey_check == cortical_owner.human_host.ckey)
-			owner.balloon_alert(owner, "host already willing")
-			return
+	if(cortical_owner.human_host.is_willing_host(cortical_owner.human_host))
+		owner.balloon_alert(owner, "host already willing")
+		return
 
 	owner.balloon_alert(owner, "asking host...")
 	cortical_owner.chemical_storage -= chemical_cost
@@ -32,7 +31,6 @@
 
 	owner.balloon_alert(owner, "host willing!")
 	to_chat(cortical_owner.human_host, span_notice("You have accepted being a willing host!"))
-	GLOB.willing_hosts += cortical_owner.human_host.ckey
-	cortical_owner.human_host.mind.add_antag_datum(/datum/antagonist/willing_host)
+	GLOB.willing_hosts += cortical_owner.human_host.mind
 	cortical_owner.human_host.add_mood_event("borer", /datum/mood_event/has_borer) //If the host is being asked then they have a worm in their ear. The rest is done on insert/exit of the organ.
 	StartCooldown()

@@ -6588,7 +6588,6 @@
 #include "monkestation\code\modules\antagonists\borers\code\mobs\empowered_borer.dm"
 #include "monkestation\code\modules\antagonists\borers\code\mobs\name_lists.dm"
 #include "monkestation\code\modules\antagonists\borers\code\mobs\neutered_borer.dm"
-#include "monkestation\code\modules\antagonists\borers\willing_host\willing_host_datum.dm"
 #include "monkestation\code\modules\antagonists\brainwashing\brainwashing.dm"
 #include "monkestation\code\modules\antagonists\brainwashing\brainwashing_alert.dm"
 #include "monkestation\code\modules\antagonists\brainwashing\brainwashing_helpers.dm"
