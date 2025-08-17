@@ -7663,24 +7663,6 @@
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"eyP" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 8
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/docking_port/stationary{
-	dwidth = 9;
-	height = 34;
-	name = " emergency evac bay";
-	shuttle_id = "emergency_home";
-	width = 19;
-	dir = 4
-	},
-/turf/open/floor/plastic,
-/area/station/service/bar)
 "ezc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -38395,8 +38377,23 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "uJk" = (
-/turf/open/space/openspace,
-/area/station/outside)
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/docking_port/stationary{
+	dwidth = 9;
+	height = 34;
+	name = " emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 19;
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/station/service/bar)
 "uJl" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -196638,7 +196635,7 @@ bNQ
 bNQ
 bNQ
 bNQ
-uJk
+bNQ
 bNQ
 bNQ
 bNQ
@@ -526611,7 +526608,7 @@ hsu
 mPV
 eNX
 vTz
-eyP
+uJk
 ruM
 qgm
 alc

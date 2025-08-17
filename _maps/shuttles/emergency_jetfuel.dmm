@@ -21,9 +21,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "dg" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/shuttle/escape)
+/obj/effect/abstract/fire/big_fire,
+/turf/open/floor/plating,
+/area/template_noop)
 "dp" = (
 /obj/effect/abstract/fire/big_fire,
 /turf/open/floor/mineral/plastitanium/red,
@@ -41,10 +41,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"em" = (
-/obj/effect/decal/cleanable/blood/gibs/torso,
-/turf/open/floor/plating,
-/area/template_noop)
 "ex" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -65,14 +61,6 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
-/area/shuttle/escape)
-"gk" = (
-/obj/docking_port/mobile/emergency,
-/turf/open/floor/plating,
-/area/template_noop)
-"gD" = (
-/obj/effect/mob_spawn/corpse/human/assistant,
-/turf/open/floor/plating,
 /area/template_noop)
 "gY" = (
 /obj/structure/chair/comfy/shuttle{
@@ -173,7 +161,7 @@
 /area/shuttle/escape/brig)
 "vd" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/openspace,
+/turf/open/floor/plating,
 /area/template_noop)
 "wQ" = (
 /obj/effect/mob_spawn/corpse/human/bridgeofficer,
@@ -185,10 +173,6 @@
 /area/shuttle/escape)
 "xp" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
-/turf/open/openspace,
-/area/template_noop)
-"xL" = (
-/obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
 /area/template_noop)
 "xY" = (
@@ -314,11 +298,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Ji" = (
-/turf/template_noop,
-/area/shuttle/escape)
+/obj/docking_port/mobile/emergency,
+/turf/open/floor/plating,
+/area/template_noop)
 "KD" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
-/turf/open/openspace,
+/turf/open/floor/plating,
 /area/template_noop)
 "KO" = (
 /obj/effect/abstract/fire/big_fire,
@@ -331,9 +316,6 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"LI" = (
-/turf/open/floor/plating,
-/area/template_noop)
 "LK" = (
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -368,7 +350,7 @@
 /area/template_noop)
 "Oy" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/openspace,
+/turf/open/floor/plating,
 /area/template_noop)
 "OV" = (
 /turf/template_noop,
@@ -413,21 +395,17 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Th" = (
-/turf/open/openspace,
+/turf/open/floor/plating,
 /area/template_noop)
 "WF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"WN" = (
-/obj/effect/abstract/fire/big_fire,
-/turf/open/floor/plating,
-/area/template_noop)
 "XF" = (
 /obj/effect/abstract/fire/big_fire,
 /obj/structure/lattice,
-/turf/open/openspace,
+/turf/template_noop,
 /area/template_noop)
 "XQ" = (
 /obj/effect/decal/cleanable/glass,
@@ -502,8 +480,8 @@ Mg
 Mg
 Mg
 Mg
-LI
-gk
+Th
+Ji
 Mg
 OV
 OV
@@ -511,11 +489,11 @@ OV
 Pc
 OV
 DG
-LI
+Th
 OV
 OV
 Qp
-XR
+NM
 zq
 OV
 OV
@@ -539,8 +517,8 @@ FF
 bT
 oz
 lR
-dg
-dg
+NM
+NM
 Mg
 Mg
 OV
@@ -549,10 +527,10 @@ OV
 OV
 Mw
 Rt
-LI
-XR
-XR
-XR
+Th
+NM
+NM
+NM
 Mw
 OV
 OV
@@ -574,21 +552,21 @@ CO
 ss
 lR
 OV
-dg
+NM
 OV
 OV
-LI
-LI
+Th
+Th
 Mw
 OV
-LI
-LI
+Th
+Th
 OV
 OV
 Th
 Th
 vd
-LI
+Th
 Th
 Th
 Oy
@@ -613,20 +591,20 @@ MD
 oR
 zj
 OV
-LI
-LI
+Th
+Th
 DG
-LI
-gD
-LI
+Th
+KD
+Th
 OV
 Th
 KD
-WN
-LI
+dg
+Th
 DG
-LI
-LI
+Th
+Th
 Th
 qI
 Rt
@@ -651,9 +629,9 @@ lR
 zj
 MD
 Mg
-LI
-LI
-LI
+Th
+Th
+Th
 OV
 Th
 Th
@@ -663,10 +641,10 @@ OV
 OV
 OV
 KD
-qI
-LI
-LI
-gD
+dg
+Th
+Th
+KD
 "}
 (7,1,1) = {"
 OV
@@ -688,7 +666,7 @@ ex
 lR
 Mg
 OV
-dg
+NM
 Mg
 Mg
 Mg
@@ -701,8 +679,8 @@ Oy
 OV
 OV
 OV
-LI
-LI
+Th
+Th
 "}
 (8,1,1) = {"
 OV
@@ -719,7 +697,7 @@ Ij
 ex
 oz
 ex
-dg
+NM
 OV
 OV
 eg
@@ -731,14 +709,14 @@ HT
 HT
 HT
 Pc
-LI
+Th
 XR
 XR
 XR
 Mw
 Rt
-LI
-LI
+Th
+Th
 "}
 (9,1,1) = {"
 OV
@@ -760,15 +738,15 @@ Ff
 wQ
 fd
 dJ
-dg
+NM
 Mg
 OV
 OV
 OV
 OV
 Fi
-LI
-LI
+Th
+Th
 XR
 Yy
 OV
@@ -797,8 +775,8 @@ PT
 lR
 as
 Mg
-dg
-dg
+NM
+NM
 lR
 Pw
 cI
@@ -806,9 +784,9 @@ OV
 MD
 Mg
 OV
-gD
-xL
-LI
+KD
+Oy
+Th
 Pc
 OV
 "}
@@ -836,13 +814,13 @@ Mg
 ss
 OV
 OV
-LI
-LI
+Th
+Th
 OV
 OV
 OV
 OV
-LI
+Th
 OV
 OV
 OV
@@ -865,20 +843,20 @@ lR
 ex
 lR
 oz
-Ji
-Ji
+OV
+OV
 Mg
 HT
 OV
-LI
-LI
+Th
+Th
 Pw
-LI
+Th
 OV
 Mg
-LI
-LI
-LI
+Th
+Th
+Th
 Pc
 OV
 Mw
@@ -897,16 +875,16 @@ Mg
 AJ
 lR
 fA
-LI
-dg
-LI
+Th
+NM
+Th
 oR
 MD
 Mg
 Mg
 OV
 OV
-dg
+NM
 Mg
 OV
 Mg
@@ -916,8 +894,8 @@ OV
 Mw
 OV
 OV
-Oy
-Th
+Rt
+OV
 zq
 "}
 (14,1,1) = {"
@@ -934,14 +912,14 @@ ue
 dT
 lR
 lR
-dg
-LI
-LI
-Ji
-Ji
-OV
+NM
 Th
-xp
+Th
+OV
+OV
+OV
+OV
+zq
 NM
 OV
 OV
@@ -951,9 +929,9 @@ OV
 OV
 Pc
 Rt
-LI
-LI
-qI
+Th
+Th
+Mw
 OV
 "}
 (15,1,1) = {"
@@ -973,24 +951,24 @@ zj
 sz
 lR
 Mj
-LI
-LI
+Th
+Th
 Rt
 Pc
-Th
-XR
-XR
-KD
-Th
+OV
+NM
+NM
+Pc
+OV
 Mw
 NM
 NM
 Fi
 OV
-LI
-LI
 Th
 Th
+OV
+OV
 "}
 (16,1,1) = {"
 OV
@@ -1004,8 +982,8 @@ LK
 LK
 CO
 Fq
-xL
-LI
+Oy
+Th
 MD
 Pw
 lR
@@ -1013,19 +991,19 @@ MD
 Mg
 Fi
 NM
-XR
-XR
+NM
+NM
 XF
-XR
-Th
-KD
+NM
+OV
+Pc
 Oq
 NM
 NM
 OV
 OV
-Th
-KD
+OV
+Pc
 OV
 "}
 (17,1,1) = {"
@@ -1041,24 +1019,24 @@ LK
 CO
 yQ
 lR
-dg
-dg
+NM
+NM
 lR
-Ji
-Ji
-Ji
+OV
+OV
+OV
 Pc
 OV
-XR
-Oy
-Th
-Oy
+NM
 Rt
-Th
+OV
+Rt
+Rt
+OV
 OV
 NM
-LI
-em
+Th
+xp
 Mw
 Rt
 OV
@@ -1081,18 +1059,18 @@ OV
 OV
 OV
 Mg
-Ji
 OV
+OV
+OV
+Mw
+NM
+NM
 Th
-qI
-XR
-XR
-LI
 Qp
-xL
-Th
-Th
-Th
+Oy
+OV
+OV
+OV
 Mw
 OV
 OV
@@ -1119,17 +1097,17 @@ Mw
 OV
 OV
 OV
-Th
-qI
-qI
+OV
+Mw
+Mw
 Fi
-LI
+Th
 OV
 OV
 qI
+OV
+OV
 Th
-Th
-LI
 OV
 Rt
 Pc
