@@ -21913,6 +21913,7 @@
 /area/station/security/execution/transfer)
 "mbL" = (
 /obj/structure/cable/multilayer,
+/obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/station/engineering/a2MINPP/exterior)
 "mbW" = (
@@ -30732,9 +30733,23 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "qQA" = (
-/obj/structure/cable/multilayer/multiz,
-/turf/closed/wall/r_wall,
-/area/station/engineering/a2MINPP/exterior)
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/docking_port/stationary{
+	dwidth = 9;
+	height = 34;
+	name = " emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 19;
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/station/service/bar)
 "qQN" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Test Subject Cell"
@@ -38369,24 +38384,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"uJk" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 8
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/docking_port/stationary{
-	dwidth = 9;
-	height = 34;
-	name = " emergency evac bay";
-	shuttle_id = "emergency_home";
-	width = 19;
-	dir = 4
-	},
-/turf/open/floor/plastic,
-/area/station/service/bar)
 "uJl" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -225932,7 +225929,7 @@ uKR
 uKR
 bzq
 bzq
-kJe
+bzq
 kJe
 cSy
 cSy
@@ -226187,9 +226184,9 @@ syl
 kEx
 kSt
 oFQ
-snK
+eiR
+eiR
 bzq
-kJe
 kJe
 kJe
 kJe
@@ -226445,9 +226442,9 @@ wQn
 wSD
 uKR
 kJe
-qQA
-kJe
-kJe
+snK
+bzq
+bzq
 kJe
 kJe
 kJe
@@ -226702,9 +226699,9 @@ dkC
 jza
 oFQ
 eiR
-mcO
 kJe
-kJe
+snK
+bzq
 kJe
 kJe
 kJe
@@ -226958,10 +226955,10 @@ vjs
 had
 myn
 uKR
-bzq
+mcO
 mbL
-kJe
-kJe
+mcO
+bzq
 kJe
 kJe
 kJe
@@ -526601,7 +526598,7 @@ hsu
 mPV
 eNX
 vTz
-uJk
+qQA
 ruM
 qgm
 alc
