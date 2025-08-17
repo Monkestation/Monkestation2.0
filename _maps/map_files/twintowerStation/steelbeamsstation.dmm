@@ -2565,8 +2565,7 @@
 "bzH" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter/welded{
-	dir = 4;
-	active = 1
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/roomone)
@@ -3281,8 +3280,7 @@
 "bVM" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter/welded{
-	dir = 8;
-	active = 1
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/roomtwo)
@@ -7663,24 +7661,6 @@
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"eyP" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 8
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/docking_port/stationary{
-	dwidth = 9;
-	height = 34;
-	name = " emergency evac bay";
-	shuttle_id = "emergency_home";
-	width = 19;
-	dir = 4
-	},
-/turf/open/floor/plastic,
-/area/station/service/bar)
 "ezc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -12533,8 +12513,7 @@
 "hco" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter/welded{
-	dir = 4;
-	active = 1
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/roomtwo)
@@ -18446,11 +18425,11 @@
 /area/station/medical/pathology)
 "kdD" = (
 /obj/structure/table,
-/obj/item/paper{
-	name = "NOTES ON SCRAM SYSTEM";
-	default_raw_text = "Dumps a swimming pool of 43k H2O on the SM. Yes we know water vapor is not a good gas to use, but it is significantly cheaper then the alternatives, it can backfire if your SM is somehow so hot that it isn't extinguished."
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/item/paper{
+	name = "READ ME ENGINEER";
+	default_raw_text = "The SM needs its emitters enabled, besides that its ready!"
+	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/roomone)
 "kdF" = (
@@ -18878,8 +18857,7 @@
 "kpV" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter/welded{
-	dir = 8;
-	active = 1
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers,
 /turf/open/floor/plating,
@@ -19657,8 +19635,7 @@
 /obj/machinery/power/smes{
 	charge = 5e+006;
 	name = "Reactor 1 Emitters";
-	outputting = 0;
-	output_level = 1000
+	outputting = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/large,
@@ -25402,12 +25379,12 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "ocX" = (
-/obj/item/paper{
-	name = "READ ME ENGINEER";
-	default_raw_text = "The SM is already setup for you! Start it from the control room on the 2nd floor."
-	},
 /obj/structure/table,
 /obj/machinery/camera/directional/south,
+/obj/item/paper{
+	name = "READ ME ENGINEER";
+	default_raw_text = "The SM needs its emitters enabled, besides that its ready!"
+	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/roomtwo)
 "ocZ" = (
@@ -25477,8 +25454,7 @@
 "ofz" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter/welded{
-	dir = 8;
-	active = 1
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/roomone)
@@ -35239,8 +35215,7 @@
 /area/station/service/library)
 "taR" = (
 /obj/machinery/power/emitter/welded{
-	dir = 4;
-	active = 1
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -38394,6 +38369,24 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"uJk" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/docking_port/stationary{
+	dwidth = 9;
+	height = 34;
+	name = " emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 19;
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/station/service/bar)
 "uJl" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -227217,7 +227210,7 @@ vjs
 vjs
 jUA
 lXO
-lVL
+uUN
 vjs
 mhZ
 dCJ
@@ -227474,7 +227467,7 @@ geH
 geH
 geH
 rYf
-uUN
+lVL
 vjs
 had
 arb
@@ -526608,7 +526601,7 @@ hsu
 mPV
 eNX
 vTz
-eyP
+uJk
 ruM
 qgm
 alc
