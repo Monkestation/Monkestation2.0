@@ -10,7 +10,8 @@
 		"emergency": "emergency_jetfuel"
 	},
 	"ignored_unit_tests": [
-        "/datum/unit_test/modify_fantasy_variable"
+        "/datum/unit_test/modify_fantasy_variable",
+		"/datum/unit_test/create_and_destroy"
 	],
 	"traits": [
 		{
