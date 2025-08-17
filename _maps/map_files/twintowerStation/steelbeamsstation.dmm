@@ -7113,6 +7113,12 @@
 "ejd" = (
 /turf/open/openspace,
 /area/station/cargo/lobby)
+"ejo" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/turf/open/water/sewage,
+/area/station/maintenance/central)
 "ejL" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -7703,6 +7709,11 @@
 	dir = 4
 	},
 /area/station/cargo/office)
+"ezI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/station/maintenance/central)
 "ezK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -11437,6 +11448,13 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
+"gzJ" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/structure/table_or_rack,
+/turf/open/water/sewage,
+/area/station/maintenance/central)
 "gzR" = (
 /obj/machinery/cart,
 /turf/open/floor/iron/textured,
@@ -17362,6 +17380,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/range)
+"jHg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/central)
 "jHp" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19300,6 +19324,11 @@
 "kGr" = (
 /turf/closed/wall,
 /area/station/commons/subway/northstation)
+"kGQ" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/water/sewage,
+/area/station/maintenance/central)
 "kHi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20347,6 +20376,13 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
+"lka" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/water/sewage,
+/area/station/maintenance/central)
 "lkf" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -21037,6 +21073,12 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/engineering/a2MINPP/interior)
+"lEZ" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/water/sewage,
+/area/station/maintenance/central)
 "lFc" = (
 /obj/structure/window/spawner/directional/north,
 /obj/structure/disposalpipe/trunk{
@@ -31924,6 +31966,12 @@
 /obj/item/wrench,
 /turf/open/floor/grass,
 /area/station/outside)
+"rzz" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/water/sewage,
+/area/station/maintenance/central)
 "rzB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth_half{
@@ -43393,6 +43441,12 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
+"xBO" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/water/sewage,
+/area/station/maintenance/central)
 "xBP" = (
 /obj/structure/shipping_container/donk_co,
 /turf/open/floor/plating,
@@ -66569,12 +66623,12 @@ gCY
 gCY
 gCY
 sMW
-hPj
-hPj
-hPj
-hPj
-hPj
-hPj
+gzJ
+rzz
+kGQ
+kGQ
+lEZ
+rzz
 sMW
 sMW
 nCI
@@ -66826,12 +66880,12 @@ gCY
 gCY
 gCY
 sMW
-hPj
-hPj
-hPj
-hPj
-hPj
-hPj
+lka
+kGQ
+kGQ
+kGQ
+kGQ
+ejo
 hPj
 hPj
 tbc
@@ -67083,12 +67137,12 @@ gCY
 gCY
 gCY
 sMW
-hPj
-hPj
-hPj
-hPj
-hPj
-hPj
+rzz
+kGQ
+nvU
+nvU
+nvU
+nvU
 hPj
 hPj
 tbc
@@ -67340,13 +67394,13 @@ gCY
 gCY
 gCY
 sMW
+kGQ
+xBO
+nvU
+ezI
 hPj
 hPj
-hPj
-hPj
-hPj
-hPj
-hPj
+ezI
 hPj
 tbc
 hLu
@@ -67597,12 +67651,12 @@ gCY
 gCY
 gCY
 sMW
-hPj
-hPj
-hPj
-hPj
-hPj
-hPj
+rzz
+kGQ
+nvU
+jHg
+ezI
+nvU
 hPj
 hPj
 tbc
