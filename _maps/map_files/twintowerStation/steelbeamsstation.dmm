@@ -7661,6 +7661,10 @@
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"eyP" = (
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/iron/white,
+/area/station/commons/easttower/a2ndfloor/hallway)
 "ezc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -9007,6 +9011,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
+/obj/structure/chair/sofa/bench/left,
 /turf/open/floor/iron/white,
 /area/station/commons/easttower/a2ndfloor/hallway)
 "fed" = (
@@ -30733,23 +30738,9 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "qQA" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 8
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/docking_port/stationary{
-	dwidth = 9;
-	height = 34;
-	name = " emergency evac bay";
-	shuttle_id = "emergency_home";
-	width = 19;
-	dir = 4
-	},
-/turf/open/floor/plastic,
-/area/station/service/bar)
+/obj/structure/chair/sofa/bench/right,
+/turf/open/floor/iron/white,
+/area/station/commons/easttower/a2ndfloor/hallway)
 "qQN" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Test Subject Cell"
@@ -38384,6 +38375,24 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"uJk" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/docking_port/stationary{
+	dwidth = 9;
+	height = 34;
+	name = " emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 19;
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/station/service/bar)
 "uJl" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -208688,7 +208697,7 @@ bNQ
 bNQ
 bNQ
 sdo
-fcQ
+qQA
 tVX
 dGE
 qBM
@@ -208945,7 +208954,7 @@ bNQ
 bNQ
 bNQ
 sdo
-fcQ
+eyP
 mmR
 dGE
 jou
@@ -209202,7 +209211,7 @@ bNQ
 bNQ
 bNQ
 sdo
-fcQ
+eyP
 nqD
 dGE
 jou
@@ -526598,7 +526607,7 @@ hsu
 mPV
 eNX
 vTz
-qQA
+uJk
 ruM
 qgm
 alc
