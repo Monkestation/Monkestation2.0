@@ -199,6 +199,15 @@
 #define TRAUMA_LIMIT_MAGIC 3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
 
+/// This trauma cannot be cured through "special" means, such as nanites or viruses.
+#define TRAUMA_SPECIAL_CURE_PROOF (1<<0)
+/// This trauma transfers on cloning.
+#define TRAUMA_CLONEABLE (1<<1)
+/// This trauma CANNOT be obtained randomly.
+#define TRAUMA_NOT_RANDOM (1<<2)
+/// Default trauma flags.
+#define TRAUMA_DEFAULT_FLAGS (TRAUMA_CLONEABLE)
+
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
 //Health hud screws for carbon mobs

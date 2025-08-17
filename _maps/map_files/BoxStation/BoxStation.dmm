@@ -9871,9 +9871,6 @@
 	id = "hopflash"
 	},
 /obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = -6
-	},
 /obj/machinery/door/window/left/directional/north{
 	dir = 8;
 	name = "Reception"
@@ -9887,6 +9884,7 @@
 	name = "Privacy Shutters";
 	dir = 8
 	},
+/obj/structure/desk_bell/departmental/command/hop,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/hop)
 "dgK" = (
@@ -20176,7 +20174,8 @@
 	id = "genetics_shutters";
 	name = "Genetics Shutters"
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/science{
+	bell_location = "Genetics Desk";
 	pixel_x = 7
 	},
 /turf/open/floor/iron/white/textured,
@@ -22161,7 +22160,7 @@
 	name = "Medbay Front Desk Shutters";
 	dir = 8
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/medical{
 	pixel_x = -6
 	},
 /turf/open/floor/iron/white/textured,
@@ -22514,6 +22513,16 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
+"hjw" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "hjB" = (
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
@@ -23774,10 +23783,7 @@
 	id = "brig_post";
 	name = "Security Shutters"
 	},
-/obj/structure/desk_bell{
-	pixel_y = 2;
-	pixel_x = 6
-	},
+/obj/structure/desk_bell/departmental/security,
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
 "hDv" = (
@@ -40811,6 +40817,18 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/chapel/office)
+"neR" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "neW" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -46655,8 +46673,8 @@
 	id = "rad_shutters";
 	name = "RaD Shutters"
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = 6
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lab)
@@ -47148,6 +47166,14 @@
 "pht" = (
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/storage)
+"phw" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "pia" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -49657,11 +49683,11 @@
 	name = "Cargo Desk Shutters";
 	dir = 1
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7;
-	pixel_y = 7
-	},
 /obj/item/papercutter,
+/obj/structure/desk_bell/departmental/supply{
+	pixel_y = 7;
+	pixel_x = 7
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/office)
 "pXY" = (
@@ -56817,7 +56843,6 @@
 /area/station/science/genetics/cloning)
 "srQ" = (
 /obj/machinery/light/directional/south,
-/obj/structure/nestbox,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "srS" = (
@@ -63984,7 +64009,6 @@
 /area/station/service/abandoned_gambling_den)
 "uGS" = (
 /obj/machinery/light/directional/north,
-/obj/structure/nestbox,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "uHc" = (
@@ -68788,10 +68812,7 @@
 	name = "Engineering Shutters";
 	dir = 8
 	},
-/obj/structure/desk_bell{
-	pixel_y = 10;
-	pixel_x = -6
-	},
+/obj/structure/desk_bell/departmental/engineering,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/break_room)
 "wcj" = (
@@ -71853,6 +71874,12 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/iron/dark,
 /area/station/security/execution)
+"xdu" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/nestbox,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "xdw" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -90440,11 +90467,11 @@ nJa
 xqS
 pff
 aSR
-guH
+hjw
 sXx
 ohF
 vBm
-aBL
+neR
 aSR
 bnl
 wgX
@@ -90697,11 +90724,11 @@ nJa
 xqS
 pff
 knA
-pfJ
+xdu
 sXx
 ohF
 vBm
-eaL
+phw
 knA
 bnl
 epc

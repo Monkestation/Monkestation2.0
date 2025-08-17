@@ -266,3 +266,94 @@
   Wisemonster:
   - bugfix: The automated announcement system once more announces new arrivals to
       the station.
+2025-08-12:
+  Absolucy:
+  - refactor: (timothymtorres) Sound has been heavily optimized and will now ignore
+      low volume sounds from far away.
+  - admin: (timothymtorres) Add debugging sound earmuffs to admin equipment inside
+      the debug box. Wear them to determine a sounds max range, distance, volume,
+      and sound name. Highly recommended to walk otherwise you will get spammed with
+      footstep sounds.
+  - bugfix: (grungussuss, Melbert) After 4 years, computer sound loop now works properly.
+  - qol: Stargazers can now slime link basic/simple mobs using a normal grab.
+  - bugfix: Hotspots/fire from ash drakes, explosions, and fire breath should no longer
+      last more than a couple of seconds.
+  - refactor: Slightly refactored brain trauma.
+  - balance: Nanites and viruses can no longer cure an obsession or hypnosis.
+  - map: The centcom firing range floors are now indestructible.
+  - balance: Revenge Vassals now also resist mindshields, just like Favorite Vassals.
+  Absolucy, Maximal08, FlufflesTheDog:
+  - qol: Using a multitool inhand tells you where the area APC is.
+  Aniantan, Bomberman66Dev:
+  - rscadd: Ported the surplus prosthetic organ quirks from TG. Select few species
+      cannot use them, however.
+  Ben10Omintrix:
+  - bugfix: moving away from the surgery table with its mask no longer causes lag
+  ThePooba:
+  - bugfix: less monkeycoins from roundend for mentors and fixed donator monkecoins
+  - balance: also buffed slasher again so i didnt forgor
+  Wernerses:
+  - map: Added the missing disk compartamentalizer to Icebox Botany
+  - map: Added heated nesting boxes to some maps that did not have it before
+  - map: Replaced all ranching railings with reinforced thin glass walls and windoors
+      for easy access for simians
+  - map: Chicken nest boxes are now all close to windoors for easy access to eggs
+  notghosti:
+  - bugfix: Contractor bundles should now still be purchasable after an objective
+      times out
+2025-08-13:
+  ThePooba:
+  - balance: jugg + minigun costs less
+  - balance: suit and minigun less slowdown
+  - balance: suit has more armor for lasers
+  - balance: minigun more damage shoots slower slightly less loud because it huwts
+      my ears
+  ancient-engineer:
+  - bugfix: fixed attacking a mirror giving you /datum/component/ instead of /datum/component/omen
+  notghosti:
+  - code_imp: Nuked sentient disease code.
+2025-08-14:
+  BingusSS13:
+  - qol: Service borgs can now hold beakers, bottles, and coffeepots.
+  - bugfix: Service borgs are now capable of cooking eggs on griddles, let's get cracking!
+  Tractor Maam:
+  - rscadd: Departmental Bells have replaced the desk bells at the front desk of every
+      station. These bells ring onto the respective department channel when rung (60
+      second cooldown.)
+  - rscadd: All bells can now be anchored with a wrench left click.
+  - rscadd: Maps that did not contain a bell for certain departments have been updated.
+  - image: desk bells have had their sprites replaced with Yogstation ones.
+  Wisemonster:
+  - balance: Lone Op's minimum/starting weight decreased to 0
+2025-08-15:
+  leaKsi:
+  - bugfix: (SmArtKar) Putting people you're fireman carrying into contractor pods
+      no longer sends both of you to zelda's shadow realm.
+  - bugfix: (Sealed101) Fixed equipping straight jackets onto people with attack-equip
+      then equipping another jacket through the equip window causing magical jacket
+      consumption into the recipient's contents.
+  - bugfix: Monkification no longer magically changes your ID/PDA name.
+2025-08-16:
+  Absolucy:
+  - map: Fixed missing disposals pipes in Tramstation's engineering SMES room.
+  - bugfix: Bloodsuckers and Changelings now have the "no healing" challenge removed.
+  Absolucy, JohnFulpWillard:
+  - admin: Admins can now link a URL for maps, used to give feedback on said maps.
+      Accessible through the roundend report, escape menu, and stat panel.
+  - qol: You can now directly go to the webmap of maps from the stat panel (assuming
+      it's set in config).
+  EssentialTomato:
+  - bugfix: (Synclt21) Failing to equip a dual handed item should properly clear out
+      all status effects related to equipping it, for e.g. remove the action button
+      from chainsaw
+  - bugfix: Fixed beach bar floors not giving back the right tiles.
+2025-08-17:
+  Absolucy, Bisar:
+  - balance: 'Added a list of "universal" items that can fit on any suit storage.
+      Mostly low-impact but high-utility items, but of special note: holsters and
+      the captain''s jetpack can be worn on any suit storage.'
+  - balance: Any item of size "tiny" can now also be worn in suit storage.
+  - qol: The suit storage change gives some small amount of sanity to wearing things
+      on suit storage, such as emergency oxygen tanks or a pack of smokes.
+  throwawayuseless:
+  - rscadd: Pro Skater quirk. Become totally radical today!
