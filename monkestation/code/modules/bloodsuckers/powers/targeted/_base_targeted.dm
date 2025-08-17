@@ -97,5 +97,5 @@
 	return FireTargetedPower(target, params)
 
 /datum/action/cooldown/bloodsucker/targeted/InterceptClickOn(mob/living/user, params, atom/target)
-	click_with_power(target, params)
+	return click_with_power(target, params)
 

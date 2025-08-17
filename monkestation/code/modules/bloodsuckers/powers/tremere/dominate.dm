@@ -34,15 +34,13 @@
 	blocked_by_glasses = FALSE
 	/// Data huds to show while the power is active
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED)
+	/// assoc list of timer_id to vassal datum
 	var/list/vassals = list()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/Remove(mob/removed_from)
 	. = ..()
-	for(var/datum/weakref/vassals_ref in vassals)
-		var/mob/vassal = vassals_ref?.resolve()
-		if(!vassals)
-			continue
-		end_possession(vassal, vassal_ref = vassals_ref)
+	for(var/datum/antagonist/thrall as anything in vassals)
+		end_possession(thrall)
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/get_power_desc_extended()
 	. = ..()
@@ -52,8 +50,7 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/get_power_explanation_extended()
 	. = list()
 	. += "Click any person to, after [DisplayTimeText(mesmerize_delay)], stun them for [DisplayTimeText(get_power_time())]."
-	. += "Right clicking on your victim however will apply a knockdown will confuse and slow them down for [DisplayTimeText(get_power_time())]."
-	. += "A left click will completely immobilize, and blind them for the next [DisplayTimeText(get_power_time())] seconds, and will also mute them for [DisplayTimeText(get_power_time())] seconds."
+	. += "Casting [src] will completely immobilize, and blind them for the next [DisplayTimeText(get_power_time())], and will also mute them for [DisplayTimeText(get_power_time())]."
 	. += "While this ability is active, you will be able to see additional information about everyone in the room."
 	. += "At level [DOMINATE_XRAY_LEVEL], you will gain X-Ray vision while this ability is active."
 	. += "At level [DOMINATE_VASSALIZE_LEVEL], while adjacent to the target, if your target is in critical condition or dead, they will instead be turned into a temporary Vassal. This will cost [TEMP_VASSALIZE_COST] blood."
@@ -102,17 +99,21 @@
 	if(target_mob.stat != CONSCIOUS && level_current >= DOMINATE_VASSALIZE_LEVEL)
 		if(user.Adjacent(target))
 			attempt_ghoulize(target, user)
+			return
 		else
 			if(IS_VASSAL(target_mob))
 				owner.balloon_alert(owner, "too far to revive!")
 			else
 				owner.balloon_alert(owner, "too far to vassal!")
+			return
 	..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/attempt_ghoulize(mob/living/target, mob/living/user)
 	owner.face_atom(target)
 	var/datum/antagonist/vassal/vassal = IS_VASSAL(target)
 	if(!victim_has_blood(target))
+		return FALSE
+	if(!bloodsuckerdatum_power.can_make_vassal(target))
 		return FALSE
 	if(vassal)
 		owner.balloon_alert(owner, "attempting to revive.")
@@ -154,12 +155,12 @@
 		target.add_traits(list(TRAIT_MUTE, TRAIT_DEAF), DOMINATE_TRAIT)
 	user.balloon_alert(target, "only [DisplayTimeText(living_time)] left to live!")
 	to_chat(target, span_warning("You will only live for [DisplayTimeText(living_time)]! Obey your master and go out in a blaze of glory!"))
-	var/timer_id = addtimer(CALLBACK(src, PROC_REF(end_possession), target), living_time, TIMER_STOPPABLE)
+	var/timer_id = addtimer(CALLBACK(src, PROC_REF(end_possession), vassal_datum), living_time, TIMER_STOPPABLE)
 	// timer that only the master and thrall can see
 	setup_timer(user, target, living_time, timer_id)
-	vassals += WEAKREF(target)
-	RegisterSignals(target, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(end_possession), timer_id)
-	RegisterSignal(vassal_datum, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antag_datum_removal), target, timer_id)
+	vassals[vassal_datum] = timer_id
+	RegisterSignals(target, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
+	RegisterSignal(target.mind, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antag_datum_removal))
 	pay_cost(TEMP_VASSALIZE_COST - bloodcost)
 	return TRUE
 
@@ -173,50 +174,53 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/setup_timer(mob/living/user, mob/living/target, living_time, timer_id)
-	var/list/show_to = list(user, target)
+	var/list/show_to = list(user)
 	if(bloodsuckerdatum_power && length(bloodsuckerdatum_power.vassals))
 		for(var/datum/antagonist/vassal in bloodsuckerdatum_power.vassals)
-			if(!vassal?.owner?.current)
+			if(isnull(vassal?.owner?.current))
 				continue
-			show_to += vassal.owner.current
+			show_to |= vassal.owner.current
 
-	new /atom/movable/screen/text/screen_timer/attached(null, show_to, timer_id, "Dies in ${timer}", null, null, target)
+	new /atom/movable/screen/text/screen_timer/attached(null, show_to, timer_id, "Dies in ${timer}", -16, 32, target)
 	new /atom/movable/screen/text/screen_timer(null, show_to, timer_id, "You die in ${timer}")
 
-/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/on_antag_datum_removal(datum/antagonist/vassal, mob/living/thrall, timer_id)
-	end_possession(thrall, timer_id)
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/on_antag_datum_removal(datum/mind/mind, datum/antagonist/vassal)
+	end_possession(vassal, FALSE)
 
-/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/is_vassal(mob/living/target)
-	for(var/datum/weakref/vassal_ref in vassals)
-		var/mob/vassal = vassal_ref?.resolve()
-		if(isnull(vassal) || vassal != target)
-			continue
-		return vassal_ref
-	return null
-
-/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/end_possession(mob/living/user, timer_id, datum/weakref/vassal_ref)
-	if(timer_id)
-		deltimer(timer_id)
-	if(!user)
-		CRASH("[src] end_possession called with no user!")
-	vassal_ref = vassal_ref ? vassal_ref : is_vassal(user)
-	if(isnull(vassal_ref))
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/on_death(mob/living/thrall)
+	var/vassal = IS_VASSAL(thrall)
+	if(isnull(vassal))
 		return
+	end_possession(vassal)
+
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/end_possession(datum/antagonist/vassal, remove_antag = TRUE)
+	SIGNAL_HANDLER
+	if(!vassals[vassal])
+		return
+	if(!istype(vassal))
+		CRASH("[src] end_possession called with non-vassal [vassal]!")
+	var/mob/living/user = vassal?.owner?.current
+	var/vassal_timer = vassals[vassal]
+	if(!istype(user))
+		vassals -= vassal
+		return
+	if(vassal_timer)
+		deltimer(vassal_timer)
 	user.remove_traits(list(TRAIT_MUTE, TRAIT_DEAF), DOMINATE_TRAIT)
+	UnregisterSignal(user, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
+	UnregisterSignal(user.mind, COMSIG_ANTAGONIST_REMOVED)
 	if(!HAS_TRAIT(user, TRAIT_NOBLOOD))
 		user.blood_volume = 0
-	if(!IS_VASSAL(user))
-		to_chat(user, span_warning("You feel the blood keeping you alive run out!"))
-		return
-	vassals -= vassal_ref
 	to_chat(user, span_warning("You feel the Blood of your Master run out!"))
-	user.mind?.remove_antag_datum(/datum/antagonist/vassal)
+	vassals -= vassal
+	if(remove_antag)
+		user.mind?.remove_antag_datum(/datum/antagonist/vassal)
 	if(user.stat == DEAD)
 		return
 	user.death()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/get_vassal_duration()
-	return 4 MINUTES * max(level_current, 1)
+	return min(2 MINUTES * max(level_current, 1), 60 MINUTES - 1 SECOND)
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/get_vassalize_cooldown()
 	return cooldown_time * 3

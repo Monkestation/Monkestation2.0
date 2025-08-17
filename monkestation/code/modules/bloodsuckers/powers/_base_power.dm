@@ -310,7 +310,7 @@
 /datum/action/cooldown/bloodsucker/proc/get_power_desc()
 	SHOULD_CALL_PARENT(TRUE)
 	var/new_desc = ""
-	if(level_current != -1)
+	if(level_current != 0)
 		new_desc += "<br><b>LEVEL:</b> [level_current]"
 	else
 		new_desc += "<br><b>(Inherent Power)</b>"

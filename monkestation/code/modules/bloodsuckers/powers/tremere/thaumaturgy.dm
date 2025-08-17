@@ -109,10 +109,10 @@
 			owner.balloon_alert(owner, "off hand is full!")
 			to_chat(owner, span_notice("[capitalize(src)] couldn't be activated as your off hand is full."))
 			return FALSE
-		owner.balloon_alert(owner, "you form the [src]")
+		owner.balloon_alert(owner, "you form the [new_shield]")
 		owner.visible_message(
-			span_warning("[owner]\'s hands begins to bleed and forms into a [src]!"),
-			span_warning("We form our [src]!"),
+			span_warning("[owner]\'s hands begins to bleed and forms into a [new_shield]!"),
+			span_warning("We form our [new_shield]!"),
 			span_hear("You hear liquids forming together."),
 		)
 
@@ -149,7 +149,7 @@
 	. = ..()
 	if(next_use_time - world.time <= 0)
 		button.maptext = MAPTEXT_TINY_UNICODE(span_center("[charges]/[get_max_charges()]"))
-		button.maptext_x = -6
+		button.maptext_x = -5
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/FireSecondaryTargetedPower(atom/target, params)
 	if(shot_cooldown > world.time)
@@ -201,10 +201,10 @@
 			targets += possible_target
 		if(length(targets))
 			magic_9ball.set_homing_target(pick(targets))
-	else if(ismob(target))
+	else
 		magic_9ball.homing_target = target
 	magic_9ball.homing_turn_speed = min(10 * level_current, 90)
-	magic_9ball.range = initial(magic_9ball.range) + level_current * 10
+	magic_9ball.range = max(level_current, 1) * 5
 	INVOKE_ASYNC(magic_9ball, TYPE_PROC_REF(/obj/projectile, fire))
 	// ditch the pointer to reduce harddels
 	magic_9ball = null
@@ -265,8 +265,8 @@
 	item_flags = ABSTRACT | DROPDEL
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	icon_state = "blood_shield"
-	lefthand_file = 'monkestation/icons/bloodsuckers/bs_leftinhand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bs_rightinhand.dmi'
+	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
 	block_chance = BLOOD_SHIELD_BLOCK_CHANCE
 
 /obj/item/shield/bloodsucker/Initialize(mapload)

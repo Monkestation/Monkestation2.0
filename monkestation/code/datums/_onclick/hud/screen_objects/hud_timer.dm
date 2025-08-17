@@ -45,7 +45,7 @@
 		apply_to(mobs)
 
 /atom/movable/screen/text/screen_timer/process()
-	if(!timeleft(timer_id))
+	if(!timeleft(timer_id) || timeleft == 0)
 		qdel(src)
 		return
 	update_maptext()
@@ -74,19 +74,9 @@
 		return
 	if(!islist(mobs))
 		mobs = list(mobs)
-	for(var/mob/player in mobs)
-		// when the player is a weakref, assume it's the same pointer that we use in the timer_mobs list
-		var/datum/weakref/found_weakref = player
-		if(istype(found_weakref))
-			found_weakref = player
-		// otherwise we have to search through and resolve each one and compare it
-		else
-			for(var/datum/weakref/possible_match as anything in timer_mobs)
-				if(IS_WEAKREF_OF(player, possible_match))
-					found_weakref = possible_match
-					break
-		timer_mobs -= found_weakref
-		var/found_player = found_weakref.resolve()
+	for(var/datum/weakref/weakref as anything in mobs)
+		timer_mobs -= weakref
+		var/found_player = weakref.resolve()
 		if(!found_player)
 			return
 		UnregisterSignal(found_player, COMSIG_MOB_LOGIN)
@@ -96,10 +86,11 @@
 
 /// Updates the maptext to show the current time left on the timer
 /atom/movable/screen/text/screen_timer/proc/update_maptext()
-	var/time_formatted = time2text(timeleft(timer_id), "mm:ss")
+	var/time_formatted = time2text(timeleft(timer_id), "mm:ss")\
 	var/timer_text = replacetextEx(maptext_string, "${timer}", time_formatted)
-	// If we don't find ${timer} in the string, just use the time formatted
-	var/result_text = MAPTEXT("[timer_text]")
+	// If we don't find ${timer} in the string, just use the time formattedhu
+	var/result_text = "<span class='maptext' style='text-align: center'>[timer_text]</span>"
+	message_admins("Timer [timer_id] time left: [time_formatted] ([timeleft(timer_id)])")
 	apply_change(result_text)
 
 /atom/movable/screen/text/screen_timer/proc/apply_change(result_text)
@@ -119,7 +110,7 @@
 	do_attach(client, add_to_screen)
 
 /atom/movable/screen/text/screen_timer/proc/can_attach(client/client, add_to_screen)
-	return add_to_screen == (src in client.screen)
+	return add_to_screen != (src in client.screen)
 
 /atom/movable/screen/text/screen_timer/proc/do_attach(client/client, add_to_screen)
 	if(add_to_screen)
@@ -144,7 +135,7 @@
 	maptext_y = 32
 	maptext_height = 32
 	maptext_width = 64
-	var/following_object
+	var/atom/following_object
 	var/image/text_image
 
 /atom/movable/screen/text/screen_timer/attached/Initialize(
@@ -156,24 +147,27 @@
 		offset_y,
 		following_object,
 	)
-	if(following_object && get_turf(following_object))
+	if(isatom(following_object) && get_turf(following_object))
 		attach_self_to(following_object, offset_x, offset_y)
+		src.following_object = following_object
+
 	else
 		return INITIALIZE_HINT_QDEL
 	. = ..()
 
-/atom/movable/screen/text/screen_timer/attached/can_attach(client/client)
-	return !(src in client.images)
+/atom/movable/screen/text/screen_timer/attached/can_attach(client/client, add_to_screen)
+	return add_to_screen != (text_image in client.images)
 
 // attached screen timers are a visible timer in the gameworld that are only visible to the mobs listed in the timer_mobs list
 /atom/movable/screen/text/screen_timer/attached/do_attach(client/client, add_to_screen)
 	if(add_to_screen)
-		client.images += text_image
+		client.images |= text_image
 	else
 		client.images -= text_image
 
 /atom/movable/screen/text/screen_timer/attached/proc/attach_self_to(atom/movable/target, maptext_x, maptext_y)
 	text_image = image(src, target)
+	text_image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 	text_image.maptext_x = maptext_x
 	text_image.maptext_y = maptext_y
@@ -182,6 +176,11 @@
 	text_image.maptext_width = maptext_width
 
 	SET_PLANE_EXPLICIT(text_image, ABOVE_HUD_PLANE, target)
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(delete_self))
+
+/atom/movable/screen/text/screen_timer/attached/proc/delete_self()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /atom/movable/screen/text/screen_timer/attached/apply_change(result_text)
 	..()
@@ -201,6 +200,6 @@
 	abstract_move(get_turf(tracked))
 
 /atom/movable/screen/text/screen_timer/attached/Destroy()
-	if(following_object)
-		unregister_follower()
 	. = ..()
+	unregister_follower()
+
