@@ -72,8 +72,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	if(!istype(victim) || !living_pawn.CanReach(victim))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 
 
@@ -81,7 +80,7 @@
 
 	controller.set_blackboard_key(BB_MONKEY_PICKPOCKETING, TRUE)
 
-	var/success = FALSE
+	var/success = AI_BEHAVIOR_FAILED
 
 	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && living_pawn.CanReach(victim))
 
@@ -91,12 +90,12 @@
 				if(victim.temporarilyRemoveItemFromInventory(target))
 					if(!QDELETED(target) && !equip_item(controller))
 						target.forceMove(living_pawn.drop_location())
-						success = TRUE
+						success = AI_BEHAVIOR_SUCCEEDED
 						break
 				else
 					victim.visible_message(span_danger("[living_pawn] tried to snatch [target] from [victim], but failed!"), span_userdanger("[living_pawn] tried to grab [target]!"))
 
-	finish_action(controller, success) //We either fucked up or got the item.
+	return AI_BEHAVIOR_DELAY | success //We either fucked up or got the item.
 
 /datum/ai_behavior/monkey_equip/pickpocket/finish_action(datum/ai_controller/controller, success)
 	. = ..()

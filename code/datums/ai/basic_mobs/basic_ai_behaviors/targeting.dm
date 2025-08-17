@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
-	finish_action(controller, succeeded = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
