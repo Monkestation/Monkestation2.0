@@ -33,4 +33,6 @@
 	owner.balloon_alert(owner, "host willing!")
 	to_chat(cortical_owner.human_host, span_notice("You have accepted being a willing host!"))
 	GLOB.willing_hosts += cortical_owner.human_host.ckey
+	cortical_owner.human_host.mind.add_antag_datum(/datum/antagonist/willing_host)
+	cortical_owner.human_host.add_mood_event("borer", /datum/mood_event/has_borer) //If the host is being asked then they have a worm in their ear. The rest is done on insert/exit of the organ.
 	StartCooldown()

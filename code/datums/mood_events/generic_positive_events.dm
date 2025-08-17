@@ -373,3 +373,7 @@
 /datum/mood_event/prophat
 	description = "This hat fills me with whimsical joy!"
 	mood_change = 2
+
+/datum/mood_event/has_borer
+	description = "I hear her singing to me within my ear."
+	mood_change = 5

@@ -65,6 +65,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	for(var/datum/borer_focus/body_focus as anything in borer.body_focuses)
 		body_focus.on_add()
 	carbon_target.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	if(IS_WILLING_HOST(carbon_target))
+		carbon_target.add_mood_event("borer", /datum/mood_event/has_borer)
 
 //on removal, force the borer out
 /obj/item/organ/internal/borer_body/Remove(mob/living/carbon/carbon_target, special)
@@ -76,6 +78,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		cb_inside.leave_host()
 	carbon_target.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	qdel(src)
+	if(IS_WILLING_HOST(carbon_target))
+		carbon_target.add_mood_event("borer", /datum/mood_event/no_borer)
 
 /obj/item/reagent_containers/borer
 	volume = 100

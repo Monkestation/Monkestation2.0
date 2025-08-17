@@ -225,7 +225,8 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
 #define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
-
+/// Checks if the given mob is a willing host
+#define IS_WILLING_HOST(mob) (mob.mind?.has_antag_datum(/datum/antagonist/willing_host))
 /// Checks if the given mob is in the mansus realm
 #define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
