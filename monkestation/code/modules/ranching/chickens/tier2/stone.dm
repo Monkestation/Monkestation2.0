@@ -5,7 +5,7 @@
 
 	breed_name = "Stone"
 	egg_type = /obj/item/food/egg/stone
-	mutation_list = list(/datum/mutation/ranching/chicken/cockatrice)
+	mutation_list = list(/datum/ranching_mutation/chicken/cockatrice)
 
 	book_desc = "These chickens are capable of replicating materials the eggs have been plated with. The downside, you need to break the eggs to get the materials. This will make chickens very sad and make some become hostile."
 	liked_foods = list(/obj/item/food/grown/cannabis = 3)

@@ -402,7 +402,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
 	new_body.socks = "Nude"
-	stored_dna.transfer_identity(new_body, transfer_SE = TRUE)
+	stored_dna.copy_dna(new_body.dna, COPY_DNA_SE | COPY_DNA_SPECIES)
 	new_body.real_name = new_body.dna.real_name
 	new_body.name = new_body.dna.real_name
 	new_body.updateappearance(mutcolor_update = TRUE)
@@ -454,23 +454,24 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	drop_items_to_ground(new_body.drop_location())
 	return new_body
 
-/client/proc/cmd_admin_heal_oozeling(obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
-	set category = "Debug"
-	set name = "Heal Oozeling Core"
-
-	if(!check_rights(R_ADMIN))
-		return
-
+ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
 	if(QDELETED(core))
+		to_chat(user, span_boldannounce("Invalid Oozeling Core."), confidential = TRUE)
 		return
 	var/mob/living/carbon/human/new_body = core.rebuild_body(nugget = FALSE)
 
-	var/log_msg = "[key_name(usr)] healed / revived [key_name(new_body)]"
+	var/log_msg
+	var/msg
+	if(!isnull(new_body))
+		log_msg = "[key_name(user)] healed / revived [key_name(new_body)]"
+		msg = span_danger("Admin [key_name_admin(user)] healed / revived [ADMIN_LOOKUPFLW(new_body)]!")
+	else
+		log_msg = "[key_name(user)] attempted to heal / revive [key_name(core)]. A body was not reconstructed."
+		msg = span_danger("Admin [key_name_admin(user)] attempted to heal / revive [ADMIN_LOOKUPFLW(core)]! A body was not reconstructed.")
 	log_admin(log_msg)
-	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(new_body)]!")
 	message_admins(msg)
 	admin_ticket_log(new_body, log_msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Heal Oozeling Core") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Heal Oozeling Core")
 
 /obj/item/organ/internal/brain/synth
 	name = "compact positronic brain"

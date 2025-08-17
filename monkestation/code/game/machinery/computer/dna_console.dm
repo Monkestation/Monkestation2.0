@@ -1,7 +1,7 @@
-/obj/machinery/computer/scan_consolenew
+/obj/machinery/computer/dna_console
 	var/static/list/chromosome_ckey_list = null
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/dnainjector/activator/activator, mob/user, params)
+/obj/machinery/computer/dna_console/attackby(obj/item/dnainjector/activator/activator, mob/user, params)
 	if(!istype(activator))
 		return ..()
 

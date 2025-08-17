@@ -3078,7 +3078,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "sf" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
@@ -3490,7 +3490,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "FZ" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,

@@ -23,3 +23,10 @@
 #define DEFAULT_COMMANDREPORT_SOUND "default_commandreport"
 #define DEFAULT_ALERT_SOUND "default_alert"
 #define CUSTOM_ALERT_SOUND "custom_alert"
+
+// Mentor Permissions
+/// R_NONE assumed from code\__DEFINES\admin.dm, No need to redefine R_NONE again.
+#define R_MENTOR (1<<0)
+#define R_HEADMENTOR (1<<1)
+#define R_AUTOMENTOR (1<<2)
+#define R_MENTOR_EVERYTHING (R_AUTOMENTOR<<1)-1 //the sum of all other rank permissions, used for +EVERYTHING set to the highest bitflag if you add more

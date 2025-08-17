@@ -511,7 +511,7 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
-		if(M.dna && M.dna.check_mutation(/datum/mutation/human/clumsy))
+		if(M.dna && M.dna.check_mutation(/datum/mutation/clumsy))
 			if (M.shoes)
 				var/obj/item/clothing/shoes/item_to_strip = M.shoes
 				M.dropItemToGround(item_to_strip)

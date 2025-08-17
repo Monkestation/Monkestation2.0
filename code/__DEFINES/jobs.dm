@@ -44,6 +44,7 @@
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
 #define JOB_BLUESHIELD "Blueshield" //Monke edit
+#define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
@@ -91,6 +92,11 @@
 #define JOB_FLORIST "Florist"
 #define JOB_SPRING_CLEANER "Spring Cleaner"
 #define JOB_BIRD_WATCHER "Bird Watcher"
+//Summer Donator Jobs
+#define JOB_GRILLER "Grill Master"
+#define JOB_HOTDOG "Hotdog Dude"
+#define JOB_GYM_BRO "Gym Bro"
+#define JOB_TOURIST "Tourist"
 //Spooktober
 #define JOB_SPOOKTOBER_GHOST "Ghost"
 #define JOB_SPOOKTOBER_GODZILLA "Discount Godzilla"
@@ -132,6 +138,7 @@
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
 #define JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE 2.25 //monkestation edit: nanotrasen representative
 #define JOB_DISPLAY_ORDER_BLUESHIELD 2.5 // monkestation edit: blueshield
+#define JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT 2.75 // modularisation is dead but monke addition still
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
 #define JOB_DISPLAY_ORDER_BARTENDER 4
 #define JOB_DISPLAY_ORDER_BOTANIST 5
@@ -200,6 +207,8 @@
 #define DEPARTMENT_SPOOKTOBER "Spooktober"
 #define DEPARTMENT_BITFLAG_SPRING (1<<11)
 #define DEPARTMENT_SPRING "Spring"
+#define DEPARTMENT_BITFLAG_SUMMER (1<<12)
+#define DEPARTMENT_SUMMER "Summer"
 
 #define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<11)
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command"

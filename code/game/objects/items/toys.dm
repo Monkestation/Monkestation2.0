@@ -25,6 +25,7 @@
  * Fake heretic codex
  * Fake Pierced Reality
  * Intento
+ * Heretic Replica Blades
  */
 /obj/item/toy
 	throwforce = 0
@@ -1737,6 +1738,143 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/*
+ * Heretic Replica Blades
+ */
+/obj/item/gun/magic/sickly_blade_toy
+	name = "plastic replica blade"
+	desc = "A sickly green crescent blade, decorated with a plastic eye. You feel like this was cheaply made. A Donk Co logo is on the hilt."
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "eldritch_blade"
+	inhand_icon_state = "eldritch_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	force = 0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	recharge_rate = 3
+	ammo_type = /obj/item/ammo_casing/magic/sickly_blade_toy
+	fire_sound = 'sound/weapons/batonextend.ogg'
+	item_flags = NEEDS_PERMIT
+	var/trash_type = /obj/effect/decal/cleanable/plastic
+
+/obj/item/gun/magic/sickly_blade_toy/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, span_warning("The [name] grumbles quietly. It is not yet ready to fire again!"))
+
+/obj/item/gun/magic/sickly_blade_toy/attack(mob/living/M, mob/living/user)
+	if((IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
+		to_chat(user, span_danger("You feel a pulse of the old gods lash out at your mind, laughing how you're using a fake blade!"))
+	return ..()
+
+/obj/item/gun/magic/sickly_blade_toy/attack_self(mob/living/user)
+	to_chat(user,span_warning("You shatter [src]. It was a REALLY cheap replica after all."))
+	playsound(src, SFX_SHATTER, 70, TRUE)
+	var/datum/effect_system/spark_spread/sparks = new()
+	sparks.set_up(3, 1, src)
+	sparks.start()
+	new trash_type(user.loc)
+	qdel(src)
+
+/obj/item/gun/magic/sickly_blade_toy/rust_toy
+	name = "rustic replica blade"
+	desc = "This crescent blade is decrepit, wasting to dust. Yet still it bites, catching flesh with jagged, rotten foam."
+	icon_state = "rust_blade"
+	inhand_icon_state = "rust_blade"
+
+/obj/item/gun/magic/sickly_blade_toy/ash_toy
+	name = "metallic replica blade"
+	desc = "A hunk of molten soft injection plastic warped to cinders and slag. Unmade and remade countless times over, it aspires to be more than it is."
+	icon_state = "ash_blade"
+	inhand_icon_state = "ash_blade"
+
+/obj/item/gun/magic/sickly_blade_toy/flesh_toy
+	name = "flesh-like replica blade"
+	desc = "A blade of strange material born from a fleshwarped creature. Keenly aware, it seeks to spread the excruciating comedy it has endured from dread origins."
+	icon_state = "flesh_blade"
+	inhand_icon_state = "flesh_blade"
+
+/obj/item/ammo_casing/magic/sickly_blade_toy
+	name = "toy hook"
+	desc = "A harmless plastic hook used for play."
+	projectile_type = /obj/projectile/sickly_blade_toy/dragging
+	harmful = FALSE
+
+/obj/projectile/sickly_blade_toy/dragging
+	name = "toy hook"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "hook"
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	damage = 0
+	range = 6
+	pass_flags = PASSTABLE
+	knockdown = 0
+	immobilize = 0
+	armour_penetration = 0
+	var/chain
+	var/chain_iconstate = "chain"
+
+/obj/projectile/sickly_blade_toy/dragging/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = chain_iconstate, emissive = FALSE)
+	..()
+
+/obj/projectile/sickly_blade_toy/dragging/on_hit(atom/movable/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(!ismovable(target) || target.anchored || ismachinery(target) || !firer || target.move_resist > MOVE_FORCE_NORMAL)
+		return BULLET_ACT_BLOCK
+
+	var/mob/living/user = firer
+	if(iscarbon(target))
+		if (user.zone_selected == BODY_ZONE_HEAD)
+			var/mob/living/carbon/victim = target
+			if(istype(victim.head, /obj/item))
+				var/obj/item/hat = victim.head
+				if(HAS_TRAIT(hat, TRAIT_NODROP))
+					return BULLET_ACT_BLOCK
+				if(istype(hat, /obj/item/clothing/head))
+					var/obj/item/clothing/head/hat_head = hat
+					if(hat_head.clothing_flags & SNUG_FIT)
+						return BULLET_ACT_BLOCK
+				if(victim.dropItemToGround(hat))
+					hat.visible_message(span_warning("[hat] is yanked off [victim]'s head by the toy hook!"))
+					hat.throw_at(
+						target = get_turf(user),
+						range = 6,
+						speed = 1,
+						thrower = user,
+						diagonals_first = TRUE,
+						gentle = TRUE,
+					)
+					return BULLET_ACT_HIT
+		else
+			return BULLET_ACT_BLOCK
+	if(isliving(target))
+		return BULLET_ACT_BLOCK
+
+	var/atom/movable/pullee = target
+	pullee.visible_message(span_notice("[pullee] is gently tugged by [user]'s toy hook."))
+	pullee.throw_at(
+		target = get_turf(user),
+		range = 6,
+		speed = 2,
+		thrower = user,
+		diagonals_first = TRUE,
+		gentle = TRUE,
+	)
+
+	return BULLET_ACT_HIT
+
+/obj/projectile/sickly_blade_toy/dragging/Destroy()
+	if(chain)
+		qdel(chain)
 	return ..()
 
 #undef HELP

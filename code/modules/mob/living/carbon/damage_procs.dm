@@ -165,7 +165,7 @@
  * * maximum - currently an arbitrarily large number, can be set so as to limit damage
  * * required_organ_flag - targets only a specific organ type if set to ORGAN_ORGANIC or ORGAN_ROBOTIC
  */
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum = INFINITY, required_organ_flag = NONE)
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return
@@ -252,7 +252,7 @@
 		return
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage(TRUE) //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
-	if(picked.heal_damage(brute, burn, required_bodytype))
+	if(picked.heal_damage(brute, burn, required_bodytype, updating_health))
 		update_damage_overlays()
 	return max(damage_calculator - picked.get_damage(TRUE), 0)
 
@@ -269,7 +269,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	if(picked.receive_damage(brute, burn, check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, updating_health, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 
 ///Heal MANY bodyparts, in random order
@@ -310,7 +310,14 @@
 		var/burn_was = picked.burn_dam
 
 
-		update |= picked.receive_damage(brute_per_part, burn_per_part, FALSE, updating_health, required_bodytype, wound_bonus = CANT_WOUND) // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
+		update |= picked.receive_damage(
+			brute_per_part,
+			burn_per_part,
+			blocked = FALSE,
+			updating_health = FALSE,
+			required_bodytype = required_bodytype,
+			wound_bonus = CANT_WOUND, // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
+		)
 
 		brute = round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn = round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)

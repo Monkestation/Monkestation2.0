@@ -4,7 +4,7 @@
 #define EAT_VOMIT (1 << 3)
 #define EAT_DELETE (1 << 4)
 
-/datum/mutation/human/consumption
+/datum/mutation/consumption
 	name = "Matter Eater"
 	desc = "Allows the subject to eat just about anything without harm."
 	quality = POSITIVE
@@ -13,12 +13,12 @@
 	instability = 40
 	difficulty = 12
 	power_path = /datum/action/cooldown/spell/pointed/consumption
-	conflicts = list(/datum/mutation/human/consumption/syndicate)
+	conflicts = list(/datum/mutation/consumption/syndicate)
 	synchronizer_coeff = 1
 	power_coeff = 1
 	energy_coeff = 1
 
-/datum/mutation/human/consumption/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/consumption/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
@@ -26,7 +26,7 @@
 	if(GET_MUTATION_SYNCHRONIZER(src) < 1)
 		REMOVE_TRAIT(owner, TRAIT_STABILIZED_EATER, GENETIC_MUTATION)
 
-/datum/mutation/human/consumption/modify()
+/datum/mutation/consumption/setup()
 	. = ..()
 	if(!.)
 		return
@@ -502,12 +502,12 @@
 	hungry_boy.visible_message(span_danger("[hungry_boy] consumes [src] whole, how is that even possible?"))
 	return EAT_SUCCESS
 
-/datum/mutation/human/consumption/syndicate
+/datum/mutation/consumption/syndicate
 	name = "Refined Matter Eater"
 	desc = "Allows the subject to eat just about anything without harm. This seems to be a strain that was marked as too dangerous by Nanotrasen and thus is outlawed."
 	locked = TRUE
 	instability = 20
-	conflicts = list(/datum/mutation/human/consumption)
+	conflicts = list(/datum/mutation/consumption)
 
 #undef EAT_FAILED
 #undef EAT_SUCCESS

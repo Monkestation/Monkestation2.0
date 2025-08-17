@@ -20,7 +20,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot = ORGAN_SLOT_BRAIN_NIF
 	actions_types = list(/datum/action/item_action/nif/open_menu)
-	encode_info = AUGMENT_NO_REQ
 
 	//User Variables
 	///What user is currently linked with the NIF?
@@ -370,7 +369,7 @@
 
 ///Sends a message to the owner of the NIF. Typically used for messages from the NIF itself or from NIFSofts.
 /obj/item/organ/internal/cyberimp/brain/nif/proc/send_message(message_to_send, alert = FALSE)
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+	var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 	var/tag = sheet.icon_tag("nif-[chat_icon]")
 	var/nif_icon = ""
 
@@ -487,10 +486,10 @@
 
 	return FALSE
 
-/datum/asset/spritesheet/chat/create_spritesheets()
+/datum/asset/spritesheet_batched/chat/create_spritesheets()
 	. = ..()
 
-	InsertAll("nif", 'monkestation/code/modules/blueshift/icons/chat.dmi')
+	insert_all_icons("nif", 'monkestation/code/modules/blueshift/icons/chat.dmi')
 
 /obj/item/autosurgeon/organ/nif
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/standard

@@ -832,7 +832,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
 		C.update_hidden_docking_ports(remove_images, add_images)
 
-	QDEL_LIST(remove_images)
+	remove_images.Cut()
 
 /**
  * Loads a shuttle template and sends it to a given destination port, optionally replacing the existing shuttle
@@ -969,7 +969,7 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle = null
 
 /datum/controller/subsystem/shuttle/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/controller/subsystem/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

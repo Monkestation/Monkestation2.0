@@ -121,7 +121,8 @@
 	// Breathe from air
 	else
 		breath = get_breath_from_surroundings(environment, BREATH_VOLUME)
-		breath_airborne_diseases()
+		if(!HAS_TRAIT(src, TRAIT_VIRUSIMMUNE))
+			breath_airborne_diseases()
 
 	check_breath(breath, skip_breath)
 
@@ -291,7 +292,6 @@
 				if(dna.previous["name"])
 					real_name = dna.previous["name"]
 					name = real_name
-					update_name_tag() // monkestation edit: name tags
 					dna.previous.Remove("name")
 				if(dna.previous["UE"])
 					dna.unique_enzymes = dna.previous["UE"]
@@ -301,9 +301,6 @@
 					dna.previous.Remove("blood_type")
 				dna.temporary_mutations.Remove(mut)
 				continue
-	for(var/datum/mutation/human/HM in dna.mutations)
-		if(HM?.timeout)
-			dna.remove_mutation(HM.type)
 
 /**
  * Handles calling metabolization for dead people.

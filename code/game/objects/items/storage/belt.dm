@@ -431,9 +431,18 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/trench_tool, //monkestation edit
 		/obj/item/cargo_teleporter, //monkestation edit
 		/obj/item/storage/box/kinetic, //monkestation edit
 		/obj/item/ammo_box/magazine/pksmgmag, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker, //monkestation edit
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
+		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
+		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
+		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
 	))
 
 
@@ -612,9 +621,9 @@
 
 /obj/item/storage/belt/grenade/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 30
+	atom_storage.max_slots = 100
 	atom_storage.numerical_stacking = TRUE
-	atom_storage.max_total_storage = 60
+	atom_storage.max_total_storage = 1000 //store every grenade under the sun without issue or remorse
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
@@ -625,6 +634,8 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,
 		/obj/item/screwdriver,
+		/obj/item/ammo_casing/a40mm,
+		/obj/item/assembly/signaler,
 	))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()

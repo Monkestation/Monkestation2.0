@@ -83,6 +83,43 @@
 	leavingSound = 'sound/effects/podwoosh.ogg'
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 
+/obj/structure/closet/supplypod/nuke_relocation
+	name = "Syndicate Relocation Pod"
+	desc = "A specalised, blood-red styled pod for relocating high-value assets in active mission areas."
+	specialised = TRUE
+	layer = GATEWAY_UNDERLAY_LAYER
+	style = STYLE_SYNDICATE
+	bluespace = FALSE
+	delays = list(POD_TRANSIT = 25, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+	reversing = TRUE
+	explosionSize = list(0,0,0,0)
+	/// Turf we return to after exiting
+	var/turf/return_to_turf
+	stay_after_drop = TRUE
+	leavingSound = 'sound/effects/podwoosh.ogg'
+	reverse_option_list = list("Mobs"=TRUE,"Objects"=TRUE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Unanchored" = TRUE, "Floors"=FALSE,"Walls"=FALSE, "Mecha"=TRUE)
+
+/obj/structure/closet/supplypod/nuke_relocation/preReturn(atom/movable/holder)
+	if(return_to_turf)
+		reverse_dropoff_coords = list(return_to_turf.x, return_to_turf.y, return_to_turf.z)
+	return ..()
+
+/obj/structure/closet/supplypod/syndicate_relocation/setOpened()
+	opened = TRUE
+	set_density(TRUE)
+	update_appearance()
+
+/obj/structure/closet/supplypod/syndicate_missile
+	name = "missile"
+	desc = "If you are seeing this, run."
+	specialised = TRUE
+	effectMissile = TRUE
+	style = STYLE_RED_MISSILE
+	explosionSize = list(3, 6, 12, 12)
+	effectGib = TRUE
+	damage = 500
+	delays = list(POD_TRANSIT = 100, POD_FALLING = 5, POD_OPENING = 30, POD_LEAVING = 30)
+
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
 	bluespace = TRUE
@@ -359,17 +396,21 @@
 	insert(turf_underneath, holder)
 
 /obj/structure/closet/supplypod/insert(atom/to_insert, atom/movable/holder)
-	if(insertion_allowed(to_insert))
-		if(isturf(to_insert))
-			var/turf/turf_to_insert = to_insert
-			turfs_in_cargo += turf_to_insert.type
-			turf_to_insert.ScrapeAway()
-		else
-			var/atom/movable/movable_to_insert = to_insert
-			movable_to_insert.forceMove(holder)
-		return TRUE
-	else
+	if(!insertion_allowed(to_insert))
 		return FALSE
+
+	if(isturf(to_insert))
+		var/turf/turf_to_insert = to_insert
+		turfs_in_cargo += turf_to_insert.type
+		turf_to_insert.ScrapeAway()
+		return TRUE
+
+	var/atom/movable/movable_to_insert = to_insert
+	if (ismob(movable_to_insert))
+		var/mob/mob_to_insert = movable_to_insert
+		if (!isnull(mob_to_insert.buckled))
+			mob_to_insert.buckled.unbuckle_mob(mob_to_insert, force = TRUE)
+	movable_to_insert.forceMove(holder)
 
 /obj/structure/closet/supplypod/insertion_allowed(atom/to_insert)
 	if(to_insert.invisibility == INVISIBILITY_ABSTRACT)

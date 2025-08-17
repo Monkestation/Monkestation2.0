@@ -3137,7 +3137,6 @@
 /area/station/commons/lounge)
 "Vg" = (
 /obj/structure/sink/kitchen/directional/east,
-/obj/machinery/duct,
 /obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)

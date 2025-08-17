@@ -15,6 +15,6 @@
 	if(prob(10))
 		switch(round(multiplier, 1))
 			if(2)
-				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 			if(3)
-				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
+				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)

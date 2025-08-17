@@ -11,7 +11,7 @@
 		return FALSE
 
 	for(var/datum/traitor_objective/objective in handler.completed_objectives)
-		if(objective.objective_state != OBJECTIVE_STATE_INACTIVE)
+		if(objective.objective_state != OBJECTIVE_STATE_INVALID)
 			return FALSE
 
 	return TRUE

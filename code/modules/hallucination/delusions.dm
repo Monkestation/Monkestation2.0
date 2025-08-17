@@ -155,7 +155,7 @@
 	delusion_name = "monkey"
 
 /datum/hallucination/delusion/preset/monkey/start()
-	delusion_name += " ([rand(1, 999)])"
+	delusion_name = pick(GLOB.random_monkey_names)
 	return ..()
 
 /datum/hallucination/delusion/preset/corgi

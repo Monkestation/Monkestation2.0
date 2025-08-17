@@ -57,6 +57,8 @@
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
 	if(!stored)
+		if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
+			return ..() // Borgs should not be grabbing their own modules
 		var/itemcheck = FALSE
 		for(var/storable_type in storable)
 			if(istype(atom, storable_type))
@@ -161,8 +163,11 @@
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Will resynthesize any drinks you pour out!"
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/cup/glass,
-					/obj/item/reagent_containers/condiment)
+	storable = list(/obj/item/reagent_containers/cup/beaker,
+					/obj/item/reagent_containers/cup/bottle,
+					/obj/item/reagent_containers/cup/glass,
+					/obj/item/reagent_containers/condiment,
+					/obj/item/reagent_containers/cup/coffeepot)
 
 /obj/item/borg/apparatus/beaker/service/add_glass()
 	stored = new /obj/item/reagent_containers/cup/glass/drinkingglass(src)

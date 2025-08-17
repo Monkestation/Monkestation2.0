@@ -5,7 +5,6 @@
 	icon_state = "toolkit_generic"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	encode_info = AUGMENT_NT_LOWLEVEL
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
 	/// Organ slot that the implant occupies for the right arm

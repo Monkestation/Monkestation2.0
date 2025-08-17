@@ -19,10 +19,27 @@
 	/// How much damage to mechs take when engulfed?
 	var/mech_damage = 45
 
+/datum/action/cooldown/mob_cooldown/fire_breath/Grant(mob/granted_to)
+	. = ..()
+	RegisterSignals(granted_to, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_ITEM_POST_UNEQUIP), PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/mob_cooldown/fire_breath/Remove(mob/removed_from)
+	UnregisterSignal(removed_from, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_ITEM_POST_UNEQUIP))
+	return ..()
+
 /datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
 	attack_sequence(target_atom)
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/fire_breath/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(astype(owner, /mob/living)?.is_mouth_covered())
+		if(feedback)
+			owner.balloon_alert(owner, "mouth covered!")
+		return FALSE
 
 /// Apply our specific fire breathing shape, in proc form so we can override it in subtypes
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/attack_sequence(atom/target)
@@ -66,6 +83,7 @@
 		hit_list |= robotron
 		robotron.take_damage(mech_damage, BURN, FIRE)
 
+	QDEL_IN(fire_hotspot, 2.5 SECONDS)
 	return fire_hotspot
 
 /// Do something unpleasant to someone we set on fire

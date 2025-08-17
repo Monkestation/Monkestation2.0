@@ -99,6 +99,9 @@
 	if(SkipChecks)
 		torpor_begin()
 		return
+	if(user.has_status_effect(/datum/status_effect/frenzy))
+		to_chat(user, span_userdanger("You are restless! Collect enough blood to end your frenzy."))
+		return
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
@@ -160,87 +163,89 @@
 
 /datum/status_effect/bloodsucker_sol
 	id = "bloodsucker_sol"
-	tick_interval = STATUS_EFFECT_NO_TICK
+	tick_interval = 2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/bloodsucker_sol
-	var/list/datum/action/cooldown/bloodsucker/burdened_actions
-	var/static/list/sol_traits = list(
-		TRAIT_EASILY_WOUNDED,
-		TRAIT_NO_SPRINT,
-	)
+	processing_speed = STATUS_EFFECT_PRIORITY
+	/// The antag datum of the victim bloodsucker.
+	var/datum/antagonist/bloodsucker/bloodsucker
+	/// Is this bloodsucker currently protected from solar flares?
+	var/protected = FALSE
+
+/datum/status_effect/bloodsucker_sol/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	if(.) // alert gets created after on_apply, so we have to do an initial update_appearance here
+		linked_alert?.update_appearance(UPDATE_ICON_STATE)
 
 /datum/status_effect/bloodsucker_sol/on_apply()
 	if(!SSsol.sunlight_active || istype(owner.loc, /obj/structure/closet/crate/coffin))
 		return FALSE
+
+	bloodsucker = IS_BLOODSUCKER(owner)
+	if(!bloodsucker)
+		. = FALSE // this ain't a vampire?!
+		CRASH("[type] applied to non-bloodsucker ([owner]) somehow")
+
+	update_in_shade()
+
 	RegisterSignal(SSsol, COMSIG_SOL_END, PROC_REF(on_sol_end))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
-	owner.set_pain_mod(id, 1.5)
-	owner.add_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
-	owner.remove_filter(id)
-	owner.add_filter(id, 2, drop_shadow_filter(x = 0, y = 0, size = 3, offset = 1.5, color = "#ee7440"))
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
-	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/bloodsucker_sol)
-	to_chat(owner, span_userdanger("Sol has risen! Your powers are suppressed, your body is burdened, and you will not heal outside of a coffin!"), type = MESSAGE_TYPE_INFO)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology?.damage_resistance -= 50
-	for(var/datum/action/cooldown/bloodsucker/power in owner.actions)
-		if(power.check_flags & BP_CANT_USE_DURING_SOL)
-			if(power.active && power.can_deactivate())
-				power.DeactivatePower()
-				to_chat(owner, span_danger("[power.name] has been deactivated due to the solar flares!"), type = MESSAGE_TYPE_INFO)
-		else if(power.sol_multiplier)
-			power.bloodcost *= power.sol_multiplier
-			power.constant_bloodcost *= power.sol_multiplier
-			if(power.active)
-				to_chat(owner, span_warning("[power.name] is harder to upkeep during Sol, now requiring [power.constant_bloodcost] blood while the solar flares last!"), type = MESSAGE_TYPE_INFO)
-			LAZYSET(burdened_actions, power, TRUE)
-		power.update_desc(rebuild = FALSE)
-		power.build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_STATUS)
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_SHADED), SIGNAL_REMOVETRAIT(TRAIT_SHADED)), PROC_REF(update_in_shade))
+
+	ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/bloodsucker_sol/on_remove()
 	UnregisterSignal(SSsol, COMSIG_SOL_END)
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-	owner.unset_pain_mod(id)
-	owner.remove_traits(sol_traits, TRAIT_STATUS_EFFECT(id))
-	owner.remove_filter(id)
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/bloodsucker_sol)
-	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/bloodsucker_sol)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology?.damage_resistance += 50
-	for(var/datum/action/cooldown/bloodsucker/power in owner.actions)
-		if(LAZYACCESS(burdened_actions, power))
-			power.bloodcost /= power.sol_multiplier
-			power.constant_bloodcost /= power.sol_multiplier
-		power.update_desc(rebuild = FALSE)
-		power.build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_STATUS)
-	LAZYNULL(burdened_actions)
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, SIGNAL_ADDTRAIT(TRAIT_SHADED), SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
+	REMOVE_TRAITS_IN(owner, TRAIT_STATUS_EFFECT(id))
 
-/datum/status_effect/bloodsucker_sol/get_examine_text()
-	return span_warning("[owner.p_They()] seem[owner.p_s()] sickly and painfully overburned!")
+/datum/status_effect/bloodsucker_sol/tick(seconds_between_ticks)
+	if(protected)
+		return
+	var/bloodsucker_level = bloodsucker.bloodsucker_level
+	if(COOLDOWN_FINISHED(bloodsucker, bloodsucker_spam_sol_burn))
+		if(bloodsucker_level > 0)
+			to_chat(owner, span_userdanger("The solar flare sets your skin ablaze!"))
+		else
+			to_chat(owner, span_userdanger("The solar flare scalds your neophyte skin!"))
+		COOLDOWN_START(bloodsucker, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
+	if(!HAS_TRAIT(owner, TRAIT_NOFIRE))
+		if(owner.fire_stacks <= 0)
+			owner.fire_stacks = 0
+		if(bloodsucker_level > 0)
+			owner.adjust_fire_stacks(0.2 + bloodsucker_level / 10)
+			owner.ignite_mob()
+	// they'll take around 45 damage total during Sol at rank 1, to 150 damage total at rank 8 (not counting any damage from being set on fire)
+	owner.take_overall_damage(burn = (0.5 + (bloodsucker_level / 4)) * seconds_between_ticks)
+	owner.add_mood_event("vampsleep", /datum/mood_event/daylight)
 
 /datum/status_effect/bloodsucker_sol/proc/on_sol_end()
 	SIGNAL_HANDLER
 	if(!QDELING(src))
-		to_chat(owner, span_big(span_boldnotice("Sol has ended, your vampiric powers are no longer strained!")), type = MESSAGE_TYPE_INFO)
 		qdel(src)
 
 /datum/status_effect/bloodsucker_sol/proc/on_owner_moved()
 	SIGNAL_HANDLER
 	if(istype(owner.loc, /obj/structure/closet/crate/coffin))
 		qdel(src)
+	else
+		update_in_shade()
+
+/datum/status_effect/bloodsucker_sol/proc/update_in_shade()
+	SIGNAL_HANDLER
+	var/in_shade = HAS_TRAIT(owner, TRAIT_SHADED) || isstructure(owner.loc)
+	if(protected != in_shade)
+		protected = in_shade
+		linked_alert?.update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/alert/status_effect/bloodsucker_sol
 	name = "Solar Flares"
-	desc = "Solar flares bombard the station, heavily weakening your vampiric abilities and burdening your body!\nSleep in a coffin to avoid the effects of the solar flare!"
+	desc = "Solar flares bombard the station!\nSleep in a coffin, hide in a locker, or shade yourself with an umbrella to avoid the effects of the solar flare!"
 	icon = 'monkestation/icons/bloodsuckers/actions_bloodsucker.dmi'
+	base_icon_state = "sol_alert"
 	icon_state = "sol_alert"
 
-/datum/actionspeed_modifier/bloodsucker_sol
-	multiplicative_slowdown = 1
-	id = ACTIONSPEED_ID_BLOODSUCKER_SOL
-
-/datum/movespeed_modifier/bloodsucker_sol
-	multiplicative_slowdown = 0.45
-	id = ACTIONSPEED_ID_BLOODSUCKER_SOL
+/atom/movable/screen/alert/status_effect/bloodsucker_sol/update_icon_state()
+	. = ..()
+	var/shaded = astype(attached_effect, /datum/status_effect/bloodsucker_sol)?.protected
+	icon_state = "[base_icon_state][shaded ? "_shaded" : ""]"

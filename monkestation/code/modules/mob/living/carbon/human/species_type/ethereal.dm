@@ -12,19 +12,18 @@
 		/obj/item/organ/external/ethereal_horns = "None",
 		/obj/item/organ/external/tail/ethereal = "None")
 	exotic_bloodtype = /datum/blood_type/crew/ethereal
-	inert_mutation = /datum/mutation/human/overload
+	inert_mutation = /datum/mutation/overload
 
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
 	bodytemp_normal = (BODYTEMP_NORMAL + 50)
 	temperature_homeostasis_speed = 3
-	temperature_normalization_speed = 3
+	temperature_normalization_speed = 1
 
 	siemens_coeff = 0.5 //They thrive on energy
 	payday_modifier = 1
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_BLOODLOSS_DAMAGE, //we handle that species-side.
 		TRAIT_SPLEENLESS_METABOLISM,
@@ -35,7 +34,7 @@
 
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
-	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
+	bodytemp_cold_damage_limit = 283 KELVIN // about 10c
 	hair_color = "fixedmutcolor"
 	hair_alpha = 180
 	facial_hair_alpha = 180
@@ -78,7 +77,8 @@
 	RegisterSignal(ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
-	RegisterSignal(new_ethereal, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(on_after_attackedby))
+	RegisterSignal(ethereal, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(on_saboteur))
+	RegisterSignal(ethereal, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(on_after_attackedby))
 	ethereal_light = ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	spec_updatehealth(ethereal)
 
@@ -93,6 +93,7 @@
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
+	UnregisterSignal(former_ethereal, COMSIG_ATOM_SABOTEUR_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_AFTER_ATTACKEDBY)
 	QDEL_NULL(ethereal_light)
 	return ..()
@@ -130,8 +131,8 @@
 		ethereal_light.set_light_on(FALSE)
 		current_color = rgb(230, 230, 230)
 		fixed_mut_color = current_color
-	ethereal.hair_color = current_color
-	ethereal.facial_hair_color = current_color
+	ethereal.set_haircolor(current_color, update = FALSE)
+	ethereal.set_facial_haircolor(current_color, update = FALSE)
 	if(ethereal.organs_slot["horns"])
 		var/obj/item/organ/external/horms = ethereal.organs_slot["horns"]
 		horms.bodypart_overlay.draw_color = current_color
@@ -150,6 +151,16 @@
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), H), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
 		if(EMP_HEAVY)
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
+
+/datum/species/ethereal/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/our_target = source
+	EMPeffect = TRUE
+	spec_updatehealth(our_target)
+	to_chat(our_target, span_warning("Something inside of you crackles in a bad way."))
+	our_target.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
+	addtimer(CALLBACK(src, PROC_REF(stop_emp), our_target), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
 	SIGNAL_HANDLER

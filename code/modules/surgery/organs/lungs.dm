@@ -972,6 +972,34 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
+/obj/item/organ/internal/lungs/oni
+	name = "oni lungs"
+	desc = "The lungs of an oni, resistant to heat and able to produce small amounts of flame to be expelled through the mouth."
+	icon_state = "lungs-ashwalker"
+	actions_types = list(/datum/action/cooldown/mob_cooldown/fire_breath/oni)
+
+	cold_level_warning_threshold = 275
+	cold_level_hazard_threshold = 225
+	cold_level_danger_threshold = 145
+
+	heat_level_warning_threshold = 400
+	heat_level_hazard_threshold = 570
+	heat_level_danger_threshold = 800
+
+/datum/action/cooldown/mob_cooldown/fire_breath/oni
+	name = "Oni Breath"
+	button_icon = 'icons/obj/wizard.dmi'
+	button_icon_state = "fireball"
+	desc = "Conjure flames within your lungs, before exhaling them in front of yourself."
+	cooldown_time = 1 MINUTES
+	fire_range = 3
+	fire_sound = 'sound/magic/fireball.ogg'
+	fire_delay = 1.5 DECISECONDS
+	fire_temperature = DRAKE_FIRE_TEMP
+	fire_volume = DRAKE_FIRE_EXPOSURE
+	fire_damage = 10
+	mech_damage = 25
+
 /obj/item/organ/internal/lungs/smoker_lungs
 	name = "smoker lungs"
 	desc = "A pair of lungs that look sickly, a result from smoking a lot."
@@ -1011,6 +1039,19 @@
 	cold_level_warning_threshold = CELCIUS_TO_KELVIN(-73.15 CELCIUS)
 	cold_level_hazard_threshold = CELCIUS_TO_KELVIN(-133.15 CELCIUS)
 	cold_level_danger_threshold = CELCIUS_TO_KELVIN(-173.15 CELCIUS)
+
+/obj/item/organ/internal/lungs/cybernetic/surplus
+	name = "surplus prosthetic lungs"
+	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
+		Offer no protection against EMPs."
+	icon_state = "lungs-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/lungs/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
 	. = ..()

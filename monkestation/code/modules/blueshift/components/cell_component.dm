@@ -199,7 +199,6 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 		cell_overlay = mutable_appearance(equipment.icon, "[initial(equipment.icon_state)]_cell")
 		equipment.add_overlay(cell_overlay)
 	else
-		QDEL_NULL(cell_overlay)
 		cell_overlay = null
 		if(update_overlays)
 			equipment.overlays.Cut()

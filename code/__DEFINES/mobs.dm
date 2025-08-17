@@ -127,11 +127,13 @@
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
+#define SPECIES_ONI "oni" //Monkestation Addition
 #define SPECIES_SIMIAN "simian" //Monkestation Addition
 #define SPECIES_GOBLIN "goblin" //Monkestation Addition
 #define SPECIES_FLORAN "floran" //Monkestation Addition
 #define SPECIES_SATYR "satyr" //Monkestation Addition
 #define SPECIES_TERATOMA "teratoma" //Monkestation Addition
+#define SPECIES_TRAINED_MONKEY "trainedmonkey"
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
@@ -196,6 +198,15 @@
 #define TRAUMA_LIMIT_LOBOTOMY 3
 #define TRAUMA_LIMIT_MAGIC 3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
+
+/// This trauma cannot be cured through "special" means, such as nanites or viruses.
+#define TRAUMA_SPECIAL_CURE_PROOF (1<<0)
+/// This trauma transfers on cloning.
+#define TRAUMA_CLONEABLE (1<<1)
+/// This trauma CANNOT be obtained randomly.
+#define TRAUMA_NOT_RANDOM (1<<2)
+/// Default trauma flags.
+#define TRAUMA_DEFAULT_FLAGS (TRAUMA_CLONEABLE)
 
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
@@ -428,8 +439,8 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HELD "held"
 #define OFFSET_ACCESSORY "accessory"
-#define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN 18 //youngest a character can be
@@ -674,16 +685,16 @@
 /// Assoc list of all heights, cast to strings, to """"tuples"""""
 /// The first """tuple""" index is the upper body offset
 /// The second """tuple""" index is the lower body offset
-GLOBAL_LIST_INIT(human_heights_to_offsets, list(
-	"[MONKEY_HEIGHT_DWARF]" = list(-9, -3),
-	"[MONKEY_HEIGHT_MEDIUM]" = list(-7, -4),
-	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
-	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
-	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
-	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
-	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
-	"[HUMAN_HEIGHT_TALLER]" = list(2, 1),
-	"[HUMAN_HEIGHT_TALLEST]" = list(3, 2),
+GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
+	MONKEY_HEIGHT_DWARF = list(-9, -3),
+	MONKEY_HEIGHT_MEDIUM = list(-7, -4),
+	HUMAN_HEIGHT_DWARF = list(-5, -4),
+	HUMAN_HEIGHT_SHORTEST = list(-2, -1),
+	HUMAN_HEIGHT_SHORT = list(-1, -1),
+	HUMAN_HEIGHT_MEDIUM = list(0, 0),
+	HUMAN_HEIGHT_TALL = list(1, 1),
+	HUMAN_HEIGHT_TALLER = list(2, 1),
+	HUMAN_HEIGHT_TALLEST = list(3, 2),
 ))
 
 // Mob Overlays Indexes

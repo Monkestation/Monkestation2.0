@@ -315,12 +315,6 @@
 	message = "squints."
 	message_param = "squints at %t."
 
-/datum/emote/living/nodnod
-	key = "nodnod"
-	key_third_person = "nodnods"
-	message = "nodnods."
-	message_param = "nodnods at %t."
-
 //The code from 'Start' to 'End' was ported from Russ-station, with permission.
 //All credit to 'bitch fish'
 //Start
@@ -501,4 +495,36 @@
 
 /datum/emote/spin/speen/get_sound(mob/living/user)
 	return 'monkestation/sound/voice/speen.ogg'
+
+/datum/emote/living/breathein
+	key = "breathein"
+	key_third_person = "breathes in."
+	message = "breathes in."
+	message_mime = "exageratedly breathes in."
+	message_param = "breathes in at %t."
+	emote_type = EMOTE_AUDIBLE
+	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+
+/datum/emote/living/breathein/get_sound(mob/living/user)
+	return 'monkestation/sound/voice/breathein.ogg'
+
+/datum/emote/living/breathein/can_run_emote(mob/user, status_check, intentional)
+	return ..() && IS_SLASHER(user)
+
+/datum/emote/living/breatheout
+	key = "breatheout"
+	key_third_person = "breathes out."
+	message = "breathes out."
+	message_mime = "exageratedly breathes out."
+	message_param = "breathes out at %t."
+	emote_type = EMOTE_AUDIBLE
+	audio_cooldown = 1.5 SECONDS
+	falloff_exponent = SOUND_DEFAULT_FALLOFF_DISTANCE
+
+/datum/emote/living/breatheout/get_sound(mob/living/user)
+	return 'monkestation/sound/voice/breatheout.ogg'
+
+/datum/emote/living/breatheout/can_run_emote(mob/user, status_check, intentional)
+	return ..() && IS_SLASHER(user)
 //End

@@ -26,6 +26,7 @@
 	chat_color = LIGHT_COLOR_CLOCKWORK
 	initial_language_holder = /datum/language_holder/clockmob
 	shy = FALSE
+	pass_flags = PASSTABLE | PASSMOB
 	var/is_on_reebe = TRUE
 
 //No you can't go wielding guns like that.

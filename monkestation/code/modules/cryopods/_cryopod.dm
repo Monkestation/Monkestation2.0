@@ -316,6 +316,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 /// Handles despawning the player.
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
+	var/mob/living/carbon/human/human_occupant = astype(occupant)
 
 	SSjob.FreeRole(stored_rank)
 
@@ -363,6 +364,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
+	if(human_occupant)
+		human_occupant.save_persistent_scars(target_ckey = human_occupant.ckey || stored_ckey)
+
 	mob_occupant.ghostize(can_reenter_corpse = FALSE)
 	ADD_TRAIT(mob_occupant, TRAIT_NO_TRANSFORM, REF(src))
 	var/list/items = mob_occupant.get_equipped_items(include_pockets = TRUE)
@@ -397,6 +401,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	GLOB.joined_player_list -= stored_ckey
 	GLOB.manifest.general -= crewfile
+
+	if(human_occupant?.account_id)
+		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[human_occupant.account_id]"]
+		if(account)
+			GLOB.lottery_ticket_owners -= account
 
 	handle_objectives()
 	QDEL_NULL(occupant)

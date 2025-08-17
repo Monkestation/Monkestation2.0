@@ -1,7 +1,7 @@
 /datum/round_event_control/operative
 	name = "Lone Operative"
 	typepath = /datum/round_event/ghost_role/operative
-	weight = 1 //its weight is relative to how much stationary and neglected the nuke disk is. See nuclearbomb.dm. Shouldn't be dynamic hijackable. //monkestation edit: changed to 1 to allow it to always have a slim chance to roll
+	weight = 0 //its weight is relative to how much stationary and neglected the nuke disk is. See nuclearbomb.dm. Shouldn't be dynamic hijackable.
 	max_occurrences = 1
 	category = EVENT_CATEGORY_INVASION
 	description = "A single nuclear operative assaults the station."
@@ -50,9 +50,10 @@
 
 	category = EVENT_CATEGORY_INVASION
 	description = "A junior nuclear operative infiltrates the station."
-	weight = 1
+	weight = 0
 	max_occurrences = 5
 	track = EVENT_TRACK_MAJOR
+	repeated_mode_adjust = TRUE
 
 /datum/round_event/ghost_role/junior_operative
 	minimum_required = 1

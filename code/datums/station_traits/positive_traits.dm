@@ -242,7 +242,7 @@
 		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
-		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/arm/item_set/connector,
+		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/datum/job/scientist = /obj/item/organ/internal/cyberimp/eyes/fakehud/science,
 		/datum/job/security_assistant = list(/obj/item/organ/internal/cyberimp/leg/accelerator, /obj/item/organ/internal/cyberimp/leg/accelerator/l),
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
@@ -272,18 +272,6 @@
 		cybernetics_to_give = list(cybernetics_to_give)
 	for(var/cybernetic_type in cybernetics_to_give)
 		var/obj/item/organ/internal/cybernetic = new cybernetic_type
-		if(istype(cybernetic, /obj/item/organ/internal/cyberimp))
-			var/obj/item/organ/internal/cyberimp/implant = cybernetic
-			var/obj/item/organ/internal/cyberimp/cyberlink/cyberlink = spawned.get_organ_slot(ORGAN_SLOT_LINK)
-			if(QDELETED(cyberlink))
-				cyberlink = new /obj/item/organ/internal/cyberimp/cyberlink/nt_low
-				cyberlink.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
-			for(var/info in implant.encode_info)
-				if(implant.encode_info[info] == NO_PROTOCOL)
-					continue
-				//Not a += because we want to avoid having duplicate entries in either encode_info
-				implant.encode_info[info] |= cyberlink.encode_info[info]
-
 		cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
 
 

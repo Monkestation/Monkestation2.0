@@ -1,4 +1,4 @@
-/datum/mutation/human/firebreath
+/datum/mutation/firebreath
 	name = "Fire Breath"
 //	desc = "An ancient mutation that gives lizards breath of fire."
 	desc = "An ancient mutation found in lizard DNA that gives the host ability to breathe fire."
@@ -13,7 +13,7 @@
 	power_coeff = 1
 	synchronizer_coeff = 1 // MONKESTATION ADDITION
 
-/datum/mutation/human/firebreath/modify()
+/datum/mutation/firebreath/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/cone/staggered/fire_breath/to_modify = .
 	if(!istype(to_modify)) // null or invalid

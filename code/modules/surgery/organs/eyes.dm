@@ -149,6 +149,9 @@
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
+	if(isnull(eye_icon_state))
+		return list()
+
 	var/eye_icon = parent.dna?.species.eyes_icon || 'icons/mob/species/human/human_face.dmi' //Non-Modular change - Gives modular eye icons for certain species.
 
 	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -BODY_LAYER)
@@ -166,11 +169,9 @@
 			overlays += emissive_appearance_copy(eye_left, src, NONE)
 			overlays += emissive_appearance_copy(eye_right, src, NONE)
 
-		if(OFFSET_FACE in parent.dna?.species.offset_features)
-			var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+		if(my_head?.worn_face_offset)
 			for(var/mutable_appearance/overlay in overlays)
-				overlay.pixel_x += offset[OFFSET_X]
-				overlay.pixel_y += offset[OFFSET_Y]
+				my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
 
@@ -184,8 +185,9 @@
 	eye_color_right = initial(eye_color_right)
 
 /obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
+	var/before = damage
 	. = ..()
-	if(!owner)
+	if(!owner || before == damage)
 		return
 	apply_damaged_eye_effects()
 
@@ -452,9 +454,9 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	deactivate(eye_owner, close_ui = TRUE)
-	QDEL_NULL(eyes_overlay)
-	QDEL_NULL(eyes_overlay_left)
-	QDEL_NULL(eyes_overlay_right)
+	eyes_overlay = null
+	eyes_overlay_left = null
+	eyes_overlay_right = null
 	if(!QDELETED(eye))
 		eye.forceMove(src)
 	return ..()

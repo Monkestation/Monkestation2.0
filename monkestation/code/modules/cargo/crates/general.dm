@@ -28,6 +28,7 @@
 	)
 	crate_name = "Deluxe Smithing Crate"
 	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/misc/anvilcratesmol
 	name = "Starter Smithing Kit"
 	desc = "A kit containing the basic structures for hobby smithing! Materials not included."

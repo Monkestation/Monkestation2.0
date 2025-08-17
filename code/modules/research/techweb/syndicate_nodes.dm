@@ -18,7 +18,7 @@
 	id = "syndicate_basic"
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
-	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
+	prereq_ids = list("adv_engi", "adv_weaponry", "chemical_weapons")
 	design_ids = list(
 		"advanced_camera",
 		"ai_cam_upgrade",

@@ -22,9 +22,9 @@
 	TEST_ASSERT(time_effect, "Failed to create timestop effect")
 	sleep(0.1 SECONDS) // timestop is invoked async so let's just wait
 
-	TEST_ASSERT(!dio.IsStun(), "Timestopper should not have frozen themselves when using timestop")
-	TEST_ASSERT(kakyoin.IsStun(), "Timestopper should have frozen the target within 2 tiles of range when using timestop")
-	TEST_ASSERT(!jotaro.IsStun(), "Timestopper should not have frozen the target outside of 2 tiles of range when using timestop")
+	TEST_ASSERT(!dio.has_status_effect(/datum/status_effect/time_stopped), "Timestopper should not have frozen themselves when using timestop")
+	TEST_ASSERT(kakyoin.has_status_effect(/datum/status_effect/time_stopped), "Timestopper should have frozen the target within 2 tiles of range when using timestop")
+	TEST_ASSERT(!jotaro.has_status_effect(/datum/status_effect/time_stopped), "Timestopper should not have frozen the target outside of 2 tiles of range when using timestop")
 
 	// cleanup
 	qdel(time_effect)
