@@ -266,6 +266,25 @@
 	liver_resistance = 1.5 * LIVER_DEFAULT_TOX_RESISTANCE // +50%
 	emp_vulnerability = 20
 
+/obj/item/organ/internal/liver/cybernetic/surplus
+	name = "surplus prosthetic liver"
+	desc = "A very cheap prosthetic liver, mass produced for low-functioning alcoholics... It looks more like a water filter than \
+		an actual liver. \
+		Very fragile, absolutely terrible at filtering toxins and substantially weak to alcohol. \
+		Offers no protection against EMPs."
+	icon_state = "liver-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
+	alcohol_tolerance = ALCOHOL_RATE * 2 // can barely handle alcohol
+	toxTolerance = 1 //basically can't shrug off any toxins
+	liver_resistance = 0.75 * LIVER_DEFAULT_TOX_RESISTANCE // -25%
+	emp_vulnerability = 100
+
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/liver/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/liver/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)

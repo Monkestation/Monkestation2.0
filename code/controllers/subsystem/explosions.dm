@@ -681,7 +681,8 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what th
 		for(var/thing in flame_turf)
 			if(thing)
 				var/turf/T = thing
-				new /obj/effect/hotspot(T) //Mostly for ambience!
+				var/obj/effect/hotspot/hotspot = new(T) //Mostly for ambience!
+				QDEL_IN(hotspot, rand(1 SECONDS, 2 SECONDS))
 		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		/*

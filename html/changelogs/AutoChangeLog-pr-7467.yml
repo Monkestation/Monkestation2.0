@@ -1,0 +1,4 @@
+author: "Aniantan"
+delete-after: True
+changes:
+  - bugfix: "Slimes now flee from people with extinguishers again."

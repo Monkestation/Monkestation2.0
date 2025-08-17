@@ -91,6 +91,7 @@
 	var/static/list/always_traits = list(
 		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
 		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
+		TRAIT_OOZELING_NO_CANNIBALIZE, // prevents weird softlocks
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
@@ -105,7 +106,6 @@
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NO_BLEED_WARN,
 		TRAIT_NO_MIRROR_REFLECTION,
-		TRAIT_OOZELING_NO_CANNIBALIZE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_SLEEPIMMUNE,
@@ -251,6 +251,8 @@
 	// Assign Powers
 	give_starting_powers()
 	assign_starting_stats()
+
+	owner.current.persistent_client?.remove_challenge(/datum/challenge/no_heals)
 
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()

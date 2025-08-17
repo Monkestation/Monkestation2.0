@@ -137,6 +137,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
+		if("openWebMap")
+			if(!SSmapping.current_map.mapping_url)
+				return
+			if(is_station_level(mob.z))
+				src << link("[SSmapping.current_map.mapping_url]/?x=[mob.x]&y=[mob.y]&zoom=6")
+			else
+				src << link("[SSmapping.current_map.mapping_url]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
@@ -243,6 +250,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	TopicData = null //Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
+		return null
+
+	if(address in SSoverwatch?.cached_asn_bans)
+		log_access("Overwatch: [ckey] denied due to cached ASN ban ([address])")
 		return null
 
 	GLOB.clients += src
