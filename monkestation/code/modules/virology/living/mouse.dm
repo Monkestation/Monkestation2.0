@@ -49,7 +49,7 @@
 	if(!do_after(user, 1.5 SECONDS, src))
 		return
 	var/obj/item/reagent_containers/syringe/I = attacking_item
-	var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
+	var/list/data = list("blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
 	if(diseases)
 		data["viruses"] |= diseases
 	data["immunity"] = immune_system.GetImmunity()
