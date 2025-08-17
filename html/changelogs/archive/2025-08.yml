@@ -347,3 +347,6 @@
       all status effects related to equipping it, for e.g. remove the action button
       from chainsaw
   - bugfix: Fixed beach bar floors not giving back the right tiles.
+2025-08-17:
+  throwawayuseless:
+  - rscadd: Pro Skater quirk. Become totally radical today!
