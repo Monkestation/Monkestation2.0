@@ -97,7 +97,7 @@
 
 /mob/living/basic/bloodling/proper/update_health_hud()
 	. = ..()
-	var/biomass_next_evo
+	/*var/biomass_next_evo
 
 	switch(evolution_level)
 		if(1)
@@ -110,6 +110,7 @@
 			biomass_next_evo = 225
 	if(evolution_level > 4)
 		biomass_next_evo = biomass_max
+	*/
 
 	if(hud_used?.bloodling_bio_display)
 		hud_used.bloodling_bio_display.maptext = FORMAT_BIO_TEXT(biomass)
