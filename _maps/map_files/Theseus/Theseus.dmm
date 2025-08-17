@@ -13695,6 +13695,8 @@
 	pixel_x = -6;
 	pixel_y = 28
 	},
+/obj/structure/desk_bell/departmental/engineering,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "eca" = (
@@ -18869,9 +18871,6 @@
 	pixel_y = 16;
 	pixel_x = 6
 	},
-/obj/structure/desk_bell{
-	pixel_x = -3
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "HoPFore";
 	name = "HoP Fore Desk Shutters"
@@ -18882,6 +18881,9 @@
 	dir = 2
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_x = -3
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "fFE" = (
@@ -54279,6 +54281,10 @@
 	name = "Brig Blast Door"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/desk_bell/departmental/security{
+	pixel_x = -5;
+	pixel_y = -3
+	},
 /turf/open/floor/plating,
 /area/station/security/brig/entrance)
 "pTD" = (
@@ -58545,10 +58551,6 @@
 "rca" = (
 /obj/effect/turf_decal/tile/blue/full,
 /obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = -5;
-	pixel_y = 10
-	},
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/white,
@@ -60261,10 +60263,6 @@
 /area/station/service/library/lounge)
 "rAj" = (
 /obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = -5;
-	pixel_y = 10
-	},
 /obj/item/stack/cable_coil{
 	pixel_y = -2
 	},
@@ -60280,6 +60278,10 @@
 /obj/effect/turf_decal/tile/purple/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -5;
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "rAw" = (
@@ -61344,6 +61346,7 @@
 	pixel_x = 5;
 	pixel_y = 6
 	},
+/obj/structure/desk_bell/departmental/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "rOw" = (
@@ -62392,10 +62395,6 @@
 /obj/machinery/door/window/left/directional/south{
 	req_access = list("cargo")
 	},
-/obj/structure/desk_bell{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
 /obj/item/pen{
@@ -62403,6 +62402,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/structure/desk_bell/departmental/supply{
+	pixel_x = -7;
+	pixel_y = 10
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)

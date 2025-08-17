@@ -12853,8 +12853,11 @@
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin,
 /obj/item/pen/blue,
-/obj/machinery/door/window/right/directional/east{
-	name = "Medbay Desk";
+/obj/structure/desk_bell/departmental/medical{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/machinery/door/window/right/directional/west{
 	req_access = list("medical")
 	},
 /turf/open/floor/iron/dark,
@@ -18407,7 +18410,9 @@
 /area/station/maintenance/department/medical)
 "bLB" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/west,
+/obj/machinery/door/window/right/directional/west{
+	req_access = list("medical")
+	},
 /obj/item/folder/red{
 	pixel_x = 5;
 	pixel_y = -1
@@ -21796,9 +21801,9 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/structure/desk_bell{
-	pixel_x = -7;
-	pixel_y = -1
+/obj/structure/desk_bell/departmental/supply{
+	pixel_y = -1;
+	pixel_x = -7
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -40472,6 +40477,7 @@
 /obj/machinery/door/firedoor,
 /obj/item/reagent_containers/cup/glass/mug/britcup,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "izs" = (
@@ -58723,6 +58729,9 @@
 	name = "Security Checkpoint";
 	req_access = list("security")
 	},
+/obj/structure/desk_bell/departmental/security{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs/fore)
 "pvt" = (
@@ -67907,7 +67916,7 @@
 	req_access = list("engineering")
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/engineering{
 	pixel_x = -3;
 	pixel_y = 9
 	},
@@ -69611,10 +69620,6 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Reception Window"
 	},
-/obj/structure/desk_bell{
-	pixel_x = -7;
-	pixel_y = -1
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
 	name = "HoP Blast Door"
@@ -69623,6 +69628,10 @@
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "Head of Personnel's Desk";
 	req_access = list("hop")
+	},
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_y = -1;
+	pixel_x = -7
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -76436,6 +76445,7 @@
 	},
 /obj/item/reagent_containers/syringe,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "wmK" = (
@@ -80293,13 +80303,13 @@
 	name = "Research Lab Shutters"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
-	pixel_x = -7;
-	pixel_y = -1
-	},
 /obj/machinery/door/window/right/directional/south{
 	name = "Research Lab Desk";
 	req_access = list("science")
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -7;
+	pixel_y = -1
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)

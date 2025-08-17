@@ -316,3 +316,34 @@
   BingusSS13:
   - qol: Service borgs can now hold beakers, bottles, and coffeepots.
   - bugfix: Service borgs are now capable of cooking eggs on griddles, let's get cracking!
+  Tractor Maam:
+  - rscadd: Departmental Bells have replaced the desk bells at the front desk of every
+      station. These bells ring onto the respective department channel when rung (60
+      second cooldown.)
+  - rscadd: All bells can now be anchored with a wrench left click.
+  - rscadd: Maps that did not contain a bell for certain departments have been updated.
+  - image: desk bells have had their sprites replaced with Yogstation ones.
+  Wisemonster:
+  - balance: Lone Op's minimum/starting weight decreased to 0
+2025-08-15:
+  leaKsi:
+  - bugfix: (SmArtKar) Putting people you're fireman carrying into contractor pods
+      no longer sends both of you to zelda's shadow realm.
+  - bugfix: (Sealed101) Fixed equipping straight jackets onto people with attack-equip
+      then equipping another jacket through the equip window causing magical jacket
+      consumption into the recipient's contents.
+  - bugfix: Monkification no longer magically changes your ID/PDA name.
+2025-08-16:
+  Absolucy:
+  - map: Fixed missing disposals pipes in Tramstation's engineering SMES room.
+  - bugfix: Bloodsuckers and Changelings now have the "no healing" challenge removed.
+  Absolucy, JohnFulpWillard:
+  - admin: Admins can now link a URL for maps, used to give feedback on said maps.
+      Accessible through the roundend report, escape menu, and stat panel.
+  - qol: You can now directly go to the webmap of maps from the stat panel (assuming
+      it's set in config).
+  EssentialTomato:
+  - bugfix: (Synclt21) Failing to equip a dual handed item should properly clear out
+      all status effects related to equipping it, for e.g. remove the action button
+      from chainsaw
+  - bugfix: Fixed beach bar floors not giving back the right tiles.
