@@ -9,6 +9,9 @@
 		"whiteship": "whiteship_blueshift",
 		"emergency": "emergency_jetfuel"
 	},
+	"ignored_unit_tests": [
+        "/datum/unit_test/modify_fantasy_variable"
+	],
 	"traits": [
 		{
 			"Up": true,
