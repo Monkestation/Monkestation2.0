@@ -4,8 +4,6 @@
 	var/glass_color_blend_to_ratio
 	///Do we use random coloration
 	var/uses_color = TRUE
-	///Do we start with a window sill if maploaded
-	var/has_sill = TRUE
 
 /obj/structure/window/proc/change_color(new_color)
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
