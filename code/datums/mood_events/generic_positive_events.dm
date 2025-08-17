@@ -375,5 +375,5 @@
 	mood_change = 2
 
 /datum/mood_event/has_borer
-	description = "I hear her singing to me within my ear."
+	description = "i feel content, the melody completes me."
 	mood_change = 5
