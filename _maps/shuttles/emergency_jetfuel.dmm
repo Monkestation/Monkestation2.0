@@ -41,6 +41,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"em" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/plating,
+/area/template_noop)
 "ex" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -62,6 +66,14 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
 /area/shuttle/escape)
+"gk" = (
+/obj/docking_port/mobile/emergency,
+/turf/open/floor/plating,
+/area/template_noop)
+"gD" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/plating,
+/area/template_noop)
 "gY" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -175,6 +187,10 @@
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/openspace,
 /area/template_noop)
+"xL" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/template_noop)
 "xY" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/plastitanium/red,
@@ -240,7 +256,7 @@
 /area/shuttle/escape)
 "DG" = (
 /obj/effect/gibspawner/human,
-/turf/open/openspace,
+/turf/open/floor/plating,
 /area/template_noop)
 "Ff" = (
 /obj/structure/chair/comfy/shuttle,
@@ -316,11 +332,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "LI" = (
-/obj/docking_port/mobile/emergency{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/turf/open/floor/plating,
+/area/template_noop)
 "LK" = (
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -346,12 +359,12 @@
 /area/shuttle/escape)
 "NM" = (
 /obj/structure/lattice,
-/turf/open/openspace,
-/area/shuttle/escape)
+/turf/template_noop,
+/area/template_noop)
 "Oq" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/gibspawner/human,
-/turf/open/openspace,
+/turf/template_noop,
 /area/template_noop)
 "Oy" = (
 /obj/effect/decal/cleanable/blood,
@@ -407,6 +420,10 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"WN" = (
+/obj/effect/abstract/fire/big_fire,
+/turf/open/floor/plating,
+/area/template_noop)
 "XF" = (
 /obj/effect/abstract/fire/big_fire,
 /obj/structure/lattice,
@@ -457,10 +474,10 @@ OV
 OV
 OV
 OV
-Th
-Th
-Th
-Th
+OV
+OV
+OV
+OV
 OV
 OV
 Rt
@@ -485,8 +502,8 @@ Mg
 Mg
 Mg
 Mg
-OV
-OV
+LI
+gk
 Mg
 OV
 OV
@@ -494,7 +511,7 @@ OV
 Pc
 OV
 DG
-Th
+LI
 OV
 OV
 Qp
@@ -532,7 +549,7 @@ OV
 OV
 Mw
 Rt
-Th
+LI
 XR
 XR
 XR
@@ -560,18 +577,18 @@ OV
 dg
 OV
 OV
-Th
-Th
+LI
+LI
 Mw
 OV
-Th
-Th
+LI
+LI
 OV
 OV
 Th
 Th
 vd
-Th
+LI
 Th
 Th
 Oy
@@ -596,20 +613,20 @@ MD
 oR
 zj
 OV
-Th
-Th
+LI
+LI
 DG
+LI
+gD
+LI
+OV
 Th
 KD
-Th
-OV
-OV
-Pc
-qI
-Th
+WN
+LI
 DG
-Th
-Th
+LI
+LI
 Th
 qI
 Rt
@@ -634,22 +651,22 @@ lR
 zj
 MD
 Mg
+LI
+LI
+LI
+OV
 Th
 Th
-Th
 OV
 OV
 OV
 OV
 OV
-OV
-OV
-OV
-Pc
-qI
-Th
-Th
 KD
+qI
+LI
+LI
+gD
 "}
 (7,1,1) = {"
 OV
@@ -679,13 +696,13 @@ Mg
 Mg
 OV
 OV
-OV
-Rt
-OV
-OV
-OV
 Th
-Th
+Oy
+OV
+OV
+OV
+LI
+LI
 "}
 (8,1,1) = {"
 OV
@@ -714,14 +731,14 @@ HT
 HT
 HT
 Pc
-Th
+LI
 XR
 XR
 XR
 Mw
 Rt
-Th
-Th
+LI
+LI
 "}
 (9,1,1) = {"
 OV
@@ -750,8 +767,8 @@ OV
 OV
 OV
 Fi
-Th
-Th
+LI
+LI
 XR
 Yy
 OV
@@ -777,7 +794,7 @@ zj
 MD
 Ps
 PT
-LI
+lR
 as
 Mg
 dg
@@ -789,9 +806,9 @@ OV
 MD
 Mg
 OV
-KD
-Oy
-Th
+gD
+xL
+LI
 Pc
 OV
 "}
@@ -819,13 +836,13 @@ Mg
 ss
 OV
 OV
-Th
-Th
+LI
+LI
 OV
 OV
 OV
 OV
-Th
+LI
 OV
 OV
 OV
@@ -853,15 +870,15 @@ Ji
 Mg
 HT
 OV
-Th
-Th
+LI
+LI
 Pw
-Th
+LI
 OV
 Mg
-Th
-Th
-Th
+LI
+LI
+LI
 Pc
 OV
 Mw
@@ -880,16 +897,16 @@ Mg
 AJ
 lR
 fA
-Th
+LI
 dg
-Th
+LI
 oR
 MD
 Mg
 Mg
 OV
 OV
-NM
+dg
 Mg
 OV
 Mg
@@ -899,8 +916,8 @@ OV
 Mw
 OV
 OV
-Rt
-OV
+Oy
+Th
 zq
 "}
 (14,1,1) = {"
@@ -918,14 +935,14 @@ dT
 lR
 lR
 dg
-Th
-Th
+LI
+LI
 Ji
 Ji
 OV
-OV
-zq
-XR
+Th
+xp
+NM
 OV
 OV
 zq
@@ -934,9 +951,9 @@ OV
 OV
 Pc
 Rt
-Th
-Th
-Mw
+LI
+LI
+qI
 OV
 "}
 (15,1,1) = {"
@@ -956,24 +973,24 @@ zj
 sz
 lR
 Mj
-Th
-Th
+LI
+LI
 Rt
 Pc
-OV
+Th
 XR
 XR
-Pc
-OV
+KD
+Th
 Mw
-XR
-XR
+NM
+NM
 Fi
 OV
+LI
+LI
 Th
 Th
-OV
-OV
 "}
 (16,1,1) = {"
 OV
@@ -987,28 +1004,28 @@ LK
 LK
 CO
 Fq
-Oy
-Th
+xL
+LI
 MD
 Pw
 lR
 MD
 Mg
 Fi
-XR
+NM
 XR
 XR
 XF
 XR
-OV
-Pc
+Th
+KD
 Oq
-XR
-XR
+NM
+NM
 OV
 OV
 Th
-Pc
+KD
 OV
 "}
 (17,1,1) = {"
@@ -1034,14 +1051,14 @@ Pc
 OV
 XR
 Oy
-OV
-Rt
-Rt
-OV
-OV
-XR
 Th
-xp
+Oy
+Rt
+Th
+OV
+NM
+LI
+em
 Mw
 Rt
 OV
@@ -1066,16 +1083,16 @@ OV
 Mg
 Ji
 OV
-OV
-Mw
-XR
-XR
 Th
+qI
+XR
+XR
+LI
 Qp
-Oy
+xL
 Th
 Th
-OV
+Th
 Mw
 OV
 OV
@@ -1102,17 +1119,17 @@ Mw
 OV
 OV
 OV
-OV
-Mw
-Mw
-Fi
 Th
+qI
+qI
+Fi
+LI
 OV
 OV
 qI
 Th
 Th
-Th
+LI
 OV
 Rt
 Pc
