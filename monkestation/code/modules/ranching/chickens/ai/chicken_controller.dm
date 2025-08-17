@@ -104,15 +104,13 @@
 	var/mob/living/target = controller.blackboard[target_key]
 	if(SEND_SIGNAL(controller.pawn, COMSIG_FRIENDSHIP_CHECK_LEVEL, target, FRIENDSHIP_FRIEND))
 		controller.clear_blackboard_key(target_key)
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	// Interrupt attack chain to use tentacles, unless the target is already tentacled
 	if (isliving(target))
 		var/datum/action/cooldown/using_action = controller.blackboard[BB_CHICKEN_TARGETED_ABILITY]
 		if (using_action?.IsAvailable())
-			finish_action(controller, succeeded = FALSE)
-			return
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	return ..()
 
 /datum/ai_planning_subtree/flee_target/low_health/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
