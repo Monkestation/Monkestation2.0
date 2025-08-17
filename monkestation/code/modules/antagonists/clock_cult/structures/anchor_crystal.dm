@@ -109,7 +109,7 @@
 		SSthe_ark.adjust_clock_power(5 * seconds_per_tick, TRUE)
 		return
 
-	charging_for = min(charging_for + (seconds_per_tick SECONDS), ANCHORING_CRYSTAL_CHARGE_DURATION)
+	charging_for = min(charging_for + (seconds_per_tick * DELTA_WORLD_TIME(SSthe_ark)), ANCHORING_CRYSTAL_CHARGE_DURATION)
 
 	if(shields < initial(shields) && COOLDOWN_FINISHED(src, recently_hit_cd))
 		playsound(src, 'sound/magic/charge.ogg', 50, TRUE)

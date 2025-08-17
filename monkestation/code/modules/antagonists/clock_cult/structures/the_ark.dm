@@ -54,7 +54,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		GLOB.clock_ark = null
 	if(GLOB.ratvar_risen)
 		return ..()
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSthe_ark, src)
 	send_clock_message(null, span_bigbrass("The Ark has been destroyed, Reebe is becoming unstable!"))
 	for(var/mob/living/current_mob in GLOB.player_list)
 		if(!on_reebe(current_mob))
@@ -114,7 +114,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		return
 
 	if(current_state >= ARK_STATE_CHARGING)
-		charging_for = min(charging_for + seconds_per_tick, ARK_ASSAULT_PERIOD)
+		charging_for = min(charging_for + (seconds_per_tick * DELTA_WORLD_TIME(SSthe_ark)), ARK_ASSAULT_PERIOD)
 
 	if(charging_for >= ARK_ASSAULT_PERIOD)
 		summon_ratvar()
@@ -171,7 +171,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 50)
 	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	addtimer(CALLBACK(src, PROC_REF(begin_assault)), ARK_GRACE_PERIOD)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(send_station_support_package), /obj/item/turf_demolisher/reebe), 10 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(send_station_support_package)), 10 SECONDS)
 
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
@@ -182,7 +182,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	log_game("The clock cult has begun opening the Ark of the Clockwork Justiciar.")
 
 /obj/structure/destructible/clockwork/the_ark/proc/begin_assault()
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSthe_ark, src)
 	priority_announce("Space-time anomalies detected near the station. Source determined to be a temporal \
 		energy pulse emanating from J1523-215. All crew are to enter [text2ratvar("prep#re %o di%")]\
 		and destroy the [text2ratvar("I'd like to see you try")], which has been determined to be the source of the \
@@ -197,7 +197,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	if(current_state >= ARK_STATE_FINAL)
 		return
 	current_state = ARK_STATE_FINAL
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSthe_ark, src)
 	resistance_flags |= INDESTRUCTIBLE
 	send_clock_message(null, span_bigbrass("Ratvar approaches, you shall be eternally rewarded for your servitude!"), msg_ghosts = FALSE)
 	send_to_playing_players(span_warning("You feel time slow down."))

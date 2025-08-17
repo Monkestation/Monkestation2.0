@@ -62,17 +62,22 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 	if(additional_items)
 		spawned_list += additional_items
 	fill_with_ones(spawned_list)
-	for(var/spawned_object in spawned_list)
+	var/obj/structure/closet/crate/spawned_crate = new
+	for(var/atom/movable/spawned_object in spawned_list)
+		if(!ispath(spawned_object))
+			spawned_object.forceMove(spawned_crate)
+			continue
+
 		var/value = spawned_list[spawned_object]
 		if(value < 0)
 			stack_trace("a spawned_object([spawned_object]) in send_station_support_package() has a value < 0.")
 		while(value > 0)
 			value--
-			spawned_list += new spawned_object()
+			new spawned_object(spawned_crate)
 		spawned_list -= spawned_object
 
 	priority_announce(sent_message, has_important_message = TRUE)
-	podspawn(list("target" = bridge_turf, "style" = STYLE_CENTCOM, "spawn" = spawned_list, "bluespace" = FALSE, "stay_after_drop" = TRUE))
+	podspawn(list("target" = bridge_turf, "style" = STYLE_CENTCOM, "spawn" = spawned_crate, "bluespace" = FALSE, "stay_after_drop" = TRUE))
 
 /obj/item/storage/box/recharger_parts
 	name = "Recharger Parts"

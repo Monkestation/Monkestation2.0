@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user)
-	if(immune_to_servant_attacks && user.istate != ISTATE_HARM && (IS_CLOCK(user)))
+	if(immune_to_servant_attacks && !(user.istate & ISTATE_HARM) && (IS_CLOCK(user)))
 		return
 	return ..()
 

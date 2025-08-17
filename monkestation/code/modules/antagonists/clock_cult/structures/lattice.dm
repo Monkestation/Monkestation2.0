@@ -41,6 +41,11 @@
 	if(on_reebe(src))
 		resistance_flags |= INDESTRUCTIBLE
 
+/obj/structure/lattice/catwalk/clockwork/deconstruct()
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
+	return ..()
+
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	if(ISODD(x+y))
 		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork_large.dmi'

@@ -8,12 +8,14 @@
 	bullet_bounce_sound = null //forever falling
 	tiled_dirt = FALSE
 	init_air = FALSE
+	///is this turf walkable
+	var/walkable = FALSE
 
 /turf/open/indestructible/reebe_void/Initialize(mapload)
 	. = ..()
 	icon_state = "reebegame"
 
-/turf/open/indestructible/reebe_void/Enter(atom/movable/movable, atom/old_loc, walkable)
+/turf/open/indestructible/reebe_void/Enter(atom/movable/movable)
 	if(walkable)
 		return ..()
 
@@ -26,11 +28,13 @@
 			return TRUE
 		return FALSE
 
+/turf/open/indestructible/reebe_void/RemoveLattice()
+	return
+
 /turf/open/indestructible/reebe_void/walkable
 	icon_state = "reebespawn"
-
-/turf/open/indestructible/reebe_void/walkable/Enter(atom/movable/movable, atom/old_loc, walkable = TRUE)
-	. = ..()
+	baseturfs = /turf/open/indestructible/reebe_void/walkable
+	walkable = TRUE
 
 /turf/open/indestructible/reebe_void/spawning
 	icon_state = "reebespawn"
