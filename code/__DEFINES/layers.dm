@@ -325,4 +325,6 @@
 /// We expect at most 3 layers of multiz
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
-#define MAX_EXPECTED_Z_DEPTH 3
+///
+/// update 8/17/25: there's a huge map now
+#define MAX_EXPECTED_Z_DEPTH 11
