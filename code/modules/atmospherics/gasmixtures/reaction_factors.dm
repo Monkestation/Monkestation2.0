@@ -214,5 +214,5 @@
 		/datum/gas/hydrogen = "[MINIMUM_MOLE_COUNT * 20] moles of hydrogen need to be present for the reaction to occur.",
 		/datum/gas/hexane = "Hexane is formed at a rate that scales with the temperature.",
 		"Temperature" = "Can only occur between [HEXANE_FORMATION_MIN_TEMPERATURE] - [HEXANE_FORMATION_MAX_TEMPERATURE] kelvin. Higher temperature increases hexane formation rate.",
-		"Energy" = "[HEXANE_FORMATION_ENERGY] joules of energy is consumed per mole of hexane formed.",
+		"Energy" = "[HEXANE_FORMATION_ENERGY] joules of energy is consumed per 5.25 moles of hexane formed.",
 	)
