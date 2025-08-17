@@ -82,10 +82,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"jk" = (
-/obj/effect/mob_spawn/corpse/human/assistant,
-/turf/template_noop,
-/area/shuttle/escape)
 "kE" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/blood,
@@ -301,10 +297,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"Jh" = (
-/obj/effect/decal/cleanable/blood,
-/turf/open/openspace,
-/area/shuttle/escape)
 "Ji" = (
 /turf/template_noop,
 /area/shuttle/escape)
@@ -346,10 +338,6 @@
 "MD" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Nj" = (
-/obj/effect/gibspawner/human,
-/turf/template_noop,
 /area/shuttle/escape)
 "No" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -411,9 +399,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"SO" = (
-/turf/open/openspace,
-/area/shuttle/escape)
 "Th" = (
 /turf/open/openspace,
 /area/template_noop)
@@ -500,10 +485,10 @@ Mg
 Mg
 Mg
 Mg
-Ji
-Ji
+OV
+OV
 Mg
-Ji
+OV
 OV
 OV
 Pc
@@ -571,12 +556,12 @@ LK
 CO
 ss
 lR
-Ji
+OV
 dg
-Ji
-Ji
-SO
-SO
+OV
+OV
+Th
+Th
 Mw
 OV
 Th
@@ -610,9 +595,9 @@ oR
 MD
 oR
 zj
-Ji
-SO
-SO
+OV
+Th
+Th
 DG
 Th
 KD
@@ -685,15 +670,15 @@ lR
 ex
 lR
 Mg
-Ji
+OV
 dg
 Mg
 Mg
 Mg
 Mg
 Mg
-Ji
-Ji
+OV
+OV
 OV
 Rt
 OV
@@ -718,8 +703,8 @@ ex
 oz
 ex
 dg
-Ji
-Ji
+OV
+OV
 eg
 Hp
 Fq
@@ -728,9 +713,9 @@ ss
 HT
 HT
 HT
-jk
-SO
-NM
+Pc
+Th
+XR
 XR
 XR
 Mw
@@ -760,13 +745,13 @@ fd
 dJ
 dg
 Mg
-Ji
-Ji
-Ji
-Ji
-Nj
-SO
-SO
+OV
+OV
+OV
+OV
+Fi
+Th
+Th
 XR
 Yy
 OV
@@ -800,7 +785,7 @@ dg
 lR
 Pw
 cI
-Ji
+OV
 MD
 Mg
 OV
@@ -832,13 +817,13 @@ CH
 Mg
 Mg
 ss
-Ji
-Ji
-SO
-SO
-Ji
-Ji
-Ji
+OV
+OV
+Th
+Th
+OV
+OV
+OV
 OV
 Th
 OV
@@ -867,14 +852,14 @@ Ji
 Ji
 Mg
 HT
-Ji
-SO
-SO
+OV
+Th
+Th
 Pw
-SO
-Ji
+Th
+OV
 Mg
-SO
+Th
 Th
 Th
 Pc
@@ -895,18 +880,18 @@ Mg
 AJ
 lR
 fA
-SO
+Th
 dg
-SO
+Th
 oR
 MD
 Mg
 Mg
-Ji
-Ji
+OV
+OV
 NM
 Mg
-Ji
+OV
 Mg
 Mg
 Mg
@@ -933,8 +918,8 @@ dT
 lR
 lR
 dg
-SO
-SO
+Th
+Th
 Ji
 Ji
 OV
@@ -971,8 +956,8 @@ zj
 sz
 lR
 Mj
-SO
-SO
+Th
+Th
 Rt
 Pc
 OV
@@ -1002,8 +987,8 @@ LK
 LK
 CO
 Fq
-Jh
-SO
+Oy
+Th
 MD
 Pw
 lR
@@ -1075,9 +1060,9 @@ Mg
 Mg
 Mg
 Mg
-Ji
-Ji
-Ji
+OV
+OV
+OV
 Mg
 Ji
 OV
