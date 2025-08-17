@@ -3,7 +3,7 @@
 	"map_name": "steelbeamsstation",
 	"map_path": "map_files/twintowerStation",
 	"map_file": "steelbeamsstation.dmm",
-	"space_ruin_levels": 11,
+	"space_ruin_levels": 10,
 	"shuttles": {
 		"cargo": "cargo_steelbeam",
 		"whiteship": "whiteship_blueshift",
