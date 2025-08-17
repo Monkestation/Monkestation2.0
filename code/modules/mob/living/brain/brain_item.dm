@@ -388,6 +388,9 @@
 	else
 		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
+/obj/item/organ/internal/brain/blob_act(obj/structure/blob/B)
+	set_organ_damage(maxHealth)
+
 /obj/item/organ/internal/brain/zombie
 	name = "zombie brain"
 	desc = "This glob of green mass can't have much intelligence inside it."
