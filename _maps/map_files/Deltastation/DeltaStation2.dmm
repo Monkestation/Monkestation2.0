@@ -32759,7 +32759,9 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
-/obj/machinery/door/airlock/hydroponics,
+/obj/machinery/door/airlock/hydroponics{
+	name = "Ranching"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/chicken)
 "hHQ" = (
