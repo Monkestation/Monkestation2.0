@@ -88,11 +88,6 @@
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 
-/// Global signal sent whenever a new PDA messenger is added to GLOB.pda_messengers (datum/computer_file/program/messenger/messenger)
-#define COMSIG_GLOB_MESSENGER_ADDED "!messenger_added"
-/// Global signal sent whenever a new PDA messenger is removed from GLOB.pda_messengers (datum/computer_file/program/messenger/messenger)
-#define COMSIG_GLOB_MESSENGER_REMOVED "!messenger_removed"
-
 
 //monkestation edit start
 // Used for smothering fires upon weather event start/stop

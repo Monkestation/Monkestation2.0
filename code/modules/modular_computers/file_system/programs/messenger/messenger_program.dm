@@ -55,15 +55,6 @@
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, PROC_REF(on_imprint_added))
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_RESET, PROC_REF(on_imprint_reset))
 
-/datum/computer_file/program/messenger/on_start(mob/living/user)
-	. = ..()
-	if(.)
-		RegisterSignals(SSdcs, list(COMSIG_GLOB_MESSENGER_ADDED, COMSIG_GLOB_MESSENGER_REMOVED), PROC_REF(on_messenger_updated))
-
-/datum/computer_file/program/messenger/kill_program(mob/user)
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_MESSENGER_ADDED, COMSIG_GLOB_MESSENGER_REMOVED))
-	return ..()
-
 /datum/computer_file/program/messenger/proc/check_new_photo(sender, datum/computer_file/picture/storing_picture)
 	SIGNAL_HANDLER
 	if(!istype(storing_picture))
@@ -86,15 +77,9 @@
 	selected_image = null
 	viewing_messages_of = null
 
-/datum/computer_file/program/messenger/proc/on_messenger_updated(datum/source, datum/computer_file/program/messenger/messenger)
-	SIGNAL_HANDLER
-	if(LAZYLEN(computer?.open_uis)) // so we don't waste time with creating a callback and timer if the UI isn't even open
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers)), 0.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE) // this is a timer so it only gets called once if a bunch of messengers get updated within a short timespan
-
 /datum/computer_file/program/messenger/Destroy(force)
 	if(!QDELETED(computer))
 		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_MESSENGER_ADDED, COMSIG_GLOB_MESSENGER_REMOVED))
 	remove_messenger(src)
 	return ..()
 
@@ -341,7 +326,6 @@
 	static_data["can_spam"] = spam_mode
 	static_data["is_silicon"] = issilicon(user)
 	static_data["alert_able"] = alert_able
-	static_data["messengers"] = get_messengers()
 
 	return static_data
 
@@ -354,12 +338,15 @@
 		var/list/chat_data = chat.get_ui_data(user)
 		chats_data[chat_ref] = chat_data
 
+	var/list/messengers = get_messengers()
+
 	data["owner"] = ((REF(src) in GLOB.pda_messengers) ? list(
 			"name" = computer.saved_identification,
 			"job" = computer.saved_job,
 			"ref" = REF(src)
 		) : null)
 	data["saved_chats"] = chats_data
+	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
 	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
