@@ -1936,10 +1936,10 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
-/obj/structure/desk_bell{
+/obj/item/papercutter,
+/obj/structure/desk_bell/departmental/supply{
 	pixel_x = 7
 	},
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "aGS" = (
@@ -7910,10 +7910,10 @@
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "cpD" = (
-/obj/structure/railing/wood{
-	dir = 8
-	},
-/obj/structure/railing/wood{
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 1
 	},
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -9428,7 +9428,7 @@
 	id = "Engineering";
 	name = "Engineering Security Door"
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/engineering{
 	pixel_x = 6
 	},
 /turf/open/floor/iron,
@@ -9581,9 +9581,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "cNg" = (
-/obj/structure/railing/wood{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "cNh" = (
@@ -11230,12 +11228,8 @@
 /turf/open/floor/plating,
 /area/station/security/lockers)
 "dol" = (
-/obj/structure/railing/wood{
-	dir = 8
-	},
-/obj/structure/railing/wood{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "doq" = (
@@ -12751,9 +12745,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "dMR" = (
-/obj/structure/railing/wood{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -13463,10 +13455,10 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal)
 "dZB" = (
-/obj/structure/railing/wood{
-	dir = 8
+/obj/structure/window/reinforced/spawner/directional/west,
+/mob/living/basic/chicken/brown{
+	forced_gender = "male"
 	},
-/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "dZG" = (
@@ -21358,6 +21350,7 @@
 	pixel_y = 3;
 	pixel_x = -27
 	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gAR" = (
@@ -28584,12 +28577,12 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "iOC" = (
-/obj/structure/railing/wood{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 1
 	},
-/obj/structure/railing/wood{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "iOF" = (
@@ -29324,14 +29317,11 @@
 /turf/open/floor/iron/dark/side,
 /area/station/security/prison/workout)
 "iZp" = (
-/obj/structure/railing/wood{
-	dir = 1
-	},
-/obj/structure/railing/wood{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
+/mob/living/basic/chicken,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "iZs" = (
@@ -32295,13 +32285,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"jWh" = (
-/obj/structure/railing/wood{
-	dir = 1
-	},
-/mob/living/basic/chicken,
-/turf/open/floor/sandy_dirt,
-/area/station/service/hydroponics/chicken)
 "jWl" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -36046,10 +36029,11 @@
 	id = "pharmacy_shutters";
 	name = "Pharmacy Shutter"
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/desk_bell/departmental/medical{
+	bell_location = "Pharmacy Desk";
+	pixel_x = 6
+	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "lca" = (
@@ -39678,9 +39662,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
 "mkz" = (
-/obj/structure/railing/wood{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "mkA" = (
@@ -40721,7 +40703,7 @@
 	pixel_x = -6
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/science{
 	pixel_x = 7
 	},
 /turf/open/floor/plating,
@@ -41305,9 +41287,6 @@
 	id = "hop";
 	name = "Privacy Shutters"
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	dir = 4;
@@ -41317,6 +41296,9 @@
 	},
 /obj/machinery/flasher/directional/south{
 	pixel_y = -23
+	},
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_x = 7
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -43660,14 +43642,9 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "nuA" = (
-/obj/structure/railing/wood{
-	dir = 4
-	},
-/obj/structure/railing/wood{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/nestbox,
-/mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "nuH" = (
@@ -48926,6 +48903,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 6
 	},
+/obj/machinery/egg_incubator,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/chicken)
 "oVw" = (
@@ -52139,6 +52117,7 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Brig Reception"
 	},
+/obj/structure/desk_bell/departmental/security,
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
 "pTf" = (
@@ -53466,6 +53445,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 10
 	},
+/obj/machinery/egg_incubator,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/chicken)
 "qqJ" = (
@@ -56576,7 +56556,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "rqi" = (
-/obj/structure/railing/wood{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 1
 	},
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -60135,7 +60117,8 @@
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "svr" = (
-/obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/east,
+/mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "svw" = (
@@ -60710,7 +60693,6 @@
 /turf/open/floor/carpet,
 /area/station/service/library)
 "sEp" = (
-/obj/machinery/egg_incubator,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
 "sEq" = (
@@ -67175,9 +67157,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "uIN" = (
-/obj/structure/railing/wood{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "uIV" = (
@@ -74510,10 +74491,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "wUY" = (
-/obj/machinery/egg_incubator,
-/mob/living/basic/chicken/brown{
-	forced_gender = "male"
-	},
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
@@ -77164,12 +77141,8 @@
 /turf/closed/wall,
 /area/station/command/meeting_room)
 "xKQ" = (
-/obj/structure/railing/wood{
-	dir = 8
-	},
-/obj/structure/railing/wood{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -77387,9 +77360,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "xOI" = (
-/obj/structure/railing/wood{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -176008,7 +175979,7 @@ iZm
 xIT
 llW
 azM
-jWh
+uIN
 sLB
 sEp
 iZm
@@ -176266,7 +176237,7 @@ oHA
 ifg
 xpp
 iOC
-svr
+gUF
 nMQ
 iZm
 gjq
@@ -177552,7 +177523,7 @@ vLQ
 lfR
 nuA
 mkz
-cNg
+svr
 iZm
 iDt
 nfG

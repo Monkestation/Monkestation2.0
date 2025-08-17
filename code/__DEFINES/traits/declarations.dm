@@ -866,6 +866,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
 #define TRAIT_CAFFEINE_DEPENDENCE "caffeine_dependence"
+#define TRAIT_PRO_SKATER "pro_skater"
 /* #define TRAIT_STRONG_STOMACH "strong_stomach" */
 
 /// This mob always lands on their feet when they fall, for better or for worse.
@@ -877,6 +878,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Debug traits
 /// This object has light debugging tools attached to it
 /* #define TRAIT_LIGHTING_DEBUGGED "lighting_debugged" */
+/// This object has sound debugging tools attached to it
+#define TRAIT_SOUND_DEBUGGED "sound_debugged"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"

@@ -8730,7 +8730,9 @@
 /area/station/science/circuits)
 "bWL" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/railing{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 4
 	},
 /turf/open/floor/sandy_dirt,
@@ -12774,7 +12776,10 @@
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
 "cVt" = (
-/obj/structure/railing,
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics")
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "cVx" = (
@@ -19656,6 +19661,9 @@
 "eGr" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/light/directional/east,
+/mob/living/basic/chicken{
+	forced_gender = "female"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "eGs" = (
@@ -21372,9 +21380,6 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
-/mob/living/basic/chicken{
-	forced_gender = "male"
-	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "fam" = (
@@ -23323,9 +23328,6 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/structure/desk_bell{
-	pixel_x = -6
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -23333,6 +23335,9 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Research Lab Desk";
 	req_access = list("science")
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -6
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
@@ -23625,7 +23630,8 @@
 /area/station/maintenance/disposal/incinerator)
 "fzD" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "fzF" = (
@@ -36618,9 +36624,8 @@
 /area/station/medical/medbay)
 "iBc" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/nestbox,
 /mob/living/basic/chicken{
-	forced_gender = "female"
+	forced_gender = "male"
 	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -42662,6 +42667,9 @@
 "jVg" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "jVj" = (
@@ -44260,9 +44268,8 @@
 /area/station/service/hydroponics)
 "kmy" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "kmE" = (
@@ -46596,7 +46603,6 @@
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
 "kSi" = (
-/obj/structure/nestbox,
 /obj/machinery/light/directional/west,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
@@ -53635,11 +53641,6 @@
 	},
 /turf/open/floor/iron/edge,
 /area/station/hallway/primary/central/aft)
-"mBG" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/nestbox,
-/turf/open/floor/sandy_dirt,
-/area/station/service/hydroponics/chicken)
 "mBQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/east{
@@ -71194,7 +71195,7 @@
 	pixel_x = 0;
 	pixel_y = 26
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/command/hop{
 	pixel_x = 7
 	},
 /turf/open/floor/iron/dark,
@@ -75907,9 +75908,9 @@
 	pixel_x = -4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
-	pixel_x = 8;
-	pixel_y = 9
+/obj/structure/desk_bell/departmental/engineering{
+	pixel_y = 9;
+	pixel_x = 9
 	},
 /turf/open/floor/iron/half{
 	dir = 8
@@ -79461,11 +79462,10 @@
 /area/station/service/theater)
 "sLc" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/railing{
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
 	dir = 8
-	},
-/mob/living/basic/chicken{
-	forced_gender = "male"
 	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
@@ -82059,7 +82059,7 @@
 	req_access = list("cargo")
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/supply{
 	pixel_x = 7
 	},
 /turf/open/floor/iron,
@@ -82873,6 +82873,9 @@
 /area/station/science/robotics/lab)
 "tCH" = (
 /obj/machinery/light/directional/west,
+/mob/living/basic/chicken/brown{
+	forced_gender = "female"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "tCI" = (
@@ -88190,6 +88193,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/desk_bell/departmental/security{
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "uPI" = (
@@ -93092,12 +93098,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vZQ" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/mob/living/basic/chicken/brown{
-	forced_gender = "female"
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
 "vZV" = (
@@ -98573,10 +98575,6 @@
 /obj/item/pen{
 	pixel_x = -4
 	},
-/obj/structure/desk_bell{
-	pixel_x = 6;
-	pixel_y = 1
-	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 1;
 	id = "paramed_dispatch_desk";
@@ -98586,6 +98584,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/desk_bell/departmental/medical{
+	pixel_y = 1;
+	pixel_x = 6
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "xnu" = (
@@ -130958,7 +130960,7 @@ qgU
 qgU
 pAd
 doY
-mBG
+kaw
 tCH
 doY
 qsn
@@ -131210,7 +131212,7 @@ isH
 nVF
 doY
 doY
-wFr
+wRJ
 doY
 doY
 maW

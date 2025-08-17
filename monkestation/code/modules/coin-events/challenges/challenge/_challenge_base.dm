@@ -22,6 +22,7 @@
 	RegisterSignal(host.mob, COMSIG_MIND_TRANSFERRED, PROC_REF(on_transfer))
 
 /datum/challenge/Destroy(force)
+	on_remove()
 	host = null
 	return ..()
 
@@ -29,13 +30,17 @@
 /datum/challenge/proc/on_apply()
 	SHOULD_CALL_PARENT(TRUE)
 	LAZYADD(host.applied_challenges, src)
-	if(!applied_trait)
-		return
-	ADD_TRAIT(host.mob, applied_trait, CHALLENGE_TRAIT)
+	if(applied_trait)
+		ADD_TRAIT(host.mob, applied_trait, CHALLENGE_TRAIT)
+	if(processes)
+		START_PROCESSING(SSchallenges, src)
 
-///this fires every 10 seconds
-/datum/challenge/proc/on_process()
-	return
+/datum/challenge/proc/on_remove()
+	SHOULD_CALL_PARENT(TRUE)
+	STOP_PROCESSING(SSchallenges, src)
+	LAZYREMOVE(host.applied_challenges, src)
+	if(applied_trait)
+		REMOVE_TRAIT(host.mob, applied_trait, CHALLENGE_TRAIT)
 
 ///this fires when the mob dies
 /datum/challenge/proc/on_death()
