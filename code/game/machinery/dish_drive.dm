@@ -177,3 +177,16 @@
 			visible_message(span_notice("There are no disposable items in [src]!"))
 		return
 	COOLDOWN_START(src, time_since_dishes, 1 MINUTES)
+
+/obj/machinery/dish_drive/firing_range
+	resistance_flags = INDESTRUCTIBLE
+	icon_state = null
+	icon = null  // These three are just so it pratically doesnt exist.
+	collectable_items = list(/obj/item/ammo_casing,
+		/obj/item/bodypart,
+		/obj/item/organ,)
+
+/obj/machinery/dish_drive/firing_range/Initialize(mapload)
+	. = ..()
+	RefreshParts()
+	suck_distance = 8 

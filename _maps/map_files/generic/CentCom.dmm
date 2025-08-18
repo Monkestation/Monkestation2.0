@@ -24959,6 +24959,10 @@
 /obj/item/restraints/handcuffs/cable/white,
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/centcom/central_command_areas/prison)
+"jVH" = (
+/mob/living/basic/bot/cleanbot/firing_range,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/firing_range)
 "jWH" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/closed/indestructible/wood,
@@ -27534,6 +27538,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
+"oKo" = (
+/obj/structure/table/reinforced,
+/obj/machinery/dish_drive/firing_range,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/firing_range)
 "oKS" = (
 /obj/structure/sign{
 	name = "wall";
@@ -74016,7 +74025,7 @@ aRy
 asC
 aRy
 asC
-aRy
+oKo
 asC
 aRy
 asC
@@ -75045,7 +75054,7 @@ aBo
 aUR
 aBo
 aUR
-aBo
+jVH
 aUR
 aBo
 aUR
