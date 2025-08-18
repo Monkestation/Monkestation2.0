@@ -19,7 +19,7 @@ const BASEICONS = {
   'CentCom Head Intern': 'pen-fancy',
   'CentCom Intern': 'pen-alt',
   'CentCom Official': 'medal',
-  'Nanotrasen Representative': 'medal',
+  'Corporate Liaison': 'medal',
   Chaplain: 'cross',
   Chef: 'utensils',
   Chemist: 'prescription-bottle',
@@ -222,12 +222,10 @@ const ALTTITLES = {
   Physician: BASEICONS['Medical Doctor'],
   // Mime - comment-slash
   Pantomimist: BASEICONS['Mime'],
-  // Nanotrasen Consultant - clipboard-check
-  'Nanotrasen Diplomat': BASEICONS['Nanotrasen Consultant'],
-  'Corporate Liaison': BASEICONS['Nanotrasen Consultant'],
-  'Nanotrasen Fax Operater': BASEICONS['Nanotrasen Consultant'],
-  'Nanotrasen Official': BASEICONS['Nanotrasen Consultant'],
-  'Nanotrasen Informant': BASEICONS['Nanotrasen Consultant'],
+  // Corporate Liaison - clipboard-check
+  'Nanotrasen Fax Operater': BASEICONS['Corporate Liaison'],
+  'Nanotrasen Official': BASEICONS['Corporate Liaison'],
+  'Nanotrasen Informant': BASEICONS['Corporate Liaison'],
   // Paramedic - truck-medical
   'Emergency Medical Technician': BASEICONS['Paramedic'],
   'Search and Rescue Technician': BASEICONS['Paramedic'],

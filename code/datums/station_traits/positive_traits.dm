@@ -236,7 +236,7 @@
 		/datum/job/janitor = /obj/item/organ/internal/cyberimp/arm/item_set/janitor,
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot,
-		/datum/job/nanotrasen_representative = list(/obj/item/organ/internal/cyberimp/leg/shove_resist, /obj/item/organ/internal/cyberimp/leg/shove_resist/l),
+		/datum/job/corporate_liaison = list(/obj/item/organ/internal/cyberimp/leg/shove_resist, /obj/item/organ/internal/cyberimp/leg/shove_resist/l),
 		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/arm/item_set/paramedic,
 		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
 		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,

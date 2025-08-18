@@ -153,6 +153,13 @@
 	for(var/iterator in 1 to 5)
 		new /obj/item/stack/spacecash/c1000(src)
 
+/obj/item/storage/secure/briefcase/cash
+// LOADSAMONEY
+/obj/item/storage/secure/briefcase/cash/PopulateContents()
+	..()
+	for(var/iterator in 1 to 5)
+		new /obj/item/stack/spacecash/c500(src)
+
 /// A briefcase that contains various sought-after spoils
 /obj/item/storage/secure/briefcase/riches
 
