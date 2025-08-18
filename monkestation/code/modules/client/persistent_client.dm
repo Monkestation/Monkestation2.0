@@ -16,3 +16,18 @@
 	. = ..()
 	patreon = new(ckey, src)
 	twitch = new(ckey, src)
+
+/datum/persistent_client/proc/remove_challenge(datum/challenge/challenge_type, silent = FALSE)
+	. = FALSE
+	if(!challenge_type)
+		return FALSE
+	if(challenge_type in active_challenges)
+		LAZYREMOVE(active_challenges, challenge_type)
+		. = TRUE
+	if(LAZYLEN(applied_challenges))
+		var/datum/challenge/applied_challenge = locate(challenge_type) in applied_challenges
+		if(applied_challenge)
+			qdel(applied_challenge)
+			. = TRUE
+	if(. && !silent)
+		to_chat(mob, span_boldnotice("The [challenge_type::challenge_name] challenge has been removed from you."), type = MESSAGE_TYPE_INFO)

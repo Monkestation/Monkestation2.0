@@ -111,8 +111,7 @@
 		span_notice("You tie up your hair!"),
 	)
 	actual_hairstyle = user.hairstyle
-	user.hairstyle = picked_hairstyle
-	user.update_body_parts()
+	user.set_hairstyle(picked_hairstyle, update = TRUE)
 
 /obj/item/clothing/head/hair_tie/dropped(mob/living/carbon/human/user)
 	. = ..()
@@ -124,8 +123,7 @@
 		span_notice("[user.name] takes [src] out of [user.p_their()] hair."),
 		span_notice("You let down your hair!"),
 	)
-	user.hairstyle = actual_hairstyle
-	user.update_body_parts()
+	user.set_hairstyle(actual_hairstyle, update = TRUE)
 	actual_hairstyle = null
 
 /obj/item/clothing/head/hair_tie/AltClick(mob/living/user)

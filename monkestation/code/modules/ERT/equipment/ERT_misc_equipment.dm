@@ -142,8 +142,7 @@
 	list_reagents = list(/datum/reagent/drying_agent = 250)
 
 /obj/vehicle/sealed/mecha/honker/dark/loaded/not_evil
-	operation_req_access = list()
-	internals_req_access = list()
+	accesses = list()
 
 /obj/vehicle/sealed/mecha/honker/dark/loaded/not_evil
 	equip_by_category = list(
@@ -298,14 +297,15 @@
 
 /obj/vehicle/sealed/mecha/ripley/deathripley/real/elite
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
-	operation_req_access = list(ACCESS_CENT_SPECOPS)
-	internals_req_access = list(ACCESS_CENT_SPECOPS)
+	accesses = list(ACCESS_CENT_SPECOPS)
 	fast_pressure_step_in = 1 //step_in while in low pressure conditions
 	slow_pressure_step_in = 1.5 //step_in while in normal pressure conditions
 	movedelay = 1.5
 	max_integrity = 500
 	encumbrance_gap = 5
 	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 2,
 		MECHA_ARMOR = 3,
@@ -317,14 +317,6 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster, /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster),
 	)
-
-/obj/vehicle/sealed/mecha/ripley/deathripley/real/elite/generate_actions()
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_safeties)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/elite
 	name = "\improper KILL CLAMP"

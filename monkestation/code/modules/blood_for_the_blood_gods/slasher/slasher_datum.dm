@@ -137,7 +137,7 @@
 		human.equipOutfit(/datum/outfit/slasher/slasher)
 		linked_apron = human.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	cached_brute_mod = human.dna.species.brutemod
-	current_mob.alpha = 150
+	current_mob.alpha = 200
 	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/slasher/proc/on_death(mob/living/source)

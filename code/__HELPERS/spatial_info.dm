@@ -83,8 +83,9 @@
  *
  * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
  */
-/proc/get_hearers_in_view(view_radius, atom/source)
+/proc/get_hearers_in_view(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -93,12 +94,12 @@
 
 	if(view_radius <= 0)//special case for if only source cares
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
 			if(recursive_contents)
 				. += recursive_contents
 		return .
 
-	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, view_radius)
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
@@ -130,8 +131,9 @@
  *
  * * radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ * * contents_type - the type of contents we want to be looking for. defaults to hearing sensitive
  */
-/proc/get_hearers_in_range(range, atom/source)
+/proc/get_hearers_in_range(range, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -140,12 +142,12 @@
 
 	if(range <= 0)//special case for if only source cares
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/recursive_contents = target.important_recursive_contents?[contents_type]
 			if(recursive_contents)
 				. += recursive_contents
 		return .
 
-	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, range)
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, contents_type, range)
 
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
@@ -165,7 +167,7 @@
  * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  */
-/proc/get_hearers_in_LOS(view_radius, atom/source)
+/proc/get_hearers_in_LOS(view_radius, atom/source, contents_type=RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
@@ -173,12 +175,12 @@
 	if(view_radius <= 0)//special case for if only source cares
 		. = list()
 		for(var/atom/movable/target as anything in center_turf)
-			var/list/hearing_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			var/list/hearing_contents = target.important_recursive_contents?[contents_type]
 			if(hearing_contents)
 				. += hearing_contents
 		return
 
-	. = SSspatial_grid.orthogonal_range_search(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius)
+	. = SSspatial_grid.orthogonal_range_search(source, contents_type, view_radius)
 
 	for(var/atom/movable/target as anything in .)
 		var/turf/target_turf = get_turf(target)
@@ -213,7 +215,7 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
-		. |= get_hearers_in_LOS(radio.canhear_range, radio, FALSE)
+		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
 ///Calculate if two atoms are in sight, returns TRUE or FALSE
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)

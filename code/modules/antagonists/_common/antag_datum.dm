@@ -574,6 +574,10 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 
 	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
 	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
+	for(var/client/staff as anything in GLOB.admins)
+		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
+			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+		window_flash(staff, ignorepref = TRUE)
 
 	var/datum/objective/custom/custom_objective = new()
 	custom_objective.owner = owner

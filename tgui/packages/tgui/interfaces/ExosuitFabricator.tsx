@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
@@ -24,9 +23,11 @@ type ExosuitDesign = Design & {
 
 export const ExosuitFabricator = (props) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
+  const { materials, SHEET_MATERIAL_AMOUNT } = data;
+
   const availableMaterials: MaterialMap = {};
 
-  for (const material of data.materials) {
+  for (const material of materials) {
     availableMaterials[material.name] = material.amount;
   }
 
@@ -47,6 +48,7 @@ export const ExosuitFabricator = (props) => {
                         ...design,
                         craftable: (design as any).craftable ?? true, // fallback if missing
                       }}
+                      SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                     />
                   )}
                   categoryButtons={(category) => (
@@ -66,7 +68,8 @@ export const ExosuitFabricator = (props) => {
               <Stack.Item>
                 <Section>
                   <MaterialAccessBar
-                    availableMaterials={data.materials}
+                    availableMaterials={materials}
+                    SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                     onEjectRequested={(material, amount) => {
                       act('remove_mat', { ref: material.ref, amount });
                     }}
@@ -77,7 +80,10 @@ export const ExosuitFabricator = (props) => {
           </Stack.Item>
           <Stack.Item width="420px">
             <Authorization width="420" />
-            <Queue availableMaterials={availableMaterials} />
+            <Queue
+              availableMaterials={availableMaterials}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+            />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -85,9 +91,15 @@ export const ExosuitFabricator = (props) => {
   );
 };
 
-const Recipe = (props: { design: ExosuitDesign; available: MaterialMap }) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { design, available } = props;
+type RecipeProps = {
+  design: Design;
+  available: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Recipe = (props: RecipeProps) => {
+  const { act } = useBackend<ExosuitFabricatorData>();
+  const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -116,6 +128,7 @@ const Recipe = (props: { design: ExosuitDesign; available: MaterialMap }) => {
           <MaterialCostSequence
             design={design}
             amount={1}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
         }
@@ -125,7 +138,9 @@ const Recipe = (props: { design: ExosuitDesign; available: MaterialMap }) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { designs: [design.id], now: true })}
+          onClick={() =>
+            canPrint && act('build', { designs: [design.id], now: true })
+          }
         >
           <div className="FabricatorRecipe__Icon">
             <Box
@@ -169,9 +184,14 @@ const Recipe = (props: { design: ExosuitDesign; available: MaterialMap }) => {
   );
 };
 
-const Queue = (props: { availableMaterials: MaterialMap }) => {
+type QueueProps = {
+  availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Queue = (props: QueueProps) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { availableMaterials } = props;
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
   const { designs, processing } = data;
 
   const queue = data.queue || [];
@@ -226,6 +246,7 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
             }
           >
             <MaterialCostSequence
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
               available={availableMaterials}
               costMap={materialCosts}
             />
@@ -236,7 +257,10 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
           style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
         >
           <Section fill>
-            <QueueList availableMaterials={availableMaterials} />
+            <QueueList
+              availableMaterials={availableMaterials}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+            />
           </Section>
         </Stack.Item>
       </Stack>
@@ -244,9 +268,14 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
   );
 };
 
-const QueueList = (props: { availableMaterials: MaterialMap }) => {
+type QueueListProps = {
+  availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const QueueList = (props: QueueListProps) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { availableMaterials } = props;
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const queue = data.queue || [];
   const designs = data.designs;
@@ -299,6 +328,7 @@ const QueueList = (props: { availableMaterials: MaterialMap }) => {
                 <MaterialCostSequence
                   design={entry.design}
                   amount={1}
+                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                   available={availableMaterials}
                 />
               }
