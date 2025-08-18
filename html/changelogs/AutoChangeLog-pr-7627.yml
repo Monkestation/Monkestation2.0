@@ -1,0 +1,7 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - balance: "odysseus now has 5 utility slots"
+  - bugfix: "ricky's mauler now has full airtank and radio installed"
+  - bugfix: "you can actually see what ricky's mauler has equipped on it's arm slots"
+  - bugfix: "ricky's mauler now actually spawns with scanner and manipulator"
