@@ -5914,6 +5914,7 @@
 #include "code\modules\uplink\uplink_items\stealthy_tools.dm"
 #include "code\modules\uplink\uplink_items\suits.dm"
 #include "code\modules\vehicles\_vehicle.dm"
+#include "code\modules\vehicles\artillery.dm"
 #include "code\modules\vehicles\atv.dm"
 #include "code\modules\vehicles\bicycle.dm"
 #include "code\modules\vehicles\hoverdog.dm"

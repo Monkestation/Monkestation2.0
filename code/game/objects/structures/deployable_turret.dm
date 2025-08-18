@@ -235,6 +235,60 @@
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
+/obj/machinery/deployable_turret/artillery/light
+	name = "NT Model-2508 Field Cannon"
+	desc = "A small field cannon based off a centuries old design, updated with modern materials to make it much lighter and safe to fire on stations."
+	icon = 'icons/mecha/largetanks.dmi'
+	icon_state = "artillery_light"
+	max_integrity = 300
+	armor_type = /datum/armor/artillery
+	SET_BASE_PIXEL(-24, 0)
+	projectile_type = /obj/projectile/bullet/rocket/lighttankshell
+	anchored = TRUE
+	number_of_shots = 1
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	cooldown_duration = 5 SECONDS
+	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	can_be_undeployed = TRUE
+	spawned_on_undeploy = /obj/vehicle/ridden/stockade
+	cover_amount = 66 // its has a giant gunshield
+/datum/armor/artillery
+	melee = 10
+	bullet = 80
+	laser = 60
+	energy = 60
+	fire = 80
+	acid = 10
+
+/obj/machinery/deployable_turret/artillery/light/direction_track(mob/user, atom/targeted)
+	if(user.incapacitated())
+		return
+	setDir(get_dir(src,targeted))
+	user.setDir(dir)
+	switch(dir)
+		if(NORTH)
+			layer = BELOW_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE)
+			user.pixel_x = -9
+			user.pixel_y = 0
+		if(EAST)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			user.pixel_x = -6
+			user.pixel_y = 0
+		if(SOUTH)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			plane = GAME_PLANE_UPPER
+			user.pixel_x = 9
+			user.pixel_y = 0
+		if(WEST)
+			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+			user.pixel_x = 4
+			user.pixel_y = 0
+
 /obj/item/gun_control
 	name = "turret controls"
 	icon = 'icons/obj/weapons/hand.dmi'
