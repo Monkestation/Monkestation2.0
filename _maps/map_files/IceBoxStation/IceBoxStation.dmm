@@ -1936,10 +1936,10 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
-/obj/structure/desk_bell{
+/obj/item/papercutter,
+/obj/structure/desk_bell/departmental/supply{
 	pixel_x = 7
 	},
-/obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "aGS" = (
@@ -9428,7 +9428,7 @@
 	id = "Engineering";
 	name = "Engineering Security Door"
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/engineering{
 	pixel_x = 6
 	},
 /turf/open/floor/iron,
@@ -36029,10 +36029,11 @@
 	id = "pharmacy_shutters";
 	name = "Pharmacy Shutter"
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/desk_bell/departmental/medical{
+	bell_location = "Pharmacy Desk";
+	pixel_x = 6
+	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "lca" = (
@@ -40702,7 +40703,7 @@
 	pixel_x = -6
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/science{
 	pixel_x = 7
 	},
 /turf/open/floor/plating,
@@ -41286,9 +41287,6 @@
 	id = "hop";
 	name = "Privacy Shutters"
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	dir = 4;
@@ -41298,6 +41296,9 @@
 	},
 /obj/machinery/flasher/directional/south{
 	pixel_y = -23
+	},
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_x = 7
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -52116,6 +52117,7 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Brig Reception"
 	},
+/obj/structure/desk_bell/departmental/security,
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
 "pTf" = (

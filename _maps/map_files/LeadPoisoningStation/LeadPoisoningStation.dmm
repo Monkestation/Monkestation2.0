@@ -57,6 +57,10 @@
 	pixel_x = -11;
 	pixel_y = 7
 	},
+/obj/structure/desk_bell/departmental/security{
+	pixel_y = 5;
+	pixel_x = 6
+	},
 /turf/open/floor/plating,
 /area/station/security/brig)
 "abz" = (
@@ -8160,9 +8164,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
-	pixel_x = -7
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "rndlab1";
@@ -8175,6 +8176,9 @@
 /obj/item/pen{
 	pixel_y = 4;
 	pixel_x = 4
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -7
 	},
 /turf/open/floor/plating,
 /area/station/science/lobby)
@@ -9232,6 +9236,10 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin,
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_y = 9;
+	pixel_x = 5
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "eCN" = (
@@ -25707,7 +25715,7 @@
 	pixel_x = -4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/engineering{
 	pixel_x = 8;
 	pixel_y = 9
 	},
@@ -29533,11 +29541,12 @@
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7;
-	pixel_y = 6
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/desk_bell/departmental/medical{
+	bell_location = "Pharmacy Desk";
+	pixel_y = 9;
+	pixel_x = 7
+	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "oex" = (
@@ -31256,7 +31265,7 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/supply{
 	pixel_x = -7
 	},
 /turf/open/floor/plating,

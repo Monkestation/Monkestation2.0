@@ -31184,6 +31184,7 @@
 	req_access = list("science");
 	name = "Research Lab Desk"
 	},
+/obj/structure/desk_bell/departmental/science,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "fYm" = (
@@ -38486,6 +38487,7 @@
 	req_access = list("engineering","atmospherics");
 	name = "Engineering Desk"
 	},
+/obj/structure/desk_bell/departmental/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "hvn" = (
@@ -54524,6 +54526,7 @@
 /obj/machinery/door/window/right/directional/east{
 	name = "Access Desk"
 	},
+/obj/structure/desk_bell/departmental/command/hop,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "kwM" = (
@@ -65131,6 +65134,7 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/white,
 /obj/item/reagent_containers/hypospray/medipen,
+/obj/structure/desk_bell/departmental/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "mDn" = (
@@ -86039,6 +86043,7 @@
 /obj/machinery/door/window/right/directional/south{
 	name = "Security Desk"
 	},
+/obj/structure/desk_bell/departmental/security,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "qFQ" = (
@@ -123923,6 +123928,7 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
+/obj/structure/desk_bell/departmental/supply,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "xPn" = (

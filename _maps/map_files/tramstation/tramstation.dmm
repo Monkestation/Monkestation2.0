@@ -16824,6 +16824,9 @@
 	req_access = list("security")
 	},
 /obj/machinery/door/window/left/directional/west,
+/obj/structure/desk_bell/departmental/security{
+	bell_location = "West Desk"
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "ehl" = (
@@ -39108,12 +39111,12 @@
 	name = "Access Desk";
 	req_access = list("hop")
 	},
-/obj/structure/desk_bell{
-	pixel_x = -7
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "hop";
 	name = "Privacy Shutters"
+	},
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_x = -8
 	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
@@ -46207,10 +46210,10 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
-/obj/structure/desk_bell{
+/obj/structure/disposalpipe/segment,
+/obj/structure/desk_bell/departmental/supply{
 	pixel_x = -7
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "npR" = (
@@ -47805,6 +47808,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "nPU" = (
@@ -50170,6 +50176,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "oEM" = (
@@ -55895,15 +55904,15 @@
 	name = "Engineering Front Desk";
 	req_access = list("engineering")
 	},
-/obj/structure/desk_bell{
-	pixel_x = -7
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Engineering2"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/desk_bell/departmental/engineering{
+	pixel_x = -7
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "qrC" = (
@@ -56500,6 +56509,9 @@
 	req_access = list("security")
 	},
 /obj/machinery/door/window/right/directional/east,
+/obj/structure/desk_bell/departmental/security{
+	bell_location = "East Desk"
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "qBg" = (
@@ -59283,9 +59295,6 @@
 /area/station/cargo/office)
 "rqE" = (
 /obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = -7
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pharmacy_shutters_2";
 	name = "Pharmacy Shutters"
@@ -59295,6 +59304,10 @@
 	dir = 8;
 	name = "Chemistry Desk";
 	req_access = list("pharmacy")
+	},
+/obj/structure/desk_bell/departmental/medical{
+	bell_location = "Pharmacy Desk";
+	pixel_x = -7
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -69883,12 +69896,12 @@
 /obj/item/folder{
 	pixel_x = 5
 	},
-/obj/structure/desk_bell{
-	pixel_x = -7
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -7
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "uGq" = (
@@ -72635,6 +72648,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "vsL" = (

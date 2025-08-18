@@ -13063,12 +13063,12 @@
 	name = "Crowd Pacifier"
 	},
 /obj/machinery/status_display/evac/directional/north,
-/obj/structure/desk_bell{
-	pixel_x = 7;
-	pixel_y = 10
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
+	},
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_x = 7;
+	pixel_y = 10
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
@@ -20554,6 +20554,10 @@
 /obj/item/folder/red,
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/structure/desk_bell/departmental/security{
+	pixel_x = -8;
+	pixel_y = 8
+	},
 /turf/open/floor/plating,
 /area/station/security/warden)
 "gwa" = (
@@ -22499,7 +22503,7 @@
 	name = "Research Lab Desk";
 	req_access = list("science")
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/science{
 	pixel_x = -7;
 	pixel_y = 8
 	},
@@ -44673,11 +44677,11 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/structure/desk_bell{
+/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
+/obj/structure/desk_bell/departmental/supply{
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "nQk" = (
@@ -53927,7 +53931,7 @@
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/medical{
 	pixel_x = -7
 	},
 /turf/open/floor/iron/dark,
@@ -55956,14 +55960,14 @@
 /obj/machinery/door/window/left/directional/east{
 	name = "Engineering Desk"
 	},
-/obj/structure/desk_bell{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/item/folder/yellow{
 	pixel_x = 3
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/structure/desk_bell/departmental/engineering{
+	pixel_x = -7;
+	pixel_y = 10
+	},
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
 "rwR" = (

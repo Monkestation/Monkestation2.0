@@ -496,6 +496,23 @@ ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use t
 		if(!HAS_TRAIT(user_human, TRAIT_DEFIB_BLACKLISTED))
 			user_human.revive(FALSE)
 
+/obj/item/organ/internal/brain/synth/check_for_repair(obj/item/item, mob/user)
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/liquid_solder)) //attempt to heal the brain
+
+		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
+		if(!do_after(user, 3 SECONDS, src))
+			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+			return TRUE
+
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to restore its previous circuit paths."), span_notice("You pour the contents of [item] onto [src], causing it to restore its previous circuit paths."))
+		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/liquid_solder)
+		var/healto = max(0, damage - amount * 2)
+		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is liquid solder
+		set_organ_damage(healto) //heals 2 damage per unit of liquid solder, and by using "set_organ_damage", we clear the failing variable if that was up
+		cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
+		return TRUE
+	return FALSE
+
 /obj/item/organ/internal/brain/synth/emp_act(severity) // EMP act against the posi, keep the cap far below the organ health
 	. = ..()
 

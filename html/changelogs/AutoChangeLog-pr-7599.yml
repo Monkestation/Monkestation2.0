@@ -1,0 +1,8 @@
+author: "Veth-s"
+delete-after: True
+changes:
+  - balance: "Max bingle pit size is now 40x40"
+  - balance: "Bingles now stun in 6 hits (up from 2)"
+  - balance: "There is now an announcement alerting the crew once the bingle pit reaches size 3."
+  - balance: "Bingles now spawn every 50 items consumed (up from 30)"
+  - balance: "Bingles now have 5 weight (down from 10)"

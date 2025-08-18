@@ -94,12 +94,11 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/stone
 	value_per_unit = 0.005
-	beauty_modifier = 0.01
+	beauty_modifier = 20 / SHEET_MATERIAL_AMOUNT
 	color = "#59595a"
 	greyscale_colors = "#59595a"
 	value_per_unit = 0.0025
 	armor_modifiers = list(MELEE = 0.75, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_PLATING
 
 /obj/item/stack/stone
