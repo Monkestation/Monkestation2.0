@@ -29,7 +29,7 @@
 			potential_targets += hostile_machine
 
 	if(!potential_targets.len)
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FALSE
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/filtered_targets = list()
 

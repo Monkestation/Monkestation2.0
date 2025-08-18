@@ -51,5 +51,4 @@
 	controller.set_blackboard_key(BB_AGGRO_RANGE, new_vision_range)
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-	return
 
