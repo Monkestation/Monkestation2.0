@@ -7,9 +7,7 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_CAN_USE_FLIGHT_POTION,
-		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
@@ -23,6 +21,7 @@
 	mutanttongue = /obj/item/organ/internal/tongue/lizard
 	mutantstomach = /obj/item/organ/internal/stomach/lizard
 	mutantheart = /obj/item/organ/internal/heart/lizard
+	mutantbrain = /obj/item/organ/internal/brain/lizard
 	coldmod = 1.5
 	heatmod = 0.67
 	payday_modifier = 0.75
@@ -105,7 +104,6 @@ Lizard subspecies: ASHWALKERS
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
-		TRAIT_NO_UNDERWEAR,
 		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -115,7 +113,7 @@ Lizard subspecies: ASHWALKERS
 	examine_limb_id = SPECIES_LIZARD
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard/ashwalker,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard/ashwalker,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard/ashwalker,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard/ashwalker,

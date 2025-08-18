@@ -87,6 +87,10 @@
 	if(body.num_legs) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = body.get_bodypart(pick(limbs_to_consume))
+	for(var/obj/item/organ/internal/organ in body.get_organs_for_zone(consumed_limb.body_zone))
+		organ.Remove(body)
+		if(!QDELETED(organ))
+			organ.forceMove(body.drop_location())
 	consumed_limb.drop_limb()
 	to_chat(body, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
@@ -185,6 +189,10 @@
 	var/obj/item/bodypart/selected_limb = show_radial_menu(user, user, retractable_limbs)
 	if(isnull(selected_limb))
 		return
+	for(var/obj/item/organ/internal/organ in user.get_organs_for_zone(selected_limb.body_zone))
+		organ.Remove(user)
+		if(!QDELETED(organ))
+			organ.forceMove(user.drop_location())
 	selected_limb.drop_limb()
 	qdel(selected_limb)
 	user.blood_volume += 20

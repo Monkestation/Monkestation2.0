@@ -17,17 +17,15 @@
 	/// The current unlocked circuit component designs. Used by integrated circuits to print off circuit components remotely.
 	var/list/current_unlocked_designs = list()
 
+	/// The efficiency of this machine
+	var/efficiency_coeff = 1
+
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
 		connect_techweb(SSresearch.science_tech)
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		"component_printer", \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
@@ -75,18 +73,9 @@
 		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
-/obj/machinery/component_printer/proc/calculate_efficiency()
-	var/rating = 0
+/obj/machinery/component_printer/RefreshParts()
+	. = ..()
 
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		///we do -1 because normal manipulators rating of 1 gives us 1-1=0 i.e no decrement in cost
-		rating += manipulator.tier-1
-
-	///linear interpolation between full cost i.e 1 & 1/8th the cost i.e 0.125
-	///we do it in 6 steps because maximum rating of 2 manipulators is 8 but -1 gives us 6
-	var/coff = 1.0+((0.125-1.0)*(rating/6))
-
-	///copied from production.dm calculate_efficiency() proc
 	if(materials)
 		var/total_storage = 0
 
@@ -95,7 +84,17 @@
 
 		materials.set_local_size(total_storage)
 
-	return coff
+	efficiency_coeff = 0
+
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		///we do -1 because normal manipulators rating of 1 gives us 1-1=0 i.e no decrement in cost
+		efficiency_coeff += manipulator.tier-1
+
+	///linear interpolation between full cost i.e 1 & 1/8th the cost i.e 0.125
+	///we do it in 6 steps because maximum rating of 2 manipulators is 8 but -1 gives us 6
+	efficiency_coeff = 1.0+((0.125-1.0)*(efficiency_coeff / 6))
+
+	update_static_data_for_all_viewers()
 
 /obj/machinery/component_printer/proc/print_component(typepath)
 	var/design_id = current_unlocked_designs[typepath]
@@ -107,12 +106,10 @@
 	if (materials.on_hold())
 		return
 
-	var/efficiency_coeff = calculate_efficiency()
-	if (!materials.mat_container?.has_materials(design.materials, efficiency_coeff))
+	if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.mat_container.use_materials(design.materials, efficiency_coeff)
-	materials.silo_log(src, "printed", -1, design.name, design.materials)
+	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 	return new design.build_path(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params)
@@ -134,25 +131,19 @@
 				say("Mineral access is on hold, please contact the quartermaster.")
 				return TRUE
 
-			var/efficiency_coeff = calculate_efficiency()
-
-			if (!materials.mat_container?.has_materials(design.materials, efficiency_coeff))
+			if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
 			balloon_alert_to_viewers("printed [design.name]")
-			materials.mat_container?.use_materials(design.materials, efficiency_coeff)
-			materials.silo_log(src, "printed", -1, design.name, design.materials)
+
+			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
 			var/atom/printed_design = new design.build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return TRUE
-
 			// SAFETY: eject_sheets checks for valid mats
 			materials.eject_sheets(material, amount)
 
@@ -164,12 +155,11 @@
 	return data
 
 /obj/machinery/component_printer/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data = materials.mat_container.ui_static_data()
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
-	var/efficiency_coeff = calculate_efficiency()
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
 	for (var/researched_design_id in techweb.researched_designs)
@@ -177,12 +167,15 @@
 		if (!(design.build_type & COMPONENT_PRINTER))
 			continue
 
-		var/icon_size = spritesheet.icon_size_id(design.id)
+		var/list/cost = list()
+		for(var/datum/material/mat in design.materials)
+			cost[mat.name] = OPTIMAL_COST(design.materials[mat] * efficiency_coeff)
 
+		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[researched_design_id] = list(
 			"name" = design.name,
 			"desc" = design.desc,
-			"cost" = get_material_cost_data(design.materials, efficiency_coeff),
+			"cost" = cost,
 			"id" = researched_design_id,
 			"categories" = design.category,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
@@ -315,15 +308,12 @@
 
 	var/cost_per_component = 1000
 
+	var/efficiency_coeff = 1
+
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		"module_duplicator", \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -337,8 +327,8 @@
 		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
-/obj/machinery/module_duplicator/proc/calculate_efficiency()
-	///copied from production.dm calculate_efficiency() proc
+/obj/machinery/module_duplicator/RefreshParts()
+	. = ..()
 	if(materials)
 		var/total_storage = 0
 
@@ -347,17 +337,17 @@
 
 		materials.set_local_size(total_storage)
 
-	var/rating = 0
+	efficiency_coeff = 0
 
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)
 		///we do -1 because normal manipulators rating of 1 gives us 1-1=0 i.e no decrement in cost
-		rating += manipulator.tier - 1
+		efficiency_coeff += manipulator.tier - 1
 
 	///linear interpolation between full cost i.e 1 & 1/8th the cost i.e 0.125
 	///we do it in 6 steps because maximum rating of 2 manipulators is 8 but -1 gives us 6
-	var/coff = 1.0 + ((0.125 - 1.0) * (rating/6))
+	efficiency_coeff = 1.0 + ((0.125 - 1.0) * (efficiency_coeff/6))
 
-	return coff
+	update_static_data_for_all_viewers()
 
 /obj/machinery/module_duplicator/ui_act(action, list/params)
 	. = ..()
@@ -377,23 +367,16 @@
 				say("Mineral access is on hold, please contact the quartermaster.")
 				return TRUE
 
-			var/efficiency_coeff = calculate_efficiency()
-
-			if (!materials.mat_container?.has_materials(design["materials"], efficiency_coeff))
+			if (!materials.mat_container.has_materials(design["materials"], efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
-			balloon_alert_to_viewers("printed [design["name"]]")
-			materials.mat_container?.use_materials(design["materials"], efficiency_coeff)
-			materials.silo_log(src, "printed", -1, design["name"], design["materials"])
+			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"])
 			print_module(design)
+			balloon_alert_to_viewers("printed [design["name"]]")
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return TRUE
-
 			// SAFETY: eject_sheets checks for valid mats
 			materials.eject_sheets(material, amount)
 
@@ -481,19 +464,21 @@
 	return data
 
 /obj/machinery/module_duplicator/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data = materials.mat_container.ui_static_data()
 
 	var/list/designs = list()
 
 	var/index = 1
-
-	var/efficiency_coeff = calculate_efficiency()
-
 	for (var/list/design as anything in scanned_designs)
+		var/list/cost = list()
+		var/list/materials = design["materials"]
+		for(var/datum/material/mat in materials)
+			cost[mat.name] = OPTIMAL_COST(materials[mat] * efficiency_coeff)
+
 		designs["[index]"] = list(
 			"name" = design["name"],
 			"desc" = design["desc"],
-			"cost" = get_material_cost_data(design["materials"], efficiency_coeff),
+			"cost" = cost,
 			"id" = "[index]",
 			"icon" = "integrated_circuit",
 			"categories" = list("/Saved Circuits"),
@@ -513,11 +498,3 @@
 	if(..())
 		return TRUE
 	return default_deconstruction_screwdriver(user, "module-fab-o", "module-fab-idle", tool)
-
-/obj/machinery/module_duplicator/proc/get_material_cost_data(list/materials, efficiency_coeff)
-	var/list/data = list()
-
-	for (var/datum/material/material_type as anything in materials)
-		data[initial(material_type.name)] = materials[material_type] * efficiency_coeff
-
-	return data
