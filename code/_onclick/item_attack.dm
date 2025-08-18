@@ -79,9 +79,9 @@
 
 	if(user.client && isitem(target))
 		if(isnull(user.get_inactive_held_item()))
-			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
+			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, modifiers)
 		else
-			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
+			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, modifiers)
 
 	return TRUE
 
@@ -224,8 +224,6 @@
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return
 
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
-
 	if(item_flags & NOBLUDGEON)
 		return FALSE
 
@@ -251,9 +249,9 @@
 	if(!target_mob.attacked_by(src, user))
 		return TRUE
 
-	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, params)
-	SEND_SIGNAL(target_mob, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, params)
-	afterattack(target_mob, user, params)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, attack_modifiers)
+	SEND_SIGNAL(target_mob, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, attack_modifiers)
+	afterattack(target_mob, user, attack_modifiers)
 	if(final_force > 0)
 		log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
@@ -272,7 +270,7 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
-/obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
+/obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user)
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return TRUE

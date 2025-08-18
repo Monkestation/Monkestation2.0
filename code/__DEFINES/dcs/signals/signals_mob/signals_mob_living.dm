@@ -235,3 +235,6 @@
 	#define HOMEOSTASIS_HANDLED (1<<0)
 	/// Return to not reduce hunger at all
 	#define HOMEOSTASIS_NO_HUNGER (1<<1)
+
+/// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
+#define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"

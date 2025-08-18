@@ -1314,4 +1314,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
 
+/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
+#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
 // END TRAIT DEFINES
