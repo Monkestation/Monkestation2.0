@@ -139,8 +139,8 @@
 	if(!QDELETED(target_atom) && COOLDOWN_FINISHED(src, movement_delay))
 		step_towards(src, target_atom)
 		COOLDOWN_START(src, movement_delay, movement_cooldown)
-		if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
-			obliterate()
+	if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
+		obliterate()
 	if(QDELETED(target_atom) || !target_atom)
 		qdel(src)
 
