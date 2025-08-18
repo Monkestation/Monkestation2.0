@@ -89,11 +89,11 @@
 			target_atom = new_target
 		step_towards(src, target_atom)
 		COOLDOWN_START(src, movement_delay, movement_cooldown)
-		if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
-			obliterate()
-		//Reset target if we are on the same turf
-		if(get_turf(src) == get_turf(target_atom))
-			target_atom = null
+	if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
+		obliterate()
+	//Reset target if we are on the same turf
+	if(get_turf(src) == get_turf(target_atom))
+		target_atom = null
 
 //Find the turf on the station to path to
 /obj/effect/sunbeam/proc/find_target()
