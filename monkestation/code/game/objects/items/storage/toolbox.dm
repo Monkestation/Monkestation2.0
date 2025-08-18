@@ -14,3 +14,4 @@
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil/industrial(src)
