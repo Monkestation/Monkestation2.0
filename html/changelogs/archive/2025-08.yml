@@ -459,3 +459,35 @@
       module, ect)
   throwawayuseless:
   - rscadd: Pro Skater quirk. Become totally radical today!
+2025-08-18:
+  Absolucy:
+  - balance: Blobs can no longer delete brains (including oozeling cores), altho attacking
+      them will still cause organ damage. MMIs destroyed by blobs will also drop the
+      brain, if it had one inside of it.
+  Ice-Type:
+  - rscadd: Several new pineapple - themed food recipes
+  - rscadd: A new sprite for coconut milk in a glass
+  - rscadd: A hula skirt, that can be bought from autodrobes, or in the loadout store
+  - rscadd: A new pet, the pineapple creacher, which is a smaller, living pineapple.
+  - bugfix: Coconuts now give coconut milk, and not... normal milk (why)
+  - code_imp: Adds a credits folder to the icons file for you to credit sprites. Use
+      it you dinguses.
+  Loiosh42:
+  - rscadd: Admin-only, shouldn't be merged anyway.
+  Shoddd:
+  - balance: Oozeling bloodsuckers now take 3 minutes to revive instead of 30 seconds
+  - qol: Message telling oozeling bloodsuckers/lings how long until they revive
+  TheColorCyan:
+  - balance: odysseus now has 5 utility slots
+  - bugfix: ricky's mauler now has full airtank and radio installed
+  - bugfix: you can actually see what ricky's mauler has equipped on it's arm slots
+  - bugfix: ricky's mauler now actually spawns with scanner and manipulator
+  ThePooba:
+  - bugfix: brig phys gets a nice new coat that isn't pajamas
+  Veth-s:
+  - balance: Max bingle pit size is now 40x40
+  - balance: Bingles now stun in 6 hits (up from 2)
+  - balance: There is now an announcement alerting the crew once the bingle pit reaches
+      size 3.
+  - balance: Bingles now spawn every 50 items consumed (up from 30)
+  - balance: Bingles now have 5 weight (down from 10)
