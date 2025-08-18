@@ -45,7 +45,8 @@
 		apply_to(mobs)
 
 /atom/movable/screen/text/screen_timer/process()
-	if(!timeleft(timer_id) || timeleft == 0)
+	var/timeleft = timeleft(timer_id)
+	if(!timeleft || timeleft == 0)
 		qdel(src)
 		return
 	update_maptext()
@@ -86,7 +87,7 @@
 
 /// Updates the maptext to show the current time left on the timer
 /atom/movable/screen/text/screen_timer/proc/update_maptext()
-	var/time_formatted = time2text(timeleft(timer_id), "mm:ss")\
+	var/time_formatted = time2text(timeleft(timer_id), "mm:ss")
 	var/timer_text = replacetextEx(maptext_string, "${timer}", time_formatted)
 	// If we don't find ${timer} in the string, just use the time formattedhu
 	var/result_text = "<span class='maptext' style='text-align: center'>[timer_text]</span>"
