@@ -91,7 +91,6 @@
 	var/timer_text = replacetextEx(maptext_string, "${timer}", time_formatted)
 	// If we don't find ${timer} in the string, just use the time formattedhu
 	var/result_text = "<span class='maptext' style='text-align: center'>[timer_text]</span>"
-	message_admins("Timer [timer_id] time left: [time_formatted] ([timeleft(timer_id)])")
 	apply_change(result_text)
 
 /atom/movable/screen/text/screen_timer/proc/apply_change(result_text)

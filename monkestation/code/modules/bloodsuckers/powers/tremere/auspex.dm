@@ -81,11 +81,15 @@
 	animate(owner, alpha = 255, time = 2 SECONDS)
 	owner.RemoveElement(/datum/element/digitalcamo)
 
+/datum/action/cooldown/bloodsucker/targeted/tremere/auspex/FireTargetedPower(atom/target_atom)
+	return FALSE
+
 /datum/action/cooldown/bloodsucker/targeted/tremere/auspex/FireSecondaryTargetedPower(atom/target, params)
 	. = ..()
 	var/mob/living/user = owner
 	var/turf/targeted_turf = get_turf(target)
 	auspex_blink(user, targeted_turf)
+	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/auspex/proc/auspex_blink(mob/living/user, turf/targeted_turf)
 	var/blood_cost = AUSPEX_BLOOD_COST_PER_TILE * get_dist(user, targeted_turf)

@@ -72,18 +72,18 @@
 	power_in_use = TRUE // Lock us into this ability until it successfully fires off. Otherwise, we pay the blood even if we fail.
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		FireSecondaryTargetedPower(target_atom, modifiers)
+		. = FireSecondaryTargetedPower(target_atom, modifiers)
 	else
-		FireTargetedPower(target_atom, modifiers)
+		. = FireTargetedPower(target_atom, modifiers)
 	// Skip this part so we can return TRUE right away.
 	if(power_activates_immediately)
 		power_activated_sucessfully() // Mesmerize pays only after success.
 	power_in_use = FALSE
-	return TRUE
 
 /// Like ActivatePower, but specific to Targeted (and takes an atom input). We don't use ActivatePower for targeted.
 /datum/action/cooldown/bloodsucker/targeted/proc/FireTargetedPower(atom/target_atom)
 	log_combat(owner, target_atom, "used [name] on")
+	return TRUE
 
 /// The power went off! We now pay the cost of the power.
 /datum/action/cooldown/bloodsucker/targeted/proc/power_activated_sucessfully(cost_override = 0)

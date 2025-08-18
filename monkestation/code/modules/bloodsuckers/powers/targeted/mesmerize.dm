@@ -33,10 +33,6 @@
 	var/requires_facing_target = FALSE
 	/// if the ability requires you to not have your eyes covered
 	var/blocked_by_glasses = TRUE
-	// string id timer of the current cast, used for combat glare
-	var/timer
-	// a cooldown to ensure you can't spam both the primary and secondary mesmerizes
-	COOLDOWN_DECLARE(mesmerize_cooldown)
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_desc_extended()
 	. += "[src] a target, locking them in place for a short time[level_current >= MESMERIZE_MUTE_LEVEL ? " and muting them" : ""].<br>"
@@ -115,6 +111,10 @@
 		owner.balloon_alert(owner, "[current_target] must be facing you.")
 		return FALSE
 
+	if(!(owner in view(current_target)))
+		owner.balloon_alert(owner, "[current_target] has to be able to see you.")
+		return FALSE
+
 	// Gone through our checks, let's mark our guy.
 	target_ref = WEAKREF(current_target)
 	return TRUE
@@ -122,8 +122,6 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/target)
 	var/mob/living/user = owner
 	var/mob/living/carbon/mesmerized_target = target_ref?.resolve()
-	if(!COOLDOWN_FINISHED(src, mesmerize_cooldown))
-		return
 	if(!mesmerized_target)
 		CRASH("mesmerized_target is null")
 
@@ -138,7 +136,6 @@
 	// slow them down during the mesmerize
 	mute_target(mesmerized_target)
 
-	COOLDOWN_START(src, mesmerize_cooldown, mesmerize_delay)
 	if(!do_after(user, mesmerize_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target)))
 		StartCooldown(cooldown_time * 0.5)
 		DeactivatePower()
@@ -182,7 +179,6 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/DeactivatePower(deactivate_flags)
 	. = ..()
 	target_ref = null
-	timer = null
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/end_mesmerize(mob/living/user, mob/living/target)
 	REMOVE_TRAIT(target, TRAIT_NO_TRANSFORM, MESMERIZE_TRAIT)

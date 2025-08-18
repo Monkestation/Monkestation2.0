@@ -39,8 +39,8 @@
 	var/shot_cooldown = 0
 	var/datum/weakref/blood_shield
 	var/obj/projectile/magic/arcane_barrage/bloodsucker/magic_9ball
-	var/speed = 3
-	var/pixel_speed = 0.2
+	var/speed = 1
+	var/pixel_speed = 0.3
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/Grant()
 	charges = get_max_charges()
@@ -143,21 +143,27 @@
 	return max(1.5 - (level_current * 0.1), 0) SECONDS
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/get_shot_range()
-	return initial(magic_9ball.range) + level_current * 10
+	return initial(magic_9ball.range) + level_current * 5
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/update_button_status(atom/movable/screen/movable/action_button/button, force)
 	. = ..()
-	if(next_use_time - world.time <= 0)
+	var/time_left = max(next_use_time - world.time, 0)
+	if(time_left == 0 && next_use_time - world.time <= 0)
 		button.maptext = MAPTEXT_TINY_UNICODE(span_center("[charges]/[get_max_charges()]"))
 		button.maptext_x = -5
+	else
+		button.maptext_x = 4
+
+/datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/FireTargetedPower(atom/target_atom)
+	return FALSE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/FireSecondaryTargetedPower(atom/target, params)
 	if(shot_cooldown > world.time)
-		return
+		return TRUE
 	if(!can_pay_cost(THAUMATURGY_BLOOD_COST_PER_CHARGE))
 		owner.balloon_alert(owner, "not enough blood!")
 		DeactivatePower()
-		return
+		return TRUE
 	shot_cooldown = world.time + get_shot_cooldown()
 	var/mob/living/user = owner
 	owner.balloon_alert(owner, "you fire a blood bolt!")
@@ -179,6 +185,7 @@
 		// delay the message so it doesn't overlap with the cooldown message
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "no charges left!"), 0.5 SECONDS)
 		power_activated_sucessfully(cost_override = 0)
+	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/handle_shot(mob/user, atom/target)
 	magic_9ball = new(get_turf(user))
@@ -195,6 +202,8 @@
 		for(var/mob/living/possible_target as anything in orange(1, target))
 			if(!ismob(possible_target))
 				continue
+			if(possible_target == user)
+				continue
 			var/datum/antagonist/vassal/vassals = IS_VASSAL(possible_target)
 			if(length(bloodsuckerdatum_power?.vassals) && vassals && (vassals in bloodsuckerdatum_power?.vassals))
 				continue
@@ -204,7 +213,7 @@
 	else
 		magic_9ball.homing_target = target
 	magic_9ball.homing_turn_speed = min(10 * level_current, 90)
-	magic_9ball.range = max(level_current, 1) * 5
+	magic_9ball.range = get_shot_range()
 	INVOKE_ASYNC(magic_9ball, TYPE_PROC_REF(/obj/projectile, fire))
 	// ditch the pointer to reduce harddels
 	magic_9ball = null

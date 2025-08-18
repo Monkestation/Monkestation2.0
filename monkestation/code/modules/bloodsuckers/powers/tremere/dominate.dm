@@ -27,7 +27,7 @@
 	purchase_flags = TREMERE_CAN_BUY
 	bloodcost = 15
 	constant_bloodcost = 0.1
-	target_range = 6
+	target_range = 5
 	mesmerize_delay = 4 SECONDS
 	blind_at_level = 3
 	requires_facing_target = FALSE
@@ -180,6 +180,8 @@
 			if(isnull(vassal?.owner?.current))
 				continue
 			show_to |= vassal.owner.current
+
+	show_to -= target // don't show to the target itself, you get a special variant
 
 	new /atom/movable/screen/text/screen_timer/attached(null, show_to, timer_id, "Dies in ${timer}", -16, 32, target)
 	new /atom/movable/screen/text/screen_timer(null, show_to, timer_id, "You die in ${timer}")
