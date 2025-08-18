@@ -298,6 +298,8 @@
  *
  * @return null on success
  */
-#define DREAMLUAU_CLEAR_REF_USERDATA(object) DREAMLUAU_CALL(clear_ref_userdata)((object))
+/proc/DREAMLUAU_CLEAR_REF_USERDATA(object)
+	DREAMLUAU_CALL(clear_ref_userdata)(object)
+//#define DREAMLUAU_CLEAR_REF_USERDATA(object) DREAMLUAU_CALL(clear_ref_userdata)((object))
 
 #endif
