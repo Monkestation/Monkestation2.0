@@ -78,13 +78,6 @@
 		transfer_blood_dna = TRUE, \
 		max_blood = 4)
 
-
-// better parts since TC
-/obj/vehicle/sealed/mecha/marauder/populate_parts()
-	cell = new /obj/item/stock_parts/cell/super(src)
-	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
-	update_part_values()
-
 // trying to add multi crew 2, deisel boogaloo
 // yes I am just ripping this from the savannah ivanov how did you know?
 
