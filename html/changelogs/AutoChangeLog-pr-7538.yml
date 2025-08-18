@@ -1,0 +1,5 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "Oozeling bloodsuckers now take 3 minutes to revive instead of 30 seconds"
+  - qol: "Message telling oozeling bloodsuckers/lings how long until they revive"
