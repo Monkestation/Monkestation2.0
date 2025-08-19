@@ -126,7 +126,7 @@
 	return ..()
 
 /datum/status_effect/star_mark/Destroy()
-	QDEL_NULL(cosmic_overlay)
+	cosmic_overlay = null
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
