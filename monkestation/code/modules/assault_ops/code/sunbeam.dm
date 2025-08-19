@@ -116,8 +116,10 @@
 
 			if(isliving(atom_to_obliterate))
 				var/mob/living/mob_to_obliterate = atom_to_obliterate
+				mob_to_obliterate.visible_message(span_danger("[mob_to_obliterate] gets absolutely obliterated by \the [src]! Holy fuck!"), \
+					span_userdanger("A blinding flash of light sears into your eyes as you're consumed by \the [src]!"))
 				mob_to_obliterate.apply_damage(200, BURN)
-				mob_to_obliterate.dust()
+				mob_to_obliterate.dust(TRUE)
 				continue
 
 	COOLDOWN_START(src, oblirerate_cooldown, obliteration_cooldown)
