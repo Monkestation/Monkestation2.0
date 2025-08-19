@@ -8,6 +8,7 @@
 	force = 25 // only 4 shot but since its fast it can get a bunch of hits off
 	movedelay = 1.3
 	step_energy_drain = 40
+	SET_BASE_PIXEL(-12, 0)
 	bumpsmash = TRUE
 	stepsound = 'sound/vehicles/driving-noise.ogg'
 	turnsound = 'sound/vehicles/driving-noise.ogg'
@@ -80,7 +81,7 @@
 
 
 // better parts since TC
-/obj/vehicle/sealed/mecha/marauder/populate_parts()
+/obj/vehicle/sealed/mecha/devitt/populate_parts()
 	cell = new /obj/item/stock_parts/cell/super(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 	update_part_values()
