@@ -33,10 +33,10 @@
 /mob/living/carbon/alien/larva/Initialize(mapload, neuter)
 	// If a larva is neutered or not it gets a different ability and trait
 	if(neuter)
-		ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
 		var/datum/action/cooldown/alien/neutered_larva_evolve/evolution = new(src)
 		evolution.Grant(src)
 		src.name = "Lamarr"
+		ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
 	else
 		var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
 		evolution.Grant(src)

@@ -118,7 +118,6 @@
 		return
 
 	spawn_new_xeno(alien_caste)
-
 	return TRUE
 
 /// Generates a new entry to the
@@ -137,13 +136,15 @@
 
 	switch(alien_caste)
 		if("Runner")
-			new_xeno = new /mob/living/carbon/alien/adult/nova/runner(larva.loc)
+			new_xeno = new /mob/living/carbon/alien/adult/nova/runner/lamarr(larva.loc)
 		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/adult/nova/sentinel(larva.loc)
+			new_xeno = new /mob/living/carbon/alien/adult/nova/sentinel/lamarr(larva.loc)
 		if("Defender")
-			new_xeno = new /mob/living/carbon/alien/adult/nova/defender(larva.loc)
+			new_xeno = new /mob/living/carbon/alien/adult/nova/defender/lamarr(larva.loc)
 		else
 			CRASH("Alien evolve was given an invalid / incorrect alien cast type. Got: [alien_caste]")
 
+	ADD_TRAIT(new_xeno, TRAIT_NEUTERED, INNATE_TRAIT)
 	new_xeno.has_just_evolved()
 	larva.alien_evolve(new_xeno)
+	new_xeno.neutered = TRUE

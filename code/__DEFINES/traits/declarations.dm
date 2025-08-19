@@ -89,7 +89,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
 //FOR XENO LARVA
-#define TRAIT_NEUTERED "nuetered" //the mob cant reproduce
+#define TRAIT_NEUTERED "neutered" //the mob cant reproduce
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
 /// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
