@@ -13679,8 +13679,6 @@
 /obj/item/toner/large,
 /obj/item/toner/large,
 /obj/item/toner/large,
-/obj/item/airlock_painter/decal/tile,
-/obj/item/airlock_painter/decal/tile,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron/large,
@@ -28223,11 +28221,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "iRw" = (
-/obj/vehicle/sealed/mecha/working/ripley/cargo{
-	name = "APLU 'New London'";
-	desc = "An extremely old cargo exosuit bearing the words 'JOHNSON AND CO ARCHITECTURE LOGISTICS' is on the back. Its hull is thoroughly rusted and you'd be lucky if it even started."
-	},
 /obj/effect/turf_decal/delivery,
+/obj/vehicle/sealed/mecha/ripley/cargo{
+	name = "APLU 'New London'";
+	desc = "A rusty old cargo hauler bearing a large steel plaque on the back reading 'JOHNSON & COMPANY - LOGISTICS'. Looks to be in bad shape."
+	},
 /turf/open/floor/plating/icemoon,
 /area/station/cargo/warehouse/abandoned)
 "iRC" = (
@@ -38638,7 +38636,6 @@
 /obj/item/screwdriver,
 /obj/item/crowbar,
 /obj/item/airlock_painter/decal,
-/obj/item/airlock_painter/decal/tile,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/atmos/office)
 "lYq" = (
@@ -63333,8 +63330,8 @@
 /turf/open/openspace,
 /area/station/maintenance/solars/port/fore)
 "tyz" = (
-/obj/vehicle/sealed/mecha/working/ripley/cargo,
 /obj/machinery/camera/autoname/directional/east,
+/obj/vehicle/sealed/mecha/ripley/cargo,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "tyE" = (
