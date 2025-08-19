@@ -41,7 +41,8 @@
 			/mob/living/basic/pet/dog/bullterrier,
 			/mob/living/basic/lizard,
 			/mob/living/basic/ant,
-			/mob/living/simple_animal/pet/hamster
+			/mob/living/simple_animal/pet/hamster,
+			/mob/living/basic/pet/pcreacher
 		)
 
 		for(var/mob/living/basic_mob as anything in selectable_pets)
