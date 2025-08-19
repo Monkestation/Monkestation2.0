@@ -296,7 +296,7 @@
 	icon_state = "m1938"
 	max_integrity = 450
 	armor_type = /datum/armor/artillery
-	SET_BASE_PIXEL(-64, 0)
+	SET_BASE_PIXEL(-40, 0)
 	projectile_type = /obj/projectile/bullet/rocket/artilleryshell
 	anchored = TRUE
 	number_of_shots = 1

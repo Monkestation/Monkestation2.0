@@ -82,7 +82,7 @@
 	icon = 'icons/mecha/supertanks.dmi'
 	icon_state = "m1938"
 	layer = LYING_MOB_LAYER
-	SET_BASE_PIXEL(-64, 0)
+	SET_BASE_PIXEL(-40, 0)
 	max_buckled_mobs = 1
 	max_occupants = 1
 	pass_flags_self = null
