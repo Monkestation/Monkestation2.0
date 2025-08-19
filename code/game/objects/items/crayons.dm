@@ -902,9 +902,6 @@
 	if (!proximity)
 		return
 
-	if (isitem(target))
-		. = AFTERATTACK_PROCESSED_ITEM
-
 	if (!check_allowed_items(target))
 		return .
 

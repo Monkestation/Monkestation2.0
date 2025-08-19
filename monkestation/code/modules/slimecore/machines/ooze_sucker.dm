@@ -269,7 +269,7 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
 	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/sucker_upgrade
 	name = "ooze sucker upgrade disk"

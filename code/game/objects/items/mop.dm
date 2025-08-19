@@ -55,7 +55,7 @@
 	// Disable normal cleaning if there are liquids.
 	if(isturf(atom_to_clean) && turf_to_clean.liquids)
 		to_chat(cleaner, span_warning("It would be quite difficult to clean this with a pool of liquids on top!"))
-		return DO_NOT_CLEAN
+		return CLEAN_BLOCKED
 
 	if(clean_blacklist[atom_to_clean.type])
 		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION

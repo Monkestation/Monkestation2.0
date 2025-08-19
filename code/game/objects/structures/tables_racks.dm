@@ -246,7 +246,7 @@
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
@@ -255,7 +255,7 @@
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE, 1)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
 	var/list/modifiers = params2list(params)
@@ -902,10 +902,10 @@
 	if (istype(tool, /obj/item/clothing/mask/breath))
 		if (breath_mask && breath_mask != tool)
 			balloon_alert(user, "mask already attached!")
-			return TOOL_ACT_SIGNAL_BLOCKING
+			return ITEM_INTERACT_BLOCKING
 
 		if (!user.transferItemToLoc(tool, src))
-			return TOOL_ACT_SIGNAL_BLOCKING
+			return ITEM_INTERACT_BLOCKING
 
 		if (breath_mask != tool)
 			breath_mask = tool
@@ -914,35 +914,35 @@
 		balloon_alert(user, "mask attached")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	if (!istype(tool, /obj/item/tank))
 		return NONE
 
 	if (air_tank)
 		balloon_alert(user, "tank already attached!")
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/tank/as_tank = tool
 	if (!as_tank.tank_holder_icon_state)
 		balloon_alert(user, "does not fit!")
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	if (!user.transferItemToLoc(tool, src))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	air_tank = as_tank
 	balloon_alert(user, "tank attached")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/optable/screwdriver_act(mob/living/user, obj/item/tool)
 	if (!breath_mask)
 		return NONE
 
 	if (breath_mask.loc != src)
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	breath_mask.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
@@ -952,14 +952,14 @@
 		user.put_in_hands(breath_mask)
 	breath_mask = null
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/optable/wrench_act(mob/living/user, obj/item/tool)
 	if (!air_tank)
 		return NONE
 	balloon_alert(user, "detaching the tank...")
 	if (!tool.use_tool(src, user, 3 SECONDS))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	air_tank.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "tank detached")
@@ -969,7 +969,7 @@
 		patient.close_externals()
 	air_tank = null
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/optable/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()

@@ -94,7 +94,7 @@
 	tool.play_tool_sound(src)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), drop_amount)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
@@ -202,7 +202,7 @@
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
 	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/security/emp_act(severity)
 	toggle_lock()

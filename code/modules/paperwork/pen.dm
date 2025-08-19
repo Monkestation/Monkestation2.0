@@ -164,8 +164,6 @@
 	if (!proximity)
 		return .
 
-	. |= AFTERATTACK_PROCESSED_ITEM
-
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))

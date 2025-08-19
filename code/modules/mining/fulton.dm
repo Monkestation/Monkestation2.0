@@ -103,7 +103,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	balloon2.pixel_y = 10
 	balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.add_overlay(balloon2)
-	. |= AFTERATTACK_PROCESSED_ITEM
 
 	sleep(0.4 SECONDS)
 

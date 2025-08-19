@@ -88,12 +88,12 @@
 	can_rotate = !can_rotate
 	to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
 	tool.play_tool_sound(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
 		to_chat(user, span_warning("Unweld [src] from the floor first!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
 	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
 		return
@@ -102,7 +102,7 @@
 	if(buildstackamount)
 		new buildstacktype(drop_location(), buildstackamount)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount=0))
@@ -130,7 +130,7 @@
 			set_anchored(FALSE)
 			to_chat(user, span_notice("You cut [src] free from the floor."))
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)

@@ -62,7 +62,7 @@
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
 	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/slime_extract_requestor/proc/check_in_requests(obj/item/card/id/card)
 	for(var/datum/extract_request_data/listed_request as anything in current_requests)

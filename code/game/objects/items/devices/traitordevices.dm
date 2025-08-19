@@ -660,7 +660,6 @@ effective or pretty fucking useless.
 		return
 	if(!check_allowed_items(target, not_inside = TRUE))
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	var/turf/targeted_turf = get_turf(target)
 	if(targeted_turf.density)
 		balloon_alert(user, "target has to be in the open!")

@@ -116,8 +116,9 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		return
 	if(!my_fulton.choose_beacon(user))
 		return
-	if(my_fulton.afterattack(target, user, proximity_flag, click_parameters) == AFTERATTACK_PROCESSED_ITEM)
-		charges--
+	// XANTODO, ugh, make sure the charges get depleted
+	//if(my_fulton.afterattack(target, user, proximity_flag, click_parameters) == AFTERATTACK_PROCESSED_ITEM)
+	//	charges--
 
 /datum/design/cargo_teleporter
 	name = "Cargo Teleporter"

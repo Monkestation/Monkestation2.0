@@ -55,7 +55,6 @@
 	. = ..()
 	if (!proximity_flag)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/card/emag/Initialize(mapload)

@@ -36,7 +36,6 @@ GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 	. = ..()
 	if(. || !isliving(user) || !proximity)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	var/obj/item/welder
 	for(var/obj/item/thingy in user.held_items)
 		if(thingy.tool_behaviour == TOOL_WELDER)
