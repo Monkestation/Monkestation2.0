@@ -247,7 +247,7 @@
 	anchored = TRUE
 	number_of_shots = 1
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	cooldown_duration = 5 SECONDS
+	cooldown_duration = 3 SECONDS
 	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
@@ -301,7 +301,7 @@
 	anchored = TRUE
 	number_of_shots = 1
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	cooldown_duration = 12 SECONDS
+	cooldown_duration = 8 SECONDS
 	firesound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE

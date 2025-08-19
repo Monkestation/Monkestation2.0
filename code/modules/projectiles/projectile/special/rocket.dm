@@ -80,10 +80,10 @@ among other potential differences. This granularity is helpful for things like t
 	damage = 80
 	armour_penetration = 100
 	dismemberment = 100
-	anti_armour_damage = 150
+	anti_armour_damage = 350
 
 /obj/projectile/bullet/rocket/artilleryshell/do_boom(atom/target, blocked=0)
-	explosion(target, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, flame_range = 9, flash_range = 11, adminlog = TRUE)
+	explosion(target, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 8, flame_range = 15, flash_range = 11, adminlog = TRUE)
 
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
