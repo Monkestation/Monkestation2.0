@@ -92,7 +92,7 @@ export const ExosuitFabricator = (props) => {
 };
 
 type RecipeProps = {
-  design: Design;
+  design: ExosuitDesign;
   available: MaterialMap;
   SHEET_MATERIAL_AMOUNT: number;
 };
