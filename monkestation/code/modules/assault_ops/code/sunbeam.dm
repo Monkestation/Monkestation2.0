@@ -79,14 +79,8 @@
 
 /obj/effect/sunbeam/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, movement_delay))
-		if (target_atom && !QDELETED(target_atom))
-			//If target moves zlevels, we no longer path there
-			if(target_atom.z != src.z)
-				target_atom = null
-		//If we can no longer find the target, find a new one
-		if (!target_atom || QDELETED(target_atom))
-			var/turf/new_target = find_target()
-			target_atom = new_target
+		if (QDELETED(target_atom) || target_atom.z != z)
+			target_atom = find_target()
 		step_towards(src, target_atom)
 		COOLDOWN_START(src, movement_delay, movement_cooldown)
 	if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
@@ -97,10 +91,7 @@
 
 //Find the turf on the station to path to
 /obj/effect/sunbeam/proc/find_target()
-	var/turf/target_turf = get_random_station_turf()
-	if(!target_turf)
-		return
-	return target_turf
+	return get_random_station_turf()
 
 /obj/effect/sunbeam/proc/obliterate()
 	if(obliteration_range_fire)
@@ -141,7 +132,7 @@
 		COOLDOWN_START(src, movement_delay, movement_cooldown)
 	if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
 		obliterate()
-	if(QDELETED(target_atom) || !target_atom)
+	if(QDELETED(target_atom))
 		qdel(src)
 
 /datum/looping_sound/sunbeam
