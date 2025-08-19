@@ -19,8 +19,10 @@
 	var/antimagic_flags = NONE
 	///if true, immune atoms moving ends the timestop instead of duration.
 	var/channelled = FALSE
-	/// hides time icon effect and mutes sound
+	///hides time icon effect and mutes sound
 	var/hidden = FALSE
+	///Sound to use when destroying and creating timestop
+	var/start_sound = 'sound/magic/timeparadox2.ogg' //Monkestation Edition
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE, silent = FALSE) //Immune atoms assoc list atom = TRUE
 	. = ..()
@@ -36,6 +38,9 @@
 	for(var/mob/living/to_check in GLOB.player_list)
 		if(HAS_TRAIT(to_check, TRAIT_TIME_STOP_IMMUNE))
 			immune[to_check] = TRUE
+	for(var/mob/living/to_check in GLOB.player_list)
+		if((locate(/obj/item/badmin_stone) in to_check) || (locate(/obj/item/badmin_gauntlet) in to_check))
+			immune[to_check] = TRUE
 	for(var/mob/living/basic/guardian/stand in GLOB.parasites)
 		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense that a person's stand would also be immune.
 			immune[stand] = TRUE
@@ -45,13 +50,13 @@
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
 	if(!hidden)
-		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
+		playsound(src, start_sound, 75, TRUE, frequency = -1) //reverse! //Monkestation Edit: start_sound instead of 'sound/magic/timeparadox2.ogg'
 	return ..()
 
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	if(!hidden)
-		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
+		playsound(src, start_sound, 75, TRUE, -1) //Monkestation Edit: start_sound instead of 'sound/magic/timeparadox2.ogg'
 	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)
