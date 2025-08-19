@@ -1,0 +1,5 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - bugfix: "You get your hula skirt when you buy it now"
+  - bugfix: "You can now choose pineapple creachers with the pet beacon"
