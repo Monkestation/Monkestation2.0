@@ -25,10 +25,10 @@ SUBSYSTEM_DEF(radiation)
 
 		pulse(source, pulse_information)
 
+		processing.Cut(1, 2)
+
 		if (MC_TICK_CHECK)
 			return
-
-		processing.Cut(1, 2)
 
 /datum/controller/subsystem/radiation/stat_entry(msg)
 	msg = "[msg] | Pulses: [processing.len]"
