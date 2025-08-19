@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/mecha/devitt
 	desc = "A multi hundred year old tank. How the hell it is running and on a space station is the least of your worries."
 	name = "Devitt Mk3"
-	icon = 'monkestation/icons/mecha/tanks.dmi'
+	icon = '/icons/mecha/tanks.dmi'
 	icon_state = "devitt_0_0"
 	base_icon_state = "devitt"
 	max_integrity = 470 // its a hunk of steel that didnt need to be limited by mecha legs
