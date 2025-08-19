@@ -40539,8 +40539,11 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical)
 "iBO" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1
+	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "iBR" = (
@@ -54390,7 +54393,6 @@
 "nQf" = (
 /obj/effect/turf_decal/trimline/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "nQm" = (
@@ -57737,11 +57739,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
-"pbu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance)
 "pbY" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
@@ -58973,10 +58970,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/disposal/bin,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pBq" = (
@@ -61112,6 +61105,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "quw" = (
@@ -61461,13 +61458,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
-"qAj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance)
 "qAp" = (
 /turf/closed/wall,
 /area/station/service/hydroponics/chicken)
@@ -62624,7 +62614,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "qWW" = (
@@ -75665,10 +75654,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/effect/mapping_helpers/mail_sorting/science/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "vYa" = (
@@ -129165,9 +129153,9 @@ bVN
 sZz
 sZz
 tQC
-qAj
+pJu
 nQf
-pbu
+pJu
 qWU
 vXQ
 etY
