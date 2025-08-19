@@ -12,7 +12,7 @@
 /obj/item/clothing/shoes/bronze,
 /obj/item/clothing/head/costume/bronze,
 /turf/open/floor/bronze{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 "m" = (
@@ -20,12 +20,12 @@
 	name = "empowered bronze spear"
 	},
 /turf/open/floor/bronze{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 "o" = (
 /turf/open/floor/bronze{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 "A" = (
@@ -95,7 +95,7 @@
 	},
 /obj/item/pen,
 /turf/open/floor/bronze{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 

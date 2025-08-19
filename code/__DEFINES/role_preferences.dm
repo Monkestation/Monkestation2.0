@@ -37,7 +37,6 @@
 #define ROLE_COMMANDO_OPERATIVE_MIDROUND "Commando Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
 #define ROLE_REV_HEAD "Head Revolutionary"
-#define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
@@ -51,6 +50,8 @@
 #define ROLE_MONSTERHUNTER "Monster Hunter"
 #define ROLE_TERATOMA "Teratoma"
 #define ROLE_JUNIOR_LONE_OPERATIVE "Junior Lone Operative"
+#define ROLE_BINGLE "Bingle"
+#define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -164,7 +165,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_COMMANDO_OPERATIVE_MIDROUND = 14,
 	ROLE_PARADOX_CLONE = 0,
 	ROLE_REVENANT = 0,
-	ROLE_SENTIENT_DISEASE = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
@@ -180,6 +180,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_OPFOR_CANDIDATE = 0,
 	ROLE_TERATOMA = 0,
 	ROLE_JUNIOR_LONE_OPERATIVE = 0,
+	ROLE_BINGLE = 0,
 //monkestation edit end
 
 	// Latejoin

@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscdel: "A Jerma"
+  - map: "Fixed roundstart turf differences on Icebox and some ruins."

@@ -1,0 +1,4 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - rscadd: "ICARUS Sunbeam will now pick a random turf on the station to path to and pick another upon reaching it, instead of following rod-like movement."

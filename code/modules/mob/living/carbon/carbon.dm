@@ -770,7 +770,7 @@
 
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
+	if(hurtdamage && !HAS_TRAIT(src, TRAIT_NO_DAMAGE_OVERLAY))
 		var/severity = 0
 		switch(hurtdamage)
 			if(5 to 15)
@@ -1278,7 +1278,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(part.get_modified_bleed_rate())
+		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
@@ -1287,7 +1287,7 @@
 		return 0
 	var/total_bleed_rate = 0
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		total_bleed_rate += part.get_modified_bleed_rate()
+		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
 

@@ -37,6 +37,7 @@
 	var/list/dish_drive_contents
 	/// Distance this is capable of sucking dishes up over. (2 + servo tier)
 	var/suck_distance = 0
+	var/suck_distance_bonus = 8
 	var/binrange = 7
 
 	COOLDOWN_DECLARE(time_since_dishes)
@@ -126,7 +127,7 @@
 	if(!suction_enabled)
 		return
 
-	for(var/obj/item/dish in view(2 + suck_distance, src))
+	for(var/obj/item/dish in view(2 + suck_distance + suck_distance_bonus, src))
 		if(is_type_in_list(dish, collectable_items) && dish.loc != src && (!dish.reagents || !dish.reagents.total_volume) && (dish.contents.len < 1))
 			if(dish.Adjacent(src))
 				LAZYADD(dish_drive_contents, dish)
@@ -177,3 +178,12 @@
 			visible_message(span_notice("There are no disposable items in [src]!"))
 		return
 	COOLDOWN_START(src, time_since_dishes, 1 MINUTES)
+
+/obj/machinery/dish_drive/firing_range
+	resistance_flags = INDESTRUCTIBLE
+	icon_state = null
+	icon = null  // These three are just so it pratically doesnt exist.
+	suck_distance_bonus = 8
+	collectable_items = list(/obj/item/ammo_casing,
+		/obj/item/bodypart,
+		/obj/item/organ,)

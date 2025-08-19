@@ -121,6 +121,8 @@
 	var/ricochet_incidence_leeway = 40
 	/// Can our ricochet autoaim hit our firer?
 	var/ricochet_shoots_firer = TRUE
+	/// Do we bounce off of everything reasonable to bounce, or based off of armor flags
+	var/expanded_bounce = FALSE
 
 	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
@@ -332,6 +334,19 @@
 
 	var/mob/living/living_target = target
 
+	if(living_target.buckled)
+		var/obj/buck_source = living_target.buckled
+		if(buck_source.cover_amount != 0)
+			if(prob(buck_source.cover_amount))
+				do_sparks(round((damage / 10)), FALSE, living_target)
+				src.Impact(buck_source)
+				blocked = 100 ///Brute force time
+				damage = 0
+				wound_bonus = CANT_WOUND
+				embedding = list("embed_chance" = 0)
+				qdel(src)
+				return BULLET_ACT_HIT
+
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)
 		if (damage)
@@ -483,6 +498,10 @@
 		return FALSE
 	if(impacted[A]) // NEVER doublehit
 		return FALSE
+	if(istype(A, /mob/living/))
+		var/mob/living/living_atom = A
+		if(impacted[living_atom.buckled])
+			return FALSE
 	var/datum/point/point_cache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
@@ -759,6 +778,9 @@
 		return TRUE
 
 	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
+		return TRUE
+
+	if(expanded_bounce && (A.flags_ricochet & (RICOCHET_HARD | RICOCHET_SHINY)))
 		return TRUE
 
 	return FALSE

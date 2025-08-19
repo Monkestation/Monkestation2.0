@@ -121,6 +121,60 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
+/datum/component/riding/vehicle/hoverdog
+	keytype = /obj/item/key/hoverdog
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+	vehicle_move_delay = 1.1
+
+/datum/component/riding/vehicle/hoverdog/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 11), TEXT_SOUTH = list(0, 11), TEXT_EAST = list(0, 11), TEXT_WEST = list( 0, 11)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	set_vehicle_dir_offsets(NORTH, -48, -48)
+	set_vehicle_dir_offsets(SOUTH, -48, -48)
+	set_vehicle_dir_offsets(EAST, -48, -48)
+	set_vehicle_dir_offsets(WEST, -48, -48)
+
+/datum/component/riding/vehicle/kingschariot
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
+	vehicle_move_delay = 1
+
+/datum/component/riding/vehicle/kingschariot/handle_specials()
+	. = ..()
+	set_riding_offsets(1, list(TEXT_NORTH = list(-4, 2), TEXT_SOUTH = list(6, -4, 4), TEXT_EAST = list(6, 1), TEXT_WEST = list(2, 1)))
+	set_riding_offsets(2, list(TEXT_NORTH = list(4, 2), 	TEXT_SOUTH = list(-6, -4, 4), TEXT_EAST = list(6, 1, 4), TEXT_WEST = list(2, 1)))
+	set_vehicle_dir_offsets(NORTH, -48, -48)
+	set_vehicle_dir_offsets(SOUTH, -48, -48)
+	set_vehicle_dir_offsets(EAST, -48, -48)
+	set_vehicle_dir_offsets(WEST, -48, -48)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
+/datum/component/riding/vehicle/wienermobile
+	vehicle_move_delay = 1.29
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
+
+/datum/component/riding/vehicle/wienermobile/handle_specials()
+	. = ..()
+	set_riding_offsets(1, list(TEXT_NORTH = list(-6, 4), TEXT_SOUTH = list(10, 0, 4), TEXT_EAST = list(24, 2), TEXT_WEST = list(-64, 2)))
+	set_riding_offsets(2, list(TEXT_NORTH = list(6, 4), 	TEXT_SOUTH = list(-6, 2, 4), TEXT_EAST = list(18, 0, 4), TEXT_WEST = list(-18, 0, 3.9)))
+	set_riding_offsets(3, list(TEXT_NORTH = list(-6, -1), TEXT_SOUTH = list(6, 2, 3.9), TEXT_EAST = list(18, 0, 3.9), TEXT_WEST = list(-18, 0, 4)))
+	set_riding_offsets(4, list(TEXT_NORTH = list(6, -1), TEXT_SOUTH = list(-6, 2, 3.9), TEXT_EAST = list(6, 0, 4), TEXT_WEST = list(-6, 0, 3.9)))
+	set_riding_offsets(5, list(TEXT_NORTH = list(-6, -1, TEXT_SOUTH = list(6, 2, 3.9), TEXT_EAST = list(6, 0, 3.9), TEXT_WEST = list(-6, 0, 4))))
+	set_riding_offsets(6, list(TEXT_NORTH = list(6, -1), TEXT_SOUTH = list(-6, 2, 3.9), TEXT_EAST = list(-6, 0, 4), TEXT_WEST = list(6, 0, 3.9)))
+	set_riding_offsets(7, list(TEXT_NORTH = list(-6, -1), TEXT_SOUTH = list(6, 2, 3.9), TEXT_EAST = list(-6, 0, 3.9), TEXT_WEST = list(6, 0, 4)))
+	set_riding_offsets(8, list(TEXT_NORTH = list(6, -1), TEXT_SOUTH = list(-6, 2, 3.9), TEXT_EAST = list(-18, 0, 4), TEXT_WEST = list(18, 0, 3.9)))
+	set_riding_offsets(9, list(TEXT_NORTH = list(6, -1), TEXT_SOUTH = list(-6, 2, 3.9), TEXT_EAST = list(-18, 0, 3.9), TEXT_WEST = list(18, 0, 4)))
+	set_vehicle_dir_offsets(NORTH, -48, -48)
+	set_vehicle_dir_offsets(SOUTH, -48, -48)
+	set_vehicle_dir_offsets(EAST, -48, -48)
+	set_vehicle_dir_offsets(WEST, -48, -48)
+	for(var/i in GLOB.cardinals)
+		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
 /datum/component/riding/vehicle/bicycle
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 0

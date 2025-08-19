@@ -137,6 +137,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
+		if("openWebMap")
+			if(!SSmapping.current_map.mapping_url)
+				return
+			if(is_station_level(mob.z))
+				src << link("[SSmapping.current_map.mapping_url]/?x=[mob.x]&y=[mob.y]&zoom=6")
+			else
+				src << link("[SSmapping.current_map.mapping_url]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
@@ -243,6 +250,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	TopicData = null //Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
+		return null
+
+	if(address in SSoverwatch?.cached_asn_bans)
+		log_access("Overwatch: [ckey] denied due to cached ASN ban ([address])")
 		return null
 
 	GLOB.clients += src
@@ -576,7 +587,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && (isnull(GLOB.mentor_datums[ckey]) || isnull(GLOB.dementors[ckey]))&& !is_admin(src))
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
 		interviewee = TRUE
 		register_for_interview()
 
@@ -882,7 +893,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(string)
 				string += ", "
 			string += "Mobile Hostspot IP"
-	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && (isnull(GLOB.mentor_datums[ckey]) || isnull(GLOB.dementors[ckey])) && !is_admin(src))
+	if(failed && !(ckey in GLOB.interviews.approved_ckeys) && !is_mentor(src) && !is_admin(src))
 		message_admins(span_adminnotice("Proxy Detection: [key_name_admin(src)] Overwatch detected this is a [string]"))
 		interviewee = TRUE
 

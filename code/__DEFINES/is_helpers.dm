@@ -32,7 +32,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/lava,
 	/turf/open/water,
 	/turf/open/openspace,
-	/turf/open/space/openspace
+	/turf/open/space/openspace,
+	/turf/open/gas,
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -199,7 +200,9 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
+#define isspider(A) (istype(A, /mob/living/basic/spider))
+
+#define isbingle(A) (istype(A, /mob/living/basic/bingle))
 
 
 //Misc mobs
@@ -210,8 +213,6 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
-
-#define issentientdisease(A) (istype(A, /mob/camera/disease))
 
 #define iscameramob(A) (istype(A, /mob/camera))
 

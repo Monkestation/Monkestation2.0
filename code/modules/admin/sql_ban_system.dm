@@ -365,7 +365,6 @@
 				ROLE_REV,
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
-				ROLE_SENTIENT_DISEASE,
 				ROLE_SLASHER,
 				ROLE_SPIDER,
 				ROLE_SYNDICATE,
@@ -374,6 +373,7 @@
 				ROLE_WIZARD,
 				BAN_OPFOR,
 				ROLE_ASSAULT_OPERATIVE,
+				ROLE_BINGLE,
 			),
 		)
 		for(var/department in long_job_lists)

@@ -38,6 +38,7 @@
 /datum/status_effect/void_chill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
 	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, TRAIT_STATUS_EFFECT(id))
+	owner.bodytemperature = BODYTEMP_NORMAL
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
 
@@ -51,7 +52,7 @@
 		to_chat(owner, span_notice("You feel holy water warming you up."))
 		adjust_stacks(-1)
 	else
-		owner.adjust_bodytemperature(-12 KELVIN * stacks * seconds_between_ticks)
+		owner.adjust_bodytemperature(-5 KELVIN * stacks * seconds_between_ticks)
 	if (stacks == 0)
 		owner.remove_status_effect(/datum/status_effect/void_chill)
 

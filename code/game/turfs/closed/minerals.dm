@@ -771,10 +771,10 @@
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
-			G.icon_state = "Gibtonite ore 3"
+			G.icon_state = "gibtonite_3"
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
-			G.icon_state = "Gibtonite ore 2"
+			G.icon_state = "gibtonite_2"
 
 	var/flags = NONE
 	var/old_type = type
@@ -791,7 +791,7 @@
 	defer_change = TRUE
 
 /turf/closed/mineral/gibtonite/ice
-	icon_state = "icerock_Gibtonite"
+	icon_state = "icerock_Gibtonite_inactive"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "icerock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER

@@ -551,3 +551,16 @@
 			if (brushed > 50 && !GetComponent(/datum/component/particle_spewer/sparkle))
 				AddComponent(/datum/component/particle_spewer/sparkle)
 /** SHION PLUSH END **/
+
+/obj/item/toy/plush/admin/mcsteal
+	name = "Robert McPlushie"
+	desc = "Holy fuck, he McStole a plushie tank."
+	icon_state = "mcsteal"
+	squeak_override = list('sound/weapons/gun/general/lighttankgun.ogg'=1)
+/datum/loadout_item/plushies/mcsteal
+	name = "McSteal Plush"
+	item_path = /obj/item/toy/plush/admin/mcsteal
+/datum/store_item/plushies/mcsteal
+	name = "McSteal Plush"
+	item_path = /obj/item/toy/plush/admin/mcsteal
+	item_cost = 7500

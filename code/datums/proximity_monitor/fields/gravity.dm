@@ -100,9 +100,9 @@
 	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smoothed))
 
 /obj/gravity_fluff_field/Destroy(force)
-	. = ..()
-	QDEL_NULL(particles)
+	particles = null
 	emissive = null
+	return ..()
 
 /obj/gravity_fluff_field/proc/smoothed(datum/source)
 	SIGNAL_HANDLER

@@ -198,7 +198,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
+#ifndef DISABLE_DEMOS
 	SSdemo.marked_turfs?[new_turf] = TRUE // Monkestation Edit: REPLAYS
+#endif
 	return new_turf
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.
