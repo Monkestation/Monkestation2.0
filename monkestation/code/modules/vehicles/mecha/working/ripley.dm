@@ -6,6 +6,8 @@
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/thrusters, /obj/item/mecha_parts/mecha_equipment/ejector, /obj/item/mecha_parts/mecha_equipment/extinguisher),
 	)
 	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
@@ -16,8 +18,7 @@
 	fast_pressure_step_in = 1.75
 	slow_pressure_step_in = 3
 	step_energy_drain = 6
-	operation_req_access = list(ACCESS_MECH_ENGINE)
-	internals_req_access = list(ACCESS_CENT_GENERAL)
+	accesses = list(ACCESS_CENT_GENERAL)
 
 /datum/armor/mecha_ripley/engineering
 	melee = 40

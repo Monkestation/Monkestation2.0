@@ -544,12 +544,16 @@
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
+	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_NO_CLONE))
+		scantemp = "<font class='bad'>Subject's brain neurons are too short to be scanned.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
 	if(!body_only && HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if((HAS_TRAIT(mob_occupant, TRAIT_HUSK)) && (src.scanner.scan_level < 2))
-		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
+		scantemp = "<font class='bad'>Subject's DNA is too damaged to scan properly, restore DNA or upgrade machine and try again.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))

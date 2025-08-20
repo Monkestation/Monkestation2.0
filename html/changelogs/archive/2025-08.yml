@@ -348,6 +348,9 @@
       from chainsaw
   - bugfix: Fixed beach bar floors not giving back the right tiles.
 2025-08-17:
+  Absolucy:
+  - bugfix: Cannibalizing/retracting limbs as an oozeling now drops any implants in
+      that limb, instead of vaporizing it forever.
   Absolucy, Bisar:
   - balance: 'Added a list of "universal" items that can fit on any suit storage.
       Mostly low-impact but high-utility items, but of special note: holsters and
@@ -355,5 +358,158 @@
   - balance: Any item of size "tiny" can now also be worn in suit storage.
   - qol: The suit storage change gives some small amount of sanity to wearing things
       on suit storage, such as emergency oxygen tanks or a pack of smokes.
+  Aniantan:
+  - bugfix: Slimes now flee from people with extinguishers again.
+  Aniantan, itseasytosee:
+  - rscadd: Lizardpeople can wear undershirts again
+  - bugfix: Lustrous are properly tenacious
+  - code_imp: Moved a bunch of specie traits to bodyparts and organs
+  EssentialTomato:
+  - rscadd: You can now fix IPC brains by pouring liquid solder on them.
+  Killermankey:
+  - rscadd: squish mechanics for Devitt Mk3, Trash tank, Kings chariot
+  MTandi, Sealed101, mc-oofert, SyncIt21, SmArtKar, TheColorCyan:
+  - refactor: Refactored Mech UI
+  - refactor: Refactored mech radio into a utility module, adding extra slot to all
+      mechs
+  - refactor: Refactored mech air tank into a utility module with an air pump, adding
+      extra slot to all mechs
+  - refactor: Refactored mech cabin air - there is now a button to seal or unseal
+      cabin to make it airtight or exchanging gases with the environment
+  - refactor: Removed mech maintenance UI Access is set in mech UI, and parts are
+      ejected with a crowbar
+  - rscadd: Mech now has wires and can be hacked
+  - qol: Roboticists now can see MOD suit and mech wires
+  - rscadd: Mechs now require servo motor stock part and it affects movement power
+      usage instead of scanning module
+  - rscadd: Scanning module absence doesnt block mech movement and hides some UI data
+      instead. Big Bess starts without one.
+  - qol: Hitting mech with ID card now toggles ID lock on/off if the card has required
+      access
+  - bugfix: Fixed concealed weapon bay not being concealed on mech examine
+  - bugfix: Fixed mech radio not changing frequency
+  - bugfix: Fixed mech launcher type weapons ignoring specified cooldown
+  - bugfix: Fixed mech launcher type weapons not using specified power amount
+  - bugfix: Fixed mech temperature regulator ignoring gas heat capacity
+  - bugfix: Fixed mech stopping processing other things while not heating internal
+      air
+  - bugfix: Fixed mech being able to leave transit tube in transit
+  - bugfix: Fixed mech internal damage flags working incorrectly
+  - bugfix: Fixed Gygax leg overloading being useless
+  - bugfix: Fixed mechs ignoring their stock parts on creation. Syndicate mechs now
+      stronger against lasers and consume less energy on move. Upgrading from tier
+      1 to tier 2 doesn't make mech consume MORE energy than before the upgrade.
+  - bugfix: fixed mecha plasma generator not accepting fuel
+  - bugfix: fixed mecha ui incorrectly displaying fuel remaining when using an energy
+      module
+  - bugfix: fixed mecha ui missing fluff text for short circuit repair control (5th
+      option)
+  - qol: fixing mecha control module internal damage will print out a chat message
+      like fixing other damage does
+  - rscdel: did you know that for 4 years now mecha plasma generators did not, in
+      fact, pollute the environment when in use? removed that bit from its description
+  - balance: Rebalanced mech energy drain with part upgrades. Base energy drain reduced
+      by 50%, 33%, 25% with upgrades and applies to movement (Manipulator rating),
+      phasing, punching, light (Capacitor rating).
+  - balance: Hydraulic clamp now can force open airlocks
+  - balance: Made mech RCS pack consume reasonable amount of gas
+  - code_imp: Fixed some other minor bugs and made some minor changes in the mech
+      code
+  Shoddd:
+  - bugfix: Bins no longer say you shoved yourself in
+  - bugfix: chromosomes no longer count for illegal tech
+  - bugfix: ammo workbench can no longer print uplink shotgun shells
+  - bugfix: helio gulag shuttle no longer crashes into the station
+  - bugfix: missing wire in helio AI sat
+  SyncIt21, TheColorCyan:
+  - bugfix: items can be printed from autolathe & protolathe when the exact material
+      amounts are present in them after upgrading
+  - bugfix: max printable amount now shows the correct value & updates when items
+      are printed, materials are removed in the autolathe & protolathe
+  - bugfix: component printer material bar is not greyed out when there are sufficient
+      materials to eject
+  - bugfix: rcd and other devices that uses the silo link upgrade now have the correct
+      material usages
+  - bugfix: silo hold actually works
+  - bugfix: machines using local storage to hold materials will eject it's materials
+      as sheets when deconstructed/destroyed
+  - bugfix: ORM will generate points regardless of how the ore enters it.
+  - bugfix: Machines like autolathe, techfab etc can now be hit with iron sheets (or
+      any other material item type those machines accept) when in combat mode rather
+      than inserting them because it makes sense.
+  - bugfix: Mat container won't display chats fully if the MATCONTAINER_SILENT flag
+      is passed.
+  - bugfix: mat container displays correct number of sheets inserted for alloy materials.
+  - bugfix: remote materials now properly respect the MATCONTAINER_NO_INSERT flag.
+  - code_imp: removes material breakdown flags and related traits.
+  - code_imp: adds helper proc to insert materials via the remote material component
+      with proper context.
+  Tractor Maam:
+  - admin: Antagonist Custom Objectives now play a bwoink sound when created.
+  - admin: The Space Postbox will now ask you again before submitting a cassette,
+      reminding you adminhelp to make sure someone CAN review.
+  notghosti:
+  - map: Jungle, Two fort, and Arena arenas now have consistent atmospherics.
+  - map: Deltastation Chicken Coop botany now has more escapable. unrestricted access
+      helpers
+  - bugfix: Automated announcement TUGI height has been increased to 255 to include
+      the research section
+  - code_imp: Deleted unused blueshield security belt from code.
+  - bugfix: fixes deconstructive nodes not being researchable (Alien, illegal, mod
+      module, ect)
   throwawayuseless:
   - rscadd: Pro Skater quirk. Become totally radical today!
+2025-08-18:
+  Absolucy:
+  - balance: Blobs can no longer delete brains (including oozeling cores), altho attacking
+      them will still cause organ damage. MMIs destroyed by blobs will also drop the
+      brain, if it had one inside of it.
+  Ice-Type:
+  - rscadd: Several new pineapple - themed food recipes
+  - rscadd: A new sprite for coconut milk in a glass
+  - rscadd: A hula skirt, that can be bought from autodrobes, or in the loadout store
+  - rscadd: A new pet, the pineapple creacher, which is a smaller, living pineapple.
+  - bugfix: Coconuts now give coconut milk, and not... normal milk (why)
+  - code_imp: Adds a credits folder to the icons file for you to credit sprites. Use
+      it you dinguses.
+  Loiosh42:
+  - rscadd: Admin-only, shouldn't be merged anyway.
+  Shoddd:
+  - balance: Oozeling bloodsuckers now take 3 minutes to revive instead of 30 seconds
+  - qol: Message telling oozeling bloodsuckers/lings how long until they revive
+  TheColorCyan:
+  - balance: odysseus now has 5 utility slots
+  - bugfix: ricky's mauler now has full airtank and radio installed
+  - bugfix: you can actually see what ricky's mauler has equipped on it's arm slots
+  - bugfix: ricky's mauler now actually spawns with scanner and manipulator
+  ThePooba:
+  - bugfix: brig phys gets a nice new coat that isn't pajamas
+  Veth-s:
+  - balance: Max bingle pit size is now 40x40
+  - balance: Bingles now stun in 6 hits (up from 2)
+  - balance: There is now an announcement alerting the crew once the bingle pit reaches
+      size 3.
+  - balance: Bingles now spawn every 50 items consumed (up from 30)
+  - balance: Bingles now have 5 weight (down from 10)
+2025-08-19:
+  Ice-Type:
+  - bugfix: You get your hula skirt when you buy it now
+  - bugfix: You can now choose pineapple creachers with the pet beacon
+  Shoddd:
+  - bugfix: TRAIT_SNOWSTORM_IMMUNE no longer makes you plasma lake proof
+  TheColorCyan:
+  - rscadd: ICARUS Sunbeam will now pick a random turf on the station to path to and
+      pick another upon reaching it, instead of following rod-like movement.
+  Xander3359:
+  - balance: silenced status effect blocks emotes
+  notghosti:
+  - rscadd: Included toolboxes and supplies to Centcom robotics to be able to do all
+      surgeries.
+  - rscadd: Added recharging defib mounts to CC
+  - rscadd: Rickys mech now comes with a interals air tank
+  - balance: Removed Gas analyzer from brig physicians toolbox for coil and a multitool
+  - qol: Reorganized mecha nodes categorization.
+  - rscadd: CC Firing range will automate its cleaning better.
+  - bugfix: Bullet drives will now properly clean dishes at further ranges.
+  - rscdel: A Jerma
+  - map: Fixed roundstart turf differences on Icebox and some ruins.

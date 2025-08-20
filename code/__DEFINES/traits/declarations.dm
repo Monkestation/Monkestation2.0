@@ -656,7 +656,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
-#define TRAIT_KNOW_ROBO_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
@@ -749,9 +749,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
-
-///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
-#define TRAIT_MAT_TRANSMUTED "transmuted"
 
 // cargo traits
 ///If the item will block the cargo shuttle from flying to centcom
@@ -857,6 +854,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
+#define TRAIT_NO_CLONE "NO_CLONE"
 #define TRAIT_BALD "bald"
 #define TRAIT_SHAVED "shaved"
 #define TRAIT_BADTOUCH "bad_touch"
