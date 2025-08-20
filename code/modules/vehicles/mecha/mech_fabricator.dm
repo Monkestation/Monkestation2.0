@@ -457,6 +457,8 @@ skip them
 
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
+	check_auth_changes(user)
+
 
 	data["materials"] = rmat.mat_container.ui_data()
 	data["queue"] = list()
