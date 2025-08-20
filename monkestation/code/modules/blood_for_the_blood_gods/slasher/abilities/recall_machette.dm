@@ -23,6 +23,8 @@
 		return
 	if(!stored_machette || QDELETED(stored_machette))
 		var/datum/antagonist/slasher/slasherdatum = IS_SLASHER(owner)
+		if(!slasherdatum)
+			return
 		switch(slasherdatum.slasher_variant)
 			if(VARIANT_SLASHER)
 				stored_machette = new /obj/item/slasher_machette
@@ -30,8 +32,6 @@
 				stored_machette = new /obj/item/slasher_machette/cluwne
 			if(VARIANT_BRUTE)
 				stored_machette = new /obj/item/slasher_machette/brute
-		if(!slasherdatum)
-			return
 		slasherdatum.linked_machette = stored_machette
 
 	if(!owner.put_in_hands(stored_machette))
