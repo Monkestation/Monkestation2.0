@@ -61,3 +61,12 @@
 	icon_state = "ducky_shoes"
 	inhand_icon_state = "ducky_shoes"
 	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
+
+/obj/item/clothing/shoes/clown_shoes/cluwne
+	name = "cluwne shoes"
+	desc = "A sense of bloodlust washes over you as you wear these shoes."
+	icon_state = "cluwne"
+	inhand_icon_state = "cluwne_shoes"
+	worn_icon_state = "cluwne"
+	slowdown = SHOES_SLOWDOWN
+	squeak_sound = list()

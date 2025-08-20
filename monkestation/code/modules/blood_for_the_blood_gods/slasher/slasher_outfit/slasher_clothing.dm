@@ -19,7 +19,9 @@
 /obj/item/clothing/mask/gas/slasher/adjustmask()
 	return
 
-
+/obj/item/clothing/mask/gas/slasher/cluwne
+	name = "cluwne's gas mask"
+	icon_state = "cluwne_mask"
 
 /obj/item/clothing/suit/apron/slasher
 	name = "butcher's apron"
@@ -71,6 +73,11 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
+/obj/item/clothing/suit/apron/slasher/cluwne
+	name = "damned suspenders"
+	icon_state = "cluwne_apron"
+	desc = "A pair of suspenders that seem to be stitched together from the souls of the damned."
+
 /obj/item/clothing/under/slasher
 	name = "butcher's jumpsuit"
 	icon = 'monkestation/icons/mob/slasher/slasher_items.dmi'
@@ -83,6 +90,11 @@
 /obj/item/clothing/under/slasher/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+
+/obj/item/clothing/under/slasher/cluwne
+	name = "cluwne's jumpsuit"
+	icon_state = "cluwne_under"
+	desc = "A cluwne jumpsuit, suspenders sold separately cause fuck these bastards."
 
 /obj/item/storage/belt/slasher
 	name = "slasher's trap fanny pack"
@@ -105,3 +117,11 @@
 /obj/item/restraints/legcuffs/beartrap/slasher
 	name = "barbed bear trap"
 	breakouttime = 2 SECONDS
+
+/obj/item/storage/belt/slasher/cluwne
+	name = "cluwne's trap fanny pack"
+	desc = "A place to put all your clowny traps."
+	icon_state = "clown"
+	inhand_icon_state = "clown"
+	worn_icon_state = "clown"
+
