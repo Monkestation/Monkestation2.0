@@ -180,10 +180,15 @@
 /obj/item/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!IS_HERETIC(user))
 		return NONE
-	if(istype(target, /obj/effect/lock_portal))
+	if(istype(target, /obj/item/card/id/advanced))
+		eat_card(target, user)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(target, /obj/effect/knock_portal))
 		clear_portals()
 		return ITEM_INTERACT_SUCCESS
 	if(!istype(target, /obj/machinery/door))
+		return NONE
+	if(SSmapping.level_trait(target.z, ZTRAIT_NOPHASE))
 		return NONE
 	var/reference_resolved = link?.resolve()
 	if(reference_resolved == target)
@@ -191,7 +196,7 @@
 
 	if(reference_resolved)
 		make_portal(user, reference_resolved, target)
-		to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
+		to_chat(user, span_notice("You use [src], to link [reference_resolved] and [target] together."))
 		link = null
 		balloon_alert(user, "link 2/2")
 	else

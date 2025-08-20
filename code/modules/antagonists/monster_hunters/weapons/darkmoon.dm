@@ -31,6 +31,10 @@
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+// XANTODO https://discord.com/channels/326822144233439242/326831214667235328/1407603846640828487
+// interact_with_atom_secondary
+// ranged_interact_with_atom_secondary
+
 /obj/item/melee/trick_weapon/darkmoon/attack_secondary(atom/target, mob/living/user, clickparams)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
