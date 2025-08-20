@@ -162,7 +162,7 @@
 	if(blocking_item)
 		target.visible_message(span_danger("[src] smashes against [target]'s [blocking_item]!"), \
 							span_userdanger("[src] smashes against your [blocking_item]!"))
-		if(!neutered) //Lamarr should be carryable by people in a protective suit
+		if(!neutered)
 			Die()
 		return FALSE
 
@@ -238,7 +238,7 @@
 	worn_icon_state = "[base_icon_state]"
 
 /obj/item/clothing/mask/facehugger/proc/GoIdle()
-	if(stat == DEAD || stat == UNCONSCIOUS)
+	if(stat == DEAD || stat == UNCONSCIOUS || neutered)
 		return
 
 	stat = UNCONSCIOUS
