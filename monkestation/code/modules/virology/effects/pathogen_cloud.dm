@@ -38,11 +38,7 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	if(!core)
 		var/obj/effect/pathogen_cloud/core/core = locate(/obj/effect/pathogen_cloud/core) in src.loc
 		if(get_turf(core) == get_turf(src))
-			for(var/datum/disease/acute/V as anything in viruses)
-				if("[V.uniqueID]-[V.subID]" in core.id_list)
-					continue
-				core.viruses |= V.Copy()
-				core.modified = TRUE
+			core.add_virus(viruses)
 			return INITIALIZE_HINT_QDEL
 
 	if(istype(src, /obj/effect/pathogen_cloud/core))
@@ -61,6 +57,20 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	source = sourcemob
 
 	QDEL_IN(src, lifetime)
+
+/obj/effect/pathogen_cloud/proc/add_virus(list/viruses)
+	. = FALSE
+	if(!islist(viruses))
+		viruses = list(viruses)
+	for(var/datum/disease/acute/virus as anything in viruses)
+		var/id = "[virus.uniqueID]-[virus.subID]"
+		if(id in id_list)
+			continue
+		viruses += virus.Copy()
+		id_list += id
+		. = TRUE
+	if(.)
+		modified = TRUE
 
 /obj/effect/pathogen_cloud/core
 	core = TRUE
