@@ -60,7 +60,7 @@
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. \
 		Contains three insulated gloves."
-	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
+	cost = CARGO_CRATE_VALUE * 5 //Made of pure-grade bullshittinium
 	contains = list(/obj/item/clothing/gloves/color/yellow = 3)
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical

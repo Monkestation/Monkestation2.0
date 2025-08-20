@@ -24,6 +24,11 @@
 	//Slime healing cause pain, oof ouch
 	var/pain_amount = 20
 
+/datum/status_effect/regenerative_extract/on_creation(mob/living/new_owner, alert_color)
+	. = ..()
+	if(. && linked_alert)
+		apply_alert_effect(alert_color)
+
 /datum/status_effect/regenerative_extract/on_apply()
 	// So this seems weird, but this allows us to have multiple things affect the regen multiplier,
 	// without doing something like hardcoding a `for(var/datum/status_effect/slime_regen_cooldown/cooldown in owner.status_effects)`
@@ -43,6 +48,10 @@
 	var/heal_amt = base_healing_amt * seconds_between_ticks * multiplier
 	heal_act(heal_amt)
 	owner.updatehealth()
+
+/datum/status_effect/regenerative_extract/proc/apply_alert_effect(alert_color)
+	if(alert_color)
+		linked_alert.add_atom_colour(alert_color, FIXED_COLOUR_PRIORITY)
 
 /datum/status_effect/regenerative_extract/proc/heal_act(heal_amt)
 	if(!heal_amt)
@@ -98,4 +107,4 @@
 /atom/movable/screen/alert/status_effect/regen_extract
 	name = "Slime Regeneration"
 	desc = "A milky slime covers your skin, regenerating your injuries!"
-	icon_state = "regenerative_core"
+	icon_state = "slime_regen"

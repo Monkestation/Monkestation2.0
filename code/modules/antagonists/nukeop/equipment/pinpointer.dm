@@ -1,10 +1,12 @@
 /obj/item/pinpointer/nuke
+	name = "pinpointer"
+	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mode = TRACK_NUKE_DISK
 
 /obj/item/pinpointer/nuke/examine(mob/user)
 	. = ..()
-	var/msg = "Its tracking indicator reads "
+	var/msg = "It's tracking indicator reads "
 	switch(mode)
 		if(TRACK_NUKE_DISK)
 			msg += "\"nuclear_disk\"."
@@ -12,6 +14,8 @@
 			msg += "\"01000001 01001001\"."
 		if(TRACK_INFILTRATOR)
 			msg += "\"vasvygengbefuvc\"."
+		if(TRACK_COMMANDO_NUKE)
+			msg += "\"big_bomb\"."
 		else
 			msg = "Its tracking indicator is blank."
 	. += msg
@@ -50,6 +54,11 @@
 					target = A
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
+		if(TRACK_COMMANDO_NUKE)
+			for(var/obj/machinery/nuclearbomb/commando/bombue as anything in GLOB.nuke_list)
+				if(bombue.timing || bombue.exploding)
+					target = bombue
+					break
 	..()
 
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
@@ -62,7 +71,6 @@
 
 /obj/item/pinpointer/nuke/syndicate // Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
 	name = "syndicate pinpointer"
-	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
 	icon_state = "pinpointer_syndicate"
 	worn_icon_state = "pinpointer_black"
 
@@ -92,4 +100,15 @@
 	var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 	if(closest_operative)
 		target = closest_operative
+	..()
+
+/obj/item/pinpointer/commando_nuke
+	name = "nuke pinpointer"
+	desc = "A handheld tracking device that locks onto signals given off by old Nanotrasen nuclear fission explosives."
+	icon_state = "pinpointer_nuke"
+
+/obj/item/pinpointer/commando_nuke/scan_for_target()
+	target = null
+	var/obj/machinery/nuclearbomb/commando/tracked_nuke = locate(/obj/machinery/nuclearbomb/commando) in GLOB.nuke_list
+	target = tracked_nuke
 	..()

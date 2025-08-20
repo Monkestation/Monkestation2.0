@@ -70,16 +70,6 @@
 		// Just in case our thrower isn't actually a slasher (somehow). This shouldn't ever come up,
 		// but if it does, then we just prevent the throw.
 		return COMPONENT_CANCEL_THROW
-/**
-	var/turf/below_turf = get_turf(arguments[4]) // the turf below the person throwing
-	var/turf_light_level = below_turf.get_lumcount()
-	var/area/ismaints = get_area(below_turf)
-	pre_throw_force = throwforce
-	if(istype(ismaints, /area/station/maintenance))
-		throwforce = 1.1 * throwforce
-	else
-		throwforce = throwforce * (max(clamp((1 - turf_light_level), 0, 1)))
-*/
 
 /obj/item/slasher_machette/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()

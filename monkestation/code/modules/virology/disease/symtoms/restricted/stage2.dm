@@ -176,22 +176,14 @@
 #undef STARLIGHT_CANNOT_HEAL
 #undef STARLIGHT_MAX_RANGE
 
-/datum/symptom/starlight/proc/Heal(mob/living/carbon/M, actual_power)
+/datum/symptom/starlight/proc/Heal(mob/living/M, actual_power)
 	var/heal_amt = actual_power
 	if(M.getToxLoss() && prob(5))
 		to_chat(M, span_notice("Your skin tingles as the starlight seems to heal you."))
 
-	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
-
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
-
-	if(!parts.len)
-		return
-
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-	return 1
+	M.adjustToxLoss(-4 * heal_amt, updating_health = FALSE) //most effective on toxins
+	M.heal_overall_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC)
+	return TRUE
 
 /datum/symptom/starlight/proc/passive_message_condition(mob/living/M)
 	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
@@ -221,7 +213,7 @@
 	return
 
 /datum/symptom/toxolysis/proc/Heal(mob/living/M, datum/disease/advance/A, actual_power)
-	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
+	for(var/datum/reagent/R in M.reagents?.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.type, actual_power)
 		if(food_conversion)
 			M.adjust_nutrition(0.3)

@@ -1,0 +1,5 @@
+author: "Loiosh42"
+delete-after: True
+changes:
+  - balance: "Adds a single Wylom anti-mech rifle to the heavy armaments locker"
+  - map: "Armories across all maps now have more consistent equipment"

@@ -11,11 +11,13 @@
 	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
 	// monkestation start: REPLAYS
+#ifndef DISABLE_DEMOS
 	SSdemo.mark_dirty(src)
 	if(isturf(target))
 		SSdemo.marked_turfs?[target] = TRUE
 	else
 		SSdemo.mark_dirty(target)
+#endif
 	// monkestation end: REPLAYS
 
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
@@ -82,7 +84,9 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	interact(user)
+#ifndef DISABLE_DEMOS
 	SSdemo.mark_dirty(src) //Monkestation Edit: Replays
+#endif
 
 /// Called when the item is in the active hand, and right-clicked. Intended for alternate or opposite functions, such as lowering reagent transfer amount. At the moment, there is no verb or hotkey.
 /obj/item/proc/attack_self_secondary(mob/user, modifiers)
