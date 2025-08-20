@@ -27,6 +27,9 @@
 		return FALSE
 	if(!can_pay_cost(owner) || !can_use(owner, trigger_flags))
 		return FALSE
+	var/datum/action/cooldown/already_set = owner.click_intercept
+	if(already_set && already_set != src)
+		already_set.unset_click_ability(owner)
 
 	if(prefire_message)
 		to_chat(owner, span_announce("[prefire_message]"))
@@ -36,6 +39,11 @@
 		return InterceptClickOn(owner, null, target)
 
 	return set_click_ability(owner)
+
+/datum/action/cooldown/bloodsucker/targeted/unset_click_ability(mob/on_who, refund_cooldown)
+	. = ..()
+	if(active)
+		DeactivatePower()
 
 /datum/action/cooldown/bloodsucker/targeted/DeactivatePower()
 	if(power_flags & BP_AM_TOGGLE)

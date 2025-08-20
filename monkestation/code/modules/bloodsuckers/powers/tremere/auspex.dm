@@ -92,7 +92,7 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/auspex/proc/auspex_blink(mob/living/user, turf/targeted_turf)
-	var/blood_cost = AUSPEX_BLOOD_COST_PER_TILE * get_dist(user, targeted_turf)
+	var/blood_cost = min(AUSPEX_BLOOD_COST_PER_TILE * get_dist(user, targeted_turf), 100)
 	if(!can_pay_cost(blood_cost))
 		owner.balloon_alert(owner, "not enough blood!")
 		return

@@ -66,8 +66,12 @@
 			var/datum/weakref/ref = player
 			player = ref.resolve()
 		attach(player)
-		RegisterSignal(player, COMSIG_MOB_LOGIN, PROC_REF(attach)) // doesn't currently cleanup properly
+		RegisterSignal(player, COMSIG_MOB_LOGIN, PROC_REF(on_client_login))
 		timer_mobs += WEAKREF(player)
+
+/atom/movable/screen/text/screen_timer/proc/on_client_login(mob/source)
+	SIGNAL_HANDLER
+	attach(source, TRUE) // attach to the client screen
 
 /// Removes the object from the client.screen of all mobs in the list, and unregisters the needed signals, while also stopping processing if there's no more mobs in the screen timers mob list
 /atom/movable/screen/text/screen_timer/proc/remove_from(list/mobs)
@@ -175,7 +179,7 @@
 	text_image.maptext_height = maptext_height
 	text_image.maptext_width = maptext_width
 
-	SET_PLANE_EXPLICIT(text_image, ABOVE_HUD_PLANE, target)
+	SET_PLANE_EXPLICIT(text_image, HIGH_GAME_PLANE, target)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(delete_self))
 
 /atom/movable/screen/text/screen_timer/attached/proc/delete_self()

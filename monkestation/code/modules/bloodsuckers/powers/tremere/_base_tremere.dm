@@ -17,11 +17,3 @@
 	// Targeted stuff
 	unset_after_click = FALSE
 
-
-/datum/action/cooldown/bloodsucker/targeted/tremere/on_power_upgrade()
-	..()
-	if(purchase_flags & TREMERE_CAN_BUY && level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
-		background_icon_state = "tremere_power_gold_off"
-		active_background_icon_state = "tremere_power_gold_on"
-		base_background_icon_state = "tremere_power_gold_off"
-	build_all_button_icons(ALL)

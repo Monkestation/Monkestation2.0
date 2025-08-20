@@ -36,6 +36,7 @@
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED)
 	/// assoc list of timer_id to vassal datum
 	var/list/vassals = list()
+	var/vassal_creation_time = 6 SECONDS
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/Remove(mob/removed_from)
 	. = ..()
@@ -62,7 +63,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckCanTarget(atom/target_atom)
 	var/mob/living/selected_target = target_atom
-	if(level_current >= DOMINATE_VASSALIZE_LEVEL && (IS_VASSAL(selected_target) || selected_target.stat >= SOFT_CRIT))
+	if(level_current >= DOMINATE_VASSALIZE_LEVEL && (IS_VASSAL(selected_target) && selected_target.stat >= SOFT_CRIT))
 		if(selected_target?.mind && owner.Adjacent(selected_target))
 			return TRUE
 	. = ..()
@@ -99,13 +100,13 @@
 	if(target_mob.stat != CONSCIOUS && level_current >= DOMINATE_VASSALIZE_LEVEL)
 		if(user.Adjacent(target))
 			attempt_ghoulize(target, user)
-			return
+			return TRUE
 		else
 			if(IS_VASSAL(target_mob))
 				owner.balloon_alert(owner, "too far to revive!")
 			else
 				owner.balloon_alert(owner, "too far to vassal!")
-			return
+			return TRUE
 	..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/attempt_ghoulize(mob/living/target, mob/living/user)
@@ -119,7 +120,7 @@
 		owner.balloon_alert(owner, "attempting to revive.")
 	else
 		owner.balloon_alert(owner, "attempting to vassalize.")
-	if(!do_after(user, 6 SECONDS, target, NONE, TRUE))
+	if(!do_after(user, vassal_creation_time, target, NONE, TRUE))
 		return FALSE
 	if(!victim_has_blood(target))
 		return FALSE

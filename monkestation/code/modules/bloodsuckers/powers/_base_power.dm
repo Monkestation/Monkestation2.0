@@ -146,6 +146,13 @@
 	SHOULD_CALL_PARENT(TRUE)
 	desc = get_power_desc()
 
+	if(purchase_flags & TREMERE_CAN_BUY && level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
+		background_icon_state = "tremere_power_gold_off"
+		active_background_icon_state = "tremere_power_gold_on"
+		base_background_icon_state = "tremere_power_gold_off"
+
+	build_all_button_icons(ALL)
+
 ///Checks if the Power is available to use.
 /datum/action/cooldown/bloodsucker/proc/can_use(mob/living/carbon/user, trigger_flags)
 	if(QDELETED(owner))

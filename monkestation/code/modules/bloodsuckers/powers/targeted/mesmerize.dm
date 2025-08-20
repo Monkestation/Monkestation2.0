@@ -33,6 +33,8 @@
 	var/requires_facing_target = FALSE
 	/// if the ability requires you to not have your eyes covered
 	var/blocked_by_glasses = TRUE
+	var/mesmerize_layer = ABOVE_ALL_MOB_LAYER
+	var/mesmerize_plane = ABOVE_HUD_PLANE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_desc_extended()
 	. += "[src] a target, locking them in place for a short time[level_current >= MESMERIZE_MUTE_LEVEL ? " and muting them" : ""].<br>"
@@ -135,13 +137,29 @@
 		return
 	// slow them down during the mesmerize
 	mute_target(mesmerized_target)
+	var/eye_protection = mesmerized_target.get_eye_protection()
+
+	var/modified_delay = mesmerize_delay
+	if(eye_protection > 2)
+		to_chat(user, span_warning("Not effective, their eyes are protected!"))
+		user.balloon_alert(user, "immune!")
+		StartCooldown(cooldown_time * 0.5)
+		DeactivatePower()
+		return
+	if(eye_protection > 0)
+		modified_delay += (eye_protection * 0.25) * mesmerize_delay
+		to_chat(mesmerized_target, span_warning("It feels like your eye-protection is helping you resist the victim's gaze!"))
+		to_chat(mesmerized_target, "But, you can still feel it making your eyes grow heavy.")
+		to_chat(user, "[mesmerized_target] is wearing eye-protection, it will take longer to mesmerize them.")
+		user.balloon_alert(user, "partially protected!")
+	else
+		to_chat(mesmerized_target, "[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]...")
 
 	if(!do_after(user, mesmerize_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target)))
 		StartCooldown(cooldown_time * 0.5)
 		DeactivatePower()
 		return
 	// Can't quite time it here, but oh well
-	to_chat(mesmerized_target, "[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]...")
 	if(IS_MONSTERHUNTER(mesmerized_target))
 		to_chat(mesmerized_target, span_notice("You feel your eyes burn for a while, but it passes."))
 		mesmerized_target.balloon_alert(user, "resists!")
@@ -199,8 +217,9 @@
 
 /// Display an animated overlay over our head to indicate what's going on
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/eldritch_eye(mob/target, icon_state = "eye_open", duration = 1 SECONDS)
-	var/image/image = image('icons/effects/eldritch.dmi', owner, icon_state, ABOVE_ALL_MOB_LAYER, pixel_x = -owner.pixel_x, pixel_y = 28) /// TODO make this disable cloak
-	SET_PLANE_EXPLICIT(image, ABOVE_LIGHTING_PLANE, owner)
+	var/image/image = image('icons/effects/eldritch.dmi', owner, icon_state, mesmerize_layer, pixel_x = -owner.pixel_x, pixel_y = 28) /// TODO make this disable cloak
+	image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	SET_PLANE_EXPLICIT(image, mesmerize_plane, owner)
 	flick_overlay_global(image, list(owner?.client, target?.client), duration)
 
 #undef MESMERIZE_GLASSES_LEVEL
