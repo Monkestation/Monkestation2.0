@@ -286,7 +286,7 @@
 	icon_state ="chemistrybook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemistry Textbook"
-	page_link = "guide-to-chemistry"
+	page_link = "Guide_to_chemistry"
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
@@ -404,7 +404,7 @@
 	icon_state = "book2"
 	starting_author = "W. Powell"
 	starting_title = "DIY Chemical Grenades"
-	page_link = "Guide-to-grenades"
+	page_link = "Guide_to_grenades"
 
 /obj/item/book/manual/wiki/ordnance
 	name = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
@@ -461,7 +461,7 @@
 	icon_state = "book6"
 	starting_author = "Dr. Mobius"
 	starting_title = "Artifact Science!"
-	page_link = "Guide-to-artsci"
+	page_link = "Guide_to_artsci"
 
 /obj/item/book/manual/wiki/banned //manual specific for... well, handing a funny book to people that might be on the verge of breaking rules but we can have a funny way of handling those situations.
 	name = "How to Avoid Getting Banned"
