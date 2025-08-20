@@ -54,13 +54,13 @@
 
 /obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if((stat == CONSCIOUS && !sterile && !neutered) && !isalien(user))
+	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Leap(user))
 			return COMSIG_LIVING_CANCEL_PULL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
-	if((stat == CONSCIOUS && !sterile && !neutered) && !isalien(user))
+	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Leap(user))
 			return
 	. = ..()
@@ -148,8 +148,6 @@
 
 /obj/item/clothing/mask/facehugger/proc/Leap(mob/living/hit_mob)
 	//check if not carbon/alien/has facehugger already/ect.
-	if(neutered)
-		return FALSE //neutered facehuggers can't leap
 	if(!valid_to_attach(hit_mob))
 		return FALSE
 	var/mob/living/carbon/target = hit_mob
@@ -164,7 +162,8 @@
 	if(blocking_item)
 		target.visible_message(span_danger("[src] smashes against [target]'s [blocking_item]!"), \
 							span_userdanger("[src] smashes against your [blocking_item]!"))
-		Die()
+		if(!neutered) //Lamarr should be carryable by people in a protective suit
+			Die()
 		return FALSE
 
 	if(target.wear_mask)
