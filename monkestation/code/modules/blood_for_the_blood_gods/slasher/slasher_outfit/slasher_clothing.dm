@@ -89,7 +89,7 @@
 	desc = "A pair of suspenders that seem to be stitched together from the souls of the damned."
 
 /obj/item/clothing/suit/apron/slasher/brute
-	name = "frightful armor"
+	name = "soul-steel armor"
 	icon_state = "brute_apron"
 	desc = "A set of armor that grows stronger with each soul claimed."
 
