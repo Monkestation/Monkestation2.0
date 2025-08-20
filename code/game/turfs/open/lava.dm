@@ -360,7 +360,6 @@
 	light_outer_range = 3
 	light_power = 0.75
 	light_color = LIGHT_COLOR_PURPLE
-	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
 
