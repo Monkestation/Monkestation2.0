@@ -23,7 +23,7 @@
 	return
 
 /obj/item/clothing/mask/gas/slasher/cluwne
-	name = "cluwne's mask"
+	name = "cluwne mask"
 	icon_state = "cluwne_mask"
 	desc = "A close-fitting sealed mask, this one seems to be protruding some kind of dark aura."
 	flags_inv = HIDEFACIALHAIR
@@ -107,7 +107,7 @@
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/clothing/under/slasher/cluwne
-	name = "cluwne's jumpsuit"
+	name = "cluwne jumpsuit"
 	icon_state = "cluwne_under"
 	desc = "A cluwne jumpsuit, suspenders sold separately cause fuck these bastards."
 
