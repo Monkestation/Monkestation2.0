@@ -491,3 +491,25 @@
       size 3.
   - balance: Bingles now spawn every 50 items consumed (up from 30)
   - balance: Bingles now have 5 weight (down from 10)
+2025-08-19:
+  Ice-Type:
+  - bugfix: You get your hula skirt when you buy it now
+  - bugfix: You can now choose pineapple creachers with the pet beacon
+  Shoddd:
+  - bugfix: TRAIT_SNOWSTORM_IMMUNE no longer makes you plasma lake proof
+  TheColorCyan:
+  - rscadd: ICARUS Sunbeam will now pick a random turf on the station to path to and
+      pick another upon reaching it, instead of following rod-like movement.
+  Xander3359:
+  - balance: silenced status effect blocks emotes
+  notghosti:
+  - rscadd: Included toolboxes and supplies to Centcom robotics to be able to do all
+      surgeries.
+  - rscadd: Added recharging defib mounts to CC
+  - rscadd: Rickys mech now comes with a interals air tank
+  - balance: Removed Gas analyzer from brig physicians toolbox for coil and a multitool
+  - qol: Reorganized mecha nodes categorization.
+  - rscadd: CC Firing range will automate its cleaning better.
+  - bugfix: Bullet drives will now properly clean dishes at further ranges.
+  - rscdel: A Jerma
+  - map: Fixed roundstart turf differences on Icebox and some ruins.
