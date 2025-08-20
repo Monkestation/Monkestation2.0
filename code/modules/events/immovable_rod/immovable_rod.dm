@@ -214,14 +214,18 @@
 				transform = transform.Scale(1.005, 1.005)
 				name = "[initial(name)] of sentient slaying +[num_sentient_mobs_hit]"
 
-	if(iscarbon(smeared_mob))
-		var/mob/living/carbon/smeared_carbon = smeared_mob
+	var/mob/living/carbon/smeared_carbon = smeared_mob
+	if(istype(smeared_carbon))
 		smeared_carbon.adjustBruteLoss(100)
 		var/obj/item/bodypart/penetrated_chest = smeared_carbon.get_bodypart(BODY_ZONE_CHEST)
 		penetrated_chest?.receive_damage(60, wound_bonus = 20, sharpness=SHARP_POINTY)
 
 	if(smeared_mob.density || prob(10))
 		EX_ACT(smeared_mob, EXPLODE_HEAVY)
+		if (istype(smeared_carbon) && smeared_carbon.has_quirk(/datum/quirk/loud_ass))
+			playsound(smeared_carbon, "monkestation/sound/effects/superfart.ogg", 50, TRUE, mixer_channel = CHANNEL_PRUDE)
+	else if (istype(smeared_carbon))
+		smeared_carbon.impact_fart()
 
 /obj/effect/immovablerod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

@@ -8,11 +8,11 @@
 
 /datum/quirk/loud_ass
 	name = "Loud Ass"
-	desc = "For some ungodly reason, your ass is twice as loud as normal."
+	desc = "For some ungodly reason, your ass is twice as loud as normal and collisions are much more likely to knock the wind out of you."
 	value = 2
-	medical_record_text = "Patient's buttocks have a tendency to loudly clap as they walk."
+	medical_record_text = "Patient's buttocks are very talkative."
 	icon = FA_ICON_VOLUME_HIGH
-	//All effects are handled directly in butts.dm
+	//The volume effect is handled directly in butts.dm
 
 /datum/quirk/dummy_thick
 	name = "Dummy Thicc"

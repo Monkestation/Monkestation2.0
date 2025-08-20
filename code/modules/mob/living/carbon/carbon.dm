@@ -69,6 +69,8 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		impact_fart()
+
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
@@ -84,6 +86,7 @@
 			)
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 		log_combat(src, victim, "crashed into")
+		victim.impact_fart()
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -1440,3 +1443,30 @@
 		return
 	head.adjustBleedStacks(5)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
+
+/mob/living/carbon/death(gibbed)
+	if(has_quirk(/datum/quirk/loud_ass) && gibbed)
+		playsound(src, "monkestation/sound/effects/superfart.ogg", 50, TRUE, mixer_channel = CHANNEL_PRUDE)
+	else if (has_quirk(/datum/quirk/loud_ass) || prob(1))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(2 SECONDS, 10 SECONDS))
+	else if (prob(10))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(15 SECONDS, 100 SECONDS))
+	. = ..()
+
+/mob/living/carbon/ZImpactDamage(turf/T, levels)
+	impact_fart()
+	. = ..()
+
+/mob/living/carbon/proc/impact_fart(probability = 1, volume = 25)
+	if(has_quirk(/datum/quirk/loud_ass) || prob(probability))
+		var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
+		if (butt)
+			visible_message(span_notice("[src] has the wind knocked out of them!"))
+			playsound(src, pick(butt.sound_effect), volume, TRUE, mixer_channel = CHANNEL_PRUDE)
+
+/mob/living/carbon/proc/death_fart(delay)
+	sleep(delay)
+	var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
+	if (butt)
+		visible_message(span_notice("[src]'s ass gives one last salute!"))
+		playsound(src, pick(butt.sound_effect), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
