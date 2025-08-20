@@ -16,6 +16,7 @@
 	var/recent_spin = 0
 	var/last_fire = 0
 	gun_flags = GUN_SMOKE_PARTICLES
+	box_reload_delay = CLICK_CD_RAPID // honestly this is negligible because of the inherent delay of having to switch hands
 
 /obj/item/gun/ballistic/revolver/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	..()
@@ -98,6 +99,9 @@
 	if(last_fire && last_fire + 15 SECONDS > world.time)
 		. = span_notice("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
 
+/obj/item/gun/ballistic/revolver/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
@@ -131,6 +135,9 @@
 		"Black Panther" = "c38_panther"
 	)
 
+/obj/item/gun/ballistic/revolver/c38/detective/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
 /obj/item/gun/ballistic/revolver/syndicate
 	name = "\improper Syndicate Revolver"
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
@@ -141,10 +148,16 @@
 	//There's already a cowboy sprite in there!
 	icon_state = "lucky"
 
+/obj/item/gun/ballistic/revolver/syndicate/nuclear
+	pin = /obj/item/firing_pin/implant/pindicate
+
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
+
+/obj/item/gun/ballistic/revolver/mateba/give_manufacturer_examine()
+	return
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
@@ -263,6 +276,9 @@
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(span_danger("[user.name] fires [src] at [user.p_their()] head!"), span_userdanger("You fire [src] at your head!"), span_hear("You hear a gunshot!"))
 
+/obj/item/gun/ballistic/revolver/russian/give_manufacturer_examine()
+	return
+
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
@@ -291,4 +307,78 @@
 		user.drop_all_held_items()
 		user.Paralyze(80)
 
+///Blueshift guns
 
+// .35 Sol mini revolver
+
+/obj/item/gun/ballistic/revolver/sol
+	name = "\improper Eland Revolver"
+	desc = "A small revolver with a comically short barrel and cylinder space for eight .35 Sol Short rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon_state = "eland"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c35sol
+	suppressor_x_offset = 3
+	w_class = WEIGHT_CLASS_SMALL
+	can_suppress = TRUE
+
+/obj/item/gun/ballistic/revolver/sol/evil
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
+
+/obj/item/gun/ballistic/revolver/sol/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/revolver/sol/examine_more(mob/user)
+	. = ..()
+
+	. += "The Eland is one of the few Trappiste weapons not made for military contract. \
+		Instead, the Eland started life as a police weapon, offered as a gun to finally \
+		outmatch all others in the cheap police weapons market. Unfortunately, this \
+		coincided with nearly every SolFed police force realising they are actually \
+		comically overfunded. With military weapons bought for police forces taking \
+		over the market, the Eland instead found home in the civilian personal defense \
+		market. That is likely the reason you are looking at this one now."
+
+	return .
+
+
+// .585 super revolver. INSANELY slow fire rate for the damage
+
+/obj/item/gun/ballistic/revolver/takbok
+	name = "\improper Takbok Revolver"
+	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon_state = "takbok"
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
+	suppressor_x_offset = 5
+	can_suppress = TRUE
+	fire_delay = 1 SECONDS
+	recoil = 3
+	wield_recoil = 1
+
+/obj/item/gun/ballistic/revolver/takbok/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
+
+/obj/item/gun/ballistic/revolver/takbok/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/revolver/takbok/examine_more(mob/user)
+	. = ..()
+
+	. += "The Takbok is a unique design for Trappiste for the sole reason that it \
+		was made at first to be a one-off. Founder of partner company Carwo Defense, \
+		Darmaan Khaali Carwo herself, requested a sporting revolver from Trappiste. \
+		What was delivered wasn't a target revolver, it was a target crusher. The \
+		weapon became popular as Carwo crushed many shooting competitions using \
+		the Takbok, with the design going on several production runs up until \
+		2523 when the popularity of the gun fell off. Due to the number of revolvers \
+		made, they are still easy enough to find if you look despite production \
+		having already ceased many years ago."
+
+	return .

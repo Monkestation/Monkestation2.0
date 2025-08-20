@@ -446,3 +446,489 @@
 	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
 	pin = /obj/item/firing_pin/monkey
+
+//Blueshift guns, modular no more. And yes, these are automatics not rifles.
+
+///The standard rifle rifle, it just works
+
+/obj/item/gun/ballistic/automatic/sol_rifle
+	name = "\improper Carwo-Cawil Battle Rifle"
+	desc = "A heavy battle rifle firing .40 Sol. Commonly seen in the hands of SolFed military types. Accepts any standard SolFed rifle magazine."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
+	icon_state = "infanterie"
+
+	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
+	worn_icon_state = "infanterie"
+
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
+	inhand_icon_state = "infanterie"
+
+	SET_BASE_PIXEL(-8, 0)
+
+	special_mags = TRUE
+
+	bolt_type = BOLT_TYPE_LOCKING
+
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c40sol_rifle
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c40sol_rifle/standard
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/rifle_heavy.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_rifle.ogg'
+	can_suppress = TRUE
+
+	can_bayonet = FALSE
+
+	suppressor_x_offset = 12
+
+	burst_size = 1
+	fire_delay = 0.4 SECONDS
+	actions_types = list()
+
+	spread = 7.5
+	projectile_wound_bonus = -10
+
+/obj/item/gun/ballistic/automatic/sol_rifle/Initialize(mapload)
+	. = ..()
+
+	give_autofire()
+
+/// Separate proc for handling auto fire just because one of these subtypes isn't otomatica
+/obj/item/gun/ballistic/automatic/sol_rifle/proc/give_autofire()
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/sol_rifle/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
+
+/obj/item/gun/ballistic/automatic/sol_rifle/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/sol_rifle/examine_more(mob/user)
+	. = ..()
+
+	. += "The Carwo-Cawil rifles are built by Carwo for \
+		use by SolFed's various infantry branches. Following the rather reasonable \
+		military requirements of using the same few cartridges and magazines, \
+		the lifespans of logistics coordinators and quartermasters everywhere \
+		were lengthened by several years. While typically only for military sale \
+		in the past, the recent collapse of certain unnamed weapons manufacturers \
+		has caused Carwo to open many of its military weapons to civilian sale, \
+		which includes this one."
+
+	return .
+
+/obj/item/gun/ballistic/automatic/sol_rifle/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_rifle/evil
+	desc = "A heavy battle rifle, this one seems to be painted tacticool black. Accepts any standard SolFed rifle magazine."
+
+	icon_state = "infanterie_evil"
+	worn_icon_state = "infanterie_evil"
+	inhand_icon_state = "infanterie_evil"
+	projectile_wound_bonus = 5
+	projectile_damage_multiplier = 1.25
+	fire_delay = 0.3 SECONDS
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_rifle/evil/unrestricted
+	pin = /obj/item/firing_pin
+
+// Sol marksman rifle, mildly useless but highly accurate
+
+/obj/item/gun/ballistic/automatic/sol_rifle/marksman
+	name = "\improper Cawil Marksman Rifle"
+	desc = "A heavy marksman rifle commonly seen in the hands of SolFed military types. Accepts any standard SolFed rifle magazine."
+
+	icon_state = "elite"
+	worn_icon_state = "elite"
+	inhand_icon_state = "elite"
+
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c40sol_rifle
+
+	fire_delay = 0.8 SECONDS
+
+	spread = 0
+	projectile_damage_multiplier = 1.75
+	projectile_wound_bonus = 0
+
+/obj/item/gun/ballistic/automatic/sol_rifle/marksman/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/scope, range_modifier = 2)
+
+/obj/item/gun/ballistic/automatic/sol_rifle/marksman/give_autofire() ///I.E not actually automatic fire, just semi
+	return
+
+/obj/item/gun/ballistic/automatic/sol_rifle/marksman/examine_more(mob/user)
+	. = ..()
+
+	. += "This particlar variant is a marksman rifle. \
+		Automatic fire was forsaken for a semi-automatic setup, a more fitting \
+		stock, and more often than not a scope. Typically also seen with smaller \
+		magazines for convenience for the shooter, but as with any other Sol \
+		rifle, all standard magazine types will work."
+
+	return .
+
+/obj/item/gun/ballistic/automatic/sol_rifle/marksman/no_mag
+	spawnwithmagazine = FALSE
+
+///.585 trappiste SMG, always having balance problems
+
+/obj/item/gun/ballistic/automatic/xhihao_smg
+	name = "\improper Bogseo Heavy Submachine Gun"
+	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the hefty .585 cartridge. \
+		It provides enough kick to bruise a shoulder pretty bad if used without protection."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
+	icon_state = "bogseo"
+
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/xhihao_light_arms/guns_righthand.dmi'
+	inhand_icon_state = "bogseo"
+
+	special_mags = FALSE
+
+	bolt_type = BOLT_TYPE_STANDARD
+
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
+	can_suppress = TRUE
+
+	can_bayonet = FALSE
+
+	suppressor_x_offset = 9
+
+	burst_size = 2
+	fire_delay = 0.5 SECONDS
+	actions_types = list()
+	spread = 14.5
+	// Hope you didn't need to see anytime soon
+	recoil = 2
+	wield_recoil = 1
+	projectile_wound_bonus = -5
+
+/obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
+///	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/xhihao_smg/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/xhihao_smg/examine_more(mob/user)
+	. = ..()
+
+	. += "The Bogseo submachinegun is seen in highly different lights based on \
+		who you ask. Ask a Jovian, and they'll go off all day about how they \
+		love the thing so. A big weapon for shooting big targets, like the \
+		fuel-stat raiders in their large suits of armor. Ask a space pirate, however \
+		and you'll get a different story. That is thanks to many SolFed anti-piracy \
+		units picking the Bogseo as their standard boarding weapon. What better \
+		to ruin a brigand's day than a bullet large enough to turn them into \
+		mist at full auto, after all?"
+
+	return .
+
+/obj/item/gun/ballistic/automatic/xhihao_smg/no_mag
+	spawnwithmagazine = FALSE
+
+// Rapid firing submachinegun firing .27-54 Cesarzowa
+
+/obj/item/gun/ballistic/automatic/miecz
+	name = "\improper Miecz Submachine Gun"
+	desc = "A short barrel, further compacted conversion of the 'Lanca' rifle to fire pistol caliber .27-54 cartridges. \
+		Due to the intended purpose of the weapon, and less than optimal ranged performance of the projectile, it has \
+		nothing more than basic glow-sights as opposed to the ranged scope Lanca users might be used to."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_48.dmi'
+	icon_state = "miecz"
+
+	inhand_icon_state = "c20r"
+	worn_icon_state = "gun"
+
+	SET_BASE_PIXEL(-8, 0)
+
+	special_mags = FALSE
+
+	bolt_type = BOLT_TYPE_STANDARD
+
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_SUITSTORE
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/miecz
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_light.ogg'
+	can_suppress = TRUE
+	suppressor_x_offset = 0
+	suppressor_y_offset = 0
+
+	can_bayonet = FALSE
+
+	burst_size = 1
+	fire_delay = 0.2 SECONDS
+	actions_types = list()
+
+	spread = 5
+
+/obj/item/gun/ballistic/automatic/miecz/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/miecz/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
+
+/obj/item/gun/ballistic/automatic/miecz/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/miecz/examine_more(mob/user)
+	. = ..()
+
+	. += "The Meicz is one of the newest weapons to come out of CIN member state hands and \
+		into the wild, typically the frontier. It was built alongside the round it fires, the \
+		.27-54 Cesarzawa pistol round. Based on the proven Lanca design, it seeks to bring that \
+		same reliable weapon design into the factor of a submachinegun. While it is significantly \
+		larger than many comparable weapons in SolFed use, it more than makes up for it with ease \
+		of control and significant firerate."
+
+	return .
+
+/obj/item/gun/ballistic/automatic/miecz/no_mag
+	spawnwithmagazine = FALSE
+
+///Really torn as to whether these belong in rifle.dm or here..... ACTUALLY, SOLUTION. Lanca stays semi, make the heavy a bolt-action later
+
+
+// Semi-automatic rifle firing .310 with reduced damage compared to a Sakhno. I.E weaker damage mosin with slower fire rate but semi and magazines and accurate
+
+/obj/item/gun/ballistic/automatic/lanca
+	name = "\improper Lanca Battle Rifle"
+	desc = "A relatively compact, long barreled bullpup battle rifle chambered for .310 Strilka. Has an integrated sight with \
+		a surprisingly functional amount of magnification, given its place of origin."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_48.dmi'
+	icon_state = "lanca"
+
+	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_worn.dmi'
+	worn_icon_state = "lanca"
+
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_righthand.dmi'
+	inhand_icon_state = "lanca"
+
+	SET_BASE_PIXEL(-8, 0)
+
+	special_mags = FALSE
+
+	bolt_type = BOLT_TYPE_STANDARD
+
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/lanca
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/battle_rifle.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
+	can_suppress = TRUE
+	suppressor_x_offset = 0
+	suppressor_y_offset = 0
+
+	can_bayonet = FALSE
+
+	burst_size = 1
+	fire_delay = 1.2 SECONDS
+	actions_types = list()
+
+	recoil = 1.5
+	wield_recoil = 0.5
+	spread = 2.5
+
+/obj/item/gun/ballistic/automatic/lanca/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
+
+/obj/item/gun/ballistic/automatic/lanca/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
+
+/obj/item/gun/ballistic/automatic/lanca/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/lanca/examine_more(mob/user)
+	. = ..()
+
+	. += "The Lanca is a now relatively dated replacement for Kalashnikov pattern rifles \
+		adopted by states now combining to form the CIN. While the rifle that came before them \
+		had its benefits, leadership of many armies started to realize that the Kalashnikov-based \
+		rifles were really showing their age once the variants began reaching the thousands in serial. \
+		The solution was presented by a then new company, Szot Dynamica. This new rifle, not too \
+		unlike the one you are seeing now, adopted all of the latest technology of the time. Lightweight \
+		caseless ammunition, well known for its use in Sakhno rifles, as well as various electronics and \
+		other incredible technological advancements. These advancements may have already been around since \
+		before the creation of even the Sakhno, but the fact you're seeing this now fifty year old design \
+		must mean something, right?"
+
+	return .
+
+/obj/item/gun/ballistic/automatic/lanca/no_mag
+	spawnwithmagazine = FALSE
+
+
+// The AMR
+// This sounds a lot scarier than it actually is, you'll just have to trust me here
+
+/obj/item/gun/ballistic/automatic/wylom
+	name = "\improper Wyłom Anti-Materiel Rifle"
+	desc = "A massive, outdated beast of an anti materiel rifle that was once in use by CIN military forces. Fires the devastating .60 Strela caseless round, \
+		the massively overperforming penetration of which being the reason this weapon was discontinued."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_64.dmi'
+	base_pixel_x = -16 // This baby is 64 pixels wide
+	pixel_x = -16
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/inhands_64_left.dmi'
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/inhands_64_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/szot_dynamica/guns_worn.dmi'
+	icon_state = "wylom"
+	inhand_icon_state = "wylom"
+	worn_icon_state = "wylom"
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = ITEM_SLOT_BACK
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/wylom
+	can_suppress = FALSE
+	can_bayonet = FALSE
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/amr_fire.ogg'
+	fire_sound_volume = 100 // BOOM BABY
+
+	recoil = 4
+	wield_recoil = 2
+
+	weapon_weight = WEAPON_HEAVY
+	burst_size = 1
+	fire_delay = 2 SECONDS
+	actions_types = list()
+
+	force = 15 // I mean if you're gonna beat someone with the thing you might as well get damage appropriate for how big the fukken thing is
+
+/obj/item/gun/ballistic/automatic/wylom/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
+	AddElement(/datum/element/gun_launches_little_guys, throwing_force = 3, throwing_range = 5)
+
+/obj/item/gun/ballistic/automatic/wylom/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/wylom/examine_more(mob/user)
+	. = ..()
+
+	. += "The 'Wyłom' AMR was a weapon not originally made for unaided human hands. \
+		The original rifle had mounting points for a specialized suit attachment system, \
+		not too much unlike heavy smartguns that can be seen across the galaxy. CIN military \
+		command, however, deemed that expensive exoskeletons and rigs for carrying an organic \
+		anti material system were simply not needed, and that soldiers should simply 'deal with it'. \
+		Unsurprisingly, soldiers assigned this weapon tend to not be a massive fan of that fact, \
+		and smekalka within CIN ranks is common with troops finding novel ways to carry and use \
+		their large rifles with as little effort as possible. Most of these novel methods, of course, \
+		tend to shatter when the rifle is actually fired."
+
+	return .
+
+
+
+// Base Sol SMG - Incredibly junky, needs work
+
+/obj/item/gun/ballistic/automatic/sol_smg
+	name = "\improper Sindano Submachine Gun"
+	desc = "A small submachine gun firing .35 Sol. Commonly seen in the hands of PMCs and other unsavory corpos. Accepts any standard Sol pistol magazine."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns32x.dmi'
+	icon_state = "sindano"
+
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
+	inhand_icon_state = "sindano"
+
+	special_mags = TRUE
+
+	bolt_type = BOLT_TYPE_OPEN
+
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol/stendo
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_light.ogg'
+	can_suppress = TRUE
+
+	can_bayonet = FALSE
+
+	suppressor_x_offset = 11
+
+	burst_size = 2
+	fire_delay = 0.35 SECONDS
+
+	spread = 7.5
+
+/obj/item/gun/ballistic/automatic/sol_smg/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
+
+/obj/item/gun/ballistic/automatic/sol_smg/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/sol_smg/examine_more(mob/user)
+	. = ..()
+
+	. += "The Sindano submachinegun was originally produced for military contract. \
+		These guns were seen in the hands of anyone from medics, ship techs, logistics officers, \
+		and shuttle pilots often had several just to show off. Due to SolFed's quest to \
+		extend the lifespans of their logistics officers and quartermasters, the weapon \
+		uses the same standard pistol cartridge that most other miltiary weapons of \
+		small caliber use. This results in interchangeable magazines between pistols \
+		and submachineguns, neat!"
+
+	return .
+
+/obj/item/gun/ballistic/automatic/sol_smg/no_mag
+	spawnwithmagazine = FALSE
+
+// Sindano (evil)
+
+/obj/item/gun/ballistic/automatic/sol_smg/evil
+	desc = "A small submachinegun, this one is painted in tacticool black. Accepts any standard Sol pistol magazine."
+
+	icon_state = "sindano_evil"
+	inhand_icon_state = "sindano_evil"
+	spread = 5
+	projectile_wound_bonus = 5
+	projectile_damage_multiplier = 1.25
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
+	pin = /obj/item/firing_pin
+

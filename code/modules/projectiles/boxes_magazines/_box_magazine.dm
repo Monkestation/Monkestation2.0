@@ -33,6 +33,9 @@
 	var/start_empty = FALSE
 	///Whether the sprite updates if it has ammunition, monke var
 	var/spriteshift = TRUE
+	/// When inserted into an ammo workbench, does this ammo box check for parent ammunition to search for subtypes of? Relevant for surplus clips, multi-sprite magazines.
+	/// Maybe don't enable this for shotgun ammo boxes.
+	var/multitype = TRUE
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()

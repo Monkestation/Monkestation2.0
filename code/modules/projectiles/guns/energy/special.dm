@@ -20,6 +20,9 @@
 /obj/item/gun/energy/ionrifle/emp_act(severity)
 	return
 
+/obj/item/gun/energy/ionrifle/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
+
 /obj/item/gun/energy/ionrifle/carbine
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
@@ -334,6 +337,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot, /obj/item/ammo_casing/energy/temp/cryo)
 	cell_type = /obj/item/stock_parts/cell/high
 	pin = /obj/item/firing_pin
+
+/obj/item/gun/energy/temperature/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"

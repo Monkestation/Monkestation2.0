@@ -1,6 +1,6 @@
 /obj/item/gun/energy/e_gun
-	name = "energy gun"
-	desc = "A basic hybrid energy gun with two settings: disable and kill."
+	name = "\improper Allstar SC-2 energy carbine"
+	desc = "A basic hybrid energy carbine with two settings: disable and kill."
 	icon_state = "energy"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
@@ -15,6 +15,9 @@
 		light_overlay = "flight", \
 		overlay_x = 15, \
 		overlay_y = 10)
+
+/obj/item/gun/energy/e_gun/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
@@ -51,6 +54,9 @@
 	icon_state = "protolaser"
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/electrode/old)
+
+/obj/item/gun/energy/e_gun/old/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
 /obj/item/gun/energy/e_gun/mini/practice_phaser
 	name = "practice phaser"

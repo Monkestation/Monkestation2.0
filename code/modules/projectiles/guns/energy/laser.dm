@@ -1,6 +1,6 @@
 /obj/item/gun/energy/laser
-	name = "laser gun"
-	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
+	name = "\improper Allstar SC-1 laser carbine"
+	desc = "A basic energy-based laser carbine that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	inhand_icon_state = "laser"
 	w_class = WEIGHT_CLASS_BULKY
@@ -8,6 +8,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
+
+/obj/item/gun/energy/laser/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
@@ -29,15 +32,9 @@
 	item_flags = NONE
 	gun_flags = NOT_A_REAL_GUN
 
-/obj/item/gun/energy/laser/retro
-	name ="retro laser gun"
-	icon_state = "retro"
-	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-	ammo_x_offset = 3
-
 /obj/item/gun/energy/laser/carbine
-	name = "laser carbine"
-	desc = "A modified laser gun which can shoot far faster, but each shot is far less damaging."
+	name = "\improper Allstar SC-1A laser auto-carbine"
+	desc = "An basic energy-based laser auto-carbine that rapidly fires weakened, concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
 
@@ -45,12 +42,24 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS, allow_akimbo = FALSE)
 
+/obj/item/gun/energy/laser/retro
+	name ="retro laser gun"
+	icon_state = "retro"
+	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	ammo_x_offset = 3
+
+/obj/item/gun/energy/laser/retro/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
+
 /obj/item/gun/energy/laser/retro/old
 	name ="laser gun"
 	icon_state = "retro"
 	desc = "First generation lasergun, developed by Nanotrasen. Suffers from ammo issues but its unique ability to recharge its ammo without the need of a magazine helps compensate. You really hope someone has developed a better lasergun while you were in cryo."
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
 	ammo_x_offset = 3
+
+/obj/item/gun/energy/laser/retro/old/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
 /obj/item/gun/energy/laser/hellgun
 	name ="hellfire laser gun"
@@ -70,6 +79,9 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/antique)
+
+/obj/item/gun/energy/laser/captain/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
@@ -120,6 +132,9 @@
 	pin = null
 	ammo_x_offset = 3
 
+/obj/item/gun/energy/lasercannon/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
+
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator
 	select_name = "accelerator"
@@ -164,6 +179,9 @@
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
 
+/obj/item/gun/energy/laser/bluetag/give_manufacturer_examine()
+	return
+
 /obj/item/gun/energy/laser/redtag
 	name = "laser tag gun"
 	icon_state = "redtag"
@@ -178,6 +196,9 @@
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
+
+/obj/item/gun/energy/laser/redtag/give_manufacturer_examine()
+	return
 
 //Inferno and Cryo Pistols
 
@@ -231,3 +252,4 @@
 	name = "luxurious laser gun"
 	desc = "A laser gun modified to cost 20 credits to fire. Point towards poor people."
 	pin = /obj/item/firing_pin/paywall/luxury
+

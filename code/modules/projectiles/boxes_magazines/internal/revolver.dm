@@ -20,3 +20,14 @@
 /obj/item/ammo_box/magazine/internal/rus357/Initialize(mapload)
 	stored_ammo += new ammo_type(src)
 	. = ..()
+
+/obj/item/ammo_box/magazine/internal/cylinder/c35sol
+	ammo_type = /obj/item/ammo_casing/c35sol
+	caliber = CALIBER_SOL35SHORT
+	max_ammo = 8
+
+/obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
+	ammo_type = /obj/item/ammo_casing/c585trappiste
+	caliber = CALIBER_585TRAPPISTE
+	max_ammo = 5
+

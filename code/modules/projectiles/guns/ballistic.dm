@@ -129,6 +129,17 @@
 
 	var/wield_recoil = 0
 
+	/// Does this gun have mag and nomag on mob variance?
+	var/alt_icons = FALSE
+	/// What the icon state is for the on-back guns
+	var/alt_icon_state
+	/// How long it takes to reload a magazine.
+	var/reload_time = 2 SECONDS
+	/// if this gun has a penalty for reloading with an ammo_box type
+	var/box_reload_penalty = TRUE
+	/// reload penalty inflicted by using an ammo box instead of an individual cartridge, if not outright exchanging the magazine
+	var/box_reload_delay = CLICK_CD_MELEE
+
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
@@ -147,6 +158,8 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_reload))
 	register_context()
+	if(alt_icons)
+		AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/ballistic/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -251,6 +264,22 @@
 			capacity_number = 20
 	if(capacity_number)
 		. += "[icon_state]_mag_[capacity_number]"
+	if(alt_icons)
+		if(!magazine)
+			if(alt_icon_state)
+				inhand_icon_state = "[alt_icon_state]_nomag"
+				worn_icon_state = "[alt_icon_state]_nomag"
+			else
+				inhand_icon_state = "[initial(icon_state)]_nomag"
+				worn_icon_state = "[initial(icon_state)]_nomag"
+		else
+			if(alt_icon_state)
+				inhand_icon_state = "[alt_icon_state]"
+				worn_icon_state = "[alt_icon_state]"
+			else
+				inhand_icon_state = "[initial(icon_state)]"
+				worn_icon_state = "[initial(icon_state)]"
+
 
 
 /obj/item/gun/ballistic/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
@@ -434,7 +463,7 @@
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	suppressed = S
-	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	///w_class += S.w_class //so pistols do not fit in pockets when suppressed (We actually want this and had horrible code to override this code)
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
@@ -442,7 +471,7 @@
 		return
 	if(isitem(suppressed))
 		var/obj/item/I = suppressed
-		w_class -= I.w_class
+		//w_class -= I.w_class
 	return ..()
 
 /obj/item/gun/ballistic/AltClick(mob/user)
@@ -734,3 +763,48 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/suppressor/standard
+	desc = "A small-arms suppressor for maximum espionage."
+
+///Blueshift code!
+/obj/item/gun/ballistic/proc/on_wield()
+	SIGNAL_HANDLER
+
+	recoil = wield_recoil
+	spread = spread * 0.75
+
+/obj/item/gun/ballistic/proc/on_unwield()
+	SIGNAL_HANDLER
+
+	recoil = initial(recoil)
+	spread = initial(spread)
+
+/obj/item/gun/ballistic/proc/handle_magazine(mob/user, obj/item/ammo_box/magazine/inserting_magazine)
+	if(magazine) // If we already have a magazine inserted, we're going to begin tactically reloading it.
+		if(reload_time && !HAS_TRAIT(user, TRAIT_INSTANT_RELOAD)) // Check if we have a reload time to tactical reloading, or if we have the instant reload trait.
+			to_chat(user, span_notice("You start to insert the magazine into [src]!"))
+			if(!do_after(user, reload_time, src, IGNORE_USER_LOC_CHANGE)) // We are allowed to move while reloading.
+				to_chat(user, span_danger("You fail to insert the magazine into [src]!"))
+				return TRUE
+		eject_magazine(user, FALSE, inserting_magazine) // We eject the magazine then insert the new one, while putting the old one in hands.
+	else
+		insert_magazine(user, inserting_magazine) // Otherwise, just insert it.
+
+	return TRUE
+
+/obj/item/gun/ballistic/proc/handle_box_reload(mob/user, obj/item/ammo_box/ammobox, num_loaded)
+	var/box_load = FALSE // if you're reloading with an ammo box, inflicts a cooldown
+	if(istype(ammobox, /obj/item/ammo_box) && box_reload_penalty)
+		box_load = TRUE
+		user.changeNext_move(box_reload_delay) // cooldown to simulate having to fumble for another round
+		balloon_alert(user, "reload encumbered!")
+	to_chat(user, span_notice("You load [num_loaded] [cartridge_wording]\s into [src][box_load ?  ", but it takes some extra effort" : ""]."))
+
+/obj/effect/temp_visual/dir_setting/firing_effect
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 2
+	light_power = 1
+	light_color = LIGHT_COLOR_FIRE
+
+

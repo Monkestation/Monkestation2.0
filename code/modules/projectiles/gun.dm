@@ -630,5 +630,9 @@
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
 	return
 
+/// Adds the gun manufacturer examine component to the gun on subtypes, does nothing by default
+/obj/item/gun/proc/give_manufacturer_examine()
+	return
+
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

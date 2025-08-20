@@ -118,6 +118,9 @@
 	knife_x_offset = 20
 	knife_y_offset = 12
 
+/obj/item/gun/energy/recharge/ebow/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /obj/item/gun/energy/recharge/ebow/halloween
 	name = "candy corn crossbow"
 	desc = "A weapon favored by Syndicate trick-or-treaters."

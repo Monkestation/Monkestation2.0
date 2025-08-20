@@ -49,6 +49,81 @@
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
 
+/obj/item/gun/ballistic/shotgun/riot/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
+// SolFed shotgun (I.E resprited riot shotgun from blueshift)
+
+/obj/item/gun/ballistic/shotgun/riot/sol
+	name = "\improper Renoster Shotgun"
+	desc = "A twelve gauge shotgun with a six shell capacity underneath. Made for and used by SolFed's various military branches."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
+	icon_state = "renoster"
+
+	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
+	worn_icon_state = "renoster"
+
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
+	inhand_icon_state = "renoster"
+
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+
+	SET_BASE_PIXEL(-8, 0)
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/shotgun_heavy.ogg'
+	rack_sound = 'monkestation/code/modules/blueshift/sounds/shotgun_rack.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
+	can_suppress = TRUE
+
+	suppressor_x_offset = 9
+
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+
+/obj/item/gun/ballistic/shotgun/riot/sol/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
+
+/obj/item/gun/ballistic/shotgun/riot/sol/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/shotgun/riot/sol/examine_more(mob/user)
+	. = ..()
+
+	. += "The Renoster was designed at its core as a police shotgun. \
+		As consequence, it holds all the qualities a police force would want \
+		in one. Large shell capacity, sturdy frame, while holding enough \
+		capacity for modification to satiate even the most overfunded of \
+		peacekeeper forces. Inevitably, the weapon made its way into civilian \
+		markets alongside its sale to several military branches that also \
+		saw value in having a heavy shotgun."
+
+	return .
+
+/obj/item/gun/ballistic/shotgun/riot/sol/update_appearance(updates)
+	if(sawn_off)
+		suppressor_x_offset = 0
+		SET_BASE_PIXEL(0, 0)
+
+	. = ..()
+
+// Shotgun but EVIL!
+
+/obj/item/gun/ballistic/shotgun/riot/sol/evil
+	desc = "A twleve guage shotgun with an eight shell capacity underneath. This one is painted in a tacticool black."
+
+	icon_state = "renoster_evil"
+	worn_icon_state = "renoster_evil"
+	inhand_icon_state = "renoster_evil"
+	projectile_wound_bonus = 15
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
+
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
@@ -64,6 +139,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 	pbk_gentle = TRUE
+
+/obj/item/gun/ballistic/shotgun/automatic/combat/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact shotgun"
@@ -136,6 +214,9 @@
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	rack()
+
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
 // Bulldog shotgun //
 
@@ -273,6 +354,9 @@
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
 
+/obj/item/gun/ballistic/shotgun/bulldog/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////
@@ -361,4 +445,37 @@
 /obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	hook.afterattack(target, user, proximity_flag, click_parameters)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+// A shotgun, but tis a revolver (Blueshift again)
+// Woe, buckshot be upon ye
+
+/obj/item/gun/ballistic/revolver/shotgun_revolver
+	name = "\improper Bóbr 12 GA revolver"
+	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev12ga
+	recoil = SAWN_OFF_RECOIL
+	wield_recoil = SAWN_OFF_RECOIL * 0.5
+	weapon_weight = WEAPON_MEDIUM
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
+	icon_state = "bobr"
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_fire.ogg'
+	spread = SAWN_OFF_ACC_PENALTY
+	projectile_damage_multiplier = 0.75 /// No way in hell a handgun with a 3 inch barrel should fire the same cartridge with the same force as a full-length barrel
+	projectile_wound_bonus = -5  /// In addition, this should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
+
+/obj/item/gun/ballistic/revolver/shotgun_revolver/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
+
+/obj/item/gun/ballistic/revolver/shotgun_revolver/examine_more(mob/user)
+	. = ..()
+
+	. += "The 'Bóbr' started development as a limited run sporting weapon before \
+		the military took interest. The market quickly changed from sport shooting \
+		targets, to sport shooting SolFed strike teams once the conflict broke out. \
+		This pattern is different from the original civilian version, with a military \
+		standard pistol grip and weather resistant finish. While the 'Bóbr' was not \
+		a weapon standard issued to every CIN soldier, it was available for relatively \
+		cheap, and thus became rather popular among the ranks."
+
+	return .
 

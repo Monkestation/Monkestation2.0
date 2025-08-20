@@ -36,6 +36,9 @@
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
 
+/obj/item/gun/ballistic/automatic/pistol/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /obj/item/gun/ballistic/automatic/pistol/clandestine
 	name = "\improper Ansem pistol"
 	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."
@@ -43,6 +46,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
 	empty_indicator = TRUE
 	suppressor_x_offset = 12
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
@@ -113,6 +119,9 @@
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	suppressor_x_offset = 6
 
+/obj/item/gun/ballistic/automatic/pistol/aps/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
 	desc = "A 2 dimensional gun.. what?"
@@ -141,3 +150,220 @@
 	projectile_damage_multiplier = 0.5
 	projectile_wound_bonus = -12
 	pin = /obj/item/firing_pin/monkey
+
+///Blueshift guns
+
+// .35 Sol pistol
+
+/obj/item/gun/ballistic/automatic/pistol/sol
+	name = "\improper Wespe Pistol"
+	desc = "The standard issue service pistol of SolFed's various military branches. Uses .35 Sol and comes with an attached light."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon_state = "wespe"
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_light.ogg'
+
+	w_class = WEIGHT_CLASS_NORMAL
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol
+	special_mags = TRUE
+
+	suppressor_x_offset = 7
+	suppressor_y_offset = 0
+
+	fire_delay = 0.3 SECONDS
+
+/obj/item/gun/ballistic/automatic/pistol/sol/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
+
+/obj/item/gun/ballistic/automatic/pistol/sol/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		starting_light = new /obj/item/flashlight/seclite(src), \
+		is_light_removable = FALSE, \
+		)
+
+/obj/item/gun/ballistic/automatic/pistol/sol/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/pistol/sol/examine_more(mob/user)
+	. = ..()
+
+	. += "The Wespe is a pistol that was made entirely for military use. \
+		Required to use a standard round, standard magazines, and be able \
+		to function in all of the environments that SolFed operated in \
+		commonly. These qualities just so happened to make the weapon \
+		popular in frontier space and is likely why you are looking at \
+		one now."
+
+	return .
+
+/obj/item/gun/ballistic/automatic/pistol/sol/no_mag
+	spawnwithmagazine = FALSE
+
+// Sol pistol evil gun
+
+/obj/item/gun/ballistic/automatic/pistol/sol/evil
+	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. This one is painted tacticool black."
+
+	icon_state = "wespe_evil"
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/automatic/pistol/sol/evil/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
+
+// Trappiste high caliber pistol in .585
+
+/obj/item/gun/ballistic/automatic/pistol/trappiste
+	name = "\improper Skild Pistol"
+	desc = "A somewhat rare to see Trappiste pistol firing the high caliber .585 developed by the same company. \
+		Sees rare use mainly due to its tendency to cause severe wrist discomfort."
+
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon_state = "skild"
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_heavy.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
+
+	w_class = WEIGHT_CLASS_NORMAL
+
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
+
+	suppressor_x_offset = 8
+	suppressor_y_offset = 0
+
+	fire_delay = 1 SECONDS
+
+	recoil = 3
+	wield_recoil = 1
+
+/obj/item/gun/ballistic/automatic/pistol/trappiste/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
+
+/obj/item/gun/ballistic/automatic/pistol/sol/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/pistol/trappiste/examine_more(mob/user)
+	. = ..()
+
+	. += "The Skild only exists due to a widely known event that SolFed's military \
+		would prefer wasn't anywhere near as popular. A general, name unknown as of now, \
+		was recorded complaining about the lack of capability the Wespe provided to the \
+		military, alongside several statements comparing the Wespe's lack of masculinity \
+		to the, quote, 'unique lack of testosterone those NRI mongrels field'. While the \
+		identities of both the general and people responsible for the leaking of the recording \
+		are still classified, many high ranking SolFed military staff suspiciously have stopped \
+		appearing in public, unlike the Skild. A lot of several thousand pistols, the first \
+		of the weapons to ever exist, were not so silently shipped to SolFed's Plutonian \
+		shipping hub from TRAPPIST. SolFed military command refuses to answer any \
+		further questions about the incident to this day."
+
+	return .
+
+/obj/item/gun/ballistic/automatic/pistol/trappiste/no_mag
+	spawnwithmagazine = FALSE
+
+// Plasma spewing pistol. Yes these have chargeable packs, but they are basically ballistics....
+// Sprays a wall of plasma that sucks against armor but fucks against unarmored targets
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_thrower
+	name = "\improper Słońce Plasma Projector"
+	desc = "An outdated sidearm rarely seen in use by some members of the CIN. \
+		Uses plasma power packs. \
+		Spews an inaccurate stream of searing plasma out the magnetic barrel so long as it has power and the trigger is pulled."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
+	icon_state = "slonce"
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/incinerate.ogg'
+	fire_sound_volume = 40 // This thing is comically loud otherwise
+
+	w_class = WEIGHT_CLASS_NORMAL
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/plasma_battery
+	can_suppress = FALSE
+	show_bolt_icon = FALSE
+	casing_ejector = FALSE
+	empty_indicator = FALSE
+	bolt_type = BOLT_TYPE_OPEN
+	fire_delay = 0.1 SECONDS
+	spread = 15
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_thrower/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, autofire_shot_delay = fire_delay)
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_thrower/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_thrower/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_thrower/examine_more(mob/user)
+	. = ..()
+
+	. += "The 'Słońce' started life as an experiment in advancing the field of accelerated \
+		plasma weaponry. Despite the design's obvious shortcomings in terms of accuracy and \
+		range, the CIN combined military command (which we'll call the CMC from now on) took \
+		interest in the weapon as a means to counter Sol's more advanced armor technology. \
+		As it would turn out, the plasma globules created by the weapon were really not \
+		as effective against armor as the CMC had hoped, quite the opposite actually. \
+		What the plasma did do well however was inflict grevious burns upon anyone unfortunate \
+		enough to get hit by it unprotected. For this reason, the 'Słońce' saw frequent use by \
+		army officers and ship crews who needed a backup weapon to incinerate the odd space \
+		pirate or prisoner of war."
+
+	return .
+
+// Plasma sharpshooter pistol
+// Shoots single, strong plasma blasts at a slow rate
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_marksman
+	name = "\improper Gwiazda Plasma Sharpshooter"
+	desc = "An outdated sidearm rarely seen in use by some members of the CIN. \
+		Uses plasma power packs. \
+		Fires relatively accurate globs of searing plasma."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
+	icon_state = "gwiazda"
+
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/burn.ogg'
+	fire_sound_volume = 40 // This thing is comically loud otherwise
+
+	w_class = WEIGHT_CLASS_NORMAL
+	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/plasma_battery
+	can_suppress = FALSE
+	show_bolt_icon = FALSE
+	casing_ejector = FALSE
+	empty_indicator = FALSE
+	bolt_type = BOLT_TYPE_OPEN
+	fire_delay = 0.6 SECONDS
+	spread = 2.5
+
+	projectile_damage_multiplier = 3 // 30 damage a shot
+	projectile_wound_bonus = 10 // +55 of the base projectile, burn baby burn
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_marksman/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_marksman/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/pistol/plasma_marksman/examine_more(mob/user)
+	. = ..()
+
+	. += "The 'Gwiazda' is a further refinement of the 'Słońce' design. with improved \
+		energy cycling, magnetic launchers built to higher precision, and an overall more \
+		ergonomic design. While it still fails to perform against armor, the weapon is \
+		significantly more accurate and higher power, at expense of a much lower firerate. \
+		Opinions on this weapon within military service were highly mixed, with many preferring \
+		the sheer stopping power a spray of plasma could produce, with others loving the new ability \
+		to hit something in front of you for once."
+
+	return .
+

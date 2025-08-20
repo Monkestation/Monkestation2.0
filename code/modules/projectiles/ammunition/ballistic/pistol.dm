@@ -52,3 +52,43 @@
 	desc = "A .50AE bullet casing."
 	caliber = CALIBER_50
 	projectile_type = /obj/projectile/bullet/a50ae
+
+
+
+// .35 Sol Short
+// Pistol caliber caseless round used almost exclusively by SolFed weapons
+//CASELESS VAR IS ADDED SO THAT REVOLVER CHAMBERS KNOW WHAT TO DO WITH IT
+
+/obj/item/ammo_casing/c35sol
+	name = ".35 Sol Short lethal bullet casing"
+	desc = "A SolFed standard caseless lethal pistol round."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
+	icon_state = "35sol"
+	caliber = CALIBER_SOL35SHORT
+	projectile_type = /obj/projectile/bullet/c35sol
+
+/obj/item/ammo_casing/c35sol/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
+
+/obj/item/ammo_casing/c35sol/incapacitator
+	name = ".35 Sol Short incapacitator bullet casing"
+	desc = "A SolFed standard caseless less-lethal pistol round. Exhausts targets on hit, has a tendency to bounce off walls at shallow angles."
+	icon_state = "35sol_disabler"
+	projectile_type = /obj/projectile/bullet/c35sol/incapacitator
+	harmful = FALSE
+
+/obj/item/ammo_casing/c35sol/ripper
+	name = ".35 Sol Short ripper bullet casing"
+	desc = "A SolFed standard caseless ripper pistol round. Causes slashing wounds on targets, but is weak to armor."
+	icon_state = "35sol_shrapnel"
+	projectile_type = /obj/projectile/bullet/c35sol/ripper
+	custom_materials = AMMO_MATS_RIPPER
+	advanced_print_req = TRUE
+
+/obj/item/ammo_casing/c35sol/pierce
+	name = ".35 Sol Short armor piercing bullet casing"
+	desc = "A SolFed standard caseless armor piercing pistol round. Penetrates armor, but is rather weak against un-armored targets."
+	icon_state = "35sol_shrapnel"
+	projectile_type = /obj/projectile/bullet/c35sol/pierce
+

@@ -119,3 +119,36 @@
 /obj/item/ammo_box/magazine/r10mm/empty
 	icon_state = "r10mm-0"
 	start_empty = TRUE
+
+
+
+///AMMO BOXES!!!///
+
+/obj/item/ammo_box/c35sol
+	name = "ammo box (.35 Sol Short lethal)"
+	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
+	icon_state = "35box"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	w_class = WEIGHT_CLASS_NORMAL
+	caliber = CALIBER_SOL35SHORT
+	ammo_type = /obj/item/ammo_casing/c35sol
+	max_ammo = 24
+
+/obj/item/ammo_box/c35sol/incapacitator
+	name = "ammo box (.35 Sol Short incapacitator)"
+	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The blue stripe indicates this should hold less-lethal ammunition."
+	icon_state = "35box_disabler"
+	ammo_type = /obj/item/ammo_casing/c35sol/incapacitator
+
+/obj/item/ammo_box/c35sol/ripper
+	name = "ammo box (.35 Sol Short ripper)"
+	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The purple stripe indicates this should hold hollowpoint-like ammunition."
+	icon_state = "35box_shrapnel"
+	ammo_type = /obj/item/ammo_casing/c35sol/ripper
+
+/obj/item/ammo_box/c35sol/pierce
+	name = "ammo box (.35 Sol Short armor piercing)"
+	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds."
+	ammo_type = /obj/item/ammo_casing/c35sol/pierce
+
