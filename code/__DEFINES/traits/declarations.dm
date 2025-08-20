@@ -852,6 +852,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
+#define TRAIT_NO_CLONE "NO_CLONE"
 #define TRAIT_BALD "bald"
 #define TRAIT_SHAVED "shaved"
 #define TRAIT_BADTOUCH "bad_touch"

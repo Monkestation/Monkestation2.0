@@ -513,3 +513,10 @@
   - bugfix: Bullet drives will now properly clean dishes at further ranges.
   - rscdel: A Jerma
   - map: Fixed roundstart turf differences on Icebox and some ruins.
+2025-08-20:
+  Shoddd:
+  - rscadd: Uncloneable Neurons Quirk
+  - qol: Changed husk failed cloning message
+  notghosti:
+  - bugfix: Regeneration Coma will no longer Put No healings into a death coma.
+  - map: Icebox surface asteroid is now actually without round start turfs
