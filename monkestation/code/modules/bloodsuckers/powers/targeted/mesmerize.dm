@@ -35,6 +35,8 @@
 	var/blocked_by_glasses = TRUE
 	var/mesmerize_layer = ABOVE_ALL_MOB_LAYER
 	var/mesmerize_plane = ABOVE_HUD_PLANE
+	/// at this protection mesmerize will fail
+	var/max_eye_protection = 2
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_desc_extended()
 	. += "[src] a target, locking them in place for a short time[level_current >= MESMERIZE_MUTE_LEVEL ? " and muting them" : ""].<br>"
@@ -117,15 +119,32 @@
 		owner.balloon_alert(owner, "[current_target] has to be able to see you.")
 		return FALSE
 
+	var/eye_protection = current_target.get_eye_protection()
+	if(eye_protection > max_eye_protection)
+		owner.balloon_alert(owner, "[current_target] has too much eye protection to mesmerize.")
+		return FALSE
+
 	// Gone through our checks, let's mark our guy.
 	target_ref = WEAKREF(current_target)
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/FireTargetedPower(atom/target)
+	. = ..()
 	var/mob/living/user = owner
 	var/mob/living/carbon/mesmerized_target = target_ref?.resolve()
 	if(!mesmerized_target)
 		CRASH("mesmerized_target is null")
+
+	var/modified_delay = mesmerize_delay
+	var/eye_protection = mesmerized_target.get_eye_protection()
+	if(eye_protection > 0)
+		modified_delay += (eye_protection * 0.25) * mesmerize_delay
+		to_chat(mesmerized_target, span_warning("It feels like your eye-protection is helping you resist the victim's gaze!"))
+		to_chat(mesmerized_target, span_warning("But, you can still feel it making your eyes grow heavy."))
+		to_chat(user, span_warning("[mesmerized_target] is wearing eye-protection, it will take longer to mesmerize them."))
+		user.balloon_alert(user, "partially protected!")
+	else
+		to_chat(mesmerized_target, "[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]...")
 
 	perform_indicators(mesmerized_target, mesmerize_delay)
 
@@ -137,23 +156,6 @@
 		return
 	// slow them down during the mesmerize
 	mute_target(mesmerized_target)
-	var/eye_protection = mesmerized_target.get_eye_protection()
-
-	var/modified_delay = mesmerize_delay
-	if(eye_protection > 2)
-		to_chat(user, span_warning("Not effective, their eyes are protected!"))
-		user.balloon_alert(user, "immune!")
-		StartCooldown(cooldown_time * 0.5)
-		DeactivatePower()
-		return
-	if(eye_protection > 0)
-		modified_delay += (eye_protection * 0.25) * mesmerize_delay
-		to_chat(mesmerized_target, span_warning("It feels like your eye-protection is helping you resist the victim's gaze!"))
-		to_chat(mesmerized_target, "But, you can still feel it making your eyes grow heavy.")
-		to_chat(user, "[mesmerized_target] is wearing eye-protection, it will take longer to mesmerize them.")
-		user.balloon_alert(user, "partially protected!")
-	else
-		to_chat(mesmerized_target, "[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]...")
 
 	if(!do_after(user, mesmerize_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target)))
 		StartCooldown(cooldown_time * 0.5)

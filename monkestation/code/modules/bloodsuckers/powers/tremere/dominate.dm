@@ -63,7 +63,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/CheckCanTarget(atom/target_atom)
 	var/mob/living/selected_target = target_atom
-	if(level_current >= DOMINATE_VASSALIZE_LEVEL && (IS_VASSAL(selected_target) && selected_target.stat >= SOFT_CRIT))
+	if(level_current >= DOMINATE_VASSALIZE_LEVEL || selected_target.stat >= SOFT_CRIT)
 		if(selected_target?.mind && owner.Adjacent(selected_target))
 			return TRUE
 	. = ..()
@@ -97,6 +97,7 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/FireTargetedPower(atom/target, params)
 	var/mob/living/target_mob = target
 	var/mob/living/user = owner
+	user.face_atom(target)
 	if(target_mob.stat != CONSCIOUS && level_current >= DOMINATE_VASSALIZE_LEVEL)
 		if(user.Adjacent(target))
 			attempt_ghoulize(target, user)
@@ -107,7 +108,7 @@
 			else
 				owner.balloon_alert(owner, "too far to vassal!")
 			return TRUE
-	..()
+	. = ..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/attempt_ghoulize(mob/living/target, mob/living/user)
 	owner.face_atom(target)
@@ -182,10 +183,7 @@
 				continue
 			show_to |= vassal.owner.current
 
-	show_to -= target // don't show to the target itself, you get a special variant
-
 	new /atom/movable/screen/text/screen_timer/attached(null, show_to, timer_id, "Dies in ${timer}", -16, 32, target)
-	new /atom/movable/screen/text/screen_timer(null, show_to, timer_id, "You die in ${timer}")
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/proc/on_antag_datum_removal(datum/mind/mind, datum/antagonist/vassal)
 	end_possession(vassal, FALSE)
