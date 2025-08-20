@@ -7,8 +7,11 @@
 	icon_state = "slasher_firemask"
 	inhand_icon_state = null
 	flash_protect = FLASH_PROTECTION_WELDER
-	clothing_flags = HIDEHAIR | HIDEFACIALHAIR | MASKINTERNALS
+	clothing_flags = MASKINTERNALS
 	flags_cover = PEPPERPROOF | MASKCOVERSEYES
+	flags_inv = HIDEFACIALHAIR | HIDEHAIR
+	visor_flags_inv = 0
+	flags_cover = MASKCOVERSEYES | PEPPERPROOF
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	slowdown = 0
 
@@ -20,8 +23,15 @@
 	return
 
 /obj/item/clothing/mask/gas/slasher/cluwne
-	name = "cluwne's gas mask"
+	name = "cluwne's mask"
 	icon_state = "cluwne_mask"
+	desc = "A close-fitting sealed mask, this one seems to be protruding some kind of dark aura."
+	flags_inv = HIDEFACIALHAIR
+
+/obj/item/clothing/mask/gas/slasher/brute
+	name = "dome helmet"
+	icon_state = "brute_mask"
+	desc = "A close-fitting sealed helmet, this one seems to be protruding some kind of dark aura."
 
 /obj/item/clothing/suit/apron/slasher
 	name = "butcher's apron"
@@ -77,6 +87,11 @@
 	name = "damned suspenders"
 	icon_state = "cluwne_apron"
 	desc = "A pair of suspenders that seem to be stitched together from the souls of the damned."
+
+/obj/item/clothing/suit/apron/slasher/brute
+	name = "frightful armor"
+	icon_state = "brute_apron"
+	desc = "A set of armor that grows stronger with each soul claimed."
 
 /obj/item/clothing/under/slasher
 	name = "butcher's jumpsuit"

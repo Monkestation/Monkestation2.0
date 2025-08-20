@@ -24,10 +24,10 @@
 
 /datum/outfit/slasher/brute
 	name = "Brute Slasher Outfit"
-	suit = /obj/item/clothing/suit/apron/slasher
+	suit = /obj/item/clothing/suit/apron/slasher/brute
 	uniform = /obj/item/clothing/under/slasher
 	shoes = /obj/item/clothing/shoes/admiral
-	mask = /obj/item/clothing/mask/gas/slasher
+	mask = /obj/item/clothing/mask/gas/slasher/brute
 	belt = /obj/item/storage/belt/slasher
 	gloves = /obj/item/clothing/gloves/admiral
 	back = /obj/item/storage/backpack/cursed
@@ -163,13 +163,13 @@
 	var/mob/living/carbon/human/human = current_mob
 	if(istype(human))
 		switch(slasher_variant)
-			if("slasher")
+			if(VARIANT_SLASHER)
 				human.equipOutfit(/datum/outfit/slasher/slasher)
 
-			if("cluwne")
+			if(VARIANT_CLUWNE)
 				human.equipOutfit(/datum/outfit/slasher/cluwne)
 
-			if("brute")
+			if(VARIANT_BRUTE)
 				human.equipOutfit(/datum/outfit/slasher/brute)
 
 		linked_apron = human.get_item_by_slot(ITEM_SLOT_OCLOTHING)

@@ -1,3 +1,7 @@
+#define VARIANT_SLASHER "slasher"
+#define VARIANT_CLUWNE "cluwne"
+#define VARIANT_BRUTE "brute"
+
 /datum/action/cooldown/slasher/summon_machette
 	name = "Summon Machette"
 	desc = "Summon your machete to your active hand, or create one if it doesn't exist. This machete deals 15 BRUTE on hit increasing by 2.5 for every soul you own, and stuns on throw."
@@ -18,8 +22,14 @@
 	if(owner.stat == DEAD)
 		return
 	if(!stored_machette || QDELETED(stored_machette))
-		stored_machette = new /obj/item/slasher_machette
 		var/datum/antagonist/slasher/slasherdatum = IS_SLASHER(owner)
+		switch(slasherdatum.slasher_variant)
+			if(VARIANT_SLASHER)
+				stored_machette = new /obj/item/slasher_machette
+			if(VARIANT_CLUWNE)
+				stored_machette = new /obj/item/slasher_machette/cluwne
+			if(VARIANT_BRUTE)
+				stored_machette = new /obj/item/slasher_machette/brute
 		if(!slasherdatum)
 			return
 		slasherdatum.linked_machette = stored_machette
@@ -139,3 +149,20 @@
 		if(density && !open(BYPASS_DOOR_CHECKS)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
 		return
+
+/obj/item/slasher_machette/cluwne
+	name = "Cluwne's Carving Blade"
+	desc = "A Killer Cluwne's favorite tool, its edge is no laughing matter."
+	icon_state = "cluwne_machete"
+	inhand_icon_state = "cluwne_machete"
+
+/obj/item/slasher_machette/brute
+	name = "Brute's Bonecrusher"
+	desc = "A spiked mace, with each victim, its thirst for violence only seems to grow."
+	hitsound = SFX_SWING_HIT
+	icon_state = "brute_mace"
+	inhand_icon_state = "brute_mace"
+
+#undef VARIANT_SLASHER
+#undef VARIANT_CLUWNE
+#undef VARIANT_BRUTE
