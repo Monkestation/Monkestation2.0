@@ -46,7 +46,7 @@
 
 /atom/movable/screen/text/screen_timer/process()
 	var/timeleft = timeleft(timer_id)
-	if(!timeleft || timeleft == 0)
+	if(!timeleft || timeleft < 10)
 		qdel(src)
 		return
 	update_maptext()
