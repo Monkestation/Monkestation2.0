@@ -41,6 +41,8 @@
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
+	if(damage >= maxHealth) // already fully decayed, don't bother with further checks
+		return
 	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
 	if(HAS_TRAIT(src, TRAIT_NO_ORGAN_DECAY) || (owner && HAS_TRAIT(owner, TRAIT_NO_ORGAN_DECAY)))
