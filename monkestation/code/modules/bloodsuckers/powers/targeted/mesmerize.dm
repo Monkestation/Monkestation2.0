@@ -144,7 +144,7 @@
 		to_chat(user, span_warning("[mesmerized_target] is wearing eye-protection, it will take longer to mesmerize them."))
 		user.balloon_alert(user, "partially protected!")
 	else
-		to_chat(mesmerized_target, "[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]...")
+		to_chat(mesmerized_target, span_warning("[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]..."))
 
 	perform_indicators(mesmerized_target, mesmerize_delay)
 
