@@ -3838,6 +3838,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
+"bmz" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "bmE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4607,6 +4616,13 @@
 /obj/structure/liquid_pump,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/atmos)
+"bxr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "bxx" = (
 /obj/structure/showcase/cyborg/old{
 	dir = 4;
@@ -17118,6 +17134,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "fBW" = (
@@ -26226,6 +26243,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "itM" = (
@@ -28388,10 +28406,6 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"jet" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/engineering/engine_smes)
 "jeu" = (
 /obj/machinery/corral_corner{
 	mapping_id = "6"
@@ -35376,6 +35390,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "lqu" = (
@@ -44022,6 +44037,12 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/checker,
 /area/station/maintenance/port/fore)
+"odp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "odz" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -46578,6 +46599,9 @@
 /obj/structure/cable,
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "oXi" = (
@@ -50887,6 +50911,11 @@
 	dir = 1
 	},
 /area/station/command/heads_quarters/cmo)
+"qsi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "qsk" = (
 /turf/closed/indestructible{
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
@@ -56088,6 +56117,14 @@
 /obj/machinery/ore_silo,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
+"sek" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "sem" = (
 /obj/machinery/artifact_zapper{
 	dir = 8
@@ -57848,6 +57885,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "sKS" = (
@@ -71451,6 +71489,9 @@
 /obj/structure/cable,
 /obj/machinery/light/directional/west,
 /obj/machinery/status_display/ai/directional/west,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "wUb" = (
@@ -73498,6 +73539,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"xDo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine)
 "xDr" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -95404,7 +95451,7 @@ uoo
 vcG
 nlj
 nfa
-jet
+nfa
 nfa
 ecI
 ioJ
@@ -95918,7 +95965,7 @@ uoo
 vcG
 nlj
 nfa
-jet
+nfa
 nfa
 ecI
 ioJ
@@ -98223,9 +98270,9 @@ pIs
 bsX
 vCq
 xUa
-vCq
-vHk
-bsX
+odp
+bxr
+qsi
 iuo
 bsX
 gKC
@@ -98480,13 +98527,13 @@ iko
 iko
 iko
 iko
-iko
-iko
-iko
-iko
-iko
-iko
-iko
+sek
+sek
+bmz
+sek
+sek
+sek
+sek
 itL
 rlK
 xgs
@@ -98739,7 +98786,7 @@ bsX
 xUa
 sKN
 lqr
-xzN
+xDo
 xUa
 qiV
 llR
