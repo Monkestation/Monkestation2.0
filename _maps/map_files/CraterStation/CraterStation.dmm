@@ -8490,6 +8490,9 @@
 /obj/structure/mineral_door/manual_colony_door,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"cJv" = (
+/turf/closed/wall/prefab_plastic,
+/area/station/maintenance/port/greater)
 "cJG" = (
 /obj/structure/ladder,
 /turf/open/floor/plating,
@@ -22086,12 +22089,6 @@
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
-"gSI" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/station/maintenance/port/greater)
 "gSM" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 8
@@ -24226,8 +24223,12 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plating,
-/area/station/maintenance/port/greater)
+/area/station/maintenance/solars/port/fore)
 "hzl" = (
 /obj/structure/transit_tube/curved/flipped{
 	dir = 8
@@ -32713,12 +32714,12 @@
 /area/station/maintenance/arrivals_outpost)
 "kdd" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/barricade/wooden/crude,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/airlock/welded,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "crater_maint_cavein"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "kdl" = (
@@ -34842,7 +34843,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/maintenance/port/greater)
+/area/station/maintenance/solars/port/fore)
 "kLG" = (
 /turf/closed/wall,
 /area/station/maintenance/aux_eva)
@@ -40658,6 +40659,9 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/brig)
+"mCq" = (
+/turf/open/floor/iron/colony/bolts,
+/area/station/maintenance/port/greater)
 "mCu" = (
 /obj/structure/ladder,
 /obj/structure/lattice/catwalk,
@@ -43713,6 +43717,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"nxG" = (
+/obj/structure/mineral_door/manual_colony_door,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "nxT" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
@@ -52332,6 +52340,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "qco" = (
@@ -55754,6 +55765,14 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms/bunkhouse/floor1)
+"qZJ" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "crater_maint_cavein"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "qZK" = (
 /obj/structure/railing,
 /obj/machinery/camera/directional/east{
@@ -98318,7 +98337,7 @@ oLG
 mCx
 evs
 iIx
-iIx
+nxG
 iIx
 crc
 crc
@@ -98575,8 +98594,8 @@ lHo
 wsH
 evs
 iIx
-crc
-crc
+mCq
+cJv
 crc
 cZm
 cZm
@@ -98832,8 +98851,8 @@ iIx
 wsH
 evs
 iIx
-crc
-crc
+mCq
+cJv
 crc
 cZm
 wba
@@ -99089,7 +99108,7 @@ iIx
 wsH
 evs
 iIx
-iIx
+qZJ
 iIx
 iIx
 cZm
@@ -99345,7 +99364,7 @@ crc
 iIx
 wsH
 evs
-gSI
+iIx
 xWk
 xWk
 fgK
@@ -100882,8 +100901,8 @@ jfK
 dCL
 hCt
 cbU
-iIx
-iIx
+cbU
+cbU
 iIx
 wsH
 evs
@@ -101139,8 +101158,8 @@ vJa
 dCL
 mti
 sME
-oLG
-oLG
+tHO
+tHO
 iIx
 qeY
 evs
@@ -101653,8 +101672,8 @@ jrn
 dCL
 pJq
 tHO
-oLG
-oLG
+tHO
+tHO
 iIx
 oLG
 tKd
@@ -101910,8 +101929,8 @@ oCv
 dCL
 cbU
 cbU
-iIx
-iIx
+cbU
+cbU
 iIx
 iIx
 ggy
