@@ -102,6 +102,7 @@
 	owner.stamina.adjust(7 * seconds_between_ticks, forced = TRUE)
 	adjust_all_damages(healing_amount)
 	adjust_bleed_wounds(healing_amount)
+	heal_wounds()
 	if(needs_update)
 		owner.updatehealth()
 
@@ -127,6 +128,12 @@
 		if(iter_wound.blood_flow && (iter_wound.blood_flow > bloodiest_wound?.blood_flow))
 			bloodiest_wound = iter_wound
 	bloodiest_wound?.adjust_blood_flow(-0.5)
+
+/datum/status_effect/cursed_blood/proc/heal_wounds()
+	var/mob/living/carbon/carbon_owner = astype(owner)
+	if(length(carbon_owner?.all_wounds))
+		var/list/datum/wound/ordered_wounds = sort_list(carbon_owner.all_wounds, GLOBAL_PROC_REF(cmp_wound_severity_dsc))
+		ordered_wounds[1]?.remove_wound()
 
 /atom/movable/screen/alert/status_effect/cursed_blood
 	name = "Cursed Blood"
