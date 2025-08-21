@@ -240,6 +240,7 @@
 	inhand_icon_state = "renoster_evil"
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
+	pbk_gentle = FALSE
 
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
@@ -339,8 +340,8 @@
 	projectile_wound_bonus = 5
 	fire_delay = 0.3 SECONDS
 	pin = /obj/item/firing_pin/implant/pindicate
-
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
+	pbk_gentle = FALSE
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
