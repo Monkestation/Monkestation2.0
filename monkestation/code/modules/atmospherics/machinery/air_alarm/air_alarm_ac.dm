@@ -29,6 +29,8 @@
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
+	if(mapload && !(is_station_level(z) || is_mining_level(z)))
+		air_conditioning = FALSE
 	if(air_conditioning)
 		SSair.start_processing_machine(src)
 
