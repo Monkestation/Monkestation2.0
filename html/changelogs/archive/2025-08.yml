@@ -521,6 +521,13 @@
   - bugfix: Regeneration Coma will no longer Put No healings into a death coma.
   - map: Icebox surface asteroid is now actually without round start turfs
 2025-08-21:
+  Absolucy:
+  - rscadd: Oozelings can now hug flaming people to extinguish them! Grabbing someone
+      will extinguish them slightly more, and aggressively grabbing them far more!
+  - bugfix: Large bingle pits no longer cause massive amounts of lag just to heal
+      bingles.
+  - bugfix: Bingles will now only gib when THEIR HOLE (the pit they were spawned by)
+      is destroyed.
   Salted-Zen:
   - rscadd: Adds five new guns to mining, the 'Fenrir' Auto Shotgun, the 'Slab' Grenade
       Launcher, the 'Hellhound' LMG, the 'Duster' Revolver, and the 'Thor' Kinetic
@@ -544,6 +551,12 @@
   - code_imp: Demodularizes most if not all the custom mining gear.
   - code_imp: Added comments to all the mining vendor categories about what should
       go where.
+  WeLoveCastingSpells:
+  - rscadd: Adds a new flamboyant outfit to the Autodrobe, any similarity with a certain
+      Japanese anime is completely unintentional.
   throwawayuseless:
   - rscadd: Four-Bit, Bachhus' Blessing, and Rat'vander now get IPCs drunk.
   - balance: Drunken Resilience works on IPCs.
+  wonderinghost:
+  - map: updates helios disposal network
+  - map: ordanance now has a mail bin and atmos should be mail routable
