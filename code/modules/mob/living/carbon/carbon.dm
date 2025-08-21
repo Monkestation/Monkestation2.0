@@ -1468,17 +1468,27 @@
 			playsound(src, pick(butt.sound_effect), volume, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/carbon/proc/death_fart(delay)
-	SLEEP_NOT_DEL(delay)
-	if (QDELETED(src) || stat != DEAD)
-		return
+	var/endtime = world.time + delay
+
+	while (world.time < endtime)
+		stoplag(1)
+		if (QDELETED(src) || stat != DEAD)
+			return
 	var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
 	if (butt)
 		visible_message(span_notice("[src]'s ass gives one last salute!"))
 		playsound(src, pick(butt.sound_effect), 50, mixer_channel = CHANNEL_PRUDE)
 
-/mob/living/carbon/proc/gib_fart()
+/mob/living/carbon/proc/gib_fart(vol=50, freq=40000)
 	if (stat == DEAD && world.time - timeofdeath > 1 SECOND)
 		return
 
-	if(has_quirk(/datum/quirk/loud_ass))
-		playsound(src.loc, "monkestation/sound/effects/superfart.ogg", 50, frequency=40000, mixer_channel = CHANNEL_PRUDE, pressure_affected = FALSE)
+	// var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
+	// if (butt)
+	var/static/sounds = list('sound/misc/fart1.ogg', 'monkestation/sound/effects/fart2.ogg')
+	playsound(src.loc, pick(sounds), vol, TRUE, frequency=freq, mixer_channel = CHANNEL_PRUDE, pressure_affected = FALSE)
+
+
+	// if(has_quirk(/datum/quirk/loud_ass))
+		// playsound(src.loc, "monkestation/sound/effects/superfart.ogg", 50, frequency=40000, mixer_channel = CHANNEL_PRUDE, pressure_affected = FALSE)
+		// playsound(src.loc, pick(butt.sound_effect), 50, frequency=40000, mixer_channel = CHANNEL_PRUDE, pressure_affected = FALSE)
