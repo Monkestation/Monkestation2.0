@@ -20,7 +20,7 @@
 	time = 64
 	success_sound = 'sound/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
-	repeatable = TRUEdwddw
+	repeatable = TRUE
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	for(var/obj/item/object in target.implants)
