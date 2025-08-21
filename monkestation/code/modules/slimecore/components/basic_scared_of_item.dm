@@ -21,7 +21,7 @@
 		for(var/obj/item/item as anything in human.held_items)
 			if(QDELETED(item))
 				continue
-			if(!ai_controller.blackboard[BB_BASIC_MOB_SCARED_ITEM])
+			if(!istype(item, ai_controller.blackboard[BB_BASIC_MOB_SCARED_ITEM]))
 				continue
 			ai_controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
 
