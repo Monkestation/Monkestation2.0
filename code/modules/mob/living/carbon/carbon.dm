@@ -1461,7 +1461,7 @@
 	if(has_quirk(/datum/quirk/loud_ass) || prob(probability))
 		var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
 		if (butt)
-			visible_message(span_notice("[src] has the wind knocked out of them!"))
+			visible_message(span_notice("[src] has the wind knocked out of [p_them()]!"))
 			playsound(src, pick(butt.sound_effect), volume, TRUE, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/carbon/proc/death_fart(delay)
