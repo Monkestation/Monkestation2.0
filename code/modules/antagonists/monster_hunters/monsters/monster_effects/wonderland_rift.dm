@@ -37,7 +37,7 @@
 	. = ..()
 	if(hunter_antag)
 		. += span_info("Use your hunter weapon in order to tear open the rift. ") + span_warning("This will be visible to anyone nearby!")
-		. += span_info("You have opened [hunter_antag.rabbits_spotted] out of 5 rifts.")
+		. += span_info("You have opened [hunter_antag.rifts_opened] out of 5 rifts.")
 
 /obj/effect/bnnuy/attackby(obj/item/weapon, mob/user, params)
 	if(user.mind != hunter_antag.owner)
@@ -70,20 +70,21 @@
 
 /obj/effect/bnnuy/proc/open_rift(mob/living/user)
 	var/list/extra_logs = list()
-	if(hunter_antag?.rabbits_spotted == 0) //our first bunny
+	hunter_antag.rifts_opened++
+	if(hunter_antag.rifts_opened == 1) //our first bunny
 		user.put_in_hands(new /obj/item/clothing/mask/cursed_rabbit(drop_location()))
 		extra_logs += "the cursed rabbit mask"
 	user.put_in_hands(new /obj/item/rabbit_eye(drop_location()))
 	if(drop_gun)
 		give_gun(user)
 		extra_logs += "the hunter's revolver"
-	hunter_antag?.rabbits -= src
-	var/msg = "opened a wonderland rift at [AREACOORD(src)]"
+	hunter_antag.rabbits -= src
+	var/msg = "opened a wonderland rift ([hunter_antag.rifts_opened] / [hunter_antag.total_rifts]) at [AREACOORD(src)]"
 	if(length(extra_logs) > 0)
 		msg += ", which dropped [english_list(extra_logs)]"
 	user.log_message(msg, LOG_GAME)
 	new /obj/effect/anomaly/dimensional/wonderland/rift(get_turf(src), null, FALSE)
-	var/rabbit_amount = max(rand(hunter_antag.rabbits_spotted, hunter_antag.rabbits_spotted + 2), 2)
+	var/rabbit_amount = max(rand(hunter_antag.rifts_opened, hunter_antag.rifts_opened + 2), 2)
 	// spawn (benign) rabbits randomly around the station
 	for(var/i = 1 to rabbit_amount)
 		var/turf/target_turf = get_safe_random_station_turf_equal_weight()

@@ -14,7 +14,9 @@
 	var/weapon_claimed = FALSE
 	var/give_objectives = TRUE
 	///how many rabbits have we found
-	var/rabbits_spotted = 0
+	var/rifts_opened = 0
+	/// The total amount of rifts to spawn.
+	var/total_rifts = 5
 	///the list of white rabbits
 	var/list/obj/effect/bnnuy/rabbits = list()
 	///the red card tied to this trauma if any
@@ -74,7 +76,7 @@
 		card.moveToNullspace()
 		grant_drop_ability(card)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
-	spawn_rifts()
+	spawn_rifts(total_rifts)
 	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
 	gun_holder.drop_gun = TRUE
 	var/datum/action/cooldown/spell/track_monster/track = new
@@ -91,7 +93,7 @@
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/monsterhunter/proc/spawn_rifts(amount = 5)
+/datum/antagonist/monsterhunter/proc/spawn_rifts(amount)
 	var/list/base_areas = list(
 		/area/station/engineering,
 		/area/station/medical,
@@ -156,7 +158,7 @@
 			break
 	return list(
 		"weapon_claimed" = weapon_claimed,
-		"rabbits_spotted" = rabbits_spotted,
+		"rabbits_spotted" = rifts_opened,
 		"rabbits_remaining" = length(rabbits),
 		"all_completed" = completed,
 		"apocalypse" = apocalypse,
@@ -311,7 +313,6 @@
 					abilities |= "[ability.name]"
 				description += english_list(abilities)
 
-	rabbits_spotted++
 	if(description)
 		to_chat(owner.current, span_boldnotice("[description]"))
 
