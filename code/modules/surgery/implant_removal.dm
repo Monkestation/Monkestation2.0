@@ -1,5 +1,5 @@
 /datum/surgery/implant_removal
-	name = "Implant Removal"
+	name = "Subdermal Implant Removal"
 	target_mobtypes = list(/mob/living)
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
@@ -20,11 +20,12 @@
 	time = 64
 	success_sound = 'sound/surgery/hemostat1.ogg'
 	var/obj/item/implant/implant
+	repeatable = TRUEdwddw
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	for(var/obj/item/object in target.implants)
 		implant = object
-		break
+		// break - Iterate all the way through to make implant removal LIFO
 	if(implant)
 		display_results(
 			user,
