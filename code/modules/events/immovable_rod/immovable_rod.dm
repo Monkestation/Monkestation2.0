@@ -222,8 +222,8 @@
 
 	if(smeared_mob.density || prob(10))
 		EX_ACT(smeared_mob, EXPLODE_HEAVY)
-		if (istype(smeared_carbon) && smeared_carbon.has_quirk(/datum/quirk/loud_ass))
-			playsound(smeared_carbon, "monkestation/sound/effects/superfart.ogg", 50, TRUE, mixer_channel = CHANNEL_PRUDE)
+		if (istype(smeared_carbon))
+			smeared_carbon.gib_fart()
 	else if (istype(smeared_carbon))
 		smeared_carbon.impact_fart()
 

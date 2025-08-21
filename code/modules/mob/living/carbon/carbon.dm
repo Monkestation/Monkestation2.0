@@ -1445,12 +1445,15 @@
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
 
 /mob/living/carbon/death(gibbed)
-	// if(has_quirk(/datum/quirk/loud_ass) && gibbed)
-	// 	playsound(src, "monkestation/sound/effects/superfart.ogg", 50, TRUE, mixer_channel = CHANNEL_PRUDE)
-	// else if (has_quirk(/datum/quirk/loud_ass) || prob(1))
-	// 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(2 SECONDS, 10 SECONDS))
-	// else if (prob(10))
-	// 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(15 SECONDS, 100 SECONDS))
+	if (stat == DEAD)
+		return ..()
+
+	if (gibbed)
+		gib_fart()
+	else if (has_quirk(/datum/quirk/loud_ass) || prob(1))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(2 SECONDS, 10 SECONDS))
+	else if (prob(10))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(15 SECONDS, 100 SECONDS))
 	. = ..()
 
 /mob/living/carbon/ZImpactDamage(turf/T, levels)
@@ -1462,11 +1465,20 @@
 		var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
 		if (butt)
 			visible_message(span_notice("[src] has the wind knocked out of [p_them()]!"))
-			playsound(src, pick(butt.sound_effect), volume, TRUE, mixer_channel = CHANNEL_PRUDE)
+			playsound(src, pick(butt.sound_effect), volume, mixer_channel = CHANNEL_PRUDE)
 
 /mob/living/carbon/proc/death_fart(delay)
-	sleep(delay)
+	SLEEP_NOT_DEL(delay)
+	if (QDELETED(src) || stat != DEAD)
+		return
 	var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
 	if (butt)
 		visible_message(span_notice("[src]'s ass gives one last salute!"))
-		playsound(src, pick(butt.sound_effect), 50, TRUE, mixer_channel = CHANNEL_PRUDE)
+		playsound(src, pick(butt.sound_effect), 50, mixer_channel = CHANNEL_PRUDE)
+
+/mob/living/carbon/proc/gib_fart()
+	if (stat == DEAD && world.time - timeofdeath > 1 SECOND)
+		return
+
+	if(has_quirk(/datum/quirk/loud_ass))
+		playsound(src.loc, "monkestation/sound/effects/superfart.ogg", 50, frequency=40000, mixer_channel = CHANNEL_PRUDE, pressure_affected = FALSE)
