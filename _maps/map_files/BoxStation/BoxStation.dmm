@@ -3838,15 +3838,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
-"bmz" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine)
 "bmE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -98529,7 +98520,7 @@ iko
 iko
 sek
 sek
-bmz
+sek
 sek
 sek
 sek
