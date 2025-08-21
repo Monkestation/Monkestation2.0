@@ -520,3 +520,30 @@
   notghosti:
   - bugfix: Regeneration Coma will no longer Put No healings into a death coma.
   - map: Icebox surface asteroid is now actually without round start turfs
+2025-08-21:
+  Salted-Zen:
+  - rscadd: Adds five new guns to mining, the 'Fenrir' Auto Shotgun, the 'Slab' Grenade
+      Launcher, the 'Hellhound' LMG, the 'Duster' Revolver, and the 'Thor' Kinetic
+      Rifle.
+  - rscadd: Adds three new crushers to mining, the Sickle, the Throwing Knives, and
+      the Pile bunker.
+  - rscadd: Adds three new backpacks to mining, Rockspider (holds three guns / pkas),
+      Trench Jockey (Holds 20 slots of any mining gun ammo), and Ashen Duelist (two
+      slots, can hold any gun /pka and crusher)
+  - rscadd: Adds Admin Only pilebunker that is super long and can mark people with
+      destabilizing marks. item path ends with adminpilebunker.
+  - qol: Gave the SMG and Kinetic Boomstick nicknames, the 'Rapier' and 'Slayer' respectively
+  - balance: Gives the shockwave 2 range instead of 0, so you don't shoot behind you
+      all the time.
+  - qol: Reorganized the ENTIRE mining vendor, including a category just for waste
+      pin locked weapons (so they cant be purchased by golems or freeminers who cant
+      use them at all)
+  - balance: Waste pin locked weapons now no longer work in space... sorry explorers
+  - code_imp: Wasteland firing pin now has a blacklist in the code to remove certain
+      areas.
+  - code_imp: Demodularizes most if not all the custom mining gear.
+  - code_imp: Added comments to all the mining vendor categories about what should
+      go where.
+  throwawayuseless:
+  - rscadd: Four-Bit, Bachhus' Blessing, and Rat'vander now get IPCs drunk.
+  - balance: Drunken Resilience works on IPCs.
