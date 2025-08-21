@@ -1445,12 +1445,12 @@
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
 
 /mob/living/carbon/death(gibbed)
-	if(has_quirk(/datum/quirk/loud_ass) && gibbed)
-		playsound(src, "monkestation/sound/effects/superfart.ogg", 50, TRUE, mixer_channel = CHANNEL_PRUDE)
-	else if (has_quirk(/datum/quirk/loud_ass) || prob(1))
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(2 SECONDS, 10 SECONDS))
-	else if (prob(10))
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(15 SECONDS, 100 SECONDS))
+	// if(has_quirk(/datum/quirk/loud_ass) && gibbed)
+	// 	playsound(src, "monkestation/sound/effects/superfart.ogg", 50, TRUE, mixer_channel = CHANNEL_PRUDE)
+	// else if (has_quirk(/datum/quirk/loud_ass) || prob(1))
+	// 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(2 SECONDS, 10 SECONDS))
+	// else if (prob(10))
+	// 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, death_fart), rand(15 SECONDS, 100 SECONDS))
 	. = ..()
 
 /mob/living/carbon/ZImpactDamage(turf/T, levels)
