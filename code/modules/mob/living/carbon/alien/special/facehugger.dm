@@ -181,15 +181,13 @@
 	if(!valid_to_attach(M))
 		return
 	// early returns and validity checks done: attach.
-	attached++
-	//ensure we detach once we no longer need to be attached
-	addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
-
 
 	if(!sterile && !neutered)
+		//ensure we detach once we no longer need to be attached
+		attached++
+		addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
 		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
 		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
-
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
