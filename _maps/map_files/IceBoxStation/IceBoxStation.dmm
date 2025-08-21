@@ -8915,16 +8915,6 @@
 /obj/effect/spawner/random/techstorage/medical_all,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
-"cEk" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "botany_chasm_and_wolf_shutters"
-	},
-/turf/open/openspace/icemoon/keep_below,
-/area/station/service/hydroponics/chicken)
 "cEo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -23405,9 +23395,6 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"hfZ" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "hgc" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -175723,7 +175710,7 @@ oZd
 cWm
 cWm
 olJ
-cEk
+olJ
 olJ
 kum
 gjq
@@ -181847,7 +181834,7 @@ tjo
 tjo
 tjo
 tjo
-hfZ
+iDt
 fLa
 iDt
 tjo
