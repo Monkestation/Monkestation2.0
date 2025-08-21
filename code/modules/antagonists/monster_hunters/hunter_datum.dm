@@ -76,7 +76,7 @@
 		card.moveToNullspace()
 		grant_drop_ability(card)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
-	spawn_rifts(total_rifts)
+	spawn_rifts()
 	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
 	gun_holder.drop_gun = TRUE
 	var/datum/action/cooldown/spell/track_monster/track = new
@@ -120,8 +120,8 @@
 	for(var/base_area in base_areas)
 		var/list/department = (typesof(base_area) - forbidden_areas) & GLOB.the_station_areas
 		if(length(department))
-			departments[department] = amount
-	for(var/i = 1 to amount)
+			departments[department] = total_rifts
+	for(var/i = 1 to total_rifts)
 		var/list/department = pick_weight(departments)
 		var/turf/target_turf = get_safe_random_station_turf(department)
 		if(!target_turf)

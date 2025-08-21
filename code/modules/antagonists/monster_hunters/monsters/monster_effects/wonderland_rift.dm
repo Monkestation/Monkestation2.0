@@ -37,7 +37,7 @@
 	. = ..()
 	if(hunter_antag)
 		. += span_info("Use your hunter weapon in order to tear open the rift. ") + span_warning("This will be visible to anyone nearby!")
-		. += span_info("You have opened [hunter_antag.rifts_opened] out of 5 rifts.")
+		. += span_info("You have opened [hunter_antag.rifts_opened] out of [hunter_antag.total_rifts] rifts.")
 
 /obj/effect/bnnuy/attackby(obj/item/weapon, mob/user, params)
 	if(user.mind != hunter_antag.owner)
