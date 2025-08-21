@@ -372,6 +372,18 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
+/datum/status_effect/crusher_mark/admin //admin version that marks any mob
+	id = "admin_crusher_mark"
+	duration = 3000
+
+/datum/status_effect/crusher_mark/admin/on_apply() //this one marks ANYONE :>
+	marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+	marked_underlay.pixel_x = -owner.pixel_x
+	marked_underlay.pixel_y = -owner.pixel_y
+	owner.underlays += marked_underlay
+	return TRUE
+
+
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
@@ -383,6 +395,16 @@
 	overlay_state = "bleed"
 	underlay_state = "bleed"
 	var/bleed_damage = 200
+
+/datum/status_effect/stacking/saw_bleed/sickle //monke addition
+	id = "sickle_bleed"
+	tick_interval = 6
+	delay_before_decay = 100 //these take longer to decay
+	overlay_file = 'icons/effects/bleed.dmi'
+	underlay_file = 'icons/effects/bleed.dmi'
+	overlay_state = "bleed"
+	underlay_state = "bleed"
+	bleed_damage = 125 //weaker than cleaving saw bleed due to being more available
 
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
