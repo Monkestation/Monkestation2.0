@@ -38,8 +38,8 @@
 	hitsound = 'goon/sounds/impact_sounds/Flesh_Cut_1.ogg'
 
 	inhand_icon_state = "PKMachete0"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/melee_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 
 	force = 20 //damage increases by 2.5 for every soul they take
 	throwforce = 20 //damage goes up by 2.5 for every soul they take
@@ -132,7 +132,7 @@
 	var/time_to_open = 5 //half a second
 	if(hasPower())
 		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 60, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 
 
 	if(do_after(user, time_to_open, src))

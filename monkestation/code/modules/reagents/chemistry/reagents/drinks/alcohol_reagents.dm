@@ -7,6 +7,7 @@
 	taste_description = "sweet brass"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	bypass_restriction = TRUE
+	synthetic_boozepwr = 10 //it's a machine-god themed cocktail. it just makes sense.
 
 /datum/reagent/consumable/ethanol/ratvander/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.adjust_timed_status_effect(6 SECONDS * REM * seconds_per_tick, /datum/status_effect/speech/slurring/clock, max_duration = 6 SECONDS)

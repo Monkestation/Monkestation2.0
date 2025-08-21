@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Removed the knockback stun from riot shotguns and such. Bulldog shotguns and double-barrelled shotguns can still do so, tho."

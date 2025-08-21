@@ -9,7 +9,7 @@
 /obj/item/mecha_parts/mecha_equipment/light_amplification/ui_act(action, list/params)
 	. = ..()
 	if(action == "toggle")
-		if(activated)
+		if(active)
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Light amplification functionality enabled.")]")
 			chassis.initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/light_amplification)
 			log_message("Activated.", LOG_MECHA)

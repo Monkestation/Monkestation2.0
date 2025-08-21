@@ -10,7 +10,7 @@
 	clothing_flags = HIDEHAIR | HIDEFACIALHAIR | MASKINTERNALS
 	flags_cover = PEPPERPROOF | MASKCOVERSEYES
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	slowdown = 1
+	slowdown = 0
 
 /obj/item/clothing/mask/gas/slasher/Initialize(mapload)
 	. = ..()
