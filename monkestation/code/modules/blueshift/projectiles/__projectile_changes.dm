@@ -1,43 +1,17 @@
 /obj/item/ammo_casing
-	/// Can this bullet casing be printed at an ammunition workbench?
-	var/can_be_printed = TRUE
-	/// If it can be printed, does this casing require an advanced ammunition datadisk? Mainly for specialized ammo.
-	/// Rubbers aren't advanced. Standard ammo (or FMJ if you're particularly pedantic) isn't advanced.
-	/// Think more specialized or weird, niche ammo, like armor-piercing, incendiary, hollowpoint, or God forbid, phasic.
-	var/advanced_print_req = FALSE
+
 
 // whatever goblin decided to spread out bullets over like 3 files and god knows however many overrides i wish you a very stubbed toe
 
 // to whomever made this file, i wish you get a papercut
 
-/obj/item/ammo_casing/strilka310
-	name = ".310 Strilka bullet casing"
-	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder."
-	icon_state = "310-casing"
-	caliber = CALIBER_STRILKA310
-	projectile_type = /obj/projectile/bullet/strilka310
 
-/obj/item/ammo_casing/strilka310/Initialize(mapload)
-	. = ..()
 
-	AddElement(/datum/element/caseless)
 
-/obj/item/ammo_casing/strilka310/surplus
-	name = ".310 Strilka surplus bullet casing"
-	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder. Damp red powder at that."
-	projectile_type = /obj/projectile/bullet/strilka310/surplus
 
-/obj/projectile/bullet/strilka310
-	name = ".310 Strilka bullet"
-	damage = 55    //-5 from mosin
-	armour_penetration = 10
-	wound_bonus = -50  //-5 from mosin
-	wound_falloff_tile = 0
 
-/obj/projectile/bullet/strilka310/surplus
-	name = ".310 Strilka surplus bullet"
-	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
-	armour_penetration = 0
+
+
 
 // Red kill lasers for the big gun
 

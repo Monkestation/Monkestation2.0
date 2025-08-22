@@ -31,3 +31,12 @@
 	caliber = CALIBER_585TRAPPISTE
 	max_ammo = 5
 
+
+// Shotgun revolver's cylinder
+
+/obj/item/ammo_box/magazine/internal/cylinder/rev12ga
+	name = "\improper 12 GA revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/shotgun
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 4
+	multiload = FALSE

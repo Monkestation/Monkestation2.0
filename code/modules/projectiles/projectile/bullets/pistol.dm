@@ -22,6 +22,7 @@
 	damage = 15
 	fire_stacks = 2
 
+
 // 10mm
 
 /obj/projectile/bullet/c10mm
@@ -42,6 +43,9 @@
 	name = "10mm incendiary bullet"
 	damage = 20
 	fire_stacks = 3
+
+
+///.35 sol short, weak crew pistol/smg round
 
 /obj/projectile/bullet/c35sol ///Yes yes, fits in both pistols and revolvers. I'm putting it here
 	name = ".35 Sol Short bullet"
@@ -95,3 +99,28 @@
 	damage = 13
 	bare_wound_bonus = -30
 	armour_penetration = 30
+
+
+///.585 Trappiste, heavy crew pistol/smg round
+
+/obj/projectile/bullet/c585trappiste
+	name = ".585 Trappiste bullet"
+	damage = 25
+	wound_bonus = -10
+
+/obj/projectile/bullet/c585trappiste/incapacitator
+	name = ".585 Trappiste flathead bullet"
+	damage = 9
+	stamina = 35
+	wound_bonus = -20
+	weak_against_armour = TRUE
+	shrapnel_type = null
+	sharpness = NONE
+	embedding = null
+
+/obj/projectile/bullet/c585trappiste/hollowpoint
+	name = ".585 Trappiste hollowhead bullet"
+	damage = 25
+	weak_against_armour = TRUE
+	wound_bonus = 10
+	bare_wound_bonus = 20

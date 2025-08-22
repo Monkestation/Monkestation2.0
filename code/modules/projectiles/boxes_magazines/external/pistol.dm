@@ -1,3 +1,5 @@
+//10mm mags
+
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A gun magazine."
@@ -30,6 +32,23 @@
 	desc= "A 10mm pistol magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
+/obj/item/ammo_box/magazine/r10mm
+	name = "regal condor magazine (10mm)"
+	icon_state = "r10mm-8"
+	base_icon_state = "r10mm"
+	ammo_type = /obj/item/ammo_casing/c10mm
+	caliber = CALIBER_10MM
+	max_ammo = 8
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	multiple_sprite_use_base = TRUE
+
+/obj/item/ammo_box/magazine/r10mm/empty
+	icon_state = "r10mm-0"
+	start_empty = TRUE
+
+
+//.45 mags
+
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
 	icon_state = "45-8"
@@ -39,6 +58,9 @@
 	max_ammo = 8
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	multiple_sprite_use_base = TRUE
+
+
+//9mm mags
 
 /obj/item/ammo_box/magazine/m9mm
 	name = "pistol magazine (9mm)"
@@ -98,6 +120,9 @@
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 	max_ammo = 15
 
+
+///.50ae mags
+
 /obj/item/ammo_box/magazine/m50
 	name = "handgun magazine (.50ae)"
 	icon_state = "50ae"
@@ -106,49 +131,47 @@
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
-/obj/item/ammo_box/magazine/r10mm
-	name = "regal condor magazine (10mm)"
-	icon_state = "r10mm-8"
-	base_icon_state = "r10mm"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	caliber = CALIBER_10MM
-	max_ammo = 8
-	multiple_sprites = AMMO_BOX_PER_BULLET
-	multiple_sprite_use_base = TRUE
 
-/obj/item/ammo_box/magazine/r10mm/empty
-	icon_state = "r10mm-0"
+// .35 Sol pistol magazines
+
+/obj/item/ammo_box/magazine/c35sol_pistol
+	name = "\improper Sol pistol magazine"
+	desc = "A standard size magazine for SolFed pistols, holds twelve rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
+	icon_state = "pistol_35_standard"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	w_class = WEIGHT_CLASS_TINY
+	ammo_type = /obj/item/ammo_casing/c35sol
+	caliber = CALIBER_SOL35SHORT
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/c35sol_pistol/starts_empty
+	start_empty = TRUE
+
+/obj/item/ammo_box/magazine/c35sol_pistol/stendo
+	name = "\improper Sol extended pistol magazine"
+	desc = "An extended magazine for SolFed pistols, holds sixteen rounds."
+	icon_state = "pistol_35_stended"
+	w_class = WEIGHT_CLASS_NORMAL
+	max_ammo = 16
+
+/obj/item/ammo_box/magazine/c35sol_pistol/stendo/starts_empty
 	start_empty = TRUE
 
 
+// .585 pistol magazines
 
-///AMMO BOXES!!!///
-
-/obj/item/ammo_box/c35sol
-	name = "ammo box (.35 Sol Short lethal)"
-	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/ammo.dmi'
-	icon_state = "35box"
+/obj/item/ammo_box/magazine/c585trappiste_pistol
+	name = "\improper Trappiste pistol magazine"
+	desc = "A standard size magazine for Trappiste pistols, holds sixteen rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/ammo.dmi'
+	icon_state = "pistol_585_standard"
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
-	w_class = WEIGHT_CLASS_NORMAL
-	caliber = CALIBER_SOL35SHORT
-	ammo_type = /obj/item/ammo_casing/c35sol
-	max_ammo = 24
+	w_class = WEIGHT_CLASS_SMALL
+	ammo_type = /obj/item/ammo_casing/c585trappiste
+	caliber = CALIBER_585TRAPPISTE
+	max_ammo = 16
 
-/obj/item/ammo_box/c35sol/incapacitator
-	name = "ammo box (.35 Sol Short incapacitator)"
-	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The blue stripe indicates this should hold less-lethal ammunition."
-	icon_state = "35box_disabler"
-	ammo_type = /obj/item/ammo_casing/c35sol/incapacitator
-
-/obj/item/ammo_box/c35sol/ripper
-	name = "ammo box (.35 Sol Short ripper)"
-	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds. The purple stripe indicates this should hold hollowpoint-like ammunition."
-	icon_state = "35box_shrapnel"
-	ammo_type = /obj/item/ammo_casing/c35sol/ripper
-
-/obj/item/ammo_box/c35sol/pierce
-	name = "ammo box (.35 Sol Short armor piercing)"
-	desc = "A box of .35 Sol Short pistol rounds, holds twenty-four rounds."
-	ammo_type = /obj/item/ammo_casing/c35sol/pierce
+/obj/item/ammo_box/magazine/c585trappiste_pistol/spawns_empty
+	start_empty = TRUE
 

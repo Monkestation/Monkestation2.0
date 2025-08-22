@@ -11,7 +11,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*15)
 	throwforce = 2
-	w_class = WEIGHT_CLASS_TINY
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 	override_notes = TRUE
@@ -175,6 +175,10 @@
 			if(AMMO_BOX_FULL_EMPTY)
 				icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
 	return ..()
+
+
+/obj/item/ammo_box/magazine
+	w_class = WEIGHT_CLASS_SMALL
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)

@@ -92,3 +92,29 @@
 	icon_state = "35sol_shrapnel"
 	projectile_type = /obj/projectile/bullet/c35sol/pierce
 
+
+// .585 Trappiste
+// High caliber round used in large pistols and revolvers
+
+/obj/item/ammo_casing/c585trappiste
+	name = ".585 Trappiste lethal bullet casing"
+	desc = "A white polymer cased high caliber round commonly used in handguns."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/ammo.dmi'
+	icon_state = "585trappiste"
+	caliber = CALIBER_585TRAPPISTE
+	projectile_type = /obj/projectile/bullet/c585trappiste
+
+/obj/item/ammo_casing/c585trappiste/incapacitator
+	name = ".585 Trappiste flathead bullet casing"
+	desc = "A white polymer cased high caliber round with a relatively soft, flat tip. Designed to flatten against targets and usually not penetrate on impact."
+	icon_state = "585trappiste_disabler"
+	projectile_type = /obj/projectile/bullet/c585trappiste/incapacitator
+	harmful = FALSE
+
+/obj/item/ammo_casing/c585trappiste/hollowpoint
+	name = ".585 Trappiste hollowhead bullet casing"
+	desc = "A white polymer cased high caliber round with a hollowed tip. Designed to cause as much damage on impact to fleshy targets as possible."
+	icon_state = "585trappiste_shrapnel"
+	projectile_type = /obj/projectile/bullet/c585trappiste/hollowpoint
+	advanced_print_req = TRUE
+
