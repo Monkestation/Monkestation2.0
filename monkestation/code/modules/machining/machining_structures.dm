@@ -178,7 +178,7 @@
 				to_chat(usr, span_warning("[src] workspace is preoccupied with another recipe!"))
 				return
 
-			if((current_user_machining_skill) <= recipe_path.machining_skill_required)
+			if((current_user_machining_skill) >= recipe_path.machining_skill_required)
 				to_chat(usr, span_warning("You do not have the skill necessary to construct this upgrade! Try sharpening your skills more?"))
 				return
 
@@ -370,9 +370,9 @@
 		to_chat(user, span_notice("You add [part_name] to [src]."))
 		req_materials[stock_part_base]--
 		check_done(user)
-		return TRUE
+		return
 	to_chat(user, span_warning("You cannot add that to the machine!"))
-	return FALSE
+	return
 
 //check if lathe materials requirements are met
 /obj/machinery/lathe/proc/check_done(mob/user)
