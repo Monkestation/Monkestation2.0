@@ -52,7 +52,7 @@
 		/obj/item/machining_intermediates/insulation = 4,
 		/obj/item/machining_intermediates/sewingsupplies = 2,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/hardened_exosuit_parts
 	category = TAB_SPECIFIC_PARTS
@@ -64,7 +64,7 @@
 		/obj/item/stack/machining_intermediates/steel = 10,
 		/obj/item/machining_intermediates/moltenplastic = 2,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/hardened_exosuit_plating
 	category = TAB_SPECIFIC_PARTS
@@ -76,7 +76,7 @@
 		/obj/item/stack/machining_intermediates/hardsteel = 8,
 		/obj/item/stack/machining_intermediates/steel = 4,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 
 /datum/machining_recipe/slidepistol
 	category = TAB_SPECIFIC_PARTS
@@ -87,7 +87,7 @@
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/stack/machining_intermediates/screwbolt = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/firearm_hammer
 	category = TAB_SPECIFIC_PARTS
@@ -97,7 +97,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/steel = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/bullet_small_ap
 	category = TAB_SPECIFIC_PARTS
@@ -107,7 +107,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/hardsteel = 1,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 	result_amount = 6
 
 /datum/machining_recipe/bullet_large_ap
@@ -118,7 +118,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/hardsteel = 1,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 	result_amount = 12
 
 /datum/machining_recipe/lens
@@ -130,7 +130,7 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/machining_intermediates/universalcircuit = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/crappyring
 	category = TAB_SPECIFIC_PARTS
@@ -141,7 +141,7 @@
 		/obj/item/stack/sheet/mineral/silver = 3,
 		/obj/item/stack/sheet/mineral/titanium = 1,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/fancyring
 	category = TAB_SPECIFIC_PARTS
@@ -152,7 +152,7 @@
 		/obj/item/stack/sheet/mineral/gold = 3,
 		/obj/item/stack/sheet/mineral/titanium = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/axehead
 	category = TAB_SPECIFIC_PARTS
@@ -162,7 +162,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/hardsteel = 5,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 
 /datum/machining_recipe/bodyarmor
 	category = TAB_SPECIFIC_PARTS
@@ -175,7 +175,7 @@
 		/obj/item/stack/sheet/leather = 2,
 		/obj/item/machining_intermediates/sewingsupplies = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/helmet
 	category = TAB_SPECIFIC_PARTS
@@ -188,7 +188,7 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/machining_intermediates/sewingsupplies = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/bodyarmor_bulletproof
 	category = TAB_SPECIFIC_PARTS
@@ -201,7 +201,7 @@
 		/obj/item/stack/sheet/cloth = 6,
 		/obj/item/machining_intermediates/sewingsupplies = 2,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 
 /datum/machining_recipe/helmet_bulletproof
 	category = TAB_SPECIFIC_PARTS
@@ -215,7 +215,7 @@
 		/obj/item/stack/sheet/rglass = 2,
 		/obj/item/machining_intermediates/sewingsupplies = 2,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 
 /datum/machining_recipe/forged_exosuit_parts
 	category = TAB_SPECIFIC_PARTS
@@ -228,7 +228,7 @@
 		/obj/item/mecha_parts/mecha_equipment/armor/hardened_exosuit_part = 1,
 		/obj/item/machining_intermediates/suitsensors = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/forged_exosuit_plating
 	category = TAB_SPECIFIC_PARTS
@@ -243,7 +243,7 @@
 		/obj/item/stack/sheet/mineral/silver = 2,
 		/obj/item/stack/sheet/mineral/titanium = 8,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 
 /datum/machining_recipe/mosin
 	category = TAB_SPECIFIC_PARTS
@@ -257,4 +257,4 @@
 		/obj/item/stack/sheet/mineral/wood = 4,
 		/obj/item/stack/machining_intermediates/screwbolt = 6,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4

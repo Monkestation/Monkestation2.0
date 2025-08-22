@@ -23,7 +23,7 @@
 	machinery_type = MACHINING_WORKSTATION
 	crafting_time = MACHINING_DELAY_NORMAL
 	result = /obj/item/machining_intermediates/universalcircuit
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 	reqs = list(
 		/obj/item/machining_intermediates/moltenplastic = 1,
 		/obj/item/stack/machining_intermediates/smallwire = 5,
@@ -35,7 +35,7 @@
 	machinery_type = MACHINING_WORKSTATION
 	crafting_time = MACHINING_DELAY_NORMAL
 	result = /obj/item/machining_intermediates/smallmotor
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 	reqs = list(
 		/obj/item/stack/rods = 2,
 		/obj/item/stack/machining_intermediates/smallwire = 20,
@@ -68,7 +68,7 @@
 	machinery_type = MACHINING_FURNACE
 	crafting_time = MACHINING_DELAY_NORMAL
 	result = /obj/item/stack/machining_intermediates/steel
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 	)
@@ -78,7 +78,7 @@
 	machinery_type = MACHINING_FURNACE
 	crafting_time = MACHINING_DELAY_NORMAL
 	result = /obj/item/stack/machining_intermediates/hardsteel
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/stack/sheet/mineral/titanium = 1,

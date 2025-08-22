@@ -42,10 +42,8 @@
 	var/result_amount = 1
 	///determines if the recipe requires specific levels of parts. (ie specifically a femto menipulator vs generic manipulator)
 	var/specific_parts = FALSE
-	///what tier of machinery required to craft this recipe
-	var/upgrade_tier_required = 1
 	///what tier of skill required to craft this recipe
-	var/machining_skill_required = 0
+	var/machining_skill_required = 1
 
 /datum/machining_recipe/New()
 	if(!result)

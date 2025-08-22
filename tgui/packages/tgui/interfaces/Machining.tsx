@@ -34,6 +34,7 @@ type Recipe = {
   desc: String;
   machinery_type: String;
   reqs: Atoms;
+  machining_skill_required: Number;
 };
 
 type Data = {
@@ -42,7 +43,6 @@ type Data = {
   busy: BooleanLike;
   craftable: BooleanLike;
   user_machining_skill: BooleanLike;
-  upgrade_tier: BooleanLike;
   recipes: Recipe[];
   atom_data: String[];
 };
@@ -91,7 +91,8 @@ export const Machining = (props, context) => {
                   content="Upgrade your machines as your skills increase to gain a wider selection of recipes."
                 >
                   <NoticeBox position="relative" info>
-                    Current machine tier: {data.upgrade_tier ?? 'Unknown'}
+                    Current User Skill Level:{' '}
+                    {data.user_machining_skill ?? 'Unknown'}
                   </NoticeBox>
                 </Tooltip>
                 <Button.Checkbox
@@ -220,9 +221,9 @@ const MainRecipeScreen = (props, context) => {
               icon={busy ? 'circle-notch' : 'hammer'}
               iconSpin={busy ? 1 : 0}
               tooltip={
-                recipe.upgrade_tier_required
-                  ? `Requires upgrade tier ${recipe.upgrade_tier_required} to construct.`
-                  : 'No upgrade tier required.'
+                recipe.machining_skill_required
+                  ? `Requires machining skill level ${recipe.machining_skill_required} to construct.`
+                  : 'No skill required.'
               }
               onClick={() =>
                 act('make', {

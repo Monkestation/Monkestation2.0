@@ -28,7 +28,7 @@
 		/obj/item/stack/sheet/leather = 4,
 		/obj/item/machining_intermediates/sewingsupplies = 1,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/hardarmor
 	category = TAB_TYPE_PARTS
@@ -40,7 +40,7 @@
 		/obj/item/stack/machining_intermediates/hardsteel = 4,
 		/obj/item/machining_intermediates/sewingsupplies = 1,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/handle_wood
 	category = TAB_TYPE_PARTS
@@ -93,7 +93,7 @@
 		/obj/item/machining_intermediates/moltenplastic = 1,
 		/obj/item/stack/machining_intermediates/smallwire = 4,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/bolt
 	category = TAB_TYPE_PARTS
@@ -103,7 +103,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/hardsteel = 1,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/gunbarrel_pistol
 	category = TAB_TYPE_PARTS
@@ -113,7 +113,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/steel = 2,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/gunbarrel_rifle
 	category = TAB_TYPE_PARTS
@@ -123,7 +123,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/hardsteel = 4,
 	)
-	upgrade_tier_required = 4
+	machining_skill_required = 4
 
 /datum/machining_recipe/gunbarrel_smootbore
 	category = TAB_TYPE_PARTS
@@ -133,7 +133,7 @@
 	reqs = list(
 		/obj/item/stack/machining_intermediates/steel = 4,
 	)
-	upgrade_tier_required = 3
+	machining_skill_required = 3
 
 /datum/machining_recipe/bullet_small_casing
 	category = TAB_TYPE_PARTS
@@ -143,7 +143,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 1,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/bullet_large_casing
 	category = TAB_TYPE_PARTS
@@ -153,7 +153,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/bullet_small
 	category = TAB_TYPE_PARTS
@@ -163,7 +163,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 1,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2
 
 /datum/machining_recipe/bullet_large
 	category = TAB_TYPE_PARTS
@@ -173,4 +173,4 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 	)
-	upgrade_tier_required = 2
+	machining_skill_required = 2

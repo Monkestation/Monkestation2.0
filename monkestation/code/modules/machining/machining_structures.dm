@@ -29,11 +29,12 @@
 	var/auto_dispense = FALSE
 	///Should the lathe automatically build the item?
 	var/auto_build = FALSE
-	/// what tier are the parts
+	///what tier are the parts
 	var/manipulator_tier = 1
 	var/speed_mod = 1
-	var/upgrade_tier = 1
 
+	//current user
+	var/current_user_machining_skill
 	///sounds for machines
 	var/operating_sound = 'sound/items/welder.ogg'
 
@@ -83,6 +84,7 @@
 
 /obj/machinery/lathe/ui_data(mob/user)
 	var/list/data = list()
+	current_user_machining_skill = user?.mind?.get_skill_level(/datum/skill/machinist) || 1
 
 	data["recipes"] = list()
 	data["categories"] = list()
@@ -90,8 +92,7 @@
 	data["craftable"] = craftable
 	data["auto_dispense"] = auto_dispense
 	data["auto_build"] = auto_build
-	data["user_machining_skill"] = user?.mind?.get_skill_level(/datum/skill/machinist) || 0 //default 1
-	data["upgrade_tier"] = upgrade_tier
+	data["user_machining_skill"] = current_user_machining_skill
 
 	// Recipes
 	for(var/datum/machining_recipe/recipe as anything in GLOB.machining_recipes)
@@ -127,6 +128,9 @@
 	// Name, Description
 	data["name"] = recipe.name
 
+	// Crafting Skill Needed
+	data["machining_skill_required"] = recipe.machining_skill_required
+
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result
 		if(recipe.result_amount > 1)
@@ -154,7 +158,7 @@
 			data["reqs"]["[id]"] = recipe.reqs[req_atom]
 
 	// craftability
-	if(upgrade_tier >= recipe.upgrade_tier_required)
+	if((current_user_machining_skill) >= recipe.machining_skill_required)
 		data["req_required"] = TRUE
 	else
 		data["req_required"] = FALSE
@@ -173,15 +177,12 @@
 			if(busy)
 				to_chat(usr, span_warning("[src] workspace is preoccupied with another recipe!"))
 				return
-			if(upgrade_tier < recipe_path.upgrade_tier_required)
-				to_chat(usr, span_warning("You need at least a tier [upgrade_tier] upgrade to make this recipe!"))
+
+			if((current_user_machining_skill) <= recipe_path.machining_skill_required)
+				to_chat(usr, span_warning("You do not have the skill necessary to construct this upgrade! Try sharpening your skills more?"))
 				return
 
-			if(usr?.mind?.get_skill_level(/datum/skill/machinist) <= recipe_path.machining_skill_required)
-				to_chat(usr, span_warning("You do not have the skill necessarry to construct this upgrade! Try sharpening your skills more?"))
-				return
-
-			to_chat(usr, span_notice("[key_name(usr)] is making [params["recipe"]] on [src] ([src.loc])"))
+			to_chat(usr, span_notice("[usr.name] is making [recipe_path.name] on [src]"))
 			load_recipe(new recipe_path.type)
 
 		if("produce")
@@ -280,7 +281,7 @@
 			to_chat(usr, span_warning("You fail to follow the design document on [src]!"))
 			return //no abusing abort button while in do_after
 		var/gain_array = list(MACHINING_DELAY_VERY_FAST, MACHINING_DELAY_FAST, MACHINING_DELAY_NORMAL, MACHINING_DELAY_SLOW, MACHINING_DELAY_VERY_SLOW)
-		usr?.mind?.adjust_experience(/datum/skill/machinist, gain_array[clamp(to_make.upgrade_tier_required, 1, 5)])
+		usr?.mind?.adjust_experience(/datum/skill/machinist, gain_array[clamp(to_make.machining_skill_required, 1, 5)])
 		spawn_item()
 		return
 
@@ -310,16 +311,6 @@
 
 /obj/machinery/lathe/attackby(obj/item/interacted_item, mob/user, params)
 	. = ..()
-	if(istype(interacted_item, /obj/item/machining_intermediates/upgrade))
-		var/obj/item/machining_intermediates/upgrade/upgrade_part = interacted_item
-		if(upgrade_part.upgrade_tier <= upgrade_tier)
-			to_chat(user, span_warning("You cannot add a tier [upgrade_part.upgrade_tier] upgrade to a lathe with a tier [upgrade_tier] manipulator!"))
-			return FALSE
-		upgrade_tier = upgrade_part.upgrade_tier
-		to_chat(user, span_notice("You upgraded the [src] into tier [upgrade_tier]."))
-		update_namelist()
-		qdel(upgrade_part)
-		return TRUE
 
 	for(var/stock_part_base in req_materials)
 		if (req_materials[stock_part_base] == 0)

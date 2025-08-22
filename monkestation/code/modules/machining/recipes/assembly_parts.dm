@@ -13,7 +13,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 8,
         /obj/item/machining_intermediates/moltenplastic = 2,
     )
-    upgrade_tier_required = 5
+    machining_skill_required = 5
 
 /datum/machining_recipe/wylom_magazine
     name = "Wylom Magazine"
@@ -26,7 +26,7 @@
         /obj/item/stack/rods = 2,
         /obj/item/stack/machining_intermediates/screwbolt = 4,
     )
-    upgrade_tier_required = 5
+    machining_skill_required = 5
 
 /datum/machining_recipe/c20r
     name = "C-20r"
@@ -44,7 +44,7 @@
         /obj/item/machining_intermediates/moltenplastic = 2,
 		/obj/item/machining_intermediates/bullet_large_ap = 12,
     )
-    upgrade_tier_required = 5
+    machining_skill_required = 5
 
 /datum/machining_recipe/c20r_magazine
     name = "C-20r Magazine"
@@ -58,7 +58,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 4,
 		/obj/item/machining_intermediates/bullet_large_ap = 12,
     )
-    upgrade_tier_required = 5
+    machining_skill_required = 5
 
 /datum/machining_recipe/revolver_38
     name = ".38 Revolver"
@@ -75,7 +75,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 4,
 		/obj/item/machining_intermediates/bullet_small = 6,
     )
-    upgrade_tier_required = 3
+    machining_skill_required = 3
 
 /datum/machining_recipe/paco_pistol
     name = "Paco Pistol"
@@ -91,7 +91,7 @@
         /obj/item/machining_intermediates/trigger = 1,
         /obj/item/stack/machining_intermediates/screwbolt = 8,
     )
-    upgrade_tier_required = 3
+    machining_skill_required = 3
 
 /datum/machining_recipe/paco_magazine
     name = "Paco Magazine"
@@ -105,7 +105,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 4,
 		/obj/item/machining_intermediates/bullet_small = 12,
     )
-    upgrade_tier_required = 3
+    machining_skill_required = 3
 
 /datum/machining_recipe/disabler_pistol
     name = "Disabler Pistol"
@@ -123,7 +123,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 6,
         /obj/item/machining_intermediates/moltenplastic = 2,
     )
-    upgrade_tier_required = 3
+    machining_skill_required = 3
 
 /datum/machining_recipe/laser_gun
     name = "Laser Gun"
@@ -143,7 +143,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 10,
         /obj/item/machining_intermediates/moltenplastic = 2,
     )
-    upgrade_tier_required = 4
+    machining_skill_required = 4
 
 /datum/machining_recipe/energy_gun
     name = "Energy Gun"
@@ -163,7 +163,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 10,
         /obj/item/machining_intermediates/moltenplastic = 2,
     )
-    upgrade_tier_required = 4
+    machining_skill_required = 4
 
 /datum/machining_recipe/makeshift_pulse_gun
     name = "Makeshift Pulse Gun"
@@ -180,7 +180,7 @@
         /obj/item/stack/machining_intermediates/hardsteel = 4,
         /obj/item/machining_intermediates/moltenplastic = 6,
     )
-    upgrade_tier_required = 5
+    machining_skill_required = 5
 
 //etc
 /datum/machining_recipe/knockoff_jewelry
@@ -193,7 +193,7 @@
         /obj/item/machining_intermediates/crappyring = 1,
         /obj/item/stack/sheet/glass = 2,
     )
-    upgrade_tier_required = 2
+    machining_skill_required = 2
 
 /datum/machining_recipe/quality_jewelry
     name = "Quality Jewelry"
@@ -205,7 +205,7 @@
         /obj/item/machining_intermediates/fancyring = 1,
         /obj/item/stack/sheet/mineral/diamond = 1,
     )
-    upgrade_tier_required = 3
+    machining_skill_required = 3
 
 /datum/machining_recipe/artisan_jewelry
     name = "Artisan Jewelry"
@@ -218,7 +218,7 @@
         /obj/item/stack/sheet/mineral/gold = 1,
         /obj/item/stack/sheet/mineral/diamond = 3,
     )
-    upgrade_tier_required = 4
+    machining_skill_required = 4
 
 /datum/machining_recipe/gas_pump
     name = "Gas Pump"
@@ -232,7 +232,7 @@
         /obj/item/machining_intermediates/moltenplastic = 2,
         /obj/item/stack/machining_intermediates/screwbolt = 8,
     )
-    upgrade_tier_required = 2
+    machining_skill_required = 2
 
 /datum/machining_recipe/portable_scrubber
     name = "Portable Scrubber"
@@ -246,7 +246,7 @@
         /obj/item/machining_intermediates/moltenplastic = 2,
         /obj/item/stack/machining_intermediates/screwbolt = 6,
     )
-    upgrade_tier_required = 2
+    machining_skill_required = 2
 
 /datum/machining_recipe/jaws_of_life
     name = "Jaws of Life"
@@ -263,7 +263,7 @@
         /obj/item/stack/machining_intermediates/smallwire = 4,
         /obj/item/machining_intermediates/handle_polymer = 2,
     )
-    upgrade_tier_required = 3
+    machining_skill_required = 3
 
 /datum/machining_recipe/hand_drill
     name = "Hand Drill"
@@ -280,7 +280,7 @@
         /obj/item/stack/machining_intermediates/smallwire = 4,
         /obj/item/machining_intermediates/handle_polymer = 1,
     )
-    upgrade_tier_required = 3
+    machining_skill_required = 3
 
 /datum/machining_recipe/fire_axe
     name = "Fire Axe"
@@ -294,7 +294,7 @@
         /obj/item/stack/machining_intermediates/screwbolt = 4,
         /obj/item/machining_intermediates/dye = 1,
     )
-    upgrade_tier_required = 4
+    machining_skill_required = 4
 
 /datum/machining_recipe/sledgehammer
     name = "Sledgehammer"
@@ -307,4 +307,4 @@
         /obj/item/machining_intermediates/handle_wood = 2,
         /obj/item/stack/machining_intermediates/screwbolt = 4,
     )
-    upgrade_tier_required = 2
+    machining_skill_required = 2

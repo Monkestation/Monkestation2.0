@@ -165,34 +165,6 @@
 	desc = "A stock of polymer, sleek and tacticool."
 	icon_state = "stock_polymer"
 
-//tiered
-/obj/item/machining_intermediates/upgrade
-	var/upgrade_tier
-
-/obj/item/machining_intermediates/upgrade/machineparts_t1
-	name = "tier 1 machine parts"
-	desc = "Basic machine parts, used for constructing simple machines."
-	icon_state = "machineparts_t1"
-	upgrade_tier = 2
-
-/obj/item/machining_intermediates/upgrade/machineparts_t2
-	name = "tier 2 machine parts"
-	desc = "Advanced machine parts, used for constructing complex machines."
-	icon_state = "machineparts_t2"
-	upgrade_tier = 3
-
-/obj/item/machining_intermediates/upgrade/machineparts_t3
-	name = "tier 3 machine parts"
-	desc = "High-tech machine parts, used for constructing advanced machines."
-	icon_state = "machineparts_t3"
-	upgrade_tier = 4
-
-/obj/item/machining_intermediates/upgrade/machineparts_t4
-	name = "tier 4 machine parts"
-	desc = "Top-tier machine parts, used for constructing the most advanced of machines."
-	icon_state = "machineparts_t4"
-	upgrade_tier = 5
-
 /obj/item/machining_intermediates/crappyring
 	name = "crappy ring"
 	desc = "A cheap ring, not worth much."
