@@ -67,6 +67,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet/grimey,
 /area/station/commons/dorms)
+"acf" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "acg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -492,6 +496,13 @@
 /obj/machinery/teleport/station,
 /turf/open/floor/iron,
 /area/station/command/teleporter)
+"alM" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/station/outside)
 "ama" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1097,10 +1108,10 @@
 /turf/open/floor/mineral/gold,
 /area/station/ai_monitored/command/nuke_storage)
 "aCi" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
+/obj/effect/turf_decal/trimline/green/filled/warning,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "aDf" = (
@@ -1340,6 +1351,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/westtower/a1stfloor/hallway)
+"aJA" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/flora/bush/sparsegrass,
+/obj/structure/flora/bush/jungle/a/style_3,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "aJB" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -2254,6 +2272,7 @@
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
 	name = "SapMaster XP"
 	},
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "bgC" = (
@@ -3912,6 +3931,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
+"bTq" = (
+/obj/effect/turf_decal/trimline/green/filled/warning,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "bTx" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -4385,6 +4408,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/dark/half,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cec" = (
@@ -4777,6 +4801,12 @@
 /area/station/engineering/supermatter/control_room)
 "cmJ" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cnd" = (
@@ -4826,6 +4856,12 @@
 /obj/structure/fence,
 /turf/open/floor/grass,
 /area/station/outside)
+"cpe" = (
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "cpj" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law{
@@ -5453,12 +5489,12 @@
 /turf/open/floor/iron/large,
 /area/station/engineering/supermatter/control_room)
 "cHd" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cHe" = (
@@ -6285,15 +6321,13 @@
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "cTk" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/structure/sink/directional/east,
 /obj/machinery/light/directional/west,
 /obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cTp" = (
@@ -6526,13 +6560,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "cYA" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 4;
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /mob/living/basic/chicken,
 /obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/outside)
 "cYM" = (
@@ -6966,9 +6996,17 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/misc/asteroid,
 /area/station/outside)
+"diT" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "djd" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -10041,6 +10079,8 @@
 /obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/dark/half,
+/obj/effect/turf_decal/tile/dark/half,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "eNU" = (
@@ -10190,13 +10230,10 @@
 /area/station/command/heads_quarters/nt_rep_pent)
 "eQC" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/seed_extractor,
+/obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/machinery/seed_extractor,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "eQK" = (
@@ -10443,6 +10480,9 @@
 "eWU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "eXa" = (
@@ -11599,6 +11639,10 @@
 "fzR" = (
 /turf/open/floor/carpet/green,
 /area/station/service/bar)
+"fzU" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "fAi" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/machinery/light/directional/north,
@@ -11620,6 +11664,12 @@
 /obj/structure/stairs/east,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"fAO" = (
+/obj/machinery/growing/tray,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/dark/half,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "fAR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12658,6 +12708,19 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/cargo/warehouse/upper)
+"gbP" = (
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "gbX" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
@@ -13672,6 +13735,13 @@
 /obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/station/medical/pathology/isolation)
+"gyU" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/bush/grassy,
+/obj/structure/flora/bush/flowers_yw,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "gzd" = (
 /obj/machinery/vending/hydronutrients,
 /obj/effect/decal/cleanable/dirt,
@@ -14395,12 +14465,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "gPN" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 4;
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/obj/structure/railing/wooden_fencing,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/outside)
 "gQh" = (
@@ -15572,12 +15638,8 @@
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "hks" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 4;
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/outside)
 "hkM" = (
@@ -16106,9 +16168,20 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/subway/southstation)
+"hzf" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/warning,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "hzj" = (
 /obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/dark/half,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "hzl" = (
@@ -16230,6 +16303,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/office)
+"hCW" = (
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "hCY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -17334,18 +17419,13 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/diner)
 "ifR" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/green/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ifT" = (
@@ -17907,6 +17987,17 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/medical/psychology)
+"ivr" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/station/outside)
 "ivu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18735,6 +18826,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
+"iGV" = (
+/obj/effect/turf_decal/trimline/green/corner,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "iGW" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
@@ -18824,6 +18922,11 @@
 /obj/effect/landmark/start/janitor,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"iIG" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/grass,
+/area/station/outside)
 "iJg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
@@ -19027,10 +19130,12 @@
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/supermatter/roomone)
 "iPR" = (
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "iPZ" = (
@@ -19898,6 +20003,15 @@
 "jlc" = (
 /turf/open/openspace,
 /area/station/maintenance/central/lesser)
+"jld" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "jlm" = (
 /obj/machinery/button/flasher{
 	id = "hopflash";
@@ -20345,12 +20459,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "jvj" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 4;
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /mob/living/basic/chicken,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/outside)
 "jvm" = (
@@ -21291,6 +21401,17 @@
 "jSH" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
+"jSI" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jSK" = (
@@ -21861,6 +21982,12 @@
 	dir = 1
 	},
 /area/station/science/robotics/mechbay)
+"kfF" = (
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/station/outside)
 "kfG" = (
 /turf/open/floor/iron,
 /area/station/science/lobby)
@@ -22473,6 +22600,16 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/outside)
+"kwv" = (
+/obj/machinery/growing/tray,
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/dark/half,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "kwK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -22769,6 +22906,18 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet/green,
 /area/station/service/bar)
+"kCO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "kDa" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -24538,6 +24687,9 @@
 "lzL" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lzN" = (
@@ -25166,6 +25318,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"lQu" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/grass,
+/area/station/outside)
 "lQO" = (
 /obj/structure/table/wood/fancy/green,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25183,6 +25339,9 @@
 "lQZ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/kitchen/diner)
 "lRc" = (
@@ -25236,12 +25395,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "lTf" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -26631,10 +26786,7 @@
 /turf/open/floor/iron,
 /area/station/commons/easttower/a7ndfloor/hallway)
 "mzy" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -26687,15 +26839,27 @@
 	},
 /turf/open/floor/grass,
 /area/station/outside)
+"mBy" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "mBR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/ordnance)
 "mBS" = (
-/obj/structure/railing/wooden_fencing{
-	dir = 8
-	},
 /obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/grass,
 /area/station/outside)
 "mBT" = (
@@ -28738,6 +28902,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/easttower/maintenence/a5thfloor/hallway)
+"nEk" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "nEs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28990,6 +29163,15 @@
 	},
 /turf/open/floor/plastic,
 /area/station/service/bar)
+"nKB" = (
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/large,
+/area/station/outside)
 "nKS" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -29018,6 +29200,14 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
+"nLt" = (
+/obj/effect/landmark/start/botanist,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "nLz" = (
 /obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /obj/structure/dresser,
@@ -29501,6 +29691,9 @@
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/reagent_containers/cup/watering_can,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "nXB" = (
@@ -29585,6 +29778,13 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
 /area/station/service/chapel/office)
+"nYR" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/flora/bush/grassy,
+/obj/structure/flora/bush/flowers_yw,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "nYZ" = (
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/white,
@@ -30124,12 +30324,10 @@
 "omp" = (
 /obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/dark/half,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "omq" = (
@@ -30261,15 +30459,9 @@
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "oqK" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/sink/directional/east,
 /obj/machinery/light/directional/south,
+/obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "oqQ" = (
@@ -30670,6 +30862,13 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/wood/large,
 /area/station/commons/easttower/a1stfloor/hallway)
+"ozg" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/bush/sparsegrass,
+/obj/structure/flora/bush/jungle/a/style_3,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "ozx" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -32246,12 +32445,12 @@
 /turf/open/floor/plastic,
 /area/station/engineering/a2MINPP/staging)
 "pgE" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "pgH" = (
@@ -32521,6 +32720,16 @@
 "ppj" = (
 /turf/closed/wall,
 /area/station/cargo/quartermaster)
+"ppm" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "ppp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -33435,6 +33644,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "pGc" = (
@@ -33753,13 +33965,10 @@
 /area/station/science/lobby)
 "pQk" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/composters,
+/obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/machinery/composters,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "pQN" = (
@@ -34370,6 +34579,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/wood/parquet,
 /area/station/service/theater)
+"qic" = (
+/obj/machinery/rnd/production/techfab/department/service,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "qin" = (
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/machinery/firealarm/directional/east,
@@ -35248,6 +35461,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
+"qwP" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "qwQ" = (
 /turf/closed/wall,
 /area/station/medical/treatment_center)
@@ -35526,6 +35749,9 @@
 /area/station/commons/dorms)
 "qGX" = (
 /obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "qHb" = (
@@ -36920,6 +37146,10 @@
 /obj/machinery/growing/tray,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/dark/half,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rmp" = (
@@ -37674,14 +37904,17 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/roomtwo)
 "rGD" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/sink/directional/north,
 /obj/structure/cable,
 /obj/machinery/camera/directional/south{
 	c_tag = "East Tower- Botany Lower"
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -38748,6 +38981,13 @@
 	},
 /turf/open/floor/iron/shuttle/arrivals,
 /area/station/cargo/dockyards)
+"sfn" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "sfo" = (
 /obj/docking_port/stationary/escape_pod,
 /turf/open/floor/iron/shuttle/arrivals,
@@ -39497,6 +39737,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "swQ" = (
@@ -39537,6 +39780,10 @@
 	dir = 5
 	},
 /turf/open/floor/iron/large,
+/area/station/outside)
+"syd" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/grass,
 /area/station/outside)
 "syh" = (
 /obj/structure/railing,
@@ -40192,6 +40439,9 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "East Tower - Botany Upper"
 	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sOa" = (
@@ -40287,6 +40537,9 @@
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
 /obj/machinery/light/directional/east,
 /obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sQy" = (
@@ -40357,6 +40610,13 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/ballpit,
 /area/station/commons/dorms)
+"sRO" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/bush/grassy,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "sRP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -41353,16 +41613,15 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "tri" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/sink/directional/north,
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "trv" = (
@@ -41505,6 +41764,12 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/commons/easttower/maintenence/a5thfloor/hallway)
+"ttY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/green/filled/warning,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "tum" = (
 /obj/effect/turf_decal/arrows/white,
 /obj/effect/turf_decal/stripes/line{
@@ -41553,6 +41818,12 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"tvi" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "tvl" = (
 /obj/effect/mapping_helpers/airlock/access/all/science/robotics,
 /obj/machinery/door/airlock/research/glass{
@@ -42045,6 +42316,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tHB" = (
@@ -44834,6 +45108,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/commons/easttower/maintenence/a5thfloor/hallway)
+"uTx" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "uTD" = (
 /obj/machinery/camera/directional/north,
 /obj/machinery/firealarm/directional/north,
@@ -45021,7 +45303,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "uVR" = (
-/obj/structure/railing/wooden_fencing/gate,
+/obj/machinery/door/window/right/directional/south{
+	req_access = list("hydroponics")s)
+	},
 /turf/open/floor/grass,
 /area/station/outside)
 "uWa" = (
@@ -45118,8 +45402,11 @@
 /turf/open/floor/iron/large,
 /area/station/outside)
 "uZj" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/flora/bush/grassy,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/grass,
 /area/station/service/hydroponics)
 "uZl" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible,
@@ -45321,6 +45608,13 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/iron,
 /area/station/commons/westtower/a1stfloor/hallway)
+"veo" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "vey" = (
 /obj/structure/cable,
 /mob/living/simple_animal/bot/secbot/ed209,
@@ -46443,11 +46737,14 @@
 /turf/open/floor/iron/large,
 /area/station/outside)
 "vFg" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "vFr" = (
@@ -47379,6 +47676,13 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plastic,
 /area/station/engineering/a2MINPP/smes)
+"wca" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "wce" = (
 /obj/structure/tank_holder/extinguisher,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -48187,14 +48491,15 @@
 /turf/open/floor/iron,
 /area/station/engineering/a2MINPP/staging)
 "wwz" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wxb" = (
@@ -48338,6 +48643,15 @@
 	luminosity = 2
 	},
 /area/station/ai_monitored/command/nuke_storage)
+"wzm" = (
+/obj/machinery/door/window/right/directional/south{
+	req_access = list("hydroponics")s)
+	},
+/obj/machinery/door/window/right/directional/south{
+	req_access = list("hydroponics")s)
+	},
+/turf/open/floor/grass,
+/area/station/outside)
 "wzw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -48677,16 +48991,16 @@
 /turf/open/floor/iron/white,
 /area/station/commons/easttower/a7ndfloor/hallway)
 "wIi" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/junction{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/corner{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -49360,6 +49674,9 @@
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/cultivator,
 /obj/item/wirecutters,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xax" = (
@@ -50174,6 +50491,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/kitchen/diner)
 "xyb" = (
@@ -50267,6 +50587,12 @@
 /obj/structure/table,
 /obj/machinery/plantgenes,
 /obj/structure/sign/poster/random/directional/east,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xBu" = (
@@ -50907,6 +51233,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"xQH" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/grass,
+/area/station/outside)
 "xQJ" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/grimey,
@@ -51305,6 +51635,9 @@
 "xZB" = (
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "xZI" = (
@@ -101974,7 +102307,7 @@ wpK
 wcW
 cSz
 cSz
-aCi
+bTq
 kHZ
 sMR
 sMR
@@ -102151,14 +102484,14 @@ eSD
 xuZ
 jgJ
 jgJ
-uZj
+gyU
 ifR
 wwz
 wIi
 cTk
 djd
-kQJ
-jYc
+nLt
+qwP
 aCi
 kHZ
 sMR
@@ -102336,16 +102669,16 @@ sBI
 xuZ
 jgJ
 qIa
-uZj
+sRO
 omp
 rmk
 swG
+fAO
+cpe
+fAO
 hzj
-jYc
-hzj
-hzj
-aCi
-kHZ
+veo
+qic
 sMR
 sMR
 eJQ
@@ -102521,14 +102854,14 @@ wzB
 pTT
 jgJ
 qIa
-uZj
-mzy
-cmJ
+ozg
+jld
+jSI
 pFJ
+uTx
 cmJ
-cmJ
-cmJ
-cmJ
+uTx
+mBy
 vFg
 aTv
 kFN
@@ -102706,14 +103039,14 @@ jgJ
 jgJ
 xxC
 qIa
-uZj
+sRO
 eQC
 clj
 bTH
 cdZ
 eWU
 eNF
-eNF
+kwv
 pgE
 rNk
 atZ
@@ -102891,14 +103224,14 @@ jgJ
 jgJ
 jgJ
 qIa
-uZj
+sfn
 mzy
 jYc
 kQJ
-wNB
-pzm
-jYc
-jYc
+ppm
+kCO
+iGV
+gbP
 rGD
 wpK
 txD
@@ -103076,13 +103409,13 @@ jgJ
 jgJ
 jgJ
 jgJ
-uZj
+gyU
 pQk
 ctf
 jYc
-hzj
-jYc
-hzj
+fAO
+cpe
+fAO
 hzj
 cHd
 wpK
@@ -103261,14 +103594,14 @@ keL
 sqL
 qIa
 vkF
-uZj
+ozg
 lTf
+tvi
+tvi
 iPR
+nEk
 iPR
-iPR
-iPR
-iPR
-iPR
+hCW
 tri
 wpK
 uKl
@@ -103446,12 +103779,12 @@ pDF
 hgk
 qIa
 jgJ
+fzU
+nYR
+aJA
 uZj
-uZj
-uZj
-uZj
-uZj
-uZj
+wca
+nYR
 uZj
 vFr
 hIn
@@ -103823,14 +104156,14 @@ jgJ
 qIa
 qIa
 qIa
-jgJ
-nts
+kfF
+alM
 nts
 nts
 qZQ
-qZQ
-qZQ
-jgJ
+ivr
+ivr
+nKB
 xxC
 jgJ
 jgJ
@@ -104201,10 +104534,10 @@ tXw
 pDF
 eSD
 eSD
-tXw
+lQu
 mBS
-gwF
-tOz
+xQH
+iIG
 glO
 tXq
 aJY
@@ -104571,9 +104904,9 @@ tXw
 cRx
 aRD
 lgA
-tXw
+lQu
 cYA
-gDF
+syd
 gPN
 eSD
 eSD
@@ -104756,10 +105089,10 @@ tXw
 iNX
 pDF
 eSD
-tXw
+lQu
 ksh
 eSD
-tXw
+lQu
 eSD
 cIM
 eNY
@@ -105126,12 +105459,12 @@ tXw
 xUZ
 eSD
 eSD
-tXw
+lQu
 hks
-gDF
+syd
 gPN
 eSD
-hYc
+eSD
 ucM
 foR
 wve
@@ -105311,10 +105644,10 @@ tXw
 htr
 eSD
 eSD
-tXw
+lQu
 sLH
 seT
-tXw
+lQu
 eSD
 eSD
 eNY
@@ -105681,9 +106014,9 @@ tXw
 boG
 pDF
 eSD
-tXw
+lQu
 hks
-gDF
+syd
 gPN
 pDF
 eSD
@@ -105866,10 +106199,10 @@ tXw
 iNX
 eSD
 tqm
-tXw
+lQu
 sLH
 eSD
-tXw
+lQu
 eSD
 cIM
 ucM
@@ -106051,7 +106384,7 @@ tXw
 eSD
 eSD
 eSD
-uVR
+wzm
 seT
 lhx
 uVR
@@ -106236,7 +106569,7 @@ tXw
 eSD
 eSD
 eSD
-tXw
+lQu
 hks
 jvj
 gPN
@@ -136381,12 +136714,12 @@ rOs
 cuP
 sIl
 wpK
-jYc
+hzf
 aSW
 aSW
 rlb
 uGM
-jYc
+diT
 wpK
 xRy
 cuP
@@ -136566,12 +136899,12 @@ rOs
 cuP
 cFX
 wpK
-jYc
+hzf
 dNp
 dNp
 aOC
 uGM
-jYc
+acf
 wpK
 eFq
 cuP
@@ -136941,7 +137274,7 @@ usX
 fMd
 usX
 sZQ
-sZQ
+ttY
 ybV
 toA
 toA
