@@ -47,6 +47,11 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/incapacitate
 	max_ammo = 3
 
+/obj/item/ammo_box/magazine/internal/shot/buckshotroulette
+	name = "buckshotroulette shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/spent
+	max_ammo = 6
+
 /obj/item/ammo_box/magazine/internal/shot/levergun
 	name = "brush gun internal magazine"
 	ammo_type = /obj/item/ammo_casing/g45l

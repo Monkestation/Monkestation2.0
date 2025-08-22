@@ -108,6 +108,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/gun/ballistic/revolver/c38/detective
 	name = "\improper Colt Detective Special"

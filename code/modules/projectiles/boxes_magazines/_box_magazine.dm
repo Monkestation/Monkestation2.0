@@ -206,8 +206,12 @@
 	stored_ammo -= A
 	update_appearance()
 
-// monkestation edit start
 /obj/item/ammo_box/handle_atom_del(atom/A)
 	stored_ammo.Remove(A)
 	return ..()
-// monkestation edit end
+
+
+/obj/item/ammo_box/advanced
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiload = FALSE
+	w_class = WEIGHT_CLASS_NORMAL //used to be tiny tee hee

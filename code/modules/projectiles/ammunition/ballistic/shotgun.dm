@@ -288,3 +288,10 @@
 	icon_state = "breacher"
 	projectile_type = /obj/projectile/bullet/shotgun_breaching
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
+
+
+/obj/item/ammo_casing/shotgun/buckshot/spent
+	name = "spent buckshot shell"
+	desc = "A 12 gauge buckshot shell."
+	icon_state = "gshell"
+	projectile_type = null

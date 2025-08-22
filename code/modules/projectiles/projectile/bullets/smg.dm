@@ -33,6 +33,9 @@
 	damage = 40
 	weak_against_armour = TRUE
 
+/obj/projectile/bullet/c45/caseless
+	damage = 26 //parent damage var is 30
+
 
 // 4.6x30mm (Autorifles)
 

@@ -246,8 +246,5 @@
 /obj/projectile/beam/cybersun_laser/blade
 	icon_state = "blade"
 
-/obj/item/ammo_box/advanced
-	multiple_sprites = AMMO_BOX_FULL_EMPTY
-	multiload = FALSE
-	w_class = WEIGHT_CLASS_NORMAL //used to be tiny tee hee
+
 

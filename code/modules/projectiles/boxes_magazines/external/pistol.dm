@@ -59,6 +59,21 @@
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	multiple_sprite_use_base = TRUE
 
+/obj/item/ammo_box/magazine/whispering_jester_45_magazine
+	name = "Whispering-Jester pistol magazine (.45)"
+	desc = "A .45 pistol magazine for the Whispering-Jester handgun. Normaly chambered with caseless 45."
+	icon = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/item.dmi'
+	icon_state = "mag_jester"
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	ammo_type = /obj/item/ammo_casing/caseless/c45_caseless
+	caliber = CALIBER_45
+	max_ammo = 18
+
+/obj/item/ammo_box/magazine/whispering_jester_45_magazine/big_lmao
+	name = "screaming hilux magazine"
+	desc = "Why oh god fucking why?"
+	max_ammo = 45
+
 
 //9mm mags
 

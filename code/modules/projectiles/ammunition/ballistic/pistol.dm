@@ -21,6 +21,7 @@
 	desc = "A 10mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c10mm
 
+
 // 9mm (Makarov, Stechkin APS, PP-95)
 
 /obj/item/ammo_casing/c9mm
@@ -52,7 +53,6 @@
 	desc = "A .50AE bullet casing."
 	caliber = CALIBER_50
 	projectile_type = /obj/projectile/bullet/a50ae
-
 
 
 // .35 Sol Short
@@ -117,4 +117,6 @@
 	icon_state = "585trappiste_shrapnel"
 	projectile_type = /obj/projectile/bullet/c585trappiste/hollowpoint
 	advanced_print_req = TRUE
+
+
 

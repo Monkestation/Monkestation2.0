@@ -367,3 +367,62 @@
 
 	return .
 
+
+/obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
+	name = "\improper Whispering-Jester .45"
+	desc = "A .45 handgun that is designed by Rayne Corp for various people such as jesters, insurgents, and even stealth operatives. The handgun has a built in holosight, suppressor, and laser sight."
+	icon = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/item.dmi'
+	icon_state = "jester"
+	lefthand_file = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/lefthand.dmi'
+	righthand_file = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/righthand.dmi'
+	inhand_icon_state = "jester"
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
+	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
+	can_bayonet = FALSE
+	can_suppress = FALSE
+	can_unsuppress = FALSE
+	suppressed = TRUE
+	bolt_type = BOLT_TYPE_OPEN
+	bolt_wording = "firearm"
+	fire_delay = 1
+	fire_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_fire.ogg' //Unused, just in case it some how gets un-suppressed.
+	suppressed_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_fire.ogg'
+	suppressed_volume = 60
+	dry_fire_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	rack_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	lock_back_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	bolt_drop_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_clicky.ogg'
+	load_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	load_empty_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_in.ogg'
+	eject_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+	eject_empty_sound = 'monkestation/sound/weapons/gun/whispering_jester_45/jester_mag_out.ogg'
+
+//april fools edition
+/obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota
+	name = "\improper Screaming-Hilux .45"
+	desc = "A three-way weapon design project by Rayne Corp, Toyota, and Johnson & Co Architecture, sold under the Toyne Group. Designed as a fully-automatic alternative to the Whispering Jester, it trades all forms of stealth for delivering a lethal punch to hearing first, targets second. Do not trust the onboard suppressor. Wear hearing protection."
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
+	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine/big_lmao
+	can_bayonet = FALSE
+	can_suppress = FALSE
+	can_unsuppress = TRUE
+	suppressed = FALSE
+	bolt_type = BOLT_TYPE_OPEN
+	bolt_wording = "firearm"
+	fire_delay = 0.1
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 150 //abraxis this is a bad idea
+	recoil = 5 //it's a pistol firing full-auto, fuck your wrist lmao
+	wield_recoil = 0.75
+	spread = 12.5
+
+/obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota/Initialize(mapload)
+	. = ..()
+
+	give_autofire()
+
+//why did i steal code from the qarad for this fucking thing
+/obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota/proc/give_autofire()
+	AddComponent(/datum/component/automatic_fire, fire_delay)
