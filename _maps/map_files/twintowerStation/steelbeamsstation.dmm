@@ -1811,16 +1811,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/science/robotics)
-"aUd" = (
-/obj/structure/chair/pew/left{
-	dir = 4
-	},
-/obj/structure/chair/pew/left{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/thinplating/dark,
-/turf/open/floor/holofloor/dark,
-/area/station/security/courtroom)
 "aUf" = (
 /obj/structure/chair/sofa/bench/right,
 /turf/open/floor/wood/large,
@@ -11976,17 +11966,6 @@
 /obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/grass,
 /area/station/outside)
-"fCX" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/red/real_red/diagonal_centre,
-/obj/structure/chair/stool/bar/directional/north,
-/obj/structure/chair/stool/bar/directional/north,
-/turf/open/floor/iron/kitchen/diagonal,
-/area/station/service/kitchen/diner)
 "fCY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/openspace,
@@ -14476,16 +14455,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/medical/pathology/isolation)
-"gKv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/structure/hedge/opaque,
-/obj/structure/hedge/opaque,
-/turf/open/floor/wood,
-/area/station/commons/westtower/a3rdfloor/hallway)
 "gKF" = (
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/wood/parquet,
@@ -19766,16 +19735,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"iWT" = (
-/obj/structure/chair/sofa/right/maroon{
-	dir = 4
-	},
-/obj/structure/chair/sofa/right/maroon{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/turf/open/floor/iron/diagonal,
-/area/station/service/kitchen/diner)
 "iWU" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "West Tower - Antichamber"
@@ -20154,9 +20113,6 @@
 /area/station/hallway/secondary/command)
 "jfK" = (
 /obj/machinery/light/directional/north,
-/obj/structure/chair/pew/right{
-	dir = 4
-	},
 /obj/structure/chair/pew/right{
 	dir = 4
 	},
@@ -25075,11 +25031,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
-"lvd" = (
-/obj/structure/table/wood/fancy/green,
-/obj/structure/table/wood/fancy/green,
-/turf/open/floor/iron/dark/textured,
-/area/station/security/courtroom)
 "lvf" = (
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -47086,9 +47037,6 @@
 /area/station/hallway/secondary/command)
 "voF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/chair/sofa/bench/right{
-	dir = 4
-	},
 /obj/structure/chair/sofa/bench/right{
 	dir = 4
 	},
@@ -102696,7 +102644,7 @@ laG
 oKW
 bSc
 kDo
-iWT
+kQu
 hpj
 jgJ
 jgJ
@@ -103247,7 +103195,7 @@ sEV
 qbR
 dKH
 pXq
-fCX
+pxE
 keK
 bSc
 uWG
@@ -165399,7 +165347,7 @@ uKn
 cEE
 mxr
 jfK
-aUd
+xfE
 sJb
 vwc
 aag
@@ -166312,7 +166260,7 @@ uZJ
 cHP
 mZs
 sCu
-gKv
+sCu
 sCu
 nDj
 rDU
@@ -167249,7 +167197,7 @@ qcI
 cWQ
 vGJ
 sWW
-lvd
+hzl
 nqb
 eFn
 hzl
