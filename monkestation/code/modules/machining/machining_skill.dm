@@ -1,4 +1,4 @@
-//machining skills, each level gives you the ability to construct an upgrade to your machining machineries.
+//machining skills, each level gives you the ability to cosntruct more recipes
 #define MACHINING_SKILL_STOCK 3 //stock
 #define MACHINING_SKILL_T1 (MACHINING_SKILL_STOCK*5) //tier 1
 #define MACHINING_SKILL_T2 (MACHINING_SKILL_T1*1.5) //tier 2

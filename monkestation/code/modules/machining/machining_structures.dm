@@ -178,7 +178,7 @@
 				to_chat(usr, span_warning("[src] workspace is preoccupied with another recipe!"))
 				return
 
-			if((current_user_machining_skill) >= recipe_path.machining_skill_required)
+			if((current_user_machining_skill) < recipe_path.machining_skill_required)
 				to_chat(usr, span_warning("You do not have the skill necessary to construct this upgrade! Try sharpening your skills more?"))
 				return
 
