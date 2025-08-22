@@ -65,9 +65,18 @@
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		)
-	var/list/blue_alert_designs = list( //sec can have disabler
-		/obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
-		/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
+	/// list of items unlocked on blue alert
+	var/list/blue_alert_designs = list(
+		/datum/design/mech_disabler,
+		/datum/design/mech_laser,
+		/datum/design/clusterbang_launcher,
+		/datum/design/clusterbang_launcher_ammo,
+	)
+	// list of items that isn't to be restricted even if it fits into the categories of combat-level items, for snowflakes outliers.
+	var/list/whitelisted_designs = list(
+		/datum/design/mecha_tracking,
+		/datum/design/mecha_tracking_ai_control,
+		/datum/design/mecha_camera,
 	)
 	//monke edit end
 
@@ -439,7 +448,7 @@
 /*
 Essentially, For all categories in the design node, check if there is a banned string (from banned_categories).
 If it is, and it isn't just something supported by combat mechs like auto repair droid,
-skip them
+skip them. Returns the is_combat_design variable
 */
 /obj/machinery/mecha_part_fabricator/proc/weapon_lock_check(datum/design/design)
 	var/is_combat_design = FALSE
@@ -450,7 +459,9 @@ skip them
 
 	//they can have a tiny bit of non-lethal weapons. as a treat
 	if(is_combat_design && !combat_parts_allowed)
-		if((design in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
+		if(design.type in whitelisted_designs)
+			is_combat_design = FALSE
+		if((design.type in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
 			is_combat_design = FALSE
 
 	return is_combat_design
@@ -520,7 +531,8 @@ skip them
 					continue
 
 				var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-				if(weapon_lock_check(design))
+
+				if(weapon_lock_check(design) && !combat_parts_allowed)
 					balloon_alert(usr, "unauthorized!")
 					continue
 
