@@ -5,6 +5,7 @@
 	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
 	icon_state = "trickshell"
 	projectile_type = /obj/projectile/bullet/pellet/trickshot
+	can_be_printed = FALSE
 	pellets = 6
 	variance = 8
 
@@ -14,6 +15,7 @@
 	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
 	icon_state = "uraniumpenetrator"
 	projectile_type = /obj/projectile/bullet/uraniumpen
+	can_be_printed = FALSE
 
 /obj/item/ammo_casing/shotgun/beeshot
 	name = "beeshot"
@@ -21,5 +23,6 @@
 	icon = 'monkestation/icons/obj/guns/ammunition.dmi'
 	icon_state = "beeshot"
 	projectile_type = /obj/projectile/bullet/pellet/beeshot
+	can_be_printed = FALSE
 	pellets = 3
 	variance = 5

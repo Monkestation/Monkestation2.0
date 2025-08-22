@@ -446,3 +446,327 @@
 	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
 	pin = /obj/item/firing_pin/monkey
+
+
+//Proto Kinetic SMG, used by miners as part of what ill call "Gun Mining"
+//Not actually a PKA, but styled to be like one
+
+/obj/item/gun/ballistic/automatic/proto/pksmg
+	name = "proto-kinetic 'Rapier' smg"
+	desc = "Using partial ballistic technology and kinetic acceleration, the Mining Research department has managed to make the kinetic accelerator full auto. \
+	While the technology is promising, it is held back by certain factors, specifically limited ammo and no mod capacity, but that shouldn't be an issue with its performance."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "pksmg"
+	burst_size = 2
+	actions_types = list()
+	mag_display = TRUE
+	empty_indicator = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/pksmgmag
+	pin = /obj/item/firing_pin/wastes
+	bolt_type = BOLT_TYPE_LOCKING
+	show_bolt_icon = FALSE
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+//FLASHLIGHTTTTTT
+/obj/item/gun/ballistic/automatic/proto/pksmg/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 16)
+
+//Magazine for SMG and the box the mags come in
+/obj/item/ammo_box/magazine/pksmgmag
+	name = "proto-kinetic magazine"
+	desc = "A single magazine for the 'Rapier' SMG."
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "pksmgmag"
+	base_icon_state = "pksmgmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/energy/kinetic/smg
+	caliber = ENERGY
+	max_ammo = 45
+
+/obj/item/storage/box/kinetic
+	name = "box of kinetic SMG magazines"
+	desc = "A box full of kinetic projectile magazines, specifically for the 'Rapier' SMG.\
+	It is specially designed to only hold proto-kinetic magazines, and also fit inside of explorer webbing."
+	icon_state = "rubbershot_box"
+	illustration = "rubbershot_box"
+
+/obj/item/storage/box/kinetic/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 7
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_box/magazine/pksmgmag,
+	))
+
+/obj/item/storage/box/kinetic/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_box/magazine/pksmgmag(src)
+
+
+/obj/item/storage/box/pksmg //A case that the SMG comes in on purchase, containing three magazines
+	name = "'Rapier' SMG Case"
+	desc = "A case containing a 'Rapier' SMG and three magazines. Designed for full auto but has limited ammo."
+	icon_state = "miner_case"
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	illustration = ""
+
+/obj/item/storage/box/pksmg/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 4
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 4
+
+/obj/item/storage/box/pksmg/PopulateContents()
+		new /obj/item/gun/ballistic/automatic/proto/pksmg(src)
+		new /obj/item/ammo_box/magazine/pksmgmag(src)
+		new /obj/item/ammo_box/magazine/pksmgmag(src)
+		new /obj/item/ammo_box/magazine/pksmgmag(src)
+
+/obj/item/ammo_casing/energy/kinetic/smg
+	projectile_type = /obj/projectile/kinetic/smg
+	select_name = "kinetic"
+	e_cost = 0
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+/obj/projectile/kinetic/smg
+	name = "kinetic projectile"
+	damage = 10
+	range = 7
+	icon_state = "bullet"
+	Skillbasedweapon = FALSE
+
+// Proto Kinetic Auto Shotgun... yep
+
+#define KINETIC_20G "20 Gauge kinetic shell"
+
+/obj/item/gun/ballistic/automatic/proto/pksmg/autoshotgun
+	name = "20. Gauge Kinetic 'Fenrir' Auto Shotgun"
+	desc = "A fully automatic shotgun created using some spare polymer parts, procured from a undisclosed source. \
+	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \
+	20. Gauge shells, for sweeping up any unwanted fauna from a hostile environment."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	inhand_icon_state = "protokshotgunauto"
+	worn_icon_state = "protokshotgunauto"
+	icon_state = "protokshotgunauto"
+	slot_flags = ITEM_SLOT_BACK
+	burst_size = 1
+	fire_delay = 0
+	base_pixel_x = -2
+	pixel_x = -2
+	actions_types = list()
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	mag_display = TRUE
+	empty_indicator = FALSE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/autoshotgun
+	pin = /obj/item/firing_pin/wastes
+	bolt_type = BOLT_TYPE_STANDARD
+	show_bolt_icon = FALSE
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+
+//Magazine for SMG and the box the mags come in
+/obj/item/ammo_box/magazine/autoshotgun
+	name = "20 Gauge Shotgun Magazine"
+	desc = "A single magazine capable of holding 12 rounds of 20 gauge kinetic hydra shells."
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "proto20gmag"
+	base_icon_state = "proto20gmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/shotgun/hydrakinetic
+	caliber = KINETIC_20G
+	max_ammo = 12
+
+/obj/item/ammo_casing/shotgun/hydrakinetic
+	name = "Kinetic Hydra Shell"
+	desc = "A 20 gauge shell loaded with five pellets, dubbed the Kinetic Hydra Shell! <b> Does NOT fit in any standard shotgun! </b>"
+	icon_state = "20gshell"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	caliber = KINETIC_20G
+	pellets = 5
+	variance = 7 //very tight spread
+	projectile_type = /obj/projectile/bullet/hydrakinetic
+
+/obj/projectile/bullet/hydrakinetic
+	name = "Kinetic Hydra Sabot"
+	icon_state = "bullet"
+	damage = 13
+	armour_penetration = -15
+
+/obj/projectile/bullet/hydrakinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
+	if(ismineralturf(target))
+		var/turf/closed/mineral/M = target
+		M.gets_drilled(firer, FALSE)
+	. = ..()
+
+/obj/item/storage/box/kinetic/autoshotgun/bigcase //box containing the actual gun and a few spare mags for sale
+	name = "'Fenrir' Shotgun case"
+	desc = "A mining gun case containing a 20. gauge Fenrir automatic shotgun and three spare magazines."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	icon_state = "miner_case"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/autoshotgun/bigcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 4
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 4
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/autoshotgun/bigcase/PopulateContents() //populate
+
+		new /obj/item/gun/ballistic/automatic/proto/pksmg/autoshotgun (src)
+		new /obj/item/ammo_box/magazine/autoshotgun (src)
+		new /obj/item/ammo_box/magazine/autoshotgun (src)
+		new /obj/item/ammo_box/magazine/autoshotgun (src)
+
+/obj/item/storage/box/kinetic/autoshotgun //box containing 45 spare shells for the fenrir, used to reload spare mags. cheaper to buy than new spare mags.
+	name = "20. Gauge Hydra Shell Box"
+	desc = "A surprisingly hefty box containing 45 spare 10. gauge Hydra shells, for reloading spare Fenrir magazines. Despite its heft, it fits in explorer webbing."
+	icon_state = "smallshell_box"
+	illustration = ""
+
+/obj/item/storage/box/kinetic/autoshotgun/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 45
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 45
+	atom_storage.set_holdable(list(/obj/item/ammo_casing/shotgun/hydrakinetic))
+
+/obj/item/storage/box/kinetic/autoshotgun/PopulateContents() //populate
+	for(var/i in 1 to 45)
+		new /obj/item/ammo_casing/shotgun/hydrakinetic (src)
+
+/obj/item/storage/box/kinetic/autoshotgun/smallcase //box containing 3 spare mags for the fenrir auto shotgun
+	name = "Spare Fenrir Shotgun Magazine Case"
+	desc = "A small gun case that contains three spare magazines for the Fenrir auto shotgun. It fits in explorer webbing too."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	icon_state = "miner_case_small"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/autoshotgun/smallcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 3
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/autoshotgun/smallcase/PopulateContents() //populate
+		new /obj/item/ammo_box/magazine/autoshotgun (src)
+		new /obj/item/ammo_box/magazine/autoshotgun (src)
+		new /obj/item/ammo_box/magazine/autoshotgun (src)
+
+// KINETIC L6 SAW (LMG dubbed the 'Hellhound')
+
+#define CALIBER_A762_KINETIC "7.65 Kinetic" //the ammo type (so it doesnt fit anywhere else)
+
+/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg
+	name = "Kinetic 'Hellhound' LMG"
+	desc = "Using parts from confiscated weapons, the Mining Research team has thrown together \
+	A beast of a weapon. Using Proto Kinetic Acceleration technology as per usual, the 'Hellhound' \
+	is a LMG chambered in kinetic 7.62 with a incredibly high fire rate, for when you need a beast \
+	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
+	top off and reload using stripper clips."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "kineticlmg"
+	inhand_icon_state = "kineticlmg"
+	base_icon_state = "kineticlmg"
+	worn_icon_state = "kineticlmg"
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	burst_size = 3
+	mag_display = FALSE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/kineticlmg
+	weapon_weight = WEAPON_HEAVY
+	internal_magazine = TRUE
+	spread = 3
+	pin = /obj/item/firing_pin/wastes
+	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
+
+/obj/item/ammo_box/magazine/internal/kineticlmg
+	name = "Internal LMG magazine"
+	desc = "uhm... uhg... erm... the magazine fell off... (REPORT ME)"
+	ammo_type = /obj/item/ammo_casing/a762/kinetic
+	caliber = CALIBER_A762_KINETIC
+	max_ammo = 100
+	multiload = TRUE
+
+/obj/item/ammo_casing/a762/kinetic
+	name = "Kinetic 7.62 bullet casing"
+	desc = "A kinetic 7.62 bullet casing for use in the 'Hellhound' LMG."
+	icon_state = "762kinetic-casing"
+	caliber = CALIBER_A762_KINETIC
+	projectile_type = /obj/projectile/bullet/a762/kinetic
+
+/obj/projectile/bullet/a762/kinetic
+	name = "kinetic 7.62 projectile"
+	damage = 15 //somehow does less damage than the SMG, uh... dont ask why?
+	armour_ignorance = 0
+	icon_state = "gaussweak"
+
+/obj/projectile/bullet/a762/kinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
+	if(ismineralturf(target))
+		var/turf/closed/mineral/M = target
+		M.gets_drilled(firer, FALSE)
+	. = ..()
+
+/obj/item/ammo_box/a762/kinetic
+	name = "stripper clip (Kinetic 7.62mm)"
+	desc = "A stripper clip with Kinetic 7.62mm rounds."
+	icon_state = "762kinetic"
+	ammo_type = /obj/item/ammo_casing/a762/kinetic
+	caliber = CALIBER_A762_KINETIC
+
+/obj/item/storage/box/kinetic/kineticlmg //box of stripper clips (20, totalling 100 rounds)
+	name = "box of kinetic 7.62mm stripper clips"
+	desc = "A box that contains up to 20 stripper clips of Kinetic 7.62mm, for refilling the 'Hellhound' LMG. Surprisingly fits inside of explorer webbings."
+	icon_state = "kinetic762_box"
+	illustration = ""
+
+/obj/item/storage/box/kinetic/kineticlmg/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 20
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 100
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_box/a762/kinetic,
+	))
+
+/obj/item/storage/box/kinetic/kineticlmg/PopulateContents() //populate
+	for(var/i in 1 to 20)
+		new /obj/item/ammo_box/a762/kinetic(src)
+
+/obj/item/storage/box/kinetic/kineticlmg/bigcase //box containing the LMG and a box of extra bullets to get one reload
+	name = "Kinetic 'Hellhound' LMG case"
+	desc = "A special and totally original gun case that contains a Kinetic 'Hellhound' LMG, and a box of spare rounds to refill it."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "miner_case"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/kineticlmg/bigcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 2
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/kineticlmg/bigcase/PopulateContents() //populate
+
+		new /obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg (src)
+		new /obj/item/storage/box/kinetic/kineticlmg (src)

@@ -9,6 +9,18 @@
 	ammo_x_offset = 1
 	shaded_charge = 1
 
+/obj/item/gun/energy/laser/lasrifle
+	name = "laser rifle"
+	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
+	icon_state = "lasrifle"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_icon_state = "lasrifle"
+	fire_delay = 10
+	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound_volume = 90
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasrifle)
+
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."

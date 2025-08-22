@@ -1,0 +1,7 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "Upped assistant point reward to 200 credits"
+  - balance: "Assistants can no longer punch cards"
+  - balance: "Cards no longer start with one free punch"
+  - map: "Added assistant point redeemer to all cargos that lacked one"

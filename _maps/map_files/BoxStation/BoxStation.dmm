@@ -21383,10 +21383,7 @@
 	dir = 9
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/landmark/start/hangover,
+/obj/machinery/gbp_redemption,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},

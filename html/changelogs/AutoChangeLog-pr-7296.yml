@@ -1,0 +1,11 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - rscadd: "Added new antigen 'Ig', which cannot be mass produced normally."
+  - rscadd: "Beaker apparatus can now pick up tubes and virus dishes."
+  - balance: "Tubercle Bacillus Cosmosis Microbes now has a antibody and thus protection against reinfection."
+  - balance: "Convermol/Spaceallin mix will not give antibodies against Tubercle Bacillus Cosmosis Microbes. But BVAK injectors and other methods will."
+  - balance: "Nerfed Alkali Burn stacks"
+  - bugfix: "Plague Rats will now no longer nibble their way into NULLSPACE (((Hopefully)))"
+  - bugfix: "sililcons can now interact with incubators and disease analyzers"
+  - admin: "Plague rats have been removed from the antag datum panel. Use the event instead"

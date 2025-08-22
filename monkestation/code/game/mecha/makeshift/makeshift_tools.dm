@@ -114,7 +114,7 @@
 	if(tank.type != /obj/vehicle/sealed/mecha/trash_tank)
 		to_chat(user, span_warning("This armor plating can only be installed to a trash tank"))
 		return FALSE
-	if(!(tank.mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+	if(!(tank.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
 		to_chat(user, span_warning("[tank] must have maintenance protocols active in order to allow this conversion kit."))
 		return FALSE
 	return TRUE
