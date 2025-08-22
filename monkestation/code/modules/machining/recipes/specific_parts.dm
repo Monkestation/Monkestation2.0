@@ -132,6 +132,18 @@
 	)
 	machining_skill_required = 3
 
+/datum/machining_recipe/lasercavity
+	category = TAB_SPECIFIC_PARTS
+	machinery_type = MACHINING_DRILLPRESS
+	crafting_time = MACHINING_DELAY_NORMAL
+	result = /obj/item/machining_intermediates/lasercavity
+	reqs = list(
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/machining_intermediates/universalcircuit = 2,
+		/obj/item/stock_parts/micro_laser = 4,
+	)
+	machining_skill_required = 2
+
 /datum/machining_recipe/crappyring
 	category = TAB_SPECIFIC_PARTS
 	machinery_type = MACHINING_LATHE
