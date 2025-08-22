@@ -202,7 +202,7 @@
 		return
 	return ..()
 
-/obj/structure/window/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/structure/window/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 	add_fingerprint(user)

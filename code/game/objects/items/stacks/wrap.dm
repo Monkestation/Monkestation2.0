@@ -167,7 +167,7 @@
 			balloon_alert(user, "not enough paper!")
 			return ITEM_INTERACT_BLOCKING
 
-	else if(istype(interacting_with,  /obj/machinery/portable_atmospherics))
+	else if(istype(interacting_with, /obj/machinery/portable_atmospherics))
 		var/obj/machinery/portable_atmospherics/portable_atmospherics = interacting_with
 		if(portable_atmospherics.anchored)
 			balloon_alert(user, "can't wrap while anchored!")
@@ -185,8 +185,8 @@
 			return ITEM_INTERACT_BLOCKING
 
 	// MONKESTATION EDIT START
-	else if(istype(target, /obj/structure/fermentation_keg))
-		var/obj/structure/fermentation_keg/keg = target
+	else if(istype(interacting_with, /obj/structure/fermentation_keg))
+		var/obj/structure/fermentation_keg/keg = interacting_with
 		if(!keg.ready_to_bottle)
 			balloon_alert(user, "can't wrap without anything in it!")
 			return

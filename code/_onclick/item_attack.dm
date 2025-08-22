@@ -253,7 +253,7 @@
 	SEND_SIGNAL(target_mob, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, attack_modifiers)
 	afterattack(target_mob, user, attack_modifiers)
 	if(final_force > 0)
-		log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
+		log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.log_istate())]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 	return FALSE // unhandled
 
@@ -309,151 +309,33 @@
 	stack_trace("areas are NOT supposed to have attacked_by() called on them!")
 	return ATTACK_FAILED
 
-/mob/living/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-
-	var/targeting = check_zone(user.zone_selected)
-	if(user != src)
-		var/zone_hit_chance = 80
-		if(body_position == LYING_DOWN)
-			zone_hit_chance += 10
-		targeting = get_random_valid_zone(targeting, zone_hit_chance)
-	var/targeting_human_readable = parse_zone_with_bodypart(targeting)
-
-	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
-		send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
-
-	var/armor_block = min(run_armor_check(
-			def_zone = targeting,
-			attack_flag = MELEE,
-			absorb_text = span_notice("Your armor has protected your [targeting_human_readable]!"),
-			soften_text = span_warning("Your armor has softened a hit to your [targeting_human_readable]!"),
-			armour_penetration = attacking_item.armour_penetration,
-			weak_against_armour = attacking_item.weak_against_armour,
-		), ARMOR_MAX_BLOCK)
-
-	var/final_force = CALCULATE_FORCE(attacking_item, attack_modifiers)
+/mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
+	send_item_attack_message(attacking_item, user)
+	if(!attacking_item.force)
+		return FALSE
+	var/damage = attacking_item.force * user.outgoing_damage_mod
 	if(mob_biotypes & MOB_ROBOTIC)
-		final_force *= attacking_item.get_demolition_modifier(src)
+		damage *= attacking_item.demolition_mod
+	apply_damage(damage, attacking_item.damtype)
+	if(attacking_item.damtype == BRUTE && prob(33))
+		attacking_item.add_mob_blood(src)
+		var/turf/location = get_turf(src)
+		add_splatter_floor(location)
+		if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
+			user.add_mob_blood(src)
+	return TRUE //successful attack
 
-	var/wounding = attacking_item.wound_bonus
-	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && body_position == LYING_DOWN && (LAZYLEN(surgeries) > 0))
-		wounding = CANT_WOUND
+/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
+	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
+	else
+		return ..()
 
-	if(user != src)
-		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
-		if(check_block(attacking_item, final_force, "\the [attacking_item]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
-			return ATTACK_FAILED
-
-	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
-
-	if(final_force <= 0)
-		return 0
-
-	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
-		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
-		SSblackbox.record_feedback("tally", "zone_targeted", 1, user.zone_selected)
-
-	var/damage_done = apply_damage(
-		damage = final_force,
-		damagetype = attacking_item.damtype,
-		def_zone = targeting,
-		blocked = armor_block,
-		wound_bonus = wounding,
-		exposed_wound_bonus = attacking_item.exposed_wound_bonus,
-		sharpness = attacking_item.get_sharpness(),
-		attack_direction = get_dir(user, src),
-		attacking_item = attacking_item,
-	)
-
-	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
-
-	return damage_done
-
-/**
- * Called when we take damage, used to cause effects such as a blood splatter.
- *
- * Return TRUE if an effect was done, FALSE otherwise.
- */
-/mob/living/proc/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	if(damage_done <= 0 || attacking_item.damtype != BRUTE || !prob(25 + damage_done * 2))
-		return FALSE
-
-	attacking_item.add_mob_blood(src)
-	add_splatter_floor(get_turf(src))
-	if(get_dist(attacker, src) > 1)
-		return TRUE
-
-	if(!ishuman(attacker))
-		attacker.add_mob_blood(src)
-		return TRUE
-
-	var/bloodied_things = ITEM_SLOT_GLOVES
-	if(damage_done >= 20 || (damage_done >= 15 && prob(25)))
-		bloodied_things |= ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING
-		if(prob(33) && damage_done >= 10)
-			bloodied_things |= ITEM_SLOT_FEET
-		if(prob(33) && damage_done >= 24) // fireaxe damage, because heeeeere's johnny
-			bloodied_things |= ITEM_SLOT_MASK
-		if(prob(33) && damage_done >= 30) // esword damage
-			bloodied_things |= ITEM_SLOT_HEAD
-
-	var/mob/living/carbon/human/human_attacker = attacker
-	human_attacker.add_blood_DNA_to_items(get_blood_dna_list(), bloodied_things)
-	return TRUE
-
-/mob/living/carbon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	var/obj/item/bodypart/hit_bodypart = get_bodypart(hit_zone) || bodyparts[1]
-	if(!hit_bodypart.can_bleed())
-		return FALSE
-
-	return ..()
-
-/mob/living/carbon/human/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	. = ..()
-	switch(hit_zone)
-		if(BODY_ZONE_HEAD)
-			if(.)
-				var/bloodied_things = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
-				if(prob(33))
-					bloodied_things |= ITEM_SLOT_EYES
-				add_blood_DNA_to_items(get_blood_dna_list(), bloodied_things)
-
-			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED) && attacking_item.damtype == BRUTE)
-				if(prob(damage_done))
-					adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
-					if(stat == CONSCIOUS)
-						visible_message(
-							span_danger("[src] is knocked senseless!"),
-							span_userdanger("You're knocked senseless!"),
-						)
-						set_confusion_if_lower(20 SECONDS)
-						adjust_eye_blur(20 SECONDS)
-					if(prob(10))
-						gain_trauma(/datum/brain_trauma/mild/concussion)
-				else
-					adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_done * 0.2)
-
-				// rev deconversion through blunt trauma.
-				// this can be signalized to the rev datum
-				if(mind && stat == CONSCIOUS && src != attacker && prob(damage_done + ((100 - health) * 0.5)))
-					var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
-					rev?.remove_revolutionary(attacker)
-
-		if(BODY_ZONE_CHEST)
-			if(.)
-				add_blood_DNA_to_items(get_blood_dna_list(), ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
-
-			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
-				if(prob(damage_done))
-					visible_message(
-						span_danger("[src] is knocked down!"),
-						span_userdanger("You're knocked down!"),
-					)
-					apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
-
-	// Triggers force say events
-	if(damage_done > 10 || (damage_done >= 5 && prob(33)))
-		force_say()
+/mob/living/basic/attacked_by(obj/item/I, mob/living/user)
+	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
+	else
+		return ..()
 
 /**
  * Last proc in the [/obj/item/proc/melee_attack_chain].

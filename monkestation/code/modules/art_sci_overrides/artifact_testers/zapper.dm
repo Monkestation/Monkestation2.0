@@ -99,7 +99,8 @@
 		return ITEM_INTERACT_BLOCKING
 	into_wand_mode = !into_wand_mode
 	visible_message(span_info("[src] switches to [into_wand_mode ? "attempting to break down artifacts." : "just zapping artifacts." ]"))
-	return TOOL_ACT_MELEE_CHAIN_BLOCKING
+	return ITEM_INTERACT_BLOCKING
+
 /obj/machinery/artifact_zapper/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
 		return ITEM_INTERACT_BLOCKING

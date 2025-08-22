@@ -245,7 +245,7 @@
 	destroy_artifact_mode = !destroy_artifact_mode
 	var/modestring = destroy_artifact_mode ? "DESTRUCTIVE SCAN" : "NON-DESTRUCTIVE SCAN"
 	to_chat(user,span_notice("[src] switched to [modestring] mode."))
-	return TOOL_ACT_MELEE_CHAIN_BLOCKING
+	return ITEM_INTERACT_BLOCKING
 
 
 /obj/machinery/artifact_xray/screwdriver_act(mob/living/user, obj/item/tool)

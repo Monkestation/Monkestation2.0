@@ -24,8 +24,12 @@
 	#define COMPONENT_BULLET_PIERCED (1<<2)
 ///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit, blocked)
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
+///from base of atom/CheckParts(): (list/parts_list, datum/crafting_recipe/R)
+#define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
+/* Not implemented
 ///from base of atom/on_craft_completion(): (components, datum/crafting_recipe/current_recipe)
 #define COMSIG_ATOM_ON_CRAFT "atom_checkparts"
+*/
 ///from base of atom/used_in_craft(): (atom/result)
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)
@@ -88,6 +92,8 @@
 
 /// Sent from [atom/proc/item_interaction], when this atom is used as a tool and an event occurs
 #define COMSIG_ITEM_TOOL_ACTED "tool_item_acted"
+
+#define COMSIG_ATOM_DOOR_OPEN "atom_door_open"
 
 /// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
 #define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
