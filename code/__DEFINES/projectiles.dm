@@ -69,6 +69,11 @@
 #define CALIBER_SPEAR "throwing spear"
 //Peashooter ammo for mech and minigun
 #define CALIBER_22LR ".22 LR"
+// The caliber used by the PACO
+#define CALIBER_35 ".35"
+// The caliber used by the Quarad machinegun
+#define CALIBER_C65XENO "6.5x39"
+
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2

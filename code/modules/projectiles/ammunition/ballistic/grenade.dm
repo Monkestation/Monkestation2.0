@@ -12,9 +12,6 @@
 	/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2, \
 )
 
-#define GRENADE_SMOKE_RANGE 0.75
-
-
 
 // .980 grenades
 // Grenades that can be given a range to detonate at by their firing gun
@@ -77,7 +74,6 @@
 #undef AMMO_MATS_GRENADE_SHRAPNEL
 #undef AMMO_MATS_GRENADE_INCENDIARY
 
-#undef GRENADE_SMOKE_RANGE
 
 
 

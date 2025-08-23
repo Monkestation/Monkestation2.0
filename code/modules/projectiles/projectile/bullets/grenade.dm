@@ -178,6 +178,8 @@
 	ricochet_decay_chance = 0.9
 
 
+#define GRENADE_SMOKE_RANGE 0.75
+
 //.980 riot grenades
 
 /obj/projectile/bullet/c980grenade
@@ -274,3 +276,6 @@
 	smoke.chemholder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
 	smoke.set_up(GRENADE_SMOKE_RANGE, holder = src, location = src)
 	smoke.start()
+
+
+#undef GRENADE_SMOKE_RANGE

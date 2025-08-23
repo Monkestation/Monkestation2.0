@@ -67,6 +67,11 @@
 	icon_state = "hellgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
 
+/obj/item/gun/energy/laser/hellgun/blueshield
+	name ="modified hellfire laser gun"
+	desc = "A lightly overtuned version of NT's Hellfire Laser rifle, scratches showing its age and the fact it has definitely been owned before. This one is more energy efficient without sacrificing damage."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/blueshield)
+
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
