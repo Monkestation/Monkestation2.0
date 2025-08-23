@@ -93,3 +93,4 @@
 	projectile_type = /obj/projectile/bullet/c65xeno/incendiary/evil
 
 	can_be_printed = FALSE
+

@@ -148,8 +148,3 @@
 	desc = "A cased stun grenade that can only be activated once fired out of a grenade launcher."
 	icon_state = "40mmFRAG"
 	projectile_type = /obj/projectile/bullet/a40mm/frag
-
-
-
-
-

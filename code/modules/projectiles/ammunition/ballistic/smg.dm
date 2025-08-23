@@ -93,9 +93,3 @@
 	icon_state = "27-54cesarzowa_rubber"
 	projectile_type = /obj/projectile/bullet/c27_54cesarzowa/rubber
 
-
-
-
-
-
-

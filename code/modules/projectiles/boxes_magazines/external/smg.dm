@@ -168,3 +168,4 @@
 
 /obj/item/ammo_box/magazine/miecz/spawns_empty
 	start_empty = TRUE
+

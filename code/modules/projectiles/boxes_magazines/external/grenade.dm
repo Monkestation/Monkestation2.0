@@ -50,6 +50,3 @@
 /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_gas
 	ammo_type = /obj/item/ammo_casing/c980grenade/riot
 
-
-
-
