@@ -49,6 +49,8 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
+/// from base of atom/Exited(): (mob/user, obj/item/extrapolator/E, scan = TRUE)
+#define COMSIG_ATOM_EXTRAPOLATOR_ACT "atom_extrapolator_act"
 
 /// Sent from [atom/proc/item_interaction], when this atom is left-clicked on by a mob with an item
 /// Sent from the very beginning of the click chain, intended for generic atom-item interactions

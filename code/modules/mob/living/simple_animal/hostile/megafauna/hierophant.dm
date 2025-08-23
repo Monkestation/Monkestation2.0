@@ -750,7 +750,7 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
+/obj/effect/hierophant/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = I
 		if(H.beacon == src)

@@ -702,7 +702,7 @@
 
 	is_zero_amount(delete_if_zero = TRUE)
 
-/obj/item/stack/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(can_merge(W, inhand = TRUE))
 		var/obj/item/stack/S = W
 		if(merge(S))

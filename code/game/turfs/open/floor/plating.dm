@@ -162,7 +162,7 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
+/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/stack/tile/iron))
 		var/obj/item/stack/tile/iron/P = I
 		if(P.use(1))

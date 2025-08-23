@@ -94,7 +94,7 @@
 			I.forceMove(Tsec)
 	update_appearance()
 
-/obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
+/obj/structure/bookcase/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	switch(state)
 		if(BOOKCASE_UNANCHORED)
 			if(I.tool_behaviour == TOOL_WRENCH)

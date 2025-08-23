@@ -32,7 +32,7 @@
 	return TRUE
 
 
-/obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
+/obj/structure/table_frame/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(isstack(I))
 		var/obj/item/stack/material = I
 		if(material.tableVariant)
@@ -95,7 +95,7 @@
 	framestackamount = 2
 	resistance_flags = FLAMMABLE
 
-/obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
+/obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if (isstack(I))
 		var/obj/item/stack/material = I
 		var/toConstruct // stores the table variant

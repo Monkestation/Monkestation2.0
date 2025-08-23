@@ -192,7 +192,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
+/obj/machinery/mineral/ore_redemption/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
 		return
 	if(default_deconstruction_crowbar(W))

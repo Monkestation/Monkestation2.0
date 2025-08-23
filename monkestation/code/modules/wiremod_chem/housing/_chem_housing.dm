@@ -17,7 +17,7 @@
 	var/buffer = 500
 	var/recharge_counter = 0
 
-/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(attacking_item.use_tool(src, user, 40, volume=75))
 			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
@@ -74,7 +74,7 @@
 	incoming_tank.forceMove(src)
 	connected_tank = incoming_tank
 
-/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/precursor_tank))
 		replace_tank(attacking_item, user)
 		return

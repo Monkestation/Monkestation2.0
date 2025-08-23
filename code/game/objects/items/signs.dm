@@ -29,7 +29,7 @@
 		name = "[label] sign"
 		desc = "It reads: [label]"
 
-/obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
+/obj/item/picket_sign/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
 		retext(user, W)
 	else

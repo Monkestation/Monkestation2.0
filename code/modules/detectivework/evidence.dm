@@ -14,7 +14,7 @@
 	evidencebagEquip(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
+/obj/item/evidencebag/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(evidencebagEquip(I, user))
 		return 1
 

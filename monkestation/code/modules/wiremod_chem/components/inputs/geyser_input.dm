@@ -23,7 +23,7 @@
 	. = ..()
 	STOP_PROCESSING(SSmachines, src)
 
-/obj/structure/chemical_input/liquid_pump/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/chemical_input/liquid_pump/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(attacking_item.use_tool(src, user, 40, volume=75))
 			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))

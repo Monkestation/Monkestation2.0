@@ -87,7 +87,7 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
 		return
@@ -816,7 +816,7 @@
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
-/turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/strong/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!ishuman(user))
 		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
 		return FALSE

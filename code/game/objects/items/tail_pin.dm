@@ -30,7 +30,7 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/party_game, 32)
 
-/obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(I,/obj/item/tail_pin))//We're using the same trick that tables use for placing objects x and y onto the click location.
 		return

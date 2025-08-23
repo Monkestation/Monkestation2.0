@@ -124,7 +124,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	signal_sleeper = null
 
-/obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
+/obj/item/bedsheet/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
 			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), stack_amount)
@@ -691,7 +691,7 @@ LINEN BINS
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
+/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/bedsheet))
 		if(!user.transferItemToLoc(I, src))
 			return

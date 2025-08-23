@@ -25,7 +25,7 @@
 	//monkestation addition to check for certain exceptions of items that can be sharpened
 	var/exceptions = list(/obj/item/reagent_containers/cooking_container/pan, /obj/item/melee/flyswatter)  //RIP Ben
 
-/obj/item/sharpener/attackby(obj/item/I, mob/user, params)
+/obj/item/sharpener/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(uses == 0)
 		to_chat(user, span_warning("The sharpening block is too worn to use again!"))
 		return

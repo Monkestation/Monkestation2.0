@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	. = ..()
 	. += GLOB.glass_recipes
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/glass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	. = ..()
 	. += GLOB.pglass_recipes
 
-/obj/item/stack/sheet/plasmaglass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/plasmaglass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/stack/rods))
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	fire = 70
 	acid = 100
 
-/obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/rglass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	..()
 

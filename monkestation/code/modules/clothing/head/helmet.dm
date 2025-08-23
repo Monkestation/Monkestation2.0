@@ -34,7 +34,7 @@
 		REMOVE_TRAIT(user, hud_trait, HELMET_TRAIT)
 		hud_trait = null
 
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(hud_attachable && !hud_glasses && istype(I, /obj/item/clothing/glasses/hud))
 		user.transferItemToLoc(I, src)
 		hud_glasses = I

@@ -21,12 +21,9 @@
 /obj/machinery/botpad/crowbar_act(mob/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/tool)
+/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
-		return
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	multitool.set_buffer(src)
 	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
 	return ITEM_INTERACT_SUCCESS

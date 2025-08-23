@@ -1178,7 +1178,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
-/obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
+/obj/item/rack_parts/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (W.tool_behaviour == TOOL_WRENCH)
 		new /obj/item/stack/sheet/iron(user.loc)
 		qdel(src)

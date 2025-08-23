@@ -226,7 +226,7 @@
 		set_anchored(FALSE)
 
 
-/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/shieldgen/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
@@ -426,7 +426,7 @@
 		connect_to_network()
 
 
-/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/shieldwallgen/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked

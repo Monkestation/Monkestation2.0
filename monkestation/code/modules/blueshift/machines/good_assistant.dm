@@ -19,7 +19,7 @@
 	icon_state = "punchcard_1"
 	punches = 1 // GBP_PUNCH_REWARD credits by default
 
-/obj/item/gbp_punchcard/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/gbp_punchcard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(istype(attacking_item, /obj/item/gbp_puncher))
 		if(!COOLDOWN_FINISHED(src, gbp_punch_cooldown))
@@ -57,7 +57,7 @@
 	default_unfasten_wrench(user, tool)
 	return
 
-/obj/machinery/gbp_redemption/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/gbp_redemption/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "gbp_machine_open", "gbp_machine", attacking_item))
 		return
 

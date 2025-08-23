@@ -99,7 +99,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
-/obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
+/obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I

@@ -369,7 +369,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
-/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/shard))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
 		user.balloon_alert(user, "crafting spear...")

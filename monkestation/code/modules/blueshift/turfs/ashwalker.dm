@@ -1,4 +1,4 @@
-/turf/closed/attackby(obj/item/attacking_item, mob/user, params)
+/turf/closed/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/flashlight/flare/torch))
 		return place_torch(attacking_item, user, params)
 

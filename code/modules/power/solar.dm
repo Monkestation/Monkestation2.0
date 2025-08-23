@@ -309,7 +309,7 @@
 		return
 	randomise_offset(anchored ? 0 : random_offset)
 
-/obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
+/obj/item/solar_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, span_warning("You can't secure [src] here."))

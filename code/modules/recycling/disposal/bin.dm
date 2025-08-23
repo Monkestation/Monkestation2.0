@@ -337,7 +337,7 @@
 	icon_state = "disposal"
 
 // attack by item places it in to disposal
-/obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
+/obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/bag = I
 		to_chat(user, span_warning("You empty the bag."))

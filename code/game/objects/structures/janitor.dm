@@ -189,7 +189,7 @@
 
 	return . || NONE
 
-/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/mop))
 		if(mymop)
 			balloon_alert(user, "already has \a [mymop]!")

@@ -51,7 +51,7 @@
 			return COMPONENT_ITEM_BLOCK_UNEQUIP
 	return
 
-/obj/item/clothing/bomb_vest/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/bomb_vest/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(user.contents.Find(src))
 		return //Nope.
 	if(W.tool_behaviour == TOOL_WRENCH)

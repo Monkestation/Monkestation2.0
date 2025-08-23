@@ -450,7 +450,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 
-/obj/structure/closet/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(user in src)
 		return
 	if(src.tool_interact(W,user))

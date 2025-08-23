@@ -9,7 +9,7 @@
 	density = TRUE
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
-/obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
+/obj/structure/ore_box/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (istype(W, /obj/item/stack/ore))
 		user.transferItemToLoc(W, src)
 	else if(W.atom_storage)

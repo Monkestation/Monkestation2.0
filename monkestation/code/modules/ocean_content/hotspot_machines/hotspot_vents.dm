@@ -53,7 +53,7 @@
 	disassemble()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/vent/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/turf/turf = get_turf(src)

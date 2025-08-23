@@ -1582,7 +1582,7 @@
 			vend_ready = TRUE
 			return TRUE
 
-/obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
+/obj/machinery/vending/custom/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!linked_account && isliving(user))
 		var/mob/living/L = user
 		var/obj/item/card/id/C = L.get_idcard(TRUE)

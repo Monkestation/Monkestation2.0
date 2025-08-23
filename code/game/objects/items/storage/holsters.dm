@@ -203,7 +203,7 @@
 	atom_storage.silent = TRUE
 
 // MONKESTATION ADDITION START
-/obj/item/storage/belt/holster/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/belt/holster/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 

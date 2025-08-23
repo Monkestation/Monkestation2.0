@@ -66,7 +66,7 @@
 	if(mergeable_decal)
 		return TRUE
 
-/obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
+/obj/effect/decal/cleanable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((istype(W, /obj/item/reagent_containers/cup) && !istype(W, /obj/item/reagent_containers/cup/rag)) || istype(W, /obj/item/reagent_containers/cup/glass))
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.

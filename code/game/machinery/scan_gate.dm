@@ -85,7 +85,7 @@
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 
-/obj/machinery/scanner_gate/attackby(obj/item/W, mob/user, params)
+/obj/machinery/scanner_gate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/obj/item/card/id/card = W.GetID()
 	if(card)
 		if(locked)

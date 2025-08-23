@@ -137,7 +137,7 @@
 		moth_snack.clothing = WEAKREF(src)
 	moth_snack.attack(target, user, params)
 
-/obj/item/clothing/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(W, repairable_by))
 		return ..()
 
@@ -357,7 +357,7 @@
 
 	if(TRAIT_CAN_SIGN_ON_COMMS in clothing_traits)
 		. += "[src] allows you talk on radios through sign language."
-	
+
 	switch (max_heat_protection_temperature)
 		if (400 to 1000)
 			. += "[src] offers the wearer limited protection from fire."

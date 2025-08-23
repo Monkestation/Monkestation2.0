@@ -556,7 +556,7 @@
 				if(ispath(trim))
 					SSid_access.apply_trim_to_card(src, trim)
 
-/obj/item/card/id/attackby(obj/item/W, mob/user, params)
+/obj/item/card/id/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/rupee))
 		to_chat(user, span_warning("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
 		return
@@ -1009,7 +1009,7 @@
 /obj/item/card/id/advanced/chat_span()
 	return trim_chat_span_override || ..()
 
-/obj/item/card/id/advanced/attackby(obj/item/W, mob/user, params)
+/obj/item/card/id/advanced/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/our_crayon = W
@@ -1419,7 +1419,7 @@
 	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
 
 // MONKESTATION ADDITION START
-/obj/item/card/id/advanced/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/card/id/advanced/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 

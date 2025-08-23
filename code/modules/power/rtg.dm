@@ -38,7 +38,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Power generation now at <b>[power_gen*0.001]</b>kW.")
 
-/obj/machinery/power/rtg/attackby(obj/item/I, mob/user, params)
+/obj/machinery/power/rtg/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
 		return
 	else if(default_deconstruction_crowbar(I))
@@ -141,7 +141,7 @@
 	power_gen = 750
 	anchored = TRUE
 
-/obj/machinery/power/rtg/old_station/attackby(obj/item/I, mob/user, params)
+/obj/machinery/power/rtg/old_station/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
 		to_chat(user,span_warning("You feel it crumbling under your hands!"))
 		return

@@ -14,7 +14,7 @@
 	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
 
 // MONKESTATION ADDITION START
-/obj/item/card/id/advanced/undercover/attackby(obj/item/W, mob/user, params)
+/obj/item/card/id/advanced/undercover/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 

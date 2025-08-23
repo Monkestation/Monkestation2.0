@@ -721,7 +721,7 @@
 		return
 	name = "[saved_identification] ([saved_job])"
 
-/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	// Check for ID first
 	if(isidcard(attacking_item) && InsertID(attacking_item, user))
 		return

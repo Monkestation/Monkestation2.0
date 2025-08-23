@@ -10,7 +10,7 @@
 	var/static/list/mob_mobs = list()
 
 #define NICKNAME_CAP (MAX_NAME_LEN/2)
-/obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
+/obj/item/virgin_mary/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(resistance_flags & ON_FIRE)
 		return

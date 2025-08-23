@@ -234,7 +234,7 @@
 	var/obj/item/electronics/airlock/electronics
 
 
-/obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
+/obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
 		to_chat(user, span_notice("You start disassembling [src]..."))
 		I.play_tool_sound(src)

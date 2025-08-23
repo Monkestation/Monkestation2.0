@@ -81,7 +81,7 @@
 	user.put_in_hands(power_cell)
 	power_cell = null
 
-/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src)
 		panel_open = !panel_open

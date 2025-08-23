@@ -42,7 +42,7 @@
 	. = ..()
 	. += "[depleted ? "The ore vein is exhausted." : ""]"
 
-/obj/structure/ore_vein/attackby(obj/item/W, mob/user, params)
+/obj/structure/ore_vein/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MINING)
 		to_chat(user, span_notice("You need a pickaxe to mine this."))
 		return FALSE

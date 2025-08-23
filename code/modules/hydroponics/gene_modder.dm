@@ -87,7 +87,7 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
+/obj/machinery/plantgenes/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(iscyborg(user))
 		return
 	if(!anchored)

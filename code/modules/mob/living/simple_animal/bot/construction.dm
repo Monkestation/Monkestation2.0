@@ -10,7 +10,7 @@
 	var/build_step = ASSEMBLY_FIRST_STEP
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 
-/obj/item/bot_assembly/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(istype(I, /obj/item/pen))
 		rename_bot()
@@ -100,7 +100,7 @@
 	var/lasercolor = ""
 	var/vest_type = /obj/item/clothing/suit/armor/vest
 
-/obj/item/bot_assembly/ed209/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/ed209/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP, ASSEMBLY_SECOND_STEP)
@@ -230,7 +230,7 @@
 		if(ASSEMBLY_SECOND_STEP)
 			icon_state = "[toolbox_color]toolbox_tiles_sensor"
 
-/obj/item/bot_assembly/floorbot/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/floorbot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
@@ -270,7 +270,7 @@
 	if(skin)
 		add_overlay("kit_skin_[skin]")
 
-/obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/medbot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
@@ -307,7 +307,7 @@
 	icon_state = "honkbot_arm"
 	created_name = "Honkbot"
 
-/obj/item/bot_assembly/honkbot/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/bot_assembly/honkbot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
@@ -346,7 +346,7 @@
 	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
 	var/toyswordamt = 0 //honk
 
-/obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	var/atom/Tsec = drop_location()
 	switch(build_step)
@@ -480,7 +480,7 @@
 	icon_state = "firebot_arm"
 	created_name = "Firebot"
 
-/obj/item/bot_assembly/firebot/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/firebot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
@@ -510,7 +510,7 @@
 	icon_state = "hygienebot"
 	created_name = "Hygienebot"
 
-/obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	var/atom/Tsec = drop_location()
 	switch(build_step)

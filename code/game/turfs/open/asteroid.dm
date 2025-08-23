@@ -84,7 +84,7 @@
 		return
 	return ..()
 
-/turf/open/misc/asteroid/attackby(obj/item/W, mob/user, params)
+/turf/open/misc/asteroid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE

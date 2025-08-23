@@ -86,7 +86,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
+/obj/machinery/power/smes/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		update_appearance()

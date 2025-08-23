@@ -111,28 +111,30 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
 	SIGNAL_HANDLER
 
-	if(!I.multitool_check_buffer(user, I))
+	. = NONE
+	var/obj/item/multitool/multi = I
+	if(!istype(multi))
 		return ITEM_INTERACT_BLOCKING
-	var/obj/item/multitool/M = I
-	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
-		if (silo == M.buffer)
-			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
-			return ITEM_INTERACT_BLOCKING
-		if(!check_z_level(M.buffer))
-			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
-			return ITEM_INTERACT_BLOCKING
-		if (silo)
-			silo.ore_connected_machines -= src
-			silo.updateUsrDialog()
-		else if (mat_container)
-			mat_container.retrieve_all()
-			qdel(mat_container)
-		silo = M.buffer
-		silo.ore_connected_machines += src
+	if(!istype(multi.buffer, /obj/machinery/ore_silo))
+		return ITEM_INTERACT_BLOCKING
+	if(silo == multi.buffer)
+		to_chat(user, span_warning("[parent] is already connected to [silo]!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!check_z_level(multi.buffer))
+		to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
+		return ITEM_INTERACT_BLOCKING
+	if(silo)
+		silo.ore_connected_machines -= src
 		silo.updateUsrDialog()
-		mat_container = silo.GetComponent(/datum/component/material_container)
-		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return ITEM_INTERACT_BLOCKING
+	else if (mat_container)
+		mat_container.retrieve_all()
+		qdel(mat_container)
+	silo = multi.buffer
+	silo.ore_connected_machines += src
+	silo.updateUsrDialog()
+	mat_container = silo.GetComponent(/datum/component/material_container)
+	to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
+	return ITEM_INTERACT_BLOCKING
 
 /datum/component/remote_materials/proc/check_z_level(obj/silo_to_check)
 	SIGNAL_HANDLER

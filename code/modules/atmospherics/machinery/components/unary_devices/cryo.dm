@@ -501,7 +501,7 @@
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/reagent_containers/cup))
 		. = 1 //no afterattack
 		if(beaker)

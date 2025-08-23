@@ -96,7 +96,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/shipbreaker/attackby(obj/item/I, mob/user, params)
+/obj/machinery/shipbreaker/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 

@@ -14,7 +14,7 @@
 	var/obj/item/canvas/painting = null
 
 //Adding canvases
-/obj/structure/easel/attackby(obj/item/I, mob/user, params)
+/obj/structure/easel/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/canvas))
 		var/obj/item/canvas/canvas = I
 		user.dropItemToGround(canvas)
@@ -489,7 +489,7 @@
 	. = ..()
 	SSpersistent_paintings.painting_frames -= src
 
-/obj/structure/sign/painting/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/painting/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!current_canvas && istype(I, /obj/item/canvas))
 		frame_canvas(user,I)
 	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))

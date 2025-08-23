@@ -117,7 +117,7 @@
 	if(uses <= 0)
 		desc = "[initial(desc)] The surgical tools look too blunt and worn to pierce a skull. Looks like it's all used up."
 
-/obj/item/autosurgeon/skillchip/attackby(obj/item/I, mob/user, params)
+/obj/item/autosurgeon/skillchip/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, skillchip_type))
 		return ..()
 

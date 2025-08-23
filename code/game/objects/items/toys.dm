@@ -67,7 +67,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/reagent_containers/cup))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
@@ -179,7 +179,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/balloon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
 		pop_balloon(monkey_pop = TRUE)
 	else

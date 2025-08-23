@@ -100,7 +100,7 @@
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
-/obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
+/obj/machinery/airalarm/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	update_last_used(user)
 	switch(buildstage)
 		if(AIR_ALARM_BUILD_COMPLETE)

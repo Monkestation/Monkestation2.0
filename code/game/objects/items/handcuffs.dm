@@ -291,7 +291,7 @@
 	cable_color = CABLE_COLOR_WHITE
 	inhand_icon_state = "coil_white"
 
-/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
+/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers) //Slapcrafting
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))

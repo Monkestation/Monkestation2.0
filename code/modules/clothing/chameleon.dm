@@ -401,7 +401,7 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/under/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/under/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -461,7 +461,7 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/suit/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/suit/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -520,7 +520,7 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/glasses/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/glasses/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -582,7 +582,7 @@
 
 // MONKESTATION ADDITION START
 
-/obj/item/clothing/gloves/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/gloves/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -641,7 +641,7 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/head/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/head/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -722,7 +722,7 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/mask/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/mask/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -811,7 +811,7 @@
 	acid = 50
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/shoes/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/shoes/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -863,7 +863,7 @@
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 // MONKESTATION ADDITION START
-/obj/item/storage/backpack/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/backpack/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -907,7 +907,7 @@
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 // MONKESTATION ADDITION START
-/obj/item/storage/belt/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/belt/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -954,7 +954,7 @@
 	action_slots = ALL
 
 // MONKESTATION ADDITION START
-/obj/item/radio/headset/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/radio/headset/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -997,7 +997,7 @@
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
 
 // MONKESTATION ADDITION START
-/obj/item/modular_computer/pda/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/modular_computer/pda/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -1041,7 +1041,7 @@
 	action_slots = ALL
 
 // MONKESTATION ADDITION START
-/obj/item/stamp/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/stamp/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -1086,7 +1086,7 @@
 	action_slots = ALL
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/neck/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/neck/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -1144,7 +1144,7 @@
 	var/real_hits = FALSE
 
 // MONKESTATION ADDITION START
-/obj/item/gun/energy/laser/chameleon/attackby(obj/item/W, mob/user, params)
+/obj/item/gun/energy/laser/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 

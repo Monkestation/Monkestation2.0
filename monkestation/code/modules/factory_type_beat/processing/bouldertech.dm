@@ -100,7 +100,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
 		update_boulder_count()

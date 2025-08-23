@@ -67,7 +67,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/jetpack_module))
 		if(jetpack_upgrade)
 			to_chat(user, span_warning("[src] has already been upgraded!"))

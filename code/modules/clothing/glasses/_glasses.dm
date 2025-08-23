@@ -515,7 +515,7 @@
 	action_slots = ALL
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 

@@ -152,7 +152,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	investigate_log("was pulled up by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 	deconstruct()
 
-/obj/structure/pipe_cleaner/attackby(obj/item/W, mob/user, params)
+/obj/structure/pipe_cleaner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	handlecable(W, user, params)
 
 /obj/structure/pipe_cleaner/singularity_pull(S, current_size)

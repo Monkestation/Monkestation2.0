@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	. = ..()
 	. += span_notice("With a <b>chisel</b> or even a <b>pickaxe</b> of some kind, you could cut this into <b>blocks</b>.")
 
-/obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
 		return ..()
 	playsound(src, 'sound/effects/picaxe1.ogg', 50, TRUE)

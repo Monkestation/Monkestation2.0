@@ -53,7 +53,7 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/poster/attackby(obj/item/I, mob/user, params)
+/obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/shard))
 		return ..()
 

@@ -49,7 +49,7 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/attackby(obj/item/W, mob/user, params)
+/obj/item/laser_pointer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stock_parts/micro_laser))
 		if(!diode)
 			if(!user.transferItemToLoc(W, src))

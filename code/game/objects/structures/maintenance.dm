@@ -89,7 +89,7 @@ at the cost of risking a vicious bite.**/
 			return
 	to_chat(user, span_warning("You find nothing of value..."))
 
-/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, params)
+/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
 		return ..()
 	add_fingerprint(user)

@@ -38,7 +38,7 @@
 
 	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
 
-/obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
+/obj/item/golem_shell/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	var/static/list/golem_shell_species_types = list(
 		/obj/item/stack/sheet/iron = /datum/species/golem,

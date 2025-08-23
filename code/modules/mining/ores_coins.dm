@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	set_wires(null)
 	return ..()
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
+/obj/item/gibtonite/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!wires && isigniter(I))
 		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
 		set_wires(new /datum/wires/explosive/gibtonite(src))
@@ -406,7 +406,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	. += span_info("It's worth [value] credit\s.")
 
-/obj/item/coin/attackby(obj/item/W, mob/user, params)
+/obj/item/coin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)

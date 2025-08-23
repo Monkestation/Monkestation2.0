@@ -215,7 +215,7 @@
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = attacking_item.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)

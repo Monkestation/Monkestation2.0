@@ -520,7 +520,7 @@
 			span_notice("You escape the cramped confines of [src]!"))
 		open_machine()
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
+/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(state_open && is_operational)
 		if(istype(I, /obj/item/clothing/suit))
 			if(suit)

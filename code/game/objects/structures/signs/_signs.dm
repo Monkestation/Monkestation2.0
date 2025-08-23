@@ -87,7 +87,7 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/structure/sign/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
@@ -171,7 +171,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/sign/attackby(obj/item/I, mob/user, params)
+/obj/item/sign/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")

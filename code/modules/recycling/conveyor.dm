@@ -409,7 +409,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_linked_conveyors()
 	update_linked_switches()
 
-/obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE

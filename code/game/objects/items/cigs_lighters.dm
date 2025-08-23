@@ -257,7 +257,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/mask/cigarette/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(lit)
 		return ..()
 

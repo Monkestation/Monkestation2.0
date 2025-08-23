@@ -596,7 +596,7 @@
 			return NO_FUEL
 
 /// allows lighting an unlit candle from some fire source by left clicking the candle with the source
-/obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(try_light_candle(attacking_item, user, silent = istype(attacking_item, src.type))) // so we don't double balloon alerts when a candle is used to light another candle
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	else

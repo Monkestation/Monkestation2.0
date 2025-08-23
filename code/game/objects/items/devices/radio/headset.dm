@@ -417,7 +417,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	tool.play_tool_sound(src, 10)
 	return TRUE
 
-/obj/item/radio/headset/attackby(obj/item/W, mob/user, params)
+/obj/item/radio/headset/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	user.set_machine(src)
 
 	if(istype(W, /obj/item/encryptionkey))

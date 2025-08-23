@@ -50,7 +50,7 @@
 	mood_buff = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE, department = quirk_poster_department)
 	return ..()
 
-/obj/structure/sign/poster/quirk/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/poster/quirk/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if (I.tool_behaviour == TOOL_WIRECUTTER)
 		QDEL_NULL(mood_buff)
 	return ..()

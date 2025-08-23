@@ -159,7 +159,7 @@
 	balloon_alert(user, "you can't find an obvious maintenance hatch!")
 	return TRUE
 
-/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))
 		switch(deconstruction_state)
 			if(HDD_PANEL_CLOSED)

@@ -182,12 +182,14 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/slime_pen_controller/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	if(!multitool_check_buffer(user, multitool) || QDELETED(multitool.buffer))
-		return
+	. = NONE
+	if(!multitool.buffer)
+		return NONE
+
 	if(linked_oozesucker(multitool.buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
 		balloon_alert_to_viewers("linked sucker")
 		to_chat(user, span_notice("You link the [multitool.buffer] to the [src]."))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	var/obj/machinery/corral_corner/pad = astype(multitool.buffer)
 	if(!pad?.connected_data)
@@ -199,7 +201,7 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 	balloon_alert_to_viewers("linked pen")
 	pad.balloon_alert_to_viewers("linked to controller")
 	to_chat(user, span_notice("You link the [pad] to the [src]."))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/slime_pen_controller/proc/linked_oozesucker(obj/machinery/plumbing/ooze_sucker/target, datum/corral_data/linked_pen)
 	if(!istype(target) || !istype(linked_pen))

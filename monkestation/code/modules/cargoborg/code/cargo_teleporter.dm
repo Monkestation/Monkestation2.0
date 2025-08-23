@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 
 //---- Allows the cargo teleporter to hold fultons as charges, in order to fulton people with right click
 
-/obj/item/cargo_teleporter/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/cargo_teleporter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/extraction_pack))
 		return
@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	light_outer_range = 3
 	light_color = COLOR_VIVID_YELLOW
 
-/obj/effect/decal/cleanable/cargo_mark/attackby(obj/item/W, mob/user, params)
+/obj/effect/decal/cleanable/cargo_mark/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/cargo_teleporter))
 		to_chat(user, span_notice("You remove [src] using [W]."))
 		playsound(src, 'sound/machines/click.ogg', 50)

@@ -15,7 +15,7 @@
 	list_reagents = list(/datum/reagent/drug/cocaine/freebase_cocaine = 40)
 	possible_transfer_amounts = list()
 
-/obj/item/reagent_containers/crackbrick/attackby(obj/item/W, mob/user, params)
+/obj/item/reagent_containers/crackbrick/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.get_sharpness())
 		user.show_message(span_notice("You cut [src] into some rocks."), MSG_VISUAL)
 		for(var/i in 1 to 4)

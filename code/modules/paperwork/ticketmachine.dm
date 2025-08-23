@@ -50,13 +50,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	. += span_notice("The ticket machine shows that ticket #[current_number] is currently being served.")
 	. += span_notice("You can take a ticket out with <b>Left-Click</b> to be number [ticket_number + 1] in queue.")
 
-/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
-		return
-	var/obj/item/multitool/M = I
+/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
-	return TRUE
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ticket_machine/emag_act(mob/user, obj/item/card/emag/emag_card) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
 	if(obj_flags & EMAGGED)
@@ -181,7 +178,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			maptext_x = 4
 	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
-/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
+/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))

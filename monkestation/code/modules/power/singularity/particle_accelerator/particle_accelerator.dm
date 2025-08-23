@@ -62,7 +62,7 @@
 	update_state()
 	update_icon()
 
-/obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
+/obj/structure/particle_accelerator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/did_something = FALSE
 
 	switch(construction_state)

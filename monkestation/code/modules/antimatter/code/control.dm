@@ -179,7 +179,7 @@
 	//No other icons for it atm
 
 
-/obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/am_control_unit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(!anchored)
 			W.play_tool_sound(src, 75)

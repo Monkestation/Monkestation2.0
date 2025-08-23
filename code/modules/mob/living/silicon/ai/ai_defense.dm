@@ -1,5 +1,5 @@
 
-/mob/living/silicon/ai/attackby(obj/item/W, mob/user, params)
+/mob/living/silicon/ai/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/ai_module))
 		var/obj/item/ai_module/MOD = W
 		if(!mind) //A player mind is required for law procs to run antag checks.

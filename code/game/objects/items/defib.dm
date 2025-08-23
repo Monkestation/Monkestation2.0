@@ -156,7 +156,7 @@
 	update_power()
 	return TRUE
 
-/obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
+/obj/item/defibrillator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W == paddles)
 		toggle_paddles()
 	else if(istype(W, /obj/item/stock_parts/cell))
@@ -307,7 +307,7 @@
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_power()
 
-/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
+/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(W == paddles)
 		toggle_paddles()
 		return

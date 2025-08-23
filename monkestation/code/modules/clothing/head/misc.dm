@@ -2,7 +2,7 @@
 #define ADD_HAT 0
 #define REMOVE_HAT 1
 
-/obj/item/clothing/head/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/head/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/clothing/head) && !istype(I, /obj/item/clothing/head/mob_holder) && !istype(src, /obj/item/clothing/head/mob_holder)) //No putting Ian on a hat or vice-reversa
 		if(contents) 					//Checking for previous hats and preventing towers that are too large
 			if(I.contents)
