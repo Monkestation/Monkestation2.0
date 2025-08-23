@@ -14708,9 +14708,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "bry" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/medipen_refiller,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "brA" = (
