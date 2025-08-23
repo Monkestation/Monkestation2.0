@@ -7,6 +7,7 @@
 /datum/species/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_DRINKS_BLOOD,
 		TRAIT_BLOOD_CLANS,
@@ -24,7 +25,6 @@
 	mutanttongue = /obj/item/organ/internal/tongue/vampire
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
@@ -39,7 +39,6 @@
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
-	new_vampire.set_safe_hunger_level()
 	RegisterSignal(new_vampire, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)

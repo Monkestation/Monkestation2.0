@@ -47,8 +47,6 @@
 #define TRAIT_ALL_SURGERIES "all_surgeries"
 /// Prevents the user from ever (unintentionally) failing a surgery step, and ensures they always have the maximum surgery speed.
 #define TRAIT_PERFECT_SURGEON "perfect_surgeon"
-/// Reduces the complexity of any cyberlink hacking minigames for the user.
-#define TRAIT_BETTER_CYBERCONNECTOR "better_cyberconnector_hacking"
 /// Allows the user to climb tables and such faster.
 #define TRAIT_FAST_CLIMBER 	"fast_climber"
 /// The user is more resistant to being shoved.
@@ -73,8 +71,6 @@
 #define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
 /// Applied when blight is cured. Prevents getting blight again while present.
 #define TRAIT_REVENANT_BLIGHT_PROTECTION "revenant_blight_protection"
-/// Bypasses any cyberlink-related checks, allowing the user to use implants regardless.
-#define TRAIT_BYPASS_CYBERLINK "bypass_cyberlink"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
@@ -87,6 +83,8 @@
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
 #define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW	"joined_as_crew"
 
 // Traits related to food
 /// Trait for Fire Burps

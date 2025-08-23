@@ -143,7 +143,7 @@
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
 /mob/living/basic/proc/apply_atmos_requirements()
-	if(unsuitable_atmos_damage == 0)
+	if(unsuitable_atmos_damage == 0 || isnull(habitable_atmos))
 		return
 	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
 	habitable_atmos = string_assoc_list(habitable_atmos)

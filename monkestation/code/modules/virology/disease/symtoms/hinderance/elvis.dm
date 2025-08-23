@@ -13,7 +13,7 @@
 		mouse.icon_living = "mouse_elvis"
 		mouse.icon_dead = "mouse_brown_dead"
 		return
-	mob.dna.add_mutation(/datum/mutation/human/elvis, MUT_EXTRA)
+	mob.dna.add_mutation(/datum/mutation/elvis, MUTATION_SOURCE_GENE_SYMPTOM)
 
 /datum/symptom/elvis/activate(mob/living/carbon/mob)
 	if(!ishuman(mob))
@@ -40,15 +40,13 @@
 
 		if(!(victim.hairstyle == "Pompadour (Big)"))
 			spawn(50)
-				victim.hairstyle = "Pompadour (Big)"
-				victim.hair_color = "#242424"
-				victim.update_body()
+				victim.set_hairstyle("Pompadour (Big)", update = FALSE)
+				victim.set_haircolor("#242424", update = TRUE)
 
 		if(!(victim.facial_hairstyle == "Sideburns (Elvis)"))
 			spawn(50)
-				victim.facial_hairstyle = "Sideburns (Elvis)"
-				victim.facial_hair_color = "#242424"
-				victim.update_body()
+				victim.set_facial_hairstyle("Sideburns (Elvis)", update = FALSE)
+				victim.set_facial_haircolor("#242424", update = TRUE)
 
 /datum/symptom/elvis/deactivate(mob/living/carbon/mob)
 	if(ismouse(mob))
@@ -60,4 +58,4 @@
 			dude.glasses.canremove = 1
 			dude.u_equip(dude.glasses,1)
 	*/
-	mob.dna.remove_mutation(/datum/mutation/human/elvis)
+	mob.dna.remove_mutation(/datum/mutation/elvis, MUTATION_SOURCE_GENE_SYMPTOM)

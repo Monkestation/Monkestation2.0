@@ -798,6 +798,9 @@
 /obj/item/card/id/RemoveID()
 	return src
 
+/obj/item/card/id/proc/chat_span()
+	return trim?.chat_span()
+
 /// Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.
 /obj/item/card/id/proc/update_in_wallet()
 	SIGNAL_HANDLER
@@ -896,6 +899,11 @@
 	desc = "An ID card that allows access to bots maintenance protocols."
 	trim = /datum/id_trim/job/away/old/robo /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
+/obj/item/card/id/away/old/cargo
+	name = "Alpha Station Cargo Technician's ID card"
+	desc = "A faded Alpha Station ID card. You can make out the rank \"Cargo Technician\"."
+	trim = /datum/id_trim/job/away/old/cargo
+
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
@@ -930,6 +938,36 @@
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
 
+/obj/item/card/id/departmental_budget/civ
+	department_ID = ACCOUNT_CIV
+	department_name = ACCOUNT_CIV_NAME
+	icon_state = "civ_budget" //for the captain to squander
+
+/obj/item/card/id/departmental_budget/srv
+	department_ID = ACCOUNT_SRV
+	department_name = ACCOUNT_SRV_NAME
+	icon_state = "srv_budget" //for parties
+
+/obj/item/card/id/departmental_budget/sec
+	department_ID = ACCOUNT_SEC
+	department_name = ACCOUNT_SEC_NAME
+	icon_state = "sec_budget" //for buying 100 bobrs
+
+/obj/item/card/id/departmental_budget/med
+	department_ID = ACCOUNT_MED
+	department_name = ACCOUNT_MED_NAME
+	icon_state = "med_budget"
+
+/obj/item/card/id/departmental_budget/eng
+	department_ID = ACCOUNT_ENG
+	department_name = ACCOUNT_ENG_NAME
+	icon_state = "eng_budget"
+
+/obj/item/card/id/departmental_budget/sci
+	department_ID = ACCOUNT_SCI
+	department_name = ACCOUNT_SCI_NAME
+	icon_state = "sci_budget"
+
 /obj/item/card/id/departmental_budget/AltClick(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
 
@@ -958,6 +996,8 @@
 	var/trim_assignment_override
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
+	/// If this is set, will manually override the chat span used for the wearer's name, normally set by the trim. Intended for admins to VV edit and chameleon ID cards.
+	var/trim_chat_span_override
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -966,9 +1006,10 @@
 
 /obj/item/card/id/advanced/Destroy()
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
 	return ..()
 
+/obj/item/card/id/advanced/chat_span()
+	return trim_chat_span_override || ..()
 
 /obj/item/card/id/advanced/attackby(obj/item/W, mob/user, params)
 	. = ..()
@@ -1368,6 +1409,7 @@
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+	action_slots = ALL
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE

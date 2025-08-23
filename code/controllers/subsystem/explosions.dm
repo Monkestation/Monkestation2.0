@@ -9,8 +9,8 @@ SUBSYSTEM_DEF(explosions)
 	name = "Explosions"
 	init_order = INIT_ORDER_EXPLOSIONS
 	priority = FIRE_PRIORITY_EXPLOSIONS
-	wait = 1
-	flags = SS_TICKER|SS_NO_INIT
+	wait = 0
+	flags = SS_TICKER | SS_NO_INIT | SS_HIBERNATE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_lowturf = 0
@@ -40,6 +40,18 @@ SUBSYSTEM_DEF(explosions)
 
 	var/currentpart = SSAIR_PIPENETS
 
+/datum/controller/subsystem/explosions/PreInit(start_timeofday)
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, lowturf),
+		NAMEOF(src, medturf),
+		NAMEOF(src, highturf),
+		NAMEOF(src, flameturf),
+		NAMEOF(src, throwturf),
+		NAMEOF(src, low_mov_atom),
+		NAMEOF(src, med_mov_atom),
+		NAMEOF(src, high_mov_atom),
+	)
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
 	msg += "C:{"
@@ -81,12 +93,9 @@ SUBSYSTEM_DEF(explosions)
 	flameturf -= T
 	throwturf -= T
 
-/client/proc/check_bomb_impacts()
-	set name = "Check Bomb Impact"
-	set category = "Debug"
-
-	var/newmode = tgui_alert(usr, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
-	var/turf/epicenter = get_turf(mob)
+ADMIN_VERB(check_bomb_impacts, R_DEBUG, FALSE, "Check Bomb Impact", "See what the effect of a bomb would be.", ADMIN_CATEGORY_DEBUG)
+	var/newmode = tgui_alert(user, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
+	var/turf/epicenter = get_turf(user.mob)
 	if(!epicenter)
 		return
 
@@ -94,7 +103,7 @@ SUBSYSTEM_DEF(explosions)
 	var/heavy = 0
 	var/light = 0
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = tgui_input_list(usr, "Pick the bomb size", "Bomb Size?", choices)
+	var/choice = tgui_input_list(user, "Pick the bomb size", "Bomb Size?", choices)
 	switch(choice)
 		if(null)
 			return 0
@@ -111,9 +120,9 @@ SUBSYSTEM_DEF(explosions)
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devastation range (Tiles):") as num
-			heavy = input("Heavy impact range (Tiles):") as num
-			light = input("Light impact range (Tiles):") as num
+			dev = input(user, "Devastation range (Tiles):") as num
+			heavy = input(user, "Heavy impact range (Tiles):") as num
+			light = input(user, "Light impact range (Tiles):") as num
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x
@@ -672,11 +681,14 @@ SUBSYSTEM_DEF(explosions)
 		for(var/thing in flame_turf)
 			if(thing)
 				var/turf/T = thing
-				new /obj/effect/hotspot(T) //Mostly for ambience!
+				var/obj/effect/hotspot/hotspot = new(T) //Mostly for ambience!
+				QDEL_IN(hotspot, rand(1 SECONDS, 2 SECONDS))
 		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
+		/*
 		if (low_turf.len || med_turf.len || high_turf.len)
 			Master.laggy_byond_map_update_incoming()
+		*/
 
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
 		currentpart = SSEXPLOSIONS_THROWS

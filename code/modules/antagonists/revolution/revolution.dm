@@ -187,6 +187,7 @@
 	job_rank = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
+	hardcore_random_bonus = TRUE
 
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
@@ -269,8 +270,7 @@
 
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
-	assistant.hairstyle = hairstyle
-	assistant.update_body_parts()
+	assistant.set_hairstyle(hairstyle, update = TRUE)
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -302,6 +302,7 @@
 
 	if(mute)
 		rev_mind.current.set_silence_if_lower(10 SECONDS)
+		rev_mind.current.set_emote_mute_if_lower(10 SECONDS)
 	if(stun)
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)

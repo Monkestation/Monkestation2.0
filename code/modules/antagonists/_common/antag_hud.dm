@@ -4,9 +4,12 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 /// An alternate appearance that will only show if you have the antag datum
 /datum/atom_hud/alternate_appearance/basic/has_antagonist
 	var/antag_datum_type
+	///The key or list of keys that are valid to see this hud, if unset then it will display to everyone with the antag datum like normal
+	var/list/valid_keys
 
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/New(key, image/I, antag_datum_type, valid_keys) //monkestation edit: adds valid_keys
-	src.antag_datum_type = antag_datum_type
+	if(antag_datum_type)
+		src.antag_datum_type = antag_datum_type
 	src.valid_keys = valid_keys
 	GLOB.has_antagonist_huds += src
 	return ..(key, I, NONE)
@@ -15,8 +18,20 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	GLOB.has_antagonist_huds -= src
 	return ..()
 
-///datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/M) //monkestation removal, moved to the modular version of this file
-//	return !!M.mind?.has_antag_datum(antag_datum_type) //monkestation removal
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/target)
+	if(add_ghost_version && isobserver(target))
+		return FALSE // use the ghost version instead
+
+	var/datum/antagonist/antag_datum = target?.mind?.has_antag_datum(antag_datum_type)
+	if(!antag_datum)
+		return FALSE
+
+	if(!valid_keys)
+		return TRUE
+
+	if(!islist(valid_keys))
+		valid_keys = list(valid_keys)
+	return length(valid_keys - antag_datum.hud_keys) != length(valid_keys)
 
 /// An alternate appearance that will show all the antagonists this mob has
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud
@@ -43,7 +58,6 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	return ..(key, first_antagonist, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud/Destroy()
-	QDEL_LIST(antag_hud_images)
 	STOP_PROCESSING(SSantag_hud, src)
 	mind.antag_hud = null
 	mind = null

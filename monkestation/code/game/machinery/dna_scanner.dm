@@ -22,12 +22,12 @@
 		mutation_weights = initialize_mutation_weights()
 
 	var/mutation_type = pick_weight_recursive(mutation_weights)
-	var/datum/mutation/human/mutation = new mutation_type(GET_INITIALIZED_MUTATION(mutation_type))
+	var/datum/mutation/mutation = new mutation_type(GET_INITIALIZED_MUTATION(mutation_type))
 	roll_for_chromosome(mutation)?.apply(mutation)
 	mutations += mutation
 
 /// Randomly returns a valid initialized chromosome or null.
-/obj/item/disk/data/random/proc/roll_for_chromosome(datum/mutation/human/mutation) as /obj/item/chromosome
+/obj/item/disk/data/random/proc/roll_for_chromosome(datum/mutation/mutation) as /obj/item/chromosome
 	RETURN_TYPE(/obj/item/chromosome)
 	var/chromosome_type
 	var/list/valid_chromosomes = mutation.valid_chromosome_types() - /obj/item/chromosome/stabilizer
@@ -42,17 +42,23 @@
 /obj/item/disk/data/random/proc/initialize_mutation_weights() as /list
 	RETURN_TYPE(/list)
 	. = list()
-	.[get_non_random_locked_mutations(GLOB.good_mutations)] = POSITIVE_WEIGHT
-	.[get_non_random_locked_mutations(GLOB.not_good_mutations)] = NEUTRAL_WEIGHT
-	.[get_non_random_locked_mutations(GLOB.bad_mutations)] = NEGATIVE_WEIGHT
-
-/// Returns a list of the typepaths of mutations in the given list without the random_locked var enabled.
-/obj/item/disk/data/random/proc/get_non_random_locked_mutations(list/mutations) as /list
-	RETURN_TYPE(/list)
-	. = list()
-	for(var/datum/mutation/human/mutation as anything in mutations)
-		if(!mutation.random_locked)
-			.[mutation.type] = isnull(mutation.species_allowed) ? 2 : 3
+	var/list/good = list()
+	var/list/neutral = list()
+	var/list/bad = list()
+	for(var/datum/mutation/mutation as anything in GLOB.all_mutations)
+		if(mutation::random_locked)
+			continue
+		var/weight = isnull(mutation::species_allowed) ? 2 : 3
+		switch(mutation::quality)
+			if(POSITIVE)
+				good[mutation] = weight
+			if(MINOR_NEGATIVE)
+				neutral[mutation] = weight
+			if(NEGATIVE)
+				bad[mutation] = weight
+	.[good] = POSITIVE_WEIGHT
+	.[neutral] = NEUTRAL_WEIGHT
+	.[bad] = NEGATIVE_WEIGHT
 
 #undef STABILIZER_PROB
 #undef CHROMOSOME_PROB

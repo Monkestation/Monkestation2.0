@@ -201,12 +201,12 @@ Key procs
 
 /// Gets the atom, since we some times need to check if the tongue has limitations.
 /datum/language_holder/proc/get_atom()
-	if(owner)
-		if(istype(owner, /datum/mind))
-			var/datum/mind/M = owner
-			return M.current
+	var/mob/owner = src.owner
+	if(istype(owner, /datum/mind))
+		var/datum/mind/owner_mind = owner
+		owner = owner_mind.current
+	if(!QDELETED(owner))
 		return owner
-	return FALSE
 
 /// Empties out the atom specific languages and updates them according to the supplied atoms language holder.
 /datum/language_holder/proc/update_atom_languages(atom/movable/thing)
@@ -306,6 +306,13 @@ Key procs
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/monkey = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/monkey = list(LANGUAGE_ATOM))
+
+/datum/language_holder/monkey/smart
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/monkey = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/monkey = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/common
 
 /datum/language_holder/mushroom
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
@@ -448,6 +455,9 @@ Key procs
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()
+
+// Has all the languages known (via "mind")
+/datum/language_holder/universal
 
 /datum/language_holder/universal/New()
 	..()

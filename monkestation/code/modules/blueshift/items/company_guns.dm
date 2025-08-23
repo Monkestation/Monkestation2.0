@@ -169,6 +169,9 @@
 /obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/sol_rifle/evil/unrestricted
+	pin = /obj/item/firing_pin
+
 // SolFed shotgun (this was gonna be in a proprietary shotgun shell type outside of 12ga at some point, wild right?)
 
 /obj/item/gun/ballistic/shotgun/riot/sol
@@ -237,7 +240,10 @@
 	inhand_icon_state = "renoster_evil"
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
+	pbk_gentle = FALSE
 
+/obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 // Low caliber grenade launcher (fun & games)
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher
@@ -334,11 +340,14 @@
 	projectile_wound_bonus = 5
 	fire_delay = 0.3 SECONDS
 	pin = /obj/item/firing_pin/implant/pindicate
-
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
+	pbk_gentle = FALSE
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 /*
 *	QM Sporter Rifle
@@ -443,7 +452,7 @@
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+///	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/examine(mob/user)
 	. = ..()
@@ -608,6 +617,9 @@
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 // Trappiste high caliber pistol in .585
 
@@ -1067,6 +1079,9 @@
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 /// File location for the long gun's speech
 #define LONG_MOD_LASER_SPEECH "nova/long_modular_laser.json"

@@ -96,7 +96,7 @@
 /datum/antagonist/bloodsucker/proc/SpendRank(mob/living/carbon/human/target, cost_rank = TRUE, blood_cost)
 	if(!owner || !owner.current || !owner.current.client || (cost_rank && bloodsucker_level_unspent <= 0))
 		return
-	SEND_SIGNAL(src, BLOODSUCKER_RANK_UP, target, cost_rank, blood_cost)
+	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_RANK_UP, target, cost_rank, blood_cost)
 
 /**
  * Called when a Bloodsucker reaches Final Death
@@ -105,10 +105,7 @@
 /datum/antagonist/bloodsucker/proc/free_all_vassals()
 	for(var/datum/antagonist/vassal/all_vassals in vassals)
 		// Skip over any Bloodsucker Vassals, they're too far gone to have all their stuff taken away from them
-		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker))
-			all_vassals.owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
-			continue
-		if(all_vassals.special_type == REVENGE_VASSAL)
+		if(all_vassals.owner.has_antag_datum(/datum/antagonist/bloodsucker) || all_vassals.special_type == REVENGE_VASSAL)
 			continue
 		all_vassals.owner.add_antag_datum(/datum/antagonist/ex_vassal)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)
@@ -146,13 +143,20 @@
 // The maximum blood that counts towards this
 /datum/antagonist/bloodsucker/proc/blood_level_gain()
 	var/level_cost = get_level_cost()
-	if(blood_level_gain >= level_cost && bloodsucker_blood_volume >= level_cost) // Checks if we have drunk enough blood from the living to allow us to gain a level up as well as checking if we have enough blood to actually use on the level up
-		switch(tgui_alert(owner.current, "You have drunk enough blood from the living to thicken your blood, this will cost you [level_cost] blood and give you another level",  "Thicken your blood?.", list("Yes", "No"))) //asks user if they want to spend their blood on a level
-			if("Yes")
-				RankUp() // gives level
-				blood_level_gain -= level_cost // Subtracts the cost from the pool of drunk blood
-				AddBloodVolume(-level_cost) // Subtracts the cost from the bloodsucker's actual blood
-				blood_level_gain_amount += 1 // Increments the variable that makes future levels more expensive
+	// Checks if we have drunk enough blood from the living to allow us to gain a level up as well as checking if we have enough blood to actually use on the level up
+	if(blood_level_gain < level_cost || bloodsucker_blood_volume < level_cost)
+		return
+	if(tgui_alert(owner.current, "You have drunk enough blood from the living to thicken your blood, this will cost you [level_cost] blood and give you another level", "Thicken your blood?", list("Yes", "No")) != "Yes") //asks user if they want to spend their blood on a level
+		return
+	// check again to make sure nothing weird has happened in between
+	level_cost = get_level_cost()
+	if(blood_level_gain < level_cost || bloodsucker_blood_volume < level_cost)
+		to_chat(owner.current, span_warning("You no longer have enough living blood to thicken!"))
+		return
+	RankUp() // gives level
+	blood_level_gain -= level_cost // Subtracts the cost from the pool of drunk blood
+	AddBloodVolume(-level_cost) // Subtracts the cost from the bloodsucker's actual blood
+	blood_level_gain_amount += 1 // Increments the variable that makes future levels more expensive
 
 /datum/antagonist/bloodsucker/proc/get_level_cost()
 	var/level_cost = (0.3 + (0.05 * blood_level_gain_amount))

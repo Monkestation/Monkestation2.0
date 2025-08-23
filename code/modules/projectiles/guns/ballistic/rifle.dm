@@ -16,6 +16,8 @@
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 	gun_flags = GUN_SMOKE_PARTICLES
+	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
+	var/need_bolt_lock_to_interact = TRUE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
@@ -33,7 +35,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
-	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
+	if(need_bolt_lock_to_interact && !bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
 		balloon_alert(user, "[bolt_wording] is closed!")
 		return
 	return ..()
@@ -163,18 +165,19 @@
 		name = "\improper Regal Obrez" // wear it loud and proud
 
 /obj/item/gun/ballistic/rifle/rebarxbow
-	name = "Heated Rebar Crossbow"
-	desc = "Made from an inducer, iron rods, and some wire, this crossbow fires sharpened iron rods, made from the plentiful iron rods found stationwide. \
-			Additionally, can fire specialty ammo made from the materials in the atmos crystalizer - zaukerite, metallic hydrogen, and healium crytals all work. \
-			Very slow to reload - you can craft the crossbow with a crowbar to try loosen the crossbar, but risks a misfire, or worse..."
+	name = "heated rebar crossbow"
+	desc = "A handcrafted crossbow. \
+		   Aside from conventional sharpened iron rods, it can also fire specialty ammo made from the atmos crystalizer - zaukerite, metallic hydrogen, and healium rods all work. \
+		   Very slow to reload - you can craft the crossbow with a crowbar to loosen the crossbar, but risk a misfire, or worse..."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
+	base_icon_state = "rebarxbow"
 	inhand_icon_state = "rebarxbow"
 	worn_icon_state = "rebarxbow"
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	mag_display = FALSE
 	empty_indicator = TRUE
-	bolt_type = BOLT_TYPE_LOCKING
+	bolt_type = BOLT_TYPE_OPEN
 	semi_auto = FALSE
 	internal_magazine = TRUE
 	can_modify_ammo = FALSE
@@ -182,7 +185,7 @@
 	bolt_wording = "bowstring"
 	magazine_wording = "rod"
 	cartridge_wording = "rod"
-	misfire_probability = 25
+	weapon_weight = WEAPON_HEAVY
 	initial_caliber = CALIBER_REBAR
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
 	fire_sound = 'sound/items/xbow_lock.ogg'
@@ -190,6 +193,7 @@
 	tac_reloads = FALSE
 	var/draw_time = 3 SECONDS
 	SET_BASE_PIXEL(0, 0)
+	need_bolt_lock_to_interact = FALSE
 
 /obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
 	if (bolt_locked)
@@ -210,17 +214,33 @@
 	bolt_locked = FALSE
 	update_appearance()
 
+/obj/item/gun/ballistic/rifle/rebarxbow/shoot_live_shot(mob/living/user)
+	..()
+	rack()
+
 /obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
 	if (bolt_locked)
 		return FALSE
 	return ..()
 
+/obj/item/gun/ballistic/rifle/rebarxbow/shoot_with_empty_chamber(mob/living/user)
+	if(chambered || !magazine || !length(magazine.contents))
+		return ..()
+	drop_bolt(user)
+
 /obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
 	. = ..()
 	. += "The crossbow is [bolt_locked ? "not ready" : "ready"] to fire."
 
+/obj/item/gun/ballistic/rifle/rebarxbow/update_overlays()
+	. = ..()
+	if(!magazine)
+		. += "[base_icon_state]" + "_empty"
+	if(!bolt_locked)
+		. += "[base_icon_state]" + "_bolt_locked"
+
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
-	name = "Stressed Rebar Crossbow"
+	name = "stressed rebar crossbow"
 	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a draw this crossbow a bit faster. Hopefully, it was worth it."
 	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
 	can_misfire = TRUE
@@ -229,9 +249,10 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
-	name = "Syndicate Rebar Crossbow"
+	name = "syndicate rebar crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Compatable with all known crossbow ammunition."
+			Holds three shots without a chance of exploding, and features a built in scope. Compatible with all known crossbow ammunition."
+	base_icon_state = "rebarxbowsyndie"
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
@@ -383,3 +404,108 @@
 		It is also able to be suppressed....somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
 		Who knows what that might mean."
 	pin = /obj/item/firing_pin/implant/pindicate
+
+// THE 950 JDJ RIFLE FOR MINERS
+
+#define CALIBER_MINER_950 ".950 JDJ Kinetic" //the ammo type (so it doesnt fit anywhere else)
+
+/obj/item/gun/ballistic/rifle/minerjdj //probably the singlehandedly most expensive weapon a miner can buy, and for good reason
+	name = ".950 JDJ 'Thor' Kinetic Rifle"
+	desc = "Completely absurd, in both size and firepower. The people down in Mining Research were either overcompensating, \
+	or just having a damn good time, but we found this laying on a table surrounded by about six researchers, \
+	and the Mining Research Director, all passed out on the floor with beers and sodas. Fires an absolutely massive round that \
+	is sure to stop pretty much anything in its tracks that would even warrent it."
+	icon_state = "fatmac"
+	w_class = WEIGHT_CLASS_HUGE
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	inhand_icon_state = "fatmac"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "fatmac"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/minerjdj
+	bolt_wording = "bolt"
+	bolt_type = BOLT_TYPE_LOCKING
+	semi_auto = FALSE
+	recoil = 8 //ow my back
+	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
+	fire_sound_volume = 200 // L O U D
+	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
+	bolt_drop_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	need_bolt_lock_to_interact = TRUE
+	pin = /obj/item/firing_pin/wastes //hey so yeah did you see how much damage the bullet this thing fires does ok cool so you know why this is NEVER EVER coming off
+
+/obj/item/ammo_box/magazine/internal/boltaction/minerjdj
+	name = "GIGANTIC RIFLE BREECH THAT SHOULD NOT EXIST"
+	desc = "DO NOT BREAK THE EXPENSIVE MINING EQUIPMENT (REPORT ME)"
+	ammo_type = /obj/item/ammo_casing/minerjdj
+	caliber = CALIBER_MINER_950
+	max_ammo = 1
+	multiload = FALSE
+
+/obj/item/ammo_casing/minerjdj
+	name = ".950 JDJ kinetic casing"
+	desc = "A monster of a round for the 'Thor' Rifle, weighing over half a pound and capable of generating over 50,000 Joules of force. You might assume almost nothing could survive a round like this... but..."
+	icon_state = ".950"
+	caliber = CALIBER_MINER_950
+	projectile_type = /obj/projectile/plasma/minerjdj
+
+/obj/projectile/plasma/minerjdj //is plasma because wall cutting
+	name = ".950 JDJ Kinetic solid brass projectile"
+	desc = "you have somehow observed pure death, and it strikes fear that weaves deep within your psyche."
+	speed = 0.2
+	damage = 2500 //(EXPERIMENTAL) it costs like fucking over 40k points just to buy the rifle, lets test making it just delete one boss of your choice (and the loot potentially :)
+	dismemberment = 100 //yeah no if you get hit by this its so over
+	damage_type = BRUTE
+	armor_flag = BULLET //not that it will save you...
+	range = 50
+	icon_state = "gaussstrong"
+	tracer_type = ""
+	muzzle_type = ""
+	impact_type = ""
+	mine_range = 1
+	projectile_piercing = PASSMOB
+
+/obj/item/storage/box/kinetic/minerjdj/bigcase //box containing the actual gun for sale
+	name = ".950 JDJ Kinetic 'Thor' Rifle case"
+	desc = "A pretty redundant gun case that only contains the .950 JDJ Kinetic 'Thor' Rifle... contains no spare ammo, so make your one shot count or buy some more bullets."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "miner_case"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/minerjdj/bigcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 1
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 1
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/minerjdj/bigcase/PopulateContents() //populate
+
+		new /obj/item/gun/ballistic/rifle/minerjdj (src)
+
+/obj/item/storage/box/kinetic/minerjdj //box containing a single bullet, as to not anger the mining vendor with the bullets dynamic description
+	name = ".950 JDJ Kinetic bullet case"
+	desc = "A pretty redundant small gun case that only contains a single .950 JDJ Kinetic round for the 'Thor' rifle... its more than enough honestly."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "miner_case_small"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/minerjdj/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 1
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 1
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/minerjdj/PopulateContents() //populate
+
+		new /obj/item/ammo_casing/minerjdj (src)

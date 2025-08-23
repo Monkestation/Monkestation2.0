@@ -26,7 +26,7 @@
 	var/list/boosted_nodes = list()
 	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
-	/// Items already deconstructed for a generic point boost, path = list(point_type = points)
+	/// List of items already deconstructed for research points, preventing infinite research point generation.
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
 	var/list/research_points = list()
@@ -365,10 +365,10 @@
 
 	return TRUE
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -434,17 +434,15 @@
 	LAZYINITLIST(boosted_nodes[node.id])
 	for(var/point_type in pointlist)
 		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
-	if(node.autounlock_by_boost)
-		hidden_nodes -= node.id
+	unhide_node(node)
 	update_node_status(node)
 	return TRUE
 
-/// Boosts a techweb node by using items.
-/datum/techweb/proc/boost_with_item(datum/techweb_node/node, itempath)
-	if(!istype(node) || !ispath(itempath))
+///Removes a node from the hidden_nodes list, making it viewable and researchable (if no experiments are required).
+/datum/techweb/proc/unhide_node(datum/techweb_node/node)
+	if(!istype(node))
 		return FALSE
-	var/list/boost_amount = node.boost_item_paths[itempath]
-	boost_techweb_node(node, boost_amount)
+	hidden_nodes -= node.id
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)

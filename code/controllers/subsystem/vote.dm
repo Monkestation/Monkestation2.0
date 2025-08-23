@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(vote)
 	// Remove AFK or clientless non-voters.
 	for(var/non_voter_ckey in non_voters)
 		var/client/non_voter_client = non_voters[non_voter_ckey]
-		if(!non_voter_client || non_voter_client.is_afk())
+		if(!istype(non_voter_client) || non_voter_client.is_afk())
 			non_voters -= non_voter_ckey
 
 	// Now get the result of the vote.
@@ -470,6 +470,7 @@ SUBSYSTEM_DEF(vote)
 /// Datum action given to mobs that allows players to vote on the current vote.
 /datum/action/vote
 	name = "Vote!"
+	button_icon = 'monkestation/icons/hud/actions.dmi'
 	button_icon_state = "vote"
 	show_to_observers = FALSE
 
@@ -486,12 +487,12 @@ SUBSYSTEM_DEF(vote)
 
 // We also need to remove our action from the player actions when we're cleaning up.
 /datum/action/vote/Remove(mob/removed_from)
-	if(removed_from.client)
-		removed_from.client?.persistent_client.player_actions -= src
+	if(removed_from.persistent_client)
+		removed_from.persistent_client.player_actions -= src
 
 	else if(removed_from.ckey)
-		var/datum/persistent_client/associated_details = GLOB.persistent_clients_by_ckey[removed_from.ckey]
-		associated_details?.player_actions -= src
+		var/datum/persistent_client/persistent_client = GLOB.persistent_clients_by_ckey[removed_from.ckey]
+		persistent_client?.player_actions -= src
 
 	return ..()
 

@@ -16,7 +16,7 @@
 
 /datum/antagonist/vassal/favorite/on_gain()
 	. = ..()
-	SEND_SIGNAL(master, BLOODSUCKER_MAKE_FAVORITE, src)
+	SEND_SIGNAL(master, COMSIG_BLOODSUCKER_MAKE_FAVORITE, src)
 
 /datum/antagonist/vassal/favorite/pre_mindshield(mob/implanter, mob/living/mob_override)
 	return COMPONENT_MINDSHIELD_RESISTED

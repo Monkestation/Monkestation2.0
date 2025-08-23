@@ -30,7 +30,7 @@ Behavior that's still missing from this component that original food items had t
 	var/list/eatverbs
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
-	///Callback to be ran for when you take a bite of something
+	///Callback to be ran for when you take a finish eating something
 	var/datum/callback/on_consume
 	///Callback to be ran for when the code check if the food is liked, allowing for unique overrides for special foods like donuts with cops.
 	var/datum/callback/check_liked
@@ -474,8 +474,11 @@ Behavior that's still missing from this component that original food items had t
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
 		return
-	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+
+	var/fraction = 0.3
+	fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
+	eater.hud_used?.hunger?.update_hunger_bar()
 	bitecount++
 	var/desired_mask = (total_bites / bitecount)
 	desired_mask = round(desired_mask)
@@ -592,7 +595,7 @@ Behavior that's still missing from this component that original food items had t
 	var/food_quality = get_recipe_complexity()
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
+		if(!isoozeling(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		food_quality += LIKED_FOOD_QUALITY_CHANGE
 
@@ -635,7 +638,8 @@ Behavior that's still missing from this component that original food items had t
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
 
 	on_consume?.Invoke(eater, feeder)
-
+	if (QDELETED(parent)) // might be destroyed by the callback
+		return
 	// monkestation start: food buffs
 	if(food_buffs && ishuman(eater))
 		var/mob/living/carbon/consumer = eater

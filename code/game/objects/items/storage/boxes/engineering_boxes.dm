@@ -64,6 +64,10 @@
 	name = "box of debug tools"
 	icon_state = "syndiebox"
 
+/obj/item/storage/box/debugtools/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+
 /obj/item/storage/box/debugtools/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/card/emag=1,
@@ -72,7 +76,7 @@
 		/obj/item/flashlight/emp/debug=1,
 		/obj/item/geiger_counter=1,
 		/obj/item/healthanalyzer/advanced=1,
-		/obj/item/modular_computer/pda/heads/captain=1,
+		/obj/item/card/id/advanced/debug=1,
 		/obj/item/pipe_dispenser=1,
 		/obj/item/stack/spacecash/c1000=50,
 		/obj/item/storage/box/beakers/bluespace=1,
@@ -80,6 +84,7 @@
 		/obj/item/storage/box/material=1,
 		/obj/item/uplink/debug=1,
 		/obj/item/uplink/nuclear/debug=1,
+		/obj/item/clothing/ears/earmuffs/debug = 1,
 		)
 	generate_items_inside(items_inside,src)
 

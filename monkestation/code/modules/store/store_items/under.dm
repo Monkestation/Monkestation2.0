@@ -247,6 +247,11 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/miscellaneous/bunnysuit
 	name = "Colorable Bunny Suit"
 	item_path = /obj/item/clothing/under/costume/playbunny
+
+/datum/store_item/under/miscellaneous/hula
+	name = "Hula Skirt"
+	item_path = /obj/item/clothing/under/dress/hula
+
 /*
 *	FORMAL UNDERSUITS
 */
@@ -707,6 +712,16 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/miscellaneous/flowerdress //BUYABLE
 	name = "Flower Dress"
 	item_path = /obj/item/clothing/under/dress/nova/flower
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/sweater //BUYABLE
+	name = "Cableknit Sweater"
+	item_path = /obj/item/clothing/under/sweater
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/sweater/keyhole //BUYABLE
+	name = "Keyhole Sweater"
+	item_path = /obj/item/clothing/under/sweater/keyhole
 	item_cost = 1000
 
 /datum/store_item/under/miscellaneous/tactical_hawaiian_orange //BUYABLE

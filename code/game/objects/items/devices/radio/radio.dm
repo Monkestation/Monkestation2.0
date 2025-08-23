@@ -129,6 +129,12 @@
 		QDEL_NULL(keyslot)
 	return ..()
 
+/obj/item/radio/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
+		set_broadcasting(FALSE)
+		return TRUE
+
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
@@ -266,6 +272,8 @@
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off
 		set_listening(FALSE, actual_setting = FALSE)
 
+	set_frequency(frequency)
+
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
 		return
@@ -296,7 +304,8 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	flick_overlay_view(overlay_mic_active, 5 SECONDS)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -422,7 +431,8 @@
 
 /obj/item/radio/proc/on_recieve_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state

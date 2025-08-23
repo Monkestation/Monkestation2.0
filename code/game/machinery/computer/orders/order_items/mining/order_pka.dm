@@ -1,4 +1,4 @@
-/datum/orderable_item/accelerator
+/datum/orderable_item/accelerator //self explanitory, only PKA's go here, NO wastepin locked weapons.
 	category_index = CATEGORY_PKA
 
 /datum/orderable_item/accelerator/gun
@@ -9,20 +9,12 @@
 	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/repeater
 	cost_per_order = 1250
 
-/datum/orderable_item/accelerator/gun/shotgun //monke edit
-	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shotgun
-	cost_per_order = 1250
-
 /datum/orderable_item/accelerator/gun/shockwave //monke edit
-	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave
+	item_path = /obj/item/storage/box/shockwave
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/gun/glock //monke edit
 	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/glock
-	cost_per_order = 1250
-
-/datum/orderable_item/accelerator/gun/railgun //monke edit
-	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/railgun
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/range
@@ -35,6 +27,14 @@
 
 /datum/orderable_item/accelerator/cooldown
 	item_path = /obj/item/borg/upgrade/modkit/cooldown
+	cost_per_order = 1000
+
+/datum/orderable_item/accelerator/aoe_mobs
+	item_path = /obj/item/borg/upgrade/modkit/aoe/mobs
+	cost_per_order = 2000
+
+/datum/orderable_item/accelerator/minebot_passthrough
+	item_path = /obj/item/borg/upgrade/modkit/minebot_passthrough
 	cost_per_order = 1000
 
 /datum/orderable_item/accelerator/chasis
@@ -52,11 +52,3 @@
 /datum/orderable_item/accelerator/adjustable_tracer
 	item_path = /obj/item/borg/upgrade/modkit/tracer/adjustable
 	cost_per_order = 150
-
-/datum/orderable_item/accelerator/aoe_mobs
-	item_path = /obj/item/borg/upgrade/modkit/aoe/mobs
-	cost_per_order = 2000
-
-/datum/orderable_item/accelerator/minebot_passthrough
-	item_path = /obj/item/borg/upgrade/modkit/minebot_passthrough
-	cost_per_order = 1000

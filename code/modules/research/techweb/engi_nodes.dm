@@ -34,6 +34,9 @@
 		"pacman",
 		"plasma_tank",
 		"plasmaman_tank_belt",
+		"pump",
+		"scrubber",
+		"pipe_scrubber",
 		"pneumatic_seal",
 		"power_control",
 		"powermonitor",
@@ -56,12 +59,13 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
-	prereq_ids = list("engineering", "emp_basic")
+	prereq_ids = list("engineering", "emp_basic", "basic_tools")
 	design_ids = list(
 		"HFR_core",
 		"HFR_corner",
@@ -86,6 +90,7 @@
 		/datum/experiment/scanning/random/material/medium/one = TECHWEB_TIER_2_POINTS,
 		/datum/experiment/ordnance/gaseous/bz = TECHWEB_TIER_4_POINTS,
 	)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/telecomms
 	id = "telecomms"
@@ -114,6 +119,7 @@
 		"s_treatment",
 		"s_traffic", // MONKESTATION ADDITION -- NTSL -- The board to actually program in NTSL
 	)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/emp_basic //EMP tech for some reason
 	id = "emp_basic"
@@ -133,6 +139,7 @@
 		"vendatray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/emp_adv
 	id = "emp_adv"
@@ -144,6 +151,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser = TECHWEB_DISCOUNT_MINOR * 2.5)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/emp_super
 	id = "emp_super"
@@ -158,6 +166,7 @@
 		/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = TECHWEB_TIER_2_POINTS,
 		/datum/experiment/ordnance/gaseous/noblium = TECHWEB_TIER_4_POINTS,
 	)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/high_efficiency
 	id = "high_efficiency"
@@ -170,6 +179,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/adv_power
 	id = "adv_power"
@@ -193,6 +203,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/integrated_hud
 	id = "integrated_HUDs"
@@ -207,6 +218,7 @@
 		"security_hud",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/nvg_tech
 	id = "NVGtech"
@@ -224,3 +236,4 @@
 		"mech_light_amplification",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)

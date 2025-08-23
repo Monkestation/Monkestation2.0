@@ -140,11 +140,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	switch(icon_state)
 		if("honk1")
-			user.dna.add_mutation(/datum/mutation/human/clumsy)
+			user.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 			AddComponent(/datum/component/slippery, 40) //Same as a synthesized banana peel.
 		if("honk2")
-			user.dna.add_mutation(/datum/mutation/human/clumsy)
+			user.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
 			AddComponent(/datum/component/slippery, 40) //Same as a synthesized banana peel.
 		if("insuls")
@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/mob/living/carbon/human/built_in_his_image = blessed
 	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
 		if(!IS_ORGANIC_LIMB(bodypart))
-			balloon_alert(user, "can't heal metal!")
+			balloon_alert(user, "can't heal inorganic!")
 			return FALSE
 
 	var/heal_amt = 10

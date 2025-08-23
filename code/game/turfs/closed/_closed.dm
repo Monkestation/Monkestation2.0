@@ -388,3 +388,24 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/grille/Initialize(mapload)
 	. = ..()
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
+
+/turf/closed/indestructible/meat
+	name = "dense meat wall"
+	desc = "A huge chunk of dense, packed meat. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/meat_wall.dmi'
+	icon_state = "meat_wall-0"
+	base_icon_state = "meat_wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS
+
+/turf/closed/indestructible/bingle
+	name = "Bingle Pit wall"
+	desc = "Its blue... Thats about all you can tell from it, cant destroy it."
+	icon = 'icons/turf/walls/bingle.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS
+

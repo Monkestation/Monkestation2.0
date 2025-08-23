@@ -95,6 +95,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 			affected_mob.stamina.adjust(7.5 * seconds_per_tick, TRUE)
 			continue
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
+		affected_mob.adjust_emote_mute_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
 
 	if(charge_state == FULLY_CHARGED) //if fully charged then add the power and return
 		GLOB.clock_power = min(GLOB.clock_power + (10 * seconds_per_tick), GLOB.max_clock_power)

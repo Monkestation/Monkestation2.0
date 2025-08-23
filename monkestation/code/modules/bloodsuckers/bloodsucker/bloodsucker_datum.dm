@@ -48,8 +48,6 @@
 
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
-	///Frenzy Grab Martial art given to Bloodsuckers in a Frenzy
-	var/datum/martial_art/frenzygrab/frenzygrab = new
 
 	///Vassals under my control. Periodically remove the dead ones.
 	var/list/datum/antagonist/vassal/vassals = list()
@@ -78,6 +76,8 @@
 	///Sunlight timer HUD
 	var/atom/movable/screen/bloodsucker/sunlight_counter/sunlight_display
 
+	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
+
 	/// Static typecache of all bloodsucker powers.
 	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, ignore_root_path = TRUE)
 	/// Antagonists that cannot be Vassalized no matter what
@@ -91,27 +91,31 @@
 	var/static/list/always_traits = list(
 		TRAIT_NO_MINDSWAP, // mindswapping bloodsuckers is buggy af and I'm too lazy to properly fix it. ~Absolucy
 		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
+		TRAIT_OOZELING_NO_CANNIBALIZE, // prevents weird softlocks
 	)
 	///Default Bloodsucker traits
 	var/static/list/bloodsucker_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_SLEEPIMMUNE,
-		TRAIT_NOCRITDAMAGE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_STABLEHEART,
-		TRAIT_STABLELIVER,
-		TRAIT_NOSOFTCRIT,
-		TRAIT_NOHARDCRIT,
 		TRAIT_AGEUSIA,
 		TRAIT_COLD_BLOODED,
-		TRAIT_VIRUSIMMUNE,
-		TRAIT_TOXIMMUNE,
-		TRAIT_HARDLY_WOUNDED,
-		TRAIT_NO_MIRROR_REFLECTION,
 		TRAIT_ETHEREAL_NO_OVERCHARGE,
-		TRAIT_OOZELING_NO_CANNIBALIZE,
+		TRAIT_GENELESS,
+		TRAIT_HARDLY_WOUNDED,
+		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NO_BLEED_WARN,
+		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
+		TRAIT_TOXIMMUNE,
+		TRAIT_VIRUSIMMUNE,
+		// they eject zombie tumors and xeno larvae during eepy time anyways
+		TRAIT_NO_ZOMBIFY, // they're already undead lol
+		TRAIT_XENO_IMMUNE, // something something facehuggers only latch onto living things
 	)
 	/// Traits applied during Torpor.
 	var/static/list/torpor_traits = list(
@@ -143,9 +147,11 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
+	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(life_tick))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
+	RegisterSignal(current_mob, SIGNAL_REMOVETRAIT(TRAIT_SHADED), PROC_REF(handle_sol))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
@@ -157,6 +163,7 @@
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	ensure_brain_nonvital(current_mob)
+	setup_tracker(current_mob)
 
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
@@ -172,9 +179,11 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
+
+	cleanup_tracker()
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
@@ -242,6 +251,8 @@
 	// Assign Powers
 	give_starting_powers()
 	assign_starting_stats()
+
+	owner.current.persistent_client?.remove_challenge(/datum/challenge/no_heals)
 
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
@@ -343,7 +354,7 @@
 		.["clan"] = list(
 			"name" = my_clan.name,
 			"desc" = my_clan.description,
-			"icon" = my_clan.join_icon,
+			"icon" = text_ref(my_clan.join_icon),
 			"icon_state" = my_clan.join_icon_state,
 		)
 
@@ -352,7 +363,7 @@
 		.["powers"] += list(list(
 			"name" = power.name,
 			"explanation" = power.html_power_explanation(),
-			"icon" = power.button_icon,
+			"icon" = text_ref(power.button_icon),
 			"icon_state" = power.button_icon_state,
 		))
 
@@ -542,6 +553,7 @@
 	var/mob/living/current = owner?.current
 	if(QDELETED(current))
 		return
+	tracker?.tracking_beacon?.update_position()
 	if(istype(current.loc, /obj/structure/closet/crate/coffin))
 		current.add_traits(coffin_traits, BLOODSUCKER_COFFIN_TRAIT)
 	else

@@ -160,10 +160,6 @@
 	fire = 80
 	acid = 100
 
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return 1
-
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
@@ -197,6 +193,11 @@
 	dog_fashion = /datum/dog_fashion/head/eyepatch
 
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
+	. = ..()
+	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
+	user.update_worn_glasses()
+
+/obj/item/clothing/glasses/eyepatch/AltClick(mob/user)
 	. = ..()
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
@@ -511,6 +512,7 @@
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
+	action_slots = ALL
 
 // MONKESTATION ADDITION START
 /obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/W, mob/user, params)
@@ -664,7 +666,7 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman
-	name = "colored glasses"
+	name = "Dealmaker"
 	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'."
 	icon_state = "salesman"
 	inhand_icon_state = "salesman"
@@ -714,4 +716,10 @@
 	name = "Phantom Thief Mask"
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
+	inhand_icon_state = null
+
+/obj/item/clothing/glasses/ralsei
+	name = "Prince's Glasses"
+	desc = "Green coloured glasses... There are patches of fur in the hinges."
+	icon_state = "ralsei_glasses"
 	inhand_icon_state = null

@@ -21,6 +21,7 @@
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -67,19 +68,20 @@
 	if(!on || !is_operational)
 		return
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/input_air = airs[1]
+	var/datum/gas_mixture/output_air = airs[2]
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
 	if(!inverted)
-		if(air1.temperature < target_temperature)
-			if(air1.release_gas_to(air2, air1.return_pressure()))
+		if(input_air.temperature < target_temperature)
+			if(input_air.release_gas_to(output_air, input_air.return_pressure(), output_pipenet_air = output_pipenet_air))
 				update_parents()
 				is_gas_flowing = TRUE
 		else
 			is_gas_flowing = FALSE
 	else
-		if(air1.temperature > target_temperature)
-			if(air1.release_gas_to(air2, air1.return_pressure()))
+		if(input_air.temperature > target_temperature)
+			if(input_air.release_gas_to(output_air, input_air.return_pressure(), output_pipenet_air = output_pipenet_air))
 				update_parents()
 				is_gas_flowing = TRUE
 		else

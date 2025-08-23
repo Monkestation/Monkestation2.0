@@ -132,6 +132,13 @@
 	cost = 11
 	restricted_roles = list(JOB_STATION_ENGINEER)
 
+/datum/uplink_item/role_restricted/vendozer
+	name = "The Vendozer blueprint"
+	desc = "A book spirited away from all to hide a great evil. The Vendozer, is yours to wield, if you can craft it."
+	item = /obj/item/book/granter/crafting_recipe/vendozer
+	cost = 16
+	restricted_roles = list(JOB_STATION_ENGINEER)
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
@@ -329,3 +336,23 @@
 	item = /obj/item/clothing/shoes/magboots/boomboots
 	cost = 20
 	restricted_roles = list(JOB_CLOWN)
+
+/datum/uplink_item/role_restricted/monkey_agent
+	name = "Simian Agent Reinforcements"
+	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
+		They've been trained to operate machinery and can read, but they can't speak Common. \
+		Please note that these are free-range monkeys that don't react with Mutadone."
+	item = /obj/item/antag_spawner/loadout/monkey_man
+	cost = 6
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	refundable = TRUE
+
+/datum/uplink_item/role_restricted/monkey_supplies
+	name = "Simian Agent Supplies"
+	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
+		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+	item = /obj/item/storage/toolbox/guncase/monkeycase
+	cost = 4
+	limited_stock = 3
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	refundable = FALSE

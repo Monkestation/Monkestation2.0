@@ -76,6 +76,11 @@
 	if(machine)
 		machine.check_eye(src)
 
+	if(living_flags & QUEUE_NUTRITION_UPDATE)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+		living_flags &= ~QUEUE_NUTRITION_UPDATE
+
 	if(stat != DEAD)
 		return 1
 
@@ -126,6 +131,9 @@
 
 	// Cap increase and decrease
 	temp_change = temp_change < 0 ? max(temp_change, BODYTEMP_HOMEOSTASIS_COOLING_MAX) : min(temp_change, BODYTEMP_HOMEOSTASIS_HEATING_MAX)
+	// Boost when returning to equilibrium
+	if(!ISINRANGE_EX(equilibrium_temp, standard_body_temperature - 2, standard_body_temperature + 2))
+		temp_change *= 2
 
 	adjust_bodytemperature(temp_change * seconds_per_tick) // No use_insulation because we manually account for it
 
@@ -138,16 +146,19 @@
 /**
  * Get the fullness of the mob
  *
- * This returns a value form 0 upwards to represent how full the mob is.
- * The value is a total amount of consumable reagents in the body combined
- * with the total amount of nutrition they have.
- * This does not have an upper limit.
+ * Fullness is a representation of how much nutrition the mob has,
+ * including the nutrition of stuff yet to be digested (reagents in blood / stomach)
+ *
+ * * only_consumable - if TRUE, only consumable reagents are counted.
+ * Otherwise, all reagents contribute to fullness, despite not adding nutrition as they process.
+ *
+ * Returns a number representing fullness, scaled similarly to nutrition.
  */
-/mob/living/proc/get_fullness()
+/mob/living/proc/get_fullness(only_consumable)
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
 	for(var/datum/reagent/consumable/bits in reagents.reagent_list)
-		fullness += bits.nutriment_factor  * bits.volume / bits.metabolization_rate
+		fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**
@@ -160,7 +171,7 @@
  * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
  */
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
-	return reagents.has_reagent(reagent, amount, needs_metabolizing)
+	return reagents?.has_reagent(reagent, amount, needs_metabolizing)
 
 /mob/living/proc/update_damage_hud()
 	return

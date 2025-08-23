@@ -352,6 +352,12 @@
 		. += span_warning("<b>[p_theyre(TRUE)] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
 		return
 
+	if(TRAIT_FAST_CUFFING in clothing_traits)
+		. += "[src] increase the speed that you handcuff others."
+
+	if(TRAIT_CAN_SIGN_ON_COMMS in clothing_traits)
+		. += "[src] allows you talk on radios through sign language."
+	
 	switch (max_heat_protection_temperature)
 		if (400 to 1000)
 			. += "[src] offers the wearer limited protection from fire."

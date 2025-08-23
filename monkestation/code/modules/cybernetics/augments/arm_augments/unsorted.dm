@@ -60,6 +60,16 @@
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
+/obj/item/organ/internal/cyberimp/arm/strongarm/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
+	. = ..()
+	if(!QDELETED(hand))
+		ADD_TRAIT(hand, TRAIT_BORG_PUNCHER, REF(src))
+
+/obj/item/organ/internal/cyberimp/arm/strongarm/on_limb_detached(obj/item/bodypart/source)
+	if(!QDELETED(hand) && source == hand)
+		REMOVE_TRAIT(hand, TRAIT_BORG_PUNCHER, REF(src))
+	return ..()
+
 /obj/item/organ/internal/cyberimp/arm/strongarm/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 	owner.balloon_alert(owner, "your arm stops spasming!")
@@ -74,7 +84,7 @@
 	if(!isliving(target))
 		return NONE
 	var/datum/dna/dna = source.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(dna?.check_mutation(/datum/mutation/hulk)) //NO HULK
 		return NONE
 	if(!COOLDOWN_FINISHED(src, slam_cooldown))
 		return NONE
@@ -161,7 +171,6 @@
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#750137"
-	encode_info = AUGMENT_NT_HIGHLEVEL
 
 	var/atom/movable/screen/cybernetics/ammo_counter/counter_ref
 	var/obj/item/gun/our_gun
@@ -178,16 +187,11 @@
 	our_gun = null
 	update_hud_elements()
 
-/obj/item/organ/internal/cyberimp/arm/ammo_counter/update_implants()
-	update_hud_elements()
-
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/proc/update_hud_elements()
 	SIGNAL_HANDLER
 	if(!owner || !owner?.hud_used)
 		return
 
-	if(!check_compatibility())
-		return
 
 	var/datum/hud/H = owner.hud_used
 
@@ -256,7 +260,6 @@
 
 /obj/item/organ/internal/cyberimp/arm/ammo_counter/syndicate
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/internal/cyberimp/arm/cooler
 	name = "sub-dermal cooling implant"
@@ -265,12 +268,9 @@
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#00e1ff"
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/cooler/on_life()
 	. = ..()
-	if(!check_compatibility())
-		return
 	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
 	if(amt == 0)
 		return
@@ -287,12 +287,9 @@
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#ff9100"
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/heater/on_life()
 	. = ..()
-	if(!check_compatibility())
-		return
 	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
 	if(amt == 0)
 		return

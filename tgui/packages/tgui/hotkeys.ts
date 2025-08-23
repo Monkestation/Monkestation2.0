@@ -185,22 +185,15 @@ export const setupHotKeys = () => {
   globalEvents.on('window-blur', () => {
     releaseHeldKeys();
   });
-  startKeyPassthrough();
-};
-
-export const startKeyPassthrough = () => {
-  globalEvents.on('key', keyEvent);
-};
-
-export const stopKeyPassthrough = () => {
-  globalEvents.off('key', keyEvent);
-};
-
-const keyEvent = (key: KeyEvent) => {
-  for (const keyListener of keyListeners) {
-    keyListener(key);
-  }
-  handlePassthrough(key);
+  globalEvents.on('input-focus', () => {
+    releaseHeldKeys();
+  });
+  globalEvents.on('key', (key: KeyEvent) => {
+    for (const keyListener of keyListeners) {
+      keyListener(key);
+    }
+    handlePassthrough(key);
+  });
 };
 
 /**

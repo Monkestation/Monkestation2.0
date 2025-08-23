@@ -14,6 +14,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	in_use = FALSE
 	return ..()
 
+// no reason for these to ever be hearing sensitive, it just wastes time on spatial grid stuff
+/mob/living/carbon/human/dummy/become_hearing_sensitive(trait_source)
+	return
+
 /mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	return
 
@@ -203,7 +207,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
+		carbon_target.dna.copy_dna(copycat.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target
@@ -238,9 +242,10 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 /mob/living/carbon/human/dummy/extra_tall
 	bound_height = 64
-
+	// this prevents the top of tall characters from being cut off.
+	appearance_flags = parent_type::appearance_flags & ~TILE_BOUND
 	var/list/extra_bodyparts = list()
 
 /mob/living/carbon/human/dummy/extra_tall/Destroy()
-	. = ..()
-	extra_bodyparts = null
+	extra_bodyparts.Cut()
+	return ..()
