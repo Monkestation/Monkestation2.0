@@ -58,6 +58,15 @@
 /obj/item/tank/internals/oxygen/empty/populate_gas()
 	return
 
+//we do a little trolling :3
+/obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead
+	desc = "A tank of oxygen, the paint is peeling off to reveal a black tank with a hazard symbol on it. \
+	Which could mean nothing."
+
+/obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead/populate_gas()
+	air_contents.assert_gas(/datum/gas/carbon_dioxide)
+	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+
 /*
  * Anesthetic
  */

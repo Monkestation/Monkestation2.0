@@ -61,12 +61,13 @@ if too much trash on ground bingles roll
 	return TRUE
 
 /datum/action/cooldown/bingle/spawn_hole/proc/spawn_hole(turf/selected_turf)
-    var/datum/antagonist/bingle/bingle_datum = IS_BINGLE(owner)
-    if(!selected_turf)
-        to_chat(owner, span_notice("No selected turf found!"))
-        return
-    var/obj/structure/bingle_hole/hole = new(selected_turf)
-    bingle_datum.pit_check = hole
-    // Register the team in the pit
-    hole.bingle_team = bingle_datum.get_team()
-    Remove(owner)
+	var/datum/antagonist/bingle/bingle_datum = IS_BINGLE(owner)
+	if(!selected_turf)
+		to_chat(owner, span_notice("No selected turf found!"))
+		return
+	var/obj/structure/bingle_hole/hole = new(selected_turf)
+	bingle_datum.pit_check = hole
+	// Register the team in the pit
+	hole.bingle_team = bingle_datum.get_team()
+	astype(owner, /mob/living/basic/bingle)?.set_linked_pit(hole) // link the bingle to this binghole
+	Remove(owner)

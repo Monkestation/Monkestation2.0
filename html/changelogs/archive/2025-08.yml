@@ -513,3 +513,108 @@
   - bugfix: Bullet drives will now properly clean dishes at further ranges.
   - rscdel: A Jerma
   - map: Fixed roundstart turf differences on Icebox and some ruins.
+2025-08-20:
+  Shoddd:
+  - rscadd: Uncloneable Neurons Quirk
+  - qol: Changed husk failed cloning message
+  notghosti:
+  - bugfix: Regeneration Coma will no longer Put No healings into a death coma.
+  - map: Icebox surface asteroid is now actually without round start turfs
+2025-08-21:
+  Absolucy:
+  - rscadd: Oozelings can now hug flaming people to extinguish them! Grabbing someone
+      will extinguish them slightly more, and aggressively grabbing them far more!
+  - bugfix: Large bingle pits no longer cause massive amounts of lag just to heal
+      bingles.
+  - bugfix: Bingles will now only gib when THEIR HOLE (the pit they were spawned by)
+      is destroyed.
+  Salted-Zen:
+  - rscadd: Adds five new guns to mining, the 'Fenrir' Auto Shotgun, the 'Slab' Grenade
+      Launcher, the 'Hellhound' LMG, the 'Duster' Revolver, and the 'Thor' Kinetic
+      Rifle.
+  - rscadd: Adds three new crushers to mining, the Sickle, the Throwing Knives, and
+      the Pile bunker.
+  - rscadd: Adds three new backpacks to mining, Rockspider (holds three guns / pkas),
+      Trench Jockey (Holds 20 slots of any mining gun ammo), and Ashen Duelist (two
+      slots, can hold any gun /pka and crusher)
+  - rscadd: Adds Admin Only pilebunker that is super long and can mark people with
+      destabilizing marks. item path ends with adminpilebunker.
+  - qol: Gave the SMG and Kinetic Boomstick nicknames, the 'Rapier' and 'Slayer' respectively
+  - balance: Gives the shockwave 2 range instead of 0, so you don't shoot behind you
+      all the time.
+  - qol: Reorganized the ENTIRE mining vendor, including a category just for waste
+      pin locked weapons (so they cant be purchased by golems or freeminers who cant
+      use them at all)
+  - balance: Waste pin locked weapons now no longer work in space... sorry explorers
+  - code_imp: Wasteland firing pin now has a blacklist in the code to remove certain
+      areas.
+  - code_imp: Demodularizes most if not all the custom mining gear.
+  - code_imp: Added comments to all the mining vendor categories about what should
+      go where.
+  WeLoveCastingSpells:
+  - rscadd: Adds a new flamboyant outfit to the Autodrobe, any similarity with a certain
+      Japanese anime is completely unintentional.
+  throwawayuseless:
+  - rscadd: Four-Bit, Bachhus' Blessing, and Rat'vander now get IPCs drunk.
+  - balance: Drunken Resilience works on IPCs.
+  wonderinghost:
+  - map: updates helios disposal network
+  - map: ordanance now has a mail bin and atmos should be mail routable
+2025-08-22:
+  Absolucy:
+  - balance: Removed the knockback stun from riot shotguns and such. Bulldog shotguns
+      and double-barrelled shotguns can still do so, tho.
+  - qol: Slime Washing now works if the oozeling is lying down, even if they have
+      shoes on.
+  - bugfix: Slime Washing now actually feeds the oozeling when they clean up grime,
+      as intended.
+  Salted-Zen:
+  - balance: PK Pistol cooldown upped to 4 seconds
+  - bugfix: You can no longer cause an error by giving the PK Pistol 10 cooldown mods
+  Shoddd:
+  - balance: frontier coats in loadout no longer have armor
+  Tractor Maam:
+  - rscadd: Added a new escape shuttle! The Yate Haugan Neo for 14062 credits
+  - rscadd: Added a new emag only escape shuttle, The Cargo Refitted Yate Haugan Neo
+      for 22264 credits
+  - bugfix: fixed a typo in rayne welder code
+  - bugfix: John Intern's (sprungle) office paper now contains text.
+2025-08-23:
+  Absolucy:
+  - map: Box Station now has 6 SMESes instead of 4.
+  - map: Box Station's cables near engi are now protected with catwalks.
+  - map: Added an oxygen canister to Box Station's engineering.
+  Ice-Type:
+  - balance: shooting someone riding a welding fuel tank has a 50% chance of hitting
+      the tank instead. Yes, this can blow it the fuck up.
+  Shoddd:
+  - balance: Upped assistant point reward to 200 credits
+  - balance: Assistants can no longer punch cards
+  - balance: Cards no longer start with one free punch
+  - map: Added assistant point redeemer to all cargos that lacked one
+  - bugfix: updates GAP card description from 100 to 200
+  Sorenon:
+  - rscadd: Added the Monoplegic and Hemiplegic paralysis quirks
+  Xander3359:
+  - code_imp: adds emote_mute status effect and helper procs
+  - balance: adds emote mute to some silencing effects
+  notghosti:
+  - rscadd: Added new antigen 'Ig', which cannot be mass produced normally.
+  - rscadd: Beaker apparatus can now pick up tubes and virus dishes.
+  - balance: Tubercle Bacillus Cosmosis Microbes now has a antibody and thus protection
+      against reinfection.
+  - balance: Convermol/Spaceallin mix will not give antibodies against Tubercle Bacillus
+      Cosmosis Microbes. But BVAK injectors and other methods will.
+  - balance: Nerfed Alkali Burn stacks
+  - bugfix: Plague Rats will now no longer nibble their way into NULLSPACE (((Hopefully)))
+  - bugfix: sililcons can now interact with incubators and disease analyzers
+  - admin: Plague rats have been removed from the antag datum panel. Use the event
+      instead
+  - balance: Removed the 4 crew spawns from the battlecruiser starfury
+  - bugfix: Florans can reattach limbs again
+  throwawayuseless:
+  - spellcheck: TRNE Corp. has hired a Ratvarian-fluent spellchecker and has subsequently
+      renamed the Rat'vander cocktail to Ratvander.
+  wonderinghost:
+  - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
+      access instead of both'

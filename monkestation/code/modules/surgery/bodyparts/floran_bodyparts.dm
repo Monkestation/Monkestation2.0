@@ -12,11 +12,10 @@
 	limb_id = SPECIES_FLORAN
 	is_dimorphic = TRUE
 	ass_image = 'icons/ass/asspodperson.png'
-	bodypart_traits = list(TRAIT_LIMBATTACHMENT)
+	bodypart_traits = list(TRAIT_LIMBATTACHMENT, TRAIT_NO_UNDERWEAR)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 	burn_modifier = 1.8
-	bodypart_traits = list(TRAIT_NO_UNDERWEAR)
 
 /obj/item/bodypart/arm/left/floran
 	icon_greyscale = 'monkestation/icons/mob/species/floran/bodyparts.dmi'
