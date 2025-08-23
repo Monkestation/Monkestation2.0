@@ -7,6 +7,10 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/shuttle/supply)
+"b" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/shuttle/supply)
 "d" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/corner{
@@ -344,9 +348,9 @@ s
 G
 G
 G
+G
 J
-J
-E
+b
 w
 w
 w
@@ -381,7 +385,7 @@ G
 G
 G
 J
-w
+J
 w
 w
 w
@@ -415,7 +419,7 @@ s
 (7,1,1) = {"
 G
 G
-J
+G
 J
 w
 w
@@ -451,9 +455,9 @@ s
 (8,1,1) = {"
 G
 G
+G
 J
-E
-w
+b
 w
 w
 w
@@ -486,9 +490,9 @@ J
 "}
 (9,1,1) = {"
 G
+G
 J
 J
-w
 w
 w
 w
@@ -523,9 +527,9 @@ G
 (10,1,1) = {"
 G
 G
+G
 J
-M
-w
+b
 w
 w
 w
@@ -559,7 +563,7 @@ J
 (11,1,1) = {"
 G
 G
-J
+G
 J
 w
 w
@@ -597,7 +601,7 @@ G
 G
 G
 J
-w
+J
 w
 w
 w
@@ -632,9 +636,9 @@ s
 G
 G
 G
+G
 J
-J
-M
+b
 w
 w
 w
