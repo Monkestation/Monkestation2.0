@@ -271,6 +271,20 @@
 	dose_available = TRUE
 	emp_vulnerability = 20
 
+/obj/item/organ/internal/heart/cybernetic/surplus
+	name = "surplus prosthetic heart"
+	desc = "A fragile mockery of a human heart that resembles a water pump more than an actual heart. \
+		Offers no protection against EMPs."
+	icon_state = "heart-c-s-on"
+	base_icon_state = "heart-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/heart/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)

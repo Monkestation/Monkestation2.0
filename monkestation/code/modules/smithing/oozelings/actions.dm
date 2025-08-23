@@ -43,14 +43,14 @@
 /datum/status_effect/slime_washing/tick(seconds_between_ticks, seconds_per_tick)
 	var/mob/living/carbon/human/slime = owner
 	slime.wash(CLEAN_WASH)
-	if((slime.wear_suit?.body_parts_covered | slime.w_uniform?.body_parts_covered | slime.shoes?.body_parts_covered) & FEET)
+	if(slime.body_position != LYING_DOWN && ((slime.wear_suit?.body_parts_covered | slime.w_uniform?.body_parts_covered | slime.shoes?.body_parts_covered) & FEET))
 		return
 	var/turf/open/open_turf = get_turf(slime)
-	if(istype(open_turf))
-		open_turf.wash(CLEAN_WASH)
-		return TRUE
-	if(SPT_PROB(5, seconds_per_tick))
-		slime.adjust_nutrition(rand(5,25))
+	if(!istype(open_turf))
+		return
+	if(open_turf.wash(CLEAN_WASH) && slime.nutrition <= NUTRITION_LEVEL_FED)
+		slime.adjust_nutrition(rand(5, 25))
+	return TRUE
 
 /datum/status_effect/slime_washing/get_examine_text()
 	return span_notice("[owner.p_Their()] outer layer is pulling in grime, filth sinking inside of their body and vanishing.")

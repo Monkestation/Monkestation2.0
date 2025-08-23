@@ -122,6 +122,7 @@
 			ADD_TRAIT(mesmerized_target, TRAIT_MUTE, MESMERIZED_TRAIT)
 		mesmerized_target.Immobilize(power_time)
 		mesmerized_target.adjust_silence(power_time)
+		mesmerized_target.adjust_emote_mute(power_time)
 		//mesmerized_target.silent += power_time / 10 // Silent isn't based on ticks.
 		COOLDOWN_START(mesmerized_target, next_move, power_time) // <--- Use direct change instead. We want an unmodified delay to their next move // mesmerized_target.changeNext_move(power_time) // check click.dm
 		ADD_TRAIT(mesmerized_target, TRAIT_NO_TRANSFORM, MESMERIZED_TRAIT)// <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.

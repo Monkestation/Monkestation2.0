@@ -24,6 +24,11 @@
 	//Slime healing cause pain, oof ouch
 	var/pain_amount = 20
 
+/datum/status_effect/regenerative_extract/on_creation(mob/living/new_owner, alert_color)
+	. = ..()
+	if(. && linked_alert)
+		apply_alert_effect(alert_color)
+
 /datum/status_effect/regenerative_extract/on_apply()
 	// So this seems weird, but this allows us to have multiple things affect the regen multiplier,
 	// without doing something like hardcoding a `for(var/datum/status_effect/slime_regen_cooldown/cooldown in owner.status_effects)`
@@ -43,6 +48,10 @@
 	var/heal_amt = base_healing_amt * seconds_between_ticks * multiplier
 	heal_act(heal_amt)
 	owner.updatehealth()
+
+/datum/status_effect/regenerative_extract/proc/apply_alert_effect(alert_color)
+	if(alert_color)
+		linked_alert.add_atom_colour(alert_color, FIXED_COLOUR_PRIORITY)
 
 /datum/status_effect/regenerative_extract/proc/heal_act(heal_amt)
 	if(!heal_amt)
@@ -69,22 +78,10 @@
 		owner.nutrition = min(owner.nutrition + blood_restore, nutrition_heal_cap)
 
 /datum/status_effect/regenerative_extract/proc/heal_organs(heal_amt)
-	var/static/list/ignored_traumas
-	if(!ignored_traumas)
-		ignored_traumas = typecacheof(list(
-			/datum/brain_trauma/hypnosis,
-			/datum/brain_trauma/special/obsessed,
-			/datum/brain_trauma/severe/split_personality/brainwashing,
-		))
 	var/mob/living/carbon/carbon_owner = owner
 	for(var/obj/item/organ/organ in carbon_owner.organs)
 		organ.apply_organ_damage(-heal_amt)
-	// stupid manual trauma curing code, so you can't just remove trauma-based antags with one click
-	var/obj/item/organ/internal/brain/brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	for(var/datum/brain_trauma/trauma as anything in shuffle(brain?.traumas))
-		if(!is_type_in_typecache(trauma, ignored_traumas) && trauma.resilience <= TRAUMA_RESILIENCE_MAGIC)
-			qdel(trauma)
-			return
+	carbon_owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_MAGIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 
 /datum/status_effect/regenerative_extract/proc/heal_wounds()
 	var/mob/living/carbon/carbon_owner = owner
@@ -98,4 +95,4 @@
 /atom/movable/screen/alert/status_effect/regen_extract
 	name = "Slime Regeneration"
 	desc = "A milky slime covers your skin, regenerating your injuries!"
-	icon_state = "regenerative_core"
+	icon_state = "slime_regen"

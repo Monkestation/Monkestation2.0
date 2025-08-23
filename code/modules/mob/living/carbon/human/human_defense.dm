@@ -680,7 +680,7 @@
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
 		for(var/obj/item/bodypart/part as anything in bodyparts)
-			if(part.get_modified_bleed_rate())
+			if(part.cached_bleed_rate)
 				bleeding_limbs += part
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)
@@ -773,6 +773,11 @@
 		for(var/D in damaged)
 			damaged_message += D
 		combined_msg += span_info("Your [damaged_message] [damaged_plural ? "are" : "is"] hurt.")
+
+	if (HAS_TRAIT_FROM(src, TRAIT_DEAF, EAR_DAMAGE))
+		combined_msg += span_warning("Your ears hurt and you cannot hear anything.")
+	else if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		combined_msg += span_warning("Your ears hurt and everything sounds quiet.")
 
 	if(quirks.len)
 		combined_msg += span_notice("You have these quirks: [get_quirk_string(FALSE, CAT_QUIRK_ALL)].")

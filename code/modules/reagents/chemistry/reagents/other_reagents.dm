@@ -1345,6 +1345,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/alcohol = 4)
 	liquid_fire_power = 25
+	synthetic_boozepwr = 25
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1846,6 +1847,7 @@
 	addiction_types = null
 	default_container = /obj/effect/decal/cleanable/oil
 	liquid_fire_power = 15
+	synthetic_boozepwr = 0
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
@@ -2135,6 +2137,8 @@
 	reagent_state = LIQUID
 	color = "#E7EA91"
 	taste_description = "acid"
+	process_flags = ORGANIC | SYNTHETIC
+	synthetic_boozepwr = 50
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2153,8 +2157,10 @@
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
 	color = "#AF14B7"
+	process_flags = ORGANIC | SYNTHETIC
 	taste_description = "acid"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	synthetic_boozepwr = 90
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
@@ -2732,7 +2738,7 @@
 		return
 
 	var/metal_amount = 0
-	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
+	var/list/materials_to_transmute = A.get_material_composition()
 	for(var/metal_key in materials_to_transmute) //list with what they're made of
 		metal_amount += materials_to_transmute[metal_key]
 
@@ -2742,7 +2748,6 @@
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
-	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"
