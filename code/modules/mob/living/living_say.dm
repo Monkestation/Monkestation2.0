@@ -286,11 +286,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			playsound_local(get_turf(src), 'goon/sounds/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 	//monkestation edit end
 
-	if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING) && !HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
-		message_range = 1
-		spans = spans.Copy()
-		spans |= SPAN_ITALICS
-
 	var/deaf_message
 	var/deaf_type
 
