@@ -87,27 +87,26 @@
 //Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
-	if(id_card)
-		var/list/access = id_card.GetAccess()
-		for(var/pack in SSshuttle.supply_packs)
-			var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-			if(!is_visible_pack(user, P.access_view, access, P.contraband) || P.hidden)
-				continue
-			if(!data["supplies"][P.group])
-				data["supplies"][P.group] = list(
-					"name" = P.group,
-					"packs" = list()
-				)
-			if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
-				continue
-			data["supplies"][P.group]["packs"] += list(list(
-				"name" = P.name,
-				"cost" = P.get_cost(),
-				"id" = pack,
-				"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-				"goody" = P.goody,
-				"access" = P.access
-			))
+	var/list/access = id_card?.GetAccess()
+	for(var/pack in SSshuttle.supply_packs)
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+		if(!is_visible_pack(user, P.access_view, access, P.contraband) || P.hidden)
+			continue
+		if(!data["supplies"][P.group])
+			data["supplies"][P.group] = list(
+				"name" = P.group,
+				"packs" = list()
+			)
+		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.drop_pod_only))
+			continue
+		data["supplies"][P.group]["packs"] += list(list(
+			"name" = P.name,
+			"cost" = P.get_cost(),
+			"id" = pack,
+			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"goody" = P.goody,
+			"access" = P.access
+		))
 
 //Data regarding the User's capability to buy things.
 	data["has_id"] = id_card
