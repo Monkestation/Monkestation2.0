@@ -27254,6 +27254,7 @@
 "hzY" = (
 /obj/structure/industrial_lift/tram/white,
 /obj/effect/landmark/tram/platform/tramstation/central,
+/obj/effect/landmark/tram/nav/tramstation/main,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "hAc" = (
