@@ -4611,8 +4611,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "bxx" = (
 /obj/structure/showcase/cyborg/old{
@@ -10661,6 +10660,10 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/large,
 /area/station/medical/paramedic)
+"dus" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/engine)
 "duu" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/holopad,
@@ -15693,6 +15696,11 @@
 "fck" = (
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"fcl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/engine)
 "fcm" = (
 /obj/structure/bed{
 	dir = 4
@@ -18602,6 +18610,10 @@
 "fZB" = (
 /turf/open/floor/wood,
 /area/station/service/bar)
+"fZG" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/engine)
 "fZK" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
@@ -20979,7 +20991,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "gKH" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -26234,8 +26246,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/engineering/storage)
 "itM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -26294,7 +26305,7 @@
 "iuj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "ium" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -35381,8 +35392,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "lqu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38107,6 +38117,11 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"miH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/engine)
 "miL" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/pump,
@@ -44031,8 +44046,7 @@
 "odp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "odz" = (
 /obj/machinery/firealarm/directional/west,
@@ -46617,6 +46631,11 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
+"oXL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/engine)
 "oXN" = (
 /obj/structure/closet/secure_closet/engineering_welding,
 /turf/open/floor/iron,
@@ -50902,11 +50921,6 @@
 	dir = 1
 	},
 /area/station/command/heads_quarters/cmo)
-"qsi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine)
 "qsk" = (
 /turf/closed/indestructible{
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
@@ -56113,8 +56127,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "sem" = (
 /obj/machinery/artifact_zapper{
@@ -57876,8 +57889,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "sKS" = (
 /obj/machinery/status_display/ai/directional/east,
@@ -73533,8 +73545,7 @@
 "xDo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/engine)
 "xDr" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -98263,11 +98274,11 @@ vCq
 xUa
 odp
 bxr
-qsi
-iuo
-bsX
+dus
+fZG
+dus
 gKC
-qYN
+fcl
 mDv
 vVk
 cMy
@@ -98779,8 +98790,8 @@ sKN
 lqr
 xDo
 xUa
-qiV
-llR
+oXL
+miH
 iuj
 mDv
 aTB
