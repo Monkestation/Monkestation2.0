@@ -212,7 +212,7 @@
 		if(QDELETED(target_gland))
 			return
 
-		if(carbon_target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		if(carbon_target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0) || HAS_MIND_TRAIT(carbon_target, TRAIT_UNCONVERTABLE))
 			user.balloon_alert(user, "foiled!")
 			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
 			return
