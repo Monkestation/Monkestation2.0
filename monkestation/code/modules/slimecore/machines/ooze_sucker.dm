@@ -175,7 +175,7 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	var/turf/local_turf = get_turf(src)
 	var/list/turf/affected_turfs = list()
 
-	for(var/turf/candidate in local_turf.get_atmos_adjacent_turfs(alldir = TRUE) + local_turf)
+	for(var/turf/candidate as anything in RANGE_TURFS(1, local_turf))
 		// don't bother considering turfs that don't even have slime ooze
 		if(!candidate.liquids?.liquid_group?.total_reagent_volume)
 			continue
