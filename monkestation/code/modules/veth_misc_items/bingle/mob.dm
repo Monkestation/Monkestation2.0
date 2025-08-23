@@ -36,30 +36,46 @@
 	light_outer_range = 4
 
 	var/evolved = FALSE
+	/// The pit from which this bingle came.
+	var/obj/structure/bingle_hole/linked_pit
 	var/static/list/bingle_traits = list(
-		TRAIT_HEALS_FROM_BINGLE_HOLES,
 		TRAIT_BINGLE,
 		TRAIT_CLUMSY,
 		TRAIT_DUMB,
 		TRAIT_NO_PAIN_EFFECTS,
 	)
 
-/mob/living/basic/bingle/Initialize(mapload)
+/mob/living/basic/bingle/Initialize(mapload, obj/structure/bingle_hole/origin_pit)
 	. = ..()
-	LAZYADD(GLOB.bingle_mobs, src)
 	RegisterSignal(src, BINGLE_EVOLVE, PROC_REF(evolve))
 	add_traits(bingle_traits, INNATE_TRAIT)
+	set_linked_pit(origin_pit)
 
 /mob/living/basic/bingle/Destroy()
-	LAZYREMOVE(GLOB.bingle_mobs, src)
+	if(linked_pit)
+		UnregisterSignal(linked_pit, COMSIG_QDELETING)
+	linked_pit = null
 	return ..()
+
+/mob/living/basic/bingle/proc/set_linked_pit(obj/structure/bingle_hole/new_pit)
+	if(linked_pit)
+		UnregisterSignal(linked_pit, COMSIG_QDELETING)
+		linked_pit = null
+	if(!QDELETED(new_pit))
+		RegisterSignal(new_pit, COMSIG_QDELETING, PROC_REF(on_pit_destruction))
+		linked_pit = new_pit
+
+/mob/living/basic/bingle/proc/on_pit_destruction()
+	SIGNAL_HANDLER
+	if(!QDELETED(src))
+		gib()
 
 /mob/living/basic/bingle/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!isliving(target))
 		return ..()
 	var/mob/living/mob_target = target
 	mob_target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
-	mob_target.stamina.adjust(-100)
+	mob_target.stamina.adjust(-35)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	return ..()
 
@@ -67,6 +83,15 @@
 	. = ..()
 	if(!IS_BINGLE(src))
 		mind.add_antag_datum(/datum/antagonist/bingle)
+
+/mob/living/basic/bingle/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+	. = ..()
+	update_icon()
+	if(!linked_pit || get_dist(src, linked_pit) > linked_pit.healing_range)
+		return
+	if(adjust_health(-5 * seconds_per_tick, updating_health = FALSE))
+		updatehealth()
+		new /obj/effect/temp_visual/heal(get_turf(src), COLOR_BLUE_LIGHT)
 
 /mob/living/basic/bingle/lord
 	name = "bingle lord"
@@ -81,18 +106,10 @@
 	melee_damage_upper = 15
 	var/pit_spawner = /datum/action/cooldown/bingle/spawn_hole
 
-/mob/living/basic/bingle/lord/Initialize(mapload)
+/mob/living/basic/bingle/lord/Initialize(mapload, obj/structure/bingle_hole/origin_pit)
 	. = ..()
 	var/datum/action/cooldown/bingle/spawn_hole/makehole = new pit_spawner(src)
 	makehole.Grant(src)
-
-/mob/living/basic/bingle/Life(seconds_between_ticks, times_fired)
-	. = ..()
-	update_icon()
-
-/mob/living/basic/bingle/lord/Life(seconds_between_ticks, times_fired)
-	. = ..()
-	update_icon()
 
 /mob/living/basic/bingle/proc/evolve()
 	var/mob/living/basic/bingle/bongle = src

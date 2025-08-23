@@ -202,12 +202,6 @@
 	tags = list(TAG_COMMUNAL, TAG_SPOOKY, TAG_MAGICAL)
 	dont_spawn_near_roundend = TRUE
 
-/datum/round_event_control/sentient_disease
-	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
-	checks_antag_cap = TRUE
-	dont_spawn_near_roundend = TRUE
-
 /datum/round_event_control/shuttle_catastrophe
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_COMMUNAL)

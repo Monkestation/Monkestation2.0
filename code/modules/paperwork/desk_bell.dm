@@ -3,7 +3,7 @@
 /obj/structure/desk_bell
 	name = "desk bell"
 	desc = "The cornerstone of any customer service job. You feel an unending urge to ring it."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/yogstation/yogbell.dmi'
 	icon_state = "desk_bell"
 	layer = OBJ_LAYER
 	anchored = FALSE
@@ -28,6 +28,7 @@
 	. = ..()
 
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Secure"
 		context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -124,3 +125,14 @@
 		return
 	target.attach_bell(src)
 	return ..()
+
+
+/obj/structure/desk_bell/wrench_act(mob/living/user, obj/item/tool)
+	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 10 SECONDS)) //Using a wrench on a thing as small as a bell? unwieldy.
+		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		set_anchored(!anchored)
+		tool.play_tool_sound(src)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE

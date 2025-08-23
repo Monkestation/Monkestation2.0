@@ -38,10 +38,15 @@
 	var/client/client = GLOB.directory[ckey]
 	if(!client)
 		return
+	var/total_amount = 0
 	for(var/reward in rewards)
 		var/amount = reward[1]
 		var/reason = reward[2]
-		client?.prefs?.adjust_metacoins(ckey, amount, reason)
+		total_amount += amount
+		to_chat(client, span_rose(span_bold("[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]")))
+	// don't do separate SQL queries for each reward, just add all the coins at once lol
+	if(total_amount)
+		client?.prefs?.adjust_metacoins(ckey, total_amount, reason = "roundend rewards", announces = FALSE)
 	if(client?.mob?.mind?.assigned_role)
 		add_jobxp(client, added_xp, client?.mob?.mind?.assigned_role?.title)
 
@@ -52,15 +57,20 @@
 	if(!ckey)
 		return
 	var/datum/persistent_client/details = client.persistent_client
-	var/round_end_bonus = 75
+
+	var/round_end_bonus = 100
+	var/dono_bonus
 
 	// Patreon Flat Roundend Bonus
-	if((details?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))
-		round_end_bonus += DONATOR_ROUNDEND_BONUS
-
-	// Twitch Flat Roundend Bonus
+		// Twitch Flat Roundend Bonus
 	if((details?.twitch?.has_access(ACCESS_TWITCH_SUB_TIER_1)))
-		round_end_bonus += DONATOR_ROUNDEND_BONUS
+		dono_bonus += DONATOR_ROUNDEND_BONUS
+	if((details?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))
+		dono_bonus += DONATOR_ROUNDEND_BONUS
+	if(details?.patreon?.has_access(ACCESS_NUKIE_RANK))
+		dono_bonus += DONATOR_ROUNDEND_BONUS
+	if(dono_bonus > 0)
+		queue[ckey] += list(list(dono_bonus, "Donator Bonus! Thank you!"))
 
 	LAZYINITLIST(queue[ckey])
 
@@ -73,9 +83,9 @@
 		queue[ckey] += list(list(special_bonus, "Special Bonus"))
 	if(!isnull(GLOB.mentor_datums[ckey]) || !isnull(GLOB.dementors[ckey]))
 		if(details?.mob?.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			queue[ckey] += list(list(800, "Mentor Head of Staff Bonus"))
+			queue[ckey] += list(list(300, "Mentor Head of Staff Bonus"))
 		else
-			queue[ckey] += list(list(500, "Mentor Bonus"))
+			queue[ckey] += list(list(200, "Mentor Bonus"))
 
 	var/list/applied_challenges = details?.applied_challenges
 	if(LAZYLEN(applied_challenges))

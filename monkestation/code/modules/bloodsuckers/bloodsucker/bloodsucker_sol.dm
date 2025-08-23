@@ -99,6 +99,9 @@
 	if(SkipChecks)
 		torpor_begin()
 		return
+	if(user.has_status_effect(/datum/status_effect/frenzy))
+		to_chat(user, span_userdanger("You are restless! Collect enough blood to end your frenzy."))
+		return
 	var/total_brute = user.getBruteLoss_nonProsthetic()
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn

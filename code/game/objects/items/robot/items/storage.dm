@@ -98,7 +98,9 @@
 	desc = "A special apparatus for carrying beakers without spilling the contents."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/cup/beaker,
-					/obj/item/reagent_containers/cup/bottle)
+					/obj/item/reagent_containers/cup/tube,
+					/obj/item/weapon/virusdish,
+					/obj/item/reagent_containers/cup/bottle,)
 
 /obj/item/borg/apparatus/beaker/Initialize(mapload)
 	add_glass()
@@ -163,8 +165,11 @@
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Will resynthesize any drinks you pour out!"
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/cup/glass,
-					/obj/item/reagent_containers/condiment)
+	storable = list(/obj/item/reagent_containers/cup/beaker,
+					/obj/item/reagent_containers/cup/bottle,
+					/obj/item/reagent_containers/cup/glass,
+					/obj/item/reagent_containers/condiment,
+					/obj/item/reagent_containers/cup/coffeepot)
 
 /obj/item/borg/apparatus/beaker/service/add_glass()
 	stored = new /obj/item/reagent_containers/cup/glass/drinkingglass(src)
