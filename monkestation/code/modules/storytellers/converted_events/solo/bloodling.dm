@@ -4,6 +4,7 @@
 	antag_flag = ROLE_BLOODLING
 	antag_datum = /datum/antagonist/bloodling
 	typepath = /datum/round_event/antagonist/solo/bloodling
+	shared_occurence_type = SHARED_HIGH_THREAT
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
