@@ -38,7 +38,9 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 
 /datum/round_event/wonderlandapocalypse/start()
 	GLOB.wonderland_apocalypse = TRUE
-	SSshuttle.emergency_no_recall = TRUE
+	SSshuttle.admin_emergency_no_recall = TRUE
+	if(!EMERGENCY_AT_LEAST_DOCKED)
+		SSshuttle.emergency.request()
 	for(var/i = 1 to 16)
 		new /obj/effect/anomaly/dimensional/wonderland(get_safe_random_station_turf_equal_weight(), null, FALSE)
 	for(var/i = 1 to 4)
