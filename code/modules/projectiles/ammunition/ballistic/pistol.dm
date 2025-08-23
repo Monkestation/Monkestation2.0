@@ -119,4 +119,18 @@
 	advanced_print_req = TRUE
 
 
+//.35 Auto, NOT the same as .35 sol short. Chambers in the PACO security pistol
+/obj/item/ammo_casing/c35
+	name = ".35 Auto bullet casing"
+	desc = "A .35 Auto bullet casing."
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
+	icon_state = "35_casing"
+	caliber = CALIBER_35
+	projectile_type = /obj/projectile/bullet/c35
+
+/obj/item/ammo_casing/c35/rubber
+	name = ".35 Auto rubber bullet casing"
+	desc = "A .35 Auto rubber bullet casing."
+	icon_state = "35r_casing"
+	projectile_type = /obj/projectile/bullet/c35/rubber
 

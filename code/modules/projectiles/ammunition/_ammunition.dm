@@ -52,6 +52,7 @@
 	pixel_y = base_pixel_y + rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
 	update_appearance()
+	update_trash_trait()
 
 /obj/item/ammo_casing/Destroy()
 	var/turf/T = get_turf(src)
@@ -102,13 +103,14 @@
 		update_appearance()
 		victim.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
 		source_item?.reagents?.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
-
+	update_trash_trait()
 	return ..()
 
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
+	update_trash_trait()
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box))
@@ -161,3 +163,17 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), sound_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
 	else if(our_turf.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, our_turf.bullet_bounce_sound, 20, 1), sound_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.
+
+/obj/item/ammo_casing/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
+	. = ..()
+	update_trash_trait()
+
+/obj/item/ammo_casing/refresh_shot()
+	. = ..()
+	update_trash_trait()
+
+/obj/item/ammo_casing/proc/update_trash_trait()
+	if(QDELETED(loaded_projectile))
+		ADD_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)

@@ -128,3 +128,23 @@
 	ricochet_auto_aim_range = 6
 	ricochet_incidence_leeway = 80
 	ricochet_decay_chance = 1
+
+
+///.45 Long, also used in the Brush Gun
+
+/obj/projectile/bullet/g45l/rubber
+	name = ".45 Long rubber bullet"
+	damage = 5
+	stamina = 35
+	weak_against_armour = TRUE
+	sharpness = NONE
+	embedding = null
+
+/obj/projectile/bullet/g45l
+	name = ".45 Long bullet"
+	damage = 25
+	weak_against_armour = TRUE // High fire rate
+	wound_bonus = -10
+	sharpness = SHARP_EDGED
+	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+

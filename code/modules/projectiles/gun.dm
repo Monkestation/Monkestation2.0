@@ -74,8 +74,13 @@
 	var/ammo_x_offset = 0 //used for positioning ammo count overlay on sprite
 	var/ammo_y_offset = 0
 
-	var/pb_knockback = 0
-	var/pbk_gentle = FALSE
+	var/pb_knockback = 0 //tiles of knockback
+	var/pbk_gentle = FALSE //whether getting knocked into a wall/mob will stun
+
+	///a multiplier of the duration the recoil takes to go back to normal view, this is (recoil*recoil_backtime_multiplier)+1
+	var/recoil_backtime_multiplier = 2
+	///this is how much deviation the gun recoil can have, recoil pushes the screen towards the reverse angle you shot + some deviation which this is the max.
+	var/recoil_deviation = 22.5
 
 /obj/item/gun/Initialize(mapload)
 	. = ..()
@@ -219,6 +224,25 @@
 		addtimer(VARSET_CALLBACK(gun_smoke.particles, count, 0), 5)
 		addtimer(VARSET_CALLBACK(gun_smoke.particles, drift, 0), 3)
 		QDEL_IN(gun_smoke, 0.6 SECONDS)
+	if(HAS_TRAIT(user, TRAIT_FEEBLE) && recoil && !tk_firing(user))
+		feeble_quirk_recoil(user, get_dir(user, pbtarget), TRUE)
+
+///Makes a recoil-like animation on the mob camera.
+/proc/recoil_camera(mob/M, duration, backtime_duration, strength, angle)
+	if(!M || !M.client)
+		return
+	if(HAS_TRAIT(M, TRAIT_NO_RECOIL))
+		return
+	var/client/sufferer = M.client
+	strength *= world.icon_size
+	var/oldx = sufferer.pixel_x
+	var/oldy = sufferer.pixel_y
+
+	//get pixels to move the camera in an angle
+	var/mpx = sin(angle) * strength
+	var/mpy = cos(angle) * strength
+	animate(sufferer, pixel_x = oldx+mpx, pixel_y = oldy+mpy, time = duration, flags = ANIMATION_RELATIVE)
+	animate(pixel_x = oldx, pixel_y = oldy, time = backtime_duration, easing = BACK_EASING)
 
 /obj/item/gun/emp_act(severity)
 	. = ..()

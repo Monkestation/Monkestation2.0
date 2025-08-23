@@ -57,3 +57,14 @@
 	ammo_type = /obj/item/ammo_casing/g45l
 	caliber = CALIBER_45L
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/shot/six
+	name = "six-barrel shotgun internal magazine"
+	max_ammo = 1
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/six
+
+/obj/item/ammo_box/magazine/internal/shot/hundred
+	name = "hundred-barrel shotgun internal magazine"
+	max_ammo = 1
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/hundred
+

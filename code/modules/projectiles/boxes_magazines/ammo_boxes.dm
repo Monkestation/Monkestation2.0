@@ -61,6 +61,21 @@
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 
 
+/obj/item/ammo_box/g45l
+	name = "ammo box (.45 Long Lethal)"
+	desc = "This box contains .45 Long lethal cartridges."
+	ammo_type = /obj/item/ammo_casing/g45l
+	icon_state = "45box"
+	max_ammo = 24
+
+/obj/item/ammo_box/g45l/rubber
+	name = "ammo box (.45 Long Rubber)"
+	desc = "Brought to you at great expense,this box contains .45 Long rubber cartridges."
+	icon_state = "45box"
+	ammo_type = /obj/item/ammo_casing/g45l/rubber
+	max_ammo = 24
+
+
 ///Pistol rounds
 
 /obj/item/ammo_box/c9mm
@@ -155,6 +170,24 @@
 	desc = "A box of .585 Trappiste pistol rounds, holds 32 cartridges. The purple stripe indicates that it should hold hollowpoint-like rounds."
 	icon_state = "585box_shrapnel"
 	ammo_type = /obj/item/ammo_casing/c585trappiste/hollowpoint
+
+
+/obj/item/ammo_box/c35
+	name = "ammunition packet (.35 Auto)"
+	desc = "A shiny box containing .35 Auto ammo for the \"Paco\" handgun."
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
+	icon_state = "35_ammobox"
+	ammo_type = /obj/item/ammo_casing/c35
+	max_ammo = 40
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/ammo_box/c35/rubber
+	name = "ammunition packet (.35 Auto Rubber)"
+	desc = "A shiny box containing .35 Auto rubber ammo for the \"Paco\" handgun."
+	icon_state = "35r_ammobox"
+	ammo_type = /obj/item/ammo_casing/c35/rubber
+	max_ammo = 40
 
 
 ///SMG rounds
@@ -485,3 +518,82 @@
 	reload_delay = 0.1 SECONDS
 
 
+// GRENADE BOXES!
+#define A40MM_GRENADE_INBOX_SPRITE_WIDTH 3
+
+/obj/item/storage/fancy/a40mm_box
+	name = "40mm grenade box"
+	desc = "A metal box designed to hold 40mm grenades."
+	icon =  'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_box"
+	base_icon_state = "40mm_box"
+	spawn_type = /obj/item/ammo_casing/a40mm
+	spawn_count = 4
+	open_status = FALSE
+	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
+	contents_tag = "grenade"
+	foldable_result = null
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	flags_1 = CONDUCT_1
+	force = 8
+	throwforce = 12
+	throw_speed = 2
+	throw_range = 7
+	resistance_flags = null
+
+	hitsound = 'sound/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+
+/obj/item/storage/fancy/a40mm_box/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/ammo_casing/a40mm))
+
+/obj/item/storage/fancy/a40mm_box/attack_self(mob/user)
+	..()
+	if(open_status == FANCY_CONTAINER_OPEN)
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+
+/obj/item/storage/fancy/a40mm_box/PopulateContents()
+	. = ..()
+	update_appearance()
+
+/obj/item/storage/fancy/a40mm_box/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][open_status ? "_open" : null]"
+
+/obj/item/storage/fancy/a40mm_box/update_overlays()
+	. = ..()
+	if(!open_status)
+		return
+
+	var/grenades = 0
+	for(var/_grenade in contents)
+		var/obj/item/ammo_casing/a40mm/grenade = _grenade
+		if (!istype(grenade))
+			continue
+		. += image(icon = initial(icon), icon_state = (initial(grenade.icon_state) + "_inbox"), pixel_x = grenades * A40MM_GRENADE_INBOX_SPRITE_WIDTH)
+		grenades += 1
+
+#undef A40MM_GRENADE_INBOX_SPRITE_WIDTH
+
+/obj/item/storage/fancy/a40mm_box/rubber
+	spawn_type = /obj/item/ammo_casing/a40mm/rubber
+
+/obj/item/storage/fancy/a40mm_box/weak
+	spawn_type = /obj/item/ammo_casing/a40mm/weak
+
+/obj/item/storage/fancy/a40mm_box/incendiary
+	spawn_type = /obj/item/ammo_casing/a40mm/incendiary
+
+/obj/item/storage/fancy/a40mm_box/smoke
+	spawn_type = /obj/item/ammo_casing/a40mm/smoke
+
+/obj/item/storage/fancy/a40mm_box/stun
+	spawn_type = /obj/item/ammo_casing/a40mm/stun
+
+/obj/item/storage/fancy/a40mm_box/hedp
+	spawn_type = /obj/item/ammo_casing/a40mm/hedp
+
+/obj/item/storage/fancy/a40mm_box/frag
+	spawn_type = /obj/item/ammo_casing/a40mm/frag

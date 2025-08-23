@@ -355,3 +355,22 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	damage = 5 //does shit damage to everything except doors and windows
 	demolition_mod = 200 //one shot to break a window or grille, or two shots to breach an airlock door
+
+
+//Admeme shotgun
+
+/obj/projectile/bullet/pellet/shotgun_death
+	name = "buckshot pellet"
+	damage = 25
+	wound_bonus = 10
+	bare_wound_bonus = 10
+
+	ricochets_max = 6
+	ricochet_chance = 240
+	ricochet_decay_chance = 0.9
+	ricochet_decay_damage = 0.8
+	ricochet_auto_aim_range = 2
+	ricochet_auto_aim_angle = 30
+	ricochet_incidence_leeway = 75
+
+

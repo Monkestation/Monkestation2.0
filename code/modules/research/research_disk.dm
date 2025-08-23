@@ -21,3 +21,20 @@
 /obj/item/disk/tech_disk/debug/Initialize(mapload)
 	stored_research = SSresearch.admin_tech
 	return ..()
+
+
+
+/obj/item/disk/design_disk/fss  ///Apparently we don't have a place to collect these, so here will do
+	name = "FSS-550 Design Disk"
+	desc = "A disk that allows an autolathe to print the FSS-550 and associated ammo."
+	icon_state = "datadisk1"
+
+/obj/item/disk/design_disk/fss/Initialize(mapload)
+	. = ..()
+	blueprints += new /datum/design/fss
+	blueprints += new /datum/design/mag_autorifle_fss
+	blueprints += new /datum/design/mag_autorifle_fss/ap_mag
+	blueprints += new /datum/design/mag_autorifle_fss/ic_mag
+	blueprints += new /datum/design/mag_autorifle_fss/rub_mag
+	blueprints += new /datum/design/mag_autorifle_fss/salt_mag
+

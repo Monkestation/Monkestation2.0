@@ -118,39 +118,27 @@
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher
 	name = "\improper Kiboko Grenade Launcher"
 	desc = "A unique grenade launcher firing .980 grenades. A laser sight system allows its user to specify a range for the grenades it fires to detonate at."
-
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
 	icon_state = "kiboko"
-
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
 	worn_icon_state = "kiboko"
-
 	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
 	inhand_icon_state = "kiboko"
-
 	SET_BASE_PIXEL(-8, 0)
-
 	special_mags = TRUE
-
 	bolt_type = BOLT_TYPE_LOCKING
-
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
-
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
-
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
-
 	can_suppress = FALSE
 	can_bayonet = FALSE
-
 	burst_size = 1
 	fire_delay = 5
 	actions_types = list()
-
 	/// The currently stored range to detonate shells at
 	var/target_range = 14
 	/// The maximum range we can set grenades to detonate at, just to be safe
@@ -217,4 +205,57 @@
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/unrestricted
 	pin = /obj/item/firing_pin
+
+
+/obj/item/gun/ballistic/shotgun/china_lake
+	name = "\improper China Lake 40mm"
+	desc = "Oh, they're goin' ta have to glue you back together...IN HELL!"
+	desc_controls = "ALT-Click to set range. Can be reloaded by CLICK-DRAGGING grenades onto the launcher."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/china_lake
+	var/target_range = 10
+	var/minimum_target_range = 5
+	var/maximum_target_range = 30
+	icon = 'monkestation/icons/obj/guns/china_lake_obj.dmi'
+	icon_state = "china_lake"
+	lefthand_file = 'monkestation/icons/mob/inhands/china_lake_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/china_lake_righthand.dmi'
+	inhand_icon_state = "china_lake"
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	fire_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_fire.ogg'
+	fire_sound_volume = 100
+	rack_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_rack.ogg'
+	rack_delay = 1.5 SECONDS
+	drop_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_drop.ogg'
+	pickup_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_pickup.ogg'
+
+/obj/item/gun/ballistic/shotgun/china_lake/Initialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 10, force_wielded = 10)
+
+/obj/item/gun/ballistic/shotgun/china_lake/examine(mob/user)
+	. = ..()
+	. += span_notice("The leaf sight is set for: <b>[target_range] tiles</b>.")
+
+/obj/item/gun/ballistic/shotgun/china_lake/AltClick(mob/living/user)
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return ..()
+	var/new_range = tgui_input_number(user, "Please set the range", "Leaf Sight Level", 10, maximum_target_range, minimum_target_range)
+	if(!new_range || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	if(new_range != target_range)
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	target_range = new_range
+	to_chat(user, "Leaf sight set for [target_range] tiles.")
+
+/obj/item/gun/ballistic/shotgun/china_lake/MouseDrop_T(obj/item/target, mob/living/user, params)
+	. = ..()
+	if(!istype(target, /obj/item/ammo_casing/a40mm))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user, target))
+		return
+	src.attackby(target, user)
+
+/obj/item/gun/ballistic/shotgun/china_lake/restricted
+	pin = /obj/item/firing_pin/implant/pindicate
 

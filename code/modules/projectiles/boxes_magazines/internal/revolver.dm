@@ -31,6 +31,12 @@
 	caliber = CALIBER_585TRAPPISTE
 	max_ammo = 5
 
+/obj/item/ammo_box/magazine/internal/cylinder/rev45l
+	name = ".45 Long revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/g45l
+	caliber = CALIBER_45L
+	max_ammo = 6
+
 
 // Shotgun revolver's cylinder
 

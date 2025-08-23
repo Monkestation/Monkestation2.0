@@ -14,7 +14,7 @@
 
 /obj/item/gun/energy/laser/lasrifle
 	name = "laser rifle"
-	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
+	desc = "An extremely accurate and deadly pulsed laser weapon based upon a vastly older original design. Unfortunately, it's optics were crippled by penny-pinching, so the dropoff is significant."
 	icon_state = "lasrifle"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'

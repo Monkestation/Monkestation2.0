@@ -59,6 +59,17 @@
 	desc = "A 4.6x30mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c46x30mm
 
+/obj/item/ammo_casing/c46x30mm/rub
+	name = "4.6x30mm rubber bullet casing"
+	desc = "A 4.6x30mm rubber bullet casing."
+	projectile_type = /obj/projectile/bullet/c46x30mm/rub
+
+/obj/item/ammo_casing/c46x30mm/salt
+	name = "4.6x30mm saltshot bullet casing"
+	desc = "A 4.6x30mm saltshot bullet casing."
+	projectile_type = /obj/projectile/bullet/c46x30mm/salt
+
+
 
 // .27-54 Cesarzowa
 // Low-caliber crew SMG round

@@ -124,3 +124,20 @@
 	weak_against_armour = TRUE
 	wound_bonus = 10
 	bare_wound_bonus = 20
+
+
+///.35 Auto, sec standard carry round
+
+/obj/projectile/bullet/c35
+	name = ".35 Auto bullet"
+	damage = 20
+	wound_bonus = -5
+
+/obj/projectile/bullet/c35/rubber
+	name = ".35 Auto rubber bullet"
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
+	icon_state = "rubber_bullet"
+	damage = 4
+	stamina = 50 // Turns out 35 stamina damage is not good enough.
+	sharpness = NONE
+	embedding = null

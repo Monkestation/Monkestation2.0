@@ -57,6 +57,20 @@
 	damage = 10
 	fire_stacks = 1
 
+/obj/projectile/bullet/c46x30mm/salt
+	name = "4.6x30mm saltshot bullet"
+	damage = 0
+	stamina = 40
+	embedding = null
+	sharpness = NONE
+
+/obj/projectile/bullet/c46x30mm/rub
+	name = "4.6x30mm rubber bullet"
+	damage = 4
+	stamina = 50
+	embedding = null
+	sharpness = NONE
+
 
 // .27-54 Cesarzowa
 // Low-caliber crew SMG round

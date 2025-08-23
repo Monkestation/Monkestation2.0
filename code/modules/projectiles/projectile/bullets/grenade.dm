@@ -1,18 +1,184 @@
-// 40mm (Grenade Launcher
+// 40mm (Grenade Launcher/China Lake)
 
-//MONKESTATION REMOVAL: moved to 40mm_grenade.dm
-// /obj/projectile/bullet/a40mm
-// 	name ="40mm grenade"
-// 	desc = "USE A WEEL GUN"
-// 	icon_state= "bolter"
-// 	damage = 60
-// 	embedding = null
-// 	shrapnel_type = null
+/obj/projectile/bullet/a40mm
+	name ="40mm grenade"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_projectile"
+	damage = 60
+	embedding = null
+	shrapnel_type = null
+	range = 30
 
-// /obj/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0, pierce_hit)
-// 	..()
-// 	explosion(target, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = FALSE, explosion_cause = src)
-// 	return BULLET_ACT_HIT
+/obj/projectile/bullet/a40mm/Range() //because you lob the grenade to achieve the range :)
+	if(!has_gravity(get_area(src)))
+		range++
+	return ..()
+
+/obj/projectile/bullet/a40mm/proc/payload(atom/target)
+	explosion(target, devastation_range = -1, light_impact_range = 3, flame_range = 0, flash_range = 2, adminlog = FALSE, explosion_cause = src)
+
+/obj/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0, pierce_hit)
+	..()
+	payload(target)
+	return BULLET_ACT_HIT
+
+/obj/projectile/bullet/a40mm/on_range()
+	payload(get_turf(src))
+	return ..()
+
+/obj/projectile/bullet/a40mm/proc/valid_turf(turf1, turf2)
+	for(var/turf/line_turf in get_line(turf1, turf2))
+		if(line_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			return FALSE
+	return TRUE
+
+//40mm slug-grenade
+/obj/projectile/bullet/shotgun_beanbag/a40mm
+	name = "40mm rubber slug"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mmRUBBER_projectile"
+	damage = 20
+	stamina = 250 //BONK
+	paralyze = 5 SECONDS
+	wound_bonus = 30
+	weak_against_armour = TRUE
+
+//40mm weak HE grenade, printable at an autolath
+/obj/projectile/bullet/a40mm/weak
+	name ="light 40mm grenade"
+	damage = 30
+
+/obj/projectile/bullet/a40mm/weak/payload(atom/target)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 3, flame_range = 0, flash_range = 1, adminlog = FALSE, explosion_cause = src)
+
+//40mm incendiary grenade
+/obj/projectile/bullet/a40mm/incendiary
+	name ="40mm incendiary grenade"
+	damage = 15
+
+/obj/projectile/bullet/a40mm/incendiary/payload(atom/target)
+	if(iscarbon(target))
+		var/mob/living/carbon/extra_crispy_carbon = target
+		extra_crispy_carbon.adjust_fire_stacks(20)
+		extra_crispy_carbon.ignite_mob()
+		extra_crispy_carbon.apply_damage(30, BURN)
+
+	var/turf/our_turf = get_turf(src)
+
+	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
+		if(valid_turf(our_turf, nearby_turf))
+			var/obj/effect/hotspot/fire_tile = locate(nearby_turf) || new(nearby_turf)
+			fire_tile.temperature = CELCIUS_TO_KELVIN(800 CELCIUS)
+			nearby_turf.hotspot_expose(CELCIUS_TO_KELVIN(800 CELCIUS), 125, 1)
+			for(var/mob/living/crispy_living in nearby_turf.contents)
+				crispy_living.apply_damage(30, BURN)
+				if(iscarbon(crispy_living))
+					var/mob/living/carbon/crispy_carbon = crispy_living
+					crispy_carbon.adjust_fire_stacks(10)
+					crispy_carbon.ignite_mob()
+
+	explosion(target, flame_range = 1, flash_range = 3, adminlog = FALSE, explosion_cause = src)
+
+//40mm smoke grenade
+/obj/projectile/bullet/a40mm/smoke
+	name ="40mm smoke grenade"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_projectile"
+	damage = 15
+
+/obj/projectile/bullet/a40mm/smoke/payload(atom/target)
+	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
+	smoke.set_up(4, holder = src, location = src)
+	smoke.start()
+
+//40mm flashbang grenade
+/obj/projectile/bullet/a40mm/stun
+	name ="40mm stun grenade"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_projectile"
+	damage = 15
+
+/obj/projectile/bullet/a40mm/stun/payload(atom/target)
+	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+
+	explosion(target, flash_range = 3, adminlog = FALSE, explosion_cause = src)
+	do_sparks(rand(5, 9), FALSE, src)
+
+	var/turf/our_turf = get_turf(src)
+
+	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
+		if(valid_turf(our_turf, nearby_turf))
+			if(prob(50))
+				do_sparks(rand(1, 9), FALSE, nearby_turf)
+			for(var/mob/living/stunned_living in nearby_turf.contents)
+				stunned_living.Paralyze(5 SECONDS)
+				stunned_living.Knockdown(8 SECONDS)
+				stunned_living.soundbang_act(1, 200, 10, 15)
+
+//40mm HEDP grenade, good vs mechs
+/obj/projectile/bullet/a40mm/hedp
+	name ="40mm HEDP grenade"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mmHEDP_projectile"
+	damage = 50
+	var/anti_material_damage_bonus = 75
+
+/obj/projectile/bullet/a40mm/hedp/payload(atom/target)
+	explosion(target, heavy_impact_range = 0, light_impact_range = 2,  flash_range = 1, adminlog = FALSE, explosion_cause = src)
+
+	if(ismecha(target))
+		var/obj/vehicle/sealed/mecha/mecha = target
+		mecha.take_damage(anti_material_damage_bonus)
+	if(issilicon(target))
+		var/mob/living/silicon/borgo = target
+		borgo.gib()
+
+	if(isstructure(target) || isvehicle (target) || isclosedturf (target) || ismachinery (target)) //if the target is a structure, machine, vehicle or closed turf like a wall, explode that shit
+		if(isclosedturf(target)) //walls get blasted
+			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			return
+		if(target.density) //Dense objects get blown up a bit harder
+			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			target.take_damage(anti_material_damage_bonus)
+			return
+		else
+			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			target.take_damage(anti_material_damage_bonus)
+
+//40mm fragmentation grenade
+/obj/projectile/bullet/a40mm/frag
+	name ="40mm fragmentation grenade"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_projectile"
+
+/obj/projectile/bullet/a40mm/frag/payload(atom/target)
+	var/obj/item/grenade/shrapnel_maker = new /obj/item/grenade/a40mm_frag(drop_location())
+
+	shrapnel_maker.detonate()
+	qdel(shrapnel_maker)
+
+/obj/item/grenade/a40mm_frag
+	name = "40mm fragmentation payload"
+	desc = "An anti-personnel fragmentation payload. How the heck did this get here?"
+	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
+	icon_state = "40mm_projectile"
+	shrapnel_type = /obj/projectile/bullet/shrapnel/a40mm_frag
+	shrapnel_radius = 4
+	det_time = 0
+	display_timer = FALSE
+	ex_light = 2
+
+/obj/projectile/bullet/shrapnel/a40mm_frag
+	name = "flying shrapnel hunk"
+	range = 4
+	dismemberment = 15
+	ricochets_max = 6
+	ricochet_chance = 75
+	ricochet_incidence_leeway = 0
+	ricochet_decay_chance = 0.9
+
+
+//.980 riot grenades
 
 /obj/projectile/bullet/c980grenade
 	name = ".980 Tydhouer practice grenade"

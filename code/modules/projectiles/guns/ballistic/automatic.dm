@@ -125,6 +125,73 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
+/obj/item/gun/ballistic/automatic/wt550/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/wt550/fss //Slightly worse printable WT-550
+	name = "\improper FSS-550"
+	desc = "A modified printable version of the WT-550 autorifle, in order to be printed by an autolathe, some sacrifices had to be made. Not only does this gun have less stopping power, the magazine doesn't entirely fit, and it takes a bit of force to jam it in or rip it out. Used by Syndicate agents and rebels in more than 50 systems."
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	lefthand_file = 'monkestation/icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon_state = "fss550"
+	inhand_icon_state = "fss"
+	spread = 2
+	projectile_damage_multiplier = 0.9
+	///How long does it take to add or remove a magazine from this gun.
+	var/magazine_time = 4 SECONDS
+
+///Modify proc so it takes time to add or remove the magazine.
+/obj/item/gun/ballistic/automatic/wt550/fss/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
+	if(!istype(AM, accepted_magazine_type))
+		balloon_alert(user, "[AM.name] doesn't fit!")
+		return FALSE
+	if(!do_after(user, magazine_time, target = src))
+		balloon_alert(user, "interrupted!")
+		return FALSE
+	if(user.transferItemToLoc(AM, src))
+		magazine = AM
+		if (display_message)
+			balloon_alert(user, "[magazine_wording] loaded")
+		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
+			chamber_round(TRUE)
+		update_appearance()
+		return TRUE
+	else
+		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
+		return FALSE
+
+///Modify proc so it takes time to add or remove the magazine.
+/obj/item/gun/ballistic/automatic/wt550/fss/eject_magazine(mob/user, display_message = TRUE, obj/item/ammo_box/magazine/tac_load = null)
+	if(!do_after(user, magazine_time, target = src))
+		balloon_alert(user, "interrupted!")
+		return FALSE
+	if(bolt_type == BOLT_TYPE_OPEN)
+		chambered = null
+	if (magazine.ammo_count())
+		playsound(src, load_sound, load_sound_volume, load_sound_vary)
+	else
+		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	magazine.forceMove(drop_location())
+	var/obj/item/ammo_box/magazine/old_mag = magazine
+	if (tac_load)
+		if (insert_magazine(user, tac_load, FALSE))
+			balloon_alert(user, "[magazine_wording] swapped")
+		else
+			to_chat(user, span_warning("You dropped the old [magazine_wording], but the new one doesn't fit. How embarassing."))
+			magazine = null
+	else
+		magazine = null
+	user.put_in_hands(old_mag)
+	old_mag.update_appearance()
+	if (display_message)
+		balloon_alert(user, "[magazine_wording] unloaded")
+	update_appearance()
+
+/obj/item/gun/ballistic/automatic/wt550/fss/no_mag
+	spawnwithmagazine = FALSE
+
 /obj/item/gun/ballistic/automatic/plastikov
 	name = "\improper PP-95 SMG"
 	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs, though perhaps simplified too much."

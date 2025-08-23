@@ -5,7 +5,7 @@
 	name = "projectile gun"
 	icon_state = "debug"
 	w_class = WEIGHT_CLASS_NORMAL
-
+	recoil = 1
 	///sound when inserting magazine
 	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
 	///sound when inserting an empty magazine
@@ -127,6 +127,7 @@
 	///What is the cap on our misfire probability? Do not set this to 100.
 	var/misfire_probability_cap = 25
 
+	///Recoil quantity when the gun is wielded
 	var/wield_recoil = 0
 
 	/// Does this gun have mag and nomag on mob variance?
@@ -806,5 +807,3 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	light_outer_range = 2
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
-
-

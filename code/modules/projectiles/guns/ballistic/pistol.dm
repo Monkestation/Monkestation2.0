@@ -426,3 +426,79 @@
 //why did i steal code from the qarad for this fucking thing
 /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45/toyota/proc/give_autofire()
 	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+
+//.35 Auto PACO, I.E standard security carry
+/obj/item/gun/ballistic/automatic/pistol/paco //Sec pistol, Paco from CEV Eris.
+	name = "\improper FS HG .35 Auto \"Paco\""
+	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 Auto and high capacity magazines."
+	icon = 'monkestation/code/modules/security/icons/paco.dmi'
+	icon_state = "paco"
+	inhand_icon_state = "paco"
+	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
+	can_suppress = FALSE
+	fire_sound = 'monkestation/code/modules/security/sound/paco/paco_shot.ogg'
+	rack_sound = 'monkestation/code/modules/security/sound/paco/paco_rack.ogg'
+	lock_back_sound = 'monkestation/code/modules/security/sound/paco/paco_lock.ogg'
+	bolt_drop_sound = 'monkestation/code/modules/security/sound/paco/paco_drop.ogg'
+	load_sound = 'monkestation/code/modules/security/sound/paco/paco_magin.ogg'
+	load_empty_sound = 'monkestation/code/modules/security/sound/paco/paco_magin.ogg'
+	eject_sound = 'monkestation/code/modules/security/sound/paco/paco_magout.ogg'
+	eject_empty_sound = 'monkestation/code/modules/security/sound/paco/paco_magout.ogg'
+	var/has_stripe = TRUE
+	var/COOLDOWN_STRIPE
+
+/obj/item/gun/ballistic/automatic/pistol/paco/Initialize(mapload) //Sec pistol, Paco(renamed to TACO... Atleast 10 percent of the time)
+	. = ..()
+	if(prob(10))
+		name = "\improper FS HG .35 Auto \"Taco\" LE"
+		desc += " <font color=#FFE733>You notice a small difference on the side of the pistol... An engraving depicting a taco! It's a Limited Run model!</font>"
+
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/paco/update_icon_state()
+	. = ..()
+	if(!has_stripe) //Definitely turn this into a switch case statement if someone (or I) decide to add more variants, but this works for now
+		icon_state = "spaco"
+		inhand_icon_state = "spaco"
+
+/obj/item/gun/ballistic/automatic/pistol/paco/add_seclight_point() //Seclite functionality
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'monkestation/icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "pacoflight", \
+		overlay_x = 15, \
+		overlay_y = 13)
+
+/obj/item/gun/ballistic/automatic/pistol/paco/AltClick(mob/user) //Some people like the stripe, some people don't. Gives you the option to do the unthinkable.
+	if(has_stripe && !TIMER_COOLDOWN_CHECK(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
+		TIMER_COOLDOWN_START(src, COOLDOWN_STRIPE, 6 SECONDS)
+		playsound(src, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
+		balloon_alert_to_viewers("[user] starts picking at the Paco's stripe!")
+		if(do_after(user, 6 SECONDS))
+			has_stripe = FALSE
+			obj_flags = UNIQUE_RENAME
+			desc += " You figure there's ample room to engrave something nice on it, but know that it'd offer no tactical advantage whatsoever."
+			playsound(src, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
+			playsound(src, rack_sound, 50, TRUE) //Increases satisfaction
+			balloon_alert_to_viewers("[user] rips the stripe right off the Paco!") //The implication that the stripe is just a piece of red tape is very funny
+			update_icon_state()
+			update_appearance() //So you don't have to rack the slide to update the sprite
+			update_inhand_icon(user) //So you don't have to switch the gun inhand to update the inhand sprite
+
+//Busted blueshield pistol
+/obj/item/gun/ballistic/automatic/pistol/tech_9
+	name = "\improper Glock-O"
+	desc = "The standard issue service pistol of blueshield agents."
+	burst_size = 4
+	fire_delay = 1
+	icon = 'monkestation/icons/obj/weapons/guns/tech9.dmi'
+	icon_state = "tech9"
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_light.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
+
+/obj/item/gun/ballistic/automatic/pistol/tech_9/no_mag
+	spawnwithmagazine = FALSE

@@ -190,3 +190,32 @@
 /obj/item/ammo_box/magazine/c585trappiste_pistol/spawns_empty
 	start_empty = TRUE
 
+
+//.35 Auto pistol magazines
+
+/obj/item/ammo_box/magazine/m35
+	name = "\improper \"Paco\" pistol magazine (.35 Auto)"
+	desc = "A .35 Auto pistol magazine for the Paco handgun. Consult your head of security before use."
+	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
+	icon_state = "35"
+	base_icon_state = "35"
+	ammo_type = /obj/item/ammo_casing/c35
+	caliber = CALIBER_35
+	max_ammo = 16
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	multiple_sprite_use_base = TRUE
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/ammo_box/magazine/m35/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[round(ammo_count(), 2)]"
+
+/obj/item/ammo_box/magazine/m35/rubber
+	name = "\improper \"Paco\" pistol magazine (.35 Auto Rubber)"
+	desc = "A .35 Auto rubber pistol magazine for the \"Paco\" handgun. Loaded with rubber ammo for assisting in arrests."
+	icon_state = "35r"
+	base_icon_state = "35r"
+	ammo_type = /obj/item/ammo_casing/c35/rubber
+	w_class = WEIGHT_CLASS_SMALL
+
+
