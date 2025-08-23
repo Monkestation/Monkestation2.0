@@ -36,7 +36,7 @@
 	var/list/data = list()
 
 	data["satellites"] = list()
-	for(var/obj/machinery/satellite/sat in GLOB.machines)
+	for(var/obj/machinery/satellite/sat as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/satellite))
 		data["satellites"] += list(list(
 			"id" = sat.id,
 			"active" = sat.active,
