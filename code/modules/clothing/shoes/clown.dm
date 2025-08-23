@@ -64,9 +64,22 @@
 
 /obj/item/clothing/shoes/clown_shoes/cluwne
 	name = "cluwne shoes"
-	desc = "A sense of bloodlust washes over you as you wear these shoes."
+	desc = "A sense of bloodlust washes over you as you wear these shoes. Ctrl-click to toggle waddle dampeners. Alt-click to toggle sound dampeners."
 	icon_state = "cluwne"
 	inhand_icon_state = "cluwne_shoes"
 	worn_icon_state = "cluwne"
 	slowdown = SHOES_SLOWDOWN
-	squeak_sound = list()
+	var/sound_dampener = TRUE
+
+/obj/item/clothing/shoes/clown_shoes/cluwne/AltClick(mob/living/user)
+	if(!isliving(user))
+		return
+	if(user.get_active_held_item() != src)
+		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
+		return
+
+	sound_dampener = !sound_dampener
+	if(sound_dampener)
+		to_chat(user, span_notice("You switch on the sound dampener. Your footsteps fall silent."))
+	else
+		to_chat(user, span_notice("You switch off the sound dampener. The shoes are ready to squeak again."))

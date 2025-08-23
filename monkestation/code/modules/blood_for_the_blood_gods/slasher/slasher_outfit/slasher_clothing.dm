@@ -8,7 +8,6 @@
 	inhand_icon_state = null
 	flash_protect = FLASH_PROTECTION_WELDER
 	clothing_flags = MASKINTERNALS
-	flags_cover = PEPPERPROOF | MASKCOVERSEYES
 	flags_inv = HIDEFACIALHAIR | HIDEHAIR
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSEYES | PEPPERPROOF
