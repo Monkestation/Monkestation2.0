@@ -57,6 +57,11 @@
 	if(obj_flags & EMAGGED)
 		. += span_warning("The safety protocols panel shows sparks coming out of it!")
 
+/obj/machinery/lathe/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/lathe/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
 		return FALSE
@@ -310,8 +315,6 @@
 	playsound(src, operating_sound, 100, TRUE)
 
 /obj/machinery/lathe/attackby(obj/item/interacted_item, mob/user, params)
-	. = ..()
-
 	for(var/stock_part_base in req_materials)
 		if (req_materials[stock_part_base] == 0)
 			continue
@@ -371,8 +374,16 @@
 		req_materials[stock_part_base]--
 		check_done(user)
 		return
+
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, interacted_item))
+		update_appearance(UPDATE_ICON)
+		return
+
+	if(default_deconstruction_crowbar(interacted_item))
+		return
+
 	to_chat(user, span_warning("You cannot add that to the machine!"))
-	return
+	return . = ..()
 
 //check if lathe materials requirements are met
 /obj/machinery/lathe/proc/check_done(mob/user)

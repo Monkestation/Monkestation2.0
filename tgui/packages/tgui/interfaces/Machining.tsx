@@ -147,7 +147,7 @@ export const Machining = (props, context) => {
               lineHeight={2.5}
               align="center"
               content="Produce"
-              disabled={!craftable}
+              disabled={!craftable || auto_dispense}
               color="green"
               icon="circle-notch"
               iconSpin={craftable ? 1 : 0}
