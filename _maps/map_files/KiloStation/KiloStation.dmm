@@ -6114,7 +6114,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
 "bWI" = (
-/obj/machinery/cassette/dj_station{
+/obj/machinery/dj_station{
 	pixel_y = 12
 	},
 /obj/structure/table/wood,

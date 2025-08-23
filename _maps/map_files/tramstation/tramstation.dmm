@@ -33928,7 +33928,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "jBm" = (
-/obj/machinery/cassette/dj_station{
+/obj/machinery/dj_station{
 	pixel_y = 12
 	},
 /obj/structure/table/wood,

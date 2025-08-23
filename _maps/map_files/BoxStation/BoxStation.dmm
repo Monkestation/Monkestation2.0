@@ -981,6 +981,24 @@
 	dir = 4
 	},
 /area/station/security/prison/workout)
+"aqe" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/north{
+	name = "Brig Entrance Desk";
+	req_access = list("security")
+	},
+/obj/machinery/door/window/left/directional/south{
+	name = "Brig Entrance Desk"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "brig_post";
+	name = "Security Shutters"
+	},
+/obj/structure/desk_bell/departmental/security,
+/turf/open/floor/iron/dark,
+/area/station/security/brig/entrance)
 "aqf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -7688,7 +7706,7 @@
 /area/station/science/robotics/mechbay)
 "cvm" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
+/obj/machinery/dj_station{
 	pixel_y = 12
 	},
 /turf/open/floor/iron/vaporwave,
@@ -9868,34 +9886,6 @@
 /obj/machinery/space_heater,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"dgD" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/flasher/directional/north{
-	id = "hopflash"
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
-	name = "Reception"
-	},
-/obj/machinery/door/window/brigdoor/right/directional/east{
-	req_access = list("hop");
-	name = "Head of Personnel's Desk"
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "hop";
-	name = "Privacy Shutters";
-	dir = 8
-	},
-/obj/structure/desk_bell/departmental/command/hop,
-/turf/open/floor/iron/dark/textured,
-/area/station/command/heads_quarters/hop)
 "dgK" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
@@ -20181,30 +20171,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/wood,
 /area/station/service/chapel/funeral)
-"gyN" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	name = "Genetics Desk";
-	req_access = list("genetics")
-	},
-/obj/machinery/door/window/left/directional/south{
-	name = "Reception"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "genetics_shutters";
-	name = "Genetics Shutters"
-	},
-/obj/structure/desk_bell/departmental/science{
-	bell_location = "Genetics Desk";
-	pixel_x = 7
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/science/genetics)
 "gzw" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21540,54 +21506,6 @@
 /obj/machinery/quantum_server,
 /turf/open/floor/iron/dark,
 /area/station/security/bitden)
-"gSC" = (
-/obj/structure/sign/painting/library_private{
-	pixel_y = -32
-	},
-/obj/structure/table/wood,
-/obj/item/device/cassette_tape/friday{
-	pixel_y = 2;
-	pixel_x = 9
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/toy/figure/curator,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "gSE" = (
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
@@ -22151,26 +22069,6 @@
 "hdj" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/service)
-"hdl" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/right/directional/east{
-	name = "Medbay Front Desk";
-	req_access = list("medical")
-	},
-/obj/machinery/door/window/left/directional/west{
-	name = "Medbay Front Desk"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "medbay_desk_shutters";
-	name = "Medbay Front Desk Shutters";
-	dir = 8
-	},
-/obj/structure/desk_bell/departmental/medical{
-	pixel_x = -6
-	},
-/turf/open/floor/iron/white/textured,
-/area/station/medical/office)
 "hdm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer4,
 /turf/open/floor/engine,
@@ -23784,24 +23682,6 @@
 "hDp" = (
 /turf/closed/wall/r_wall,
 /area/station/security/brig)
-"hDs" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/north{
-	name = "Brig Entrance Desk";
-	req_access = list("security")
-	},
-/obj/machinery/door/window/left/directional/south{
-	name = "Brig Entrance Desk"
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "brig_post";
-	name = "Security Shutters"
-	},
-/obj/structure/desk_bell/departmental/security,
-/turf/open/floor/iron/dark,
-/area/station/security/brig/entrance)
 "hDv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -24385,6 +24265,34 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/chapel/funeral)
+"hMc" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/flasher/directional/north{
+	id = "hopflash"
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/north{
+	dir = 8;
+	name = "Reception"
+	},
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	req_access = list("hop");
+	name = "Head of Personnel's Desk"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "hop";
+	name = "Privacy Shutters";
+	dir = 8
+	},
+/obj/structure/desk_bell/departmental/command/hop,
+/turf/open/floor/iron/dark/textured,
+/area/station/command/heads_quarters/hop)
 "hMe" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/disposalpipe/trunk{
@@ -33021,6 +32929,32 @@
 "kDm" = (
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/medical)
+"kDw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/south{
+	name = "Cargo Desk";
+	req_access = list("cargo")
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Cargo Desk"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "cargo_desk";
+	name = "Cargo Desk Shutters";
+	dir = 1
+	},
+/obj/item/papercutter,
+/obj/structure/desk_bell/departmental/supply{
+	pixel_y = 7;
+	pixel_x = 7
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/cargo/office)
 "kDx" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -34442,6 +34376,29 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/starboard)
+"lbt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/south{
+	name = "Reception"
+	},
+/obj/machinery/door/window/right/directional/north{
+	name = "RaD Desk";
+	req_access = list("science")
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rad_shutters";
+	name = "RaD Shutters"
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = 6
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/science/lab)
 "lbC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -36091,6 +36048,35 @@
 "lzT" = (
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
+"lzU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "engineering";
+	name = "Engineering Blast Door"
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/west{
+	name = "Engineering Desk"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Engineering Desk";
+	req_access = list("atmospherics","engineering")
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "engi_office_shutters";
+	name = "Engineering Shutters";
+	dir = 8
+	},
+/obj/structure/desk_bell/departmental/engineering,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/break_room)
 "lAc" = (
 /turf/closed/wall,
 /area/station/service/library/lounge)
@@ -36174,6 +36160,54 @@
 /obj/item/storage/bag/trash,
 /turf/open/floor/iron/dark/side,
 /area/station/security/prison)
+"lBC" = (
+/obj/structure/sign/painting/library_private{
+	pixel_y = -32
+	},
+/obj/structure/table/wood,
+/obj/item/cassette_tape/friday{
+	pixel_y = 2;
+	pixel_x = 9
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/toy/figure/curator,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "lBE" = (
 /obj/structure/chair/office/light,
 /obj/effect/landmark/start/medical_doctor,
@@ -37158,6 +37192,30 @@
 "lRD" = (
 /turf/closed/wall,
 /area/station/cargo/miningoffice)
+"lRR" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/north{
+	name = "Genetics Desk";
+	req_access = list("genetics")
+	},
+/obj/machinery/door/window/left/directional/south{
+	name = "Reception"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "genetics_shutters";
+	name = "Genetics Shutters"
+	},
+/obj/structure/desk_bell/departmental/science{
+	bell_location = "Genetics Desk";
+	pixel_x = 7
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/science/genetics)
 "lSy" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
@@ -46676,29 +46734,6 @@
 /obj/machinery/autolathe,
 /turf/open/floor/iron/dark/side,
 /area/station/cargo/office)
-"oYv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/south{
-	name = "Reception"
-	},
-/obj/machinery/door/window/right/directional/north{
-	name = "RaD Desk";
-	req_access = list("science")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rad_shutters";
-	name = "RaD Shutters"
-	},
-/obj/structure/desk_bell/departmental/science{
-	pixel_x = 6
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/science/lab)
 "oYD" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -49685,32 +49720,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/brig)
-"pXG" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/south{
-	name = "Cargo Desk";
-	req_access = list("cargo")
-	},
-/obj/machinery/door/window/left/directional/north{
-	name = "Cargo Desk"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "cargo_desk";
-	name = "Cargo Desk Shutters";
-	dir = 1
-	},
-/obj/item/papercutter,
-/obj/structure/desk_bell/departmental/supply{
-	pixel_y = 7;
-	pixel_x = 7
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/cargo/office)
 "pXY" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
@@ -68838,35 +68847,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
-"wce" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/preopen{
-	id = "engineering";
-	name = "Engineering Blast Door"
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/west{
-	name = "Engineering Desk"
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Engineering Desk";
-	req_access = list("atmospherics","engineering")
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "engi_office_shutters";
-	name = "Engineering Shutters";
-	dir = 8
-	},
-/obj/structure/desk_bell/departmental/engineering,
-/turf/open/floor/iron/dark/textured,
-/area/station/engineering/break_room)
 "wcj" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -68891,6 +68871,26 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/qm)
+"wcu" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/right/directional/east{
+	name = "Medbay Front Desk";
+	req_access = list("medical")
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Medbay Front Desk"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "medbay_desk_shutters";
+	name = "Medbay Front Desk Shutters";
+	dir = 8
+	},
+/obj/structure/desk_bell/departmental/medical{
+	pixel_x = -6
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/office)
 "wcA" = (
 /obj/machinery/light/no_nightlight/directional/east,
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -86657,7 +86657,7 @@ sui
 vPe
 uBC
 usv
-pXG
+kDw
 kRe
 tvt
 ske
@@ -101573,7 +101573,7 @@ jSh
 twb
 siE
 lFc
-dgD
+hMc
 xdw
 lFc
 xdw
@@ -105121,7 +105121,7 @@ pNK
 vhd
 xoP
 vOq
-hDs
+aqe
 hwe
 xpb
 mKW
@@ -105446,7 +105446,7 @@ lku
 elt
 oqK
 kaD
-wce
+lzU
 ufs
 dMW
 lls
@@ -111070,7 +111070,7 @@ dXW
 iNT
 wzV
 wBG
-oYv
+lbt
 nVy
 bUT
 wxL
@@ -112621,7 +112621,7 @@ qOH
 cua
 cua
 qOH
-hdl
+wcu
 cua
 qOH
 qOH
@@ -113126,7 +113126,7 @@ hXt
 hXt
 mJB
 eRV
-gyN
+lRR
 nVy
 bUT
 wxL
@@ -123939,7 +123939,7 @@ xZm
 gji
 dOL
 nVc
-gSC
+lBC
 nBE
 nep
 mhc

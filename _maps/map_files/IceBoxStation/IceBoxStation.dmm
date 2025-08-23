@@ -21402,7 +21402,7 @@
 /area/station/hallway/primary/starboard)
 "gBr" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
+/obj/machinery/dj_station{
 	pixel_y = 12
 	},
 /turf/open/floor/glass,

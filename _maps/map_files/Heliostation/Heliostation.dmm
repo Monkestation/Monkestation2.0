@@ -39122,7 +39122,7 @@
 /area/station/maintenance/solars/starboard/fore)
 "iao" = (
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/cassette/dj_station{
+/obj/machinery/dj_station{
 	pixel_y = 12
 	},
 /obj/structure/table/wood,
