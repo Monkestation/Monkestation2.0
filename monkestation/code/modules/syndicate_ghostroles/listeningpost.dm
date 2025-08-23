@@ -45,6 +45,6 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space/anderson/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
 	new_spawn.adjustOrganLoss(ORGAN_SLOT_EYES, 100) //AAAARGH MY EYES
 	new_spawn.adjustOrganLoss(ORGAN_SLOT_LIVER, 35) //not completely out, but it's not having a good day

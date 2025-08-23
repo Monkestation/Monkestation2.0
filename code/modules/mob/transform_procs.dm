@@ -214,7 +214,6 @@
 
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.PossessByPlayer(key)
-	update_atom_languages()
 
 	to_chat(new_xeno, span_boldnotice("You are now an alien."))
 	qdel(src)

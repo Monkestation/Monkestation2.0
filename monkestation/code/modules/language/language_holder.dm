@@ -1,13 +1,13 @@
 /// Language holder for borers, that let them understand any language their host understands.
 /datum/language_holder/borer
 
-/datum/language_holder/borer/has_language(language, spoken = FALSE)
+/datum/language_holder/borer/has_language(language, flag_to_check = UNDERSTOOD_LANGUAGE)
 	. = ..()
 	if(.)
 		return
-	var/mob/living/basic/cortical_borer/cortical_owner = get_atom()
+	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	if(istype(cortical_owner))
-		return cortical_owner.human_host?.get_language_holder()?.has_language(language, spoken)
+		return cortical_owner.human_host?.get_language_holder()?.has_language(language, flag_to_check)
 
 /datum/language_holder/apid
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
