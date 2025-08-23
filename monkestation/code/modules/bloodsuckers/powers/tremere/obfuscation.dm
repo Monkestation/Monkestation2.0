@@ -73,11 +73,13 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/ActivatePower(trigger_flags)
 	..()
+	ADD_TRAIT(owner, TRAIT_UNKNOWN, REF(src))
 	owner.AddElement(/datum/element/digitalcamo)
 	animate(owner, alpha = 15, time = 2 SECONDS)
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/DeactivatePower(deactivate_flags)
 	..()
+	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, REF(src))
 	animate(owner, alpha = 255, time = 2 SECONDS)
 	owner.RemoveElement(/datum/element/digitalcamo)
 
