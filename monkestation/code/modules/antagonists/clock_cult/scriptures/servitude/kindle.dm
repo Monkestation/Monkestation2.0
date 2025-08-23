@@ -91,6 +91,7 @@
 		carbon_hit.adjust_timed_status_effect(26 SECONDS, /datum/status_effect/speech/slurring/clock)
 
 		carbon_hit.adjust_silence(EFFECT_TIME * 2) //enough time to cuff and remove their radio, or just go back to reebe where their comms wont work
+		carbon_hit.adjust_emote_mute(EFFECT_TIME * 2)
 		carbon_hit.AdjustKnockdown(EFFECT_TIME * (has_mindshield ? 1 : 1.5))
 		//pretty much 0 stun if your on reebe, still good for knockdown though, also only a 1 second stun on mindshielded people
 		carbon_hit.Stun((has_mindshield ? 1 SECONDS : EFFECT_TIME) * ((on_reebe(carbon_hit) && GLOB.clock_ark?.current_state) ? 0.1 : 1))
