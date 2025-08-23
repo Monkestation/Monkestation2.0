@@ -93,9 +93,6 @@
 	our_mob.balloon_alert(our_mob, "You begin absorbing [target]!")
 	var/mob/living/mob_to_absorb = target
 
-	// This prevents the mob from being dragged away from the bloodling during the process
-	mob_to_absorb.AddComponent(/datum/component/leash, owner = our_mob, distance = 1)
-
 	if(!iscarbon(mob_to_absorb))
 		biomass_gain = max(mob_to_absorb.getMaxHealth() * 0.5, biomass_gain)
 		if(biomass_gain > 150)
@@ -115,6 +112,8 @@
 			biomass_gain = 100
 			absorb_time = 10 SECONDS
 
+	// This prevents the mob from being dragged away from the bloodling during the process
+	mob_to_absorb.AddComponent(/datum/component/leash, owner = our_mob, distance = 1)
 	// Setting this to true means they cant target the same person multiple times, or other people since it allows for speedrunning
 	is_absorbing = TRUE
 
@@ -125,6 +124,7 @@
 		return FALSE
 
 	is_absorbing = FALSE
+	qdel(mob_to_absorb.GetComponent(/datum/component/leash))
 	our_mob.add_biomass(biomass_gain)
 	mob_to_absorb.gib()
 	our_mob.visible_message(
