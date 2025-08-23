@@ -1006,6 +1006,17 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"aoO" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/obj/item/stock_parts/cell/high/empty,
+/turf/open/floor/plating,
+/area/station/maintenance/department/electrical)
 "aoT" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /obj/effect/turf_decal/bot,
@@ -8139,6 +8150,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "cEF" = (
@@ -18196,9 +18208,9 @@
 "fJV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/cable,
-/obj/machinery/power/smes,
-/turf/open/floor/iron,
+/obj/structure/frame/machine/secured,
+/obj/item/circuitboard/machine/smes,
+/turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "fJY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -21880,6 +21892,7 @@
 "gPn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/cable_coil/five,
+/obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "gPq" = (
@@ -31374,6 +31387,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/cable_coil/cut,
 /obj/item/radio/intercom/directional/west,
+/obj/item/stock_parts/capacitor,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "jJY" = (
@@ -121489,7 +121503,7 @@ dIm
 dIm
 fKI
 dIm
-dIm
+aoO
 dIm
 dIm
 phc
