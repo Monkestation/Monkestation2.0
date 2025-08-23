@@ -35880,11 +35880,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep_pub)
-"qkh" = (
-/obj/structure/cable/multilayer,
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/engineering/a2MINPP/exterior)
 "qki" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -150327,7 +150322,7 @@ sCq
 xBU
 fIh
 vFu
-qkh
+vFu
 vFu
 qGc
 mqO
