@@ -592,6 +592,12 @@
   - balance: Assistants can no longer punch cards
   - balance: Cards no longer start with one free punch
   - map: Added assistant point redeemer to all cargos that lacked one
+  - bugfix: updates GAP card description from 100 to 200
+  Sorenon:
+  - rscadd: Added the Monoplegic and Hemiplegic paralysis quirks
+  Xander3359:
+  - code_imp: adds emote_mute status effect and helper procs
+  - balance: adds emote mute to some silencing effects
   notghosti:
   - rscadd: Added new antigen 'Ig', which cannot be mass produced normally.
   - rscadd: Beaker apparatus can now pick up tubes and virus dishes.
@@ -605,3 +611,10 @@
   - admin: Plague rats have been removed from the antag datum panel. Use the event
       instead
   - balance: Removed the 4 crew spawns from the battlecruiser starfury
+  - bugfix: Florans can reattach limbs again
+  throwawayuseless:
+  - spellcheck: TRNE Corp. has hired a Ratvarian-fluent spellchecker and has subsequently
+      renamed the Rat'vander cocktail to Ratvander.
+  wonderinghost:
+  - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
+      access instead of both'
