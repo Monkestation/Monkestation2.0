@@ -291,6 +291,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes someone show up as mindshielded on sechuds. Does NOT actually make them unconvertable - See TRAIT_UNCONVERTABLE for that
 #define TRAIT_MINDSHIELD "mindshield"
 /// Makes it impossible for someone to be converted by cult/revs/etc.
+/// This immunity is to be considered ABSOLUTE, and no form of conversion, brainwashing, or such should bypass this in any way, outside of admin fuckery.
+/// Keep this rare.
 #define TRAIT_UNCONVERTABLE "unconvertable"
 #define TRAIT_DISSECTED "dissected"
 /* #define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed" */
