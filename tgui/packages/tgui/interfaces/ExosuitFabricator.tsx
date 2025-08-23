@@ -419,9 +419,9 @@ const Authorization = (props, context) => {
         : ''}
       {alert_level === 0
         ? ''
-        : alert_level === 1
-          ? 'Increased threat alert is in effect for the station!\n'
-          : 'Credible threat to the station in effect!\n'}
+        : alert_level >= 4
+          ? 'Credible threat to the station in effect!\n'
+          : 'Increased threat alert is in effect for the station!\n'}
     </Section>
   );
 };

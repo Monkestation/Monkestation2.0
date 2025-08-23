@@ -58,6 +58,7 @@
 	var/obj/item/card/id/id_card = new()
 	/// Combined boolean value of red alert, auth override, and the users access for the sake of smaller if statements. if this is true, combat parts are available
 	var/combat_parts_allowed = FALSE
+	/// List of categories that all contains combat parts, everything in the category will be classified as combat parts
 	var/list/combat_parts = list(
 		RND_CATEGORY_MECHFAB_DURAND,
 		RND_CATEGORY_MECHFAB_HONK,
