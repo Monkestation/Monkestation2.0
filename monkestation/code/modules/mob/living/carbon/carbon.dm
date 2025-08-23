@@ -1,8 +1,3 @@
-/mob/living/carbon/hypnosis_vulnerable()
-	if(HAS_MIND_TRAIT(src, TRAIT_UNCONVERTABLE))
-		return FALSE
-	return ..()
-
 /mob/living/carbon/proc/fumble_throw_item(atom/target, atom/movable/thrown_thing)
 	visible_message(span_danger("[src] fumbles [thrown_thing]."), \
 					span_danger("You fumble [thrown_thing]."))
