@@ -46268,6 +46268,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/ai_monitored/command/storage/eva)
+"ogA" = (
+/obj/machinery/gbp_redemption,
+/turf/open/floor/iron,
+/area/station/cargo/lobby)
 "ogF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -233540,7 +233544,7 @@ dBZ
 dBZ
 wcV
 rCC
-qmi
+ogA
 vQQ
 vQQ
 sve
