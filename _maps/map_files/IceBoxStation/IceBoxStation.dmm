@@ -3416,17 +3416,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating/icemoon,
 /area/station/engineering/atmos)
-"bed" = (
-/obj/machinery/light/floor/has_bulb,
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "publicElevator"
-	},
-/obj/effect/abstract/elevator_music_zone{
-	linked_elevator_id = "publicElevator"
-	},
-/turf/open/openspace,
-/area/station/commons/storage/mining)
 "beh" = (
 /obj/machinery/firealarm/directional/north{
 	pixel_x = -26
@@ -8918,16 +8907,6 @@
 /obj/effect/spawner/random/techstorage/medical_all,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
-"cEk" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "botany_chasm_and_wolf_shutters"
-	},
-/turf/open/openspace/icemoon/keep_below,
-/area/station/service/hydroponics/chicken)
 "cEo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -21497,6 +21476,17 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"gCH" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/industrial_lift,
+/obj/effect/landmark/lift_id{
+	specific_lift_id = "publicElevator"
+	},
+/obj/effect/abstract/elevator_music_zone{
+	linked_elevator_id = "publicElevator"
+	},
+/turf/open/openspace,
+/area/station/commons/storage/mining)
 "gCK" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -23408,9 +23398,6 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"hfZ" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "hgc" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -40353,6 +40340,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mvK" = (
+/obj/machinery/gbp_redemption,
+/turf/open/floor/iron,
+/area/station/cargo/lobby)
 "mvU" = (
 /obj/machinery/button/door/directional/east{
 	id = "cmoprivacy";
@@ -175726,7 +175717,7 @@ oZd
 cWm
 cWm
 olJ
-cEk
+olJ
 olJ
 kum
 gjq
@@ -181850,7 +181841,7 @@ tjo
 tjo
 tjo
 tjo
-hfZ
+iDt
 fLa
 iDt
 tjo
@@ -233556,7 +233547,7 @@ dBZ
 dBZ
 wcV
 rCC
-qmi
+mvK
 vQQ
 vQQ
 sve
@@ -238181,7 +238172,7 @@ ybv
 clE
 kta
 fhk
-bed
+gCH
 vEH
 clE
 qQC
