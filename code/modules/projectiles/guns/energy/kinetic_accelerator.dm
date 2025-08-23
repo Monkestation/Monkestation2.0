@@ -645,7 +645,7 @@
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "kineticpistol"
 	base_icon_state = "kineticpistol"
-	recharge_time = 2 SECONDS
+	recharge_time = 4 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
 	can_bayonet = FALSE
 	max_mod_capacity = 300 //experimental, if people find too many wack ass combos on the pistol im dropping it back to 200

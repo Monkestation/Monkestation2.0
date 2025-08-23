@@ -2545,13 +2545,11 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard)
 "aMy" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/gbp_redemption,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "aMU" = (

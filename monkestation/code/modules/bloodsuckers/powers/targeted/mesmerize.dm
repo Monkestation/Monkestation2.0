@@ -195,6 +195,7 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/mute_target(mob/living/mesmerized_target)
 	if(level_current >= MESMERIZE_MUTE_LEVEL)
 		mesmerized_target.set_silence_if_lower(get_mute_time())
+		mesmerized_target.set_emote_mute_if_lower(get_mute_time())
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/DeactivatePower(deactivate_flags)
 	. = ..()
