@@ -1207,7 +1207,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/station_map
+/datum/design/board/station_map
 	name = "Station Map Board"
 	desc = "The circuit board for a station map Screen."
 	id = "station_map"
