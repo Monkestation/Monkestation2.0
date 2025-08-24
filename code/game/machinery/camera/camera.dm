@@ -598,8 +598,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 
 /obj/machinery/camera/autoname/no_multiz/can_see()
 	if(isXRay())
-		reutrn range(view_range, loc)
-	else get_hear(view_range, loc)
+		return range(view_range, loc)
+	else
+		return get_hear(view_range, loc)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/no_multiz, 0)
 
