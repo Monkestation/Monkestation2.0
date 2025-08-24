@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"map_name": "Asbestosstation",
-	"map_path": "map_files/abestosstation",
+	"map_path": "map_files/Abestosstation",
 	"map_file": "absestosstation.dmm",
 	"space_ruin_levels": 2,
 	"shuttles": {
