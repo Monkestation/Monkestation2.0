@@ -136,10 +136,10 @@
 	if(admin)
 		return
 	//Finishing the frame
-	else if(istype(W, /obj/item/stack/sheet))
+	else if(istype(attacking_item, /obj/item/stack/sheet))
 		if(finished)
 			return
-		var/obj/item/stack/sheet/S = W
+		var/obj/item/stack/sheet/S = attacking_item
 		if(istype(S, /obj/item/stack/sheet/glass))
 			if(S.use(5))
 				new /obj/structure/reflector/single(drop_location())

@@ -14,7 +14,7 @@
 	. = ..()
 	if(resistance_flags & ON_FIRE)
 		return
-	if(!burn_paper_product_attackby_check(W, user, TRUE))
+	if(!burn_paper_product_attackby_check(attacking_item, user, TRUE))
 		return
 	if(used_up)
 		return

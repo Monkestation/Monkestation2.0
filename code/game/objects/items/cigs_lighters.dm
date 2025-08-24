@@ -261,7 +261,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit)
 		return ..()
 
-	var/lighting_text = W.ignition_effect(src, user)
+	var/lighting_text = attacking_item.ignition_effect(src, user)
 	if(!lighting_text)
 		return ..()
 

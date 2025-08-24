@@ -407,8 +407,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. += span_info("It's worth [value] credit\s.")
 
 /obj/item/coin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = attacking_item
 		if(string_attached)
 			to_chat(user, span_warning("There already is a string attached to this coin!"))
 			return

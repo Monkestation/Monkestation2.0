@@ -703,8 +703,8 @@
 	is_zero_amount(delete_if_zero = TRUE)
 
 /obj/item/stack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(can_merge(W, inhand = TRUE))
-		var/obj/item/stack/S = W
+	if(can_merge(attacking_item, inhand = TRUE))
+		var/obj/item/stack/S = attacking_item
 		if(merge(S))
 			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
 	else

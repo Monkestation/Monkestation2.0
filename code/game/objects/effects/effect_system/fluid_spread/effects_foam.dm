@@ -352,10 +352,10 @@
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
-	if(!istype(W, /obj/item/stack/sheet))
+	if(!istype(attacking_item, /obj/item/stack/sheet))
 		return ..()
 
-	var/obj/item/stack/sheet/sheet_for_plating = W
+	var/obj/item/stack/sheet/sheet_for_plating = attacking_item
 	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
 		if(sheet_for_plating.get_amount() < 2)
 			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))

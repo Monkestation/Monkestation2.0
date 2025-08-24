@@ -212,21 +212,21 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
+/obj/vehicle/sealed/mecha/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((user.istate & ISTATE_HARM))
 		return ..()
-	if(istype(W, /obj/item/mmi))
-		if(mmi_move_inside(W,user))
-			to_chat(user, span_notice("[src]-[W] interface initialized successfully."))
+	if(istype(attacking_item, /obj/item/mmi))
+		if(mmi_move_inside(attacking_item,user))
+			to_chat(user, span_notice("[src]-[attacking_item] interface initialized successfully."))
 		else
-			to_chat(user, span_warning("[src]-[W] interface initialization failed."))
+			to_chat(user, span_warning("[src]-[attacking_item] interface initialization failed."))
 		return
 
-	if(istype(W, /obj/item/mecha_ammo))
-		ammo_resupply(W, user)
+	if(istype(attacking_item, /obj/item/mecha_ammo))
+		ammo_resupply(attacking_item, user)
 		return
 
-	if(W.GetID())
+	if(attacking_item.GetID())
 		if((mecha_flags & ADDING_ACCESS_POSSIBLE) || (mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE))
 			if(internals_access_allowed(user))
 				ui_interact(user)
@@ -236,12 +236,12 @@
 		to_chat(user, span_warning("Maintenance protocols disabled by operator."))
 		return
 
-	if(istype(W, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(construction_state == MECHA_OPEN_HATCH)
 			if(!cell)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
+				if(!user.transferItemToLoc(attacking_item, src, silent = FALSE))
 					return
-				var/obj/item/stock_parts/cell/C = W
+				var/obj/item/stock_parts/cell/C = attacking_item
 				to_chat(user, span_notice("You install the power cell."))
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 				cell = C
@@ -250,36 +250,36 @@
 				to_chat(user, span_warning("There's already a power cell installed!"))
 		return
 
-	if(istype(W, /obj/item/stock_parts/scanning_module))
+	if(istype(attacking_item, /obj/item/stock_parts/scanning_module))
 		if(construction_state == MECHA_OPEN_HATCH)
 			if(!scanmod)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
+				if(!user.transferItemToLoc(attacking_item, src, silent = FALSE))
 					return
 				to_chat(user, span_notice("You install the scanning module."))
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				scanmod = W
-				log_message("[W] installed", LOG_MECHA)
+				scanmod = attacking_item
+				log_message("[attacking_item] installed", LOG_MECHA)
 				update_part_values()
 			else
 				to_chat(user, span_warning("There's already a scanning module installed!"))
 		return
 
-	if(istype(W, /obj/item/stock_parts/capacitor))
+	if(istype(attacking_item, /obj/item/stock_parts/capacitor))
 		if(construction_state == MECHA_OPEN_HATCH)
 			if(!capacitor)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
+				if(!user.transferItemToLoc(attacking_item, src, silent = FALSE))
 					return
 				to_chat(user, span_notice("You install the capacitor."))
 				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				capacitor = W
-				log_message("[W] installed", LOG_MECHA)
+				capacitor = attacking_item
+				log_message("[attacking_item] installed", LOG_MECHA)
 				update_part_values()
 			else
 				to_chat(user, span_warning("There's already a capacitor installed!"))
 		return
 
-	if(istype(W, /obj/item/mecha_parts))
-		var/obj/item/mecha_parts/P = W
+	if(istype(attacking_item, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = attacking_item
 		P.try_attach_part(user, src, FALSE)
 		return
 

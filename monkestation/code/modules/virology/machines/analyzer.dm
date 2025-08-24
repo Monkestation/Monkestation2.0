@@ -31,7 +31,7 @@
 		scancount += M.tier
 	minimum_growth = round((initial(minimum_growth) - (scancount * 6)))
 
-/obj/machinery/disease2/diseaseanalyser/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/disease2/diseaseanalyser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(machine_stat & (BROKEN))

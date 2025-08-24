@@ -15,19 +15,19 @@
 
 // MONKESTATION ADDITION START
 /obj/item/card/id/advanced/undercover/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_card_action.hidden)
 		chameleon_card_action.hidden = FALSE
 		actions += chameleon_card_action
 		chameleon_card_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [attacking_item]")
 	else
 		chameleon_card_action.hidden = TRUE
 		actions -= chameleon_card_action
 		chameleon_card_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [attacking_item]")
 // MONKESTATION ADDITION END
 
 /obj/item/card/id/advanced/undercover/Initialize(mapload)

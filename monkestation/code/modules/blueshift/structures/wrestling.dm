@@ -89,7 +89,7 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/wrestling_corner/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/wrestling_corner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	add_fingerprint(user)
 

@@ -193,15 +193,15 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", attacking_item))
 		return
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	if(!powered())
 		return ..()
 
-	var/obj/item/stack/ore/O = W
+	var/obj/item/stack/ore/O = attacking_item
 	if(istype(O))
 		if(isnull(O.refined_type))
 			to_chat(user, span_warning("[O] has already been refined!"))

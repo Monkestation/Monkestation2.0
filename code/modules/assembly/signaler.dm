@@ -121,8 +121,8 @@
 	update_appearance()
 
 /obj/item/assembly/signaler/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(issignaler(W))
-		var/obj/item/assembly/signaler/signaler2 = W
+	if(issignaler(attacking_item))
+		var/obj/item/assembly/signaler/signaler2 = attacking_item
 		if(secured && signaler2.secured)
 			code = signaler2.code
 			set_frequency(signaler2.frequency)

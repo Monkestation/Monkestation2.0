@@ -158,7 +158,7 @@
 
 /obj/machinery/computer/cloning/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(!istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
+	if(!istype(tool, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		return NONE
 
 	if(!diskette || !user.transferItemToLoc(tool, src))

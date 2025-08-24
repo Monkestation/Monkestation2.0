@@ -21,7 +21,7 @@
 	return TRUE
 
 /obj/item/grenade/monkey_barrel/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		return TRUE
 	else
 		return ..()

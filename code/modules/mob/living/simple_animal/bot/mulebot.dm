@@ -165,7 +165,7 @@
 	diag_hud_set_mulebotcell()
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
+/mob/living/simple_animal/bot/mulebot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))

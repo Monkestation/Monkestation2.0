@@ -227,8 +227,8 @@
 
 
 /obj/machinery/shieldgen/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
-		var/obj/item/stack/cable_coil/coil = W
+	if(istype(attacking_item, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
+		var/obj/item/stack/cable_coil/coil = attacking_item
 		if (coil.get_amount() < 1)
 			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
 			return
@@ -242,7 +242,7 @@
 			to_chat(user, span_notice("You repair \the [src]."))
 			update_appearance()
 
-	else if(W.GetID())
+	else if(attacking_item.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
 			to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the controls."))
@@ -427,7 +427,7 @@
 
 
 /obj/machinery/power/shieldwallgen/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.GetID())
+	if(attacking_item.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
 			to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))

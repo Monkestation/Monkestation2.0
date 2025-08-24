@@ -34,14 +34,14 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/statue/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=0))
+		if(attacking_item.tool_behaviour == TOOL_WELDER)
+			if(!attacking_item.tool_start_check(user, amount=0))
 				return FALSE
 			user.balloon_alert(user, "slicing apart...")
-			if(W.use_tool(src, user, 40, volume=50))
+			if(attacking_item.use_tool(src, user, 40, volume=50))
 				deconstruct(TRUE)
 			return
 	return ..()

@@ -257,7 +257,7 @@
 		deconstruct(TRUE, 1)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/table/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/list/modifiers = params2list(params)
 
 	if(istype(I, /obj/item/storage/bag/tray))
@@ -1118,14 +1118,14 @@
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 
-/obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && (user.istate & ISTATE_SECONDARY))
-		W.play_tool_sound(src)
+/obj/structure/rack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if (attacking_item.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && (user.istate & ISTATE_SECONDARY))
+		attacking_item.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
 	if((user.istate & ISTATE_HARM))
 		return ..()
-	if(user.transferItemToLoc(W, drop_location()))
+	if(user.transferItemToLoc(attacking_item, drop_location()))
 		return 1
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
@@ -1179,7 +1179,7 @@
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if (W.tool_behaviour == TOOL_WRENCH)
+	if (attacking_item.tool_behaviour == TOOL_WRENCH)
 		new /obj/item/stack/sheet/iron(user.loc)
 		qdel(src)
 	else

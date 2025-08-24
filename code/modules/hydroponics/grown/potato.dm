@@ -39,8 +39,8 @@
 	bite_consumption_mod = 100
 
 /obj/item/food/grown/potato/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
-		to_chat(user, span_notice("You cut the potato into wedges with [W]."))
+	if(attacking_item.get_sharpness())
+		to_chat(user, span_notice("You cut the potato into wedges with [attacking_item]."))
 		var/obj/item/food/grown/potato/wedges/Wedges = new /obj/item/food/grown/potato/wedges
 		remove_item_from_storage(user)
 		qdel(src)

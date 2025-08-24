@@ -10,11 +10,11 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
 /obj/structure/ore_box/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if (istype(W, /obj/item/stack/ore))
-		user.transferItemToLoc(W, src)
-	else if(W.atom_storage)
-		W.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
-		to_chat(user, span_notice("You empty the ore in [W] into \the [src]."))
+	if (istype(attacking_item, /obj/item/stack/ore))
+		user.transferItemToLoc(attacking_item, src)
+	else if(attacking_item.atom_storage)
+		attacking_item.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
+		to_chat(user, span_notice("You empty the ore in [attacking_item] into \the [src]."))
 	else
 		return ..()
 

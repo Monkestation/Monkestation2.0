@@ -58,8 +58,8 @@
 /obj/structure/chair/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(flags_1 & NODECONSTRUCT_1)
 		return . = ..()
-	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		electrify_self(W, user)
+	if(istype(attacking_item, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
+		electrify_self(attacking_item, user)
 		return
 	. = ..()
 

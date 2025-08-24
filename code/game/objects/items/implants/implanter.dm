@@ -44,7 +44,7 @@
 	else
 		to_chat(user, span_warning("[src] fails to implant [target]."))
 
-/obj/item/implanter/attackby(obj/item/I, mob/living/user, params)
+/obj/item/implanter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/pen))
 		return ..()
 	if(!user.can_write(I))

@@ -58,7 +58,7 @@
 	growthrate = initial(growthrate) + lasercount
 
 
-/obj/machinery/disease2/incubator/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/disease2/incubator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if (machine_stat & (BROKEN))

@@ -155,7 +155,7 @@ the modular shield components(not generator) are climbable
 
 /obj/machinery/modular_shield_generator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(is_wire_tool(W) && panel_open)
+	if(is_wire_tool(attacking_item) && panel_open)
 		wires.interact(user)
 		return TRUE
 

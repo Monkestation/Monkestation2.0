@@ -95,7 +95,7 @@
 				new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 	..()
 
-/obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/toilet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		to_chat(user, span_notice("You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]..."))
@@ -198,7 +198,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	else
 		..()
 
-/obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/urinal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(exposed)
 		if (hidden_item)
 			to_chat(user, span_warning("There is already something in the drain enclosure!"))

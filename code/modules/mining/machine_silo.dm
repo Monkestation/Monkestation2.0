@@ -70,17 +70,17 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	return TRUE
 
 /obj/machinery/ore_silo/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 		updateUsrDialog()
 		return
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	if(!powered())
 		return ..()
 
-	if (isstack(W))
-		return remote_attackby(src, user, W)
+	if (isstack(attacking_item))
+		return remote_attackby(src, user, attacking_item)
 
 	return ..()
 

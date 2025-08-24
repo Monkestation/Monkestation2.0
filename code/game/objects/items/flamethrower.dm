@@ -114,41 +114,41 @@
 		return TRUE
 
 /obj/item/flamethrower/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isigniter(W))
-		var/obj/item/assembly/igniter/I = W
+	if(isigniter(attacking_item))
+		var/obj/item/assembly/igniter/I = attacking_item
 		if(I.secured)
 			return
 		if(igniter)
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		igniter = I
 		update_appearance()
 		return
 
-	else if(istype(W, /obj/item/tank/internals/plasma))
+	else if(istype(attacking_item, /obj/item/tank/internals/plasma))
 		if(ptank)
-			if(user.transferItemToLoc(W,src))
+			if(user.transferItemToLoc(attacking_item,src))
 				ptank.forceMove(get_turf(src))
-				ptank = W
+				ptank = attacking_item
 				to_chat(user, span_notice("You swap the plasma tank in [src]!"))
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		ptank = W
+		ptank = attacking_item
 		update_appearance()
 		return
 
-	else if(istype(W, /obj/item/reagent_containers/cup/beaker))
+	else if(istype(attacking_item, /obj/item/reagent_containers/cup/beaker))
 		if(beaker)
-			if(user.transferItemToLoc(W,src))
+			if(user.transferItemToLoc(attacking_item,src))
 				beaker.forceMove(get_turf(src))
-				beaker = W
+				beaker = attacking_item
 				to_chat(user, "<span class='notice'>You swap [beaker] in [src]!</span>")
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		beaker = W
+		beaker = attacking_item
 		to_chat(user, "<span class='notice'>You attach [beaker] to [src]!</span>")
 		update_icon()
 		return

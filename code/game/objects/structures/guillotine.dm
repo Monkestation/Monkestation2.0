@@ -185,7 +185,7 @@
 	icon_state = "guillotine"
 
 /obj/structure/guillotine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if (istype(W, /obj/item/sharpener))
+	if (istype(attacking_item, /obj/item/sharpener))
 		add_fingerprint(user)
 		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
 			return

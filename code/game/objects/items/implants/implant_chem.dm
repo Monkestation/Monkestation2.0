@@ -66,8 +66,8 @@
 	imp_type = /obj/item/implant/chem
 
 /obj/item/implantcase/chem/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/reagent_containers/syringe) && imp)
-		W.afterattack(imp, user, TRUE, params)
+	if(istype(attacking_item, /obj/item/reagent_containers/syringe) && imp)
+		attacking_item.afterattack(imp, user, TRUE, params)
 		return TRUE
 	else
 		return ..()

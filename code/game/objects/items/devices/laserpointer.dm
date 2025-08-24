@@ -50,11 +50,11 @@
 		return TRUE
 
 /obj/item/laser_pointer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stock_parts/micro_laser))
+	if(istype(attacking_item, /obj/item/stock_parts/micro_laser))
 		if(!diode)
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			diode = W
+			diode = attacking_item
 			to_chat(user, span_notice("You install a [diode.name] in [src]."))
 		else
 			to_chat(user, span_warning("[src] already has a diode installed!"))

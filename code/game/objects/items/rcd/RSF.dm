@@ -85,16 +85,16 @@ RSF
 	matter = 30
 
 /obj/item/rsf/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(is_type_in_list(W,matter_by_item))//If the thing we got hit by is in our matter list
-		var/tempMatter = matter_by_item[W.type] + matter
+	if(is_type_in_list(attacking_item,matter_by_item))//If the thing we got hit by is in our matter list
+		var/tempMatter = matter_by_item[attacking_item.type] + matter
 		if(tempMatter > max_matter)
 			to_chat(user, span_warning("\The [src] can't hold any more [discriptor]!"))
 			return
-		if(isstack(W))
-			var/obj/item/stack/stack = W
+		if(isstack(attacking_item))
+			var/obj/item/stack/stack = attacking_item
 			stack.use(1)
 		else
-			qdel(W)
+			qdel(attacking_item)
 		matter = tempMatter //We add its value
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, span_notice("\The [src] now holds [matter]/[max_matter] [discriptor]."))

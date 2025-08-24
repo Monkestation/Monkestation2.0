@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		STOP_PROCESSING(SSobj, src)
 	infection_attempt(user)
 
-/obj/item/weapon/virusdish/attackby(obj/item/I, mob/living/user, params)
+/obj/item/weapon/virusdish/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(istype(I,/obj/item/hand_labeler))
 		return

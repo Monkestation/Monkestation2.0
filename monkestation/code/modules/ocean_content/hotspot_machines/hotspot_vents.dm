@@ -55,9 +55,9 @@
 
 /obj/machinery/power/vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
 		var/turf/turf = get_turf(src)
-		turf.attackby(W)
+		turf.attackby(attacking_item)
 
 /obj/machinery/power/vent/examine(mob/user)
 	. = ..()

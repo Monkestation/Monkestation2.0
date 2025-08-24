@@ -26,11 +26,11 @@
 	if(.)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/rods))
-		build_with_rods(W, user)
+	if(istype(attacking_item, /obj/item/stack/rods))
+		build_with_rods(attacking_item, user)
 		return TRUE
-	else if(istype(W, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(W, user)
+	else if(istype(attacking_item, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(attacking_item, user)
 		return TRUE
 
 /turf/open/misc/attack_paw(mob/user, list/modifiers)

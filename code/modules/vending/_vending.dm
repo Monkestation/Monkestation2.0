@@ -577,7 +577,7 @@
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/vending/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
 		return

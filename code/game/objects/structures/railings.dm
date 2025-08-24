@@ -56,7 +56,7 @@
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
-/obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/railing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	add_fingerprint(user)
 

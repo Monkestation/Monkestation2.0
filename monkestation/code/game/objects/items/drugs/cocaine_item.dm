@@ -16,7 +16,7 @@
 	possible_transfer_amounts = list()
 
 /obj/item/reagent_containers/crackbrick/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
+	if(attacking_item.get_sharpness())
 		user.show_message(span_notice("You cut [src] into some rocks."), MSG_VISUAL)
 		for(var/i in 1 to 4)
 			new /obj/item/reagent_containers/crack(user.loc)

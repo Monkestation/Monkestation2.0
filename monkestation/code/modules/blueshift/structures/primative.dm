@@ -1774,7 +1774,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	name = "Glass-blowing Metal Cup"
 	result = /obj/item/glassblowing/metal_cup
 
-/obj/item/glassblowing/metal_cup/attackby(obj/item/I, mob/living/user, params)
+/obj/item/glassblowing/metal_cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/glass_obj = I
 		if(!glass_obj.use(1))

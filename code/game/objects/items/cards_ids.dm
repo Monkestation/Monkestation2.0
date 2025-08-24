@@ -557,14 +557,14 @@
 					SSid_access.apply_trim_to_card(src, trim)
 
 /obj/item/card/id/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/rupee))
+	if(istype(attacking_item, /obj/item/rupee))
 		to_chat(user, span_warning("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
 		return
-	else if(iscash(W))
-		insert_money(W, user)
+	else if(iscash(attacking_item))
+		insert_money(attacking_item, user)
 		return
-	else if(istype(W, /obj/item/storage/bag/money))
-		var/obj/item/storage/bag/money/money_bag = W
+	else if(istype(attacking_item, /obj/item/storage/bag/money))
+		var/obj/item/storage/bag/money/money_bag = attacking_item
 		var/list/money_contained = money_bag.contents
 		var/money_added = mass_insert_money(money_contained, user)
 		if (money_added)
@@ -1011,8 +1011,8 @@
 
 /obj/item/card/id/advanced/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/our_crayon = W
+	if(istype(attacking_item, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/our_crayon = attacking_item
 		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
 			if(!do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
 				return
@@ -1420,19 +1420,19 @@
 
 // MONKESTATION ADDITION START
 /obj/item/card/id/advanced/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_card_action.hidden)
 		chameleon_card_action.hidden = FALSE
 		actions += chameleon_card_action
 		chameleon_card_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [attacking_item]")
 	else
 		chameleon_card_action.hidden = TRUE
 		actions -= chameleon_card_action
 		chameleon_card_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [attacking_item]")
 // MONKESTATION ADDITION END
 
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)

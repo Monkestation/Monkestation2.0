@@ -330,7 +330,7 @@
 		flop_animation(contained_egg)
 		contained_egg.desc = "You can hear pecking from the inside of this seems it may hatch soon."
 
-/obj/machinery/egg_incubator/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/egg_incubator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty

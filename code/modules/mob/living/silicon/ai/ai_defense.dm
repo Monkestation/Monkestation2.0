@@ -1,13 +1,13 @@
 
 /mob/living/silicon/ai/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/ai_module))
-		var/obj/item/ai_module/MOD = W
+	if(istype(attacking_item, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = attacking_item
 		if(!mind) //A player mind is required for law procs to run antag checks.
 			to_chat(user, span_warning("[src] is entirely unresponsive!"))
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
-	if(W.force && W.damtype != STAMINA && stat != DEAD && !QDELETED(src)) //only sparks if real damage is dealt.
+	if(attacking_item.force && attacking_item.damtype != STAMINA && stat != DEAD && !QDELETED(src)) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
 

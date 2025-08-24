@@ -82,8 +82,8 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/emptysandbag/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stack/ore/glass))
-		var/obj/item/stack/ore/glass/G = W
+	if(istype(attacking_item, /obj/item/stack/ore/glass))
+		var/obj/item/stack/ore/glass/G = attacking_item
 		to_chat(user, span_notice("You fill the sandbag."))
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
 		qdel(src)
@@ -464,11 +464,11 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	novariants = TRUE
 
 /obj/item/stack/sheet/mineral/coal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
+	if(attacking_item.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		user.log_message("ignited coal", LOG_GAME)
-		fire_act(W.get_temperature())
+		fire_act(attacking_item.get_temperature())
 		return TRUE
 	else
 		return ..()

@@ -54,12 +54,12 @@
 		teleport(AM)
 
 /obj/machinery/teleport/hub/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
+	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", attacking_item))
 		if(power_station?.engaged)
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
 			update_appearance()
 		return
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 
@@ -167,7 +167,7 @@
 
 	if(panel_open)
 		multi.set_buffer(src)
-		to_chat(user, span_notice("You download the data to the [W.name]'s buffer."))
+		to_chat(user, span_notice("You download the data to the [multi.name]'s buffer."))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(multi.buffer, /obj/machinery/teleport/station) || multi.buffer == src)
@@ -183,11 +183,11 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/teleport/station/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+	if(default_deconstruction_screwdriver(user, "controller-o", "controller", attacking_item))
 		update_appearance()
 		return
 
-	else if(default_deconstruction_crowbar(W))
+	else if(default_deconstruction_crowbar(attacking_item))
 		return
 	else
 		return ..()

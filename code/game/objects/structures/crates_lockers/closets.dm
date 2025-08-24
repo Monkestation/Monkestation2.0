@@ -453,7 +453,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 /obj/structure/closet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(user in src)
 		return
-	if(src.tool_interact(W,user))
+	if(src.tool_interact(attacking_item,user))
 		return 1 // No afterattack
 	else
 		return ..()

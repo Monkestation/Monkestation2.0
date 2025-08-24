@@ -27,7 +27,7 @@
 /obj/structure/barricade/proc/make_debris()
 	return
 
-/obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/barricade/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && bar_material == METAL)
 		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))

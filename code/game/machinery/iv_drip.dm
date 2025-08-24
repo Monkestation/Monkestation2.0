@@ -208,15 +208,15 @@
 	if(use_internal_storage)
 		return ..()
 
-	if(is_type_in_typecache(W, drip_containers) || IS_EDIBLE(W))
+	if(is_type_in_typecache(attacking_item, drip_containers) || IS_EDIBLE(attacking_item))
 		if(reagent_container)
 			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		reagent_container = W
-		to_chat(user, span_notice("You attach [W] to [src]."))
-		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
+		reagent_container = attacking_item
+		to_chat(user, span_notice("You attach [attacking_item] to [src]."))
+		user.log_message("attached a [attacking_item] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
 		add_fingerprint(user)
 		update_appearance(UPDATE_ICON)
 		return

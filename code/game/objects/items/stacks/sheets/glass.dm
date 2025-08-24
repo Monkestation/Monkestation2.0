@@ -50,8 +50,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = attacking_item
 		if (get_amount() < 1 || CC.get_amount() < 5)
 			to_chat(user, span_warning("You need five lengths of coil and one sheet of glass to make wired glass!"))
 			return
@@ -62,8 +62,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
 		return
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
+	if(istype(attacking_item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/V = attacking_item
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
 			if(!QDELETED(RG))
@@ -114,8 +114,8 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 /obj/item/stack/sheet/plasmaglass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
+	if(istype(attacking_item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/V = attacking_item
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
 			if (!QDELETED(RG))

@@ -138,19 +138,19 @@
 	moth_snack.attack(target, user, params)
 
 /obj/item/clothing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(W, repairable_by))
+	if(!istype(attacking_item, repairable_by))
 		return ..()
 
 	switch(damaged_clothes)
 		if(CLOTHING_PRISTINE)
 			return..()
 		if(CLOTHING_DAMAGED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = attacking_item
 			cloth_repair.use(1)
 			repair(user, params)
 			return TRUE
 		if(CLOTHING_SHREDDED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = attacking_item
 			if(cloth_repair.amount < 3)
 				to_chat(user, span_warning("You require 3 [cloth_repair.name] to repair [src]."))
 				return TRUE

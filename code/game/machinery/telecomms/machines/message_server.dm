@@ -39,7 +39,7 @@
 		to_chat(user, span_warning("It seems that the blackbox is missing..."))
 		return
 
-/obj/machinery/blackbox_recorder/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/blackbox))
 		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
 			to_chat(user, span_warning("[I] is stuck to your hand!"))

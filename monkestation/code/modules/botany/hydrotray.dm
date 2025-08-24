@@ -20,7 +20,7 @@
 	AddComponent(/datum/component/plant_tray_overlay, icon, "hydrotray_gaia", "hydrotray_water_", "hydrotray_pests", "hydrotray_harvest", "hydrotray_nutriment", "hydrotray_health", 0, 0)
 	. = ..()
 
-/obj/machinery/growing/tray/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/growing/tray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!(user.istate & ISTATE_HARM))
 		// handle opening the panel
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))

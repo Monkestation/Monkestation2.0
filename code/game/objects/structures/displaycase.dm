@@ -333,8 +333,8 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/key/displaycase))
+/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/key/displaycase))
 		toggle_historian_mode(user)
 		return
 	return ..()
@@ -584,7 +584,7 @@
 			return TRUE
 	. = TRUE
 
-/obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isidcard(I))
 		//Card Registration
 		var/obj/item/card/id/potential_acc = I

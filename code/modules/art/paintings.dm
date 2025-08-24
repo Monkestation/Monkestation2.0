@@ -109,7 +109,7 @@
 		ui = new(user, src, "Canvas", name)
 		ui.open()
 
-/obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
+/obj/item/canvas/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!(user.istate & ISTATE_HARM))
 		ui_interact(user)
 	else
