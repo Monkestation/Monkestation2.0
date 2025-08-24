@@ -618,3 +618,18 @@
   wonderinghost:
   - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
       access instead of both'
+2025-08-24:
+  Absolucy:
+  - map: Added a medipen refiller to the Helio medbay lobby.
+  JohnFulpWillard:
+  - qol: The pushbroom can now pull with RMB.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  ThePooba:
+  - bugfix: maintloot turbomode
