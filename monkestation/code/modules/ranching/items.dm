@@ -119,7 +119,7 @@
 	name = "Chicken Scanner"
 	id = "chicken_scanner"
 	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/chicken_scanner
 	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

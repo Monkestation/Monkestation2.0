@@ -26,13 +26,6 @@
 		return
 	playsound(src, stepsound, 40, TRUE)
 
-///Disconnects air tank- air port connection on mecha move
-/obj/vehicle/sealed/mecha/proc/disconnect_air()
-	SIGNAL_HANDLER
-	if(internal_tank.disconnect()) // Something moved us and broke connection
-		to_chat(occupants, "[icon2html(src, occupants)][span_warning("Air port connection has been severed!")]")
-		log_message("Lost connection to gas port.", LOG_MECHA)
-
 // Do whatever you do to mobs to these fuckers too
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()
@@ -77,14 +70,13 @@
 		return FALSE
 	if(!direction)
 		return FALSE
+	if(ismovable(loc)) //Mech is inside an object, tell it we moved
+		var/atom/loc_atom = loc
+		return loc_atom.relaymove(src, direction)
+	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
 	if(internal_tank?.connected_port)
 		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while connected to the air system port!")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	if(construction_state)
-		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_danger("Maintenance protocols in effect.")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 
@@ -95,14 +87,16 @@
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while in zoom mode!")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
-	if(!cell)
+	var/list/missing_parts = list()
+	if(isnull(cell))
+		missing_parts += "power cell"
+	if(isnull(capacitor))
+		missing_parts += "capacitor"
+	if(isnull(manipulator))
+		missing_parts += "micro-manipulator"
+	if(length(missing_parts))
 		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing power cell.")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	if(!scanmod || !capacitor)
-		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [scanmod? "capacitor" : "scanning module"].")]")
+			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 	if(!use_power(step_energy_drain))
@@ -212,9 +206,6 @@
 			tally = 0
 		else	// Otherwise, start the tally after cutting that gap out.
 			tally -= encumbrance_gap
-
-	if(leg_overload_mode)	// At the end, because this would normally just make the mech *slower* since tally wasn't starting at 0.
-		tally = min(1, round(tally/2))
 
 //	return max(1, round(tally, 0.1))	// Round the total to the nearest 10th. Can't go lower than 1 tick. Even humans have a delay longer than that.
 	return movedelay + round(tally, 0.1)

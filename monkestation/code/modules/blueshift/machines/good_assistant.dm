@@ -1,4 +1,4 @@
-#define GBP_PUNCH_REWARD 100
+#define GBP_PUNCH_REWARD 200
 
 /obj/item/card/id
 	COOLDOWN_DECLARE(gbp_redeem_cooldown)
@@ -6,7 +6,7 @@
 /obj/item/gbp_punchcard
 	name = "Good Assistant Points punchcard"
 	desc = "The Good Assistant Points program is designed to supplement the income of otherwise unemployed or unpaid individuals on board Nanotrasen vessels and colonies.<br>\
-	Simply get your punchcard stamped by a Head of Staff to earn 100 credits per punch upon turn-in at a Good Assistant Point machine!<br>\
+	Simply get your punchcard stamped by a Head of Staff to earn 200 credits per punch upon turn-in at a Good Assistant Point machine!<br>\
 	Maximum of six punches per any given card. Card replaced upon redemption of existing card. Do not lose your punchcard."
 	icon = 'monkestation/code/modules/blueshift/icons/punchcard.dmi'
 	icon_state = "punchcard_0"
@@ -15,13 +15,12 @@
 	var/punches = 0
 	COOLDOWN_DECLARE(gbp_punch_cooldown)
 
-/obj/item/gbp_punchcard/starting
-	icon_state = "punchcard_1"
-	punches = 1 // GBP_PUNCH_REWARD credits by default
-
 /obj/item/gbp_punchcard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(istype(attacking_item, /obj/item/gbp_puncher))
+		if(is_assistant_job(user.mind.assigned_role))
+			to_chat(user, span_notice("I can't punch my own card, it would ruin the integrity of the system!"))
+			return
 		if(!COOLDOWN_FINISHED(src, gbp_punch_cooldown))
 			balloon_alert(user, "cooldown! [DisplayTimeText(COOLDOWN_TIMELEFT(src, gbp_punch_cooldown))]")
 			return
@@ -170,7 +169,7 @@
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/human, visualsOnly)
 	. = ..()
-	backpack_contents += list(/obj/item/gbp_punchcard/starting)
+	backpack_contents += list(/obj/item/gbp_punchcard)
 
 /datum/design/board/gbp_machine
 	name = "Good Assistant Points Redemption Machine Board"

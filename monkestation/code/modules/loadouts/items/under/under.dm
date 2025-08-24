@@ -295,6 +295,10 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Colorable Bunny Suit"
 	item_path = /obj/item/clothing/under/costume/playbunny
 
+/datum/loadout_item/under/miscellaneous/hula
+	name = "Hula Skirt"
+	item_path = /obj/item/clothing/under/dress/hula
+
 /*
 *	FORMAL UNDERSUITS
 */
