@@ -76,13 +76,6 @@
 		},
 		{
 			"Down": true,
-			"Up": true,
-			"Baseturf": "/turf/open/openspace",
-			"Linkage": "Cross",
-			"No Parallax": true
-		},
-		{
-			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		}
