@@ -7,8 +7,8 @@
 	sugar_restricted = TRUE
 	ability_explanation = "\
 	Asks your host if they accept your existance inside of them\n\
-	If the host agrees, you will progress one of your objectives.\n\
-	Whilst this does not immediatelly provide a benefit to you, enough willing hosts will make your evolution and chemical points accumulate quicker.\n\
+	If the host agrees, they'll become a more suitable environment to your needs and you will progress one of your objectives.\n\
+	With enough willing hosts will make your evolution and chemical points accumulate quicker.\n\
 	"
 
 /datum/action/cooldown/borer/willing_host/Trigger(trigger_flags, atom/target)
