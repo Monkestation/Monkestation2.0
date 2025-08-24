@@ -518,6 +518,7 @@
 				C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult/used(C))
 				C.update_handcuffed()
 				C.adjust_silence(10 SECONDS)
+				C.adjust_emote_mute(10 SECONDS)
 				to_chat(user, span_notice("You shackle [C]."))
 				log_combat(user, C, "shackled")
 				uses--

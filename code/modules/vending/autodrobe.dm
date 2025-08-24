@@ -107,6 +107,10 @@
 				/obj/item/clothing/gloves/infinity_gloves = 5,
 				/obj/item/clothing/suit/thekiller_robe = 1,
 				/obj/item/clothing/head/thekiller_head = 1,
+				/obj/item/clothing/head/costume/dio = 1,
+				/obj/item/clothing/suit/costume/dio = 1,
+				/obj/item/clothing/under/costume/dio = 1,
+				/obj/item/clothing/shoes/dio = 1,
 				//Monkestation Addition end
 			),
 		),

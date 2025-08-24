@@ -102182,6 +102182,7 @@
 /area/station/engineering/lobby)
 "ygT" = (
 /obj/effect/turf_decal/tile/brown,
+/obj/machinery/gbp_redemption,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "ygW" = (
