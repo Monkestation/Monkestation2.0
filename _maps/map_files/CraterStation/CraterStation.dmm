@@ -31477,6 +31477,10 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/engineering/supermatter/room)
+"jJi" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/upper)
 "jJr" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_y = 32
@@ -123842,9 +123846,9 @@ bwO
 rqX
 xVO
 sgL
-oke
-oYd
-oke
+sgL
+hsl
+sgL
 sgL
 sgL
 sgL
@@ -124615,7 +124619,7 @@ xVO
 gLo
 oke
 oYd
-oke
+jJi
 sgL
 crc
 crc
