@@ -88,9 +88,11 @@
 	var/was_deaf = HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE)
 	var/was_hoh = HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
 
-	if (!deaf && was_hoh || was_deaf)
-		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
-		REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+	if (!deaf)
+		if (was_deaf)
+			REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
+		if (was_hoh)
+			REMOVE_TRAIT(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
 		return
 
 	if (damage < 25 && !(organ_flags & ORGAN_FAILING))
