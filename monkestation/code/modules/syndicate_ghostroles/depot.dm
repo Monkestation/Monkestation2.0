@@ -165,7 +165,7 @@
 	armor_type = /datum/armor/machinery_blackbox_recorder
 	///The machine's internal radio, used to broadcast alerts.
 	var/obj/item/radio/radio //i hate this fucking code
-	var/radio_channel = RADIO_CHANNEL_SYNDICATE
+	var/radio_channel = FREQ_SYNDICATE
 	var/obj/item/stored
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //meant to be breakable when box not inserted, but it might shit itself if i change resistance flags mid-operation
 
