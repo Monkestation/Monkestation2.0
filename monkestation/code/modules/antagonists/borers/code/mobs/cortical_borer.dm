@@ -354,8 +354,6 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	if(prob(5 * host_harm_multiplier * ((upgrade_flags & BORER_STEALTH_MODE) ? 0.1 : 1)) && human_host.getToxLoss() <= (80 * host_harm_multiplier))
 		human_host.adjustToxLoss(2.5 * seconds_per_tick * host_harm_multiplier, TRUE, TRUE)
 
-	human_host.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
-
 	//cant do anything if the host has sugar
 	if(host_sugar())
 		if(!has_status_effect(/datum/status_effect/borer_sugar))
