@@ -188,7 +188,7 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, GenerateCombatOverlay())
 	hotkey_keys = list("C")
 	name = "combat_indicator"
 	full_name = "Combat Indicator"
-	description = "Indicates that you're escalating to mechanics. YOU NEED TO USE THIS"
+	description = "Indicates that you want to resort to violence."
 	keybind_signal = COMSIG_KB_LIVING_COMBAT_INDICATOR
 
 /datum/keybinding/living/combat_indicator/down(client/user)
