@@ -11,7 +11,7 @@
 
 	research_value = TECHWEB_DISCOUNT_MINOR *2
 
-	examine_discovered = span_warning("It appears to be some sort of automated surgery device")
+	examine_discovered = span_warning("It appears to be some sort of automated surgery device.")
 
 /datum/artifact_effect/surgery/effect_touched(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, surgery_cooldown))

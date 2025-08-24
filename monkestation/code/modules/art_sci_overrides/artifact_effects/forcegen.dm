@@ -28,7 +28,7 @@
 
 	research_value = TECHWEB_TIER_2_POINTS
 
-	examine_discovered = span_warning("It appears to generate some kind of forcefield")
+	examine_discovered = span_warning("It appears to generate some kind of forcefield.")
 
 	var/cooldown_time //cooldown AFTER the shield lowers
 	var/shield_iconstate
@@ -52,13 +52,8 @@
 		return
 	our_artifact.holder.anchored = TRUE
 	var/turf/our_turf = get_turf(our_artifact.holder)
-	var/list/bad_turfs
-	if(radius > 1)
-		bad_turfs = range(radius - 1, our_artifact.holder)
-	for(var/turf/open/floor in range(radius,our_artifact.holder))
-		if(floor in bad_turfs)
-			continue
-		if(floor == our_turf)
+	for(var/turf/open/floor in orange(radius, our_turf))
+		if(radius > 1 && get_dist(our_turf, floor) < radius)
 			continue
 		var/obj/field = new /obj/structure/artifact_forcefield(floor)
 		field.icon_state = shield_iconstate
