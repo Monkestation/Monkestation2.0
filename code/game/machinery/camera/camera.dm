@@ -592,3 +592,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	else
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 	return 1
+
+// stupid variant of cameras that doesn't check multi-z at all
+/obj/machinery/camera/autoname/no_multiz
+
+/obj/machinery/camera/autoname/no_multiz/can_see()
+	if(isXRay())
+		reutrn range(view_range, loc)
+	else get_hear(view_range, loc)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/no_multiz, 0)
+
