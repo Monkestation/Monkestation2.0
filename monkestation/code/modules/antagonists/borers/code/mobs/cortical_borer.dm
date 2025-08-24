@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	carbon_target.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	if(carbon_target.is_willing_host(carbon_target))
 		carbon_target.add_mood_event("borer", /datum/mood_event/has_borer)
+
 	var/image/holder = carbon_target.hud_list[BORER_HUD]
 	var/mutable_appearance/MA = new /mutable_appearance(holder)
 	MA.icon_state = "virus_infected"
@@ -98,6 +99,14 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		carbon_target.add_mood_event("borer", /datum/mood_event/no_borer)
 	var/datum/atom_hud/borer/hud = GLOB.huds[DATA_HUD_BORER]
 	hud.remove_atom_from_hud(carbon_target)
+
+/obj/item/organ/internal/borer_body/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	if(!iscarbon(owner) || !owner.reagents)
+		return
+
+	if(owner.is_willing_host(owner))
+		owner.reagents.metabolize(owner, seconds_per_tick, 0, can_overdose=TRUE)
 
 /obj/item/reagent_containers/borer
 	volume = 100
