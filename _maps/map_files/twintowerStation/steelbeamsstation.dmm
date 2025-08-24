@@ -3220,13 +3220,6 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
-"boj" = (
-/obj/structure/cable,
-/obj/machinery/camera/autoname/no_multiz/directional/east,
-/turf/open/floor/iron/smooth_half{
-	dir = 1
-	},
-/area/station/commons/subway/track)
 "bos" = (
 /obj/machinery/door/window/elevator/left/directional/west{
 	elevator_mode = 1;
@@ -7461,10 +7454,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/easttower/a2ndfloor/hallway)
-"cQL" = (
-/obj/machinery/camera/autoname/no_multiz/directional/north,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "cQO" = (
 /turf/closed/wall,
 /area/station/service/janitor)
@@ -26898,6 +26887,13 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"kxz" = (
+/obj/structure/cable,
+/obj/machinery/camera/autoname/no_multiz/directional/east,
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
+/area/station/commons/subway/track)
 "kxM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28207,7 +28203,6 @@
 /obj/machinery/door/airlock/corporate{
 	name = "Blueshield's Quarters"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/blueshield)
 "kYn" = (
@@ -38119,6 +38114,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/station/commons/easttower/maintenence/a5thfloor/hallway)
+"oXw" = (
+/obj/machinery/camera/autoname/no_multiz/directional/north,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "oXy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42705,14 +42704,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/command)
-"qLC" = (
-/obj/machinery/camera/autoname/no_multiz/directional/south,
-/obj/effect/turf_decal/tile/orange,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plastic,
-/area/station/engineering/a2MINPP/interior)
 "qLF" = (
 /obj/structure/table,
 /obj/item/modular_computer/laptop/preset/civilian,
@@ -44816,6 +44807,14 @@
 /obj/machinery/camera/autoname/no_multiz/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/subway/northstation)
+"rCL" = (
+/obj/machinery/camera/autoname/no_multiz/directional/south,
+/obj/effect/turf_decal/tile/orange,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/station/engineering/a2MINPP/interior)
 "rDi" = (
 /obj/machinery/blackbox_recorder,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -53421,6 +53420,11 @@
 /obj/effect/turf_decal/trimline/green/corner,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"uTD" = (
+/obj/machinery/camera/autoname/no_multiz/directional/north,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/textured_large,
+/area/station/service/kitchen/diner)
 "uTG" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
@@ -61116,11 +61120,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/cargo/quartermaster)
-"xXZ" = (
-/obj/machinery/camera/autoname/no_multiz/directional/north,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/textured_large,
-/area/station/service/kitchen/diner)
 "xYd" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -82437,7 +82436,7 @@ ltQ
 ltQ
 pMU
 nrv
-boj
+kxz
 sYK
 sYK
 sYK
@@ -82469,7 +82468,7 @@ nrv
 sYK
 sYK
 sYK
-boj
+kxz
 nrv
 sYK
 sYK
@@ -111104,7 +111103,7 @@ nXr
 bHQ
 dhH
 sEV
-xXZ
+uTD
 xvZ
 pXq
 pxE
@@ -112584,7 +112583,7 @@ cdz
 rHk
 qpP
 sEV
-xXZ
+uTD
 uAM
 pXq
 pxE
@@ -121456,7 +121455,7 @@ sls
 nhO
 qxQ
 rKN
-qLC
+rCL
 mIB
 mIB
 mIB
@@ -126094,7 +126093,7 @@ kYx
 hgu
 vhM
 rKN
-qLC
+rCL
 mIB
 ncK
 ncK
@@ -213216,7 +213215,7 @@ oZm
 phI
 hxl
 avY
-cQL
+oXw
 cBN
 lrn
 lrn
@@ -216923,7 +216922,7 @@ vXk
 nbV
 uab
 avY
-cQL
+oXw
 cBN
 cBN
 lrn
