@@ -1158,7 +1158,7 @@
 	pixel_x = 6
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/reagent_containers/cocaine,
+/obj/item/stack/sheet/cocaine,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "UR" = (
@@ -1312,7 +1312,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "ZP" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/cocaine,
+/obj/item/stack/sheet/cocaine,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
