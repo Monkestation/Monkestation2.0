@@ -54,6 +54,8 @@
 #define SENSOR_HUD	"25"
 // for silicons to know if you're crew
 #define CREW_HUD "26"
+/// Hud for spying who already has a host as a borer
+#define BORER_HUD "27"
 //monkestation edit end
 
 //by default everything in the hud_list of an atom is an image
@@ -74,6 +76,7 @@
 #define DATA_HUD_PERMIT 10 //monkestation edit
 #define DATA_HUD_SENSORS 11 //monkestation edit
 #define DATA_HUD_CREW 12 //monkestation edit
+#define DATA_HUD_BORER 13
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

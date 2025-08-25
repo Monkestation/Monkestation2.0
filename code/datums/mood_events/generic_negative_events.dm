@@ -479,3 +479,7 @@
 	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
 	mood_change = -4
 	timeout = 1 MINUTES
+
+/datum/mood_event/no_borer
+	description = "I still can hear that lingering melody, echoing."
+	mood_change = -5
