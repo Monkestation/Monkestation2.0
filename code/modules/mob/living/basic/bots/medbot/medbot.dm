@@ -4,8 +4,8 @@
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "medibot0"
-	base_icon_state = "medibot"
+	icon_state = "medbot_generic_idle"
+	base_icon_state = "medbot"
 	density = FALSE
 	anchored = FALSE
 	health = 20
@@ -95,7 +95,7 @@
 	/// drop determining variable
 	var/medkit_type = /obj/item/storage/medkit
 	///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
-	var/skin
+	var/skin = "generic"
 	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
 	/// Start healing when they have this much damage in a category
@@ -156,21 +156,23 @@
 
 /mob/living/basic/bot/medbot/update_icon_state()
 	. = ..()
-	if(!(bot_mode_flags & BOT_MODE_ON))
-		icon_state = "[base_icon_state]0"
-		return
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		icon_state = "[base_icon_state]a"
-		return
-	if(mode == BOT_HEALING)
-		icon_state = "[base_icon_state]s[medical_mode_flags & MEDBOT_STATIONARY_MODE ? 1 : 0]"
-		return
-	icon_state = "[base_icon_state][medical_mode_flags & MEDBOT_STATIONARY_MODE ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
+
+	var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
+	icon_state = "[base_icon_state]_[skin]_[mode_suffix]"
 
 /mob/living/basic/bot/medbot/update_overlays()
 	. = ..()
-	if(skin)
-		. += "medskin_[skin]"
+
+	if(!(medical_mode_flags & MEDBOT_STATIONARY_MODE))
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_wheels")
+
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_incapacitated")
+		. += emissive_appearance(icon, "[base_icon_state]_overlay_incapacitated", src, alpha = src.alpha)
+	else if(bot_mode_flags & BOT_MODE_ON)
+		var/mode_suffix = mode == BOT_HEALING ? "active" : "idle"
+		. += mutable_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]")
+		. += emissive_appearance(icon, "[base_icon_state]_overlay_on_[mode_suffix]", src, alpha = src.alpha)
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()
