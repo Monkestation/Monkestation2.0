@@ -1,7 +1,6 @@
 /datum/lighting_object
 	///the underlay we are currently applying to our turf to apply light
 	var/mutable_appearance/current_underlay
-	var/mutable_appearance/additive_underlay
 
 	///whether we are already in the SSlighting.objects_queue list
 	var/needs_update = FALSE
@@ -20,10 +19,6 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	. = ..()
 
 	current_underlay = new(GLOB.default_lighting_underlays_by_z[source.z])
-
-	additive_underlay = mutable_appearance(LIGHTING_ICON, ("light"), source.z, source, LIGHTING_PLANE_ADDITIVE, 200, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
-
-	additive_underlay.blend_mode = BLEND_ADD
 
 	affected_turf = source
 	if (affected_turf.lighting_object)
@@ -50,7 +45,6 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 		affected_turf.lighting_object = null
 		affected_turf.luminosity = 1
 		affected_turf.underlays -= current_underlay
-		affected_turf.underlays -= additive_underlay
 	affected_turf = null
 	return ..()
 
@@ -114,21 +108,6 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 			alpha_corner.cache_r, alpha_corner.cache_g, alpha_corner.cache_b, 00,
 			00, 00, 00, 01
 		)
-
-	if(red_corner.applying_additive || green_corner.applying_additive || blue_corner.applying_additive || alpha_corner.applying_additive)
-		affected_turf.underlays -= additive_underlay
-		additive_underlay.icon_state = "light"
-
-		additive_underlay.color = list(
-			red_corner.add_r, red_corner.add_g, red_corner.add_b, 00,
-			green_corner.add_r, green_corner.add_g, green_corner.add_b, 00,
-			blue_corner.add_r, blue_corner.add_g, blue_corner.add_b, 00,
-			alpha_corner.add_r, alpha_corner.add_g, alpha_corner.add_b, 00,
-			00, 00, 00, 01
-		)
-		affected_turf.underlays += additive_underlay
-	else
-		affected_turf.underlays -= additive_underlay
 
 	affected_turf.underlays += current_underlay
 	affected_turf.luminosity = set_luminosity
