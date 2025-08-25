@@ -1,5 +1,6 @@
 #define MANNEQUIN_WOOD "wood"
 #define MANNEQUIN_PLASTIC "plastic"
+#define MANNEQUIN_SKELETON "skeleton"
 
 /// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
@@ -175,6 +176,12 @@
 
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
+
+/obj/structure/mannequin/skeleton
+	name = "skeleton model"
+	desc = "Not to knock over."
+	material = MANNEQUIN_SKELETON
+	obj_flags = UNIQUE_RENAME
 
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,

@@ -1,0 +1,78 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/light/warm/directional/south,
+/mob/living/basic/rabbit,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"e" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"i" = (
+/obj/structure/flora/bush/leavy/style_random,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"j" = (
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"n" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/storage/basket/easter,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"u" = (
+/mob/living/basic/rabbit,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"v" = (
+/obj/structure/flora/bush/leafy,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"w" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/modular_map_connector,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"R" = (
+/mob/living/basic/rabbit,
+/obj/structure/flora/bush/leavy/style_random,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"S" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"W" = (
+/obj/structure/flora/bush/leavy/style_random,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+"X" = (
+/obj/structure/flora/bush/pointy/style_random,
+/turf/open/floor/grass,
+/area/station/maintenance/aft/upper)
+
+(1,1,1) = {"
+n
+e
+a
+"}
+(2,1,1) = {"
+X
+R
+w
+"}
+(3,1,1) = {"
+i
+j
+S
+"}
+(4,1,1) = {"
+u
+v
+W
+"}

@@ -12,8 +12,8 @@
 	icon_state = "station_map"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 16
-	active_power_usage = 128
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	circuit = /obj/item/circuitboard/machine/station_map
 	light_color = HOLOMAP_HOLOFIER
 
@@ -100,7 +100,7 @@
 	user.client.images |= holomap_datum.base_map
 
 	watching_mob = user
-	use_power = ACTIVE_POWER_USE
+	update_use_power(ACTIVE_POWER_USE)
 
 	if(holomap_datum.bogus)
 		to_chat(user, span_warning("The holomap failed to initialize. This area of space cannot be mapped."))
@@ -142,7 +142,7 @@
 			watching_mob = null
 			set_light(HOLOMAP_LOW_LIGHT)
 
-	use_power = IDLE_POWER_USE
+	update_use_power(IDLE_POWER_USE)
 	holomap_datum.reset_map()
 
 /obj/machinery/station_map/power_change()

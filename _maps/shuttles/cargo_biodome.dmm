@@ -1,0 +1,234 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"b" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/dark/textured_edge,
+/area/shuttle/supply)
+"c" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/shuttle/supply)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_edge,
+/area/shuttle/supply)
+"m" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2";
+	name = "on ramp"
+	},
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+"o" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"q" = (
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/shuttle/supply)
+"r" = (
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+"w" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Supply Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor,
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+"A" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "Supply Dock Loading Door"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"B" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Supply Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/docking_port/mobile/supply{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"C" = (
+/obj/machinery/button/door/directional/west{
+	id = "QMLoaddoor2";
+	name = "Loading Doors";
+	pixel_y = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_y = -8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+"E" = (
+/turf/template_noop,
+/area/template_noop)
+"F" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+"H" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"K" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2";
+	name = "on ramp"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/shuttle/supply)
+"S" = (
+/turf/open/floor/iron/dark/textured_edge,
+/area/shuttle/supply)
+"W" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+"X" = (
+/turf/open/floor/iron/recharge_floor/asteroid,
+/area/shuttle/supply)
+"Z" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/turf/open/floor/fake_iron_sand,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+H
+H
+H
+A
+B
+H
+w
+K
+H
+H
+H
+E
+"}
+(2,1,1) = {"
+H
+c
+r
+Z
+r
+C
+r
+m
+x
+S
+H
+o
+"}
+(3,1,1) = {"
+H
+P
+r
+j
+r
+r
+r
+r
+r
+l
+H
+o
+"}
+(4,1,1) = {"
+H
+X
+r
+r
+r
+W
+r
+r
+r
+l
+H
+a
+"}
+(5,1,1) = {"
+H
+q
+j
+F
+r
+r
+r
+j
+r
+S
+H
+o
+"}
+(6,1,1) = {"
+H
+c
+j
+r
+r
+x
+r
+r
+x
+b
+H
+o
+"}
+(7,1,1) = {"
+H
+H
+H
+H
+H
+H
+H
+H
+H
+H
+H
+E
+"}

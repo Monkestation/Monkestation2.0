@@ -1,0 +1,91 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/bookcase/random,
+/turf/open/floor/wood/large,
+/area/station/maintenance/aft/upper)
+"d" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/large,
+/area/station/maintenance/aft/upper)
+"i" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/railing,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/maintenance/aft/upper)
+"p" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/bookcase/random,
+/turf/open/floor/wood/large,
+/area/station/maintenance/aft/upper)
+"q" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/station/maintenance/aft/upper)
+"s" = (
+/obj/structure/railing/corner,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/maintenance/aft/upper)
+"v" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/railing,
+/turf/open/floor/wood,
+/area/station/maintenance/aft/upper)
+"w" = (
+/obj/machinery/light/warm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/large,
+/area/station/maintenance/aft/upper)
+"z" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/wood/stairs/down,
+/area/station/maintenance/aft/upper)
+"R" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood/large,
+/area/station/maintenance/aft/upper)
+"S" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/mob/living/basic/creature/docile,
+/turf/open/floor/wood/stairs/down,
+/area/station/maintenance/aft/upper)
+
+(1,1,1) = {"
+v
+p
+w
+"}
+(2,1,1) = {"
+q
+z
+R
+"}
+(3,1,1) = {"
+s
+S
+d
+"}
+(4,1,1) = {"
+i
+a
+d
+"}

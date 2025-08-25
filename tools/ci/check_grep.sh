@@ -53,7 +53,7 @@ if $grep -U '^".+" = \(.+\)' $map_files;	then
     st=1
 fi;
 part "comments"
-if $grep '//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc'; then
+if $grep '//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc|http'; then
 	echo
 	echo -e "${RED}ERROR: Unexpected commented out line detected in this map file. Please remove it.${NC}"
 	st=1

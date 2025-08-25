@@ -9,6 +9,7 @@
 	decon_speed = 4 SECONDS
 	glass_type = /obj/item/stack/sheet/bronze
 	glass_amount = 1
+	spawn_with_window_sill = FALSE
 
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(on_reebe(src))
