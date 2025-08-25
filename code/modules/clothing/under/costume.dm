@@ -427,3 +427,10 @@
 	desc = "Looking at this REALLY makes you want to reject your humanity."
 	icon_state = "dio_turtleneck"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/jimbo
+	name = "joker's suit"
+	desc = "A costume fit for an ace of spades, club, diamonds and hearts. It's a suit of suits."
+	icon_state = "jimbo"
+	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
