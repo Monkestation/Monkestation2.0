@@ -77,15 +77,13 @@
 	var/mob/living/spider = controller.pawn
 	var/atom/current_target = controller.blackboard[target_key]
 	if (current_target && !(locate(/obj/structure/spider/stickyweb) in current_target))
-		finish_action(controller, succeeded = FALSE) // Already got a target
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.clear_blackboard_key(target_key)
 	var/turf/our_turf = get_turf(spider)
 	if (is_valid_web_turf(our_turf))
 		controller.set_blackboard_key(target_key, our_turf)
-		finish_action(controller, succeeded = TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/list/turfs_by_range = list()
 	for (var/i in 1 to scan_range)
@@ -101,11 +99,10 @@
 			final_turfs = turfs_by_range[turf_list]
 			break
 	if (!length(final_turfs))
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(target_key, pick(final_turfs))
-	finish_action(controller, succeeded = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_unwebbed_turf/proc/is_valid_web_turf(turf/target_turf, mob/living/spider)
 	if (locate(/obj/structure/spider/stickyweb) in target_turf)
