@@ -264,6 +264,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow/clockwork
 	/// Time between bolt recharges
 	var/recharge_time = 1.5 SECONDS
+	drawn = TRUE
 
 /obj/item/gun/ballistic/bow/clockwork/Initialize(mapload)
 	. = ..()

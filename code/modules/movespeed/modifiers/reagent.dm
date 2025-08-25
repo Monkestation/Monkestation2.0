@@ -44,3 +44,6 @@ MONKESTATION REMOVAL END */
 
 /datum/movespeed_modifier/reagent/nooartrium
 	multiplicative_slowdown = 2
+
+/datum/movespeed_modifier/reagent/shadowfrost
+	multiplicative_slowdown = 2

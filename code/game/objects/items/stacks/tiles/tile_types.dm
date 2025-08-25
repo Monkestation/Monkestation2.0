@@ -126,6 +126,13 @@
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fairygrass
 
+/obj/item/stack/tile/fairygrass/dark
+	name = "dark fairygrass tile"
+	singular_name = "dark fairygrass floor tile"
+	desc = "A patch of odd, light consuming grass."
+	turf_type = /turf/open/floor/grass/fairy/dark
+	color = "#410096"
+
 //Wood
 /obj/item/stack/tile/wood
 	name = "wood floor tile"

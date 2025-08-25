@@ -96,6 +96,7 @@ h1.alert, h2.alert		{color: #000000;}
 .grey					{color: #838383;}
 .nicegreen				{color: #14a833;}
 .boldnicegreen			{color: #14a833;	font-weight: bold;}
+.velvet					{color: #21007F;}
 .cult					{color: #973e3b;}
 .cultlarge				{color: #973e3b;	font-weight: bold;	font-size: 3;}
 .narsie					{color: #973e3b;	font-weight: bold;	font-size: 15;}

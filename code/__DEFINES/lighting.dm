@@ -141,3 +141,8 @@ do { \
 		0, 0, 0, 1           \
 	)                        \
 //monkestation end
+
+/// /turf/proc/is_softly_lit() but inlined
+#define IS_SOFTLY_LIT(turf) (turf.lighting_object && !(turf.luminosity || turf.dynamic_lumcount))
+/// Similar to turf.get_lumcount(), but it checks for soft lighting first, and just assumes the lumcount is 0 if it is.
+#define GET_SIMPLE_LUMCOUNT(turf) (IS_SOFTLY_LIT(turf) ? 0 : turf.get_lumcount())

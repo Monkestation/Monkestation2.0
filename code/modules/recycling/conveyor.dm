@@ -408,6 +408,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_appearance()
 	update_linked_conveyors()
 	update_linked_switches()
+	play_click_sound(SFX_SWITCH)
 
 /obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
 	if(is_wire_tool(attacking_item))
