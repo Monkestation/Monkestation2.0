@@ -1,0 +1,6 @@
+author: "Tractor Maam"
+delete-after: True
+changes:
+  - map: "heliostation now has departmental bells."
+  - map: "added a syndicate variant of the departmental bell for mapping purposes."
+  - rscdel: "Removed herobrine."

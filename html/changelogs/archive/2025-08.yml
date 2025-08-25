@@ -592,6 +592,12 @@
   - balance: Assistants can no longer punch cards
   - balance: Cards no longer start with one free punch
   - map: Added assistant point redeemer to all cargos that lacked one
+  - bugfix: updates GAP card description from 100 to 200
+  Sorenon:
+  - rscadd: Added the Monoplegic and Hemiplegic paralysis quirks
+  Xander3359:
+  - code_imp: adds emote_mute status effect and helper procs
+  - balance: adds emote mute to some silencing effects
   notghosti:
   - rscadd: Added new antigen 'Ig', which cannot be mass produced normally.
   - rscadd: Beaker apparatus can now pick up tubes and virus dishes.
@@ -605,3 +611,30 @@
   - admin: Plague rats have been removed from the antag datum panel. Use the event
       instead
   - balance: Removed the 4 crew spawns from the battlecruiser starfury
+  - bugfix: Florans can reattach limbs again
+  throwawayuseless:
+  - spellcheck: TRNE Corp. has hired a Ratvarian-fluent spellchecker and has subsequently
+      renamed the Rat'vander cocktail to Ratvander.
+  wonderinghost:
+  - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
+      access instead of both'
+2025-08-24:
+  Absolucy:
+  - map: Added a medipen refiller to the Helio medbay lobby.
+  - rscdel: Removed the "Hard of Hearing" quirk, due to issues relating to chat spam.
+      Hopefully it'll be back soon.
+  JohnFulpWillard:
+  - qol: The pushbroom can now pull with RMB.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  ThePooba:
+  - bugfix: maintloot turbomode
+2025-08-25:
+  Snack-Max:
+  - rscadd: Batter's Uniform to autodrone
