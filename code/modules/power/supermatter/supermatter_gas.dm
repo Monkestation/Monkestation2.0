@@ -114,9 +114,9 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 
 /datum/sm_gas/plasma
 	gas_path = /datum/gas/plasma
-	heat_modifier = 14
+	heat_modifier = 18
 	power_transmission = 0.4
-	heat_power_generation = 1
+	heat_power_generation = 1.1
 
 /datum/sm_gas/water_vapor
 	gas_path = /datum/gas/water_vapor
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 
 /datum/sm_gas/tritium
 	gas_path = /datum/gas/tritium
-	heat_modifier = 9
+	heat_modifier = 22
 	power_transmission = 3
 	heat_power_generation = 1
 
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 
 /// Start to emit radballs at a maximum of 30% chance per tick
 /datum/sm_gas/bz/extra_effects(obj/machinery/power/supermatter_crystal/sm)
-	if(sm.gas_percentage[/datum/gas/bz] > 0.4 && prob(30 * sm.gas_percentage[/datum/gas/bz]))
+	if(sm.gas_percentage[/datum/gas/bz] > 0.4 && prob(40 * sm.gas_percentage[/datum/gas/bz]))
 		sm.fire_nuclear_particle()
 
 /datum/sm_gas/pluoxium
