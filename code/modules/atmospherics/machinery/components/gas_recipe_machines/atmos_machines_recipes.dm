@@ -45,6 +45,24 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	requirements = list(/datum/gas/oxygen = 1000, /datum/gas/hypernoblium = 85)
 	products = list(/obj/item/hypernoblium_crystal = 1)
 
+/datum/gas_recipe/crystallizer/halon_crystalium
+	id = "halon_crystalium"
+	name = "Halon Crystal"
+	min_temp = 3
+	max_temp = 150
+	energy_release = -350000
+	requirements = list(/datum/gas/halon = 350, /datum/gas/hypernoblium = 40)
+	products = list(/obj/item/halon_crystal = 1)
+
+/datum/gas_recipe/crystallizer/hexane_crystalium
+	id = "hexane_crystalium"
+	name = "Hexane Crystal"
+	min_temp = 300
+	max_temp = 500
+	energy_release = 200000
+	requirements = list(/datum/gas/hexane = 200,/datum/gas/carbon_dioxide = 500)
+	products = list(/obj/item/hexane_crystal = 1)
+
 /datum/gas_recipe/crystallizer/metallic_hydrogen
 	id = "metal_h"
 	name = "Metallic hydrogen"
@@ -117,6 +135,15 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	energy_release = 9500000
 	requirements = list(/datum/gas/carbon_dioxide = 1500)
 	products = list(/obj/item/stack/sheet/mineral/diamond = 1)
+
+/datum/gas_recipe/crystallizer/uranium
+	id = "uranium"
+	name = "Uranium"
+	min_temp = 1000
+	max_temp = 5000
+	energy_release = -2500000
+	requirements = list(/datum/gas/tritium = 200, /datum/gas/hypernoblium = 50)
+	products = list(/obj/item/stack/sheet/mineral/uranium = 1)
 
 /datum/gas_recipe/crystallizer/plasma_sheet
 	id = "plasma_sheet"

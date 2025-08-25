@@ -42,3 +42,71 @@
 	uses--
 	if(!uses)
 		qdel(src)
+
+/obj/item/halon_crystal
+	name = "halon crystal"
+	desc = "A crystal made from halon and hyper-noblium that will fireproof any article of clothing."
+	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon_state = "halon_crystal"
+	resistance_flags = FIRE_PROOF
+	var/uses = 1
+
+/obj/item/halon_crystal/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+
+/obj/item/halon_crystal/afterattack(obj/item/clothing/clothing, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(!uses)
+		qdel(src)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(!istype(clothing))
+		to_chat(user, span_warning("The crystal can only be used on clothing!"))
+		return
+	if(clothing.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+		to_chat(user, span_warning("\The [clothing] is already fireproof!"))
+		return
+	to_chat(user, span_notice("You crush the crystal against [clothing], fireproofing it."))
+	clothing.name = "fireproofed [clothing.name]"
+	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	clothing.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+	clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	clothing.resistance_flags |= FIRE_PROOF
+	uses --
+	if(!uses)
+		qdel(src)
+
+/obj/item/hexane_crystal
+	name = "hexane crystal"
+	desc = "Potent radiation shield made from hexane and carbon dioxide. Has two uses."
+	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon_state = "hexane_crystal"
+	var/uses = 2
+
+/obj/item/hexane_crystal/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+
+/obj/item/hexane_crystal/afterattack(obj/item/clothing/clothing, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(!uses)
+		qdel(src)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(!istype(clothing))
+		to_chat(user, span_warning("The crystal can only be used on clothing!"))
+		return
+	if(HAS_TRAIT(clothing, TRAIT_RADIATION_PROTECTED_CLOTHING))
+		to_chat(user, span_warning("\The [clothing] is already shielded against radiation!"))
+		return
+	to_chat(user, span_notice("You crush the crystal against [clothing], shielding it from radiation."))
+	clothing.name = "rad-shielded [clothing.name]"
+	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	clothing.add_atom_colour("#f870f1", FIXED_COLOUR_PRIORITY)
+	ADD_TRAIT(clothing, TRAIT_RADIATION_PROTECTED_CLOTHING, src)
+	uses --
+	if(!uses)
+		qdel(src)

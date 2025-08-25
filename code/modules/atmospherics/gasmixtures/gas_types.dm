@@ -294,7 +294,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 200
 	base_value = 2
-	desc = "Powerful neutron absorber. Used in highly radioactive environments."
+	desc = "Powerful neutron reflector. Used in highly radioactive environments."
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
