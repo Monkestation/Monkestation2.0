@@ -1,5 +1,5 @@
 /datum/artifact_effect/toeverybody
-	examine_hint = "Seems...off somehow."
+	examine_hint = "Seems... off somehow."
 	examine_discovered = "Temporarily tears holes in reality."
 	discovered_credits = CARGO_CRATE_VALUE * 100 //GDM
 	weight = ARTIFACT_VERYRARE/5 //Super rare

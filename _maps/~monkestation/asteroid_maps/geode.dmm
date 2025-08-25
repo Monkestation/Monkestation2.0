@@ -1,19 +1,19 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/asteroid/tospace/gold,
-/area/space)
+/area/template_noop)
 "e" = (
 /turf/closed/mineral/asteroid/tospace/diamond,
-/area/space)
+/area/template_noop)
 "h" = (
 /turf/closed/mineral/asteroid/tospace/bscrystal,
-/area/space)
+/area/template_noop)
 "O" = (
 /turf/closed/mineral/random/asteroid,
-/area/space)
+/area/template_noop)
 "S" = (
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 S

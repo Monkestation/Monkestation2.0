@@ -21,11 +21,11 @@
 		to_chat(living, span_warning("You feel a soft prick."))
 
 /datum/artifact_fault/reagent/poison
-	name = "Poison"
+	name = "Poisoning Fault"
 
 /datum/artifact_fault/reagent/poison/on_trigger()
 	if(!reagents.len) //mostly copied from reagents.dm but oh well
 		for(var/datum/reagent/reagent as anything in subtypesof(/datum/reagent/toxin))
 			if(initial(reagent.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
 				reagents += reagent
-	. = ..()
+	return ..()
