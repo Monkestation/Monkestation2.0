@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 /obj/machinery/slime_pen_controller/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
-	for(var/obj/machinery/plumbing/ooze_sucker/main in GLOB.machines)
+	for(var/obj/machinery/plumbing/ooze_sucker/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/plumbing/ooze_sucker))
 		if(main.mapping_id != mapping_id)
 			continue
 		linked_sucker = main

@@ -5,6 +5,7 @@
 	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/regen_extract
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 	/// The damage healed (for each type) per tick.
 	/// This is multipled against the multiplier derived from cooldowns.
 	var/base_healing_amt = 5

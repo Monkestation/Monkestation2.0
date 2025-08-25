@@ -16,7 +16,7 @@ export const OverviewSection = (props) => {
   let overallOverrun = 0;
   for (let i = 0; i < subsystems.length; i++) {
     avgUsage += subsystems[i].usage_per_tick;
-    overallOverrun += subsystems[i].tick_overrun;
+    overallOverrun += subsystems[i].overtime;
   }
 
   return (

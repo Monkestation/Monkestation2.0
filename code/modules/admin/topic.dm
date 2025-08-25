@@ -69,7 +69,7 @@
 	else if(href_list["gamemode_panel"])
 		if(!check_rights(R_ADMIN))
 			return
-		SSticker.mode.admin_panel()
+		//SSticker.mode.admin_panel()
 		SSgamemode.admin_panel(usr) //monkestation addition
 
 	else if(href_list["call_shuttle"])

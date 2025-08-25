@@ -1,9 +1,8 @@
 #define REGISTER_POLLUTION(pollution) SSpollution.all_polution[pollution] = TRUE
-#define UNREGISTER_POLLUTION(pollution) SSpollution.all_polution -= pollution
+#define UNREGISTER_POLLUTION(pollution) SSpollution.all_polution -= pollution; SSpollution.current_run -= pollution; SSpollution.processed_this_run -= pollution
 #define SET_ACTIVE_POLLUTION(pollution) SSpollution.active_pollution[pollution] = TRUE
 #define SET_UNACTIVE_POLLUTION(pollution) SSpollution.active_pollution -= pollution
 #define SET_PROCESSED_THIS_RUN(pollution) SSpollution.processed_this_run[pollution] = TRUE
-#define REMOVE_POLLUTION_CURRENTRUN(pollution) SSpollution.current_run -= pollution
 
 #define POLLUTION_HEIGHT_DIVISOR 10
 

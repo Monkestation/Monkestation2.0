@@ -342,11 +342,11 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-	owner.adjustBruteLoss(-25)
-	owner.adjustFireLoss(-25)
+	owner.heal_overall_damage(brute = 25, burn = 25, updating_health = FALSE) // fully_heal always calls updatehealth anyways
 	owner.fully_heal(HEAL_CC_STATUS|HEAL_TEMP)
 	return TRUE
 

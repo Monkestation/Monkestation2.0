@@ -334,7 +334,7 @@
 
 	var/mob/living/living_target = target
 
-	if(living_target.buckled)
+	if(isobj(living_target.buckled))
 		var/obj/buck_source = living_target.buckled
 		if(buck_source.cover_amount != 0)
 			if(prob(buck_source.cover_amount))

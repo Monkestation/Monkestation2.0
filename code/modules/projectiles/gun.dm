@@ -335,7 +335,7 @@
 	if(super_throw && istype(target))
 		target.apply_damage((src.w_class * 7.5), BRUTE, attacking_item = src)
 		target.Knockdown((w_class) SECONDS)
-		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)
+		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		do_sparks(5, FALSE, src)
 		qdel(src)
 

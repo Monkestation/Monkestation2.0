@@ -185,6 +185,11 @@
 	for(var/datum/weakref/held as anything in fear_stages)
 		var/stage = fear_stages[held]
 		var/mob/living/carbon/human/human = held.resolve()
+		if(!human)
+			fear_stages -= held
+			heartbeats -= held
+			mobs_with_fullscreens -= held
+			continue
 
 		if(stage >= 1)
 			currently_beating |= held

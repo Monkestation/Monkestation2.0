@@ -399,10 +399,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 ///returns TRUE if all floors of the holodeck are present, returns FALSE if any are broken or removed
 /obj/machinery/computer/holodeck/proc/floorcheck()
+	var/list/typecache = GLOB.typecache_holodeck_linked_floorcheck_ok
 	for(var/turf/holo_floor in linked)
-		if (is_type_in_typecache(holo_floor, GLOB.typecache_holodeck_linked_floorcheck_ok))
-			continue
-		return FALSE
+		if(!is_type_in_typecache(holo_floor, typecache))
+			return FALSE
 	return TRUE
 
 ///changes all weapons in the holodeck to do stamina damage if set

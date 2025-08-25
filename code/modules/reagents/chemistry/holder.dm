@@ -1224,7 +1224,7 @@
 	//If the reaction pollutes, pollute it here if we have an atom
 	if(selected_reaction.pollutant_type && my_atom)
 		var/turf/my_turf = get_turf(my_atom)
-		my_turf.pollute_turf(selected_reaction.pollutant_type, selected_reaction.pollutant_amount * multiplier)
+		my_turf?.pollute_turf(selected_reaction.pollutant_type, selected_reaction.pollutant_amount * multiplier)
 
 	selected_reaction.on_reaction(src, null, multiplier)
 	selected_reaction.reaction_finish(src, null, multiplier)
