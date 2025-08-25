@@ -193,7 +193,7 @@
 	return NONE
 
 /obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	if(!check_allowed_items(target, target_self = TRUE))
 		return NONE

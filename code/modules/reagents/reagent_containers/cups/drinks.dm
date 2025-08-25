@@ -300,7 +300,7 @@
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/waterbottle/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !(user.istate & ISTATE_HARM))))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
 		return ITEM_INTERACT_BLOCKING
 

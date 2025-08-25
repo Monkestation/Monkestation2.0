@@ -434,7 +434,7 @@ effective or pretty fucking useless.
 /obj/item/storage/toolbox/emergency/turret/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
 	if(!istype(inserted, /obj/item/wrench/combat))
 		return TRUE
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		return TRUE
 	if(!inserted.toolspeed)
 		return TRUE
@@ -443,7 +443,7 @@ effective or pretty fucking useless.
 /obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/wrench/combat))
 		return NONE
-	if(!user.combat_mode)
+	if(!(user.istate & ISTATE_HARM))
 		return NONE
 	if(!tool.toolspeed)
 		return ITEM_INTERACT_BLOCKING

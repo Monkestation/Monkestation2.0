@@ -264,12 +264,12 @@
 	. = ..()
 	if(.)
 		return .
-	if(isnull(bayonet) || !user.combat_mode)
+	if(isnull(bayonet) || !(user.istate & ISTATE_HARM))
 		return .
 	return bayonet.melee_attack_chain(user, A, params)
 
 /obj/item/gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return NONE
 
 	if(istype(tool, /obj/item/knife))
@@ -286,7 +286,7 @@
 	return NONE
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(user.combat_mode && isliving(interacting_with))
+	if((user.istate & ISTATE_HARM) && isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
 		return ITEM_INTERACT_SUCCESS

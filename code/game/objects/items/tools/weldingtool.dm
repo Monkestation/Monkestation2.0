@@ -142,21 +142,35 @@
 		return ITEM_INTERACT_SUCCESS
 	if(!ishuman(interacting_with))
 		return NONE
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return NONE
 
-	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
+	return try_heal_loop(interacting_with, user)
 
-	if(affecting && !IS_ORGANIC_LIMB(affecting) && !(user.istate & ISTATE_HARM))
-		if(src.use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
-			if(user == attacked_humanoid)
-				user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
-					span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
-				if(!do_after(user, 5 SECONDS, attacked_humanoid))
-					return
-			item_heal_robotic(attacked_humanoid, user, 15, 0)
-	else
-		return ..()
+/obj/item/weldingtool/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
+	var/mob/living/carbon/human/attacked_humanoid = interacting_with
+	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
+	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
+		return NONE
+
+	if (!affecting.brute_dam)
+		balloon_alert(user, "limb not damaged")
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
+		span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+	var/use_delay = repeating ? 1 SECONDS : 0
+	if(user == attacked_humanoid)
+		use_delay = 5 SECONDS
+
+	if(!use_tool(attacked_humanoid, user, use_delay, volume=50, amount=1))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!item_heal_robotic(attacked_humanoid, user, brute_heal = 15, burn_heal = 0))
+		return ITEM_INTERACT_BLOCKING
+
+	INVOKE_ASYNC(src, PROC_REF(try_heal_loop), interacting_with, user, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
 	if(!isOn())
@@ -171,28 +185,14 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
 		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
-/obj/item/weldingtool/attack_qdeleted(atom/attacked_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(isOn())
-		handle_fuel_and_temps(1, user)
-
-		if(!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
-			var/mob/living/attacked_mob = attacked_atom
-			if(attacked_mob.ignite_mob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)].")
-				user.log_message("set [key_name(attacked_mob)] on fire with [src]", LOG_ATTACK)
-
-
 /obj/item/weldingtool/attack_self(mob/user)
-	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
+	if(reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		user.log_message("activated a rigged welder", LOG_VICTIM)
 		explode()
-	switched_on(user)
+		return
 
+	switched_on(user)
 	update_appearance()
 
 /obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)

@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 //   - Multitool : get the power currently passing through the cable
 //
 /obj/structure/cable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	handlecable(attacking_item, user, params)
+	handlecable(attacking_item, user, modifiers)
 
 
 // shock the user with probability prb

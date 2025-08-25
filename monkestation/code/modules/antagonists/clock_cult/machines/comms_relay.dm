@@ -13,7 +13,7 @@
 			var/obj/item/encryptionkey/key = attacking_item
 			for(var/i in key.channels)
 				key.channels[i] = 1
-			GLOB.current_eminence.internal_radio.attackby(key, user, params)
+			GLOB.current_eminence.internal_radio.attackby(key, user, modifiers, attack_modifiers)
 	. = ..()
 
 /obj/item/radio/intercom/reebe

@@ -365,7 +365,7 @@
 	. = ..()
 	if(.)
 		return .
-	if(A == user || !user.combat_mode)
+	if(A == user || !(user.istate & ISTATE_HARM))
 		return .
 	if(!check_hit(A))
 		return .

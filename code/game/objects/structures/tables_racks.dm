@@ -275,7 +275,7 @@
 	if(.)
 		return .
 
-	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+	if(!(user.istate & ISTATE_HARM) || (tool.item_flags & NOBLUDGEON))
 		return table_place_act(user, tool, modifiers)
 
 	return NONE

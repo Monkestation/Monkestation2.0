@@ -41,7 +41,7 @@
 		return .. ()
 
 	if(istype(attacking_item, /obj/item/food) || istype(attacking_item, /obj/item/chicken_feed) && istype(stored_chicken))
-		stored_chicken.attackby(attacking_item, user, params)
+		stored_chicken.attackby(attacking_item, user, modifiers, attack_modifiers)
 		return
 	. = ..()
 

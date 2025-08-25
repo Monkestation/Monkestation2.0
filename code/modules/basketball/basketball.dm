@@ -180,7 +180,7 @@
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/toy/basketball/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		user.throw_item(interacting_with)
 		return ITEM_INTERACT_SUCCESS
 	return NONE

@@ -64,22 +64,34 @@
 	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
 
 
-/obj/machinery/griddle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(length(griddled_objects) >= max_items)
-		to_chat(user, span_notice("[src] can't fit more items!"))
-		return
-	var/list/modifiers = params2list(params)
-	//Center the icon where the user clicked.
-	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
-		return
-	if(user.transferItemToLoc(attacking_item, src, silent = FALSE))
-		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		attacking_item.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-		attacking_item.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-		to_chat(user, span_notice("You place [attacking_item] on [src]."))
-		AddToGrill(attacking_item, user)
-	else
-		return ..()
+/obj/machinery/griddle/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(isnull(item.atom_storage))
+		return NONE
+
+	if(length(contents) >= max_items)
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!istype(item, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = item))
+			return ITEM_INTERACT_BLOCKING
+
+	var/loaded = 0
+	for(var/obj/tray_item in item)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(length(contents) >= max_items)
+			break
+		if(item.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			AddToGrill(tray_item, user)
+	if(loaded)
+		to_chat(user, span_notice("You insert [loaded] item\s into [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()

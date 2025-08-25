@@ -109,7 +109,7 @@
 		to_chat(user, span_warning("[M] doesn't have any eyes!"))
 		return
 
-	M.flash_act(visual = TRUE, length = (user.combat_mode) ? 2.5 SECONDS : 1 SECONDS) // Apply a 1 second flash effect to the target. The duration increases to 2.5 Seconds if you have combat mode on.
+	M.flash_act(visual = TRUE, length = (user.istate & ISTATE_HARM) ? 2.5 SECONDS : 1 SECONDS) // Apply a 1 second flash effect to the target. The duration increases to 2.5 Seconds if you have combat mode on.
 
 	if(M == user) //they're using it on themselves
 		user.visible_message(span_warning("[user] shines [src] into [M.p_their()] eyes."), ignored_mobs = user)
@@ -232,7 +232,7 @@
 	if(!light_on)
 		return NONE
 	add_fingerprint(user)
-	if(user.combat_mode || (user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
+	if((user.istate & ISTATE_HARM) || (user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		return NONE
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50)) //too dumb to use flashlight properly
 		return ITEM_INTERACT_SKIP_TO_ATTACK //just hit them in the head

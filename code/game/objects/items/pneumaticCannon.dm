@@ -162,7 +162,7 @@
 	return TRUE
 
 /obj/item/pneumatic_cannon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	Fire(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS

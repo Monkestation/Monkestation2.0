@@ -314,7 +314,7 @@
 		sync_ammo()
 		var/atom/target = M.client.mouse_object_ref?.resolve()
 		if(target)
-			INVOKE_ASYNC(src, PROC_REF(try_fire_gun), target, source.mob, source.mouseParams, TRUE)
+			INVOKE_ASYNC(src, PROC_REF(try_fire_gun), target, M.client.mob, M.client.mouseParams, TRUE)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
 	return ..()
@@ -323,7 +323,7 @@
 	if(user.Adjacent(target)) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return FALSE
-		if(!ismob(target) || user.combat_mode) //melee attack
+		if(!ismob(target) || (user.istate & ISTATE_HARM)) //melee attack
 			return FALSE
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return FALSE

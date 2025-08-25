@@ -66,7 +66,7 @@
 		heater_coefficient *= micro_laser.tier
 
 /obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
-	if(user.combat_mode || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+	if((user.istate & ISTATE_HARM) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return NONE
 
 	if(!QDELETED(beaker))
@@ -84,7 +84,7 @@
 	return NONE
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return NONE
 
 	. = ITEM_INTERACT_BLOCKING
@@ -92,7 +92,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return NONE
 
 	. = ITEM_INTERACT_BLOCKING
@@ -100,7 +100,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return NONE
 
 	. = ITEM_INTERACT_BLOCKING

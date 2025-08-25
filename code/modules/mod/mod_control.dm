@@ -367,7 +367,7 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/mod/control/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		// Block all item-click-inserts when we're open
 		// Other form of insertion will still function (mousedrop, hotkey)
 		if(open)

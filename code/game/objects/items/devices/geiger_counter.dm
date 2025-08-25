@@ -71,7 +71,7 @@
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/geiger_counter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if (user.combat_mode)
+	if (user.istate & ISTATE_HARM)
 		return NONE
 	if (!CAN_IRRADIATE(interacting_with))
 		return NONE

@@ -340,7 +340,7 @@
 
 	if(!(user.istate & ISTATE_HARM) && !(attacking_item.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(attacking_item, drop_location(), silent = FALSE))
-			var/list/click_params = params2list(params)
+			var/list/click_params = params2list(modifiers)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return

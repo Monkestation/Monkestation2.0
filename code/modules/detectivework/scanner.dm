@@ -100,7 +100,7 @@
 	log_data = list()
 
 /obj/item/detective_scanner/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
-	return !user.combat_mode
+	return !(user.istate & ISTATE_HARM)
 
 /obj/item/detective_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	safe_scan(user, interacting_with)

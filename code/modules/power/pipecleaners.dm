@@ -153,7 +153,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	deconstruct()
 
 /obj/structure/pipe_cleaner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	handlecable(attacking_item, user, params)
+	handlecable(attacking_item, user, modifiers)
 
 /obj/structure/pipe_cleaner/singularity_pull(S, current_size)
 	..()
