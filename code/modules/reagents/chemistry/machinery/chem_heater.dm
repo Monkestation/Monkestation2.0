@@ -203,16 +203,16 @@
 
 			use_power(active_power_usage * seconds_per_tick)
 
-/obj/machinery/chem_heater/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
+/obj/machinery/chem_heater/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", attacking_item))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(attacking_item) && !(attacking_item.item_flags & ABSTRACT) && attacking_item.is_open_container())
 		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/B = I
+		var/obj/item/reagent_containers/B = attacking_item
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
@@ -222,12 +222,12 @@
 		return
 
 	if(beaker)
-		if(istype(I, /obj/item/reagent_containers/dropper))
-			var/obj/item/reagent_containers/dropper/D = I
+		if(istype(attacking_item, /obj/item/reagent_containers/dropper))
+			var/obj/item/reagent_containers/dropper/D = attacking_item
 			D.afterattack(beaker, user, 1)
 			return
-		if(istype(I, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/syringe/S = I
+		if(istype(attacking_item, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/S = attacking_item
 			S.afterattack(beaker, user, 1)
 			return
 	return ..()

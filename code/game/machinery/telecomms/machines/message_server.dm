@@ -40,14 +40,14 @@
 		return
 
 /obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/blackbox))
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand!"))
+	if(istype(attacking_item, /obj/item/blackbox))
+		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
 			return
-		user.visible_message(span_notice("[user] clicks [I] into [src]!"), \
+		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
 		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		stored = I
+		stored = attacking_item
 		update_appearance()
 		return
 	return ..()

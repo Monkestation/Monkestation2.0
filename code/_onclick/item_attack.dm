@@ -338,15 +338,15 @@
 		return ..()
 
 /**
- * Last proc in the [/obj/item/proc/melee_attack_chain].
- * Returns a bitfield containing AFTERATTACK_PROCESSED_ITEM if the user is likely intending to use this item on another item.
- * Some consumers currently return TRUE to mean "processed". These are not consistent and should be taken with a grain of salt.
+ * Called on an object being hit by an item
  *
  * Arguments:
- * * atom/target - The thing that was hit
- * * mob/user - The mob doing the hitting
- * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
- * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
+ * * obj/item/attacking_item - The item hitting this atom
+ * * mob/user - The wielder of this item
+ * * list/modifiers - click params such as alt/shift etc
+ * * list/attack_modifiers - attack modifiers such as force, damage type, etc
+ *
+ * See: [/obj/item/proc/melee_attack_chain]
  */
 /obj/item/proc/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	PROTECTED_PROC(TRUE)

@@ -541,9 +541,9 @@
 		grinded = null
 		to_chat(user, span_notice("You eject the item inside."))
 
-/obj/item/reagent_containers/cup/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
+/obj/item/reagent_containers/cup/mortar/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
-	if(istype(I,/obj/item/pestle))
+	if(istype(attacking_item,/obj/item/pestle))
 		if(grinded)
 			if(user.stamina.loss > 50)
 				to_chat(user, span_warning("You are too tired to work!"))
@@ -553,7 +553,7 @@
 				"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
 			)
 			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
-			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)
+			if(grinded && in_range(src, user) && user.is_holding(attacking_item) && picked_option)
 				to_chat(user, span_notice("You start grinding..."))
 				if(do_after(user, 25, target = src))
 					user.stamina.adjust(-40)
@@ -598,9 +598,9 @@
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
 		return
-	if(I.juice_results || I.grind_results)
-		I.forceMove(src)
-		grinded = I
+	if(attacking_item.juice_results || attacking_item.grind_results)
+		attacking_item.forceMove(src)
+		grinded = attacking_item
 		return
 	to_chat(user, span_warning("You can't grind this!"))
 

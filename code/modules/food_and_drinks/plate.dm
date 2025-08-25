@@ -16,11 +16,11 @@
 	/// IE, if we this is normal, we can carry normal items or smaller.
 	var/biggest_w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/plate/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!IS_EDIBLE(I) && !istype(I, /obj/item/reagent_containers/cooking_container))
+/obj/item/plate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!IS_EDIBLE(attacking_item) && !istype(attacking_item, /obj/item/reagent_containers/cooking_container))
 		balloon_alert(user, "not food!")
 		return
-	if(I.w_class > biggest_w_class)
+	if(attacking_item.w_class > biggest_w_class)
 		balloon_alert(user, "too big!")
 		return
 	if(contents.len >= max_items)
@@ -30,11 +30,11 @@
 	//Center the icon where the user clicked.
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
-	if(user.transferItemToLoc(I, src, silent = FALSE))
-		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
-		I.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
-		to_chat(user, span_notice("You place [I] on [src]."))
-		AddToPlate(I, user)
+	if(user.transferItemToLoc(attacking_item, src, silent = FALSE))
+		attacking_item.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
+		attacking_item.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
+		to_chat(user, span_notice("You place [attacking_item] on [src]."))
+		AddToPlate(attacking_item, user)
 	else
 		return ..()
 

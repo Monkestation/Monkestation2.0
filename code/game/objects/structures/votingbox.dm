@@ -20,13 +20,13 @@
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
 /obj/structure/votebox/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I,/obj/item/card/id))
+	if(istype(attacking_item,/obj/item/card/id))
 		if(!owner)
-			register_owner(I,user)
+			register_owner(attacking_item,user)
 			return
-	if(istype(I,/obj/item/paper))
+	if(istype(attacking_item,/obj/item/paper))
 		if(voting_active)
-			apply_vote(I,user)
+			apply_vote(attacking_item,user)
 		else
 			to_chat(user,span_warning("[src] is in maintenance mode. Voting is not possible at the moment."))
 		return

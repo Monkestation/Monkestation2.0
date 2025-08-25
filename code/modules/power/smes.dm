@@ -86,14 +86,14 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/power/smes/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/power/smes/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	//opening using screwdriver
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), attacking_item))
 		update_appearance()
 		return
 
 	//changing direction using wrench
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, attacking_item))
 		terminal = null
 		var/turf/T = get_step(src, dir)
 		for(var/obj/machinery/power/terminal/term in T)
@@ -110,7 +110,7 @@
 		return
 
 	//building and linking a terminal
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
 		var/dir = get_dir(user,src)
 		if(dir & (dir-1))//we don't want diagonal click
 			return
@@ -129,7 +129,7 @@
 			return
 
 
-		var/obj/item/stack/cable_coil/C = I
+		var/obj/item/stack/cable_coil/C = attacking_item
 		if(C.get_amount() < 10)
 			to_chat(user, span_warning("You need more wires!"))
 			return
@@ -164,12 +164,12 @@
 
 	//crowbarring it !
 	var/turf/T = get_turf(src)
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)].")
 		user.log_message("deconstructed [src]", LOG_GAME)
 		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
 		return
-	else if(panel_open && I.tool_behaviour == TOOL_CROWBAR)
+	else if(panel_open && attacking_item.tool_behaviour == TOOL_CROWBAR)
 		return
 
 	return ..()

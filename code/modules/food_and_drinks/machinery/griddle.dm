@@ -64,7 +64,7 @@
 	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
 
 
-/obj/machinery/griddle/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/griddle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(length(griddled_objects) >= max_items)
 		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
@@ -72,12 +72,12 @@
 	//Center the icon where the user clicked.
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
-	if(user.transferItemToLoc(I, src, silent = FALSE))
+	if(user.transferItemToLoc(attacking_item, src, silent = FALSE))
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-		to_chat(user, span_notice("You place [I] on [src]."))
-		AddToGrill(I, user)
+		attacking_item.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+		attacking_item.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+		to_chat(user, span_notice("You place [attacking_item] on [src]."))
+		AddToGrill(attacking_item, user)
 	else
 		return ..()
 

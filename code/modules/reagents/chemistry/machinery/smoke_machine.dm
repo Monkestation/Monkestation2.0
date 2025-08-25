@@ -99,17 +99,17 @@
 		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
-/obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/smoke_machine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(is_reagent_container(I) && I.is_open_container())
-		var/obj/item/reagent_containers/RC = I
+	if(is_reagent_container(attacking_item) && attacking_item.is_open_container())
+		var/obj/item/reagent_containers/RC = attacking_item
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return
-	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", I))
+	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", attacking_item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()
 

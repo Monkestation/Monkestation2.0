@@ -185,14 +185,14 @@
 	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/cell))
+/obj/item/clothing/suit/space/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!cell_cover_open || !istype(attacking_item, /obj/item/stock_parts/cell))
 		return ..()
 	if(cell)
 		to_chat(user, span_warning("[src] already has a cell installed."))
 		return
-	if(user.transferItemToLoc(I, src))
-		cell = I
+	if(user.transferItemToLoc(attacking_item, src))
+		cell = attacking_item
 		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 		return
 

@@ -648,15 +648,15 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
 
-/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
+/obj/item/stack/sheet/cardboard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
-			playsound(I, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
+			playsound(attacking_item, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 			to_chat(user, span_notice("You stamp the cardboard! It's a clown box! Honk!"))
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix
-	if(istype(I, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
+	if(istype(attacking_item, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
 			to_chat(user, span_notice("You stamp the cardboard in a sinister way."))

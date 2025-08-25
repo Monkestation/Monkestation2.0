@@ -80,8 +80,8 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/structure/plaque/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/pen/fountain))
+/obj/structure/plaque/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
@@ -104,7 +104,7 @@
 		user.visible_message(span_notice("[user] engraves [src]."), \
 			span_notice("You engrave [src]."))
 		return
-	if(istype(I, /obj/item/pen))
+	if(istype(attacking_item, /obj/item/pen))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
 			return
@@ -153,8 +153,8 @@
 	return TRUE
 
 
-/obj/item/plaque/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers) //Same as part of the above, except for the item in hand instead of the structure.
-	if(istype(I, /obj/item/pen/fountain))
+/obj/item/plaque/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //Same as part of the above, except for the item in hand instead of the structure.
+	if(istype(attacking_item, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
@@ -177,7 +177,7 @@
 		user.visible_message(span_notice("[user] engraves [src]."), \
 			span_notice("You engrave [src]."))
 		return
-	if(istype(I, /obj/item/pen))
+	if(istype(attacking_item, /obj/item/pen))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
 			return

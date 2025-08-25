@@ -72,12 +72,12 @@
 		to_chat(user, span_notice("You link [src] to the one in [multi.name]'s buffer."))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/quantumpad/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
+/obj/machinery/quantumpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", attacking_item))
 		return
 
-	else if(istype(I, /obj/item/quantum_keycard))
-		var/obj/item/quantum_keycard/K = I
+	else if(istype(attacking_item, /obj/item/quantum_keycard))
+		var/obj/item/quantum_keycard/K = attacking_item
 		if(K.qpad)
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, activating it."))
 			interact(user, K.qpad)
@@ -87,7 +87,7 @@
 				to_chat(user, span_notice("You complete the link between [K] and [src]."))
 				K.set_pad(src)
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()

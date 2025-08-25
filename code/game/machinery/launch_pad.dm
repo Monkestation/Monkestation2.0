@@ -75,15 +75,15 @@
 	to_chat(user, span_notice("You save the data in the [multi.name]'s buffer."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/launchpad/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/launchpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!stationary)
 		return ..()
 
-	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", I))
+	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", attacking_item))
 		update_indicator()
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 /obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)

@@ -23,9 +23,9 @@
 	var/obj/item/card/id/inserted_scan_id
 
 /obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isidcard(I))
-		if(id_insert(user, I, inserted_scan_id))
-			inserted_scan_id = I
+	if(isidcard(attacking_item))
+		if(id_insert(user, attacking_item, inserted_scan_id))
+			inserted_scan_id = attacking_item
 			return TRUE
 	return ..()
 

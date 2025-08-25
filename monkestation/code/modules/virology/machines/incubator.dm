@@ -68,10 +68,10 @@
 	if (.)
 		return
 
-	if (istype(I, /obj/item/weapon/virusdish))
+	if (istype(attacking_item, /obj/item/weapon/virusdish))
 		for (var/i in 1 to dish_data.len)
 			if (dish_data[i] == null) // Empty slot
-				addDish(I, user, i)
+				addDish(attacking_item, user, i)
 				return TRUE
 
 		to_chat(user, span_warning("There is no more room inside \the [src]. Remove a dish first."))

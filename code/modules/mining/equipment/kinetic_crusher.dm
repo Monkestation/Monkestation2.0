@@ -58,18 +58,18 @@
 		var/obj/item/crusher_trophy/T = t
 		. += span_notice("It has \a [T] attached, which causes [T.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/I, mob/living/user)
-	if(I.tool_behaviour == TOOL_CROWBAR)
+/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(LAZYLEN(trophies))
 			to_chat(user, span_notice("You remove [src]'s trophies."))
-			I.play_tool_sound(src)
+			attacking_item.play_tool_sound(src)
 			for(var/t in trophies)
 				var/obj/item/crusher_trophy/T = t
 				T.remove_from(src, user)
 		else
 			to_chat(user, span_warning("There are no trophies on [src]."))
-	else if(istype(I, /obj/item/crusher_trophy))
-		var/obj/item/crusher_trophy/T = I
+	else if(istype(attacking_item, /obj/item/crusher_trophy))
+		var/obj/item/crusher_trophy/T = attacking_item
 		T.add_to(src, user)
 	else
 		return ..()

@@ -54,15 +54,15 @@
 
 /obj/item/kirbyplants/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
+	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && attacking_item.get_sharpness())
 		to_chat(user,span_notice("You start trimming [src]."))
 		if(do_after(user,3 SECONDS,target=src))
 			to_chat(user,span_notice("You finish trimming [src]."))
 			change_visual()
-	if(dead && istype(I, /obj/item/seeds))
+	if(dead && istype(attacking_item, /obj/item/seeds))
 		to_chat(user,span_notice("You start planting a new seed into the pot."))
 		if(do_after(user,3 SECONDS,target=src))
-			qdel(I)
+			qdel(attacking_item)
 			dead = FALSE
 			update_appearance()
 

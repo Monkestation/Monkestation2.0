@@ -383,21 +383,21 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_dispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 		update_appearance()
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/B = I
+	if(is_reagent_container(attacking_item) && !(attacking_item.item_flags & ABSTRACT) && attacking_item.is_open_container())
+		var/obj/item/reagent_containers/B = attacking_item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
 		ui_interact(user)
-	else if(!(user.istate & ISTATE_HARM) && !istype(I, /obj/item/card/emag))
-		to_chat(user, span_warning("You can't load [I] into [src]!"))
+	else if(!(user.istate & ISTATE_HARM) && !istype(attacking_item, /obj/item/card/emag))
+		to_chat(user, span_warning("You can't load [attacking_item] into [src]!"))
 		return ..()
 	else
 		return ..()

@@ -219,9 +219,9 @@
 /obj/machinery/hydroponics/constructable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!(user.istate & ISTATE_HARM))
 		// handle opening the panel
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 			return
-		if(default_deconstruction_crowbar(I))
+		if(default_deconstruction_crowbar(attacking_item))
 			return
 
 	return ..()

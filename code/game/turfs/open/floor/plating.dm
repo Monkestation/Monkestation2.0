@@ -162,9 +162,9 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/stack/tile/iron))
-		var/obj/item/stack/tile/iron/P = I
+/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/tile/iron))
+		var/obj/item/stack/tile/iron/P = attacking_item
 		if(P.use(1))
 			var/obj/L = locate(/obj/structure/lattice) in src
 			if(L)
@@ -176,9 +176,9 @@
 		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
-		if(prob(I.force * 20 - 25))
+		if(prob(attacking_item.force * 20 - 25))
 			user.visible_message(span_danger("[user] smashes through [src]!"), \
-							span_danger("You smash through [src] with [I]!"))
+							span_danger("You smash through [src] with [attacking_item]!"))
 			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		else
 			to_chat(user, span_danger("You hit [src], to no effect!"))

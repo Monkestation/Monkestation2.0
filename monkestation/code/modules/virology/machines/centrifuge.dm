@@ -63,12 +63,12 @@
 	if(.)
 		return
 
-	if (istype(I, /obj/item/reagent_containers/cup/tube))
+	if (istype(attacking_item, /obj/item/reagent_containers/cup/tube))
 		special = CENTRIFUGE_LIGHTSPECIAL_OFF
 		if (on)
 			to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first.") )
 			return
-		var/obj/item/reagent_containers/cup/tube/tube = I
+		var/obj/item/reagent_containers/cup/tube/tube = attacking_item
 		for (var/i = 1 to tubes.len)
 			if(!tubes[i])
 				tubes[i] = tube

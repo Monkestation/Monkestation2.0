@@ -28,13 +28,13 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && bar_material == METAL)
+	if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && bar_material == METAL)
 		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
+			if(!attacking_item.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(I.use_tool(src, user, 40, volume=40))
+			if(attacking_item.use_tool(src, user, 40, volume=40))
 				atom_integrity = clamp(atom_integrity + 20, 0, max_integrity)
 	else
 		return ..()
@@ -70,14 +70,14 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
 
-/obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/W = I
+/obj/structure/barricade/wooden/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item,/obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/W = attacking_item
 		if(W.amount < 5)
 			to_chat(user, span_warning("You need at least five wooden planks to make a wall!"))
 			return
 		else
-			to_chat(user, span_notice("You start adding [I] to [src]..."))
+			to_chat(user, span_notice("You start adding [attacking_item] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
 			if(do_after(user, 50, target=src) && W.use(5))
 				var/turf/T = get_turf(src)

@@ -257,78 +257,69 @@
 		deconstruct(TRUE, 1)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	var/list/modifiers = params2list(params)
+// This extends base item interaction because tables default to blocking 99% of interactions
+/obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
 
-	if(istype(I, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/T = I
-		if(T.contents.len > 0) // If the tray isn't empty
-			for(var/x in T.contents)
-				var/obj/item/item = x
-				AfterPutItemOnTable(item, user)
-			I.atom_storage.remove_all(drop_location())
-			user.visible_message(span_notice("[user] empties [I] on [src]."))
-			return
-		// If the tray IS empty, continue on (tray will be placed on the table like other items)
+	//if(is_flipped) // Monke does not have table flipping somehow?
+	//	return .
 
-	if(istype(I, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = I
-		if(dealer_deck.wielded) // deal a card facedown on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				attackby(card, user, params)
-			return
+	if(istype(tool, /obj/item/toy/cards/deck))
+		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(istype(tool, /obj/item/storage/bag/tray))
+		. = tray_act(user, tool)
 
-	if(istype(I, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding_item = I
-		var/mob/living/carried_mob = riding_item.rider
-		if(carried_mob == user) //Piggyback user.
-			return
-		if((user.istate & ISTATE_HARM))
-			user.unbuckle_mob(carried_mob)
-			tablelimbsmash(user, carried_mob)
-		else
-			var/tableplace_delay = 3.5 SECONDS
-			var/skills_space = ""
-			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-				tableplace_delay = 2 SECONDS
-				skills_space = " expertly"
-			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-				tableplace_delay = 2.75 SECONDS
-				skills_space = " quickly"
-			carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-				span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-			if(do_after(user, tableplace_delay, target = carried_mob))
-				user.unbuckle_mob(carried_mob)
-				tableplace(user, carried_mob)
-		return TRUE
+	// Continue to placing if we don't do anything else
+	if(.)
+		return .
 
-	if(!(user.istate & ISTATE_HARM) && !(I.item_flags & ABSTRACT))
-		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-			//Center the icon where the user clicked.
-			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
-				return
-			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-			AfterPutItemOnTable(I, user)
-			return TRUE
-	else
-		return ..()
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		return table_place_act(user, tool, modifiers)
 
-/obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(dealer_deck.wielded) // deal a card faceup on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				card.Flip()
-				attackby(card, user, params)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	..()
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return NONE
 
-/obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
+/obj/structure/table/proc/tray_act(mob/living/user, obj/item/storage/bag/tray/used_tray)
+	if(used_tray.contents.len <= 0)
+		return NONE // If the tray IS empty, continue on (tray will be placed on the table like other items)
+
+	for(var/obj/item/thing in used_tray.contents)
+		AfterPutItemOnTable(thing, user)
+	used_tray.atom_storage.remove_all(drop_location())
+	user.visible_message(span_notice("[user] empties [used_tray] on [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/proc/deck_act(mob/living/user, obj/item/toy/cards/deck/dealer_deck, list/modifiers, flip)
+	if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
+		return NONE
+
+	var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+	if(isnull(card))
+		return ITEM_INTERACT_BLOCKING
+	if(flip)
+		card.Flip()
+	return table_place_act(user, card, modifiers)
+
+// Where putting things on tables is handled.
+/obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.item_flags & ABSTRACT)
+		return NONE
+
+	var/x_offset = 0
+	var/y_offset = 0
+	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
+	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), (world.icon_size/2))
+		y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), (world.icon_size/2))
+
+	if(!user.transfer_item_to_turf(tool, get_turf(src), x_offset, y_offset, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	AfterPutItemOnTable(tool, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
 
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)

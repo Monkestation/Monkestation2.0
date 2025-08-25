@@ -130,17 +130,17 @@
 	if(cell)
 		. += span_notice("[src] is [round(cell.percent())]% charged.")
 
-/obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
+/obj/item/gun/energy/plasmacutter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
-	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma))
 		charge_multiplier = 2
-	if(istype(I, /obj/item/stack/ore/plasma))
+	if(istype(attacking_item, /obj/item/stack/ore/plasma))
 		charge_multiplier = 1
 	if(charge_multiplier)
 		if(cell.charge == cell.maxcharge)
 			balloon_alert(user, "already fully charged!")
 			return
-		I.use(1)
+		attacking_item.use(1)
 		cell.give(500*charge_multiplier)
 		balloon_alert(user, "cell recharged")
 	else

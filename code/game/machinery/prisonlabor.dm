@@ -33,8 +33,8 @@
 	if(current_plate)
 		to_chat(user, span_warning("[src] already has a plate in it!"))
 		return FALSE
-	if(istype(I, /obj/item/stack/license_plates/empty))
-		var/obj/item/stack/license_plates/empty/plate = I
+	if(istype(attacking_item, /obj/item/stack/license_plates/empty))
+		var/obj/item/stack/license_plates/empty/plate = attacking_item
 		plate.use(1)
 		current_plate = new plate.type(src, 1) //Spawn a new single sheet in the machine
 		update_appearance()

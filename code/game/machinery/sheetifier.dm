@@ -48,10 +48,10 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/sheetifier/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
+/obj/machinery/sheetifier/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), attacking_item))
 		update_appearance()
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()

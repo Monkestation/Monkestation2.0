@@ -100,15 +100,15 @@
 
 	senders = list()
 
-/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), I))
+/obj/machinery/plumbing/receiver/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), attacking_item))
 		update_appearance()
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(attacking_item))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()

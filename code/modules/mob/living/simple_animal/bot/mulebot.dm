@@ -166,28 +166,28 @@
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
+	if(istype(attacking_item, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
 			return TRUE
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return TRUE
-		cell = I
+		cell = attacking_item
 		diag_hud_set_mulebotcell()
 		user.visible_message(
 			span_notice("[user] inserts \a [cell] into [src]."),
 			span_notice("You insert [cell] into [src]."),
 		)
 		return TRUE
-	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
+	else if(is_wire_tool(attacking_item) && bot_cover_flags & BOT_COVER_OPEN)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
-		if(prob(1 + I.force * 2))
+		if(prob(1 + attacking_item.force * 2))
 			unload(0)
-			user.visible_message(span_danger("[user] knocks [load] off [src] with \the [I]!"),
-									span_danger("You knock [load] off [src] with \the [I]!"))
+			user.visible_message(span_danger("[user] knocks [load] off [src] with \the [attacking_item]!"),
+									span_danger("You knock [load] off [src] with \the [attacking_item]!"))
 		else
-			to_chat(user, span_warning("You hit [src] with \the [I] but to no effect!"))
+			to_chat(user, span_warning("You hit [src] with \the [attacking_item] but to no effect!"))
 			return ..()
 	else
 		return ..()

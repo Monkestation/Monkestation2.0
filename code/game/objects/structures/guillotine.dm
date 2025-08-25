@@ -58,13 +58,13 @@
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 
-/obj/structure/guillotine/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/plasteel))
+/obj/structure/guillotine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/sheet/plasteel))
 		to_chat(user, span_notice("You start repairing the guillotine with the plasteel..."))
 		if(blade_sharpness<10)
 			if(do_after(user,100,target=user))
 				blade_sharpness = min(10,blade_sharpness+3)
-				I.use(1)
+				attacking_item.use(1)
 				to_chat(user, span_notice("You repair the guillotine with the plasteel."))
 			else
 				to_chat(user, span_notice("You stop repairing the guillotine with the plasteel."))

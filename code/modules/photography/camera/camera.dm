@@ -80,24 +80,24 @@
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/camera/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/camera_film))
+/obj/item/camera/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/camera_film))
 		if(pictures_left)
 			to_chat(user, span_notice("[src] still has some film in it!"))
 			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
+		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
-		to_chat(user, span_notice("You insert [I] into [src]."))
-		qdel(I)
+		to_chat(user, span_notice("You insert [attacking_item] into [src]."))
+		qdel(attacking_item)
 		pictures_left = pictures_max
 		return
-	if(istype(I, /obj/item/disk/holodisk))
+	if(istype(attacking_item, /obj/item/disk/holodisk))
 		if (!disk)
-			if(!user.transferItemToLoc(I, src))
-				to_chat(user, span_warning("[I] is stuck to your hand!"))
+			if(!user.transferItemToLoc(attacking_item, src))
+				to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
 				return TRUE
-			to_chat(user, span_notice("You slide [I] into the back of [src]."))
-			disk = I
+			to_chat(user, span_notice("You slide [attacking_item] into the back of [src]."))
+			disk = attacking_item
 		else
 			to_chat(user, span_warning("There's already a disk inside [src]."))
 		return TRUE //no afterattack

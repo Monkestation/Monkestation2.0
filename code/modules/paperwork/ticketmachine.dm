@@ -178,16 +178,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			maptext_x = 4
 	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
-/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/ticket_machine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
-	if(istype(I, /obj/item/hand_labeler_refill))
+	if(istype(attacking_item, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))
-			to_chat(user, span_notice("[src] refuses [I]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
+			to_chat(user, span_notice("[src] refuses [attacking_item]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
 			return
 		to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
 		if(do_after(user, 30, target = src))
-			to_chat(user, span_notice("You insert [I] into [src] as it whirs nondescriptly."))
-			qdel(I)
+			to_chat(user, span_notice("You insert [attacking_item] into [src] as it whirs nondescriptly."))
+			qdel(attacking_item)
 			ticket_number = 0
 			current_number = 0
 			if(tickets.len)

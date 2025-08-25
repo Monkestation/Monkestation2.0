@@ -22,7 +22,7 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/reagent_containers/syringe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)

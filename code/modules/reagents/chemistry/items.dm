@@ -162,15 +162,15 @@
 
 /obj/item/burner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(is_reagent_container(I))
+	if(is_reagent_container(attacking_item))
 		if(lit)
-			var/obj/item/reagent_containers/container = I
+			var/obj/item/reagent_containers/container = attacking_item
 			container.reagents.expose_temperature(get_temperature())
-			to_chat(user, span_notice("You heat up the [I] with the [src]."))
+			to_chat(user, span_notice("You heat up the [attacking_item] with the [src]."))
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
 			return
-		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
-			var/obj/item/reagent_containers/container = I
+		else if(attacking_item.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
+			var/obj/item/reagent_containers/container = attacking_item
 			if(!container.reagents.total_volume)
 				to_chat(user, span_warning("[container] is empty and can't be poured!"))
 				return
@@ -181,7 +181,7 @@
 
 			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transfered_by = user)
 			to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
-	if(I.heat < 1000)
+	if(attacking_item.heat < 1000)
 		return
 	set_lit(TRUE)
 	user.visible_message(span_notice("[user] lights up the [src]."))

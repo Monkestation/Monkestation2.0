@@ -223,9 +223,9 @@
 
 /obj/item/toy/plush/lobotomy/yuri/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(I, /obj/item/food/grown/apple/gold))
+	if(istype(attacking_item, /obj/item/food/grown/apple/gold))
 		if(do_after(user, 2 SECONDS, target = user))
-			user.visible_message(span_danger("[src] is violently absorbed by \the [I]!"))
+			user.visible_message(span_danger("[src] is violently absorbed by \the [attacking_item]!"))
 			qdel(src)
 			return
 		to_chat(user, span_notice("You feel as if you prevented something terrible from happening again."))

@@ -72,9 +72,9 @@
 	to_chat(user, span_notice("You screw the battery case on [src] [open ? "open" : "closed"] ."))
 	update_appearance()
 
-/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(!istype(I, /obj/item/stock_parts/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/cell))
 		return ..()
 	if(!open)
 		to_chat(user, span_warning("The battery case must be open to insert a power cell!"))
@@ -82,9 +82,9 @@
 	if(cell)
 		to_chat(user, span_warning("There is already a power cell inside!"))
 		return FALSE
-	else if(!user.transferItemToLoc(I, src))
+	else if(!user.transferItemToLoc(attacking_item, src))
 		return
-	cell = I
+	cell = attacking_item
 	user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 	update_appearance()
 

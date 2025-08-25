@@ -67,19 +67,19 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/reagent_containers/cup))
-		if(I.reagents)
-			if(I.reagents.total_volume <= 0)
-				to_chat(user, span_warning("[I] is empty."))
+/obj/item/toy/waterballoon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/reagent_containers/cup))
+		if(attacking_item.reagents)
+			if(attacking_item.reagents.total_volume <= 0)
+				to_chat(user, span_warning("[attacking_item] is empty."))
 			else if(reagents.total_volume >= 10)
 				to_chat(user, span_warning("[src] is full."))
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
-				to_chat(user, span_notice("You fill the balloon with the contents of [I]."))
-				I.reagents.trans_to(src, 10, transfered_by = user)
+				to_chat(user, span_notice("You fill the balloon with the contents of [attacking_item]."))
+				attacking_item.reagents.trans_to(src, 10, transfered_by = user)
 				update_appearance()
-	else if(I.get_sharpness())
+	else if(attacking_item.get_sharpness())
 		balloon_burst()
 	else
 		return ..()
@@ -179,8 +179,8 @@
 	qdel(src)
 	return TRUE
 
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
+/obj/item/toy/balloon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()

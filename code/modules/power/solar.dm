@@ -523,8 +523,8 @@
 	return FALSE
 
 /obj/machinery/power/solar_control/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(I.use_tool(src, user, 20, volume=50))
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+		if(attacking_item.use_tool(src, user, 20, volume=50))
 			if (src.machine_stat & BROKEN)
 				to_chat(user, span_notice("The broken glass falls out."))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
@@ -548,7 +548,7 @@
 				A.icon_state = "4"
 				A.set_anchored(TRUE)
 				qdel(src)
-	else if(!(user.istate & ISTATE_HARM) && !(I.item_flags & NOBLUDGEON))
+	else if(!(user.istate & ISTATE_HARM) && !(attacking_item.item_flags & NOBLUDGEON))
 		attack_hand(user)
 	else
 		return ..()

@@ -99,11 +99,11 @@
 	use_power(active_power_usage)
 
 
-/obj/machinery/oven/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
-		if(user.transferItemToLoc(I, src, silent = FALSE))
-			to_chat(user, span_notice("You put [I] in [src]."))
-			add_tray_to_oven(I, user)
+/obj/machinery/oven/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(open && !used_tray && istype(attacking_item, /obj/item/plate/oven_tray))
+		if(user.transferItemToLoc(attacking_item, src, silent = FALSE))
+			to_chat(user, span_notice("You put [attacking_item] in [src]."))
+			add_tray_to_oven(attacking_item, user)
 	else
 		return ..()
 
