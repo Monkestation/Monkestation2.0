@@ -621,6 +621,8 @@
 2025-08-24:
   Absolucy:
   - map: Added a medipen refiller to the Helio medbay lobby.
+  - rscdel: Removed the "Hard of Hearing" quirk, due to issues relating to chat spam.
+      Hopefully it'll be back soon.
   JohnFulpWillard:
   - qol: The pushbroom can now pull with RMB.
   Sorenon:
@@ -633,3 +635,19 @@
       can cause deafness to last much longer than intended.
   ThePooba:
   - bugfix: maintloot turbomode
+2025-08-25:
+  Snack-Max:
+  - rscadd: Batter's Uniform to autodrone
+  Tractor Maam:
+  - map: heliostation now has departmental bells.
+  - map: added a syndicate variant of the departmental bell for mapping purposes.
+  - rscdel: Removed herobrine.
+  notghosti:
+  - balance: T3 lasers now require t2 lasers to be researched first
+  - rscadd: Removed industrial engineering from mining tech perquisites. This does
+      not effect actual tech to research it
+  throwawayuseless:
+  - rscadd: 'New Quirk: Snappy. Snap with style, panache, pizzaz, mojo, moxie, badassery,
+      goodassery, insouciance, chill, swag, snazz, and a certain *je ne sais quoi*.
+      (please help im running out of synonyms and the thesaurus-beasts from the nether
+      realms are going to CATCH UP WITHMEOHGODTHEPAAAAIIIINNN)'
