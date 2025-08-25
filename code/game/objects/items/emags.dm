@@ -46,6 +46,22 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
+/obj/item/card/emagfake/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible, \
+		initial_reagents = list( \
+			/datum/reagent/consumable/nutriment = 1, \
+			/datum/reagent/consumable/nutriment/protein = 0.5, \
+		), \
+		food_flags = FOOD_FINGER_FOOD, \
+		tastes = list("crime" = 1), \
+		eatverbs = list("swallow" = 1), \
+		eat_time = 0, \
+		foodtypes = JUNKFOOD, \
+		bite_consumption = 99999, \
+	)
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
