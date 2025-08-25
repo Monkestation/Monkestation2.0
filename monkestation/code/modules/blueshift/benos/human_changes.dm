@@ -22,6 +22,8 @@
 	var/on_fire_pixel_x = 16
 	/// Pixel Y shifting of the on fire overlay
 	var/on_fire_pixel_y = 16
+	/// for keeping the neutered xenos name consistent
+	var/neutered = FALSE
 
 
 /mob/living/carbon/alien/adult/nova/Initialize(mapload)
@@ -90,6 +92,7 @@
 	/// What type this ability will turn the owner into upon completion
 	var/type_to_evolve_into
 
+
 /datum/action/cooldown/alien/nova/generic_evolve/Grant(mob/grant_to)
 	. = ..()
 	if(!isalien(owner))
@@ -99,11 +102,9 @@
 
 /datum/action/cooldown/alien/nova/generic_evolve/Activate()
 	var/mob/living/carbon/alien/adult/nova/evolver = owner
-
 	if(!istype(evolver))
 		to_chat(owner, span_warning("You aren't an alien, you can't evolve!"))
 		return FALSE
-
 	type_to_evolve_into = evolver.next_evolution
 	if(!type_to_evolve_into)
 		to_chat(evolver, span_bolddanger("Something is wrong... We can't evolve into anything? (This is broken report it on GitHub)"))
@@ -188,6 +189,9 @@
 	if(mind)
 		mind.name = xeno_to_transfer_to.real_name
 		mind.transfer_to(xeno_to_transfer_to)
+		if(HAS_TRAIT(src, TRAIT_NEUTERED))
+			xeno_to_transfer_to.neutered = TRUE
+			ADD_TRAIT(xeno_to_transfer_to, TRAIT_NEUTERED, INNATE_TRAIT)
 	qdel(src)
 
 /mob/living/carbon/alien/adult/nova/get_fire_overlay(stacks, on_fire)
