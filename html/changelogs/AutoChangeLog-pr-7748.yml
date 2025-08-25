@@ -1,0 +1,5 @@
+author: "Salted-Zen"
+delete-after: True
+changes:
+  - balance: "Hiero staff dash now counts as magic so its not disrupted by bag of holding"
+  - code_imp: "Hiero staff dash now counts as magic, just like its beacon recall does"
