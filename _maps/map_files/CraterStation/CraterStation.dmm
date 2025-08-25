@@ -29729,7 +29729,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "jic" = (
-/obj/machinery/computer/department_orders/service,
+/obj/machinery/computer/order_console/cook,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "jif" = (
@@ -32439,9 +32440,6 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
-"jWX" = (
-/turf/open/openspace/icemoon,
-/area/station/service/kitchen)
 "jWY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -46138,9 +46136,6 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
-"oiO" = (
-/turf/open/space/basic,
-/area/icemoon/surface/outdoors/nospawn)
 "ojd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -66144,7 +66139,7 @@
 /turf/open/floor/carpet/grimey,
 /area/mine/laborcamp/quarters)
 "uga" = (
-/obj/machinery/computer/order_console/cook,
+/obj/structure/table,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "ugc" = (
@@ -252389,7 +252384,7 @@ xrl
 xrl
 xrl
 xrl
-jWX
+xrl
 pPl
 pPl
 pPl
@@ -252903,7 +252898,7 @@ pPl
 pPl
 pPl
 pPl
-oiO
+pPl
 pPl
 pPl
 pPl
