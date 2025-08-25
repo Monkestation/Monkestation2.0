@@ -12,10 +12,10 @@
 	if(!istype(local_turf))
 		return NONE
 
-	var/kiss_power = 0
+	var/kiss_power = 75
 	switch(projectile.type)
 		if(/obj/projectile/kiss)
-			kiss_power = 60
+			kiss_power = 75
 		if(/obj/projectile/kiss/death)
 			kiss_power = 20000
 
@@ -95,7 +95,7 @@
 			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
 			return
 
-		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
+		to_chat(user, span_warning("You begin to dab while attaching \the [destabilizing_crystal] to \the [src]..."))
 		if(do_after(user, 3 SECONDS, src))
 			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
 			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
