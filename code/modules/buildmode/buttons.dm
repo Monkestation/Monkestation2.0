@@ -34,7 +34,7 @@
 
 /atom/movable/screen/buildmode/help
 	icon_state = "buildhelp"
-	screen_loc = "NORTH,WEST+1"
+	screen_loc = "S"
 	name = "Buildmode Help"
 
 /atom/movable/screen/buildmode/help/Click(location, control, params)
