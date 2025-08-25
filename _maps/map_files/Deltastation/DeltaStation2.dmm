@@ -5549,10 +5549,10 @@
 /turf/open/space,
 /area/space/nearstation)
 "bmR" = (
-/obj/machinery/disease2/diseaseanalyser,
 /obj/effect/turf_decal/siding/green{
 	dir = 4
 	},
+/obj/machinery/computer/diseasesplicer,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "bmU" = (
@@ -15638,6 +15638,9 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 5
 	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "dHN" = (
@@ -22872,10 +22875,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/disease2/centrifuge,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
+/obj/item/storage/box/tube,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "frR" = (
@@ -25156,7 +25156,23 @@
 /obj/structure/cable,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/pathology,
+/obj/item/clothing/glasses/pathology,
+/obj/item/clothing/glasses/pathology,
 /obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/book/manual/wiki/infections,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
+/obj/item/storage/box/beakers{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/syringes,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "fUf" = (
@@ -26293,6 +26309,7 @@
 /obj/item/folder/white,
 /obj/item/pen/red,
 /obj/structure/table/reinforced/rglass,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/iron,
 /area/station/medical/pathology/isolation)
 "ggS" = (
@@ -39483,10 +39500,10 @@
 	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/secure_closet/medical1,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/records/pathology,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "jkC" = (
@@ -41559,10 +41576,7 @@
 /obj/structure/cable,
 /obj/machinery/disease2/centrifuge,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
+/obj/item/storage/box/tube,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "jJc" = (
@@ -49920,16 +49934,6 @@
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"lGt" = (
-/obj/machinery/computer/records/pathology{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/green{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/medical/pathology)
 "lGv" = (
 /turf/closed/wall,
 /area/station/security/prison/rec)
@@ -62852,7 +62856,6 @@
 /area/station/commons/locker)
 "oOz" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/item/restraints/handcuffs,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -68805,12 +68808,11 @@
 /area/station/hallway/secondary/command)
 "qiJ" = (
 /obj/machinery/newscaster/directional/north,
-/obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/bot,
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "qiM" = (
@@ -75177,11 +75179,6 @@
 	},
 /turf/closed/wall,
 /area/station/maintenance/department/crew_quarters/bar)
-"rKP" = (
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/effect/turf_decal/trimline/green/filled/line,
-/turf/open/floor/iron/white,
-/area/station/medical/pathology)
 "rLc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -81349,21 +81346,11 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "tiJ" = (
-/obj/structure/rack,
-/obj/item/storage/box/monkeycubes/mousecubes,
-/obj/item/storage/box/monkeycubes/mousecubes,
-/obj/item/storage/box/monkeycubes/mousecubes,
-/obj/item/book/manual/wiki/infections,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/dropper,
 /obj/effect/turf_decal/siding/green{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron,
 /area/station/medical/pathology)
 "tiM" = (
@@ -86795,13 +86782,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
-"uxI" = (
-/obj/machinery/computer/diseasesplicer,
-/obj/effect/turf_decal/siding/green{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/medical/pathology)
 "uxY" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/white,
@@ -94592,6 +94572,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "wqk" = (
@@ -95086,6 +95068,13 @@
 /obj/item/pen/red,
 /obj/effect/turf_decal/siding/green{
 	dir = 8
+	},
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
@@ -100232,6 +100221,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/dark,
 /area/station/medical/pathology)
 "xHf" = (
@@ -136737,8 +136727,8 @@ gqm
 tiJ
 bmR
 grE
-uxI
-lGt
+bmR
+tiJ
 gqm
 gqm
 qYo
@@ -137758,7 +137748,7 @@ cwZ
 cqc
 eNo
 tfn
-rKP
+ecC
 xHd
 tgT
 qiJ
