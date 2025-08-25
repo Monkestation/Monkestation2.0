@@ -459,11 +459,10 @@ skip them. Returns the is_combat_design variable
 				is_combat_design = TRUE
 
 	//they can have a tiny bit of non-lethal weapons. as a treat
-	if(is_combat_design && !combat_parts_allowed)
-		if(design.type in whitelisted_designs)
-			is_combat_design = FALSE
-		if((design.type in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
-			is_combat_design = FALSE
+	if(design.type in whitelisted_designs)
+		is_combat_design = FALSE
+	if((design.type in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
+		is_combat_design = FALSE
 
 	return is_combat_design
 
