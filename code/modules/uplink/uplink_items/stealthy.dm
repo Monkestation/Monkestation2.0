@@ -118,3 +118,11 @@
 	item = /obj/item/book/granter/martial/carp/true
 	lock_other_purchases = TRUE
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS)
+
+/datum/uplink_item/stealthy_weapons/suprapen
+	name = "S-2 Fountain Gold"
+	desc = "A pen that, for once, is <b>actually</b> mightier than the sword. \ It has a variety of useful miscelanious functions, precise killing power, \ and a chameleon circuit to disguise it, at least to a cursory glane, as a normal pen."
+	cost = 20
+	item = /obj/item/pen/fountain/cigsynth/deluxe
+	lock_other_purchases = TRUE
+	purchasable_from ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
