@@ -3837,6 +3837,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/noslip,
 /area/station/science/lobby)
+"bjP" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
 "bjW" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/button/door/directional/north{
@@ -7761,11 +7768,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/abandon_diner)
-"cxt" = (
-/obj/effect/spawner/random/food_or_drink/cake_ingredients,
-/obj/structure/table,
-/turf/open/floor/iron/kitchen/small,
-/area/station/service/kitchen)
 "cxx" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Weather and Radstorm Shelter"
@@ -12492,6 +12494,13 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
+"dXg" = (
+/obj/structure/table,
+/obj/machinery/plantgenes{
+	pixel_y = 6
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "dXI" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -19005,6 +19014,9 @@
 "fVw" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/table,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "fVA" = (
@@ -20979,6 +20991,12 @@
 	pixel_y = 11
 	},
 /obj/item/kitchen/rollingpin,
+/obj/item/knife/kitchen{
+	pixel_x = 4
+	},
+/obj/item/knife/kitchen{
+	pixel_x = 7
+	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "gyW" = (
@@ -26301,11 +26319,18 @@
 	},
 /obj/machinery/button/tram/directional/south{
 	lift_id = "CRATER_DUMBWAITER";
-	id = "CRATER_DUMBWAITER_BOTANY"
+	id = "CRATER_DUMBWAITER_KITCHEN";
+	name = "Send Dumbwaiter"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
+	},
+/obj/machinery/button/tram/directional/south{
+	lift_id = "CRATER_DUMBWAITER";
+	id = "CRATER_DUMBWAITER_BOTANY";
+	pixel_y = -22;
+	name = "Call Dumbwaiter"
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
@@ -28827,6 +28852,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "iUg" = (
@@ -29702,6 +29728,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
+"jic" = (
+/obj/machinery/computer/department_orders/service,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
 "jif" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -32409,6 +32439,9 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
+"jWX" = (
+/turf/open/openspace/icemoon,
+/area/station/service/kitchen)
 "jWY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -42089,6 +42122,11 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
+"mXv" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
 "mXJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
@@ -46100,6 +46138,9 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
+"oiO" = (
+/turf/open/space/basic,
+/area/icemoon/surface/outdoors/nospawn)
 "ojd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -47490,9 +47531,16 @@
 	},
 /obj/machinery/button/tram/directional/north{
 	id = "CRATER_DUMBWAITER_KITCHEN";
-	lift_id = "CRATER_DUMBWAITER"
+	lift_id = "CRATER_DUMBWAITER";
+	name = "Call Dumbwaiter"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/button/tram/directional/north{
+	pixel_y = 42;
+	id = "CRATER_DUMBWAITER_BOTANY";
+	lift_id = "CRATER_DUMBWAITER";
+	name = "Send Dumbwaiter"
+	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "oEs" = (
@@ -47896,6 +47944,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/abandoned_generator)
+"oJZ" = (
+/obj/structure/table,
+/obj/machinery/splicer,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "oKf" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -53222,6 +53275,13 @@
 /obj/structure/fence/door,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"qlD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/restaurant_portal/restaurant,
+/turf/open/floor/wood,
+/area/station/commons/lounge/public_house)
 "qlE" = (
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "mining_elevator"
@@ -54635,9 +54695,12 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "qHk" = (
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/machinery/camera/directional/east{
 	c_tag = "Public House - Bar"
+	},
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
@@ -62702,6 +62765,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood,
 /area/station/commons/lounge/public_house)
 "teS" = (
@@ -63922,6 +63986,10 @@
 /obj/machinery/atmospherics/miner/plasma,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
+"txC" = (
+/obj/effect/landmark/start/cook,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
 "txI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -66076,8 +66144,8 @@
 /turf/open/floor/carpet/grimey,
 /area/mine/laborcamp/quarters)
 "uga" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/openspace,
+/obj/machinery/computer/order_console/cook,
+/turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "ugc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66289,6 +66357,7 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Public House - Cellar"
 	},
+/obj/structure/fermenting_barrel,
 /turf/open/floor/iron,
 /area/station/maintenance/department/crew_quarters/bar/cellar)
 "ujT" = (
@@ -66898,6 +66967,16 @@
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
+"utl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet{
+	req_access = list("bar");
+	name = "Gun Locker"
+	},
+/obj/item/storage/box/beanbag,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/turf/open/floor/wood,
+/area/station/service/bar/backroom)
 "utt" = (
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/spawner/random/maintenance,
@@ -72866,9 +72945,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "wmv" = (
-/obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+/obj/machinery/light/small/directional/north{
+	dir = 4
 	},
 /obj/effect/landmark/start/cook,
 /turf/open/floor/iron/kitchen/small,
@@ -184204,7 +184282,7 @@ sDb
 dKs
 sDM
 dbM
-sDb
+bjP
 suq
 kCF
 xsy
@@ -184727,7 +184805,7 @@ fLr
 dkY
 gEz
 pPM
-ocf
+qlD
 iTb
 pgA
 pgA
@@ -248423,8 +248501,8 @@ rJU
 qeV
 uEn
 fwi
-hqy
 nTt
+hqy
 wIR
 jrY
 uVo
@@ -248681,7 +248759,7 @@ rJU
 rJU
 fwi
 lJC
-nTt
+oJZ
 wIR
 dxB
 uVo
@@ -248715,7 +248793,7 @@ rBU
 hMm
 tOR
 iJG
-mmL
+utl
 iPd
 qQi
 nwc
@@ -249195,7 +249273,7 @@ bUO
 nUG
 fwi
 lnl
-nTt
+dXg
 wIR
 jrY
 glt
@@ -250508,8 +250586,8 @@ kgx
 dxB
 nYD
 xrl
-nbK
-nbK
+jic
+iHX
 nbK
 xKl
 xrl
@@ -250517,7 +250595,7 @@ bZe
 jNa
 cok
 sxv
-cxt
+qXu
 qXu
 cok
 ehS
@@ -250766,7 +250844,7 @@ jrY
 bdC
 xrl
 uga
-nbK
+iHX
 nbK
 dAy
 nbU
@@ -250774,7 +250852,7 @@ wML
 cJL
 jSr
 wZU
-qXu
+mXv
 gyV
 cok
 tOp
@@ -251022,7 +251100,7 @@ wIR
 jrY
 bdC
 nbU
-wmv
+txC
 wmv
 bRO
 exQ
@@ -252311,7 +252389,7 @@ xrl
 xrl
 xrl
 xrl
-xrl
+jWX
 pPl
 pPl
 pPl
@@ -252825,7 +252903,7 @@ pPl
 pPl
 pPl
 pPl
-pPl
+oiO
 pPl
 pPl
 pPl
