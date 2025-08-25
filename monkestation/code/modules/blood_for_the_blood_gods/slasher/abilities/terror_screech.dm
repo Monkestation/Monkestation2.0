@@ -1,3 +1,6 @@
+#define VARIANT_SLASHER "slasher"
+#define VARIANT_CLUWNE "cluwne"
+#define VARIANT_BRUTE "brute"
 /datum/action/cooldown/slasher/terror
 	name = "Screech of Terror"
 	desc = "Inflict near paralyzing fear to those already scared of you."
@@ -9,7 +12,14 @@
 /datum/action/cooldown/slasher/terror/Activate(atom/target)
 	. = ..()
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
-	playsound(owner, 'monkestation/sound/voice/terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
+	switch(slasherdatum.slasher_variant)
+		if(VARIANT_SLASHER)
+			playsound(owner, 'monkestation/sound/voice/terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
+		if(VARIANT_CLUWNE)
+			playsound(owner, 'monkestation/sound/voice/cluwne-terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
+		if(VARIANT_BRUTE)
+			playsound(owner, 'monkestation/sound/voice/brute-terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
+
 	var/datum/antagonist/slasher/slasher = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 
 	for(var/mob/living/carbon/human/human_resolved in view(7, owner))
@@ -58,3 +68,7 @@
 
 /datum/action/cooldown/slasher/terror/proc/remove_overlay(mob/living/carbon/human/remover)
 	remover.clear_fullscreen("terror", 10)
+
+#undef VARIANT_SLASHER
+#undef VARIANT_CLUWNE
+#undef VARIANT_BRUTE

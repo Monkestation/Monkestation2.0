@@ -82,6 +82,11 @@
 /datum/component/squeak/proc/step_squeak()
 	SIGNAL_HANDLER
 
+	if(istype(parent, /obj/item/clothing/shoes/clown_shoes/cluwne))
+		var/obj/item/clothing/shoes/clown_shoes/cluwne/shoe = parent
+		if(shoe.sound_dampener)
+			return
+
 	if(steps > step_delay)
 		play_squeak()
 		steps = 0
