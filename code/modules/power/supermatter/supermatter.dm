@@ -36,7 +36,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/zap_icon = DEFAULT_ZAP_ICON_STATE
 
 	///The portion of the gasmix we're on that we should remove
-	var/absorption_ratio = 0.15
+	var/absorption_ratio = 0.2
 	/// The gasmix we just recently absorbed. Tile's air multiplied by absorption_ratio
 	var/datum/gas_mixture/absorbed_gasmix
 	/// The current gas behaviors for this particular crystal
@@ -79,7 +79,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Are we exploding?
 	var/final_countdown = FALSE
 	///A scaling value that affects the severity of explosions.
-	var/explosion_power = 35
+	var/explosion_power = 45
 	///Time in 1/10th of seconds since the last sent warning
 	var/lastwarning = 0
 
@@ -89,15 +89,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/list/gas_percentage
 
 	/// Affects the heat our SM makes.
-	var/gas_heat_modifier = 0
+	var/gas_heat_modifier = 1
 	/// Affects the minimum point at which the SM takes heat damage
-	var/gas_heat_resistance = 0
+	var/gas_heat_resistance = .9
 	/// How much power decay is negated. Complete power decay negation at 1.
-	var/gas_powerloss_inhibition = 0
+	var/gas_powerloss_inhibition = .9
 	/// Affects the amount of power the main SM zap makes.
-	var/gas_power_transmission = 0
+	var/gas_power_transmission = 9
 	/// Affects the power gain the SM experiances from heat.
-	var/gas_heat_power_generation = 0
+	var/gas_heat_power_generation = 9
 
 	/// External power that are added over time instead of immediately.
 	var/external_power_trickle = 0
