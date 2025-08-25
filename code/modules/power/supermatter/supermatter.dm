@@ -700,7 +700,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * Returns: The factors that have influenced the calculation. list[FACTOR_DEFINE] = number
  */
 /obj/machinery/power/supermatter_crystal/proc/calculate_waste_multiplier()
-	waste_multiplier = 0
+	waste_multiplier = 1
 	if(disable_gas)
 		return
 	/// Tell people the heat output in energy. More informative than telling them the heat multiplier.
@@ -819,7 +819,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy.on_select(src)
 	return TRUE
 
-/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 7, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
 		return
 	. = zapstart.dir
