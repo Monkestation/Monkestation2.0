@@ -433,4 +433,3 @@
 	desc = "A costume fit for an ace of spades, club, diamonds and hearts. It's a suit of suits."
 	icon_state = "jimbo"
 	can_adjust = FALSE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
