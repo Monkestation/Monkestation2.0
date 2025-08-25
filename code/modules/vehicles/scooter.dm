@@ -304,6 +304,9 @@
 /obj/vehicle/ridden/scooter/skateboard/wheelys/proc/link_shoes(newshoes)
 	shoes = newshoes
 
+/obj/vehicle/ridden/scooter/skateboard/wheelys/cheap
+	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/cheap
+
 /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. Vintage, yet functional!"

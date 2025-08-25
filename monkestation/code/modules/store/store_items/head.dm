@@ -223,8 +223,8 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_cost = 5000
 
 /datum/store_item/head/glatiator
-	name = "Gladiator Helmet"
-	item_path = /obj/item/clothing/head/helmet/gladiator
+	name = "Gladiator Helmet Replica"
+	item_path = /obj/item/clothing/head/helmet/gladiator/cheap
 	item_cost = 5000
 
 /datum/store_item/head/griffin
