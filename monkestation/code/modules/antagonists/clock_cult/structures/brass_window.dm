@@ -32,6 +32,10 @@
 		if(state == RWINDOW_SECURE)
 			. += span_brass("You see a way to <b>cut</b> the window pane away.")
 
+//FOR ANTI TM CONFLICT, MOVE TO MAIN SECTION
+/obj/structure/window/reinforced/clockwork
+	uses_color = FALSE
+
 /obj/structure/window/reinforced/clockwork/narsie_act()
 	take_damage(rand(25, 75), BRUTE)
 	if(!QDELETED(src))

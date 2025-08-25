@@ -24,9 +24,14 @@
 	return TRUE
 
 /obj/structure/destructible/clockwork/sigil/vitality/dispel_check(mob/user)
+	. = ..()
+	if(!.)
+		return
+
 	if(active_timer)
 		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently siphoning [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
 			return FALSE
+	return TRUE
 
 /obj/structure/destructible/clockwork/sigil/vitality/apply_effects(mob/living/affected_mob)
 	. = ..()
@@ -86,7 +91,9 @@
 		check_special_role(affected_mob)
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 40, MAX_CLOCK_VITALITY) // 100 (for clients) total in the ideal situation, since it'll take 6 pulses to go from full to crit
 		if(affected_mob.client)
-			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
+			if(GLOB.clock_ark.current_state >= ARK_STATE_ACTIVE)
+				new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
+
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
 			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)) && !HAS_MIND_TRAIT(affected_mob, TRAIT_UNBORGABLE)) // monkestation edit: TRAIT_UNBORGABLE
 				new_vessel.transfer_personality(affected_mob)

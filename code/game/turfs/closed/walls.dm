@@ -298,7 +298,7 @@
 	if(try_clean(attacking_item, user) || try_wallmount(attacking_item, user) || try_decon(attacking_item, user)) //monkestation edit
 		return
 
-	return ..() || (attacking_item.attack_atom(src, user))
+	return ..() || (uses_integrity && attacking_item.attack_atom(src, user))
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
 	if(!(user.istate & ISTATE_HARM)) //monkestation edit

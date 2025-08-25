@@ -38,7 +38,7 @@
 	min_players = 45
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 0
+	weight = 4
 	max_occurrences = 1
 	event_icon_state = "clockcult"
 	preferred_events = list(/datum/round_event_control/antagonist/solo/bloodcult = 1)
