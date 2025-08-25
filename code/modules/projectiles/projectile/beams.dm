@@ -2,7 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
+	damage = 25
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -67,7 +67,7 @@
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
 	wound_bonus = 0
-	damage = 25
+	damage = 30
 	speed = 0.6 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)
