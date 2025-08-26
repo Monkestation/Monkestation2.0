@@ -10,6 +10,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	hardcore_random_bonus = TRUE
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
+	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
 	var/datum/action/bb/comms/comms_action
 	var/datum/action/bb/gear/gear_action
 	VAR_PRIVATE/datum/team/brother_team/team
@@ -106,7 +107,7 @@
 	owner.announce_objectives()
 
 /datum/antagonist/brother/proc/finalize_brother()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	play_stinger()
 	team.update_name()
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)

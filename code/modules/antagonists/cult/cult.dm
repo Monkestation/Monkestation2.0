@@ -15,6 +15,7 @@
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	antag_hud_name = "cult"
+	stinger_sound = 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg'
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
@@ -54,7 +55,6 @@
 
 /datum/antagonist/cult/greet()
 	. = ..()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	owner.announce_objectives()
 
 /datum/antagonist/cult/on_gain()

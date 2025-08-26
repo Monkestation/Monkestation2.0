@@ -1143,8 +1143,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob heals from cult pylons.
 #define TRAIT_HEALS_FROM_CULT_PYLONS "heals_from_cult_pylons"
-///
-#define TRAIT_HEALS_FROM_BINGLE_HOLES "heals_from_bingle_holes"
 /// Ignore Crew monitor Z levels
 #define TRAIT_MULTIZ_SUIT_SENSORS "multiz_suit_sensors"
 
@@ -1315,4 +1313,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
 
+/// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
+#define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 // END TRAIT DEFINES

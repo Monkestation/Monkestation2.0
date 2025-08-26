@@ -2,7 +2,6 @@
 	name = "department bell"
 	desc = "The cornerstone of any customer service job. Ringing it sends an announcement to the relevant radio channel."
 
-	ring_cooldown_length = 0.6 SECONDS // twice as slow
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // Nothing stops the bell.
 	var/announce_cooldown_length = 60 SECONDS // WHAT? I CANT HEAR YOU OVER THE RADIO BEING SPAMMED.
 	/// The cooldown for announcing the bell
@@ -50,7 +49,7 @@
 	return FALSE
 
 /obj/structure/desk_bell/departmental/check_clapper(mob/living/user)
-	return //NOTHING.
+	return
 
 /obj/structure/desk_bell/departmental/MouseDrop(obj/over_object, src_location, over_location)
 	if(istype(over_object, /obj/vehicle/ridden/wheelchair))
@@ -94,3 +93,6 @@
 
 /obj/structure/desk_bell/departmental/service
 	radio_channel = FREQ_SERVICE
+
+/obj/structure/desk_bell/departmental/syndicate
+	radio_channel = FREQ_SYNDICATE

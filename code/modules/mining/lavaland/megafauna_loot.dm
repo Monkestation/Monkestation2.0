@@ -15,6 +15,7 @@
 	phaseout = /obj/effect/temp_visual/hierophant/blast/visual
 	// It's a simple purple beam, works well enough for the purple hiero effects.
 	beam_effect = "plasmabeam"
+	teleport_channel = TELEPORT_CHANNEL_MAGIC
 
 /datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)

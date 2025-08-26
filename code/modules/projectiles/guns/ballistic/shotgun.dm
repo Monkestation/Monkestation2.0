@@ -48,8 +48,12 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
+	pbk_gentle = TRUE
 
 // Automatic Shotguns//
+
+/obj/item/gun/ballistic/shotgun/automatic
+	pbk_gentle = TRUE
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
@@ -63,7 +67,6 @@
 	fire_delay = 8
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
-	pbk_gentle = TRUE
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact shotgun"
@@ -167,6 +170,7 @@
 	tac_reloads = TRUE
 	projectile_damage_multiplier = 1.2
 	casing_ejector = TRUE
+	pbk_gentle = FALSE
 	///the type of secondary magazine for the bulldog
 	var/secondary_magazine_type
 	///the secondary magazine
