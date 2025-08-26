@@ -127,11 +127,8 @@ export const BarDrone = () => {
           Prefix your message with <b>:b</b> to speak in Drone Chat.
         </Box>
         <Box fontSize="14px" color="#ffffff" margin="5px 0">
-          Drone Rules and more info can be found at our wiki{' '}
-          <a href="https://mediawiki.monkestation.com/Drone">
-            HERE
-          </a>
-          .
+          Drone Rules and more info can be found at our wiki{" "}
+          <a href="https://mediawiki.monkestation.com/Drone">HERE</a>.
         </Box>
       </Section>
     </Window>
