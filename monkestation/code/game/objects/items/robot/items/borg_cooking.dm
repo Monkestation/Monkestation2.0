@@ -11,6 +11,8 @@
 		/obj/item/reagent_containers/cup/soup_pot,
 		/obj/item/seeds,
 		/obj/item/stack/biocube,
+		/obj/item/folder,
+		/obj/item/clipboard,
 	)
 
 /obj/item/borg/apparatus/cooking/Initialize(mapload)
@@ -22,7 +24,7 @@
 	if(!stored)
 		var/itemcheck = FALSE
 		for(var/storable_type in storable)
-			if(istype(atom, storable_type))
+			if(istype(atom, storable_type) && !(istype(atom.loc, /obj/item/robot_model) || atom.loc == user))
 				itemcheck = TRUE
 				break
 		if(itemcheck)

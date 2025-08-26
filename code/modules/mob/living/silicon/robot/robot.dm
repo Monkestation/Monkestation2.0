@@ -110,7 +110,7 @@
  * and also borg emag code.
  */
 /mob/living/silicon/robot/proc/set_modularInterface_theme()
-	if(istype(model, /obj/item/robot_model/syndicate) || emagged)
+	if(istype(model, /obj/item/robot_model/syndicate) || (emagged && !centcom))
 		modularInterface.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
 	else
@@ -988,7 +988,7 @@
 		heal_bodypart_damage(repairs, repairs)
 
 /mob/living/silicon/robot/proc/set_connected_ai(new_ai)
-	if(connected_ai == new_ai)
+	if((connected_ai == new_ai) || centcom)
 		return
 	. = connected_ai
 	connected_ai = new_ai
