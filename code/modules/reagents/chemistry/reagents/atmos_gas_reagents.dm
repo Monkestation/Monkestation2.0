@@ -159,6 +159,6 @@
 
 /datum/reagent/hexane/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
 	breather.adjust_hallucinations_up_to(12 SECONDS * REM * seconds_per_tick, 2 MINUTES)
-	if(prob(33))
+	if(SPT_PROB(33, seconds_per_tick))
 		breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5 * REM * seconds_per_tick, 100, required_organ_flag = affected_organ_flags)
 	return ..()
