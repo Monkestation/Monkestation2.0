@@ -90,18 +90,21 @@
 /obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow() // monkestation edit: remove gib_on_success, as we don't gib the victim anymore
 	if(!owner || bursting)
 		return
-
+	var/neuter_status
+	if(neutered)
+		neuter_status = "Lamarr"
+	else
+		neuter_status = "alien larva"
 	bursting = TRUE
-
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		"Do you want to play as an alien larva that will burst out of [owner.real_name]?",
+		"Do you want to play as [neuter_status], that will burst out of [owner.real_name]?",
 		role = ROLE_ALIEN,
 		check_jobban = ROLE_ALIEN,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_ALIEN_LARVA,
 		alert_pic = /mob/living/carbon/alien/larva,
-		role_name_text = "alien larva"
-	)
+		role_name_text = neuter_status
+		)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return
