@@ -388,6 +388,9 @@
 	else
 		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
+/obj/item/organ/internal/brain/blob_act(obj/structure/blob/B)
+	set_organ_damage(maxHealth)
+
 /obj/item/organ/internal/brain/zombie
 	name = "zombie brain"
 	desc = "This glob of green mass can't have much intelligence inside it."
@@ -414,10 +417,17 @@
 /obj/item/organ/internal/brain/lustrous/before_organ_replacement(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+	organ_owner.RemoveElement(/datum/element/tenacious)
 
 /obj/item/organ/internal/brain/lustrous/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+	organ_owner.AddElement(/datum/element/tenacious)
+
+/obj/item/organ/internal/brain/lizard
+	name = "lizard brain"
+	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_TACKLING_TAILED_DEFENDER)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

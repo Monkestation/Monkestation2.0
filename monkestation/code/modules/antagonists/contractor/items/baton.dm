@@ -49,6 +49,7 @@
 	var/mob/living/carbon/carbon_target = target
 	if(upgrade_flags & BATON_MUTE_UPGRADE)
 		carbon_target.adjust_silence_up_to(MUTE_APPLIED, MUTE_MAX)
+		carbon_target.adjust_emote_mute_up_to(MUTE_APPLIED, MUTE_MAX)
 
 	if(upgrade_flags & BATON_FOCUS_UPGRADE)
 		var/datum/antagonist/traitor/traitor_datum = IS_TRAITOR(user)

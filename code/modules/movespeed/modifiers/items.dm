@@ -19,3 +19,6 @@
 
 /datum/movespeed_modifier/belt_satchel
 	multiplicative_slowdown = 2
+
+/datum/movespeed_modifier/belt_satchel/light
+	multiplicative_slowdown = 0.3
