@@ -46,7 +46,7 @@
 //MONKESTATION EDIT START
 /obj/item/gun/energy/e_gun/advtaser/evil
 	pin = /obj/item/firing_pin/implant/pindicate
-	
+
 /obj/item/gun/energy/e_gun/advtaser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(select == 1)
 		playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
@@ -108,6 +108,7 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	cyborg_cost_multiplier = 15
 
 /obj/item/gun/energy/disabler/cyborg/emp_act()
 	return
