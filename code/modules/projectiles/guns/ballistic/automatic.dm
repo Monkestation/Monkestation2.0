@@ -677,7 +677,7 @@
 	desc = "Using parts from confiscated weapons, the Mining Research team has thrown together \
 	A beast of a weapon. Using Proto Kinetic Acceleration technology as per usual, the 'Hellhound' \
 	is a LMG chambered in kinetic 7.62 with a incredibly high fire rate, for when you need a beast \
-	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
+	to kill a beast. Has a fixed unremovable 150 round magazine with a special loading port on the outside, forcing you to \
 	top off and reload using stripper clips."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "kineticlmg"
@@ -692,6 +692,7 @@
 	weapon_weight = WEAPON_HEAVY
 	internal_magazine = TRUE
 	spread = 3
+	fire_delay = 1
 	pin = /obj/item/firing_pin/wastes
 	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
 
@@ -700,7 +701,7 @@
 	desc = "uhm... uhg... erm... the magazine fell off... (REPORT ME)"
 	ammo_type = /obj/item/ammo_casing/a762/kinetic
 	caliber = CALIBER_A762_KINETIC
-	max_ammo = 100
+	max_ammo = 150
 	multiload = TRUE
 
 /obj/item/ammo_casing/a762/kinetic
@@ -747,6 +748,38 @@
 /obj/item/storage/box/kinetic/kineticlmg/PopulateContents() //populate
 	for(var/i in 1 to 20)
 		new /obj/item/ammo_box/a762/kinetic(src)
+
+/obj/item/ammo_box/a762/kinetic/big
+	name = "rapid reloader (Kinetic 7.62mm)"
+	desc = "A hefty reloader for 'Hellhound' LMG that can load up to fifty rounds at once, and even be refilled. Might be better to hang onto this once its empty.."
+	icon_state = "a762"
+	max_ammo = 50
+	ammo_type = /obj/item/ammo_casing/a762/kinetic
+	multiple_sprites = AMMO_BOX_ONE_SPRITE
+
+/obj/item/storage/box/kinetic/kineticlmg/smallcase //hilarious its called small case when it holds the larger option
+	name = "Case of 'Hellhound' Rapid Reloaders"
+	desc = "A case containing three rapid reloaders for the 'Hellhound' LMG. For when you really just dont have time."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	icon_state = "miner_case_small"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/kineticlmg/smallcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 3
+	atom_storage.set_holdable(list(/obj/item/ammo_box/a762/kinetic/big))
+
+/obj/item/storage/box/kinetic/kineticlmg/smallcase/PopulateContents() //populate
+
+		new /obj/item/ammo_box/a762/kinetic/big (src)
+		new /obj/item/ammo_box/a762/kinetic/big (src)
+		new /obj/item/ammo_box/a762/kinetic/big (src)
 
 /obj/item/storage/box/kinetic/kineticlmg/bigcase //box containing the LMG and a box of extra bullets to get one reload
 	name = "Kinetic 'Hellhound' LMG case"

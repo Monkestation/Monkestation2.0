@@ -675,7 +675,7 @@
 	weapon_weight = WEAPON_HEAVY
 	can_bayonet = FALSE
 	max_mod_capacity = 0 // Fuck off
-	recoil = 3 // Railgun go brrrrr
+	recoil = 1
 	disablemodification = TRUE
 
 /obj/item/ammo_casing/energy/kinetic/railgun
