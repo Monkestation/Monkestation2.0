@@ -35,7 +35,8 @@
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to adjust it.")
+	if(adjustable)
+		. += span_notice("Alt-click [src] to adjust it.")
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
@@ -57,8 +58,10 @@
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	body_parts_covered = NONE
 	flags_cover = NONE
+	actions_types = null
 	armor_type = /datum/armor/breath_muzzle
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+	adjustable = FALSE
 
 /*
 /obj/item/clothing/mask/breath/muzzle/Initialize(mapload)
