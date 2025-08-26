@@ -128,7 +128,7 @@ export const BarDrone = () => {
         </Box>
         <Box fontSize="14px" color="#ffffff" margin="5px 0">
           Drone Rules and more info can be found at our wiki{' '}
-          <a href="https://wiki.monkestation.com/en/jobs/non-human/drone">
+          <a href="https://mediawiki.monkestation.com/Drone">
             HERE
           </a>
           .

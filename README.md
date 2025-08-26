@@ -11,7 +11,7 @@
 |-------------------------|------------------------------------------------|
 | Website                 | [https://monkestation.com/](https://monkestation.com/) |
 | Code                    | [https://github.com/Monkestation/Monkestation2.0](https://github.com/Monkestation/Monkestation2.0) |
-| Wiki                    | [https://wiki.monkestation.com/](https://wiki.monkestation.com/) |
+| Wiki                    | [https://mediawiki.monkestation.com/](https://mediawiki.monkestation.com/) |
 | Codedocs                | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/) |
 | monkestation Discord    | [https://discord.com/invite/monkestation](https://discord.com/invite/monkestation) |
 

@@ -122,7 +122,7 @@ const HivemindSection = (props) => {
             greater humiliation.{'\n'}
           </NoticeBox>
           Additionally changeling rules can be found under{' '}
-          <a href="https://wiki.monkestation.com/#specific-stuff-for-antagonists">
+          <a href="https://mediawiki.monkestation.com/Monke_mrp_rules#Specific_Stuff_for_Antagonists">
             Antagonist Guidance.
           </a>
         </Stack.Item>
