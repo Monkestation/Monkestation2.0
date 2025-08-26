@@ -538,9 +538,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "aja" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "aji" = (
@@ -4841,7 +4841,7 @@
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/radio/intercom/prison/directional/south,
 /obj/machinery/camera/autoname/directional/west,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "bER" = (
@@ -6812,9 +6812,9 @@
 /turf/open/floor/eighties,
 /area/station/service/hydroponics/chicken)
 "clQ" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/door/window/survival_pod/left/directional/north,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "cmf" = (
@@ -17696,10 +17696,10 @@
 /turf/open/floor/plating,
 /area/station/service/library)
 "fOF" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/light/directional/north,
 /obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/machinery/digital_clock/directional/north,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "fOJ" = (
@@ -20836,10 +20836,10 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/prison)
 "gUq" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "gUB" = (
@@ -22676,8 +22676,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "hzT" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/door/window/survival_pod/left/directional/north,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "hAc" = (
@@ -33585,7 +33585,7 @@
 /area/station/science/xenobiology)
 "ldN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "ldQ" = (
@@ -42487,7 +42487,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "oeq" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "oes" = (
@@ -42697,10 +42697,10 @@
 /turf/open/floor/plating/forest,
 /area/forestplanet/outdoors/nospawn)
 "ohL" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "ohP" = (
@@ -43407,7 +43407,7 @@
 /area/station/engineering/storage_shared)
 "osn" = (
 /obj/machinery/digital_clock/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "osu" = (
@@ -44049,7 +44049,7 @@
 /area/station/service/lawoffice)
 "oBS" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "oBZ" = (
@@ -44324,6 +44324,7 @@
 /turf/open/floor/iron/dark/small,
 /area/station/science/robotics)
 "oGV" = (
+/obj/machinery/composters,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "oGY" = (
@@ -44740,8 +44741,8 @@
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/blueshield)
 "oOd" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/door/window/survival_pod/left/directional/east,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "oOg" = (
@@ -46895,8 +46896,8 @@
 	},
 /area/station/service/chapel)
 "ptE" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/door/window/survival_pod/left/directional/north,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "ptY" = (
@@ -47898,8 +47899,8 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "pKH" = (
@@ -48088,11 +48089,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pOU" = (
-/obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/upper)
 "pOW" = (
@@ -48922,7 +48923,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "qdn" = (
@@ -51527,11 +51528,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "qVt" = (
-/obj/machinery/hydroponics/soil,
 /obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/upper)
 "qWb" = (
@@ -54556,8 +54557,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison)
 "rXf" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "rXi" = (
@@ -59983,10 +59984,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "tJg" = (
-/obj/machinery/hydroponics/soil,
 /obj/item/shovel/spade,
 /obj/machinery/light/blacklight/directional/south,
 /obj/effect/turf_decal/weather/dirt,
+/obj/machinery/growing/soil,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/upper)
 "tJk" = (
@@ -60109,7 +60110,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "tLs" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "tLD" = (
@@ -60264,9 +60265,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
 "tNW" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/effect/turf_decal/tile/green/opposingcorners,
+/obj/machinery/growing/tray,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics)
 "tNZ" = (
@@ -61998,7 +61999,7 @@
 /area/station/medical/medbay/lobby)
 "usj" = (
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "usn" = (
@@ -73623,7 +73624,7 @@
 /area/station/commons/lounge)
 "yhO" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing/tray,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "yhQ" = (
