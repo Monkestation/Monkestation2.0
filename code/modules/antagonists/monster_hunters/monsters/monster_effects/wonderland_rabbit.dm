@@ -94,6 +94,7 @@
 	id = "rabbit_sickness"
 	duration = 3 MINUTES
 	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
 	COOLDOWN_DECLARE(message_cooldown)
 
 /datum/status_effect/rabbit_sickness/on_apply()
