@@ -11,7 +11,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*15)
 	throwforce = 2
-	w_class = WEIGHT_CLASS_TINY
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 	override_notes = TRUE
@@ -33,6 +33,9 @@
 	var/start_empty = FALSE
 	///Whether the sprite updates if it has ammunition, monke var
 	var/spriteshift = TRUE
+	/// When inserted into an ammo workbench, does this ammo box check for parent ammunition to search for subtypes of? Relevant for surplus clips, multi-sprite magazines.
+	/// Maybe don't enable this for shotgun ammo boxes.
+	var/multitype = TRUE
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
@@ -173,6 +176,10 @@
 				icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
 	return ..()
 
+
+/obj/item/ammo_box/magazine
+	w_class = WEIGHT_CLASS_SMALL
+
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
 	var/boolets = 0
@@ -199,8 +206,12 @@
 	stored_ammo -= A
 	update_appearance()
 
-// monkestation edit start
 /obj/item/ammo_box/handle_atom_del(atom/A)
 	stored_ammo.Remove(A)
 	return ..()
-// monkestation edit end
+
+
+/obj/item/ammo_box/advanced
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiload = FALSE
+	w_class = WEIGHT_CLASS_NORMAL //used to be tiny tee hee

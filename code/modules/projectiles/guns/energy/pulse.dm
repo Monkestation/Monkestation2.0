@@ -34,6 +34,9 @@
 		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
+/obj/item/gun/energy/pulse/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
 /obj/item/gun/energy/pulse/loyalpin
 	pin = /obj/item/firing_pin/implant/mindshield
 

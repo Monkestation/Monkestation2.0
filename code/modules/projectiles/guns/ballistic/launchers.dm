@@ -82,10 +82,8 @@
 	desc = "A reusable rocket propelled grenade launcher. This one has been fitted with a special coolant loop to avoid embarassing teamkill 'accidents' from backblast."
 	backblast = FALSE
 
-/obj/item/gun/ballistic/rocketlauncher/try_fire_gun(atom/target, mob/living/user, params)
+/obj/item/gun/ballistic/rocketlauncher/afterattack()
 	. = ..()
-	if(!.)
-		return
 	magazine.get_round(FALSE) //Hack to clear the mag after it's fired
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
@@ -115,9 +113,155 @@
 		sleep(2 SECONDS)
 		return OXYLOSS
 
-// 40mm Kinetic Grenade Launcher Hell Yeah
+///Blueshift gun below
 
-#define CALIBER_40MM_KINETIC "40mm Kinetic Grenade" //the ammo type (so it doesnt fit anywhere else)
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher
+	name = "\improper Kiboko Grenade Launcher"
+	desc = "A unique grenade launcher firing .980 grenades. A laser sight system allows its user to specify a range for the grenades it fires to detonate at."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
+	icon_state = "kiboko"
+	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
+	worn_icon_state = "kiboko"
+	lefthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_righthand.dmi'
+	inhand_icon_state = "kiboko"
+	SET_BASE_PIXEL(-8, 0)
+	special_mags = TRUE
+	bolt_type = BOLT_TYPE_LOCKING
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/grenade_launcher.ogg'
+	can_suppress = FALSE
+	can_bayonet = FALSE
+	burst_size = 1
+	fire_delay = 5
+	actions_types = list()
+	/// The currently stored range to detonate shells at
+	var/target_range = 14
+	/// The maximum range we can set grenades to detonate at, just to be safe
+	var/maximum_target_range = 14
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/examine_more(mob/user)
+	. = ..()
+
+	. += "The Kiboko is one of the strangest weapons Carwo offers. A grenade launcher, \
+		though not in the standard grenade size. The much lighter .980 Tydhouer grenades \
+		developed for the weapon offered many advantages over standard grenade launching \
+		ammunition. For a start, it was significantly lighter, and easier to carry large \
+		amounts of. What it also offered, however, and the reason SolFed funded the \
+		project: Variable time fuze. Using the large and expensive ranging sight on the \
+		launcher, its user can set an exact distance for the grenade to self detonate at. \
+		The dream of militaries for decades, finally realized. The smaller shells do not, \
+		however, make the weapon any more enjoyable to fire. The kick is only barely \
+		manageable thanks to the massive muzzle brake at the front."
+
+	return .
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/examine(mob/user)
+	. = ..()
+
+	. += span_notice("With <b>Right Click</b> you can set the range that shells will detonate at.")
+	. += span_notice("A small indicator in the sight notes the current detonation range is: <b>[target_range]</b>.")
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with || !user)
+		return
+
+	var/distance_ranged = get_dist(user, interacting_with)
+	if(distance_ranged > maximum_target_range)
+		user.balloon_alert(user, "out of range")
+		return
+
+	target_range = distance_ranged
+	user.balloon_alert(user, "range set: [target_range]")
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag
+	spawnwithmagazine = FALSE
+
+// fun & games but evil this time
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil
+	icon_state = "kiboko_evil"
+	worn_icon_state = "kiboko_evil"
+	inhand_icon_state = "kiboko_evil"
+	projectile_wound_bonus = 5
+	fire_delay = 0.3 SECONDS
+	pin = /obj/item/firing_pin/implant/pindicate
+
+	spawn_magazine_type = /obj/item/ammo_box/magazine/c980_grenade/drum/thunderdome_shrapnel
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/unrestricted
+	pin = /obj/item/firing_pin
+
+
+/obj/item/gun/ballistic/shotgun/china_lake
+	name = "\improper China Lake 40mm"
+	desc = "Oh, they're goin' ta have to glue you back together...IN HELL!"
+	desc_controls = "ALT-Click to set range. Can be reloaded by CLICK-DRAGGING grenades onto the launcher."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/china_lake
+	var/target_range = 10
+	var/minimum_target_range = 5
+	var/maximum_target_range = 30
+	icon = 'monkestation/icons/obj/guns/china_lake_obj.dmi'
+	icon_state = "china_lake"
+	lefthand_file = 'monkestation/icons/mob/inhands/china_lake_lefthand.dmi'
+	righthand_file = 'monkestation/icons/mob/inhands/china_lake_righthand.dmi'
+	inhand_icon_state = "china_lake"
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	fire_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_fire.ogg'
+	fire_sound_volume = 100
+	rack_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_rack.ogg'
+	rack_delay = 1.5 SECONDS
+	drop_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_drop.ogg'
+	pickup_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_pickup.ogg'
+
+/obj/item/gun/ballistic/shotgun/china_lake/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 10, force_wielded = 10)
+
+/obj/item/gun/ballistic/shotgun/china_lake/examine(mob/user)
+	. = ..()
+	. += span_notice("The leaf sight is set for: <b>[target_range] tiles</b>.")
+
+/obj/item/gun/ballistic/shotgun/china_lake/AltClick(mob/living/user)
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return ..()
+	var/new_range = tgui_input_number(user, "Please set the range", "Leaf Sight Level", 10, maximum_target_range, minimum_target_range)
+	if(!new_range || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	if(new_range != target_range)
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	target_range = new_range
+	to_chat(user, "Leaf sight set for [target_range] tiles.")
+
+/obj/item/gun/ballistic/shotgun/china_lake/MouseDrop_T(obj/item/target, mob/living/user, params)
+	. = ..()
+	if(!istype(target, /obj/item/ammo_casing/a40mm))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user, target))
+		return
+	src.attackby(target, user)
+
+
+/obj/item/gun/ballistic/shotgun/china_lake/restricted
+	pin = /obj/item/firing_pin/implant/pindicate
+
+
+///Mining grenade launcher
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/kinetic
 	desc = "Frankly we have no idea how the boys in Mining Research put this one together, \
@@ -141,109 +285,4 @@
 	weapon_weight = WEAPON_HEAVY
 	pin = /obj/item/firing_pin/wastes
 
-/obj/item/ammo_box/magazine/internal/grenadelauncher/kinetic
-	name = "kinetic rotary grenade launcher"
-	ammo_type = /obj/item/ammo_casing/a40mm/kinetic
-	caliber = CALIBER_40MM_KINETIC
-	max_ammo = 6
 
-/obj/item/ammo_casing/a40mm/kinetic
-	name = "40mm Kinetic Grenade"
-	desc = "A 40mm explosive grenade modified with Proto Kinetic technology."
-	caliber = CALIBER_40MM_KINETIC
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = "40mmkinetic"
-	projectile_type = /obj/projectile/bullet/a40mm/kinetic
-
-/obj/projectile/bullet/a40mm/kinetic
-	name ="40mm kinetic grenade"
-	desc = "OH SHIT!!!"
-	icon = 'icons/obj/weapons/guns/projectiles.dmi'
-	icon_state = "bolter"
-	damage = 100
-	range = 25
-
-/obj/projectile/bullet/a40mm/kinetic/payload(atom/target)
-	var/obj/item/grenade/shrapnel_maker = new /obj/item/grenade/kineticshrapnel(drop_location())
-	shrapnel_maker.detonate()
-	qdel(shrapnel_maker)
-	explosion(target, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 4, flame_range = 0, flash_range = 1, adminlog = FALSE, explosion_cause = src)
-
-/obj/item/storage/box/kinetic/grenadelauncher/bigcase //box containing the  launcher and a spare box of grenades
-	name = "'Slab' grenade launcher case"
-	desc = "A mining gun case containing a six round rotary 'Slab' grenade launcher, and a box of spare grenades."
-	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
-	icon_state = "miner_case"
-	w_class = WEIGHT_CLASS_BULKY
-	illustration = ""
-	foldable_result = /obj/item/stack/sheet/iron
-
-/obj/item/storage/box/kinetic/grenadelauncher/bigcase/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 2
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 2
-	atom_storage.set_holdable(list())
-
-/obj/item/storage/box/kinetic/grenadelauncher/bigcase/PopulateContents() //populate
-
-		new /obj/item/gun/ballistic/revolver/grenadelauncher/kinetic (src)
-		new /obj/item/storage/box/kinetic/grenadelauncher (src)
-
-/obj/item/storage/box/kinetic/grenadelauncher //box containing 12 spare 40mm kinetic shells for the 'Slab' grenade launcher
-	name = "40mm Kinetic Grenade Box"
-	desc = "A small box containing 12 spare 40mm Kinetic Grenades for the 'Slab' Grenade Launcher. Despite everything, it fits in explorer webbing."
-	icon_state = "40mmk_box"
-	illustration = ""
-
-/obj/item/storage/box/kinetic/grenadelauncher/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 12
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 12
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/a40mm/kinetic
-	))
-
-/obj/item/storage/box/kinetic/grenadelauncher/PopulateContents() //populate
-	for(var/i in 1 to 12)
-		new /obj/item/ammo_casing/a40mm/kinetic (src)
-
-
-/obj/item/grenade/kineticshrapnel
-	name = "Kinetic fragmentation payload"
-	desc = "holy fucking shit you should NOT be seeing this please report it and then CRY ABOUT IT"
-	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
-	icon_state = "40mm_projectile"
-	shrapnel_type = /obj/projectile/bullet/shrapnel/kinetic
-	shrapnel_radius = 2
-	det_time = 0
-	display_timer = FALSE
-	ex_light = 0
-
-/obj/projectile/bullet/shrapnel/kinetic
-	name = "Kinetic Shrapnel Hunk"
-	range = 5
-	damage = 75
-	weak_against_armour = TRUE
-	dismemberment = 0
-	ricochets_max = 0
-	ricochet_chance = 0
-	ricochet_incidence_leeway = 0
-	ricochet_decay_chance = 0
-
-/obj/projectile/bullet/shrapnel/kinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
-	if(ismineralturf(target))
-		var/turf/closed/mineral/M = target
-		M.gets_drilled(firer, FALSE)
-	. = ..()
-
-/obj/item/grenade/kineticshrapnel/detonate(mob/living/lanced_by)
-
-	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized)
-		shrapnel_initialized = TRUE
-		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
-
-	SEND_SIGNAL(src, COMSIG_GRENADE_DETONATE, lanced_by)

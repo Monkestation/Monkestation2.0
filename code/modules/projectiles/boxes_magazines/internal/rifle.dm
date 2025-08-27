@@ -49,3 +49,11 @@
 	max_ammo = 3
 	caliber = CALIBER_REBAR_SYNDIE
 	ammo_type = /obj/item/ammo_casing/rebar
+
+/obj/item/ammo_box/magazine/internal/boltaction/minerjdj
+	name = "GIGANTIC RIFLE BREECH THAT SHOULD NOT EXIST"
+	desc = "DO NOT BREAK THE EXPENSIVE MINING EQUIPMENT (REPORT ME)"
+	ammo_type = /obj/item/ammo_casing/minerjdj
+	caliber = CALIBER_MINER_950
+	max_ammo = 1
+	multiload = FALSE

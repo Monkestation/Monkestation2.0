@@ -1,3 +1,5 @@
+///WT autorifle mags
+
 /obj/item/ammo_box/magazine/wt550m9
 	name = "wt550 magazine (4.6x30mm)"
 	icon_state = "46x30mmt-20"
@@ -6,10 +8,8 @@
 	caliber = CALIBER_46X30MM
 	max_ammo = 20
 
-//MONKESTATION ADDITION START
 /obj/item/ammo_box/magazine/wt550m9/starts_empty
 	start_empty = TRUE
-//MONKESTATION ADDITION END
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon_state()
 	. = ..()
@@ -35,6 +35,31 @@
 	. = ..()
 	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
 
+/obj/item/ammo_box/magazine/wt550m9/wtrub
+	name = "wt550 magazine (Rubber 4.6x30mm)"
+	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	icon_state = "46x30mmtR-20"
+	base_icon_state = "46x30mmtR"
+	ammo_type = /obj/item/ammo_casing/c46x30mm/rub
+
+/obj/item/ammo_box/magazine/wt550m9/wtic/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
+
+/obj/item/ammo_box/magazine/wt550m9/wtsalt
+	name = "wt550 magazine (Saltshot 4.6x30mm)"
+	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	icon_state = "46x30mmtS-20"
+	base_icon_state = "46x30mmtS"
+	ammo_type = /obj/item/ammo_casing/c46x30mm/salt
+
+/obj/item/ammo_box/magazine/wt550m9/wtic/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
+
+
+///Plastikov mags
+
 /obj/item/ammo_box/magazine/plastikov9mm
 	name = "PP-95 magazine (9mm)"
 	icon_state = "9x19-50"
@@ -52,6 +77,9 @@
 	icon_state = "9x19-red-50"
 	base_icon_state = "9x19-red"
 
+
+///Uzi mags
+
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"
@@ -63,6 +91,9 @@
 /obj/item/ammo_box/magazine/uzim9mm/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
+
+
+///Saber SMG mags
 
 /obj/item/ammo_box/magazine/smgm9mm
 	name = "SMG magazine (9mm)"
@@ -84,6 +115,9 @@
 	name = "SMG Magazine (Incendiary 9mm)"
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
+
+///CR20 mags
+
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
 	icon_state = "c20r45-24"
@@ -94,14 +128,12 @@
 
 /obj/item/ammo_box/magazine/smgm45/update_icon_state()
 	. = ..()
-	//monke edit start
 	var/old_ammo = 24 // From the old 24 ammo count.
 	var/icon_steps = 2 // Number of steps each icon changed. If 2 with 24 ammo then 24->22->20 etc
 	var/scaled_ammo = round((ammo_count() / max_ammo) * old_ammo, icon_steps) // Required offest without altering icons.
 	if(ammo_count() > 0 && ammo_count() < 2) // Force last bullet icon till the last bullet is actually used.
 		scaled_ammo = icon_steps // icon_steps is usually also your last icon before 0
 	icon_state = "[base_icon_state]-[scaled_ammo]"
-	//monke edit end
 
 /obj/item/ammo_box/magazine/smgm45/ap
 	name = "SMG magazine (Armour Piercing .45)"
@@ -111,9 +143,42 @@
 	name = "SMG magazine (Incendiary .45)"
 	ammo_type = /obj/item/ammo_casing/c45/inc
 
+
+///Tommygun mags
+
 /obj/item/ammo_box/magazine/tommygunm45
 	name = "drum magazine (.45)"
 	icon_state = "drum45"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = CALIBER_45
 	max_ammo = 50
+
+
+//Miecz mags
+
+/obj/item/ammo_box/magazine/miecz
+	name = "\improper Miecz submachinegun magazine"
+	desc = "A standard size magazine for Miecz submachineguns, holds eighteen rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
+	icon_state = "miecz_mag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/c27_54cesarzowa
+	caliber = CALIBER_CESARZOWA
+	max_ammo = 18
+
+/obj/item/ammo_box/magazine/miecz/spawns_empty
+	start_empty = TRUE
+
+
+//Magazine for PKA-smg
+/obj/item/ammo_box/magazine/pksmgmag
+	name = "proto-kinetic magazine"
+	desc = "A single magazine for the 'Rapier' SMG."
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "pksmgmag"
+	base_icon_state = "pksmgmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/energy/kinetic/smg
+	caliber = ENERGY
+	max_ammo = 45
+

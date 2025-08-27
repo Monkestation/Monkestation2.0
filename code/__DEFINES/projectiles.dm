@@ -69,6 +69,22 @@
 #define CALIBER_SPEAR "throwing spear"
 //Peashooter ammo for mech and minigun
 #define CALIBER_22LR ".22 LR"
+// The caliber used by the PACO
+#define CALIBER_35 ".35"
+// The caliber used by the Quarad machinegun
+#define CALIBER_C65XENO "6.5x39"
+// The caliber used by the mining autoshotgun
+#define KINETIC_20G "20 Gauge kinetic shell"
+// The caliber used by the mining LMG
+#define CALIBER_A762_KINETIC "7.65 Kinetic"
+// The caliber used by mining grenade launchers
+#define CALIBER_40MM_KINETIC "40mm Kinetic Grenade"
+// The caliber used by the mining revolver
+#define CALIBER_GOV_MINING ".45-70 Gov Kinetic"
+// The caliber used by the Thor kinetic mining rifle
+#define CALIBER_MINER_950 ".950 JDJ Kinetic"
+// The caliber used by the mining doublebarrel
+#define MINER_SHOTGUN "kinetic shotgun"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2

@@ -103,6 +103,9 @@
 	var/syringe_count = syringes.len
 	. += "[initial(icon_state)]_[syringe_count ? clamp(syringe_count, 1, initial(max_syringes)) : "empty"]"
 
+/obj/item/gun/syringe/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_INTERDYNE)
+
 /obj/item/gun/syringe/rapidsyringe
 	name = "compact rapid syringe gun"
 	desc = "A modification of the syringe gun design to be more compact and use a rotating cylinder to store up to six syringes."
@@ -138,6 +141,9 @@
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
 	syringes = list(new /obj/item/reagent_containers/syringe())
+
+/obj/item/gun/syringe/syndicate/prototype/give_manufacturer_examine()
+	return
 
 /obj/item/gun/syringe/dna
 	name = "modified compact syringe gun"
@@ -205,6 +211,9 @@
 	user.stamina.adjust(-20)
 	user.adjustOxyLoss(20)
 	return ..()
+
+/obj/item/gun/syringe/blowgun/give_manufacturer_examine()
+	return
 
 //Prepare thy coders for a PSYCHIC ATTACK.
 

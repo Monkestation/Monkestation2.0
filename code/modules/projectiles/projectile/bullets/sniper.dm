@@ -117,3 +117,35 @@
 	ricochet_incidence_leeway = 90
 	ricochet_decay_damage = 1
 	ricochet_shoots_firer = FALSE
+
+
+///.60 Strela (Wylom AM rifle)
+
+/obj/projectile/bullet/p60strela // The funny thing is, these are wild but you only get three of them a magazine
+	name =".60 Strela bullet"
+	icon_state = "gaussphase"
+	speed = 0.4
+	damage = 50
+	armour_penetration = 80
+	wound_bonus = 10
+	bare_wound_bonus = 10
+	demolition_mod = 1.8
+	/// How much damage we add to things that are weak to this bullet
+	var/anti_materiel_damage_addition = 30
+
+/obj/projectile/bullet/p60strela/Initialize(mapload)
+	. = ..()
+	// We do 80 total damage to anything robotic, namely borgs, and robotic simplemobs
+	AddElement(/datum/element/bane, target_type = /mob/living, mob_biotypes = MOB_ROBOTIC, damage_multiplier = 0, added_damage = anti_materiel_damage_addition)
+
+/obj/projectile/bullet/p60strela/pierce/on_hit(atom/target, blocked = 0, pierce_hit)  /// If anyone is deranged enough to use it on soft targets, you may as well let them have fun
+	if(isliving(target))
+		// If the bullet has already gone through 3 people, stop it on this hit
+		if(pierces > 3)
+			projectile_piercing = NONE
+
+			if(damage > 10) // Lets just be safe with this one
+				damage -= 10
+			armour_penetration -= 10
+
+	return ..()

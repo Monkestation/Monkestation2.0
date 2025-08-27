@@ -38,3 +38,52 @@
 	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
+
+/obj/projectile/plasma/minerjdj //is plasma because wall cutting
+	name = ".950 JDJ Kinetic solid brass projectile"
+	desc = "you have somehow observed pure death, and it strikes fear that weaves deep within your psyche."
+	speed = 0.2
+	damage = 2500 //(EXPERIMENTAL) it costs like fucking over 40k points just to buy the rifle, lets test making it just delete one boss of your choice (and the loot potentially :)
+	dismemberment = 100 //yeah no if you get hit by this its so over
+	damage_type = BRUTE
+	armor_flag = BULLET //not that it will save you...
+	range = 50
+	icon_state = "gaussstrong"
+	tracer_type = ""
+	muzzle_type = ""
+	impact_type = ""
+	mine_range = 1
+	projectile_piercing = PASSMOB
+
+
+/obj/projectile/plasma/kineticshotgun //subtype of plasma instead of kinetic so it can punch through mineable turf. Cant be used off of lavaland or off the wastes of icemoon anyways so...
+	name = "magnum kinetic projectile"
+	icon_state = "cryoshot"
+	damage_type = BRUTE
+	damage = 35  //totals 175 damage letting them reach the breakpoint for watcher HP so it one shots them
+	range = 7
+	dismemberment = 0
+	projectile_piercing = PASSMOB
+	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
+	mine_range = 1
+	tracer_type = ""
+	muzzle_type = ""
+	impact_type = ""
+
+/obj/projectile/plasma/kineticshotgun/sniperslug // long range but cant hit the oneshot breakpoint of a watcher and does not penetrate targets
+	name = ".50 BMG kinetic"
+	speed = 0.4
+	damage = 150
+	range = 10
+	icon_state = "gaussstrong"
+	projectile_piercing = NONE
+
+/obj/projectile/plasma/kineticshotgun/rockbreaker // for breaking rocks
+	name = "kinetic rockbreaker"
+	speed = 1 //slower than average
+	damage = 2
+	range = 13
+	icon_state = "guardian"
+	projectile_piercing = NONE
+
