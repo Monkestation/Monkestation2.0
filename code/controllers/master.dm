@@ -195,7 +195,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 			"cost_ms" = subsystem.cost,
 			"tick_usage" = subsystem.tick_usage,
 			"usage_per_tick" = average,
-			"tick_overrun" = subsystem.tick_overrun,
+			"overtime" = subsystem.tick_overrun,
 			"initialized" = subsystem.initialized,
 			"initialization_failure_message" = subsystem.initialization_failure_message,
 		))
@@ -468,7 +468,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	else
 		SStitle.remove_init_text(subsystem.type)
 
-	log_world("[message_prefix] [seconds] second\s!")
+	if(message_prefix)
+		log_world("[message_prefix] [seconds] second\s!")
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel

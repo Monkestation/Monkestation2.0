@@ -621,6 +621,8 @@
 2025-08-24:
   Absolucy:
   - map: Added a medipen refiller to the Helio medbay lobby.
+  - rscdel: Removed the "Hard of Hearing" quirk, due to issues relating to chat spam.
+      Hopefully it'll be back soon.
   JohnFulpWillard:
   - qol: The pushbroom can now pull with RMB.
   Sorenon:
@@ -633,3 +635,112 @@
       can cause deafness to last much longer than intended.
   ThePooba:
   - bugfix: maintloot turbomode
+2025-08-25:
+  Salted-Zen:
+  - balance: Hiero staff dash now counts as magic so its not disrupted by bag of holding
+  - code_imp: Hiero staff dash now counts as magic, just like its beacon recall does
+  - balance: Security batons now drain 1% of their cells max charge over time if left
+      on
+  Snack-Max:
+  - rscadd: Batter's Uniform to autodrone
+  ThePooba:
+  - rscadd: Mr bagheads donator pill "Eat Me, I Know You Wanna"
+  - rscadd: cyber_huskey can now speak multiple languages and the dog can now be pet
+  Tractor Maam:
+  - map: heliostation now has departmental bells.
+  - map: added a syndicate variant of the departmental bell for mapping purposes.
+  - rscdel: Removed herobrine.
+  notghosti:
+  - balance: T3 lasers now require t2 lasers to be researched first
+  - rscadd: Removed industrial engineering from mining tech perquisites. This does
+      not effect actual tech to research it
+  - balance: Oozelings are blacklisted from Prosthetics  and Qaud Amputtee quirks
+  throwawayuseless:
+  - rscadd: 'New Quirk: Snappy. Snap with style, panache, pizzaz, mojo, moxie, badassery,
+      goodassery, insouciance, chill, swag, snazz, and a certain *je ne sais quoi*.
+      (please help im running out of synonyms and the thesaurus-beasts from the nether
+      realms are going to CATCH UP WITHMEOHGODTHEPAAAAIIIINNN)'
+2025-08-27:
+  Absolucy:
+  - bugfix: idk i guess im fixing more lag?
+  - refactor: (LemonInTheDark) I have reworked how parallax and its animations (space
+      travel) work. Please report any bugs lads!
+  - bugfix: (Melbert) Some things which should pacify people (but aren't) now will
+      properly, like hypnoflash.
+  - bugfix: (timothymtorres) Fix custom map loading ignoring JSON values that were
+      ignored previously. (minetype, planetary, etc.)
+  - bugfix: (00-Steven) Sign language no longer throws a runtime error when repeatedly
+      muted and unmuted.
+  - bugfix: (00-Steven) Sign language no longer fails to hide the action when you
+      get it while mute, stop being mute, and start being mute again.
+  - admin: (SmArtKar) Renamed "Tick Overrun" in MC overview to "Subsystem Overtime"
+      to be true as to what it actually displays.
+  - balance: (Melbert) Cameras can only see vertically upwards if the turf above them
+      is transparent. But hey, multi-z maps will now perform wayyy better (less time
+      dilation)
+  - bugfix: (SmArtKar) Fixed weather from Z levels above rendering over players' UI.
+  - qol: (SmArtKar) Multi-Z Detail setting has been renamed to Multi-Z Depth with
+      an explanation on what it does. "Standard" setting has been renamed to "No Culling"
+  - bugfix: (SmArtKar) Maps with a large amount of Z levels should no longer randomly
+      display space parallax to players with low multi-z culling settings.
+  - rscdel: Removed bloom (additive lighting). It just made bright lights more painful
+      on the eyes, and didn't look too much better anyways.
+  - bugfix: Rescue hooks can now fish up Oozeling cores.
+  - bugfix: Oozelings which self-revive in chasms somehow will properly "leap" out
+      of the chasm, like other mobs would.
+  - bugfix: Stowaway Oozelings will no longer teleport when revived.
+  Absolucy, hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  Arturlang:
+  - rscadd: mesmerize is now a visual effect only visible to victim and attacker,
+      and no longer requires both parties to stand still
+  - rscadd: both tremere abilities besides mesmerize are now toggled with right click
+      for usability
+  - rscadd: thaumaturgy is now charge-based instead of a single shot, but is thus
+      weaker per-shot
+  - rscadd: tremere abilities now have dynamic descriptions
+  - rscadd: dominate no longer requires facing your target
+  - rscadd: bloodsuckers can only have 1 targeted ability active at a time, you couldn't
+      multicast before anyway.
+  - rscadd: Mesmerize is now slowed down/blocked with welding protection, with levels
+      past 2 making you immune (welding protection is level 2)
+  - rscadd: Dominate now has a visual timer for when your vassal dies horribly
+  - rscadd: Auspex is renamed into Obfsucate, as that makes more sense given what
+      it does.
+  - balance: Auspex, now, Obfuscate, fills your stamina to full, as tremere are lacking
+      in stamina regen options
+  - balance: Obfuscate requires level 6 to allow you to teleport anywehre
+  - balance: Obfuscate now has a per-tile cost of 5 blood per tile teleported, with
+      a cap of 100 blood
+  - code_imp: heavy refactors of tremere abilities
+  Cmpwarrior:
+  - rscadd: Adds a new outfit to the AutoDrobe and a new clown mask variant, based
+      off everyone's favorite fool.
+  Melbert:
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
+  Salted-Zen:
+  - qol: Scraped the Scarborough arms stamp off the 'Duster' Revolver
+  - balance: Reduced PK Railgun recoil
+  - balance: Slightly increased the firerate of the 'Hellhound' LMG and increased
+      max ammo to 150
+  - rscadd: Added a purchasable case of 3 large speed loaders that hold 50 rounds
+      each, for reloading the 'Hellhound' LMG
+  - balance: All mining guns (Except the 'Thor' 950 JDJ) fit in the suit slots of
+      Explorer Armor, Goliath Cloak, Ash Drake Armor, And Godslayer Armor
+  Shoddd:
+  - balance: stimulants now stun alien embryos growth
+  SmArtKar:
+  - qol: Heads of staff PDAs start with twice as much disk space
+  wonderinghost:
+  - bugfix: fixes flatpack duplication when deploying
+  - bugfix: fixes material duplication when repacking

@@ -85,6 +85,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		/datum/quirk/drg_callout, // skillchips are in the brain anyways
 		/datum/quirk/prosthetic_limb,
 		/datum/quirk/quadruple_amputee,
+		/datum/quirk/stowaway,
 	))
 
 	var/rebuilt = TRUE
@@ -378,6 +379,14 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	GLOB.dead_oozeling_cores -= src
 	set_organ_damage(0) // heals the brain fully
+
+	if(istype(loc, /obj/effect/abstract/chasm_storage))
+		// oh fuck we're reviving in a chasm somehow, uhhhh, quick, find us the nearest non-chasm turf
+		for(var/turf/turf as anything in spiral_range_turfs(5, get_turf(src), TRUE))
+			if(!isopenturf(turf) || isgroundlessturf(turf) || turf.is_blocked_turf(exclude_mobs = TRUE))
+				continue
+			forceMove(turf)
+			break
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
 		gps_active = FALSE

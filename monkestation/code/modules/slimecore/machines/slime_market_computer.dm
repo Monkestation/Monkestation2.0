@@ -48,21 +48,19 @@ GLOBAL_DATUM(default_slime_market, /obj/machinery/computer/slime_market)
 
 	return market_pad
 
-/obj/machinery/computer/slime_market/attackby(obj/item/weapon, mob/user, params)
-	if(panel_open)
-		if(weapon.tool_behaviour == TOOL_MULTITOOL)
-			if(!multitool_check_buffer(user, weapon))
-				return
-			var/obj/item/multitool/M = weapon
-			if(!M.buffer)
-				return
-			var/obj/machinery/slime_extract_requestor/pad = M.buffer
-			if(!istype(pad))
-				return
-			pad.console = src
-			request_pad = pad
-			to_chat(user, span_notice("You link the [pad] to the [src]."))
-	. = ..()
+/obj/machinery/computer/slime_market/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!panel_open)
+		return NONE
+	if(!istype(multi.buffer, /obj/machinery/slime_extract_requestor))
+		multi.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
+		return ITEM_INTERACT_SUCCESS
+	var/obj/machinery/slime_extract_requestor/pad = multi.buffer
+	pad.console = src
+	request_pad = pad
+	to_chat(user, span_notice("You link the [pad] to the [src]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/slime_market/ui_assets(mob/user)
 	return list(

@@ -282,7 +282,7 @@
 	playsound(src, 'sound/weapons/genhit.ogg', 25, TRUE)
 	add_fingerprint(user)
 
-/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, params) //monkestation edit
+/turf/closed/wall/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //monkestation edit
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))

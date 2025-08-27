@@ -102,3 +102,6 @@
 	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAIT_XENO_ABILITY_GIVEN)
 
 #undef RAVAGER_OUTLINE_EFFECT
+
+/mob/living/carbon/alien/adult/nova/ravager/lamarr
+	name = "Lamarr"

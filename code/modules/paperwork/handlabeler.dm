@@ -1,7 +1,7 @@
 /obj/item/hand_labeler
 	name = "hand labeler"
 	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use.\nUse while powered off to remove existing labels."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "labeler0"
 	inhand_icon_state = null
 	var/label = null
@@ -41,8 +41,6 @@
 	if(!proximity)
 		return
 
-	. |= AFTERATTACK_PROCESSED_ITEM
-
 	if(!mode) //if it's off, give up.
 		return
 
@@ -81,14 +79,14 @@
 	else
 		to_chat(user, span_notice("You turn off [src]."))
 
-/obj/item/hand_labeler/attackby(obj/item/I, mob/user, params)
+/obj/item/hand_labeler/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
-	if(istype(I, /obj/item/hand_labeler_refill))
-		to_chat(user, span_notice("You insert [I] into [src]."))
-		qdel(I)
+	if(istype(attacking_item, /obj/item/hand_labeler_refill))
+		to_chat(user, span_notice("You insert [attacking_item] into [src]."))
+		qdel(attacking_item)
 		labels_left = initial(labels_left) //Yes, it's capped at its initial value
 
-/obj/item/hand_labeler/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/hand_labeler/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return !mode
 
 /obj/item/hand_labeler/borg
@@ -98,7 +96,6 @@
 	. = ..()
 	if(!proximity)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!iscyborg(user))
 		return
 
@@ -118,7 +115,7 @@
 
 /obj/item/hand_labeler_refill
 	name = "hand labeler paper roll"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	inhand_icon_state = "electropack"

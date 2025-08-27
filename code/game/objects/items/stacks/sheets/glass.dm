@@ -48,10 +48,10 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	. = ..()
 	. += GLOB.glass_recipes
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/glass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = attacking_item
 		if (get_amount() < 1 || CC.get_amount() < 5)
 			to_chat(user, span_warning("You need five lengths of coil and one sheet of glass to make wired glass!"))
 			return
@@ -62,8 +62,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
 		return
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
+	if(istype(attacking_item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/V = attacking_item
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
 			if(!QDELETED(RG))
@@ -111,11 +111,11 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	. = ..()
 	. += GLOB.pglass_recipes
 
-/obj/item/stack/sheet/plasmaglass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/plasmaglass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
+	if(istype(attacking_item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/V = attacking_item
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
 			if (!QDELETED(RG))
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	fire = 70
 	acid = 100
 
-/obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/rglass/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	..()
 
@@ -339,20 +339,16 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
-/obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
-	. = ..()
-	if(!proximity || !(src in user))
+/obj/item/shard/afterattack(atom/target, mob/user, click_parameters)
+	if(!iscarbon(user) || !user.is_holding(src))
 		return
-	if(isturf(A))
+
+	var/mob/living/carbon/jab = user
+	if(jab.get_all_covered_flags() & HANDS)
 		return
-	if(istype(A, /obj/item/storage))
-		return
-	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
-			to_chat(H, span_warning("[src] cuts into your hand!"))
-			H.apply_damage(force*0.5, BRUTE, hit_hand)
+
+	to_chat(user, span_warning("[src] cuts into your hand!"))
+	jab.apply_damage(force * 0.5, BRUTE, user.get_active_hand(), attacking_item = src)
 
 /obj/item/shard/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/lightreplacer))
@@ -378,7 +374,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		to_chat(user, span_notice("You melt [src] down into [new_glass.name]."))
 		new_glass.forceMove((Adjacent(user) ? user.drop_location() : loc)) //stack merging is handled automatically.
 		qdel(src)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/shard/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

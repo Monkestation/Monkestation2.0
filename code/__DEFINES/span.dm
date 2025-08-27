@@ -41,6 +41,7 @@
 #define span_cultbold(str) ("<span class='cultbold'>" + str + "</span>")
 #define span_cultboldtalic(str) ("<span class='cultboldtalic'>" + str + "</span>")
 #define span_cultitalic(str) ("<span class='cultitalic'>" + str + "</span>")
+#define span_cult_italic(str) ("<span class='cult_italic'>" + str + "</span>")
 #define span_cultlarge(str) ("<span class='cultlarge'>" + str + "</span>")
 #define span_danger(str) ("<span class='danger'>" + str + "</span>")
 #define span_deadsay(str) ("<span class='deadsay'>" + str + "</span>")
@@ -133,6 +134,7 @@
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
+#define span_center(str) ("<span class='center'>[str]</span>")
 
 // Spans that use embedded tgui components:
 // Sorted alphabetically

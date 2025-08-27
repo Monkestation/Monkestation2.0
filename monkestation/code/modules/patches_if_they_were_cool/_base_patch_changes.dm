@@ -27,7 +27,6 @@
 	var/divided_size = world.icon_size / 2
 	var/px = text2num(LAZYACCESS(parameters, ICON_X)) - divided_size
 	var/py = text2num(LAZYACCESS(parameters, ICON_Y)) - divided_size
-	. |= AFTERATTACK_PROCESSED_ITEM
 	user.do_attack_animation(target)
 	stick(target,user,px,py)
 	return .

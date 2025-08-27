@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	. = ..()
 	if(default_unfasten_wrench(user, tool))
 		power_change()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/biomass_recycler/attackby(obj/item/item, mob/user, params)
 	. = ..()
