@@ -1,4 +1,4 @@
-/obj/item/gun/ballistic/shotgun
+ /obj/item/gun/ballistic/shotgun
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
@@ -275,6 +275,7 @@
 	. += "You can remove a secondary magazine by alt-right-clicking [src]."
 	. += "Right-click to swap the magazine to the secondary position, and vice versa."
 
+
 /obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
 	. = ..()
 	if(secondary_magazine)
@@ -300,28 +301,25 @@
 	toggle_magazine()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, params)
+/obj/item/gun/ballistic/shotgun/bulldog/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(secondary_magazine)
 		toggle_magazine()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return SECONDARY_ATTACK_CALL_NORMAL
+	return ..()
 
-/obj/item/gun/ballistic/shotgun/bulldog/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, secondary_magazine_type))
-		balloon_alert(user, "[weapon.name] doesn't fit!")
-		return SECONDARY_ATTACK_CALL_NORMAL
-	if(!user.transferItemToLoc(weapon, src))
-		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/ballistic/shotgun/bulldog/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, secondary_magazine_type))
+		return ..()
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 	var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
-	secondary_magazine = weapon
+	secondary_magazine = tool
 	if(old_mag)
 		user.put_in_hands(old_mag)
 		old_mag.update_appearance()
 	balloon_alert(user, "secondary [magazine_wording] loaded")
 	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
-	update_appearance(UPDATE_OVERLAYS)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
 	if(secondary_magazine)
@@ -442,9 +440,10 @@
 	. = ..()
 	. += span_notice("Right-click to shoot the hook.")
 
-/obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	hook.afterattack(target, user, proximity_flag, click_parameters)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/ballistic/shotgun/hook/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return hook.try_fire_gun(target, user, params)
+	return ..()
 
 // A shotgun, but tis a revolver (Blueshift again)
 // Woe, buckshot be upon ye
@@ -571,7 +570,7 @@
 	internal_magazine = FALSE
 	show_bolt_icon = FALSE
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	pb_knockback = 0 //you may have your point blank, but you dont get a fling  //Why tf are they worried about this when half the mining guns instantly kill you
+	pb_knockback = 0
 
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic

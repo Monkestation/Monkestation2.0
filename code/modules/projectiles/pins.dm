@@ -432,12 +432,13 @@
 		/area/station/cargo/storage,
 		/area/station/cargo/office,
 		/area/station/cargo/sorting,
+		)
 
 //Checks to see if the user in cargo or it's warehouse
 /obj/item/firing_pin/cargo/pin_auth(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if (is_type_in_list(get_area(user), station_cargo))
+	if(is_type_in_list(get_area(user), station_cargo))
 		return TRUE
 	return FALSE
 
