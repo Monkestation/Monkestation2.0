@@ -31,7 +31,7 @@
 
 /obj/projectile/bullet/bloodsilver/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(isliving(target) && is_monster_hunter_prey(target))
+	if(is_monster_hunter_prey(target))
 		target.apply_status_effect(/datum/status_effect/silver_bullet)
 
 /datum/status_effect/silver_bullet
