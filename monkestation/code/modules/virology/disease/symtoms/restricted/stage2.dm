@@ -212,7 +212,7 @@
 			multiplier = min(multiplier + 0.1, max_multiplier)
 	return
 
-/datum/symptom/toxolysis/proc/Heal(mob/living/M, datum/disease/advance/A, actual_power)
+/datum/symptom/toxolysis/proc/Heal(mob/living/M, actual_power)
 	for(var/datum/reagent/R in M.reagents?.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.type, actual_power)
 		if(food_conversion)

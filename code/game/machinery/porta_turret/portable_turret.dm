@@ -40,6 +40,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	subsystem_type = /datum/controller/subsystem/processing/turrets
 	// Same faction mobs will never be shot at, no matter the other settings
 	faction = list(FACTION_TURRET)
 

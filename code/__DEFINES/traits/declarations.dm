@@ -88,6 +88,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
+//FOR XENO LARVA
+#define TRAIT_NEUTERED "neutered" //the mob cant reproduce
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
 /// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
@@ -1311,4 +1313,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
 
+/// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
+#define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 // END TRAIT DEFINES

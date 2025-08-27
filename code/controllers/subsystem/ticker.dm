@@ -351,7 +351,8 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	if(!CONFIG_GET(flag/disable_storyteller))
 		SSgamemode.current_storyteller.round_started = TRUE
-		SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+		if(!SSgamemode.halted_storyteller)
+			SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
 	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
 

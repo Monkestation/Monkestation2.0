@@ -560,3 +560,145 @@
   wonderinghost:
   - map: updates helios disposal network
   - map: ordanance now has a mail bin and atmos should be mail routable
+2025-08-22:
+  Absolucy:
+  - balance: Removed the knockback stun from riot shotguns and such. Bulldog shotguns
+      and double-barrelled shotguns can still do so, tho.
+  - qol: Slime Washing now works if the oozeling is lying down, even if they have
+      shoes on.
+  - bugfix: Slime Washing now actually feeds the oozeling when they clean up grime,
+      as intended.
+  Salted-Zen:
+  - balance: PK Pistol cooldown upped to 4 seconds
+  - bugfix: You can no longer cause an error by giving the PK Pistol 10 cooldown mods
+  Shoddd:
+  - balance: frontier coats in loadout no longer have armor
+  Tractor Maam:
+  - rscadd: Added a new escape shuttle! The Yate Haugan Neo for 14062 credits
+  - rscadd: Added a new emag only escape shuttle, The Cargo Refitted Yate Haugan Neo
+      for 22264 credits
+  - bugfix: fixed a typo in rayne welder code
+  - bugfix: John Intern's (sprungle) office paper now contains text.
+2025-08-23:
+  Absolucy:
+  - map: Box Station now has 6 SMESes instead of 4.
+  - map: Box Station's cables near engi are now protected with catwalks.
+  - map: Added an oxygen canister to Box Station's engineering.
+  Ice-Type:
+  - balance: shooting someone riding a welding fuel tank has a 50% chance of hitting
+      the tank instead. Yes, this can blow it the fuck up.
+  Shoddd:
+  - balance: Upped assistant point reward to 200 credits
+  - balance: Assistants can no longer punch cards
+  - balance: Cards no longer start with one free punch
+  - map: Added assistant point redeemer to all cargos that lacked one
+  - bugfix: updates GAP card description from 100 to 200
+  Sorenon:
+  - rscadd: Added the Monoplegic and Hemiplegic paralysis quirks
+  Xander3359:
+  - code_imp: adds emote_mute status effect and helper procs
+  - balance: adds emote mute to some silencing effects
+  notghosti:
+  - rscadd: Added new antigen 'Ig', which cannot be mass produced normally.
+  - rscadd: Beaker apparatus can now pick up tubes and virus dishes.
+  - balance: Tubercle Bacillus Cosmosis Microbes now has a antibody and thus protection
+      against reinfection.
+  - balance: Convermol/Spaceallin mix will not give antibodies against Tubercle Bacillus
+      Cosmosis Microbes. But BVAK injectors and other methods will.
+  - balance: Nerfed Alkali Burn stacks
+  - bugfix: Plague Rats will now no longer nibble their way into NULLSPACE (((Hopefully)))
+  - bugfix: sililcons can now interact with incubators and disease analyzers
+  - admin: Plague rats have been removed from the antag datum panel. Use the event
+      instead
+  - balance: Removed the 4 crew spawns from the battlecruiser starfury
+  - bugfix: Florans can reattach limbs again
+  throwawayuseless:
+  - spellcheck: TRNE Corp. has hired a Ratvarian-fluent spellchecker and has subsequently
+      renamed the Rat'vander cocktail to Ratvander.
+  wonderinghost:
+  - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
+      access instead of both'
+2025-08-24:
+  Absolucy:
+  - map: Added a medipen refiller to the Helio medbay lobby.
+  - rscdel: Removed the "Hard of Hearing" quirk, due to issues relating to chat spam.
+      Hopefully it'll be back soon.
+  JohnFulpWillard:
+  - qol: The pushbroom can now pull with RMB.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  ThePooba:
+  - bugfix: maintloot turbomode
+2025-08-25:
+  Salted-Zen:
+  - balance: Hiero staff dash now counts as magic so its not disrupted by bag of holding
+  - code_imp: Hiero staff dash now counts as magic, just like its beacon recall does
+  - balance: Security batons now drain 1% of their cells max charge over time if left
+      on
+  Snack-Max:
+  - rscadd: Batter's Uniform to autodrone
+  ThePooba:
+  - rscadd: Mr bagheads donator pill "Eat Me, I Know You Wanna"
+  - rscadd: cyber_huskey can now speak multiple languages and the dog can now be pet
+  Tractor Maam:
+  - map: heliostation now has departmental bells.
+  - map: added a syndicate variant of the departmental bell for mapping purposes.
+  - rscdel: Removed herobrine.
+  notghosti:
+  - balance: T3 lasers now require t2 lasers to be researched first
+  - rscadd: Removed industrial engineering from mining tech perquisites. This does
+      not effect actual tech to research it
+  - balance: Oozelings are blacklisted from Prosthetics  and Qaud Amputtee quirks
+  throwawayuseless:
+  - rscadd: 'New Quirk: Snappy. Snap with style, panache, pizzaz, mojo, moxie, badassery,
+      goodassery, insouciance, chill, swag, snazz, and a certain *je ne sais quoi*.
+      (please help im running out of synonyms and the thesaurus-beasts from the nether
+      realms are going to CATCH UP WITHMEOHGODTHEPAAAAIIIINNN)'
+2025-08-27:
+  Absolucy:
+  - bugfix: idk i guess im fixing more lag?
+  - refactor: (LemonInTheDark) I have reworked how parallax and its animations (space
+      travel) work. Please report any bugs lads!
+  - bugfix: (Melbert) Some things which should pacify people (but aren't) now will
+      properly, like hypnoflash.
+  - bugfix: (timothymtorres) Fix custom map loading ignoring JSON values that were
+      ignored previously. (minetype, planetary, etc.)
+  - bugfix: (00-Steven) Sign language no longer throws a runtime error when repeatedly
+      muted and unmuted.
+  - bugfix: (00-Steven) Sign language no longer fails to hide the action when you
+      get it while mute, stop being mute, and start being mute again.
+  - admin: (SmArtKar) Renamed "Tick Overrun" in MC overview to "Subsystem Overtime"
+      to be true as to what it actually displays.
+  - balance: (Melbert) Cameras can only see vertically upwards if the turf above them
+      is transparent. But hey, multi-z maps will now perform wayyy better (less time
+      dilation)
+  - bugfix: (SmArtKar) Fixed weather from Z levels above rendering over players' UI.
+  - qol: (SmArtKar) Multi-Z Detail setting has been renamed to Multi-Z Depth with
+      an explanation on what it does. "Standard" setting has been renamed to "No Culling"
+  - bugfix: (SmArtKar) Maps with a large amount of Z levels should no longer randomly
+      display space parallax to players with low multi-z culling settings.
+  - rscdel: Removed bloom (additive lighting). It just made bright lights more painful
+      on the eyes, and didn't look too much better anyways.
+  Cmpwarrior:
+  - rscadd: Adds a new outfit to the AutoDrobe and a new clown mask variant, based
+      off everyone's favorite fool.
+  Salted-Zen:
+  - qol: Scraped the Scarborough arms stamp off the 'Duster' Revolver
+  - balance: Reduced PK Railgun recoil
+  - balance: Slightly increased the firerate of the 'Hellhound' LMG and increased
+      max ammo to 150
+  - rscadd: Added a purchasable case of 3 large speed loaders that hold 50 rounds
+      each, for reloading the 'Hellhound' LMG
+  - balance: All mining guns (Except the 'Thor' 950 JDJ) fit in the suit slots of
+      Explorer Armor, Goliath Cloak, Ash Drake Armor, And Godslayer Armor
+  SmArtKar:
+  - qol: Heads of staff PDAs start with twice as much disk space
+  wonderinghost:
+  - bugfix: fixes flatpack duplication when deploying
+  - bugfix: fixes material duplication when repacking

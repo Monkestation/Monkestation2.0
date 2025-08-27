@@ -236,7 +236,7 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, 1)//Monkestation edit end
-		
+
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
 	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
@@ -271,6 +271,7 @@
 	accepts_rig = TRUE
 	can_buckle = TRUE //Monkestation edit start
 	buckle_lying = 0
+	cover_amount = 50
 
 /obj/structure/reagent_dispensers/fueltank/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()

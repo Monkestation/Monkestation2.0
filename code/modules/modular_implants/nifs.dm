@@ -15,7 +15,7 @@
 /obj/item/organ/internal/cyberimp/brain/nif
 	name = "Nanite Implant Framework"
 	desc = "A brain implant that infuses the user with nanites."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/nifs.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "base_nif"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot = ORGAN_SLOT_BRAIN_NIF
@@ -263,11 +263,11 @@
 	if(!blood_drain)
 		power_usage += (blood_drain_rate * blood_conversion_rate)
 
-		balloon_alert(linked_mob, "Blood draining disabled")
+		balloon_alert(linked_mob, "blood draining disabled")
 		return
 
 	power_usage -= (blood_drain_rate * blood_conversion_rate)
-	balloon_alert(linked_mob, "Blood draining enabled")
+	balloon_alert(linked_mob, "blood draining enabled")
 
 ///Checks if the NIF is able to draw blood as a power source?
 /obj/item/organ/internal/cyberimp/brain/nif/proc/blood_check()
@@ -501,6 +501,11 @@
 /obj/item/autosurgeon/organ/nif/debug
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/nif/debug
 	uses = 1
+
+/// This cell is only meant for use in items temporarily created by a NIF. Do not let players extract this from devices.
+/obj/item/stock_parts/cell/infinite/nif_cell
+	name = "Nanite Cell"
+	desc = "If you see this, please make an issue on GitHub."
 
 /obj/item/storage/box/nif_ghost_box
 	name = "\improper NIF Starter Kit"

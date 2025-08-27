@@ -31613,7 +31613,7 @@
 /area/centcom/central_command_areas/adminroom)
 "vRs" = (
 /obj/item/paper{
-	text = "FUUUUUUUUUUU-"
+	raw_text_inputs = "FUUUUUUUUUUU-"
 	},
 /obj/effect/temp_visual/cult/rune_spawn/rune4{
 	color = "#880808";
