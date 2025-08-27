@@ -60,6 +60,23 @@
 	QDEL_LIST(effects)
 	return ITEM_INTERACT_SUCCESS
 
+// didnt want to mess up is_blocked_turf_ignore_climbable
+/// checks if our target is blocked, also checks for border objects facing the above turf and climbable stuff
+/obj/item/climbing_hook/proc/target_blocked(turf/target, turf/trans_vertical)
+	if(target.density || (isopenspaceturf(target) && target.zPassOut(DOWN)) || !trans_vertical.zPassOut(DOWN) || trans_vertical.density) // we check if we would fall down from it additionally
+		return TRUE
+
+	for(var/atom/movable/atom_content as anything in target.contents)
+		if(isliving(atom_content))
+			continue
+		if(HAS_TRAIT(atom_content, TRAIT_CLIMBABLE))
+			continue
+		if((atom_content.flags_1 & ON_BORDER_1) && atom_content.dir != get_dir(target, trans_vertical)) //if the border object is facing the hole then it is blocking us, likely
+			continue
+		if(atom_content.density)
+			return TRUE
+	return FALSE
+
 /obj/item/climbing_hook/emergency
 	name = "emergency climbing hook"
 	desc = "An emergency climbing hook to scale up holes. The rope is EXTREMELY cheap and may not withstand extended use."

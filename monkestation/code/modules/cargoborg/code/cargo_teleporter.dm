@@ -107,18 +107,15 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	if(!my_fulton) // Fulton self delete
 		my_fulton = new(src)
 
-/obj/item/cargo_teleporter/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
+/obj/item/cargo_teleporter/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	. = NONE
 	if(charges <= 0)
 		balloon_alert(user, "no charges left!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!my_fulton.choose_beacon(user))
-		return
-	// XANTODO, ugh, make sure the charges get depleted
-	//if(my_fulton.afterattack(target, user, proximity_flag, click_parameters) == AFTERATTACK_PROCESSED_ITEM)
-	//	charges--
+		return ITEM_INTERACT_BLOCKING
+	if(my_fulton.interact_with_atom(interacting_with, user, modifiers) == ITEM_INTERACT_SUCCESS)
+		charges--
 
 /datum/design/cargo_teleporter
 	name = "Cargo Teleporter"

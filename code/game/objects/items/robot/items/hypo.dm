@@ -379,7 +379,7 @@
 	charge_cost = 0.04 * STANDARD_CELL_CHARGE //Costs double the power of the borgshaker due to synthesizing solids
 	recharge_time = 6 //Double the recharge time too, for the same reason.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
-	default_reagent_types = EXPANDED_SERVICE_REAGENTS
+	default_reagent_types = HACKED_SERVICE_REAGENTS
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -105,10 +105,10 @@ Slimecrossing Potions
 	icon_state = "potblue"
 	var/uses = 2
 
-// monkestation start: allow using on storage items via right clicking or combat mode
-/obj/item/slimepotion/spaceproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
-// monkestation end
+//// monkestation start: allow using on storage items via right clicking or combat mode
+///obj/item/slimepotion/spaceproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+//	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+//// monkestation end XANTODO
 
 /obj/item/slimepotion/spaceproof/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -155,10 +155,10 @@ Slimecrossing Potions
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
 
-// monkestation start: allow using on storage items via right clicking or combat mode
-/obj/item/slimepotion/lavaproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
-// monkestation end
+//// monkestation start: allow using on storage items via right clicking or combat mode
+///obj/item/slimepotion/lavaproof/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+//	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+//// monkestation end XANTODO
 
 /obj/item/slimepotion/lavaproof/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()

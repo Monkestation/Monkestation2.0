@@ -103,7 +103,7 @@
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!. && prob(50))
-		stick(hit_atom,rand(-7,7),rand(-7,7))
+		attempt_attach(hit_atom, px = rand(-7,7), py = rand(-7,7))
 		attached.balloon_alert_to_viewers("the sticker lands on its sticky side!")
 
 ///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable

@@ -20,7 +20,7 @@
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_successful_attack))
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /datum/component/jousting/UnregisterFromParent()

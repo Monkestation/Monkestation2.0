@@ -47,8 +47,8 @@
 	RegisterSignal(casing, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_after_dip), override = TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-///signal called on parent being examined
-/datum/element/envenomable_casing/proc/on_examine(obj/item/ammo_casing/casing, mob/user, list/examine_list)
+///signal called on parent being examined while not coated
+/datum/element/envenomable_casing/proc/on_examine_before_dip(obj/item/ammo_casing/casing, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("You can dip it in a chemical to deliver a poisonous kick.")
 

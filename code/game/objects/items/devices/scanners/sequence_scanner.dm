@@ -1,6 +1,6 @@
 /obj/item/sequence_scanner
 	name = "genetic sequence scanner"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "gene"
 	inhand_icon_state = "healthanalyzer"
 	worn_icon_state = "healthanalyzer"
@@ -30,8 +30,8 @@
 		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
 
 /obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = interacting_with
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
 		if(console.stored_research)
 			to_chat(user, span_notice("[name] linked to central research database."))
 			discovered = console.stored_research.discovered_mutations
@@ -42,11 +42,11 @@
 	if(!isliving(interacting_with))
 		return NONE
 
-/obj/item/sequence_scanner/attack(mob/living/target, mob/living/carbon/human/user)
 	add_fingerprint(user)
+
 	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
+	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
+		user.visible_message(span_notice("[user] analyzes [interacting_with]'s genetic sequence."))
 		balloon_alert(user, "sequence analyzed")
 		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough
 		gene_scan(interacting_with, user)
@@ -56,8 +56,8 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = interacting_with
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
 		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
 		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
 		return ITEM_INTERACT_SUCCESS
@@ -97,20 +97,29 @@
 	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
 	var/list/active_mutations = list()
 	for(var/datum/mutation/mutation in target.dna.mutations)
-		LAZYOR(buffer, mutation.type)
+		LAZYSET(buffer, mutation.type, GET_SEQUENCE(mutation.type))
 		active_mutations.Add(mutation.type)
 
-	var/list/lines = list()
-	lines += span_notice("Subject [span_name(target.name)]'s DNA sequence has been saved to buffer.")
-	lines += span_boldnotice("Genetic Stability: ") + "[target.dna.stability]%"
+	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
 	for(var/mutation in buffer)
 		//highlight activated mutations
 		if(LAZYFIND(active_mutations, mutation))
-			lines += span_boldnotice("[get_display_name(mutation)]")
+			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
 		else
-			lines += span_notice("[get_display_name(mutation)]")
-	var/title = "<img class='icon bigicon' src='\ref[icon]?state=[url_encode(icon_state)]'> " + span_bold("Genetic Sequence Analysis")
-	to_chat(user, fieldset_block(title, jointext(lines, "<br>"), "boxed_message blue_box"), type = MESSAGE_TYPE_INFO)
+			to_chat(user, span_notice("[get_display_name(mutation)]"))
+
+///proc for scanning someone's genetic makeup
+/obj/item/sequence_scanner/proc/makeup_scan(mob/living/carbon/target, mob/living/user)
+	if(!iscarbon(target) || !target.has_dna())
+		return
+
+	genetic_makeup_buffer = list(
+	"label"="Analyzer Slot:[target.real_name]",
+	"UI"=target.dna.unique_identity,
+	"UE"=target.dna.unique_enzymes,
+	"UF"=target.dna.unique_features,
+	"name"=target.real_name,
+	"blood_type"=target.get_bloodtype())
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)

@@ -98,7 +98,7 @@
 		if(WAND_EMERGENCY)
 			icon_state_mode = "emergency"
 
-	icon_state = "[base_icon_state]_[department]_[icon_state_mode]"
+	icon_state = "[base_icon_state]_[remote_type]_[icon_state_mode]"
 	return ..()
 
 /obj/item/door_remote/omni
