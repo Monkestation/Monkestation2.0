@@ -393,16 +393,21 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		qdel(GetComponent(/datum/component/gps))
 
 	//we have the plasma. we can rebuild them.
-	brainmob?.mind?.grab_ghost()
+	var/mob/dead/observer/ghost = brainmob?.mind?.get_ghost()
+	if(ghost)
+		if(!ghost.can_reenter_corpse)
+			user?.balloon_alert(user, "This core's soul has departed...")
+			return null
+		ghost.reenter_corpse()
 	if(isnull(original_mind))
 		if(isnull(brainmob))
-			user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
+			user?.balloon_alert(user, "This core is not a viable candidate for repair!")
 			return null
 		if(isnull(brainmob.stored_dna))
-			user?.balloon_alert(user, "This brain does not contain any dna!")
+			user?.balloon_alert(user, "This core does not contain any DNA!")
 			return null
 		if(isnull(brainmob.client))
-			user?.balloon_alert(user, "This brain does not contain a mind!")
+			user?.balloon_alert(user, "This core does not contain a mind!")
 			return null
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
