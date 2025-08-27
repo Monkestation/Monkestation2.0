@@ -25,9 +25,9 @@
 		return
 	. += "largebino"
 
-/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/storage/bag/trash))
-		var/obj/item/storage/bag/trash/T = W
+/obj/structure/closet/crate/bin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/storage/bag/trash))
+		var/obj/item/storage/bag/trash/T = attacking_item
 		to_chat(user, span_notice("You fill the bag."))
 		for(var/obj/item/O in src)
 			T.atom_storage?.attempt_insert(O, user, TRUE)

@@ -1,12 +1,37 @@
 //entirely neutral or internal status effects go here
 
-/datum/status_effect/crusher_damage //tracks the damage dealt to this mob by kinetic crushers
+/datum/status_effect/crusher_damage
 	id = "crusher_damage"
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
+	/// How much damage?
 	var/total_damage = 0
+
+/datum/status_effect/crusher_damage/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(damage_taken))
+	return TRUE
+
+/datum/status_effect/crusher_damage/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE)
+
+/datum/status_effect/crusher_damage/proc/damage_taken(
+	datum/source,
+	damage_dealt,
+	damagetype,
+	def_zone,
+	blocked,
+	wound_bonus,
+	bare_wound_bonus,
+	sharpness,
+	attack_direction,
+	attacking_item,
+)
+	SIGNAL_HANDLER
+
+	if(istype(attacking_item, /obj/item/kinetic_crusher))
+		total_damage += damage_dealt
 
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
@@ -335,6 +360,21 @@
 		return
 
 	owner.emote("surrender")
+
+///For when you need to make someone be prompted for surrender, but not forever
+/datum/status_effect/surrender_timed
+	id = "surrender_timed"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/surrender_timed/on_apply()
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+/datum/status_effect/surrender_timed/on_remove()
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
 
 /*
  * A status effect used for preventing caltrop message spam

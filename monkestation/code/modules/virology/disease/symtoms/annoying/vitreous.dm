@@ -20,7 +20,7 @@
 		return
 	if (is_type_in_list(glass_to_shatter, list(/obj/item/reagent_containers/cup/glass)))
 		to_chat(victim, span_warning("Your [check_arm] resonates with the glass in \the [glass_to_shatter], shattering it to bits!"))
-		glass_to_shatter.reagents.expose(victim, TOUCH)
+		glass_to_shatter.reagents?.expose(victim, TOUCH)
 		new/obj/effect/decal/cleanable/generic(get_turf(victim))
 		playsound(victim, 'sound/effects/glassbr1.ogg', 25, 1)
 		spawn(1 SECONDS)

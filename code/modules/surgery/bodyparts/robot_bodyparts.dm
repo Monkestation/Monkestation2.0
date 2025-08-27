@@ -505,8 +505,9 @@
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 5
-	unarmed_damage_high = 13
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
+	unarmed_stun_threshold = 15
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5
@@ -517,8 +518,9 @@
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 5
-	unarmed_damage_high = 13
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
+	unarmed_stun_threshold = 15
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5
@@ -529,8 +531,8 @@
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 7
-	unarmed_damage_high = 17
+	unarmed_damage_low = 18
+	unarmed_damage_high = 18
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5
@@ -541,8 +543,8 @@
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 7
-	unarmed_damage_high = 17
+	unarmed_damage_low = 18
+	unarmed_damage_high = 18
 	max_damage = 75
 	brute_modifier = 0.5
 	burn_modifier = 0.5

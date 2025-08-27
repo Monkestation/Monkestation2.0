@@ -450,10 +450,10 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 
-/obj/structure/closet/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(user in src)
 		return
-	if(src.tool_interact(W,user))
+	if(src.tool_interact(attacking_item,user))
 		return 1 // No afterattack
 	else
 		return ..()
@@ -648,7 +648,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	if(attack_hand(user))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in view(1)

@@ -61,10 +61,10 @@
 	if(istype(sigdev))
 		sigdev.signal()
 
-/obj/item/pressure_plate/attackby(obj/item/I, mob/living/L)
-	if(issignaler(I) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
-		sigdev = I
-		to_chat(L, span_notice("You attach [I] to [src]!"))
+/obj/item/pressure_plate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(issignaler(attacking_item) && !istype(sigdev) && removable_signaller && user.transferItemToLoc(attacking_item, src))
+		sigdev = attacking_item
+		to_chat(user, span_notice("You attach [attacking_item] to [src]!"))
 	return ..()
 
 /obj/item/pressure_plate/attack_self(mob/living/L)

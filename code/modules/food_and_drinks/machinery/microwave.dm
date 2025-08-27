@@ -27,6 +27,7 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
 	anchored_tabletop_offset = 6
+	var/held_state = "microwave_standard"
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
 	/// How dirty is it?
@@ -55,6 +56,8 @@
 	create_reagents(100)
 	soundloop = new(src, FALSE)
 	update_appearance(UPDATE_ICON)
+	AddComponent(/datum/component/throwable_structure, held_state = held_state, held_force = 14, \
+											throw_force = 20, throw_knockdown = 1.5 SECONDS, held_slowdown = 1, impact_sound = 'sound/effects/bang.ogg')
 
 /obj/machinery/microwave/Exited(atom/movable/gone, direction)
 	if(gone in ingredients)
@@ -228,14 +231,14 @@
 		return FALSE
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
 	if(operating)
 		return
 	if(!default_deconstruction_crowbar(tool))
 		return
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
 	if(operating)
@@ -244,7 +247,7 @@
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)

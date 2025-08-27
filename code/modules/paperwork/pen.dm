@@ -13,7 +13,7 @@
 /obj/item/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -163,8 +163,6 @@
 
 	if (!proximity)
 		return .
-
-	. |= AFTERATTACK_PROCESSED_ITEM
 
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && (O.obj_flags & UNIQUE_RENAME))
@@ -335,7 +333,7 @@
 /obj/item/pen/survival
 	name = "survival pen"
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "digging_pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -400,3 +398,44 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "_out" : null]"
 	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.
+
+//The Security holopen
+/obj/item/pen/red/security
+	name = "security pen"
+	desc = "This is a red ink pen exclusively provided to members of the Security Department. Its opposite end features a built-in holographic projector designed for issuing arrest prompts to individuals."
+	icon_state = "pen_sec"
+	COOLDOWN_DECLARE(holosign_cooldown)
+
+/obj/item/pen/red/security/examine(mob/user)
+	. = ..()
+	. += span_notice("To initiate the surrender prompt, simply click on an individual within your proximity.")
+
+//Code from the medical penlight
+/obj/item/pen/red/security/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
+		balloon_alert(user, "not ready!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/turf/target_turf = get_turf(interacting_with)
+	var/mob/living/living_target = locate(/mob/living) in target_turf
+
+	if(!living_target || (living_target == user))
+		return ITEM_INTERACT_BLOCKING
+
+	living_target.apply_status_effect(/datum/status_effect/surrender_timed)
+	to_chat(living_target, span_userdanger("[user] requests your immediate surrender! You are given 30 seconds to comply!"))
+	new /obj/effect/temp_visual/security_holosign(target_turf, user) //produce a holographic glow
+	COOLDOWN_START(src, holosign_cooldown, 30 SECONDS)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/effect/temp_visual/security_holosign
+	name = "security holosign"
+	desc = "A small holographic glow that indicates you're under arrest."
+	icon_state = "sec_holo"
+	duration = 60
+
+/obj/effect/temp_visual/security_holosign/Initialize(mapload, creator)
+	. = ..()
+	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
+	if(creator)
+		visible_message(span_danger("[creator] created a security hologram!"))

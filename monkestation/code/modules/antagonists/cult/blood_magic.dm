@@ -45,6 +45,7 @@
 	to_chat(target, span_cultboldtalic("Eldritch horrors try to flood your thoughts, before being drowned out by an intense alcoholic haze!"), type = MESSAGE_TYPE_COMBAT) // yeah nobody's gonna be able to understand you through the slurring but it's funny anyways
 	target.say("MUCKLE DAMRED CULT! 'AIR EH NAMBLIES BE KEEPIN' ME WEE MEN!?!!", forced = "drunk cult stun")
 	target.adjust_silence(15 SECONDS)
+	target.adjust_emote_mute(15 SECONDS)
 	target.adjust_confusion(15 SECONDS)
 	target.set_jitter_if_lower(15 SECONDS)
 
@@ -57,6 +58,7 @@
 	target.stamina.adjust(-80)
 	target.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/speech/slurring/cult)
 	target.adjust_silence(8 SECONDS)
+	target.adjust_emote_mute(8 SECONDS)
 	target.adjust_stutter(20 SECONDS)
 	target.set_jitter_if_lower(20 SECONDS)
 
@@ -70,6 +72,7 @@
 	else if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.adjust_silence(12 SECONDS)
+		carbon_target.adjust_emote_mute(12 SECONDS)
 		carbon_target.adjust_stutter(30 SECONDS)
 		carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
 		carbon_target.set_jitter_if_lower(30 SECONDS)

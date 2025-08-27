@@ -486,34 +486,34 @@
 	else
 		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
 		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
 	if(on || state_open)
 		return FALSE
 	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
 	if(on || occupant || state_open)
 		return FALSE
 	if(default_change_direction_wrench(user, tool))
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/cup))
+/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/reagent_containers/cup))
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, span_warning("A beaker is already loaded into [src]!"))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		beaker = I
-		user.visible_message(span_notice("[user] places [I] in [src]."), \
-							span_notice("You place [I] in [src]."))
-		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
-		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
+		beaker = attacking_item
+		user.visible_message(span_notice("[user] places [attacking_item] in [src]."), \
+							span_notice("You place [attacking_item] in [src]."))
+		var/reagentlist = pretty_string_from_reagent_list(attacking_item.reagents.reagent_list)
+		user.log_message("added an [attacking_item] to cryo containing [reagentlist].", LOG_GAME)
 		return
 	return ..()
 

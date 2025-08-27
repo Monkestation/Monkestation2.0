@@ -32,6 +32,9 @@
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK "#0000007A"
 
+//windows affected by Nar'Sie turn this color.
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
 #define COLOR_RED "#FF0000"
 #define COLOR_CHRISTMAS_RED "#D6001C"
 #define COLOR_OLD_GLORY_RED "#B22234"

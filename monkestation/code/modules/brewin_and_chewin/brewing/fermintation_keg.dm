@@ -50,22 +50,22 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		start_brew()
 	..()
 
-/obj/structure/fermentation_keg/attackby(obj/item/I, mob/user)
+/obj/structure/fermentation_keg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/list/produce_list = list()
 	var/obj/item/storage/bag/plants/storage
 
-	if(istype(I, /obj/item/bottle_kit))
-		var/obj/item/bottle_kit/kit = I
+	if(istype(attacking_item, /obj/item/bottle_kit))
+		var/obj/item/bottle_kit/kit = attacking_item
 		bottle(kit.glass_colour)
 
-	if(I.type in selected_recipe?.needed_items)
-		produce_list += I
+	if(attacking_item.type in selected_recipe?.needed_items)
+		produce_list += attacking_item
 
-	if(istype(I, /obj/item/food/grown))
-		produce_list += I
+	if(istype(attacking_item, /obj/item/food/grown))
+		produce_list += attacking_item
 
-	if(istype(I, /obj/item/storage/bag/plants))
-		storage = I
+	if(istype(attacking_item, /obj/item/storage/bag/plants))
+		storage = attacking_item
 		for(var/obj/item/food/grown/item in storage.contents)
 			produce_list += item
 

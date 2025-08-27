@@ -847,7 +847,9 @@
 	if (!moving_diagonally && client_mobs_in_contents)
 		update_parallax_contents()
 
+#ifndef DISABLE_DEMOS
 	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
+#endif
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	if(old_loc)
@@ -1122,6 +1124,7 @@
 	else
 		CRASH("No valid destination passed into forceMove")
 
+///For items that deploy and can be picked up again
 /atom/movable/proc/moveToNullspace()
 	return doMove(null)
 

@@ -515,20 +515,20 @@
 	action_slots = ALL
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+/obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_action.hidden)
 		chameleon_action.hidden = FALSE
 		actions += chameleon_action
 		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon thermals ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon thermals ([name]) with [attacking_item]")
 	else
 		chameleon_action.hidden = TRUE
 		actions -= chameleon_action
 		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon thermals ([name]) with [W]")
+		log_game("[key_name(user)] has locked the disguise of the chameleon thermals ([name]) with [attacking_item]")
 // MONKESTATION ADDITION END
 
 /obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
@@ -666,7 +666,7 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman
-	name = "colored glasses"
+	name = "Dealmaker"
 	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'."
 	icon_state = "salesman"
 	inhand_icon_state = "salesman"

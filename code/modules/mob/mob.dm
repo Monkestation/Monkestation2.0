@@ -105,11 +105,8 @@
 		add_to_alive_mob_list()
 	set_focus(src)
 	prepare_huds()
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	update_config_movespeed()
@@ -880,6 +877,7 @@
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
+	return .
 
 /**
  * Convert a list of spells into a displyable list for the statpanel
@@ -1263,13 +1261,6 @@
 		return
 	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
 		light.set_light_cutoff(lighting_cutoff, lighting_color_cutoffs)
-	for(var/atom/movable/screen/plane_master/additive_lighting/light as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE_ADDITIVE))
-		if(!client)
-			return
-		if(!client.prefs.read_preference(/datum/preference/toggle/bloom))
-			light.alpha = 0
-		else
-			light.alpha = 140
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()

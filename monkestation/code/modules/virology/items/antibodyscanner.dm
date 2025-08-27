@@ -72,7 +72,7 @@
 					rgb = "#E6FF81"
 				if ("X","Y","Z")
 					rgb = "#FF9681"
-				if ("C")
+				if ("C", "Ig")
 					rgb = "#F54B4B"
 				//add colors for new special antigens here
 			scan.DrawBox(rgb,i*bar_spacing+bar_offset+x_adjustment,6,i*bar_spacing+bar_width+bar_offset+x_adjustment,6+antibodies[antibody]*3)

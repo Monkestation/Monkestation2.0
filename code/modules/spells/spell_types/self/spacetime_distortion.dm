@@ -149,9 +149,9 @@
 	if(!busy)
 		walk_link(AM)
 
-/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
-	if(user.temporarilyRemoveItemFromInventory(W))
-		walk_link(W)
+/obj/effect/cross_action/spacetime_dist/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(user.temporarilyRemoveItemFromInventory(attacking_item))
+		walk_link(attacking_item)
 	else
 		walk_link(user)
 

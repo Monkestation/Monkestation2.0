@@ -30,7 +30,11 @@
 	current_human.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
 	added = TRUE
 
-/datum/challenge/paranoia/on_process()
+/datum/challenge/paranoia/on_remove()
+	. = ..()
+	astype(host.mob, /mob/living/carbon)?.cure_trauma_type(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/challenge/paranoia/process()
 	if(added)
 		return
 	var/mob/living/carbon/human/current_human = host.mob
