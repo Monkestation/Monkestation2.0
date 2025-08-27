@@ -55,4 +55,4 @@
 /atom/movable/screen/alert/status_effect/silver_bullet
 	name = "Bloodsilver Curse"
 	desc = "You can feel your sins crawling on your back, weighing you down immensely."
-	icon_state = "weaken"
+	icon_state = "silver_bullet"
