@@ -46,7 +46,7 @@
 	. = ..()
 	register_context()
 	if(holds_minerals)
-		silo_materials = AddComponent(/datum/component/remote_materials, "bouldertech", mapload, force_connect = TRUE, mat_container_flags=BREAKDOWN_FLAGS_ORM)
+		silo_materials = AddComponent(/datum/component/remote_materials, "bouldertech", mapload, force_connect = TRUE)
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/bouldertech/LateInitialize()

@@ -252,6 +252,8 @@
 	give_starting_powers()
 	assign_starting_stats()
 
+	owner.current.persistent_client?.remove_challenge(/datum/challenge/no_heals)
+
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
 	UnregisterSignal(SSsol, list(COMSIG_SOL_RANKUP_BLOODSUCKERS, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))

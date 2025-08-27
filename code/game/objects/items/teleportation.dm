@@ -174,7 +174,7 @@
 		return
 
 	var/list/locations = list()
-	for(var/obj/machinery/computer/teleporter/computer in GLOB.machines)
+	for(var/obj/machinery/computer/teleporter/computer as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/teleporter))
 		var/atom/target = computer.target_ref?.resolve()
 		if(!target)
 			computer.target_ref = null
@@ -209,7 +209,7 @@
 			if (about_to_replace_location)
 				UnregisterSignal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
 
-		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
+		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target), override = TRUE)
 
 		last_portal_location = WEAKREF(teleport_location)
 

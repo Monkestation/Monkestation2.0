@@ -48,8 +48,15 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 /obj/item/pushbroom/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	sweep(user, interacting_with)
+	sweep(user, interacting_with, towards_player = FALSE)
 	return NONE // I guess
+
+/obj/item/pushbroom/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag)
+		return
+	sweep(user, target, towards_player = TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Attempts to push up to BROOM_PUSH_LIMIT atoms from a given location the user's faced direction
@@ -57,14 +64,15 @@
  * Arguments:
  * * user - The user of the pushbroom
  * * A - The atom which is located at the location to push atoms from
+ * * towards_player - Boolean on whether the items will be being pushed towards the player, away if FALSE.
  */
-/obj/item/pushbroom/proc/sweep(mob/user, atom/A)
+/obj/item/pushbroom/proc/sweep(mob/user, atom/A, towards_player = FALSE)
 	SIGNAL_HANDLER
 
 	var/turf/current_item_loc = isturf(A) ? A : A.loc
 	if (!isturf(current_item_loc))
 		return
-	var/turf/new_item_loc = get_step(current_item_loc, user.dir)
+	var/turf/new_item_loc = towards_player ? get_step(current_item_loc, REVERSE_DIR(user.dir)) : get_step(current_item_loc, user.dir)
 	var/obj/machinery/disposal/bin/target_bin = locate(/obj/machinery/disposal/bin) in new_item_loc.contents
 	var/i = 1
 	for (var/obj/item/garbage in current_item_loc.contents)

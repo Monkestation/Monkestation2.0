@@ -184,6 +184,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 	use_power = IDLE_POWER_USE
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
+/obj/machinery/defibrillator_mount/charging/loaded/Initialize(mapload) //loaded subtype for mapping use
+	. = ..()
+	defib = new /obj/item/defibrillator/loaded(src)
+	update_appearance()
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/charging/loaded, 28)
 
 /obj/machinery/defibrillator_mount/charging/Initialize(mapload)
 	. = ..()

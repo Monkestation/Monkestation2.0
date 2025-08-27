@@ -253,7 +253,8 @@ Regenerative extracts:
 		var/mob/living/carbon/carbon_target = target
 		var/mob/living/carbon/carbon_dummy = dummy
 		carbon_dummy.real_name = carbon_target.real_name
-		carbon_target.dna.copy_dna(carbon_dummy.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		if(carbon_target.dna)
+			carbon_target.dna.copy_dna(carbon_dummy.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		carbon_dummy.updateappearance(mutcolor_update = TRUE)
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())

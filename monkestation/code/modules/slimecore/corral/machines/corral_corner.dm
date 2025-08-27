@@ -52,14 +52,14 @@
 	if(!mapping_id || connected_data)
 		return
 	var/list/found_corners = list()
-	for(var/obj/machinery/corral_corner/main in GLOB.machines)
+	for(var/obj/machinery/corral_corner/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/corral_corner))
 		if(main.mapping_id != mapping_id)
 			continue
 		found_corners += main
 	submit_corners(found_corners)
 
 	if(connected_data)
-		for(var/obj/machinery/slime_pen_controller/controller in GLOB.machines)
+		for(var/obj/machinery/slime_pen_controller/controller as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
 			if(controller.mapping_id == mapping_id)
 				controller.linked_data = connected_data
 

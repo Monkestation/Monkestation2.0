@@ -301,7 +301,7 @@
 			otherlock.close_others -= src
 		close_others.Cut()
 	if(id_tag)
-		for(var/obj/machinery/door_buttons/D in GLOB.machines)
+		for(var/obj/machinery/door_buttons/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons))
 			D.removeMe(src)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
@@ -1664,7 +1664,7 @@
 	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
 	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
 	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
-	wire["lights"] = !wires.is_cut(WIRE_LIGHT)
+	wire["lights"] = !wires.is_cut(WIRE_BOLTLIGHT)
 	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
 	wire["timing"] = !wires.is_cut(WIRE_TIMING)
 
