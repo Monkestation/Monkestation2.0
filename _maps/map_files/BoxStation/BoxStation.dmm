@@ -68857,7 +68857,7 @@
 	},
 /obj/machinery/door/window/left/directional/east{
 	name = "Engineering Desk";
-	req_access = list("atmospherics","engineering")
+	req_one_access = list("atmospherics","engineering")
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "engi_office_shutters";

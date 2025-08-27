@@ -592,6 +592,12 @@
   - balance: Assistants can no longer punch cards
   - balance: Cards no longer start with one free punch
   - map: Added assistant point redeemer to all cargos that lacked one
+  - bugfix: updates GAP card description from 100 to 200
+  Sorenon:
+  - rscadd: Added the Monoplegic and Hemiplegic paralysis quirks
+  Xander3359:
+  - code_imp: adds emote_mute status effect and helper procs
+  - balance: adds emote mute to some silencing effects
   notghosti:
   - rscadd: Added new antigen 'Ig', which cannot be mass produced normally.
   - rscadd: Beaker apparatus can now pick up tubes and virus dishes.
@@ -605,3 +611,65 @@
   - admin: Plague rats have been removed from the antag datum panel. Use the event
       instead
   - balance: Removed the 4 crew spawns from the battlecruiser starfury
+  - bugfix: Florans can reattach limbs again
+  throwawayuseless:
+  - spellcheck: TRNE Corp. has hired a Ratvarian-fluent spellchecker and has subsequently
+      renamed the Rat'vander cocktail to Ratvander.
+  wonderinghost:
+  - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
+      access instead of both'
+2025-08-24:
+  Absolucy:
+  - map: Added a medipen refiller to the Helio medbay lobby.
+  - rscdel: Removed the "Hard of Hearing" quirk, due to issues relating to chat spam.
+      Hopefully it'll be back soon.
+  JohnFulpWillard:
+  - qol: The pushbroom can now pull with RMB.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  ThePooba:
+  - bugfix: maintloot turbomode
+2025-08-25:
+  Salted-Zen:
+  - balance: Hiero staff dash now counts as magic so its not disrupted by bag of holding
+  - code_imp: Hiero staff dash now counts as magic, just like its beacon recall does
+  - balance: Security batons now drain 1% of their cells max charge over time if left
+      on
+  Snack-Max:
+  - rscadd: Batter's Uniform to autodrone
+  ThePooba:
+  - rscadd: Mr bagheads donator pill "Eat Me, I Know You Wanna"
+  - rscadd: cyber_huskey can now speak multiple languages and the dog can now be pet
+  Tractor Maam:
+  - map: heliostation now has departmental bells.
+  - map: added a syndicate variant of the departmental bell for mapping purposes.
+  - rscdel: Removed herobrine.
+  notghosti:
+  - balance: T3 lasers now require t2 lasers to be researched first
+  - rscadd: Removed industrial engineering from mining tech perquisites. This does
+      not effect actual tech to research it
+  - balance: Oozelings are blacklisted from Prosthetics  and Qaud Amputtee quirks
+  throwawayuseless:
+  - rscadd: 'New Quirk: Snappy. Snap with style, panache, pizzaz, mojo, moxie, badassery,
+      goodassery, insouciance, chill, swag, snazz, and a certain *je ne sais quoi*.
+      (please help im running out of synonyms and the thesaurus-beasts from the nether
+      realms are going to CATCH UP WITHMEOHGODTHEPAAAAIIIINNN)'
+2025-08-27:
+  Cmpwarrior:
+  - rscadd: Adds a new outfit to the AutoDrobe and a new clown mask variant, based
+      off everyone's favorite fool.
+  Salted-Zen:
+  - qol: Scraped the Scarborough arms stamp off the 'Duster' Revolver
+  - balance: Reduced PK Railgun recoil
+  - balance: Slightly increased the firerate of the 'Hellhound' LMG and increased
+      max ammo to 150
+  - rscadd: Added a purchasable case of 3 large speed loaders that hold 50 rounds
+      each, for reloading the 'Hellhound' LMG
+  - balance: All mining guns (Except the 'Thor' 950 JDJ) fit in the suit slots of
+      Explorer Armor, Goliath Cloak, Ash Drake Armor, And Godslayer Armor
