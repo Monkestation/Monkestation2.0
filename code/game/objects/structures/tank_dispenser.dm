@@ -37,32 +37,32 @@
 /obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/tank_dispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/tank_dispenser/attackby(obj/item/I, mob/living/user, params)
 	var/full
-	if(istype(attacking_item, /obj/item/tank/internals/plasma))
+	if(istype(I, /obj/item/tank/internals/plasma))
 		if(plasmatanks < TANK_DISPENSER_CAPACITY)
 			plasmatanks++
 		else
 			full = TRUE
-	else if(istype(attacking_item, /obj/item/tank/internals/oxygen))
+	else if(istype(I, /obj/item/tank/internals/oxygen))
 		if(oxygentanks < TANK_DISPENSER_CAPACITY)
 			oxygentanks++
 		else
 			full = TRUE
 	else if(!(user.istate & ISTATE_HARM))
-		to_chat(user, span_notice("[attacking_item] does not fit into [src]."))
+		to_chat(user, span_notice("[I] does not fit into [src]."))
 		return
 	else
 		return ..()
 	if(full)
-		to_chat(user, span_notice("[src] can't hold any more of [attacking_item]."))
+		to_chat(user, span_notice("[src] can't hold any more of [I]."))
 		return
 
-	if(!user.transferItemToLoc(attacking_item, src))
+	if(!user.transferItemToLoc(I, src))
 		return
-	to_chat(user, span_notice("You put [attacking_item] in [src]."))
+	to_chat(user, span_notice("You put [I] in [src]."))
 	update_appearance()
 
 /obj/structure/tank_dispenser/ui_state(mob/user)

@@ -99,7 +99,7 @@
 		//register the sensor's unique ID with it's assositated chamber
 		connected_sensors[sensor.chamber_id] = sensor.id_tag
 		user.balloon_alert(user, "sensor connected to [src]")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	return
 

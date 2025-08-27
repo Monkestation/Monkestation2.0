@@ -86,7 +86,7 @@
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
 	..()
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
 	. = ..()

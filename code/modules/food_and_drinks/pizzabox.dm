@@ -171,9 +171,9 @@
 		update_appearance()
 		user.regenerate_icons()
 
-/obj/item/pizzabox/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/pizzabox))
-		var/obj/item/pizzabox/newbox = attacking_item
+/obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/pizzabox))
+		var/obj/item/pizzabox/newbox = I
 		if(!open && !newbox.open)
 			var/list/add = list()
 			add += newbox
@@ -194,30 +194,30 @@
 			return
 		else
 			balloon_alert(user, "close it first!")
-	else if(istype(attacking_item, /obj/item/food/pizza))
+	else if(istype(I, /obj/item/food/pizza))
 		if(open)
 			if(pizza)
 				balloon_alert(user, "it's full!")
 				return
-			if(!user.transferItemToLoc(attacking_item, src))
+			if(!user.transferItemToLoc(I, src))
 				return
-			pizza = attacking_item
+			pizza = I
 			update_appearance()
 			return
-	else if(istype(attacking_item, /obj/item/bombcore/miniature/pizza))
+	else if(istype(I, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
-			if(!user.transferItemToLoc(attacking_item, src))
+			if(!user.transferItemToLoc(I, src))
 				return
 			set_wires(new /datum/wires/explosive/pizza(src))
-			bomb = attacking_item
+			bomb = I
 			balloon_alert(user, "bomb placed")
 			update_appearance()
 			return
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-	else if(istype(attacking_item, /obj/item/pen))
+	else if(istype(I, /obj/item/pen))
 		if(!open)
-			if(!user.can_write(attacking_item))
+			if(!user.can_write(I))
 				return
 			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
@@ -227,7 +227,7 @@
 			boxtag_set = TRUE
 			update_appearance()
 			return
-	else if(is_wire_tool(attacking_item))
+	else if(is_wire_tool(I))
 		if(wires && bomb)
 			wires.interact(user)
 	..()

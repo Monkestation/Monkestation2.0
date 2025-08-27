@@ -156,20 +156,20 @@
 	update_power()
 	return TRUE
 
-/obj/item/defibrillator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item == paddles)
+/obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
+	if(W == paddles)
 		toggle_paddles()
-	else if(istype(attacking_item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = attacking_item
+	else if(istype(W, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/C = W
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
 			if(C.maxcharge < paddles.revivecost)
 				to_chat(user, span_notice("[src] requires a higher capacity cell."))
 				return
-			if(!user.transferItemToLoc(attacking_item, src))
+			if(!user.transferItemToLoc(W, src))
 				return
-			cell = attacking_item
+			cell = W
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_power()
 	else
@@ -307,8 +307,8 @@
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_power()
 
-/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item == paddles)
+/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
+	if(W == paddles)
 		toggle_paddles()
 		return
 

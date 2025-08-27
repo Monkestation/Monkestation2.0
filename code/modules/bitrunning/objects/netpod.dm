@@ -92,24 +92,24 @@
 /obj/machinery/netpod/crowbar_act(mob/living/user, obj/item/tool)
 	if(user.istate & ISTATE_HARM)
 		attack_hand(user)
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	if(default_pry_open(tool, user) || default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/netpod/screwdriver_act(mob/living/user, obj/item/tool)
 	if(occupant)
 		balloon_alert(user, "in use!")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	if(state_open)
 		balloon_alert(user, "close first.")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_panel", "[base_icon_state]_closed", tool))
 		update_appearance() // sometimes icon doesnt properly update during flick()
 		ui_close(user)
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/netpod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

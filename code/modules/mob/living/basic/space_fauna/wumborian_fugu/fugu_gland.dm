@@ -18,17 +18,18 @@
 		/mob/living/basic/guardian,
 	))
 
-/obj/item/fugu_gland/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isanimal_or_basicmob(interacting_with) || fugu_blacklist[interacting_with.type])
-		return NONE
-	var/mob/living/animal = interacting_with
+/obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!proximity_flag || !isanimal_or_basicmob(target) || fugu_blacklist[target.type])
+		return
+	var/mob/living/animal = target
 
 	if(animal.stat == DEAD || HAS_TRAIT(animal, TRAIT_FAKEDEATH))
 		balloon_alert(user, "it's dead!")
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(HAS_TRAIT(animal, TRAIT_FUGU_GLANDED))
 		balloon_alert(user, "already large!")
-		return ITEM_INTERACT_BLOCKING
+		return
 
 	ADD_TRAIT(animal, TRAIT_FUGU_GLANDED, type)
 	animal.AddComponent(/datum/component/seethrough_mob)
@@ -40,4 +41,3 @@
 	AddElement(/datum/element/wall_tearer)
 	to_chat(user, span_info("You increase the size of [animal], giving [animal.p_them()] a surge of strength!"))
 	qdel(src)
-	return ITEM_INTERACT_SUCCESS

@@ -106,28 +106,28 @@
 	air_contents.merge(removed)
 	trunk_check()
 
-/obj/machinery/disposal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/disposal/attackby(obj/item/I, mob/living/user, params)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			toggle_panel_open()
-			attacking_item.play_tool_sound(src)
+			I.play_tool_sound(src)
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
-		else if(attacking_item.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!attacking_item.tool_start_check(user, amount=0))
+		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
+			if(!I.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
-			if(attacking_item.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
+			if(I.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
 				to_chat(user, span_notice("You slice the floorweld off \the [src]."))
 				deconstruct()
 			return
 
 	if(!(user.istate & ISTATE_HARM))
-		if((attacking_item.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(attacking_item))
+		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
-		place_item_in_disposal(attacking_item, user)
+		place_item_in_disposal(I, user)
 		update_appearance()
 		return 1 //no afterattack
 	else
@@ -337,9 +337,9 @@
 	icon_state = "disposal"
 
 // attack by item places it in to disposal
-/obj/machinery/disposal/bin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/bag = attacking_item
+/obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
+		var/obj/item/storage/bag/trash/bag = I
 		to_chat(user, span_warning("You empty the bag."))
 		bag.atom_storage.remove_all(src)
 		update_appearance()

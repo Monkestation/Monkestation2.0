@@ -31,14 +31,14 @@
 			. += new /mutable_appearance(gun_overlay)
 	. += "[icon_state]_[open ? "open" : "door"]"
 
-/obj/structure/guncase/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
 	if(iscyborg(user) || isalien(user))
 		return
-	if(istype(attacking_item, gun_category) && open)
+	if(istype(I, gun_category) && open)
 		if(LAZYLEN(contents) < capacity)
-			if(!user.transferItemToLoc(attacking_item, src))
+			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, span_notice("You place [attacking_item] in [src]."))
+			to_chat(user, span_notice("You place [I] in [src]."))
 			update_appearance()
 		else
 			to_chat(user, span_warning("[src] is full."))

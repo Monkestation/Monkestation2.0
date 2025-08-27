@@ -30,7 +30,7 @@
 	loc.balloon_alert(user, "tile reclaimed")
 	new /obj/item/stack/tile/iron(get_turf(src))
 	qdel(src)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/broken_flooring/singular
 	icon_state = "singular"

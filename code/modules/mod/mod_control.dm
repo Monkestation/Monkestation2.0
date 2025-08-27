@@ -202,9 +202,6 @@
 	if(active)
 		. += span_notice("Charge: [core ? "[get_charge_percent()]%" : "No core"].")
 		. += span_notice("Selected module: [selected_module || "None"].")
-	if(atom_storage)
-		. += span_notice("<i>While the suit's panel is open, \
-			being on <b>combat mode</b> will prevent you from inserting items into it when clicking on it.</i>")
 	if(!open && !active)
 		if(!wearer)
 			. += span_notice("You could equip it to turn it on.")
@@ -300,29 +297,34 @@
 			return ..()
 
 /obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
+	if(..())
+		return TRUE
 	if(seconds_electrified && get_charge() && shock(user))
-		return ITEM_INTERACT_BLOCKING
+		return TRUE
 	if(open)
 		if(!core)
 			balloon_alert(user, "no core!")
-			return ITEM_INTERACT_BLOCKING
+			return TRUE
 		balloon_alert(user, "removing core...")
 		wrench.play_tool_sound(src, 100)
 		if(!wrench.use_tool(src, user, 3 SECONDS) || !open)
 			balloon_alert(user, "interrupted!")
-			return ITEM_INTERACT_BLOCKING
+			return TRUE
 		wrench.play_tool_sound(src, 100)
 		balloon_alert(user, "core removed")
 		core.forceMove(drop_location())
 		update_charge_alert()
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+		return TRUE
+	return ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	. = ..()
+	if(.)
+		return TRUE
 	if(active || activating || ai_controller)
 		balloon_alert(user, "deactivate suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return ITEM_INTERACT_BLOCKING
+		return FALSE
 	balloon_alert(user, "[open ? "closing" : "opening"] cover...")
 	screwdriver.play_tool_sound(src, 100)
 	if(screwdriver.use_tool(src, user, 1 SECONDS))
@@ -333,21 +335,21 @@
 		open = !open
 	else
 		balloon_alert(user, "interrupted!")
-	return ITEM_INTERACT_SUCCESS
+	return TRUE
 
 /obj/item/mod/control/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = ..()
 	if(!open)
 		balloon_alert(user, "open the cover first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return ITEM_INTERACT_BLOCKING
+		return FALSE
 	if(!allowed(user))
 		balloon_alert(user, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_REMOVAL, user) & MOD_CANCEL_REMOVAL)
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return ITEM_INTERACT_BLOCKING
+		return FALSE
 	if(length(modules))
 		var/list/removable_modules = list()
 		for(var/obj/item/mod/module/module as anything in modules)
@@ -356,64 +358,53 @@
 			removable_modules += module
 		var/obj/item/mod/module/module_to_remove = tgui_input_list(user, "Which module to remove?", "Module Removal", removable_modules)
 		if(!module_to_remove?.mod)
-			return ITEM_INTERACT_BLOCKING
+			return FALSE
 		uninstall(module_to_remove)
 		module_to_remove.forceMove(drop_location())
 		crowbar.play_tool_sound(src, 100)
 		SEND_SIGNAL(src, COMSIG_MOD_MODULE_REMOVED, user)
-		return ITEM_INTERACT_SUCCESS
+		return TRUE
 	balloon_alert(user, "no modules!")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-	return ITEM_INTERACT_BLOCKING
+	return FALSE
 
-/obj/item/mod/control/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(user.istate & ISTATE_HARM)
-		// Block all item-click-inserts when we're open
-		// Other form of insertion will still function (mousedrop, hotkey)
-		if(open)
-			return FALSE
-		// ...You have to open it up somehow though
-		if(inserted.tool_behaviour == TOOL_SCREWDRIVER)
-			return FALSE
-	return TRUE
-
-/obj/item/mod/control/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+/obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/pai_card))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
-			return ITEM_INTERACT_BLOCKING
+			return FALSE
 		insert_pai(user, attacking_item)
-		return ITEM_INTERACT_SUCCESS
+		return TRUE
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return ITEM_INTERACT_BLOCKING
+			return FALSE
 		install(attacking_item, user)
 		SEND_SIGNAL(src, COMSIG_MOD_MODULE_ADDED, user)
-		return ITEM_INTERACT_SUCCESS
-	if(istype(attacking_item, /obj/item/mod/core))
+		return TRUE
+	else if(istype(attacking_item, /obj/item/mod/core))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return ITEM_INTERACT_BLOCKING
+			return FALSE
 		if(core)
 			balloon_alert(user, "core already installed!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return ITEM_INTERACT_BLOCKING
+			return FALSE
 		var/obj/item/mod/core/attacking_core = attacking_item
 		attacking_core.install(src)
 		balloon_alert(user, "core installed")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return ITEM_INTERACT_SUCCESS
-	if(open)
-		if(is_wire_tool(attacking_item))
-			wires.interact(user)
-			return ITEM_INTERACT_SUCCESS
-		if(attacking_item.GetID())
-			update_access(user, attacking_item.GetID())
-			return ITEM_INTERACT_SUCCESS
-	return NONE
+		update_charge_alert()
+		return TRUE
+	else if(is_wire_tool(attacking_item) && open)
+		wires.interact(user)
+		return TRUE
+	else if(open && attacking_item.GetID())
+		update_access(user, attacking_item.GetID())
+		return TRUE
+	return ..()
 
 /obj/item/mod/control/get_cell()
 	if(!open)

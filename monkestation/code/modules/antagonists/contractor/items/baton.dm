@@ -69,7 +69,7 @@
 		break
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/melee/baton/telescopic/contractor_baton/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/melee/baton/telescopic/contractor_baton/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(istype(attacking_item, /obj/item/baton_upgrade))
 		add_upgrade(attacking_item, user)

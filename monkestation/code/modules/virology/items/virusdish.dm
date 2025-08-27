@@ -99,32 +99,32 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		STOP_PROCESSING(SSobj, src)
 	infection_attempt(user)
 
-/obj/item/weapon/virusdish/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/weapon/virusdish/attackby(obj/item/I, mob/living/user, params)
 	..()
-	if(istype(attacking_item, /obj/item/hand_labeler))
+	if(istype(I,/obj/item/hand_labeler))
 		return
-	if(istype(attacking_item, /obj/item/reagent_containers/syringe))
+	if(istype(I, /obj/item/reagent_containers/syringe))
 		if(growth < 50)
 			to_chat(user, span_warning("There isn't enough growth in the [src]."))
 		else
 			growth = growth - 50
-			var/obj/item/reagent_containers/syringe/B = attacking_item
+			var/obj/item/reagent_containers/syringe/B = I
 			var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"="O-","resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
 			data["viruses"] |= list(contained_virus)
 			B.reagents.add_reagent(/datum/reagent/blood, B.volume, data)
 			to_chat(user, span_notice("You take some blood from the [src]."))
 	if (open)
-		if (istype(attacking_item, /obj/item/reagent_containers))
+		if (istype(I,/obj/item/reagent_containers))
 			var/success = 0
-			var/obj/container = attacking_item
+			var/obj/container = I
 			if (!container.is_open_container() && istype(container, /obj/item/reagent_containers))
 				return
-			if(attacking_item.is_open_container())
-				success = attacking_item.reagents.trans_to(src, 10, transfered_by = user)
+			if(I.is_open_container())
+				success = I.reagents.trans_to(src, 10, transfered_by = user)
 			if (success > 0)
 				to_chat(user, span_notice("You transfer [success] units of the solution to \the [src]."))
 			return
-	if((user.istate & ISTATE_HARM) && attacking_item.force)
+	if((user.istate & ISTATE_HARM) && I.force)
 		visible_message(span_danger("The virus dish is smashed to bits!"))
 		shatter(user)
 

@@ -144,21 +144,21 @@
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/reagentgrinder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/reagentgrinder/attackby(obj/item/I, mob/living/user, params)
 	//You can only screw open empty grinder
-	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
+	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		return
 
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(I))
 		return
 
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (is_reagent_container(attacking_item) && !(attacking_item.item_flags & ABSTRACT) && attacking_item.is_open_container())
-		var/obj/item/reagent_containers/B = attacking_item
+	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
@@ -172,30 +172,30 @@
 		return TRUE
 
 	//Fill machine with a bag!
-	if(istype(attacking_item, /obj/item/storage/bag))
+	if(istype(I, /obj/item/storage/bag))
 		var/list/inserted = list()
-		if(attacking_item.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
+		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
-			if(!attacking_item.contents.len)
-				to_chat(user, span_notice("You empty [attacking_item] into [src]."))
+			if(!I.contents.len)
+				to_chat(user, span_notice("You empty [I] into [src]."))
 			else
 				to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
-	if(!attacking_item.grind_results && !attacking_item.juice_results)
+	if(!I.grind_results && !I.juice_results)
 		if((user.istate & ISTATE_HARM))
 			return ..()
 		else
-			to_chat(user, span_warning("You cannot grind [attacking_item] into reagents!"))
+			to_chat(user, span_warning("You cannot grind [I] into reagents!"))
 			return TRUE
 
-	if(!attacking_item.grind_requirements(src)) //Error messages should be in the objects' definitions
+	if(!I.grind_requirements(src)) //Error messages should be in the objects' definitions
 		return
 
-	if(user.transferItemToLoc(attacking_item, src))
-		to_chat(user, span_notice("You add [attacking_item] to [src]."))
-		holdingitems[attacking_item] = TRUE
+	if(user.transferItemToLoc(I, src))
+		to_chat(user, span_notice("You add [I] to [src]."))
+		holdingitems[I] = TRUE
 		return FALSE
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave

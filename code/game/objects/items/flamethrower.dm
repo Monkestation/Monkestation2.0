@@ -75,17 +75,20 @@
 	if(beaker)
 		. += "+beaker"
 
-/obj/item/flamethrower/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
+	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(flag)
+		return // too close
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
-		log_combat(user, interacting_with, "attempted to flamethrower", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\" ([src]), igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit" : "" + " but failed due to pacifism."))
-		return ITEM_INTERACT_BLOCKING
-	var/turf/target_turf = get_turf(interacting_with)
-	if(target_turf)
-		var/turflist = get_line(user, target_turf)
-		log_combat(user, interacting_with, "flamethrowered", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\", igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit." : "."))
-		flame_turf(turflist)
-	return ITEM_INTERACT_SUCCESS
+		return
+	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
+		var/turf/target_turf = get_turf(target)
+		if(target_turf)
+			var/turflist = get_line(user, target_turf)
+			log_combat(user, target, "flamethrowered", src)
+			flame_turf(turflist, user)
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
 	. = TRUE
@@ -113,42 +116,42 @@
 		update_appearance()
 		return TRUE
 
-/obj/item/flamethrower/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isigniter(attacking_item))
-		var/obj/item/assembly/igniter/I = attacking_item
+/obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
+	if(isigniter(W))
+		var/obj/item/assembly/igniter/I = W
 		if(I.secured)
 			return
 		if(igniter)
 			return
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(W, src))
 			return
 		igniter = I
 		update_appearance()
 		return
 
-	else if(istype(attacking_item, /obj/item/tank/internals/plasma))
+	else if(istype(W, /obj/item/tank/internals/plasma))
 		if(ptank)
-			if(user.transferItemToLoc(attacking_item,src))
+			if(user.transferItemToLoc(W,src))
 				ptank.forceMove(get_turf(src))
-				ptank = attacking_item
+				ptank = W
 				to_chat(user, span_notice("You swap the plasma tank in [src]!"))
 			return
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(W, src))
 			return
-		ptank = attacking_item
+		ptank = W
 		update_appearance()
 		return
 
-	else if(istype(attacking_item, /obj/item/reagent_containers/cup/beaker))
+	else if(istype(W, /obj/item/reagent_containers/cup/beaker))
 		if(beaker)
-			if(user.transferItemToLoc(attacking_item,src))
+			if(user.transferItemToLoc(W,src))
 				beaker.forceMove(get_turf(src))
-				beaker = attacking_item
+				beaker = W
 				to_chat(user, "<span class='notice'>You swap [beaker] in [src]!</span>")
 			return
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(W, src))
 			return
-		beaker = attacking_item
+		beaker = W
 		to_chat(user, "<span class='notice'>You attach [beaker] to [src]!</span>")
 		update_icon()
 		return

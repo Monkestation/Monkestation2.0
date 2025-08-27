@@ -21,16 +21,16 @@
 	heat_capacity = 10000
 	tiled_dirt = TRUE
 
-/turf/open/misc/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/turf/open/misc/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(.)
 		return TRUE
 
-	if(istype(attacking_item, /obj/item/stack/rods))
-		build_with_rods(attacking_item, user)
+	if(istype(W, /obj/item/stack/rods))
+		build_with_rods(W, user)
 		return TRUE
-	else if(istype(attacking_item, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(attacking_item, user)
+	else if(istype(W, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(W, user)
 		return TRUE
 
 /turf/open/misc/attack_paw(mob/user, list/modifiers)

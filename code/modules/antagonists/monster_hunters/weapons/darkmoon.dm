@@ -31,22 +31,18 @@
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-// XANTODO https://discord.com/channels/326822144233439242/326831214667235328/1407603846640828487
-// interact_with_atom_secondary
-// ranged_interact_with_atom_secondary
-
 /obj/item/melee/trick_weapon/darkmoon/attack_secondary(atom/target, mob/living/user, clickparams)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/melee/trick_weapon/darkmoon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/melee/trick_weapon/darkmoon/afterattack_secondary(atom/target, mob/living/user, clickparams)
 	if(!enabled)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!COOLDOWN_FINISHED(src, moonbeam_fire))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(interacting_with == user)
+	if(target == user)
 		balloon_alert(user, "can't aim at yourself!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_moonbeam(interacting_with, user, modifiers)
+	fire_moonbeam(target, user, clickparams)
 	user.changeNext_move(CLICK_CD_MELEE)
 	COOLDOWN_START(src, moonbeam_fire, 4 SECONDS)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -86,4 +86,5 @@
 
 #define TRAIT_RAINBOWED "rainbowed"
 
+#define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"
 #define COMSIG_CLIENT_HOVER_NEW "client_new_hover"

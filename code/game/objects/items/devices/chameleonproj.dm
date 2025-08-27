@@ -36,27 +36,28 @@
 	else
 		to_chat(user, span_warning("You can't use [src] while inside something!"))
 
-/obj/item/chameleon/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+/obj/item/chameleon/afterattack(atom/target, mob/user , proximity)
+	. = ..()
+	if(!proximity)
+		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!check_sprite(target))
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(active_dummy)//I now present you the blackli(f)st
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(isturf(target))
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(ismob(target))
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(istype(target, /obj/structure/falsewall))
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(target.alpha != 255)
-		return ITEM_INTERACT_BLOCKING
+		return
 	if(target.invisibility != 0)
-		return ITEM_INTERACT_BLOCKING
-	if(iseffect(target) && !istype(target, /obj/effect/decal)) //be a footprint
-		return ITEM_INTERACT_BLOCKING
-	make_copy(target, user)
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/chameleon/proc/make_copy(atom/target, mob/user)
+		return
+	if(iseffect(target))
+		if(!(istype(target, /obj/effect/decal))) //be a footprint
+			return
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
 	var/obj/temp = new /obj()

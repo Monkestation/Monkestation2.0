@@ -116,10 +116,10 @@
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
 		balloon_alert(user, "turn it off!")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	tool.play_tool_sound(src, 50)
 	toggle_panel_open()
@@ -130,7 +130,7 @@
 	balloon_alert(user, "you [panel_open ? "open" : "close"] the maintenance hatch of [src]")
 	update_appearance()
 
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/turbine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
@@ -146,16 +146,16 @@
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "panel is closed!")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!installed_part)
 		balloon_alert(user, "no rotor installed!")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(active)
 		balloon_alert(user, "[src] is on!")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	user.put_in_hands(installed_part)
 
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /**
  * Allow easy enabling of each machine for connection to the main controller
@@ -417,7 +417,7 @@
 
 	//failed checks
 	if(!activate_parts(user))
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	//log rotor to link later to computer
 	balloon_alert(user, "all parts linked")
@@ -426,7 +426,7 @@
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 
 	//success
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/turbine/core_rotor/multitool_act_secondary(mob/living/user, obj/item/tool)
 	//allow cable layer changing

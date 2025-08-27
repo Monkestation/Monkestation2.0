@@ -28,7 +28,7 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/atom/movable/attackby(obj/item/attacking_item, mob/user, params)
 	if(!can_buckle || !istype(attacking_item, /obj/item/riding_offhand) || !user.Adjacent(src))
 		return ..()
 

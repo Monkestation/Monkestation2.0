@@ -225,10 +225,10 @@
 		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
 			return
 		source.balloon_alert(user, "it's locked!")
-		return ITEM_INTERACT_BLOCKING
+		return COMPONENT_BLOCK_TOOL_ATTACK
 
 	attached_circuit.interact(user)
-	return ITEM_INTERACT_BLOCKING
+	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /**
  * Called when a screwdriver is used on the parent. Removes the circuitboard from the component.
@@ -245,12 +245,12 @@
 		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
 			return
 		source.balloon_alert(user, "it's locked!")
-		return ITEM_INTERACT_BLOCKING
+		return COMPONENT_BLOCK_TOOL_ATTACK
 
 	tool.play_tool_sound(parent)
 	source.balloon_alert(user, "you unscrew [attached_circuit] from [parent].")
 	remove_circuit()
-	return ITEM_INTERACT_BLOCKING
+	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /**
  * Checks for when the circuitboard moves. If it moves, removes it from the component.

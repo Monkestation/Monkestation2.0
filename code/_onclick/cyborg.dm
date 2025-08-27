@@ -103,8 +103,9 @@
 		if(CanReach(A,W))
 			W.melee_attack_chain(src, A, params)
 			return
-		else if(isturf(A) || isturf(A.loc))
-			A.base_ranged_item_interaction(src, W, modifiers)
+		if(isturf(A) || isturf(A.loc))
+			W.afterattack(A, src, 0, params)
+		//MONKESTATION ADDITION END
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs

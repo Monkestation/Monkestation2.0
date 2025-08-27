@@ -22,10 +22,10 @@
 	///Typecast of an inserted, scanned ID card inside the console, as bounties are held within the ID card.
 	var/obj/item/card/id/inserted_scan_id
 
-/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isidcard(attacking_item))
-		if(id_insert(user, attacking_item, inserted_scan_id))
-			inserted_scan_id = attacking_item
+/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, params)
+	if(isidcard(I))
+		if(id_insert(user, I, inserted_scan_id))
+			inserted_scan_id = I
 			return TRUE
 	return ..()
 

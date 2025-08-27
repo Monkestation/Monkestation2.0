@@ -136,25 +136,25 @@
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(state == AI_READY_CORE)
 		if(!core_mmi)
 			balloon_alert(user, "no brain installed!")
-			return ITEM_INTERACT_SUCCESS
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 		else if(!core_mmi.brainmob?.mind || suicide_check())
 			balloon_alert(user, "brain is inactive!")
-			return ITEM_INTERACT_SUCCESS
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 		else
 			balloon_alert(user, "connecting neural network...")
 			if(!tool.use_tool(src, user, 10 SECONDS))
-				return ITEM_INTERACT_SUCCESS
+				return TOOL_ACT_TOOLTYPE_SUCCESS
 			if(!ai_structure_to_mob())
-				return ITEM_INTERACT_SUCCESS
+				return TOOL_ACT_TOOLTYPE_SUCCESS
 			balloon_alert(user, "connected neural network")
-			return ITEM_INTERACT_SUCCESS
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/ai_core/attackby(obj/item/P, mob/living/user, params)
 	if(!anchored)

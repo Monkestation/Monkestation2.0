@@ -254,7 +254,7 @@
 
 	unwrap_contents()
 	post_unwrap_contents(user)
-	return ITEM_INTERACT_BLOCKING
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/dest_tagger
 	name = "destination tagger"

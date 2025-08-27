@@ -137,31 +137,30 @@
 		moth_snack.clothing = WEAKREF(src)
 	moth_snack.attack(target, user, params)
 
-/obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
-	. = NONE
-	if(!istype(weapon, repairable_by))
-		return
+/obj/item/clothing/attackby(obj/item/W, mob/user, params)
+	if(!istype(W, repairable_by))
+		return ..()
 
 	switch(damaged_clothes)
 		if(CLOTHING_PRISTINE)
-			return
-
+			return..()
 		if(CLOTHING_DAMAGED)
-			var/obj/item/stack/cloth_repair = weapon
+			var/obj/item/stack/cloth_repair = W
 			cloth_repair.use(1)
-			repair(user)
-			return ITEM_INTERACT_SUCCESS
-
+			repair(user, params)
+			return TRUE
 		if(CLOTHING_SHREDDED)
-			var/obj/item/stack/cloth_repair = weapon
+			var/obj/item/stack/cloth_repair = W
 			if(cloth_repair.amount < 3)
 				to_chat(user, span_warning("You require 3 [cloth_repair.name] to repair [src]."))
-				return ITEM_INTERACT_BLOCKING
+				return TRUE
 			to_chat(user, span_notice("You begin fixing the damage to [src] with [cloth_repair]..."))
 			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
-				return ITEM_INTERACT_BLOCKING
-			repair(user)
-			return ITEM_INTERACT_SUCCESS
+				return TRUE
+			repair(user, params)
+			return TRUE
+
+	return ..()
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
@@ -358,7 +357,7 @@
 
 	if(TRAIT_CAN_SIGN_ON_COMMS in clothing_traits)
 		. += "[src] allows you talk on radios through sign language."
-
+	
 	switch (max_heat_protection_temperature)
 		if (400 to 1000)
 			. += "[src] offers the wearer limited protection from fire."

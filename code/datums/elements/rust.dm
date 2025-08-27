@@ -45,7 +45,7 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(handle_tool_use), source, user, item)
-	return ITEM_INTERACT_BLOCKING
+	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /// We call this from secondary_tool_act because we sleep with do_after
 /datum/element/rust/proc/handle_tool_use(atom/source, mob/user, obj/item/item)

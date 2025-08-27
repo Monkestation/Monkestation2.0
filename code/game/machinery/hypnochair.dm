@@ -20,13 +20,13 @@
 	open_machine()
 	update_appearance()
 
-/obj/machinery/hypnochair/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
+/obj/machinery/hypnochair/attackby(obj/item/I, mob/user, params)
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_appearance()
 		return
-	if(default_pry_open(attacking_item))
+	if(default_pry_open(I))
 		return
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 

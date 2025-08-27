@@ -53,15 +53,15 @@ The console is located at computer/gulag_teleporter.dm
 		return
 	toggle_open()
 
-/obj/machinery/gulag_teleporter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",attacking_item))
+/obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
+	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
 		update_appearance()
 		return
 
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(I))
 		return
 
-	if(default_pry_open(attacking_item))
+	if(default_pry_open(I))
 		return
 
 	return ..()

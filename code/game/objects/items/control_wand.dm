@@ -33,35 +33,35 @@
 	icon_state = "remote_[remote_type]_[mode]" //monkestation addition
 	balloon_alert(user, "mode: [desc[mode]]")
 
-/obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
+// Airlock remote works by sending NTNet packets to whatever it's pointed at.
+/obj/item/door_remote/afterattack(atom/target, mob/user)
+	. = ..()
 
-/obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/door/door
 
-	if (istype(interacting_with, /obj/machinery/door))
-		door = interacting_with
-		if (!door.opens_with_door_remote)
-			return ITEM_INTERACT_BLOCKING
+	if (istype(target, /obj/machinery/door))
+		door = target
 
+		if (!door.opens_with_door_remote)
+			return
 	else
-		for (var/obj/machinery/door/door_on_turf in get_turf(interacting_with))
+		for (var/obj/machinery/door/door_on_turf in get_turf(target))
 			if (door_on_turf.opens_with_door_remote)
 				door = door_on_turf
 				break
 
 		if (isnull(door))
-			return ITEM_INTERACT_BLOCKING
+			return
 
 	if (!door.check_access_list(access_list) || !door.requiresID())
-		interacting_with.balloon_alert(user, "can't access!")
-		return ITEM_INTERACT_BLOCKING
+		target.balloon_alert(user, "can't access!")
+		return
 
 	var/obj/machinery/door/airlock/airlock = door
 
 	if (!door.hasPower() || (istype(airlock) && !airlock.canAIControl()))
-		interacting_with.balloon_alert(user, mode == WAND_OPEN ? "it won't budge!" : "nothing happens!")
-		return ITEM_INTERACT_BLOCKING
+		target.balloon_alert(user, mode == WAND_OPEN ? "it won't budge!" : "nothing happens!")
+		return
 
 	switch (mode)
 		if (WAND_OPEN)
@@ -71,8 +71,8 @@
 				door.close()
 		if (WAND_BOLT)
 			if (!istype(airlock))
-				interacting_with.balloon_alert(user, "only airlocks!")
-				return ITEM_INTERACT_BLOCKING
+				target.balloon_alert(user, "only airlocks!")
+				return
 
 			if (airlock.locked)
 				airlock.unbolt()
@@ -80,26 +80,11 @@
 				airlock.bolt()
 		if (WAND_EMERGENCY)
 			if (!istype(airlock))
-				interacting_with.balloon_alert(user, "only airlocks!")
-				return ITEM_INTERACT_BLOCKING
+				target.balloon_alert(user, "only airlocks!")
+				return
 
 			airlock.emergency = !airlock.emergency
 			airlock.update_appearance(UPDATE_ICON)
-
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/door_remote/update_icon_state()
-	var/icon_state_mode
-	switch(mode)
-		if(WAND_OPEN)
-			icon_state_mode = "open"
-		if(WAND_BOLT)
-			icon_state_mode = "bolt"
-		if(WAND_EMERGENCY)
-			icon_state_mode = "emergency"
-
-	icon_state = "[base_icon_state]_[remote_type]_[icon_state_mode]"
-	return ..()
 
 /obj/item/door_remote/omni
 	name = "omni door remote"

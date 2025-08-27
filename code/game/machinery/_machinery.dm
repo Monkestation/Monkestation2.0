@@ -757,11 +757,11 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
-		return ITEM_INTERACT_BLOCKING
+		return TOOL_ACT_MELEE_CHAIN_BLOCKING
 	. = ..()
-	if(. & ITEM_INTERACT_BLOCKING)
+	if(. & TOOL_ACT_SIGNAL_BLOCKING)
 		return
 	update_last_used(user)
 

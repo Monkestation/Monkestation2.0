@@ -39,6 +39,9 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
+/obj/item/singularityhammer/proc/recharge()
+	charged = TRUE
+
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(ismovable(X))
@@ -56,19 +59,22 @@
 				step_towards(A,pull)
 				step_towards(A,pull)
 
-/obj/item/singularityhammer/afterattack(atom/target, mob/user, click_parameters)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/living/user, proximity)
+	. = ..()
+	if(!proximity)
 		return
-	if(!charged)
-		return
-
-	charged = FALSE
-	if(isliving(target))
-		var/mob/living/smacked = target
-		smacked.take_bodypart_damage(20, 0)
-	playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
-	vortex(get_turf(target), user)
-	addtimer(VARSET_CALLBACK(src, charged, TRUE), 10 SECONDS)
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
+		if(charged)
+			charged = FALSE
+			if(isliving(A))
+				var/mob/living/Z = A
+				Z.take_bodypart_damage(20,0)
+			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
+			var/turf/target = get_turf(A)
+			vortex(target,user)
+			addtimer(CALLBACK(src, PROC_REF(recharge)), 100)
+	return .
 
 /obj/item/mjollnir
 	name = "Mjolnir"

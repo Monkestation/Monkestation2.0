@@ -152,32 +152,32 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
 	locked = new_value
 
-/obj/item/integrated_circuit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(istype(attacking_item, /obj/item/circuit_component))
-		add_component_manually(attacking_item, user)
+	if(istype(I, /obj/item/circuit_component))
+		add_component_manually(I, user)
 		return
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/cell))
 		if(cell)
 			balloon_alert(user, "there already is a cell inside!")
 			return
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(I, src))
 			return
-		set_cell(attacking_item)
-		attacking_item.add_fingerprint(user)
+		set_cell(I)
+		I.add_fingerprint(user)
 		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 		return
 
-	if(isidcard(attacking_item))
-		balloon_alert(user, "owner id set for [attacking_item]")
-		owner_id = WEAKREF(attacking_item)
+	if(isidcard(I))
+		balloon_alert(user, "owner id set for [I]")
+		owner_id = WEAKREF(I)
 		return
 
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!cell)
 			return
-		attacking_item.play_tool_sound(src)
+		I.play_tool_sound(src)
 		user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
 		cell.forceMove(drop_location())
 		set_cell(null)

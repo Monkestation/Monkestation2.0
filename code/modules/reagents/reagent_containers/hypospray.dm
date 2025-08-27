@@ -81,9 +81,11 @@
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 30, /datum/reagent/medicine/omnizine = 30, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/atropine = 15)
 
-/obj/item/reagent_containers/hypospray/combat/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/hypospray/combat/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!interacting_with.reagents)
+	if(!proximity_flag)
+		return
+	if(!target.reagents)
 		return
 
 	. |= SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -95,20 +97,20 @@
 		to_chat(user, span_notice("[src] is full."))
 		return
 
-	if(isliving(interacting_with)) // Combat hypo can only draw chems
+	if(isliving(target)) // Combat hypo can only draw chems
 		return
 
-	if(!interacting_with.reagents.total_volume)
-		to_chat(user, span_warning("[interacting_with] is empty!"))
+	if(!target.reagents.total_volume)
+		to_chat(user, span_warning("[target] is empty!"))
 		return
 
-	if(!interacting_with.is_drawable(user))
-		to_chat(user, span_warning("You cannot directly remove reagents from [interacting_with]!"))
+	if(!target.is_drawable(user))
+		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
 		return
 
-	var/trans = interacting_with.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
+	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
 	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
-	interacting_with.update_appearance()
+	target.update_appearance()
 
 /obj/item/reagent_containers/hypospray/combat/empty
 	list_reagents = null

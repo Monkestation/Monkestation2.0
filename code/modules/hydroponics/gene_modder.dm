@@ -68,7 +68,7 @@
 /obj/machinery/plantgenes/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/plantgenes/screwdriver_act(mob/living/user, obj/item/tool)
 	if(..())
@@ -87,31 +87,31 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/plantgenes/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user))
 		return
 	if(!anchored)
 		return ..()
 
-	if(istype(attacking_item, /obj/item/seeds))
+	if(istype(I, /obj/item/seeds))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
 			return
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(I, src))
 			return
 		eject_seed()
-		insert_seed(attacking_item)
-		to_chat(user, "<span class='notice'>You add [attacking_item] to the machine.</span>")
+		insert_seed(I)
+		to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
 		interact(user)
-	else if(istype(attacking_item, /obj/item/disk/plantgene))
+	else if(istype(I, /obj/item/disk/plantgene))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
 			return
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(I, src))
 			return
 		eject_disk()
-		disk = attacking_item
-		to_chat(user, "<span class='notice'>You add [attacking_item] to the machine.</span>")
+		disk = I
+		to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
 		interact(user)
 	else
 		..()

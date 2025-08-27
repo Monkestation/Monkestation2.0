@@ -7,8 +7,6 @@
 	locked = TRUE
 	rustle_sound = FALSE
 	silent = TRUE
-	// Snowflake so you can feed it
-	insert_on_attack = FALSE
 
 /datum/storage/extract_inventory/New()
 	. = ..()

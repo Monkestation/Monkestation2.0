@@ -496,9 +496,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 /// Mob has fov applied to it
-#define TRAIT_FOV_APPLIED "fov_applied"
+/* #define TRAIT_FOV_APPLIED "fov_applied" */
 /// Mob is using the scope component
-#define TRAIT_USER_SCOPED "user_scoped"
+/* #define TRAIT_USER_SCOPED "user_scoped" */
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
 /// Mob does not get a damage overlay from brute/burn
@@ -1313,10 +1313,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
 
-/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
-#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
-
 /// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
 #define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
-
 // END TRAIT DEFINES

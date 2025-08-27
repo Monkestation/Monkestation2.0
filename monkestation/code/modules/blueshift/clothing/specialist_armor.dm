@@ -68,7 +68,7 @@
 
 	AddComponent(/datum/component/clothing_damaged_by_bullets)
 
-/obj/item/clothing/head/helmet/sf_sacrificial/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/clothing/head/helmet/sf_sacrificial/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 
 	if(!(istype(attacking_item, /obj/item/sacrificial_face_shield)))

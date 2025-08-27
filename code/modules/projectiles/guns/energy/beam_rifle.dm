@@ -314,28 +314,27 @@
 		sync_ammo()
 		var/atom/target = M.client.mouse_object_ref?.resolve()
 		if(target)
-			INVOKE_ASYNC(src, PROC_REF(try_fire_gun), target, M.client.mob, M.client.mouseParams, TRUE)
+			afterattack(target, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
 	return ..()
 
-/obj/item/gun/energy/beam_rifle/try_fire_gun(atom/target, mob/living/user, params, passthrough = FALSE)
-	if(user.Adjacent(target)) //It's adjacent, is the user, or is on the user's person
+/obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	. |= AFTERATTACK_PROCESSED_ITEM
+	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
-			return FALSE
+			return
 		if(!ismob(target) || (user.istate & ISTATE_HARM)) //melee attack
-			return FALSE
+			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return FALSE
+			return
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
-		return FALSE
+		return
 	if(lastfire > world.time + delay)
-		return FALSE
-	if(!..())
-		return FALSE
+		return
 	lastfire = world.time
+	. = ..()
 	stop_aiming()
-	return TRUE
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)

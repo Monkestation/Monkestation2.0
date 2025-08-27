@@ -83,7 +83,7 @@
 		/datum/reagent/toxin,
 		/datum/reagent/saltpetre
 	)
-
+	
 	var/list/emagged_reagents = list(
 		/datum/reagent/toxin/carpotoxin,
 		/datum/reagent/medicine/mine_salve,
@@ -380,24 +380,24 @@
 /obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/chem_dispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
+/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_appearance()
 		return
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(I))
 		return
-	if(is_reagent_container(attacking_item) && !(attacking_item.item_flags & ABSTRACT) && attacking_item.is_open_container())
-		var/obj/item/reagent_containers/B = attacking_item
+	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+		var/obj/item/reagent_containers/B = I
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
 		ui_interact(user)
-	else if(!(user.istate & ISTATE_HARM) && !istype(attacking_item, /obj/item/card/emag))
-		to_chat(user, span_warning("You can't load [attacking_item] into [src]!"))
+	else if(!(user.istate & ISTATE_HARM) && !istype(I, /obj/item/card/emag))
+		to_chat(user, span_warning("You can't load [I] into [src]!"))
 		return ..()
 	else
 		return ..()

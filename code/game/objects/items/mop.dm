@@ -55,16 +55,14 @@
 	// Disable normal cleaning if there are liquids.
 	if(isturf(atom_to_clean) && turf_to_clean.liquids)
 		to_chat(cleaner, span_warning("It would be quite difficult to clean this with a pool of liquids on top!"))
-		return CLEAN_BLOCKED
+		return DO_NOT_CLEAN
 
 	if(clean_blacklist[atom_to_clean.type])
-		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
+		return DO_NOT_CLEAN
 	if(reagents.total_volume < 0.1)
-		cleaner.balloon_alert(cleaner, "mop is dry!")
-		return CLEAN_BLOCKED
-	if(reagents.has_chemical_flag(REAGENT_CLEANS, amount = 1))
-		return CLEAN_ALLOWED
-	return CLEAN_BLOCKED|CLEAN_NO_XP
+		to_chat(cleaner, span_warning("Your mop is dry!"))
+		return DO_NOT_CLEAN
+	return reagents.has_chemical_flag(REAGENT_CLEANS, 1)
 
 /**
  * Applies reagents to the cleaned floor and removes them from the mop.

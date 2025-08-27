@@ -361,17 +361,12 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/pre_attack(atom/A, mob/living/user, params)
+/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
-	if(.)
-		return .
-	if(A == user || !(user.istate & ISTATE_HARM))
-		return .
-	if(!check_hit(A))
-		return .
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(A)
-	return TRUE
+	if (!proximity || target == user || !(user.istate & ISTATE_HARM))
+		return
+	if (check_hit(target))
+		user.changeNext_move(CLICK_CD_MELEE)
 
 /**
  * Check if we should increment the hit counter

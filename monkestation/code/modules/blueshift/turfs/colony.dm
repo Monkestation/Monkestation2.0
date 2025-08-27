@@ -41,10 +41,10 @@ GLOBAL_LIST_INIT(plastic_wall_panel_recipes, list(
 	. = ..()
 	. += span_notice("You can build a prefabricated wall by right clicking on an empty floor.")
 
-/obj/item/stack/sheet/plastic_wall_panel/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isopenturf(interacting_with))
+/obj/item/stack/sheet/plastic_wall_panel/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if(!isopenturf(target))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	var/turf/open/build_on = interacting_with
+	var/turf/open/build_on = target
 	if(!user.Adjacent(build_on))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(isgroundlessturf(build_on))

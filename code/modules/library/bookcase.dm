@@ -94,57 +94,57 @@
 			I.forceMove(Tsec)
 	update_appearance()
 
-/obj/structure/bookcase/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(BOOKCASE_UNANCHORED)
-			if(attacking_item.tool_behaviour == TOOL_WRENCH)
-				if(attacking_item.use_tool(src, user, 20, volume=50))
+			if(I.tool_behaviour == TOOL_WRENCH)
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, span_notice("You wrench the frame into place."))
 					set_anchored(TRUE)
-			else if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-				if(attacking_item.use_tool(src, user, 20, volume=50))
+			else if(I.tool_behaviour == TOOL_CROWBAR)
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, span_notice("You pry the frame apart."))
 					deconstruct(TRUE)
 
 		if(BOOKCASE_ANCHORED)
-			if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
-				var/obj/item/stack/sheet/mineral/wood/W = attacking_item
+			if(istype(I, /obj/item/stack/sheet/mineral/wood))
+				var/obj/item/stack/sheet/mineral/wood/W = I
 				if(W.get_amount() >= 2)
 					W.use(2)
 					to_chat(user, span_notice("You add a shelf."))
 					state = BOOKCASE_FINISHED
 					update_appearance()
-			else if(attacking_item.tool_behaviour == TOOL_WRENCH)
-				attacking_item.play_tool_sound(src, 100)
+			else if(I.tool_behaviour == TOOL_WRENCH)
+				I.play_tool_sound(src, 100)
 				to_chat(user, span_notice("You unwrench the frame."))
 				set_anchored(FALSE)
 
 		if(BOOKCASE_FINISHED)
-			if(isbook(attacking_item))
-				if(!user.transferItemToLoc(attacking_item, src))
+			if(isbook(I))
+				if(!user.transferItemToLoc(I, src))
 					return
 				update_appearance()
 			else if(atom_storage)
-				for(var/obj/item/T in attacking_item.contents)
+				for(var/obj/item/T in I.contents)
 					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
 						atom_storage.attempt_remove(T, src)
-				to_chat(user, span_notice("You empty \the [attacking_item] into \the [src]."))
+				to_chat(user, span_notice("You empty \the [I] into \the [src]."))
 				update_appearance()
-			else if(istype(attacking_item, /obj/item/pen))
-				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
+			else if(istype(I, /obj/item/pen))
+				if(!user.can_perform_action(src) || !user.can_write(I))
 					return
 				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
-				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
+				if(!user.can_perform_action(src) || !user.can_write(I))
 					return
 				if(!newname)
 					return
 				else
 					name = "bookcase ([sanitize(newname)])"
-			else if(attacking_item.tool_behaviour == TOOL_CROWBAR)
+			else if(I.tool_behaviour == TOOL_CROWBAR)
 				if(length(contents))
 					to_chat(user, span_warning("You need to remove the books first!"))
 				else
-					attacking_item.play_tool_sound(src, 100)
+					I.play_tool_sound(src, 100)
 					to_chat(user, span_notice("You pry the shelf out."))
 					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 					state = BOOKCASE_ANCHORED

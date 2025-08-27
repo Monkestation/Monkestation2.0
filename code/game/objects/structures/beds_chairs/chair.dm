@@ -55,11 +55,11 @@
 	W.setDir(dir)
 	qdel(src)
 
-/obj/structure/chair/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(flags_1 & NODECONSTRUCT_1)
 		return . = ..()
-	if(istype(attacking_item, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		electrify_self(attacking_item, user)
+	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
+		electrify_self(W, user)
 		return
 	. = ..()
 
@@ -392,15 +392,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		return TRUE
 	return FALSE
 
-/obj/item/chair/afterattack(atom/target, mob/user, click_parameters)
-	if(!prob(break_chance))
+/obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	if(!proximity)
 		return
-	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.health < C.maxHealth*0.5)
-			C.Paralyze(20)
-	smash(user)
+	if(prob(break_chance))
+		user.visible_message(span_danger("[user] smashes \the [src] to pieces against \the [target]"))
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			if(C.health < C.maxHealth*0.5)
+				C.Paralyze(20)
+		smash(user)
 
 /obj/item/chair/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS

@@ -62,6 +62,7 @@
 	. = ..()
 	if(whip_trip(user, target))
 		user.changeNext_move(CLICK_CD_WHIP)
+		. |= AFTERATTACK_PROCESSED_ITEM
 
 /// Tries to find a target to throw a a disarmed item towards.
 /// It will ignore anything adjacent to the user or target.

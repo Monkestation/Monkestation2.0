@@ -113,27 +113,26 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	else
 		..()
 
-/obj/item/food/egg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/machinery/griddle))
-		return NONE
+/obj/item/food/egg/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 
-	var/obj/machinery/griddle/hit_griddle = interacting_with
-	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
-		interacting_with.balloon_alert(user, "no room!")
-		return ITEM_INTERACT_BLOCKING
-	var/atom/broken_egg = new /obj/item/food/rawegg(interacting_with.loc)
-	if(LAZYACCESS(modifiers, ICON_X))
-		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-	if(LAZYACCESS(modifiers, ICON_Y))
-		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
-	reagents.copy_to(broken_egg, reagents.total_volume)
+	if(!istype(target, /obj/machinery/griddle))
+		return SECONDARY_ATTACK_CALL_NORMAL
 
+	var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
+	broken_egg.pixel_x = pixel_x
+	broken_egg.pixel_y = pixel_y
+	playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
+	reagents.copy_to(broken_egg,reagents.total_volume)
+
+	var/obj/machinery/griddle/hit_griddle = target
 	hit_griddle.AddToGrill(broken_egg, user)
-	interacting_with.balloon_alert(user, "cracks [src] open")
+	target.balloon_alert(user, "cracks [src] open")
 
 	qdel(src)
-	return ITEM_INTERACT_BLOCKING
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/food/egg/blue
 	icon_state = "egg-blue"

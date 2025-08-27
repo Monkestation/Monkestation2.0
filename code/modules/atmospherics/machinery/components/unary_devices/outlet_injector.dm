@@ -48,11 +48,11 @@
 		sensor.inlet_id = id_tag
 		multi_tool.set_buffer(null)
 		balloon_alert(user, "input linked to sensor")
-		return ITEM_INTERACT_SUCCESS
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
 	multi_tool.set_buffer(src)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))

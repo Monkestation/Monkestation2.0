@@ -309,7 +309,7 @@
 	chambered = bolt
 	update_icon()
 
-/obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/gun/ballistic/bow/clockwork/update_icon_state()

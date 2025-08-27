@@ -95,12 +95,11 @@
 	if(active)
 		to_chat(user, span_userdanger("You have a really bad feeling about [src]!"))
 
-/obj/item/hot_potato/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/hot_potato/afterattack(atom/target, mob/user, adjacent, params)
 	. = ..()
-	if(.)
-		return .
-
-	return force_onto(target_mob, user)
+	if(!adjacent || !ismob(target))
+		return
+	force_onto(target, user)
 
 /obj/item/hot_potato/proc/force_onto(mob/living/victim, mob/user)
 	if(!istype(victim) || user != loc || victim == user)

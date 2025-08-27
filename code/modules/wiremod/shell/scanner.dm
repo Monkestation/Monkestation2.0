@@ -41,19 +41,22 @@
 	signal = add_output_port("Scanned", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/wiremod_scanner/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(handle_interaction))
+	RegisterSignal(shell, COMSIG_ITEM_AFTERATTACK, PROC_REF(handle_afterattack))
 
 /obj/item/circuit_component/wiremod_scanner/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, COMSIG_ITEM_INTERACTING_WITH_ATOM)
+	UnregisterSignal(shell, COMSIG_ITEM_AFTERATTACK)
 
 /**
  * Called when the shell item attacks something
  */
-/obj/item/circuit_component/wiremod_scanner/proc/handle_interaction(atom/source, mob/user, atom/target, ...)
+/obj/item/circuit_component/wiremod_scanner/proc/handle_afterattack(atom/source, atom/target, mob/user, proximity_flag)
 	SIGNAL_HANDLER
+	if(!proximity_flag)
+		return
 	source.balloon_alert(user, "scanned object")
-	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	attacker.set_output(user)
 	attacking.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)
-	return ITEM_INTERACT_SUCCESS
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
+

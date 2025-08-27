@@ -610,7 +610,7 @@
 	to_chat(user, span_notice("You pop out the encryption key in the radio."))
 	return ..()
 
-/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
 
 	if(istype(attacking_item, /obj/item/encryptionkey))
 		if(keyslot)

@@ -73,8 +73,9 @@
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
-/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, click_parameters)
-	if(!isliving(target))
+/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!isliving(target) || !proximity_flag)
 		return
 	var/mob/living/M = target
 	if(!(M.mob_biotypes & MOB_ORGANIC))

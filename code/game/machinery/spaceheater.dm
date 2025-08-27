@@ -186,30 +186,30 @@
 /obj/machinery/space_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/space_heater/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
 		update_appearance()
 		return TRUE
 
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(I))
 		return TRUE
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/cell))
 		if(!panel_open)
 			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
 			return
 		if(cell)
 			to_chat(user, span_warning("There is already a power cell inside!"))
 			return
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(I, src))
 			return
-		cell = attacking_item
-		attacking_item.add_fingerprint(usr)
+		cell = I
+		I.add_fingerprint(usr)
 		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
 		SStgui.update_uis(src)
 		return TRUE
@@ -389,7 +389,7 @@
 	//Dropper tools
 	if(beaker)
 		if(is_type_in_list(item, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
-			item.interact_with_atom(beaker, user)
+			item.afterattack(beaker, user, 1)
 		return
 
 

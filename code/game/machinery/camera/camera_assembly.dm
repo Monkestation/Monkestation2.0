@@ -137,11 +137,11 @@
 	user.balloon_alert_to_viewers(state == STATE_WELDED ? "welded" : "unwelded")
 
 
-/obj/structure/camera_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
 		if(STATE_WELDED)
-			if(istype(attacking_item, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/C = attacking_item
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = W
 				if(C.use(2))
 					to_chat(user, span_notice("You add wires to [src]."))
 					state = STATE_WIRED
@@ -149,41 +149,41 @@
 					to_chat(user, span_warning("You need two lengths of cable to wire a camera!"))
 				return
 		if(STATE_WIRED) // Upgrades!
-			if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma)) //emp upgrade
+			if(istype(W, /obj/item/stack/sheet/mineral/plasma)) //emp upgrade
 				if(emp_module)
 					to_chat(user, span_warning("[src] already contains a [emp_module]!"))
 					return
-				if(!attacking_item.use_tool(src, user, 0, amount=1)) //only use one sheet, otherwise the whole stack will be consumed.
+				if(!W.use_tool(src, user, 0, amount=1)) //only use one sheet, otherwise the whole stack will be consumed.
 					return
 				emp_module = new(src)
 				if(malf_xray_firmware_active)
 					malf_xray_firmware_active = FALSE //flavor reason: MALF AI Upgrade Camera Network ability's firmware is incompatible with the new part
 														//real reason: make it a normal upgrade so the finished camera's icons and examine texts are restored.
-				to_chat(user, span_notice("You attach [attacking_item] into [src]'s inner circuits."))
+				to_chat(user, span_notice("You attach [W] into [src]'s inner circuits."))
 				return
 
-			else if(istype(attacking_item, /obj/item/analyzer)) //xray upgrade
+			else if(istype(W, /obj/item/analyzer)) //xray upgrade
 				if(xray_module)
 					to_chat(user, span_warning("[src] already contains a [xray_module]!"))
 					return
-				if(!user.transferItemToLoc(attacking_item, src))
+				if(!user.transferItemToLoc(W, src))
 					return
-				to_chat(user, span_notice("You attach [attacking_item] into [src]'s inner circuits."))
-				xray_module = attacking_item
+				to_chat(user, span_notice("You attach [W] into [src]'s inner circuits."))
+				xray_module = W
 				if(malf_xray_firmware_active)
 					malf_xray_firmware_active = FALSE //flavor reason: MALF AI Upgrade Camera Network ability's firmware is incompatible with the new part
 														//real reason: make it a normal upgrade so the finished camera's icons and examine texts are restored.
 				update_appearance()
 				return
 
-			else if(isprox(attacking_item)) //motion sensing upgrade
+			else if(isprox(W)) //motion sensing upgrade
 				if(proxy_module)
 					to_chat(user, span_warning("[src] already contains a [proxy_module]!"))
 					return
-				if(!user.transferItemToLoc(attacking_item, src))
+				if(!user.transferItemToLoc(W, src))
 					return
-				to_chat(user, span_notice("You attach [attacking_item] into [src]'s inner circuits."))
-				proxy_module = attacking_item
+				to_chat(user, span_notice("You attach [W] into [src]'s inner circuits."))
+				proxy_module = W
 				return
 
 	return ..()

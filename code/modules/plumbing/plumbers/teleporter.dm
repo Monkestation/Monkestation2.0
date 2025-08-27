@@ -14,18 +14,23 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
-/obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/multitool/M)
+/obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/I)
+	if(!multitool_check_buffer(user, I))
+		return
+
+	var/obj/item/multitool/M = I
+
 	if(!istype(M.buffer, /obj/machinery/plumbing/receiver))
 		to_chat(user, span_warning("Invalid buffer."))
-		return ITEM_INTERACT_BLOCKING
+		return
 
 	if(target)
 		lose_teleport_target()
 
 	set_teleport_target(M.buffer)
 
-	to_chat(user, span_green("You successfully link [src] to the [M.buffer]."))
-	return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_green("You succesfully link [src] to the [M.buffer]."))
+	return TRUE
 
 ///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
 /obj/machinery/plumbing/sender/proc/lose_teleport_target()
@@ -64,10 +69,14 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
-/obj/machinery/plumbing/receiver/multitool_act(mob/living/user, obj/item/multitool/M)
+/obj/machinery/plumbing/receiver/multitool_act(mob/living/user, obj/item/I)
+	if(!multitool_check_buffer(user, I))
+		return
+
+	var/obj/item/multitool/M = I
 	M.set_buffer(src)
-	balloon_alert(user, "saved to multitool buffer")
-	return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	return TRUE
 
 /obj/machinery/plumbing/receiver/process(seconds_per_tick)
 	if(machine_stat & NOPOWER || panel_open)
@@ -100,15 +109,15 @@
 
 	senders = list()
 
-/obj/machinery/plumbing/receiver/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), attacking_item))
+/obj/machinery/plumbing/receiver/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, icon_state + "_open", initial(icon_state), I))
 		update_appearance()
 		return
 
-	if(default_pry_open(attacking_item))
+	if(default_pry_open(I))
 		return
 
-	if(default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_crowbar(I))
 		return
 
 	return ..()
