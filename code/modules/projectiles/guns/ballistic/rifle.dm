@@ -393,8 +393,8 @@
 
 
 
-//Stupid OP mining rifle, WARNING, FIRES PLASMA NOT BULLETS
-/obj/item/gun/ballistic/rifle/minerjdj //probably the singlehandedly most expensive weapon a miner can buy, and for good reason
+//Stupid OP mining rifle, WARNING, FIRES PLASMA NOT BULLETS     probably the singlehandedly most expensive weapon a miner can buy, and for good reason
+/obj/item/gun/ballistic/rifle/minerjdj
 	name = ".950 JDJ 'Thor' Kinetic Rifle"
 	desc = "Completely absurd, in both size and firepower. The people down in Mining Research were either overcompensating, \
 	or just having a damn good time, but we found this laying on a table surrounded by about six researchers, \
