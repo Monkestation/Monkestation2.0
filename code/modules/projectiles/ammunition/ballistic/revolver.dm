@@ -72,3 +72,16 @@
 	caliber = CALIBER_45L
 	projectile_type = /obj/projectile/bullet/g45l/rubber
 
+
+///.45-70 mining
+
+/obj/item/ammo_casing/govmining
+	name = ".45-70 Gov Kinetic Magnum Casing"
+	desc = "An absolute beast of a round that will probably only fit in the 'Duster' Revolver."
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = ".45-70"
+	caliber = CALIBER_GOV_MINING
+	projectile_type = /obj/projectile/bullet/govmining
+
+
+

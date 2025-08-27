@@ -46,3 +46,28 @@
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 4
 	multiload = FALSE
+
+
+// Mining revolver cylinder
+
+/obj/item/ammo_box/magazine/internal/cylinder/govmining
+	name = "Really Big Revolver Cylinder"
+	desc = "Hey BUB howdja do that, dont BREAK the expensive equipment. (REPORT ME)"
+	ammo_type = /obj/item/ammo_casing/govmining
+	caliber = CALIBER_GOV_MINING
+	max_ammo = 6
+
+//Once again the casings wont just fall out, you gotta eject them all
+/obj/item/ammo_box/magazine/internal/cylinder/govmining/give_round(obj/item/ammo_casing/R, replace_spent = 0)
+	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
+		return FALSE
+
+	for(var/i in 1 to stored_ammo.len)
+		var/obj/item/ammo_casing/bullet = stored_ammo[i]
+		if(!bullet) // found a spent ammo
+			stored_ammo[i] = R
+			R.forceMove(src)
+			return TRUE
+
+	return FALSE
+

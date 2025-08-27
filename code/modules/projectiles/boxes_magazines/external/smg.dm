@@ -169,3 +169,16 @@
 /obj/item/ammo_box/magazine/miecz/spawns_empty
 	start_empty = TRUE
 
+
+//Magazine for PKA-smg
+/obj/item/ammo_box/magazine/pksmgmag
+	name = "proto-kinetic magazine"
+	desc = "A single magazine for the 'Rapier' SMG."
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "pksmgmag"
+	base_icon_state = "pksmgmag"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	ammo_type = /obj/item/ammo_casing/energy/kinetic/smg
+	caliber = ENERGY
+	max_ammo = 45
+

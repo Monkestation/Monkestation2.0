@@ -430,3 +430,31 @@
 						"Lucky" = "lucky" //Well do ya?
 						)
 
+
+/// Mining revolver
+
+/obj/item/gun/ballistic/revolver/govmining
+	name = "45-70 GOV 'Duster' Revolver"
+	desc = "A .45-70 cartridge adapted to Proto Kinetic Acceleration technology has proven \
+	very effective for taking down the heavy hitting local fauna, making this a rather useful \
+	option to carry out into the wilds. Comes with a spin nanochip in the grip that grants \
+	the wielder the dexterity to spin the revolver to eject the casings. Why it was designed to \
+	only eject the casings when spun, we cant be sure, but the Mining Research Director said \
+	that 'it will be really cool trust me'."
+	icon_state = "miningbigiron"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/govmining
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
+	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
+	fire_sound_volume = 100
+	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
+	pin = /obj/item/firing_pin/wastes
+
+/obj/item/gun/ballistic/revolver/govmining/attack_self(mob/living/user) //you do a sick flip when you empty the rounds
+	SpinAnimation(4,2)
+	if(flip_cooldown <= world.time)
+		flip_cooldown = (world.time + 30)
+		user.visible_message(span_notice("[user] spins [src] around [user.p_their()] finger by the trigger, ejecting any loaded cartridges!"))
+		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+	. = ..()
+

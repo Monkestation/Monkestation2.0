@@ -148,3 +148,12 @@
 	desc = "A cased stun grenade that can only be activated once fired out of a grenade launcher."
 	icon_state = "40mmFRAG"
 	projectile_type = /obj/projectile/bullet/a40mm/frag
+
+// Mining grenade
+/obj/item/ammo_casing/a40mm/kinetic
+	name = "40mm Kinetic Grenade"
+	desc = "A 40mm explosive grenade modified with Proto Kinetic technology."
+	caliber = CALIBER_40MM_KINETIC
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "40mmkinetic"
+	projectile_type = /obj/projectile/bullet/a40mm/kinetic

@@ -335,3 +335,14 @@
 	pellets = 600
 	variance = 25
 
+
+// for the mining autoshotgun
+/obj/item/ammo_casing/shotgun/hydrakinetic
+	name = "Kinetic Hydra Shell"
+	desc = "A 20 gauge shell loaded with five pellets, dubbed the Kinetic Hydra Shell! <b> Does NOT fit in any standard shotgun! </b>"
+	icon_state = "20gshell"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	caliber = KINETIC_20G
+	pellets = 5
+	variance = 7 //very tight spread
+	projectile_type = /obj/projectile/bullet/hydrakinetic

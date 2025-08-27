@@ -994,3 +994,58 @@
 	actions_types = list()
 	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
 	casing_ejector = FALSE
+
+
+
+//Proto Kinetic SMG, used by miners as part of what ill call "Gun Mining"
+//Not actually a PKA, but styled to be like one
+
+/obj/item/gun/ballistic/automatic/proto/pksmg
+	name = "proto-kinetic 'Rapier' smg"
+	desc = "Using partial ballistic technology and kinetic acceleration, the Mining Research department has managed to make the kinetic accelerator full auto. \
+	While the technology is promising, it is held back by certain factors, specifically limited ammo and no mod capacity, but that shouldn't be an issue with its performance."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "pksmg"
+	burst_size = 2
+	actions_types = list()
+	mag_display = TRUE
+	empty_indicator = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/pksmgmag
+	pin = /obj/item/firing_pin/wastes
+	bolt_type = BOLT_TYPE_LOCKING
+	show_bolt_icon = FALSE
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+//FLASHLIGHTTTTTT
+/obj/item/gun/ballistic/automatic/proto/pksmg/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 16)
+
+
+// KINETIC L6 SAW (LMG dubbed the 'Hellhound')
+
+/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg
+	name = "Kinetic 'Hellhound' LMG"
+	desc = "Using parts from confiscated weapons, the Mining Research team has thrown together \
+	A beast of a weapon. Using Proto Kinetic Acceleration technology as per usual, the 'Hellhound' \
+	is a LMG chambered in kinetic 7.62 with a incredibly high fire rate, for when you need a beast \
+	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
+	top off and reload using stripper clips."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "kineticlmg"
+	inhand_icon_state = "kineticlmg"
+	base_icon_state = "kineticlmg"
+	worn_icon_state = "kineticlmg"
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	burst_size = 3
+	mag_display = FALSE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/kineticlmg
+	weapon_weight = WEAPON_HEAVY
+	internal_magazine = TRUE
+	spread = 3
+	pin = /obj/item/firing_pin/wastes
+	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'

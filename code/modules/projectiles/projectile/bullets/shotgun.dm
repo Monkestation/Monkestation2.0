@@ -374,3 +374,17 @@
 	ricochet_incidence_leeway = 75
 
 
+///Mining shotgun, 5 pellet
+
+/obj/projectile/bullet/hydrakinetic
+	name = "Kinetic Hydra Sabot"
+	icon_state = "bullet"
+	damage = 13
+	armour_penetration = -15
+
+/obj/projectile/bullet/hydrakinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
+	if(ismineralturf(target))
+		var/turf/closed/mineral/M = target
+		M.gets_drilled(firer, FALSE)
+	. = ..()
+

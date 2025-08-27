@@ -61,6 +61,17 @@
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 
 
+/obj/item/ammo_box/govmining
+	name = "speed loader (.45-70 Kinetic)"
+	desc = "A six round speedloader carrying an absolute beast of a round for the 'Duster' Revolver."
+	icon_state = "4570loader"
+	w_class = WEIGHT_CLASS_TINY
+	ammo_type = /obj/item/ammo_casing/govmining
+	max_ammo = 6
+	caliber = CALIBER_GOV_MINING
+	multiple_sprites = AMMO_BOX_PER_BULLET
+
+
 /obj/item/ammo_box/g45l
 	name = "ammo box (.45 Long Lethal)"
 	desc = "This box contains .45 Long lethal cartridges."
@@ -305,6 +316,14 @@
 	icon_state = "10mmbox"
 	ammo_type = /obj/item/ammo_casing/n762
 	max_ammo = 14
+
+
+/obj/item/ammo_box/a762/kinetic
+	name = "stripper clip (Kinetic 7.62mm)"
+	desc = "A stripper clip with Kinetic 7.62mm rounds."
+	icon_state = "762kinetic"
+	ammo_type = /obj/item/ammo_casing/a762/kinetic
+	caliber = CALIBER_A762_KINETIC
 
 
 /obj/item/ammo_box/c40sol

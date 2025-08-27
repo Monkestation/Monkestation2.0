@@ -94,3 +94,13 @@
 
 	can_be_printed = FALSE
 
+
+/// Mining LMG
+
+/obj/item/ammo_casing/a762/kinetic
+	name = "Kinetic 7.62 bullet casing"
+	desc = "A kinetic 7.62 bullet casing for use in the 'Hellhound' LMG."
+	icon_state = "762kinetic-casing"
+	caliber = CALIBER_A762_KINETIC
+	projectile_type = /obj/projectile/bullet/a762/kinetic
+

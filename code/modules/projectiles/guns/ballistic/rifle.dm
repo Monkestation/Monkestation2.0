@@ -367,10 +367,7 @@
 	material_flags = NONE // ????? Why do these have materials enabled??
 
 
-
-
-
-//.45 Long Lever-Rifle, cargo cowboy gun, doesn't really belong here but it used to be a shotgun, this makes more sense.
+//.45 Long Lever-Rifle, cargo cowboy gun, used to be a shotgun, this makes more sense.
 /obj/item/gun/ballistic/rifle/leveraction
 	name = "brush gun"
 	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
@@ -393,4 +390,33 @@
 	pb_knockback = 0
 	need_bolt_lock_to_interact = FALSE
 	box_reload_delay = CLICK_CD_MELEE
+
+
+
+//Stupid OP mining rifle, WARNING, FIRES PLASMA NOT BULLETS
+/obj/item/gun/ballistic/rifle/minerjdj //probably the singlehandedly most expensive weapon a miner can buy, and for good reason
+	name = ".950 JDJ 'Thor' Kinetic Rifle"
+	desc = "Completely absurd, in both size and firepower. The people down in Mining Research were either overcompensating, \
+	or just having a damn good time, but we found this laying on a table surrounded by about six researchers, \
+	and the Mining Research Director, all passed out on the floor with beers and sodas. Fires an absolutely massive round that \
+	is sure to stop pretty much anything in its tracks that would even warrent it."
+	icon_state = "fatmac"
+	w_class = WEIGHT_CLASS_HUGE
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	inhand_icon_state = "fatmac"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "fatmac"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/minerjdj
+	bolt_wording = "bolt"
+	bolt_type = BOLT_TYPE_LOCKING
+	semi_auto = FALSE
+	recoil = 8 //ow my back
+	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
+	fire_sound_volume = 200 // L O U D
+	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
+	bolt_drop_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	need_bolt_lock_to_interact = TRUE
+	pin = /obj/item/firing_pin/wastes //hey so yeah did you see how much damage the bullet this thing fires does ok cool so you know why this is NEVER EVER coming off
 

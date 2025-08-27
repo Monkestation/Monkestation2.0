@@ -259,3 +259,29 @@
 /obj/item/gun/ballistic/shotgun/china_lake/restricted
 	pin = /obj/item/firing_pin/implant/pindicate
 
+
+///Mining grenade launcher
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic
+	desc = "Frankly we have no idea how the boys in Mining Research put this one together, \
+	but we can only assume it was more illegal gun parts. Using the usual Proto Kinetic Acceleration \
+	technology, the 'Slab' is a six round rotary grenade launcher, featuring extra heavy explosive 40mm \
+	payloads. It does heavy damage on a direct hit to the natural landscape and natural fauna, however due to \
+	hardiness of most fauna, the blast leaves something to be desired."
+	name = "Proto-Kinetic 'Slab' Grenade Launcher"
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
+	eject_sound = 'sound/weapons/gun/l6/l6_door.ogg'
+	worn_icon_state = "protoklauncher"
+	base_pixel_x = -5
+	pixel_x = -5
+	slot_flags = ITEM_SLOT_BACK
+	icon_state = "protoklauncher"
+	inhand_icon_state = "protoklauncher"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher/kinetic
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	pin = /obj/item/firing_pin/wastes
+
+
