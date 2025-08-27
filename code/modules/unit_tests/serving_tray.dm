@@ -24,7 +24,7 @@
 
 	TEST_ASSERT_EQUAL((banana in test_tray.contents), TRUE, "The banana did not get picked up by the serving tray")
 
-	the_table.melee_attack_chain(human, test_tray)
+	test_tray.melee_attack_chain(human, the_table)
 
 	TEST_ASSERT_EQUAL(test_tray.contents.len, 0, "The serving tray did not drop all items on hitting the table")
 
