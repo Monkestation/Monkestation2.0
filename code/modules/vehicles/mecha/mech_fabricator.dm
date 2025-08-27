@@ -59,13 +59,20 @@
 	/// Combined boolean value of red alert, auth override, and the users access for the sake of smaller if statements. if this is true, combat parts are available
 	var/combat_parts_allowed = FALSE
 	/// List of categories that all contains combat parts, everything in the category will be classified as combat parts
-	var/list/combat_parts = list(
+	var/list/combat_categories = list(
 		RND_CATEGORY_MECHFAB_DURAND,
 		RND_CATEGORY_MECHFAB_HONK,
 		RND_CATEGORY_MECHFAB_PHAZON,
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		)
+	// list of categories that isn't going to be combat parts
+	var/list/non_combat_categories = list(
+		RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+	)
 	/// list of items unlocked on blue alert
 	var/list/blue_alert_designs = list(
 		/datum/design/mech_disabler,
@@ -453,10 +460,13 @@ skip them. Returns the is_combat_design variable
 */
 /obj/machinery/mecha_part_fabricator/proc/weapon_lock_check(datum/design/design)
 	var/is_combat_design = FALSE
-	for(var/categories in design.category) // may allah forgive me for this insolence upon nature (okay this was way worse, I cleaned it as best I could)
-		for(var/banned_categories in combat_parts)
-			if(findtext(categories, banned_categories) && !findtext(categories, RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT)) // for I have sinned
+	for(var/categories in design.category) //may allah forgive me for this insolence upon nature
+		for(var/banned_categories in combat_categories) //(okay this was way worse, I cleaned it as best I could)
+			if(findtext(categories, banned_categories)) //for I have sinned
 				is_combat_design = TRUE
+		for(var/unbanned_categories in non_combat_categories)
+			if(findtext(categories, unbanned_categories))
+				is_combat_design = FALSE
 
 	//they can have a tiny bit of non-lethal weapons. as a treat
 	if(design.type in whitelisted_designs)
