@@ -547,6 +547,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lung_harm = 1.5
 	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/medicine/omnizine = 15)
 
+/obj/item/clothing/mask/cigarette/syndicate/synthesized
+	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/medicine/omnizine/protozine = 15)
+	lung_harm = 0
+
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
 	lung_harm = 1.5
