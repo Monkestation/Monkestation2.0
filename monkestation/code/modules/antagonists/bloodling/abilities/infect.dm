@@ -23,7 +23,6 @@
 		owner.balloon_alert(owner, "not a humanoid!")
 		return
 
-
 	if(owner.grab_state <= GRAB_NECK)
 		owner.balloon_alert(owner, "needs tighter grip!")
 		return
@@ -39,12 +38,17 @@
 	if(HAS_TRAIT(carbon_mob, TRAIT_MINDSHIELD))
 		infest_time *= 2
 
+	carbon_mob.Paralyze(infest_time)
+	ADD_TRAIT(carbon_mob, TRAIT_MUTE, REF(src))
 	owner.balloon_alert(carbon_mob, "[owner] attempts to infect you!")
 	if(!do_after(owner, infest_time))
 		is_infecting = FALSE
+		REMOVE_TRAIT(carbon_mob, TRAIT_MUTE, REF(src))
 		return FALSE
 
-	if(!carbon_mob.mind  || !carbon_mob.client)
+	REMOVE_TRAIT(carbon_mob, TRAIT_MUTE, REF(src))
+
+	if(!carbon_mob.mind || !carbon_mob.client)
 		var/mob/chosen_one = null
 		if(carbon_mob.stat == DEAD)
 			chosen_one = carbon_mob.get_ghost(ghosts_with_clients = TRUE)

@@ -15,8 +15,11 @@
 	var/is_ascended = FALSE
 	// The team datum
 	var/datum/team/bloodling/bling_team
+	// The areas in which in you are able to ascend
+	var/list/ascension_areas = list()
 
 /datum/antagonist/bloodling/on_gain()
+	generate_ascension_areas()
 	forge_objectives()
 	var/mob/living/our_mob = owner.current
 	our_mob.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are a horrific blob of flesh who can manifest a million tongues.
@@ -47,7 +50,36 @@
 /datum/antagonist/bloodling/forge_objectives()
 	var/datum/objective/bloodling_ascend/ascend_objective = new
 	ascend_objective.owner = owner
+	ascend_objective.ascend_areas = ascension_areas
 	objectives += ascend_objective
 
 /datum/antagonist/bloodling/get_preview_icon()
 	return finish_preview_icon(icon('monkestation/code/modules/antagonists/bloodling/sprites/bloodling_sprites.dmi', "bloodling_stage_1"))
+
+/// This generates the areas for the bloodling to ascend in
+/datum/antagonist/bloodling/proc/generate_ascension_areas()
+	/// List of high-security areas that we pick required ones from
+	var/list/allowed_areas = typecacheof(list(/area/station/command,
+		/area/station/comms,
+		/area/station/engineering,
+		/area/station/science,
+		/area/station/security,
+	))
+
+	var/list/blacklisted_areas = typecacheof(list(/area/station/engineering/hallway,
+		/area/station/engineering/lobby,
+		/area/station/engineering/storage,
+		/area/station/science/lobby,
+		/area/station/science/ordnance/bomb,
+		/area/station/security/prison,
+	))
+
+	var/list/possible_areas = GLOB.areas.Copy()
+	for(var/area/possible_area as anything in possible_areas)
+		if(!is_type_in_typecache(possible_area, allowed_areas) || initial(possible_area.outdoors) || is_type_in_typecache(possible_area, blacklisted_areas))
+			possible_areas -= possible_area
+
+	for(var/i in 1 to 3)
+		ascension_areas += pick_n_take(possible_areas)
+
+	return ascension_areas

@@ -13,6 +13,7 @@ GLOBAL_VAR(ascended_bloodling)
 
 /datum/action/cooldown/bloodling/ascension/PreActivate(atom/target)
 	var/mob/living/basic/bloodling/proper/our_mob = owner
+	var/datum/antagonist/bloodling/bling = IS_BLOODLING(our_mob)
 	our_turf = get_turf(our_mob)
 
 	if(GLOB.ascended_bloodling)
@@ -26,8 +27,8 @@ GLOBAL_VAR(ascended_bloodling)
 
 	var/area/our_area = get_area(our_turf)
 
-	if(!istype(our_area, /area/station/command/bridge))
-		to_chat(our_mob, span_noticealien("You can only begin ascension in Bridge."))
+	if(!(our_area in bling.ascension_areas))
+		to_chat(our_mob, span_noticealien("Wrong area. Your ascension objective tells you where you can ascend."))
 		return FALSE
 
 	return ..()
@@ -76,6 +77,10 @@ GLOBAL_VAR(ascended_bloodling)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(ascend)), 5 MINUTES)
 
+/mob/living/basic/bloodling/proper/ascending/Destroy()
+	SSshuttle.clearHostileEnvironment(src)
+	return ..()
+
 /mob/living/basic/bloodling/proper/ascending/evolution_mind_change(mob/living/basic/bloodling/proper/new_bloodling)
 	new_bloodling.setDir(dir)
 	if(numba)
@@ -115,9 +120,13 @@ GLOBAL_VAR(ascended_bloodling)
 		return
 
 	// Calls the shuttle
+	SSshuttle.clearHostileEnvironment(src)
 	SSshuttle.requestEvac(src, "ALERT: LEVEL 4 BIOHAZARD DETECTED. BLOODLING CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.")
-	SSshuttle.emergency_no_recall = TRUE
-	SSshuttle.emergency_call_time = 5 MINUTES
+	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
+		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	SSshuttle.admin_emergency_no_recall = TRUE
+	if(!EMERGENCY_AT_LEAST_DOCKED)
+		SSshuttle.emergency.request(null, 0, reason =  "ALERT: LEVEL 4 BIOHAZARD DETECTED. BLOODLING CONTAINMENT HAS FAILED. EVACUATE REMAINING PERSONEL.", set_coefficient = 0.1)
 
 	var/datum/antagonist/bloodling/antag = IS_BLOODLING(src)
 	antag.is_ascended = TRUE

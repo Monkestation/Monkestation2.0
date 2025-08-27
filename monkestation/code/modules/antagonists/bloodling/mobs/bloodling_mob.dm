@@ -205,11 +205,9 @@
 	for(var/datum/action/cooldown/ability in new_bloodling.our_abilties)
 		ability.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
-	// TEMP TESTMERGE CODE START
 	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in new_bloodling.actions
 	if(vow)
 		vow.Remove(new_bloodling)
-	// TEMP TESTMERGE CODE END
 
 	qdel(src)
 
