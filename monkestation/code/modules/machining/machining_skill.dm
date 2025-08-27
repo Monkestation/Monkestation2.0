@@ -1,9 +1,9 @@
 //machining skills, each level gives you the ability to cosntruct more recipes
 #define MACHINING_SKILL_STOCK 3 //stock
 #define MACHINING_SKILL_T1 (MACHINING_SKILL_STOCK*5) //tier 1
-#define MACHINING_SKILL_T2 (MACHINING_SKILL_T1*1.5) //tier 2
-#define MACHINING_SKILL_T3 (MACHINING_SKILL_T2*1.75) // tier 3
-#define MACHINING_SKILL_T4 (MACHINING_SKILL_T2*2) // tier 4
+#define MACHINING_SKILL_T2 (MACHINING_SKILL_T1*2) //tier 2
+#define MACHINING_SKILL_T3 (MACHINING_SKILL_T2*2) // tier 3
+#define MACHINING_SKILL_T4 (MACHINING_SKILL_T3*2) // tier 4
 
 /datum/skill/machinist
 	name = "Machining"

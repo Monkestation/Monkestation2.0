@@ -28,38 +28,6 @@
     )
     machining_skill_required = 5
 
-/datum/machining_recipe/c20r
-    name = "C-20r"
-    category = TAB_ASSEMBLY_PARTS
-    machinery_type = MACHINING_WORKSTATION
-    crafting_time = MACHINING_DELAY_SLOW
-    result = /obj/item/gun/ballistic/automatic/c20r/unrestricted
-    reqs = list(
-        /obj/item/machining_intermediates/stock_polymer = 1,
-        /obj/item/machining_intermediates/gunbarrel_rifle = 1,
-        /obj/item/machining_intermediates/firearm_bolt = 2,
-        /obj/item/machining_intermediates/handle_polymer = 1,
-        /obj/item/stack/machining_intermediates/hardsteel = 4,
-        /obj/item/stack/machining_intermediates/screwbolt = 8,
-        /obj/item/machining_intermediates/moltenplastic = 2,
-		/obj/item/machining_intermediates/bullet_large_ap = 12,
-    )
-    machining_skill_required = 5
-
-/datum/machining_recipe/c20r_magazine
-    name = "C-20r Magazine"
-    category = TAB_ASSEMBLY_PARTS
-    machinery_type = MACHINING_WORKSTATION
-    crafting_time = MACHINING_DELAY_NORMAL
-    result = /obj/item/ammo_box/magazine/smgm45
-    reqs = list(
-        /obj/item/machining_intermediates/moltenplastic = 4,
-        /obj/item/stack/rods = 2,
-        /obj/item/stack/machining_intermediates/screwbolt = 4,
-		/obj/item/machining_intermediates/bullet_large_ap = 12,
-    )
-    machining_skill_required = 5
-
 /datum/machining_recipe/revolver_38
     name = ".38 Revolver"
     category = TAB_ASSEMBLY_PARTS
@@ -190,7 +158,7 @@
     crafting_time = MACHINING_DELAY_NORMAL
     result = /obj/item/machining_intermediates/crappyring
     reqs = list(
-        /obj/item/machining_intermediates/crappyring = 1,
+        /obj/item/stack/sheet/iron = 1,
         /obj/item/stack/sheet/glass = 2,
     )
     machining_skill_required = 2
@@ -202,8 +170,8 @@
     crafting_time = MACHINING_DELAY_NORMAL
     result = /obj/item/machining_intermediates/fancyring
     reqs = list(
-        /obj/item/machining_intermediates/fancyring = 1,
-        /obj/item/stack/sheet/mineral/diamond = 1,
+        /obj/item/stack/sheet/mineral/gold  = 1,
+		/obj/item/stack/sheet/iron = 1,
     )
     machining_skill_required = 3
 
@@ -215,8 +183,8 @@
     result = /obj/item/machining_intermediates/fancyring
     reqs = list(
         /obj/item/machining_intermediates/fancyring = 1,
-        /obj/item/stack/sheet/mineral/gold = 1,
-        /obj/item/stack/sheet/mineral/diamond = 3,
+		/obj/item/stack/sheet/mineral/gold  = 2,
+        /obj/item/stack/sheet/mineral/diamond = 1,
     )
     machining_skill_required = 4
 
