@@ -205,11 +205,11 @@
 
 /obj/machinery/mineral/ore_redemption/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)

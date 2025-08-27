@@ -52,7 +52,7 @@
 	return NONE // I guess
 
 /obj/item/pushbroom/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	sweep(user, target, towards_player = TRUE)
+	sweep(user, interacting_with, towards_player = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**

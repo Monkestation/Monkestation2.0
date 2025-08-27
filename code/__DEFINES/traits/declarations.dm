@@ -1316,9 +1316,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
-/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
-#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
-
 /// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
 #define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 

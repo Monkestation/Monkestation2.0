@@ -800,7 +800,7 @@
 			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
 			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/kinetic_crusher/pilebunker/afterattack_secondary(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/pilebunker/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!armed)
 		playsound(user, 'sound/mecha/hydraulic.ogg', 100, TRUE)
 		if(do_after(user, 3 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_SLOWDOWNS))
@@ -809,13 +809,16 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !overrides_twohandrequired)
 		balloon_alert(user, "wield it first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target == user)
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with == user)
 		balloon_alert(user, "can't aim at yourself!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, clickparams)
+		return ITEM_INTERACT_BLOCKING
+	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/kinetic_crusher/pilebunker/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/kinetic_crusher/pilebunker/update_icon_state()
 	if(!armed)
@@ -965,21 +968,17 @@
 			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
 			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/gun/magic/crusherknives/attack_secondary(atom/target, mob/living/user, clickparams)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-/obj/item/gun/magic/crusherknives/afterattack_secondary(atom/target, mob/living/user, clickparams)
-	if(target == user)
+/obj/item/gun/magic/crusherknives/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with == user)
 		balloon_alert(user, "can't aim at yourself!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, clickparams)
+	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/magic/crusherknives/proc/fire_kinetic_blast(atom/target, mob/living/user, clickparams)
+/obj/item/gun/magic/crusherknives/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
 	if(!charged)
 		return
-	var/modifiers = params2list(clickparams)
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))
 		return
@@ -1255,7 +1254,7 @@
 			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
 			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/kinetic_crusher/adminpilebunker/afterattack_secondary(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/adminpilebunker/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!armed)
 		playsound(user, 'sound/mecha/hydraulic.ogg', 100, TRUE)
 		if(do_after(user, 0.1 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_SLOWDOWNS))
@@ -1265,10 +1264,10 @@
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !overrides_twohandrequired)
 		balloon_alert(user, "wield it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target == user)
+	if(interacting_with == user)
 		balloon_alert(user, "can't aim at yourself!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, clickparams)
+	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
