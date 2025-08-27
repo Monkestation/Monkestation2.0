@@ -7348,9 +7348,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
 	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
@@ -9614,7 +9611,6 @@
 /area/station/ai_monitored/turret_protected/ai)
 "djE" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
-/obj/structure/railing/corner,
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14603,11 +14599,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "ePC" = (
-/obj/effect/turf_decal/trimline/white/warning{
-	color = "#009dc4";
+/obj/machinery/station_map/engineering/directional/south,
+/obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
 	},
-/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "ePK" = (
@@ -23511,9 +23506,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/green/filled/warning{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 4
 	},
@@ -31282,9 +31274,6 @@
 "kvp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/brown/filled/warning{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 4
 	},
@@ -34374,9 +34363,6 @@
 /obj/machinery/requests_console/directional/south,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/red{
 	dir = 6
 	},
@@ -38228,12 +38214,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
-"mIR" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/diagonal,
-/area/station/cargo/lobby)
 "mIS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -39458,6 +39438,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
 	},
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/supermatter/room)
 "nbM" = (
@@ -43729,9 +43710,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 8
 	},
-/obj/structure/railing/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
 	},
@@ -46742,9 +46720,6 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "prq" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/red{
 	dir = 5
 	},
@@ -47416,12 +47391,6 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/main)
-"pCS" = (
-/obj/effect/turf_decal/trimline/purple/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/hallway/primary/central)
 "pCX" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -48821,9 +48790,6 @@
 "qak" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/brown/filled/warning{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 4
 	},
@@ -54770,10 +54736,6 @@
 /obj/effect/turf_decal/trimline/white/warning{
 	color = "#009dc4";
 	dir = 4
-	},
-/obj/effect/turf_decal/trimline/white/filled/line{
-	dir = 8;
-	color = "#009dc4"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
@@ -65388,13 +65350,6 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
-"vto" = (
-/obj/effect/turf_decal/trimline/brown/filled/warning{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/brown/warning,
-/turf/open/floor/iron/dark/textured,
-/area/station/hallway/primary/aft)
 "vtF" = (
 /obj/machinery/vending/wardrobe/law_wardrobe,
 /obj/effect/turf_decal/siding/dark{
@@ -66125,9 +66080,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 4
 	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
 	},
@@ -66565,9 +66517,8 @@
 /area/station/science/server)
 "vPo" = (
 /obj/machinery/light/directional/south,
-/obj/effect/turf_decal/trimline/white/line{
-	dir = 1;
-	color = "#009dc4"
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
@@ -90541,7 +90492,7 @@ cAu
 mcB
 szU
 kvV
-vto
+boU
 beO
 vUV
 ddE
@@ -91051,7 +91002,7 @@ eTz
 pgI
 dBg
 ubJ
-mIR
+mcB
 mcB
 kKC
 vLH
@@ -107965,8 +107916,8 @@ iXa
 uaX
 gpl
 dsP
-gpl
-pCS
+ves
+qti
 nmw
 nmw
 nmw
