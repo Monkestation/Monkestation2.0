@@ -557,14 +557,14 @@
 	verb_say = "states"
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/lawbringer/detain, \
-	 /obj/item/ammo_casing/energy/lawbringer/execute, \
-	 /obj/item/ammo_casing/energy/lawbringer/hotshot, \
-	 /obj/item/ammo_casing/energy/lawbringer/smokeshot, \
-	 /obj/item/ammo_casing/energy/lawbringer/bigshot, \
-	 /obj/item/ammo_casing/energy/lawbringer/clownshot, \
-	 /obj/item/ammo_casing/energy/lawbringer/pulse, \
-	 /obj/item/ammo_casing/energy/lawbringer/tideshot, \
-	 /obj/item/ammo_casing/energy/lawbringer/ion )
+		/obj/item/ammo_casing/energy/lawbringer/execute, \
+		/obj/item/ammo_casing/energy/lawbringer/hotshot, \
+		/obj/item/ammo_casing/energy/lawbringer/smokeshot, \
+		/obj/item/ammo_casing/energy/lawbringer/bigshot, \
+		/obj/item/ammo_casing/energy/lawbringer/clownshot, \
+		/obj/item/ammo_casing/energy/lawbringer/pulse, \
+		/obj/item/ammo_casing/energy/lawbringer/tideshot, \
+		/obj/item/ammo_casing/energy/lawbringer/ion )
 	pin = /obj/item/firing_pin/lawbringer
 	ammo_x_offset = 3
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF

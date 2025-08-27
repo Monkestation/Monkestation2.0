@@ -1,4 +1,4 @@
- /obj/item/gun/ballistic/shotgun
+/obj/item/gun/ballistic/shotgun
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
@@ -599,5 +599,5 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
-	pb_knockback = 0 //you may have your point blank, but you dont get a fling    //Why tf are they worried about this when half the mining guns instantly kill you
+	pb_knockback = 0 //you may have your point blank, but you dont get a fling    Why tf are they worried about this when half the mining guns instantly kill you
 
