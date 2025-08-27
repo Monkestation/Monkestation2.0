@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	min_temp = 3
 	max_temp = 150
 	energy_release = -350000
-	requirements = list(/datum/gas/halon = 350, /datum/gas/hypernoblium = 40)
+	requirements = list(/datum/gas/halon = 350, /datum/gas/nitrogen = 1000)
 	products = list(/obj/item/halon_crystal = 1)
 
 /datum/gas_recipe/crystallizer/hexane_crystalium
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	min_temp = 1000
 	max_temp = 5000
 	energy_release = -2500000
-	requirements = list(/datum/gas/tritium = 200, /datum/gas/hypernoblium = 50)
+	requirements = list(/datum/gas/tritium = 200)
 	products = list(/obj/item/stack/sheet/mineral/uranium = 1)
 
 /datum/gas_recipe/crystallizer/plasma_sheet

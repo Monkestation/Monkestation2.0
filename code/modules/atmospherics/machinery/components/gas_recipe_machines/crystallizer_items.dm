@@ -49,7 +49,6 @@
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "halon_crystal"
 	resistance_flags = FIRE_PROOF
-	var/uses = 1
 
 /obj/item/halon_crystal/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
 	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
@@ -57,9 +56,6 @@
 /obj/item/halon_crystal/afterattack(obj/item/clothing/clothing, mob/user, proximity)
 	. = ..()
 	if(!proximity)
-		return
-	if(!uses)
-		qdel(src)
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!istype(clothing))
@@ -74,9 +70,7 @@
 	clothing.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing.resistance_flags |= FIRE_PROOF
-	uses --
-	if(!uses)
-		qdel(src)
+	qdel(src)
 
 /obj/item/hexane_crystal
 	name = "hexane crystal"

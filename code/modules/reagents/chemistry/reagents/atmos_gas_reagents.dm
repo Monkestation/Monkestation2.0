@@ -3,7 +3,7 @@
 	description = "A powerful heat absorbent."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
-	color = "#0B9089"
+	color = "#90560B"
 	taste_description = "burning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
@@ -20,7 +20,7 @@
 	description = "A fire suppression gas that removes oxygen and cools down the area"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "#850B90"
+	color = "#90560B"
 	taste_description = "minty"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	metabolized_traits = list(TRAIT_RESISTHEAT)
@@ -38,7 +38,7 @@
 	description = "A powerful sleeping agent with healing properties"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "#25AF37"
+	color = "#90560B"
 	taste_description = "rubbery"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
@@ -58,7 +58,7 @@
 	description = "A suppressive gas that stops gas reactions on those who inhale it."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
-	color = "#0B9073"
+	color = "#90560B"
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
@@ -125,7 +125,7 @@
 	description = "An unstable gas that is toxic to all living beings."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "#352005"
+	color = "#90560B"
 	taste_description = "bitter"
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // "toxic to all living beings"
