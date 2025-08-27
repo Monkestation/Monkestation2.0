@@ -130,7 +130,7 @@
 	if((user.dir & backstab_dir) && (target.dir & backstab_dir))
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
-		playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+		playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
