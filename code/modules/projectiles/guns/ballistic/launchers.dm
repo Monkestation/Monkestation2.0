@@ -229,7 +229,7 @@
 	drop_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_drop.ogg'
 	pickup_sound = 'monkestation/sound/misc/china_lake_sfx/china_lake_pickup.ogg'
 
-/obj/item/gun/ballistic/shotgun/china_lake/Initialize()
+/obj/item/gun/ballistic/shotgun/china_lake/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 10, force_wielded = 10)
 
@@ -255,6 +255,7 @@
 	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user, target))
 		return
 	src.attackby(target, user)
+
 
 /obj/item/gun/ballistic/shotgun/china_lake/restricted
 	pin = /obj/item/firing_pin/implant/pindicate
