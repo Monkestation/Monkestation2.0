@@ -9,6 +9,7 @@
 	decon_speed = 4 SECONDS
 	glass_type = /obj/item/stack/sheet/bronze
 	glass_amount = 1
+	uses_color = FALSE
 
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(on_reebe(src))
@@ -31,10 +32,6 @@
 	if(IS_CLOCK(user))
 		if(state == RWINDOW_SECURE)
 			. += span_brass("You see a way to <b>cut</b> the window pane away.")
-
-//FOR ANTI TM CONFLICT, MOVE TO MAIN SECTION
-/obj/structure/window/reinforced/clockwork
-	uses_color = FALSE
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
 	take_damage(rand(25, 75), BRUTE)
