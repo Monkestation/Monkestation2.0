@@ -296,6 +296,25 @@
 	ammo_type = /obj/item/ammo_casing/c980grenade/riot
 
 
+///LMG rounds
+
+/obj/item/ammo_box/a762/kinetic
+	name = "stripper clip (Kinetic 7.62mm)"
+	desc = "A stripper clip with Kinetic 7.62mm rounds."
+	icon_state = "762kinetic"
+	ammo_type = /obj/item/ammo_casing/a762/kinetic
+	caliber = CALIBER_A762_KINETIC
+
+/obj/item/ammo_box/a762/kinetic/big
+	name = "rapid reloader (Kinetic 7.62mm)"
+	desc = "A hefty reloader for 'Hellhound' LMG that can load up to fifty rounds at once, and even be refilled. Might be better to hang onto this once its empty.."
+	icon_state = "a762"
+	max_ammo = 50
+	ammo_type = /obj/item/ammo_casing/a762/kinetic
+	multiple_sprites = AMMO_BOX_ONE_SPRITE
+
+
+
 ///Rifle rounds
 
 /obj/item/ammo_box/a762
@@ -316,14 +335,6 @@
 	icon_state = "10mmbox"
 	ammo_type = /obj/item/ammo_casing/n762
 	max_ammo = 14
-
-
-/obj/item/ammo_box/a762/kinetic
-	name = "stripper clip (Kinetic 7.62mm)"
-	desc = "A stripper clip with Kinetic 7.62mm rounds."
-	icon_state = "762kinetic"
-	ammo_type = /obj/item/ammo_casing/a762/kinetic
-	caliber = CALIBER_A762_KINETIC
 
 
 /obj/item/ammo_box/c40sol

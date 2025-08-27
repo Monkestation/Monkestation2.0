@@ -79,6 +79,30 @@
 	for(var/i in 1 to 20)
 		new /obj/item/ammo_box/a762/kinetic(src)
 
+/obj/item/storage/box/kinetic/kineticlmg/smallcase //hilarious its called small case when it holds the larger option
+	name = "Case of 'Hellhound' Rapid Reloaders"
+	desc = "A case containing three rapid reloaders for the 'Hellhound' LMG. For when you really just dont have time."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	icon_state = "miner_case_small"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/kineticlmg/smallcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 3
+	atom_storage.set_holdable(list(/obj/item/ammo_box/a762/kinetic/big))
+
+/obj/item/storage/box/kinetic/kineticlmg/smallcase/PopulateContents() //populate
+
+		new /obj/item/ammo_box/a762/kinetic/big (src)
+		new /obj/item/ammo_box/a762/kinetic/big (src)
+		new /obj/item/ammo_box/a762/kinetic/big (src)
+
 
 /obj/item/storage/box/kinetic/grenadelauncher //box containing 12 spare 40mm kinetic shells for the 'Slab' grenade launcher
 	name = "40mm Kinetic Grenade Box"
