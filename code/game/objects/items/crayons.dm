@@ -871,7 +871,7 @@
 	balloon_alert(user, "can't match those colours!")
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/crayon/spraycan/click_alt(mob/user)
+/obj/item/toy/crayon/spraycan/AltClick(mob/user)
 	if(!has_cap)
 		return CLICK_ACTION_BLOCKING
 	is_capped = !is_capped

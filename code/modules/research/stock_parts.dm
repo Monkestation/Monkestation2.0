@@ -14,6 +14,20 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
+/obj/item/storage/part_replacer/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	if(user.istate & ISTATE_HARM)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	//its very important to NOT block so frames can still interact with it
+	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
+		return NONE
+
+	var/obj/machinery/attacked_machinery = attacked_object
+	if(!LAZYLEN(attacked_machinery.component_parts))
+		return ITEM_INTERACT_FAILURE
+
+	return attacked_machinery.exchange_parts(user, src) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
 /obj/item/storage/part_replacer/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/rped)
@@ -51,25 +65,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	return TRUE
 
-/obj/item/storage/part_replacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(part_replace_action(interacting_with, user))
-		return ITEM_INTERACT_SUCCESS
-	return NONE
-
-/obj/item/storage/part_replacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!works_from_distance)
-		return NONE
-	if(part_replace_action(interacting_with, user))
-		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return ITEM_INTERACT_SUCCESS
-	if(istype(interacting_with, /obj/structure/frame))
-		// Cursed snowflake but we need to handle frame ranged interaction here
-		// Likely no longer necessary with the new framework, revisit later
-		interacting_with.item_interaction(user, src)
-		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
-
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
 	if(alt_sound && prob(1))
@@ -96,6 +91,14 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(on_part_entered))
 	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_part_exited))
+
+/obj/item/storage/part_replacer/bluespace/interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+
+/obj/item/storage/part_replacer/bluespace/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.

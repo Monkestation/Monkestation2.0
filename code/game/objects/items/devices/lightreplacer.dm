@@ -175,19 +175,24 @@
 		update_appearance()
 	return ..()
 
-
 /obj/item/lightreplacer/attack_self(mob/user)
 	for(var/obj/machinery/light/target in user.loc)
 		replace_light(target, user)
 	to_chat(user, status_string())
 
-/obj/item/lightreplacer/proc/range_check(atom/destination, mob/user)
-	if(destination.z != user.z)
-		return
-	if(!(destination in view(7, get_turf(user))))
-		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
-		return FALSE
-	else
+/**
+ * attempts to fix lights, flood lights & lights on a turf
+ * Arguments
+ * * target - the target we are trying to fix
+ * * user - the mob performing this action
+ * returns TRUE if the target was valid[light, floodlight or turf] regardless if any light's were fixed or not
+ */
+/obj/item/lightreplacer/proc/do_action(atom/target, mob/user)
+	// if we are attacking an light fixture then replace it directly
+	if(istype(target, /obj/machinery/light))
+		if(replace_light(target, user) && bluespace_toggle)
+			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 		return TRUE
 
 	// if we are attacking a floodlight frame finish it
@@ -197,7 +202,7 @@
 			new /obj/machinery/power/floodlight(frame.loc)
 			if(bluespace_toggle)
 				user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+				playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 			to_chat(user, span_notice("You finish \the [frame] with a light tube."))
 			qdel(frame)
 		return TRUE
@@ -210,10 +215,19 @@
 				light_replaced = TRUE
 		if(light_replaced && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 		return TRUE
 
 	return FALSE
+
+/obj/item/lightreplacer/proc/range_check(atom/destination, mob/user)
+	if(destination.z != user.z)
+		return
+	if(!(destination in view(7, get_turf(user))))
+		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
+		return FALSE
+	else
+		return TRUE
 
 /obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."

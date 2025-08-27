@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(area.area_flags & NOTELEPORT)
 		balloon_alert(user, "unable to activate!")
 		return ITEM_INTERACT_BLOCKING
-	var/area/target_area = get_area(beacon)
+	//var/area/target_area = get_area(beacon)
 	//if(area != target_area && ((area.area_flags & LOCAL_TELEPORT) || (target_area.area_flags & LOCAL_TELEPORT)))
 	//	balloon_alert(user, "unable to activate!")
 	//	return ITEM_INTERACT_BLOCKING

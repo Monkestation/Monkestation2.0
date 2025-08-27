@@ -77,6 +77,9 @@
 	var/pb_knockback = 0
 	var/pbk_gentle = FALSE
 
+	/// Cooldown for the visible message sent from gun flipping.
+	COOLDOWN_DECLARE(flip_cooldown)
+
 /obj/item/gun/Initialize(mapload)
 	. = ..()
 	if(pin)

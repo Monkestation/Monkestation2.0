@@ -1,8 +1,19 @@
 // RAPID LIGHTING DEVICE
 
-#define GLOW_MODE 3
+// modes of operation
+#define GLOW_MODE 1
 #define LIGHT_MODE 2
-#define REMOVE_MODE 1
+#define REMOVE_MODE 3
+
+// operation costs
+#define LIGHT_TUBE_COST 10
+#define FLOOR_LIGHT_COST 15
+#define GLOW_STICK_COST 5
+#define DECONSTRUCT_COST 10
+
+//operation delays
+#define BUILD_DELAY 10
+#define REMOVE_DELAY 15
 
 /obj/item/construction/rld
 	name = "Rapid Lighting Device"
@@ -180,7 +191,7 @@
 			new_stick.color = color_choice
 			new_stick.set_light_color(new_stick.color)
 			new_stick.throw_at(interacting_with, 9, 3, user)
-			new_stick.turn_on()
+			new_stick.attack_self()
 			new_stick.update_brightness()
 			return ITEM_INTERACT_SUCCESS
 
@@ -195,6 +206,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 100
 	max_matter = 100
+
+#undef LIGHT_TUBE_COST
+#undef FLOOR_LIGHT_COST
+#undef GLOW_STICK_COST
+#undef DECONSTRUCT_COST
+
+#undef BUILD_DELAY
+#undef REMOVE_DELAY
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

@@ -125,7 +125,7 @@
 	balloon_alert(user, "now [(istate & ISTATE_HARM) ? "attacking wildlife" : "collecting loose ore"]")
 
 /mob/living/basic/mining_drone/RangedAttack(atom/target, list/modifiers)
-	if(!combat_mode)
+	if(!(istate & ISTATE_HARM))
 		return
 	stored_gun.try_fire_gun(target, src, list2params(modifiers))
 

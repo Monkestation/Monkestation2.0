@@ -62,7 +62,7 @@
 	if(reagents.total_volume < 0.1)
 		cleaner.balloon_alert(cleaner, "mop is dry!")
 		return CLEAN_BLOCKED
-	if(reagents.has_reagent(amount = 1, chemical_flags = REAGENT_CLEANS))
+	if(reagents.has_chemical_flag(REAGENT_CLEANS, amount = 1))
 		return CLEAN_ALLOWED
 	return CLEAN_BLOCKED|CLEAN_NO_XP
 

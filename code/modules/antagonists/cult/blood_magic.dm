@@ -1,3 +1,10 @@
+/// how many units of blood one charge of blood rites is worth
+#define USES_TO_BLOOD 2
+/// blood rites charges gained from sapping blood from a victim
+#define BLOOD_DRAIN_GAIN 50
+/// penalty for self healing, 1 point of damage * this # = charges required
+#define SELF_HEAL_PENALTY 1.65
+
 /datum/action/innate/cult/blood_magic //Blood magic handles the creation of blood spells (formerly talismans)
 	name = "Prepare Blood Magic"
 	button_icon_state = "carve"
@@ -417,8 +424,7 @@
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),
 		span_cult_italic("You attempt to stun [target] with the spell!"),
-		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-	)
+	) // visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE, TODO visible message flags port
 	user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
 	if(IS_HERETIC(target))
 		to_chat(user, span_warning("Some force greater than you intervenes! [target] is protected by the Forgotten Gods!"))
@@ -706,22 +712,26 @@
  * '/obj/item/melee/blood_magic/manipulator/proc/blood_draw' handles blood pools/trails and does not affect parent proc
  */
 /obj/item/melee/blood_magic/manipulator/cast_spell(mob/living/target, mob/living/carbon/user)
-	if((isconstruct(target) || isshade(target)) && !heal_construct(target, user))
+	if(isconstruct(target) || isshade(target))
+		if(heal_construct(target, user))
+			return ..()
 		return
-	if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/decal/cleanable/trail_holder) || isturf(target))
+	if(istype(target, /obj/effect/decal/cleanable/blood) || isturf(target))
 		blood_draw(target, user)
-	if(ishuman(target))
-		var/mob/living/carbon/human/human_bloodbag = target
-		if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
-			human_bloodbag.balloon_alert(user, "no blood!")
-			return
-		if(human_bloodbag.stat == DEAD)
-			human_bloodbag.balloon_alert(user, "dead!")
-			return
-		if(IS_CULTIST(human_bloodbag) && !heal_cultist(human_bloodbag, user))
-			return
-		if(!IS_CULTIST(human_bloodbag) && !drain_victim(human_bloodbag, user))
-			return
+		return ..()
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/human_bloodbag = target
+	if(HAS_TRAIT(human_bloodbag, TRAIT_NOBLOOD))
+		human_bloodbag.balloon_alert(user, "no blood!")
+		return
+	if(human_bloodbag.stat == DEAD)
+		human_bloodbag.balloon_alert(user, "dead!")
+		return
+	if(IS_CULTIST(human_bloodbag) && !heal_cultist(human_bloodbag, user))
+		return
+	if(!IS_CULTIST(human_bloodbag) && !drain_victim(human_bloodbag, user))
+		return
 	return ..()
 
 /**
@@ -908,3 +918,7 @@
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
+
+#undef USES_TO_BLOOD
+#undef BLOOD_DRAIN_GAIN
+#undef SELF_HEAL_PENALTY

@@ -136,7 +136,7 @@
 
 /obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!status && interacting_with.is_refillable())
-		reagents.trans_to(interacting_with, reagents.total_volume, transferred_by = user)
+		reagents.trans_to(interacting_with, reagents.total_volume, transfered_by = user)
 		to_chat(user, span_notice("You empty [src]'s fuel tank into [interacting_with]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS

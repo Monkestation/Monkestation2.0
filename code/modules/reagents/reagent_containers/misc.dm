@@ -144,7 +144,7 @@
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
 	if((user.istate & ISTATE_HARM) && !carbon_target.is_mouth_covered())
-		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
+		reagents.trans_to(carbon_target, reagents.total_volume, transfered_by = user, methods = INGEST)
 		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
 		log_combat(user, carbon_target, "smothered", src, log_object)
 	else
@@ -156,7 +156,7 @@
 
 ///Checks whether or not we should clean.
 /obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
-	if(cleaner.combat_mode && ismob(atom_to_clean))
+	if((cleaner.istate & ISTATE_HARM) && ismob(atom_to_clean))
 		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
 	if(loc == cleaner)
 		return CLEAN_ALLOWED

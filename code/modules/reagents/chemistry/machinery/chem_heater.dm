@@ -111,7 +111,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -122,17 +122,27 @@
 /obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
+/**
+ * Replace or eject the beaker inside this machine
+ * Arguments
+ * * mob/living/user - the player operating this machine
+ * * obj/item/reagent_containers/new_beaker - the new beaker to replace the current one if not null else it will just eject
+ */
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	if(!user)
-		return FALSE
-	if(beaker)
+	PRIVATE_PROC(TRUE)
+
+	if(!QDELETED(beaker))
 		try_put_in_hand(beaker, user)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
-		beaker = null
-	if(new_beaker)
+
+	if(!QDELETED(new_beaker))
+		if(!user.transferItemToLoc(new_beaker, src))
+			update_appearance()
+			return FALSE
 		beaker = new_beaker
 		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
+
 	update_appearance()
+
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
@@ -202,35 +212,6 @@
 			beaker.reagents.handle_reactions()
 
 			use_power(active_power_usage * seconds_per_tick)
-
-/obj/machinery/chem_heater/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", attacking_item))
-		return
-
-	if(default_deconstruction_crowbar(attacking_item))
-		return
-
-	if(is_reagent_container(attacking_item) && !(attacking_item.item_flags & ABSTRACT) && attacking_item.is_open_container())
-		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/B = attacking_item
-		if(!user.transferItemToLoc(B, src))
-			return
-		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
-		ui_interact(user)
-		update_appearance()
-		return
-
-	if(beaker)
-		if(istype(attacking_item, /obj/item/reagent_containers/dropper))
-			var/obj/item/reagent_containers/dropper/D = attacking_item
-			D.afterattack(beaker, user, 1)
-			return
-		if(istype(attacking_item, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/syringe/S = attacking_item
-			S.afterattack(beaker, user, 1)
-			return
-	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
 	replace_beaker()

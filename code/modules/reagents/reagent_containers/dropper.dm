@@ -78,7 +78,7 @@
 		to_chat(user, span_warning("[target] is empty!"))
 		return ITEM_INTERACT_BLOCKING
 
-	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 
 	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 

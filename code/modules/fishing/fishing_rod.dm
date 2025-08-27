@@ -27,7 +27,7 @@
 	var/obj/item/fishing_hook/hook
 
 	/// Currently hooked item for item reeling
-	var/obj/item/currently_hooked_item
+	var/atom/movable/currently_hooked
 
 	/// Fishing line visual for the hooked item
 	var/datum/beam/fishing_line/fishing_line
@@ -41,6 +41,9 @@
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
 
+	///Prevents spamming the line casting, without affecting the player's click cooldown.
+	COOLDOWN_DECLARE(casting_cd)
+
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
 	register_context()
@@ -49,7 +52,7 @@
 
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(src == held_item)
-		if(currently_hooked_item)
+		if(currently_hooked)
 			context[SCREENTIP_CONTEXT_LMB] = "Reel in"
 		context[SCREENTIP_CONTEXT_RMB] = "Modify"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -57,7 +60,7 @@
 
 /obj/item/fishing_rod/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
-	if(currently_hooked_item)
+	if(currently_hooked)
 		context[SCREENTIP_CONTEXT_LMB] = "Reel in"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
@@ -123,15 +126,15 @@
 	update_icon()
 
 /obj/item/fishing_rod/interact(mob/user)
-	if(currently_hooked_item)
+	if(currently_hooked)
 		reel(user)
 
 /obj/item/fishing_rod/proc/reel(mob/user)
 	//Could use sound here for feedback
-	if(do_after(user, 1 SECONDS, currently_hooked_item))
+	if(do_after(user, 1 SECONDS, currently_hooked))
 		// Should probably respect and used force move later
-		step_towards(currently_hooked_item, get_turf(src))
-		if(get_dist(currently_hooked_item,get_turf(src)) < 1)
+		step_towards(currently_hooked, get_turf(src))
+		if(get_dist(currently_hooked,get_turf(src)) < 1)
 			QDEL_NULL(fishing_line)
 
 /obj/item/fishing_rod/attack_self_secondary(mob/user, modifiers)
@@ -160,7 +163,7 @@
 		var/mob/user = loc
 		user.update_held_items()
 	fishing_line = null
-	currently_hooked_item = null
+	currently_hooked = null
 
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
@@ -168,11 +171,11 @@
 
 /// Hooks the item
 /obj/item/fishing_rod/proc/hook_item(mob/user, atom/target_atom)
-	if(currently_hooked_item)
+	if(currently_hooked)
 		return
 	if(!can_be_hooked(target_atom))
 		return
-	currently_hooked_item = target_atom
+	currently_hooked = target_atom
 	create_fishing_line(target_atom)
 	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
@@ -219,6 +222,7 @@
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = cast_range

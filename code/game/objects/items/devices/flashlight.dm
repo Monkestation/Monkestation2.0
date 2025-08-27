@@ -131,9 +131,6 @@
 		else
 			. += "<span class='notice ml-1'>[M.p_Their()] pupils narrow.</span>\n"//they're okay :D
 
-		if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray))
-			. += "<span class='danger ml-1'>[M.p_Their()] pupils give an eerie glow!</span>\n"//mob has X-ray vision
-
 	return .
 
 /obj/item/flashlight/proc/mouth_examine(mob/living/carbon/human/M, mob/living/user)
@@ -258,7 +255,7 @@
 
 	if(length(render_list))
 		//display our packaged information in an examine block for easy reading
-		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+		to_chat(user, boxed_message(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -292,7 +289,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	light_outer_range = 2
-	var/holo_cooldown = 0
+	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, holosign_cooldown))

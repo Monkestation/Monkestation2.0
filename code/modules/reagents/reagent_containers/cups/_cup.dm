@@ -169,7 +169,7 @@
 			to_chat(user, span_warning("[target] is full."))
 			return ITEM_INTERACT_BLOCKING
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 		target.update_appearance()
@@ -215,41 +215,40 @@
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	var/hotness = attacking_item.get_temperature()
+/obj/item/reagent_containers/cup/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	var/hotness = tool.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
-		return
+		to_chat(user, span_notice("You heat [name] with [tool]!"))
+		return ITEM_INTERACT_SUCCESS
 
 	//Cooling method
-	if(istype(attacking_item, /obj/item/extinguisher))
-		var/obj/item/extinguisher/extinguisher = attacking_item
+	if(istype(tool, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = tool
 		if(extinguisher.safety)
-			return
+			return NONE
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
+		to_chat(user, span_notice("You cool \the [src] with the [tool]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
-		var/obj/item/food/egg/attacking_egg = attacking_item
+	if(istype(tool, /obj/item/food/egg)) //breaking eggs
+		var/obj/item/food/egg/attacking_egg = tool
 		if(!reagents)
-			return
-		if(reagents.total_volume >= reagents.maximum_volume)
+			return ITEM_INTERACT_BLOCKING
+		if(reagents.holder_full())
 			to_chat(user, span_notice("[src] is full."))
-		else
-			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
-			qdel(attacking_egg)
-		return
-
-	return ..()
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You break [attacking_egg] in [src]."))
+		attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+		qdel(attacking_egg)
+		return ITEM_INTERACT_SUCCESS
 
 /*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
@@ -533,74 +532,84 @@
 	resistance_flags = FLAMMABLE
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
+	/// Reference to the item inside the mortar, ready to be grinded
 	var/obj/item/grinded
 
 /obj/item/reagent_containers/cup/mortar/AltClick(mob/user)
-	if(grinded)
-		grinded.forceMove(drop_location())
-		grinded = null
-		to_chat(user, span_notice("You eject the item inside."))
+	if(!grinded)
+		return CLICK_ACTION_BLOCKING
+	grinded.forceMove(drop_location())
+	grinded = null
+	balloon_alert(user, "ejected")
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/reagent_containers/cup/mortar/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	..()
-	if(istype(attacking_item,/obj/item/pestle))
-		if(grinded)
-			if(user.stamina.loss > 50)
-				to_chat(user, span_warning("You are too tired to work!"))
-				return
-			var/list/choose_options = list(
-				"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
-				"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
-			)
-			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
-			if(grinded && in_range(src, user) && user.is_holding(attacking_item) && picked_option)
-				to_chat(user, span_notice("You start grinding..."))
-				if(do_after(user, 25, target = src))
-					user.stamina.adjust(-40)
-					switch(picked_option)
-						if("Juice") //prioritize juicing
-							if(grinded.juice_results)
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
-								QDEL_NULL(grinded)
-								return
-						if("Grind")
-							if(grinded.grind_results)
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You break [grinded] into powder."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
-						else
-							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
-							return
-			return
-		else
+/obj/item/reagent_containers/cup/mortar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return
+
+	// Try to grind with a pestle
+	if(istype(tool, /obj/item/pestle))
+		if(!grinded)
 			to_chat(user, span_warning("There is nothing to grind!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(user.staminaloss > 50)
+			to_chat(user, span_warning("You are too tired to work!"))
+			return ITEM_INTERACT_BLOCKING
+
+		var/list/choose_options = list(
+			"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
+			"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
+		)
+		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
+		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || picked_option)
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You start grinding..."))
+		if(!do_after(user, 2.5 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		user.stamina.adjust(-40)
+		switch(picked_option)
+			if("Juice") //prioritize juicing
+				if(grinded.juice_results)
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+				else
+					grinded.on_grind()
+					reagents.add_reagent_list(grinded.grind_results)
+					if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+					to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+			if("Grind")
+				if(grinded.grind_results)
+					grinded.on_grind()
+					reagents.add_reagent_list(grinded.grind_results)
+					if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+					to_chat(user, span_notice("You break [grinded] into powder."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+				else
+					grinded.on_juice()
+					reagents.add_reagent_list(grinded.juice_results)
+					to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
+					QDEL_NULL(grinded)
+					return ITEM_INTERACT_SUCCESS
+			else
+				to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
+				return ITEM_INTERACT_BLOCKING
+
+	// Try to insert an item
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
 		return
-	if(attacking_item.juice_results || attacking_item.grind_results)
-		attacking_item.forceMove(src)
-		grinded = attacking_item
+	if(tool.juice_results || tool.grind_results)
+		tool.forceMove(src)
+		grinded = tool
 		return
 	to_chat(user, span_warning("You can't grind this!"))
 

@@ -31,10 +31,14 @@
 	verb_say = "states"
 	circuit = /obj/item/circuitboard/machine/clonepod
 
-	var/heal_level //The clone is released once its health reaches this level.
-	var/obj/machinery/computer/cloning/connected //So we remember the connected clone machine.
-	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
-	var/attempting = FALSE //One clone attempt at a time thanks
+	///The clone is released once its health reaches this level.
+	var/heal_level
+	///So we remember the connected clone machine.
+	var/obj/machinery/computer/cloning/connected
+	///Need to clean out it if it's full of exploded clone.
+	var/mess = FALSE
+	///One clone attempt at a time thanks
+	var/attempting = FALSE
 	var/speed_coeff
 	var/efficiency
 
@@ -352,17 +356,14 @@
 
 /obj/machinery/clonepod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-
 	if(!tool.GetID())
-		return
+		return NONE
 	if(!check_access(tool))
 		to_chat(user, "<span class='danger'>Access Denied.</span>")
-		return
-	if(!(mob_occupant || mess))
-		to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 		return ITEM_INTERACT_BLOCKING
 	if(!(occupant || mess))
-		return NONE
+		to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
+		return ITEM_INTERACT_BLOCKING
 	var/mob/living/mob_occupant = occupant
 	add_fingerprint(user)
 	connected_message("Emergency Ejection")

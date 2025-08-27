@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		return .
 	if(LAZYACCESS(user.do_afters, "firelance"))
 		return .
-	if(!cell.use(0.2 * STANDARD_CELL_CHARGE))
+	if(!cell.use(200))
 		to_chat(user,span_warning("[src]'s battery ran dry!"))
 		return .
 	ADD_TRAIT(user, TRAIT_IMMOBILIZED, REF(src))

@@ -42,9 +42,6 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
-		new /obj/item/storage/pill_bottle/potassiodide(src)
-
 	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
 		new /obj/item/climbing_hook/emergency(src)
 

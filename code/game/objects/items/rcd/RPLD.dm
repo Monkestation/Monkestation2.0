@@ -268,8 +268,6 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -370,8 +368,3 @@
 		/obj/machinery/plumbing/tank = 20,
 		/obj/machinery/plumbing/acclimator = 10,
 	)
-
-/obj/item/construction/plumbing/service/Initialize(mapload)
-	plumbing_design_types = service_design_types
-
-	. = ..()

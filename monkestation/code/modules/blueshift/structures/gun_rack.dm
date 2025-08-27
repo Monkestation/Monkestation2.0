@@ -40,7 +40,6 @@
 				to_place.place_on_rack()
 
 /obj/structure/rack/gunrack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	var/list/modifiers = params2list(modifiers)
 	if (attacking_item.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
 		attacking_item.play_tool_sound(src)
 		deconstruct(TRUE)

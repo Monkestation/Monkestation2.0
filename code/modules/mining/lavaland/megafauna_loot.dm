@@ -970,10 +970,10 @@
 /obj/item/melee/cleaving_saw/pre_attack_secondary(atom/A, mob/living/user, params)
 	return TRUE // Let's dance.
 
-/obj/item/melee/cleaving_saw/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+/obj/item/melee/cleaving_saw/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.IsImmobilized()) // no free dodgerolls
 		return
-	var/turf/where_to = get_turf(target)
+	var/turf/where_to = get_turf(interacting_with)
 	user.stamina.adjust(-roll_stamcost)
 	user.Immobilize(0.8 SECONDS) // you dont get to adjust your roll
 	user.throw_at(where_to, range = roll_range, speed = 2, force = MOVE_FORCE_NORMAL, spin = roll_orientation)

@@ -813,7 +813,7 @@
 /obj/item/storage/organbox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_reagent_container(tool) && tool.is_open_container())
 		var/obj/item/reagent_containers/RC = tool
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			balloon_alert(user, "[units]u transferred")
 			return ITEM_INTERACT_SUCCESS

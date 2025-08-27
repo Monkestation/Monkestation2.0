@@ -364,7 +364,7 @@
 	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
 	shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
 
-	shaker.trans_to(interacting_with, amount_per_transfer_from_this, transferred_by = user)
+	shaker.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
 	balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 	return ITEM_INTERACT_SUCCESS
 
@@ -376,7 +376,7 @@
 	icon_state = "flour"
 	possible_transfer_amounts = list(5,10,20,1)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
-	charge_cost = 0.04 * STANDARD_CELL_CHARGE //Costs double the power of the borgshaker due to synthesizing solids
+	charge_cost = 40 //Costs double the power of the borgshaker due to synthesizing solids
 	recharge_time = 6 //Double the recharge time too, for the same reason.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS
@@ -425,7 +425,7 @@
 	var/datum/reagents/shaker = new()
 	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
 	shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
-	shaker.trans_to(interacting_with, amount_per_transfer_from_this, transferred_by = user)
+	shaker.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
 	balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 	return ITEM_INTERACT_SUCCESS
 

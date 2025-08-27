@@ -821,26 +821,26 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/whack_speed = (prob(60) ? 1 : 4)
 		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
-/obj/item/melee/baseball_bat/multi_attack(mob/living/target_mob, mob/living/user, params, direction_traveled)
+/obj/item/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	// we obtain the relative direction from the bat itself to the target
-	var/relative_direction = get_cardinal_dir(src, target_mob)
-	var/atom/throw_target = get_edge_target_turf(target_mob, relative_direction)
+	var/relative_direction = get_cardinal_dir(src, target)
+	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
 	. = ..()
-	if(iscarbon(target_mob))
-		var/mob/living/carbon/target = target_mob
-		target.stamina.adjust(-force * 2)
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.stamina.adjust(-force * 2)
 
 	if(homerun_ready)
 		user.visible_message(span_userdanger("It's a home run!"))
-		if(!QDELETED(target_mob))
-			target_mob.throw_at(throw_target, rand(8,10), 14, user)
+		if(!QDELETED(target))
+			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
 		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = FALSE
 		return
-	else if(!QDELETED(target_mob) && !target_mob.anchored)
+	else if(!QDELETED(target) && !target.anchored)
 		var/whack_speed = (prob(60) ? 1 : 4)
-		target_mob.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
+		target.throw_at(throw_target, rand(1, 2), whack_speed, user, gentle = TRUE) // sorry friends, 7 speed batting caused wounds to absolutely delete whoever you knocked your target into (and said target)
 
 /obj/item/melee/baseball_bat/Destroy(force)
 	for(var/target in thrown_datums)
