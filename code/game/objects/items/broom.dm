@@ -51,10 +51,7 @@
 	sweep(user, interacting_with, towards_player = FALSE)
 	return NONE // I guess
 
-/obj/item/pushbroom/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
+/obj/item/pushbroom/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	sweep(user, target, towards_player = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
