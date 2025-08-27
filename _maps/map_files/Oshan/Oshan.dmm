@@ -42308,8 +42308,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/obj/structure/cable/multilayer,
-/obj/structure/cable/layer1,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/engine_smes)
 "oas" = (
@@ -58302,14 +58301,13 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable/multilayer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "thF" = (
