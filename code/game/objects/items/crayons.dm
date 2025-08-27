@@ -775,10 +775,10 @@
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
-		return 0
+		return ITEM_INTERACT_BLOCKING
 
 	if(check_empty(user))
-		return 0
+		return ITEM_INTERACT_BLOCKING
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
@@ -802,9 +802,9 @@
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
 
-	else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
-		balloon_alert(user, "[target.p_theyre()] already that color!")
-		return FALSE
+	//else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
+	//	balloon_alert(user, "[target.p_theyre()] already that color!")
+	//	return FALSE TODO: Port atom color
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
