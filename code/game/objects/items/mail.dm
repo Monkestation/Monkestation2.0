@@ -3,7 +3,7 @@
 	name = "mail"
 	gender = NEUTER
 	desc = "An officially postmarked, tamper-evident parcel regulated by CentCom and made of high-quality materials."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mail_small"
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
@@ -281,7 +281,7 @@
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mailbag"
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE

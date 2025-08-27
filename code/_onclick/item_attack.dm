@@ -246,7 +246,7 @@
 
 	if(get(src, /mob/living) == user) // telekinesis.
 		user.do_attack_animation(target_mob)
-	if(!target_mob.attacked_by(src, user))
+	if(target_mob.attacked_by(src, user, modifiers, attack_modifiers) == ATTACK_FAILED)
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, attack_modifiers)
@@ -309,7 +309,7 @@
 	stack_trace("areas are NOT supposed to have attacked_by() called on them!")
 	return ATTACK_FAILED
 
-/mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
+/mob/living/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	send_item_attack_message(attacking_item, user)
 	if(!attacking_item.force)
 		return FALSE
