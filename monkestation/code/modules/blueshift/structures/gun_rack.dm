@@ -39,17 +39,16 @@
 				var/obj/item/gun/to_place = I
 				to_place.place_on_rack()
 
-/obj/structure/rack/gunrack/attackby(obj/item/W, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
-		W.play_tool_sound(src)
+/obj/structure/rack/gunrack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if (attacking_item.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
+		attacking_item.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
 	if(user.istate & ISTATE_HARM)
 		return ..()
-	if(user.transferItemToLoc(W, drop_location()))
-		if(istype(W, /obj/item/gun))
-			var/obj/item/gun/our_gun = W
+	if(user.transferItemToLoc(attacking_item, drop_location()))
+		if(istype(attacking_item, /obj/item/gun))
+			var/obj/item/gun/our_gun = attacking_item
 			our_gun.place_on_rack()
 			our_gun.pixel_x = rand(-10, 10)
 		return TRUE

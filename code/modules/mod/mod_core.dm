@@ -299,7 +299,7 @@
 	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
 	return ..()
 
-/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(charge_plasma(attacking_item, user))
 		return TRUE
 	return ..()

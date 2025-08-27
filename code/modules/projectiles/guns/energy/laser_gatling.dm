@@ -52,8 +52,8 @@
 	else
 		..()
 
-/obj/item/minigunpack/attackby(obj/item/W, mob/user, params)
-	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
+/obj/item/minigunpack/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else
 		..()
@@ -150,10 +150,11 @@
 		ammo_pack.battery.use(transferred)
 
 
-/obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/gun/energy/minigun/try_fire_gun(atom/target, mob/living/user, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
-	. = ..()
+		return FALSE
+	return ..()
 
 /obj/item/stock_parts/cell/minigun
 	name = "gatling gun fusion core"

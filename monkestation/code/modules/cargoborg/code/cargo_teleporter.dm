@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 
 //---- Allows the cargo teleporter to hold fultons as charges, in order to fulton people with right click
 
-/obj/item/cargo_teleporter/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/cargo_teleporter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/extraction_pack))
 		return
@@ -107,16 +107,14 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	if(!my_fulton) // Fulton self delete
 		my_fulton = new(src)
 
-/obj/item/cargo_teleporter/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
+/obj/item/cargo_teleporter/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	. = NONE
 	if(charges <= 0)
 		balloon_alert(user, "no charges left!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!my_fulton.choose_beacon(user))
-		return
-	if(my_fulton.afterattack(target, user, proximity_flag, click_parameters) == AFTERATTACK_PROCESSED_ITEM)
+		return ITEM_INTERACT_BLOCKING
+	if(my_fulton.interact_with_atom(interacting_with, user, modifiers) == ITEM_INTERACT_SUCCESS)
 		charges--
 
 /datum/design/cargo_teleporter
@@ -140,9 +138,9 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	light_outer_range = 3
 	light_color = COLOR_VIVID_YELLOW
 
-/obj/effect/decal/cleanable/cargo_mark/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/cargo_teleporter))
-		to_chat(user, span_notice("You remove [src] using [W]."))
+/obj/effect/decal/cleanable/cargo_mark/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/cargo_teleporter))
+		to_chat(user, span_notice("You remove [src] using [attacking_item]."))
 		playsound(src, 'sound/machines/click.ogg', 50)
 		qdel(src)
 		return

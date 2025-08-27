@@ -29,7 +29,7 @@
 
 // Shamelessly copied from code\modules\recycling\disposal\bin.dm
 /obj/machinery/microwave/MouseDrop_T(mob/living/target, mob/living/user)
-	if(target.buckled || target.has_buckled_mobs())
+	if(!isliving(target) || target.buckled || target.has_buckled_mobs())
 		return
 	stuff_mob_in(target, user)
 

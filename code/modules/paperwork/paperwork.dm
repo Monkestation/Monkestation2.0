@@ -13,7 +13,7 @@
 /obj/item/paperwork
 	name = "paperwork documents"
 	desc = "A disorganized mess of documents, research results, and investigation findings."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "docs_part"
 	inhand_icon_state = "paper"
 	throwforce = 0
@@ -39,7 +39,7 @@
 
 	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 
-/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(!stamped)
@@ -95,7 +95,7 @@
  * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
  */
 /obj/item/paperwork/proc/add_stamp()
-	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
+	stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', stamp_icon)
 	add_overlay(stamp_overlay)
 	stamped = TRUE
 
@@ -229,10 +229,10 @@
 	else
 		. += span_notice("These appear to just be a photocopy of the original documents.")
 
-/obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)
 		to_chat(user, span_notice("You plant the [attacking_item] firmly onto the front of the documents."))
-		stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_stamp-void")
+		stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
 		add_overlay(stamp_overlay)
 		voided = TRUE
 		stamped = TRUE //It won't get you any money, but it also can't LOSE you money now.

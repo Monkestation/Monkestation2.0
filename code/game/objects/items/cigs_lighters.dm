@@ -257,11 +257,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/mask/cigarette/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(lit)
 		return ..()
 
-	var/lighting_text = W.ignition_effect(src, user)
+	var/lighting_text = attacking_item.ignition_effect(src, user)
 	if(!lighting_text)
 		return ..()
 
@@ -286,12 +286,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/carbon/the_smoker = user
 	return the_smoker.can_breathe_helmet()
 
-/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/cup/glass, mob/user, proximity)
-	. = ..()
-	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
-		return
+/obj/item/clothing/mask/cigarette/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
+		return NONE
+	var/obj/item/reagent_containers/cup/glass = interacting_with
 	if(!istype(glass)) //you can dip cigarettes into beakers
-		return
+		return NONE
 
 	if(glass.reagents.trans_to(src, chem_volume, transfered_by = user)) //if reagents were transfered, show the message
 		to_chat(user, span_notice("You dip \the [src] into \the [glass]."))
@@ -300,8 +300,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_warning("[glass] is empty!"))
 	else
 		to_chat(user, span_warning("[src] is full!"))
-
-	return AFTERATTACK_PROCESSED_ITEM
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/mask/cigarette/update_icon_state()
 	. = ..()

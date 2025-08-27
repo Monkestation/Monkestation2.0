@@ -299,11 +299,9 @@
 
 	return spawn_type
 
-/obj/item/vacuum_nozzle/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-
-	if(pack.modified && pack.ghost_busting && target != pack.ghost_busting && COOLDOWN_FINISHED(pack, busting_throw_cooldown))
-		pack.ghost_busting.throw_at(get_turf(target), get_dist(pack.ghost_busting, target), 3, user)
+/obj/item/vacuum_nozzle/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(pack.modified && pack.ghost_busting && interacting_with != pack.ghost_busting && COOLDOWN_FINISHED(pack, busting_throw_cooldown))
+		pack.ghost_busting.throw_at(get_turf(interacting_with), get_dist(pack.ghost_busting, interacting_with), 3, user)
 		COOLDOWN_START(pack, busting_throw_cooldown, 3 SECONDS)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -337,7 +335,7 @@
 	if(isturf(user.loc))
 		ADD_TRAIT(spawned, VACPACK_THROW, "vacpack")
 		spawned.pass_flags |= PASSMOB
-		spawned.throw_at(target, min(get_dist(user, target), (pack.illegal ? 5 : 11)), 1, user, gentle = TRUE) //Gentle so eggs have 50% instead of 12.5% to spawn a chick
+		spawned.throw_at(interacting_with, min(get_dist(user, interacting_with), (pack.illegal ? 5 : 11)), 1, user, gentle = TRUE) //Gentle so eggs have 50% instead of 12.5% to spawn a chick
 
 	user.visible_message(span_warning("[user] shoots [spawned] out their [src]!"), span_notice("You fabricate and shoot [spawned] out of your [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

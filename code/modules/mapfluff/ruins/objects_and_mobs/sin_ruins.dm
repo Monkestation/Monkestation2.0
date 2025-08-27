@@ -122,18 +122,15 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, click_parameters)
+	if(!istype(user) || !ishuman(target))
 		return
-	if(!istype(user))
-		return
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(user.real_name != H.dna.real_name)
-			user.real_name = H.dna.real_name
-			H.dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
-			user.updateappearance(mutcolor_update=1)
-			user.domutcheck()
-			user.visible_message(span_warning("[user]'s appearance shifts into [H]'s!"), \
-			span_boldannounce("[H.p_they(TRUE)] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't."))
+
+	var/mob/living/carbon/human/H = target
+	if(user.real_name != H.dna.real_name)
+		user.real_name = H.dna.real_name
+		H.dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		user.updateappearance(mutcolor_update=1)
+		user.domutcheck()
+		user.visible_message(span_warning("[user]'s appearance shifts into [H]'s!"), \
+		span_boldannounce("[H.p_they(TRUE)] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't."))

@@ -8,6 +8,7 @@
 	ui_name = "AntagInfoClock"
 	show_to_ghosts = TRUE
 	antag_hud_name = "clockwork"
+	stinger_sound = 'sound/magic/clockwork/scripture_tier_up.ogg'
 	/// Ref to the cultist's communication ability
 	var/datum/action/innate/clockcult/comm/communicate = new
 	/// Ref to the cultist's slab recall ability
@@ -31,7 +32,6 @@
 
 /datum/antagonist/clock_cultist/on_gain()
 	var/mob/living/current = owner.current
-	current.playsound_local(get_turf(owner.current), 'sound/magic/clockwork/scripture_tier_up.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	objectives |= clock_team.objectives
 	if(give_slab && ishuman(current))
 		give_clockwork_slab(current)
