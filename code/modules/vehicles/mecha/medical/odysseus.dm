@@ -12,6 +12,13 @@
 	step_energy_drain = 6
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
 	pivot_step = TRUE
+	max_equip_by_category = list(
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 5,
+		MECHA_POWER = 1,
+		MECHA_ARMOR = 1,
+	)
 
 /obj/vehicle/sealed/mecha/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()
