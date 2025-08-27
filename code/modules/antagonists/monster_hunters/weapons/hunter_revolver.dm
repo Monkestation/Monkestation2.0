@@ -40,16 +40,21 @@
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/silver_bullet
+	/// Traits given to the victim.
+	var/static/list/traits_to_give = list(
+		TRAIT_EASILY_WOUNDED,
+		TRAIT_NO_SPRINT,
+	)
 
 /datum/status_effect/silver_bullet/on_apply()
-	ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(traits_to_give, TRAIT_STATUS_EFFECT(id))
 	owner.set_pain_mod(id, 1.5)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
 	to_chat(owner, span_userdanger("Your body suddenly feels impossibly heavy, you can barely move!"), type = MESSAGE_TYPE_COMBAT)
 	return TRUE
 
 /datum/status_effect/silver_bullet/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(traits_to_give, TRAIT_STATUS_EFFECT(id))
 	owner.unset_pain_mod(id)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
 	to_chat(owner, span_notice("The impossible weight fades away, allowing you to move normally once more."), type = MESSAGE_TYPE_COMBAT)
