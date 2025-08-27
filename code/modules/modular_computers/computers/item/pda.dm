@@ -143,7 +143,7 @@
 
 	return . || NONE
 
-/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(!is_type_in_list(attacking_item, contained_item))

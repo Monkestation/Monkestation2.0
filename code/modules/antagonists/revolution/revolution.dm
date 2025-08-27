@@ -14,6 +14,7 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
+	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why
 	var/deconversion_reason
@@ -78,7 +79,6 @@
 /datum/antagonist/rev/greet()
 	. = ..()
 	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/revolutionary_tide.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
@@ -302,6 +302,7 @@
 
 	if(mute)
 		rev_mind.current.set_silence_if_lower(10 SECONDS)
+		rev_mind.current.set_emote_mute_if_lower(10 SECONDS)
 	if(stun)
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)

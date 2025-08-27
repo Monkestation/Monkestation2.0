@@ -28,16 +28,16 @@
 	add_occupant(M)
 	return ..()
 
-/obj/vehicle/ridden/attackby(obj/item/I, mob/user, params)
-	if(!key_type || is_key(inserted_key) || !is_key(I))
+/obj/vehicle/ridden/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!key_type || is_key(inserted_key) || !is_key(attacking_item))
 		return ..()
-	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
+	if(!user.transferItemToLoc(attacking_item, src))
+		to_chat(user, span_warning("[attacking_item] seems to be stuck to your hand!"))
 		return
-	to_chat(user, span_notice("You insert \the [I] into \the [src]."))
+	to_chat(user, span_notice("You insert \the [attacking_item] into \the [src]."))
 	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
-	inserted_key = I
+	inserted_key = attacking_item
 
 /obj/vehicle/ridden/AltClick(mob/user)
 	if(!inserted_key || !user.can_perform_action(src, NEED_DEXTERITY))

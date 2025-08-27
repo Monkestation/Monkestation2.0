@@ -63,9 +63,8 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 		return FALSE
 
 /// Calculates the "adjusted" volume for a user's volume mixer
-/proc/calculate_mixed_volume(user, volume, mixer_channel)
+/proc/calculate_mixed_volume(client/client, volume, mixer_channel)
 	. = volume
-	var/client/client = CLIENT_FROM_VAR(user)
 	var/list/channels = client?.prefs?.channel_volume
 	if(!channels)
 		return volume
@@ -262,7 +261,7 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 		else
 			mixer_channel = guess_mixer_channel(soundin)
 
-	sound_to_use.volume = calculate_mixed_volume(src, sound_to_use.volume, mixer_channel)
+	sound_to_use.volume = calculate_mixed_volume(client, sound_to_use.volume, mixer_channel)
 
 	SEND_SOUND(src, sound_to_use)
 

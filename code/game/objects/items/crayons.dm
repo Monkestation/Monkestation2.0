@@ -382,7 +382,7 @@
 	return lowertext(crayon_regex.Replace(text, ""))
 
 /// Attempts to color the target. Returns how many charges were used.
-/obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
+/obj/item/toy/crayon/proc/use_on(atom/target, mob/user, list/modifiers)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 
@@ -456,7 +456,6 @@
 			else
 				graf_rot = 0
 
-	var/list/modifiers = params2list(params)
 	var/clickx
 	var/clicky
 
@@ -535,39 +534,12 @@
 	check_empty(user)
 	return .
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
+/obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!check_allowed_items(interacting_with))
+		return NONE
 
-	if(!proximity)
-		return .
-
-	if (isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
-
-	if (!check_allowed_items(target))
-		return .
-
-	use_on(target, user, params)
-	return .
-
-/obj/item/toy/crayon/attack(mob/target, mob/user)
-	if(!edible || (target != user))
-		return ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/crayon_eater = target
-		var/covered = ""
-		if(crayon_eater.is_mouth_covered(ITEM_SLOT_HEAD))
-			covered = "headgear"
-		else if(crayon_eater.is_mouth_covered(ITEM_SLOT_MASK))
-			covered = "mask"
-		if(covered)
-			balloon_alert(user, "remove your [covered]!")
-			return
-	to_chat(user, span_notice("You take a bite of the [src.name]. Delicious!"))
-	var/eaten = use_charges(user, 5, FALSE)
-	if(check_empty(user)) //Prevents division by zero
-		return
-	reagents.trans_to(target, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
+	use_on(interacting_with, user, modifiers)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
@@ -661,7 +633,7 @@
 	charges = -1
 	dye_color = DYE_RAINBOW
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/rainbow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	set_painting_tool_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 	return ..()
 
@@ -797,7 +769,7 @@
 		return
 	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
-/obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, params)
+/obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
 		return 0
@@ -869,17 +841,15 @@
 
 	return ..()
 
-/obj/item/toy/crayon/spraycan/afterattack_secondary(atom/target, mob/user, proximity, params)
-	if(!proximity)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/toy/crayon/spraycan/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	if(check_empty(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
-	if(isbodypart(target) && actually_paints)
-		var/obj/item/bodypart/limb = target
+	if(isbodypart(interacting_with) && actually_paints)
+		var/obj/item/bodypart/limb = interacting_with
 		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
@@ -892,18 +862,24 @@
 			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target.color)
-		paint_color = target.color
+			return ITEM_INTERACT_SUCCESS
+	if(interacting_with.color)
+		paint_color = interacting_with.color
 		balloon_alert(user, "matched colour of target")
 		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	else
-		balloon_alert(user, "can't match those colours!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "can't match those colours!")
+	return ITEM_INTERACT_BLOCKING
 
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/toy/crayon/spraycan/AltClick(mob/user)
+	if(!has_cap)
+		return CLICK_ACTION_BLOCKING
+	is_capped = !is_capped
+	balloon_alert(user, is_capped ? "capped" : "cap removed")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/toy/crayon/spraycan/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
@@ -925,9 +901,6 @@
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
 	if (!proximity)
 		return
-
-	if (isitem(target))
-		. = AFTERATTACK_PROCESSED_ITEM
 
 	if (!check_allowed_items(target))
 		return .

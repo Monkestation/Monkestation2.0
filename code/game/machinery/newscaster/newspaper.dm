@@ -1,7 +1,7 @@
 /obj/item/newspaper
 	name = "newspaper"
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "newspaper"
 	inhand_icon_state = "newspaper"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
@@ -153,12 +153,12 @@
 		if(ismob(loc))
 			attack_self(loc)
 
-/obj/item/newspaper/attackby(obj/item/W, mob/living/user, params)
-	if(burn_paper_product_attackby_check(W, user))
+/obj/item/newspaper/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(burn_paper_product_attackby_check(attacking_item, user))
 		return
 
-	if(istype(W, /obj/item/pen))
-		if(!user.can_write(W))
+	if(istype(attacking_item, /obj/item/pen))
+		if(!user.can_write(attacking_item))
 			return
 		if(scribble_page == curr_page)
 			to_chat(user, span_warning("There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?"))

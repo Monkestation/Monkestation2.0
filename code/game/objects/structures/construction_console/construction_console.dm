@@ -65,10 +65,10 @@
 	eyeobj.origin = src
 	return TRUE
 
-/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)
+/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	//If we have an internal RCD, we can refill it by slapping the console with some materials
-	if(internal_rcd && (istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet)))
-		internal_rcd.attackby(W, user, params)
+	if(internal_rcd && (istype(attacking_item, /obj/item/rcd_ammo) || istype(attacking_item, /obj/item/stack/sheet)))
+		internal_rcd.attackby(attacking_item, user, modifiers, attack_modifiers)
 	else
 		return ..()
 

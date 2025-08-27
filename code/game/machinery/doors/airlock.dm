@@ -301,7 +301,7 @@
 			otherlock.close_others -= src
 		close_others.Cut()
 	if(id_tag)
-		for(var/obj/machinery/door_buttons/D in GLOB.machines)
+		for(var/obj/machinery/door_buttons/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons))
 			D.removeMe(src)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
@@ -840,16 +840,16 @@
 /obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open && detonated)
 		to_chat(user, span_warning("[src] has no maintenance panel!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
 	tool.play_tool_sound(src)
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
-		. = TOOL_ACT_TOOLTYPE_SUCCESS  // everything after this shouldn't result in attackby
+		. = ITEM_INTERACT_SUCCESS  // everything after this shouldn't result in attackby
 		if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
 			return .
 		to_chat(user, span_notice("You start cutting through the outer grille."))
@@ -870,7 +870,7 @@
 		note.forceMove(tool.drop_location())
 		note = null
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/crowbar_act(mob/living/user, obj/item/tool)
 
@@ -890,14 +890,14 @@
 			layer_flavor = "inner layer of shielding"
 			next_level = AIRLOCK_SECURITY_NONE
 		else
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 
 	user.visible_message(span_notice("You start prying away [src]'s [layer_flavor]."))
 	if(!tool.use_tool(src, user, 40, volume=100))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!panel_open || security_level != starting_level)
 		// if the plating's already been broken, don't break it again
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] removes [src]'s shielding."),
 							span_notice("You remove [src]'s [layer_flavor]."))
 	security_level = next_level
@@ -906,7 +906,7 @@
 		modify_max_integrity(max_integrity / AIRLOCK_INTEGRITY_MULTIPLIER)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/wrench_act(mob/living/user, obj/item/tool)
 	if(!locked)
@@ -924,7 +924,7 @@
 			return
 		unbolt()
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/welder_act(mob/living/user, obj/item/tool)
 
@@ -951,19 +951,19 @@
 			layer_flavor = "inner layer of shielding"
 			next_level = AIRLOCK_SECURITY_PLASTEEL_I_S
 		else
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 
 	if(!tool.tool_start_check(user, amount=2))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You begin cutting the [layer_flavor]..."))
 
 	if(!tool.use_tool(src, user, 4 SECONDS, volume=50, amount=2))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	if(!panel_open || security_level != starting_level)
 		// see if anyone's screwing with us
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	user.visible_message(
 		span_notice("[user] cuts through [src]'s shielding."),  // passers-by don't get the full picture
@@ -979,7 +979,7 @@
 	if(security_level == AIRLOCK_SECURITY_NONE)
 		update_appearance()
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/proc/try_reinforce(mob/user, obj/item/stack/sheet/material, amt_required, new_security_level)
 	if(material.get_amount() < amt_required)

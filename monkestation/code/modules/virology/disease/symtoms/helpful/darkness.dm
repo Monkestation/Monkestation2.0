@@ -5,6 +5,7 @@
 	stage = 3
 	max_chance = 33
 	severity = 0
+	badness = EFFECT_DANGER_HELPFUL
 	var/passive_message = span_notice("You feel tingling on your skin as light passes over it.")
 	COOLDOWN_DECLARE(heal_msg_cooldown)
 

@@ -37,6 +37,8 @@
 	var/datum/component/remote_materials/silo_mats
 	/// switch to use internal or remote storage
 	var/silo_link = FALSE
+	/// has the blueprint design changed
+	var/blueprint_changed = FALSE
 
 /datum/armor/item_construction
 	fire = 100

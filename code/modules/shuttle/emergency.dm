@@ -38,8 +38,8 @@
 		if(hijack_announce)
 			. += span_warning("It is probably best to fortify your position as to be uninterrupted during the attempt, given the automatic announcements..")
 
-/obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
-	if(isidcard(I))
+/obj/machinery/computer/emergency_shuttle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isidcard(attacking_item))
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 
@@ -546,7 +546,7 @@
 				for(var/datum/shuttle_event/event as anything in event_list)
 					event.start_up_event(SSshuttle.emergency_escape_time * engine_coeff)
 
-				INVOKE_ASYNC(SSvote, TYPE_PROC_REF(/datum/controller/subsystem/vote, initiate_vote), /datum/vote/map_vote, initiator_name = "Map Rotation")
+				INVOKE_ASYNC(SSvote, TYPE_PROC_REF(/datum/controller/subsystem/vote, initiate_vote), /datum/vote/map_vote, "Map Rotation")
 
 		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
 			SSshuttle.checkHostileEnvironment()
@@ -786,14 +786,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 	new /obj/item/bodybag/environmental(src)
 	new /obj/item/bodybag/environmental(src)
 
-/obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
-	if (can_interact(user))
-		return ..()
-
-/obj/item/storage/pod/attackby_secondary(obj/item/weapon, mob/user, params)
-	if (!can_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
+/obj/item/storage/pod/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	return can_interact(user)
 
 /obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))

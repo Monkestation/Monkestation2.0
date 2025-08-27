@@ -57,7 +57,7 @@
 	end_processing()
 
 ///Enable the machine
-/obj/machinery/chem_recipe_debug/attackby(obj/item/I, mob/user, params)
+/obj/machinery/chem_recipe_debug/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	ui_interact(usr)
 
