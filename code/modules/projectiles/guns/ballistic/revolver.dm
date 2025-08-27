@@ -458,9 +458,8 @@
 		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 	. = ..()
 
-// 45-70 GOV "MINING" REVOLVER
 
-#define CALIBER_GOV_MINING ".45-70 Gov Kinetic" //the ammo type (so it doesnt fit anywhere else)
+// 45-70 GOV "MINING" REVOLVER
 
 /obj/item/gun/ballistic/revolver/govmining
 	name = "45-70 GOV 'Duster' Revolver"
