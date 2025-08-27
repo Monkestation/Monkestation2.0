@@ -168,6 +168,67 @@
 
 
 
+/obj/item/storage/box/kinetic/shotgun //box
+	name = "box of kinetic shells"
+	desc = "A box that can hold up to ten shells of Magnum Kinetic Buckshot for the PKShotgun. Fits inside of explorer webbings."
+	icon_state = "protoshell_box"
+	illustration = "protoshell_box"
+
+/obj/item/storage/box/kinetic/shotgun/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 10
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/shotgun/kinetic,
+	))
+
+/obj/item/storage/box/kinetic/shotgun/PopulateContents() //populate
+	for(var/i in 1 to 10)
+		new /obj/item/ammo_casing/shotgun/kinetic(src)
+
+/obj/item/storage/box/kinetic/shotgun/sniperslug //box
+	name = "box of .50 BMG Kinetic"
+	desc = "A box designed to hold up to ten shells of 50 BMG Slugs for the PKShotgun. Fits inside of explorer webbings."
+	icon_state = "bmgshell_box"
+	illustration = "bmgshell_box"
+
+/obj/item/storage/box/kinetic/shotgun/sniperslug/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 10
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/shotgun/kinetic/sniperslug,
+	))
+
+/obj/item/storage/box/kinetic/shotgun/sniperslug/PopulateContents() //populate
+	for(var/i in 1 to 10)
+		new /obj/item/ammo_casing/shotgun/kinetic/sniperslug(src)
+
+/obj/item/storage/box/kinetic/shotgun/rockbreaker //box
+	name = "box of kinetic rock breaker"
+	desc = "A box for holding up to twenty shells of Rockbreaker for the PKShotgun. Surprisingly fits inside of explorer webbings."
+	icon = 'icons/obj/storage/toolbox.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	icon_state = "ammobox"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/shotgun/rockbreaker/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 20
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 20
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/shotgun/kinetic/rockbreaker,
+	))
+
+/obj/item/storage/box/kinetic/shotgun/rockbreaker/PopulateContents() //populate
+	for(var/i in 1 to 20)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
+
 
 
 
@@ -315,4 +376,56 @@
 /obj/item/storage/box/kinetic/minerjdj/bigcase/PopulateContents() //populate
 
 		new /obj/item/gun/ballistic/rifle/minerjdj (src)
+
+
+/obj/item/storage/box/kinetic/shotgun/bigcase //box
+	name = "Kinetic 'Slayer' Shotgun Case"
+	desc = "A special and totally original gun case that contains a 'Slayer' Shotgun, eight shells of Rockbreaker, and four shells of Magnum Kinetic Buckshot. Beware, they dont fit back inside once taken out for some reason."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "miner_case"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/shotgun/bigcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 13
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 13
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/shotgun/bigcase/PopulateContents() //populate
+
+		new /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic(src) //the shotgun
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src) //fuck it we do a little bit of bad code :)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src) //8 shells of rockbreaker
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
+		new /obj/item/ammo_casing/shotgun/kinetic/rockbreaker(src)
+		new /obj/item/ammo_casing/shotgun/kinetic(src) //4 shells of kinetic buckshot
+		new /obj/item/ammo_casing/shotgun/kinetic(src)
+		new /obj/item/ammo_casing/shotgun/kinetic(src)
+		new /obj/item/ammo_casing/shotgun/kinetic(src)
+
+
+// Pkas
+/obj/item/storage/box/shockwave
+	name = "PK-Shockwave Box"
+	desc = "A box containing a PK-Shockwave and the Shockwave modkit. Designed to create large blasts of powerful kinetic energy for clearing large amounts of rock, or fauna"
+	icon_state = "cyber_implants"
+
+/obj/item/storage/box/shockwave/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 2
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.max_total_storage = 2
+
+/obj/item/storage/box/shockwave/PopulateContents()
+	new /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave(src)
+	new /obj/item/borg/upgrade/modkit/aoe/turfs/shockwave(src)
 

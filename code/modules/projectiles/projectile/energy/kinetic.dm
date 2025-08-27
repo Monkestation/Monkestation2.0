@@ -80,3 +80,83 @@
 	select_name = "kinetic"
 	e_cost = 0
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+
+/obj/item/ammo_casing/energy/kinetic/glock
+	projectile_type = /obj/projectile/kinetic/glock
+
+/obj/projectile/kinetic/glock
+	name = "light kinetic force"
+	damage = 10
+
+
+/obj/item/ammo_casing/energy/kinetic/railgun
+	projectile_type = /obj/projectile/kinetic/railgun
+	fire_sound = 'sound/weapons/beam_sniper.ogg'
+
+/obj/projectile/kinetic/railgun
+	name = "hyper kinetic force"
+	damage = 100
+	range = 7
+	pressure_decrease = 0.10 // Pressured enviorments are a no go for the railgun
+	speed = 0.1 // NYOOM
+	projectile_piercing = PASSMOB
+
+
+/obj/item/ammo_casing/energy/kinetic/repeater
+	projectile_type = /obj/projectile/kinetic/repeater
+	e_cost = 150 //about three shots
+
+/obj/projectile/kinetic/repeater
+	name = "rapid kinetic force"
+	damage = 20
+	range = 4
+
+
+/obj/item/ammo_casing/energy/kinetic/shockwave
+	projectile_type = /obj/projectile/kinetic/shockwave
+	fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+
+/obj/projectile/kinetic/shockwave
+	name = "concussive kinetic force"
+	damage = 40
+	range = 2
+
+
+/obj/item/ammo_casing/energy/kinetic/meme
+	projectile_type = /obj/projectile/kinetic/meme
+	e_cost = 1
+	pellets = 69
+	variance = 90
+	fire_sound = 'sound/effects/adminhelp.ogg'
+
+/obj/projectile/kinetic/meme
+	name = "proto kinetic meme force"
+	damage = 420
+	range = 300
+	pressure_decrease = 1
+	dismemberment = 10
+	catastropic_dismemberment = TRUE
+	hitsound = 'sound/effects/adminhelp.ogg'
+
+
+/obj/item/ammo_casing/energy/kinetic/meme/nonlethal
+	projectile_type = /obj/projectile/kinetic/meme/nonlethal
+
+/obj/projectile/kinetic/meme/nonlethal
+	name = "surprisingly soft proto kinetic meme force"
+	damage = 0
+	dismemberment = 0
+	catastropic_dismemberment = FALSE
+	stun = 69
+	knockdown = 69
+	paralyze = 69
+	immobilize = 69
+	unconscious = 69
+	eyeblur = 69
+	drowsy = 69 SECONDS
+	jitter = 69 SECONDS
+	stamina = 69 SECONDS
+	stutter = 69 SECONDS
+	slur = 69 SECONDS
+

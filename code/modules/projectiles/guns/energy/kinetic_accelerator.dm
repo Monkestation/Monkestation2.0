@@ -167,6 +167,91 @@
 		var/obj/item/gun/energy/recharge/kinetic_accelerator/KA = loc
 		KA.modify_projectile(loaded_projectile)
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/glock
+	name = "proto-kinetic pistol"
+	desc = "An innovative take on the Proto-Kinetic Accelerator, this model comes with none of the technology that makes the accelerator actually good. \
+	Working a late shift one night, the Mining Research Director used a box of salvaged spare parts from busted accelerators to throw together this design. While it lacks \
+	most of what makes the accelerator a good tool, it makes up for it with a unprecidented amount of room for modification, capable of holding nearly triple \
+	the amount of mods that a normal accelerator could. 'Assemble it yourself' he said."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
+	icon_state = "kineticpistol"
+	base_icon_state = "kineticpistol"
+	recharge_time = 2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
+	can_bayonet = FALSE
+	max_mod_capacity = 300 //experimental, if people find too many wack ass combos on the pistol im dropping it back to 200
+
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/railgun
+	name = "proto-kinetic railgun"
+	desc = "Before the nice streamlined and modern day Proto-Kinetic Accelerator was created, multiple designs were drafted by the Mining Research and Development \
+	team. Many were failures, including this one, which came out too bulky and too ineffective. Well recently the MR&D Team got drunk and said 'fuck it we ball' and \
+	went back to the bulky design, overclocked it, and made it functional, turning it into what is essentially a literal man portable particle accelerator. \
+	The design results in a massive hard to control blast of kinetic energy, with the power to punch right through creatures and cause massive damage. The \
+	only problem with the design is that it is so bulky you need to carry it with two hands, and the technology has been outfitted with a special firing pin \
+	that denies use near or on the station, due to its destructive nature."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
+	icon_state = "kineticrailgun"
+	base_icon_state = "kineticrailgun"
+	w_class = WEIGHT_CLASS_HUGE
+	pin = /obj/item/firing_pin/wastes
+	recharge_time = 3 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/railgun)
+	weapon_weight = WEAPON_HEAVY
+	can_bayonet = FALSE
+	max_mod_capacity = 0 // Fuck off
+	recoil = 3 // Railgun go brrrrr
+	disablemodification = TRUE
+
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/repeater
+	name = "proto-kinetic repeater"
+	desc = "A Proto-Kinetic Accelerator with multiple smaller capacitors instead of one big one for storing charges. Turns out using less than \
+	full power on the kinetic force generation means that you can fit a couple more smaller capacitors in without the entire thing exploding. \
+	This results in a multi shot accelerator that doesn't combust on the first shot and allows rapid follow up shots in short succession. \
+	The director said 'It came to me in a delusion' when we asked him how the team came up with this."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
+	icon_state = "kineticrepeater"
+	base_icon_state = "kineticrepeater"
+	recharge_time = 2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/repeater)
+	max_mod_capacity = 60
+
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave
+	name = "proto-kinetic shockwave"
+	desc = "Innovating on the mining blast mod, Mining Research and Development has managed to overclock the performance of the mod to the extreme. \
+	The result is a specialized accelerator frame that when equipped with the accompanying modkit grants a fairly punchy, large blast that is excellent \
+	for clearing large amounts of rocks and crowded fauna. \
+	The only downside is the lowered mod capacity, lack of range, required mod, and longer cooldown... but its pretty good for clearing rocks. \
+	A warning label is stuck to the side : Weapon will underperform without accompanying mod (Should be included with purchase)."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
+	icon_state = "kineticshockwave"
+	base_icon_state = "kineticshockwave"
+	recharge_time = 2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shockwave)
+	can_bayonet = FALSE
+	max_mod_capacity = 90 //bumped up to 90 to compensate for the 30 you need to spend on the AOE mod that gives it its functionality
+
+
+
+//ADMIN ONLY SUPER OP
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/meme
+	name = "adminium reaper"
+	desc = "Mining RnD broke the fabric of space time, please return to your nearest centralcommand officer. <b> WARNING FROM THE MINING RND DIRECTOR : DO NOT RAPIDLY PULL TRIGGER : FABRIC OF SPACE TIME LIABLE TO BREAK </b>"
+	recharge_time = 0.1
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/meme)
+	max_mod_capacity = 420
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/meme/nonlethal
+	name = "adminium stunner"
+	desc = "Mining RnD broke the fabric of space time AGAIN, please return to your nearest centralcommand officer. <b> WARNING FROM THE MINING RND DIRECTOR : DO NOT RAPIDLY PULL TRIGGER : FABRIC OF SPACE TIME LIABLE TO BREAK </b>\
+	Im being bullied by the admins"
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/meme/nonlethal)
+	can_bayonet = FALSE
+	max_mod_capacity = 0
+
 //Modkits
 /obj/item/borg/upgrade/modkit
 	name = "kinetic accelerator modification kit"
@@ -366,6 +451,48 @@
 	name = "offensive explosion"
 	desc = "Causes the kinetic accelerator to damage mobs in an AoE."
 	modifier = 0.2
+
+
+/obj/item/borg/upgrade/modkit/aoe/turfs/shockwave
+	name = "Shockwave modkit"
+	desc = "A special version of the AOE modkit that gives the PK-Shockwave all of its unique properties. \
+	It had to be shipped uninstalled from the actual PK-Shockwave due to technical issues, but installation is simple. \
+	It does not fit into any other PK weapon."
+	maximum_of_type = 1
+	modifier = 0.50
+
+
+/obj/item/borg/upgrade/modkit/aoe/turfs/shockwave/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	if(stats_stolen)
+		return
+	new /obj/effect/temp_visual/explosion/fast(target_turf)
+	if(turf_aoe)
+		for(var/T in RANGE_TURFS(2, target_turf) - target_turf)
+			if(ismineralturf(T))
+				var/turf/closed/mineral/M = T
+				M.gets_drilled(K.firer, TRUE)
+	if(modifier)
+		for(var/mob/living/L in range(2, target_turf) - K.firer - target)
+			var/armor = L.run_armor_check(K.def_zone, K.armor_flag, "", "", K.armour_penetration)
+			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
+			to_chat(L, span_userdanger("You're struck by a [K.name]!"))
+
+/obj/item/borg/upgrade/modkit/aoe/turfs/shockwave/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
+	if(istype(KA, /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave))
+		. = ..()
+		if(.)
+			for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
+				if(AOE.stats_stolen || AOE == src)
+					continue
+				modifier += AOE.modifier //take its modifiers
+				AOE.modifier = 0
+				turf_aoe += AOE.turf_aoe
+				AOE.turf_aoe = FALSE
+				AOE.stats_stolen = TRUE
+	else
+		to_chat(user, span_warning("[src] does not fit in [KA]. It will only fit in a Shockwave!"))
+		return FALSE
+
 
 //Minebot passthrough
 /obj/item/borg/upgrade/modkit/minebot_passthrough

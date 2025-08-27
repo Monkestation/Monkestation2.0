@@ -68,3 +68,21 @@
 	max_ammo = 1
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/hundred
 
+/obj/item/ammo_box/magazine/internal/shot/dual/kinetic
+	name = "kinetic double barrel shotgun internal magazine"
+	desc = "how did you break my gun like this, please report whatever you did then feel bad!!!"
+	ammo_type = /obj/item/ammo_casing/shotgun/kinetic
+	caliber = MINER_SHOTGUN
+	max_ammo = 2
+
+//You cant just pry these shells out with your fingers, youll have to eject them by breaking open the shotgun
+/obj/item/ammo_box/magazine/internal/shot/dual/kinetic/give_round(obj/item/ammo_casing/R)
+	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
+		return FALSE
+
+	else if (stored_ammo.len < max_ammo)
+		stored_ammo += R
+		R.forceMove(src)
+		return TRUE
+	return FALSE
+

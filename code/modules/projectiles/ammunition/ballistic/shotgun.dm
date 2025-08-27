@@ -346,3 +346,35 @@
 	pellets = 5
 	variance = 7 //very tight spread
 	projectile_type = /obj/projectile/bullet/hydrakinetic
+
+
+// for the mining breakaction
+
+/obj/item/ammo_casing/shotgun/kinetic //for slaying, works on crowds
+	name = "Kinetic Magnum Buckshot Shell"
+	desc = "A 12 gauge Shell loaded with magnum kinetic projectiles. Penetrates rocky walls and creatures! <b> Does NOT fit in any standard 12 gauge shotgun! </b>"
+	icon_state = "shellproto"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	caliber = MINER_SHOTGUN
+	pellets = 5
+	variance = 30
+	projectile_type = /obj/projectile/plasma/kineticshotgun
+
+/obj/item/ammo_casing/shotgun/kinetic/sniperslug //slugs essentially
+	name = "Kinetic .50 BMG"
+	desc = "If god did not want us to put 50 BMG in a 12 gauge, he would not have given them similar diameter! A incredibly large 50 BMG round adapted into a kinetic slug. Does not penetrate targets like Magnum Kinetic Buckshot, but still penetrates rock walls. <b> Does NOT fit in any standard 12 gauge shotgun! </b>"
+	icon_state = "slugbmg"
+	pellets = 1
+	variance = 5
+	projectile_type = /obj/projectile/plasma/kineticshotgun/sniperslug
+
+
+/obj/item/ammo_casing/shotgun/kinetic/rockbreaker //for digging!
+	name = "Kinetic Rockbreaker Shell"
+	desc = "A 12 gauge Shell loaded with dozens of special tiny kinetic rockbreaker pellets, perfect for clearing masses of rocks but no good for killing fauna. <b> Does NOT fit in any standard 12 gauge shotgun! </b>"
+	icon_state = "bountyshell"
+	caliber = MINER_SHOTGUN
+	pellets = 10
+	variance = 120
+	projectile_type = /obj/projectile/plasma/kineticshotgun/rockbreaker
+
