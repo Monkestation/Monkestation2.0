@@ -1,0 +1,28 @@
+{
+	"amoung": [
+		{
+			"type": "icon_state",
+			"icon_state": "amoung",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+        {
+			"type": "icon_state",
+			"icon_state": "amoung_visor",
+			"blend_mode": "overlay"
+		}
+	],
+	"amoung_dead": [
+		{
+			"type": "icon_state",
+			"icon_state": "amoung_dead",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+        {
+			"type": "icon_state",
+			"icon_state": "amoung_bone",
+			"blend_mode": "overlay"
+		}
+	]
+}

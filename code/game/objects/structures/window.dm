@@ -35,6 +35,8 @@
 	var/bloodied = FALSE
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
+	/// If this window should automatically spawn a window sill during mapload.
+	var/spawn_with_window_sill = TRUE
 
 /datum/armor/structure_window
 	melee = 50
@@ -84,7 +86,7 @@
 			glass_color = new_color
 		if(fulltile)
 			color = glass_color
-		if(mapload && fulltile)
+		if(mapload && fulltile && spawn_with_window_sill)
 			new /obj/structure/window_sill(get_turf(src))
 	//monkestation edit end
 
@@ -880,6 +882,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	bash_sound = 'sound/weapons/slashmiss.ogg'
 	break_sound = 'sound/items/poster_ripped.ogg'
 	hit_sound = 'sound/weapons/slashmiss.ogg'
+	spawn_with_window_sill = FALSE
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 

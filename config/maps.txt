@@ -83,6 +83,10 @@ endmap
 map graveyard
 endmap
 
+map biodome
+	votable
+endmap
+
 map leadpoisoningstation
 	votable
 	minplayers 40

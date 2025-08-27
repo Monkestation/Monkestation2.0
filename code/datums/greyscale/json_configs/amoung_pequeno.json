@@ -1,0 +1,29 @@
+
+{
+    "amoung_pequeno": [
+		{
+			"type": "icon_state",
+			"icon_state": "amoung_pequeno",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+        {
+			"type": "icon_state",
+			"icon_state": "amoung_pequeno_visor",
+			"blend_mode": "overlay"
+		}
+	],
+	"amoung_pequeno_dead": [
+		{
+			"type": "icon_state",
+			"icon_state": "amoung_pequeno_dead",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+        {
+			"type": "icon_state",
+			"icon_state": "amoung_pequeno_bone",
+			"blend_mode": "overlay"
+		}
+	]
+}

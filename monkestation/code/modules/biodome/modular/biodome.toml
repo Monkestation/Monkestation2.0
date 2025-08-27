@@ -1,0 +1,14 @@
+
+directory = "_maps/map_files/biodome/modules/"
+
+[rooms.cage_1]
+modules = ["cage_1_axolotl.dmm", "cage_1_creature.dmm", "cage_1_goldgrub.dmm", "cage_1_isaac.dmm"]
+
+[rooms.cage_2]
+modules = ["cage_2_amoung.dmm", "cage_2_ghost.dmm", "cage_2_blahaj.dmm"]
+
+[rooms.cage_3]
+modules = ["cage_3_rabbit.dmm", "cage_3_gnome.dmm", "cage_3_cirno.dmm"]
+
+[rooms.cage_4]
+modules = ["cage_4_cockroach.dmm", "cage_4_spider.dmm", "cage_4_clown_chicken.dmm"]
