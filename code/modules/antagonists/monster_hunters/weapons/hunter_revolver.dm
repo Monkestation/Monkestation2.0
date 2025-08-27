@@ -31,8 +31,8 @@
 
 /obj/projectile/bullet/bloodsilver/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(isliving(target))
-		target.apply_status_effect(/datum/status_effect/silver_bullet) // status effect won't apply for non-prey anyways
+	if(isliving(target) && is_monster_hunter_prey(owner))
+		target.apply_status_effect(/datum/status_effect/silver_bullet)
 
 /datum/status_effect/silver_bullet
 	id = "silver_bullet"
@@ -42,8 +42,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/silver_bullet
 
 /datum/status_effect/silver_bullet/on_apply()
-	if(!is_monster_hunter_prey(owner))
-		return FALSE
 	ADD_TRAIT(owner, TRAIT_EASILY_WOUNDED, TRAIT_STATUS_EFFECT(id))
 	owner.set_pain_mod(id, 1.5)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/silver_bullet)
