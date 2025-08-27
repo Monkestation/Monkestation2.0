@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /// The first sentient body found in the list of contents is returned, otherwise
 /// if none are sentient choose randomly.
 /datum/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
-	for(var/thing as anything in chasm_stuff)
+	for(var/thing in chasm_stuff)
 		if(astype(thing, /mob)?.mind || astype(thing, /obj/item/organ/internal/brain/slime)?.original_mind)
 			return thing
 	return ..()
