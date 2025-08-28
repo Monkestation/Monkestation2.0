@@ -49,6 +49,7 @@
 	. = ..()
 	if(offset != 0)
 		// You aren't the source? don't change yourself
+		critical = PLANE_CRITICAL_FUCKO_PARALLAX
 		return
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 /*
@@ -56,6 +57,9 @@
 	if(GLOB.narsie_summon_count >= 1)
 		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
 */
+	RegisterSignal(SSdcs, COMSIG_DARKSPAWN_ASCENSION, PROC_REF(darkspawn_ascension))
+	if(GLOB.sacrament_done) //so no runtimes prior to the round starting
+		darkspawn_ascension(0)
 	offset_increase(0, SSmapping.max_plane_offset)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
@@ -128,6 +132,10 @@
 /atom/movable/screen/plane_master/parallax/proc/narsie_unsummoned()
 	animate(src, color = null, time = 8 SECONDS)
 */
+
+/atom/movable/screen/plane_master/parallax/proc/darkspawn_ascension(delay = 15 SECONDS)
+	animate(src, color = "#555555", time = delay) //greatly dimmed stars
+
 
 /atom/movable/screen/plane_master/gravpulse
 	name = "Gravpulse"
@@ -288,14 +296,6 @@
 	plane = LIGHTING_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_LIGHTING)
-	blend_mode_override = BLEND_ADD
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	critical = PLANE_CRITICAL_DISPLAY
-
-/atom/movable/screen/plane_master/additive_lighting
-	name = "additive lighting plane master"
-	plane = LIGHTING_PLANE_ADDITIVE
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	critical = PLANE_CRITICAL_DISPLAY
@@ -463,6 +463,7 @@
 	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
 	plane = WEATHER_PLANE
 	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
 	. = ..()
@@ -475,6 +476,7 @@
 	documentation = "Holds the glowing parts of the main tiling 32x32 sprites of weather."
 	plane = WEATHER_GLOW_PLANE
 	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/weather_glow/set_home(datum/plane_master_group/home)
 	. = ..()

@@ -6,20 +6,20 @@
 
 	var/obj/item/reagent_containers/cup/tube/container = null
 
-/obj/machinery/computer/curer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/cup/tube))
+/obj/machinery/computer/curer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/reagent_containers/cup/tube))
 		var/mob/living/carbon/C = user
 		if(!container)
-			if(C.forceMove(I, src))
-				container = I
-	if(istype(I,/obj/item/weapon/virusdish))
+			if(C.forceMove(attacking_item, src))
+				container = attacking_item
+	if(istype(attacking_item,/obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..")
 			return
 		var/obj/item/reagent_containers/cup/tube/product = new(src.loc)
 
 		var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=0)
-		data["viruses"] |= I:viruses
+		data["viruses"] |= attacking_item:viruses
 		product.reagents.add_reagent(/datum/reagent/blood, 30,data)
 
 		virusing = 1

@@ -73,7 +73,7 @@
 		to_chat(owner, "<span class='bold'>[trauma.obsession.name] has no idea how much danger they're in and you're the only person that can be there for them.</span>")
 		to_chat(owner, "<span class='bold'>Nobody else can be trusted, they are all liars and will use deceit to stab you and [trauma.obsession.name] in the back as soon as they can.</span>")
 	to_chat(owner, "<span class='boldannounce'>This role does NOT enable you to otherwise surpass what's deemed creepy behavior per the rules.</span>")//ironic if you know the history of the antag
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	play_stinger()
 	owner.announce_objectives()
 
 

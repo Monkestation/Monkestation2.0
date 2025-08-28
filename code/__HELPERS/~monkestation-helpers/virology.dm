@@ -39,6 +39,10 @@ GLOBAL_LIST_INIT(alien_antigens, list(
 	ANTIGEN_Z,
 ))
 
+GLOBAL_LIST_INIT(unique_antigens, list(
+	ANTIGEN_IG,
+))
+
 /proc/antigen_family(id)
 	switch(id)
 		if (ANTIGEN_BLOOD)
@@ -49,3 +53,5 @@ GLOBAL_LIST_INIT(alien_antigens, list(
 			return GLOB.rare_antigens
 		if (ANTIGEN_ALIEN)
 			return GLOB.alien_antigens
+		if (ANTIGEN_UNIQUE)
+			return GLOB.unique_antigens

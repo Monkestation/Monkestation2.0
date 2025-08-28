@@ -560,3 +560,245 @@
   wonderinghost:
   - map: updates helios disposal network
   - map: ordanance now has a mail bin and atmos should be mail routable
+2025-08-22:
+  Absolucy:
+  - balance: Removed the knockback stun from riot shotguns and such. Bulldog shotguns
+      and double-barrelled shotguns can still do so, tho.
+  - qol: Slime Washing now works if the oozeling is lying down, even if they have
+      shoes on.
+  - bugfix: Slime Washing now actually feeds the oozeling when they clean up grime,
+      as intended.
+  Salted-Zen:
+  - balance: PK Pistol cooldown upped to 4 seconds
+  - bugfix: You can no longer cause an error by giving the PK Pistol 10 cooldown mods
+  Shoddd:
+  - balance: frontier coats in loadout no longer have armor
+  Tractor Maam:
+  - rscadd: Added a new escape shuttle! The Yate Haugan Neo for 14062 credits
+  - rscadd: Added a new emag only escape shuttle, The Cargo Refitted Yate Haugan Neo
+      for 22264 credits
+  - bugfix: fixed a typo in rayne welder code
+  - bugfix: John Intern's (sprungle) office paper now contains text.
+2025-08-23:
+  Absolucy:
+  - map: Box Station now has 6 SMESes instead of 4.
+  - map: Box Station's cables near engi are now protected with catwalks.
+  - map: Added an oxygen canister to Box Station's engineering.
+  Ice-Type:
+  - balance: shooting someone riding a welding fuel tank has a 50% chance of hitting
+      the tank instead. Yes, this can blow it the fuck up.
+  Shoddd:
+  - balance: Upped assistant point reward to 200 credits
+  - balance: Assistants can no longer punch cards
+  - balance: Cards no longer start with one free punch
+  - map: Added assistant point redeemer to all cargos that lacked one
+  - bugfix: updates GAP card description from 100 to 200
+  Sorenon:
+  - rscadd: Added the Monoplegic and Hemiplegic paralysis quirks
+  Xander3359:
+  - code_imp: adds emote_mute status effect and helper procs
+  - balance: adds emote mute to some silencing effects
+  notghosti:
+  - rscadd: Added new antigen 'Ig', which cannot be mass produced normally.
+  - rscadd: Beaker apparatus can now pick up tubes and virus dishes.
+  - balance: Tubercle Bacillus Cosmosis Microbes now has a antibody and thus protection
+      against reinfection.
+  - balance: Convermol/Spaceallin mix will not give antibodies against Tubercle Bacillus
+      Cosmosis Microbes. But BVAK injectors and other methods will.
+  - balance: Nerfed Alkali Burn stacks
+  - bugfix: Plague Rats will now no longer nibble their way into NULLSPACE (((Hopefully)))
+  - bugfix: sililcons can now interact with incubators and disease analyzers
+  - admin: Plague rats have been removed from the antag datum panel. Use the event
+      instead
+  - balance: Removed the 4 crew spawns from the battlecruiser starfury
+  - bugfix: Florans can reattach limbs again
+  throwawayuseless:
+  - spellcheck: TRNE Corp. has hired a Ratvarian-fluent spellchecker and has subsequently
+      renamed the Rat'vander cocktail to Ratvander.
+  wonderinghost:
+  - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
+      access instead of both'
+2025-08-24:
+  Absolucy:
+  - map: Added a medipen refiller to the Helio medbay lobby.
+  - rscdel: Removed the "Hard of Hearing" quirk, due to issues relating to chat spam.
+      Hopefully it'll be back soon.
+  JohnFulpWillard:
+  - qol: The pushbroom can now pull with RMB.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  ThePooba:
+  - bugfix: maintloot turbomode
+2025-08-25:
+  Salted-Zen:
+  - balance: Hiero staff dash now counts as magic so its not disrupted by bag of holding
+  - code_imp: Hiero staff dash now counts as magic, just like its beacon recall does
+  - balance: Security batons now drain 1% of their cells max charge over time if left
+      on
+  Snack-Max:
+  - rscadd: Batter's Uniform to autodrone
+  ThePooba:
+  - rscadd: Mr bagheads donator pill "Eat Me, I Know You Wanna"
+  - rscadd: cyber_huskey can now speak multiple languages and the dog can now be pet
+  Tractor Maam:
+  - map: heliostation now has departmental bells.
+  - map: added a syndicate variant of the departmental bell for mapping purposes.
+  - rscdel: Removed herobrine.
+  notghosti:
+  - balance: T3 lasers now require t2 lasers to be researched first
+  - rscadd: Removed industrial engineering from mining tech perquisites. This does
+      not effect actual tech to research it
+  - balance: Oozelings are blacklisted from Prosthetics  and Qaud Amputtee quirks
+  throwawayuseless:
+  - rscadd: 'New Quirk: Snappy. Snap with style, panache, pizzaz, mojo, moxie, badassery,
+      goodassery, insouciance, chill, swag, snazz, and a certain *je ne sais quoi*.
+      (please help im running out of synonyms and the thesaurus-beasts from the nether
+      realms are going to CATCH UP WITHMEOHGODTHEPAAAAIIIINNN)'
+2025-08-27:
+  Absolucy:
+  - bugfix: idk i guess im fixing more lag?
+  - refactor: (LemonInTheDark) I have reworked how parallax and its animations (space
+      travel) work. Please report any bugs lads!
+  - bugfix: (Melbert) Some things which should pacify people (but aren't) now will
+      properly, like hypnoflash.
+  - bugfix: (timothymtorres) Fix custom map loading ignoring JSON values that were
+      ignored previously. (minetype, planetary, etc.)
+  - bugfix: (00-Steven) Sign language no longer throws a runtime error when repeatedly
+      muted and unmuted.
+  - bugfix: (00-Steven) Sign language no longer fails to hide the action when you
+      get it while mute, stop being mute, and start being mute again.
+  - admin: (SmArtKar) Renamed "Tick Overrun" in MC overview to "Subsystem Overtime"
+      to be true as to what it actually displays.
+  - balance: (Melbert) Cameras can only see vertically upwards if the turf above them
+      is transparent. But hey, multi-z maps will now perform wayyy better (less time
+      dilation)
+  - bugfix: (SmArtKar) Fixed weather from Z levels above rendering over players' UI.
+  - qol: (SmArtKar) Multi-Z Detail setting has been renamed to Multi-Z Depth with
+      an explanation on what it does. "Standard" setting has been renamed to "No Culling"
+  - bugfix: (SmArtKar) Maps with a large amount of Z levels should no longer randomly
+      display space parallax to players with low multi-z culling settings.
+  - rscdel: Removed bloom (additive lighting). It just made bright lights more painful
+      on the eyes, and didn't look too much better anyways.
+  - bugfix: Rescue hooks can now fish up Oozeling cores.
+  - bugfix: Oozelings which self-revive in chasms somehow will properly "leap" out
+      of the chasm, like other mobs would.
+  - bugfix: Stowaway Oozelings will no longer teleport when revived.
+  Absolucy, hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  Arturlang:
+  - rscadd: mesmerize is now a visual effect only visible to victim and attacker,
+      and no longer requires both parties to stand still
+  - rscadd: both tremere abilities besides mesmerize are now toggled with right click
+      for usability
+  - rscadd: thaumaturgy is now charge-based instead of a single shot, but is thus
+      weaker per-shot
+  - rscadd: tremere abilities now have dynamic descriptions
+  - rscadd: dominate no longer requires facing your target
+  - rscadd: bloodsuckers can only have 1 targeted ability active at a time, you couldn't
+      multicast before anyway.
+  - rscadd: Mesmerize is now slowed down/blocked with welding protection, with levels
+      past 2 making you immune (welding protection is level 2)
+  - rscadd: Dominate now has a visual timer for when your vassal dies horribly
+  - rscadd: Auspex is renamed into Obfsucate, as that makes more sense given what
+      it does.
+  - balance: Auspex, now, Obfuscate, fills your stamina to full, as tremere are lacking
+      in stamina regen options
+  - balance: Obfuscate requires level 6 to allow you to teleport anywehre
+  - balance: Obfuscate now has a per-tile cost of 5 blood per tile teleported, with
+      a cap of 100 blood
+  - code_imp: heavy refactors of tremere abilities
+  Cmpwarrior:
+  - rscadd: Adds a new outfit to the AutoDrobe and a new clown mask variant, based
+      off everyone's favorite fool.
+  Melbert:
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
+  Salted-Zen:
+  - qol: Scraped the Scarborough arms stamp off the 'Duster' Revolver
+  - balance: Reduced PK Railgun recoil
+  - balance: Slightly increased the firerate of the 'Hellhound' LMG and increased
+      max ammo to 150
+  - rscadd: Added a purchasable case of 3 large speed loaders that hold 50 rounds
+      each, for reloading the 'Hellhound' LMG
+  - balance: All mining guns (Except the 'Thor' 950 JDJ) fit in the suit slots of
+      Explorer Armor, Goliath Cloak, Ash Drake Armor, And Godslayer Armor
+  Shoddd:
+  - balance: stimulants now stun alien embryos growth
+  SmArtKar:
+  - qol: Heads of staff PDAs start with twice as much disk space
+  wonderinghost:
+  - bugfix: fixes flatpack duplication when deploying
+  - bugfix: fixes material duplication when repacking
+2025-08-28:
+  Absolucy, Melbert:
+  - bugfix: Hierophant Club Blink at range
+  - bugfix: Crusher Loot
+  Melbert:
+  - refactor: Storage and Tables are now a lower priority action, meaning some uses
+      of items on storage should work... better, now. Here's hoping at least, report
+      any oddities.
+  - refactor: 'Note: For an overwhelming majority of items, combat mode will attempt
+      to attack/insert into the target, while non-combat-mode will attempt to use
+      on a target. This means screwdrivering or emagging a MODsuit must be done on
+      non-combat-mode, as combat mode will simply put the screwdriver or emag into
+      its storage. Same applies to tables, though when in doubt, RMB may help (for
+      things which are also weapons, like mops).'
+  - refactor: Refactored escape pod storage, now they actually properly show as unlocked
+      on red alert and above.
+  MrMelbert:
+  - balance: Clock cultists are given a slowing status effect after warping to the
+      station
+  - rscadd: Anchoring crystals now bend reality the more of them there are
+  - balance: anchoring crystals now lock down the shuttle while active
+  - balance: abscond can only be invoked from marked areas and takes 45 seconds, servant
+      antag info now lists marked areas
+  - balance: vitality sigils no longer create borg shells but shells can be made by
+      on station tinker's caches
+  - balance: the soul vessels given by vitality sigils can now be converted to cogscarab
+      shells
+  - balance: clockwork mobs can now warp to the station but are restricted to marked
+      areas
+  - bugfix: various clock cult bugs
+  - balance: reduced the maximum amount of cogscarabs from 9 to 6
+  - balance: reworked the clockwork power economy into passive and active power
+  ThePooba:
+  - rscadd: 'donator alt title: Sr. Attending physician(cmo), Cybertronic Engineer(robo),
+      Builder(engi)'
+  - rscadd: Darkspawn antag https://mediawiki.monkestation.com/Darkspawn
+  - rscadd: Head of security jackboots (they are stompy)
+  - rscadd: Swinging component (fighter only for now)
+  - rscadd: like 50 spells for darkspawn and shit
+  - rscadd: New camera network system - mostly code side
+  - rscadd: custom key click sounds for some machines and buttons, firealarms etc
+  Xander3359:
+  - bugfix: (MrMelbert) Fix inability to make r-glass by hand inside your backpack
+  - qol: (MrMelbert) Hand labels now have a visual effect associated, and are also
+      affected by heat / can be cleaned off like stickers.
+  - refactor: (MrMelbert) Refactored hand labels. They're objects now!
+  - bugfix: (MrMelbert) Heirophant Club Blink at range
+  - bugfix: (MrMelbert) Crusher Loot
+  - bugfix: (MrMelbert) RCD material reclamation
+  - bugfix: (SmArtKar) Fixed crayons not being usable on anything except turfs (including
+      washing machines)
+  - refactor: (intercepti0n) Stickers are now a component and gets rid of a copyright
+      infringement
+  - bugfix: (SyncIt21) RLD won't try to put lights on storage objects like bags &
+      such
+  - bugfix: Fix being unable to apply patches
+  - bugfix: Fix being unable to place on griddle
+  - bugfix: Fix being unable to use xenobio vacuum from range

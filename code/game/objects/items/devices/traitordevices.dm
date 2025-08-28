@@ -431,29 +431,32 @@ effective or pretty fucking useless.
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(!istype(attacking_item, /obj/item/wrench/combat))
-		return ..()
-
+/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/wrench/combat))
+		return NONE
 	if(!(user.istate & ISTATE_HARM))
-		return
-
-	if(!attacking_item.toolspeed)
-		return
-
+		return NONE
+	if(!tool.toolspeed)
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "constructing...")
-	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
-		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "constructed!")
-	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
-		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		span_danger("[user] bashes [src] with [tool]!"),
+		span_danger("You bash [src] with [tool]!"),
+		null,
+		COMBAT_MESSAGE_RANGE,
+	)
 
 	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")
@@ -648,7 +651,6 @@ effective or pretty fucking useless.
 		return
 	if(!check_allowed_items(target, not_inside = TRUE))
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	var/turf/targeted_turf = get_turf(target)
 	if(targeted_turf.density)
 		balloon_alert(user, "target has to be in the open!")

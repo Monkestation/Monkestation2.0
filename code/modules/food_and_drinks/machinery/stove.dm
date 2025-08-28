@@ -116,7 +116,7 @@
 	. = ..()
 	LAZYREMOVE(added_ingredients, gone)
 
-/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return

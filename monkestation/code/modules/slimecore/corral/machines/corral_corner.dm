@@ -13,7 +13,6 @@
 	if(target == host)
 		if(host.submit_corners(corral_corners))
 			qdel(src)
-		return AFTERATTACK_PROCESSED_ITEM
 
 	if(length(corral_corners) == 4)
 		say("Buffer full!")
@@ -53,14 +52,14 @@
 	if(!mapping_id || connected_data)
 		return
 	var/list/found_corners = list()
-	for(var/obj/machinery/corral_corner/main in GLOB.machines)
+	for(var/obj/machinery/corral_corner/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/corral_corner))
 		if(main.mapping_id != mapping_id)
 			continue
 		found_corners += main
 	submit_corners(found_corners)
 
 	if(connected_data)
-		for(var/obj/machinery/slime_pen_controller/controller in GLOB.machines)
+		for(var/obj/machinery/slime_pen_controller/controller as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
 			if(controller.mapping_id == mapping_id)
 				controller.linked_data = connected_data
 
@@ -70,13 +69,10 @@
 		return
 	start_linking_procedure()
 
-/obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/multitool/multi)
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/corral_corner/proc/start_linking_procedure()
 	var/obj/item/corral_linker/new_linker = new(loc)

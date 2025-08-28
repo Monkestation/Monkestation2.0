@@ -20,8 +20,34 @@
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_attack))
+	RegisterSignal(parent, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
+/datum/component/jousting/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ITEM_AFTERATTACK,
+		COMSIG_TRANSFORMING_ON_TRANSFORM,
+	))
+
+/datum/component/jousting/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_notice("It can be used on a vehicle for jousting, dealing potential knockdowns and additional damage.")
+
+/datum/component/jousting/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+	if(!user)
+		return
+
+	if(active)
+		INVOKE_ASYNC(src, PROC_REF(on_equip), source, user)
+	else
+		INVOKE_ASYNC(src, PROC_REF(on_drop), source, user)
+
+///Called when a mob equips the spear, registers them as the holder and checks their signals for moving.
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 

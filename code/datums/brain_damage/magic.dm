@@ -17,11 +17,11 @@
 
 /datum/brain_trauma/magic/lumiphobia/on_life(seconds_per_tick, times_fired)
 	..()
-	var/turf/T = owner.loc
-	if(!istype(T))
+	var/turf/turf = owner.loc
+	if(!istype(turf))
 		return
 
-	if(T.get_lumcount() <= SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
+	if(turf.get_lumcount() <= SHADOW_SPECIES_DIM_LIGHT) //if there's enough light, start dying
 		return
 
 	if(COOLDOWN_FINISHED(src, damage_warning_cooldown))

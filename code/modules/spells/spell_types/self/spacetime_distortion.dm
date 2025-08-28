@@ -47,8 +47,8 @@
 
 	for(var/turf/swap_a as anything in to_switcharoo)
 		var/turf/swap_b = to_switcharoo[swap_a]
-		var/obj/effect/cross_action/spacetime_dist/effect_a = new /obj/effect/cross_action/spacetime_dist(swap_a, antimagic_flags)
-		var/obj/effect/cross_action/spacetime_dist/effect_b = new /obj/effect/cross_action/spacetime_dist(swap_b, antimagic_flags)
+		var/obj/effect/cross_action/spacetime_dist/effect_a = new spawned_effect_type(swap_a, antimagic_flags) //monkestation edit: replaces the typing with spawned_effect_type
+		var/obj/effect/cross_action/spacetime_dist/effect_b = new spawned_effect_type(swap_b, antimagic_flags) //monkestation edit: same as above
 		effect_a.linked_dist = effect_b
 		effect_a.add_overlay(swap_b.photograph())
 		effect_b.linked_dist = effect_a
@@ -149,9 +149,9 @@
 	if(!busy)
 		walk_link(AM)
 
-/obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
-	if(user.temporarilyRemoveItemFromInventory(W))
-		walk_link(W)
+/obj/effect/cross_action/spacetime_dist/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(user.temporarilyRemoveItemFromInventory(attacking_item))
+		walk_link(attacking_item)
 	else
 		walk_link(user)
 

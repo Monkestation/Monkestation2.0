@@ -48,3 +48,15 @@
 	)))
 	if(newname)
 		ascended_traitor.fully_replace_character_name(ascended_traitor.real_name, newname)
+
+/proc/make_everyone_wizards()
+	for(var/mob/living/player_mob in GLOB.alive_player_list)
+		if(!player_mob.mind)
+			continue
+
+		if(!ishuman(player_mob))
+			var/mob/living/carbon/human/new_mob = new
+			player_mob.mind.transfer_to(new_mob, TRUE)
+			qdel(player_mob)
+			player_mob = new_mob
+		player_mob.mind.make_wizard()

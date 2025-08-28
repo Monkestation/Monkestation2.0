@@ -273,22 +273,23 @@
 	new /obj/item/gun_maintenance_supplies(src)
 
 //floorbot assembly
-/obj/item/storage/toolbox/attackby(obj/item/stack/tile/iron/T, mob/user, params)
-	var/list/allowed_toolbox = list(/obj/item/storage/toolbox/emergency, //which toolboxes can be made into floorbots
-							/obj/item/storage/toolbox/electrical,
-							/obj/item/storage/toolbox/mechanical,
-							/obj/item/storage/toolbox/artistic,
-							/obj/item/storage/toolbox/syndicate)
+/obj/item/storage/toolbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(!istype(inserted, /obj/item/stack/tile/iron))
+		return TRUE
+	var/static/list/allowed_toolbox = list(
+		/obj/item/storage/toolbox/artistic,
+		/obj/item/storage/toolbox/electrical,
+		/obj/item/storage/toolbox/emergency,
+		/obj/item/storage/toolbox/mechanical,
+		/obj/item/storage/toolbox/syndicate,
+	)
 
-	if(!istype(T, /obj/item/stack/tile/iron))
-		..()
-		return
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
-		return
+		return TRUE
 	if(contents.len >= 1)
 		balloon_alert(user, "not empty!")
-		return
-	if(T.use(10))
+		return FALSE
+	if(inserted.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		switch(B.toolbox)
@@ -306,10 +307,9 @@
 		B.update_appearance()
 		B.balloon_alert(user, "tiles added")
 		qdel(src)
-	else
-		balloon_alert(user, "needs 10 tiles!")
-		return
-
+		return FALSE
+	balloon_alert(user, "needs 10 tiles!")
+	return FALSE
 
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
@@ -322,7 +322,7 @@
 
 /obj/item/storage/toolbox/guncase/monkeycase/Initialize(mapload)
 	. = ..()
-	atom_storage.locked = STORAGE_SOFT_LOCKED
+	atom_storage.set_locked(STORAGE_SOFT_LOCKED)
 
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
 	if(!monkey_check(user))
@@ -343,7 +343,7 @@
 		return TRUE
 
 	if(is_simian(user))
-		atom_storage.locked = STORAGE_NOT_LOCKED
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		to_chat(user, span_notice("You place your paw on the paw scanner, and hear a soft click as [src] unlocks!"))
 		playsound(src, 'sound/machines/click.ogg', 25, TRUE)
 		return TRUE

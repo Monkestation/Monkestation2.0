@@ -163,3 +163,5 @@
 #define SD_MESSAGE 2
 /// Shows an alert picture (e.g. red alert, radiation, etc.)
 #define SD_PICTURE 3
+///clicky noises, how much time needed in between clicks on the machine for the sound to play on click again.
+#define CLICKSOUND_INTERVAL (0.1 SECONDS)

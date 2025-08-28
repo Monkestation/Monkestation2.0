@@ -76,6 +76,10 @@
 	item_path = /obj/item/storage/box/kinetic/kineticlmg
 	cost_per_order = 2500
 
+/datum/orderable_item/waste_weapon/hellhound/sparemags
+	item_path = /obj/item/storage/box/kinetic/kineticlmg/smallcase
+	cost_per_order = 3000 //yes these cost the same as the gun, however its still preferable to buying a whole new gun because its harder to carry multiple LMG's than these loaders kept in nice boxes
+
 /datum/orderable_item/waste_weapon/jdj
 	item_path = /obj/item/storage/box/kinetic/minerjdj/bigcase
 	cost_per_order = 115385 //really weird number however its specifically set to this to make shuttle buy a clean 75k points. This thing should demolish your wallet as violently as your enemies

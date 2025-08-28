@@ -20,6 +20,10 @@
 #define VANGUARD_TRAIT "vanguard"
 /// Source trait for Bloodsuckers-related traits
 #define BLOODSUCKER_TRAIT "bloodsucker_trait"
+/// Source for bloodsucker mesmerize related traits
+#define MESMERIZE_TRAIT "meserize_trait"
+/// Source trait for bloodsucker dominate related traits
+#define DOMINATE_TRAIT "dominate_trait"
 /// Source trait for bloodsuckers in torpor.
 #define TORPOR_TRAIT "torpor_trait"
 /// Source trait for stuff related to bloodsuckers in coffins.

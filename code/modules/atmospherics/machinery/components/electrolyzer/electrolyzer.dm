@@ -163,24 +163,24 @@
 /obj/machinery/electrolyzer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/electrolyzer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!panel_open)
 			balloon_alert(user, "open panel!")
 			return
 		if(cell)
 			balloon_alert(user, "cell inside!")
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		cell = I
-		I.add_fingerprint(usr)
+		cell = attacking_item
+		attacking_item.add_fingerprint(usr)
 		balloon_alert(user, "inserted cell")
 		SStgui.update_uis(src)
 

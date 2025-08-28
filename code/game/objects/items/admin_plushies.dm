@@ -218,7 +218,7 @@
 	item_path = /obj/item/toy/plush/admin/gabbie
 	item_cost = 7500
 
-/obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food/deadmouse))
 		playsound(src.loc, 'sound/items/eatfood.ogg', 50)
 		to_chat(user, span_warning("Gabbie chomps up the rat!"))
@@ -521,7 +521,7 @@
 			if(50 to INFINITY)
 				. += span_notice("Her hair has been brushed! It sparkles with beauty! It's the most beautiful hair in the galaxy!")
 
-/obj/item/toy/plush/admin/shion/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/toy/plush/admin/shion/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/razor))
 		if(shaved)
 			to_chat(user, span_warning("You can't shave [src], she has already been shaved!"))

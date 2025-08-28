@@ -204,19 +204,19 @@
 	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	attach_iv(target, usr)
 
-/obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
+/obj/machinery/iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(use_internal_storage)
 		return ..()
 
-	if(is_type_in_typecache(W, drip_containers) || IS_EDIBLE(W))
+	if(is_type_in_typecache(attacking_item, drip_containers) || IS_EDIBLE(attacking_item))
 		if(reagent_container)
 			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		reagent_container = W
-		to_chat(user, span_notice("You attach [W] to [src]."))
-		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
+		reagent_container = attacking_item
+		to_chat(user, span_notice("You attach [attacking_item] to [src]."))
+		user.log_message("attached a [attacking_item] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
 		add_fingerprint(user)
 		update_appearance(UPDATE_ICON)
 		return
@@ -251,8 +251,9 @@
 			to_chat(attached, span_userdanger("The IV drip needle is ripped out of you, leaving an open bleeding wound!"))
 			var/list/arm_zones = shuffle(list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 			var/obj/item/bodypart/chosen_limb = attached_mob.get_bodypart(arm_zones[1]) || attached_mob.get_bodypart(arm_zones[2]) || attached_mob.get_bodypart(BODY_ZONE_CHEST)
-			chosen_limb.receive_damage(3)
-			attached_mob.cause_wound_of_type_and_severity(WOUND_PIERCE, chosen_limb, WOUND_SEVERITY_MODERATE, wound_source = "IV needle")
+			if(!QDELETED(chosen_limb))
+				chosen_limb.receive_damage(3)
+				attached_mob.cause_wound_of_type_and_severity(WOUND_PIERCE, chosen_limb, WOUND_SEVERITY_MODERATE, wound_source = "IV needle")
 		else
 			visible_message(span_warning("[attached] is detached from [src]."))
 		detach_iv()
@@ -441,7 +442,7 @@
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /atom/movable/screen/alert/iv_connected
 	name = "IV Connected"

@@ -10,6 +10,15 @@
 /// Checks if the given mob is a Bingle
 #define IS_BINGLE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bingle))
 
+#define IS_DARKSPAWN(A) (A?.mind?.has_antag_datum(/datum/antagonist/darkspawn))
+#define IS_THRALL(A) (A?.mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn))
+///non thrall teammates
+#define IS_PSYCHE(A) (A?.mind?.has_antag_datum(/datum/antagonist/psyche))
+#define IS_DARKSPAWN_OR_THRALL(A) (A?.mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn) || A?.mind?.has_antag_datum(/datum/antagonist/darkspawn))
+///also checks factions, so things can be immune to darkspawn spells without needing an antag datum
+#define IS_TEAM_DARKSPAWN(A) ((A?.mind && (IS_DARKSPAWN(A) || IS_THRALL(A)) || IS_PSYCHE(A) || (ROLE_DARKSPAWN in A.faction)))
+
+
 /// List of areas blacklisted from area based traitor objectives
 #define TRAITOR_OBJECTIVE_BLACKLISTED_AREAS list(/area/station/engineering/hallway, \
 		/area/station/engineering/lobby, \
@@ -24,7 +33,7 @@
 // Clock cultist
 #define IS_CLOCK(mob) ((FACTION_CLOCK in mob.faction) || mob?.mind?.has_antag_datum(/datum/antagonist/clock_cultist))
 /// maximum amount of cogscarabs the clock cult can have
-#define MAXIMUM_COGSCARABS 9
+#define MAXIMUM_COGSCARABS 6
 /// is something a cogscarab
 #define iscogscarab(checked) (istype(checked, /mob/living/basic/drone/cogscarab))
 /// is something an eminence
