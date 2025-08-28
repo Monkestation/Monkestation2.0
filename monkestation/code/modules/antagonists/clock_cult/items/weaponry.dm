@@ -179,6 +179,7 @@
 	desc = "A brass hammer glowing with energy."
 	base_icon_state = "ratvarian_hammer"
 	icon_state = "ratvarian_hammer0"
+	force = 15
 	throwforce = 25
 	armour_penetration = 6
 	attack_verb_simple = list("bash", "hammer", "attack", "smash")
@@ -264,6 +265,8 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow/clockwork
 	/// Time between bolt recharges
 	var/recharge_time = 1.5 SECONDS
+	drawn = TRUE
+	nodrop = TRUE
 
 /obj/item/gun/ballistic/bow/clockwork/Initialize(mapload)
 	. = ..()

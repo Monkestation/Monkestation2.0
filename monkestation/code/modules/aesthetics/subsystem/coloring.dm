@@ -40,8 +40,9 @@ SUBSYSTEM_DEF(station_coloring)
 
 /datum/controller/subsystem/station_coloring/proc/color_area_objects(list/possible_areas, color) // paint in areas
 	for(var/type in possible_areas)
-		for(var/obj/structure/window/W in GLOB.areas_by_type[type]) // for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
-			W.change_color(color)
+		for(var/obj/structure/window/window in GLOB.areas_by_type[type]) // for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
+			if(window.uses_color)
+				window.change_color(color)
 		if(wall_trims)
 			for(var/turf/closed/wall/wall in GLOB.areas_by_type[type])
 				if(wall.wall_trim)

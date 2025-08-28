@@ -57,7 +57,7 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
-	else if(!(user.istate & ISTATE_HARM))
+	else if(!(user.istate & ISTATE_HARM) || (P.item_flags & NOBLUDGEON))
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()

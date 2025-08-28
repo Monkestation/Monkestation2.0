@@ -1397,21 +1397,19 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	if(glass.steps_remaining[STEP_JACKS])
 		. += "The glass requires [glass.steps_remaining[STEP_JACKS]] more jacking actions!"
 
-/obj/item/glassblowing/blowing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return ..()
-	if(istype(target, /obj/item/glassblowing/molten_glass))
-		var/obj/item/glassblowing/molten_glass/attacking_glass = target
+/obj/item/glassblowing/blowing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/glassblowing/molten_glass))
+		var/obj/item/glassblowing/molten_glass/attacking_glass = interacting_with
 		var/obj/item/glassblowing/molten_glass/glass = glass_ref?.resolve()
 		if(glass)
 			to_chat(user, span_warning("[src] already has some glass on it!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(attacking_glass, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		glass_ref = WEAKREF(attacking_glass)
-		to_chat(user, span_notice("[src] picks up [target]."))
+		to_chat(user, span_notice("[src] picks up [interacting_with]."))
 		icon_state = "blow_pipe_full"
-		return
+		return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/item/glassblowing/blowing_rod/attackby(obj/item/attacking_item, mob/living/user, params)
