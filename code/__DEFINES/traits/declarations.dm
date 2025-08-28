@@ -1310,9 +1310,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
 
-///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
-#define TRAIT_ILLUSORY_EFFECT "illusory_effect"
-
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
 
