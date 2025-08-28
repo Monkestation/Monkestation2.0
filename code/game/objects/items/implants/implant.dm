@@ -19,7 +19,8 @@
 	var/allow_multiple = FALSE
 	///how many times this can do something, only relevant for implants with limited uses
 	var/uses = -1
-
+	//if true, this implant broadcasts a warning when it is removed surgically
+	var/has_surgical_warning = FALSE
 
 /obj/item/implant/proc/activate()
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
@@ -128,6 +129,15 @@
 	if(imp_in)
 		removed(imp_in)
 	return ..()
+
+//Called when the implant begins to be removed surgicallly
+/obj/item/implant/proc/on_surgical_removal_attempt()
+	return
+
+//Called when the implant is successfully removed surgically
+/obj/item/implant/proc/on_surgical_removal_complete()
+	return
+
 /**
  * Gets implant specifications for the implant pad
  */
