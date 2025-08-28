@@ -108,6 +108,9 @@
 	/// If true shows the contents of the storage in open_storage
 	var/display_contents = TRUE
 
+	/// Switch this off if you want to handle click_alt in the parent atom
+	var/click_alt_open = TRUE
+
 /datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	if(!istype(parent))
 		stack_trace("Storage datum ([type]) created without a [isnull(parent) ? "null parent" : "invalid parent ([parent.type])"]!")
@@ -135,7 +138,7 @@
 	parent = null
 	real_location = null
 
-	for(var/mob/person in is_using)
+	for(var/mob/person as anything in is_using)
 		if(person.active_storage == src)
 			person.active_storage = null
 			person.client?.screen -= boxes
@@ -188,6 +191,7 @@
 	ASSERT(isnull(parent))
 
 	parent = new_parent
+	ADD_TRAIT(parent, TRAIT_COMBAT_MODE_SKIP_INTERACTION, REF(src))
 	// a few of theses should probably be on the real_location rather than the parent
 	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
@@ -201,6 +205,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(close_distance))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(update_actions))
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	// monke edit: bluespace compression kit
 	RegisterSignal(parent, COMSIG_ITEM_PRE_COMPRESS, PROC_REF(attempt_compression))
 	// monke end
@@ -656,7 +661,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/remove_and_refresh(atom/movable/gone)
 	SIGNAL_HANDLER
 
-	for(var/mob/user in is_using)
+	for(var/mob/user as anything in is_using)
 		if(user.client)
 			var/client/cuser = user.client
 			cuser.screen -= gone
@@ -813,6 +818,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	attempt_insert(dropping, user)
+	return //COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 /// Called directly from the attack chain if [insert_on_attack] is TRUE.
 /// Handles inserting an item into the storage when clicked.
@@ -936,6 +942,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(display_contents)
 		return COMPONENT_NO_AFTERATTACK
 
+
+/// Alt click on the storage item. Default: Open the storage.
+/datum/storage/proc/on_click_alt(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	if(!click_alt_open)
+		return
+
+	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
+
 /// Opens the storage to the mob, showing them the contents to their UI.
 /datum/storage/proc/open_storage(mob/to_show)
 	if(!parent)
@@ -1005,7 +1021,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /// Close the storage UI for everyone viewing us.
 /datum/storage/proc/close_all()
-	for(var/mob/user in is_using)
+	for(var/mob/user as anything in is_using)
 		hide_contents(user)
 
 /// Refresh the views of everyone currently viewing the storage.
@@ -1131,3 +1147,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	changed.visible_message(span_warning("[changed] falls out of [parent]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+
+///Assign a new value to the locked variable. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
+/datum/storage/proc/set_locked(new_locked)
+	if(locked == new_locked)
+		return
+	locked = new_locked
+	if(new_locked > STORAGE_NOT_LOCKED)
+		close_all_recursive()
+	parent.update_appearance()
+
+/// Closes the storage UIs of this and everything inside the parent for everyone viewing them.
+/datum/storage/proc/close_all_recursive()
+	close_all()
+	for(var/atom/movable/movable as anything in parent.get_all_contents())
+		movable.atom_storage?.close_all()
+

@@ -744,3 +744,61 @@
   wonderinghost:
   - bugfix: fixes flatpack duplication when deploying
   - bugfix: fixes material duplication when repacking
+2025-08-28:
+  Absolucy, Melbert:
+  - bugfix: Hierophant Club Blink at range
+  - bugfix: Crusher Loot
+  Melbert:
+  - refactor: Storage and Tables are now a lower priority action, meaning some uses
+      of items on storage should work... better, now. Here's hoping at least, report
+      any oddities.
+  - refactor: 'Note: For an overwhelming majority of items, combat mode will attempt
+      to attack/insert into the target, while non-combat-mode will attempt to use
+      on a target. This means screwdrivering or emagging a MODsuit must be done on
+      non-combat-mode, as combat mode will simply put the screwdriver or emag into
+      its storage. Same applies to tables, though when in doubt, RMB may help (for
+      things which are also weapons, like mops).'
+  - refactor: Refactored escape pod storage, now they actually properly show as unlocked
+      on red alert and above.
+  MrMelbert:
+  - balance: Clock cultists are given a slowing status effect after warping to the
+      station
+  - rscadd: Anchoring crystals now bend reality the more of them there are
+  - balance: anchoring crystals now lock down the shuttle while active
+  - balance: abscond can only be invoked from marked areas and takes 45 seconds, servant
+      antag info now lists marked areas
+  - balance: vitality sigils no longer create borg shells but shells can be made by
+      on station tinker's caches
+  - balance: the soul vessels given by vitality sigils can now be converted to cogscarab
+      shells
+  - balance: clockwork mobs can now warp to the station but are restricted to marked
+      areas
+  - bugfix: various clock cult bugs
+  - balance: reduced the maximum amount of cogscarabs from 9 to 6
+  - balance: reworked the clockwork power economy into passive and active power
+  ThePooba:
+  - rscadd: 'donator alt title: Sr. Attending physician(cmo), Cybertronic Engineer(robo),
+      Builder(engi)'
+  - rscadd: Darkspawn antag https://mediawiki.monkestation.com/Darkspawn
+  - rscadd: Head of security jackboots (they are stompy)
+  - rscadd: Swinging component (fighter only for now)
+  - rscadd: like 50 spells for darkspawn and shit
+  - rscadd: New camera network system - mostly code side
+  - rscadd: custom key click sounds for some machines and buttons, firealarms etc
+  Xander3359:
+  - bugfix: (MrMelbert) Fix inability to make r-glass by hand inside your backpack
+  - qol: (MrMelbert) Hand labels now have a visual effect associated, and are also
+      affected by heat / can be cleaned off like stickers.
+  - refactor: (MrMelbert) Refactored hand labels. They're objects now!
+  - bugfix: (MrMelbert) Heirophant Club Blink at range
+  - bugfix: (MrMelbert) Crusher Loot
+  - bugfix: (MrMelbert) RCD material reclamation
+  - bugfix: (SmArtKar) Fixed crayons not being usable on anything except turfs (including
+      washing machines)
+  - refactor: (intercepti0n) Stickers are now a component and gets rid of a copyright
+      infringement
+  - bugfix: (SyncIt21) RLD won't try to put lights on storage objects like bags &
+      such
+  - bugfix: Fix being unable to apply patches
+  - bugfix: Fix being unable to place on griddle
+  - bugfix: Fix being unable to use xenobio vacuum from range

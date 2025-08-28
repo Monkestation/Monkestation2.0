@@ -10,7 +10,7 @@
 	jaunt_type = /obj/effect/dummy/phased_mob/shadow
 
 	/// The max amount of lumens on a turf allowed before we can no longer enter jaunt with this
-	var/light_threshold = SHADOW_SPECIES_LIGHT_THRESHOLD
+	var/light_threshold = SHADOW_SPECIES_DIM_LIGHT
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/Grant(mob/grant_to)
 	. = ..()
@@ -54,7 +54,7 @@
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
 	/// Max amount of light permitted before being kicked out
-	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
+	var/light_max = SHADOW_SPECIES_DIM_LIGHT
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
 	var/healing_rate = 1.5
 	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
