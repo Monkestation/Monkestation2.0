@@ -146,4 +146,4 @@
 
 ///Adds a topic for remotely destroying a security implant.
 /obj/machinery/computer/prisoner/management/proc/add_destroy_topic(obj/item/implant/our_implant)
-	return "<A href='?src=[REF(src)];self_destruct=[REF(our_implant)]'>(<font class='bad'>Destroy</font>)</A><BR>"
+	return "<A href='byond://?src=[REF(src)];self_destruct=[REF(our_implant)]'>(<font class='bad'>Destroy</font>)</A><BR>"
