@@ -366,23 +366,13 @@
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/mod/control/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(user.istate & ISTATE_HARM)
-		// Block all item-click-inserts when we're open
-		// Other form of insertion will still function (mousedrop, hotkey)
-		if(open)
-			return FALSE
-		// ...You have to open it up somehow though
-		if(inserted.tool_behaviour == TOOL_SCREWDRIVER)
-			return FALSE
-	return TRUE
-
-/obj/item/mod/control/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
-	if(istype(attacking_item, /obj/item/pai_card))
+// Makes use of tool act to prevent shoving stuff into our internal storage
+/obj/item/mod/control/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/pai_card))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
-			return ITEM_INTERACT_BLOCKING
-		insert_pai(user, attacking_item)
+			return NONE // shoves the card in the storage anyways
+		insert_pai(user, tool)
 		return ITEM_INTERACT_SUCCESS
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)

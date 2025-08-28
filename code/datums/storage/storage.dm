@@ -191,6 +191,7 @@
 	ASSERT(isnull(parent))
 
 	parent = new_parent
+	ADD_TRAIT(parent, TRAIT_COMBAT_MODE_SKIP_INTERACTION, REF(src))
 	// a few of theses should probably be on the real_location rather than the parent
 	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
@@ -817,6 +818,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	attempt_insert(dropping, user)
+	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 /// Called directly from the attack chain if [insert_on_attack] is TRUE.
 /// Handles inserting an item into the storage when clicked.

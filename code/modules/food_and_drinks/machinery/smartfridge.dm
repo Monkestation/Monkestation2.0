@@ -136,9 +136,12 @@
 				to_chat(user, span_warning("There is nothing in [O] to put in [src]!"))
 				return FALSE
 
-	if(!(user.istate & ISTATE_HARM))
-		to_chat(user, span_warning("\The [src] smartly refuses [O]."))
-		SStgui.update_uis(src)
+	if(!powered())
+		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		return FALSE
+
+	if(!(user.istate & ISTATE_HARM) || (weapon.item_flags & NOBLUDGEON))
+		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
 		return FALSE
 	else
 		return ..()

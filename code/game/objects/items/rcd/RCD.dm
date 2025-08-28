@@ -372,6 +372,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(!rcd_results)
 		return NONE
 
+	//straight up can't touch this
+	if(mode == RCD_DECONSTRUCT && (target.resistance_flags & INDESTRUCTIBLE))
+		balloon_alert(user, "too durable!")
+		return ITEM_INTERACT_BLOCKING
+
 	var/delay = rcd_results["delay"] * delay_mod
 	if (
 		!(upgrade & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN) \

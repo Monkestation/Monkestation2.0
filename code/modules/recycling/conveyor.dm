@@ -282,7 +282,20 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		update_move_direction()
 		to_chat(user, span_notice("You set [src]'s direction [inverted ? "backwards" : "back to default"]."))
 
-	else if(!(user.istate & ISTATE_HARM))
+	else if(istype(attacking_item, /obj/item/stack/conveyor))
+		// We should place a new conveyor belt machine on the output turf the conveyor is pointing to.
+		var/turf/target_turf = get_step(get_turf(src), forwards)
+		if(!target_turf)
+			return ..()
+		for(var/obj/machinery/conveyor/belt in target_turf)
+			to_chat(user, span_warning("You cannot place a conveyor belt on top of another conveyor belt."))
+			return ..()
+
+		var/obj/item/stack/conveyor/belt_item = attacking_item
+		belt_item.use(1)
+		new /obj/machinery/conveyor(target_turf, forwards, id)
+
+	else if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
 		user.transferItemToLoc(attacking_item, drop_location())
 	else
 		return ..()
