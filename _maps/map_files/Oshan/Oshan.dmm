@@ -17494,6 +17494,7 @@
 	dir = 6;
 	color = "#009dc4"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard/central)
 "fIG" = (
