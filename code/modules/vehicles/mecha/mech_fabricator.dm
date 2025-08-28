@@ -97,7 +97,7 @@
 		connect_techweb(SSresearch.science_tech)
 	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
-	RefreshParts() //Recalculating local material sizes if the fab isn't linked
+	RefreshParts() // Recalculating local material sizes if the fab isn't linked
 	if(stored_research)
 		update_menu_tech()
 	return ..()
@@ -109,7 +109,7 @@
 		if(obj_flags & EMAGGED)
 			to_chat(user, span_warning("The authentification slot spits sparks at you and the display reads scrambled text!"))
 			do_sparks(1, FALSE, src)
-			authorization_override = TRUE //just in case it wasn't already for some reason. keycard reader is busted.
+			authorization_override = TRUE // just in case it wasn't already for some reason. keycard reader is busted.
 			return
 		if((ACCESS_COMMAND in card.access))
 			if(!authorization_override)
