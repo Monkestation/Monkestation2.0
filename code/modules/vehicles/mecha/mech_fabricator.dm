@@ -135,6 +135,8 @@
 		if(isliving(user))
 			var/mob/living/living_user = user
 			id_card = living_user.get_idcard(hand_first = TRUE)
+			if(!id_card)
+				return FALSE
 			return (ACCESS_COMMAND in id_card.access)
 	return issilicon(user)
 
