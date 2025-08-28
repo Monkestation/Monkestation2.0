@@ -72,6 +72,8 @@
 				slowdown *= 2 // spaceacillin doubles the time it takes to grow
 			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
+			if(owner.has_reagent(/datum/reagent/medicine/stimulants))
+				slowdown *= 10 //stimulants greatly stun the babys growth
 
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 

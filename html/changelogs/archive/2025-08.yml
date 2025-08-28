@@ -685,9 +685,49 @@
       display space parallax to players with low multi-z culling settings.
   - rscdel: Removed bloom (additive lighting). It just made bright lights more painful
       on the eyes, and didn't look too much better anyways.
+  - bugfix: Rescue hooks can now fish up Oozeling cores.
+  - bugfix: Oozelings which self-revive in chasms somehow will properly "leap" out
+      of the chasm, like other mobs would.
+  - bugfix: Stowaway Oozelings will no longer teleport when revived.
+  Absolucy, hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  Arturlang:
+  - rscadd: mesmerize is now a visual effect only visible to victim and attacker,
+      and no longer requires both parties to stand still
+  - rscadd: both tremere abilities besides mesmerize are now toggled with right click
+      for usability
+  - rscadd: thaumaturgy is now charge-based instead of a single shot, but is thus
+      weaker per-shot
+  - rscadd: tremere abilities now have dynamic descriptions
+  - rscadd: dominate no longer requires facing your target
+  - rscadd: bloodsuckers can only have 1 targeted ability active at a time, you couldn't
+      multicast before anyway.
+  - rscadd: Mesmerize is now slowed down/blocked with welding protection, with levels
+      past 2 making you immune (welding protection is level 2)
+  - rscadd: Dominate now has a visual timer for when your vassal dies horribly
+  - rscadd: Auspex is renamed into Obfsucate, as that makes more sense given what
+      it does.
+  - balance: Auspex, now, Obfuscate, fills your stamina to full, as tremere are lacking
+      in stamina regen options
+  - balance: Obfuscate requires level 6 to allow you to teleport anywehre
+  - balance: Obfuscate now has a per-tile cost of 5 blood per tile teleported, with
+      a cap of 100 blood
+  - code_imp: heavy refactors of tremere abilities
   Cmpwarrior:
   - rscadd: Adds a new outfit to the AutoDrobe and a new clown mask variant, based
       off everyone's favorite fool.
+  Melbert:
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
   Salted-Zen:
   - qol: Scraped the Scarborough arms stamp off the 'Duster' Revolver
   - balance: Reduced PK Railgun recoil
@@ -697,6 +737,8 @@
       each, for reloading the 'Hellhound' LMG
   - balance: All mining guns (Except the 'Thor' 950 JDJ) fit in the suit slots of
       Explorer Armor, Goliath Cloak, Ash Drake Armor, And Godslayer Armor
+  Shoddd:
+  - balance: stimulants now stun alien embryos growth
   SmArtKar:
   - qol: Heads of staff PDAs start with twice as much disk space
   wonderinghost:

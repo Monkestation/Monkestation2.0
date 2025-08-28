@@ -332,3 +332,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 
 #define isartifact(thing) (istype(thing, /obj/structure/artifact) || istype(thing, /obj/item/melee/artifact) || istype(thing, /obj/item/gun/magic/artifact) || istype(thing, /obj/item/stock_parts/cell/artifact))
 #define iswater(A) (istype(A, /turf/open/water))
+
+#define is_oozeling_core(A) (istype(A, /obj/item/organ/internal/brain/slime))
