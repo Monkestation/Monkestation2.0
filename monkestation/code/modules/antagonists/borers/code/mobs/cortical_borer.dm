@@ -401,11 +401,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	if(istype(/mob/living/basic/cortical_borer/empowered, src)) // lets also distinguish empowered borers from normal ones
 		name = "larger [name]"
-		real_name = "larger [name]"
 
 	if(generation == 0) //The first ever borer gets a special name
 		name = "The hivequeen [initial(name)]"
-		real_name = "The hivequeen [initial(name)]"
 
 // if things can go wrong, they will. So this proc is an emergency measure meant to resolve them
 /mob/living/basic/cortical_borer/proc/resolve_misc_issues()
