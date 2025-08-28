@@ -274,8 +274,8 @@
 		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
-	else if(istype(tool, /obj/item/riding_offhand))
-		. = riding_offhand_act(user, tool)
+	//else if(istype(tool, /obj/item/riding_offhand))
+	//	. = riding_offhand_act(user, tool) TALBESMASH COMPONENT
 
 	// Continue to placing if we don't do anything else
 	if(.)
@@ -1094,13 +1094,13 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
-
+/*
 /obj/structure/rack/skeletal
 	name = "skeletal minibar"
 	desc = "Rattle me boozes!"
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
-
+*/
 /obj/structure/rack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/climbable)
@@ -1138,7 +1138,7 @@
 	. = ..()
 	if(.)
 		return .
-	if((tool.item_flags & ABSTRACT) || (user.combat_mode && !(tool.item_flags & NOBLUDGEON)))
+	if((tool.item_flags & ABSTRACT) || ((user.istate & ISTATE_HARM) && !(tool.item_flags & NOBLUDGEON)))
 		return NONE
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS

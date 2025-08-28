@@ -670,12 +670,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_DETECTIVES_TASTE "detectives_taste" */
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
-/* #define TRAIT_MOVE_GROUND "move_ground" */
+#define TRAIT_MOVE_GROUND "move_ground"
 #define TRAIT_MOVE_FLYING "move_flying"
 #define TRAIT_MOVE_VENTCRAWLING "move_ventcrawling"
 #define TRAIT_MOVE_FLOATING "move_floating"
-/* #define TRAIT_MOVE_PHASING "move_phasing" */
-/*#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down*/
+#define TRAIT_MOVE_PHASING "move_phasing"
+#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down"
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
 
@@ -712,7 +712,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Chasms will be safe to cross while they've this trait.
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
 ///Chasms will be safe to cross if there is something with this trait on it
-/* #define TRAIT_CHASM_STOPPER "chasm_stopper" */
+#define TRAIT_CHASM_STOPPER "chasm_stopper"
 ///The effects of the immerse element will be halted while this trait is present.
 /* #define TRAIT_IMMERSE_STOPPED "immerse_stopped" */
 /// The effects of hyperspace drift are blocked when the tile has this trait

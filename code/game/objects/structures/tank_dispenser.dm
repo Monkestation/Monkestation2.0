@@ -51,7 +51,7 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(!(user.istate & ISTATE_HARM) || (I.item_flags & NOBLUDGEON))
+	else if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
 		balloon_alert(user, "can't insert!")
 		return
 	else

@@ -500,8 +500,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
 			update_appearance()
 
-	else if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
-		var/item_is_id = weapon.GetID()
+	else if(!(user.istate & ISTATE_HARM) || (W.item_flags & NOBLUDGEON))
+		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE
 		if((item_is_id || !toggle(user)) && !opened)

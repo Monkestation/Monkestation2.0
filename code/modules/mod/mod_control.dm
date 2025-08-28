@@ -374,15 +374,15 @@
 			return NONE // shoves the card in the storage anyways
 		insert_pai(user, tool)
 		return ITEM_INTERACT_SUCCESS
-	if(istype(attacking_item, /obj/item/mod/module))
+	if(istype(tool, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return ITEM_INTERACT_BLOCKING
-		install(attacking_item, user)
+		install(tool, user)
 		SEND_SIGNAL(src, COMSIG_MOD_MODULE_ADDED, user)
 		return ITEM_INTERACT_SUCCESS
-	if(istype(attacking_item, /obj/item/mod/core))
+	if(istype(tool, /obj/item/mod/core))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -391,19 +391,19 @@
 			balloon_alert(user, "core already installed!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return ITEM_INTERACT_BLOCKING
-		var/obj/item/mod/core/attacking_core = attacking_item
+		var/obj/item/mod/core/attacking_core = tool
 		attacking_core.install(src)
 		balloon_alert(user, "core installed")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return ITEM_INTERACT_SUCCESS
 	if(open)
-		if(is_wire_tool(attacking_item))
+		if(is_wire_tool(tool))
 			wires.interact(user)
 			return ITEM_INTERACT_SUCCESS
-		if(attacking_item.GetID())
-			update_access(user, attacking_item.GetID())
+		if(tool.GetID())
+			update_access(user, tool.GetID())
 			return ITEM_INTERACT_SUCCESS
-	return NONE
+	return ..()
 
 /obj/item/mod/control/get_cell()
 	if(!open)

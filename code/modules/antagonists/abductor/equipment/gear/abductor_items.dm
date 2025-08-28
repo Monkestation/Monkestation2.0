@@ -57,9 +57,9 @@
 
 	switch(mode)
 		if(GIZMO_SCAN)
-			scan(target, user)
+			scan(interacting_with, user)
 		if(GIZMO_MARK)
-			mark(target, user)
+			mark(interacting_with, user)
 
 
 /obj/item/abductor/gizmo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

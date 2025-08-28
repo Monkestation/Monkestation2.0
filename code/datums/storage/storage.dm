@@ -818,7 +818,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	attempt_insert(dropping, user)
-	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
+	return //COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 /// Called directly from the attack chain if [insert_on_attack] is TRUE.
 /// Handles inserting an item into the storage when clicked.

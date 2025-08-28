@@ -28,16 +28,30 @@
 	light_power = 3
 	anchored_tabletop_offset = 6
 	var/held_state = "microwave_standard"
-	var/wire_disabled = FALSE // is its internal wire cut?
+	/// Is its function wire cut?
+	var/wire_disabled = FALSE
 	var/operating = FALSE
 	/// How dirty is it?
 	var/dirty = 0
 	var/dirty_anim_playing = FALSE
 	/// How broken is it? NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
 	var/broken = NOT_BROKEN
+	/// Microwave door position
 	var/open = FALSE
+	/// Microwave max capacity
 	var/max_n_of_items = 10
+	/// Microwave efficiency (power) based on the stock components
 	var/efficiency = 0
+	/// If we use a cell instead of powernet
+	var/cell_powered = FALSE
+	/// The cell we charge with
+	var/obj/item/stock_parts/cell/cell
+	/// The cell we're charging
+	var/obj/item/stock_parts/cell/vampire_cell
+	/// Capable of vampire charging PDAs
+	var/vampire_charging_capable = FALSE
+	/// Charge contents of microwave instead of cook
+	var/vampire_charging_enabled = FALSE
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
@@ -277,11 +291,11 @@
 			return ITEM_INTERACT_BLOCKING
 		return NONE
 
-	if(istype(item, /obj/item/stock_parts/power_store/cell) && cell_powered)
+	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
 		var/swapped = FALSE
 		if(!isnull(cell))
 			cell.forceMove(drop_location())
-			if(!HAS_SILICON_ACCESS(user) && Adjacent(user))
+			if(!(issilicon(user) || isdrone(user) || isAdminGhostAI(user)) && Adjacent(user))
 				user.put_in_hands(cell)
 			cell = null
 			swapped = TRUE
@@ -303,7 +317,7 @@
 		balloon_alert(user, "max 1 device!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(item.w_class <= WEIGHT_CLASS_NORMAL && !user.combat_mode && isnull(item.atom_storage))
+	if(item.w_class <= WEIGHT_CLASS_NORMAL && !(user.istate & ISTATE_HARM) && isnull(item.atom_storage))
 		if(ingredients.len >= max_n_of_items)
 			balloon_alert(user, "it's full!")
 			return ITEM_INTERACT_BLOCKING
@@ -324,28 +338,33 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/microwave/proc/handle_dumping(mob/living/user, obj/item/tool)
-	if(isnull(tool.atom_storage))
-		return
-
-	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !(user.istate & ISTATE_HARM))
-		if(ingredients.len >= max_n_of_items)
-			balloon_alert(user, "it's full!")
-			return TRUE
-		if(!user.transferItemToLoc(O, src))
-			balloon_alert(user, "it's stuck to your hand!")
-			return FALSE
-
-		ingredients += O
-		user.visible_message(span_notice("[user] adds \a [O] to \the [src]."), span_notice("You add [O] to \the [src]."))
-		update_appearance()
-		return
-
 	//MONKESTATION EDIT START
-	if (istype(O, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding = O
+	if (istype(tool, /obj/item/riding_offhand))
+		var/obj/item/riding_offhand/riding = tool
 		return stuff_mob_in(riding.rider, user)
 	//MONKESTATION EDIT END
-	return ..()
+
+	var/loaded = 0
+	if(!istype(tool, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [tool] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = tool))
+			return
+
+	for(var/obj/tray_item in tool.contents)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(ingredients.len >= max_n_of_items)
+			balloon_alert(user, "it's full!")
+			return
+		if(tool.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			ingredients += tray_item
+
+	if(loaded)
+		open(autoclose = 0.6 SECONDS)
+		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		update_appearance()
 
 /obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
@@ -593,10 +612,10 @@
 	soundloop.stop()
 	open()
 
-/obj/machinery/microwave/proc/open()
+/obj/machinery/microwave/proc/open(autoclose = 0.8 SECONDS)
 	open = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(close)), 0.8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(close)), autoclose)
 
 /obj/machinery/microwave/proc/close()
 	open = FALSE

@@ -253,7 +253,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /obj/item/traitor_bug
 	name = "suspicious device"
 	desc = "It looks dangerous."
-	item_flags = EXAMINE_SKIP|NOBLUDGEON
+	item_flags = NOBLUDGEON
 
 	icon = 'icons/obj/device_syndie.dmi'
 	icon_state = "bug"

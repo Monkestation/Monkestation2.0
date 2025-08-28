@@ -125,8 +125,8 @@
 				deconstruct()
 			return
 
-	if(!(user.istate & ISTATE_HARM) || (I.item_flags & NOBLUDGEON))
-		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
+	if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
+		if((attacking_item.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
 		place_item_in_disposal(attacking_item, user)
 		update_appearance()

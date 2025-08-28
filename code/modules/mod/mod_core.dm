@@ -211,7 +211,7 @@
 	return replace_cell(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/mod/core/standard/proc/replace_cell(obj/item/attacking_item, mob/user)
-	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/cell))
 		return FALSE
 	if(!mod.open)
 		mod.balloon_alert(user, "open the cover first!")
