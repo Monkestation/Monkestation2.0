@@ -116,7 +116,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	. = ..()
 	. += span_notice("With a <b>chisel</b> or even a <b>pickaxe</b> of some kind, you could cut this into <b>blocks</b>.")
 
-/obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
 		return ..()
 	playsound(src, 'sound/effects/picaxe1.ogg', 50, TRUE)
@@ -1773,9 +1773,9 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	name = "Glass-blowing Metal Cup"
 	result = /obj/item/glassblowing/metal_cup
 
-/obj/item/glassblowing/metal_cup/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/stack/ore/glass))
-		var/obj/item/stack/ore/glass/glass_obj = I
+/obj/item/glassblowing/metal_cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/ore/glass))
+		var/obj/item/stack/ore/glass/glass_obj = attacking_item
 		if(!glass_obj.use(1))
 			return
 		has_sand = TRUE

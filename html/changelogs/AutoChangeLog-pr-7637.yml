@@ -1,4 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - bugfix: "TRAIT_SNOWSTORM_IMMUNE no longer makes you plasma lake proof"

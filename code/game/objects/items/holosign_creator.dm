@@ -28,8 +28,8 @@
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
 
-/obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	afterattack(target, user, proximity_flag, click_parameters)
+/obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, click_parameters)
+	interact_with_atom(target, user, click_parameters)
 
 /obj/item/holosign_creator/examine(mob/user)
 	. = ..()
@@ -37,36 +37,39 @@
 		return
 	. += span_notice("It is currently maintaining <b>[length(signs)]/[max_signs]</b> projections.")
 
-/obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || !check_allowed_items(target, not_inside = TRUE))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/turf/target_turf = get_turf(target)
+/obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return NONE
+
+	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+
 	if(target_holosign)
-		qdel(target_holosign)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(holocreator_busy)
-		to_chat(user, span_notice("[src] is busy creating a hologram."))
-		return
+		balloon_alert(user, "busy making a hologram!")
+		return ITEM_INTERACT_BLOCKING
 	if(LAZYLEN(signs) >= max_signs)
 		balloon_alert(user, "max capacity!")
-		return
-	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+
 	if(creation_time)
 		holocreator_busy = TRUE
-		if(!do_after(user, creation_time, target = target))
+		if(!do_after(user, creation_time, target = interacting_with))
 			holocreator_busy = FALSE
-			return
+			return ITEM_INTERACT_BLOCKING
 		holocreator_busy = FALSE
 		if(LAZYLEN(signs) >= max_signs)
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //don't try to sneak dense stuff on our tile during the wait.
-			return
-	create_holosign(target, user)
+			return ITEM_INTERACT_BLOCKING
+
+	target_holosign = create_holosign(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -80,16 +83,15 @@
 
 /obj/item/holosign_creator/attack_self(mob/user)
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 		balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/Destroy()
 	. = ..()
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
-
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"
@@ -153,11 +155,11 @@
 	. = ..()
 	register_context()
 
-/obj/item/holosign_creator/atmos/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/holosign_creator/atmos/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!.)
+	if(!(. & ITEM_INTERACT_SUCCESS))
 		return
-	var/obj/machinery/door/firedoor/firelock = locate() in get_turf(target)
+	var/obj/machinery/door/firedoor/firelock = locate() in get_turf(interacting_with)
 	firelock?.open()
 
 /obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)

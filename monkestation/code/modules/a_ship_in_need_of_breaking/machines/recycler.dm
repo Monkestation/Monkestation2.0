@@ -94,15 +94,15 @@
 /obj/machinery/shipbreaker/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/shipbreaker/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
+/obj/machinery/shipbreaker/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", attacking_item))
 		return
 
-	if(default_pry_open(I, close_after_pry = TRUE))
+	if(default_pry_open(attacking_item, close_after_pry = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 	return ..()

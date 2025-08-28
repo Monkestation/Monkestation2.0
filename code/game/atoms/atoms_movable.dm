@@ -1124,6 +1124,7 @@
 	else
 		CRASH("No valid destination passed into forceMove")
 
+///For items that deploy and can be picked up again
 /atom/movable/proc/moveToNullspace()
 	return doMove(null)
 

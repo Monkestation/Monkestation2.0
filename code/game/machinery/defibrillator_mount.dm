@@ -83,30 +83,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 		return
 	user.put_in_hands(defib.paddles)
 
-/obj/machinery/defibrillator_mount/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/defibrillator))
+/obj/machinery/defibrillator_mount/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/defibrillator))
 		if(defib)
 			to_chat(user, span_warning("There's already a defibrillator in [src]!"))
 			return
-		var/obj/item/defibrillator/D = I
+		var/obj/item/defibrillator/D = attacking_item
 		if(!D.get_cell())
 			to_chat(user, span_warning("Only defibrilators containing a cell can be hooked up to [src]!"))
 			return
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand!"))
+		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
 			return
-		user.visible_message(span_notice("[user] hooks up [I] to [src]!"), \
-		span_notice("You press [I] into the mount, and it clicks into place."))
+		user.visible_message(span_notice("[user] hooks up [attacking_item] to [src]!"), \
+		span_notice("You press [attacking_item] into the mount, and it clicks into place."))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		// Make sure the defib is set before processing begins.
-		defib = I
+		defib = attacking_item
 		begin_processing()
 		update_appearance()
 		return
-	else if(defib && I == defib.paddles)
+	else if(defib && attacking_item == defib.paddles)
 		defib.paddles.snap_back()
 		return
-	var/obj/item/card/id = I.GetID()
+	var/obj/item/card/id = attacking_item.GetID()
 	if(id)
 		if(check_access(id) || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
 			if(!defib)
@@ -184,6 +184,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/loaded, 28)
 	use_power = IDLE_POWER_USE
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
+/obj/machinery/defibrillator_mount/charging/loaded/Initialize(mapload) //loaded subtype for mapping use
+	. = ..()
+	defib = new /obj/item/defibrillator/loaded(src)
+	update_appearance()
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount/charging/loaded, 28)
 
 /obj/machinery/defibrillator_mount/charging/Initialize(mapload)
 	. = ..()

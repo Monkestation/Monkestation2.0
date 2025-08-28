@@ -132,6 +132,7 @@ If the target is T3 grabbed or sleeping, instead deal 60 damage with a weeping a
 	defender.Knockdown(5) //Without knockdown defender still stands up while T3 grabbed.
 	attacker.setGrabState(GRAB_NECK)
 	defender.adjust_silence_up_to(10 SECONDS, 10 SECONDS)
+	defender.adjust_emote_mute_up_to(10 SECONDS, 10 SECONDS)
 
 /datum/martial_art/tribal_claw/harm_act(mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
 	add_to_streak("H",defender)

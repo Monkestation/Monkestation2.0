@@ -16,7 +16,7 @@
 	change_icons = FALSE
 	max_fuel = 20
 
-/obj/item/weldingtool/electric/raynewelde/attack_self(mob/user)
+/obj/item/weldingtool/electric/raynewelder/attack_self(mob/user)
 	if(!istype(get_area(src), /area/space/shipbreak))
 		return
 

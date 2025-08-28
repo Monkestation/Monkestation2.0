@@ -88,6 +88,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
+//FOR XENO LARVA
+#define TRAIT_NEUTERED "neutered" //the mob cant reproduce
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
 /// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
@@ -494,9 +496,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 /// Mob has fov applied to it
-/* #define TRAIT_FOV_APPLIED "fov_applied" */
+#define TRAIT_FOV_APPLIED "fov_applied"
 /// Mob is using the scope component
-/* #define TRAIT_USER_SCOPED "user_scoped" */
+#define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
 /// Mob does not get a damage overlay from brute/burn
@@ -668,12 +670,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_DETECTIVES_TASTE "detectives_taste" */
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
-/* #define TRAIT_MOVE_GROUND "move_ground" */
+#define TRAIT_MOVE_GROUND "move_ground"
 #define TRAIT_MOVE_FLYING "move_flying"
 #define TRAIT_MOVE_VENTCRAWLING "move_ventcrawling"
 #define TRAIT_MOVE_FLOATING "move_floating"
-/* #define TRAIT_MOVE_PHASING "move_phasing" */
-/*#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down*/
+#define TRAIT_MOVE_PHASING "move_phasing"
+#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down"
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
 
@@ -710,7 +712,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Chasms will be safe to cross while they've this trait.
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
 ///Chasms will be safe to cross if there is something with this trait on it
-/* #define TRAIT_CHASM_STOPPER "chasm_stopper" */
+#define TRAIT_CHASM_STOPPER "chasm_stopper"
 ///The effects of the immerse element will be halted while this trait is present.
 /* #define TRAIT_IMMERSE_STOPPED "immerse_stopped" */
 /// The effects of hyperspace drift are blocked when the tile has this trait
@@ -852,6 +854,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
+#define TRAIT_NO_CLONE "NO_CLONE"
 #define TRAIT_BALD "bald"
 #define TRAIT_SHAVED "shaved"
 #define TRAIT_BADTOUCH "bad_touch"
@@ -1140,8 +1143,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob heals from cult pylons.
 #define TRAIT_HEALS_FROM_CULT_PYLONS "heals_from_cult_pylons"
-///
-#define TRAIT_HEALS_FROM_BINGLE_HOLES "heals_from_bingle_holes"
 /// Ignore Crew monitor Z levels
 #define TRAIT_MULTIZ_SUIT_SENSORS "multiz_suit_sensors"
 
@@ -1296,6 +1297,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which allows mobs to parry mining mob projectiles
 /* #define TRAIT_MINING_PARRYING "mining_parrying" */
 
+/**
+ *
+ * This trait is used in some interactions very high in the interaction chain to allow
+ * certain atoms to be skipped by said interactions if the user is in combat mode.
+ *
+ * Its primarily use case is for stuff like storage and tables, to allow things like emags to be bagged
+ * (because in some contexts you might want to be emagging a bag, and in others you might want to be storing it.)
+ *
+ * This is only checked by certain items explicitly so you can't just add the trait and expect it to work.
+ * (This may be changed later but I chose to do it this way to avoid messing up interactions which require combat mode)
+ */
+#define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
+
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
 
@@ -1311,5 +1325,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
+
+/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
+#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+/// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
+#define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 
 // END TRAIT DEFINES

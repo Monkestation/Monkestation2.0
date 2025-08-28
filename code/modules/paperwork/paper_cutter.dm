@@ -1,7 +1,7 @@
 /obj/item/papercutter
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
@@ -70,7 +70,7 @@
 	tool.play_tool_sound(src)
 	balloon_alert(user, "blade [blade_secured ? "un" : ""]secured")
 	blade_secured = !blade_secured
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, params)
@@ -185,7 +185,7 @@
 /obj/item/hatchet/cutterblade
 	name = "paper cutter blade"
 	desc = "The blade of a paper cutter. Most likely removed for polishing or sharpening."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "cutterblade"
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
