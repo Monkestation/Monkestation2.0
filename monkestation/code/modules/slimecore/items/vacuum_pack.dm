@@ -342,13 +342,14 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/vacuum_nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /obj/machinery/biomass_recycler) && target.Adjacent(user))
-		if(!(VACUUM_PACK_UPGRADE_BIOMASS in pack.upgrades))
-			to_chat(user, span_warning("[pack] does not posess a required upgrade!"))
-			return ITEM_INTERACT_BLOCKING
-		pack.linked = target
-		to_chat(user, span_notice("You link [pack] to [target]."))
-		return ITEM_INTERACT_SUCCESS
+	if(!istype(interacting_with, /obj/machinery/biomass_recycler))
+		return NONE
+	if(!(VACUUM_PACK_UPGRADE_BIOMASS in pack.upgrades))
+		to_chat(user, span_warning("[pack] does not posess a required upgrade!"))
+		return ITEM_INTERACT_BLOCKING
+	pack.linked = interacting_with
+	to_chat(user, span_notice("You link [pack] to [interacting_with]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/vacuum_nozzle/proc/do_suck(atom/movable/target, mob/user)
 	if(pack.ghost_busting)

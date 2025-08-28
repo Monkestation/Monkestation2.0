@@ -12,6 +12,8 @@
 	var/use_large_steam_sprite = FALSE
 	/// REF() to the mind which placed us on the griddle
 	var/who_placed_us
+	/// Are we grilling right now?
+	var/is_grilling = FALSE
 
 	/// What type of pollutant we spread around as we are grilleed, can be none  // MONKESTATION EDIT ADDITION
 	var/pollutant_type
