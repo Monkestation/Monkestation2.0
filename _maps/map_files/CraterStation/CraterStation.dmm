@@ -7872,6 +7872,14 @@
 /obj/item/clothing/neck/link_scryer/loaded,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
+"czq" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/bot,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/dark,
+/area/station/security/prison/work)
 "czr" = (
 /obj/structure/chair{
 	dir = 1
@@ -17431,6 +17439,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
+"fub" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "fuk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
@@ -20114,6 +20126,17 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/station/cargo/warehouse/abandoned)
+"glo" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table,
+/obj/item/stack/sheet/cardboard{
+	amount = 14
+	},
+/obj/item/stack/package_wrap,
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
+/area/station/security/prison/work)
 "glt" = (
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron,
@@ -28440,6 +28463,9 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"iNh" = (
+/turf/closed/wall/r_wall,
+/area/station/security/prison/work)
 "iNi" = (
 /obj/structure/sign/directions/ptl/directional/north{
 	dir = 4
@@ -38082,6 +38108,14 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/ai)
+"lGo" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/station/security/prison/work)
 "lGq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
@@ -43617,6 +43651,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/chapel/office)
+"nsx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "nsz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -43900,6 +43940,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/command/teleporter)
+"nxe" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/public/glass{
+	name = "Work Room"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "nxh" = (
 /obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron/white,
@@ -50406,6 +50455,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
+"pvo" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/table,
+/obj/item/stack/license_plates/empty/fifty{
+	pixel_x = -3
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/station/security/prison/work)
 "pvq" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
@@ -57397,6 +57456,11 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"rtJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "rtN" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -65992,6 +66056,12 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/surface/outdoors/nospawn)
+"udh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "udi" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/door/airlock{
@@ -66354,6 +66424,13 @@
 /obj/structure/closet/secure_closet/brig/genpop,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
+"ujd" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/camera/autoname/directional/east,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "ujo" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -70170,6 +70247,11 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
+"vqS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "vqU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/yellow{
@@ -77754,6 +77836,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/kitchen,
 /area/station/hallway/secondary/entry)
+"xHJ" = (
+/obj/machinery/plate_press{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark/side{
+	dir = 9
+	},
+/area/station/security/prison/work)
 "xHS" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Cell 5"
@@ -181567,7 +181658,7 @@ vQa
 uhg
 alo
 alo
-alo
+cJQ
 alo
 rWC
 pSw
@@ -181822,11 +181913,11 @@ bEn
 bEn
 bEn
 bEn
-wZh
-wZh
-wZh
-wZh
-oBx
+iNh
+iNh
+nxe
+iNh
+iNh
 qrU
 qrU
 nUf
@@ -182079,11 +182170,11 @@ gtZ
 gtZ
 gtZ
 gtZ
-gtZ
-gtZ
-gtZ
-gtZ
-oBx
+iNh
+czq
+nsx
+udh
+iNh
 oBx
 oBx
 oBx
@@ -182336,11 +182427,11 @@ gtZ
 gtZ
 gtZ
 gtZ
-gtZ
-gtZ
-gtZ
-gtZ
-gtZ
+iNh
+xHJ
+lGo
+vqS
+iNh
 gtZ
 gtZ
 gtZ
@@ -182593,11 +182684,11 @@ gtZ
 gtZ
 gtZ
 gtZ
-gtZ
-gtZ
-gtZ
-gtZ
-gtZ
+iNh
+glo
+pvo
+rtJ
+iNh
 gtZ
 gtZ
 gtZ
@@ -182850,11 +182941,11 @@ vFw
 vFw
 vFw
 gtZ
-gtZ
-gtZ
-gtZ
-gtZ
-gtZ
+iNh
+xHJ
+lGo
+fub
+iNh
 gtZ
 gtZ
 gtZ
@@ -183107,11 +183198,11 @@ vFw
 vFw
 vFw
 vFw
-vFw
-vFw
-vFw
-vFw
-vFw
+iNh
+glo
+pvo
+ujd
+iNh
 vFw
 vFw
 vFw
@@ -183364,11 +183455,11 @@ vFw
 vFw
 vFw
 vFw
-vFw
-vFw
-vFw
-vFw
-vFw
+iNh
+iNh
+iNh
+iNh
+iNh
 vFw
 vFw
 vFw
