@@ -138,7 +138,7 @@
 	else
 		paymode = HOLOCHIP
 		balloon_alert(user, "now using holochips")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

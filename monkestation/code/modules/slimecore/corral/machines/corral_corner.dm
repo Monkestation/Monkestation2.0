@@ -13,7 +13,6 @@
 	if(target == host)
 		if(host.submit_corners(corral_corners))
 			qdel(src)
-		return AFTERATTACK_PROCESSED_ITEM
 
 	if(length(corral_corners) == 4)
 		say("Buffer full!")
@@ -70,13 +69,10 @@
 		return
 	start_linking_procedure()
 
-/obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/multitool/multi)
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/corral_corner/proc/start_linking_procedure()
 	var/obj/item/corral_linker/new_linker = new(loc)

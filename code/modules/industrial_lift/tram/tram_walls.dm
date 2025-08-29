@@ -187,7 +187,7 @@
 	/// The last time a radiation pulse was performed
 	var/last_event = 0
 
-/obj/structure/tramwall/uranium/attackby(obj/item/W, mob/user, params)
+/obj/structure/tramwall/uranium/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	radiate()
 	return ..()
 

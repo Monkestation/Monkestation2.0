@@ -186,7 +186,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	armour_penetration = 60
+	armour_penetration = 50
 	armour_ignorance = 5
 	block_chance = 50
 	block_sound = 'sound/weapons/block_blade.ogg'

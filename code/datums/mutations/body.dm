@@ -243,6 +243,7 @@
 	var/glow_power = 2.5
 	var/glow_range = 2.5
 	var/glow_color
+
 	var/obj/effect/dummy/lighting_obj/moblight/glow
 
 /datum/mutation/glow/on_acquiring(mob/living/carbon/human/owner)
@@ -251,6 +252,14 @@
 		return
 	glow_color = get_glow_color()
 	glow = owner.mob_light()
+	modify()
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+
+/datum/mutation/glow/modify()
+	if(!glow)
+		return
+	glow.set_light_range_power_color(glow_range * GET_MUTATION_POWER(src), glow_power, glow_color)
+	glow.set_light_on(TRUE)
 
 // Override modify here without a parent call, because we don't actually give an action.
 /datum/mutation/glow/setup()
@@ -259,10 +268,19 @@
 
 	glow.set_light_range_power_color(glow_range * GET_MUTATION_POWER(src), glow_power, glow_color)
 
+/datum/mutation/glow/proc/on_light_eater(mob/living/carbon/human/source, datum/light_eater)
+	SIGNAL_HANDLER
+	if(!glow)
+		return
+	glow.set_light_on(FALSE)
+	addtimer(CALLBACK(src, PROC_REF(modify)), 20 SECONDS * GET_MUTATION_SYNCHRONIZER(src), TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds (reduced by sychronizer)
+	return COMPONENT_BLOCK_LIGHT_EATER
+
 /datum/mutation/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
+	UnregisterSignal(glow, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(glow)
 
 /// Returns a color for the glow effect

@@ -6,7 +6,7 @@
 	desc = "A sticker with some strong adhesive on the back, sticks to stuff!"
 	item_flags = NOBLUDGEON | XENOMORPH_HOLDABLE //funny
 	resistance_flags = FLAMMABLE
-	icon = 'icons/obj/stickers.dmi'
+	icon = 'icons/obj/toys/stickers.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 3
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
@@ -28,25 +28,27 @@
 	pixel_y = rand(-3,3)
 	pixel_x = rand(-3,3)
 
-/obj/item/sticker/afterattack(atom/target, mob/living/user, prox, params)
-	. = ..()
-	if(!prox)
-		return
-	if(!isliving(target) && !isobj(target) && !isturf(target))
-		return
-	var/list/parameters = params2list(params)
-	if(!LAZYACCESS(parameters, ICON_X) || !LAZYACCESS(parameters, ICON_Y))
-		return
-	var/divided_size = world.icon_size / 2
-	var/px = text2num(LAZYACCESS(parameters, ICON_X)) - divided_size
-	var/py = text2num(LAZYACCESS(parameters, ICON_Y)) - divided_size
-	. |= AFTERATTACK_PROCESSED_ITEM
-	user.do_attack_animation(target)
-	stick(target,user,px,py)
-	return .
+/obj/item/sticker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isatom(interacting_with))
+		return NONE
 
-///Sticks this sticker to the target, with the pixel offsets being px and py.
-/obj/item/sticker/proc/stick(atom/target, mob/living/user, px,py)
+	var/cursor_x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/cursor_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+
+	if(isnull(cursor_x) || isnull(cursor_y))
+		return NONE
+
+	if(attempt_attach(interacting_with, user, cursor_x, cursor_y))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/**
+ * Attempts to attach sticker to an object. Returns `FALSE` if atom has more than
+ * `MAX_STICKER_COUNT` stickers, `TRUE` otherwise. If no `px` or `py` were passed
+ * picks random coordinates based on a `target`'s icon.
+ */
+/obj/item/sticker/proc/attempt_attach(atom/target, mob/user, px, py)
 	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_ALLOWED_STICKERS)
 		target.balloon_alert(user, "sticker won't stick!")
 		return FALSE
@@ -101,7 +103,7 @@
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!. && prob(50))
-		stick(hit_atom,rand(-7,7),rand(-7,7))
+		attempt_attach(hit_atom, px = rand(-7,7), py = rand(-7,7))
 		attached.balloon_alert_to_viewers("the sticker lands on its sticky side!")
 
 ///Signal handler for COMSIG_TURF_EXPOSE, deletes this sticker if the temperature is above 100C and it is flammable

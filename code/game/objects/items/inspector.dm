@@ -65,13 +65,13 @@
 	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
 	return TRUE
 
-/obj/item/inspector/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+/obj/item/inspector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(cell_cover_open && istype(attacking_item, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
-		if(user.transferItemToLoc(I, src))
-			cell = I
+		if(user.transferItemToLoc(attacking_item, src))
+			cell = attacking_item
 			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 			return
 	return ..()
@@ -136,7 +136,7 @@
 /obj/item/paper/report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
@@ -196,8 +196,8 @@
 	cycle_print_time(user)
 	return TRUE
 
-/obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/kitchen/fork))
+/obj/item/inspector/clown/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(cell_cover_open && istype(attacking_item, /obj/item/kitchen/fork))
 		cycle_sound(user)
 		return
 	return ..()
@@ -275,17 +275,17 @@
 	check_settings_legality()
 	return TRUE
 
-/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
+/obj/item/inspector/clown/bananium/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(cell_cover_open)
 		check_settings_legality()
-	if(istype(I, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
-		to_chat(user, span_info("\The [src] refuses to consume \the [I]!"))
+	if(istype(attacking_item, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
+		to_chat(user, span_info("\The [src] refuses to consume \the [attacking_item]!"))
 		return
-	if(istype(I, /obj/item/paper))
-		to_chat(user, span_info("\The [src] consumes \the [I]!"))
+	if(istype(attacking_item, /obj/item/paper))
+		to_chat(user, span_info("\The [src] consumes \the [attacking_item]!"))
 		paper_charges = min(paper_charges + charges_per_paper, max_paper_charges)
-		qdel(I)
+		qdel(attacking_item)
 
 /obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
@@ -334,7 +334,7 @@
 /obj/item/paper/fake_report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	show_written_words = FALSE
 	///What area the inspector scanned when the report was made. Used to generate the examine text of the report

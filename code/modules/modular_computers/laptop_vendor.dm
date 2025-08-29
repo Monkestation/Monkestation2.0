@@ -83,25 +83,25 @@
 		ui = new(user, src, "ComputerFabricator")
 		ui.open()
 
-/obj/machinery/lapvend/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/spacecash))
-		var/obj/item/stack/spacecash/c = I
+/obj/machinery/lapvend/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/c = attacking_item
 		if(!user.temporarilyRemoveItemFromInventory(c))
 			return
 		credits += c.value
 		visible_message(span_info("[span_name("[user]")] inserts [c.value] cr into [src]."))
 		qdel(c)
 		return
-	else if(istype(I, /obj/item/holochip))
-		var/obj/item/holochip/HC = I
+	else if(istype(attacking_item, /obj/item/holochip))
+		var/obj/item/holochip/HC = attacking_item
 		credits += HC.credits
 		visible_message(span_info("[user] inserts a [HC.credits] cr holocredit chip into [src]."))
 		qdel(HC)
 		return
-	else if(isidcard(I))
+	else if(isidcard(attacking_item))
 		if(state != 2)
 			return
-		var/obj/item/card/id/ID = I
+		var/obj/item/card/id/ID = attacking_item
 		var/datum/bank_account/account = ID.registered_account
 		var/target_credits = total_price - credits
 		if(!account.adjust_money(-target_credits, "Vending: Laptop Vendor"))

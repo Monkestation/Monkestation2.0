@@ -66,46 +66,46 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return TRUE
 
-/obj/item/reagent_containers/condiment/afterattack(obj/target, mob/user, proximity, params)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
-		if(!target.reagents.total_volume)
-			to_chat(user, span_warning("[target] is empty!"))
-			return
+/obj/item/reagent_containers/condiment/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+		if(!interacting_with.reagents.total_volume)
+			to_chat(user, span_warning("[interacting_with] is empty!"))
+			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, span_warning("[src] is full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
+		var/trans = interacting_with.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [interacting_with]."))
+		return ITEM_INTERACT_SUCCESS
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
-	else if(target.is_drainable() || IS_EDIBLE(target))
+	else if(interacting_with.is_drainable() || IS_EDIBLE(interacting_with))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
-			return
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, span_warning("you can't add anymore to [target]!"))
-			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You transfer [trans] units of the condiment to [target]."))
+			return ITEM_INTERACT_BLOCKING
+		if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+			to_chat(user, span_warning("you can't add anymore to [interacting_with]!"))
+			return ITEM_INTERACT_BLOCKING
+		var/trans = src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
+		to_chat(user, span_notice("You transfer [trans] units of the condiment to [interacting_with]."))
 
 		var/datum/reagent/main_reagent = reagents.get_master_reagent_id()
 		var/condiment_overlay = initial(main_reagent.condiment_overlay)
 		var/overlay_colored = initial(main_reagent.overlay_colored)
-		if(condiment_overlay && istype (target, /obj/item/food))
-			var/list/params_list = params2list(params)
-			var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', target, condiment_overlay)
+		if(condiment_overlay && istype (interacting_with, /obj/item/food))
+			var/list/params_list = params2list(modifiers)
+			var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', interacting_with, condiment_overlay)
 			I.pixel_x = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
 			I.pixel_y = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
 			if (overlay_colored)
 				I.color = mix_color_from_reagents(reagents.reagent_list)
-			target.overlays += I
+			interacting_with.overlays += I
+
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/reagent_containers/condiment/enzyme
 	name = "universal enzyme"
@@ -161,19 +161,19 @@
 	desc = "Salt. From dead crew, presumably."
 	return TOXLOSS
 
-/obj/item/reagent_containers/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
+/obj/item/reagent_containers/condiment/saltshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(isturf(target))
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(isturf(interacting_with))
 		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
 			to_chat(user, span_warning("You don't have enough salt to make a pile!"))
 			return
-		user.visible_message(span_notice("[user] shakes some salt onto [target]."), span_notice("You shake some salt onto [target]."))
+		user.visible_message(span_notice("[user] shakes some salt onto [interacting_with]."), span_notice("You shake some salt onto [interacting_with]."))
 		reagents.remove_reagent(/datum/reagent/consumable/salt, 2)
-		new/obj/effect/decal/cleanable/food/salt(target)
-		return
+		new/obj/effect/decal/cleanable/food/salt(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return .
 
 /obj/item/reagent_containers/condiment/peppermill
 	name = "pepper mill"
@@ -457,37 +457,34 @@
 /obj/item/reagent_containers/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
-/obj/item/reagent_containers/condiment/pack/afterattack(obj/target, mob/user , proximity, params)
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/condiment/pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	//You can tear the bag open above food to put the condiments on it, obviously.
-	if(IS_EDIBLE(target))
+	if(IS_EDIBLE(interacting_with))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("You tear open [src], but there's nothing in it."))
 			qdel(src)
-			return
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, span_warning("You tear open [src], but [target] is stacked so high that it just drips off!") )
+			return ITEM_INTERACT_BLOCKING
+		if(interacting_with.reagents.total_volume >= interacting_with.reagents.maximum_volume)
+			to_chat(user, span_warning("You tear open [src], but [interacting_with] is stacked so high that it just drips off!") )
 			qdel(src)
-			return
+			return ITEM_INTERACT_BLOCKING
 		else
-			to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
+			to_chat(user, span_notice("You tear open [src] above [interacting_with] and the condiments drip onto it."))
 			var/datum/reagent/main_reagent = reagents.get_master_reagent_id()
 			var/condiment_overlay = initial(main_reagent.condiment_overlay)
 			var/overlay_colored = initial(main_reagent.overlay_colored)
-			if(condiment_overlay && istype (target, /obj/item/food))
-				var/list/params_list = params2list(params)
-				var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', target, condiment_overlay)
+			if(condiment_overlay && istype (interacting_with, /obj/item/food))
+				var/list/params_list = params2list(modifiers)
+				var/image/I = image('monkestation/code/modules/brewin_and_chewin/icons/condiment_overlays.dmi', interacting_with, condiment_overlay)
 				I.pixel_x = clamp(text2num(params_list["icon-x"]) - world.icon_size/2 - pixel_x,-world.icon_size/2,world.icon_size/2)
 				I.pixel_y = clamp(text2num(params_list["icon-y"]) - world.icon_size/2 - pixel_y,-world.icon_size/2,world.icon_size/2)
 				if (overlay_colored)
 					I.color = mix_color_from_reagents(reagents.reagent_list)
-				target.overlays += I
-			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+				interacting_with.overlays += I
+			src.reagents.trans_to(interacting_with, amount_per_transfer_from_this, transfered_by = user)
 			qdel(src)
-			return
-	return . | ..()
+			return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /// Handles reagents getting added to the condiment pack.
 /obj/item/reagent_containers/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)

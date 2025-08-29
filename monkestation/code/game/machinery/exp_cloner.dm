@@ -245,28 +245,24 @@
 	pod.connected = null
 	LAZYREMOVE(pods, pod)
 
-/obj/machinery/computer/prototype_cloning/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/P = W
+/obj/machinery/computer/prototype_cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!istype(multi.buffer, /obj/machinery/clonepod/experimental))
+		multi.set_buffer(src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+		return ITEM_INTERACT_SUCCESS
 
-		if(istype(P.buffer, /obj/machinery/clonepod/experimental))
-			if(get_area(P.buffer) != get_area(src))
-				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.set_buffer(null)
-				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/clonepod/experimental/pod = P.buffer
-			if(pod.connected)
-				pod.connected.DetachCloner(pod)
-			AttachCloner(pod)
-		else
-			P.set_buffer(src)
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
-		return
-	else
-		return ..()
+	if(get_area(multi.buffer) != get_area(src))
+		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
+		multi.set_buffer(null)
+		return ITEM_INTERACT_FAILURE
+
+	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/experimental/pod = multi.buffer
+	if(pod.connected)
+		pod.connected.DetachCloner(pod)
+	AttachCloner(pod)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/prototype_cloning/attack_hand(mob/user)
 	if(..())

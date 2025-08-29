@@ -37,8 +37,6 @@
 	for(var/datum/action/cooldown/bloodsucker/targeted/tremere/power as anything in bloodsuckerdatum.powers)
 		if(!(power.purchase_flags & TREMERE_CAN_BUY))
 			continue
-		if(isnull(power.upgraded_power))
-			continue
 		options[initial(power.name)] = power
 
 	if(length(options) < 1)
@@ -60,15 +58,13 @@
 
 		// Good to go - Buy Power!
 		var/datum/action/cooldown/bloodsucker/purchased_power = options[choice]
-		var/datum/action/cooldown/bloodsucker/targeted/tremere/tremere_power = purchased_power
-		if(isnull(tremere_power.upgraded_power))
-			bloodsuckerdatum.owner.current.balloon_alert(bloodsuckerdatum.owner.current, "cannot upgrade [choice]!")
-			to_chat(bloodsuckerdatum.owner.current, span_notice("[choice] is already at max level!"))
+		var/datum/action/cooldown/bloodsucker/targeted/tremere/tremere_power = locate(purchased_power) in bloodsuckerdatum.powers
+		if(isnull(tremere_power))
+			to_chat(bloodsuckerdatum.owner.current, span_warning("You do not have the power [choice]!"))
 			return
-		bloodsuckerdatum.BuyPower(new tremere_power.upgraded_power)
-		bloodsuckerdatum.RemovePower(tremere_power)
-		bloodsuckerdatum.owner.current.balloon_alert(bloodsuckerdatum.owner.current, "upgraded [choice]!")
-		to_chat(bloodsuckerdatum.owner.current, span_notice("You have upgraded [choice]!"))
+		tremere_power.upgrade_power()
+		bloodsuckerdatum.owner.current.balloon_alert(bloodsuckerdatum.owner.current, "upgraded [tremere_power]!")
+		to_chat(bloodsuckerdatum.owner.current, span_notice("You have upgraded [tremere_power]!"))
 
 	finalize_spend_rank(bloodsuckerdatum, cost_rank, blood_cost)
 
