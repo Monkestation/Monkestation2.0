@@ -756,7 +756,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///If the crate's contents are immune to the missing item manifest error
 #define TRAIT_NO_MISSING_ITEM_ERROR "no_missing_item_error"
 ///If the crate is immune to the wrong content in manifest error
-/* #define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error" */
+#define TRAIT_NO_MANIFEST_CONTENTS_ERROR "no_manifest_contents_error"
 
 ///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
 #define TRAIT_MARKET_CRASHING "market_crashing"

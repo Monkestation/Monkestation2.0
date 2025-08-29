@@ -159,7 +159,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 /obj/structure/closet/Destroy()
 	id_card = null
 	QDEL_NULL(door_obj)
-	QDEL_NULL(electronics)
 	GLOB.closets -= src
 	GLOB.roundstart_station_closets -= src
 	return ..()
@@ -818,8 +817,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 				return
 		if ((user.istate & ISTATE_HARM))
 			return FALSE
-		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
-			return
 		if(user.transferItemToLoc(weapon, drop_location())) // so weapone put in unlit weaponelder too
 			return
 
@@ -1028,6 +1025,17 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(!opened && secure)
 		togglelock(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/**
+ * returns TRUE if the closet is allowed to unlock
+ * * user: the player trying to unlock this closet
+ * * player_id: the id of the player trying to unlock this closet
+ * * registered_id: the id registered to this closet, null if no one registered
+ */
+/obj/structure/closet/proc/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
+	if(isnull(registered_id))
+		return allowed(user)
+	return player_id == registered_id
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(!secure || broken)

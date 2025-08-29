@@ -264,26 +264,6 @@
 			return
 	fully_replace_character_name(real_name, new_name)
 
-/mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
-		return TRUE
-	if(!maints_access_required) // No requirements to access it.
-		return TRUE
-	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
-		return TRUE
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
-
-	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
-
-	if(!used_id || !used_id.access)
-		return FALSE
-
-	for(var/requested_access in maints_access_required)
-		if(requested_access in used_id.access)
-			return TRUE
-	return FALSE
-
 /mob/living/simple_animal/bot/bee_friendly()
 	return TRUE
 

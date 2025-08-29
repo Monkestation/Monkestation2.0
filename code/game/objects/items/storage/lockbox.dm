@@ -12,6 +12,7 @@
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
+	var/icon_open = "lockbox"
 	var/icon_broken = "lockbox+b"
 
 /obj/item/storage/lockbox/Initialize(mapload)
@@ -22,42 +23,56 @@
 	atom_storage.locked = TRUE
 
 	register_context()
+	update_icon_state()
 
-/obj/item/storage/lockbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	var/locked = atom_storage.locked
-	if(inserted.GetID())
-		if(broken)
-			balloon_alert(user, "broken!")
-			return FALSE
-		if(allowed(user))
-			if(atom_storage.locked)
-				atom_storage.locked = STORAGE_NOT_LOCKED
-			else
-				atom_storage.locked = STORAGE_FULLY_LOCKED
-			locked = atom_storage.locked
-			if(locked)
-				icon_state = icon_locked
-				atom_storage.close_all()
-			else
-				icon_state = icon_closed
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
 
-			balloon_alert(user, locked ? "locked" : "unlocked")
-			return FALSE
+/obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/card = tool.GetID()
+	if(isnull(card))
+		return ..()
 
+	if(can_unlock(user, card))
+		toggle_locked(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if(check_access(id_card))
+		return TRUE
+	if(!silent)
 		balloon_alert(user, "access denied!")
-		return FALSE
+	return FALSE
 
-	if(locked)
-		balloon_alert(user, "locked!")
-		return FALSE
+/obj/item/storage/lockbox/proc/toggle_locked(mob/living/user)
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
+	balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
 
-	return TRUE
+/obj/item/storage/lockbox/update_icon_state()
+	. = ..()
+	if(broken)
+		icon_state = icon_broken
+	else if(atom_storage?.locked)
+		icon_state = icon_locked
+	else if(open)
+		icon_state = icon_open
+	else
+		icon_state = icon_closed
 
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
 		broken = TRUE
-		atom_storage.locked = STORAGE_NOT_LOCKED
-		icon_state = src.icon_broken
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		balloon_alert(user, "lock destroyed")
 		if (emag_card && user)
 			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
@@ -243,34 +258,18 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/datum/bank_account/buyer_account
-	var/privacy_lock = TRUE
 
 /obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
-	add_traits(list(TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_BANNED_FROM_CARGO_SHUTTLE), TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
+	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NO_MANIFEST_CONTENTS_ERROR, TRAIT_GENERIC)
 
-/obj/item/storage/lockbox/order/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	var/obj/item/card/id/id_card = inserted.GetID()
-	if(!id_card)
-		return ..()
-
-	if(id_card.registered_account != buyer_account)
+/obj/item/storage/lockbox/order/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if(id_card.registered_account == buyer_account)
+		return TRUE
+	if(!silent)
 		balloon_alert(user, "incorrect bank account!")
-		return FALSE
-
-	if(privacy_lock)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-		icon_state = icon_locked
-		REMOVE_TRAIT(src, TRAIT_BANNED_FROM_CARGO_SHUTTLE, TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
-	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-		icon_state = icon_closed
-	privacy_lock = atom_storage.locked
-	user.visible_message(
-		span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
-		span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."),
-	)
 	return FALSE
 
 ///screentips for lockboxes

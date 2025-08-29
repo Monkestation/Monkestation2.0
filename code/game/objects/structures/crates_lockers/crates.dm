@@ -124,7 +124,7 @@
 			AddElement(/datum/element/elevation, pixel_shift = elevation)
 
 
-/obj/structure/closet/crate/open(mob/living/user, force = FALSE)
+/obj/structure/closet/crate/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	. = ..()
 	if(. && !QDELETED(manifest))
 		to_chat(user, span_notice("The manifest is torn off [src]."))

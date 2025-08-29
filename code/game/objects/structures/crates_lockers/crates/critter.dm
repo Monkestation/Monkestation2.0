@@ -20,8 +20,6 @@
 
 	var/obj/item/tank/internals/emergency_oxygen/tank
 
-	var/obj/item/tank/internals/emergency_oxygen/tank
-
 /obj/structure/closet/crate/critter/Initialize(mapload)
 	. = ..()
 	tank = new
