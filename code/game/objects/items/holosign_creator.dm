@@ -45,6 +45,9 @@
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
 
 	if(target_holosign)
+		if(target_holosign.projector == src)
+			target_holosign.attackby(src, user, modifiers)
+			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
 		return ITEM_INTERACT_BLOCKING
