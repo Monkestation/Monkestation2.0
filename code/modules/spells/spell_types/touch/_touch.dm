@@ -131,6 +131,10 @@
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
 	RegisterSignal(attached_hand, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_hand_interact))
 	RegisterSignal(attached_hand, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_hand_interact_secondary))
+
+	RegisterSignal(attached_hand, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_hand_ranged_interact))
+	RegisterSignal(attached_hand, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_hand_ranged_interact_secondary))
+
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
 	RegisterSignal(attached_hand, COMSIG_QDELETING, PROC_REF(on_hand_deleted))
 
@@ -146,6 +150,8 @@
 		COMSIG_ITEM_AFTERATTACK,
 		COMSIG_ITEM_INTERACTING_WITH_ATOM,
 		COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_QDELETING,
 		COMSIG_ITEM_OFFER_TAKEN,
@@ -199,6 +205,26 @@
 		SIGNAL_HANDLER
 
 		return source.interact_with_atom_secondary(target, user, modifiers)
+
+/**
+ * Signal proc for [COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM] from our attached hand.
+ *
+ * Handles left-click ranged interactions through the item interaction system.
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_ranged_interact(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+
+	return source.ranged_interact_with_atom(target, user, modifiers)
+
+/**
+ * Signal proc for [COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
+ *
+ * Handles right-click ranged interactions through the item interaction system.
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_ranged_interact_secondary(obj/item/melee/touch_attack/source, mob/living/user, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+
+	return source.ranged_interact_with_atom_secondary(target, user, modifiers)
 
 /// Checks if the passed victim can be cast on by the caster.
 /datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/caster)
@@ -380,6 +406,12 @@
 	hand_spell.do_secondary_hand_hit(src, interacting_with, user)
 	if(QDELETED(src))
 		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/melee/touch_attack/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
+/obj/item/melee/touch_attack/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	return NONE
 
 /**
