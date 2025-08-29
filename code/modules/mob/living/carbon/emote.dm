@@ -193,6 +193,30 @@
 	hands_use_check = TRUE
 	muzzle_ignore = TRUE
 
+/datum/emote/living/carbon/snap/super
+	key = "supersnap"
+	key_third_person = "supersnaps"
+	message = "snaps their fingers stylishly."
+	message_param = "snaps their fingers stylishly at %t."
+	cooldown = 10 SECONDS
+	volume = 120
+
+/datum/emote/living/carbon/snap/super/can_run_emote(mob/user, status_check, intentional)
+	. = ..()
+	if(!HAS_TRAIT(user, TRAIT_PANACHEFUL_SNAPS))
+		to_chat(user, span_warning("You aren't stylish enough to snap like that!"))
+		return FALSE
+	return TRUE
+
+/datum/emote/living/carbon/snap/super/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	new /obj/effect/particle_effect/sparks(get_turf(user))
+	var/obj/item/clothing/mask/cigarette/held = user.get_active_held_item()
+	if(istype(held))
+		held.light(span_notice("The [held] ignites with a flash of sparks as [user] snaps [user.p_their()] fingers! <b>Damn.</b> <i>That's badass.</i>"))
+
 /datum/emote/living/carbon/snap/get_sound(mob/living/user)
 	if(ishuman(user))
 		return pick('sound/misc/fingersnap1.ogg', 'sound/misc/fingersnap2.ogg')

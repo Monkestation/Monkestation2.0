@@ -422,8 +422,10 @@
 	*/
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
-	if(!data)
+	if(!islist(data))
 		data = list("misc" = 0)
+	else if(!IS_SAFE_NUM(data["misc"]))
+		data["misc"] = 0
 
 	data["misc"] += seconds_per_tick SECONDS * REM
 	affected_mob.adjust_jitter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)
@@ -2738,7 +2740,7 @@
 		return
 
 	var/metal_amount = 0
-	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
+	var/list/materials_to_transmute = A.get_material_composition()
 	for(var/metal_key in materials_to_transmute) //list with what they're made of
 		metal_amount += materials_to_transmute[metal_key]
 
@@ -2748,7 +2750,6 @@
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
-	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"

@@ -88,12 +88,12 @@
 /obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)
 	. = NONE
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", base_icon_state, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/portagrav/crowbar_act(mob/living/user, obj/item/tool)
 	. = NONE
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/portagrav/attackby(obj/item/tool, mob/living/user, params)
 	. = NONE
@@ -129,7 +129,7 @@
 	else
 		disconnect_from_network()
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/portagrav/get_cell()
 	return cell

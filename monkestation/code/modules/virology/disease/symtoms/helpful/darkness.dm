@@ -5,6 +5,7 @@
 	stage = 3
 	max_chance = 33
 	severity = 0
+	badness = EFFECT_DANGER_HELPFUL
 	var/passive_message = span_notice("You feel tingling on your skin as light passes over it.")
 	COOLDOWN_DECLARE(heal_msg_cooldown)
 
@@ -26,10 +27,10 @@
 		if(mob_turf.is_softly_lit())
 			return TRUE
 		var/light_amount = min(1, mob_turf.get_lumcount()) - 0.5
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(light_amount > SHADOW_SPECIES_DIM_LIGHT)
 			return FALSE
-	return TRUE
-
+  return TRUE
+  
 /datum/symptom/darkness/proc/Heal(mob/living/carbon/victim, actual_power)
 	var/old_health = victim.health
 	victim.heal_overall_damage(brute = actual_power * 2, burn = actual_power, required_bodytype = BODYTYPE_ORGANIC)

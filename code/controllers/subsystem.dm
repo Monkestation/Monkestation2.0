@@ -31,6 +31,9 @@
 	/// This var is set to `INITIALIZATION_INNEW_REGULAR` after the subsystem has been initialized.
 	var/initialized = FALSE
 
+	/// Similar to above however this will be set even if an SS has SS_NO_INIT set.
+	var/ready = FALSE
+
 	/// Set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	/// use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
 	var/can_fire = TRUE

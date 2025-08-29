@@ -1,3 +1,4 @@
+/* old viro code bleh.
 /datum/disease/tuberculosis
 	form = "Disease"
 	name = "Fungal tuberculosis"
@@ -59,3 +60,4 @@
 			if(SPT_PROB(7.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit...", "You feel like taking off some clothes...")]"))
 				affected_mob.adjust_bodytemperature(40)
+*/

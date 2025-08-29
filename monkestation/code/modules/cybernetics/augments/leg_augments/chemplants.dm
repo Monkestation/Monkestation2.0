@@ -58,9 +58,8 @@
 		overlays += overlay
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/proc/remove_overlay()
-	QDEL_NULL(overlay)
-
-	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+	overlay = null
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /obj/effect/temp_visual/chempunk
 	icon = 'monkestation/code/modules/cybernetics/icons/96x96.dmi'

@@ -212,13 +212,13 @@
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/stack/sheet/iron))
+/obj/item/scooter_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/stack/sheet/iron))
 		return ..()
-	if(!I.tool_start_check(user, amount=5))
+	if(!attacking_item.tool_start_check(user, amount=5))
 		return
 	to_chat(user, span_notice("You begin to add wheels to [src]."))
-	if(!I.use_tool(src, user, 80, volume=50, amount=5))
+	if(!attacking_item.use_tool(src, user, 80, volume=50, amount=5))
 		return
 	to_chat(user, span_notice("You finish making wheels for [src]."))
 	new /obj/vehicle/ridden/scooter/skateboard/improvised(user.loc)
@@ -235,13 +235,13 @@
 /obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/stack/rods))
+/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/stack/rods))
 		return ..()
-	if(!I.tool_start_check(user, amount=2))
+	if(!attacking_item.tool_start_check(user, amount=2))
 		return
 	to_chat(user, span_notice("You begin making handlebars for [src]."))
-	if(!I.use_tool(src, user, 25, volume=50, amount=2))
+	if(!attacking_item.use_tool(src, user, 25, volume=50, amount=2))
 		return
 	to_chat(user, span_notice("You add the rods to [src], creating handlebars."))
 	var/obj/vehicle/ridden/scooter/skaterskoot = new(loc)

@@ -304,6 +304,24 @@
 		var/turf/drop = drop_location()
 		I.launch_item(drop)
 
+/// Unequips and transfers an item to a given turf, if possible.
+/mob/proc/transfer_item_to_turf(
+	obj/item/to_transfer,
+	turf/new_loc,
+	x_offset = 0,
+	y_offset = 0,
+	force = FALSE,
+	silent = FALSE,
+	drop_item_inventory = TRUE,
+)
+	if(!doUnEquip(to_transfer, force, new_loc, no_move = FALSE, invdrop = drop_item_inventory, silent = silent))
+		return FALSE
+	if(QDELETED(to_transfer)) // Some items may get deleted upon getting unequipped.
+		return FALSE
+	to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
+	to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
+	to_transfer.do_drop_animation(src)
+	return TRUE
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)

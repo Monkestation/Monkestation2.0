@@ -64,13 +64,13 @@
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
 
-/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag)
+/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.interact_with_atom(attack_target, src, modifiers)
 	else
 		return ..()
 
@@ -78,7 +78,7 @@
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.interact_with_atom(A, src, modifiers)
 	else
 		return ..()
 
@@ -280,7 +280,7 @@
 		flick("firebots_use", user)
 	else
 		flick("firebot1_use", user)
-	internal_ext.afterattack(target, user, null)
+	internal_ext.interact_with_atom(target, src)
 
 /mob/living/simple_animal/bot/firebot/update_icon_state()
 	. = ..()

@@ -360,7 +360,6 @@
 	light_outer_range = 3
 	light_power = 0.75
 	light_color = LIGHT_COLOR_PURPLE
-	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
 
@@ -368,13 +367,13 @@
 	. = ..()
 	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
 
-/turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
-	if(!I.is_open_container())
+/turf/open/lava/plasma/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!attacking_item.is_open_container())
 		return ..()
-	if(!I.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10)))
-		to_chat(user, span_warning("[I] is full."))
+	if(!attacking_item.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10)))
+		to_chat(user, span_warning("[attacking_item] is full."))
 		return
-	user.visible_message(span_notice("[user] scoops some plasma from the [src] with [I]."), span_notice("You scoop out some plasma from the [src] using [I]."))
+	user.visible_message(span_notice("[user] scoops some plasma from the [src] with [attacking_item]."), span_notice("You scoop out some plasma from the [src] using [attacking_item]."))
 
 /turf/open/lava/plasma/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
 	. = TRUE

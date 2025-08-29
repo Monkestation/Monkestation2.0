@@ -285,8 +285,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 //Step one - dehairing.
 
-/obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
-	if(W.get_sharpness())
+/obj/item/stack/sheet/animalhide/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
 		if(do_after(user, 50, target = src))

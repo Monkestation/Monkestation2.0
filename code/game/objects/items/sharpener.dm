@@ -25,39 +25,39 @@
 	//monkestation addition to check for certain exceptions of items that can be sharpened
 	var/exceptions = list(/obj/item/reagent_containers/cooking_container/pan, /obj/item/melee/flyswatter)  //RIP Ben
 
-/obj/item/sharpener/attackby(obj/item/I, mob/user, params)
+/obj/item/sharpener/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(uses == 0)
 		to_chat(user, span_warning("The sharpening block is too worn to use again!"))
 		return
-	if(I.force >= max || I.throwforce >= max) //So the whetstone never reduces force or throw_force
-		to_chat(user, span_warning("[I] is much too powerful to sharpen further!"))
+	if(attacking_item.force >= max || attacking_item.throwforce >= max) //So the whetstone never reduces force or throw_force
+		to_chat(user, span_warning("[attacking_item] is much too powerful to sharpen further!"))
 		return
-	if(requires_sharpness && !I.get_sharpness() && !(is_type_in_list(I, exceptions))) //monkestation edit for the last part
+	if(requires_sharpness && !attacking_item.get_sharpness() && !(is_type_in_list(attacking_item, exceptions))) //monkestation edit for the last part
 		to_chat(user, span_warning("You can only sharpen items that are already sharp, such as knives!"))
 		return
-	if(is_type_in_list(I, list(/obj/item/melee/energy, /obj/item/dualsaber))) //You can't sharpen the photons in energy meelee weapons
-		to_chat(user, span_warning("You don't think \the [I] will be the thing getting modified if you use it on \the [src]!"))
+	if(is_type_in_list(attacking_item, list(/obj/item/melee/energy, /obj/item/dualsaber))) //You can't sharpen the photons in energy meelee weapons
+		to_chat(user, span_warning("You don't think \the [attacking_item] will be the thing getting modified if you use it on \the [src]!"))
 		return
 
 	//This block is used to check more things if the item has a relevant component.
-	var/signal_out = SEND_SIGNAL(I, COMSIG_ITEM_SHARPEN_ACT, increment, max) //Stores the bitflags returned by SEND_SIGNAL
+	var/signal_out = SEND_SIGNAL(attacking_item, COMSIG_ITEM_SHARPEN_ACT, increment, max) //Stores the bitflags returned by SEND_SIGNAL
 	if(signal_out & COMPONENT_BLOCK_SHARPEN_MAXED) //If the item's components enforce more limits on maximum power from sharpening,  we fail
-		to_chat(user, span_warning("[I] is much too powerful to sharpen further!"))
+		to_chat(user, span_warning("[attacking_item] is much too powerful to sharpen further!"))
 		return
 	if(signal_out & COMPONENT_BLOCK_SHARPEN_BLOCKED)
-		to_chat(user, span_warning("[I] is not able to be sharpened right now!"))
+		to_chat(user, span_warning("[attacking_item] is not able to be sharpened right now!"))
 		return
-	if((signal_out & COMPONENT_BLOCK_SHARPEN_ALREADY) || (I.force > initial(I.force) && !signal_out)) //No sharpening stuff twice
-		to_chat(user, span_warning("[I] has already been refined before. It cannot be sharpened further!"))
+	if((signal_out & COMPONENT_BLOCK_SHARPEN_ALREADY) || (attacking_item.force > initial(attacking_item.force) && !signal_out)) //No sharpening stuff twice
+		to_chat(user, span_warning("[attacking_item] has already been refined before. It cannot be sharpened further!"))
 		return
 	if(!(signal_out & COMPONENT_BLOCK_SHARPEN_APPLIED)) //If the item has a relevant component and COMPONENT_BLOCK_SHARPEN_APPLIED is returned, the item only gets the throw force increase
-		I.force = clamp(I.force + increment, 0, max)
-		I.wound_bonus = I.wound_bonus + increment //wound_bonus has no cap
-	user.visible_message(span_notice("[user] sharpens [I] with [src]!"), span_notice("You sharpen [I], making it much more deadly than before."))
+		attacking_item.force = clamp(attacking_item.force + increment, 0, max)
+		attacking_item.wound_bonus = attacking_item.wound_bonus + increment //wound_bonus has no cap
+	user.visible_message(span_notice("[user] sharpens [attacking_item] with [src]!"), span_notice("You sharpen [attacking_item], making it much more deadly than before."))
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
-	I.sharpness = SHARP_EDGED //When you whetstone something, it becomes an edged weapon, even if it was previously dull or pointy
-	I.throwforce = clamp(I.throwforce + increment, 0, max)
-	I.name = "[prefix] [I.name]" //This adds a prefix and a space to the item's name regardless of what the prefix is
+	attacking_item.sharpness = SHARP_EDGED //When you whetstone something, it becomes an edged weapon, even if it was previously dull or pointy
+	attacking_item.throwforce = clamp(attacking_item.throwforce + increment, 0, max)
+	attacking_item.name = "[prefix] [attacking_item.name]" //This adds a prefix and a space to the item's name regardless of what the prefix is
 	desc = "[desc] At least, it used to."
 	uses-- //this doesn't cause issues because we check if uses == 0 earlier in this proc
 	if(uses == 0)

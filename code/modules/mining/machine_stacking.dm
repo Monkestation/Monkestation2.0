@@ -22,13 +22,10 @@
 		machine = null
 	return ..()
 
-/obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I))
-		return
-	var/obj/item/multitool/M = I
+/obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
-	return TRUE
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -101,7 +98,12 @@
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, (mapload && force_connect))
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		FALSE, \
+		(mapload && force_connect) \
+	)
 
 /obj/machinery/mineral/stacking_machine/Destroy()
 	if(console)
@@ -140,8 +142,7 @@
 	if(materials.silo && !materials.on_hold())
 		var/matlist = inp.custom_materials & materials.mat_container.materials
 		if (length(matlist))
-			var/inserted = materials.mat_container.insert_item(inp)
-			materials.silo_log(src, "collected", inserted, "sheets", matlist)
+			materials.mat_container.insert_item(inp, context = src)
 			return
 
 	// No silo attached process to internal storage

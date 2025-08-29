@@ -140,6 +140,16 @@
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
+/datum/brain_trauma/severe/paralysis/hemiplegic
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/left
+	paralysis_type = "left"
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/right
+	paralysis_type = "right"
+
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
 	desc = "Patient may involuntarily fall asleep during normal activities."

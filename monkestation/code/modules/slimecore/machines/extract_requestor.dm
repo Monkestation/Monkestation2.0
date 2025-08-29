@@ -54,15 +54,13 @@
 		return
 	create_request(user, card)
 
-/obj/machinery/slime_extract_requestor/multitool_act(mob/living/user, obj/item/tool)
+/obj/machinery/slime_extract_requestor/multitool_act(mob/living/user, obj/item/multitool/multi)
 	if(!panel_open)
-		return
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+		user.balloon_alert(user, "panel closed")
+		return ITEM_INTERACT_BLOCKING
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/slime_extract_requestor/proc/check_in_requests(obj/item/card/id/card)
 	for(var/datum/extract_request_data/listed_request as anything in current_requests)
