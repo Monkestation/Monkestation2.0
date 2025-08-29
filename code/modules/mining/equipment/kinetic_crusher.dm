@@ -837,8 +837,8 @@
 	name = "set of proto kinetic knives"
 	desc = "With a touch of bluespace, the crusher has been made into a more practical form for throwing. \
 	This set of throwing knives allows you to utilize the features of a crusher while maintaining more than a safe \
-	distance from whatever fauna stands between you and your ore. Unfortunetly, while they are the perfect shape for throwing, the awkward grip \
-	and blade make it pretty much impossible to stab with... at least it can still utilize trophies."
+	distance from whatever fauna stands between you and your ore, though the small weapon limits damage... \
+	at least it can still utilize trophies."
 	fire_sound = 'sound/weapons/fwoosh.ogg'
 	pinless = TRUE
 	force = 10
@@ -867,8 +867,8 @@
 	var/list/trophies = list() //yes these are new variables because this isnt a crusher subtype
 	var/charged = TRUE
 	var/charge_time = 5
-	var/detonation_damage = 60 //these are the same as the thrown projectile so the description is correct on the damage.
-	var/backstab_bonus = 10
+	var/detonation_damage = 30 //these are the same as the thrown projectile so the description is correct on the damage.
+	var/backstab_bonus = 20
 	//so a quick note, you can technically land crusher melee stabs... however thats if point blanking it removed, from this... which i admittedly cant get removed from here so... im just redacting any mention of stabbing... sorry :(
 
 
@@ -972,13 +972,10 @@
 			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
 			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/gun/magic/crusherknives/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with == user)
-		balloon_alert(user, "can't aim at yourself!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/magic/crusherknives/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return
 
 /obj/item/gun/magic/crusherknives/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
 	if(!charged)
@@ -1039,8 +1036,8 @@
 	antimagic_flags = NONE
 	antimagic_charge_cost = 0
 	var/obj/item/gun/magic/crusherknives/hammer_synced
-	var/detonation_damage = 60
-	var/backstab_bonus = 10
+	var/detonation_damage = 30
+	var/backstab_bonus = 20
 
 //we have more copy pasted crusher code here because the damage from a projectile is different from a melee strike
 /obj/projectile/magic/knives/on_hit(atom/target, Firer, blocked = 0, pierce_hit)
