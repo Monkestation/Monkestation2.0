@@ -20577,7 +20577,7 @@
 	},
 /obj/structure/table/optable,
 /obj/machinery/light/cold/directional/north,
-/obj/machinery/defibrillator_mount/loaded/directional/north,
+/obj/machinery/defibrillator_mount/charging/loaded/directional/north,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
 "cKq" = (
