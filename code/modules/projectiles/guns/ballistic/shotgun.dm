@@ -550,6 +550,8 @@
 	With some Proto Kinetic Acceleration tech mixed in, the 'Fenrir' becomes a lethal auto shotgun chambered in \
 	20. Gauge shells, for sweeping up any unwanted fauna from a hostile environment."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "protokshotgunauto"
 	worn_icon_state = "protokshotgunauto"
 	icon_state = "protokshotgunauto"
