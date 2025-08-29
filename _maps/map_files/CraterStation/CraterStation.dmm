@@ -2744,6 +2744,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "aSs" = (
@@ -14885,6 +14886,7 @@
 /area/station/engineering/atmos/hallway)
 "eJL" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "eJY" = (
@@ -33613,6 +33615,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit/green/anim,
 /area/station/ai_monitored/command/nuke_storage)
+"kpI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/prison/garden)
 "kpL" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/structure/cable,
@@ -43767,6 +43776,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
+"ntU" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
+/obj/structure/chair/stool/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/security/prison/mess)
 "nul" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/box/corners{
@@ -50486,6 +50503,10 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/pod/light,
 /area/station/maintenance/radshelter/sci)
+"pwb" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/security/prison)
 "pwn" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/chair{
@@ -53663,6 +53684,15 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/tcommsat/server)
+"qrs" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/prison/mess)
 "qrB" = (
 /turf/open/floor/plating,
 /area/station/command/gateway)
@@ -60004,6 +60034,14 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/security/office)
+"siH" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
+/obj/structure/chair/stool/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/prison/mess)
 "siL" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -61696,6 +61734,10 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/large,
 /area/station/engineering/atmos)
+"sLc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron,
+/area/station/security/prison/workout)
 "sLf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61803,6 +61845,14 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
+"sMY" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners{
+	dir = 1
+	},
+/obj/structure/chair/stool/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/security/prison/mess)
 "sMZ" = (
 /obj/structure/chair/wood/wings,
 /obj/effect/landmark/start/assistant,
@@ -69264,6 +69314,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"vcF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/security/prison)
 "vcN" = (
 /turf/open/openspace/icemoon,
 /area/station/cargo/crater_elevator)
@@ -79486,6 +79542,7 @@
 "yiD" = (
 /obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "yiH" = (
@@ -178576,7 +178633,7 @@ vnx
 dAx
 mpJ
 xJr
-alo
+vcF
 alo
 alo
 alo
@@ -178585,7 +178642,7 @@ alo
 uyM
 alo
 alo
-alo
+vcF
 alo
 cJQ
 alo
@@ -180115,7 +180172,7 @@ bFc
 kqm
 bRC
 aIR
-alo
+pwb
 cJQ
 svg
 rui
@@ -180386,7 +180443,7 @@ pgA
 sFN
 let
 kYo
-waw
+kpI
 lqf
 lqf
 avM
@@ -181657,22 +181714,22 @@ wXZ
 vQa
 uhg
 alo
-alo
+pwb
 cJQ
 alo
 rWC
 pSw
 bqI
 bqI
-bqI
+sLc
 moW
 oNL
 gYj
 uXj
 eEn
 mWK
-wta
-uFI
+ntU
+qrs
 uFI
 wLc
 eGw
@@ -182183,9 +182240,9 @@ oBx
 lrp
 sCz
 eJL
-mvI
+siH
 aSo
-wta
+sMY
 uFI
 mix
 rwO
