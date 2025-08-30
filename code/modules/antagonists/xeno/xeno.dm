@@ -61,6 +61,8 @@
 	objective.owner = owner
 	objectives += objective
 	ADD_TRAIT(owner.current, TRAIT_NEUTERED, INNATE_TRAIT)
+	owner.current.remove_blocked_language(/datum/language/common)
+	owner.current.grant_language(/datum/language/common, TRUE, FALSE)
 
 /datum/objective/survive/New()
 
