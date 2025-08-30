@@ -71,12 +71,10 @@
 	inhand_icon_state = "cluwne_shoes"
 	worn_icon_state = "cluwne"
 	slowdown = SHOES_SLOWDOWN
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sound_dampener = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/cluwne/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/clothing/shoes/clown_shoes/cluwne/AltClick(mob/living/user)
 	if(!isliving(user))
