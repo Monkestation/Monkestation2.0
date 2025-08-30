@@ -135,3 +135,8 @@
 	return list(
 		get_asset_datum(/datum/asset/simple/borer_icons),
 	)
+
+
+// Lets the borers see who is a willing host
+/datum/antagonist/cortical_borer/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)

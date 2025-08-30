@@ -105,6 +105,7 @@ h1.alert, h2.alert		{color: #000000;}
 .hierophant				{color: #660099;	font-weight: bold;	font-style: italic;}
 .hierophant_warning		{color: #660099;	font-style: italic;}
 .purple					{color: #5e2d79;}
+.purplelarge			{color: #5e2d79;	font-weight: bold;	font-size: 3;}
 .holoparasite			{color: #35333a;}
 .bounty					{color: #ab6613;	font-style: italic;}
 
