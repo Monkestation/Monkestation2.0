@@ -73,9 +73,6 @@
 	slowdown = SHOES_SLOWDOWN
 	var/sound_dampener = TRUE
 
-/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize(mapload)
-	. = ..()
-
 /obj/item/clothing/shoes/clown_shoes/cluwne/AltClick(mob/living/user)
 	if(!isliving(user))
 		return
