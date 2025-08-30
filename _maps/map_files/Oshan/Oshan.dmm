@@ -14868,6 +14868,10 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/commons/lounge)
+"eSO" = (
+/obj/effect/landmark/start/brig_physician,
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/medical)
 "eSS" = (
 /obj/structure/grille/broken,
 /obj/effect/mapping_helpers/broken_floor,
@@ -23889,6 +23893,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/public/glass{
+	name = "Bar"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/lounge)
 "hPW" = (
@@ -25695,6 +25702,12 @@
 	},
 /obj/effect/turf_decal/trimline/green/filled/warning,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Bar"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/commons/lounge)
 "iup" = (
@@ -29727,6 +29740,8 @@
 /obj/structure/sign/poster/random/directional/south,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/structure/closet/secure_closet/brig_physician,
+/obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/medical)
 "jQt" = (
@@ -50837,6 +50852,12 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Bar"
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/commons/lounge)
 "qFa" = (
@@ -68358,6 +68379,9 @@
 	},
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Bar"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/lounge)
 "wny" = (
@@ -102079,7 +102103,7 @@ pAm
 mGs
 mUc
 kMd
-okE
+eSO
 vOU
 okE
 vgo
