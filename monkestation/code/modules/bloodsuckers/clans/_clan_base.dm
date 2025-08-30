@@ -199,15 +199,13 @@
 	bloodsuckerdatum.bloodsucker_regen_rate += 0.05
 	bloodsuckerdatum.max_blood_volume += 100
 
-	if(ishuman(bloodsuckerdatum.owner.current))
-		var/mob/living/carbon/human/human_user = bloodsuckerdatum.owner.current
-		var/obj/item/bodypart/user_left_hand = human_user.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/user_right_hand = human_user.get_bodypart(BODY_ZONE_R_ARM)
-		user_left_hand.unarmed_damage_low += 0.5
-		user_right_hand.unarmed_damage_low += 0.5
+	for(var/limb_slot in bloodsuckerdatum.affected_limbs)
+		var/obj/item/bodypart/limb = bloodsuckerdatum.affected_limbs[limb_slot]
+		if(QDELETED(limb))
+			continue
 		// This affects the hitting power of Brawn.
-		user_left_hand.unarmed_damage_high += 0.5
-		user_right_hand.unarmed_damage_high += 0.5
+		limb.unarmed_damage_high += 0.5
+		limb.unarmed_damage_high += 0.5
 
 	// We're almost done - Spend your Rank now.
 	bloodsuckerdatum.bloodsucker_level++

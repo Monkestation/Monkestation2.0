@@ -78,6 +78,14 @@
 
 	var/obj/effect/abstract/bloodsucker_tracker_holder/tracker
 
+	/// List of limbs we've applied additional punch damage to.
+	var/list/affected_limbs = list(
+		BODY_ZONE_L_ARM = null,
+		BODY_ZONE_R_ARM = null,
+		BODY_ZONE_L_LEG = null,
+		BODY_ZONE_R_LEG = null,
+	)
+
 	/// Static typecache of all bloodsucker powers.
 	var/static/list/all_bloodsucker_powers = typecacheof(/datum/action/cooldown/bloodsucker, ignore_root_path = TRUE)
 	/// Antagonists that cannot be Vassalized no matter what
@@ -163,6 +171,7 @@
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 	ensure_brain_nonvital(current_mob)
+	setup_limbs(current_mob)
 	setup_tracker(current_mob)
 
 #ifdef BLOODSUCKER_TESTING
@@ -170,6 +179,7 @@
 	new /obj/structure/closet/crate/coffin(user_loc)
 	new /obj/structure/bloodsucker/vassalrack(user_loc)
 #endif
+
 
 /**
  * Remove innate effects is everything given to the mob
@@ -182,7 +192,7 @@
 	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED)))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
-
+	cleanup_limbs(current_mob)
 	cleanup_tracker()
 
 	if(current_mob.hud_used)
@@ -193,6 +203,7 @@
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
 		QDEL_NULL(sunlight_display)
+
 
 /datum/antagonist/bloodsucker/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
@@ -275,39 +286,6 @@
 		if(old_body)
 			all_powers.Remove(old_body)
 		all_powers.Grant(new_body)
-	var/obj/item/bodypart/old_left_arm = old_body.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/old_right_arm = old_body.get_bodypart(BODY_ZONE_R_ARM)
-	var/old_left_arm_unarmed_damage_low
-	var/old_left_arm_unarmed_damage_high
-	var/old_right_arm_unarmed_damage_low
-	var/old_right_arm_unarmed_damage_high
-	if(old_body && ishuman(old_body))
-		var/mob/living/carbon/human/old_user = old_body
-		var/datum/species/old_species = old_user.dna.species
-		old_species.inherent_traits -= TRAIT_DRINKS_BLOOD
-		//Keep track of what they were
-		old_left_arm_unarmed_damage_low = old_left_arm.unarmed_damage_low
-		old_left_arm_unarmed_damage_high = old_left_arm.unarmed_damage_high
-		old_right_arm_unarmed_damage_low = old_right_arm.unarmed_damage_low
-		old_right_arm_unarmed_damage_high = old_right_arm.unarmed_damage_high
-		//Then reset them
-		old_left_arm.unarmed_damage_low = initial(old_left_arm.unarmed_damage_low)
-		old_left_arm.unarmed_damage_high = initial(old_left_arm.unarmed_damage_high)
-		old_right_arm.unarmed_damage_low = initial(old_right_arm.unarmed_damage_low)
-		old_right_arm.unarmed_damage_high = initial(old_right_arm.unarmed_damage_high)
-	if(ishuman(new_body))
-		var/mob/living/carbon/human/new_user = new_body
-		var/datum/species/new_species = new_user.dna.species
-		new_species.inherent_traits += TRAIT_DRINKS_BLOOD
-		var/obj/item/bodypart/new_left_arm
-		var/obj/item/bodypart/new_right_arm
-		//Give old punch damage values
-		new_left_arm = new_body.get_bodypart(BODY_ZONE_L_ARM)
-		new_right_arm = new_body.get_bodypart(BODY_ZONE_R_ARM)
-		new_left_arm.unarmed_damage_low = old_left_arm_unarmed_damage_low
-		new_left_arm.unarmed_damage_high = old_left_arm_unarmed_damage_high
-		new_right_arm.unarmed_damage_low = old_right_arm_unarmed_damage_low
-		new_right_arm.unarmed_damage_high = old_right_arm_unarmed_damage_high
 
 	//Give Bloodsucker Traits
 	old_body?.remove_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
@@ -452,10 +430,6 @@
 		var/obj/item/bodypart/user_right_arm = user.get_bodypart(BODY_ZONE_R_ARM)
 		user_species.inherent_traits += TRAIT_DRINKS_BLOOD
 		user.dna?.remove_all_mutations()
-		user_left_arm.unarmed_damage_low += 1 //lowest possible punch damage - 0
-		user_left_arm.unarmed_damage_high += 1 //highest possible punch damage - 9
-		user_right_arm.unarmed_damage_low += 1 //lowest possible punch damage - 0
-		user_right_arm.unarmed_damage_high += 1 //highest possible punch damage - 9
 	//Give Bloodsucker Traits
 	owner.current.add_traits(bloodsucker_traits + always_traits, BLOODSUCKER_TRAIT)
 	//Clear Addictions
@@ -559,3 +533,51 @@
 	else
 		REMOVE_TRAITS_IN(current, BLOODSUCKER_COFFIN_TRAIT)
 
+/datum/antagonist/bloodsucker/proc/setup_limbs(mob/living/carbon/target)
+	if(!iscarbon(target))
+		return
+	RegisterSignal(target, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
+	RegisterSignal(target, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
+	for(var/body_part in affected_limbs)
+		var/obj/item/bodypart/limb = target.get_bodypart(check_zone(body_part))
+		if(limb)
+			register_limb(target, limb, initial = TRUE)
+
+/datum/antagonist/bloodsucker/proc/cleanup_limbs(mob/living/carbon/target)
+	if(!iscarbon(target))
+		return
+	UnregisterSignal(target, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
+	for(var/body_part in affected_limbs)
+		var/obj/item/bodypart/limb = target.get_bodypart(check_zone(body_part))
+		if(limb)
+			unregister_limb(target, limb)
+
+/datum/antagonist/bloodsucker/proc/register_limb(mob/living/carbon/owner, obj/item/bodypart/new_limb, special, initial = FALSE)
+	SIGNAL_HANDLER
+	if(new_limb.body_zone == BODY_ZONE_HEAD || new_limb.body_zone == BODY_ZONE_CHEST)
+		return
+
+	affected_limbs[new_limb.body_zone] = new_limb
+	RegisterSignal(new_limb, COMSIG_QDELETING, PROC_REF(limb_gone))
+
+	var/extra_damage = 1 + (bloodsucker_level / 2)
+	new_limb.unarmed_damage_low += extra_damage
+	new_limb.unarmed_damage_high += extra_damage
+
+/datum/antagonist/bloodsucker/proc/unregister_limb(mob/living/carbon/owner, obj/item/bodypart/lost_limb, special)
+	SIGNAL_HANDLER
+	if(lost_limb.body_zone == BODY_ZONE_HEAD || lost_limb.body_zone == BODY_ZONE_CHEST)
+		return
+	var/extra_damage = 1 + (bloodsucker_level / 2)
+
+	affected_limbs[lost_limb.body_zone] = null
+	UnregisterSignal(lost_limb, COMSIG_QDELETING)
+	// safety measure in case we ever accidentally fuck up the math or something
+	lost_limb.unarmed_damage_low = max(lost_limb.unarmed_damage_low - extra_damage, initial(lost_limb.unarmed_damage_low))
+	lost_limb.unarmed_damage_high = max(lost_limb.unarmed_damage_high - extra_damage, initial(lost_limb.unarmed_damage_high))
+
+/datum/antagonist/bloodsucker/proc/limb_gone(obj/item/bodypart/deleted_limb)
+	SIGNAL_HANDLER
+	if(affected_limbs[deleted_limb.body_zone])
+		affected_limbs[deleted_limb.body_zone] = null
+		UnregisterSignal(deleted_limb, COMSIG_QDELETING)
