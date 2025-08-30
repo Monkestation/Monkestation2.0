@@ -236,28 +236,24 @@
 	var/datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/bloodsucker_power = power_ref?.resolve()
 	if(!bloodsucker_power)
 		return ..()
-	if(istype(target, /obj/structure/closet) && bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
-		var/obj/structure/closet/hit_closet = target
-		if(hit_closet)
+	if(bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
+		if(istype(target, /obj/structure/closet))
+			var/obj/structure/closet/hit_closet = target
 			hit_closet.welded = FALSE
 			hit_closet.locked = FALSE
 			hit_closet.broken = TRUE
 			hit_closet.update_appearance()
-			return ..()
-	if(istype(target, /obj/machinery/door) && bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
-		var/obj/machinery/door/hit_airlock = target
-		hit_airlock.open(BYPASS_DOOR_CHECKS)
-		qdel(src)
-		return ..()
-	if(ismob(target))
-		if(bloodsucker_power.level_current >= THAUMATURGY_BLOOD_STEAL_LEVEL)
-			var/mob/living/person_hit = target
-			person_hit.blood_volume -= THAUMATURGY_BLOOD_COST_PER_CHARGE
-			var/datum/antagonist/bloodsucker/bloodsucker = bloodsucker_power.bloodsuckerdatum_power
-			if(bloodsucker)
-				bloodsucker.bloodsucker_blood_volume += min(THAUMATURGY_BLOOD_COST_PER_CHARGE, bloodsucker.max_blood_volume)
-		return ..()
-	. = ..()
+		else if(istype(target, /obj/machinery/door))
+			var/obj/machinery/door/hit_airlock = target
+			hit_airlock.open(BYPASS_DOOR_CHECKS)
+			qdel(src)
+	if(isliving(target) && bloodsucker_power.level_current >= THAUMATURGY_BLOOD_STEAL_LEVEL)
+		var/mob/living/person_hit = target
+		person_hit.blood_volume -= THAUMATURGY_BLOOD_COST_PER_CHARGE
+		var/datum/antagonist/bloodsucker/bloodsucker = bloodsucker_power.bloodsuckerdatum_power
+		if(bloodsucker)
+			bloodsucker.bloodsucker_blood_volume += min(THAUMATURGY_BLOOD_COST_PER_CHARGE, bloodsucker.max_blood_volume)
+	return ..()
 
 /**
  *	# Blood Shield
