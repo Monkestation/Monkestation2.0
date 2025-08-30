@@ -5,7 +5,7 @@
  *	Level 2 - Cloak of Darkness until clicking an area, teleports the user to the selected area (max 3 tiles)
  *	Level 3 - Cloak of Darkness until clicking an area, teleports the user to the selected area
  *	Level 4 - Cloak of Darkness until clicking an area, teleports the user to the selected area, causes nearby people to bleed.
- *	Level 5 - Cloak of Darkness until clicking an area, teleports the user to the selected area, causes nearby people to fall asleep.
+ *	Level 5 - Cloak of Darkness until clicking an area, teleports the user to the selected area, causes nearby people to be knocked down.
  */
 
 #define OBFUSCATION_BLOOD_COST_PER_TILE 5
@@ -43,7 +43,7 @@
 		. += " anywhere you can see."
 	if(level_current >= OBFUSCATION_BLEED_LEVEL)
 		if(level_current >= OBFUSCATION_KNOCKDOWN_LEVEL)
-			. += " This will cause people at your destination to start bleeding and fall asleep."
+			. += " This will cause people at your destination to start bleeding and knock them down."
 		else
 			. += " This will cause people at your destination to start bleeding."
 
