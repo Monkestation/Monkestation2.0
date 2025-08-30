@@ -327,3 +327,11 @@
 	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
+
+/datum/supply_pack/goody/summoner_nifsoft
+	name = "Grimoire Caeruleam NIFSoft"
+	desc = "Contains a single Grimoire Caeruleam NIFSoft uploader disk."
+	cost = CARGO_CRATE_VALUE * 0.75
+	contains = list(
+		/obj/item/disk/nifsoft_uploader/summoner,
+	)

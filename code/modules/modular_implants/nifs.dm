@@ -406,8 +406,6 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/added_stun_duration = 200/severity // the previous stun duration added by the parent call
-	owner.AdjustStun(-added_stun_duration) // we want to negate that stun here
 	to_chat(owner, span_warning("You feel a stinging pain in your head!"))
 	if(!durability_loss_vulnerable)
 		return FALSE

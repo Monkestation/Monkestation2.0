@@ -5253,6 +5253,7 @@
 #include "code\modules\modular_implants\nifsofts\hivemind.dm"
 #include "code\modules\modular_implants\nifsofts\huds.dm"
 #include "code\modules\modular_implants\nifsofts\money_sense.dm"
+#include "code\modules\modular_implants\nifsofts\prop_summoner.dm"
 #include "code\modules\modular_implants\nifsofts\soul_poem.dm"
 #include "code\modules\movespeed\_movespeed_modifier.dm"
 #include "code\modules\movespeed\modifiers\components.dm"
