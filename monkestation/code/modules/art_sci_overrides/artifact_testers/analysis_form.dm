@@ -56,6 +56,7 @@
 	if(!istype(usr.get_active_held_item(), /obj/item/pen))
 		to_chat(usr, span_notice("You need a pen to write on [src]!"))
 		return
+	. = TRUE
 	switch(action)
 		if("origin")
 			chosen_origin = params["origin"]
@@ -96,10 +97,10 @@
 			continue //shhhhh
 		artifact_names += initial(subtype.type_name)
 
-	.["allorigins"] = origins_names
-	.["allfaults"] = allfaults
-	.["alltypes"] = artifact_names
-	.["alltriggers"] = trigger_names
+	.["allorigins"] = sort_list(origins_names)
+	.["allfaults"] = sort_list(allfaults)
+	.["alltypes"] = sort_list(artifact_names)
+	.["alltriggers"] = sort_list(trigger_names)
 	return
 
 /obj/item/sticker/analysis_form/ui_data(mob/user)
@@ -184,7 +185,7 @@
 	if(!to_analyze)
 		return
 	to_analyze.holder.name = to_analyze.fake_name
-	QDEL_NULL(to_analyze.analysis)
+	to_analyze.analysis = null
 
 /obj/item/sticker/analysis_form/proc/get_export_value(datum/component/artifact/art)
 	var/baseval = CARGO_CRATE_VALUE

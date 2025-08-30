@@ -7,7 +7,7 @@
 /datum/artifact_activator/touch/data
 	name = "Data"
 	required_stimuli = STIMULUS_DATA
-	hint_texts = list("It yearns for information")
+	hint_texts = list("It yearns for information.")
 	discovered_text = "Activated by Information"
 
 /datum/artifact_activator/touch/carbon
@@ -19,5 +19,5 @@
 /datum/artifact_activator/touch/silicon
 	name = "Silicon Touch"
 	required_stimuli = STIMULUS_SILICON_TOUCH
-	hint_texts  = list("It feels like it's malfunctioning")
+	hint_texts  = list("It looks like it's malfunctioning.")
 	discovered_text = "Activated by Silicon Contact"

@@ -32,7 +32,7 @@
 	SIGNAL_HANDLER
 	if(analysis)
 		to_chat(user, "You peel off [analysis], to make room for [sticker].")
-		sticker.peel()
+		analysis.peel()
 	if(!istype(sticker, /obj/item/sticker/analysis_form))
 		return
 	analysis = sticker
