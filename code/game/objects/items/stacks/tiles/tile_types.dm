@@ -101,9 +101,8 @@
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 
-/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		target.attackby(src, user, click_parameters)
+/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, click_parameters)
+	target.attackby(src, user, click_parameters)
 
 //Grass
 /obj/item/stack/tile/grass
@@ -125,6 +124,13 @@
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fairygrass
+
+/obj/item/stack/tile/fairygrass/dark
+	name = "dark fairygrass tile"
+	singular_name = "dark fairygrass floor tile"
+	desc = "A patch of odd, light consuming grass."
+	turf_type = /turf/open/floor/grass/fairy/dark
+	color = "#410096"
 
 //Wood
 /obj/item/stack/tile/wood

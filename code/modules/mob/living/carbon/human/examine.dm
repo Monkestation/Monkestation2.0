@@ -330,6 +330,9 @@
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
+	if((!wear_suit && !w_uniform) && mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn))
+		msg += "[t_His] whole body is covered in sigils!\n"
+
 	if(just_sleeping)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 
@@ -350,11 +353,6 @@
 					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
-				else if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING))
-					if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
-						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> noises.\n"
-					else
-						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet voices</strong>.\n"
 				if (bodytemperature > bodytemp_heat_damage_limit)
 					msg += "[t_He] [t_is] flushed and wheezing.\n"
 				if (bodytemperature < bodytemp_cold_damage_limit)

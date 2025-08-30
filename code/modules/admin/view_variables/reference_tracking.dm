@@ -35,9 +35,6 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 		/turf/open/space/basic,
 		/turf/cordon,
 		/obj/effect/abstract/mirage_holder, // only a turf ref i think?
-		// no need to scan these two
-		/datum/controller/subsystem/demo,
-		/datum/controller/subsystem/garbage,
 		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue
 		/datum/light_source,
 		/datum/lighting_corner,
@@ -45,6 +42,8 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 		/datum/reagent/consumable/nutriment,
 		/datum/chatmessage,
 		/atom/movable/outdoor_effect,
+		// these hard delete but holy shit these trigger the reftracker CONSTANTLY
+		/atom/movable/screen/map_view/char_preview,
 	))
 		for(var/type in typesof(base_type))
 			.[type] = TRUE

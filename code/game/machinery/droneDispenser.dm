@@ -85,7 +85,7 @@
 	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/syndrone/badass
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
-// I don't need your forgiveness, this is awesome.
+// attacking_item don't need your forgiveness, this is awesome.
 /obj/machinery/drone_dispenser/snowflake
 	name = "snowflake drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
@@ -220,25 +220,25 @@
 	icon_state = icon_on
 	return ..()
 
-/obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
-	if(I.tool_behaviour == TOOL_CROWBAR)
+/obj/machinery/drone_dispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		materials.retrieve_all()
-		I.play_tool_sound(src)
+		attacking_item.play_tool_sound(src)
 		to_chat(user, span_notice("You retrieve the materials from [src]."))
 
-	else if(I.tool_behaviour == TOOL_WELDER)
+	else if(attacking_item.tool_behaviour == TOOL_WELDER)
 		if(!(machine_stat & BROKEN))
 			to_chat(user, span_warning("[src] doesn't need repairs."))
 			return
 
-		if(!I.tool_start_check(user, amount=1))
+		if(!attacking_item.tool_start_check(user, amount=1))
 			return
 
 		user.visible_message(
-			span_notice("[user] begins patching up [src] with [I]."),
+			span_notice("[user] begins patching up [src] with [attacking_item]."),
 			span_notice("You begin restoring the damage to [src]..."))
 
-		if(!I.use_tool(src, user, 40, volume=50, amount=1))
+		if(!attacking_item.use_tool(src, user, 40, volume=50, amount=1))
 			return
 
 		user.visible_message(

@@ -61,15 +61,15 @@
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
 	if(!can_change_cable_layer || !cable_layer_change_checks(user, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
 	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
 	balloon_alert(user, "now operating on the [choice]")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return multitool_act(user, tool)
@@ -254,9 +254,9 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = W
+/obj/machinery/power/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = attacking_item
 		var/turf/T = user.loc
 		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
 			return

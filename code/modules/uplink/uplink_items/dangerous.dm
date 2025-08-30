@@ -100,6 +100,24 @@
 	surplus = 50
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
+/datum/uplink_item/dangerous/razorwire
+	name = "Razorwire Implant"
+	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
+	Two tile range and can anchor further targets to keep them still."
+	item = /obj/item/autosurgeon/organ/syndicate/razorwire
+	progression_minimum = 15 MINUTES
+	cost = 12
+	surplus = 20
+
+/datum/uplink_item/dangerous/mantis_blade
+	name = "Razorwire Implant"
+	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
+	Two tile range and can anchor further targets to keep them still."
+	item = /obj/item/autosurgeon/organ/syndicate/razorwire
+	progression_minimum = 15 MINUTES
+	cost = 12
+	surplus = 20
+
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"
 	desc = "This grenade is filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders. WARNING: The cats are not trained to discern friend from foe!"

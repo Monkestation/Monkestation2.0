@@ -392,3 +392,10 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/nifsoft_hud/meson
+	name = "Meson HUD NIFSoft"
+	desc = "A NIFSoft datadisk containing the Meson HUD NIFsoft."
+	id = "nifsoft_hud_meson"
+	build_path = /obj/item/disk/nifsoft_uploader/meson_hud
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING

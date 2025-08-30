@@ -1,0 +1,6 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed some emissive blockers not working."
+  - code_imp: "changed the code for unique death sounds on masks to be a list similar to alternative laughs/screams on clothing items."
+  - balance: "lowered honkerblast jitter times."

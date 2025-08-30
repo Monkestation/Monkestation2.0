@@ -138,8 +138,8 @@
 	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
 	return ..()
 
-/obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
-	if(pickaxe_door(user, I))
+/obj/structure/mineral_door/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(pickaxe_door(user, attacking_item))
 		return
 	else if(!(user.istate & ISTATE_HARM))
 		return attack_hand(user)
@@ -154,7 +154,7 @@
 /obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 4 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /////////////////////// TOOL OVERRIDES ///////////////////////
@@ -283,9 +283,9 @@
 /obj/structure/mineral_door/wood/crowbar_act(mob/living/user, obj/item/I)
 	return crowbar_door(user, I)
 
-/obj/structure/mineral_door/wood/attackby(obj/item/I, mob/living/user)
-	if(I.get_temperature())
-		fire_act(I.get_temperature())
+/obj/structure/mineral_door/wood/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_temperature())
+		fire_act(attacking_item.get_temperature())
 		return
 
 	return ..()
@@ -319,16 +319,16 @@
 /obj/structure/mineral_door/paperframe/crowbar_act(mob/living/user, obj/item/I)
 	return crowbar_door(user, I)
 
-/obj/structure/mineral_door/paperframe/attackby(obj/item/I, mob/living/user)
-	if(I.get_temperature()) //BURN IT ALL DOWN JIM
-		fire_act(I.get_temperature())
+/obj/structure/mineral_door/paperframe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_temperature()) //BURN IT ALL DOWN JIM
+		fire_act(attacking_item.get_temperature())
 		return
 
-	if((!(user.istate & ISTATE_HARM)) && istype(I, /obj/item/paper) && (atom_integrity < max_integrity))
+	if((!(user.istate & ISTATE_HARM)) && istype(attacking_item, /obj/item/paper) && (atom_integrity < max_integrity))
 		user.visible_message(span_notice("[user] starts to patch the holes in [src]."), span_notice("You start patching some of the holes in [src]!"))
 		if(do_after(user, 2 SECONDS, src))
 			atom_integrity = min(atom_integrity+4,max_integrity)
-			qdel(I)
+			qdel(attacking_item)
 			user.visible_message(span_notice("[user] patches some of the holes in [src]."), span_notice("You patch some of the holes in [src]!"))
 			return TRUE
 

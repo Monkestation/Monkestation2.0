@@ -12,50 +12,66 @@
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
+	var/icon_open = "lockbox"
 	var/icon_broken = "lockbox+b"
+
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(src.broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/storage/lockbox/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
 	atom_storage.max_slots = 4
-	atom_storage.locked = TRUE
+	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
 
-/obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
-	var/locked = atom_storage.locked
-	if(W.GetID())
-		if(broken)
-			balloon_alert(user, "broken!")
-			return
-		if(allowed(user))
-			if(atom_storage.locked)
-				atom_storage.locked = STORAGE_NOT_LOCKED
-			else
-				atom_storage.locked = STORAGE_FULLY_LOCKED
-			locked = atom_storage.locked
-			if(locked)
-				icon_state = icon_locked
-				atom_storage.close_all()
-			else
-				icon_state = icon_closed
-
-			balloon_alert(user, locked ? "locked" : "unlocked")
-			return
-
-		else
-			balloon_alert(user, "access denied!")
-			return
-	if(!locked)
+/obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/card = tool.GetID()
+	if(isnull(card))
 		return ..()
+
+	if(can_unlock(user, card))
+		toggle_locked(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if(check_access(id_card))
+		return TRUE
+	if(!silent)
+		balloon_alert(user, "access denied!")
+	return FALSE
+
+/obj/item/storage/lockbox/proc/toggle_locked(mob/living/user)
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
+	balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
+
+/obj/item/storage/lockbox/update_icon_state()
+	. = ..()
+	if(broken)
+		icon_state = icon_broken
+	else if(atom_storage?.locked)
+		icon_state = icon_locked
+	else if(open)
+		icon_state = icon_open
 	else
-		balloon_alert(user, "locked!")
+		icon_state = icon_closed
 
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
 		broken = TRUE
-		atom_storage.locked = STORAGE_NOT_LOCKED
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		icon_state = src.icon_broken
 		balloon_alert(user, "lock destroyed")
 		if (emag_card && user)
@@ -249,36 +265,23 @@
 	buyer_account = _buyer_account
 	add_traits(list(TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_BANNED_FROM_CARGO_SHUTTLE), TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
 
-/obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	var/obj/item/card/id/id_card = W.GetID()
-	if(!id_card)
+/obj/item/storage/lockbox/order/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/id/id_card = tool.GetID()
+	if(isnull(id_card))
 		return ..()
 
 	if(id_card.registered_account != buyer_account)
 		balloon_alert(user, "incorrect bank account!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	if(privacy_lock)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-		icon_state = icon_locked
-		REMOVE_TRAIT(src, TRAIT_BANNED_FROM_CARGO_SHUTTLE, TRAIT_GENERIC) // monkestation edit: prevent locked goody cases from being sent back
+		toggle_locked(user)
+		REMOVE_TRAIT(src, TRAIT_BANNED_FROM_CARGO_SHUTTLE, TRAIT_GENERIC)
 	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-		icon_state = icon_closed
+		toggle_locked(user)
 	privacy_lock = atom_storage.locked
 	user.visible_message(
 		span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
 		span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."),
 	)
-	return FALSE
-
-///screentips for lockboxes
-/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!held_item)
-		return NONE
-	if(src.broken)
-		return NONE
-	if(!held_item.GetID())
-		return NONE
-	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
-	return CONTEXTUAL_SCREENTIP_SET
+	return ITEM_INTERACT_BLOCKING

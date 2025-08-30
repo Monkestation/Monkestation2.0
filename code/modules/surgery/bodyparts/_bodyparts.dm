@@ -417,6 +417,8 @@
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/organ as anything in get_organs())
+		if(organ.organ_flags & ORGAN_UNREMOVABLE)
+			continue
 		if(owner)
 			organ.Remove(owner)
 		else
@@ -477,7 +479,7 @@
 			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
-	var/datum/species/owner_species = owner.dna?.species
+	var/datum/species/owner_species = owner?.dna?.species
 	if(owner_species)
 		dmg_multi *= (100 - owner_species.armor) / 100 // species.armor is a 0-100 percentage of damage reduction, so we have to convert that to a 0-1 multiplier
 		brute *= owner_species.brutemod

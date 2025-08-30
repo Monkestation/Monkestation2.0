@@ -132,13 +132,13 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Wirecutters : cut it duh !
 //   - pipe cleaner coil : merge pipe cleaners
 //
-/obj/structure/pipe_cleaner/proc/handlecable(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
+/obj/structure/pipe_cleaner/proc/handlecable(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 		cut_pipe_cleaner(user)
 		return
 
-	else if(istype(W, /obj/item/stack/pipe_cleaner_coil))
-		var/obj/item/stack/pipe_cleaner_coil/coil = W
+	else if(istype(attacking_item, /obj/item/stack/pipe_cleaner_coil))
+		var/obj/item/stack/pipe_cleaner_coil/coil = attacking_item
 		if (coil.get_amount() < 1)
 			to_chat(user, span_warning("Not enough pipe cleaner!"))
 			return
@@ -152,8 +152,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	investigate_log("was pulled up by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 	deconstruct()
 
-/obj/structure/pipe_cleaner/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
+/obj/structure/pipe_cleaner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	handlecable(attacking_item, user, modifiers)
 
 /obj/structure/pipe_cleaner/singularity_pull(S, current_size)
 	..()

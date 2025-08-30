@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Disembowling no longer spills out unremovable organs."
+  - bugfix: "Oozelings will no longer duplicate organs when they die to severe damage to their chest."
+  - bugfix: "Fixed a bug where you couldn't pour plasma on an undamaged oozeling core."

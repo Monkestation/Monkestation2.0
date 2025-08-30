@@ -45,8 +45,8 @@
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		updateUsrDialog()
 
-/obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id/advanced/prisoner))
-		id_insert(user, I)
+/obj/machinery/computer/prisoner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/card/id/advanced/prisoner))
+		id_insert(user, attacking_item)
 	else
 		return ..()
