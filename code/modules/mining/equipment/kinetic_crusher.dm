@@ -143,7 +143,7 @@
 	target.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
 /obj/item/kinetic_crusher/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!overrides_twohandrequired && !HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_with == user)

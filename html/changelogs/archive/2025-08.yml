@@ -778,6 +778,10 @@
   - bugfix: various clock cult bugs
   - balance: reduced the maximum amount of cogscarabs from 9 to 6
   - balance: reworked the clockwork power economy into passive and active power
+  Rex9001:
+  - rscadd: A horrific monster has crawled inside of a crewmate, escaped all NT bio
+      scans and is now in an ideal position to burst out of its host and start wrecking
+      havoc. The bloodling has arrived!
   ThePooba:
   - rscadd: 'donator alt title: Sr. Attending physician(cmo), Cybertronic Engineer(robo),
       Builder(engi)'
@@ -787,6 +791,9 @@
   - rscadd: like 50 spells for darkspawn and shit
   - rscadd: New camera network system - mostly code side
   - rscadd: custom key click sounds for some machines and buttons, firealarms etc
+  - bugfix: chem_heater dupe
+  - bugfix: molotovs and other interacts on beakers
+  - bugfix: camera?
   Tostah:
   - rscadd: Lamarr can now produce neutered xenomorph larva which can't evolve into
       drones and start nests.

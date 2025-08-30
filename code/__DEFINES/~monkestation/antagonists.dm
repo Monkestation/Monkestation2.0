@@ -70,5 +70,20 @@
 /// If the borer can produce eggs without a host
 #define BORER_ALONE_PRODUCTION (1<<4)
 
+/// If the given mob is a bloodling
+#define IS_BLOODLING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodling))
+
+/// If the given mob is a bloodling thrall
+#define IS_BLOODLING_THRALL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/changeling/bloodling_thrall))
+
+/// If the given mob is a simplemob bloodling thrall
+#define IS_SIMPLEMOB_BLOODLING_THRALL(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/infested_thrall))
+
+/// If the given mob is a bloodling thrall or bloodling
+#define IS_BLOODLING_OR_THRALL(mob) (IS_BLOODLING(mob) || IS_BLOODLING_THRALL(mob) || IS_SIMPLEMOB_BLOODLING_THRALL(mob))
+
+/// Antagonist panel groups
+#define ANTAG_GROUP_BLOODLING "Bloodling"
+
 /// How much heretic Mark of Rust mark does to items
 #define RUST_MARK_DAMAGE	50

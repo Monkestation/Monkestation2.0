@@ -1,0 +1,5 @@
+author: "EssentialTomato"
+delete-after: True
+changes:
+  - qol: "Holofans can now be deployed over window sills."
+  - bugfix: "Fixed holosigns not being cleared when clicked on with a projector."

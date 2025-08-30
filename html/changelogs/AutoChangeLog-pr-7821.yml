@@ -1,0 +1,5 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - bugfix: "fixed a LOT of interaction bugs"
+  - rscadd: "added razorwire implant to traitor uplink and fixed mantis implants lunge"

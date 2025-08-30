@@ -18,6 +18,7 @@
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
+#define ROLE_BLOODLING "Bloodling" // monkestation edit
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
 #define ROLE_DARKSPAWN "Darkspawn"
@@ -86,6 +87,7 @@
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
+#define ROLE_BLOODLING_THRALL "Bloodling Thrall" // monkestation edit
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -154,6 +156,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CLOCK_CULTIST = 14,
 	ROLE_BLOODSUCKER = 0,
 	ROLE_ASSAULT_OPERATIVE = 14,
+	ROLE_BLOODLING = 15,
 	ROLE_DARKSPAWN = 14,
 
 	// Midround
