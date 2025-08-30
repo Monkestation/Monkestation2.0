@@ -975,7 +975,7 @@
 /obj/item/gun/magic/crusherknives/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/magic/crusherknives/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
 	if(!charged)
