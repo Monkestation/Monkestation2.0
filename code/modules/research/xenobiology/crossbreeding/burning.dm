@@ -286,6 +286,8 @@ Burning extracts:
 	effect_desc = "Gives the user a one-time use slime transformation ability. They can transform back at will and do not lose any items." // monkestation edit: same here
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
+	for (var/datum/action/cooldown/spell/shapeshift/ability in user.actions)
+		return
 	if(!isliving(user))
 		return
 	user.visible_message(span_danger("[user] absorbs \the [src]!")) // monkestation edit: slight change to reflect the cast removal
