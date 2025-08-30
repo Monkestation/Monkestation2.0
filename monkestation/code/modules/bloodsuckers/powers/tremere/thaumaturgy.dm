@@ -199,13 +199,11 @@
 	// autotarget if we aim at a turf
 	if(isturf(target))
 		var/list/targets = list()
-		for(var/mob/living/possible_target as anything in orange(1, target))
-			if(!ismob(possible_target))
+		for(var/mob/living/possible_target in range(1, target) - user)
+			if(possible_target.stat == DEAD)
 				continue
-			if(possible_target == user)
-				continue
-			var/datum/antagonist/vassal/vassals = IS_VASSAL(possible_target)
-			if(length(bloodsuckerdatum_power?.vassals) && vassals && (vassals in bloodsuckerdatum_power?.vassals))
+			var/datum/antagonist/vassal/vassal = IS_VASSAL(possible_target)
+			if(vassal && (vassal in bloodsuckerdatum_power?.vassals))
 				continue
 			targets += possible_target
 		if(length(targets))
