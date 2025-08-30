@@ -4,6 +4,7 @@
 	"map_path": "map_files/Oshan",
 	"map_file": "Oshan.dmm",
 	"planetary": 1,
+	"OshanTrait": 1,
 	"shuttles": {
 		"cargo": "cargo_nova",
 		"ferry": "ferry_fancy",
@@ -14,8 +15,11 @@
 		{
 			"Linkage": null,
 			"Gravity": true,
+			"Mining": true,
 			"Baseturf": "/turf/open/floor/plating/ocean/rock",
-			"No Parallax": true
+			"Daycycle": true,
+			"No Parallax": true,
+			"OshanTrait": true
 		}
 	],
 	"job_changes": {
