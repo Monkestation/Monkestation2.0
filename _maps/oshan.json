@@ -7,17 +7,15 @@
 	"shuttles": {
 		"cargo": "cargo_nova",
 		"ferry": "ferry_fancy",
-		"whiteship": "whiteship_box",
-		"emergency": "emergency_box"
+		"whiteship": "whiteship_blueshift",
+		"emergency": "emergency_nova"
 	},
 	"traits": [
 		{
 			"Linkage": null,
 			"Gravity": true,
-			"Baseturf": "/turf/open/misc/dirt/forest",
-			"Jungle Ruins": true,
-			"No Parallax": true,
-			"Weather_Rainstorm": true
+			"Baseturf": "/turf/open/floor/plating/ocean/rock",
+			"No Parallax": true
 		}
 	],
 	"job_changes": {
@@ -29,6 +27,5 @@
 		}
 	},
 
-	"minetype": "lavaland",
-	"blacklist_file": "jungleruinblacklist.txt"
+	"minetype": "lavaland"
 }

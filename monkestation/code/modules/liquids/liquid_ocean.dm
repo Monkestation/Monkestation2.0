@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 	icon = 'monkestation/icons/obj/effects/liquid.dmi'
 	base_icon_state = "ocean"
-	icon_state = "ocean"
+	icon_state = "ocean_area"
 	alpha = 120
 
 	requires_power = TRUE
@@ -702,6 +702,11 @@ GLOBAL_LIST_INIT(the_lever, list())
 	base_icon_state = "ironsand"
 	rand_variants = 15
 	rand_chance = 100
+
+/turf/open/floor/plating/ocean/plating_real
+	name = "plating"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "plating"
 
 /turf/open/floor/plating/ocean/rock
 	name = "rock"
