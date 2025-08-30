@@ -33,6 +33,10 @@
 			span_notice("[user] begins to extract [implant] from [target]'s [target_zone]."),
 			span_notice("[user] begins to extract something from [target]'s [target_zone]."),
 		)
+
+		if (implant.has_surgical_warning)
+			implant.on_surgical_removal_attempt()
+
 		display_pain(target, "You feel a serious pain in your [target_zone]!")
 	else
 		display_results(
@@ -52,6 +56,10 @@
 			span_notice("[user] successfully removes [implant] from [target]'s [target_zone]!"),
 			span_notice("[user] successfully removes something from [target]'s [target_zone]!"),
 		)
+
+		if (implant.has_surgical_warning)
+			implant.on_surgical_removal_complete()
+
 		display_pain(target, "You can feel your [implant.name] pulled out of you!")
 		implant.removed(target)
 
