@@ -62,7 +62,7 @@
 	to_chat(src, "<b>You are an alien larva. Hide from danger until you can evolve.<br>Use say :a to communicate with the hivemind.</b>")
 
 /mob/living/carbon/alien/larva/adjustPlasma(amount)
-	if(stat != DEAD && amount > 0)
+	if(stat != DEAD && amount > 0 && !HAS_TRAIT(src, TRAIT_NEUTERED))
 		amount_grown = min(amount_grown + 1, max_grown)
 	..(amount)
 

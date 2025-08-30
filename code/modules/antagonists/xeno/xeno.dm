@@ -59,8 +59,8 @@
 /datum/antagonist/xeno/neutered/forge_objectives()
 	var/datum/objective/survive/objective = new
 	objective.owner = owner
-	objectives = objective
-	ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
+	objectives += objective
+	ADD_TRAIT(owner.current, TRAIT_NEUTERED, INNATE_TRAIT)
 
 /datum/objective/survive/New()
 
