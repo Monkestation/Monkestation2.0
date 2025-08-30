@@ -12,3 +12,4 @@
 	name = "Devitt Mk3"
 	desc = "An ancient two man tank, comes with cannon and machinegun, but little ammo."
 	spawn_path = /obj/vehicle/sealed/mecha/devitt
+	player_minimum = 30

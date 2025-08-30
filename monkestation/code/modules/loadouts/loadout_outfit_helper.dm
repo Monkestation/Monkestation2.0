@@ -49,7 +49,7 @@
 					to_chat(src, span_warning("You were unable to get a loadout item([initial(item.item_path.name)]) due to job restrictions!"))
 				continue
 
-			new item.item_path(briefcase)
+			SSwardrobe.provide_type(item.item_path, briefcase)
 		var/list/numbers = list()
 		for(var/num as anything in preference_source?.special_loadout_list["unusual"])
 			if(num in numbers)
@@ -62,7 +62,7 @@
 				continue
 			var/list/data = unusuals[unusual_idx]
 			var/item_path = text2path(data["unusual_type"])
-			var/obj/item/new_item = new item_path(briefcase)
+			var/obj/item/new_item = SSwardrobe.provide_type(item_path, briefcase)
 			new_item.AddComponent(/datum/component/unusual_handler, data)
 
 		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
@@ -93,7 +93,7 @@
 				continue
 			var/list/data = unusuals[unusual_idx]
 			var/item_path = text2path(data["unusual_type"])
-			var/obj/item/new_item = new item_path
+			var/obj/item/new_item = SSwardrobe.provide_type(item_path)
 			new_item.AddComponent(/datum/component/unusual_handler, data)
 			if(!new_item.equip_to_best_slot(src))
 				if(!put_in_hands(new_item))

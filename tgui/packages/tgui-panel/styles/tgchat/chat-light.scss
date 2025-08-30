@@ -657,6 +657,16 @@ h2.alert {
   font-size: 370%;
 }
 
+.velvet {
+  color: #21007f;
+}
+
+.progenitor {
+  color: #21007f;
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .colossus {
   color: #7f282a;
   font-size: 310%;
@@ -1365,6 +1375,7 @@ $border-width-px: $border-width * 1px;
 $job-colors: (
   // Command
   'rawcommand': #7584ad,
+  'bridgeassistant': #7584ad,
   'captain': #d8aa53,
   'actingcaptain': #cfa962,
   // Service

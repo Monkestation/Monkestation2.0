@@ -734,6 +734,7 @@
 	var/mob/living/carbon/human/owner = hud?.mymob
 	if(isnull(owner))
 		return
+
 	if(owner.stat == DEAD)
 		for(var/limb in limbs)
 			limbs[limb].icon_state = "[limb]DEAD"
@@ -741,6 +742,7 @@
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
 
+	var/not_fake_healthy = !owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
 	for(var/obj/item/bodypart/body_part as anything in owner.bodyparts)
 		var/icon_key = 0
 		var/part_zone = body_part.body_zone
@@ -748,11 +750,9 @@
 		var/list/overridable_key = list(icon_key)
 		if(body_part.bodypart_disabled)
 			icon_key = 7
-		else if(owner.stat == DEAD)
-			icon_key = "DEAD"
 		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
 			icon_key = overridable_key[1] // thanks i hate it
-		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+		else if(not_fake_healthy)
 			var/damage = body_part.get_damage() / body_part.max_damage
 			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
 			icon_key = clamp(ceil(damage * 5), 0, 5)

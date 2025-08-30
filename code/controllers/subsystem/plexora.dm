@@ -45,7 +45,6 @@ SUBSYSTEM_DEF(plexora)
 
 	var/restart_type = PLEXORA_SHUTDOWN_NORMAL
 	var/mob/restart_requester
-	var/list/active_requests = list()
 
 /datum/controller/subsystem/plexora/Initialize()
 	if(!CONFIG_GET(flag/plexora_enabled) && !load_old_plexora_config())
@@ -77,15 +76,6 @@ SUBSYSTEM_DEF(plexora)
 
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/plexora/Shutdown()
-	var/end_time = REALTIMEOFDAY + (5 SECONDS)
-	while((length(active_requests) > 0) && (REALTIMEOFDAY < end_time))
-		for(var/datum/http_request/request as anything in active_requests)
-			if(request.is_complete())
-				active_requests -= request
-				qdel(request)
-	active_requests.Cut()
-
 /datum/controller/subsystem/plexora/Recover()
 	flags |= SS_NO_INIT // Make extra sure we don't initialize twice.
 	initialized = SSplexora.initialized
@@ -94,7 +84,6 @@ SUBSYSTEM_DEF(plexora)
 	enabled = SSplexora.enabled
 	tripped_bad_version = SSplexora.tripped_bad_version
 	default_headers = SSplexora.default_headers
-	active_requests = SSplexora.active_requests
 	if(initialized && !enabled)
 		flags |= SS_NO_FIRE
 
@@ -146,12 +135,7 @@ SUBSYSTEM_DEF(plexora)
 		json_encode(status),
 		default_headers
 	)
-	status_request.begin_async()
-	active_requests += status_request
-	for(var/datum/http_request/request as anything in active_requests)
-		if(request.is_complete()) // rust-g will clear the job once it's complete
-			active_requests -= request
-			qdel(request)
+	status_request.fire_and_forget()
 
 /datum/controller/subsystem/plexora/proc/notify_shutdown(restart_type_override)
 	var/static/server_restart_sent = FALSE
@@ -170,7 +154,7 @@ SUBSYSTEM_DEF(plexora)
 		"restart_type" = isnull(restart_type_override) ? restart_type : restart_type_override,
 		"requestedby" = usr?.ckey,
 		"requestedby_stealthed" = usr?.client?.holder?.fakekey,
-	), mark_active = FALSE)
+	))
 
 /datum/controller/subsystem/plexora/proc/serverstarted()
 	http_basicasync("serverupdates", list(
@@ -249,14 +233,14 @@ SUBSYSTEM_DEF(plexora)
 		"prefix" = prefix,
 		"key" = user.key,
 		"message" = message,
-		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
 	))
 
 /datum/controller/subsystem/plexora/proc/relay_admin_say(client/user, message)
 	http_basicasync("relay_admin_say", list(
 		"key" = user.key,
 		"message" = message,
-		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(user.mob, SOUTH, no_anim = TRUE)),
 	))
 
 // note: recover_all_SS_and_recreate_master to force mc shit
@@ -301,7 +285,7 @@ SUBSYSTEM_DEF(plexora)
 		"msg_raw" = msg_raw,
 		"opened_at" = rustg_unix_timestamp(),
 		"replay_pass" = CONFIG_GET(string/replay_password),
-		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
 		"admin_ckey" = admin_ckey,
 	))
 
@@ -367,7 +351,7 @@ SUBSYSTEM_DEF(plexora)
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
 		"opened_at" = rustg_unix_timestamp(),
-		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
 		"replay_pass" = CONFIG_GET(string/replay_password),
 		"message" = ticket.message,
 	))
@@ -382,7 +366,7 @@ SUBSYSTEM_DEF(plexora)
 		"round_timer" = ROUND_TIME(),
 		"world_time" = world.time,
 		"timestamp" = rustg_unix_timestamp(),
-		"icon_b64" = icon2base64(getFlatIcon(frommob, SOUTH, no_anim = TRUE)),
+//		"icon_b64" = icon2base64(getFlatIcon(frommob, SOUTH, no_anim = TRUE)),
 		"message" = msg,
 	))
 
@@ -393,7 +377,7 @@ SUBSYSTEM_DEF(plexora)
 		"data" = data,
 	))
 
-/datum/controller/subsystem/plexora/proc/http_basicasync(path, list/body, mark_active = TRUE)
+/datum/controller/subsystem/plexora/proc/http_basicasync(path, list/body)
 	if(!enabled) return
 
 	var/datum/http_request/request = new(
@@ -403,9 +387,7 @@ SUBSYSTEM_DEF(plexora)
 		default_headers,
 		"tmp/response.json"
 	)
-	request.begin_async()
-	if(mark_active)
-		active_requests += request
+	request.fire_and_forget()
 
 /datum/world_topic/plx_announce
 	keyword = "PLX_announce"

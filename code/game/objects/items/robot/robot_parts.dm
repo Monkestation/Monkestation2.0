@@ -169,9 +169,9 @@
 	return TRUE
 
 //ADD
-/obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/sheet/iron))
-		var/obj/item/stack/sheet/iron/M = W
+/obj/item/robot_suit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/M = attacking_item
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
 				var/obj/item/bot_assembly/ed209/B = new
@@ -184,48 +184,48 @@
 			else
 				to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
 				return
-	else if(istype(W, /obj/item/bodypart/leg/left/robot))
+	else if(istype(attacking_item, /obj/item/bodypart/leg/left/robot))
 		if(l_leg)
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		W.icon_state = initial(W.icon_state)
-		W.cut_overlays()
-		l_leg = W
+		attacking_item.icon_state = initial(attacking_item.icon_state)
+		attacking_item.cut_overlays()
+		l_leg = attacking_item
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/leg/right/robot))
+	else if(istype(attacking_item, /obj/item/bodypart/leg/right/robot))
 		if(src.r_leg)
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		W.icon_state = initial(W.icon_state)
-		W.cut_overlays()
-		r_leg = W
+		attacking_item.icon_state = initial(attacking_item.icon_state)
+		attacking_item.cut_overlays()
+		r_leg = attacking_item
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/arm/left/robot))
+	else if(istype(attacking_item, /obj/item/bodypart/arm/left/robot))
 		if(l_arm)
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		W.icon_state = initial(W.icon_state)
-		W.cut_overlays()
-		l_arm = W
+		attacking_item.icon_state = initial(attacking_item.icon_state)
+		attacking_item.cut_overlays()
+		l_arm = attacking_item
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/arm/right/robot))
+	else if(istype(attacking_item, /obj/item/bodypart/arm/right/robot))
 		if(r_arm)
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
-		W.cut_overlays()
-		r_arm = W
+		attacking_item.icon_state = initial(attacking_item.icon_state)//in case it is a dismembered robotic limb
+		attacking_item.cut_overlays()
+		r_arm = attacking_item
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/chest/robot))
-		var/obj/item/bodypart/chest/robot/CH = W
+	else if(istype(attacking_item, /obj/item/bodypart/chest/robot))
+		var/obj/item/bodypart/chest/robot/CH = attacking_item
 		if(chest)
 			return
 		if(CH.wired && CH.cell)
@@ -240,8 +240,8 @@
 		else
 			to_chat(user, span_warning("You need to attach a cell to it first!"))
 
-	else if(istype(W, /obj/item/bodypart/head/robot))
-		var/obj/item/bodypart/head/robot/HD = W
+	else if(istype(attacking_item, /obj/item/bodypart/head/robot))
+		var/obj/item/bodypart/head/robot/HD = attacking_item
 		if(locate(/obj/item/organ/internal) in HD)
 			to_chat(user, span_warning("There are organs inside [HD]!"))
 			return
@@ -257,14 +257,14 @@
 		else
 			to_chat(user, span_warning("You need to attach a flash to it first!"))
 
-	else if (W.tool_behaviour == TOOL_MULTITOOL)
+	else if (attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		if(check_completion())
 			ui_interact(user)
 		else
 			to_chat(user, span_warning("The endoskeleton must be assembled before debugging can begin!"))
 
-	else if(istype(W, /obj/item/mmi))
-		var/obj/item/mmi/M = W
+	else if(istype(attacking_item, /obj/item/mmi))
+		var/obj/item/mmi/M = attacking_item
 		if(check_completion())
 			if(!chest.cell)
 				to_chat(user, span_warning("The endoskeleton still needs a power cell!"))
@@ -280,7 +280,7 @@
 				if(!QDELETED(M))
 					to_chat(user, span_warning("This [M.name] does not seem to fit!"))
 				return
-			if(!user.temporarilyRemoveItemFromInventory(W))
+			if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
@@ -318,9 +318,9 @@
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
 
-			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			attacking_item.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			QDEL_NULL(O.mmi)  //we delete the mmi created by robot/New()
-			O.mmi = W //and give the real mmi to the borg.
+			O.mmi = attacking_item //and give the real mmi to the borg.
 			O.updatename(brainmob.client)
 			// This canonizes that MMI'd cyborgs have memories of their previous life
 			brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
@@ -354,8 +354,8 @@
 		else
 			to_chat(user, span_warning("The MMI must go in after everything else!"))
 
-	else if(istype(W, /obj/item/borg/upgrade/ai))
-		var/obj/item/borg/upgrade/ai/M = W
+	else if(istype(attacking_item, /obj/item/borg/upgrade/ai))
+		var/obj/item/borg/upgrade/ai/M = attacking_item
 		if(check_completion())
 			if(!isturf(loc))
 				to_chat(user, span_warning("You cannot install [M], the frame has to be standing on the ground to be perfectly precise!"))
@@ -388,10 +388,10 @@
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 
-	else if(istype(W, /obj/item/pen))
+	else if(istype(attacking_item, /obj/item/pen))
 		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
 //monkestation edit start
-	else if(istype(W, /obj/item/clockwork/clockwork_slab) && IS_CLOCK(user))
+	else if(istype(attacking_item, /obj/item/clockwork/clockwork_slab) && IS_CLOCK(user))
 		to_chat(user, span_brass("You adjust the internals of \the [src] to that of clockwork."))
 		be_clockwork = TRUE
 		lawsync = FALSE

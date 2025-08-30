@@ -184,6 +184,7 @@
 	if(!destroy_item())
 		return FALSE
 	stored_research.unhide_node(SSresearch.techweb_node_by_id(node_to_discover.id))
+	stored_research.update_node_status(SSresearch.techweb_node_by_id(node_to_discover.id))
 	return TRUE
 
 #undef DESTRUCTIVE_ANALYZER_DESTROY_POINTS

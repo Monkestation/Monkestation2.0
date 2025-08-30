@@ -13,6 +13,8 @@
 	check_unlocks()
 	playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/atom/spawn_type = pick_weight(spawn_types)
+	if(!spawn_type)
+		return
 	var/spawn_name = initial(spawn_type.name)
 	var/mob/living/spawned_mob = new spawn_type(get_turf(mob))
 	mob.emote("me", 1, "vomits up a live [spawn_name]!")

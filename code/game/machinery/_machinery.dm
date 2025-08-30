@@ -136,6 +136,13 @@
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
+	/// sound volume played on succesful click
+	var/clickvol = 40
+	/// value to compare with world.time for whether to play clicksound according to CLICKSOUND_INTERVAL
+	var/next_clicksound = 0
+	/// sound played on succesful interface use by a carbon lifeform
+	var/clicksound
+
 	/// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
 	///Is this machine currently in the atmos machinery queue?
@@ -287,6 +294,11 @@
 /obj/machinery/proc/begin_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	START_PROCESSING(subsystem, src)
+
+/obj/machinery/proc/play_click_sound(custom_clicksound)
+	if((custom_clicksound ||= clicksound) && world.time > next_clicksound)
+		next_clicksound = world.time + CLICKSOUND_INTERVAL
+		playsound(src, custom_clicksound, clickvol)
 
 /// Helper proc for telling a machine to stop processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/end_processing()
@@ -682,6 +694,8 @@
 /obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
 	update_last_used(usr)
+	if(isliving(usr) && in_range(src, usr))
+		play_click_sound()
 	return ..()
 
 /obj/machinery/Topic(href, href_list)
@@ -757,11 +771,11 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/machinery/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
-		return TOOL_ACT_MELEE_CHAIN_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	. = ..()
-	if(. & TOOL_ACT_SIGNAL_BLOCKING)
+	if(. & ITEM_INTERACT_BLOCKING)
 		return
 	update_last_used(user)
 

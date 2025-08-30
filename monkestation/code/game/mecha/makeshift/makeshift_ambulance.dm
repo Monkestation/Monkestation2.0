@@ -10,7 +10,7 @@
 	movedelay = 1.5
 	stepsound = 'sound/vehicles/carrev.ogg'
 	turnsound = 'sound/vehicles/carrev.ogg'
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS //can't strafe bruv
+	mecha_flags = IS_ENCLOSED | HAS_LIGHTS //can't strafe bruv
 	armor_type = /datum/armor/scrap_vehicles //Same armour as a locker (close enough to a portapotty no?)
 	internal_damage_threshold = 30 //Its got shitty durability
 	wreckage = null
@@ -23,7 +23,9 @@
 		MECHA_ARMOR = list(),
 	)
 	max_equip_by_category = list(
-		MECHA_UTILITY = 0,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 0,
 		MECHA_ARMOR = 0,
 	)

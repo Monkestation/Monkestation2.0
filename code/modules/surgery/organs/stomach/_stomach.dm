@@ -76,7 +76,7 @@
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = round(min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max), CHEMICAL_QUANTISATION_LEVEL)
+		var/amount = round(min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * seconds_per_tick, amount_max), CHEMICAL_VOLUME_ROUNDING)
 
 		if(amount <= 0)
 			continue
@@ -315,6 +315,21 @@
 	disgust_metabolism = 3
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
+
+/obj/item/organ/internal/stomach/cybernetic/surplus
+	name = "surplus prosthetic stomach"
+	desc = "A mechanical plastic oval that utilizes sulfuric acid instead of stomach acid. \
+		Very fragile, with painfully slow metabolism.\
+		Offers no protection against EMPs."
+	icon_state = "stomach-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
+	emp_vulnerability = 100
+	metabolism_efficiency = 0.025
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/stomach/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/internal/stomach/cybernetic/emp_act(severity)
 	. = ..()

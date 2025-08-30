@@ -101,6 +101,21 @@
 	owner.paralyze_diminish = 1
 	return ..()
 
+//DAZED
+/// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
+/datum/status_effect/incapacitating/dazed
+	id = "dazed"
+
+/datum/status_effect/incapacitating/dazed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/dazed/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 //INCAPACITATED
 /// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
 /datum/status_effect/incapacitating/incapacitated
@@ -372,6 +387,18 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
+/datum/status_effect/crusher_mark/admin //admin version that marks any mob
+	id = "admin_crusher_mark"
+	duration = 3000
+
+/datum/status_effect/crusher_mark/admin/on_apply() //this one marks ANYONE :>
+	marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+	marked_underlay.pixel_x = -owner.pixel_x
+	marked_underlay.pixel_y = -owner.pixel_y
+	owner.underlays += marked_underlay
+	return TRUE
+
+
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
@@ -383,6 +410,16 @@
 	overlay_state = "bleed"
 	underlay_state = "bleed"
 	var/bleed_damage = 200
+
+/datum/status_effect/stacking/saw_bleed/sickle //monke addition
+	id = "sickle_bleed"
+	tick_interval = 6
+	delay_before_decay = 100 //these take longer to decay
+	overlay_file = 'icons/effects/bleed.dmi'
+	underlay_file = 'icons/effects/bleed.dmi'
+	overlay_state = "bleed"
+	underlay_state = "bleed"
+	bleed_damage = 125 //weaker than cleaving saw bleed due to being more available
 
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
@@ -525,6 +562,27 @@
 	. = ..()
 	deltimer(timerid)
 
+/datum/status_effect/progenitor_curse
+	id= "progenitor_curse"
+	tick_interval = 1.5 SECONDS //how often a hand is shot
+	duration = 30 SECONDS
+	alert_type = null
+
+/datum/status_effect/progenitor_curse/tick()
+	if(owner.stat == DEAD)
+		return
+	var/grab_dir = turn(owner.dir, rand(-180, 180)) //grab them from a random direction
+	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
+	if(spawn_turf)
+		grasp(spawn_turf)
+
+/datum/status_effect/progenitor_curse/proc/grasp(turf/spawn_turf)
+	set waitfor = FALSE
+	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
+	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
+	pro.preparePixelProjectile(owner, spawn_turf)
+	pro.fire()
 
 /datum/status_effect/gonbola_pacify
 	id = "gonbolaPacify"
@@ -548,8 +606,9 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
 	tick_interval = 10
-	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
+	var/stun = TRUE
+	var/hypnosis_type = /datum/brain_trauma/hypnosis
 
 /atom/movable/screen/alert/status_effect/trance
 	name = "Trance"
@@ -598,9 +657,14 @@
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
 	hearing_speaker.log_message("hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, color="red")
 	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, color="orange", log_globally = FALSE)
-	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), hypnosis_type, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living, Stun), 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
+
+/// "Hardened" trance variant, used by hypnoflashes.
+/// Only difference is the resulting trauma can't be cured via nanites/viruses.
+/datum/status_effect/trance/hardened
+	hypnosis_type = /datum/brain_trauma/hypnosis/hardened
 
 /datum/status_effect/spasms
 	id = "spasms"

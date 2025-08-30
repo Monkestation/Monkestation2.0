@@ -89,7 +89,7 @@
 	spell_type = /datum/action/cooldown/spell/conjure_item/hardlight_spear/max
 	allow_multiple = FALSE
 
-/obj/item/implant/hard_spear/get_data()
+/obj/item/implant/hard_spear/max/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Aetherofusion Experimental Resonance System<BR>
 				<b>Life:</b>  8 millennia in a dead host.<BR>

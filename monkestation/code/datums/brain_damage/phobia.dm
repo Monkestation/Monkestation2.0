@@ -87,8 +87,8 @@
 
 /datum/brain_trauma/mild/phobia/christian_minecraft
 	phobia_type = "christian minecraft"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/mild/phobia/swearing
 	phobia_type = "swearing"
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM

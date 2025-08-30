@@ -208,7 +208,7 @@
 
 /obj/item/air_sensor/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/item/air_sensor/welder_act(mob/living/user, obj/item/tool)
@@ -221,7 +221,7 @@
 	loc.balloon_alert(user, "sensor dismanteled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/air_sensor/deconstruct(disassembled)
 	if(!(flags_1 & NODECONSTRUCT_1))

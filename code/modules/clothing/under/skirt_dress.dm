@@ -173,3 +173,11 @@
 	desc = "A luxurious gown for VERY special occasions, this gown glitters with silver sewn into the very fabric itself."
 	icon_state = "stargown"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/dress/hula
+	name = "hula skirt"
+	desc =  "A plastic coconut bra combined with a synthetic grass skirt, inspired by Hawaiian hula dancers. Somewhat less revealing than tradition."
+	body_parts_covered = GROIN
+	can_adjust = FALSE
+	icon_state = "hulaskirt"
+	inhand_icon_state = "hulaskirt"

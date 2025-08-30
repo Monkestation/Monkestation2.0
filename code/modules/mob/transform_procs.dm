@@ -32,7 +32,7 @@
 	invisibility = 0
 	set_species(/datum/species/monkey)
 	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
-	src.fully_replace_character_name(name, pick(GLOB.random_monkey_names))
+	fully_replace_character_name(null, pick(GLOB.random_monkey_names))
 	regenerate_icons()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()

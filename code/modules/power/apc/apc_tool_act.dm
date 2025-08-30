@@ -13,6 +13,16 @@
 		update_appearance()
 		return
 
+	//removing integration cogs
+	if(opened && integration_cog && !IS_CLOCK(user))
+		balloon_alert(user, "prying something out of [src]...")
+		crowbar.play_tool_sound(src)
+		if(!crowbar.use_tool(src, user, 5 SECONDS))
+			return
+
+		balloon_alert(user, "pried out something, destroying it!")
+		QDEL_NULL(integration_cog)
+
 	//Opening and closing cover
 	if((!opened && opened != APC_COVER_REMOVED) && !(machine_stat & BROKEN))
 		if(coverlocked && !(machine_stat & MAINT)) // locked...
@@ -130,7 +140,7 @@
 		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
 			update_integrity(min(atom_integrity += 50,max_integrity))
 			balloon_alert(user, "repaired")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	//disassembling the frame
 	if(!opened || has_electronics || terminal)

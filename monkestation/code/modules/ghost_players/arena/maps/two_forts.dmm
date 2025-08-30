@@ -140,9 +140,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/misc/sandy_dirt,
 /area/centcom/tdome/arena/actual)
-"PS" = (
-/turf/open/water,
-/area/centcom/tdome/arena/actual)
 "TW" = (
 /obj/machinery/light/small/blacklight/directional/east,
 /turf/open/floor/stone,
@@ -318,9 +315,9 @@ MZ
 Yq
 Lu
 MZ
-PS
-PS
-PS
+VF
+VF
+VF
 "}
 (13,1,1) = {"
 Pg

@@ -304,7 +304,8 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	flick_overlay_view(overlay_mic_active, 5 SECONDS)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -430,7 +431,8 @@
 
 /obj/item/radio/proc/on_recieve_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+	// lol almost nobody will miss this (feel free to uncomment if I'm proven wrong, tho) ~Lucy
+	//flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -608,7 +610,7 @@
 	to_chat(user, span_notice("You pop out the encryption key in the radio."))
 	return ..()
 
-/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(attacking_item, /obj/item/encryptionkey))
 		if(keyslot)
