@@ -37,7 +37,7 @@
 	if(crystal_inside)
 		. += mutable_appearance(icon, "chemical_injection-crystal")
 
-/obj/machinery/bouldertech/chemical_injector/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/chemical_injector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
 		var/obj/item/processing/my_dust = attacking_item
 		update_boulder_count()

@@ -705,7 +705,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 
 	return open_lift_radial(user)
 
-/obj/structure/industrial_lift/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/industrial_lift/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!radial_travel)
 		return ..()
 

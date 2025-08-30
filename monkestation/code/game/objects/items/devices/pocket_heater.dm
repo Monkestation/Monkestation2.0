@@ -55,7 +55,7 @@
 	else
 		. += span_warning("It lacks a capacitor.")
 
-/obj/item/pocket_heater/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/pocket_heater/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(cell)
 			balloon_alert(user, "already has a cell!")

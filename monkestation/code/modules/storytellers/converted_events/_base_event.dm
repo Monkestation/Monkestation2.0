@@ -133,9 +133,9 @@
 	/// How many baseline antags do we spawn
 	var/base_antags = 1
 	/// How many maximum antags can we spawn
-	var/maximum_antags = 3
+	var/maximum_antags = 2
 	/// For this many players we'll add 1 up to the maximum antag amount
-	var/denominator = 20
+	var/denominator = 26
 	/// The antag flag to be used
 	var/antag_flag
 	/// The antag datum to be applied
@@ -243,7 +243,7 @@
 	var/list/possible_candidates = cast_control.get_candidates()
 	var/list/candidates = list()
 	if(cast_control == SSgamemode.current_roundstart_event && length(SSgamemode.roundstart_antag_minds))
-		log_storyteller("Running roundstart antagonist assignment, event: [src], roundstart_antag_minds: [english_list(SSgamemode.roundstart_antag_minds)]")
+		log_storyteller("Running roundstart antagonist assignment, event type: [src.type], roundstart_antag_minds: [english_list(SSgamemode.roundstart_antag_minds)]")
 		for(var/datum/mind/antag_mind in SSgamemode.roundstart_antag_minds)
 			if(!antag_mind.current)
 				log_storyteller("Roundstart antagonist setup error: antag_mind([antag_mind]) in roundstart_antag_minds without a set mob")

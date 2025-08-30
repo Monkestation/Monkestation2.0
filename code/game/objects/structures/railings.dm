@@ -56,17 +56,17 @@
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
-/obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/railing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	add_fingerprint(user)
 
-	if(I.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM))
+	if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM))
 		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
+			if(!attacking_item.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(I.use_tool(src, user, 40, volume=50))
+			if(attacking_item.use_tool(src, user, 40, volume=50))
 				atom_integrity = max_integrity
 				to_chat(user, span_notice("You repair [src]."))
 		else

@@ -1204,3 +1204,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		span_boldnotice(name),
 		span_info(desc),
 	)
+///Alert that you used your psi too much and cant cast any more spells
+/atom/movable/screen/alert/psiblock
+	name = "Psiblock"
+	desc = "You have pushed your psionic powers beyond your capabilities and need time to recover."
+	icon_state = "shadow_mend"

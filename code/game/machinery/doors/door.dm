@@ -304,7 +304,7 @@
 
 /obj/machinery/door/welder_act(mob/living/user, obj/item/tool)
 	try_to_weld(tool, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
 	if((user.istate & ISTATE_HARM))
@@ -321,7 +321,7 @@
 		forced_open = attacker.check_can_crowbar(user)
 
 	try_to_crowbar(tool, user, forced_open)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/attackby(obj/item/weapon, mob/living/user, params)
 	if(istype(weapon, /obj/item/access_key))
@@ -340,7 +340,7 @@
 
 /obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
 	try_to_weld_secondary(tool, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	var/forced_open = FALSE
@@ -348,7 +348,7 @@
 		var/obj/item/crowbar/crowbar = tool
 		forced_open = crowbar.force_opens
 	try_to_crowbar_secondary(tool, user, forced_open)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -528,6 +528,8 @@
 /obj/machinery/door/proc/update_freelook_sight()
 	if(!glass && GLOB.cameranet)
 		GLOB.cameranet.updateVisibility(src, 0)
+	if(!glass && GLOB.thrallnet)
+		GLOB.thrallnet.updateVisibility(src, 0)
 
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)

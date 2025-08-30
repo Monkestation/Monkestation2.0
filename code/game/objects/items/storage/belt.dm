@@ -448,6 +448,7 @@
 		/obj/item/ammo_casing/a762/kinetic,
 		/obj/item/ammo_box/a762/kinetic,
 		/obj/item/storage/box/kinetic/kineticlmg,
+		/obj/item/ammo_box/a762/kinetic/big,
 		/obj/item/ammo_casing/a40mm/kinetic,
 		/obj/item/storage/box/kinetic/grenadelauncher,
 		/obj/item/ammo_casing/govmining,
