@@ -83,9 +83,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
@@ -102,9 +100,7 @@
 /area/icemoon/underground/explored)
 "bj" = (
 /obj/effect/turf_decal/bot/left,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/iron/smooth_half{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -708,30 +704,6 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
-"kA" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/obj/item/stack/ore/plasma,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/explored)
 "kG" = (
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -1202,44 +1174,25 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
-"rS" = (
-/obj/effect/turf_decal/bot/left,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/stack/sheet/mineral/plasma/thirty,
-/turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/plasma_facility/operations)
+"rW" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing/corner,
+/obj/structure/closet/crate/preopen,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/item/stack/sheet/mineral/uranium/five,
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "sq" = (
 /obj/structure/table/reinforced/rglass,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/disk/design_disk/modkit_disc/resonator_blast,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/iron/dark/textured{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/plasma_facility/commons)
-"sr" = (
-/obj/structure/railing{
-	dir = 5
-	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/sheet/mineral/silver,
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/explored)
 "su" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
@@ -1860,18 +1813,6 @@
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/lava/plasma/ice_moon,
 /area/ruin/plasma_facility/operations)
-"FD" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing/corner,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/stack/sheet/mineral/uranium/five,
-/obj/item/stack/sheet/mineral/uranium/five,
-/obj/item/stack/sheet/mineral/uranium/five,
-/obj/item/stack/sheet/mineral/uranium/five,
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "FG" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -2560,9 +2501,7 @@
 	},
 /area/ruin/plasma_facility/commons)
 "PE" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
