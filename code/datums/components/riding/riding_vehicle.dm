@@ -240,6 +240,9 @@
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
 
+/datum/component/riding/vehicle/scooter/skateboard/wheelys/cheap
+	vehicle_move_delay = 1.75
+
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/rollerskates
 	vehicle_move_delay = 1.5
 
