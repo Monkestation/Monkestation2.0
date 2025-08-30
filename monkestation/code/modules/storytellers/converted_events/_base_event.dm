@@ -133,9 +133,9 @@
 	/// How many baseline antags do we spawn
 	var/base_antags = 1
 	/// How many maximum antags can we spawn
-	var/maximum_antags = 3
+	var/maximum_antags = 2
 	/// For this many players we'll add 1 up to the maximum antag amount
-	var/denominator = 20
+	var/denominator = 26
 	/// The antag flag to be used
 	var/antag_flag
 	/// The antag datum to be applied

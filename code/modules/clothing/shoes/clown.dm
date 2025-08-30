@@ -9,11 +9,13 @@
 	var/list/squeak_sound = list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1)
 	lace_time = 20 SECONDS // how the hell do these laces even work??
 	species_exception = list(/datum/species/golem/bananium)
+	var/has_storage = TRUE
 
 /obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()
 
-	create_storage(storage_type = /datum/storage/pockets/shoes/clown)
+	if(has_storage)
+		create_storage(storage_type = /datum/storage/pockets/shoes/clown)
 	LoadComponent(/datum/component/squeak, squeak_sound, 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
@@ -61,3 +63,25 @@
 	icon_state = "ducky_shoes"
 	inhand_icon_state = "ducky_shoes"
 	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
+
+/obj/item/clothing/shoes/clown_shoes/cluwne
+	name = "cluwne shoes"
+	desc = "A sense of bloodlust washes over you as you wear these shoes. Ctrl-click to toggle waddle dampeners. Alt-click to toggle sound dampeners."
+	icon_state = "cluwne"
+	inhand_icon_state = "cluwne_shoes"
+	worn_icon_state = "cluwne"
+	slowdown = SHOES_SLOWDOWN
+	var/sound_dampener = TRUE
+
+/obj/item/clothing/shoes/clown_shoes/cluwne/AltClick(mob/living/user)
+	if(!isliving(user))
+		return
+	if(user.get_active_held_item() != src)
+		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
+		return
+
+	sound_dampener = !sound_dampener
+	if(sound_dampener)
+		to_chat(user, span_notice("You switch on the sound dampener. Your footsteps fall silent."))
+	else
+		to_chat(user, span_notice("You switch off the sound dampener. The shoes are ready to squeak again."))

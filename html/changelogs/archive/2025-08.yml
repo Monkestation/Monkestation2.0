@@ -745,6 +745,11 @@
   - bugfix: fixes flatpack duplication when deploying
   - bugfix: fixes material duplication when repacking
 2025-08-28:
+  Absolucy:
+  - qol: Slime washing now eats grime off the floor when moving, not just every second.
+  Absolucy, Melbert:
+  - bugfix: Hierophant Club Blink at range
+  - bugfix: Crusher Loot
   Melbert:
   - refactor: Storage and Tables are now a lower priority action, meaning some uses
       of items on storage should work... better, now. Here's hoping at least, report
@@ -773,9 +778,27 @@
   - bugfix: various clock cult bugs
   - balance: reduced the maximum amount of cogscarabs from 9 to 6
   - balance: reworked the clockwork power economy into passive and active power
+  Rex9001:
+  - rscadd: A horrific monster has crawled inside of a crewmate, escaped all NT bio
+      scans and is now in an ideal position to burst out of its host and start wrecking
+      havoc. The bloodling has arrived!
   ThePooba:
   - rscadd: 'donator alt title: Sr. Attending physician(cmo), Cybertronic Engineer(robo),
       Builder(engi)'
+  - rscadd: Darkspawn antag https://mediawiki.monkestation.com/Darkspawn
+  - rscadd: Head of security jackboots (they are stompy)
+  - rscadd: Swinging component (fighter only for now)
+  - rscadd: like 50 spells for darkspawn and shit
+  - rscadd: New camera network system - mostly code side
+  - rscadd: custom key click sounds for some machines and buttons, firealarms etc
+  - bugfix: chem_heater dupe
+  - bugfix: molotovs and other interacts on beakers
+  - bugfix: camera?
+  Tostah:
+  - rscadd: Lamarr can now produce neutered xenomorph larva which can't evolve into
+      drones and start nests.
+  - rscadd: Lamarr will leap at victims but won't stun them. They also won't be killed
+      by protective clothing and can be carried around.
   Xander3359:
   - bugfix: (MrMelbert) Fix inability to make r-glass by hand inside your backpack
   - qol: (MrMelbert) Hand labels now have a visual effect associated, and are also
@@ -793,3 +816,30 @@
   - bugfix: Fix being unable to apply patches
   - bugfix: Fix being unable to place on griddle
   - bugfix: Fix being unable to use xenobio vacuum from range
+  notghosti:
+  - bugfix: Ordering imports now logs who orders the import on the import forum, akin
+      to normal orders
+2025-08-30:
+  EssentialTomato:
+  - qol: Holofans can now be deployed over window sills.
+  - bugfix: Fixed holosigns not being cleared when clicked on with a projector.
+  - bugfix: Fixed not being able to spin cloth on the loom.
+  MrBagHead:
+  - bugfix: Touch spells now use the new interaction/ranged interaction signals, fixing
+      Knock Mansus Grasp and Extended Shock Touch at range.
+  - bugfix: Holosign Projectors can again delete holosigns they created.
+  - bugfix: Chemical patches can now be placed into chemical grinders.
+  - bugfix: Cigarette packs no longer drop to the ground when opened from inside a
+      backpack.
+  - rscadd: Added two new Slasher variants, The Cluwne and The Brute, each with unique
+      outfits, reskinned weapons, terror screams, and fear forms.
+  - sound: Added new terror scream audio for The Cluwne and The Brute.
+  - image: Added new icons and sprites for slasher variant outfits and weapons.
+  - bugfix: Fixed an issue where the Slasher mask used incorrect flags to block hairstyles
+      and facial hair.
+  ThePooba:
+  - bugfix: crusher twohand
+  - bugfix: fixed a LOT of interaction bugs
+  - rscadd: added razorwire implant to traitor uplink and fixed mantis implants lunge
+  notghosti:
+  - map: Tramstation pet sanctuary is now connected to the grid
