@@ -32,9 +32,9 @@
 	gain_text = span_notice("You feel several spikes of pain inside your head digging in deep...")
 	lose_text = span_warning("The spikes of pain leave your head and your mind clears.")
 	can_gain = TRUE
-	random_gain = FALSE
+	//random_gain = FALSE
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
-	clonable = FALSE
+	//clonable = FALSE
 
 /datum/brain_trauma/special/banana_tumor/on_life(seconds_per_tick, times_fired)
 	..()
@@ -42,7 +42,7 @@
 		return
 	if((owner.IsStun() || owner.IsParalyzed() || owner.IsUnconscious()))
 		return
-	var/emote_to_do = (pick_weight(list("laugh" = 40, "scream" = 10, "chuckle" = 10, "screech" = 10, "twitch" = 30)))
+	var/emote_to_do = (pick_weight(list("laugh" = 40, "scream" = 15, "chuckle" = 15, "screech" = 15, "twitch" = 30)))
 
 	owner.emote(emote_to_do)
 	if(prob(25))
