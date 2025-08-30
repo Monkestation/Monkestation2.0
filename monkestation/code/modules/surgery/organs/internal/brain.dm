@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 /// Makes it so that when a slime's core has plasma poured on it, it builds a new body and moves the brain into it.
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
-	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
+	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
 		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
 			user.balloon_alert(user, "too little plasma!")
 			return FALSE
