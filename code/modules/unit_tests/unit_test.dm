@@ -265,6 +265,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		// THESE WILL EAT OTHER ITEMS AND ALSO LAZYLOAD AN AREA
 		/obj/structure/bingle_hole,
 		/obj/structure/bingle_pit_overlay,
+		// these two are just self-deleting animations
+		/obj/effect/wonderland_rabbit_enter,
+		/obj/effect/wonderland_rabbit_exit,
 		// monkestation end
 	)
 	//Say it with me now, type template
