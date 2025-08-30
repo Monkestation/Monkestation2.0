@@ -462,7 +462,7 @@
 	if(!active || !cell)
 		return PROCESS_KILL
 
-	if(!cell.use((cell.maxcharge * 0.01) * seconds_per_tick) || cell.charge < cell_hit_cost) //reduces the charge by 1% no matter what the max is, so botany super cells cant be used to bypass your baton drain.
+	if(!cell.use((75 - (cell.maxcharge * 0.0025)) * seconds_per_tick) || cell.charge < cell_hit_cost) // This formula causes a exponential decay at 400 seconds. 6.66 minutes of baton time. Bluespace cells give 228 seconds, or 3.75 minutes
 		visible_message(span_warning("The baton fizzles and slowly dims as the charge runs out!"))
 		src.attack_self()
 
