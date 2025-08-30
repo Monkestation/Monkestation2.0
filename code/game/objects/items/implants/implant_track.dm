@@ -45,6 +45,7 @@
 
 /obj/item/implant/tracking/Destroy()
 	GLOB.tracked_implants -= src
+	QDEL_NULL(internal_radio)
 	return ..()
 
 /obj/item/implant/tracking/on_surgical_removal_attempt()
