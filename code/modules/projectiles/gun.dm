@@ -291,14 +291,14 @@
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
 		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if((user.istate & ISTATE_HARM) && isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 
-	if(!can_hold_up || !isliving(interacting_with))
-		return interact_with_atom(interacting_with, user, modifiers)
+	if(!isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
@@ -318,9 +318,8 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/gun/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(IN_GIVEN_RANGE(user, interacting_with, GUNPOINT_SHOOTER_STRAY_RANGE))
-		return interact_with_atom_secondary(interacting_with, user, modifiers)
-	return ..()
+	return ITEM_INTERACT_BLOCKING
+//Just exists to stop it running ranged interact primary, and for other stuff to work based off of it
 
 /obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
 	return fire_gun(target, user, user.Adjacent(target), params)
