@@ -195,7 +195,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 			"cost_ms" = subsystem.cost,
 			"tick_usage" = subsystem.tick_usage,
 			"usage_per_tick" = average,
-			"tick_overrun" = subsystem.tick_overrun,
+			"overtime" = subsystem.tick_overrun,
 			"initialized" = subsystem.initialized,
 			"initialization_failure_message" = subsystem.initialization_failure_message,
 		))
@@ -406,7 +406,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	)
 
 	if ((subsystem.flags & SS_NO_INIT) || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
-		subsystem.initialized = TRUE // set initialized to TRUE, because the value of initialized may still be checked on SS_NO_INIT subsystems as an "is this ready" check
+		subsystem.ready = TRUE // set ready to TRUE, because the value of ready may still be checked on SS_NO_INIT subsystems as an "is this ready" check
 		return
 
 	current_initializing_subsystem = subsystem
@@ -468,7 +468,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	else
 		SStitle.remove_init_text(subsystem.type)
 
-	log_world("[message_prefix] [seconds] second\s!")
+	if(message_prefix)
+		log_world("[message_prefix] [seconds] second\s!")
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel

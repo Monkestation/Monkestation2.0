@@ -36,6 +36,9 @@
 	if (GLOB.mentor_datums[ckey] || GLOB.dementors[ckey] || (ckey in GLOB.protected_mentors))
 		mentor = TRUE
 
+	if (!real_bans_only)
+		log_client_to_db_connection_log_manual(ckey, address, computer_id, "isbanned", type)
+
 	if(!real_bans_only && !admin && CONFIG_GET(flag/panic_bunker) && !CONFIG_GET(flag/panic_bunker_interview))
 		var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
 			"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",

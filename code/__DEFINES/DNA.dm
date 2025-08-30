@@ -137,6 +137,7 @@
 #define ORGAN_SLOT_TONGUE "tongue"
 #define ORGAN_SLOT_VOICE "vocal_cords"
 #define ORGAN_SLOT_ZOMBIE "zombie_infection"
+#define ORGAN_SLOT_BRAIN_TUMOR "brain_tumor"
 #define ORGAN_SLOT_BUTT "butt"
 #define ORGAN_SLOT_BLADDER "bladder"
 #define ORGAN_SLOT_LINK "cyber_link"

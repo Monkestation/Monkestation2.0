@@ -27,8 +27,3 @@
 	new /obj/item/clothing/suit/armor/vest/blueshield/jacket(src)
 	new /obj/item/clothing/neck/mantle/bsmantle(src)
 
-/obj/item/storage/belt/security/blueshield/PopulateContents()
-		new /obj/item/grenade/flashbang(src)
-		new /obj/item/assembly/flash/handheld(src)
-		new /obj/item/reagent_containers/spray/pepper(src)
-		new /obj/item/restraints/handcuffs(src)

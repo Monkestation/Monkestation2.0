@@ -51,7 +51,7 @@
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
-/obj/machinery/bouldertech/crusher/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
 		var/obj/item/processing/clumps/clumps = attacking_item
 		update_boulder_count()

@@ -240,6 +240,10 @@
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
+			if(istype(tool, /obj/item/organ/internal/shadowtumor/thrall))//Thralls resist deconversion
+				var/obj/item/organ/internal/shadowtumor/thrall/tumor = tool
+				if(tumor.resist(target))
+					return FALSE
 			display_results(
 				user,
 				target,
@@ -253,6 +257,7 @@
 			var/turf/drop_turf = get_turf(target)
 			if(drop_turf)
 				target_organ.forceMove(drop_turf)
+			target_organ.on_surgical_removal(user, target, target_zone, tool)
 			target.regenerate_icons()
 		else
 			display_results(

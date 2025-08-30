@@ -351,7 +351,8 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	if(!CONFIG_GET(flag/disable_storyteller))
 		SSgamemode.current_storyteller.round_started = TRUE
-		SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+		if(!SSgamemode.halted_storyteller)
+			SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
 	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
 
@@ -546,10 +547,10 @@ SUBSYSTEM_DEF(ticker)
 		SSchallenges.apply_challenges(persistent_client)
 		for(var/processing_reward_bitflags in bitflags_to_reward)//you really should use department bitflags if possible
 			if(living.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-				persistent_client.roundend_monkecoin_bonus += 425
+				persistent_client.roundend_monkecoin_bonus += 225
 		for(var/processing_reward_jobs in jobs_to_reward)//just in case you really only want to reward a specific job
 			if(living.job == processing_reward_jobs)
-				persistent_client.roundend_monkecoin_bonus += 425
+				persistent_client.roundend_monkecoin_bonus += 225
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()

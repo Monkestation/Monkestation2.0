@@ -58,6 +58,15 @@
 /obj/item/tank/internals/oxygen/empty/populate_gas()
 	return
 
+//we do a little trolling :3
+/obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead
+	desc = "A tank of oxygen, the paint is peeling off to reveal a black tank with a hazard symbol on it. \
+	Which could mean nothing."
+
+/obj/item/tank/internals/oxygen/actuallycontainscarbondioxideinstead/populate_gas()
+	air_contents.assert_gas(/datum/gas/carbon_dioxide)
+	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+
 /*
  * Anesthetic
  */
@@ -93,9 +102,9 @@
 	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
-/obj/item/tank/internals/plasma/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/flamethrower))
-		var/obj/item/flamethrower/F = W
+/obj/item/tank/internals/plasma/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/flamethrower))
+		var/obj/item/flamethrower/F = attacking_item
 		if ((!F.status) || (F.ptank))
 			return
 		if(!user.transferItemToLoc(src, F))

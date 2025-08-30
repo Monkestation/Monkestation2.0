@@ -57,19 +57,18 @@
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 
-/obj/item/universal_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/universal_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isobj(interacting_with))
+		return NONE
 	if(scanning_mode == SCAN_EXPORTS)
-		export_scan(object, user)
-		return .
+		export_scan(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
 	if(scanning_mode == SCAN_PRICE_TAG)
-		price_tag(target = object, user = user)
-	return .
+		price_tag(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
 		var/obj/item/card/id/potential_acc = attacking_item
@@ -252,7 +251,7 @@
 /obj/item/barcode
 	name = "barcode tag"
 	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
 	//All values inherited from the sales tagger it came from.

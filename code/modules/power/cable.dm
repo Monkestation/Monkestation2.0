@@ -181,11 +181,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return ..()
 
 
-/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
+/obj/structure/cable/proc/handlecable(obj/item/attacking_item, mob/user, params)
 	var/turf/T = get_turf(src)
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
+	if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
 			return
 		user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		deconstruct()
 		return
 
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
+	else if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
@@ -211,8 +211,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 //   - Wirecutters : cut it duh !
 //   - Multitool : get the power currently passing through the cable
 //
-/obj/structure/cable/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
+/obj/structure/cable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	handlecable(attacking_item, user, modifiers)
 
 
 // shock the user with probability prb
@@ -443,7 +443,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.05)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")

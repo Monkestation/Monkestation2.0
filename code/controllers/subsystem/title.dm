@@ -72,8 +72,8 @@ SUBSYSTEM_DEF(title)
 	for(var/thing in GLOB.clients)
 		if(!thing)
 			continue
-		var/atom/movable/screen/splash/S = new(thing, FALSE)
-		S.Fade(FALSE,FALSE)
+		var/atom/movable/screen/splash/S = new(null, null, thing, FALSE)
+		S.Fade(FALSE, FALSE)
 
 /datum/controller/subsystem/title/Recover()
 	icon = SStitle.icon
@@ -125,14 +125,14 @@ SUBSYSTEM_DEF(title)
 	maptext_holder.maptext = "<span class='maptext'>"
 	maptext_holder.maptext += "<span class='big'>"
 	if(SSticker?.current_state == GAME_STATE_PREGAME)
-		var/total_time_formatted = "[total_init_time]s"
+		var/total_time_formatted = "[round(total_init_time, 0.1)]s"
 		switch(total_init_time)
 			if(0 to 60)
-				total_time_formatted = "<font color='green'>[total_init_time]s</font>"
+				total_time_formatted = "<font color='green'>[total_time_formatted]</font>"
 			if(60 to 120)
-				total_time_formatted = "<font color='yellow'>[total_init_time]s</font>"
+				total_time_formatted = "<font color='yellow'>[total_time_formatted]</font>"
 			if(120 to INFINITY)
-				total_time_formatted = "<font color='red'>[total_init_time]s</font>"
+				total_time_formatted = "<font color='red'>[total_time_formatted]</font>"
 
 		maptext_holder.maptext += "Game Ready! ([total_time_formatted])"
 	else
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(title)
 		var/list/init_data = init_infos[sstype]
 		var/init_name = init_data[1]
 		var/init_stage = init_data[2]
-		var/init_time = isnum(init_data[3]) ? "([init_data[3]]s)" : ""
+		var/init_time = isnum(init_data[3]) ? "([round(init_data[3], 0.1)]s)" : ""
 		maptext_holder.maptext += "<br>[init_name] [init_stage] [init_time]"
 	maptext_holder.maptext += "<br></span>"
 

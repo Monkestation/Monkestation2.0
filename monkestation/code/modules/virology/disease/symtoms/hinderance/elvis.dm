@@ -40,15 +40,13 @@
 
 		if(!(victim.hairstyle == "Pompadour (Big)"))
 			spawn(50)
-				victim.hairstyle = "Pompadour (Big)"
-				victim.hair_color = "#242424"
-				victim.update_body()
+				victim.set_hairstyle("Pompadour (Big)", update = FALSE)
+				victim.set_haircolor("#242424", update = TRUE)
 
 		if(!(victim.facial_hairstyle == "Sideburns (Elvis)"))
 			spawn(50)
-				victim.facial_hairstyle = "Sideburns (Elvis)"
-				victim.facial_hair_color = "#242424"
-				victim.update_body()
+				victim.set_facial_hairstyle("Sideburns (Elvis)", update = FALSE)
+				victim.set_facial_haircolor("#242424", update = TRUE)
 
 /datum/symptom/elvis/deactivate(mob/living/carbon/mob)
 	if(ismouse(mob))

@@ -17,6 +17,7 @@
 		ANTIGEN_X	= 0,
 		ANTIGEN_Y	= 0,
 		ANTIGEN_Z	= 0,
+		ANTIGEN_IG 	= 0,
 		)
 
 /datum/immune_system/Destroy(force)
@@ -130,7 +131,6 @@
 				tally += 2.5
 
 			tally *= boost
-
 			if (antibodies[A] < threshold)
 				antibodies[A] = min(antibodies[A] + tally, threshold)//no overshooting here
 			else
@@ -168,7 +168,6 @@
 						EMPTY_BLOCK_GUARD
 
 			tally *= boost
-
 			if (antibodies[A] < 69)
 				antibodies[A] = min(antibodies[A] + tally * strength, 70)
 			else
