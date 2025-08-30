@@ -7009,6 +7009,7 @@
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\creepy_breathing.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\envelope_darkness.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\recall_machette.dm"
+#include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\recall_traps.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\slasher_regenerate.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\soul_steal.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\abilities\summon_kitchenspike.dm"

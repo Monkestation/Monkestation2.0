@@ -49,6 +49,8 @@
 	var/obj/item/slasher_machette/linked_machette
 	/// the linked apron for increasing his armor values on soul succ
 	var/obj/item/clothing/suit/apron/slasher/linked_apron
+	/// list of traps owned by this slasher
+	var/list/linked_traps = list()
 	///rallys the amount of souls effects are based on this
 	var/souls_sucked = 0
 	///our cached brute_mod
@@ -89,31 +91,17 @@
 	var/datum/martial_art/slasher_grab/grabart
 
 /datum/antagonist/slasher/on_gain()
-	. = ..() // Call parent first
-
-	if(give_objectives)
-		forge_objectives()
-		if(owner?.current)
-			for(var/datum/objective/objective in objectives)
-				owner.announce_objectives()
+	forge_objectives()
+	. = ..()
 
 /datum/antagonist/slasher/forge_objectives()
 	if(!owner)
 		return
-
-	// Clear any existing objectives
-	objectives.Cut()
-
 	// Add all slasher objective subtypes
 	for(var/objective_type in subtypesof(/datum/objective/slasher))
-		var/datum/objective/new_objective = new objective_type
+		var/datum/objective/slasher/new_objective = new objective_type
 		new_objective.owner = owner
 		objectives += new_objective
-
-	// Make sure these objectives are also in the mind's objectives list
-	if(owner)
-		for(var/datum/objective/O in objectives)
-			owner.objectives += O
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -449,19 +437,18 @@
 
 /datum/objective/slasher/harvest_souls
 	name = "Harvest Souls"
-	explanation_text = "Harvest souls from the dead to increase your power."
+	explanation_text = "Use soulsteal to harvest souls from the dead to increase your power."
 	admin_grantable = TRUE
 
-/datum/objective/slasher/soulsteal
-	name = "Soulsteal"
-	explanation_text = "Use soulsteal to harvest souls."
+/datum/objective/slasher/scream
+	name = "Screech"
+	explanation_text = "Use your terror screech to temporarily stun victims."
 	admin_grantable = TRUE
 
 /datum/objective/slasher/trappem
 	name = "Trapping"
-	explanation_text = "Use your traps to slow down your victims."
+	explanation_text = "Use your traps to slow down your targets."
 	admin_grantable = TRUE
-
 
 /datum/antagonist/slasher/antag_token(datum/mind/hosts_mind, mob/spender)
 	var/spender_key = spender.key
