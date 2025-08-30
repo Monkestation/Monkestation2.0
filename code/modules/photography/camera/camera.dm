@@ -135,6 +135,9 @@
 
 /obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (disk)
+		if(!ismob(interacting_with))
+			to_chat(user, span_warning("Invalid holodisk target."))
+			return ITEM_INTERACT_BLOCKING
 		if(ismob(interacting_with))
 			if (disk.record)
 				QDEL_NULL(disk.record)
