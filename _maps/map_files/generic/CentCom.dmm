@@ -21599,7 +21599,8 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi';
 	icon_state = "cc";
 	name = "centcom locker";
-	req_access = list("cent_captain")
+	req_access = list("cent_captain");
+	has_closed_overlay = FALSE
 	},
 /obj/item/radio/headset/headset_cent/commander,
 /obj/item/encryptionkey/heads/captain,
