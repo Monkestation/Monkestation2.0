@@ -73,19 +73,6 @@
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 	)
-	/// list of items unlocked on blue alert
-	var/static/list/blue_alert_designs = list(
-		/datum/design/mech_disabler,
-		/datum/design/mech_laser,
-		/datum/design/clusterbang_launcher,
-		/datum/design/clusterbang_launcher_ammo,
-	)
-	// list of items that isn't to be restricted even if it fits into the categories of combat-level items, for snowflakes outliers.
-	var/static/list/whitelisted_designs = list(
-		/datum/design/mecha_tracking,
-		/datum/design/mecha_tracking_ai_control,
-		/datum/design/mecha_camera,
-	)
 
 /obj/machinery/mecha_part_fabricator/emagged
 	obj_flags = parent_type::obj_flags | EMAGGED
@@ -472,9 +459,9 @@ skip them. Returns the is_combat_design variable
 				is_combat_design = FALSE
 
 	//they can have a tiny bit of non-lethal weapons. as a treat
-	if(design.type in whitelisted_designs)
+	if(design.special_design_flags & WHITELISTED_DESIGN)
 		is_combat_design = FALSE
-	if((design.type in blue_alert_designs) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
+	if((design.special_design_flags & BLUE_ALERT_DESIGN) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
 		is_combat_design = FALSE
 
 	return is_combat_design
