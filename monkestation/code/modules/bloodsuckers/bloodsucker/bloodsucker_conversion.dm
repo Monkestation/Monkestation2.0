@@ -27,7 +27,7 @@
  * conversion_target - Person being vassalized
  */
 /datum/antagonist/bloodsucker/proc/can_make_vassal(mob/living/conversion_target)
-	if(!iscarbon(conversion_target))
+	if(!iscarbon(conversion_target) && !is_oozeling_core(conversion_target))
 		return FALSE
 	if(length(vassals) == return_current_max_vassals())
 		to_chat(owner.current, span_danger("You find that your powers run thin and are unable to dominate their mind with your blood!"))
@@ -68,10 +68,11 @@
  * turn them into one, log it, sync their minds, then updates the Rank
  * Args:
  * conversion_target - The person converted.
+ * special_type - The "special type" to set, if any.
  */
-/datum/antagonist/bloodsucker/proc/make_vassal(mob/living/conversion_target)
+/datum/antagonist/bloodsucker/proc/make_vassal(mob/living/conversion_target, special_type)
 	if(!can_make_vassal(conversion_target))
-		return FALSE
+		return null
 
 	//Check if they used to be a Vassal and was stolen.
 	if(IS_VASSAL(conversion_target))
@@ -83,11 +84,13 @@
 	//set the master, then give the datum.
 	var/datum/antagonist/vassal/vassaldatum = new(conversion_target.mind)
 	vassaldatum.master = bloodsuckerdatum
+	if(special_type)
+		vassaldatum.special_type = special_type
 	conversion_target.mind.add_antag_datum(vassaldatum)
 
 	message_admins("[conversion_target] has become a Vassal, and is enslaved to [owner.current].")
 	log_admin("[conversion_target] has become a Vassal, and is enslaved to [owner.current].")
-	return TRUE
+	return vassaldatum
 
 /*
  *	# can_make_special

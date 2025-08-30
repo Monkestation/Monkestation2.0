@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 /// if none are sentient choose randomly.
 /datum/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
 	for(var/thing in chasm_stuff)
-		if(astype(thing, /mob)?.mind || astype(thing, /obj/item/organ/internal/brain/slime)?.original_mind)
+		if(astype(thing, /mob)?.mind || astype(thing, /obj/item/organ/internal/brain/slime)?.mind)
 			return thing
 	return ..()
 
