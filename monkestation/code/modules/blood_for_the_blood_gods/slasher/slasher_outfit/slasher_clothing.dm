@@ -126,8 +126,6 @@
 
 /obj/item/storage/belt/slasher/equipped(mob/living/user, slot)
 	. = ..()
-	if(!IS_SLASHER(user))
-		return
 	slasher_owner = user.mind.has_antag_datum(/datum/antagonist/slasher)
 	if(!slasher_owner)
 		return
