@@ -90,11 +90,11 @@
 
 /obj/machinery/mecha_part_fabricator/Destroy()
 	QDEL_NULL(id_card)
-	return . = ..()
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/object, mob/living/user, params)
-	if(object.GetID())
-		var/obj/item/card/id/card = object
+	var/obj/item/card/id/card = object.GetID()
+	if(card)
 		if(obj_flags & EMAGGED)
 			to_chat(user, span_warning("The authentification slot spits sparks at you and the display reads scrambled text!"))
 			do_sparks(1, FALSE, src)
