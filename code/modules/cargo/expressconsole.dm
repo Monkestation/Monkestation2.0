@@ -33,18 +33,18 @@
 		beacon.unlink_console()
 	return ..()
 
-/obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
-	if(W.GetID() && allowed(user))
+/obj/machinery/computer/cargo/express/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.GetID() && allowed(user))
 		locked = !locked
 		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the interface."))
 		return
-	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
+	else if(istype(attacking_item, /obj/item/disk/cargo/bluespace_pod))
 		podType = /obj/structure/closet/supplypod/bluespacepod//doesnt effect circuit board, making reversal possible
 		to_chat(user, span_notice("You insert the disk into [src], allowing for advanced supply delivery vehicles."))
-		qdel(W)
+		qdel(attacking_item)
 		return TRUE
-	else if(istype(W, /obj/item/supplypod_beacon))
-		var/obj/item/supplypod_beacon/sb = W
+	else if(istype(attacking_item, /obj/item/supplypod_beacon))
+		var/obj/item/supplypod_beacon/sb = attacking_item
 		if (sb.express_console != src)
 			sb.link_console(src, user)
 			return TRUE

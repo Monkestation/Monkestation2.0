@@ -67,7 +67,7 @@
 		victim.losebreath += 1
 	victim.visible_message("[victim] manages to escape being smothered!", span_notice("You break free!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
-/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!pillow_trophy && istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
 		user.transferItemToLoc(attacking_item, src)

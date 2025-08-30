@@ -28,7 +28,7 @@
 	base_icon_state = "rostokov"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
-	max_ammo = 25
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/rostokov9mm/update_icon_state()
 	. = ..()

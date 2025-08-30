@@ -68,7 +68,7 @@
 /obj/item/armament_points_card/proc/update_maptext()
 	maptext = span_maptext("<div align='center' valign='middle' style='position:relative'>[points]</div>")
 
-/obj/item/armament_points_card/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/armament_points_card/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(istype(attacking_item, /obj/item/armament_points_card))
 		var/obj/item/armament_points_card/attacking_card = attacking_item

@@ -162,6 +162,7 @@
 		"Head of Medical",
 		"Chief Physician",
 		"Head Physician",
+		"Sr. Attending Physician"
 	)
 
 /datum/job/clown
@@ -332,6 +333,7 @@
 		"Mechatronic Engineer",
 		"Apprentice Roboticist",
 		"Ripperdoc",
+		"Cybertronic Engineer",
 	)
 
 /datum/job/science_guard //See orderly
@@ -380,6 +382,7 @@
 		"Apprentice Engineer",
 		"Engineering Trainee",
 		"Station Reliability Engineer",
+		"Builder",
 	)
 
 /datum/job/virologist
@@ -404,4 +407,5 @@
 		"Xenobiologist",
 		"Cytologist",
 		"Cryptozoologist",
+		"Slime Mage",
 	)

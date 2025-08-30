@@ -171,7 +171,7 @@
 		lining_shape = 1
 	update_appearance()
 	rebuild_lining_string()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -181,7 +181,7 @@
 		rotation = 0
 	update_appearance()
 	rebuild_lining_string()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -191,13 +191,13 @@
 		lining_pattern = 0
 	update_appearance()
 	rebuild_lining_string()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	new /obj/item/stack/neon_lining(get_turf(user))
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/neon_lining/break_light_tube(skip_sound_and_sparks = TRUE)
 	return

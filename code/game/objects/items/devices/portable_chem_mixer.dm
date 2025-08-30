@@ -33,6 +33,7 @@
 	register_context()
 
 /obj/item/storage/portable_chem_mixer/Destroy()
+	dispensable_reagents.Cut()
 	QDEL_NULL(beaker)
 	return ..()
 
@@ -68,16 +69,17 @@
 	if(severity > EXPLODE_LIGHT)
 		return ..()
 
-/obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
-	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
-		var/obj/item/reagent_containers/B = I
-		. = TRUE //no afterattack
-		if(!user.transferItemToLoc(B, src))
-			return
-		replace_beaker(user, B)
-		ui_interact(user)
-		return
-	return ..()
+/obj/item/storage/portable_chem_mixer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!atom_storage.locked || \
+		(tool.item_flags & ABSTRACT) || \
+		(tool.flags_1 & HOLOGRAM_1) || \
+		!is_reagent_container(tool) || \
+		!tool.is_open_container() \
+	)
+		return NONE // continue with regular storage handling
+	replace_beaker(user, tool)
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Updates the contents of the portable chemical mixer
@@ -121,21 +123,18 @@
 /obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
 	if(!atom_storage.locked)
 		balloon_alert(user, "lock first to use alt eject!")
-		return ..()
-	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 	replace_beaker(user)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
+/obj/item/storage/portable_chem_mixer/CtrlClick(mob/user)
 	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-		atom_storage.hide_contents(user)
-		update_contents()
+		replace_beaker(user)
+		SStgui.close_uis(src)
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
 
 	to_chat(user, span_notice("You [atom_storage.locked ? "close" : "open"] the chemical storage of \the [src]."))
-	update_appearance()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
 	return
 

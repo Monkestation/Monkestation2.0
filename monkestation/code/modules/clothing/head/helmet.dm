@@ -34,12 +34,12 @@
 		REMOVE_TRAIT(user, hud_trait, HELMET_TRAIT)
 		hud_trait = null
 
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(hud_attachable && !hud_glasses && istype(I, /obj/item/clothing/glasses/hud))
-		user.transferItemToLoc(I, src)
-		hud_glasses = I
+/obj/item/clothing/head/helmet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(hud_attachable && !hud_glasses && istype(attacking_item, /obj/item/clothing/glasses/hud))
+		user.transferItemToLoc(attacking_item, src)
+		hud_glasses = attacking_item
 
-		balloon_alert(user, "attached [I]")
+		balloon_alert(user, "attached [attacking_item]")
 
 		var/mob/living/carbon/human/wearer = loc
 		if (istype(wearer) && wearer.head == src)

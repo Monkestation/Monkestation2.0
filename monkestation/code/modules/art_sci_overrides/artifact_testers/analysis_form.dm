@@ -155,8 +155,8 @@
 	return ..()
 //analysis
 
-/obj/item/sticker/analysis_form/stick(atom/target, mob/living/user, px,py)
-	..()
+/obj/item/sticker/analysis_form/attempt_attach(atom/target, mob/user, px, py)
+	. = ..()
 	analyze_attached()
 
 /obj/item/sticker/analysis_form/peel(atom/source)

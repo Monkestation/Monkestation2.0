@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	return BRUTELOSS
 
 /obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
-	if(get_amount() < 1)
+	if(is_zero_amount(delete_if_zero = TRUE))
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/rods/two/new_item = new(user.loc)
@@ -219,10 +219,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		)
 		use(1)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
-	if(get_amount() < 1)
+	if(is_zero_amount(delete_if_zero = TRUE))
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
@@ -234,33 +234,33 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		)
 		use(1)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
-/obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(isopenturf(target))
-		var/turf/open/build_on = target
-		if(!user.Adjacent(build_on))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(isgroundlessturf(build_on))
-			user.balloon_alert(user, "can't place it here!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(build_on.is_blocked_turf())
-			user.balloon_alert(user, "something is blocking the tile!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(get_amount() < 2)
-			user.balloon_alert(user, "not enough material!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!do_after(user, 4 SECONDS, build_on))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(build_on.is_blocked_turf())
-			user.balloon_alert(user, "something is blocking the tile!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!use(2))
-			user.balloon_alert(user, "not enough material!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		new/obj/structure/girder/displaced(build_on)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/stack/sheet/iron/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	var/turf/open/build_on = interacting_with
+	if(!user.Adjacent(build_on))
+		return ITEM_INTERACT_BLOCKING
+	if(isgroundlessturf(build_on))
+		user.balloon_alert(user, "can't place it here!")
+		return ITEM_INTERACT_BLOCKING
+	if(build_on.is_blocked_turf())
+		user.balloon_alert(user, "something is blocking the tile!")
+		return ITEM_INTERACT_BLOCKING
+	if(get_amount() < 2)
+		user.balloon_alert(user, "not enough material!")
+		return ITEM_INTERACT_BLOCKING
+	if(!do_after(user, 4 SECONDS, build_on))
+		return ITEM_INTERACT_BLOCKING
+	if(build_on.is_blocked_turf())
+		user.balloon_alert(user, "something is blocking the tile!")
+		return ITEM_INTERACT_BLOCKING
+	if(!use(2))
+		user.balloon_alert(user, "not enough material!")
+		return ITEM_INTERACT_BLOCKING
+	new/obj/structure/girder/displaced(build_on)
+	return ITEM_INTERACT_SUCCESS
 
 /*
  * Plasteel
@@ -648,15 +648,15 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
 
-/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
+/obj/item/stack/sheet/cardboard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
-			playsound(I, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
+			playsound(attacking_item, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 			to_chat(user, span_notice("You stamp the cardboard! It's a clown box! Honk!"))
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix
-	if(istype(I, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
+	if(istype(attacking_item, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
 			to_chat(user, span_notice("You stamp the cardboard in a sinister way."))

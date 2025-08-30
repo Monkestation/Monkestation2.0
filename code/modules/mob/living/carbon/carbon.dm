@@ -31,19 +31,15 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
-	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
-		return ..()
-
-	if(can_perform_surgery(user, params))
-		return TRUE
-
-	for(var/i in shuffle(all_wounds))
-		var/datum/wound/wound = i
-		if(wound.try_treating(item, user))
-			return TRUE
-
-	return ..()
+/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	// Needs to happen after parent call otherwise wounds are prioritized over surgery
+	for(var/datum/wound/wound as anything in shuffle(all_wounds))
+		if(wound.try_treating(tool, user))
+			return ITEM_INTERACT_SUCCESS
+	return .
 
 /mob/living/carbon/CtrlShiftClick(mob/user)
 	..()
@@ -53,6 +49,8 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_IMPACTIMMUNE))
+		return
 	var/hurt = TRUE
 	var/extra_speed = 0
 	if(throwingdatum.thrower != src)
@@ -1278,7 +1276,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(part.get_modified_bleed_rate())
+		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
@@ -1287,7 +1285,7 @@
 		return 0
 	var/total_bleed_rate = 0
 	for(var/obj/item/bodypart/part as anything in bodyparts)
-		total_bleed_rate += part.get_modified_bleed_rate()
+		total_bleed_rate += part.cached_bleed_rate
 
 	return total_bleed_rate
 

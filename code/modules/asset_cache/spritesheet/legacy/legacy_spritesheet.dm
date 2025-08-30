@@ -186,7 +186,7 @@
 
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
-		var/list/dimensions = get_icon_dimensions(size[SPRSZ_ICON])
+		var/alist/dimensions = get_icon_dimensions(size[SPRSZ_ICON])
 		out += ".[name][size_id]{display:inline-block;width:[dimensions["width"]]px;height:[dimensions["height"]]px;background-image:url('[get_background_url("[name]_[size_id].png")]');background-repeat:no-repeat;}"
 
 	for (var/sprite_id in sprites)
@@ -195,7 +195,7 @@
 		var/idx = sprite[SPR_IDX]
 		var/size = sizes[size_id]
 
-		var/list/tiny_dimensions = get_icon_dimensions(size[SPRSZ_ICON])
+		var/alist/tiny_dimensions = get_icon_dimensions(size[SPRSZ_ICON])
 		var/icon/big = size[SPRSZ_STRIPPED]
 		// big width won't be cached ever
 		var/per_line = big.Width() / tiny_dimensions["width"]
@@ -317,7 +317,7 @@
 
 	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
 	inserted_icon = ModifyInserted(inserted_icon)
-	var/list/dimensions = get_icon_dimensions(inserted_icon)
+	var/alist/dimensions = get_icon_dimensions(inserted_icon)
 	var/size_id = "[dimensions["width"]]x[dimensions["height"]]"
 	var/size = sizes[size_id]
 

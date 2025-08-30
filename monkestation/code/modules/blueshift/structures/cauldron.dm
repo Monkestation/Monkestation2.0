@@ -114,7 +114,7 @@
 	for(var/atom/movable/ingredient as anything in ingredients)
 		var/image/ingredient_overlay = image(ingredient, src)
 
-		var/list/icon_dimensions = get_icon_dimensions(ingredient.icon)
+		var/alist/icon_dimensions = get_icon_dimensions(ingredient.icon)
 		ingredient_overlay.transform = ingredient_overlay.transform.Scale(
 			CAULDRON_INGREDIENT_OVERLAY_SIZE / icon_dimensions["width"],
 			CAULDRON_INGREDIENT_OVERLAY_SIZE / icon_dimensions["height"],

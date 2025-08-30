@@ -11,6 +11,8 @@
 	melee_damage_upper = 35
 
 /mob/living/carbon/alien/adult/nova/warrior/Initialize(mapload)
+	if(neutered)
+		src.name = "Lamarr"
 	. = ..()
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/spell/aoe/repulse/xeno/nova_tailsweep,
@@ -22,6 +24,7 @@
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	add_movespeed_modifier(/datum/movespeed_modifier/alien_big)
+
 
 /mob/living/carbon/alien/adult/nova/warrior/create_internal_organs()
 	organs += new /obj/item/organ/internal/alien/plasmavessel
@@ -76,3 +79,6 @@
 
 /datum/movespeed_modifier/warrior_agility
 	multiplicative_slowdown = -2
+
+/mob/living/carbon/alien/adult/nova/warrior/lamarr
+	name = "Lamarr"

@@ -66,7 +66,7 @@
 		/obj/item/seeds/seedling/evil,
 	)
 
-/obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/seed_mesh/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_SEED_MESH))
 		balloon_alert(user, "already filtering seeds!")
 		return

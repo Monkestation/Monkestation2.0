@@ -1,4 +1,4 @@
-/obj/vehicle/sealed/mecha/working/ripley/lockermech
+/obj/vehicle/sealed/mecha/ripley/lockermech
 	desc = "A locker with stolen wires, struts, electronics and airlock servos crudely assembled into something that resembles the functions of a mech."
 	name = "Locker Mech"
 	icon = 'monkestation/icons/mecha/makeshift_mechs.dmi'
@@ -22,7 +22,9 @@
 		MECHA_ARMOR = list(),
 	)
 	max_equip_by_category = list(
-		MECHA_UTILITY = 0,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 2,
 		MECHA_POWER = 0,
 		MECHA_ARMOR = 0,
 	)

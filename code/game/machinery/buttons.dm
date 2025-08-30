@@ -91,31 +91,31 @@
 
 	return TRUE
 
-/obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
+/obj/machinery/button/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(panel_open)
-		if(!device && isassembly(W))
-			if(!user.transferItemToLoc(W, src))
-				to_chat(user, span_warning("\The [W] is stuck to you!"))
+		if(!device && isassembly(attacking_item))
+			if(!user.transferItemToLoc(attacking_item, src))
+				to_chat(user, span_warning("\The [attacking_item] is stuck to you!"))
 				return
-			device = W
-			to_chat(user, span_notice("You add [W] to the button."))
+			device = attacking_item
+			to_chat(user, span_notice("You add [attacking_item] to the button."))
 
-		if(!board && istype(W, /obj/item/electronics/airlock))
-			if(!user.transferItemToLoc(W, src))
-				to_chat(user, span_warning("\The [W] is stuck to you!"))
+		if(!board && istype(attacking_item, /obj/item/electronics/airlock))
+			if(!user.transferItemToLoc(attacking_item, src))
+				to_chat(user, span_warning("\The [attacking_item] is stuck to you!"))
 				return
-			board = W
+			board = attacking_item
 			if(board.one_access)
 				req_one_access = board.accesses
 			else
 				req_access = board.accesses
 			balloon_alert(user, "electronics added")
-			to_chat(user, span_notice("You add [W] to the button."))
+			to_chat(user, span_notice("You add [attacking_item] to the button."))
 
-		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
+		if(!device && !board && attacking_item.tool_behaviour == TOOL_WRENCH)
 			to_chat(user, span_notice("You start unsecuring the button frame..."))
-			W.play_tool_sound(src)
-			if(W.use_tool(src, user, 40))
+			attacking_item.play_tool_sound(src)
+			if(attacking_item.use_tool(src, user, 40))
 				to_chat(user, span_notice("You unsecure the button frame."))
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -124,7 +124,7 @@
 		update_appearance()
 		return
 
-	if(!(user.istate & ISTATE_HARM) && !(W.item_flags & NOBLUDGEON))
+	if(!(user.istate & ISTATE_HARM) && !(attacking_item.item_flags & NOBLUDGEON))
 		return attack_hand(user)
 	else
 		return ..()
@@ -180,6 +180,7 @@
 	if(!initialized_button)
 		setup_device()
 	add_fingerprint(user)
+	play_click_sound("button")
 	if(panel_open)
 		if(device || board)
 			if(device)

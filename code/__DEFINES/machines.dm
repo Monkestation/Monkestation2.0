@@ -60,6 +60,11 @@
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
 #define NANITE_COMPILER (1<<7) //Prints nanite disks
+
+//design bitflags for special interactions
+#define BLUE_ALERT_DESIGN (1<<0)
+#define WHITELISTED_DESIGN (1<<1)
+
 /// Protolathes for offstation roles. More limited tech tree.
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
@@ -146,6 +151,15 @@
 /// Max length of a status line in the status display
 #define MAX_STATUS_LINE_LENGTH 40
 
+///Define for automated system arrival announcement
+#define AUTO_ANNOUNCE_ARRIVAL "ARRIVAL"
+///Define for automated system announcement when a head of staff arrives
+#define AUTO_ANNOUNCE_NEWHEAD "NEWHEAD"
+///Define for automated system announcement for when the arrival shuttle is broken
+#define AUTO_ANNOUNCE_ARRIVALS_BROKEN "ARRIVALS_BROKEN"
+///Define for automated system announcement for researched nodes
+#define AUTO_ANNOUNCE_NODE "NODE"
+
 /// Blank Status Display
 #define SD_BLANK 0
 /// Shows the emergency shuttle timer
@@ -154,3 +168,5 @@
 #define SD_MESSAGE 2
 /// Shows an alert picture (e.g. red alert, radiation, etc.)
 #define SD_PICTURE 3
+///clicky noises, how much time needed in between clicks on the machine for the sound to play on click again.
+#define CLICKSOUND_INTERVAL (0.1 SECONDS)

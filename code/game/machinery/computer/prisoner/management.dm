@@ -68,8 +68,8 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/prisoner/management/attackby(obj/item/I, mob/user, params)
-	if(isidcard(I))
+/obj/machinery/computer/prisoner/management/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isidcard(attacking_item))
 		if(screen)
 			id_insert(user)
 		else

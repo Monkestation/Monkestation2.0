@@ -417,6 +417,8 @@
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/organ as anything in get_organs())
+		if(organ.organ_flags & ORGAN_UNREMOVABLE)
+			continue
 		if(owner)
 			organ.Remove(owner)
 		else
@@ -477,7 +479,7 @@
 			return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
-	var/datum/species/owner_species = owner.dna?.species
+	var/datum/species/owner_species = owner?.dna?.species
 	if(owner_species)
 		dmg_multi *= (100 - owner_species.armor) / 100 // species.armor is a 0-100 percentage of damage reduction, so we have to convert that to a 0-1 multiplier
 		brute *= owner_species.brutemod
@@ -789,7 +791,7 @@
 				SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD),
 				SIGNAL_ADDTRAIT(TRAIT_NOBLOOD),
 				))
-		UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
+		UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_LIVING_SET_BODY_POSITION))
 		UnregisterSignal(old_owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 		check_removal_composition(old_owner)
 	if(owner)
@@ -812,6 +814,7 @@
 			update_disabled()
 
 		RegisterSignal(owner, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle_mob))
+		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(refresh_bleed_rate))
 		check_adding_composition(owner)
 
 	refresh_bleed_rate()
@@ -1181,20 +1184,17 @@
 	for(var/datum/wound/iter_wound as anything in wounds)
 		cached_bleed_rate += iter_wound.blood_flow
 
+	if(owner.body_position == LYING_DOWN)
+		cached_bleed_rate *= 0.75
+
+	if(grasped_by)
+		cached_bleed_rate *= 0.7
+
 	// Our bleed overlay is based directly off bleed_rate, so go aheead and update that would you?
 	if(cached_bleed_rate != old_bleed_rate)
 		update_part_wound_overlay()
 
 	return cached_bleed_rate
-
-/// Returns our bleed rate, taking into account laying down and grabbing the limb
-/obj/item/bodypart/proc/get_modified_bleed_rate()
-	var/bleed_rate = cached_bleed_rate
-	if(owner.body_position == LYING_DOWN)
-		bleed_rate *= 0.75
-	if(grasped_by)
-		bleed_rate *= 0.7
-	return bleed_rate
 
 // how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
 #define BLEED_OVERLAY_LOW 0.5

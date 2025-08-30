@@ -10,6 +10,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL | ORGAN_PROMINENT
+	var/can_fit_in_mmi
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -388,6 +389,9 @@
 	else
 		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
+/obj/item/organ/internal/brain/blob_act(obj/structure/blob/B)
+	set_organ_damage(maxHealth)
+
 /obj/item/organ/internal/brain/zombie
 	name = "zombie brain"
 	desc = "This glob of green mass can't have much intelligence inside it."
@@ -414,24 +418,31 @@
 /obj/item/organ/internal/brain/lustrous/before_organ_replacement(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+	organ_owner.RemoveElement(/datum/element/tenacious)
 
 /obj/item/organ/internal/brain/lustrous/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+	organ_owner.AddElement(/datum/element/tenacious)
+
+/obj/item/organ/internal/brain/lizard
+	name = "lizard brain"
+	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_TACKLING_TAILED_DEFENDER)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
-/obj/item/organ/internal/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+/obj/item/organ/internal/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE, ignore_flags = NONE)
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
-		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
+		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience) && !(BT.trauma_flags & ignore_flags))
 			return BT
 
-/obj/item/organ/internal/brain/proc/get_traumas_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+/obj/item/organ/internal/brain/proc/get_traumas_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE, ignore_flags = NONE)
 	. = list()
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
-		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
+		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience) && !(BT.trauma_flags & ignore_flags))
 			. += BT
 
 /obj/item/organ/internal/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience, natural_gain = FALSE)
@@ -523,7 +534,7 @@
 	var/list/datum/brain_trauma/possible_traumas = list()
 	for(var/T in subtypesof(brain_trauma_type))
 		var/datum/brain_trauma/BT = T
-		if(can_gain_trauma(BT, resilience, natural_gain) && initial(BT.random_gain))
+		if(can_gain_trauma(BT, resilience, natural_gain) && !(initial(BT.trauma_flags) & TRAUMA_NOT_RANDOM))
 			possible_traumas += BT
 
 	if(!LAZYLEN(possible_traumas))
@@ -533,14 +544,14 @@
 	return gain_trauma(trauma_type, resilience)
 
 //Cure a random trauma of a certain resilience level
-/obj/item/organ/internal/brain/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_BASIC)
-	var/list/traumas = get_traumas_type(brain_trauma_type, resilience)
+/obj/item/organ/internal/brain/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = NONE)
+	var/list/traumas = get_traumas_type(brain_trauma_type, resilience, ignore_flags)
 	if(LAZYLEN(traumas))
 		qdel(pick(traumas))
 
-/obj/item/organ/internal/brain/proc/cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
+/obj/item/organ/internal/brain/proc/cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = NONE)
 	var/amount_cured = 0
-	var/list/traumas = get_traumas_type(resilience = resilience)
+	var/list/traumas = get_traumas_type(resilience = resilience, ignore_flags = ignore_flags)
 	for(var/X in traumas)
 		qdel(X)
 		amount_cured++

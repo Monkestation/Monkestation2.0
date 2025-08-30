@@ -64,6 +64,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.7
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
+	clicksound = 'sound/machines/pda_button1.ogg'
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -332,6 +333,7 @@
 				continue
 
 			var/obj/obj_to_dump = new dump_path(loc)
+			on_dispense(obj_to_dump)
 			step(obj_to_dump, pick(GLOB.alldirs))
 			found_anything = TRUE
 			dump_amount++
@@ -563,7 +565,7 @@
 		return FALSE
 	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
 		unbuckle_all_mobs(TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
@@ -576,19 +578,19 @@
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/I, mob/living/user, params)
-	if(panel_open && is_wire_tool(I))
+/obj/machinery/vending/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return
 
-	if(refill_canister && istype(I, refill_canister))
+	if(refill_canister && istype(attacking_item, refill_canister))
 		if (!panel_open)
 			to_chat(user, span_warning("You should probably unscrew the service panel first!"))
 		else if (machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, span_notice("[src] does not respond."))
 		else
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/vending_refill/canister = I
+			var/obj/item/vending_refill/canister = attacking_item
 			if(canister.get_part_rating() == 0)
 				to_chat(user, span_warning("[canister] is empty!"))
 			else
@@ -600,11 +602,11 @@
 					to_chat(user, span_warning("There's nothing to restock!"))
 			return
 	if(compartmentLoadAccessCheck(user) && !(user.istate & ISTATE_HARM))
-		if(canLoadItem(I))
-			loadingAttempt(I,user)
+		if(canLoadItem(attacking_item))
+			loadingAttempt(attacking_item,user)
 
-		if(istype(I, /obj/item/storage/bag)) //trays USUALLY
-			var/obj/item/storage/T = I
+		if(istype(attacking_item, /obj/item/storage/bag)) //trays USUALLY
+			var/obj/item/storage/T = attacking_item
 			var/loaded = 0
 			var/denied_items = 0
 			for(var/obj/item/the_item in T.contents)
@@ -622,7 +624,7 @@
 				to_chat(user, span_notice("You insert [loaded] dishes into [src]'s compartment."))
 	else
 		. = ..()
-		if(tiltable && !tilted && I.force)
+		if(tiltable && !tilted && attacking_item.force)
 			if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
 				var/opposite_direction = REVERSE_DIR(get_dir(src, user))
 				var/target = get_step(src, opposite_direction)
@@ -653,7 +655,8 @@
 			if(!dump_path)
 				continue
 			if(R.amount > LAZYLEN(R.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-				new dump_path(get_turf(src))
+				var/obj/item/free_stuff = new dump_path(get_turf(src))
+				on_dispense(free_stuff)
 			else
 				var/obj/returned_obj_to_dump = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
 				LAZYREMOVE(R.returned_products, returned_obj_to_dump)
@@ -1342,6 +1345,7 @@
 	var/obj/item/vended_item
 	if(!LAZYLEN(R.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new R.product_path(get_turf(src))
+		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
 		LAZYREMOVE(R.returned_products, vended_item)
@@ -1355,6 +1359,10 @@
 		to_chat(usr, span_warning("[capitalize(format_text(R.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[name]", "[R.name]"))
 	vend_ready = TRUE
+
+///A proc meant to perform custom behavior on newly dispensed items.
+/obj/machinery/vending/proc/on_dispense(obj/item/vended_item)
+	return
 
 /obj/machinery/vending/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -1575,7 +1583,7 @@
 			vend_ready = TRUE
 			return TRUE
 
-/obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
+/obj/machinery/vending/custom/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!linked_account && isliving(user))
 		var/mob/living/L = user
 		var/obj/item/card/id/C = L.get_idcard(TRUE)
@@ -1584,7 +1592,7 @@
 			speak("\The [src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(I, /obj/item/pen))
+		if(istype(attacking_item, /obj/item/pen))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)

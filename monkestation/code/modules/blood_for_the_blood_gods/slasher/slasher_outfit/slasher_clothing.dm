@@ -1,28 +1,4 @@
-/obj/item/clothing/shoes/slasher_shoes
-	name = "Industrial Boots"
-	icon_state = "jackboots"
-	inhand_icon_state = "jackboots"
-	clothing_traits = list(TRAIT_NO_SLIP_ALL)
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-/obj/item/clothing/shoes/slasher_shoes/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, "slasher")
-
 /obj/item/clothing/mask/gas/slasher
-	name = "slasher's gas mask"
-	desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
-
-	icon = 'icons/obj/clothing/head/utility.dmi'
-	worn_icon = 'icons/mob/clothing/head/utility.dmi'
-	icon_state = "welding"
-	inhand_icon_state = "welding"
-	flash_protect = FLASH_PROTECTION_WELDER
-	flags_cover = PEPPERPROOF | MASKCOVERSEYES
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	slowdown = 1
-
-/obj/item/clothing/mask/gas/slasher2
 	name = "slasher's gas mask"
 	desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
 
@@ -31,17 +7,12 @@
 	icon_state = "slasher_firemask"
 	inhand_icon_state = null
 	flash_protect = FLASH_PROTECTION_WELDER
-	clothing_flags = HIDEHAIR | HIDEFACIALHAIR
-	flags_cover = PEPPERPROOF | MASKCOVERSEYES
+	clothing_flags = MASKINTERNALS
+	flags_inv = HIDEFACIALHAIR | HIDEHAIR
+	visor_flags_inv = 0
+	flags_cover = MASKCOVERSEYES | PEPPERPROOF
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	slowdown = 1
-
-/obj/item/clothing/mask/gas/slasher2/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
-
-/obj/item/clothing/mask/gas/slasher2/adjustmask()
-	return
+	slowdown = 0
 
 /obj/item/clothing/mask/gas/slasher/Initialize(mapload)
 	. = ..()
@@ -50,19 +21,18 @@
 /obj/item/clothing/mask/gas/slasher/adjustmask()
 	return
 
+/obj/item/clothing/mask/gas/slasher/cluwne
+	name = "cluwne mask"
+	icon_state = "cluwne_mask"
+	desc = "A close-fitting sealed mask, this one seems to be protruding some kind of dark aura."
+	flags_inv = HIDEFACIALHAIR
+
+/obj/item/clothing/mask/gas/slasher/brute
+	name = "dome helmet"
+	icon_state = "brute_mask"
+	desc = "A close-fitting sealed helmet, this one seems to be protruding some kind of dark aura."
+
 /obj/item/clothing/suit/apron/slasher
-	name = "butcher's apron"
-	desc = "A brown butcher's apron, you can feel an aura of something dark radiating off of it."
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-	icon_state = "slasher"
-	inhand_icon_state = null
-
-/obj/item/clothing/suit/apron/slasher/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
-
-/obj/item/clothing/suit/apron/slasher2
 	name = "butcher's apron"
 	desc = "A brown butcher's apron, you can feel an aura of something dark radiating off of it."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -70,10 +40,57 @@
 	worn_icon = 'monkestation/icons/mob/slasher/slasher_wornstates.dmi'
 	icon_state = "slasher_apron"
 	inhand_icon_state = null
+	armor_type = /datum/armor/slasher/level0
 
-/obj/item/clothing/suit/apron/slasher2/Initialize(mapload)
+/datum/armor/slasher/level0 // start
+	melee = 10
+	bullet = 10
+	laser = 10
+	energy = 10
+	fire = 10
+	acid = 10
+	bio = 10
+
+/datum/armor/slasher/level1 // after 6 claimed souls
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
+	fire = 30
+	acid = 30
+	bio = 66
+
+/datum/armor/slasher/level2 // after 12 claimed souls
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	fire = 50
+	acid = 50
+	bio = 50
+
+/datum/armor/slasher/level3 //after 18 claimed souls
+	melee = 70
+	bullet = 70
+	laser = 70
+	energy = 70
+	fire = 70
+	acid = 70
+	bio = 70
+
+/obj/item/clothing/suit/apron/slasher/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+
+/obj/item/clothing/suit/apron/slasher/cluwne
+	name = "damned suspenders"
+	icon_state = "cluwne_apron"
+	desc = "A pair of suspenders that seem to be stitched together from the souls of the damned."
+
+/obj/item/clothing/suit/apron/slasher/brute
+	name = "soul-steel armor"
+	icon_state = "brute_apron"
+	desc = "A set of armor that grows stronger with each soul claimed."
 
 /obj/item/clothing/under/slasher
 	name = "butcher's jumpsuit"
@@ -87,6 +104,11 @@
 /obj/item/clothing/under/slasher/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+
+/obj/item/clothing/under/slasher/cluwne
+	name = "cluwne jumpsuit"
+	icon_state = "cluwne_under"
+	desc = "A cluwne jumpsuit, suspenders sold separately cause fuck these bastards."
 
 /obj/item/storage/belt/slasher
 	name = "slasher's trap fanny pack"
@@ -106,8 +128,14 @@
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 	SSwardrobe.provide_type(/obj/item/restraints/legcuffs/beartrap/slasher, src)
 
-
-
 /obj/item/restraints/legcuffs/beartrap/slasher
 	name = "barbed bear trap"
 	breakouttime = 2 SECONDS
+
+/obj/item/storage/belt/slasher/cluwne
+	name = "cluwne's trap fanny pack"
+	desc = "A place to put all your clowny traps."
+	icon_state = "clown"
+	inhand_icon_state = "clown"
+	worn_icon_state = "clown"
+

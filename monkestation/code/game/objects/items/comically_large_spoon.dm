@@ -19,7 +19,7 @@
 	armour_penetration = -50 // Literally couldn't possibly be a worse weapon for hitting armor.
 	throwforce = 1 // It's terribly weighted, what do you expect?
 	throw_range = 1
-	wound_bonus = 30 // Bit more than a lead pipe.
+	wound_bonus = 10 // Bit less than a lead pipe.
 	demolition_mod = 0.5 // you gotta wield it to have some oomph
 	tool_behaviour = TOOL_SHOVEL
 

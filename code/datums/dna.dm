@@ -106,6 +106,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 ///Copies the variables of a dna datum onto another.
 /datum/dna/proc/copy_dna(datum/dna/new_dna, transfer_flags = COPY_DNA_SE|COPY_DNA_SPECIES)
+	if(ishuman(new_dna))
+		var/mob/living/carbon/human/ugh = new_dna
+		new_dna = ugh.dna
+		stack_trace("incorrectly tried to pass human to copy_dna")
 	new_dna.unique_enzymes = unique_enzymes
 	new_dna.unique_identity = unique_identity
 	new_dna.unique_features = unique_features
@@ -517,6 +521,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	if(QDELETED(src))
 		CRASH("You're trying to change your species post deletion, this is a recipe for madness")
+	if(HAS_TRAIT(src, TRAIT_SPECIESLOCK))//can't swap species
+		return
 	if(mrace && has_dna())
 		var/datum/species/new_race
 		if(ispath(mrace))

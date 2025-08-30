@@ -22,7 +22,7 @@
 	Heal(mob, effectiveness)
 
 /datum/symptom/water_heal/proc/CanHeal(mob/living/M)
-	if(!M)
+	if(!iscarbon(M))
 		return 1
 	var/base = 0
 	if(M.fire_stacks < 0)
@@ -41,19 +41,10 @@
 		return TRUE
 	return FALSE
 
-/datum/symptom/water_heal/proc/Heal(mob/living/carbon/M, actual_power)
-	var/heal_amt = 2 * actual_power
-
-	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC) //more effective on burns
-
-	if(!parts.len)
-		return
-
+/datum/symptom/water_heal/proc/Heal(mob/living/M, actual_power)
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
+	M.heal_overall_damage(brute = actual_power, burn = actual_power * 2, required_bodytype = BODYTYPE_ORGANIC)
 
-	return 1
+	return TRUE

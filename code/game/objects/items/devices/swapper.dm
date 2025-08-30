@@ -24,9 +24,9 @@
 	icon_state = "swapper[linked_swapper ? "-linked" : null]"
 	return ..()
 
-/obj/item/swapper/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/swapper))
-		var/obj/item/swapper/other_swapper = I
+/obj/item/swapper/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/swapper))
+		var/obj/item/swapper/other_swapper = attacking_item
 		if(other_swapper.linked_swapper)
 			to_chat(user, span_warning("[other_swapper] is already linked. Break the current link to establish a new one."))
 			return

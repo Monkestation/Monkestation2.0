@@ -122,3 +122,4 @@
 	name = "flat-packed [initial(type_to_deploy.name)]"
 	desc = initial(type_to_deploy.desc)
 	give_deployable_component()
+	moveToNullspace() 

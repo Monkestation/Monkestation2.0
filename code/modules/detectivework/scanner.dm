@@ -99,14 +99,15 @@
 	// Clear the logs
 	log_data = list()
 
-/obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
-	safe_scan(user, atom_to_scan = A)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/detective_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE // lets us put our scanner away without trying to scan the bag
+	safe_scan(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
-	. = ..()
-	safe_scan(user, atom_to_scan = A)
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/detective_scanner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	safe_scan(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * safe_scan - a wrapper proc for scan()

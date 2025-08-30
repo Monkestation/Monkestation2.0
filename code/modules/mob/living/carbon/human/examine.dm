@@ -291,7 +291,7 @@
 		var/list/obj/item/bodypart/grasped_limbs = list()
 
 		for(var/obj/item/bodypart/body_part as anything in bodyparts)
-			if(body_part.get_modified_bleed_rate())
+			if(body_part.cached_bleed_rate)
 				bleeding_limbs += body_part
 			if(body_part.grasped_by)
 				grasped_limbs += body_part
@@ -329,6 +329,9 @@
 
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
+
+	if((!wear_suit && !w_uniform) && mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn))
+		msg += "[t_His] whole body is covered in sigils!\n"
 
 	if(just_sleeping)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"

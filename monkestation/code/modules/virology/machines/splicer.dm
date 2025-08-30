@@ -19,8 +19,8 @@
 	var/scanning = 0 // Time in process ticks until scan is over
 	var/spliced = FALSE // If at least one effect has been spliced into the current dish this is TRUE
 
-	///the stage we are set to grab from
-	var/target_stage = 1
+	///the slot we are set to grab from
+	var/target_slot = 1
 	idle_power_usage = 100
 	active_power_usage = 600
 
@@ -65,7 +65,7 @@
 		"splicing" = splicing,
 		"scanning" = scanning,
 		"burning" = burning,
-		"target_stage" = target_stage,
+		"target_slot" = target_slot,
 	)
 
 	if(dish)
@@ -167,7 +167,7 @@
 
 	var/list/effects = dish.contained_virus.symptoms
 	for(var/x = 1 to length(effects))
-		if(x == target_stage)
+		if(x == target_slot)
 			var/datum/symptom/e = effects[x]
 			effects[x] = memorybank.Copy(dish.contained_virus)
 			dish.contained_virus.log += "<br />[ROUND_TIME()] [memorybank.name] spliced in by [key_name(usr)] (replaces [e.name])"
@@ -177,7 +177,7 @@
 	spliced = TRUE
 	update_icon()
 
-/obj/machinery/computer/diseasesplicer/proc/dish2buffer(target_stage)
+/obj/machinery/computer/diseasesplicer/proc/dish2buffer(target_slot)
 	if(!dish?.contained_virus)
 		return
 	if(dish.growth < 50)
@@ -185,7 +185,7 @@
 	var/list/effects = dish.contained_virus.symptoms
 	for(var/x = 1 to effects.len)
 		var/datum/symptom/e = effects[x]
-		if(e.stage == target_stage)
+		if(e.stage == target_slot)
 			memorybank = e
 			break
 	scanning = DISEASE_SPLICER_SCANNING_TICKS
@@ -239,7 +239,7 @@
 			update_appearance()
 			return TRUE
 		if("dish_effect_to_buffer")
-			dish2buffer(target_stage)
+			dish2buffer(target_slot)
 			return TRUE
 		if("splice_buffer_to_dish")
 			buffer2dish()
@@ -247,8 +247,8 @@
 		if("burn_buffer_to_disk")
 			burning = DISEASE_SPLICER_BURNING_TICKS
 			return TRUE
-		if("target_stage")
-			target_stage = params["stage"]
+		if("target_slot")
+			target_slot = params["stage"]
 	return FALSE
 
 #undef DISEASE_SPLICER_BURNING_TICKS
