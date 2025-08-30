@@ -74,7 +74,7 @@
 	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
-	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
+	if(!user.throw_mode || user.get_active_held_item() || user.buckled || user.incapacitated())
 		return
 
 	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))
@@ -100,9 +100,13 @@
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
 
+	if (user.pulling)
+		user.stop_pulling()
+
 	user.face_atom(clicked_atom)
 
 	tackling = TRUE
+	user.toggle_throw_mode()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
@@ -148,7 +152,6 @@
 		tackle = null
 		return
 
-	user.toggle_throw_mode()
 	if(!iscarbon(hit))
 		if(hit.density)
 			INVOKE_ASYNC(src, PROC_REF(splat), user, hit)
