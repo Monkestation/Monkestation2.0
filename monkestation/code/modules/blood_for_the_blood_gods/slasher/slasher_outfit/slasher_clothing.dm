@@ -126,7 +126,7 @@
 
 /obj/item/storage/belt/slasher/equipped(mob/living/user, slot)
 	. = ..()
-	slasher_owner = user.mind.has_antag_datum(/datum/antagonist/slasher)
+	slasher_owner = IS_SLASHER(user)
 	if(!slasher_owner)
 		return
 	for(var/obj/item/restraints/legcuffs/beartrap/slasher/trap in src)
