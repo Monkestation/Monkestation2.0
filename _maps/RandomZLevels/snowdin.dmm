@@ -3483,9 +3483,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "km" = (
-/obj/structure/sign/poster/contraband/tools{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/tools,
 /obj/structure/closet/crate/preopen,
 /obj/item/tank/internals/plasma,
 /obj/item/tank/internals/plasma,
