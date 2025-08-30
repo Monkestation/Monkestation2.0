@@ -25,6 +25,7 @@
 
 	add_movespeed_modifier(/datum/movespeed_modifier/alien_quick)
 
+
 /mob/living/carbon/alien/adult/nova/runner/Destroy()
 	QDEL_NULL(evade_ability)
 	return ..()
@@ -91,3 +92,7 @@
 
 #undef EVASION_VENTCRAWL_INABILTY_CD_PERCENTAGE
 #undef RUNNER_BLUR_EFFECT
+
+/mob/living/carbon/alien/adult/nova/runner/lamarr
+	name = "Lamarr"
+	next_evolution = /mob/living/carbon/alien/adult/nova/ravager/lamarr

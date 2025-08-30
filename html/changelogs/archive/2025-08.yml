@@ -661,9 +661,73 @@
       (please help im running out of synonyms and the thesaurus-beasts from the nether
       realms are going to CATCH UP WITHMEOHGODTHEPAAAAIIIINNN)'
 2025-08-27:
+  Absolucy:
+  - bugfix: idk i guess im fixing more lag?
+  - refactor: (LemonInTheDark) I have reworked how parallax and its animations (space
+      travel) work. Please report any bugs lads!
+  - bugfix: (Melbert) Some things which should pacify people (but aren't) now will
+      properly, like hypnoflash.
+  - bugfix: (timothymtorres) Fix custom map loading ignoring JSON values that were
+      ignored previously. (minetype, planetary, etc.)
+  - bugfix: (00-Steven) Sign language no longer throws a runtime error when repeatedly
+      muted and unmuted.
+  - bugfix: (00-Steven) Sign language no longer fails to hide the action when you
+      get it while mute, stop being mute, and start being mute again.
+  - admin: (SmArtKar) Renamed "Tick Overrun" in MC overview to "Subsystem Overtime"
+      to be true as to what it actually displays.
+  - balance: (Melbert) Cameras can only see vertically upwards if the turf above them
+      is transparent. But hey, multi-z maps will now perform wayyy better (less time
+      dilation)
+  - bugfix: (SmArtKar) Fixed weather from Z levels above rendering over players' UI.
+  - qol: (SmArtKar) Multi-Z Detail setting has been renamed to Multi-Z Depth with
+      an explanation on what it does. "Standard" setting has been renamed to "No Culling"
+  - bugfix: (SmArtKar) Maps with a large amount of Z levels should no longer randomly
+      display space parallax to players with low multi-z culling settings.
+  - rscdel: Removed bloom (additive lighting). It just made bright lights more painful
+      on the eyes, and didn't look too much better anyways.
+  - bugfix: Rescue hooks can now fish up Oozeling cores.
+  - bugfix: Oozelings which self-revive in chasms somehow will properly "leap" out
+      of the chasm, like other mobs would.
+  - bugfix: Stowaway Oozelings will no longer teleport when revived.
+  Absolucy, hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  Arturlang:
+  - rscadd: mesmerize is now a visual effect only visible to victim and attacker,
+      and no longer requires both parties to stand still
+  - rscadd: both tremere abilities besides mesmerize are now toggled with right click
+      for usability
+  - rscadd: thaumaturgy is now charge-based instead of a single shot, but is thus
+      weaker per-shot
+  - rscadd: tremere abilities now have dynamic descriptions
+  - rscadd: dominate no longer requires facing your target
+  - rscadd: bloodsuckers can only have 1 targeted ability active at a time, you couldn't
+      multicast before anyway.
+  - rscadd: Mesmerize is now slowed down/blocked with welding protection, with levels
+      past 2 making you immune (welding protection is level 2)
+  - rscadd: Dominate now has a visual timer for when your vassal dies horribly
+  - rscadd: Auspex is renamed into Obfsucate, as that makes more sense given what
+      it does.
+  - balance: Auspex, now, Obfuscate, fills your stamina to full, as tremere are lacking
+      in stamina regen options
+  - balance: Obfuscate requires level 6 to allow you to teleport anywehre
+  - balance: Obfuscate now has a per-tile cost of 5 blood per tile teleported, with
+      a cap of 100 blood
+  - code_imp: heavy refactors of tremere abilities
   Cmpwarrior:
   - rscadd: Adds a new outfit to the AutoDrobe and a new clown mask variant, based
       off everyone's favorite fool.
+  Melbert:
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
   Salted-Zen:
   - qol: Scraped the Scarborough arms stamp off the 'Duster' Revolver
   - balance: Reduced PK Railgun recoil
@@ -673,3 +737,109 @@
       each, for reloading the 'Hellhound' LMG
   - balance: All mining guns (Except the 'Thor' 950 JDJ) fit in the suit slots of
       Explorer Armor, Goliath Cloak, Ash Drake Armor, And Godslayer Armor
+  Shoddd:
+  - balance: stimulants now stun alien embryos growth
+  SmArtKar:
+  - qol: Heads of staff PDAs start with twice as much disk space
+  wonderinghost:
+  - bugfix: fixes flatpack duplication when deploying
+  - bugfix: fixes material duplication when repacking
+2025-08-28:
+  Absolucy:
+  - qol: Slime washing now eats grime off the floor when moving, not just every second.
+  Absolucy, Melbert:
+  - bugfix: Hierophant Club Blink at range
+  - bugfix: Crusher Loot
+  Melbert:
+  - refactor: Storage and Tables are now a lower priority action, meaning some uses
+      of items on storage should work... better, now. Here's hoping at least, report
+      any oddities.
+  - refactor: 'Note: For an overwhelming majority of items, combat mode will attempt
+      to attack/insert into the target, while non-combat-mode will attempt to use
+      on a target. This means screwdrivering or emagging a MODsuit must be done on
+      non-combat-mode, as combat mode will simply put the screwdriver or emag into
+      its storage. Same applies to tables, though when in doubt, RMB may help (for
+      things which are also weapons, like mops).'
+  - refactor: Refactored escape pod storage, now they actually properly show as unlocked
+      on red alert and above.
+  MrMelbert:
+  - balance: Clock cultists are given a slowing status effect after warping to the
+      station
+  - rscadd: Anchoring crystals now bend reality the more of them there are
+  - balance: anchoring crystals now lock down the shuttle while active
+  - balance: abscond can only be invoked from marked areas and takes 45 seconds, servant
+      antag info now lists marked areas
+  - balance: vitality sigils no longer create borg shells but shells can be made by
+      on station tinker's caches
+  - balance: the soul vessels given by vitality sigils can now be converted to cogscarab
+      shells
+  - balance: clockwork mobs can now warp to the station but are restricted to marked
+      areas
+  - bugfix: various clock cult bugs
+  - balance: reduced the maximum amount of cogscarabs from 9 to 6
+  - balance: reworked the clockwork power economy into passive and active power
+  Rex9001:
+  - rscadd: A horrific monster has crawled inside of a crewmate, escaped all NT bio
+      scans and is now in an ideal position to burst out of its host and start wrecking
+      havoc. The bloodling has arrived!
+  ThePooba:
+  - rscadd: 'donator alt title: Sr. Attending physician(cmo), Cybertronic Engineer(robo),
+      Builder(engi)'
+  - rscadd: Darkspawn antag https://mediawiki.monkestation.com/Darkspawn
+  - rscadd: Head of security jackboots (they are stompy)
+  - rscadd: Swinging component (fighter only for now)
+  - rscadd: like 50 spells for darkspawn and shit
+  - rscadd: New camera network system - mostly code side
+  - rscadd: custom key click sounds for some machines and buttons, firealarms etc
+  - bugfix: chem_heater dupe
+  - bugfix: molotovs and other interacts on beakers
+  - bugfix: camera?
+  Tostah:
+  - rscadd: Lamarr can now produce neutered xenomorph larva which can't evolve into
+      drones and start nests.
+  - rscadd: Lamarr will leap at victims but won't stun them. They also won't be killed
+      by protective clothing and can be carried around.
+  Xander3359:
+  - bugfix: (MrMelbert) Fix inability to make r-glass by hand inside your backpack
+  - qol: (MrMelbert) Hand labels now have a visual effect associated, and are also
+      affected by heat / can be cleaned off like stickers.
+  - refactor: (MrMelbert) Refactored hand labels. They're objects now!
+  - bugfix: (MrMelbert) Heirophant Club Blink at range
+  - bugfix: (MrMelbert) Crusher Loot
+  - bugfix: (MrMelbert) RCD material reclamation
+  - bugfix: (SmArtKar) Fixed crayons not being usable on anything except turfs (including
+      washing machines)
+  - refactor: (intercepti0n) Stickers are now a component and gets rid of a copyright
+      infringement
+  - bugfix: (SyncIt21) RLD won't try to put lights on storage objects like bags &
+      such
+  - bugfix: Fix being unable to apply patches
+  - bugfix: Fix being unable to place on griddle
+  - bugfix: Fix being unable to use xenobio vacuum from range
+  notghosti:
+  - bugfix: Ordering imports now logs who orders the import on the import forum, akin
+      to normal orders
+2025-08-30:
+  EssentialTomato:
+  - qol: Holofans can now be deployed over window sills.
+  - bugfix: Fixed holosigns not being cleared when clicked on with a projector.
+  - bugfix: Fixed not being able to spin cloth on the loom.
+  MrBagHead:
+  - bugfix: Touch spells now use the new interaction/ranged interaction signals, fixing
+      Knock Mansus Grasp and Extended Shock Touch at range.
+  - bugfix: Holosign Projectors can again delete holosigns they created.
+  - bugfix: Chemical patches can now be placed into chemical grinders.
+  - bugfix: Cigarette packs no longer drop to the ground when opened from inside a
+      backpack.
+  - rscadd: Added two new Slasher variants, The Cluwne and The Brute, each with unique
+      outfits, reskinned weapons, terror screams, and fear forms.
+  - sound: Added new terror scream audio for The Cluwne and The Brute.
+  - image: Added new icons and sprites for slasher variant outfits and weapons.
+  - bugfix: Fixed an issue where the Slasher mask used incorrect flags to block hairstyles
+      and facial hair.
+  ThePooba:
+  - bugfix: crusher twohand
+  - bugfix: fixed a LOT of interaction bugs
+  - rscadd: added razorwire implant to traitor uplink and fixed mantis implants lunge
+  notghosti:
+  - map: Tramstation pet sanctuary is now connected to the grid

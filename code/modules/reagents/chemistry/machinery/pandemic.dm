@@ -85,10 +85,11 @@
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
 			return ..()
-		if(istype(held_item, /obj/item/reagent_containers/syringe) && (user.istate & ISTATE_SECONDARY))
-			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
+		var/list/modifiers = params2list(params)
+		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			held_item.interact_with_atom_secondary(beaker, user)
 		else
-			held_item.afterattack(beaker, user, Adjacent(user), params)
+			held_item.interact_with_atom(beaker, user)
 		SStgui.update_uis(src)
 		return TRUE
 

@@ -126,7 +126,7 @@
 	return ..()
 
 /datum/status_effect/star_mark/Destroy()
-	QDEL_NULL(cosmic_overlay)
+	cosmic_overlay = null
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
@@ -202,7 +202,7 @@
 	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
 
 /datum/status_effect/moon_converted/Destroy()
-	QDEL_NULL(moon_insanity_overlay)
+	moon_insanity_overlay = null
 	return ..()
 
 /datum/status_effect/moon_converted/on_apply()

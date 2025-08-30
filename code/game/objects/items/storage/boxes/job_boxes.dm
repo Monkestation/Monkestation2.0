@@ -188,18 +188,19 @@
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
 
-/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
+/obj/item/storage/box/clown/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/bodypart/arm/left/robot) || istype(tool, /obj/item/bodypart/arm/right/robot))
 		if(contents.len) //prevent accidently deleting contents
 			balloon_alert(user, "items inside!")
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		qdel(I)
-		balloon_alert(user, "wheels added, honk!")
+			return FALSE
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return FALSE
+		qdel(tool)
+		loc.balloon_alert(user, "wheels added, honk!")
 		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
+		return FALSE
 	else
 		return ..()
 

@@ -56,14 +56,15 @@ SUBSYSTEM_DEF(tgui)
 		src.current_run = all_uis.Copy()
 	// Cache for sanic speed (lists are references anyways)
 	var/list/current_run = src.current_run
-	while(current_run.len)
-		var/datum/tgui/ui = current_run[current_run.len]
+	var/seconds_per_tick = wait * 0.1
+	while(length(current_run))
+		var/datum/tgui/ui = current_run[length(current_run)]
 		current_run.len--
 		// TODO: Move user/src_object check to process()
 		if(ui?.user && ui.src_object)
-			ui.process(wait * 0.1)
+			ui.process(seconds_per_tick)
 		else
-			ui.close(0)
+			ui.close(FALSE)
 		if(MC_TICK_CHECK)
 			return
 

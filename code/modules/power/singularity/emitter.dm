@@ -289,7 +289,7 @@
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/item)
 	..()
@@ -524,11 +524,14 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/turret_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/turret_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/power/emitter/emitter = user.buckled
-	emitter.setDir(get_dir(emitter,targeted_atom))
+	emitter.setDir(get_dir(emitter, interacting_with))
 	user.setDir(emitter.dir)
 	switch(emitter.dir)
 		if(NORTH)
@@ -564,7 +567,7 @@
 			user.pixel_x = 8
 			user.pixel_y = -12
 
-	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, clickparams)
+	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, list2params(modifiers))
 
 	if(emitter.charge >= 10 && world.time > delay)
 		emitter.charge -= 10
@@ -572,6 +575,7 @@
 		delay = world.time + 10
 	else if (emitter.charge < 10)
 		playsound(src,'sound/machines/buzz-sigh.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/ctf
 	name = "Energy Cannon"

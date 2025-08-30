@@ -31,7 +31,7 @@
 		scancount += M.tier
 	minimum_growth = round((initial(minimum_growth) - (scancount * 6)))
 
-/obj/machinery/disease2/diseaseanalyser/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/disease2/diseaseanalyser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(machine_stat & (BROKEN))
@@ -46,19 +46,19 @@
 		return
 
 	if (dish)
-		if (istype(I,/obj/item/weapon/virusdish))
+		if (istype(attacking_item ,/obj/item/weapon/virusdish))
 			to_chat(user, span_warning("There is already a dish in there. Alt+Click or perform the analysis to retrieve it first."))
-		else if (istype(I,/obj/item/reagent_containers))
-			dish.attackby(I,user)
+		else if (istype(attacking_item ,/obj/item/reagent_containers))
+			dish.attackby(attacking_item ,user)
 	else
-		if (istype(I,/obj/item/weapon/virusdish))
-			var/obj/item/weapon/virusdish/D = I
+		if (istype(attacking_item ,/obj/item/weapon/virusdish))
+			var/obj/item/weapon/virusdish/D = attacking_item
 			if (D.open)
-				visible_message(span_notice("\The [user] inserts \the [I] in \the [src]."),span_notice("You insert \the [I] in \the [src]."))
+				visible_message(span_notice("\The [user] inserts \the [attacking_item] in \the [src]."),span_notice("You insert \the [attacking_item] in \the [src]."))
 				playsound(loc, 'sound/machines/click.ogg', 50, 1)
-				user.dropItemToGround(I, TRUE)
-				I.forceMove(src)
-				dish = I
+				user.dropItemToGround(attacking_item, TRUE)
+				attacking_item.forceMove(src)
+				dish = attacking_item
 				update_appearance()
 			else
 				to_chat(user, span_warning("You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
