@@ -53,8 +53,8 @@
 //This needs to be fixed
 // This comment is 12 years old I hope it's fixed by now
 /mob/living/carbon/alien/larva/get_status_tab_items()
+	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_NEUTERED))
-		. = ..()
 		. += "Progress: [amount_grown]/[max_grown]"
 
 /mob/living/carbon/alien/larva/Login()
