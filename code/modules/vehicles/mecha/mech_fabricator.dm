@@ -59,7 +59,7 @@
 	/// Combined boolean value of red alert, auth override, and the users access for the sake of smaller if statements. if this is true, combat parts are available
 	var/combat_parts_allowed = FALSE
 	/// List of categories that all contains combat parts, everything in the category will be classified as combat parts
-	var/list/combat_categories = list(
+	var/static/list/combat_categories = list(
 		RND_CATEGORY_MECHFAB_DURAND,
 		RND_CATEGORY_MECHFAB_HONK,
 		RND_CATEGORY_MECHFAB_PHAZON,
@@ -67,26 +67,25 @@
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
 		)
 	// list of categories that isn't going to be combat parts
-	var/list/non_combat_categories = list(
+	var/static/list/non_combat_categories = list(
 		RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 	)
 	/// list of items unlocked on blue alert
-	var/list/blue_alert_designs = list(
+	var/static/list/blue_alert_designs = list(
 		/datum/design/mech_disabler,
 		/datum/design/mech_laser,
 		/datum/design/clusterbang_launcher,
 		/datum/design/clusterbang_launcher_ammo,
 	)
 	// list of items that isn't to be restricted even if it fits into the categories of combat-level items, for snowflakes outliers.
-	var/list/whitelisted_designs = list(
+	var/static/list/whitelisted_designs = list(
 		/datum/design/mecha_tracking,
 		/datum/design/mecha_tracking_ai_control,
 		/datum/design/mecha_camera,
 	)
-	//monke edit end
 
 /obj/machinery/mecha_part_fabricator/emagged
 	obj_flags = parent_type::obj_flags | EMAGGED
@@ -102,9 +101,12 @@
 		update_menu_tech()
 	return ..()
 
-//monke edit start
+/obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(id_card)
+	return . = ..()
+
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/object, mob/living/user, params)
-	if(istype(object, /obj/item/card/id))
+	if(object.GetID())
 		var/obj/item/card/id/card = object
 		if(obj_flags & EMAGGED)
 			to_chat(user, span_warning("The authentification slot spits sparks at you and the display reads scrambled text!"))
@@ -149,8 +151,7 @@
 	to_chat(user, span_notice("You short out [src]'s safeties."))
 	authorization_override = TRUE
 	obj_flags |= EMAGGED
-	update_static_data(user)
-//monke edit end
+	update_static_data_for_all_viewers()
 
 /obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
