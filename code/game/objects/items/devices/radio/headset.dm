@@ -109,10 +109,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(!(slot_flags & slot))
 		return
 
+	ADD_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
 	grant_headset_languages(user)
 
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
 	for(var/language in language_list)
 		user.remove_language(language, understood = TRUE, spoken = FALSE, source = LANGUAGE_RADIOKEY)
 

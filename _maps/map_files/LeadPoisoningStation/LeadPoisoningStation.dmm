@@ -36,33 +36,6 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
-"abt" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	name = "Brig Control Desk";
-	req_access = list("armory")
-	},
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	dir = 1;
-	icon_state = "right";
-	name = "Reception Window"
-	},
-/obj/machinery/door/firedoor,
-/obj/item/paper_bin{
-	pixel_x = -11;
-	pixel_y = 7
-	},
-/obj/item/pen{
-	pixel_x = -11;
-	pixel_y = 7
-	},
-/obj/structure/desk_bell/departmental/security{
-	pixel_y = 5;
-	pixel_x = 6
-	},
-/turf/open/floor/plating,
-/area/station/security/brig)
 "abz" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
 	dir = 4
@@ -5307,6 +5280,16 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"cLB" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/obj/item/cassette_tape/random,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "cLC" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -6890,6 +6873,32 @@
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
+"dvb" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/south{
+	name = "Research Lab Desk";
+	req_access = list("science");
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "rndlab1";
+	name = "Research and Development Shutter"
+	},
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -7
+	},
+/turf/open/floor/plating,
+/area/station/science/lobby)
 "dvu" = (
 /obj/machinery/light/directional/east,
 /obj/effect/spawner/random/vending/snackvend,
@@ -8156,32 +8165,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"ebq" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/south{
-	name = "Research Lab Desk";
-	req_access = list("science");
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "rndlab1";
-	name = "Research and Development Shutter"
-	},
-/obj/item/paper_bin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_y = 4;
-	pixel_x = 4
-	},
-/obj/structure/desk_bell/departmental/science{
-	pixel_x = -7
-	},
-/turf/open/floor/plating,
-/area/station/science/lobby)
 "ecz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
@@ -9217,31 +9200,6 @@
 "eCE" = (
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
-"eCF" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 8;
-	icon_state = "rightsecure";
-	name = "Head of Personnel's Desk";
-	req_access = list("hop")
-	},
-/obj/machinery/door/window/left/directional/north{
-	dir = 4;
-	name = "Reception Window"
-	},
-/obj/machinery/door/firedoor,
-/obj/item/paper_bin,
-/obj/structure/desk_bell/departmental/command/hop{
-	pixel_y = 9;
-	pixel_x = 5
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/hop)
 "eCN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -22352,6 +22310,27 @@
 /obj/effect/turf_decal/tile/red/diagonal_edge,
 /turf/open/floor/iron/diagonal,
 /area/station/security/warden)
+"kJK" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/west{
+	name = "Engineering Desk";
+	req_access = list("engineering")
+	},
+/obj/item/paper_bin{
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/desk_bell/departmental/engineering{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
+/area/station/engineering/break_room)
 "kKk" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
@@ -23095,7 +23074,7 @@
 /area/station/maintenance/port/greater)
 "ldk" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
+/obj/machinery/dj_station{
 	pixel_y = 12
 	},
 /turf/open/floor/iron/vaporwave,
@@ -25142,16 +25121,6 @@
 "lYD" = (
 /turf/open/openspace,
 /area/station/maintenance/fore/greater)
-"lYL" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
-/obj/item/device/cassette_tape/random,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "lZo" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -25702,27 +25671,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/green,
 /area/station/hallway/floor2/fore)
-"moG" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/west{
-	name = "Engineering Desk";
-	req_access = list("engineering")
-	},
-/obj/item/paper_bin{
-	pixel_x = -4
-	},
-/obj/item/pen{
-	pixel_x = -4
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/desk_bell/departmental/engineering{
-	pixel_x = 8;
-	pixel_y = 9
-	},
-/turf/open/floor/iron/half{
-	dir = 8
-	},
-/area/station/engineering/break_room)
 "moM" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -29535,20 +29483,31 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"oen" = (
+"oeu" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/south{
-	name = "Pharmacy Desk";
-	req_access = list("pharmacy")
+/obj/machinery/door/poddoor/preopen{
+	id = "hop";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 8;
+	icon_state = "rightsecure";
+	name = "Head of Personnel's Desk";
+	req_access = list("hop")
+	},
+/obj/machinery/door/window/left/directional/north{
+	dir = 4;
+	name = "Reception Window"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell/departmental/medical{
-	bell_location = "Pharmacy Desk";
+/obj/item/paper_bin,
+/obj/structure/desk_bell/departmental/command/hop{
 	pixel_y = 9;
-	pixel_x = 7
+	pixel_x = 5
 	},
 /turf/open/floor/plating,
-/area/station/medical/pharmacy)
+/area/station/command/heads_quarters/hop)
 "oex" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c35,
@@ -31257,19 +31216,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
-"oYv" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/west{
-	dir = 2;
-	name = "Cargo Desk";
-	req_access = list("cargo")
-	},
-/obj/structure/desk_bell/departmental/supply{
-	pixel_x = -7
-	},
-/turf/open/floor/plating,
-/area/station/cargo/office)
 "oYz" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/door/firedoor/heavy,
@@ -35119,22 +35065,6 @@
 /obj/structure/closet/bombcloset,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
-"qUh" = (
-/obj/structure/table/wood,
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "qUj" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
@@ -36370,6 +36300,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/command/bridge)
+"ruF" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/west{
+	dir = 2;
+	name = "Cargo Desk";
+	req_access = list("cargo")
+	},
+/obj/structure/desk_bell/departmental/supply{
+	pixel_x = -7
+	},
+/turf/open/floor/plating,
+/area/station/cargo/office)
 "ruG" = (
 /obj/effect/turf_decal/siding/dark_blue,
 /turf/open/floor/wood,
@@ -37918,6 +37861,33 @@
 "sdR" = (
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
+"sdU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor{
+	name = "Brig Control Desk";
+	req_access = list("armory")
+	},
+/obj/machinery/door/window/left/directional/west{
+	base_state = "right";
+	dir = 1;
+	icon_state = "right";
+	name = "Reception Window"
+	},
+/obj/machinery/door/firedoor,
+/obj/item/paper_bin{
+	pixel_x = -11;
+	pixel_y = 7
+	},
+/obj/item/pen{
+	pixel_x = -11;
+	pixel_y = 7
+	},
+/obj/structure/desk_bell/departmental/security{
+	pixel_y = 5;
+	pixel_x = 6
+	},
+/turf/open/floor/plating,
+/area/station/security/brig)
 "see" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
@@ -39444,6 +39414,20 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"sOQ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/south{
+	name = "Pharmacy Desk";
+	req_access = list("pharmacy")
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/desk_bell/departmental/medical{
+	bell_location = "Pharmacy Desk";
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/turf/open/floor/plating,
+/area/station/medical/pharmacy)
 "sPg" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -46098,6 +46082,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
+"waa" = (
+/obj/structure/table/wood,
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "wak" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /turf/open/floor/iron/white,
@@ -69221,7 +69221,7 @@ uEw
 som
 som
 som
-moG
+kJK
 som
 uEw
 cOA
@@ -69238,7 +69238,7 @@ bPt
 jyr
 eKm
 rsp
-oYv
+ruF
 ncd
 mRc
 yfr
@@ -90056,7 +90056,7 @@ wMe
 cmo
 cmo
 wxU
-abt
+sdU
 xSI
 lVt
 wMe
@@ -91377,7 +91377,7 @@ nSS
 iEv
 sow
 oSt
-oen
+sOQ
 cmX
 vye
 mSg
@@ -137048,7 +137048,7 @@ vIT
 vIT
 vIT
 rbA
-ebq
+dvb
 rbA
 rbA
 rbA
@@ -153819,7 +153819,7 @@ adZ
 adZ
 qOJ
 onN
-eCF
+oeu
 adZ
 rEC
 ycG
@@ -160510,7 +160510,7 @@ jVO
 nzn
 nvL
 hqz
-qUh
+waa
 grf
 hqz
 jlv
@@ -162559,7 +162559,7 @@ gpm
 sIC
 tvr
 hkL
-lYL
+cLB
 grO
 laF
 cjH

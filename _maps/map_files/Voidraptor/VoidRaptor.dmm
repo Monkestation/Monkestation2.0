@@ -7334,6 +7334,26 @@
 "cjh" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/captain/private)
+"cjj" = (
+/obj/structure/table/reinforced,
+/obj/item/assembly/voice{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rndlab1";
+	name = "Research and Development Shutter"
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -6
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/station/science/lab)
 "cjn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -9769,6 +9789,27 @@
 	},
 /turf/open/floor/vault,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"cUZ" = (
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/door/firedoor,
+/obj/item/folder/white{
+	pixel_x = -4
+	},
+/obj/machinery/door/window/left/directional/west{
+	name = "Medbay Front Desk";
+	req_access = list("medical")
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	id = "paramed_dispatch_desk";
+	name = "Desk Shutters";
+	dir = 8
+	},
+/obj/structure/desk_bell/departmental/medical{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/station/medical/medbay/lobby)
 "cVe" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -9969,22 +10010,6 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/greater)
-"cYI" = (
-/obj/structure/table/wood,
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/light/warm/directional/east,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/obj/item/radio/radio_mic{
-	pixel_y = 7
-	},
-/obj/item/device/cassette_tape/friday{
-	pixel_y = -6;
-	pixel_x = -8
-	},
-/turf/open/floor/cult,
-/area/station/service/library)
 "cYN" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 8;
@@ -15188,6 +15213,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/abandoned)
+"erC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 6
+	},
+/obj/effect/landmark/start/security_officer,
+/obj/structure/desk_bell/departmental/security{
+	desc = "The cornerstone of any customer service job. Ringing it sends an announcement to the relevant radio channel. This one is oddly dusty and unused."
+	},
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 1
+	},
+/area/station/security/lockers)
 "erF" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -28151,6 +28191,22 @@
 	dir = 8
 	},
 /area/station/commons/fitness/recreation/entertainment)
+"ibv" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/light/warm/directional/east,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
+/obj/item/cassette_tape/friday{
+	pixel_y = -6;
+	pixel_x = -8
+	},
+/turf/open/floor/cult,
+/area/station/service/library)
 "ibC" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/turf_decal/trimline/blue/mid_joiner,
@@ -36086,21 +36142,6 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/break_room)
-"kjf" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/red/filled/warning{
-	dir = 6
-	},
-/obj/effect/landmark/start/security_officer,
-/obj/structure/desk_bell/departmental/security{
-	desc = "The cornerstone of any customer service job. Ringing it sends an announcement to the relevant radio channel. This one is oddly dusty and unused."
-	},
-/turf/open/floor/iron/dark/textured_edge{
-	dir = 1
-	},
-/area/station/security/lockers)
 "kji" = (
 /obj/effect/turf_decal/trimline/green/filled/warning,
 /obj/structure/cable,
@@ -39917,7 +39958,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
-/obj/machinery/cassette/dj_station{
+/obj/machinery/dj_station{
 	pixel_y = 7
 	},
 /obj/structure/table/wood,
@@ -48167,29 +48208,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/dark,
 /area/station/service/chapel)
-"nwm" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/yellow{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/door/window/left/directional/south{
-	name = "Engineering Desk";
-	req_access = list("engineering")
-	},
-/obj/structure/desk_bell/departmental/engineering{
-	pixel_x = -7;
-	pixel_y = 8
-	},
-/turf/open/floor/iron/textured_large,
-/area/station/engineering/lobby)
 "nwu" = (
 /obj/structure/table,
 /obj/item/transfer_valve{
@@ -54179,6 +54197,26 @@
 /obj/item/folder/white,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
+"peb" = (
+/obj/structure/table,
+/obj/machinery/door/firedoor,
+/obj/item/folder/yellow{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Cargo Desk";
+	req_access = list("cargo")
+	},
+/obj/structure/desk_bell/departmental/supply{
+	pixel_x = -8
+	},
+/turf/open/floor/iron/textured,
+/area/station/cargo/office)
 "pev" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -55418,27 +55456,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
-"puL" = (
-/obj/structure/table/reinforced/rglass,
-/obj/machinery/door/firedoor,
-/obj/item/folder/white{
-	pixel_x = -4
-	},
-/obj/machinery/door/window/left/directional/west{
-	name = "Medbay Front Desk";
-	req_access = list("medical")
-	},
-/obj/machinery/door/poddoor/shutters/window/preopen{
-	id = "paramed_dispatch_desk";
-	name = "Desk Shutters";
-	dir = 8
-	},
-/obj/structure/desk_bell/departmental/medical{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/open/floor/iron/white/textured_large,
-/area/station/medical/medbay/lobby)
 "puQ" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/window/reinforced/fulltile,
@@ -58357,26 +58374,6 @@
 /obj/structure/window/fulltile,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
-"qhz" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/brigdoor/left/directional/east{
-	name = "Head of Personnel's Desk";
-	req_access = list("hop")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/window/right/directional/west{
-	name = "Head of Personnel's Desk"
-	},
-/obj/structure/desk_bell/departmental/command/hop{
-	pixel_x = 7
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/station/command/heads_quarters/hop)
 "qhE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -58561,26 +58558,6 @@
 	dir = 8
 	},
 /area/station/medical/exam_room)
-"qki" = (
-/obj/structure/table/reinforced,
-/obj/item/assembly/voice{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/machinery/door/window/left/directional/west{
-	name = "Research Lab Desk";
-	req_access = list("science")
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rndlab1";
-	name = "Research and Development Shutter"
-	},
-/obj/structure/desk_bell/departmental/science{
-	pixel_x = -6
-	},
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/lab)
 "qkp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -62811,6 +62788,26 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/pod/dark,
 /area/station/engineering/storage/tech)
+"rum" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Head of Personnel's Desk";
+	req_access = list("hop")
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hop";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/window/right/directional/west{
+	name = "Head of Personnel's Desk"
+	},
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_x = 7
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/command/heads_quarters/hop)
 "ruu" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
@@ -72484,6 +72481,29 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/bar)
+"ubT" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/yellow{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/door/window/left/directional/south{
+	name = "Engineering Desk";
+	req_access = list("engineering")
+	},
+/obj/structure/desk_bell/departmental/engineering{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/textured_large,
+/area/station/engineering/lobby)
 "ubW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -74373,26 +74393,6 @@
 	dir = 8
 	},
 /area/station/security/checkpoint/engineering)
-"uzc" = (
-/obj/structure/table,
-/obj/machinery/door/firedoor,
-/obj/item/folder/yellow{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Cargo Desk";
-	req_access = list("cargo")
-	},
-/obj/structure/desk_bell/departmental/supply{
-	pixel_x = -8
-	},
-/turf/open/floor/iron/textured,
-/area/station/cargo/office)
 "uzi" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Science - Starboard Entrance Access";
@@ -118240,7 +118240,7 @@ kjS
 wPb
 kgj
 mAQ
-puL
+cUZ
 aXQ
 fmM
 jtG
@@ -119469,7 +119469,7 @@ lwE
 dAP
 vBP
 qDW
-qki
+cjj
 qDW
 eLM
 eLH
@@ -122389,7 +122389,7 @@ sBl
 lRB
 gwM
 rKH
-nwm
+ubT
 efQ
 lVG
 nDn
@@ -125422,7 +125422,7 @@ jzQ
 nQl
 fLp
 dWg
-cYI
+ibv
 vZM
 uuO
 rCr
@@ -125868,7 +125868,7 @@ ioM
 pZj
 lGY
 lGY
-qhz
+rum
 haE
 lGY
 lGY
@@ -126934,7 +126934,7 @@ eCc
 pcc
 fpI
 brs
-kjf
+erC
 gtT
 njJ
 sFv
@@ -127529,7 +127529,7 @@ rli
 dMh
 vuu
 dMh
-uzc
+peb
 qid
 rli
 ctj

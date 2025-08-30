@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(jukebox_track_files, list("monkestation/code/modules/cassettes/track_folder/base_tracks.json"))
+GLOBAL_LIST_INIT(jukebox_track_files, list("code/modules/cassettes/track_folder/base_tracks.json"))
 
 ///Tracks are sorted by genre then by title inside that.
 /proc/cmp_media_track_asc(datum/media_track/A, datum/media_track/B)

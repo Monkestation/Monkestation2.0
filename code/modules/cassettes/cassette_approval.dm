@@ -1,3 +1,5 @@
+#warn TODO: cassette reviews
+/*
 GLOBAL_LIST_INIT(cassette_reviews, list())
 
 #define ADMIN_OPEN_REVIEW(id) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];open_music_review=[id]'>Open Review</a>)"
@@ -208,3 +210,4 @@ ADMIN_VERB(review_cassettes, R_FUN, FALSE, "Review Cassettes", "Review this roun
 		var/datum/cassette_review/cassette = GLOB.cassette_reviews[tape_id]
 		cassette.ui_interact(ui.user)
 		return
+*/

@@ -706,7 +706,7 @@
 				return_list += bit
 
 	return return_list
-
+if[ \t]*?\([a-zA-Z_]+\[([a-zA-Z]+)][ \t]*?==[ \t]*?[a-zA-Z_]+\)\n[ \t]*return[ \t]*($2)
 /// Returns the key based on the index
 #define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
@@ -742,6 +742,12 @@
 	return null
 
 
+/proc/get_list_index_of(list/input_list, list_item)
+	for(var/i = 1; i < length(input_list); i++)
+		if (input_list[i] == list_item)
+			return i
+
+	return -1
 
 /// Returns datum/data/record
 /proc/find_record_old(field, value, list/L)

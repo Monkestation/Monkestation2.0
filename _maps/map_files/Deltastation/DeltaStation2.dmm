@@ -41676,6 +41676,11 @@
 	dir = 4
 	},
 /area/station/service/kitchen)
+"jKF" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/machinery/gbp_redemption,
+/turf/open/floor/iron,
+/area/station/cargo/lobby)
 "jKG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
@@ -54798,6 +54803,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"mNY" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "mOb" = (
 /obj/structure/table/wood,
 /obj/item/folder,
@@ -58395,13 +58407,6 @@
 /obj/item/storage/dice,
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
-"nIY" = (
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "nJb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -102180,11 +102185,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"ygT" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/machinery/gbp_redemption,
-/turf/open/floor/iron,
-/area/station/cargo/lobby)
 "ygW" = (
 /obj/machinery/vending/hydroseeds,
 /obj/effect/turf_decal/bot,
@@ -144339,7 +144339,7 @@ aHG
 pas
 vsJ
 qQE
-ygT
+jKF
 wzb
 mrc
 fYD
@@ -150295,7 +150295,7 @@ tcb
 oaB
 cXv
 dfZ
-nIY
+mNY
 szh
 szh
 guf

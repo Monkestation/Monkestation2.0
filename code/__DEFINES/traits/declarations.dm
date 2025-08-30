@@ -1337,6 +1337,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
+/// This mob can hear the music from the DJ station.
+#define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"
+
 ///Darkspawn traits
 ///lets darkspawns walk through weak light
 #define TRAIT_DARKSPAWN_LIGHTRES "darkspawn_lightres"

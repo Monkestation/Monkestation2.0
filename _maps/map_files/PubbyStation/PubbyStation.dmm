@@ -28701,13 +28701,6 @@
 /obj/item/book/kindred,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
-"cAU" = (
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood/fancy/red,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "cAV" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
@@ -29030,6 +29023,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/range)
+"cHW" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "cIb" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -34885,11 +34885,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"hIR" = (
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/gbp_redemption,
-/turf/open/floor/iron,
-/area/station/cargo/lobby)
 "hJp" = (
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -41396,6 +41391,11 @@
 	},
 /turf/closed/wall,
 /area/station/cargo/miningdock)
+"ntu" = (
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/gbp_redemption,
+/turf/open/floor/iron,
+/area/station/cargo/lobby)
 "ntG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -71246,7 +71246,7 @@ xBB
 cAu
 xBB
 cAK
-cAU
+cHW
 cyU
 aaa
 aaa
@@ -91949,7 +91949,7 @@ piM
 piM
 lJt
 aRf
-hIR
+ntu
 sre
 gCo
 aVq
