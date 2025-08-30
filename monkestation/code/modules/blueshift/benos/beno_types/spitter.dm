@@ -23,6 +23,3 @@
 	organs += new /obj/item/organ/internal/alien/plasmavessel
 	organs += new /obj/item/organ/internal/alien/neurotoxin/spitter
 	..()
-
-/mob/living/carbon/alien/adult/nova/spitter/lamarr
-	name = "Lamarr"

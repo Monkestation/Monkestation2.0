@@ -33,9 +33,9 @@
 /mob/living/carbon/alien/larva/Initialize(mapload, neuter)
 	// If a larva is neutered or not it gets a different ability and trait
 	if(neuter)
-		var/datum/action/cooldown/alien/neutered_larva_evolve/evolution = new(src)
-		evolution.Grant(src)
 		src.name = "Lamarr"
+		src.maxHealth = 100
+		src.health = 100
 		ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
 	else
 		var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
@@ -51,8 +51,9 @@
 //This needs to be fixed
 // This comment is 12 years old I hope it's fixed by now
 /mob/living/carbon/alien/larva/get_status_tab_items()
-	. = ..()
-	. += "Progress: [amount_grown]/[max_grown]"
+	if(!HAS_TRAIT(src, TRAIT_NEUTERED))
+		. = ..()
+		. += "Progress: [amount_grown]/[max_grown]"
 
 /mob/living/carbon/alien/larva/Login()
 	. = ..()
