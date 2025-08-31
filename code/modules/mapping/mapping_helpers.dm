@@ -1174,12 +1174,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "burnt floor"
 	icon = 'icons/turf/damaged.dmi'
 	icon_state = "floorscorched1"
-	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
-
-/obj/effect/mapping_helpers/burnt_floor/Initialize(mapload)
-	.=..()
-	return INITIALIZE_HINT_LATELOAD
+	late = TRUE
 
 /obj/effect/mapping_helpers/burnt_floor/LateInitialize()
 	var/turf/open/floor/floor = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
