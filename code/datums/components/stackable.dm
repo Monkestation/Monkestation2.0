@@ -337,6 +337,3 @@
 	typed_parent.add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	typed_parent.fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
-
-#undef STACK_CHECK_CARDINALS
-#undef STACK_CHECK_ADJACENT
