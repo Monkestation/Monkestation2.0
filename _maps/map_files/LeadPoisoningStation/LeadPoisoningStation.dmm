@@ -11607,9 +11607,7 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "fJm" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
@@ -48865,9 +48863,7 @@
 /turf/open/floor/grass,
 /area/station/medical/medbay/lobby)
 "xrt" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,
 /obj/item/stack/license_plates/empty/fifty,

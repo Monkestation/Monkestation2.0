@@ -42266,9 +42266,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/dorms/laundry)
 "mlH" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/shoes/wheelys/rollerskates{
@@ -51806,9 +51804,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "pfE" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/rglass{
 	amount = 50
 	},
@@ -55878,9 +55874,7 @@
 "qnd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/machinery/airalarm/directional/south,
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass/fifty{
