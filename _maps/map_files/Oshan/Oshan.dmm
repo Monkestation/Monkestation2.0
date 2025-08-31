@@ -31129,7 +31129,7 @@
 	idDoor = "pathology_airlock_interior";
 	idSelf = "pathology_airlock_control";
 	name = "Virology Access Button";
-	req_access = list("virology");
+	req_access = list("pathology");
 	pixel_x = -24
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
@@ -35827,6 +35827,20 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
+"lIu" = (
+/obj/effect/turf_decal/stripes/blue/line{
+	dir = 8
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -1;
+	pixel_x = 2
+	},
+/obj/structure/table,
+/turf/open/floor/iron/dark/diagonal,
+/area/station/hallway/secondary/entry)
 "lIG" = (
 /obj/structure/railing{
 	dir = 10
@@ -51770,7 +51784,7 @@
 	name = "Virology Access Console";
 	pixel_x = -8;
 	pixel_y = -25;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -70391,14 +70405,6 @@
 /obj/effect/turf_decal/stripes/blue/line{
 	dir = 10
 	},
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 7
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = -1;
-	pixel_x = 2
-	},
 /turf/open/floor/iron/dark/diagonal,
 /area/station/hallway/secondary/entry)
 "wVh" = (
@@ -70895,7 +70901,7 @@
 	idDoor = "pathology_airlock_exterior";
 	idSelf = "pathology_airlock_control";
 	name = "Virology Access Button";
-	req_access = list("virology");
+	req_access = list("pathology");
 	pixel_x = -24
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
@@ -109021,7 +109027,7 @@ vUJ
 vUJ
 nPV
 nYT
-nYT
+lIu
 nYT
 nYT
 nYT
@@ -109545,9 +109551,9 @@ dIq
 cxz
 owd
 vUJ
-vrP
-vrP
-vrP
+yam
+yam
+tBI
 vrP
 vrP
 vrP
@@ -109802,9 +109808,9 @@ jir
 mYV
 owd
 vUJ
-vrP
-vrP
-vrP
+yam
+yam
+tBI
 vrP
 vrP
 vrP
