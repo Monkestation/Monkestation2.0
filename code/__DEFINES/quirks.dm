@@ -16,3 +16,19 @@
 #define QUIRK_HIDE_FROM_SCAN		(1 << 4)
 /// Cloning should never carry this quirk over (monkestation addition)
 #define QUIRK_DONT_CLONE			(1 << 5)
+
+// Quirk Costs
+#define QUIRK_COST_PARAPLEGIC -12
+#define QUIRK_HARDCORE_PARAPLEGIC 15
+
+// slightly more bearable than paraplegic but not by much
+#define QUIRK_COST_HEMIPLEGIC -10
+#define QUIRK_HARDCORE_HEMIPLEGIC 10
+
+// almost half as bearable as hemiplegic
+#define QUIRK_COST_MONOPLEGIC -6
+#define QUIRK_HARDCORE_MONOPLEGIC 6
+
+// much more bearable than monoplegic
+#define QUIRK_COST_PROSTHETIC_LIMB -3
+#define QUIRK_HARDCORE_PROSTHETIC_LIMB 3

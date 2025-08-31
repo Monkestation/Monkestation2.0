@@ -153,6 +153,14 @@
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
+/obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit [tool] into [src]. \
+			Perhaps you should break it down first, or find an ore box."))
+		return ITEM_INTERACT_BLOCKING
+
+	return NONE
+
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
 

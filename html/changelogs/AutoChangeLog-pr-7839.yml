@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "fixed vacpacks not being able to suck up adjacent mobs."

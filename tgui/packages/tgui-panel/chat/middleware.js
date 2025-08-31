@@ -203,6 +203,7 @@ export const chatMiddleware = (store) => {
     }
     if (type === clearChat.type) {
       chatRenderer.clearChat();
+      saveChatToStorage(store); // save chat when its cleared
       return;
     }
     return next(action);

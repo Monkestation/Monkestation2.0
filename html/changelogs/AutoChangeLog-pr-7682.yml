@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - map: "Box Station now has 6 SMESes instead of 4."
-  - map: "Box Station's cables near engi are now protected with catwalks."
-  - map: "Added an oxygen canister to Box Station's engineering."

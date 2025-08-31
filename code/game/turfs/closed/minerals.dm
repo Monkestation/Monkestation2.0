@@ -87,12 +87,12 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
 		return
 
-	if(I.tool_behaviour == TOOL_MINING)
+	if(attacking_item.tool_behaviour == TOOL_MINING)
 		var/turf/T = user.loc
 		if (!isturf(T))
 			return
@@ -104,12 +104,12 @@
 
 		balloon_alert(user, "picking...")
 
-		if(!I.use_tool(src, user, tool_mine_speed, volume=50))
+		if(!attacking_item.use_tool(src, user, tool_mine_speed, volume=50))
 			TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 			return
 		if(ismineralturf(src))
 			gets_drilled(user, TRUE)
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 
 /turf/closed/mineral/attack_hand(mob/user)
 	if(!weak_turf)
@@ -816,7 +816,7 @@
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
-/turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/strong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!ishuman(user))
 		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
 		return FALSE

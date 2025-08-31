@@ -37,10 +37,11 @@
 
 /obj/machinery/prize_vendor/Initialize(mapload)
 	. = ..()
-	if(dispense_list_override && !dispense_overlay_list.len)
-		generate_overlay_list(dispense_list_override)
-	else if(dispense_type && !dispense_overlay_list.len)
-		generate_overlay_list(subtypesof(dispense_type))
+	if(!length(dispense_overlay_list))
+		if(dispense_list_override)
+			generate_overlay_list(dispense_list_override)
+		else if(dispense_type)
+			generate_overlay_list(subtypesof(dispense_type))
 
 	if(!dispense_type && !dispense_list_override)
 		stack_trace("[type] initialized without set dispense_type or dispense_list_override")
@@ -53,20 +54,20 @@
 	return ..()
 
 /obj/machinery/prize_vendor/process()
-	if(dispense_overlay_list.len)
+	if(length(dispense_overlay_list))
 		set_overlay_state()
 		update_appearance()
 
 /obj/machinery/prize_vendor/update_overlays()
 	. = ..()
-	if(dispense_overlay_list.len && overlay_state)
+	if(length(dispense_overlay_list) && overlay_state)
 		var/mutable_appearance/item_screen_overlay = dispense_overlay_list[overlay_state]
 		. += item_screen_overlay
 
 /obj/machinery/prize_vendor/examine(mob/user)
 	. = ..()
-	. += "It costs [ticket_cost] [ticket_cost == 1 ? "ticket" : "tickets"] to get a prize."
-	. += "It currently has [inserted_tickets] [inserted_tickets == 1 ? "ticket" : "tickets"] inserted."
+	. += span_notice("It costs [ticket_cost] [ticket_cost == 1 ? "ticket" : "tickets"] to get a prize.")
+	. += span_notice("It currently has [inserted_tickets] [inserted_tickets == 1 ? "ticket" : "tickets"] inserted.")
 
 /obj/machinery/prize_vendor/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/stack/arcadeticket))
@@ -107,10 +108,11 @@
 /obj/machinery/prize_vendor/proc/set_overlay_state()
 	if(!dispense_overlay_list)
 		return
-	if(dispense_overlay_list.len == 1)
+	var/overlay_count = length(dispense_overlay_list)
+	if(overlay_count == 1)
 		overlay_state = 1
 		return
-	if((overlay_state + 1) > dispense_overlay_list.len)
+	if((overlay_state + 1) > overlay_count)
 		overlay_state = 0
 	overlay_state++
 

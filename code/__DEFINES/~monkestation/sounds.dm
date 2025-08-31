@@ -2,3 +2,7 @@
 #define SFX_BUTTON_FAIL		"button_fail"
 #define SFX_LIGHTSWITCH		"lightswitch"
 #define SFX_MEOW			"meow"
+#define SFX_KEYSTROKE		"keystroke"
+#define SFX_KEYBOARD		"keyboard"
+#define SFX_BUTTON			"button"
+#define SFX_SWITCH			"switch"

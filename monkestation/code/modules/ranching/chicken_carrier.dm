@@ -36,12 +36,12 @@
 	update_appearance()
 	return
 
-/obj/item/chicken_carrier/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/chicken_carrier/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!stored_chicken)
 		return .. ()
 
 	if(istype(attacking_item, /obj/item/food) || istype(attacking_item, /obj/item/chicken_feed) && istype(stored_chicken))
-		stored_chicken.attackby(attacking_item, user, params)
+		stored_chicken.attackby(attacking_item, user, modifiers, attack_modifiers)
 		return
 	. = ..()
 
