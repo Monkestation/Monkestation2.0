@@ -51,7 +51,6 @@
 	. = list()
 	. += "When Activated, you will be hidden in a Cloak of Darkness."
 	. += "[target_range ? "Click to teleport up to [target_range] tiles away, as long as you can see it" : "You can teleport anywhere you can see"]."
-	. += "Teleporting will refill your stamina to full."
 	. += "At level [OBFUSCATION_BLEED_LEVEL] you will cause people at your end location to start bleeding."
 	. += "At level [OBFUSCATION_KNOCKDOWN_LEVEL] you will cause people at your end location to be knocked down."
 	. += "At level [OBFUSCATION_ANYWHERE_LEVEL] you will be able to teleport anywhere, even if you cannot properly see the tile."
@@ -75,7 +74,7 @@
 	..()
 	ADD_TRAIT(owner, TRAIT_UNKNOWN, REF(src))
 	owner.AddElement(/datum/element/digitalcamo)
-	animate(owner, alpha = 15, time = 2 SECONDS)
+	animate(owner, alpha = 100, time = 2 SECONDS)
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/DeactivatePower(deactivate_flags)
 	..()
@@ -116,7 +115,7 @@
 			living_mob.Knockdown(10 SECONDS, ignore_canstun = TRUE)
 
 	do_teleport(owner, targeted_turf, no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
-	user.stamina.revitalize()
+
 	power_activated_sucessfully(cost_override = blood_cost)
 
 #undef OBFUSCATION_BLOOD_COST_PER_TILE

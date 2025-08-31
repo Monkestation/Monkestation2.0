@@ -228,10 +228,13 @@
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_appearance()
 
-/obj/item/gun/ballistic/automatic/m90/try_fire_gun(atom/target, mob/living/user, params)
-	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		return underbarrel.try_fire_gun(target, user, params)
-	return ..()
+///obj/item/gun/ballistic/automatic/m90/try_fire_gun(atom/target, mob/living/user, params)
+	//if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+	//	return underbarrel.try_fire_gun(target, user, params)
+	//return ..()
+
+/obj/item/gun/ballistic/automatic/m90/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return underbarrel.try_fire_gun(interacting_with, user, list2params(modifiers))
 
 /obj/item/gun/ballistic/automatic/m90/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isammocasing(tool))
