@@ -1,0 +1,5 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - balance: "Obfuscation (previously auspex) no longer regenerates stamina damage on use."
+  - balance: "Obfuscation (previously auspex) invisibility has been reduced."

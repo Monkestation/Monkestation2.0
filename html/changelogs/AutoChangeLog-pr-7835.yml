@@ -1,0 +1,7 @@
+author: "MrBagHead"
+delete-after: True
+changes:
+  - rscdel: "Removed Lamarr Chestburster's ability to evolve into xeno forms."
+  - balance: "Increased Lamarr Chestburster maximum HP from 25 to 100."
+  - bugfix: "Fixed Lamarr Xeno objectives not displaying correctly, they now show \"Stay alive until the end.\""
+  - qol: "Lamarr Chestbursters can now understand Common, making it easier to interact and roleplay as RD’s pet."
