@@ -562,3 +562,57 @@
 #undef EIGENSTASIUM_PHASE_2_END
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
+
+/datum/status_effect/tagalong //applied to darkspawns while they accompany someone //yogs start: darkspawn
+	id = "tagalong"
+	tick_interval = 2 //as fast as possible
+	alert_type = /atom/movable/screen/alert/status_effect/tagalong
+	var/mob/living/shadowing
+	//we store this so if the mob is somehow gibbed we aren't put into nullspace
+	var/turf/cached_location
+
+/datum/status_effect/tagalong/on_creation(mob/living/owner, mob/living/tag)
+	. = ..()
+	if(!.)
+		return
+	shadowing = tag
+	RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
+
+/datum/status_effect/tagalong/on_remove()
+	if(owner.loc != shadowing)
+		return
+	owner.forceMove(cached_location ? cached_location : get_turf(owner))
+	shadowing.visible_message(span_warning("[owner] breaks away from [shadowing]'s shadow!"), \
+	span_userdanger("You feel a sense of freezing cold pass through you!"))
+	to_chat(owner, span_velvet("You break away from [shadowing]."))
+	playsound(owner, 'sound/magic/darkspawn/devour_will_form.ogg', 50, TRUE)
+	owner.setDir(SOUTH)
+
+/datum/status_effect/tagalong/proc/on_equip()
+	SIGNAL_HANDLER
+	to_chat(owner, span_userdanger("Equipping an item forces you out!"))
+	qdel(src)
+
+/datum/status_effect/tagalong/tick()
+	. = ..()
+	if(!shadowing)
+		owner.forceMove(cached_location)
+		qdel(src)
+		return
+	cached_location = get_turf(shadowing)
+	if(cached_location.get_lumcount() < SHADOW_SPECIES_DIM_LIGHT)
+		owner.forceMove(cached_location)
+		shadowing.visible_message(span_warning("[owner] suddenly appears from the dark!"))
+		to_chat(owner, span_warning("You are forced out of [shadowing]'s shadow!"))
+		qdel(src)
+
+/atom/movable/screen/alert/status_effect/tagalong
+	name = "Tagalong"
+	desc = "You are accompanying TARGET_NAME. Use the Tagalong ability to break away at any time."
+	icon_state = "shadow_mend"
+
+/atom/movable/screen/alert/status_effect/tagalong/MouseEntered()
+	var/datum/status_effect/tagalong/tagalong = attached_effect
+	desc = replacetext(desc, "TARGET_NAME", tagalong.shadowing.real_name)
+	..()
+	desc = initial(desc) //yogs end
