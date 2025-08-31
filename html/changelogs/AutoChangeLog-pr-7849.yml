@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - config: "Alert level escalation and de-escalation text for code blue has been changed to not encourage random searches."
