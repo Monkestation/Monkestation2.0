@@ -119,7 +119,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	M.trackers += src
 	M.diag_hud_set_mechtracking()

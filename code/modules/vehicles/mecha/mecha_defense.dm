@@ -245,6 +245,12 @@
 
 	return NONE
 
+/obj/vehicle/sealed/mecha/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/part = tool
+		return part.try_attach_part(user, src, attach_right = TRUE)
+	return ..()
+
 /// Try to insert a stock part into the mech
 /obj/vehicle/sealed/mecha/proc/try_insert_part(obj/item/stock_parts/tool, mob/living/user)
 	if(!(mecha_flags & PANEL_OPEN))
