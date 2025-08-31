@@ -449,7 +449,8 @@
 // Update the spawn proc to ensure proper tracking
 /obj/structure/bingle_hole/proc/spawn_bingle_from_ghost()
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
-		question = "Do you want to play as a Bingle?",
+		question = "<span class='ooc'>Do you want to play as a Bingle?</span>\
+		\n<span class='boldnotice'>You will return to your previous body on conclusion.</span>",
 		role = ROLE_BINGLE,
 		check_jobban = ROLE_BINGLE,
 		poll_time = 20 SECONDS,
