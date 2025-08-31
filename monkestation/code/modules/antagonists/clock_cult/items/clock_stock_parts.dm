@@ -20,7 +20,7 @@
 
 //technically this means these cant be rigged with plasma
 /obj/item/stock_parts/cell/clock/use(used, force)
-	if(istype(loc, /obj/machinery/power/apc) || SSthe_ark.clock_power < used)
+	if(!..() || istype(loc, /obj/machinery/power/apc) || SSthe_ark.clock_power < used)
 		return FALSE
 	SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	SSthe_ark.clock_power = max(SSthe_ark.clock_power - used, 0)
