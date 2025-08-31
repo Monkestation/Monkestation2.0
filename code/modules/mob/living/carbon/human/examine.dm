@@ -389,7 +389,7 @@
 		if(get_organ_by_type(/obj/item/organ/internal/brain))
 			var/obj/item/organ/internal/brain/brain = get_organ_by_type(/obj/item/organ/internal/brain)
 			if(HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
-				msg += "[span_deadsay("[t_He] [t_has] a vacant expression on their face, as if staring a thousand yards ahead. Maybe [t_He] will snap out of it soon."
+				msg += "[span_deadsay("[t_He] [t_has] a vacant expression on their face, as if staring a thousand yards ahead. Maybe [t_He] will snap out of it soon.")]\n"
 			else if(!key && !brain.temporary_sleep)
 				msg += "[span_deadsay("[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")]\n"
 			else if(brain.temporary_sleep)
