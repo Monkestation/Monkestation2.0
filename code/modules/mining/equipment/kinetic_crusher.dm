@@ -867,8 +867,8 @@
 	var/list/trophies = list() //yes these are new variables because this isnt a crusher subtype
 	var/charged = TRUE
 	var/charge_time = 5
-	var/detonation_damage = 30 //these are the same as the thrown projectile so the description is correct on the damage.
-	var/backstab_bonus = 20
+	var/detonation_damage = 60 //these are the same as the thrown projectile so the description is correct on the damage.
+	var/backstab_bonus = 10
 	//so a quick note, you can technically land crusher melee stabs... however thats if point blanking it removed, from this... which i admittedly cant get removed from here so... im just redacting any mention of stabbing... sorry :(
 
 
@@ -1036,8 +1036,8 @@
 	antimagic_flags = NONE
 	antimagic_charge_cost = 0
 	var/obj/item/gun/magic/crusherknives/hammer_synced
-	var/detonation_damage = 30
-	var/backstab_bonus = 20
+	var/detonation_damage = 60
+	var/backstab_bonus = 10
 
 //we have more copy pasted crusher code here because the damage from a projectile is different from a melee strike
 /obj/projectile/magic/knives/on_hit(atom/target, Firer, blocked = 0, pierce_hit)
