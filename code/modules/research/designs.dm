@@ -60,6 +60,9 @@ other types of metals and chemistry for reagents).
 	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
 	var/autolathe_exportable = TRUE
 
+	/// bitflags for special interactions, currently only used in exosuit fabricators
+	var/special_design_flags = NONE
+
 /datum/design/error_design
 	name = "ERROR"
 	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Comamnd so their techs can fix this ASAP(tm)"

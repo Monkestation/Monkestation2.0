@@ -2214,7 +2214,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		smelt_ore(attacking_item, user)
 		return
 
-/obj/structure/reagent_forge/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/structure/reagent_forge/attackby(attacking_item, user, modifiers, attack_modifiers)
 	if(!used_tray && istype(attacking_item, /obj/item/plate/oven_tray))
 		add_tray_to_forge(user, attacking_item)
 		return TRUE
@@ -2253,6 +2253,11 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		handle_metal_cup_melting(attacking_item, user)
 		return TRUE
 
+	if(istype(attacking_item, /obj/item/glassblowing/blowing_rod))
+		blowrod_act(user, attacking_item)
+
+	if(istype(attacking_item, /obj/item/forging/billow))
+		billow_act(user, attacking_item)
 	return ..()
 
 /// Take the given tray and place it inside the forge, updating everything relevant to that

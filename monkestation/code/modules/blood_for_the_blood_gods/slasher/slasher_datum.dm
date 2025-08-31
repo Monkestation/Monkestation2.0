@@ -1,9 +1,33 @@
+#define VARIANT_SLASHER "slasher"
+#define VARIANT_CLUWNE "cluwne"
+#define VARIANT_BRUTE "brute"
+
 /datum/outfit/slasher/slasher
 	name = "Slasher Outfit"
 	suit = /obj/item/clothing/suit/apron/slasher
 	uniform = /obj/item/clothing/under/slasher
 	shoes = /obj/item/clothing/shoes/admiral
 	mask = /obj/item/clothing/mask/gas/slasher
+	belt = /obj/item/storage/belt/slasher
+	gloves = /obj/item/clothing/gloves/admiral
+	back = /obj/item/storage/backpack/cursed
+
+/datum/outfit/slasher/cluwne
+	name = "Cluwne Slasher Outfit"
+	suit = /obj/item/clothing/suit/apron/slasher/cluwne
+	uniform = /obj/item/clothing/under/slasher/cluwne
+	shoes = /obj/item/clothing/shoes/clown_shoes/cluwne
+	mask = /obj/item/clothing/mask/gas/slasher/cluwne
+	belt = /obj/item/storage/belt/slasher/cluwne
+	gloves = /obj/item/clothing/gloves/latex
+	back = /obj/item/storage/backpack/cursed
+
+/datum/outfit/slasher/brute
+	name = "Brute Slasher Outfit"
+	suit = /obj/item/clothing/suit/apron/slasher/brute
+	uniform = /obj/item/clothing/under/slasher
+	shoes = /obj/item/clothing/shoes/admiral
+	mask = /obj/item/clothing/mask/gas/slasher/brute
 	belt = /obj/item/storage/belt/slasher
 	gloves = /obj/item/clothing/gloves/admiral
 	back = /obj/item/storage/backpack/cursed
@@ -58,6 +82,8 @@
 	var/list/tracked = list()
 	///this is our list of seers
 	var/list/seers = list()
+	///this is value for the slasher's variant
+	var/list/slasher_variant = VARIANT_SLASHER
 
 	//aggrograb for slasher
 	var/datum/martial_art/slasher_grab/grabart
@@ -132,10 +158,22 @@
 		new_ability.Grant(current_mob)
 		powers |= new_ability
 
+	slasher_variant = pick(VARIANT_SLASHER, VARIANT_CLUWNE, VARIANT_BRUTE)
+
 	var/mob/living/carbon/human/human = current_mob
 	if(istype(human))
-		human.equipOutfit(/datum/outfit/slasher/slasher)
+		switch(slasher_variant)
+			if(VARIANT_SLASHER)
+				human.equipOutfit(/datum/outfit/slasher/slasher)
+
+			if(VARIANT_CLUWNE)
+				human.equipOutfit(/datum/outfit/slasher/cluwne)
+
+			if(VARIANT_BRUTE)
+				human.equipOutfit(/datum/outfit/slasher/brute)
+
 		linked_apron = human.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+
 	cached_brute_mod = human.dna.species.brutemod
 	current_mob.alpha = 200
 	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
@@ -368,7 +406,16 @@
 	seers += weak
 
 	var/mob/living/living = weak.resolve()
-	living.AddComponent(/datum/component/see_as_something, owner.current, "wendigo", 'icons/mob/simple/icemoon/64x64megafauna.dmi', "?????")
+
+	switch(slasher_variant)
+		if(VARIANT_SLASHER)
+			living.AddComponent(/datum/component/see_as_something, owner.current, "wendigo", 'icons/mob/simple/icemoon/64x64megafauna.dmi', "?????")
+
+		if(VARIANT_CLUWNE)
+			living.AddComponent(/datum/component/see_as_something, owner.current, "glutton_tongue", 'icons/mob/simple/clown_mobs.dmi', "?????")
+
+		if(VARIANT_BRUTE)
+			living.AddComponent(/datum/component/see_as_something, owner.current, "legionnaire", 'icons/mob/simple/lavaland/lavaland_elites.dmi', "?????")
 
 /datum/hover_data/slasher_fear/setup_data(atom/source, mob/enterer)
 	if(!enterer.mind?.has_antag_datum(/datum/antagonist/slasher))
@@ -434,3 +481,7 @@
 	if(isobserver(spender))
 		qdel(spender)
 	message_admins("[ADMIN_LOOKUPFLW(slasher)] has been made into a slasher by using an antag token.")
+
+#undef VARIANT_SLASHER
+#undef VARIANT_CLUWNE
+#undef VARIANT_BRUTE

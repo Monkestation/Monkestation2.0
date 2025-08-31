@@ -228,6 +228,12 @@
 /datum/effect_system/fluid_spread/smoke/bad
 	effect_type = /obj/effect/particle_effect/fluid/smoke/bad
 
+
+/// A factory which produces green smoke that makes you cough.
+/datum/effect_system/fluid_spread/smoke/green
+	effect_type = /obj/effect/particle_effect/fluid/smoke/bad/green
+
+
 /////////////////////////////////////////////
 // Bad Smoke (But Green (and Black))
 /////////////////////////////////////////////

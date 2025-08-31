@@ -60,6 +60,11 @@
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
 #define NANITE_COMPILER (1<<7) //Prints nanite disks
+
+//design bitflags for special interactions
+#define BLUE_ALERT_DESIGN (1<<0)
+#define WHITELISTED_DESIGN (1<<1)
+
 /// Protolathes for offstation roles. More limited tech tree.
 #define AWAY_LATHE (1<<8)
 /// Imprinters for offstation roles. More limited tech tree.
