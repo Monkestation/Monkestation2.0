@@ -417,6 +417,8 @@
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/organ as anything in get_organs())
+		if(organ.organ_flags & ORGAN_UNREMOVABLE)
+			continue
 		if(owner)
 			organ.Remove(owner)
 		else

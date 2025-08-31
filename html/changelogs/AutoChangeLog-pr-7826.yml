@@ -1,0 +1,7 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - bugfix: "You will now no longer melee when you pb someone with a medbeam"
+  - bugfix: "You will now no longer melee when you pb someone with an empty gun"
+  - bugfix: "The m90gl will not fire a burst when it fires a grenade"
+  - bugfix: "the protokinetic daggers function"

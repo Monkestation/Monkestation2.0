@@ -59,6 +59,8 @@
 		if(brain)
 			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return
+		if(!newbrain.can_fit_in_mmi)
+			to_chat(user, span_warning("The brain is incompatible with the MMI!"))
 		if(newbrain.suicided)
 			to_chat(user, span_warning("[newbrain] is completely useless."))
 			return
