@@ -227,8 +227,10 @@
 	register_context()
 
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
+	if(..() == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/user)
 	. = ..()
