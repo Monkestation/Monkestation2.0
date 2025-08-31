@@ -248,12 +248,11 @@
 /obj/item/stack/rail_track/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isopenturf(interacting_with))
 		return NONE
-	var/turf/target_turf = get_turf(interacting_with)
-	var/obj/structure/railroad/check_rail = locate() in target_turf
+	var/obj/structure/railroad/check_rail = locate() in interacting_with
 	if(check_rail || !use(1))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You place [src] on [target_turf]."))
-	new /obj/structure/railroad(get_turf(interacting_with))
+	to_chat(user, span_notice("You place [src] on [interacting_with]."))
+	new /obj/structure/railroad(interacting_with)
 	playsound(interacting_with, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
