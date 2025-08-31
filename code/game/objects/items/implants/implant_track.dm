@@ -29,18 +29,12 @@
 	deltimer(timerid)
 	timerid = null
 
-/obj/item/implant/tracking/c38/Destroy()
-	return ..()
-
 /obj/item/implant/tracking/miner
 	name = "miner tracking implant"
 	desc = "A modified tracker implant with a built-in teleportation beacon to recover shaft miners."
 
 	has_surgical_warning = FALSE
 	allow_teleport = TRUE
-
-/obj/item/implant/tracking/miner/Destroy()
-	return ..()
 
 /obj/item/implant/tracking/Initialize(mapload)
 	. = ..()
