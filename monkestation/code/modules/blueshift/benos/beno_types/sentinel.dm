@@ -141,7 +141,3 @@
 		/datum/action/cooldown/alien/acid/nova,
 		/datum/action/cooldown/alien/acid/nova/lethal,
 	)
-
-/mob/living/carbon/alien/adult/nova/sentinel/lamarr
-	name = "Lamarr"
-	next_evolution = /mob/living/carbon/alien/adult/nova/spitter/lamarr
