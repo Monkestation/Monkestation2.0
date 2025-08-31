@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen)
 	/// Footype flags that will trigger the allergy
 	var/target_foodtypes = NONE
+	species_blacklist = list(SPECIES_IPC)
 
 /datum/quirk/item_quirk/food_allergic/add(client/client_source)
 	if(target_foodtypes != NONE) // Already set, don't care
