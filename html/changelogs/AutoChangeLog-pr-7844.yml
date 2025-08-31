@@ -1,0 +1,5 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - balance: "ninja shoves are now knockdowns instead of immediate hardstuns"
+  - bugfix: "fixes ninja shoves not causing sparks"
