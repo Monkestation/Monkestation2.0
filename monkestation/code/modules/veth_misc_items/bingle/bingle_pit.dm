@@ -466,12 +466,18 @@
 		return
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = TRUE
+	var/datum/mind/ghost_mind = selected.mind
+	ghost_mind.active = TRUE
 
 	var/mob/living/basic/bingle/bingle = new(spawn_loc, src)
-	player_mind.transfer_to(bingle)
-	player_mind.add_antag_datum(/datum/antagonist/bingle)
+	bingle.key = selected.key
+
+	if(ghost_mind)
+		bingle.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
+
+	var/datum/mind/antag_mind = bingle.mind
+	antag_mind.add_antag_datum(/datum/antagonist/bingle)
+
 	if(item_value_consumed >= 500)
 		bingle.icon_state = "bingle_armored"
 		bingle.maxHealth = 300
