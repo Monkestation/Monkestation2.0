@@ -837,7 +837,7 @@
 	name = "set of proto kinetic knives"
 	desc = "With a touch of bluespace, the crusher has been made into a more practical form for throwing. \
 	This set of throwing knives allows you to utilize the features of a crusher while maintaining more than a safe \
-	distance from whatever fauna stands between you and your ore, though the small weapon limits damage... \
+	distance from whatever fauna stands between you and your ore. \
 	at least it can still utilize trophies."
 	fire_sound = 'sound/weapons/fwoosh.ogg'
 	pinless = TRUE
