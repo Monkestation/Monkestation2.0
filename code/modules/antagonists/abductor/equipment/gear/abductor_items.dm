@@ -301,13 +301,13 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	cooldown = 0 SECONDS
 	stamina_damage = 0
-	knockdown_time = 14 SECONDS
+	knockdown_time = 15 SECONDS
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	affect_cyborg = TRUE
 
 	var/mode = BATON_STUN
 
-	var/sleep_time = 2 MINUTES
+	var/sleep_time = 1 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
@@ -403,7 +403,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			return
 		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
-		target.Sleeping(sleep_time)
+		target.Paralyze(sleep_time)
 		log_combat(user, target, "put to sleep")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
