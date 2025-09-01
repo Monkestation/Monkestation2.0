@@ -63,7 +63,7 @@
 
 	//admin panel
 	if (origin == "Unknown")
-		if (istype(source,/obj/item/weapon/virusdish))
+		if (isvirusdish(source))
 			if (isturf(source.loc))
 				var/turf/T = source.loc
 				if (istype(T.loc,/area/centcom))
