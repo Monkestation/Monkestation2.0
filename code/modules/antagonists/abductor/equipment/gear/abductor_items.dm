@@ -301,7 +301,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	cooldown = 0 SECONDS
 	stamina_damage = 0
-	knockdown_time = 15 SECONDS
+	knockdown_time = 14 SECONDS
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	affect_cyborg = TRUE
 
@@ -323,7 +323,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_STUN)
 			txt = "stunning"
 		if(BATON_SLEEP)
-			txt = "sleep inducement"
+			txt = "paralysis inducement"
 		if(BATON_CUFF)
 			txt = "restraining"
 		if(BATON_PROBE)
@@ -401,14 +401,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
 			target.adjust_drowsiness(4 SECONDS)
 			return
-		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
+		target.visible_message(span_danger("[user] paralyzes [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
 		target.Paralyze(sleep_time)
-		log_combat(user, target, "put to sleep")
+		log_combat(user, target, "paralyzed")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
-			target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src], but is unsuccessful!"), \
+			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our paralysis inducement methods! It seems you've been foiled."))
+			target.visible_message(span_danger("[user] tried to induce paralysis in [target] with [src], but is unsuccessful!"), \
 			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
 		target.adjust_drowsiness(2 SECONDS)
