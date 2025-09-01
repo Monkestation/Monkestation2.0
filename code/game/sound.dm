@@ -318,6 +318,15 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
 /proc/get_sfx(soundin)
+	if(!istext(soundin))
+		return soundin
+	var/datum/sound_effect/sfx = GLOB.sfx_datum_by_key[soundin]
+	if(!sfx)
+		. = soundin
+		CRASH("Tried to get SFX with the key \"[soundin]\", which did not exist!")
+	return sfx.return_sfx()
+
+/proc/old_get_sfx(soundin)
 	if(istext(soundin))
 		switch(soundin)
 			if (SFX_SHATTER)
@@ -562,7 +571,6 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 					'sound/effects/muffspeech/muffspeech8.ogg',
 					'sound/effects/muffspeech/muffspeech9.ogg',
 				)
-			// monkestation start: more sound effects
 			if(SFX_KEYSTROKE)
 				soundin = pick('sound/machines/keyboard/keypress1.ogg','sound/machines/keyboard/keypress2.ogg','sound/machines/keyboard/keypress3.ogg','sound/machines/keyboard/keypress4.ogg')
 			if(SFX_KEYBOARD)
@@ -590,5 +598,4 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 						'monkestation/sound/voice/feline/mggaow.ogg',
 						'monkestation/sound/voice/feline/funnymeow.ogg',
 					)
-			// monkestation end
 	return soundin
