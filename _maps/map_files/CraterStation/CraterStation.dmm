@@ -1328,6 +1328,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/maintenance/starboard/fore)
+"auq" = (
+/obj/machinery/research/anomaly_refinery,
+/turf/open/floor/iron/smooth_large,
+/area/station/science/ordnance/testlab)
 "aur" = (
 /turf/open/floor/iron,
 /area/station/engineering/storage)
@@ -157237,7 +157241,7 @@ dQg
 sNk
 aNE
 aNE
-aNE
+auq
 vTP
 vFw
 vFw
