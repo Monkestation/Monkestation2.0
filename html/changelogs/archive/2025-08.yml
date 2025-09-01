@@ -859,3 +859,41 @@
   - rscadd: added razorwire implant to traitor uplink and fixed mantis implants lunge
   notghosti:
   - map: Tramstation pet sanctuary is now connected to the grid
+2025-08-31:
+  Absolucy:
+  - bugfix: fixed vacpacks not being able to suck up adjacent mobs.
+  - balance: The proto-kinetic railgun is now bulky instead of huge, allowing it to
+      fit in the suit storage of certain mining suits/armors.
+  Ice-Type:
+  - bugfix: You will now no longer melee when you pb someone with a medbeam
+  - bugfix: You will now no longer melee when you pb someone with an empty gun
+  - bugfix: The m90gl will not fire a burst when it fires a grenade
+  - bugfix: the protokinetic daggers function
+  JupiterJaeden:
+  - balance: Lasers now do 25 damage instead of 20. Hellfire lasers do 30.
+  - balance: Blob tiles are slightly buffed to not be one hit by new lasers.
+  - bugfix: Florans no longer have their extra burn damage modifier applied twice.
+  - balance: Florans take 1.5x burn damage instead of 1.8x to not be completely smoked
+      by new lasers.
+  - balance: Obfuscation (previously auspex) no longer regenerates stamina damage
+      on use.
+  - balance: Obfuscation (previously auspex) invisibility has been reduced.
+  - config: Alert level escalation and de-escalation text for code blue has been changed
+      to not encourage random searches.
+  - balance: ninja shoves are now knockdowns instead of immediate hardstuns
+  - bugfix: fixes ninja shoves not causing sparks
+  MrBagHead:
+  - rscdel: Removed Lamarr Chestburster's ability to evolve into xeno forms.
+  - balance: Increased Lamarr Chestburster maximum HP from 25 to 100.
+  - bugfix: Fixed Lamarr Xeno objectives not displaying correctly, they now show "Stay
+      alive until the end."
+  - qol: "Lamarr Chestbursters can now understand Common, making it easier to interact\
+      \ and roleplay as RD\u2019s pet."
+  Wisemonster:
+  - balance: Standardized pathology on blueshift, deltastation, voidraptor, and lead
+      poisoning
+  notghosti:
+  - rscadd: Cyborgs and AI players now receive a end of our Monkecoin bonus
+  - balance: Makes it so upgrading a baton actually increases the theoretical maximum
+      baton uptime. See PR for numbers.
+  - balance: Lowered commando operatives to their intended weight. (8 -> 5)

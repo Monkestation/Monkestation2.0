@@ -160,10 +160,10 @@
 	default = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 
 /datum/config_entry/string/alert_blue_upto
-	default = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
+	default = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, searches are permitted with probable cause."
 
 /datum/config_entry/string/alert_blue_downto
-	default = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
+	default = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Searches are permitted with probable cause."
 
 /datum/config_entry/string/alert_red_upto
 	default = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."

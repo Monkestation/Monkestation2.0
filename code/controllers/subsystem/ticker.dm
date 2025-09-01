@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(ticker)
 	var/reboot_timer = null
 
 	///add bitflags to this that should be rewarded monkecoins, example: DEPARTMENT_BITFLAG_SECURITY
-	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY,)
+	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY, DEPARTMENT_BITFLAG_SILICON)
 	///add jobs to this that should get rewarded monkecoins, example: JOB_SECURITY_OFFICER
 	var/list/jobs_to_reward = list(JOB_JANITOR,)
 

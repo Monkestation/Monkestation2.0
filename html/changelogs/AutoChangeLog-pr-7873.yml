@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Added an option to hide your ckey from the roundend report (off by default)"

@@ -42,7 +42,7 @@
 	min_players = 40
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 8
+	weight = 5
 	max_occurrences = 1
 	event_icon_state = "nukeops"
 
