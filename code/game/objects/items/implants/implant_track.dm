@@ -45,6 +45,7 @@
 	internal_radio.subspace_transmission = TRUE
 	internal_radio.canhear_range = 0
 	internal_radio.set_listening(FALSE)
+	internal_radio.ignores_radio_jammers = TRUE
 	internal_radio.recalculateChannels()
 
 /obj/item/implant/tracking/Destroy()
