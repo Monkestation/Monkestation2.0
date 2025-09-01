@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 * v = singleton sound_effect datum ref
 * initialized in SSsounds init
 */
-GLOBAL_LIST_EMPTY(sfx_datum_by_key)
+GLOBAL_DATUM_INIT(sfx_datum_by_key, /alist, alist())
 
 /* List of all of our sound keys.
 	used with /datum/sound_effect as the key

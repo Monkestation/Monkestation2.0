@@ -16,7 +16,7 @@
 /datum/sound_effect/assoc
 
 /datum/sound_effect/assoc/return_sfx()
-	return pick_weight(file_paths)
+	return pick_weight_recursive(file_paths)
 
 /datum/sound_effect/shatter
 	key = SFX_SHATTER
@@ -217,14 +217,14 @@
 		'sound/items/weapons/flashbang.ogg',
 	)
 
-/datum/sound_effect/goose
+/* /datum/sound_effect/goose
 	key = SFX_GOOSE
 	file_paths = list(
 		'sound/mobs/non-humanoids/goose/goose1.ogg',
 		'sound/mobs/non-humanoids/goose/goose2.ogg',
 		'sound/mobs/non-humanoids/goose/goose3.ogg',
 		'sound/mobs/non-humanoids/goose/goose4.ogg',
-	)
+	) */
 
 /datum/sound_effect/warpspeed
 	key = SFX_WARPSPEED
@@ -406,6 +406,54 @@
 		'sound/effects/rock/rocktap3.ogg',
 	)
 
+/datum/sound_effect/keystroke
+	key = SFX_KEYSTROKE
+	file_paths = list(
+		'sound/machines/keyboard/keypress1.ogg',
+		'sound/machines/keyboard/keypress2.ogg',
+		'sound/machines/keyboard/keypress3.ogg',
+		'sound/machines/keyboard/keypress4.ogg'
+	)
+
+/datum/sound_effect/keyboard
+	key = SFX_KEYBOARD
+	file_paths = list(
+		'sound/machines/keyboard/keystroke1.ogg',
+		'sound/machines/keyboard/keystroke2.ogg',
+		'sound/machines/keyboard/keystroke3.ogg',
+		'sound/machines/keyboard/keystroke4.ogg',
+	)
+
+/datum/sound_effect/button
+	key = SFX_BUTTON
+	file_paths = list(
+		'sound/machines/button1.ogg',
+		'sound/machines/button2.ogg',
+		'sound/machines/button3.ogg',
+		'sound/machines/button4.ogg',
+	)
+
+/datum/sound_effect/button_click
+	key = SFX_BUTTON_CLICK
+	file_paths = list('monkestation/sound/effects/hl2/button-click.ogg')
+
+/datum/sound_effect/button_fail
+	key = SFX_BUTTON_FAIL
+	file_paths = list('monkestation/sound/effects/hl2/button-fail.ogg')
+
+/datum/sound_effect/use_switch
+	key = SFX_SWITCH
+	file_paths = list(
+		'sound/machines/switch1.ogg',
+		'sound/machines/switch2.ogg',
+		'sound/machines/switch3.ogg',
+	)
+
+/datum/sound_effect/light_switch
+	key = SFX_LIGHTSWITCH
+	file_paths = list('monkestation/sound/effects/hl2/lightswitch.ogg')
+
+/*
 /datum/sound_effect/sear
 	key = SFX_SEAR
 	file_paths = list('sound/items/weapons/sear.ogg')
@@ -811,11 +859,13 @@
 /datum/sound_effect/regen_mesh_drop
 	key = SFX_REGEN_MESH_DROP
 	file_paths = list('sound/items/regenerative_mesh/regen_mesh_drop1.ogg')
+*/
 
 
 /* assoc lists go next */
 
 
+/*
 /datum/sound_effect/assoc/plate_armor_rustle
 	key = SFX_PLATE_ARMOR_RUSTLE
 	file_paths = list(
@@ -853,4 +903,20 @@
 		'sound/mobs/non-humanoids/cat/cat_meow2.ogg' = 33,
 		'sound/mobs/non-humanoids/cat/cat_meow3.ogg' = 33,
 		'sound/mobs/non-humanoids/cat/oranges_meow1.ogg' = 1,
+
+	*/
+
+/datum/sound_effect/assoc/meow
+	key = SFX_MEOW
+	file_paths = list(
+		list(
+			'monkestation/sound/voice/feline/meow1.ogg',
+			'monkestation/sound/voice/feline/meow2.ogg',
+			'monkestation/sound/voice/feline/meow3.ogg',
+			'monkestation/sound/voice/feline/meow4.ogg',
+		) = 100,
+		list(
+			'monkestation/sound/voice/feline/mggaow.ogg',
+			'monkestation/sound/voice/feline/funnymeow.ogg',
+		) = 1,
 	)

@@ -321,4 +321,7 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 	if(!istext(soundin))
 		return soundin
 	var/datum/sound_effect/sfx = GLOB.sfx_datum_by_key[soundin]
-	return sfx?.return_sfx() || soundin
+	if(!sfx)
+		. = soundin
+		CRASH("Tried to get SFX with the key \"[soundin]\", which did not exist!")
+	return sfx.return_sfx()
