@@ -314,7 +314,7 @@
 		load_recipe(new to_make_path)
 	playsound(src, operating_sound, 100, TRUE)
 
-/obj/machinery/lathe/attackby(obj/item/interacted_item, mob/user, params)
+/obj/machinery/lathe/item_interaction(mob/living/user, obj/item/interacted_item, list/modifiers)
 	for(var/stock_part_base in req_materials)
 		if (req_materials[stock_part_base] == 0)
 			continue
@@ -343,7 +343,7 @@
 				materials += stack_in_machine
 				to_chat(user, span_notice("You add [interacted_item] to [src]."))
 				check_done(user)
-			return
+			return ITEM_INTERACT_SUCCESS
 
 		// We might end up qdel'ing the part if it's a stock part datum.
 		// In practice, this doesn't have side effects to the name,
@@ -373,17 +373,20 @@
 		to_chat(user, span_notice("You add [part_name] to [src]."))
 		req_materials[stock_part_base]--
 		check_done(user)
-		return
-
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, interacted_item))
-		update_appearance(UPDATE_ICON)
-		return
-
-	if(default_deconstruction_crowbar(interacted_item))
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_warning("You cannot add that to the machine!"))
 	return . = ..()
+
+/obj/machinery/lathe/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/lathe/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
 //check if lathe materials requirements are met
 /obj/machinery/lathe/proc/check_done(mob/user)
