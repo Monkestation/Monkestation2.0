@@ -99,7 +99,7 @@
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/cup/tube,
-					/obj/item/weapon/virusdish,
+					/obj/item/virusdish,
 					/obj/item/reagent_containers/cup/bottle,)
 
 /obj/item/borg/apparatus/beaker/Initialize(mapload)

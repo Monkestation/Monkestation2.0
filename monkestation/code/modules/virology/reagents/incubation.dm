@@ -22,8 +22,8 @@
 /datum/reagent/uranium/uraniumvirusfood/unstable/disease_incubate(atom/movable/parent, datum/disease/disease, obj/machinery/disease2/incubator/machine)
 	disease.log += "<br />[ROUND_TIME()] Antigen Mutation (Unstable Uranium Gel in [parent])"
 	disease.antigenmutate()
-	if(istype(parent, /obj/item/weapon/virusdish))
-		var/obj/item/weapon/virusdish/dish = parent
+	if(istype(parent, /obj/item/virusdish))
+		var/obj/item/virusdish/dish = parent
 		dish.analysed = FALSE
 		dish.contained_virus.disease_flags &= ~DISEASE_ANALYZED
 		dish.info = "OUTDATED : [dish.info]"

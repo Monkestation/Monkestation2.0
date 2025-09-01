@@ -1,6 +1,6 @@
 ///////////////VIRUS DISH///////////////
 GLOBAL_LIST_INIT(virusdishes, list())
-/obj/item/weapon/virusdish
+/obj/item/virusdish
 	name = "growth dish"
 	desc = "A petri dish fit to contain viral, bacteriologic, parasitic, or any other kind of pathogenic culture."
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	var/mob/last_openner
 	COOLDOWN_DECLARE(cloud_cooldown)
 
-/obj/item/weapon/virusdish/New(loc)
+/obj/item/virusdish/New(loc)
 	..()
 	reagents = new(10)
 	reagents.my_atom = src
@@ -32,14 +32,14 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	)
 	RegisterSignals(src.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
-/obj/item/weapon/virusdish/Destroy()
+/obj/item/virusdish/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	contained_virus = null
 	GLOB.virusdishes.Remove(src)
 	. = ..()
 
 /*
-/obj/item/weapon/virusdish/clean_blood()
+/obj/item/virusdish/clean_blood()
 	..()
 	if (open)
 		contained_virus = null
@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		update_icon()
 */
 
-/obj/item/weapon/virusdish/update_icon()
+/obj/item/virusdish/update_icon()
 	. = ..()
 	overlays.len = 0
 	if (!contained_virus)
@@ -80,11 +80,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	else if (info != "" && copytext(info, 1, 9) == "OUTDATED")
 		overlays += "virusdish-outdated"
 
-/obj/item/weapon/virusdish/attack_hand(mob/living/user, list/modifiers)
+/obj/item/virusdish/attack_hand(mob/living/user, list/modifiers)
 	..()
 	infection_attempt(user)
 
-/obj/item/weapon/virusdish/attack_self(mob/living/user, list/modifiers)
+/obj/item/virusdish/attack_self(mob/living/user, list/modifiers)
 	open = !open
 	update_appearance()
 	to_chat(user,span_notice("You [open?"open":"close"] dish's lid."))
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		STOP_PROCESSING(SSobj, src)
 	infection_attempt(user)
 
-/obj/item/weapon/virusdish/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/virusdish/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(istype(attacking_item, /obj/item/hand_labeler))
 		return
@@ -128,10 +128,10 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		visible_message(span_danger("The virus dish is smashed to bits!"))
 		shatter(user)
 
-/obj/item/weapon/virusdish/is_open_container()
+/obj/item/virusdish/is_open_container()
 	return open
 
-/obj/item/weapon/virusdish/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/virusdish/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(.)
 		return
@@ -159,12 +159,12 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		if (istype(target,/obj/structure/urinal)||istype(target,/obj/structure/sink))
 			empty(user,target)
 
-/obj/item/weapon/virusdish/proc/empty(mob/user, atom/target)
+/obj/item/virusdish/proc/empty(mob/user, atom/target)
 	if (user && target)
 		to_chat(user,span_notice("You empty \the [src]'s reagents into \the [target]."))
 	reagents.clear_reagents()
 
-/obj/item/weapon/virusdish/process()
+/obj/item/virusdish/process()
 	if(!contained_virus || !open)
 		return PROCESS_KILL
 	if(isliving(loc))
@@ -180,10 +180,10 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			var/list/L = list(contained_virus)
 			new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
 
-/obj/item/weapon/virusdish/random
+/obj/item/virusdish/random
 	name = "growth dish"
 
-/obj/item/weapon/virusdish/random/New(loc)
+/obj/item/virusdish/random/New(loc)
 	..(loc)
 	if (loc)//because fuck you /datum/subsystem/supply_shuttle/Initialize()
 		var/virus_choice = pick(WILD_ACUTE_DISEASES)
@@ -211,13 +211,13 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	else
 		GLOB.virusdishes.Remove(src)
 
-/obj/item/weapon/virusdish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/virusdish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(isturf(hit_atom))
 		visible_message(span_danger("The virus dish shatters on impact!"))
 		shatter(throwingdatum.thrower)
 
-/obj/item/weapon/virusdish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
+/obj/item/virusdish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
 	if (contained_virus)
 		if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
 			growth = min(growth + growthrate, 100)
@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			growth = max(growth - growthrate, 0)
 		contained_virus.incubate(src,mutatechance,effect_focus)
 
-/obj/item/weapon/virusdish/proc/on_reagent_change(datum/reagents/reagents)
+/obj/item/virusdish/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
 
 	if (contained_virus)
@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			L |= contained_virus
 			LAZYOR(blood.data["diseases"], filter_disease_by_spread(L, required = DISEASE_SPREAD_BLOOD))
 
-/obj/item/weapon/virusdish/proc/shatter(mob/user)
+/obj/item/virusdish/proc/shatter(mob/user)
 	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))
 	dish.pixel_x = pixel_x
 	dish.pixel_y = pixel_y
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 				strength -= 40
 	qdel(src)
 
-/obj/item/weapon/virusdish/update_desc(updates)
+/obj/item/virusdish/update_desc(updates)
 	. = ..()
 	desc = initial(desc)
 	if(open)
@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		desc += "\nThere is a sticker with some printed information on it. <a href='byond://?src=\ref[src];examine=1'>(Read it)</a>"
 
 
-/obj/item/weapon/virusdish/Topic(href, href_list)
+/obj/item/virusdish/Topic(href, href_list)
 	if(..())
 		return TRUE
 	if(href_list["examine"])
@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		popup.set_content(info)
 		popup.open()
 
-/obj/item/weapon/virusdish/infection_attempt(mob/living/perp, datum/disease/D)
+/obj/item/virusdish/infection_attempt(mob/living/perp, datum/disease/D)
 	if (open)//If the dish is open, we may get infected by the disease inside on top of those that might be stuck on it.
 		var/block = 0
 		var/bleeding = 0

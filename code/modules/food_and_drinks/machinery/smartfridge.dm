@@ -486,7 +486,7 @@
 					/obj/item/reagent_containers/spray,
 					/obj/item/reagent_containers/medigel,
 					/obj/item/reagent_containers/chem_pack,
-					/obj/item/weapon/virusdish
+					/obj/item/virusdish
 	))
 
 	if(istype(O, /obj/item/storage/pill_bottle))
@@ -496,7 +496,7 @@
 					return FALSE
 			return TRUE
 		return FALSE
-	if(istype(O, /obj/item/weapon/virusdish) && is_type_in_typecache(O, chemfridge_typecache))
+	if(istype(O, /obj/item/virusdish) && is_type_in_typecache(O, chemfridge_typecache))
 		return TRUE
 	if(!is_reagent_container(O) || (O.item_flags & ABSTRACT))
 		return FALSE

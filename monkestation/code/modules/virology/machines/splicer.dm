@@ -12,7 +12,7 @@
 	circuit = /obj/item/circuitboard/computer/diseasesplicer
 	var/datum/symptom/memorybank = null
 	var/analysed = FALSE // If the buffered effect came from a dish that had been analyzed this is TRUE
-	var/obj/item/weapon/virusdish/dish = null
+	var/obj/item/virusdish/dish = null
 	var/burning = 0 // Time in process ticks until disk burning is over
 
 	var/splicing = 0 // Time in process ticks until splicing is over
@@ -27,10 +27,10 @@
 	light_color = "#00FF00"
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
-	if(!(istype(I,/obj/item/weapon/virusdish) || istype(I,/obj/item/disk/disease)))
+	if(!(istype(I,/obj/item/virusdish) || istype(I,/obj/item/disk/disease)))
 		return ..()
 
-	if(istype(I, /obj/item/weapon/virusdish))
+	if(istype(I, /obj/item/virusdish))
 		if(dish)
 			to_chat(user, span_warning("A virus containment dish is already inside \the [src]."))
 			return
