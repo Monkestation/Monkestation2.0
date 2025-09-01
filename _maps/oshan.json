@@ -4,7 +4,6 @@
 	"map_path": "map_files/Oshan",
 	"map_file": "Oshan.dmm",
 	"planetary": 1,
-	"OshanTrait": 1,
 	"shuttles": {
 		"cargo": "cargo_nova",
 		"ferry": "ferry_fancy",
