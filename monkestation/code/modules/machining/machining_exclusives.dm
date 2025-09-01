@@ -57,7 +57,8 @@
 
 	return . = ..()
 
-/obj/item/pulsepack/attackby(obj/item/weapon, mob/user, params)
+/obj/item/pulsepack/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = ..()
 	if(weapon == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else
