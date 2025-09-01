@@ -68,10 +68,14 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 	var/list/channels = client?.prefs?.channel_volume
 	if(!channels)
 		return volume
-	if("[CHANNEL_MASTER_VOLUME]" in channels)
-		. *= channels["[CHANNEL_MASTER_VOLUME]"] * 0.01
-	if(mixer_channel && ("[mixer_channel]" in channels))
-		. *= channels["[mixer_channel]"] * 0.01
+	var/static/master_volume_key = "[CHANNEL_MASTER_VOLUME]"
+
+	if(master_volume_key in channels)
+		. *= channels[master_volume_key] * 0.01
+	if(mixer_channel)
+		var/mixer_channel_key = "[mixer_channel]"
+		if(mixer_channel_key in channels)
+			. *= channels[mixer_channel_key] * 0.01
 
 /mob/proc/stop_sound_channel(chan)
 	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))
