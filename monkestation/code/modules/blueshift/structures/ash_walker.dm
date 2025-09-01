@@ -245,15 +245,16 @@
 /obj/item/stack/rail_track/fifty
 	amount = 50
 
-/obj/item/stack/rail_track/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!isopenturf(target) || !proximity_flag)
-		return ..()
-	var/turf/target_turf = get_turf(target)
-	var/obj/structure/railroad/check_rail = locate() in target_turf
+/obj/item/stack/rail_track/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	var/obj/structure/railroad/check_rail = locate() in interacting_with
 	if(check_rail || !use(1))
-		return ..()
-	to_chat(user, span_notice("You place [src] on [target_turf]."))
-	new /obj/structure/railroad(get_turf(target))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You place [src] on [interacting_with]."))
+	new /obj/structure/railroad(interacting_with)
+	playsound(interacting_with, 'sound/weapons/genhit.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railroad
 	name = "railroad track"
@@ -286,7 +287,7 @@
 	tool.play_tool_sound(src)
 	new /obj/item/stack/rail_track(get_turf(src))
 	qdel(src)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/rail_cart
 	name = "rail cart"
@@ -485,22 +486,20 @@
 
 /obj/structure/plant_tank/wrench_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "[anchored ? "un" : ""]bolting")
-	tool.play_tool_sound(src, 50)
-	if(!tool.use_tool(src, user, 2 SECONDS))
-		return TRUE
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
 
 	anchored = !anchored
 	balloon_alert(user, "[anchored ? "" : "un"]bolted")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/plant_tank/screwdriver_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "deconstructing")
-	tool.play_tool_sound(src, 50)
-	if(!tool.use_tool(src, user, 2 SECONDS))
-		return TRUE
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
 
 	deconstruct()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/plant_tank/deconstruct(disassembled)
 	var/target_turf = get_turf(src)

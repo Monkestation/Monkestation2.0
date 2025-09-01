@@ -340,10 +340,11 @@
 /obj/item/vacuum_nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(do_suck(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/vacuum_nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/biomass_recycler))
-		return NONE
+		return ranged_interact_with_atom(interacting_with, user, modifiers)
 	if(!(VACUUM_PACK_UPGRADE_BIOMASS in pack.upgrades))
 		to_chat(user, span_warning("[pack] does not posess a required upgrade!"))
 		return ITEM_INTERACT_BLOCKING
