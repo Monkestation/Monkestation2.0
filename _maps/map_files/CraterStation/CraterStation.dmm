@@ -726,6 +726,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/abandon_diner)
+"akL" = (
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd")
+	},
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/station/science/lobby)
 "akO" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
@@ -25111,6 +25119,9 @@
 	dir = 1
 	},
 /obj/machinery/modular_computer/preset/civilian,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/carpet/grimey,
 /area/station/science/ordnance/office)
 "hIH" = (
@@ -26385,6 +26396,18 @@
 "ibK" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/airalarm/directional/north,
+/obj/item/transfer_valve{
+	pixel_x = 3;
+	pixel_y = 13
+	},
+/obj/item/transfer_valve{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/transfer_valve{
+	pixel_x = 10;
+	pixel_y = 10
+	},
 /turf/open/floor/iron/smooth_large,
 /area/station/science/ordnance/testlab)
 "ibP" = (
@@ -26628,6 +26651,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "igs" = (
@@ -27722,6 +27746,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"izZ" = (
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd")
+	},
+/turf/open/floor/iron/smooth_half,
+/area/station/science/lab)
 "iAg" = (
 /obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -39059,6 +39089,9 @@
 	pixel_y = 0
 	},
 /obj/machinery/space_heater/wall_mounted/directional/east,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd")
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/science/lobby)
 "lXk" = (
@@ -67115,12 +67148,8 @@
 /area/station/security/prison/rec)
 "utl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet{
-	req_access = list("bar");
-	name = "Gun Locker"
-	},
-/obj/item/storage/box/beanbag,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
+/obj/structure/guncase,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "utt" = (
@@ -68218,6 +68247,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
+"uMo" = (
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","rd")
+	},
+/turf/open/floor/iron/smooth_half,
+/area/station/science/lobby)
 "uMp" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -74445,6 +74480,10 @@
 /obj/structure/table/wood,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/cable,
+/obj/item/storage/box/beanbag{
+	pixel_x = 1;
+	pixel_y = 8
+	},
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "wFy" = (
@@ -162073,7 +162112,7 @@ uNm
 mZQ
 pUh
 pUh
-dvp
+izZ
 vux
 oEs
 taI
@@ -166194,7 +166233,7 @@ fbU
 iAV
 fuQ
 oSL
-lrO
+uMo
 slc
 iAV
 tEo
@@ -166703,7 +166742,7 @@ uNm
 cpa
 oSL
 oSL
-xJF
+akL
 xcU
 xcU
 eKM
