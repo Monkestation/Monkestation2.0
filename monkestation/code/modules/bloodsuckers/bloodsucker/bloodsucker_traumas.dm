@@ -8,8 +8,9 @@
 	name = "Sleepless Dreamer"
 	desc = "The patient, after undergoing untold psychological hardship, believes they can travel between the dreamscapes of this dimension."
 	scan_desc = "awoken sleeper"
-	gain_text = "<span class='notice'>Your mind snaps, and you wake up. You <i>really</i> wake up."
-	lose_text = "<span class='warning'>You succumb once more to the sleepless dream of the unwoken."
+	gain_text = span_notice("Your mind snaps, and you wake up. You <i>really</i> wake up.")
+	lose_text = span_warning("You succumb once more to the sleepless dream of the unwoken.")
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 	///Created tears, only checking the FIRST one, not the one it's created to link to.
 	var/list/created_firsts = list()
