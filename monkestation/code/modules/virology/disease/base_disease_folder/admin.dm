@@ -152,7 +152,7 @@
 		message_admins("[infectedMob] was infected with  [D.form] #["[D.uniqueID]"]-["[D.subID]"][nickname] by [C.ckey]")
 		D.AddToGoggleView(infectedMob)
 	else
-		var/obj/item/virusdish/dish = new(C.mob.loc)
+		var/obj/item/weapon/virusdish/dish = new(C.mob.loc)
 		dish.contained_virus = D
 		dish.growth = rand(5, 50)
 		dish.name = "growth dish (Unknown [D.form])"
@@ -237,7 +237,7 @@ ADMIN_VERB(diseases_panel, R_ADMIN, FALSE, "Disease Panel", "See diseases and di
 						logs["[ID]"] = list()
 					logs["[ID]"] += "[I]"
 					logs["[ID]"]["[I]"] = D.log
-		for (var/obj/item/virusdish/dish in GLOB.virusdishes)
+		for (var/obj/item/weapon/virusdish/dish in GLOB.virusdishes)
 			if (dish.contained_virus)
 				if (ID == "[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]")
 					dishes++

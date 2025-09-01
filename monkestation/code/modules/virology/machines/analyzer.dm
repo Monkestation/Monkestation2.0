@@ -16,7 +16,7 @@
 
 	var/process_time = 5
 	var/minimum_growth = 100
-	var/obj/item/virusdish/dish = null
+	var/obj/item/weapon/virusdish/dish = null
 	var/last_scan_name = ""
 	var/last_scan_info = ""
 
@@ -46,13 +46,13 @@
 		return
 
 	if (dish)
-		if (istype(attacking_item ,/obj/item/virusdish))
+		if (istype(attacking_item ,/obj/item/weapon/virusdish))
 			to_chat(user, span_warning("There is already a dish in there. Alt+Click or perform the analysis to retrieve it first."))
 		else if (istype(attacking_item ,/obj/item/reagent_containers))
 			dish.attackby(attacking_item ,user)
 	else
-		if (istype(attacking_item ,/obj/item/virusdish))
-			var/obj/item/virusdish/D = attacking_item
+		if (istype(attacking_item ,/obj/item/weapon/virusdish))
+			var/obj/item/weapon/virusdish/D = attacking_item
 			if (D.open)
 				visible_message(span_notice("\The [user] inserts \the [attacking_item] in \the [src]."),span_notice("You insert \the [attacking_item] in \the [src]."))
 				playsound(loc, 'sound/machines/click.ogg', 50, 1)

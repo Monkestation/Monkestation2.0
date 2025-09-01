@@ -68,12 +68,12 @@
 		to_chat(user, span_notice("You put the probe back in \the [src] and set it to scan for diseases."))
 
 /obj/item/extrapolator/proc/try_disease_modification(mob/user, atom/target)
-	if(!isliving(target) && !istype(target, /obj/item/virusdish))
+	if(!isliving(target) && !istype(target, /obj/item/weapon/virusdish))
 		return
 
 	last_attacked_target = target
-	if(istype(last_attacked_target, /obj/item/virusdish))
-		var/obj/item/virusdish/dish = last_attacked_target
+	if(istype(last_attacked_target, /obj/item/weapon/virusdish))
+		var/obj/item/weapon/virusdish/dish = last_attacked_target
 		if(!dish.contained_virus)
 			return
 	ui_interact(user, should_open = TRUE)
@@ -117,8 +117,8 @@
 	var/list/named_list = list()
 
 	var/list/diseases = list()
-	if(istype(last_attacked_target, /obj/item/virusdish))
-		var/obj/item/virusdish/dish = last_attacked_target
+	if(istype(last_attacked_target, /obj/item/weapon/virusdish))
+		var/obj/item/weapon/virusdish/dish = last_attacked_target
 		if(!dish.contained_virus)
 			return
 		var/list/symptom_data = list()

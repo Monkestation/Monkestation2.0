@@ -68,7 +68,7 @@
 	if (.)
 		return
 
-	if (istype(attacking_item, /obj/item/virusdish))
+	if (istype(attacking_item, /obj/item/weapon/virusdish))
 		for (var/i in 1 to dish_data.len)
 			if (dish_data[i] == null) // Empty slot
 				addDish(attacking_item, user, i)
@@ -78,7 +78,7 @@
 		return FALSE
 
 
-/obj/machinery/disease2/incubator/proc/addDish(obj/item/virusdish/VD, mob/user, slot)
+/obj/machinery/disease2/incubator/proc/addDish(obj/item/weapon/virusdish/VD, mob/user, slot)
 	if (!VD.open)
 		to_chat(user, span_warning("You must open the dish's lid before it can be put inside the incubator. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
 		return
@@ -142,7 +142,7 @@
 			if (!isliving(user))
 				return TRUE
 
-			var/obj/item/virusdish/VD = user.get_active_hand()
+			var/obj/item/weapon/virusdish/VD = user.get_active_hand()
 			if (istype(VD))
 				addDish(VD, user, slot)
 
@@ -252,7 +252,7 @@
 		dish_ui_datum["dish_slot"] = i
 
 		var/list/symptom_data = list()
-		var/obj/item/virusdish/dish = dish_datum.dish
+		var/obj/item/weapon/virusdish/dish = dish_datum.dish
 		dish_ui_datum["contains_disease"] = istype(dish.contained_virus) ? TRUE : FALSE
 		for(var/datum/symptom/symptom in dish.contained_virus?.symptoms)
 			if(!(dish.contained_virus.disease_flags & DISEASE_ANALYZED))
@@ -277,7 +277,7 @@
 	update_appearance()
 
 
-/obj/machinery/disease2/incubator/proc/find_dish_datum(obj/item/virusdish/dish)
+/obj/machinery/disease2/incubator/proc/find_dish_datum(obj/item/weapon/virusdish/dish)
 	for (var/datum/dish_incubator_dish/dish_datum in dish_data)
 		if (dish_datum.dish == dish)
 			return dish_datum
@@ -285,7 +285,7 @@
 	return null
 
 
-/obj/machinery/disease2/incubator/proc/update_major(obj/item/virusdish/dish)
+/obj/machinery/disease2/incubator/proc/update_major(obj/item/weapon/virusdish/dish)
 	var/datum/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if (dish_datum == null)
 		return
@@ -295,7 +295,7 @@
 	dish_datum.major_mutations_count++
 
 
-/obj/machinery/disease2/incubator/proc/update_minor(obj/item/virusdish/dish, str=0, rob=0, eff=0)
+/obj/machinery/disease2/incubator/proc/update_minor(obj/item/weapon/virusdish/dish, str=0, rob=0, eff=0)
 	var/datum/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if (dish_datum == null)
 		return
@@ -344,7 +344,7 @@
 			. += add_dish_sprite(dish_data[i], i)
 
 /obj/machinery/disease2/incubator/proc/add_dish_sprite(datum/dish_incubator_dish/dish_datum, slot)
-	var/obj/item/virusdish/dish = dish_datum.dish
+	var/obj/item/weapon/virusdish/dish = dish_datum.dish
 	var/list/overlays = list()
 
 	slot--
@@ -471,7 +471,7 @@
 
 /datum/dish_incubator_dish
 	// The inserted virus dish.
-	var/obj/item/virusdish/dish
+	var/obj/item/weapon/virusdish/dish
 
 	var/major_mutations_count = 0
 

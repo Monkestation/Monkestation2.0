@@ -456,7 +456,7 @@
 	*/
 	visible_message("\The [src] prints a growth dish.")
 	spawn(10)
-		var/obj/item/virusdish/dish = new/obj/item/virusdish(src.loc)
+		var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
 		if(D.disease_flags & DISEASE_DORMANT)
 			visible_message("Activating Virus Sample")
 			D.disease_flags &= ~DISEASE_DORMANT

@@ -12,7 +12,7 @@
 		if(!container)
 			if(C.forceMove(attacking_item, src))
 				container = attacking_item
-	if(istype(attacking_item,/obj/item/virusdish))
+	if(istype(attacking_item,/obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..")
 			return
