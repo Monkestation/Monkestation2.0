@@ -14,8 +14,8 @@
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
 
-	body_damage_coeff = 1.1	//IPC's Head can dismember	//Monkestation Edit
-	max_damage = 40	//Keep in mind that this value is used in the //Monkestation Edit
+	body_damage_coeff = 0.75	//IPC's Head can dismember	//Monkestation Edit
+	max_damage = 70	//Keep in mind that this value is used in the //Monkestation Edit
 	dmg_overlay_type = "synth"
 
 	disabling_threshold_percentage = 1
@@ -39,7 +39,7 @@
 	bodypart_traits = list(TRAIT_LIMBATTACHMENT)
 	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	body_damage_coeff = 1	//IPC Chest at default	///Monkestation Edit
-	max_damage = 360	//Default: 200 ///Monkestation Edit
+	max_damage = 340	//Default: 200 ///Monkestation Edit
 	brute_modifier = 1.2 // Monkestation Edit
 	burn_modifier = 1.2 // Monkestation Edit
 
