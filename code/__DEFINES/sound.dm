@@ -192,14 +192,6 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 	ANNOUNCER_ICARUS,
 ))
 
-/**
-# assoc list of datum by key
-* k = SFX_KEY (see below)
-* v = singleton sound_effect datum ref
-* initialized in SSsounds init
-*/
-GLOBAL_DATUM_INIT(sfx_datum_by_key, /alist, alist())
-
 /* List of all of our sound keys.
 	used with /datum/sound_effect as the key
 	see code\game\sound_keys.dm

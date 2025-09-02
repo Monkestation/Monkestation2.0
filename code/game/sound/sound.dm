@@ -237,7 +237,7 @@
 /proc/get_sfx(soundin)
 	if(!istext(soundin))
 		return soundin
-	var/datum/sound_effect/sfx = GLOB.sfx_datum_by_key[soundin]
+	var/datum/sound_effect/sfx = SSsounds.sfx_datum_by_key[soundin]
 	if(!sfx)
 		. = soundin
 		CRASH("Tried to get SFX with the key \"[soundin]\", which did not exist!")
