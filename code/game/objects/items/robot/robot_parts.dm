@@ -357,11 +357,11 @@
 			to_chat(new_borg, span_warning("Error: Servo motors unresponsive."))
 
 //monkestation edit start
-		if(be_clockwork && O.mind)
+		if(be_clockwork && new_borg.mind)
 			var/datum/antagonist/clock_cultist/new_servant_datum = new
 			if(old_servant_datum)
 				new_servant_datum.silent = TRUE
-			O.mind.add_antag_datum(new_servant_datum)
+			new_borg.mind.add_antag_datum(new_servant_datum)
 			new_servant_datum.silent = FALSE
 //monkestation edit end
 

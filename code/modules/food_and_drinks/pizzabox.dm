@@ -215,7 +215,7 @@
 			return
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-	else if(IS_WRITING_UTENSIL(I))
+	else if(IS_WRITING_UTENSIL(attacking_item))
 		if(!open)
 			if(!user.can_write(attacking_item))
 				return

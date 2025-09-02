@@ -13,12 +13,10 @@
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
-	var/list/datum/feed_channel/news_content = list()
 	var/wantedAuthor
 	var/wantedCriminal
 	var/wantedBody
 	var/wantedPhoto
-	var/creation_time
 	///List of news feeed channels the newspaper can see.
 	var/list/datum/feed_channel/news_content = list()
 	///The time the newspaper was made in terms of newscaster's last action, used to tell the newspaper whether a story should be in it.
