@@ -139,7 +139,7 @@
 /obj/item/sticker/analysis_form/examine(mob/user)
 	. = ..()
 	if(isobserver(user) || in_range(user, attached || src))
-		ui_interact(user)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /obj/item/sticker/analysis_form/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
