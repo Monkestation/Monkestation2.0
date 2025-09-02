@@ -97,7 +97,8 @@
 
 /mob/living/basic/bloodling/proper/update_health_hud()
 	. = ..()
-	/*var/biomass_next_evo
+  
+  var/biomass_next_evo
 
 	switch(evolution_level)
 		if(1)
@@ -109,8 +110,6 @@
 		if(4)
 			biomass_next_evo = 225
 	if(evolution_level > 4)
-		biomass_next_evo = biomass_max
-	*/
 
 	if(hud_used?.bloodling_bio_display)
 		hud_used.bloodling_bio_display.maptext = FORMAT_BIO_TEXT(biomass)
@@ -205,9 +204,11 @@
 	for(var/datum/action/cooldown/ability in new_bloodling.our_abilties)
 		ability.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
+
 	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in new_bloodling.actions
 	if(vow)
 		vow.Remove(new_bloodling)
+
 
 	qdel(src)
 
