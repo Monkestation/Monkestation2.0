@@ -152,7 +152,7 @@
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /obj/item/sticker/analysis_form/ui_status(mob/user,/datum/ui_state/ui_state)
-	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
+	if(!in_range(user, attached || src) && !isobserver(user))
 		return UI_CLOSE
 	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
