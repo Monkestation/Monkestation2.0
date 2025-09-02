@@ -1361,10 +1361,18 @@
 /mob/living/carbon/proc/set_handcuffed(new_value)
 	if(handcuffed == new_value)
 		return FALSE
-	. = handcuffed
+	var/old_value = handcuffed
 	handcuffed = new_value
-	if(.)
+	if(old_value)
 		if(!handcuffed)
+
+			var/obj/item/restraints/handcuffs/silver/silver_cuffs = astype(old_value, /obj/item/restraints/handcuffs/silver)
+			if (silver_cuffs)
+				if (IS_BLOODSUCKER_OR_VASSAL(src))
+					src.remove_status_effect(/datum/status_effect/silver_cuffed)
+
+					silver_cuffs.breakouttime = 1 SECONDS
+
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)

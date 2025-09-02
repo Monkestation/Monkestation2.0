@@ -140,18 +140,15 @@
 	desc = "A pair of silver handcuffs. Completely ineffective on normal crew, but some say they can contain certain creatures of the night..."
 	breakouttime = 1 SECONDS
 
-	var/static/list/affected_antags = list(
-		/datum/antagonist/bloodsucker,
-		/datum/antagonist/vassal
-	)
+	color = list(1,0,0, 0,1,0, 0,0,1, 0.4,0.4,0.4)
 
 /obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
 	. = ..()
 
 	if (target.handcuffed)
-		for(var/datum/antagonist/antag_datum as anything in target.mind.antag_datums)
-			if (antag_datum.type in affected_antags)
-				breakouttime = 60 SECONDS
+		if (IS_BLOODSUCKER_OR_VASSAL(target))
+			breakouttime = 60 SECONDS
+			target.apply_status_effect(/datum/status_effect/silver_cuffed)
 
 /**
  * # Alien handcuffs

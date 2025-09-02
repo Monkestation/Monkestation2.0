@@ -34,3 +34,13 @@
 	)
 	tool_paths = list(/obj/item/stamp/head/captain)
 	category = CAT_MISC
+
+/datum/crafting_recipe/silver_cuffs
+	name = "Silver Cuffs"
+	result = /obj/item/restraints/handcuffs/silver
+	reqs = list(
+		/obj/item/restraints/handcuffs = 1,
+		/obj/item/stack/sheet/mineral/silver = 1,
+	)
+	time = 3 SECONDS
+	category = CAT_MISC

@@ -559,3 +559,7 @@
 	else
 		REMOVE_TRAITS_IN(current, BLOODSUCKER_COFFIN_TRAIT)
 
+/datum/status_effect/silver_cuffed
+	id = "silver cuffed"
+	alert_type = null
+	remove_on_fullheal = TRUE
