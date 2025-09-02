@@ -6,18 +6,22 @@
 	desc = "A charging dock for energy based weaponry, PDAs, and other devices."
 	circuit = /obj/item/circuitboard/machine/recharger
 	pass_flags = PASSTABLE
+	/// The item currently inserted into the charger
 	var/obj/item/charging = null
+	/// How good the capacitor is at charging the item
 	var/recharge_coeff = 1
-	var/using_power = FALSE //Did we put power into "charging" last process()?
-	///Did we finish recharging the currently inserted item?
+	/// Did we put power into "charging" last process()?
+	var/using_power = FALSE
+	/// Did we finish recharging the currently inserted item?
 	var/finished_recharging = FALSE
-
+	/// List of items that can be recharged
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
-		/obj/item/gun/microfusion, //monkestation edit
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
+		/obj/item/gun/ballistic/automatic/battle_rifle,
+		/obj/item/gun/microfusion, //monkestation edit
 		/obj/item/stock_parts/cell/microfusion, //monkestation edit
 	))
 
@@ -43,10 +47,9 @@
 			var/obj/item/stock_parts/cell/C = charging.get_cell()
 			. += span_notice("- \The [charging]'s cell is at <b>[C.percent()]%</b>.")
 
-
 /obj/machinery/recharger/proc/setCharging(new_charging)
 	charging = new_charging
-	if (new_charging)
+	if(new_charging)
 		START_PROCESSING(SSmachines, src)
 		update_use_power(ACTIVE_POWER_USE)
 		finished_recharging = FALSE
@@ -57,67 +60,62 @@
 		using_power = FALSE
 		update_appearance()
 
-/obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
-	if(G.tool_behaviour == TOOL_WRENCH)
-		if(charging)
-			to_chat(user, span_notice("Remove the charging item first!"))
-			return
-		set_anchored(!anchored)
-		power_change()
-		to_chat(user, span_notice("You [anchored ? "attached" : "detached"] [src]."))
-		G.play_tool_sound(src)
-		return
+/obj/machinery/recharger/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_type_in_typecache(tool, allowed_devices))
+		return NONE
 
-	var/allowed = is_type_in_typecache(G, allowed_devices)
+	if(!anchored)
+		to_chat(user, span_notice("[src] isn't connected to anything!"))
+		return ITEM_INTERACT_BLOCKING
+	if(charging || panel_open)
+		return ITEM_INTERACT_BLOCKING
 
-	if(allowed)
-		if(anchored)
-			if(charging || panel_open)
-				return 1
+	var/area/our_area = get_area(src) //Check to make sure user's not in space doing it, and that the area got proper power.
+	if(!isarea(our_area) || our_area.power_equip == 0)
+		to_chat(user, span_notice("[src] blinks red as you try to insert [tool]."))
+		return ITEM_INTERACT_BLOCKING
 
-			//Checks to make sure he's not in space doing it, and that the area got proper power.
-			var/area/a = get_area(src)
-			if(!isarea(a) || a.power_equip == 0)
-				to_chat(user, span_notice("[src] blinks red as you try to insert [G]."))
-				return 1
+	if(istype(tool, /obj/item/gun/energy))
+		var/obj/item/gun/energy/energy_gun = tool
+		if(!energy_gun.can_charge)
+			to_chat(user, span_notice("Your gun has no external power connector."))
+			return ITEM_INTERACT_BLOCKING
 
-			if (istype(G, /obj/item/gun/energy))
-				var/obj/item/gun/energy/E = G
-				if(!E.can_charge)
-					to_chat(user, span_notice("Your gun has no external power connector."))
-					return 1
+	//MONKESTATION EDIT ADDITION
+	if(istype(tool, /obj/item/gun/microfusion))
+		var/obj/item/gun/microfusion/microfusion_gun = tool
+		if(microfusion_gun.cell?.chargerate <= 0)
+			to_chat(user, span_notice("[microfusion_gun] cannot be recharged!"))
+			return ITEM_INTERACT_BLOCKING
 
-			//MONKESTATION EDIT ADDITION
-			if (istype(G, /obj/item/gun/microfusion))
-				var/obj/item/gun/microfusion/microfusion_gun = G
-				if(microfusion_gun.cell?.chargerate <= 0)
-					to_chat(user, span_notice("[microfusion_gun] cannot be recharged!"))
-					return TRUE
+	if(istype(tool, /obj/item/stock_parts/cell/microfusion))
+		var/obj/item/stock_parts/cell/microfusion/inserting_cell = tool
+		if(inserting_cell.chargerate <= 0)
+			to_chat(user, span_notice("[inserting_cell] cannot be recharged!"))
+			return ITEM_INTERACT_BLOCKING
+	//MONKESTATION EDIT END
+	user.transferItemToLoc(tool, src)
+	return ITEM_INTERACT_SUCCESS
 
-			if(istype(G, /obj/item/stock_parts/cell/microfusion))
-				var/obj/item/stock_parts/cell/microfusion/inserting_cell = G
-				if(inserting_cell.chargerate <= 0)
-					to_chat(user, span_notice("[inserting_cell] cannot be recharged!"))
-					return TRUE
-			//MONKESTATION EDIT END
-			if(!user.transferItemToLoc(G, src))
-				return 1
-			setCharging(G)
+/obj/machinery/recharger/wrench_act(mob/living/user, obj/item/tool)
+	if(charging)
+		to_chat(user, span_notice("Remove the charging item first!"))
+		return ITEM_INTERACT_BLOCKING
+	set_anchored(!anchored)
+	power_change()
+	to_chat(user, span_notice("You [anchored ? "attached" : "detached"] [src]."))
+	tool.play_tool_sound(src)
+	return ITEM_INTERACT_SUCCESS
 
-		else
-			to_chat(user, span_notice("[src] isn't connected to anything!"))
-		return 1
+/obj/machinery/recharger/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!anchored || charging)
+		return ITEM_INTERACT_BLOCKING
+	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
+	if(.)
+		update_appearance()
 
-	if(anchored && !charging)
-		if(default_deconstruction_screwdriver(user, "recharger", "recharger", G))
-			update_appearance()
-			return
-
-		if(panel_open && G.tool_behaviour == TOOL_CROWBAR)
-			default_deconstruction_crowbar(G)
-			return
-
-	return ..()
+/obj/machinery/recharger/crowbar_act(mob/living/user, obj/item/tool)
+	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)
 
 /obj/machinery/recharger/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -131,7 +129,6 @@
 		user.put_in_hands(charging)
 		setCharging(null)
 
-
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(!charging)
 		return
@@ -139,7 +136,6 @@
 	charging.forceMove(drop_location())
 	setCharging(null)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
-
 
 /obj/machinery/recharger/process(seconds_per_tick)
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
@@ -173,7 +169,7 @@
 
 /obj/machinery/recharger/emp_act(severity)
 	. = ..()
-	if (. & EMP_PROTECT_CONTENTS)
+	if(. & EMP_PROTECT_CONTENTS)
 		return
 	if(!(machine_stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/gun/energy))
