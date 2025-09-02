@@ -80,9 +80,9 @@
  */
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
-	if(!user.Adjacent(source))
+
+	if(!user.can_perform_action(source))
 		return
-	source.balloon_alert(user, "clicked extra button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
-	entity.set_output(user)
-	right.set_output(COMPONENT_SIGNAL)
+
+	handle_trigger(source, user, "extra", right)
+	return CLICK_ACTION_SUCCESS

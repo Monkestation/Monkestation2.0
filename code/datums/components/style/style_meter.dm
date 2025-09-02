@@ -92,12 +92,12 @@
 /obj/item/style_meter/proc/on_altclick(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(istype(loc, /obj/item/clothing/glasses))
-		clean_up()
-		forceMove(get_turf(src))
+	if(!istype(loc, /obj/item/clothing/glasses) || !user.can_perform_action(source))
+		return CLICK_ACTION_BLOCKING
 
-	return COMPONENT_CANCEL_CLICK_ALT
-
+	clean_up(loc)
+	forceMove(get_turf(src))
+	return CLICK_ACTION_SUCCESS
 
 /// Signal proc for when the glasses or the meter is multitooled
 /obj/item/style_meter/proc/on_multitool(datum/source, mob/living/user, obj/item/tool, list/recipes)
