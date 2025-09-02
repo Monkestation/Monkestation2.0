@@ -20,7 +20,7 @@
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
-		/obj/item/gun/ballistic/automatic/battle_rifle,
+		///obj/item/gun/ballistic/automatic/battle_rifle,
 		/obj/item/gun/microfusion, //monkestation edit
 		/obj/item/stock_parts/cell/microfusion, //monkestation edit
 	))
