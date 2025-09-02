@@ -273,9 +273,9 @@
 	new /obj/item/gun_maintenance_supplies(src)
 
 //floorbot assembly
-/obj/item/storage/toolbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(!istype(inserted, /obj/item/stack/tile/iron))
-		return TRUE
+/obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/tile/iron))
+		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
 		/obj/item/storage/toolbox/electrical,
@@ -289,7 +289,7 @@
 	if(contents.len >= 1)
 		balloon_alert(user, "not empty!")
 		return FALSE
-	if(inserted.use(10))
+	if(tool.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		switch(B.toolbox)

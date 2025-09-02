@@ -450,9 +450,9 @@
 	generate_items_inside(items_inside,src)
 
 //medibot assembly
-/obj/item/storage/medkit/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(!istype(inserted, /obj/item/bodypart/arm/left/robot) && !istype(inserted, /obj/item/bodypart/arm/right/robot))
-		return TRUE
+/obj/item/storage/medkit/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
+		return ..()
 	//Making a medibot!
 	if(contents.len >= 1)
 		balloon_alert(user, "items inside!")
@@ -471,9 +471,9 @@
 		medbot_assembly.set_skin("advanced")
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
-	medbot_assembly.robot_arm = inserted.type
+	medbot_assembly.robot_arm = tool.type
 	medbot_assembly.medkit_type = type
-	qdel(inserted)
+	qdel(tool)
 	qdel(src)
 	return FALSE
 

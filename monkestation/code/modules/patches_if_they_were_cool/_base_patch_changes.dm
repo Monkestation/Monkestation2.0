@@ -12,7 +12,7 @@
 
 /obj/item/reagent_containers/pill/patch/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!isliving(target))
-		return ITEM_INTERACT_BLOCKING
+		return ..()
 
 	if(target != user && !do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target))
 		return ITEM_INTERACT_BLOCKING
