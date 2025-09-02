@@ -5,6 +5,7 @@
 2025-09-02:
   Absolucy:
   - rscadd: Added an option to hide your ckey from the roundend report (off by default)
+  - bugfix: The genetic sequence scanner now shows instability and such again.
   JupiterJaeden:
   - bugfix: You can now tackle while pulling something (it will automatically break
       the pull, however.)
@@ -14,5 +15,8 @@
   - rscadd: Axolotls now squeak!
   Xander3359:
   - bugfix: Pathology machines should be fully interactible
+  - spellcheck: fix IB "repaiing"
+  - bugfix: borgs can rotate reflectors
+  - code_imp: Rechargers use interaction
   mc-oofert:
   - bugfix: you can now attach stuff to a mechs right arm
