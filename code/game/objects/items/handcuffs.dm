@@ -140,7 +140,12 @@
 	desc = "A pair of silver handcuffs. Completely ineffective on normal crew, but some say they can contain certain creatures of the night..."
 	breakouttime = 1 SECONDS
 
-	color = list(1,0,0, 0,1,0, 0,0,1, 0.4,0.4,0.4)
+	color = list(
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1,
+		0.4,0.4,0.4
+	)
 
 /obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
 	. = ..()
