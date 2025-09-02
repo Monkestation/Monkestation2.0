@@ -73,7 +73,7 @@
 					dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
 				dat+="</ul>"
 			if(scribble_page == curr_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
+				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble_text]\"</I>"
 			dat+= "<HR><DIV STYLE='float:right;'><A href='byond://?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='byond://?src=[REF(user)];mach_close=newspaper_main'>Done reading</A></DIV>"
 		if(1) // X channel pages inbetween.
 			for(var/datum/feed_channel/NP in news_content)
@@ -102,7 +102,7 @@
 						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.return_author(notContent(MESSAGE.author_censor_time))]</FONT>\]</FONT><BR><BR>"
 					dat+="</ul>"
 			if(scribble_page == curr_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
+				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble_text]\"</I>"
 			dat+= "<BR><HR><DIV STYLE='float:left;'><A href='byond://?src=[REF(src)];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='byond://?src=[REF(src)];next_page=1'>Next Page</A></DIV>"
 		if(2) //Last page
 			for(var/datum/feed_channel/NP in news_content)
@@ -120,7 +120,7 @@
 			else
 				dat+="<I>Apart from some uninteresting classified ads, there's nothing on this page...</I>"
 			if(scribble_page == curr_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
+				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble_text]\"</I>"
 			dat+= "<HR><DIV STYLE='float:left;'><A href='byond://?src=[REF(src)];prev_page=1'>Previous Page</A></DIV>"
 	dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
 	user << browse(dat, "window=newspaper_main;size=300x400")
@@ -184,7 +184,7 @@
 			if(!user.can_perform_action(src))
 				return
 			scribble_page = curr_page
-			scribble = s
+			scribble_text = s
 			attack_self(user)
 			add_fingerprint(user)
 	else

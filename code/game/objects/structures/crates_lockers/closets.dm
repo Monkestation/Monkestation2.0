@@ -39,7 +39,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	var/has_opened_overlay = TRUE
 	var/has_closed_overlay = TRUE
 	var/icon_door = null
-	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
@@ -69,12 +68,14 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	contents_pressure_protection = 0
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
 	contents_thermal_insulation = 0
+	///electronics for access
+	var/obj/item/electronics/airlock/electronics
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
 	var/strong_grab = FALSE
-	///electronics for access
-	var/obj/item/electronics/airlock/electronics
+	/// secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
+	var/secure = FALSE
 	var/can_install_electronics = TRUE
 
 	var/contents_initialized = FALSE
@@ -482,17 +483,17 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/closet/proc/tool_interact(obj/item/tool, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	var/obj/item/card/id/id = null
-	if(!opened && istype(weapon, /obj/item/airlock_painter))
+	if(!opened && istype(tool, /obj/item/airlock_painter))
 		if(!length(paint_jobs))
 			return
 		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", paint_jobs)
 		if(isnull(choice))
 			return
 
-		var/obj/item/airlock_painter/painter = weapon
+		var/obj/item/airlock_painter/painter = tool
 		if(!painter.use_paint(user))
 			return
 		var/list/paint_job = paint_jobs[choice]
@@ -502,26 +503,26 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 
 		update_appearance()
 
-	else if(istype(weapon, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
+	else if(istype(tool, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
 			span_notice("You start to install electronics into the [src]..."))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
 			return
-		if(!user.transferItemToLoc(weapon, src))
+		if(!user.transferItemToLoc(tool, src))
 			return
 
-		CheckParts(list(weapon))
+		CheckParts(list(tool))
 		secure = TRUE
 		balloon_alert(user, "electronics installed")
 
 		update_appearance()
 
-	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
+	else if(tool.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
 		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
 			span_notice("You begin to remove the electronics from the [src]..."))
 
-		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
+		if (!tool.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
 			return
 
 		var/obj/item/electronics/airlock/airlock_electronics = new(drop_location())
@@ -539,23 +540,23 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 
 		update_appearance()
 
-	else if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
+	else if(istype(tool, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
 		user.visible_message(span_notice("[user] is installing a card reader."),
 					span_notice("You begin installing the card reader."))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return
 
-		qdel(weapon)
+		qdel(tool)
 		card_reader_installed = TRUE
 
 		balloon_alert(user, "card reader installed")
 
-	else if(weapon.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
+	else if(tool.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
 		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
 			span_notice("You begin to pry the card reader out from [src]..."))
 
-		if(!weapon.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
+		if(!tool.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
 			return
 
 		new /obj/item/stock_parts/card_reader(drop_location())
@@ -563,7 +564,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 
 		balloon_alert(user, "card reader removed")
 
-	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = weapon.GetID())))
+	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = tool.GetID())))
 		var/num_choices = length(access_choices)
 		if(!num_choices)
 			return
@@ -598,7 +599,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		else
 			balloon_alert(user, "set to [choice]")
 
-	else if(!opened && IS_WRITING_UTENSIL(weapon))
+	else if(!opened && IS_WRITING_UTENSIL(tool))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return
@@ -629,9 +630,9 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			update_appearance(bit_flag)
 
 	else if(opened)
-		if(istype(weapon, cutting_tool))
-			if(weapon.tool_behaviour == TOOL_WELDER)
-				if(!weapon.tool_start_check(user, amount=1))
+		if(istype(tool, cutting_tool))
+			if(tool.tool_behaviour == TOOL_WELDER)
+				if(!tool.tool_start_check(user, amount=1))
 					return
 
 				to_chat(user, span_notice("You begin cutting \the [src] apart..."))

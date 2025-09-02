@@ -39,6 +39,7 @@
 
 /obj/item/pen/Initialize(mapload)
 	. = ..()
+	/* MONKE EDIT
 	AddComponent(/datum/component/dart_insert, \
 		dart_insert_icon, \
 		dart_insert_casing_icon_state, \
@@ -49,6 +50,7 @@
 	AddElement(/datum/element/tool_renaming)
 	RegisterSignal(src, COMSIG_DART_INSERT_ADDED, PROC_REF(on_inserted_into_dart))
 	RegisterSignal(src, COMSIG_DART_INSERT_REMOVED, PROC_REF(on_removed_from_dart))
+	*/ // MONKE EDIT
 	if (!can_click)
 		return
 	create_transform_component()
@@ -205,13 +207,14 @@
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
 
-/obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
-	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
-		return
-	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
-	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
+///obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
+//	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
+//		return
+//	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
+//	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
 
-/obj/item/pen/item_ctrl_click(mob/living/carbon/user)
+/obj/item/pen/attack_self(mob/user, modifiers)
+	. = ..()
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return CLICK_ACTION_BLOCKING
