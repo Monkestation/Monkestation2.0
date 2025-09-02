@@ -76,18 +76,18 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		if(movable_content.anchored)
 			continue
 		do_teleport(movable_content, moving_turf)
-	playsound(src, 'sound/magic/Disable_Tech.ogg', 50) // Sound isn't played in the teleport because it will spam sounds if a lot of items are present
+	playsound(src, 'sound/magic/Disable_Tech.ogg', 35) // Sound isn't played in the teleport because it will spam sounds if a lot of items are present
 	new /obj/effect/decal/cleanable/ash(target_turf)
 	COOLDOWN_START(src, use_cooldown, 8 SECONDS)
 
 //---- Allows the cargo teleporter to hold fultons as charges, in order to fulton people with right click
 /obj/item/cargo_teleporter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(attacking_item, /obj/item/extraction_pack))
+	if(!istype(tool, /obj/item/extraction_pack))
 		return NONE
 	if(charges >= max_charges)
 		balloon_alert(user, "charges full")
 		return ITEM_INTERACT_BLOCKING
-	var/obj/item/extraction_pack/attacking_fulton = attacking_item
+	var/obj/item/extraction_pack/attacking_fulton = tool
 	var/missing_charges = max_charges - charges
 	if(missing_charges >= attacking_fulton.uses_left)
 		charges += attacking_fulton.uses_left
