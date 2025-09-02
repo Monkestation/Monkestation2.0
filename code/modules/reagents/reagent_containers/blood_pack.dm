@@ -75,12 +75,7 @@
 	blood_type = /datum/blood_type/crew/skrell
 
 /obj/item/reagent_containers/blood/snail
-<<<<<<< HEAD
 	blood_type = /datum/blood_type/snail
-=======
-	blood_type = "S"
-	unique_blood = /datum/reagent/lube
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()

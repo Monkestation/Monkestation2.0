@@ -31,8 +31,6 @@
 	var/requires_gravity = TRUE // can you use this to write in zero-g
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
-<<<<<<< HEAD
-=======
 	var/dart_insert_icon = 'icons/obj/weapons/guns/toy.dmi'
 	var/dart_insert_casing_icon_state = "overlay_pen"
 	var/dart_insert_projectile_icon_state = "overlay_pen_proj"
@@ -96,7 +94,6 @@
 
 /obj/item/pen/proc/on_removed_from_dart(datum/source, obj/projectile/dart, mob/user)
 	SIGNAL_HANDLER
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 
 /obj/item/pen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))
@@ -122,12 +119,8 @@
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
 	icon_state = "pen_4color"
-<<<<<<< HEAD
-	colour = "#000000"
-=======
 	colour = COLOR_BLACK
 	can_click = FALSE
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 
 /obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
 	. = ..()
@@ -157,12 +150,9 @@
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 	requires_gravity = FALSE // fancy spess pens
-<<<<<<< HEAD
-=======
 	dart_insert_casing_icon_state = "overlay_fountainpen"
 	dart_insert_projectile_icon_state = "overlay_fountainpen_proj"
 	can_click = FALSE
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 
 /obj/item/pen/charcoal
 	name = "charcoal stylus"
@@ -214,12 +204,6 @@
 	if(current_skin)
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
-<<<<<<< HEAD
-/obj/item/pen/attack_self(mob/living/carbon/user)
-	. = ..()
-	if(.)
-		return
-=======
 
 /obj/item/pen/fountain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
 	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
@@ -228,7 +212,6 @@
 	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
 
 /obj/item/pen/item_ctrl_click(mob/living/carbon/user)
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return CLICK_ACTION_BLOCKING
@@ -427,9 +410,6 @@
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
-<<<<<<< HEAD
-	colour = "#0000FF"
-=======
 	colour = COLOR_BLUE
 	dart_insert_casing_icon_state = "overlay_survivalpen"
 	dart_insert_projectile_icon_state = "overlay_survivalpen_proj"
@@ -451,7 +431,6 @@
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/mineral_turf = target_turf
 		mineral_turf.gets_drilled(firer, TRUE)
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 
 /obj/item/pen/destroyer
 	name = "Fine Tipped Pen"

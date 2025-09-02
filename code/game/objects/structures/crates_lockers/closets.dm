@@ -265,11 +265,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld" : "Weld"
 		screentip_change = TRUE
 
-<<<<<<< HEAD
-	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
-		screentip_change = TRUE
-=======
 	if(!locked && !opened && (welded || !can_weld_shut))
 		if(!secure)
 			if(!broken && can_install_electronics && istype(held_item, /obj/item/electronics/airlock))
@@ -297,7 +292,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			if(istype(held_item) && istype(held_item) && held_item.tool_behaviour == TOOL_MULTITOOL)
 				context[SCREENTIP_CONTEXT_LMB] = "[access_locked ? "Unlock" : "Lock"] Access Panel"
 				screentip_change = TRUE
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 
 	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
@@ -490,12 +484,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
-<<<<<<< HEAD
-	if(opened)
-		if(istype(W, cutting_tool))
-			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
-=======
 	var/obj/item/card/id/id = null
 	if(!opened && istype(weapon, /obj/item/airlock_painter))
 		if(!length(paint_jobs))
@@ -644,7 +632,6 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		if(istype(weapon, cutting_tool))
 			if(weapon.tool_behaviour == TOOL_WELDER)
 				if(!weapon.tool_start_check(user, amount=1))
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 					return
 
 				to_chat(user, span_notice("You begin cutting \the [src] apart..."))

@@ -215,11 +215,7 @@
 			return
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-<<<<<<< HEAD
-	else if(istype(attacking_item, /obj/item/pen))
-=======
 	else if(IS_WRITING_UTENSIL(I))
->>>>>>> 4ac4375fafc (Adds pen clicking, changes most pen typechecks into writing implement checks (#84186))
 		if(!open)
 			if(!user.can_write(attacking_item))
 				return

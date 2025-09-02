@@ -14,12 +14,14 @@
 	var/pages = 0
 	var/curr_page = 0
 	var/list/datum/feed_channel/news_content = list()
-	var/scribble=""
-	var/scribble_page = null
 	var/wantedAuthor
 	var/wantedCriminal
 	var/wantedBody
 	var/wantedPhoto
+	var/creation_time
+	///List of news feeed channels the newspaper can see.
+	var/list/datum/feed_channel/news_content = list()
+	///The time the newspaper was made in terms of newscaster's last action, used to tell the newspaper whether a story should be in it.
 	var/creation_time
 	///The page in the newspaper currently being read. 0 is the title screen while the last is the security screen.
 	var/current_page = 0
@@ -34,34 +36,8 @@
 	var/saved_wanted_body
 	///Stored icon of the wanted criminal, if one existed at the time of creation.
 	var/icon/saved_wanted_icon
-
-/obj/item/newspaper/Initialize(mapload)
-	. = ..()
-	register_context()
-	AddComponent(\
-		/datum/component/two_handed,\
-		wield_callback = CALLBACK(src, PROC_REF(on_wielded)),\
-		unwield_callback = CALLBACK(src, PROC_REF(on_unwielded)),\
-	)
-	creation_time = GLOB.news_network.last_action
-	for(var/datum/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
-		news_content += iterated_feed_channel
-
-	if(!GLOB.news_network.wanted_issue.active)
-		return
-	saved_wanted_criminal = GLOB.news_network.wanted_issue.criminal
-	saved_wanted_body = GLOB.news_network.wanted_issue.body
-	if(GLOB.news_network.wanted_issue.img)
-		saved_wanted_icon = GLOB.news_network.wanted_issue.img
-
-/obj/item/newspaper/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(held_item)
-		if(IS_WRITING_UTENSIL(held_item))
-			context[SCREENTIP_CONTEXT_LMB] = "Scribble"
-			return CONTEXTUAL_SCREENTIP_SET
-		if(held_item.get_temperature())
-			context[SCREENTIP_CONTEXT_LMB] = "Burn"
-			return CONTEXTUAL_SCREENTIP_SET
+	///Do we have eyeholes punctured?
+	var/punctured = FALSE
 
 /obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!"))
