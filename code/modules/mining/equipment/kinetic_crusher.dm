@@ -837,8 +837,8 @@
 	name = "set of proto kinetic knives"
 	desc = "With a touch of bluespace, the crusher has been made into a more practical form for throwing. \
 	This set of throwing knives allows you to utilize the features of a crusher while maintaining more than a safe \
-	distance from whatever fauna stands between you and your ore. Unfortunetly, while they are the perfect shape for throwing, the awkward grip \
-	and blade make it pretty much impossible to stab with... at least it can still utilize trophies."
+	distance from whatever fauna stands between you and your ore. \
+	at least it can still utilize trophies."
 	fire_sound = 'sound/weapons/fwoosh.ogg'
 	pinless = TRUE
 	force = 10
@@ -972,13 +972,10 @@
 			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
 			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/gun/magic/crusherknives/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with == user)
-		balloon_alert(user, "can't aim at yourself!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/magic/crusherknives/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/magic/crusherknives/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
 	if(!charged)

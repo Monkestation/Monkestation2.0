@@ -1,0 +1,18 @@
+2025-09-01:
+  EssentialTomato:
+  - bugfix: Minecart rails can be placed again.
+  - bugfix: Stone griddle and cauldron no longer eat your crowbar while deconstructing.
+2025-09-02:
+  Absolucy:
+  - rscadd: Added an option to hide your ckey from the roundend report (off by default)
+  JupiterJaeden:
+  - bugfix: You can now tackle while pulling something (it will automatically break
+      the pull, however.)
+  - bugfix: If you are using toggle throw mode, tackles should now always disable
+      throw mode correctly after being used.
+  Tractor Maam (Sound from warface1234455's PR on Yogstation):
+  - rscadd: Axolotls now squeak!
+  Xander3359:
+  - bugfix: Pathology machines should be fully interactible
+  mc-oofert:
+  - bugfix: you can now attach stuff to a mechs right arm
