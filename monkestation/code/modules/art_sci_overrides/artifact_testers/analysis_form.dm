@@ -90,27 +90,32 @@
 	if(!istype(user.get_active_held_item(), /obj/item/pen))
 		to_chat(user, span_notice("You need a pen to write on [src]!"))
 		return
-	. = TRUE
 	switch(action)
 		if("origin")
+			. = TRUE
 			chosen_origin = params["origin"]
 		if("type")
+			. = TRUE
 			var/trig_type = params["type"]
 			if(trig_type in chosen_effects)
 				chosen_effects -= trig_type
 			else
 				chosen_effects += trig_type
 		if("fault")
+			. = TRUE
 			chosen_fault = params["fault"]
 		if("trigger")
+			. = TRUE
 			var/trig_act = params["trigger"]
 			if(trig_act in chosentriggers)
 				chosentriggers -= trig_act
 			else
 				chosentriggers += trig_act
-	SStgui.update_uis(src)
-	if(attached)
-		analyze_attached()
+
+	if(.)
+		SStgui.update_uis(src)
+		if(attached)
+			analyze_attached()
 
 /obj/item/sticker/analysis_form/ui_static_data(mob/user)
 	return all_list
