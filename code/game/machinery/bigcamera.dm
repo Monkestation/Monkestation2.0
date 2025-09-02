@@ -52,7 +52,7 @@
 	. += span_notice("[src] is <b>[anchored ? "anchored" : "not anchored"]</b>.")
 
 /// When activating the camera
-/obj/machinery/big_broadcast_camera/proc/on_activating(var/mob/living/user)
+/obj/machinery/big_broadcast_camera/proc/on_activating(mob/living/user)
 	active = TRUE
 
 	// INTERNAL CAMERA
