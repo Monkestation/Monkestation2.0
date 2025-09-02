@@ -111,6 +111,15 @@
 	var/datum/action/cooldown/bingle/spawn_hole/makehole = new pit_spawner(src)
 	makehole.Grant(src)
 
+/mob/living/basic/bingle/armored
+	icon_state = "bingle_armored"
+	maxHealth = 300
+	obj_damage = 100
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	armour_penetration = 20
+	evolved = TRUE
+
 /mob/living/basic/bingle/proc/evolve()
 	var/mob/living/basic/bingle/bongle = src
 	bongle.maxHealth = 160
