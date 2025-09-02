@@ -54,15 +54,7 @@
 	disliked_foodtypes = CLOTH
 
 /obj/item/organ/internal/tongue/teratoma/get_scream_sound()
-	return pick(
-		'sound/creatures/monkey/monkey_screech_1.ogg',
-		'sound/creatures/monkey/monkey_screech_2.ogg',
-		'sound/creatures/monkey/monkey_screech_3.ogg',
-		'sound/creatures/monkey/monkey_screech_4.ogg',
-		'sound/creatures/monkey/monkey_screech_5.ogg',
-		'sound/creatures/monkey/monkey_screech_6.ogg',
-		'sound/creatures/monkey/monkey_screech_7.ogg',
-	)
+	return SFX_SCREECH
 
 /obj/item/organ/internal/tongue/teratoma/get_laugh_sound()
 	return 'monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'
