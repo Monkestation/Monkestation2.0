@@ -36,6 +36,38 @@
 	var/list/chosentriggers = list()
 	var/list/chosen_effects = list()
 	var/chosen_fault = ""
+	var/static/list/all_list
+
+/obj/item/sticker/analysis_form/Initialize(mapload)
+	. = ..()
+	if(!all_list)
+		all_list = initialize_static_list()
+
+/obj/item/sticker/analysis_form/proc/initialize_static_list()
+	var/list/origins_names = list()
+	for(var/datum/artifact_origin/subtype as anything in subtypesof(/datum/artifact_origin))
+		origins_names += initial(subtype.name)
+
+	var/list/allfaults = list()
+	for(var/datum/artifact_fault/subtype as anything in subtypesof(/datum/artifact_fault))
+		allfaults += initial(subtype.name)
+
+	var/list/trigger_names = list()
+	for(var/datum/artifact_activator/subtype as anything in subtypesof(/datum/artifact_activator))
+		trigger_names += initial(subtype.name)
+
+	var/list/artifact_names = list()
+	for(var/datum/artifact_effect/subtype as anything in subtypesof(/datum/artifact_effect))
+		if(subtype.super_secret)
+			continue //shhhhh
+		artifact_names += initial(subtype.type_name)
+
+	return list(
+		"allorigins" = sort_list(origins_names),
+		"allfaults" = sort_list(allfaults),
+		"alltypes" = sort_list(artifact_names),
+		"alltriggers" = sort_list(trigger_names),
+	)
 
 /obj/item/sticker/analysis_form/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/pen))
@@ -47,14 +79,16 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ArtifactForm", name)
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/item/sticker/analysis_form/ui_act(action, params)
+/obj/item/sticker/analysis_form/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	if(!istype(usr.get_active_held_item(), /obj/item/pen))
-		to_chat(usr, span_notice("You need a pen to write on [src]!"))
+	var/mob/user = ui.user
+	if(!istype(user.get_active_held_item(), /obj/item/pen))
+		to_chat(user, span_notice("You need a pen to write on [src]!"))
 		return
 	. = TRUE
 	switch(action)
@@ -74,42 +108,20 @@
 				chosentriggers -= trig_act
 			else
 				chosentriggers += trig_act
+	SStgui.update_uis(src)
 	if(attached)
 		analyze_attached()
 
 /obj/item/sticker/analysis_form/ui_static_data(mob/user)
-	. = ..()
-	var/list/origins_names = list()
-	for(var/datum/artifact_origin/subtype as anything in subtypesof(/datum/artifact_origin))
-		origins_names += initial(subtype.name)
-
-	var/list/allfaults = list()
-	for(var/datum/artifact_fault/subtype as anything in subtypesof(/datum/artifact_fault))
-		allfaults += initial(subtype.name)
-
-	var/list/trigger_names = list()
-	for(var/datum/artifact_activator/subtype as anything in subtypesof(/datum/artifact_activator))
-		trigger_names += initial(subtype.name)
-
-	var/list/artifact_names = list()
-	for(var/datum/artifact_effect/subtype as anything in subtypesof(/datum/artifact_effect))
-		if(subtype.super_secret)
-			continue //shhhhh
-		artifact_names += initial(subtype.type_name)
-
-	.["allorigins"] = sort_list(origins_names)
-	.["allfaults"] = sort_list(allfaults)
-	.["alltypes"] = sort_list(artifact_names)
-	.["alltriggers"] = sort_list(trigger_names)
-	return
+	return all_list
 
 /obj/item/sticker/analysis_form/ui_data(mob/user)
-	. = ..()
-	.["chosenorigin"] = chosen_origin
-	.["chosenfault"] = chosen_fault
-	.["chosentype"] = chosen_effects
-	.["chosentriggers"] = chosentriggers
-	return .
+	return list(
+		"chosenorigin" = chosen_origin,
+		"chosenfault" = chosen_fault,
+		"chosentype" = chosen_effects,
+		"chosentriggers" = chosentriggers,
+	)
 
 /obj/item/sticker/analysis_form/can_interact(mob/user)
 	if(attached && user.Adjacent(attached))
@@ -122,24 +134,17 @@
 
 /obj/item/sticker/analysis_form/unregister_signals(datum/source)
 	. = ..()
-	UnregisterSignal(attached, list(COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(attached, COMSIG_ATOM_EXAMINE)
 
 /obj/item/sticker/analysis_form/examine(mob/user)
 	. = ..()
-	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
-		return
-	ui_interact(user)
+	if(isobserver(user) || in_range(user, attached || src))
+		ui_interact(user)
 
 /obj/item/sticker/analysis_form/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("It has an artifact analysis form attached to it...")
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/, ui_interact), user)
-
-/obj/item/sticker/analysis_form/examine(mob/user)
-	. = ..()
-	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
-		return
-	ui_interact(user)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /obj/item/sticker/analysis_form/ui_status(mob/user,/datum/ui_state/ui_state)
 	if(!in_range(user, (attached ? attached : src)) && !isobserver(user))
