@@ -135,8 +135,10 @@
 
 /obj/effect/spawner/random/structure/crate_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/crate/peek_a_boo = ..()
+/*
 	if(istype(peek_a_boo) && prob(50))
 		peek_a_boo.open(special_effects = FALSE) //the crate appears immediatly out of thin air so no need to animate anything
+*/
 
 	return peek_a_boo
 
