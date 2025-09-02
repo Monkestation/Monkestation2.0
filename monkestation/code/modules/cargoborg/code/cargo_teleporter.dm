@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		if(movable_content.anchored)
 			continue
 		do_teleport(movable_content, moving_turf)
-	playsound(src, 'sound/magic/Disable_Tech.ogg', 35) // Sound isn't played in the teleport because it will spam sounds if a lot of items are present
+	playsound(src, 'sound/magic/disable_tech.ogg', 35) // Sound isn't played in the teleport because it will spam sounds if a lot of items are present
 	new /obj/effect/decal/cleanable/ash(target_turf)
 	COOLDOWN_START(src, use_cooldown, 8 SECONDS)
 
