@@ -438,23 +438,6 @@
 			return TRUE
 	return ..()
 
-/mob/proc/CtrlMiddleClickOn(atom/A)
-	if(check_rights_for(client, R_ADMIN))
-		client.toggle_tag_datum(A)
-	else
-		A.CtrlClick(src)
-	return
-
-/**
- * Alt click
- * Unused except for AI
- */
-/mob/proc/AltClickOn(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
-	if(. & COMSIG_MOB_CANCEL_CLICKON)
-		return
-	A.AltClick(src)
-
 /**
  * Alt click on an atom.
  * Performs alt-click actions before attempting to open a loot window.
@@ -516,14 +499,6 @@
 
 /mob/proc/TurfAdjacent(turf/tile)
 	return tile.Adjacent(src)
-
-/**
- * Control+Shift click
- * Unused except for AI
- */
-/mob/proc/CtrlShiftClickOn(atom/A)
-	A.CtrlShiftClick(src)
-	return
 
 /mob/proc/ShiftMiddleClickOn(atom/A)
 	src.pointed(A)
