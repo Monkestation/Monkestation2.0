@@ -113,16 +113,10 @@
 	if(!can_use(user) || (issilicon(user) && !HAS_SILICON_ACCESS(user)))
 		user.unset_machine()
 
-/obj/machinery/computer/camera_advanced/Destroy()
-	if(eyeobj)
-		QDEL_NULL(eyeobj)
-	QDEL_LIST(actions)
-	current_user = null
-	return ..()
-
-/obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
-	if(M == current_user)
-		remove_eye_control(M)
+/obj/machinery/computer/camera_advanced/proc/unset_machine()
+	if(!QDELETED(current_user))
+		remove_eye_control(current_user)
+	end_processing()
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
 	return can_interact(user)

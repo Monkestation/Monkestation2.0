@@ -102,7 +102,7 @@
 			dat += "<A href='byond://?src=[REF(src)];warn=[REF(T)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
 			dat += "********************************<BR>"
 		dat += "<HR><A href='byond://?src=[REF(src)];lock=1'>{Log Out}</A>"
-	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
+	var/datum/browser/popup = new(usr, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
 	popup.open()
 	return
