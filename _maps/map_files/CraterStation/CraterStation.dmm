@@ -46373,6 +46373,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
+"ohv" = (
+/obj/effect/landmark/start/scientist,
+/obj/machinery/holopad,
+/turf/open/floor/iron/smooth_large,
+/area/station/science/ordnance/testlab)
 "ohJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/office{
@@ -158092,7 +158097,7 @@ vFw
 vTP
 qDU
 aNE
-bFH
+ohv
 uAi
 oUx
 vTP
