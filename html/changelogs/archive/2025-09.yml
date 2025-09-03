@@ -6,6 +6,7 @@
   Absolucy:
   - rscadd: Added an option to hide your ckey from the roundend report (off by default)
   - bugfix: The genetic sequence scanner now shows instability and such again.
+  - bugfix: Actually, prolly, fixed crushers/proto-kinetic claws/etc.
   JupiterJaeden:
   - bugfix: You can now tackle while pulling something (it will automatically break
       the pull, however.)
@@ -26,6 +27,7 @@
   - bugfix: borgs can rotate reflectors
   - code_imp: Rechargers use interaction
   - bugfix: fixed rechargers eating infinite guns
+  - bugfix: Cargo teleporter uses correct interaction now
   ZephyrTFA:
   - bugfix: signals in circuits now actually function
   jlsnow301:
@@ -38,6 +40,8 @@
   - bugfix: fixed the asteroid magnet breaking immediately, fixed making room for
       the analysis form on the artifact, fixed basically a bunch of artifact stuff
   - spellcheck: adjust artifact wording
+  mc-oofert, Ghommie, shodd:
+  - rscadd: New deathmatch minigame for ghost
   notghosti:
   - rscadd: Station Maps are now printable.
   - rscadd: You can screwdriver on the corresponding circuit board to change station
@@ -47,3 +51,14 @@
   - rscadd: Adds the functionality for Bingle lords to be tokened.
   - map: Syndicate Infiltrator now has upgraded cyborg rechargers and a loaded defib
       mount.
+2025-09-03:
+  MrBagHead:
+  - rscdel: Space Dragons No Longer Die If They Don't Place a Rift in a 5 Minute Timer
+  Xander3359:
+  - bugfix: fixed atmos resin backpack
+  Xander3359, SmArtKar:
+  - bugfix: (Xander3359) fixed pen interactions
+  - rscadd: (SmArtKar) You can now click pens! Clickity clickery click!
+  - bugfix: (SmArtKar) E-Daggers can now break lockers/other renamable objects, and
+      pendrivers can now extract their electronics.
+  - code_imp: (SmArtKar) Most pen typechecks now check for writing implements.

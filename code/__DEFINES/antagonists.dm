@@ -349,8 +349,9 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define HUNTER_PACK_BOUNTY "Bounty Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Shikaris"
 
-// This flag disables certain checks that presume antagonist datums mean 'baddie'.
-#define FLAG_FAKE_ANTAG					(1 << 0)
+/// Used to denote an antag datum that either isn't necessarily "evil" (like Valentines)
+/// or isn't necessarily a "real" antag (like Ashwalkers)
+#define ANTAG_FAKE (1 << 0)
 /// monkestation addition: Whether the antagonist can see exploitable info on people they examine.
 #define FLAG_CAN_SEE_EXPOITABLE_INFO	(1 << 1)
 // monkestation addition: The storyteller will ignore this antag datum as counting against the antag cap.

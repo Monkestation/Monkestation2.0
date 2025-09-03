@@ -50,8 +50,8 @@
 	if(doorname)
 		. += span_notice("There is a small <i>paper</i> placard on the assembly labelled \"[doorname]\".")
 
-/obj/structure/door_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/pen) && !(user.istate & ISTATE_HARM))
+/obj/structure/door_assembly/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(IS_WRITING_UTENSIL(attacking_item) && !(user.istate & ISTATE_HARM))
 		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
 		if(!t)
 			return
