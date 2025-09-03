@@ -26630,6 +26630,15 @@
 "ibK" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/airalarm/directional/north,
+/obj/item/transfer_valve,
+/obj/item/transfer_valve{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/obj/item/transfer_valve{
+	pixel_x = 6;
+	pixel_y = 7
+	},
 /turf/open/floor/iron/smooth_large,
 /area/station/science/ordnance/testlab)
 "ibP" = (
@@ -57299,6 +57308,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"rjx" = (
+/obj/machinery/research/anomaly_refinery,
+/turf/open/floor/iron/smooth_large,
+/area/station/science/ordnance/testlab)
 "rjH" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -75037,6 +75050,18 @@
 "wFm" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/camera/directional/east,
+/obj/item/raw_anomaly_core/random{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/smooth_large,
 /area/station/science/ordnance/testlab)
 "wFr" = (
@@ -157823,7 +157848,7 @@ dQg
 sNk
 aNE
 aNE
-aNE
+rjx
 vTP
 vFw
 vFw
