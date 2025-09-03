@@ -939,6 +939,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "anQ" = (
@@ -7107,6 +7108,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage/tcomms)
+"clW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad,
+/turf/open/floor/iron/smooth_large,
+/area/station/science/lobby)
 "cme" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -10902,6 +10908,11 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/wood,
 /area/station/service/barber)
+"duK" = (
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "duL" = (
 /obj/item/electropack,
 /obj/structure/closet/crate/secure/gear{
@@ -12579,6 +12590,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit)
+"dXP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
+/turf/open/floor/wood,
+/area/station/commons/lounge/public_house)
 "dYe" = (
 /obj/structure/stairs/north,
 /obj/structure/railing{
@@ -15802,6 +15819,8 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "eWZ" = (
@@ -17418,6 +17437,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"ftj" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "ftk" = (
 /obj/effect/mapping_helpers/airlock/access/all/command/teleporter,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -20448,6 +20471,14 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/starboard/lesser)
+"goA" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "goI" = (
 /mob/living/carbon/human/species/monkey,
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -20518,6 +20549,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/large,
 /area/station/service/janitor)
+"gpK" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron/smooth_large,
+/area/station/science/lobby)
 "gpU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -21365,6 +21400,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "gCH" = (
@@ -27044,6 +27080,11 @@
 /obj/structure/railing,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
+"ilb" = (
+/obj/effect/landmark/start/librarian,
+/obj/machinery/holopad,
+/turf/open/floor/wood,
+/area/station/service/library/upper)
 "ilc" = (
 /obj/structure/railing,
 /turf/open/floor/iron/dark,
@@ -47490,6 +47531,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/command/cc_dock)
+"ozH" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
 "ozR" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light/directional/west,
@@ -47576,6 +47621,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
+"oAF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "oAP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -48074,6 +48128,13 @@
 /obj/item/storage/fancy/egg_box,
 /turf/open/floor/iron/kitchen/small,
 /area/station/security/prison/mess)
+"oHC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/wood,
+/area/station/command/meeting_room)
 "oHG" = (
 /obj/structure/shipping_container/nanotrasen,
 /obj/effect/decal/cleanable/dirt,
@@ -50147,6 +50208,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
+"pnH" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/landmark/start/station_engineer,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/storage_shared)
 "pnI" = (
 /obj/machinery/deepfryer,
 /obj/machinery/camera/directional/south{
@@ -51502,6 +51571,7 @@
 "pIk" = (
 /obj/effect/landmark/start/bartender,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/holopad,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "pIx" = (
@@ -51536,6 +51606,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
+/obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "pIL" = (
@@ -62145,6 +62216,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/lawoffice)
+"sOA" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad/secure,
+/turf/open/floor/wood,
+/area/station/command/bridge)
 "sOH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -66528,6 +66606,7 @@
 	pixel_y = 0;
 	pixel_x = 0
 	},
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "ugh" = (
@@ -69813,6 +69892,11 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
+"vgg" = (
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "vgl" = (
 /obj/structure/flora/bush/style_random,
 /obj/structure/flora/bush/style_random,
@@ -75141,6 +75225,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
 /turf/open/floor/carpet/grimey,
 /area/station/cargo/lobby)
 "wLI" = (
@@ -77701,6 +77786,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry/outpost)
+"xBs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad/secure,
+/turf/open/floor/iron/dark/textured_half,
+/area/station/ai_monitored/turret_protected/ai)
 "xBz" = (
 /obj/structure/safe,
 /obj/item/clothing/head/costume/bearpelt,
@@ -165973,7 +166065,7 @@ dhc
 nnL
 slc
 dRR
-iAV
+gpK
 lrO
 lDN
 luB
@@ -166223,7 +166315,7 @@ rvk
 oSL
 kuH
 edg
-fbU
+clW
 iAV
 vUc
 vng
@@ -172160,7 +172252,7 @@ rVI
 nqP
 rVI
 wPI
-gIV
+vgg
 pCU
 gUR
 ntg
@@ -172411,7 +172503,7 @@ pAD
 pAD
 pAD
 gaC
-tcV
+ftj
 sfu
 rVI
 nqP
@@ -178073,7 +178165,7 @@ uiv
 jQr
 gOE
 eZb
-eZb
+oHC
 hBZ
 beU
 pKi
@@ -183727,7 +183819,7 @@ gEz
 gEz
 uxm
 gEz
-gEz
+dXP
 cHj
 deR
 iTb
@@ -186297,7 +186389,7 @@ nUO
 gEz
 gEz
 gEz
-gEz
+dXP
 lVd
 hUm
 dXI
@@ -188879,7 +188971,7 @@ ylH
 xhl
 skg
 xiq
-nPC
+oAF
 jjT
 dgl
 tYW
@@ -190159,7 +190251,7 @@ ctr
 mkX
 msC
 syP
-msC
+pnH
 eWV
 tot
 mCe
@@ -244388,7 +244480,7 @@ iVX
 cAu
 cAu
 udD
-wzV
+sOA
 kEp
 fWT
 qNx
@@ -249737,7 +249829,7 @@ ocp
 qlq
 bUO
 nUG
-fwi
+goA
 lnl
 dXg
 wIR
@@ -251059,7 +251151,7 @@ xKl
 xrl
 bZe
 jNa
-cok
+ozH
 sxv
 qXu
 qXu
@@ -251289,7 +251381,7 @@ rBU
 lxX
 xhx
 rND
-rND
+ilb
 hZw
 lxX
 jTs
@@ -259089,7 +259181,7 @@ tbG
 gVT
 oiD
 tyK
-tyK
+duK
 tyK
 gWZ
 pgA
@@ -270855,7 +270947,7 @@ gLR
 bxM
 bxM
 jfF
-wRk
+xBs
 lGc
 bxM
 bxM
