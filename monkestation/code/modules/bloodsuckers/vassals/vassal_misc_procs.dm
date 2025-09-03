@@ -19,13 +19,14 @@
 	// Default String
 	var/return_info
 	var/return_state
+	var/species_name = carbon_current.dna?.species?.name || initial(carbon_current.name)
 	// Am I Viewer's Vassal?
 	if(master.owner == viewer.mind)
-		return_info = "This [carbon_current.dna.species.name] bears YOUR mark!"
+		return_info = "This [species_name] bears YOUR mark!"
 		return_state = "vassal"
 	// Am I someone ELSE'S Vassal?
 	else if(IS_BLOODSUCKER(viewer) || IS_MONSTERHUNTER(viewer))
-		return_info = "This [carbon_current.dna.species.name] bears the mark of <b>[master.return_full_name()][master.broke_masquerade ? " who has broken the Masquerade" : ""]</b>"
+		return_info = "This [species_name] bears the mark of <b>[master.return_full_name()][master.broke_masquerade ? " who has broken the Masquerade" : ""]</b>"
 		return_state = "vassal_grey"
 	// Are you serving the same master as I am?
 	else if(viewer.mind.has_antag_datum(/datum/antagonist/vassal) in master.vassals)
