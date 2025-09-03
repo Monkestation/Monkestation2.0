@@ -14536,7 +14536,7 @@
 /area/station/smithing)
 "eEm" = (
 /obj/structure/stairs/north,
-/turf/open/floor/iron,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "eEn" = (
 /obj/structure/cable,
@@ -71833,7 +71833,7 @@
 	name = "Pharmacy Stairwell"
 	},
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/iron,
+/turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "vNE" = (
 /obj/effect/spawner/random/vending/colavend,
