@@ -1036,6 +1036,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/large,
 /area/station/service/janitor)
+"aoW" = (
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/iron/dark/smooth_large,
+/area/mine/lobby)
 "aoX" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden,
 /turf/open/floor/catwalk_floor/iron_dark{
@@ -7130,6 +7134,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "cmk" = (
@@ -22600,6 +22605,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/mine/production)
 "gUQ" = (
@@ -27430,6 +27436,7 @@
 /area/station/commons/storage/primary)
 "iqX" = (
 /obj/structure/closet/emcloset/wall/directional/south,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/lobby)
 "irl" = (
@@ -44733,6 +44740,7 @@
 "nFu" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/firecloset,
+/obj/structure/sign/flag/nanotrasen/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "nFv" = (
@@ -45949,6 +45957,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "nYY" = (
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/white,
 /area/mine/medical)
 "nZa" = (
@@ -46827,6 +46836,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/ore_box,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/mine/lobby)
 "omN" = (
@@ -47860,6 +47870,10 @@
 "oCO" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"oCR" = (
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/floor/iron/dark,
+/area/mine/eva)
 "oCX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/structure/cable,
@@ -53354,6 +53368,7 @@
 	c_tag = "Command - Underground Access";
 	name = "command camera"
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qgk" = (
@@ -56937,6 +56952,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "reB" = (
@@ -68767,6 +68783,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "uOu" = (
@@ -75389,6 +75406,7 @@
 "wLT" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/emcloset,
+/obj/structure/sign/departments/vault/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "wMc" = (
@@ -96863,7 +96881,7 @@ xqk
 iKa
 jDh
 jDh
-jDh
+oCR
 xqk
 xqk
 xqk
@@ -98400,7 +98418,7 @@ qCD
 gGb
 iZU
 wla
-iEf
+aoW
 xqa
 xqa
 xqa
