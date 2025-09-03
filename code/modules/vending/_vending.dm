@@ -1592,7 +1592,7 @@
 			speak("\The [src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(attacking_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attacking_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)

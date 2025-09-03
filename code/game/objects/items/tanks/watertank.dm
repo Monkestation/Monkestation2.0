@@ -293,13 +293,16 @@
 /obj/item/extinguisher/mini/nozzle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AttemptRefill(interacting_with, user))
 		return NONE
+	return ..()
+
+/obj/item/extinguisher/mini/nozzle/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(nozzle_mode == EXTINGUISHER)
 		return ..()
 
 	var/Adj = user.Adjacent(interacting_with)
 	if(nozzle_mode == RESIN_LAUNCHER)
-		if(Adj)
-			return ITEM_INTERACT_BLOCKING //Safety check so you don't blast yourself trying to refill your tank
+		if(Adj && (user.istate & ISTATE_HARM))
+			return ITEM_INTERACT_SKIP_TO_ATTACK
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
 			balloon_alert(user, "not enough water!")
@@ -319,7 +322,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj || !isturf(interacting_with))
+		if(!isturf(interacting_with))
+			return NONE
+		if(!Adj)
 			balloon_alert(user, "too far!")
 			return ITEM_INTERACT_BLOCKING
 		for(var/thing in interacting_with)
