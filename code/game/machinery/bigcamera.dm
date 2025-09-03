@@ -20,6 +20,10 @@
 	var/obj/machinery/camera/internal_camera
 	/// The "virtual" radio inside of the the physical camera, a la microphone
 	var/obj/item/radio/entertainment/microphone/internal_radio
+	/// Camera offset.
+	var/camera_offset = 8
+	/// Do we apply the offset or not.
+	var/do_offset = FALSE
 
 /obj/machinery/big_broadcast_camera/Initialize(mapload)
 	. = ..()
@@ -49,6 +53,7 @@
 	. = ..()
 	. += span_notice("Broadcast name is <b>[html_encode(broadcast_name)]</b>")
 	. += span_notice("The microphone is <b>[active_microphone ? "On" : "Off"]</b>")
+	. += span_notice("You can adjust the [src]'s focus using a <b>multitool</b>.")
 	. += span_notice("[src] is <b>[anchored ? "anchored" : "not anchored"]</b>.")
 
 /// When activating the camera
@@ -103,6 +108,26 @@
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/big_broadcast_camera/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
+	do_offset = !do_offset
+	balloon_alert(user, "adjusted the camera [do_offset ? "to focus on distant objects" : "focus back to normal"].")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/big_broadcast_camera/process(seconds_per_tick)
+	internal_camera.view_offset_x = 0
+	internal_camera.view_offset_y = 0
+	if(do_offset && internal_camera)
+		switch(dir)
+			if(NORTH)
+				internal_camera.view_offset_y = camera_offset
+			if(SOUTH)
+				internal_camera.view_offset_y = -camera_offset
+			if(EAST)
+				internal_camera.view_offset_x = camera_offset
+			if(WEST)
+				internal_camera.view_offset_x = -camera_offset
 
 /datum/crafting_recipe/big_broadcast_camera
 	name = "big broadcast camera"
