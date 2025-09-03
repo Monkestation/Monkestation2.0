@@ -190,7 +190,7 @@
 		feed_strength_mult = 0.3
 	blood_taken += bloodsuckerdatum_power.handle_feeding(feed_target, feed_strength_mult, level_current)
 
-	if(feed_strength_mult >= 1 && feed_target.stat < DEAD)
+	if(feed_strength_mult > 5 && feed_target.stat < DEAD)
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood)
 	// Drank mindless as Ventrue? - BAD
 	if(bloodsuckerdatum_power.my_clan?.blood_drink_type == BLOODSUCKER_DRINK_SNOBBY && QDELETED(feed_target.mind))
