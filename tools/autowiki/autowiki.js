@@ -36,7 +36,7 @@ async function main() {
 	const bot = new MWBot()
 
 	await bot.loginGetEditToken({
-		apiUrl: "https://tgstation13.org/wiki/api.php",
+		apiUrl: "https://wiki.monkestation.com/api.php", //REMINDER: CHANGE WHEN PORTING AND MAKE WIKI BOT
 		username: USERNAME,
 		password: PASSWORD,
 	})
