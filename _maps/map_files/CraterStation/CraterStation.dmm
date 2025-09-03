@@ -5619,6 +5619,10 @@
 	pixel_y = 9
 	},
 /obj/machinery/camera/directional/east,
+/obj/item/storage/medkit{
+	pixel_x = 2;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "bRh" = (
@@ -10275,6 +10279,8 @@
 "dlm" = (
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "dlx" = (
@@ -14648,6 +14654,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/oil,
+/obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "eFH" = (
