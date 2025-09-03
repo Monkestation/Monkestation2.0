@@ -29,8 +29,8 @@
 	id = ICEMOON_DEFAULT_ATMOS
 
 	base_gases = list(
-		/datum/gas/oxygen=19, //MONKESTATION EDIT: Increases oxygen level by a fuckload so that craterstation is breathable, formerly 10
-		/datum/gas/nitrogen=1, //MONKESTATION EDIT: trades N2 for O2. formerly 10
+		/datum/gas/oxygen=20, //MONKESTATION EDIT: Increases oxygen level by a fuckload so that craterstation is breathable, formerly 10
+		/datum/gas/nitrogen=40, //MONKESTATION EDIT: they kept bothering me for more air formerly 10
 	)
 	normal_gases = list(
 		/datum/gas/oxygen=24, //MONKESTATION EDIT: oxygen (used to be 10)
@@ -44,8 +44,8 @@
 	)
 	restricted_chance = 20
 
-	minimum_pressure = HAZARD_LOW_PRESSURE + 10
-	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
+	minimum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE + 1
+	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE +30
 
 	minimum_temp = ICEBOX_MIN_TEMPERATURE
 	maximum_temp = ICEBOX_MIN_TEMPERATURE
