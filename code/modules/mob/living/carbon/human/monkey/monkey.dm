@@ -141,7 +141,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	desc = "This ape is the widest. There are many things in this cosmos; Stars, planets, galaxies, gods. But, of all of those things, this ape is the widest. Imagine the largest room you can imagine. The ape is wider than that room, because this ape is the widest."
 
 /mob/living/carbon/human/species/monkey/wide/Initialize(mapload)
-	src.transform = src.transform.Scale(14,1) //wide
+	src.transform = src.transform.Scale(4,1) //wide
 	for (var/obj/item/bodypart/part in src.bodyparts)
 		part.transform = part.transform.Scale(7, 1)
 		part.name = "wide " + part.name
