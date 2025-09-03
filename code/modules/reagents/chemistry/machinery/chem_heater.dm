@@ -133,6 +133,7 @@
 
 	if(!QDELETED(beaker))
 		try_put_in_hand(beaker, user)
+		beaker = null
 
 	if(!QDELETED(new_beaker))
 		if(!user.transferItemToLoc(new_beaker, src))

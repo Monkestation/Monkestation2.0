@@ -58,6 +58,8 @@
 	var/can_chromosome = CHROMOSOME_NONE
 	/// Name of the chromosome
 	var/chromosome_name
+	///ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
+	var/modified = FALSE
 
 	//Chromosome stuff - set to -1 to prevent people from changing it. Example: It'd be a waste to decrease cooldown on mutism
 	/// genetic stability coeff
@@ -194,6 +196,16 @@
 	energy_coeff = initial(energy_coeff)
 	can_chromosome = initial(can_chromosome)
 	chromosome_name = null
+
+///called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
+/datum/mutation/proc/modify()
+	if(modified || !power_path || !owner)
+		return
+	var/datum/action/cooldown/spell/modified_power = locate(power_path) in owner.actions
+	if(!modified_power)
+		CRASH("Genetic mutation [type] called modify(), but could not find a action to modify!")
+	modified_power.cooldown_time *= GET_MUTATION_ENERGY(src) // Doesn't do anything for mutations with energy_coeff unset
+	return modified_power
 
 /datum/mutation/proc/grant_power()
 	if(!ispath(power_path) || !owner)

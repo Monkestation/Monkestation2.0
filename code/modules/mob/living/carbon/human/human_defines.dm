@@ -93,3 +93,10 @@
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
 	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()
 	VAR_FINAL/mob_height = HUMAN_HEIGHT_MEDIUM
+
+	///stored list of alternate screams
+	var/list/alternative_screams
+	///stored list of alternate laughs
+	var/list/alternative_laughs
+	///stored list of alternate deathgasps
+	var/list/alternative_deathgasps

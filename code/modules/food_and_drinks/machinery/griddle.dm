@@ -37,8 +37,6 @@
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
 	variant = rand(1,3)
@@ -59,10 +57,22 @@
 	visible_message(span_notice("[exposing_reagent] begins to cook on [src]."))
 	return NONE
 
-/obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
+/obj/machinery/griddle/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 
+	if(griddled_objects.len >= max_items)
+		to_chat(user, span_notice("[src] can't fit more items!"))
+		return
+	//Center the icon where the user clicked.
+	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
+		return
+	if(user.transferItemToLoc(I, src, silent = FALSE))
+		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
+		to_chat(user, span_notice("You place [I] on [src]."))
+		AddToGrill(I, user)
+	else
+		return ..()
 
 /obj/machinery/griddle/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(isnull(item.atom_storage))
@@ -95,6 +105,13 @@
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()
+	toggle_mode()
+
+/obj/machinery/griddle/attack_robot(mob/user)
+	. = ..()
+	toggle_mode()
+
+/obj/machinery/griddle/proc/toggle_mode()
 	on = !on
 	if(on)
 		begin_processing()
@@ -103,6 +120,15 @@
 	update_appearance()
 	update_grill_audio()
 
+/obj/machinery/griddle/begin_processing()
+	. = ..()
+	for(var/obj/item/item_to_grill as anything in griddled_objects)
+		SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_TURNED_ON)
+
+/obj/machinery/griddle/end_processing()
+	. = ..()
+	for(var/obj/item/item_to_grill as anything in griddled_objects)
+		SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_TURNED_OFF)
 
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
 	vis_contents += item_to_grill

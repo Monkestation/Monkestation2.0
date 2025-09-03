@@ -194,11 +194,11 @@
 
 /obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(user.istate & ISTATE_HARM)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
+		return NONE
 	if(!check_allowed_items(target, target_self = TRUE))
 		return NONE
 	if(!spillable)
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
@@ -215,31 +215,30 @@
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/reagent_containers/cup/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
-	var/hotness = tool.get_temperature()
+/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/hotness = attacking_item.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, span_notice("You heat [name] with [tool]!"))
-		return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
+		return TRUE
 
 	//Cooling method
-	if(istype(tool, /obj/item/extinguisher))
-		var/obj/item/extinguisher/extinguisher = tool
+	if(istype(attacking_item, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
-			return NONE
+			return TRUE
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return ITEM_INTERACT_BLOCKING
+			return TRUE
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool \the [src] with the [tool]!"))
+		to_chat(user, span_notice("You cool \the [src] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
-		return ITEM_INTERACT_SUCCESS
+		return TRUE
 
-	if(istype(tool, /obj/item/food/egg)) //breaking eggs
-		var/obj/item/food/egg/attacking_egg = tool
+	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
+		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
 			return ITEM_INTERACT_BLOCKING
 		if(reagents.holder_full())

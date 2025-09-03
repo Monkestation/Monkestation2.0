@@ -17,7 +17,6 @@
 	var/biggest_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/plate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
 	if(!IS_EDIBLE(tool))
 		balloon_alert(user, "not food!")
 		return ITEM_INTERACT_BLOCKING

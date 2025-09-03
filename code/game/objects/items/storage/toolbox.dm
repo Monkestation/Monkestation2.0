@@ -273,9 +273,9 @@
 	new /obj/item/gun_maintenance_supplies(src)
 
 //floorbot assembly
-/obj/item/storage/toolbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(!istype(inserted, /obj/item/stack/tile/iron))
-		return TRUE
+/obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/tile/iron))
+		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
 		/obj/item/storage/toolbox/electrical,
@@ -289,7 +289,7 @@
 	if(contents.len >= 1)
 		balloon_alert(user, "not empty!")
 		return FALSE
-	if(inserted.use(10))
+	if(tool.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		switch(B.toolbox)
@@ -322,7 +322,7 @@
 
 /obj/item/storage/toolbox/guncase/monkeycase/Initialize(mapload)
 	. = ..()
-	atom_storage.locked = STORAGE_SOFT_LOCKED
+	atom_storage.set_locked(STORAGE_SOFT_LOCKED)
 
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
 	if(!monkey_check(user))
@@ -343,7 +343,7 @@
 		return TRUE
 
 	if(is_simian(user))
-		atom_storage.locked = STORAGE_NOT_LOCKED
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		to_chat(user, span_notice("You place your paw on the paw scanner, and hear a soft click as [src] unlocks!"))
 		playsound(src, 'sound/machines/click.ogg', 25, TRUE)
 		return TRUE

@@ -17,6 +17,7 @@
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
 	interaction_range = INFINITY
+	var/list/networks = list("ss13", "mine")
 
 /mob/camera/ai_eye/Initialize(mapload)
 	. = ..()

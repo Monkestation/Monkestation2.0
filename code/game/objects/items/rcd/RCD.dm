@@ -370,7 +370,12 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	//does this atom allow for rcd actions?
 	var/list/rcd_results = target.rcd_vals(user, src)
 	if(!rcd_results)
-		return FALSE
+		return NONE
+
+	//straight up can't touch this
+	if(mode == RCD_DECONSTRUCT && (target.resistance_flags & INDESTRUCTIBLE))
+		balloon_alert(user, "too durable!")
+		return ITEM_INTERACT_BLOCKING
 
 	var/delay = rcd_results["delay"] * delay_mod
 	if (
@@ -383,6 +388,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	current_active_effects += 1
 	_rcd_create_effect(target, user, delay, rcd_results)
 	current_active_effects -= 1
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Internal proc which creates the rcd effects & creates the structure
@@ -586,31 +592,33 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	ui_interact(user)
 
 /obj/item/construction/rcd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+
 	mode = construction_mode
-	rcd_create(interacting_with, user)
-	return ITEM_INTERACT_SUCCESS
+	return rcd_create(interacting_with, user)
 
 /obj/item/construction/rcd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ranged || !range_check(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 
-	return interact_with_atom(interacting_with, user, modifiers)
+	mode = construction_mode
+	return rcd_create(interacting_with, user)
 
 /obj/item/construction/rcd/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	mode = RCD_DECONSTRUCT
-	rcd_create(interacting_with, user)
-	return ITEM_INTERACT_SUCCESS
+	return rcd_create(interacting_with, user)
 
 /obj/item/construction/rcd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ranged || !range_check(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 
-	return interact_with_atom_secondary(interacting_with, user, modifiers)
+	mode = RCD_DECONSTRUCT
+	return rcd_create(interacting_with, user)
 
-/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return
-	afterattack(target, user, TRUE, click_parameters)
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, list/modifiers)
+	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \

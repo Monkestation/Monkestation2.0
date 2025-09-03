@@ -1,0 +1,60 @@
+2025-09-01:
+  EssentialTomato:
+  - bugfix: Minecart rails can be placed again.
+  - bugfix: Stone griddle and cauldron no longer eat your crowbar while deconstructing.
+2025-09-02:
+  Absolucy:
+  - rscadd: Added an option to hide your ckey from the roundend report (off by default)
+  - bugfix: The genetic sequence scanner now shows instability and such again.
+  - bugfix: Actually, prolly, fixed crushers/proto-kinetic claws/etc.
+  JupiterJaeden:
+  - bugfix: You can now tackle while pulling something (it will automatically break
+      the pull, however.)
+  - bugfix: If you are using toggle throw mode, tackles should now always disable
+      throw mode correctly after being used.
+  Sorenon:
+  - rscadd: Made donksoft foam darts, the donkco foam arm blade and the donkco emag
+      card edible.
+  - rscadd: Being shot in the head (without a mask) with a donksoft dart has a chance
+      to make the player inhale it and choke.
+  TheColorCyan:
+  - image: some drink bottles got a resprite
+  Tractor Maam (Sound from warface1234455's PR on Yogstation):
+  - rscadd: Axolotls now squeak!
+  Xander3359:
+  - bugfix: Pathology machines should be fully interactible
+  - spellcheck: fix IB "repaiing"
+  - bugfix: borgs can rotate reflectors
+  - code_imp: Rechargers use interaction
+  - bugfix: fixed rechargers eating infinite guns
+  - bugfix: Cargo teleporter uses correct interaction now
+  ZephyrTFA:
+  - bugfix: signals in circuits now actually function
+  jlsnow301:
+  - bugfix: Fixed the targeting capability of mobs with full auto
+  - bugfix: You can now fire the marksman revolver at things you can see
+  mc-oofert:
+  - bugfix: you can now attach stuff to a mechs right arm
+  - qol: sorted artifact stuff in the analysis form, magnet displays its status in
+      UI and wont waste discovered asteroids
+  - bugfix: fixed the asteroid magnet breaking immediately, fixed making room for
+      the analysis form on the artifact, fixed basically a bunch of artifact stuff
+  - spellcheck: adjust artifact wording
+  mc-oofert, Ghommie, shodd:
+  - rscadd: New deathmatch minigame for ghost
+  notghosti:
+  - rscadd: Station Maps are now printable.
+  - rscadd: You can screwdriver on the corresponding circuit board to change station
+      map types
+  - bugfix: Icebox Northeast maintence is now connected to distro
+  - bugfix: Flooding icebox security wont do that to the rest of the station.
+  - rscadd: Adds the functionality for Bingle lords to be tokened.
+  - map: Syndicate Infiltrator now has upgraded cyborg rechargers and a loaded defib
+      mount.
+2025-09-03:
+  Xander3359, SmArtKar:
+  - bugfix: (Xander3359) fixed pen interactions
+  - rscadd: (SmArtKar) You can now click pens! Clickity clickery click!
+  - bugfix: (SmArtKar) E-Daggers can now break lockers/other renamable objects, and
+      pendrivers can now extract their electronics.
+  - code_imp: (SmArtKar) Most pen typechecks now check for writing implements.

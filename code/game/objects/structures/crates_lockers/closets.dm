@@ -499,50 +499,8 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 							span_hear("You hear welding."))
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [W]", LOG_GAME)
 			update_appearance()
-	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
-			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
-		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
-			span_notice("You start to install electronics into the [src]..."))
-		if (!do_after(user, 4 SECONDS, target = src))
-			return FALSE
-		if (electronics || secure)
-			return FALSE
-		if (!user.transferItemToLoc(W, src))
-			return FALSE
-		W.moveToNullspace()
-		to_chat(user, span_notice("You install the electronics."))
-		electronics = W
-		if (electronics.one_access)
-			req_one_access = electronics.accesses
-		else
-			req_access = electronics.accesses
-		secure = TRUE
-		update_appearance()
-	else if (can_install_electronics && W.tool_behaviour == TOOL_SCREWDRIVER\
-			&& (secure || electronics) && !locked && (welded || !can_weld_shut))
-		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
-			span_notice("You begin to remove the electronics from the [src]..."))
-		var/had_electronics = !!electronics
-		var/was_secure = secure
-		if (!do_after(user, 4 SECONDS, target = src))
-			return FALSE
-		if ((had_electronics && !electronics) || (was_secure && !secure))
-			return FALSE
-		var/obj/item/electronics/airlock/electronics_ref
-		if (!electronics)
-			electronics_ref = new /obj/item/electronics/airlock(loc)
-			if (req_one_access.len)
-				electronics_ref.one_access = 1
-				electronics_ref.accesses = req_one_access
-			else
-				electronics_ref.accesses = req_access
-		else
-			electronics_ref = electronics
-			electronics = null
-			electronics_ref.forceMove(drop_location())
-		secure = FALSE
-		update_appearance()
-	else if(!(user.istate & ISTATE_HARM))
+
+	else if(!(user.istate & ISTATE_HARM) || (W.item_flags & NOBLUDGEON))
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE

@@ -110,6 +110,12 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
+/obj/item/hierophant_club/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(blink_activated)
+		blink.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink?.current_charges > 0 ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
 	return ..()
@@ -794,10 +800,12 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
-/obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with.atom_storage || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(timer > world.time)
 		return NONE
 	if(is_type_in_typecache(interacting_with, banned_turfs))
