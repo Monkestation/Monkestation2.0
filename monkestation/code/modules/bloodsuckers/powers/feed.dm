@@ -59,7 +59,7 @@
 /datum/action/cooldown/bloodsucker/feed/DeactivatePower()
 	var/mob/living/user = owner
 	var/mob/living/feed_target = target_ref?.resolve()
-	if(!QDELETED(feed_target))
+	if(feed_target)
 		if(!started_frenzied && !bloodsuckerdatum_power.frenzied)
 			feed_target.apply_status_effect(/datum/status_effect/feed_regen)
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
