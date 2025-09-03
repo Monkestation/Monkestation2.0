@@ -289,7 +289,7 @@
 	return NONE
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(ismob(interacting_with) || ismecha(interacting_with))
+	if(ismob(interacting_with))
 		if(try_fire_gun(interacting_with, user, list2params(modifiers)))
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
