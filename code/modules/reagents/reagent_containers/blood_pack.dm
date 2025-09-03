@@ -100,7 +100,7 @@
 	blood_type = /datum/blood_type/universal
 
 /obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
-	if (istype(tool, /obj/item/pen) || istype(tool, /obj/item/toy/crayon))
+	if (IS_WRITING_UTENSIL(tool))
 		if(!user.can_write(tool))
 			return
 		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, MAX_NAME_LEN)
