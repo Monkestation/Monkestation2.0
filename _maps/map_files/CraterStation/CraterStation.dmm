@@ -14534,6 +14534,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/smithing)
+"eEm" = (
+/obj/structure/stairs/north,
+/turf/open/floor/iron,
+/area/station/medical/pharmacy)
 "eEn" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/bar/opposingcorners{
@@ -20554,6 +20558,10 @@
 /area/icemoon/surface/outdoors/nospawn)
 "gqG" = (
 /obj/effect/spawner/random/vending/snackvend,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "gqK" = (
@@ -38916,10 +38924,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/brown/half/contrasted{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/camera/autoname/directional/north,
+/obj/effect/turf_decal/tile/orange{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "lRN" = (
@@ -44322,10 +44332,6 @@
 	},
 /turf/open/openspace,
 /area/station/engineering/atmos/pumproom)
-"nAR" = (
-/obj/machinery/vending/imported/tizirian,
-/turf/open/floor/iron/white,
-/area/station/medical/pharmacy)
 "nAV" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -51953,6 +51959,20 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/ordnance_maint)
+"pPI" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera/autoname/directional/north,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/orange{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "pPK" = (
 /obj/structure/railing{
 	dir = 4;
@@ -68843,6 +68863,13 @@
 "uSD" = (
 /turf/closed/wall,
 /area/station/medical/surgery/theatre)
+"uSJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/misc/dirt/station,
+/area/icemoon/underground/explored)
 "uTb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -71208,9 +71235,13 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/turf_decal/tile/brown/half/contrasted{
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/sign/departments/chemistry/alt/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "vCk" = (
@@ -71797,6 +71828,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/colony,
 /area/station/maintenance/abandoned_camp/hothouse)
+"vNA" = (
+/obj/machinery/door/window/right/directional/south{
+	name = "Pharmacy Stairwell"
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/station/medical/pharmacy)
 "vNE" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/carpet/blue,
@@ -101964,8 +102002,8 @@ qLW
 bPm
 bPm
 crc
-sGg
-orJ
+ptP
+jYQ
 cFh
 rOh
 pgk
@@ -102221,8 +102259,8 @@ bRU
 dVc
 bPm
 bPm
-crc
-ptP
+iyz
+jYQ
 cFh
 wRu
 eHk
@@ -102478,10 +102516,10 @@ bRU
 onp
 xFq
 bPm
-crc
-ptP
-cFh
-wRu
+uSJ
+wns
+wns
+pPI
 qBv
 lIY
 kYu
@@ -102735,9 +102773,9 @@ gHj
 qOJ
 llq
 bPm
-crc
-iyz
-cFh
+uSJ
+eEm
+vNA
 lRH
 eHk
 lIY
@@ -102992,9 +103030,9 @@ bPm
 bPm
 wph
 bPm
-crc
-ptP
-cFh
+uSJ
+wns
+wns
 vCf
 eHk
 lIY
@@ -103249,8 +103287,8 @@ rUJ
 nne
 onp
 bPm
-cxG
-xJS
+ptP
+jYQ
 cFh
 wRu
 gjk
@@ -168017,7 +168055,7 @@ jRj
 gkk
 gqG
 wns
-pgA
+wns
 pgA
 pgA
 qMp
@@ -168272,9 +168310,9 @@ bfG
 tmj
 bfG
 cFz
-nAR
+mgY
+mgY
 wns
-pgA
 pgA
 pgA
 qMp
