@@ -148,3 +148,4 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		for (var/obj/item/organ/organ in part.get_organs())
 			organ.transform = organ.transform.Scale(7,1)
 			organ.name = "wide " + organ.name
+	return ..()
