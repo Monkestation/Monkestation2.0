@@ -67,7 +67,7 @@
 /obj/effect/portal/newtonian_move(direction, instant = FALSE, start_delay = 0)
 	return TRUE
 
-/obj/effect/portal/attackby(obj/item/W, mob/user, params)
+/obj/effect/portal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(user && Adjacent(user))
 		playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(user)

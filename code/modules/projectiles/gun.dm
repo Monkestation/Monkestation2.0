@@ -77,6 +77,9 @@
 	var/pb_knockback = 0
 	var/pbk_gentle = FALSE
 
+	/// Cooldown for the visible message sent from gun flipping.
+	COOLDOWN_DECLARE(flip_cooldown)
+
 /obj/item/gun/Initialize(mapload)
 	. = ..()
 	if(pin)
@@ -226,33 +229,100 @@
 		for(var/obj/inside in contents)
 			inside.emp_act(severity)
 
-/obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
-	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
-		return ..() //if they're out of range, just shootem.
-	if (user.istate & ISTATE_HARM)
-		return SECONDARY_ATTACK_CALL_NORMAL //continue attack chain for melee attack, we dont want to hold up
-	if(!can_hold_up)
-		return ..()
-	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
-	if (gunpoint_component)
-		if(gunpoint_component.target == victim)
-			return ..() //we're already holding them up, shoot that mans instead of complaining
-		balloon_alert(user, "already holding someone up!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if (user == victim)
-		balloon_alert(user, "can't hold yourself up!")
+/obj/item/gun/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
+
+	if(pinless)
+		return
+
+	if(!HAS_TRAIT(user, TRAIT_GUNFLIP))
+		return
+
+	SpinAnimation(4, 2) // The spin happens regardless of the cooldown
+
+	if(!COOLDOWN_FINISHED(src, flip_cooldown))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	user.AddComponent(/datum/component/gunpoint, victim, src)
+	COOLDOWN_START(src, flip_cooldown, 3 SECONDS)
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+		// yes this will sound silly for bows and wands, but that's a "gun" moment for you
+		user.visible_message(
+			span_danger("While trying to flip [src] [user] pulls the trigger accidentally!"),
+			span_userdanger("While trying to flip [src] you pull the trigger accidentally!"),
+		)
+		process_fire(user, user, FALSE, user.get_random_valid_zone(even_weights = TRUE))
+		user.dropItemToGround(src, TRUE)
+	else
+		user.visible_message(
+			span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That's pretty badass."),
+			span_notice("You spin [src] around your finger by the trigger. That's pretty badass."),
+		)
+		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
-	..()
-	if(HAS_TRAIT(user, TRAIT_THROW_GUNS))
-		super_throw = TRUE
-		user.throw_item(target)
-		return
-	return fire_gun(target, user, flag, params) | AFTERATTACK_PROCESSED_ITEM
+/obj/item/gun/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
+	if(isnull(bayonet) || !(user.istate & ISTATE_HARM))
+		return .
+	return bayonet.melee_attack_chain(user, A, params)
+
+/obj/item/gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.istate & ISTATE_HARM)
+		return NONE
+
+	if(istype(tool, /obj/item/knife))
+		var/obj/item/knife/new_stabber = tool
+		if(!can_bayonet || !new_stabber.bayonet || !isnull(bayonet)) //ensure the gun has an attachment point available, and that the knife is compatible with it.
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(new_stabber, src))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You attach [new_stabber] to [src]'s bayonet lug."))
+		bayonet = new_stabber
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if((user.istate & ISTATE_HARM) && isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
+
+	if(!isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
+	if (gunpoint_component)
+		balloon_alert(user, "already holding [gunpoint_component.target == interacting_with ? "them" : "someone"] up!")
+		return ITEM_INTERACT_BLOCKING
+	if (user == interacting_with)
+		balloon_alert(user, "can't hold yourself up!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(do_after(user, 0.5 SECONDS, interacting_with))
+		user.AddComponent(/datum/component/gunpoint, interacting_with, src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/gun/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
+//Just exists to stop it running ranged interact primary, and for other stuff to work based off of it
+
+/obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
+	return fire_gun(target, user, user.Adjacent(target), params)
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
@@ -335,7 +405,7 @@
 	if(super_throw && istype(target))
 		target.apply_damage((src.w_class * 7.5), BRUTE, attacking_item = src)
 		target.Knockdown((w_class) SECONDS)
-		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), COMBAT_MESSAGE_RANGE)
+		target.visible_message(span_warning("[target] is hit by [src], the force breaks apart the gun and forces them to the ground!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		do_sparks(5, FALSE, src)
 		qdel(src)
 
@@ -462,39 +532,6 @@
 
 /obj/item/gun/proc/reset_semicd()
 	semicd = FALSE
-
-/obj/item/gun/attack(mob/M, mob/living/user)
-	if((user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY)) //Flogging
-		if(bayonet)
-			M.attackby(bayonet, user)
-			return
-		else
-			return ..()
-	return
-
-/obj/item/gun/attack_atom(obj/O, mob/living/user, params)
-	if((user.istate & ISTATE_HARM && user.istate & ISTATE_SECONDARY))
-		if(bayonet)
-			O.attackby(bayonet, user)
-			return
-	return ..()
-
-/obj/item/gun/attackby(obj/item/I, mob/living/user, params)
-	if((user.istate & ISTATE_HARM))
-		return ..()
-
-	else if(istype(I, /obj/item/knife))
-		var/obj/item/knife/K = I
-		if(!can_bayonet || !K.bayonet || bayonet) //ensure the gun has an attachment point available, and that the knife is compatible with it.
-			return ..()
-		if(!user.transferItemToLoc(I, src))
-			return
-		to_chat(user, span_notice("You attach [K] to [src]'s bayonet lug."))
-		bayonet = K
-		update_appearance()
-
-	else
-		return ..()
 
 /obj/item/gun/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()

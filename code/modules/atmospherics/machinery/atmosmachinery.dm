@@ -369,9 +369,9 @@
 	nodes[nodes.Find(reference)] = null
 	update_appearance()
 
-/obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pipe)) //lets you autodrop
-		var/obj/item/pipe/pipe = W
+/obj/machinery/atmospherics/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/pipe)) //lets you autodrop
+		var/obj/item/pipe/pipe = attacking_item
 		if(user.dropItemToGround(pipe))
 			pipe.set_piping_layer(piping_layer) //align it with us
 			return TRUE

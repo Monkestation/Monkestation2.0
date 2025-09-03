@@ -86,101 +86,140 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
-	//opening using screwdriver
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		update_appearance()
+/**
+ * Can we place the terminal based on the players position
+ *
+ * Arguments
+ * * mob/living/user - the player attempting to install the cable
+ * * obj/item/stack/cable_coil/installing_cable - the cable coil used to install the terminal
+ * * silent - should we display error messages
+*/
+/obj/machinery/power/smes/proc/can_place_terminal(mob/living/user, obj/item/stack/cable_coil/installing_cable, silent = TRUE)
+	PRIVATE_PROC(TRUE)
+
+	var/set_dir = get_dir(user, src)
+	if(set_dir & (set_dir - 1))//we don't want diagonal click
+		return FALSE
+
+	var/turf/terminal_turf = get_turf(user)
+	if(!panel_open)
+		if(!silent && user)
+			balloon_alert(user, "open the maintenance panel!")
+		return FALSE
+	if(terminal_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		if(!silent && user)
+			balloon_alert(user, "remove the floor plating!")
+		return FALSE
+	if(terminal)
+		if(!silent && user)
+			balloon_alert(user, "already wired!")
+		return FALSE
+	if(installing_cable.get_amount() < 10)
+		if(!silent && user)
+			balloon_alert(user, "need ten lengths of cable!")
+		return FALSE
+	return TRUE
+
+// adapted from APC item interacts for cable act handling
+/obj/machinery/power/smes/item_interaction(mob/living/user, obj/item/stack/cable_coil/installing_cable, list/modifiers)
+	. = NONE
+	if(istype(installing_cable))
+		. = ITEM_INTERACT_BLOCKING
+		if(!can_place_terminal(user, installing_cable, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+
+		//select cable layer
+		var/terminal_cable_layer
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			if(isnull(choice) \
+				|| !user.is_holding(installing_cable) \
+				|| !user.Adjacent(src) \
+				|| user.incapacitated() \
+				|| !can_place_terminal(user, installing_cable, silent = TRUE) \
+			)
+				return ITEM_INTERACT_BLOCKING
+			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+		user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
+		balloon_alert(user, "adding cables...")
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+
+		//use cable
+		if(!do_after(user, 2 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		if(!can_place_terminal(user, installing_cable, silent = TRUE))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/cable_coil/cable = installing_cable
+		var/turf/turf = get_turf(user)
+		var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
+		if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
+			do_sparks(5, TRUE, src)
+			return ITEM_INTERACT_BLOCKING
+		cable.use(10)
+		user.visible_message(span_notice("[user.name] adds cables to [src]."))
+		balloon_alert(user, "cables added")
+
+		//build the terminal and link it to the network
+		terminal = new(turf)
+		terminal.master = src
+		terminal.cable_layer = terminal_cable_layer
+		terminal.setDir(get_dir(turf, src))
+		terminal.connect_to_network()
+		set_machine_stat(machine_stat & ~BROKEN)
+		return ITEM_INTERACT_SUCCESS
+
+//opening using screwdriver
+/obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
+		update_appearance(UPDATE_OVERLAYS)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/item)
+	. = ITEM_INTERACT_FAILURE
+	if(terminal && panel_open)
+		terminal.dismantle(user, item)
+		return ITEM_INTERACT_SUCCESS
+
+//crowbarring it!
+/obj/machinery/power/smes/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_FAILURE
+	if(terminal)
+		balloon_alert(user, "remove the power terminal!")
 		return
 
-	//changing direction using wrench
-	if(default_change_direction_wrench(user, I))
-		terminal = null
-		var/turf/T = get_step(src, dir)
-		for(var/obj/machinery/power/terminal/term in T)
-			if(term && term.dir == turn(dir, 180))
+	if(default_deconstruction_crowbar(tool))
+		var/turf/ground = get_turf(src)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(ground)].")
+		user.log_message("deconstructed [src]", LOG_GAME)
+		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
+		return ITEM_INTERACT_SUCCESS
+
+//changing direction using wrench
+/obj/machinery/power/smes/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_FAILURE
+	if(default_change_direction_wrench(user, tool))
+		disconnect_terminal()
+		for(var/obj/machinery/power/terminal/term in get_step(src, dir))
+			if(term && term.dir == REVERSE_DIR(dir))
 				terminal = term
 				terminal.master = src
 				to_chat(user, span_notice("Terminal found."))
-				break
-		if(!terminal)
-			to_chat(user, span_alert("No power terminal found."))
-			return
-		set_machine_stat(machine_stat & ~BROKEN)
-		update_appearance()
-		return
-
-	//building and linking a terminal
-	if(istype(I, /obj/item/stack/cable_coil))
-		var/dir = get_dir(user,src)
-		if(dir & (dir-1))//we don't want diagonal click
-			return
-
-		if(terminal) //is there already a terminal ?
-			to_chat(user, span_warning("This SMES already has a power terminal!"))
-			return
-
-		if(!panel_open) //is the panel open ?
-			to_chat(user, span_warning("You must open the maintenance panel first!"))
-			return
-
-		var/turf/T = get_turf(user)
-		if (T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE) //can we get to the underfloor?
-			to_chat(user, span_warning("You must first remove the floor plating!"))
-			return
-
-
-		var/obj/item/stack/cable_coil/C = I
-		if(C.get_amount() < 10)
-			to_chat(user, span_warning("You need more wires!"))
-			return
-
-		var/terminal_cable_layer
-		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
-			if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(C) || !user.Adjacent(src) || !user.is_holding(C))
-				return
-			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
-
-		to_chat(user, span_notice("You start building the power terminal..."))
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-
-		if(do_after(user, 20, target = src))
-			if(C.get_amount() < 10 || !C)
-				return
-			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
-				do_sparks(5, TRUE, src)
-				return
-			if(!terminal)
-				C.use(10)
-				user.visible_message(span_notice("[user.name] builds a power terminal."),\
-					span_notice("You build the power terminal."))
-
-				//build the terminal and link it to the network
-				make_terminal(T, terminal_cable_layer)
-				terminal.connect_to_network()
-				connect_to_network()
-		return
-
-	//crowbarring it !
-	var/turf/T = get_turf(src)
-	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)].")
-		user.log_message("deconstructed [src]", LOG_GAME)
-		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
-		return
-	else if(panel_open && I.tool_behaviour == TOOL_CROWBAR)
-		return
-
+				set_machine_stat(machine_stat & ~BROKEN)
+				update_appearance(UPDATE_OVERLAYS)
+				return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_alert("No power terminal found."))
+/*
+/obj/machinery/power/smes/cable_layer_act(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open panel first!")
+		return ITEM_INTERACT_BLOCKING
 	return ..()
-
-/obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/I)
-	//disassembling the terminal
+*/
+/obj/machinery/power/smes/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(terminal && panel_open)
-		terminal.dismantle(user, I)
-		return TRUE
-
+	if(. == ITEM_INTERACT_SUCCESS)
+		connect_to_network()
 
 /obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
 	if(istype(C) && terminal)
@@ -202,15 +241,6 @@
 	if(terminal)
 		disconnect_terminal()
 	return ..()
-
-// create a terminal object pointing towards the SMES
-// wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_cable_layer = cable_layer)
-	terminal = new/obj/machinery/power/terminal(T)
-	terminal.cable_layer = terminal_cable_layer
-	terminal.setDir(get_dir(T,src))
-	terminal.master = src
-	set_machine_stat(machine_stat & ~BROKEN)
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)

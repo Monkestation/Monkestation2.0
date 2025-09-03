@@ -313,6 +313,10 @@
 	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
 	pin = /obj/item/firing_pin/wastes
 
+/obj/item/gun/ballistic/revolver/govmining/give_manufacturer_examine()
+	RemoveElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH) //So this gun was made in house by nanotrasen's mining research team, it was NOT made by Scarborough
+
+
 /obj/item/gun/ballistic/revolver/govmining/attack_self(mob/living/user) //you do a sick flip when you empty the rounds
 	SpinAnimation(4,2)
 	if(flip_cooldown <= world.time)

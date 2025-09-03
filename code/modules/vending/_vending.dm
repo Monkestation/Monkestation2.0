@@ -64,6 +64,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.7
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
+	clicksound = 'sound/machines/pda_button1.ogg'
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -564,7 +565,7 @@
 		return FALSE
 	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
 		unbuckle_all_mobs(TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
@@ -577,19 +578,19 @@
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
 
-/obj/machinery/vending/attackby(obj/item/I, mob/living/user, params)
-	if(panel_open && is_wire_tool(I))
+/obj/machinery/vending/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return
 
-	if(refill_canister && istype(I, refill_canister))
+	if(refill_canister && istype(attacking_item, refill_canister))
 		if (!panel_open)
 			to_chat(user, span_warning("You should probably unscrew the service panel first!"))
 		else if (machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, span_notice("[src] does not respond."))
 		else
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/vending_refill/canister = I
+			var/obj/item/vending_refill/canister = attacking_item
 			if(canister.get_part_rating() == 0)
 				to_chat(user, span_warning("[canister] is empty!"))
 			else
@@ -601,11 +602,11 @@
 					to_chat(user, span_warning("There's nothing to restock!"))
 			return
 	if(compartmentLoadAccessCheck(user) && !(user.istate & ISTATE_HARM))
-		if(canLoadItem(I))
-			loadingAttempt(I,user)
+		if(canLoadItem(attacking_item))
+			loadingAttempt(attacking_item,user)
 
-		if(istype(I, /obj/item/storage/bag)) //trays USUALLY
-			var/obj/item/storage/T = I
+		if(istype(attacking_item, /obj/item/storage/bag)) //trays USUALLY
+			var/obj/item/storage/T = attacking_item
 			var/loaded = 0
 			var/denied_items = 0
 			for(var/obj/item/the_item in T.contents)
@@ -623,7 +624,7 @@
 				to_chat(user, span_notice("You insert [loaded] dishes into [src]'s compartment."))
 	else
 		. = ..()
-		if(tiltable && !tilted && I.force)
+		if(tiltable && !tilted && attacking_item.force)
 			if(isclosedturf(get_turf(user))) //If the attacker is inside of a wall, immediately fall in the other direction, with no chance for goodies.
 				var/opposite_direction = REVERSE_DIR(get_dir(src, user))
 				var/target = get_step(src, opposite_direction)
@@ -1582,7 +1583,7 @@
 			vend_ready = TRUE
 			return TRUE
 
-/obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
+/obj/machinery/vending/custom/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!linked_account && isliving(user))
 		var/mob/living/L = user
 		var/obj/item/card/id/C = L.get_idcard(TRUE)
@@ -1591,7 +1592,7 @@
 			speak("\The [src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(I, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attacking_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)

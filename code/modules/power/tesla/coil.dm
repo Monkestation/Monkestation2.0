@@ -75,16 +75,16 @@
 /obj/machinery/power/energy_accumulator/tesla_coil/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/energy_accumulator/tesla_coil/attackby(obj/item/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))
+/obj/machinery/power/energy_accumulator/tesla_coil/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", attacking_item))
 		return
 
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
-	if(is_wire_tool(W) && panel_open)
+	if(is_wire_tool(attacking_item) && panel_open)
 		wires.interact(user)
 		return
 
@@ -157,13 +157,13 @@
 /obj/machinery/power/energy_accumulator/grounding_rod/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/energy_accumulator/grounding_rod/attackby(obj/item/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grounding_rod_open[anchored]", "grounding_rod[anchored]", W))
+/obj/machinery/power/energy_accumulator/grounding_rod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "grounding_rod_open[anchored]", "grounding_rod[anchored]", attacking_item))
 		return
 
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()

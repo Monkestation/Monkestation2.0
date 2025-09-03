@@ -33,15 +33,15 @@
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	else if (default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
@@ -52,16 +52,16 @@
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
 	balloon_alert(user, "id changed")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(machine_stat & NOPOWER)
 		open(TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
@@ -72,13 +72,13 @@
 		id = null
 		deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
 		balloon_alert(user, "removed airlock electronics")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
@@ -90,13 +90,13 @@
 		new /obj/item/stack/cable_coil(loc, amount)
 		deconstruction = BLASTDOOR_NEEDS_WIRES
 		balloon_alert(user, "removed internal cables")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if (density)
 		balloon_alert(user, "open the door first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_WIRES)
@@ -108,7 +108,7 @@
 		new /obj/item/stack/sheet/plasteel(loc, amount)
 		user.balloon_alert(user, "torn apart")
 		qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/poddoor/examine(mob/user)
 	. = ..()

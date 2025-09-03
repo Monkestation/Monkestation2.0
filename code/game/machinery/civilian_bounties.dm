@@ -22,10 +22,10 @@
 	///Typecast of an inserted, scanned ID card inside the console, as bounties are held within the ID card.
 	var/obj/item/card/id/inserted_scan_id
 
-/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, params)
-	if(isidcard(I))
-		if(id_insert(user, I, inserted_scan_id))
-			inserted_scan_id = I
+/obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(isidcard(attacking_item))
+		if(id_insert(user, attacking_item, inserted_scan_id))
+			inserted_scan_id = attacking_item
 			return TRUE
 	return ..()
 
@@ -38,7 +38,7 @@
 /obj/machinery/computer/piratepad_control/civilian/LateInitialize()
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/civilian/C in GLOB.machines)
+		for(var/obj/machinery/piratepad/civilian/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad/civilian))
 			if(C.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(C)
 				return

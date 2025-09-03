@@ -64,6 +64,8 @@
  */
 #define PREVENT_CHARACTER_TRIM_LOSS(integer) (integer + 1)
 
+#define ANTAG_MAPTEXT(value, color) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[color]'>[round(value)]</font></div>")
+
 /// Folder directory for strings
 #define STRING_DIRECTORY "strings"
 

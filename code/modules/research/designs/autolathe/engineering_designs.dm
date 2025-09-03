@@ -393,6 +393,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+
 /datum/design/marker_beacon
 	name = "Marker Beacon (x30)"
 	id = "marker_beacon"
@@ -408,3 +409,10 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+ 
+/datum/design/nifsoft_hud/meson
+	name = "Meson HUD NIFSoft"
+	desc = "A NIFSoft datadisk containing the Meson HUD NIFsoft."
+	id = "nifsoft_hud_meson"
+	build_path = /obj/item/disk/nifsoft_uploader/meson_hud
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING

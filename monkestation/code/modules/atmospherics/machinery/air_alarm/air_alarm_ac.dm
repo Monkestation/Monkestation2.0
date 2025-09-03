@@ -29,6 +29,8 @@
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
+	if(mapload && !(is_station_level(z) || is_mining_level(z)))
+		air_conditioning = FALSE
 	if(air_conditioning)
 		SSair.start_processing_machine(src)
 
@@ -77,12 +79,12 @@
 		stop_ac()
 		return PROCESS_KILL
 	var/turf/open/location = get_turf(src)
-	if(!istype(location) || QDELING(location))
+	if(!isopenturf(location))
 		update_use_power(IDLE_POWER_USE)
 		ac_active = FALSE
 		return
 	var/datum/gas_mixture/environment = location.return_air()
-	if(QDELETED(environment))
+	if(!environment)
 		update_use_power(IDLE_POWER_USE)
 		ac_active = FALSE
 		return
@@ -102,14 +104,12 @@
 			environment.temperature = max(current_temp - ac_temp_inc, ac_temp_target)
 		air_update_turf(update = FALSE, remove = FALSE)
 		// Update the air of adjacent turfs too
-		if(!TURF_SHARES(location))
-			return
 		var/adjacent_inc = CEILING(ac_temp_inc * ac_adjacent_mul, 0.1)
-		for(var/turf/open/adjacent_turf in location.get_atmos_adjacent_turfs(alldir = TRUE))
-			if(QDELING(adjacent_turf) || isspaceturf(adjacent_turf))
+		for(var/turf/open/adjacent_turf in location.get_atmos_adjacent_turfs())
+			if(isspaceturf(adjacent_turf))
 				continue
 			var/datum/gas_mixture/adj_environment = adjacent_turf.return_air()
-			if(QDELETED(adj_environment))
+			if(!adj_environment)
 				continue
 			var/adj_temp = adj_environment.return_temperature()
 			if(adj_temp < ac_temp_target)
