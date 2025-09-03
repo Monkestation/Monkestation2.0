@@ -1,18 +1,12 @@
 ///Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
 // #define BLOODSUCKER_TESTING
 
-#ifdef TESTING
-#define BLOODSUCKER_TESTING
-#endif //#ifdef TESTING
-
 #ifdef BLOODSUCKER_TESTING
-	#if defined(CIBUILDING) || defined(TGS)
-		#error BLOODSUCKER_TESTING is enabled, disable this!!!
-	#else
-		#ifndef TESTING
-			#warn BLOODSUCKER_TESTING is enabled, you REALLY do not want this enabled outside of local testing!!
-		#endif //ifndef TESTING
-	#endif //ifdef CIBUILDING
+#ifdef CIBUILDING
+#error BLOODSUCKER_TESTING is enabled, disable this!!!
+#else
+#warn BLOODSUCKER_TESTING is enabled, you REALLY do not want this enabled outside of local testing!!
+#endif //ifdef CIBUILDING
 #endif //ifdef BLOODSUCKER_TESTING
 
 /**
