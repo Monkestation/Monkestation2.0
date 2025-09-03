@@ -154,6 +154,8 @@
 		if (IS_BLOODSUCKER_OR_VASSAL(target))
 			breakouttime = 60 SECONDS
 			target.apply_status_effect(/datum/status_effect/silver_cuffed)
+		else
+			breakouttime = initial(breakouttime)
 
 /**
  * # Alien handcuffs

@@ -180,8 +180,8 @@
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Silver cuffed?
-	if(owner.has_status_effect(/datum/status_effect/silver_cuffed))
-		owner.balloon_alert(owner, "The silver cuffs on your wrist prevent you from using your powers!")
+	if(!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
+		user.balloon_alert(user, "The silver cuffs on your wrist prevent you from using your powers!")
 		return FALSE
 	var/bloodcost = get_blood_cost()
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
@@ -277,7 +277,7 @@
 		return FALSE
 	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
 		return FALSE
-	if (owner.has_status_effect(/datum/status_effect/silver_cuffed))
+	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
 		return FALSE
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	if(constant_bloodcost <= 0)

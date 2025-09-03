@@ -80,6 +80,8 @@
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
 /// This Power can't be used during Sol
 #define BP_CANT_USE_DURING_SOL (1<<5)
+/// This Power CAN be used while silver cuffed
+#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<6)
 
 /// This Power can be purchased by Bloodsuckers
 #define BLOODSUCKER_CAN_BUY (1<<0)

@@ -1371,8 +1371,6 @@
 				if (IS_BLOODSUCKER_OR_VASSAL(src))
 					src.remove_status_effect(/datum/status_effect/silver_cuffed)
 
-					silver_cuffs.breakouttime = 1 SECONDS
-
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
