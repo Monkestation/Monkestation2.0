@@ -145,7 +145,7 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, GenerateCombatOverlay())
  */
 
 /obj/vehicle/sealed/proc/handle_ci_migration(mob/living/user)
-	if(!typesof(user.loc, /obj/vehicle/sealed)) //Sanity check: If the mob's location (not the tile they are on) is NOT a type of vehicle/sealed, kill the proc.
+	if(!istype(user.loc, /obj/vehicle/sealed)) //Sanity check: If the mob's location (not the tile they are on) is NOT a type of vehicle/sealed, kill the proc.
 		return
 	//If the vehicle can have more passenger seats than driver seats (note: each driver seat counts as a passenger seat) AND both: The mob is not a driver, and the vehicle has a driver, return.
 	if ((src.max_occupants > src.max_drivers) && ((!(user in return_drivers())) && (src.driver_amount() > 0)))
