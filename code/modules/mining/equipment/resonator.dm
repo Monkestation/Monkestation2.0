@@ -42,10 +42,6 @@
 		new /obj/effect/temp_visual/resonance(target_turf, user, src, mode, adding_failure)
 		user.changeNext_move(CLICK_CD_MELEE)
 
-///obj/item/resonator/pre_attack(atom/target, mob/user, params)
-//	if(check_allowed_items(target, not_inside = TRUE))
-//		create_resonance(target, user)
-//	return ..()
 /obj/item/resonator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(check_allowed_items(interacting_with, not_inside = TRUE))
 		create_resonance(interacting_with, user)
