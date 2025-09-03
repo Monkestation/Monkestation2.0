@@ -82,15 +82,15 @@
 
 	user.put_in_hands(internal_paper)
 
-/obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
-	if(burn_paper_product_attackby_check(P, user))
+/obj/item/paperplane/attackby(obj/item/attacking_item, mob/living/carbon/human/user, params)
+	if(burn_paper_product_attackby_check(attacking_item, user))
 		return
-	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+	if(IS_WRITING_UTENSIL(attacking_item))
 		to_chat(user, span_warning("You should unfold [src] before changing it!"))
 		return
 
-	else if(istype(P, /obj/item/stamp)) //we don't randomize stamps on a paperplane
-		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
+	else if(istype(attacking_item, /obj/item/stamp)) //we don't randomize stamps on a paperplane
+		internalPaper.attackby(attacking_item, user) //spoofed attack to update internal paper.
 		update_appearance()
 		add_fingerprint(user)
 		return
