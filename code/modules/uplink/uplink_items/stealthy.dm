@@ -125,4 +125,4 @@
 	cost = 20
 	item = /obj/item/pen/fountain/cigsynth/deluxe
 	lock_other_purchases = TRUE
-	purchasable_from ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
