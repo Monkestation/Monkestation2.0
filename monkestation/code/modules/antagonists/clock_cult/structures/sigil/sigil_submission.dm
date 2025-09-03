@@ -31,7 +31,7 @@
 		animate(converted_mob.client, color = previous_colour, time = 1 SECONDS)
 
 	GLOB.main_clock_cult?.check_member_distribution()
-	if(isdrone(converted_mob) && (GLOB.cogscarabs.len < MAXIMUM_COGSCARABS))
+	if(isdrone(converted_mob) && (length(SSthe_ark.cogscarabs) < MAXIMUM_COGSCARABS))
 		var/mob/living/basic/drone/cogscarab/cogger = new /mob/living/basic/drone/cogscarab(get_turf(src))
 		cogger.PossessByPlayer(converted_mob.key)
 		cogger.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
@@ -69,6 +69,10 @@
 	return FALSE
 
 /obj/structure/destructible/clockwork/sigil/submission/dispel_check(mob/user)
+	. = ..()
+	if(!.)
+		return
 	if(active_timer)
 		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently converting [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
 			return FALSE
+	return TRUE

@@ -1,8 +1,6 @@
 /// Trait used to ensure that things don't get animated as falling in multiple times
 #define TRAIT_FALLING_INTO_BINGLE_HOLE "falling_into_bingle_pit"
 
-GLOBAL_LIST(bingle_mobs)
-
 /obj/structure/bingle_hole
 	name = "bingle pit"
 	desc = "An all-consuming pit of endless horrors... and bingles."
@@ -25,7 +23,7 @@ GLOBAL_LIST(bingle_mobs)
 	var/last_bingle_spawn_value = 0
 	var/last_bingle_poll_value = 0
 	var/max_pit_size = 40 // Maximum size (40x40) for the pit
-	var/datum/component/aura_healing/aura_healing
+	var/healing_range = 3
 	var/static/datum/team/bingles/bingle_team
 	/// Typecache of things that won't be swallowed by the pit.
 	var/static/list/swallow_blacklist
@@ -43,7 +41,6 @@ GLOBAL_LIST(bingle_mobs)
 			/obj/structure/bingle_hole,
 			/obj/structure/bingle_pit_overlay,
 		))
-	aura_healing = AddComponent(/datum/component/aura_healing, range = 3, simple_heal = 5, limit_to_trait = TRAIT_HEALS_FROM_BINGLE_HOLES, healing_color = COLOR_BLUE_LIGHT)
 	SSbingle_pit.add_bingle_hole(src)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -57,12 +54,8 @@ GLOBAL_LIST(bingle_mobs)
 	log_game("Bingle Pit Template loaded.")
 
 /obj/structure/bingle_hole/Destroy()
-	QDEL_NULL(aura_healing)
 	SSbingle_pit.remove_bingle_hole(src)
 	spit_em_out()
-	// Gib all bingles in the world on pit destruction
-	for(var/mob/living/basic/bingle/bingle in GLOB.bingle_mobs)
-		bingle?.gib()
 	QDEL_LIST(pit_overlays)
 	return ..()
 
@@ -305,7 +298,7 @@ GLOBAL_LIST(bingle_mobs)
 	if(new_size == 1)
 		src.icon_state = "binglepit"
 		current_pit_size = 1
-		aura_healing.range = 3
+		healing_range = 3
 		return
 
 	src.icon_state = "" // Make the pit itself invisible
@@ -367,7 +360,7 @@ GLOBAL_LIST(bingle_mobs)
 					priority_announce("The blue tide has been detected upon [station_name()]. All personnel must stop the consumption of the station.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 					announcement_made = TRUE
 	current_pit_size = new_size
-	aura_healing.range = max(round(new_size / 2, 1) + 2, 3)
+	healing_range = max(round(new_size / 2, 1) + 2, 3)
 
 /obj/structure/bingle_pit_overlay
 	name = "bingle pit"
@@ -465,19 +458,18 @@ GLOBAL_LIST(bingle_mobs)
 		role_name_text = "bingle"
 	)
 
-	if(!length(candidates))
+	if(!length(candidates) || QDELETED(src))
+		return
+
+	var/turf/spawn_loc = get_turf(src) // Use the pit's location
+	if(isnull(spawn_loc))
 		return
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
 
-	var/turf/spawn_loc = get_turf(src) // Use the pit's location
-	if(isnull(spawn_loc))
-		return
-
-	var/mob/living/basic/bingle/bingle = new(spawn_loc)
-
+	var/mob/living/basic/bingle/bingle = new(spawn_loc, src)
 	player_mind.transfer_to(bingle)
 	player_mind.add_antag_datum(/datum/antagonist/bingle)
 	if(item_value_consumed >= 500)

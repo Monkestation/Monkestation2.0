@@ -28,16 +28,30 @@
 	light_power = 3
 	anchored_tabletop_offset = 6
 	var/held_state = "microwave_standard"
-	var/wire_disabled = FALSE // is its internal wire cut?
+	/// Is its function wire cut?
+	var/wire_disabled = FALSE
 	var/operating = FALSE
 	/// How dirty is it?
 	var/dirty = 0
 	var/dirty_anim_playing = FALSE
 	/// How broken is it? NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
 	var/broken = NOT_BROKEN
+	/// Microwave door position
 	var/open = FALSE
+	/// Microwave max capacity
 	var/max_n_of_items = 10
+	/// Microwave efficiency (power) based on the stock components
 	var/efficiency = 0
+	/// If we use a cell instead of powernet
+	var/cell_powered = FALSE
+	/// The cell we charge with
+	var/obj/item/stock_parts/cell/cell
+	/// The cell we're charging
+	var/obj/item/stock_parts/cell/vampire_cell
+	/// Capable of vampire charging PDAs
+	var/vampire_charging_capable = FALSE
+	/// Charge contents of microwave instead of cook
+	var/vampire_charging_enabled = FALSE
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
@@ -231,14 +245,14 @@
 		return FALSE
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
 	if(operating)
 		return
 	if(!default_deconstruction_crowbar(tool))
 		return
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
 	if(operating)
@@ -247,7 +261,7 @@
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
@@ -255,97 +269,102 @@
 
 	if(panel_open && is_wire_tool(O))
 		wires.interact(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
-	if(broken > NOT_BROKEN)
-		if(broken == REALLY_BROKEN && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a TOOL_WIRECUTTER
-			user.visible_message(span_notice("[user] starts to fix part of \the [src]."), span_notice("You start to fix part of \the [src]..."))
-			if(O.use_tool(src, user, 20))
-				user.visible_message(span_notice("[user] fixes part of \the [src]."), span_notice("You fix part of \the [src]."))
-				broken = KINDA_BROKEN // Fix it a bit
-		else if(broken == KINDA_BROKEN && O.tool_behaviour == TOOL_WELDER) // If it's broken and they're doing the wrench
-			user.visible_message(span_notice("[user] starts to fix part of \the [src]."), span_notice("You start to fix part of \the [src]..."))
-			if(O.use_tool(src, user, 20))
-				user.visible_message(span_notice("[user] fixes \the [src]."), span_notice("You fix \the [src]."))
-				broken = NOT_BROKEN
-				update_appearance()
-				return FALSE //to use some fuel
-		else
-			balloon_alert(user, "it's broken!")
-			return TRUE
-		return
+/obj/machinery/microwave/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(operating)
+		return NONE
 
-	if(istype(O, /obj/item/reagent_containers/spray))
-		var/obj/item/reagent_containers/spray/clean_spray = O
-		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
-			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
-			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
-			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
-			dirty = 0
-			update_appearance()
-		else
-			to_chat(user, span_warning("You need more space cleaner!"))
-		return TRUE
-
-	if(istype(O, /obj/item/soap) || istype(O, /obj/item/reagent_containers/cup/rag))
-		var/cleanspeed = 50
-		if(istype(O, /obj/item/soap))
-			var/obj/item/soap/used_soap = O
-			cleanspeed = used_soap.cleanspeed
-		user.visible_message(span_notice("[user] starts to clean \the [src]."), span_notice("You start to clean \the [src]..."))
-		if(do_after(user, cleanspeed, target = src))
-			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
-			dirty = 0
-			update_appearance()
-		return TRUE
+	if(item.item_flags & ABSTRACT)
+		return NONE
 
 	if(dirty >= MAX_MICROWAVE_DIRTINESS) // The microwave is all dirty so can't be used!
-		balloon_alert(user, "it's too dirty!")
-		return TRUE
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "it's too dirty!")
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 
-	if(istype(O, /obj/item/storage))
-		var/obj/item/storage/T = O
-		var/loaded = 0
+	if(broken > NOT_BROKEN)
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "it's broken!")
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 
-		if(!istype(O, /obj/item/storage/bag/tray))
-			// Non-tray dumping requires a do_after
-			to_chat(user, span_notice("You start dumping out the contents of [O] into [src]..."))
-			if(!do_after(user, 2 SECONDS, target = T))
-				return
-
-		for(var/obj/S in T.contents)
-			if(!IS_EDIBLE(S))
-				continue
-			if(ingredients.len >= max_n_of_items)
-				balloon_alert(user, "it's full!")
-				return TRUE
-			if(T.atom_storage.attempt_remove(S, src))
-				loaded++
-				ingredients += S
-		if(loaded)
-			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
+		var/swapped = FALSE
+		if(!isnull(cell))
+			cell.forceMove(drop_location())
+			if(!(issilicon(user) || isdrone(user) || isAdminGhostAI(user)) && Adjacent(user))
+				user.put_in_hands(cell)
+			cell = null
+			swapped = TRUE
+		if(!user.transferItemToLoc(item, src))
 			update_appearance()
-		return
+			return ITEM_INTERACT_BLOCKING
+		cell = item
+		balloon_alert(user, "[swapped ? "swapped" : "inserted"] cell")
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !(user.istate & ISTATE_HARM))
+	if(!anchored)
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "not secured!")
+			return ITEM_INTERACT_BLOCKING
+		return NONE
+
+	if(vampire_charging_capable && istype(item, /obj/item/modular_computer) && ingredients.len > 0)
+		balloon_alert(user, "max 1 device!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(item.w_class <= WEIGHT_CLASS_NORMAL && !(user.istate & ISTATE_HARM) && isnull(item.atom_storage))
 		if(ingredients.len >= max_n_of_items)
 			balloon_alert(user, "it's full!")
-			return TRUE
-		if(!user.transferItemToLoc(O, src))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(item, src))
 			balloon_alert(user, "it's stuck to your hand!")
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 
-		ingredients += O
-		user.visible_message(span_notice("[user] adds \a [O] to \the [src]."), span_notice("You add [O] to \the [src]."))
+		ingredients += item
+		open(autoclose = 0.6 SECONDS)
+		user.visible_message(span_notice("[user] adds \a [item] to \the [src]."), span_notice("You add [item] to \the [src]."))
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/microwave/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if (isnull(tool.atom_storage))
+		return
+	handle_dumping(user, tool)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/microwave/proc/handle_dumping(mob/living/user, obj/item/tool)
 	//MONKESTATION EDIT START
-	if (istype(O, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding = O
+	if (istype(tool, /obj/item/riding_offhand))
+		var/obj/item/riding_offhand/riding = tool
 		return stuff_mob_in(riding.rider, user)
 	//MONKESTATION EDIT END
-	return ..()
+
+	var/loaded = 0
+	if(!istype(tool, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [tool] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = tool))
+			return
+
+	for(var/obj/tray_item in tool.contents)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(ingredients.len >= max_n_of_items)
+			balloon_alert(user, "it's full!")
+			return
+		if(tool.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			ingredients += tray_item
+
+	if(loaded)
+		open(autoclose = 0.6 SECONDS)
+		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		update_appearance()
 
 /obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
@@ -593,10 +612,10 @@
 	soundloop.stop()
 	open()
 
-/obj/machinery/microwave/proc/open()
+/obj/machinery/microwave/proc/open(autoclose = 0.8 SECONDS)
 	open = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(close)), 0.8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(close)), autoclose)
 
 /obj/machinery/microwave/proc/close()
 	open = FALSE

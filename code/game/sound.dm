@@ -63,9 +63,8 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 		return FALSE
 
 /// Calculates the "adjusted" volume for a user's volume mixer
-/proc/calculate_mixed_volume(user, volume, mixer_channel)
+/proc/calculate_mixed_volume(client/client, volume, mixer_channel)
 	. = volume
-	var/client/client = CLIENT_FROM_VAR(user)
 	var/list/channels = client?.prefs?.channel_volume
 	if(!channels)
 		return volume
@@ -262,7 +261,7 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 		else
 			mixer_channel = guess_mixer_channel(soundin)
 
-	sound_to_use.volume = calculate_mixed_volume(src, sound_to_use.volume, mixer_channel)
+	sound_to_use.volume = calculate_mixed_volume(client, sound_to_use.volume, mixer_channel)
 
 	SEND_SOUND(src, sound_to_use)
 
@@ -564,6 +563,14 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 					'sound/effects/muffspeech/muffspeech9.ogg',
 				)
 			// monkestation start: more sound effects
+			if(SFX_KEYSTROKE)
+				soundin = pick('sound/machines/keyboard/keypress1.ogg','sound/machines/keyboard/keypress2.ogg','sound/machines/keyboard/keypress3.ogg','sound/machines/keyboard/keypress4.ogg')
+			if(SFX_KEYBOARD)
+				soundin = pick('sound/machines/keyboard/keystroke1.ogg','sound/machines/keyboard/keystroke2.ogg','sound/machines/keyboard/keystroke3.ogg','sound/machines/keyboard/keystroke4.ogg')
+			if(SFX_BUTTON)
+				soundin = pick('sound/machines/button1.ogg','sound/machines/button2.ogg','sound/machines/button3.ogg','sound/machines/button4.ogg')
+			if(SFX_SWITCH)	//stolen from nsv
+				soundin = pick('sound/machines/switch1.ogg','sound/machines/switch2.ogg','sound/machines/switch3.ogg')
 			if(SFX_BUTTON_CLICK)
 				soundin = 'monkestation/sound/effects/hl2/button-click.ogg'
 			if(SFX_BUTTON_FAIL)

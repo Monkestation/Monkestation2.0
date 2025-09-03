@@ -1,0 +1,7 @@
+author: "MrBagHead"
+delete-after: True
+changes:
+  - rscadd: "Slashers gain a new \"Recall Traps\" ability to recall beartraps not in their belt, or recreate destroyed ones. Recalling removes traps attached to victims."
+  - balance: "Slasher beartraps are now semi-transparent (alpha 160) to make them harder to spot."
+  - balance: "Slasher belt can now only hold a maximum of 3 beartraps."
+  - bugfix: "Slasher objectives (instructions) now display properly and no longer fill up chat multiple times."

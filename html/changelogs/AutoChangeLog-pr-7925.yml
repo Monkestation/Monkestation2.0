@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - bugfix: "Bloodpacks can now be drawn from with syringes."

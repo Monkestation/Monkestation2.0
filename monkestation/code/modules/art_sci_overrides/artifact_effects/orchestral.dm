@@ -43,6 +43,7 @@
 		"Jazz attack!",
 	)
 
+	/// How far our effect reaches
 	var/reaction_radius = 9
 
 	COOLDOWN_DECLARE(jazz_cooldown)
@@ -57,10 +58,7 @@
 	playsound(our_artifact.holder, pick(sound_hit_list), channel = CHANNEL_MACHINERY, vol = 80)
 
 	var/turf/our_turf = get_turf(our_artifact.holder)
-	for(var/turf/open/floor in range(reaction_radius,our_artifact.holder))
-		if(floor == our_turf)
-			continue
-		for(var/mob/living/living in floor)
-			to_chat(living, span_notice(pick(reactions)))
-			living.add_mood_event("orchestral_artifact", /datum/mood_event/jazzy)
+	for(var/mob/living/living in range(reaction_radius, our_turf))
+		to_chat(living, span_notice(pick(reactions)))
+		living.add_mood_event("orchestral_artifact", /datum/mood_event/jazzy)
 	COOLDOWN_START(src, jazz_cooldown, 3 SECONDS)

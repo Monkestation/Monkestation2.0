@@ -310,13 +310,6 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
-/// Flag for when /afterattack potentially acts on an item.
-/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
-/// Does not necessarily imply success, or even that it did hit an item, just intent.
-// This is intentionally not (1 << 0) because some stuff currently erroneously returns TRUE/FALSE for afterattack.
-// Doesn't need to be set if proximity flag is FALSE.
-#define AFTERATTACK_PROCESSED_ITEM (1 << 1)
-
 //Autofire component
 /// Compatible firemode is in the gun. Wait until it's held in the user hands.
 #define AUTOFIRE_STAT_IDLE (1<<0)
@@ -363,3 +356,58 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define COMBO_STEPS "steps"
 /// The proc the combo calls
 #define COMBO_PROC "proc"
+
+///Deathmatch lobby current status
+#define DEATHMATCH_NOT_PLAYING 0
+#define DEATHMATCH_PRE_PLAYING 1
+#define DEATHMATCH_PLAYING 2
+
+// Attack chain attack_modifier modifiers
+/// Sets the weapon's base force to this. Use carefully (as multiple overrides may collide). Set via [SET_ATTACK_FORCE]
+#define FORCE_OVERRIDE "force_override"
+/// Flat addition or subtration to the weapon's force. Set via [MODIFY_ATTACK_FORCE]
+#define FORCE_MODIFIER "force_modifier"
+/// Multiplication of the weapon's force. Applied AFTER [FORCE_MODIFIER]. Set via [MODIFY_ATTACK_FORCE_MULTIPLIER]
+#define FORCE_MULTIPLIER "force_multiplier"
+/// If set in modifiers, default messages ("You hit the thing with the thing") are silenced
+#define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
+/// If set in modifiers, default hitsound is silenced
+#define SILENCE_HITSOUND "silence_hitsound"
+
+/// Used in attack chain to set the force of the attack without changing the base force of the item.
+#define SET_ATTACK_FORCE(atk_mods, value) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[FORCE_OVERRIDE] = value;
+
+/// Used in attack chain to add or remove force from the attack without changing the base force of the item.
+#define MODIFY_ATTACK_FORCE(atk_mods, amount) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[FORCE_MODIFIER] += amount;
+
+/// Used in attack chain to multiply the force of the attack without changing the base force of the item.
+#define MODIFY_ATTACK_FORCE_MULTIPLIER(atk_mods, amount) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	if(!(FORCE_MULTIPLIER in atk_mods)) { atk_mods[FORCE_MULTIPLIER] = 1 }; \
+	atk_mods[FORCE_MULTIPLIER] *= amount;
+
+/// Used in attack chain to prevent hitsounds on attack (to allow for custom sounds)
+#define MUTE_ATTACK_HITSOUND(atk_mods) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[SILENCE_HITSOUND] = TRUE;
+
+/// Used in attack chain to prevent default visible messages from being sent (to allow for custom messages)
+#define HIDE_ATTACK_MESSAGES(atk_mods) \
+	if(!islist(atk_mods)) { atk_mods = list() }; \
+	atk_mods[SILENCE_DEFAULT_MESSAGES] = TRUE;
+
+/// Calculates the final force of some item based on atk_mods
+/// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
+#define CALCULATE_FORCE(some_item, atk_mods) \
+	((((FORCE_OVERRIDE in atk_mods) ? atk_mods[FORCE_OVERRIDE] : some_item.force) + (atk_mods?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in atk_mods) ? atk_mods[FORCE_MULTIPLIER] : 1))
+
+/// Return from attacked_by to indicate the attack did not connect
+/// A negative number is used here to people can easily check "attacks that failed or did 0 damage" with <= 0
+#define ATTACK_FAILED -1
+
+///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown?
+#define FLASH_COMPLETED "flash_completed"

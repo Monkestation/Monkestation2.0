@@ -1334,6 +1334,7 @@
 	taste_description = "a wall of bricks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	bypass_restriction = TRUE
+	synthetic_boozepwr = 300 // it's divinely blessed, or so sayeth the name.
 
 /datum/reagent/consumable/ethanol/atomicbomb
 	name = "Atomic Bomb"
@@ -2801,6 +2802,7 @@
 	quality = DRINK_NICE
 	taste_description = "cyberspace"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	synthetic_boozepwr = 40 //it's cyber™
 
 /datum/reagent/consumable/ethanol/white_hawaiian //coconut milk, coconut rum, coffee liqueur
 	name = "White Hawaiian"

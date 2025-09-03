@@ -29,8 +29,8 @@
 	else
 		to_chat(user, span_warning("You need a crowbar to pry this open!"))
 
-/obj/structure/closet/crate/large/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_CROWBAR)
+/obj/structure/closet/crate/large/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
 		if(!open(user))

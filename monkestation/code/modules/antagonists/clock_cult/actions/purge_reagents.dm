@@ -1,10 +1,10 @@
-/datum/action/cooldown/eminence/purge_reagents
+/datum/action/cooldown/clock_cult/eminence/purge_reagents
 	name = "Purge Reagents"
 	desc = "Purges all reagents from the bloodstream of a marked servant, useful for if they have been given holy water."
 	button_icon_state = "Mending Mantra"
 	cooldown_time = 30 SECONDS
 
-/datum/action/cooldown/eminence/purge_reagents/Activate(atom/target)
+/datum/action/cooldown/clock_cult/eminence/purge_reagents/Activate(atom/target)
 	. = ..()
 	if(!.)
 		return FALSE

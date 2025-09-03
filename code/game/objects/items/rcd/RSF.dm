@@ -84,17 +84,17 @@ RSF
 /obj/item/rsf/cyborg
 	matter = 30
 
-/obj/item/rsf/attackby(obj/item/W, mob/user, params)
-	if(is_type_in_list(W,matter_by_item))//If the thing we got hit by is in our matter list
-		var/tempMatter = matter_by_item[W.type] + matter
+/obj/item/rsf/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(is_type_in_list(attacking_item,matter_by_item))//If the thing we got hit by is in our matter list
+		var/tempMatter = matter_by_item[attacking_item.type] + matter
 		if(tempMatter > max_matter)
 			to_chat(user, span_warning("\The [src] can't hold any more [discriptor]!"))
 			return
-		if(isstack(W))
-			var/obj/item/stack/stack = W
+		if(isstack(attacking_item))
+			var/obj/item/stack/stack = attacking_item
 			stack.use(1)
 		else
-			qdel(W)
+			qdel(attacking_item)
 		matter = tempMatter //We add its value
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, span_notice("\The [src] now holds [matter]/[max_matter] [discriptor]."))
@@ -137,21 +137,18 @@ RSF
 		return FALSE
 	return TRUE
 
-/obj/item/rsf/afterattack(atom/A, mob/user, proximity)
+/obj/item/rsf/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(cooldown > world.time)
-		return
-	. = ..()
-	if(!proximity)
-		return .
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if (!is_allowed(A))
-		return .
+		return NONE
+	if (!is_allowed(interacting_with))
+		return NONE
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
-		var/atom/meme = new to_dispense(get_turf(A))
+		var/atom/meme = new to_dispense(get_turf(interacting_with))
 		to_chat(user, span_notice("[action_type] [meme.name]..."))
 		cooldown = world.time + cooldowndelay
-	return .
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 ///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
 /obj/item/rsf/proc/use_matter(charge, mob/user)
@@ -175,10 +172,7 @@ RSF
 
 ///Helper proc that iterates through all the things we are allowed to spawn on, and sees if the passed atom is one of them
 /obj/item/rsf/proc/is_allowed(atom/to_check)
-	for(var/sort in allowed_surfaces)
-		if(istype(to_check, sort))
-			return TRUE
-	return FALSE
+	return is_type_in_list(to_check, allowed_surfaces)
 
 /obj/item/rsf/cookiesynth
 	name = "Cookie Synthesizer"
