@@ -12,6 +12,18 @@
 	//internal radio used for broadcasting to security when the tracker is surgically removed
 	var/obj/item/radio/internal_radio
 
+/obj/item/radio/internal_tracker_radio
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	subspace_transmission = TRUE
+	canhear_range = 0
+	ignores_radio_jammers = TRUE
+
+/obj/item/radio/internal_tracker_radio/Initialize(mapload)
+	. = ..()
+
+	src.set_listening(FALSE)
+	src.recalculateChannels()
+
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
@@ -40,13 +52,7 @@
 	. = ..()
 	GLOB.tracked_implants += src
 
-	internal_radio = new /obj/item/radio(src)
-	internal_radio.keyslot = new /obj/item/encryptionkey/headset_sec
-	internal_radio.subspace_transmission = TRUE
-	internal_radio.canhear_range = 0
-	internal_radio.set_listening(FALSE)
-	internal_radio.ignores_radio_jammers = TRUE
-	internal_radio.recalculateChannels()
+	internal_radio = new /obj/item/radio/internal_tracker_radio(src)
 
 /obj/item/implant/tracking/Destroy()
 	GLOB.tracked_implants -= src
