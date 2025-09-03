@@ -298,7 +298,7 @@
 			owner.adjustOxyLoss(-5 * seconds_between_ticks)
 		else
 			owner.adjustOxyLoss(-2 * seconds_between_ticks)
-	owner.blood_volume = min(owner.blood_volume + (2 * seconds_between_ticks), BLOOD_VOLUME_SAFE)
+	owner.blood_volume = += 2 * seconds_between_ticks
 
 #undef FEED_NOTICE_RANGE
 #undef FEED_DEFAULT_TIMER
