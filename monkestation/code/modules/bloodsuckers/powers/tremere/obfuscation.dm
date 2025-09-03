@@ -138,7 +138,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/proc/reveal()
 	if(!active)
-		CRASH("reveal() someone called while ability is inactive?")
+		CRASH("reveal() somehow called while ability is inactive?")
 	if(!revealed)
 		revealed = TRUE
 		animate(owner, alpha = OBFUSCATION_REVEALED_ALPHA, time = 2 SECONDS)
@@ -146,7 +146,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/proc/recloak()
 	if(!active)
-		CRASH("recloak() someone called while ability is inactive?")
+		CRASH("recloak() somehow called while ability is inactive?")
 	recloak_timer = null
 	revealed = FALSE
 	animate(owner, alpha = OBFUSCATION_HIDDEN_ALPHA, time = 2 SECONDS)
