@@ -7,11 +7,19 @@
 
 /datum/objective/bloodsucker
 	martyr_compatible = TRUE
+	var/datum/antagonist/bloodsucker/bloodsucker_datum
 
 // GENERATE
-/datum/objective/bloodsucker/New()
+/datum/objective/bloodsucker/New(text, datum/mind/owner)
 	update_explanation_text()
+	if(owner)
+		src.owner = owner
+		src.bloodsucker_datum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
 	..()
+
+/datum/objective/bloodsucker/Destroy()
+	bloodsucker_datum = null
+	return ..()
 
 //////////////////////////////////////////////////////////////////////////////
 //	//							 PROCS 									//	//
@@ -31,13 +39,12 @@
 
 /// Check Vassals and get their occupations
 /datum/objective/bloodsucker/proc/get_vassal_occupations()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(!length(bloodsuckerdatum?.vassals))
+	if(!length(bloodsucker_datum?.vassals))
 		return FALSE
 	var/list/all_vassal_jobs = list()
 	var/vassal_job
-	for(var/datum/antagonist/vassal/bloodsucker_vassals in bloodsuckerdatum.vassals)
-		if(!bloodsucker_vassals || !bloodsucker_vassals.owner)	// Must exist somewhere, and as a vassal.
+	for(var/datum/antagonist/vassal/bloodsucker_vassals in bloodsucker_datum.vassals)
+		if(!bloodsucker_vassals?.owner)	// Must exist somewhere, and as a vassal.
 			continue
 		// Mind Assigned
 		if(bloodsucker_vassals.owner?.assigned_role)
@@ -70,8 +77,7 @@
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/lair/check_completion()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(bloodsuckerdatum && bloodsuckerdatum.coffin && bloodsuckerdatum.bloodsucker_lair_area)
+	if(bloodsucker_datum?.coffin && bloodsucker_datum.bloodsucker_lair_area)
 		return TRUE
 	return FALSE
 
@@ -79,9 +85,25 @@
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-/datum/objective/survive/bloodsucker
+/datum/objective/bloodsucker/survive
 	name = "bloodsuckersurvive"
 	explanation_text = "Survive the entire shift without succumbing to Final Death."
+	completed = TRUE
+
+/datum/objective/bloodsucker/survive/New(text, datum/mind/owner)
+	. = ..()
+	if(bloodsucker_datum)
+		RegisterSignal(bloodsucker_datum, COMSIG_BLOODSUCKER_FINAL_DEATH, PROC_REF(on_final_death))
+
+/datum/objective/bloodsucker/survive/Destroy()
+	if(bloodsucker_datum)
+		UnregisterSignal(bloodsucker_datum, COMSIG_BLOODSUCKER_FINAL_DEATH)
+	return ..()
+
+/datum/objective/bloodsucker/survive/proc/on_final_death()
+	SIGNAL_HANDLER
+	completed = FALSE
+	UnregisterSignal(bloodsucker_datum, COMSIG_BLOODSUCKER_FINAL_DEATH)
 
 // WIN CONDITIONS?
 // Handled by parent
@@ -132,7 +154,7 @@
 
 
 // GENERATE!
-/datum/objective/bloodsucker/conversion/department/New()
+/datum/objective/bloodsucker/conversion/department/New(text, datum/mind/owner)
 	target_department = SSjob.get_department_type(pick(possible_departments))
 	target_amount = rand(2, 3)
 	return ..()
@@ -169,7 +191,7 @@
 	name = "heartthief"
 
 // GENERATE!
-/datum/objective/bloodsucker/heartthief/New()
+/datum/objective/bloodsucker/heartthief/New(text, datum/mind/owner)
 	target_amount = rand(2,3)
 	..()
 
@@ -201,7 +223,7 @@
 	name = "gourmand"
 
 // GENERATE!
-/datum/objective/bloodsucker/gourmand/New()
+/datum/objective/bloodsucker/gourmand/New(text, datum/mind/owner)
 	target_amount = rand(450,650)
 	..()
 
@@ -212,13 +234,7 @@
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/gourmand/check_completion()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.current.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(!bloodsuckerdatum)
-		return FALSE
-	var/stolen_blood = bloodsuckerdatum.total_blood_drank
-	if(stolen_blood >= target_amount)
-		return TRUE
-	return FALSE
+	return bloodsucker_datum?.total_blood_drank >= target_amount
 
 // HOW: Track each feed (if human). Count victory.
 
@@ -257,8 +273,7 @@
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/tremere_power/check_completion()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
-	for(var/datum/action/cooldown/bloodsucker/targeted/tremere/tremere_powers in bloodsuckerdatum.powers)
+	for(var/datum/action/cooldown/bloodsucker/targeted/tremere/tremere_powers in bloodsucker_datum?.powers)
 		if(tremere_powers.level_current >= TREMERE_OBJECTIVE_POWER_LEVEL)
 			return TRUE
 	return FALSE
@@ -276,7 +291,6 @@
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/embrace/check_completion()
-	var/datum/antagonist/bloodsucker/bloodsucker_datum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
 	for(var/datum/antagonist/vassal/favorite/vassal_datum in bloodsucker_datum?.vassals)
 		if(vassal_datum.owner.has_antag_datum(/datum/antagonist/bloodsucker))
 			return TRUE
@@ -343,7 +357,7 @@
 	name = "vassalhim"
 	var/target_department_type = FALSE
 
-/datum/objective/bloodsucker/vassalhim/New()
+/datum/objective/bloodsucker/vassalhim/New(text, datum/mind/owner)
 	var/list/possible_targets = return_possible_targets()
 	find_target(possible_targets)
 	..()

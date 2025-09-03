@@ -45,6 +45,8 @@
 	var/frenzied = FALSE
 	/// Whether the death handling code is active or not.
 	var/handling_death = FALSE
+	/// If this bloodsucker has suffered final death.
+	var/final_death = FALSE
 
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/bloodsucker/powers = list()
@@ -493,30 +495,23 @@
 
 /datum/antagonist/bloodsucker/proc/forge_bloodsucker_objectives()
 	// Claim a Lair Objective
-	var/datum/objective/bloodsucker/lair/lair_objective = new
-	lair_objective.owner = owner
-	objectives += lair_objective
+	objectives += new /datum/objective/bloodsucker/lair(null, owner)
 	// Survive Objective
-	var/datum/objective/survive/bloodsucker/survive_objective = new
-	survive_objective.owner = owner
-	objectives += survive_objective
+	objectives += new /datum/objective/bloodsucker/survive(null, owner)
 
 	// Objective 1: Vassalize a Head/Command, or a specific target
 	switch(rand(1, 3))
 		if(1) // Conversion Objective
 			var/datum/objective/bloodsucker/conversion/chosen_subtype = pick(subtypesof(/datum/objective/bloodsucker/conversion))
-			var/datum/objective/bloodsucker/conversion/conversion_objective = new chosen_subtype
-			conversion_objective.owner = owner
+			var/datum/objective/bloodsucker/conversion/conversion_objective = new chosen_subtype(null, owner)
 			conversion_objective.objective_name = "Optional Objective"
 			objectives += conversion_objective
 		if(2) // Heart Thief Objective
-			var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
-			heartthief_objective.owner = owner
+			var/datum/objective/bloodsucker/heartthief/heartthief_objective = new(null, owner)
 			heartthief_objective.objective_name = "Optional Objective"
 			objectives += heartthief_objective
 		if(3) // Drink Blood Objective
-			var/datum/objective/bloodsucker/gourmand/gourmand_objective = new
-			gourmand_objective.owner = owner
+			var/datum/objective/bloodsucker/gourmand/gourmand_objective = new(null, owner)
 			gourmand_objective.objective_name = "Optional Objective"
 			objectives += gourmand_objective
 
