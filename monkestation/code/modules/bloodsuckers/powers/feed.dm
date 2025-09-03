@@ -122,6 +122,7 @@
 
 	to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments")))
 	feed_target.Immobilize(2 SECONDS)
+	feed_target.remove_status_effect(/datum/status_effect/feed_regen)
 	owner.add_traits(list(TRAIT_MUTE, TRAIT_IMMOBILIZED), FEED_TRAIT)
 	return ..()
 
