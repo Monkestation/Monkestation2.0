@@ -293,8 +293,8 @@
 	if(owner.stat == DEAD || owner.blood_volume > BLOOD_VOLUME_SAFE)
 		qdel(src)
 		return
-	if(owner.getOxyLoss() > 0)
-		if(owner.stat != CONSCIOUS)
+	if(owner.stat != CONSCIOUS || owner.getOxyLoss() >= 40)
+		if(owner.health <= owner.crit_threshold)
 			owner.adjustOxyLoss(-5 * seconds_between_ticks)
 		else
 			owner.adjustOxyLoss(-2 * seconds_between_ticks)
