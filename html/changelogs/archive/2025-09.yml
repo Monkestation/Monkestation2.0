@@ -52,8 +52,13 @@
   - map: Syndicate Infiltrator now has upgraded cyborg rechargers and a loaded defib
       mount.
 2025-09-03:
+  Absolucy:
+  - bugfix: The curator's whip now properly has its tripping/yanking behavior, instead
+      of always having a guaranteed disarm.
   MrBagHead:
   - rscdel: Space Dragons No Longer Die If They Don't Place a Rift in a 5 Minute Timer
+  Shoddd:
+  - bugfix: AP now properly calculated on people
   Xander3359:
   - bugfix: fixed atmos resin backpack
   Xander3359, SmArtKar:
@@ -62,3 +67,5 @@
   - bugfix: (SmArtKar) E-Daggers can now break lockers/other renamable objects, and
       pendrivers can now extract their electronics.
   - code_imp: (SmArtKar) Most pen typechecks now check for writing implements.
+  Zoooooooop:
+  - balance: Increased bingle attack stamina damage to -65 (up from -35)
