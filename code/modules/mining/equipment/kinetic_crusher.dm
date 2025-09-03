@@ -91,7 +91,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!overrides_twohandrequired && !HAS_TRAIT(src, TRAIT_WIELDED))
 		user.balloon_alert(user, "must be wielded!")
 		return TRUE
 	return .

@@ -48,13 +48,7 @@
 	AddElement(/datum/element/death_drops, death_drops)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
-	AddComponent(\
-		/datum/component/tameable,\
-		food_types = list(/obj/item/stack/ore),\
-		tame_chance = 100,\
-		bonus_tame_chance = 5,\
-		after_tame = CALLBACK(src, PROC_REF(activate_bot)),\
-	)
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/stack/ore), tame_chance = 100, bonus_tame_chance = 5)
 
 	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_light/toggle_light_action = new(src)
 	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_meson_vision/toggle_meson_vision_action = new(src)

@@ -425,8 +425,8 @@
 /obj/item/gun/energy/marksman_revolver/try_fire_gun(atom/target, mob/living/user, params)
 	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return ..()
-	if(!can_see(user, get_turf(target), length = 9))
-		return ITEM_INTERACT_BLOCKING
+	if(!CAN_THEY_SEE(target, user))
+		return ..()
 
 	if(max_coins && coin_count <= 0)
 		to_chat(user, span_warning("You don't have any coins right now!"))

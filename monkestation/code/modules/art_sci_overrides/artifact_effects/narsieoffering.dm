@@ -10,8 +10,10 @@
 
 	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
+	/// How much blood is taken when used
 	var/blood_to_take = 1
 
+	/// How much blood is stored
 	var/stored_blood = 0
 
 	COOLDOWN_DECLARE(force_take_cooldown)
@@ -38,15 +40,15 @@
 	var/yoinked_blood = min(blood_to_take,user.blood_volume)
 	user.blood_volume -= yoinked_blood
 	stored_blood += yoinked_blood
-	to_chat(user,span_boldwarning("You are compelled to give blood to the [our_artifact.holder]; and feel your blood volume lower somehow!"))
-	COOLDOWN_START(src,force_take_cooldown,5 SECOND)
+	to_chat(user, span_boldwarning("You are compelled to give blood to the [our_artifact.holder]; and feel your blood volume lower somehow!"))
+	COOLDOWN_START(src, force_take_cooldown, 5 SECOND)
 
-	if(stored_blood >= BLOOD_VOLUME_NORMAL*5)
-		var/obj/tomake = pick_weight(valid_spawns)
-		var/obj/chosen = new tomake(our_artifact.holder.loc)
-		chosen.forceMove(our_artifact.holder.loc)
-		to_chat(user,span_info("[our_artifact.holder] is pleased with your work, and [chosen] appears from seemingly nowhere!"))
-		stored_blood -= BLOOD_VOLUME_NORMAL*5
-	return
+	if(stored_blood < BLOOD_VOLUME_NORMAL*5)
+		return
+	var/turf/our_turf = get_turf(our_artifact.holder);
+	var/obj/tomake = pick_weight(valid_spawns)
+	var/obj/chosen = new tomake(our_turf)
+	to_chat(user, span_info("[our_artifact.holder] is pleased with your work, and [chosen] appears from seemingly nowhere!"))
+	stored_blood -= BLOOD_VOLUME_NORMAL*5
 
 

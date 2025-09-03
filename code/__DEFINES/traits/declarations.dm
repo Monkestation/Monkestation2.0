@@ -1096,7 +1096,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage" */
 
 ///Deathmatch traits
-/* #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants" */
+#define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
 
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"

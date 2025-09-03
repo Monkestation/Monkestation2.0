@@ -43,7 +43,7 @@
 		overlay_y = 13)
 
 /obj/item/gun/ballistic/automatic/pistol/paco/AltClick(mob/user) //Some people like the stripe, some people don't. Gives you the option to do the unthinkable.
-	if(has_stripe && !TIMER_COOLDOWN_CHECK(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
+	if(has_stripe && TIMER_COOLDOWN_FINISHED(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
 		TIMER_COOLDOWN_START(src, COOLDOWN_STRIPE, 6 SECONDS)
 		playsound(src, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
 		balloon_alert_to_viewers("[user] starts picking at the Paco's stripe!")
