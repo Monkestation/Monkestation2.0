@@ -58,6 +58,7 @@
 	var/mob/living/user = owner
 	var/mob/living/feed_target = target_ref?.resolve()
 	if(!QDELETED(feed_target))
+		feed_target.apply_status_effect(/datum/status_effect/feed_regen)
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
 		to_chat(user, span_notice("You slowly release [feed_target]."))
 		if(feed_target.stat == DEAD && !started_alive)
@@ -273,6 +274,30 @@
 			owner.balloon_alert(owner, "cant drink from mindless!")
 		return FALSE
 	return TRUE
+
+// Status effect given to (still living) mobs after a bloodsucker feeds on them
+/datum/status_effect/feed_regen
+	id = "feed_regen"
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+	processing_speed = STATUS_EFFECT_PRIORITY
+
+/datum/status_effect/feed_regen/on_apply()
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_NOBLOOD) || owner.blood_volume > BLOOD_VOLUME_SAFE)
+		return FALSE
+	return TRUE
+
+/datum/status_effect/feed_regen/tick(seconds_between_ticks)
+	if(owner.stat == DEAD || owner.blood_volume > BLOOD_VOLUME_SAFE)
+		qdel(src)
+		return
+	if(owner.getOxyLoss() > 0)
+		if(owner.stat != CONSCIOUS)
+			owner.adjustOxyLoss(-5 * seconds_between_ticks)
+		else
+			owner.adjustOxyLoss(-2 * seconds_between_ticks)
+	owner.blood_volume = min(owner.blood_volume + (2 * seconds_between_ticks), BLOOD_VOLUME_SAFE)
 
 #undef FEED_NOTICE_RANGE
 #undef FEED_DEFAULT_TIMER
