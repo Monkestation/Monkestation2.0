@@ -144,7 +144,7 @@
 			continue
 		if(!isliving(nearby_viewers) || !nearby_viewers.mind || !nearby_viewers.client || nearby_viewers.client?.is_afk())
 			continue
-		if(IS_BLOODSUCKER(nearby_viewers) || IS_VASSAL(nearby_viewers) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
+		if(HAS_MIND_TRAIT(nearby_viewers, TRAIT_BLOODSUCKER_ALIGNED) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
 			continue
 		if(nearby_viewers.has_unlimited_silicon_privilege || nearby_viewers.is_blind())
 			continue

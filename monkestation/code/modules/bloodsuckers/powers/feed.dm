@@ -102,7 +102,7 @@
 		DeactivatePower()
 		return
 	if(owner.pulling == feed_target && owner.grab_state >= GRAB_AGGRESSIVE)
-		if(!IS_BLOODSUCKER(feed_target) && !IS_VASSAL(feed_target) && !IS_MONSTERHUNTER(feed_target))
+		if(!HAS_MIND_TRAIT(feed_target, TRAIT_BLOODSUCKER_ALIGNED) && !IS_MONSTERHUNTER(feed_target))
 			feed_target.Unconscious((5 + level_current) SECONDS)
 		if(!feed_target.density)
 			feed_target.Move(owner.loc)
@@ -125,7 +125,7 @@
 			bloodsuckerdatum_power.give_masquerade_infraction()
 			break
 
-	if(!IS_BLOODSUCKER(feed_target) && !IS_VASSAL(feed_target) && !IS_MONSTERHUNTER(feed_target))
+	if(!HAS_MIND_TRAIT(feed_target, TRAIT_BLOODSUCKER_ALIGNED) && !IS_MONSTERHUNTER(feed_target))
 		to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments")))
 	feed_target.Immobilize(2 SECONDS)
 	feed_target.remove_status_effect(/datum/status_effect/feed_regen)
@@ -143,9 +143,7 @@
 		return FALSE
 	if(viewer.is_blind() || viewer.is_nearsighted_currently())
 		return FALSE
-	if(IS_BLOODSUCKER(viewer) || IS_VASSAL(viewer))
-		return FALSE
-	if(HAS_MIND_TRAIT(viewer, TRAIT_OCCULTIST) || HAS_TRAIT(viewer, TRAIT_GHOST_CRITTER))
+	if(HAS_MIND_TRAIT(viewer, TRAIT_BLOODSUCKER_ALIGNED) || HAS_MIND_TRAIT(viewer, TRAIT_OCCULTIST) || HAS_TRAIT(viewer, TRAIT_GHOST_CRITTER))
 		return FALSE
 	if(isvampire(viewer)) // this checks for the species - i mean, they're not the same kind of vampire, but they're still a VAMPIRE, so, yeah
 		return FALSE

@@ -163,7 +163,7 @@
 	new /obj/effect/particle_effect/fluid/smoke/vampsmoke(targeted_turf)
 
 	for(var/mob/living/carbon/living_mob in range(1, targeted_turf)-user)
-		if(IS_BLOODSUCKER(living_mob) || IS_VASSAL(living_mob))
+		if(HAS_MIND_TRAIT(living_mob, TRAIT_BLOODSUCKER_ALIGNED))
 			continue
 		if(level_current >= OBFUSCATION_BLEED_LEVEL)
 			var/obj/item/bodypart/bodypart = pick(living_mob.bodyparts)

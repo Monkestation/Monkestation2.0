@@ -17,7 +17,7 @@
 	var/returnString = "\[<span class='warning'>"
 	var/returnIcon = ""
 	// Vassals and Bloodsuckers recognize eachother, while Monster Hunters can see Vassals.
-	if(!IS_BLOODSUCKER(viewer) && !IS_VASSAL(viewer) && !IS_MONSTERHUNTER(viewer))
+	if(!HAS_MIND_TRAIT(viewer, TRAIT_BLOODSUCKER_ALIGNED) && !IS_MONSTERHUNTER(viewer))
 		return FALSE
 	// Am I Viewer's Vassal?
 	if(master.owner == viewer.mind)
