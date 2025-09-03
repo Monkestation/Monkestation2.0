@@ -52,6 +52,10 @@
   - map: Syndicate Infiltrator now has upgraded cyborg rechargers and a loaded defib
       mount.
 2025-09-03:
+  MrBagHead:
+  - rscdel: Space Dragons No Longer Die If They Don't Place a Rift in a 5 Minute Timer
+  Xander3359:
+  - bugfix: fixed atmos resin backpack
   Xander3359, SmArtKar:
   - bugfix: (Xander3359) fixed pen interactions
   - rscadd: (SmArtKar) You can now click pens! Clickity clickery click!
