@@ -1,7 +1,7 @@
 #define COMBAT_NOTICE_COOLDOWN (10 SECONDS)
-GLOBAL_VAR_INIT(combat_indicator_overlay, GenerateCombatOverlay())
+GLOBAL_VAR_INIT(combat_indicator_overlay, generate_combat_overlay())
 
-/proc/GenerateCombatOverlay()
+/proc/generate_combat_overlay()
 	var/mutable_appearance/combat_indicator = mutable_appearance('icons/mob/effects/combat_indicator.dmi', "combat", FLY_LAYER)
 	combat_indicator.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	return combat_indicator
@@ -97,19 +97,18 @@ GLOBAL_VAR_INIT(combat_indicator_overlay, GenerateCombatOverlay())
 		if(world.time > nextcombatpopup) // As of the time of writing, COMBAT_NOTICE_COOLDOWN is 10 secs, so this is asking "has 10 secs past between last activation of CI?"
 			nextcombatpopup = world.time + COMBAT_NOTICE_COOLDOWN
 			playsound(src, 'sound/machines/chime.ogg', vol = 10, vary = FALSE, extrarange = -6, falloff_exponent = 4, frequency = null, channel = 0, pressure_affected = FALSE, ignore_walls = FALSE, falloff_distance = 1)
-			var/ciweapon
-			if(get_active_held_item())
-				ciweapon = get_active_held_item()
+			var/ciweapon = get_active_held_item()
+			if(ciweapon)
 				if(istype(ciweapon, /obj/item/gun))
-					visible_message(span_boldwarning("[src] raises \the [ciweapon] with their finger on the trigger, ready for combat!"))
+					visible_message(span_boldwarning("[src] raises \the [ciweapon] with [p_their()] finger on the trigger, ready for combat!"))
 				else
 					visible_message(span_boldwarning("[src] readies \the [ciweapon] with a tightened grip and offensive stance, ready for combat!"))
 			else
 				if(issilicon(src))
-					visible_message(span_boldwarning("<b>[src] shifts its armour plating into a defensive stance, ready for combat!"))
-				if(ishuman(src))
+					visible_message(span_boldwarning("[src] shifts its armour plating into a defensive stance, ready for combat!"))
+				else if(ishuman(src))
 					visible_message(span_boldwarning("[src] raises [p_their()] fists in an offensive stance, ready for combat!"))
-				if(isalien(src))
+				else if(isalien(src))
 					visible_message(span_boldwarning("[src] hisses in a terrifying stance, claws raised and ready for combat!"))
 				else
 					visible_message(span_boldwarning("[src] gets ready for combat!"))
