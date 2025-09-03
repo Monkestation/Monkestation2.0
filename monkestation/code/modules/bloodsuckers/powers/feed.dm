@@ -28,6 +28,8 @@
 	var/datum/weakref/target_ref
 	/// Whether the target was alive or not when we started feeding.
 	var/started_alive = TRUE
+	/// Whether we were in frenzy or not when we started feeding.
+	var/started_frenzied = FALSE
 	///Are we feeding with passive grab or not?
 	var/silent_feed = TRUE
 	///Have we notified you already that you are at maximum blood?
@@ -58,7 +60,8 @@
 	var/mob/living/user = owner
 	var/mob/living/feed_target = target_ref?.resolve()
 	if(!QDELETED(feed_target))
-		feed_target.apply_status_effect(/datum/status_effect/feed_regen)
+		if(!started_frenzied && !bloodsuckerdatum_power.frenzied)
+			feed_target.apply_status_effect(/datum/status_effect/feed_regen)
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
 		to_chat(user, span_notice("You slowly release [feed_target]."))
 		if(feed_target.stat == DEAD && !started_alive)
@@ -67,6 +70,7 @@
 
 	target_ref = null
 	started_alive = TRUE
+	started_frenzied = FALSE
 	warning_target_bloodvol = BLOOD_VOLUME_MAX_LETHAL
 	blood_taken = 0
 	notified_overfeeding = initial(notified_overfeeding)
@@ -88,6 +92,7 @@
 	var/feed_timer = clamp(round(FEED_DEFAULT_TIMER / (1.25 * (level_current || 1))), 1, FEED_DEFAULT_TIMER)
 	if(bloodsuckerdatum_power.frenzied)
 		feed_timer = 2 SECONDS
+		started_frenzied = TRUE
 
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
 	started_alive = (feed_target.stat < HARD_CRIT)
