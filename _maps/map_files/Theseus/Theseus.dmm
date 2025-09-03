@@ -8431,7 +8431,6 @@
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/cheese/royal,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "czI" = (
@@ -36368,9 +36367,7 @@
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "kHp" = (
-/mob/living/carbon/human/species/monkey{
-	name = "Hotdog"
-	},
+/obj/effect/mob_spawn/corpse/human/monkey,
 /turf/open/space/basic,
 /area/space)
 "kHs" = (
@@ -37252,6 +37249,7 @@
 /obj/effect/spawner/random/trash/bin,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/food/cheese/royal,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "kTQ" = (
@@ -79638,6 +79636,7 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Prison Gym"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "xcI" = (
