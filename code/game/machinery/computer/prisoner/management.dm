@@ -14,7 +14,7 @@
 	circuit = /obj/item/circuitboard/computer/prisoner
 
 
-/obj/machinery/computer/prisoner/management/ui_interact(mob/user)
+/obj/machinery/computer/prisoner/management/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

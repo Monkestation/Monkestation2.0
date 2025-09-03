@@ -324,7 +324,7 @@
 		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"remoteAccess" = (user == remote_control_user),
-		"siliconUser" = user.has_unlimited_silicon_privilege,
+		"siliconUser" = HAS_SILICON_ACCESS(user),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,

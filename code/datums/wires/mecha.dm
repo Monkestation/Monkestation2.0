@@ -63,9 +63,6 @@
 		if(WIRE_OVERCLOCK)
 			if(!mend)
 				mecha.toggle_overclock(FALSE)
-		if(WIRE_LAUNCH)
-			if(!mend)
-				try_attack(source)
 
 /datum/wires/mecha/proc/try_attack(mob/living/target)
 	var/obj/vehicle/sealed/mecha/mecha = holder

@@ -110,7 +110,7 @@
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
+	if(!can_use(user) || (issilicon(user) && !HAS_SILICON_ACCESS(user)))
 		user.unset_machine()
 
 /obj/machinery/computer/camera_advanced/Destroy()

@@ -100,7 +100,7 @@
 
 	var/dat = processing_machine.get_machine_data()
 
-	var/datum/browser/popup = new(user, "processing", "Smelting Console", 300, 500)
+	var/datum/browser/popup = new(ui.user, "processing", "Smelting Console", 300, 500)
 	popup.set_content(dat)
 	popup.open()
 

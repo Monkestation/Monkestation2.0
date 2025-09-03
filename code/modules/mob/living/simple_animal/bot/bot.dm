@@ -265,7 +265,7 @@
 	fully_replace_character_name(real_name, new_name)
 
 /mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
+	if(HAS_SILICON_ACCESS(user) || isAdminGhostAI(user)) // Silicon and Admins always have access.
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
 		return TRUE

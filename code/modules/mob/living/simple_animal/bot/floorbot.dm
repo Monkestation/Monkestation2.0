@@ -140,7 +140,7 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/floorbot/ui_act(action, params)
+/mob/living/simple_animal/bot/floorbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user = ui.user
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))

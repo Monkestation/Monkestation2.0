@@ -172,21 +172,11 @@
 			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
 			return FALSE
 		return TRUE
-	return FALSE
-
-/obj/machinery/smartfridge/proc/load(obj/item/O)
-	if(ismob(O.loc))
-		var/mob/M = O.loc
-		if(!M.transferItemToLoc(O, src))
-			to_chat(usr, span_warning("\the [O] is stuck to your hand, you cannot put it in \the [src]!"))
-			return FALSE
-		else
-			return TRUE
 	else
-		if(O.loc.atom_storage)
-			return O.loc.atom_storage.attempt_remove(O, src)
+		if(weapon.loc.atom_storage)
+			return weapon.loc.atom_storage.attempt_remove(weapon, src, silent = TRUE)
 		else
-			O.forceMove(src)
+			weapon.forceMove(src)
 			return TRUE
 
 ///Really simple proc, just moves the object "O" into the hands of mob "M" if able, done so I could modify the proc a little for the organ fridge
