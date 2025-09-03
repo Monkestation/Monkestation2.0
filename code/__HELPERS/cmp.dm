@@ -127,12 +127,6 @@
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
 
-/proc/cmp_pdaname_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
-	return sorttext(B?.computer?.saved_identification, A?.computer?.saved_identification)
-
-/proc/cmp_pdajob_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
-	return sorttext(B?.computer?.saved_job, A?.computer?.saved_job)
-
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)
 
@@ -182,3 +176,6 @@
 /// Orders cameras by their `c_tag` ascending
 /proc/cmp_camera_ctag_asc(obj/machinery/camera/a, obj/machinery/camera/b)
 	return sorttext(b.c_tag, a.c_tag)
+
+/proc/cmp_deathmatch_mods(datum/deathmatch_modifier/a, datum/deathmatch_modifier/b)
+	return sorttext(b.name, a.name)

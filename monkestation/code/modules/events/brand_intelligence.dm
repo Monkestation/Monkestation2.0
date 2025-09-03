@@ -79,7 +79,7 @@
 		// If it's a fake announcement, we won't have a origin_machine, so instead we'll just pick the name of a random vendor on the station,
 		// weighted by how many of said vendor exists.
 		var/list/station_vendors = list()
-		for(var/obj/machinery/vending/vendor in GLOB.machines)
+		for(var/obj/machinery/vending/vendor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
 			if(!vendor.onstation || !vendor.density || !length(trimtext(vendor.name)))
 				continue
 			station_vendors[vendor.name]++
@@ -88,7 +88,7 @@
 
 /datum/round_event/brand_intelligence/proc/find_vendors(list/department_typecache, register = TRUE) as /list
 	RETURN_TYPE(/list)
-	for(var/obj/machinery/vending/vendor in GLOB.machines)
+	for(var/obj/machinery/vending/vendor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
 		if(!vendor.onstation || !vendor.density || !length(trimtext(vendor.name)))
 			continue
 		if(chosen_vendor_type && !istype(vendor, chosen_vendor_type))

@@ -256,7 +256,7 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
 		if(QDELETED(antag) || QDELETED(antag.owner) || already_counted[antag.owner])
 			continue
-		if(!antag.count_against_dynamic_roll_chance || (antag.antag_flags & (FLAG_FAKE_ANTAG | FLAG_ANTAG_CAP_IGNORE)))
+		if(!antag.count_against_dynamic_roll_chance || (antag.antag_flags & (ANTAG_FAKE | FLAG_ANTAG_CAP_IGNORE)))
 			continue
 		if(antag.antag_flags & FLAG_ANTAG_CAP_TEAM)
 			var/datum/team/antag_team = antag.get_team()
@@ -266,6 +266,9 @@ SUBSYSTEM_DEF(gamemode)
 				already_counted[antag_team] = TRUE
 		var/mob/antag_mob = antag.owner.current
 		if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
+			continue
+		// don't count admins mucking around on centcom or whatever
+		if(istype(get_area(antag_mob), /area/centcom))
 			continue
 		already_counted[antag.owner] = TRUE
 		.++
@@ -310,7 +313,7 @@ SUBSYSTEM_DEF(gamemode)
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
 				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
-					if(antag_datum.count_against_dynamic_roll_chance && !(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+					if(antag_datum.count_against_dynamic_roll_chance && !(antag_datum.antag_flags & ANTAG_FAKE))
 						real = TRUE
 						break
 				if(real)

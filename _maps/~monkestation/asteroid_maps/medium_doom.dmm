@@ -2,33 +2,33 @@
 "a" = (
 /obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "g" = (
 /turf/closed/mineral/random/asteroid/tospace,
-/area/space)
+/area/template_noop)
 "l" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "o" = (
 /obj/effect/spawner/random/lavaland_mob/legion,
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "x" = (
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "y" = (
 /obj/effect/spawner/random/lavaland_mob/legion,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "Q" = (
 /obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "W" = (
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 W

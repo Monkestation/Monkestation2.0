@@ -389,6 +389,7 @@
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = BLUE_ALERT_DESIGN
 
 /datum/design/mech_grenade_launcher
 	name = "SGL-6 Grenade Launcher"
@@ -484,6 +485,7 @@
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = BLUE_ALERT_DESIGN
 
 /datum/design/clusterbang_launcher_ammo
 	name = "SOB-3 Clusterbang Launcher Ammunition"
@@ -503,6 +505,7 @@
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = BLUE_ALERT_DESIGN
 
 /datum/design/mech_wormhole_gen
 	name = "Localized Wormhole Generator"

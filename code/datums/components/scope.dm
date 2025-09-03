@@ -16,14 +16,14 @@
 
 /datum/component/scope/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
+	RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(do_secondary_zoom))
 	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(on_gun_fire))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/scope/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		COMSIG_GUN_TRY_FIRE,
 		COMSIG_ATOM_EXAMINE,
 	))
@@ -46,14 +46,14 @@
 		return
 	stop_zooming(tracker.owner)
 
-/datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/scope/proc/do_secondary_zoom(datum/source, mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(tracker)
 		stop_zooming(user)
 	else
 		start_zooming(user)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
 	SIGNAL_HANDLER

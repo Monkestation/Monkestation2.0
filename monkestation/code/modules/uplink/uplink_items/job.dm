@@ -55,7 +55,6 @@
 	var/atom/A = target
 	if(!proximity)
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
 	if(!istype(A, /obj/machinery/clonepod/experimental))
 		return
 	to_chat(user, "You upload the directive to the experimental cloner.")

@@ -241,6 +241,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 
+// Antag resource defines
+#define ANTAG_RESOURCE_DARKSPAWN "psi"
+
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
 	/datum/antagonist/abductor,
@@ -339,14 +342,16 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
 #define ANTAG_GROUP_CREW "Deviant Crew"
 #define ANTAG_GROUP_BINGLES "Bingles"
+#define ANTAG_GROUP_DARKSPAWN "Darkspawn"
 
 #define HUNTER_PACK_COPS "Spacepol Officers"
 #define HUNTER_PACK_RUSSIAN "Russian Smugglers"
 #define HUNTER_PACK_BOUNTY "Bounty Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Shikaris"
 
-// This flag disables certain checks that presume antagonist datums mean 'baddie'.
-#define FLAG_FAKE_ANTAG					(1 << 0)
+/// Used to denote an antag datum that either isn't necessarily "evil" (like Valentines)
+/// or isn't necessarily a "real" antag (like Ashwalkers)
+#define ANTAG_FAKE (1 << 0)
 /// monkestation addition: Whether the antagonist can see exploitable info on people they examine.
 #define FLAG_CAN_SEE_EXPOITABLE_INFO	(1 << 1)
 // monkestation addition: The storyteller will ignore this antag datum as counting against the antag cap.

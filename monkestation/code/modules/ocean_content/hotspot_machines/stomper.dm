@@ -83,11 +83,11 @@
 /obj/machinery/power/stomper/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!opened || !installed_cell)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	installed_cell.forceMove(get_turf(src))
 	installed_cell = null
 	to_chat(user, span_notice("You remove the [installed_cell] from the [src]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/stomper/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!opened || installed_cell)

@@ -9334,9 +9334,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/item/storage/pod/directional/west{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/west,
 /turf/open/floor/iron,
 /area/station/security/processing)
 "cNL" = (
@@ -9898,6 +9896,15 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
+"cVF" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/gbp_redemption,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "cVK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -16391,9 +16398,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/storage/pod/directional/west{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "eTt" = (
@@ -20592,9 +20597,7 @@
 /area/station/hallway/primary/central)
 "gfs" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/item/storage/pod/directional/north{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "gfu" = (
@@ -24837,9 +24840,7 @@
 /area/station/cargo/storage)
 "hqn" = (
 /obj/effect/spawner/random/maintenance/two,
-/obj/item/storage/pod/directional/north{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "hqJ" = (
@@ -29099,9 +29100,7 @@
 /turf/open/floor/iron/small,
 /area/station/command/heads_quarters/nt_rep)
 "iCu" = (
-/obj/item/storage/pod/directional/north{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "iCE" = (
@@ -32379,9 +32378,7 @@
 /turf/open/floor/wood,
 /area/station/service/chapel)
 "jBq" = (
-/obj/item/storage/pod/directional/west{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/hallway/primary/central)
@@ -41651,9 +41648,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/item/storage/pod/directional/north{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "mej" = (
@@ -49687,9 +49682,7 @@
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/stack/cable_coil,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/storage/pod/directional/north{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/north,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "owt" = (
@@ -58518,9 +58511,7 @@
 /area/station/engineering/gravity_generator)
 "rbt" = (
 /obj/structure/cable,
-/obj/item/storage/pod/directional/north{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "rbw" = (
@@ -70406,9 +70397,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/central)
 "uuL" = (
-/obj/item/storage/pod/directional/west{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -74954,9 +74943,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/item/storage/pod/directional/north{
-	unlocked = 1
-	},
+/obj/item/storage/pod/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "vIe" = (
@@ -131744,7 +131731,7 @@ weK
 mjY
 weK
 rVw
-sXA
+cVF
 sXA
 wYx
 vWt

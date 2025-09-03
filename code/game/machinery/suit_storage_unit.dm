@@ -520,60 +520,60 @@
 			span_notice("You escape the cramped confines of [src]!"))
 		open_machine()
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
+/obj/machinery/suit_storage_unit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(state_open && is_operational)
-		if(istype(I, /obj/item/clothing/suit))
+		if(istype(attacking_item, /obj/item/clothing/suit))
 			if(suit)
 				to_chat(user, span_warning("The unit already contains a suit!."))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			suit = I
-		else if(istype(I, /obj/item/clothing/head))
+			suit = attacking_item
+		else if(istype(attacking_item, /obj/item/clothing/head))
 			if(helmet)
 				to_chat(user, span_warning("The unit already contains a helmet!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			helmet = I
-		else if(istype(I, /obj/item/clothing/mask))
+			helmet = attacking_item
+		else if(istype(attacking_item, /obj/item/clothing/mask))
 			if(mask)
 				to_chat(user, span_warning("The unit already contains a mask!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			mask = I
-		else if(istype(I, /obj/item/mod/control))
+			mask = attacking_item
+		else if(istype(attacking_item, /obj/item/mod/control))
 			if(mod)
 				to_chat(user, span_warning("The unit already contains a MOD!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			mod = I
+			mod = attacking_item
 		else
 			if(storage)
 				to_chat(user, span_warning("The auxiliary storage compartment is full!"))
 				return
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			storage = I
+			storage = attacking_item
 
-		visible_message(span_notice("[user] inserts [I] into [src]"), span_notice("You load [I] into [src]."))
+		visible_message(span_notice("[user] inserts [attacking_item] into [src]"), span_notice("You load [attacking_item] into [src]."))
 		update_appearance()
 		return
 
 	if(panel_open)
-		if(is_wire_tool(I))
+		if(is_wire_tool(attacking_item))
 			wires.interact(user)
 			return
-		else if(I.tool_behaviour == TOOL_CROWBAR)
-			default_deconstruction_crowbar(I)
+		else if(attacking_item.tool_behaviour == TOOL_CROWBAR)
+			default_deconstruction_crowbar(attacking_item)
 			return
 	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", I))	//Set to base_icon_state because the panels for this are overlays
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", attacking_item))	//Set to base_icon_state because the panels for this are overlays
 			update_appearance()
 			return
-	if(default_pry_open(I))
+	if(default_pry_open(attacking_item))
 		dump_inventory_contents()
 		return
 

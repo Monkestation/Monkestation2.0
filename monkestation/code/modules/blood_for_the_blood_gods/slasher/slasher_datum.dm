@@ -1,9 +1,33 @@
+#define VARIANT_SLASHER "slasher"
+#define VARIANT_CLUWNE "cluwne"
+#define VARIANT_BRUTE "brute"
+
 /datum/outfit/slasher/slasher
 	name = "Slasher Outfit"
 	suit = /obj/item/clothing/suit/apron/slasher
 	uniform = /obj/item/clothing/under/slasher
 	shoes = /obj/item/clothing/shoes/admiral
 	mask = /obj/item/clothing/mask/gas/slasher
+	belt = /obj/item/storage/belt/slasher
+	gloves = /obj/item/clothing/gloves/admiral
+	back = /obj/item/storage/backpack/cursed
+
+/datum/outfit/slasher/cluwne
+	name = "Cluwne Slasher Outfit"
+	suit = /obj/item/clothing/suit/apron/slasher/cluwne
+	uniform = /obj/item/clothing/under/slasher/cluwne
+	shoes = /obj/item/clothing/shoes/clown_shoes/cluwne
+	mask = /obj/item/clothing/mask/gas/slasher/cluwne
+	belt = /obj/item/storage/belt/slasher/cluwne
+	gloves = /obj/item/clothing/gloves/latex
+	back = /obj/item/storage/backpack/cursed
+
+/datum/outfit/slasher/brute
+	name = "Brute Slasher Outfit"
+	suit = /obj/item/clothing/suit/apron/slasher/brute
+	uniform = /obj/item/clothing/under/slasher
+	shoes = /obj/item/clothing/shoes/admiral
+	mask = /obj/item/clothing/mask/gas/slasher/brute
 	belt = /obj/item/storage/belt/slasher
 	gloves = /obj/item/clothing/gloves/admiral
 	back = /obj/item/storage/backpack/cursed
@@ -25,6 +49,8 @@
 	var/obj/item/slasher_machette/linked_machette
 	/// the linked apron for increasing his armor values on soul succ
 	var/obj/item/clothing/suit/apron/slasher/linked_apron
+	/// list of traps owned by this slasher
+	var/list/linked_traps = list()
 	///rallys the amount of souls effects are based on this
 	var/souls_sucked = 0
 	///our cached brute_mod
@@ -58,36 +84,24 @@
 	var/list/tracked = list()
 	///this is our list of seers
 	var/list/seers = list()
+	///this is value for the slasher's variant
+	var/list/slasher_variant = VARIANT_SLASHER
 
 	//aggrograb for slasher
 	var/datum/martial_art/slasher_grab/grabart
 
 /datum/antagonist/slasher/on_gain()
-	. = ..() // Call parent first
-
-	if(give_objectives)
-		forge_objectives()
-		if(owner?.current)
-			for(var/datum/objective/objective in objectives)
-				owner.announce_objectives()
+	forge_objectives()
+	. = ..()
 
 /datum/antagonist/slasher/forge_objectives()
 	if(!owner)
 		return
-
-	// Clear any existing objectives
-	objectives.Cut()
-
 	// Add all slasher objective subtypes
 	for(var/objective_type in subtypesof(/datum/objective/slasher))
-		var/datum/objective/new_objective = new objective_type
+		var/datum/objective/slasher/new_objective = new objective_type
 		new_objective.owner = owner
 		objectives += new_objective
-
-	// Make sure these objectives are also in the mind's objectives list
-	if(owner)
-		for(var/datum/objective/O in objectives)
-			owner.objectives += O
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -132,10 +146,22 @@
 		new_ability.Grant(current_mob)
 		powers |= new_ability
 
+	slasher_variant = pick(VARIANT_SLASHER, VARIANT_CLUWNE, VARIANT_BRUTE)
+
 	var/mob/living/carbon/human/human = current_mob
 	if(istype(human))
-		human.equipOutfit(/datum/outfit/slasher/slasher)
+		switch(slasher_variant)
+			if(VARIANT_SLASHER)
+				human.equipOutfit(/datum/outfit/slasher/slasher)
+
+			if(VARIANT_CLUWNE)
+				human.equipOutfit(/datum/outfit/slasher/cluwne)
+
+			if(VARIANT_BRUTE)
+				human.equipOutfit(/datum/outfit/slasher/brute)
+
 		linked_apron = human.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+
 	cached_brute_mod = human.dna.species.brutemod
 	current_mob.alpha = 200
 	current_mob.playsound_local(current_mob, 'monkestation/sound/effects/tape_start.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE)
@@ -185,6 +211,11 @@
 	for(var/datum/weakref/held as anything in fear_stages)
 		var/stage = fear_stages[held]
 		var/mob/living/carbon/human/human = held.resolve()
+		if(!human)
+			fear_stages -= held
+			heartbeats -= held
+			mobs_with_fullscreens -= held
+			continue
 
 		if(stage >= 1)
 			currently_beating |= held
@@ -363,7 +394,16 @@
 	seers += weak
 
 	var/mob/living/living = weak.resolve()
-	living.AddComponent(/datum/component/see_as_something, owner.current, "wendigo", 'icons/mob/simple/icemoon/64x64megafauna.dmi', "?????")
+
+	switch(slasher_variant)
+		if(VARIANT_SLASHER)
+			living.AddComponent(/datum/component/see_as_something, owner.current, "wendigo", 'icons/mob/simple/icemoon/64x64megafauna.dmi', "?????")
+
+		if(VARIANT_CLUWNE)
+			living.AddComponent(/datum/component/see_as_something, owner.current, "glutton_tongue", 'icons/mob/simple/clown_mobs.dmi', "?????")
+
+		if(VARIANT_BRUTE)
+			living.AddComponent(/datum/component/see_as_something, owner.current, "legionnaire", 'icons/mob/simple/lavaland/lavaland_elites.dmi', "?????")
 
 /datum/hover_data/slasher_fear/setup_data(atom/source, mob/enterer)
 	if(!enterer.mind?.has_antag_datum(/datum/antagonist/slasher))
@@ -397,19 +437,18 @@
 
 /datum/objective/slasher/harvest_souls
 	name = "Harvest Souls"
-	explanation_text = "Harvest souls from the dead to increase your power."
+	explanation_text = "Use soulsteal to harvest souls from the dead to increase your power."
 	admin_grantable = TRUE
 
-/datum/objective/slasher/soulsteal
-	name = "Soulsteal"
-	explanation_text = "Use soulsteal to harvest souls."
+/datum/objective/slasher/scream
+	name = "Screech"
+	explanation_text = "Use your terror screech to temporarily stun victims."
 	admin_grantable = TRUE
 
 /datum/objective/slasher/trappem
 	name = "Trapping"
-	explanation_text = "Use your traps to slow down your victims."
+	explanation_text = "Use your traps to slow down your targets."
 	admin_grantable = TRUE
-
 
 /datum/antagonist/slasher/antag_token(datum/mind/hosts_mind, mob/spender)
 	var/spender_key = spender.key
@@ -429,3 +468,7 @@
 	if(isobserver(spender))
 		qdel(spender)
 	message_admins("[ADMIN_LOOKUPFLW(slasher)] has been made into a slasher by using an antag token.")
+
+#undef VARIANT_SLASHER
+#undef VARIANT_CLUWNE
+#undef VARIANT_BRUTE

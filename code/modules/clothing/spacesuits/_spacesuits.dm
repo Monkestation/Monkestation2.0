@@ -166,7 +166,7 @@
 //MONKSTATION REMOVAL
 ///obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
 //	toggle_spacesuit_cell(user)
-//	return TOOL_ACT_TOOLTYPE_SUCCESS
+//	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/suit/space/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell_cover_open)   //monkestation edit
@@ -182,17 +182,17 @@
 	if(deg_c && deg_c >= range_low && deg_c <= range_high)
 		temperature_setting = round(T0C + deg_c, 0.1)
 		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/cell))
+/obj/item/clothing/suit/space/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!cell_cover_open || !istype(attacking_item, /obj/item/stock_parts/cell))
 		return ..()
 	if(cell)
 		to_chat(user, span_warning("[src] already has a cell installed."))
 		return
-	if(user.transferItemToLoc(I, src))
-		cell = I
+	if(user.transferItemToLoc(attacking_item, src))
+		cell = attacking_item
 		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 		return
 

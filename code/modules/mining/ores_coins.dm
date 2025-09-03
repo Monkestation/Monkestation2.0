@@ -243,25 +243,25 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	set_wires(null)
 	return ..()
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && isigniter(I))
-		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
+/obj/item/gibtonite/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!wires && isigniter(attacking_item))
+		user.visible_message(span_notice("[user] attaches [attacking_item] to [src]."), span_notice("You attach [attacking_item] to [src]."))
 		set_wires(new /datum/wires/explosive/gibtonite(src))
 		attacher = key_name(user)
-		qdel(I)
+		qdel(attacking_item)
 		add_overlay("Gibtonite_igniter")
 		return
 
 	if(wires && !primed)
-		if(is_wire_tool(I))
+		if(is_wire_tool(attacking_item))
 			wires.interact(user)
 			return
 
-	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
+	if(attacking_item.tool_behaviour == TOOL_MINING || istype(attacking_item, /obj/item/resonator) || attacking_item.force >= 10)
 		GibtoniteReaction(user)
 		return
 
-	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) || attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		defuse(user)
 		return
 
@@ -406,9 +406,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	. += span_info("It's worth [value] credit\s.")
 
-/obj/item/coin/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
+/obj/item/coin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/CC = attacking_item
 		if(string_attached)
 			to_chat(user, span_warning("There already is a string attached to this coin!"))
 			return
@@ -581,20 +581,18 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			continue
 		target_airlock.lock()
 
-/obj/item/coin/eldritch/afterattack(atom/target_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/door/airlock))
+		return NONE
 	if(!IS_HERETIC(user))
-		var/mob/living/living_user = user
-		living_user.adjustBruteLoss(5)
-		living_user.adjustFireLoss(5)
-		return
-	if(istype(target_atom, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/target_airlock = target_atom
-		to_chat(user, span_warning("You put insert the [src] into the airlock."))
-		target_airlock.emag_act(user, src)
-		qdel(src)
+		user.adjustBruteLoss(5)
+		user.adjustFireLoss(5)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/machinery/door/airlock/target_airlock = interacting_with
+	to_chat(user, span_warning("You insert [src] into the airlock."))
+	target_airlock.emag_act(user, src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 #undef GIBTONITE_QUALITY_HIGH
 #undef GIBTONITE_QUALITY_LOW

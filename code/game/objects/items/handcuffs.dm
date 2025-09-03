@@ -291,31 +291,31 @@
 	cable_color = CABLE_COLOR_WHITE
 	inhand_icon_state = "coil_white"
 
-/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
+/obj/item/restraints/handcuffs/cable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //Slapcrafting
+	if(istype(attacking_item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = attacking_item
 		if (R.use(1))
 			var/obj/item/wirerod/W = new /obj/item/wirerod
 			remove_item_from_storage(user)
 			user.put_in_hands(W)
-			to_chat(user, span_notice("You wrap [src] around the top of [I]."))
+			to_chat(user, span_notice("You wrap [src] around the top of [attacking_item]."))
 			qdel(src)
 		else
 			to_chat(user, span_warning("You need one rod to make a wired rod!"))
 			return
-	else if(istype(I, /obj/item/stack/sheet/iron))
-		var/obj/item/stack/sheet/iron/M = I
+	else if(istype(attacking_item, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/M = attacking_item
 		if(M.get_amount() < 6)
 			to_chat(user, span_warning("You need at least six iron sheets to make good enough weights!"))
 			return
-		to_chat(user, span_notice("You begin to apply [I] to [src]..."))
+		to_chat(user, span_notice("You begin to apply [attacking_item] to [src]..."))
 		if(do_after(user, 35, target = src))
 			if(M.get_amount() < 6 || !M)
 				return
 			var/obj/item/restraints/legcuffs/bola/S = new /obj/item/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)
-			to_chat(user, span_notice("You make some weights out of [I] and tie them to [src]."))
+			to_chat(user, span_notice("You make some weights out of [attacking_item] and tie them to [src]."))
 			remove_item_from_storage(user)
 			qdel(src)
 	else
