@@ -128,7 +128,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/proc/on_unarmed_attack(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
-	if(source != target && isliving(target) && proximity)
+	if(source != target && proximity && isliving(target) && (source.istate & (ISTATE_HARM | ISTATE_SECONDARY)))
 		reveal()
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/proc/on_attacked(mob/living/source, atom/attacker, attack_flags)
