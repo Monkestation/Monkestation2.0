@@ -43500,13 +43500,6 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"nln" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/hidden,
-/turf/open/floor/iron/large,
-/area/station/engineering/atmos)
 "nlp" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
@@ -193149,7 +193142,7 @@ rXl
 rXl
 rXl
 rXl
-nln
+rXl
 xOG
 fcJ
 lhj
