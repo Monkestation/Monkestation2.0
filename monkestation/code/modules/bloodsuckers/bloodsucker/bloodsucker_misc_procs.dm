@@ -12,7 +12,7 @@
 		info_to_display = return_full_name()
 	if(info_to_display)
 		var/img_html = "<img class='icon' src='\ref['monkestation/icons/bloodsuckers/vampiric.dmi']?state=bloodsucker'></img>"
-		examine_text += span_warning("[img_html] <EM>[info_to_display]</EM>")
+		examine_text += span_warning("[img_html] \[<EM>[info_to_display]</EM>\]")
 
 ///Called when a Bloodsucker buys a power: (power)
 /datum/antagonist/bloodsucker/proc/BuyPower(datum/action/cooldown/bloodsucker/power)

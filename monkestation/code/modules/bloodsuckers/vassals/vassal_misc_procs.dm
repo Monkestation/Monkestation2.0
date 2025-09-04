@@ -38,7 +38,7 @@
 		return_state = "vassal_grey"
 
 	var/img_html = "<img class='icon' src='\ref['monkestation/icons/bloodsuckers/vampiric.dmi']?state=[return_state]'></img>"
-	return span_warning("[img_html] [return_info]")
+	return span_warning("[img_html] \[[return_info]\]")
 
 /// Used when your Master teaches you a new Power.
 /datum/antagonist/vassal/proc/BuyPower(datum/action/cooldown/bloodsucker/power)
