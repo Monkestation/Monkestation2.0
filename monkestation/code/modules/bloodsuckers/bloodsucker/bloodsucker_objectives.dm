@@ -115,6 +115,26 @@
 /datum/objective/bloodsucker/conversion
 	name = "vassalization"
 
+/datum/objective/bloodsucker/conversion/New(text, datum/mind/owner)
+	if(!target_amount)
+		target_amount = generate_target_amount()
+	return ..()
+
+/datum/objective/bloodsucker/conversion/proc/generate_target_amount()
+	return rand(1, 3)
+
+/datum/objective/bloodsucker/conversion/update_explanation_text()
+	explanation_text = "Have [target_amount] living Vassal[target_amount == 1 ? "" : "s"] by the end of the shift."
+
+/datum/objective/bloodsucker/conversion/check_completion()
+	var/living_vassals = 0
+	for(var/datum/antagonist/vassal/vassal in bloodsucker_datum?.vassals)
+		if(considered_alive(vassal.owner))
+			living_vassals++
+		if(living_vassals >= target_amount)
+			return TRUE
+	return FALSE
+
 /////////////////////////////////
 
 // Vassalize a head of staff
@@ -156,23 +176,23 @@
 // GENERATE!
 /datum/objective/bloodsucker/conversion/department/New(text, datum/mind/owner)
 	target_department = SSjob.get_department_type(pick(possible_departments))
-	target_amount = rand(2, 3)
 	return ..()
+
+/datum/objective/bloodsucker/conversion/department/generate_target_amount()
+	return rand(2, 3)
 
 // EXPLANATION
 /datum/objective/bloodsucker/conversion/department/update_explanation_text()
 	explanation_text = "Have [target_amount] Vassal[target_amount == 1 ? "" : "s"] in the [target_department.department_name] department."
-	return ..()
 
 // WIN CONDITIONS?
 /datum/objective/bloodsucker/conversion/department/check_completion()
-	var/list/vassal_jobs = get_vassal_occupations()
 	var/converted_count = 0
-	for(var/datum/job/checked_job in vassal_jobs)
+	for(var/datum/job/checked_job in get_vassal_occupations())
 		if(checked_job.departments_bitflags & target_department.department_bitflags)
 			converted_count++
-	if(converted_count >= target_amount)
-		return TRUE
+		if(converted_count >= target_amount)
+			return TRUE
 	return FALSE
 
 	/**
@@ -182,63 +202,6 @@
 	 * ALSO - Search through all jobs (look for prefs earlier that look for all jobs, and search through all jobs to see if their head matches the head listed, or it IS the head)
 	 * ALSO - registered_account in _vending.dm for banks, and assigning new ones.
 	 */
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-// NOTE: Look up /steal in objective.dm for inspiration.
-/// Steal hearts. You just really wanna have some hearts.
-/datum/objective/bloodsucker/heartthief
-	name = "heartthief"
-
-// GENERATE!
-/datum/objective/bloodsucker/heartthief/New(text, datum/mind/owner)
-	target_amount = rand(2,3)
-	..()
-
-// EXPLANATION
-/datum/objective/bloodsucker/heartthief/update_explanation_text()
-	. = ..()
-	explanation_text = "Steal and keep [target_amount] organic heart\s."
-
-// WIN CONDITIONS?
-/datum/objective/bloodsucker/heartthief/check_completion()
-	if(!owner.current)
-		return FALSE
-
-	var/list/all_items = owner.current.get_all_contents()
-	var/heart_count = 0
-	for(var/obj/item/organ/internal/heart/current_hearts in all_items)
-		if(IS_ROBOTIC_ORGAN(current_hearts)) // No robo-hearts allowed
-			continue
-		heart_count++
-
-	if(heart_count >= target_amount)
-		return TRUE
-	return FALSE
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-///Eat blood from a lot of people
-/datum/objective/bloodsucker/gourmand
-	name = "gourmand"
-
-// GENERATE!
-/datum/objective/bloodsucker/gourmand/New(text, datum/mind/owner)
-	target_amount = rand(450,650)
-	..()
-
-// EXPLANATION
-/datum/objective/bloodsucker/gourmand/update_explanation_text()
-	. = ..()
-	explanation_text = "Using your Feed ability, drink [target_amount] units of Blood."
-
-// WIN CONDITIONS?
-/datum/objective/bloodsucker/gourmand/check_completion()
-	return bloodsucker_datum?.total_blood_drank >= target_amount
-
-// HOW: Track each feed (if human). Count victory.
-
-
 
 //////////////////////////////
 //     CLAN OBJECTIVES      //

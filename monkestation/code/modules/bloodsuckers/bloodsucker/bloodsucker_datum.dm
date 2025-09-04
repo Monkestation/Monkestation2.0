@@ -503,21 +503,16 @@
 	// Survive Objective
 	objectives += new /datum/objective/bloodsucker/survive(null, owner)
 
-	// Objective 1: Vassalize a Head/Command, or a specific target
-	switch(rand(1, 3))
-		if(1) // Conversion Objective
-			var/datum/objective/bloodsucker/conversion/chosen_subtype = pick(subtypesof(/datum/objective/bloodsucker/conversion))
-			var/datum/objective/bloodsucker/conversion/conversion_objective = new chosen_subtype(null, owner)
-			conversion_objective.objective_name = "Optional Objective"
-			objectives += conversion_objective
-		if(2) // Heart Thief Objective
-			var/datum/objective/bloodsucker/heartthief/heartthief_objective = new(null, owner)
-			heartthief_objective.objective_name = "Optional Objective"
-			objectives += heartthief_objective
-		if(3) // Drink Blood Objective
-			var/datum/objective/bloodsucker/gourmand/gourmand_objective = new(null, owner)
-			gourmand_objective.objective_name = "Optional Objective"
-			objectives += gourmand_objective
+	// Conversion objective.
+	// Most likely to just be "have X living vassals", but can also be "vassalize command" or "vassalize X members of Y department"
+	var/static/list/weighted_objectives
+	if(!weighted_objectives)
+		weighted_objectives = list(/datum/objective/bloodsucker/conversion = 10)
+		weighted_objectives[subtypesof(/datum/objective/bloodsucker/conversion)] = 1
+	var/conversion_objective_type = pick_weight_recursive(weighted_objectives)
+	var/datum/objective/bloodsucker/conversion_objective = new conversion_objective_type(null, owner)
+	conversion_objective.objective_name = "Optional Objective"
+	objectives += conversion_objective
 
 /datum/antagonist/bloodsucker/proc/on_moved(datum/source)
 	SIGNAL_HANDLER
