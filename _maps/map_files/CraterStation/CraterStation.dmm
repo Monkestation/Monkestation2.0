@@ -570,6 +570,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
+"aiK" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/science/robotics/mechbay)
 "aiM" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -5631,10 +5635,6 @@
 	pixel_y = 9
 	},
 /obj/machinery/camera/directional/east,
-/obj/item/storage/medkit{
-	pixel_x = 2;
-	pixel_y = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "bRh" = (
@@ -27802,6 +27802,9 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "iwA" = (
@@ -30084,6 +30087,18 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"jje" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "jjh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34671,6 +34686,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -50883,6 +50901,10 @@
 "puy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "puD" = (
@@ -64955,7 +64977,7 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 2
 	},
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "tDM" = (
@@ -80048,6 +80070,7 @@
 	pixel_x = -8;
 	pixel_y = 7
 	},
+/obj/machinery/cell_charger_multi/wall_mounted/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "ygT" = (
@@ -112394,7 +112417,7 @@ jaL
 okr
 ahT
 mAM
-haT
+jje
 kBQ
 syr
 hDH
@@ -165045,7 +165068,7 @@ whS
 bjL
 qPw
 oSL
-tIR
+aiK
 tIR
 tIR
 tIR
