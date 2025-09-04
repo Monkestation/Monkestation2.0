@@ -12,8 +12,6 @@
 	soundloop = new(src,  FALSE)
 
 /obj/item/comically_large_straw/proc/try_straw(atom/target, mob/user, proximity)
-	if(!proximity)
-		return FALSE
 	if(!target.reagents)
 		return FALSE
 	if(check_living)
@@ -21,16 +19,14 @@
 			return FALSE
 	return TRUE
 
-/obj/item/comically_large_straw/afterattack(atom/target, mob/user, proximity)
+/obj/item/comically_large_straw/afterattack(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	if (!try_straw(target, user, proximity))
-		return
+	if (!try_straw(interacting_with, user))
+		return NONE
 	soundloop.start()
-	if(do_after(user, 10 / suck_power SECONDS, target))
-		target.reagents.trans_to(user, target.reagents.maximum_volume, transfered_by = user, methods = INGEST)
-		user.visible_message("[user] slurps up the [target] with [user.p_their()] [src]!", "You slurp up the [target] with your [src]!", "You hear a loud slurping noise!")
+	if(do_after(user, 10 / suck_power SECONDS, interacting_with))
+		interacting_with.reagents.trans_to(user, interacting_with.reagents.maximum_volume, transfered_by = user, methods = INGEST)
+		user.visible_message("[user] slurps up the [interacting_with] with [user.p_their()] [src]!", "You slurp up the [interacting_with] with your [src]!", "You hear a loud slurping noise!")
 	soundloop.stop()
 
 /obj/item/comically_large_straw/meme
