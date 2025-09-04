@@ -12528,6 +12528,7 @@
 /area/station/hallway/primary/central)
 "dVL" = (
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "dWf" = (
@@ -34026,6 +34027,12 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hallway)
+"kqP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/autoname/directional/east,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/ai_monitored/turret_protected/aisat/maint)
 "kqR" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/command)
@@ -35021,6 +35028,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
+"kGl" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/large,
+/area/station/service/theater)
 "kGJ" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
@@ -47149,6 +47160,7 @@
 /mob/living/basic/pet/dog/corgi/ian{
 	dir = 8
 	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/carpet/grimey,
 /area/station/command/heads_quarters/hop)
 "oqh" = (
@@ -52168,10 +52180,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/service/library/upper)
-"pMN" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/hidden,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
 "pMS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -59842,6 +59850,10 @@
 "rWC" = (
 /turf/closed/wall,
 /area/station/security/prison/workout)
+"rWF" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/service/theater)
 "rWG" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -70375,6 +70387,7 @@
 /area/station/commons/toilet/restrooms)
 "vjj" = (
 /obj/machinery/teleport/station,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "vjr" = (
@@ -76577,6 +76590,7 @@
 /area/station/command/heads_quarters/blueshield)
 "xcH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "xcK" = (
@@ -79018,6 +79032,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "xON" = (
@@ -171292,7 +171307,7 @@ nsf
 aTH
 nUK
 nUK
-xDx
+kGl
 wNL
 pgA
 pgA
@@ -172832,7 +172847,7 @@ jfc
 jfc
 jfc
 wNL
-vzc
+rWF
 jml
 quH
 iOs
@@ -174376,7 +174391,7 @@ oDm
 nUK
 nUK
 nUK
-xDx
+kGl
 wNL
 pgA
 pgA
@@ -200336,7 +200351,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -200850,8 +200865,8 @@ vFw
 vFw
 vFw
 vFw
-pMN
-pMN
+vFw
+vFw
 vFw
 vFw
 vFw
@@ -201107,7 +201122,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -201621,7 +201636,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -201878,7 +201893,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -202136,7 +202151,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -202650,7 +202665,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -202907,7 +202922,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -203421,7 +203436,7 @@ vFw
 vFw
 vFw
 vFw
-pMN
+vFw
 vFw
 vFw
 vFw
@@ -257173,7 +257188,7 @@ tot
 kAX
 cWc
 vWq
-vWq
+oTa
 aQZ
 vWq
 oNZ
@@ -268468,7 +268483,7 @@ ktU
 gjV
 wwo
 eOQ
-cXe
+kqP
 gjV
 gzf
 cSS

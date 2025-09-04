@@ -44,8 +44,8 @@
 	)
 	restricted_chance = 20
 
-	minimum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE + 1
-	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE +30
+	minimum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE + 1 //miner mains are gonna kill me for this one
+	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE + 30
 
 	minimum_temp = ICEBOX_MIN_TEMPERATURE
 	maximum_temp = ICEBOX_MIN_TEMPERATURE
