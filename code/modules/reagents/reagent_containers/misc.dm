@@ -72,9 +72,9 @@
 	to_chat(user, span_notice("You screw the battery case on [src] [open ? "open" : "closed"] ."))
 	update_appearance()
 
-/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(!istype(I, /obj/item/stock_parts/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/cell))
 		return ..()
 	if(!open)
 		to_chat(user, span_warning("The battery case must be open to insert a power cell!"))
@@ -82,9 +82,9 @@
 	if(cell)
 		to_chat(user, span_warning("There is already a power cell inside!"))
 		return FALSE
-	else if(!user.transferItemToLoc(I, src))
+	else if(!user.transferItemToLoc(attacking_item, src))
 		return
-	cell = I
+	cell = attacking_item
 	user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 	update_appearance()
 
@@ -137,12 +137,10 @@
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/reagent_containers/cup/rag/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return
-	if(!iscarbon(target) || !reagents?.total_volume)
+/obj/item/reagent_containers/cup/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with) || !reagents?.total_volume)
 		return ..()
-	var/mob/living/carbon/carbon_target = target
+	var/mob/living/carbon/carbon_target = interacting_with
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
 	if((user.istate & ISTATE_HARM) && !carbon_target.is_mouth_covered())
@@ -154,7 +152,12 @@
 		reagents.clear_reagents()
 		carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
 		log_combat(user, carbon_target, "touched", src, log_object)
+	return ITEM_INTERACT_SUCCESS
 
 ///Checks whether or not we should clean.
 /obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
-	return (src in cleaner)
+	if((cleaner.istate & ISTATE_HARM) && ismob(atom_to_clean))
+		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
+	if(loc == cleaner)
+		return CLEAN_ALLOWED
+	return CLEAN_ALLOWED|CLEAN_NO_XP

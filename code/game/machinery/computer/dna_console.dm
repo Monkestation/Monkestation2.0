@@ -63,6 +63,7 @@
 	circuit = /obj/item/circuitboard/computer/dna_console
 
 	light_color = LIGHT_COLOR_BLUE
+	clicksound = null
 
 	/// Link to the techweb's stored research. Used to retrieve stored mutations
 	var/datum/techweb/stored_research

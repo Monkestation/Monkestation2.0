@@ -430,7 +430,32 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
-		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || helper == src)
+			to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+			return
+		if(DOING_INTERACTION(helper, DOAFTER_SOURCE_EXTINGUISHING_HUG))
+			to_chat(helper, span_warning("You are already extinguishing someone!"))
+			return
+		visible_message(
+			span_notice("[helper] begins to closely hug [src], beginning to smother the fire consuming [p_their()] body!"),
+			span_boldnotice("[helper] holds you closely in a tight hug, beginning to smother the fire consuming your body!"),
+		)
+		while(on_fire && fire_stacks > 0)
+			if(!do_after(helper, 1 SECONDS, src, IGNORE_HELD_ITEM, interaction_key = DOAFTER_SOURCE_EXTINGUISHING_HUG))
+				visible_message(span_notice("[src] wriggles out of [helper]'s close hug!"), span_notice("You wriggle out of [src]'s close hug."))
+				return
+			visible_message(
+				span_notice("[helper] closely hugs [src], smothering the flames consuming [p_their()] body!"),
+				span_boldnotice("[helper] closely hugs you, smothering the flames consuming your body!"),
+				span_italics("You hear a fire sizzle out."),
+			)
+			var/stacks_to_extinguish = 2
+			if(pulledby == helper)
+				if(helper.grab_state > GRAB_PASSIVE)
+					stacks_to_extinguish = 5
+				else
+					stacks_to_extinguish = 3
+			adjust_fire_stacks(-stacks_to_extinguish)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)

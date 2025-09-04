@@ -6,14 +6,11 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	stinger_sound = 'sound/magic/demon_attack1.ogg'
 	/// All space carps created by this antagonist space dragon
 	var/list/datum/mind/carp = list()
 	/// The innate ability to summon rifts
 	var/datum/action/innate/summon_rift/rift_ability
-	/// Current time since the the last rift was activated.  If set to -1, does not increment.
-	var/riftTimer = 0
-	/// Maximum amount of time which can pass without a rift before Space Dragon despawns.
-	var/maxRiftTimer = 300
 	/// A list of all of the rifts created by Space Dragon.  Used for setting them all to infinite carp spawn when Space Dragon wins, and removing them when Space Dragon dies.
 	var/list/obj/structure/carp_rift/rift_list = list()
 	/// How many rifts have been successfully charged
@@ -35,9 +32,7 @@
 					It is an empty void, of which our kind was the apex predator, and there was little to rival our claim to this title.\n\
 					But now, we find intruders spread out amongst our claim, willing to fight our teeth with magics unimaginable, their dens like lights flickering in the depths of space.\n\
 					Today, we will snuff out one of those lights.</b>")
-	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/magic/demon_attack1.ogg', 80)
 
 /datum/antagonist/space_dragon/forge_objectives()
 	var/static/list/area/allowed_areas
@@ -132,19 +127,6 @@
 /datum/antagonist/space_dragon/proc/rift_checks()
 	if((rifts_charged == 3 || (SSshuttle.emergency.mode == SHUTTLE_DOCKED && rifts_charged > 0)) && !objective_complete)
 		victory()
-		return
-	if(riftTimer == -1)
-		return
-	riftTimer = min(riftTimer + 1, maxRiftTimer + 1)
-	if(riftTimer == (maxRiftTimer - 60))
-		to_chat(owner.current, span_boldwarning("You have a minute left to summon the rift! Get to it!"))
-		return
-	if(riftTimer >= maxRiftTimer)
-		to_chat(owner.current, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
-		destroy_rifts()
-		SEND_SOUND(owner.current, sound('sound/magic/demon_dies.ogg'))
-		owner.current.death(/* gibbed = */ TRUE)
-		QDEL_NULL(owner.current)
 
 /**
  * Destroys all of Space Dragon's current rifts.
@@ -159,7 +141,6 @@
 	rifts_charged = 0
 	ADD_TRAIT(owner.current, TRAIT_RIFT_FAILURE, REF(src))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_depression)
-	riftTimer = -1
 	SEND_SOUND(owner.current, sound('sound/vehicles/rocketlaunch.ogg'))
 	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.dragon = null

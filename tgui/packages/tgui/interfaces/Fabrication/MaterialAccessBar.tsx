@@ -29,6 +29,11 @@ export type MaterialAccessBarProps = {
   availableMaterials: Material[];
 
   /**
+   * Definition of how much units 1 sheet has.
+   */
+  SHEET_MATERIAL_AMOUNT: number;
+
+  /**
    * Invoked when the user requests that a material be ejected.
    */
   onEjectRequested?: (material: Material, quantity: number) => void;
@@ -45,7 +50,7 @@ const LABEL_FORMAT = (value: number) => formatSiUnit(value, 0);
  * fifty sheets.
  */
 export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
-  const { availableMaterials, onEjectRequested } = props;
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT, onEjectRequested } = props;
 
   return (
     <Flex wrap>
@@ -54,6 +59,7 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
           <Flex.Item key={material.name} grow={1}>
             <MaterialCounter
               material={material}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
               onEjectRequested={(quantity) =>
                 onEjectRequested && onEjectRequested(material, quantity)
               }
@@ -67,16 +73,19 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
 
 type MaterialCounterProps = {
   material: Material;
+  SHEET_MATERIAL_AMOUNT: number;
   onEjectRequested: (quantity: number) => void;
 };
 
 const MaterialCounter = (props: MaterialCounterProps) => {
-  const { material, onEjectRequested } = props;
+  const { material, onEjectRequested, SHEET_MATERIAL_AMOUNT } = props;
 
   const [hovering, setHovering] = useLocalState(
     `MaterialCounter__${material.name}`,
     false,
   );
+
+  const sheets = material.amount / SHEET_MATERIAL_AMOUNT;
 
   return (
     <div
@@ -85,7 +94,7 @@ const MaterialCounter = (props: MaterialCounterProps) => {
       className={classes([
         'MaterialDock',
         hovering && 'MaterialDock--active',
-        !material.removable && 'MaterialDock--disabled',
+        sheets < 1 && 'MaterialDock--disabled',
       ])}
     >
       <Stack vertial direction={'column-reverse'}>
@@ -96,38 +105,32 @@ const MaterialCounter = (props: MaterialCounterProps) => {
           className="MaterialDock__Label"
         >
           <Flex.Item>
-            <MaterialIcon
-              materialName={material.name}
-              sheets={material.sheets}
-            />
+            <MaterialIcon materialName={material.name} sheets={sheets} />
           </Flex.Item>
           <Flex.Item>
-            <AnimatedNumber
-              value={material.amount / 100}
-              format={LABEL_FORMAT}
-            />
+            <AnimatedNumber value={sheets} format={LABEL_FORMAT} />
           </Flex.Item>
         </Flex>
         {hovering && (
           <div className={'MaterialDock__Dock'}>
             <Flex vertical direction={'column-reverse'}>
               <EjectButton
-                material={material}
+                sheets={sheets}
                 amount={5}
                 onEject={onEjectRequested}
               />
               <EjectButton
-                material={material}
+                sheets={sheets}
                 amount={10}
                 onEject={onEjectRequested}
               />
               <EjectButton
-                material={material}
+                sheets={sheets}
                 amount={25}
                 onEject={onEjectRequested}
               />
               <EjectButton
-                material={material}
+                sheets={sheets}
                 amount={50}
                 onEject={onEjectRequested}
               />
@@ -140,14 +143,13 @@ const MaterialCounter = (props: MaterialCounterProps) => {
 };
 
 type EjectButtonProps = {
-  material: Material;
   amount: number;
+  sheets: number;
   onEject: (quantity: number) => void;
 };
 
 const EjectButton = (props: EjectButtonProps) => {
-  const { amount, material, onEject } = props;
-  const { sheets } = material;
+  const { amount, sheets, onEject } = props;
 
   return (
     <Button

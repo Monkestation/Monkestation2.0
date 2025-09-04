@@ -114,6 +114,7 @@
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
 #define SPECIES_SHADOW "shadow"
+#define SPECIES_DARKSPAWN "darkspawn"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
 #define SPECIES_TALLBOY "tallboy"
@@ -140,6 +141,7 @@
 #define BODYPART_ID_DIGITIGRADE "digitigrade"
 #define BODYPART_ID_LARVA "larva"
 #define BODYPART_ID_PSYKER "psyker"
+#define BODYPART_ID_DARKSPAWN "darkspawn"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -198,6 +200,15 @@
 #define TRAUMA_LIMIT_LOBOTOMY 3
 #define TRAUMA_LIMIT_MAGIC 3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
+
+/// This trauma cannot be cured through "special" means, such as nanites or viruses.
+#define TRAUMA_SPECIAL_CURE_PROOF (1<<0)
+/// This trauma transfers on cloning.
+#define TRAUMA_CLONEABLE (1<<1)
+/// This trauma CANNOT be obtained randomly.
+#define TRAUMA_NOT_RANDOM (1<<2)
+/// Default trauma flags.
+#define TRAUMA_DEFAULT_FLAGS (TRAUMA_CLONEABLE)
 
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
@@ -392,8 +403,14 @@
 #define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
 #define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
+///light of this intensity suppresses healing and causes very slow burn damage
+#define SHADOW_SPECIES_DIM_LIGHT 0.2
+///light of this intensity causes rapid burn damage (high number because movable lights are weird)
+/**so the problem is that movable lights ALWAYS have a luminosity of 0.5, regardless of power or distance, so even at the edge of the overlay they still do damage
+* at 0.6 being bright they'll still do damage and disable some abilities, but it won't be weaponized
+*/
+#define SHADOW_SPECIES_BRIGHT_LIGHT 0.6
 
-#define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
 
 #define COOLDOWN_UPDATE_SET_MELEE "set_melee"
 #define COOLDOWN_UPDATE_ADD_MELEE "add_melee"
@@ -985,3 +1002,5 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define SYNTHETIC 2
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
+/// The amount of "blood" that a slimeperson consumes when regenerating a single limb.
+#define REGEN_BLOOD_REQUIREMENT 40

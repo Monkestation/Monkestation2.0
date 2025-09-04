@@ -35,8 +35,7 @@
 		else
 			return ..()
 	else
-		stored.pre_attack(atom, user, params) //this might be a terrible idea
-		atom.attackby(stored, user, params)
+		stored.melee_attack_chain(user, atom, params)
 		return TRUE
 
 /obj/item/borg/apparatus/cooking/examine()

@@ -3,7 +3,7 @@
 	id = "basic_mining"
 	display_name = "Mining Technology"
 	description = "Better than Efficiency V."
-	prereq_ids = list("engineering", "basic_plasma")
+	prereq_ids = list("basic_plasma")
 	design_ids = list(
 		"borg_upgrade_cooldownmod",
 		"borg_upgrade_damagemod",

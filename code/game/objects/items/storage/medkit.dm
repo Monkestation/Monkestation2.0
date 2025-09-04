@@ -450,14 +450,13 @@
 	generate_items_inside(items_inside,src)
 
 //medibot assembly
-/obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
-	if((!istype(bodypart, /obj/item/bodypart/arm/left/robot)) && (!istype(bodypart, /obj/item/bodypart/arm/right/robot)))
+/obj/item/storage/medkit/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
 		return ..()
-
 	//Making a medibot!
 	if(contents.len >= 1)
 		balloon_alert(user, "items inside!")
-		return
+		return FALSE
 
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
 	if (istype(src, /obj/item/storage/medkit/fire))
@@ -472,10 +471,11 @@
 		medbot_assembly.set_skin("advanced")
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
-	medbot_assembly.robot_arm = bodypart.type
+	medbot_assembly.robot_arm = tool.type
 	medbot_assembly.medkit_type = type
-	qdel(bodypart)
+	qdel(tool)
 	qdel(src)
+	return FALSE
 
 /*
  * Pill Bottles
@@ -803,19 +803,20 @@
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
 
-/obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
-	if(is_reagent_container(I) && I.is_open_container())
-		var/obj/item/reagent_containers/RC = I
+/obj/item/storage/organbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_reagent_container(tool) && tool.is_open_container())
+		var/obj/item/reagent_containers/RC = tool
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
 			balloon_alert(user, "[units]u transferred")
-			return
-	if(istype(I, /obj/item/plunger))
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/plunger))
 		balloon_alert(user, "plunging...")
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
-		return
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)

@@ -188,7 +188,7 @@
 /area/centcom/central_command_areas/hall)
 "aaB" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aaC" = (
 /obj/machinery/oven/range_frontier,
@@ -1115,9 +1115,11 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
-/obj/machinery/defibrillator_mount/loaded/directional/west,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
+	},
+/obj/machinery/defibrillator_mount/charging/loaded/directional/west{
+	clamps_locked = 1
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
@@ -1205,7 +1207,7 @@
 "adc" = (
 /obj/machinery/door/window/right/directional/west,
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "add" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -2176,7 +2178,7 @@
 	id = "CC_firing_range_checkpoint"
 	},
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/tdome/observation)
 "afP" = (
 /obj/structure/table/wood/fancy,
@@ -3134,7 +3136,7 @@
 /obj/machinery/door/airlock/centcom{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aiw" = (
 /obj/structure/table/glass/plasmaglass,
@@ -4016,11 +4018,11 @@
 "akP" = (
 /obj/structure/closet/secure_closet/armory1,
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "akQ" = (
 /obj/structure/closet/secure_closet/armory3,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "akR" = (
 /obj/effect/turf_decal/siding/wood{
@@ -4123,7 +4125,7 @@
 /obj/effect/gun_check_blocker{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/tdome/observation)
 "alb" = (
 /obj/structure/railing,
@@ -4627,9 +4629,11 @@
 /obj/machinery/stasis{
 	dir = 4
 	},
-/obj/machinery/defibrillator_mount/loaded/directional/west,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
+	},
+/obj/machinery/defibrillator_mount/charging/loaded/directional/west{
+	clamps_locked = 1
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
@@ -5269,7 +5273,7 @@
 /area/centcom/syndicate_mothership/control)
 "aob" = (
 /obj/structure/closet/secure_closet/armory2,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aoc" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -5489,7 +5493,7 @@
 "aoF" = (
 /obj/machinery/door/airlock/centcom,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aoG" = (
 /obj/effect/turf_decal/siding/wood,
@@ -5840,7 +5844,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "apG" = (
 /turf/closed/indestructible/riveted,
@@ -5960,7 +5964,7 @@
 /obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "apT" = (
 /turf/open/floor/iron/dark,
@@ -6024,7 +6028,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aqe" = (
 /obj/structure/table/reinforced/titaniumglass,
@@ -6555,7 +6559,7 @@
 "arE" = (
 /obj/structure/table/reinforced,
 /obj/item/radio,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "arF" = (
 /obj/structure/chair/sofa/right{
@@ -6777,7 +6781,7 @@
 /area/centcom/syndicate_mothership)
 "asl" = (
 /obj/structure/closet/gimmick/tacticool,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "asm" = (
 /obj/machinery/light/directional/south,
@@ -6907,7 +6911,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "asD" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -8198,7 +8202,7 @@
 /area/centcom/syndicate_mothership/control)
 "avV" = (
 /obj/structure/hedge,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "avW" = (
 /obj/effect/turf_decal/tile/orange/anticorner/contrasted,
@@ -8330,7 +8334,7 @@
 /area/centcom/central_command_areas/adminroom)
 "awq" = (
 /obj/structure/hedge,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "awr" = (
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -8713,7 +8717,7 @@
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "axs" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "axt" = (
 /obj/docking_port/stationary{
@@ -8756,7 +8760,7 @@
 /area/centcom/central_command_areas/adminroom)
 "axy" = (
 /obj/structure/closet/secure_closet/contraband/armory,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "axz" = (
 /obj/machinery/door/airlock/centcom,
@@ -10275,7 +10279,7 @@
 /turf/open/floor/carpet/orange,
 /area/centcom/central_command_areas/admin)
 "aBo" = (
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aBp" = (
 /obj/structure/fence/door,
@@ -10729,7 +10733,7 @@
 "aCD" = (
 /obj/structure/table/reinforced,
 /obj/item/megaphone/sec,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aCE" = (
 /obj/structure/flora/bush/fullgrass/style_2,
@@ -11637,7 +11641,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aEZ" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -12013,7 +12017,7 @@
 /area/centcom/central_command_areas/arcade)
 "aGd" = (
 /obj/structure/centcom_item_spawner/gun_and_ammo_creator,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aGe" = (
 /obj/effect/turf_decal/siding/wood{
@@ -12132,7 +12136,7 @@
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
 "aGs" = (
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/tdome/observation)
 "aGt" = (
 /obj/machinery/door/airlock/centcom{
@@ -12279,7 +12283,7 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "aGM" = (
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aGN" = (
 /obj/effect/turf_decal/siding/wood{
@@ -13799,7 +13803,7 @@
 /area/space)
 "aKT" = (
 /obj/structure/closet/secure_closet/brig,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aKU" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -14611,8 +14615,10 @@
 /area/centcom/central_command_areas/briefing)
 "aMZ" = (
 /obj/machinery/light/floor/has_bulb,
-/obj/structure/table/reinforced/titaniumglass,
-/obj/item/storage/medkit/robotic_repair/preemo/stocked,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/obj/machinery/computer/vitals_reader/advanced/directional/east,
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/medical)
 "aNa" = (
@@ -14919,11 +14925,11 @@
 /area/centcom/central_command_areas/medical)
 "aNS" = (
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/brig_physician{
 	pixel_x = 0;
 	pixel_y = 8
 	},
-/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/brig_physician,
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/medical)
 "aNT" = (
@@ -15165,7 +15171,7 @@
 /area/centcom/wizard_station)
 "aOw" = (
 /obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aOx" = (
 /obj/effect/turf_decal/tile/hot_pink/diagonal_edge{
@@ -15842,8 +15848,10 @@
 /area/centcom/syndicate_mothership/control)
 "aQs" = (
 /obj/machinery/stasis,
-/obj/machinery/defibrillator_mount/loaded/directional/east,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/defibrillator_mount/charging/loaded/directional/east{
+	clamps_locked = 1
+	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
 "aQt" = (
@@ -16072,7 +16080,7 @@
 	name = "Checkpoint Shutters"
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aRb" = (
 /obj/machinery/chem_heater/withbuffer,
@@ -16253,7 +16261,7 @@
 /area/centcom/central_command_areas/hall)
 "aRy" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aRz" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -16428,7 +16436,11 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "aRU" = (
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/storage/medkit/robotic_repair/stocked,
+/obj/item/storage/backpack/duffelbag/brig_physician/surgery,
+/obj/item/storage/backpack/duffelbag/brig_physician/surgery{
+	pixel_x = 0;
+	pixel_y = 8
+	},
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/medical)
 "aRV" = (
@@ -17556,7 +17568,7 @@
 /area/centcom/syndicate_mothership/control)
 "aUR" = (
 /obj/structure/training_machine,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aUT" = (
 /obj/effect/turf_decal/bot,
@@ -17574,7 +17586,7 @@
 "aUU" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin/carbon,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
 "aUV" = (
 /obj/structure/table/sandstone{
@@ -17612,7 +17624,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/firing_range)
 "aVb" = (
 /obj/structure/closet/crate/bin{
@@ -20565,7 +20577,7 @@
 	},
 /obj/structure/table/optable,
 /obj/machinery/light/cold/directional/north,
-/obj/machinery/defibrillator_mount/loaded/directional/north,
+/obj/machinery/defibrillator_mount/charging/loaded/directional/north,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
 "cKq" = (
@@ -21404,9 +21416,11 @@
 /area/centcom/central_command_areas/admin)
 "ejG" = (
 /obj/machinery/stasis,
-/obj/machinery/defibrillator_mount/loaded/directional/east,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
+	},
+/obj/machinery/defibrillator_mount/charging/loaded/directional/east{
+	clamps_locked = 1
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/medical)
@@ -24959,6 +24973,10 @@
 /obj/item/restraints/handcuffs/cable/white,
 /turf/open/floor/carpet/neon/simple/blue/nodots,
 /area/centcom/central_command_areas/prison)
+"jVH" = (
+/mob/living/basic/bot/cleanbot/firing_range,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/firing_range)
 "jWH" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/closed/indestructible/wood,
@@ -27534,6 +27552,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/admin)
+"oKo" = (
+/obj/structure/table/reinforced,
+/obj/machinery/dish_drive/firing_range,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/firing_range)
 "oKS" = (
 /obj/structure/sign{
 	name = "wall";
@@ -29011,6 +29034,18 @@
 /obj/item/gun/magic/staff/locker,
 /turf/open/floor/carpet/donk,
 /area/centcom/central_command_areas/adminroom)
+"rpP" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/storage/medkit/robotic_repair/preemo/stocked{
+	pixel_x = 0;
+	pixel_y = 8
+	},
+/obj/item/storage/medkit/robotic_repair/preemo/stocked{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/circuit,
+/area/centcom/central_command_areas/medical)
 "rpU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -31578,7 +31613,7 @@
 /area/centcom/central_command_areas/adminroom)
 "vRs" = (
 /obj/item/paper{
-	text = "FUUUUUUUUUUU-"
+	raw_text_inputs = "FUUUUUUUUUUU-"
 	},
 /obj/effect/temp_visual/cult/rune_spawn/rune4{
 	color = "#880808";
@@ -74016,7 +74051,7 @@ aRy
 asC
 aRy
 asC
-aRy
+oKo
 asC
 aRy
 asC
@@ -75045,7 +75080,7 @@ aBo
 aUR
 aBo
 aUR
-aBo
+jVH
 aUR
 aBo
 aUR
@@ -79331,7 +79366,7 @@ aaa
 aaa
 aaa
 adl
-aRU
+rpP
 uei
 uei
 aRU

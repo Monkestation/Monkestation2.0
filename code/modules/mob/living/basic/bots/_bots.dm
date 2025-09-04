@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return TRUE
 
 /mob/living/basic/bot/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN))
 		to_chat(user, span_warning("The maintenance panel is locked!"))
 		return
@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(user.istate & ISTATE_HARM)
 		return FALSE
 
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 
 	if(health >= maxHealth)
 		user.balloon_alert(user, "no repairs needed!")

@@ -20,8 +20,8 @@
 	addtimer(CALLBACK(src, PROC_REF(arm_grenade)), isnull(delayoverride)? det_time : delayoverride)
 	return TRUE
 
-/obj/item/grenade/monkey_barrel/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/grenade/monkey_barrel/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		return TRUE
 	else
 		return ..()

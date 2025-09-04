@@ -177,30 +177,32 @@
 		playsound(drop_location(), 'sound/items/eatfood.ogg', rand(10,30), TRUE)
 		balloon_alert(user, "consumed card")
 
-/obj/item/card/id/advanced/heretic/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !IS_HERETIC(user))
-		return
+/obj/item/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!IS_HERETIC(user))
+		return NONE
 	if(istype(target, /obj/item/card/id/advanced))
 		eat_card(target, user)
-		return
+		return ITEM_INTERACT_SUCCESS
 	if(istype(target, /obj/effect/knock_portal))
 		clear_portals()
-		return
+		return ITEM_INTERACT_SUCCESS
 	if(!istype(target, /obj/machinery/door))
-		return
+		return NONE
+	if(SSmapping.level_trait(target.z, ZTRAIT_NOPHASE))
+		return NONE
 	var/reference_resolved = link?.resolve()
 	if(reference_resolved == target)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(reference_resolved)
 		make_portal(user, reference_resolved, target)
-		to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
+		to_chat(user, span_notice("You use [src], to link [reference_resolved] and [target] together."))
 		link = null
 		balloon_alert(user, "link 2/2")
 	else
 		link = WEAKREF(target)
 		balloon_alert(user, "link 1/2")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/heretic/Destroy()
 	QDEL_LIST_ASSOC_VAL(fused_ids)

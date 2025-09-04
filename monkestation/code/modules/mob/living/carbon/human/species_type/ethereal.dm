@@ -16,7 +16,7 @@
 
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
 	bodytemp_normal = (BODYTEMP_NORMAL + 50)
-	temperature_homeostasis_speed = 2
+	temperature_homeostasis_speed = 3
 	temperature_normalization_speed = 1
 
 	siemens_coeff = 0.5 //They thrive on energy
@@ -50,7 +50,9 @@
 
 	var/current_color
 	var/EMPeffect = FALSE
+	var/EMP_timer = null
 	var/emageffect = FALSE
+	var/emag_timer = null
 	var/r1
 	var/g1
 	var/b1
@@ -171,7 +173,7 @@
 		to_chat(user, span_notice("You tap [H] on the back with your card."))
 	H.visible_message(span_danger("[H] starts flickering in an array of colors!"))
 	handle_emag(H)
-	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 1 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 	return TRUE
 
 /// Special handling for getting hit with a light eater

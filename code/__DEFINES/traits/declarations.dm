@@ -88,6 +88,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
+//FOR XENO LARVA
+#define TRAIT_NEUTERED "neutered" //the mob cant reproduce
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
 /// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
@@ -140,6 +142,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
+/// protects the holder from throw_impact
+#define TRAIT_IMPACTIMMUNE "impact_immunity"
 /// This carbon doesn't show an overlay when they have no brain
 #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 #define TRAIT_NOFIRE "nonflammable"
@@ -151,6 +155,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_RECOIL "no_recoil"
 ///Can toss a guns like a badass, causing additional damage/effect to their enemies
 /* #define TRAIT_TOSS_GUN_HARD "toss_gun_hard" */
+///Prevent species from changing while they have the trait
+#define TRAIT_SPECIESLOCK "species_lock"
 /// Species with this trait are genderless
 #define TRAIT_AGENDER "agender"
 /// Species with this trait have a blood clan mechanic
@@ -494,9 +500,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 /// Mob has fov applied to it
-/* #define TRAIT_FOV_APPLIED "fov_applied" */
+#define TRAIT_FOV_APPLIED "fov_applied"
 /// Mob is using the scope component
-/* #define TRAIT_USER_SCOPED "user_scoped" */
+#define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
 /// Mob does not get a damage overlay from brute/burn
@@ -645,6 +651,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ROD_SUPLEX "rod_suplex"
 /// The mob has an active mime vow of silence, and thus is unable to speak and has other mime things going on
 #define TRAIT_MIMING "miming"
+/// This atom is affected by the cluwne curse. Mostly used to prevent looping transformations.
+#define TRAIT_CLUWNE "cluwne"
 
 /// This mob is phased out of reality from magic, either a jaunt or rod form
 #define TRAIT_MAGICALLY_PHASED "magically_phased"
@@ -654,7 +662,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
-#define TRAIT_KNOW_ROBO_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
@@ -668,12 +676,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define TRAIT_DETECTIVES_TASTE "detectives_taste" */
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
-/* #define TRAIT_MOVE_GROUND "move_ground" */
+#define TRAIT_MOVE_GROUND "move_ground"
 #define TRAIT_MOVE_FLYING "move_flying"
 #define TRAIT_MOVE_VENTCRAWLING "move_ventcrawling"
 #define TRAIT_MOVE_FLOATING "move_floating"
-/* #define TRAIT_MOVE_PHASING "move_phasing" */
-/*#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down*/
+#define TRAIT_MOVE_PHASING "move_phasing"
+#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down"
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
 
@@ -710,7 +718,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Chasms will be safe to cross while they've this trait.
 #define TRAIT_CHASM_STOPPED "chasm_stopped"
 ///Chasms will be safe to cross if there is something with this trait on it
-/* #define TRAIT_CHASM_STOPPER "chasm_stopper" */
+#define TRAIT_CHASM_STOPPER "chasm_stopper"
 ///The effects of the immerse element will be halted while this trait is present.
 /* #define TRAIT_IMMERSE_STOPPED "immerse_stopped" */
 /// The effects of hyperspace drift are blocked when the tile has this trait
@@ -747,9 +755,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
-
-///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
-#define TRAIT_MAT_TRANSMUTED "transmuted"
 
 // cargo traits
 ///If the item will block the cargo shuttle from flying to centcom
@@ -800,6 +805,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_APC_SHOCKING "apc_shocking"
 /// Properly wielded two handed item
 #define TRAIT_WIELDED "wielded"
+/// This item is currently performing a cleaving attack
+#define TRAIT_CLEAVING "cleaving"
 /// A transforming item that is actively extended / transformed
 #define TRAIT_TRANSFORM_ACTIVE "active_transform"
 /// Buckling yourself to objects with this trait won't immobilize you
@@ -855,6 +862,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
+#define TRAIT_NO_CLONE "NO_CLONE"
 #define TRAIT_BALD "bald"
 #define TRAIT_SHAVED "shaved"
 #define TRAIT_BADTOUCH "bad_touch"
@@ -866,6 +874,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
 #define TRAIT_CAFFEINE_DEPENDENCE "caffeine_dependence"
+#define TRAIT_PRO_SKATER "pro_skater"
 /* #define TRAIT_STRONG_STOMACH "strong_stomach" */
 
 /// This mob always lands on their feet when they fall, for better or for worse.
@@ -877,6 +886,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Debug traits
 /// This object has light debugging tools attached to it
 /* #define TRAIT_LIGHTING_DEBUGGED "lighting_debugged" */
+/// This object has sound debugging tools attached to it
+#define TRAIT_SOUND_DEBUGGED "sound_debugged"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -1085,7 +1096,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage" */
 
 ///Deathmatch traits
-/* #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants" */
+#define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
 
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"
@@ -1140,8 +1151,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob heals from cult pylons.
 #define TRAIT_HEALS_FROM_CULT_PYLONS "heals_from_cult_pylons"
-///
-#define TRAIT_HEALS_FROM_BINGLE_HOLES "heals_from_bingle_holes"
 /// Ignore Crew monitor Z levels
 #define TRAIT_MULTIZ_SUIT_SENSORS "multiz_suit_sensors"
 
@@ -1296,6 +1305,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which allows mobs to parry mining mob projectiles
 /* #define TRAIT_MINING_PARRYING "mining_parrying" */
 
+/**
+ *
+ * This trait is used in some interactions very high in the interaction chain to allow
+ * certain atoms to be skipped by said interactions if the user is in combat mode.
+ *
+ * Its primarily use case is for stuff like storage and tables, to allow things like emags to be bagged
+ * (because in some contexts you might want to be emagging a bag, and in others you might want to be storing it.)
+ *
+ * This is only checked by certain items explicitly so you can't just add the trait and expect it to work.
+ * (This may be changed later but I chose to do it this way to avoid messing up interactions which require combat mode)
+ */
+#define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
+
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
 
@@ -1311,5 +1333,28 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that allows humanoids to always punch borgs regardless of limb bodytype or damage.
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
+
+/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
+#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+///Darkspawn traits
+///lets darkspawns walk through weak light
+#define TRAIT_DARKSPAWN_LIGHTRES "darkspawn_lightres"
+///lets darkspawns walk through any light
+#define TRAIT_DARKSPAWN_CREEP "darkspawn_creep"
+///permanently reduces the lucidity gained from future succs
+#define TRAIT_DARKSPAWN_DEVOURED "darkspawn_devoured"
+///disable psi regeneration (make sure to remove it after some time)
+#define TRAIT_DARKSPAWN_PSIBLOCK "darkspawn_psiblock"
+///make aoe ally buff abilities also affect allied darkspawns
+#define TRAIT_DARKSPAWN_BUFFALLIES "darkspawn_allybuff"
+///revives the darkspawn if they're dead and in the dark
+#define TRAIT_DARKSPAWN_UNDYING "darkspawn_undying"
+
+///reduces the cooldown of all used /datum/action/cooldown by 25%
+#define TRAIT_FAST_COOLDOWNS "short_spell_cooldowns"
+
+/// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
+#define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 
 // END TRAIT DEFINES

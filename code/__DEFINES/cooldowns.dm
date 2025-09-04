@@ -37,6 +37,7 @@
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 #define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
 #define COOLDOWN_MECHA_MISSILE_STRIKE "mecha_missile_strike"
+#define COOLDOWN_MECHA_CABIN_SEAL "mecha_cabin_seal"
 
 //car cooldowns
 #define COOLDOWN_CAR_HONK "car_honk"
@@ -70,14 +71,18 @@
 
 #define TIMER_COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(end_cooldown), cd_source, cd_index), cd_time))
 
-#define TIMER_COOLDOWN_CHECK(cd_source, cd_index) LAZYACCESS(cd_source.cooldowns, cd_index)
+/// Checks if a timer based cooldown is NOT finished.
+#define TIMER_COOLDOWN_RUNNING(cd_source, cd_index) LAZYACCESS(cd_source.cooldowns, cd_index)
+
+/// Checks if a timer based cooldown is finished.
+#define TIMER_COOLDOWN_FINISHED(cd_source, cd_index) (!TIMER_COOLDOWN_RUNNING(cd_source, cd_index))
 
 #define TIMER_COOLDOWN_END(cd_source, cd_index) LAZYREMOVE(cd_source.cooldowns, cd_index)
 
 /*
  * Stoppable timer cooldowns.
  * Use indexes the same as the regular tiemr cooldowns.
- * They make use of the TIMER_COOLDOWN_CHECK() and TIMER_COOLDOWN_END() macros the same, just not the TIMER_COOLDOWN_START() one.
+ * They make use of the TIMER_COOLDOWN_RUNNING() and TIMER_COOLDOWN_END() macros the same, just not the TIMER_COOLDOWN_START() one.
  * A bit more expensive than the regular timers, but can be reset before they end and the time left can be checked.
 */
 
@@ -85,7 +90,7 @@
 
 #define S_TIMER_COOLDOWN_RESET(cd_source, cd_index) reset_cooldown(cd_source, cd_index)
 
-#define S_TIMER_COOLDOWN_TIMELEFT(cd_source, cd_index) (timeleft(TIMER_COOLDOWN_CHECK(cd_source, cd_index)))
+#define S_TIMER_COOLDOWN_TIMELEFT(cd_source, cd_index) (timeleft(TIMER_COOLDOWN_RUNNING(cd_source, cd_index)))
 
 
 /*

@@ -104,9 +104,9 @@
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
+/obj/item/ammo_casing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/ammo_box))
+		var/obj/item/ammo_box/box = attacking_item
 		if(isturf(loc))
 			var/boolets = 0
 			for(var/obj/item/ammo_casing/bullet in loc)

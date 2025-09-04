@@ -103,3 +103,9 @@
 	desc = "* Boots, they appear to be a replica of the ones a legendary vessel wore while saving the world."
 	icon_state = "kris_boots"
 	inhand_icon_state = null 
+
+/obj/item/clothing/shoes/dio
+	name = "flamboyant sabatons"
+	desc = "So pointy you could use them like knives!"
+	icon_state = "dioelfshoes"
+	inhand_icon_state = null 

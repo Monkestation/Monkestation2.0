@@ -34,22 +34,21 @@
 	user.put_in_inactive_hand(leashed_atom)
 
 
-/obj/item/melee/razorwire/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!ismovable(target) || tracked_component || !COOLDOWN_FINISHED(src, ensnare))
+
+/obj/item/melee/razorwire/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismovable(interacting_with) || tracked_component || !COOLDOWN_FINISHED(src, ensnare))
 		return
 
-	var/atom/movable/movable = target
+	var/atom/movable/movable = interacting_with
 	if(movable.anchored)
 		return
 
-	if(proximity_flag || (get_dist(user,target) > 4 && get_dist(user,target) < reach))
+	if((get_dist(user, interacting_with) > 4 && get_dist(user, interacting_with) < interacting_with))
 		return
 
+	var/total_dist  = get_dist(user, interacting_with) + additional_distance
 
-	var/total_dist  = get_dist(user, target) + additional_distance
-
-	if(!CheckToolReach(user, target, 4))
+	if(!CheckToolReach(user, interacting_with, 4))
 		return
 
 	tracked_component = movable.AddComponent(/datum/component/leash, src, total_dist, beam_icon_state = "razorwire", beam_icon = 'icons/effects/beam.dmi', force_teleports = FALSE)

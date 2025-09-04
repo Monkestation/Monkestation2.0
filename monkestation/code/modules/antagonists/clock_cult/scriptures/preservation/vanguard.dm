@@ -19,18 +19,20 @@
 	invoker.add_traits(list(TRAIT_STUNIMMUNE,
 							TRAIT_PUSHIMMUNE,
 							TRAIT_IGNOREDAMAGESLOWDOWN,
-							TRAIT_NOLIMBDISABLE), VANGUARD_TRAIT)
+							TRAIT_NOLIMBDISABLE,
+							TRAIT_NO_PAIN_EFFECTS), VANGUARD_TRAIT)
 	to_chat(invoker, span_notice("You feel like nothing can stop you!"))
 
 /datum/scripture/slab/vanguard/count_down()
 	. = ..()
 	if(time_left == 5 SECONDS)
-		to_chat(invoker, span_warning("You start to feel tired again."))
+		to_chat(invoker, span_userdanger("You start to feel tired again."))
 
 /datum/scripture/slab/vanguard/end_invocation(silent)
 	. = ..()
 	invoker.remove_traits(list(TRAIT_STUNIMMUNE,
 							   TRAIT_PUSHIMMUNE,
 							   TRAIT_IGNOREDAMAGESLOWDOWN,
-							   TRAIT_NOLIMBDISABLE), VANGUARD_TRAIT)
-	to_chat(invoker, span_userdanger("You feel the last of the energy from \the [invoking_slab] leave you."))
+							   TRAIT_NOLIMBDISABLE,
+							   TRAIT_NO_PAIN_EFFECTS), VANGUARD_TRAIT)
+	to_chat(invoker, span_bolddanger("You feel the last of the energy from \the [invoking_slab] leave you.")) //smaller span here because its pretty obvious when it ends anyway

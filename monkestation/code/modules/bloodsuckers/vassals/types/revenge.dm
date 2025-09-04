@@ -54,6 +54,9 @@
 
 	return data + ..()
 
+/datum/antagonist/vassal/revenge/pre_mindshield(mob/implanter, mob/living/mob_override)
+	return COMPONENT_MINDSHIELD_RESISTED
+
 /datum/antagonist/vassal/revenge/proc/on_master_death(datum/antagonist/bloodsucker/bloodsuckerdatum, mob/living/carbon/master)
 	SIGNAL_HANDLER
 

@@ -259,3 +259,641 @@
   - rscadd: (SmArtKar) You can now attach anesthetic tanks and breathing masks to
       surgical tables.
   - bugfix: (Melbert) You can operate through surgical masks again
+2025-08-11:
+  EssentialTomato:
+  - bugfix: Fixed chameleon hats not changing hairstyles and some other hairstyle
+      related stuff.
+  Wisemonster:
+  - bugfix: The automated announcement system once more announces new arrivals to
+      the station.
+2025-08-12:
+  Absolucy:
+  - refactor: (timothymtorres) Sound has been heavily optimized and will now ignore
+      low volume sounds from far away.
+  - admin: (timothymtorres) Add debugging sound earmuffs to admin equipment inside
+      the debug box. Wear them to determine a sounds max range, distance, volume,
+      and sound name. Highly recommended to walk otherwise you will get spammed with
+      footstep sounds.
+  - bugfix: (grungussuss, Melbert) After 4 years, computer sound loop now works properly.
+  - qol: Stargazers can now slime link basic/simple mobs using a normal grab.
+  - bugfix: Hotspots/fire from ash drakes, explosions, and fire breath should no longer
+      last more than a couple of seconds.
+  - refactor: Slightly refactored brain trauma.
+  - balance: Nanites and viruses can no longer cure an obsession or hypnosis.
+  - map: The centcom firing range floors are now indestructible.
+  - balance: Revenge Vassals now also resist mindshields, just like Favorite Vassals.
+  Absolucy, Maximal08, FlufflesTheDog:
+  - qol: Using a multitool inhand tells you where the area APC is.
+  Aniantan, Bomberman66Dev:
+  - rscadd: Ported the surplus prosthetic organ quirks from TG. Select few species
+      cannot use them, however.
+  Ben10Omintrix:
+  - bugfix: moving away from the surgery table with its mask no longer causes lag
+  ThePooba:
+  - bugfix: less monkeycoins from roundend for mentors and fixed donator monkecoins
+  - balance: also buffed slasher again so i didnt forgor
+  Wernerses:
+  - map: Added the missing disk compartamentalizer to Icebox Botany
+  - map: Added heated nesting boxes to some maps that did not have it before
+  - map: Replaced all ranching railings with reinforced thin glass walls and windoors
+      for easy access for simians
+  - map: Chicken nest boxes are now all close to windoors for easy access to eggs
+  notghosti:
+  - bugfix: Contractor bundles should now still be purchasable after an objective
+      times out
+2025-08-13:
+  ThePooba:
+  - balance: jugg + minigun costs less
+  - balance: suit and minigun less slowdown
+  - balance: suit has more armor for lasers
+  - balance: minigun more damage shoots slower slightly less loud because it huwts
+      my ears
+  ancient-engineer:
+  - bugfix: fixed attacking a mirror giving you /datum/component/ instead of /datum/component/omen
+  notghosti:
+  - code_imp: Nuked sentient disease code.
+2025-08-14:
+  BingusSS13:
+  - qol: Service borgs can now hold beakers, bottles, and coffeepots.
+  - bugfix: Service borgs are now capable of cooking eggs on griddles, let's get cracking!
+  Tractor Maam:
+  - rscadd: Departmental Bells have replaced the desk bells at the front desk of every
+      station. These bells ring onto the respective department channel when rung (60
+      second cooldown.)
+  - rscadd: All bells can now be anchored with a wrench left click.
+  - rscadd: Maps that did not contain a bell for certain departments have been updated.
+  - image: desk bells have had their sprites replaced with Yogstation ones.
+  Wisemonster:
+  - balance: Lone Op's minimum/starting weight decreased to 0
+2025-08-15:
+  leaKsi:
+  - bugfix: (SmArtKar) Putting people you're fireman carrying into contractor pods
+      no longer sends both of you to zelda's shadow realm.
+  - bugfix: (Sealed101) Fixed equipping straight jackets onto people with attack-equip
+      then equipping another jacket through the equip window causing magical jacket
+      consumption into the recipient's contents.
+  - bugfix: Monkification no longer magically changes your ID/PDA name.
+2025-08-16:
+  Absolucy:
+  - map: Fixed missing disposals pipes in Tramstation's engineering SMES room.
+  - bugfix: Bloodsuckers and Changelings now have the "no healing" challenge removed.
+  Absolucy, JohnFulpWillard:
+  - admin: Admins can now link a URL for maps, used to give feedback on said maps.
+      Accessible through the roundend report, escape menu, and stat panel.
+  - qol: You can now directly go to the webmap of maps from the stat panel (assuming
+      it's set in config).
+  EssentialTomato:
+  - bugfix: (Synclt21) Failing to equip a dual handed item should properly clear out
+      all status effects related to equipping it, for e.g. remove the action button
+      from chainsaw
+  - bugfix: Fixed beach bar floors not giving back the right tiles.
+2025-08-17:
+  Absolucy:
+  - bugfix: Cannibalizing/retracting limbs as an oozeling now drops any implants in
+      that limb, instead of vaporizing it forever.
+  Absolucy, Bisar:
+  - balance: 'Added a list of "universal" items that can fit on any suit storage.
+      Mostly low-impact but high-utility items, but of special note: holsters and
+      the captain''s jetpack can be worn on any suit storage.'
+  - balance: Any item of size "tiny" can now also be worn in suit storage.
+  - qol: The suit storage change gives some small amount of sanity to wearing things
+      on suit storage, such as emergency oxygen tanks or a pack of smokes.
+  Aniantan:
+  - bugfix: Slimes now flee from people with extinguishers again.
+  Aniantan, itseasytosee:
+  - rscadd: Lizardpeople can wear undershirts again
+  - bugfix: Lustrous are properly tenacious
+  - code_imp: Moved a bunch of specie traits to bodyparts and organs
+  EssentialTomato:
+  - rscadd: You can now fix IPC brains by pouring liquid solder on them.
+  Killermankey:
+  - rscadd: squish mechanics for Devitt Mk3, Trash tank, Kings chariot
+  MTandi, Sealed101, mc-oofert, SyncIt21, SmArtKar, TheColorCyan:
+  - refactor: Refactored Mech UI
+  - refactor: Refactored mech radio into a utility module, adding extra slot to all
+      mechs
+  - refactor: Refactored mech air tank into a utility module with an air pump, adding
+      extra slot to all mechs
+  - refactor: Refactored mech cabin air - there is now a button to seal or unseal
+      cabin to make it airtight or exchanging gases with the environment
+  - refactor: Removed mech maintenance UI Access is set in mech UI, and parts are
+      ejected with a crowbar
+  - rscadd: Mech now has wires and can be hacked
+  - qol: Roboticists now can see MOD suit and mech wires
+  - rscadd: Mechs now require servo motor stock part and it affects movement power
+      usage instead of scanning module
+  - rscadd: Scanning module absence doesnt block mech movement and hides some UI data
+      instead. Big Bess starts without one.
+  - qol: Hitting mech with ID card now toggles ID lock on/off if the card has required
+      access
+  - bugfix: Fixed concealed weapon bay not being concealed on mech examine
+  - bugfix: Fixed mech radio not changing frequency
+  - bugfix: Fixed mech launcher type weapons ignoring specified cooldown
+  - bugfix: Fixed mech launcher type weapons not using specified power amount
+  - bugfix: Fixed mech temperature regulator ignoring gas heat capacity
+  - bugfix: Fixed mech stopping processing other things while not heating internal
+      air
+  - bugfix: Fixed mech being able to leave transit tube in transit
+  - bugfix: Fixed mech internal damage flags working incorrectly
+  - bugfix: Fixed Gygax leg overloading being useless
+  - bugfix: Fixed mechs ignoring their stock parts on creation. Syndicate mechs now
+      stronger against lasers and consume less energy on move. Upgrading from tier
+      1 to tier 2 doesn't make mech consume MORE energy than before the upgrade.
+  - bugfix: fixed mecha plasma generator not accepting fuel
+  - bugfix: fixed mecha ui incorrectly displaying fuel remaining when using an energy
+      module
+  - bugfix: fixed mecha ui missing fluff text for short circuit repair control (5th
+      option)
+  - qol: fixing mecha control module internal damage will print out a chat message
+      like fixing other damage does
+  - rscdel: did you know that for 4 years now mecha plasma generators did not, in
+      fact, pollute the environment when in use? removed that bit from its description
+  - balance: Rebalanced mech energy drain with part upgrades. Base energy drain reduced
+      by 50%, 33%, 25% with upgrades and applies to movement (Manipulator rating),
+      phasing, punching, light (Capacitor rating).
+  - balance: Hydraulic clamp now can force open airlocks
+  - balance: Made mech RCS pack consume reasonable amount of gas
+  - code_imp: Fixed some other minor bugs and made some minor changes in the mech
+      code
+  Shoddd:
+  - bugfix: Bins no longer say you shoved yourself in
+  - bugfix: chromosomes no longer count for illegal tech
+  - bugfix: ammo workbench can no longer print uplink shotgun shells
+  - bugfix: helio gulag shuttle no longer crashes into the station
+  - bugfix: missing wire in helio AI sat
+  SyncIt21, TheColorCyan:
+  - bugfix: items can be printed from autolathe & protolathe when the exact material
+      amounts are present in them after upgrading
+  - bugfix: max printable amount now shows the correct value & updates when items
+      are printed, materials are removed in the autolathe & protolathe
+  - bugfix: component printer material bar is not greyed out when there are sufficient
+      materials to eject
+  - bugfix: rcd and other devices that uses the silo link upgrade now have the correct
+      material usages
+  - bugfix: silo hold actually works
+  - bugfix: machines using local storage to hold materials will eject it's materials
+      as sheets when deconstructed/destroyed
+  - bugfix: ORM will generate points regardless of how the ore enters it.
+  - bugfix: Machines like autolathe, techfab etc can now be hit with iron sheets (or
+      any other material item type those machines accept) when in combat mode rather
+      than inserting them because it makes sense.
+  - bugfix: Mat container won't display chats fully if the MATCONTAINER_SILENT flag
+      is passed.
+  - bugfix: mat container displays correct number of sheets inserted for alloy materials.
+  - bugfix: remote materials now properly respect the MATCONTAINER_NO_INSERT flag.
+  - code_imp: removes material breakdown flags and related traits.
+  - code_imp: adds helper proc to insert materials via the remote material component
+      with proper context.
+  Tractor Maam:
+  - admin: Antagonist Custom Objectives now play a bwoink sound when created.
+  - admin: The Space Postbox will now ask you again before submitting a cassette,
+      reminding you adminhelp to make sure someone CAN review.
+  notghosti:
+  - map: Jungle, Two fort, and Arena arenas now have consistent atmospherics.
+  - map: Deltastation Chicken Coop botany now has more escapable. unrestricted access
+      helpers
+  - bugfix: Automated announcement TUGI height has been increased to 255 to include
+      the research section
+  - code_imp: Deleted unused blueshield security belt from code.
+  - bugfix: fixes deconstructive nodes not being researchable (Alien, illegal, mod
+      module, ect)
+  throwawayuseless:
+  - rscadd: Pro Skater quirk. Become totally radical today!
+2025-08-18:
+  Absolucy:
+  - balance: Blobs can no longer delete brains (including oozeling cores), altho attacking
+      them will still cause organ damage. MMIs destroyed by blobs will also drop the
+      brain, if it had one inside of it.
+  Ice-Type:
+  - rscadd: Several new pineapple - themed food recipes
+  - rscadd: A new sprite for coconut milk in a glass
+  - rscadd: A hula skirt, that can be bought from autodrobes, or in the loadout store
+  - rscadd: A new pet, the pineapple creacher, which is a smaller, living pineapple.
+  - bugfix: Coconuts now give coconut milk, and not... normal milk (why)
+  - code_imp: Adds a credits folder to the icons file for you to credit sprites. Use
+      it you dinguses.
+  Loiosh42:
+  - rscadd: Admin-only, shouldn't be merged anyway.
+  Shoddd:
+  - balance: Oozeling bloodsuckers now take 3 minutes to revive instead of 30 seconds
+  - qol: Message telling oozeling bloodsuckers/lings how long until they revive
+  TheColorCyan:
+  - balance: odysseus now has 5 utility slots
+  - bugfix: ricky's mauler now has full airtank and radio installed
+  - bugfix: you can actually see what ricky's mauler has equipped on it's arm slots
+  - bugfix: ricky's mauler now actually spawns with scanner and manipulator
+  ThePooba:
+  - bugfix: brig phys gets a nice new coat that isn't pajamas
+  Veth-s:
+  - balance: Max bingle pit size is now 40x40
+  - balance: Bingles now stun in 6 hits (up from 2)
+  - balance: There is now an announcement alerting the crew once the bingle pit reaches
+      size 3.
+  - balance: Bingles now spawn every 50 items consumed (up from 30)
+  - balance: Bingles now have 5 weight (down from 10)
+2025-08-19:
+  Ice-Type:
+  - bugfix: You get your hula skirt when you buy it now
+  - bugfix: You can now choose pineapple creachers with the pet beacon
+  Shoddd:
+  - bugfix: TRAIT_SNOWSTORM_IMMUNE no longer makes you plasma lake proof
+  TheColorCyan:
+  - rscadd: ICARUS Sunbeam will now pick a random turf on the station to path to and
+      pick another upon reaching it, instead of following rod-like movement.
+  Xander3359:
+  - balance: silenced status effect blocks emotes
+  notghosti:
+  - rscadd: Included toolboxes and supplies to Centcom robotics to be able to do all
+      surgeries.
+  - rscadd: Added recharging defib mounts to CC
+  - rscadd: Rickys mech now comes with a interals air tank
+  - balance: Removed Gas analyzer from brig physicians toolbox for coil and a multitool
+  - qol: Reorganized mecha nodes categorization.
+  - rscadd: CC Firing range will automate its cleaning better.
+  - bugfix: Bullet drives will now properly clean dishes at further ranges.
+  - rscdel: A Jerma
+  - map: Fixed roundstart turf differences on Icebox and some ruins.
+2025-08-20:
+  Shoddd:
+  - rscadd: Uncloneable Neurons Quirk
+  - qol: Changed husk failed cloning message
+  notghosti:
+  - bugfix: Regeneration Coma will no longer Put No healings into a death coma.
+  - map: Icebox surface asteroid is now actually without round start turfs
+2025-08-21:
+  Absolucy:
+  - rscadd: Oozelings can now hug flaming people to extinguish them! Grabbing someone
+      will extinguish them slightly more, and aggressively grabbing them far more!
+  - bugfix: Large bingle pits no longer cause massive amounts of lag just to heal
+      bingles.
+  - bugfix: Bingles will now only gib when THEIR HOLE (the pit they were spawned by)
+      is destroyed.
+  Salted-Zen:
+  - rscadd: Adds five new guns to mining, the 'Fenrir' Auto Shotgun, the 'Slab' Grenade
+      Launcher, the 'Hellhound' LMG, the 'Duster' Revolver, and the 'Thor' Kinetic
+      Rifle.
+  - rscadd: Adds three new crushers to mining, the Sickle, the Throwing Knives, and
+      the Pile bunker.
+  - rscadd: Adds three new backpacks to mining, Rockspider (holds three guns / pkas),
+      Trench Jockey (Holds 20 slots of any mining gun ammo), and Ashen Duelist (two
+      slots, can hold any gun /pka and crusher)
+  - rscadd: Adds Admin Only pilebunker that is super long and can mark people with
+      destabilizing marks. item path ends with adminpilebunker.
+  - qol: Gave the SMG and Kinetic Boomstick nicknames, the 'Rapier' and 'Slayer' respectively
+  - balance: Gives the shockwave 2 range instead of 0, so you don't shoot behind you
+      all the time.
+  - qol: Reorganized the ENTIRE mining vendor, including a category just for waste
+      pin locked weapons (so they cant be purchased by golems or freeminers who cant
+      use them at all)
+  - balance: Waste pin locked weapons now no longer work in space... sorry explorers
+  - code_imp: Wasteland firing pin now has a blacklist in the code to remove certain
+      areas.
+  - code_imp: Demodularizes most if not all the custom mining gear.
+  - code_imp: Added comments to all the mining vendor categories about what should
+      go where.
+  WeLoveCastingSpells:
+  - rscadd: Adds a new flamboyant outfit to the Autodrobe, any similarity with a certain
+      Japanese anime is completely unintentional.
+  throwawayuseless:
+  - rscadd: Four-Bit, Bachhus' Blessing, and Rat'vander now get IPCs drunk.
+  - balance: Drunken Resilience works on IPCs.
+  wonderinghost:
+  - map: updates helios disposal network
+  - map: ordanance now has a mail bin and atmos should be mail routable
+2025-08-22:
+  Absolucy:
+  - balance: Removed the knockback stun from riot shotguns and such. Bulldog shotguns
+      and double-barrelled shotguns can still do so, tho.
+  - qol: Slime Washing now works if the oozeling is lying down, even if they have
+      shoes on.
+  - bugfix: Slime Washing now actually feeds the oozeling when they clean up grime,
+      as intended.
+  Salted-Zen:
+  - balance: PK Pistol cooldown upped to 4 seconds
+  - bugfix: You can no longer cause an error by giving the PK Pistol 10 cooldown mods
+  Shoddd:
+  - balance: frontier coats in loadout no longer have armor
+  Tractor Maam:
+  - rscadd: Added a new escape shuttle! The Yate Haugan Neo for 14062 credits
+  - rscadd: Added a new emag only escape shuttle, The Cargo Refitted Yate Haugan Neo
+      for 22264 credits
+  - bugfix: fixed a typo in rayne welder code
+  - bugfix: John Intern's (sprungle) office paper now contains text.
+2025-08-23:
+  Absolucy:
+  - map: Box Station now has 6 SMESes instead of 4.
+  - map: Box Station's cables near engi are now protected with catwalks.
+  - map: Added an oxygen canister to Box Station's engineering.
+  Ice-Type:
+  - balance: shooting someone riding a welding fuel tank has a 50% chance of hitting
+      the tank instead. Yes, this can blow it the fuck up.
+  Shoddd:
+  - balance: Upped assistant point reward to 200 credits
+  - balance: Assistants can no longer punch cards
+  - balance: Cards no longer start with one free punch
+  - map: Added assistant point redeemer to all cargos that lacked one
+  - bugfix: updates GAP card description from 100 to 200
+  Sorenon:
+  - rscadd: Added the Monoplegic and Hemiplegic paralysis quirks
+  Xander3359:
+  - code_imp: adds emote_mute status effect and helper procs
+  - balance: adds emote mute to some silencing effects
+  notghosti:
+  - rscadd: Added new antigen 'Ig', which cannot be mass produced normally.
+  - rscadd: Beaker apparatus can now pick up tubes and virus dishes.
+  - balance: Tubercle Bacillus Cosmosis Microbes now has a antibody and thus protection
+      against reinfection.
+  - balance: Convermol/Spaceallin mix will not give antibodies against Tubercle Bacillus
+      Cosmosis Microbes. But BVAK injectors and other methods will.
+  - balance: Nerfed Alkali Burn stacks
+  - bugfix: Plague Rats will now no longer nibble their way into NULLSPACE (((Hopefully)))
+  - bugfix: sililcons can now interact with incubators and disease analyzers
+  - admin: Plague rats have been removed from the antag datum panel. Use the event
+      instead
+  - balance: Removed the 4 crew spawns from the battlecruiser starfury
+  - bugfix: Florans can reattach limbs again
+  throwawayuseless:
+  - spellcheck: TRNE Corp. has hired a Ratvarian-fluent spellchecker and has subsequently
+      renamed the Rat'vander cocktail to Ratvander.
+  wonderinghost:
+  - map: '[SPACE_BOX] engineering reception now requires either engineering or atmos
+      access instead of both'
+2025-08-24:
+  Absolucy:
+  - map: Added a medipen refiller to the Helio medbay lobby.
+  - rscdel: Removed the "Hard of Hearing" quirk, due to issues relating to chat spam.
+      Hopefully it'll be back soon.
+  JohnFulpWillard:
+  - qol: The pushbroom can now pull with RMB.
+  Sorenon:
+  - rscadd: Added the Hard of Hearing trait which makes everything sound quieter,
+      this is caused by mild ear damage, stronger ear damage still causes complete
+      deafness.
+  - rscadd: Added the Hard of Hearing Quirk which causes everyone to sound like they
+      are whispering.
+  - bugfix: Fixed an issue where the ears being damaged multiple times in one tick
+      can cause deafness to last much longer than intended.
+  ThePooba:
+  - bugfix: maintloot turbomode
+2025-08-25:
+  Salted-Zen:
+  - balance: Hiero staff dash now counts as magic so its not disrupted by bag of holding
+  - code_imp: Hiero staff dash now counts as magic, just like its beacon recall does
+  - balance: Security batons now drain 1% of their cells max charge over time if left
+      on
+  Snack-Max:
+  - rscadd: Batter's Uniform to autodrone
+  ThePooba:
+  - rscadd: Mr bagheads donator pill "Eat Me, I Know You Wanna"
+  - rscadd: cyber_huskey can now speak multiple languages and the dog can now be pet
+  Tractor Maam:
+  - map: heliostation now has departmental bells.
+  - map: added a syndicate variant of the departmental bell for mapping purposes.
+  - rscdel: Removed herobrine.
+  notghosti:
+  - balance: T3 lasers now require t2 lasers to be researched first
+  - rscadd: Removed industrial engineering from mining tech perquisites. This does
+      not effect actual tech to research it
+  - balance: Oozelings are blacklisted from Prosthetics  and Qaud Amputtee quirks
+  throwawayuseless:
+  - rscadd: 'New Quirk: Snappy. Snap with style, panache, pizzaz, mojo, moxie, badassery,
+      goodassery, insouciance, chill, swag, snazz, and a certain *je ne sais quoi*.
+      (please help im running out of synonyms and the thesaurus-beasts from the nether
+      realms are going to CATCH UP WITHMEOHGODTHEPAAAAIIIINNN)'
+2025-08-27:
+  Absolucy:
+  - bugfix: idk i guess im fixing more lag?
+  - refactor: (LemonInTheDark) I have reworked how parallax and its animations (space
+      travel) work. Please report any bugs lads!
+  - bugfix: (Melbert) Some things which should pacify people (but aren't) now will
+      properly, like hypnoflash.
+  - bugfix: (timothymtorres) Fix custom map loading ignoring JSON values that were
+      ignored previously. (minetype, planetary, etc.)
+  - bugfix: (00-Steven) Sign language no longer throws a runtime error when repeatedly
+      muted and unmuted.
+  - bugfix: (00-Steven) Sign language no longer fails to hide the action when you
+      get it while mute, stop being mute, and start being mute again.
+  - admin: (SmArtKar) Renamed "Tick Overrun" in MC overview to "Subsystem Overtime"
+      to be true as to what it actually displays.
+  - balance: (Melbert) Cameras can only see vertically upwards if the turf above them
+      is transparent. But hey, multi-z maps will now perform wayyy better (less time
+      dilation)
+  - bugfix: (SmArtKar) Fixed weather from Z levels above rendering over players' UI.
+  - qol: (SmArtKar) Multi-Z Detail setting has been renamed to Multi-Z Depth with
+      an explanation on what it does. "Standard" setting has been renamed to "No Culling"
+  - bugfix: (SmArtKar) Maps with a large amount of Z levels should no longer randomly
+      display space parallax to players with low multi-z culling settings.
+  - rscdel: Removed bloom (additive lighting). It just made bright lights more painful
+      on the eyes, and didn't look too much better anyways.
+  - bugfix: Rescue hooks can now fish up Oozeling cores.
+  - bugfix: Oozelings which self-revive in chasms somehow will properly "leap" out
+      of the chasm, like other mobs would.
+  - bugfix: Stowaway Oozelings will no longer teleport when revived.
+  Absolucy, hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  Arturlang:
+  - rscadd: mesmerize is now a visual effect only visible to victim and attacker,
+      and no longer requires both parties to stand still
+  - rscadd: both tremere abilities besides mesmerize are now toggled with right click
+      for usability
+  - rscadd: thaumaturgy is now charge-based instead of a single shot, but is thus
+      weaker per-shot
+  - rscadd: tremere abilities now have dynamic descriptions
+  - rscadd: dominate no longer requires facing your target
+  - rscadd: bloodsuckers can only have 1 targeted ability active at a time, you couldn't
+      multicast before anyway.
+  - rscadd: Mesmerize is now slowed down/blocked with welding protection, with levels
+      past 2 making you immune (welding protection is level 2)
+  - rscadd: Dominate now has a visual timer for when your vassal dies horribly
+  - rscadd: Auspex is renamed into Obfsucate, as that makes more sense given what
+      it does.
+  - balance: Auspex, now, Obfuscate, fills your stamina to full, as tremere are lacking
+      in stamina regen options
+  - balance: Obfuscate requires level 6 to allow you to teleport anywehre
+  - balance: Obfuscate now has a per-tile cost of 5 blood per tile teleported, with
+      a cap of 100 blood
+  - code_imp: heavy refactors of tremere abilities
+  Cmpwarrior:
+  - rscadd: Adds a new outfit to the AutoDrobe and a new clown mask variant, based
+      off everyone's favorite fool.
+  Melbert:
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
+  Salted-Zen:
+  - qol: Scraped the Scarborough arms stamp off the 'Duster' Revolver
+  - balance: Reduced PK Railgun recoil
+  - balance: Slightly increased the firerate of the 'Hellhound' LMG and increased
+      max ammo to 150
+  - rscadd: Added a purchasable case of 3 large speed loaders that hold 50 rounds
+      each, for reloading the 'Hellhound' LMG
+  - balance: All mining guns (Except the 'Thor' 950 JDJ) fit in the suit slots of
+      Explorer Armor, Goliath Cloak, Ash Drake Armor, And Godslayer Armor
+  Shoddd:
+  - balance: stimulants now stun alien embryos growth
+  SmArtKar:
+  - qol: Heads of staff PDAs start with twice as much disk space
+  wonderinghost:
+  - bugfix: fixes flatpack duplication when deploying
+  - bugfix: fixes material duplication when repacking
+2025-08-28:
+  Absolucy:
+  - qol: Slime washing now eats grime off the floor when moving, not just every second.
+  Absolucy, Melbert:
+  - bugfix: Hierophant Club Blink at range
+  - bugfix: Crusher Loot
+  Melbert:
+  - refactor: Storage and Tables are now a lower priority action, meaning some uses
+      of items on storage should work... better, now. Here's hoping at least, report
+      any oddities.
+  - refactor: 'Note: For an overwhelming majority of items, combat mode will attempt
+      to attack/insert into the target, while non-combat-mode will attempt to use
+      on a target. This means screwdrivering or emagging a MODsuit must be done on
+      non-combat-mode, as combat mode will simply put the screwdriver or emag into
+      its storage. Same applies to tables, though when in doubt, RMB may help (for
+      things which are also weapons, like mops).'
+  - refactor: Refactored escape pod storage, now they actually properly show as unlocked
+      on red alert and above.
+  MrMelbert:
+  - balance: Clock cultists are given a slowing status effect after warping to the
+      station
+  - rscadd: Anchoring crystals now bend reality the more of them there are
+  - balance: anchoring crystals now lock down the shuttle while active
+  - balance: abscond can only be invoked from marked areas and takes 45 seconds, servant
+      antag info now lists marked areas
+  - balance: vitality sigils no longer create borg shells but shells can be made by
+      on station tinker's caches
+  - balance: the soul vessels given by vitality sigils can now be converted to cogscarab
+      shells
+  - balance: clockwork mobs can now warp to the station but are restricted to marked
+      areas
+  - bugfix: various clock cult bugs
+  - balance: reduced the maximum amount of cogscarabs from 9 to 6
+  - balance: reworked the clockwork power economy into passive and active power
+  Rex9001:
+  - rscadd: A horrific monster has crawled inside of a crewmate, escaped all NT bio
+      scans and is now in an ideal position to burst out of its host and start wrecking
+      havoc. The bloodling has arrived!
+  ThePooba:
+  - rscadd: 'donator alt title: Sr. Attending physician(cmo), Cybertronic Engineer(robo),
+      Builder(engi)'
+  - rscadd: Darkspawn antag https://mediawiki.monkestation.com/Darkspawn
+  - rscadd: Head of security jackboots (they are stompy)
+  - rscadd: Swinging component (fighter only for now)
+  - rscadd: like 50 spells for darkspawn and shit
+  - rscadd: New camera network system - mostly code side
+  - rscadd: custom key click sounds for some machines and buttons, firealarms etc
+  - bugfix: chem_heater dupe
+  - bugfix: molotovs and other interacts on beakers
+  - bugfix: camera?
+  Tostah:
+  - rscadd: Lamarr can now produce neutered xenomorph larva which can't evolve into
+      drones and start nests.
+  - rscadd: Lamarr will leap at victims but won't stun them. They also won't be killed
+      by protective clothing and can be carried around.
+  Xander3359:
+  - bugfix: (MrMelbert) Fix inability to make r-glass by hand inside your backpack
+  - qol: (MrMelbert) Hand labels now have a visual effect associated, and are also
+      affected by heat / can be cleaned off like stickers.
+  - refactor: (MrMelbert) Refactored hand labels. They're objects now!
+  - bugfix: (MrMelbert) Heirophant Club Blink at range
+  - bugfix: (MrMelbert) Crusher Loot
+  - bugfix: (MrMelbert) RCD material reclamation
+  - bugfix: (SmArtKar) Fixed crayons not being usable on anything except turfs (including
+      washing machines)
+  - refactor: (intercepti0n) Stickers are now a component and gets rid of a copyright
+      infringement
+  - bugfix: (SyncIt21) RLD won't try to put lights on storage objects like bags &
+      such
+  - bugfix: Fix being unable to apply patches
+  - bugfix: Fix being unable to place on griddle
+  - bugfix: Fix being unable to use xenobio vacuum from range
+  notghosti:
+  - bugfix: Ordering imports now logs who orders the import on the import forum, akin
+      to normal orders
+2025-08-30:
+  Absolucy:
+  - bugfix: Disembowling no longer spills out unremovable organs.
+  - bugfix: Oozelings will no longer duplicate organs when they die to severe damage
+      to their chest.
+  - bugfix: Fixed a bug where you couldn't pour plasma on an undamaged oozeling core.
+  Absolucy, Melbert:
+  - bugfix: Fix DNA vault probes
+  EssentialTomato:
+  - qol: Holofans can now be deployed over window sills.
+  - bugfix: Fixed holosigns not being cleared when clicked on with a projector.
+  - bugfix: Fixed not being able to spin cloth on the loom.
+  MrBagHead:
+  - bugfix: Touch spells now use the new interaction/ranged interaction signals, fixing
+      Knock Mansus Grasp and Extended Shock Touch at range.
+  - bugfix: Holosign Projectors can again delete holosigns they created.
+  - bugfix: Chemical patches can now be placed into chemical grinders.
+  - bugfix: Cigarette packs no longer drop to the ground when opened from inside a
+      backpack.
+  - rscadd: Added two new Slasher variants, The Cluwne and The Brute, each with unique
+      outfits, reskinned weapons, terror screams, and fear forms.
+  - sound: Added new terror scream audio for The Cluwne and The Brute.
+  - image: Added new icons and sprites for slasher variant outfits and weapons.
+  - bugfix: Fixed an issue where the Slasher mask used incorrect flags to block hairstyles
+      and facial hair.
+  Singul0:
+  - balance: Reworked Roboticists access to lethal mechs and weapons. Gotta get access
+      from command or red alert to make any now. (At least you get non-lethal weapons
+      on blue alert)
+  SirNightKnight:
+  - bugfix: fixed some emissive blockers not working.
+  - code_imp: changed the code for unique death sounds on masks to be a list similar
+      to alternative laughs/screams on clothing items.
+  - balance: lowered honkerblast jitter times.
+  ThePooba:
+  - bugfix: crusher twohand
+  - bugfix: fixed a LOT of interaction bugs
+  - rscadd: added razorwire implant to traitor uplink and fixed mantis implants lunge
+  notghosti:
+  - map: Tramstation pet sanctuary is now connected to the grid
+2025-08-31:
+  Absolucy:
+  - bugfix: fixed vacpacks not being able to suck up adjacent mobs.
+  - balance: The proto-kinetic railgun is now bulky instead of huge, allowing it to
+      fit in the suit storage of certain mining suits/armors.
+  Ice-Type:
+  - bugfix: You will now no longer melee when you pb someone with a medbeam
+  - bugfix: You will now no longer melee when you pb someone with an empty gun
+  - bugfix: The m90gl will not fire a burst when it fires a grenade
+  - bugfix: the protokinetic daggers function
+  JupiterJaeden:
+  - balance: Lasers now do 25 damage instead of 20. Hellfire lasers do 30.
+  - balance: Blob tiles are slightly buffed to not be one hit by new lasers.
+  - bugfix: Florans no longer have their extra burn damage modifier applied twice.
+  - balance: Florans take 1.5x burn damage instead of 1.8x to not be completely smoked
+      by new lasers.
+  - balance: Obfuscation (previously auspex) no longer regenerates stamina damage
+      on use.
+  - balance: Obfuscation (previously auspex) invisibility has been reduced.
+  - config: Alert level escalation and de-escalation text for code blue has been changed
+      to not encourage random searches.
+  - balance: ninja shoves are now knockdowns instead of immediate hardstuns
+  - bugfix: fixes ninja shoves not causing sparks
+  MrBagHead:
+  - rscdel: Removed Lamarr Chestburster's ability to evolve into xeno forms.
+  - balance: Increased Lamarr Chestburster maximum HP from 25 to 100.
+  - bugfix: Fixed Lamarr Xeno objectives not displaying correctly, they now show "Stay
+      alive until the end."
+  - qol: "Lamarr Chestbursters can now understand Common, making it easier to interact\
+      \ and roleplay as RD\u2019s pet."
+  Wisemonster:
+  - balance: Standardized pathology on blueshift, deltastation, voidraptor, and lead
+      poisoning
+  notghosti:
+  - rscadd: Cyborgs and AI players now receive a end of our Monkecoin bonus
+  - balance: Makes it so upgrading a baton actually increases the theoretical maximum
+      baton uptime. See PR for numbers.
+  - balance: Lowered commando operatives to their intended weight. (8 -> 5)

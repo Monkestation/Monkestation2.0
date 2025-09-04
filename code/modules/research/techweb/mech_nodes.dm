@@ -4,7 +4,6 @@
 	display_name = "Mechanical Exosuits"
 	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
 	design_ids = list(
-		"mech_hydraulic_clamp",
 		"mech_recharger",
 		"mecha_tracking",
 		"mechacontrol",
@@ -18,6 +17,10 @@
 		"ripley_right_leg",
 		"ripley_torso",
 		"ripleyupgrade",
+		"mech_hydraulic_clamp",
+		"mech_radio",
+		"mech_air_tank",
+		"mech_thrusters",
 	)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
@@ -228,7 +231,6 @@
 	prereq_ids = list("adv_mecha", "mech_tools")
 	design_ids = list(
 		"mech_rcd",
-		"mech_thrusters",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
