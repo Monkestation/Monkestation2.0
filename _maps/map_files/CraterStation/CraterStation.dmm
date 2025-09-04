@@ -9959,9 +9959,6 @@
 	},
 /turf/open/openspace/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"dgk" = (
-/turf/open/floor/plating/snowed/smoothed,
-/area/icemoon/underground/explored)
 "dgl" = (
 /obj/structure/railing{
 	dir = 8;
@@ -16669,7 +16666,8 @@
 /area/station/service/chapel/office)
 "fit" = (
 /turf/open/floor/plating/snowed{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	temperature = 293.15
 	},
 /area/station/maintenance/port/aft)
 "fiQ" = (
@@ -17710,7 +17708,8 @@
 /area/station/engineering/atmos/hallway)
 "fvU" = (
 /turf/open/water{
-	baseturfs = /turf/open/floor/plating
+	baseturfs = /turf/open/floor/plating;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/station/maintenance/starboard/lesser)
 "fwi" = (
@@ -23882,7 +23881,8 @@
 	desc = "This water tank really hasn't been maintained in years, has it?"
 	},
 /turf/open/water{
-	baseturfs = /turf/open/floor/plating
+	baseturfs = /turf/open/floor/plating;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/station/maintenance/starboard/lesser)
 "hoj" = (
@@ -47958,7 +47958,7 @@
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/turf/open/floor/plating/snowed/smoothed,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "oDd" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -48093,7 +48093,8 @@
 "oEO" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	temperature = 293.15
 	},
 /area/station/maintenance/port/aft)
 "oER" = (
@@ -110902,11 +110903,11 @@ jFx
 tfN
 uSc
 xng
-dgk
-dgk
-dgk
-dgk
-dgk
+lDH
+lDH
+lDH
+lDH
+lDH
 oBY
 pWC
 pWC
@@ -111161,9 +111162,9 @@ kAC
 nDI
 oBY
 oBY
-dgk
+lDH
 bXN
-dgk
+lDH
 oBY
 pWC
 pWC
@@ -111419,7 +111420,7 @@ nDI
 oBY
 oBY
 oBY
-dgk
+lDH
 oDa
 oBY
 oBY
@@ -111677,7 +111678,7 @@ crc
 ciP
 oBY
 oWK
-dgk
+lDH
 oBY
 oBY
 pWC
