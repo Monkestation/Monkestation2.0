@@ -66,7 +66,7 @@
 
 /datum/nanite_program/coagulating
 	name = "Vein Repressurization"
-	desc = "The nanites re-route circulating blood away from open wounds, halving bleeding rate."
+	desc = "The nanites re-route circulating blood away from open wounds, halving bleeding rate. Consumes nanites even when host is not bleeding."
 	use_rate = 0.20
 	rogue_types = list(/datum/nanite_program/suffocating)
 
