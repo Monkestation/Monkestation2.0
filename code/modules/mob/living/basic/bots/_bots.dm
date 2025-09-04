@@ -690,7 +690,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(key)
 		balloon_alert(user, "personality already present!")
 		return
-	if(!(bot_access_flags & BOT_COVER_OPEN))
+	if(!(bot_access_flags & BOT_COVER_MAINTS_OPEN))
 		balloon_alert(user, "slot inaccessible!")
 		return
 	if(!(bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE))

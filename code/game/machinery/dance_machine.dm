@@ -127,50 +127,37 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("toggle")
-			if(QDELETED(src))
-				return
-			if(!active)
-				if(stop > world.time)
-					to_chat(usr, span_warning("Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)]."))
-					if(!COOLDOWN_FINISHED(src, jukebox_error_cd))
-						return
-					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
-					COOLDOWN_START(src, jukebox_error_cd, 15 SECONDS)
-					return
-				activate_music()
-				START_PROCESSING(SSobj, src)
-				return TRUE
-			else
-				stop = 0
-				return TRUE
-		if("select_track")
-			if(active)
-				to_chat(usr, span_warning("Error: You cannot change the song until the current one is over."))
-				return
-			var/list/available = list()
-			for(var/datum/track/S in songs)
-				available[S.song_name] = S
-			var/selected = params["track"]
-			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
-				return
-			selection = available[selected]
+			toggle_playing(user)
 			return TRUE
+
+		if("select_track")
+			if(!isnull(music_player.active_song_sound))
+				to_chat(user, span_warning("Error: You cannot change the song until the current one is over."))
+				return TRUE
+
+			var/datum/track/new_song = music_player.songs[params["track"]]
+			if(QDELETED(src) || !istype(new_song, /datum/track))
+				return TRUE
+
+			music_player.selection = new_song
+			return TRUE
+
 		if("set_volume")
 			var/new_volume = params["volume"]
-			if(new_volume == "reset")
-				volume = initial(volume)
-				return TRUE
+			if(new_volume == "reset" || new_volume == "max")
+				music_player.set_volume_to_max()
 			else if(new_volume == "min")
-				volume = 0
-				return TRUE
-			else if(new_volume == "max")
-				volume = initial(volume)
-				return TRUE
-			else if(text2num(new_volume) != null)
-				volume = text2num(new_volume)
-				return TRUE
+				music_player.set_new_volume(0)
+			else if(isnum(text2num(new_volume)))
+				music_player.set_new_volume(text2num(new_volume))
+			return TRUE
+
+		if("loop")
+			music_player.sound_loops = !!params["looping"]
+			return TRUE
 
 /obj/machinery/dance_machine/proc/activate_music()
 	active = TRUE

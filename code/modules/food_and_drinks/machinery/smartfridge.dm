@@ -308,17 +308,43 @@
 	.["verb"] = "Take"
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/drying/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/smartfridge/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
+	if(. || !ui.user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
-	var/mob/user = ui.user
+	var/mob/living_mob = ui.user
+
 	switch(action)
-		if("Dry")
-			toggle_drying(FALSE, user)
+		if("Release")
+			var/amount = text2num(params["amount"])
+			if(isnull(amount) || !isnum(amount))
+				return TRUE
+			var/dispensed_amount = 0
+
+			if(isAI(living_mob))
+				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
+				return TRUE
+
+			for(var/obj/item/dispensed_item in contents)
+				if(amount <= 0)
+					break
+				var/item_name = "[dispensed_item.type]-[replacetext(replacetext(dispensed_item.name, "\proper", ""), "\improper", "")]"
+				if(params["path"] != item_name)
+					continue
+				if(dispensed_item in component_parts)
+					CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
+				//dispense the item
+				if(!living_mob.put_in_hands(dispensed_item))
+					dispensed_item.forceMove(drop_location())
+					adjust_item_drop_location(dispensed_item)
+				use_power(active_power_usage)
+				dispensed_amount++
+				amount--
+			if (visible_contents)
+				update_appearance()
 			return TRUE
+
 	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/powered()

@@ -406,7 +406,7 @@ ADMIN_VERB(populate_world, R_DEBUG, FALSE, "Populate World", "Populate the world
 		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
-ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(toggle_ai_interact, R_ADMIN, FALSE, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_GAME)
 	var/doesnt_have_silicon_access = !HAS_TRAIT_FROM(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
 	if(doesnt_have_silicon_access)
 		ADD_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)

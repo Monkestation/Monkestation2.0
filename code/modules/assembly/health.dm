@@ -102,7 +102,7 @@
 	var/list/data = list()
 	data["health"] = health_scan
 	data["scanning"] = scanning
-	data["target"] = health_target
+	data["target"] = alarm_health
 	return data
 
 /obj/item/assembly/health/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -115,5 +115,5 @@
 			toggle_scan()
 			return TRUE
 		if("target")
-			toggle_target()
+			AltClick(ui.user)
 			return TRUE

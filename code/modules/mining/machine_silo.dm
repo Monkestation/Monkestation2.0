@@ -112,11 +112,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/ore_silo/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
-	)
-
 /obj/machinery/ore_silo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
