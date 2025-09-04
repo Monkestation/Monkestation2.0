@@ -69,3 +69,33 @@
   - code_imp: (SmArtKar) Most pen typechecks now check for writing implements.
   Zoooooooop:
   - balance: Increased bingle attack stamina damage to -65 (up from -35)
+2025-09-04:
+  MrBagHead:
+  - rscadd: Slashers gain a new "Recall Traps" ability to recall beartraps not in
+      their belt, or recreate destroyed ones. Recalling removes traps attached to
+      victims.
+  - balance: Slasher beartraps are now semi-transparent (alpha 160) to make them harder
+      to spot.
+  - balance: Slasher belt can now only hold a maximum of 3 beartraps.
+  - bugfix: Slasher objectives (instructions) now display properly and no longer fill
+      up chat multiple times.
+  Shoddd:
+  - rscadd: Brand new toy summoner NIF
+  - rscadd: Book summoner NIF
+  ThePooba:
+  - bugfix: remote sprite had no base icon state and kept dissapearing
+  - bugfix: fixed smes
+  - bugfix: 'Fixes Cleave, scope, some admeme buttons
+
+      <!-- Both :cl:''s are required for the changelog to work! You can put your name
+      to the right of the first :cl: if you want to overwrite your GitHub username
+      as author ingame. -->
+
+      <!-- You can use multiple of the same prefix (they''re only used for the icon
+      ingame) and delete the unneeded ones. Despite some of the tags, changelogs should
+      generally represent how a player might be affected by the changes rather than
+      a summary of the PR''s contents. -->'
+  flleeppyy:
+  - bugfix: Bloodpacks can now be drawn from with syringes.
+  throwawayuseless:
+  - rscadd: Wide Ape.
