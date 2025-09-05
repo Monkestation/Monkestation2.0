@@ -62286,6 +62286,8 @@
 "sIL" = (
 /obj/structure/railing,
 /obj/machinery/door/firedoor,
+/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "sJk" = (
@@ -162985,7 +162987,7 @@ vBp
 sxn
 eky
 caF
-pgA
+gtZ
 gtZ
 rvl
 bDx
@@ -228521,8 +228523,8 @@ pgA
 pgA
 pgA
 pgA
-pPl
-pPl
+pgA
+pgA
 pPl
 pPl
 pPl
@@ -228777,7 +228779,7 @@ pgA
 pgA
 pgA
 pgA
-kYl
+pgA
 pPl
 pPl
 pPl
@@ -229034,7 +229036,7 @@ pgA
 crJ
 pgA
 pgA
-kYl
+pgA
 pPl
 pPl
 pPl
