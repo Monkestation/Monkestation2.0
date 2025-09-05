@@ -2,15 +2,6 @@
 /obj/item/pulsepack
 	name = "Backpack pulse generator"
 	desc = "A pack that converts extreme amounts of power into pre pulse fusion products. Unable to be minaturized due to a lack of technology."
-	icon = 'icons/obj/weapons/guns/minigun.dmi'
-	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
-	worn_icon_state = "pulsepack"
-	icon_state = "holsteredp"
-	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	inhand_icon_state = "pepperbackpacksec" //close enough
-	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_HUGE
 	///The actual gun that you draw when you use it
 	var/obj/item/gun/energy/pulse/makeshift/gun
 	///batteries of the pulsepack
@@ -20,6 +11,15 @@
 	var/overheat = 0
 	var/overheat_max = 1
 	var/heat_diffusion = 0.13
+	icon = 'icons/obj/weapons/guns/minigun.dmi'
+	worn_icon = 'icons/mob/clothing/back/backpack.dmi'
+	worn_icon_state = "pulsepack"
+	icon_state = "holsteredp"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
+	inhand_icon_state = "pepperbackpacksec" //close enough
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_HUGE
 
 
 /obj/item/pulsepack/Initialize(mapload)
