@@ -5,6 +5,7 @@
 	inherent_traits = list(
 		TRAIT_HAS_MARKINGS,
 		TRAIT_MUTANT_COLORS,
+		TRAIT_GREYSCALE_TOGGLE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_markings" = "None")
@@ -65,11 +66,6 @@
 /datum/species/moth/get_species_description()
 	return "Hailing from a planet that was lost long ago, the moths travel \
 		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
-
-/datum/species/moth/prepare_human_for_preview(mob/living/carbon/human/moth)
-	var/datum/color_palette/generic_colors/colors = moth.dna.color_palettes[/datum/color_palette/generic_colors]
-	colors.mutant_color = "#facc83"
-	moth.update_body(TRUE)
 
 /datum/species/moth/create_pref_unique_perks()
 	var/list/to_add = list()

@@ -14,7 +14,6 @@
 
 	if (isnull(moth_head))
 		moth_head = icon('icons/mob/species/moth/bodyparts.dmi', "moth_head")
-		moth_head.Blend(("#facc83"), ICON_MULTIPLY)
 		moth_head.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
 		moth_head.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
 
@@ -59,7 +58,6 @@
 
 		moth_body.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
 		moth_body.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
-		moth_body.Blend(("#facc83"), ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/markings = GLOB.moth_markings_list[value]
 	var/icon/icon_with_markings = new(moth_body)
@@ -104,3 +102,12 @@
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value
+
+/datum/preference/toggle/greyscale_toggle
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	savefile_key = "limb_coloring"
+	savefile_identifier = PREFERENCE_CHARACTER
+	relevant_inherent_trait = TRAIT_GREYSCALE_TOGGLE
+
+/datum/preference/toggle/greyscale_toggle/apply_to_human(mob/living/carbon/human/target, value)
+	target.greyscale_limbs = value
