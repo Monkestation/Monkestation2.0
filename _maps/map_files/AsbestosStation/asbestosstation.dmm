@@ -331,6 +331,16 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/medical/medbay/lobby)
+"fv" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/openspace,
+/area/space)
+"fw" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/openspace,
+/area/space)
 "fy" = (
 /obj/structure/lattice,
 /turf/open/openspace,
@@ -1090,6 +1100,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/research)
+"qn" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/openspace,
+/area/space)
 "qv" = (
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
@@ -1163,6 +1177,11 @@
 /obj/machinery/atmospherics/miner/n2o,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos/storage/gas)
+"rP" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/openspace,
+/area/space)
 "rR" = (
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
@@ -1522,6 +1541,10 @@
 "wO" = (
 /turf/open/openspace,
 /area/station/engineering/atmos)
+"wP" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/openspace,
+/area/station/maintenance/aft/lesser)
 "wQ" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -2139,6 +2162,11 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/maintenance/aft)
+"EG" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/openspace,
+/area/space)
 "EJ" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
@@ -2747,6 +2775,10 @@
 "MU" = (
 /turf/open/floor/iron,
 /area/station/maintenance/fore/greater)
+"Nh" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/openspace,
+/area/station/maintenance/department/science/ordnance_maint)
 "Np" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
@@ -2866,6 +2898,11 @@
 "Pc" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmospherics_engine)
+"Pf" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/openspace,
+/area/station/science/ordnance)
 "Pi" = (
 /obj/structure/curtain/bounty{
 	pixel_x = 32
@@ -3095,6 +3132,10 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
+"SD" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/openspace,
+/area/space)
 "SG" = (
 /obj/structure/window/spawner/directional/east,
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
@@ -3142,6 +3183,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
+"Ti" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/openspace,
+/area/space)
 "Tp" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -3212,6 +3258,11 @@
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
+"Vg" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/openspace,
+/area/space)
 "Vh" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/spawner/random/vending/snackvend,
@@ -3364,6 +3415,10 @@
 "Xy" = (
 /turf/open/openspace,
 /area/station/engineering/main)
+"XK" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/openspace,
+/area/space)
 "XR" = (
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/captain/private)
@@ -3397,6 +3452,10 @@
 /obj/machinery/atmospherics/miner/water_vapor,
 /turf/open/floor/engine/h2o,
 /area/station/engineering/atmos/storage/gas)
+"Yp" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/openspace,
+/area/space)
 "YG" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/fore)
@@ -112168,7 +112227,7 @@ gv
 Hl
 Hl
 NV
-NV
+wP
 NV
 NV
 NV
@@ -113400,17 +113459,17 @@ HI
 HI
 HI
 HI
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
+fv
+XK
+XK
+XK
+XK
+XK
+XK
+XK
+XK
+XK
+Vg
 rt
 rt
 rt
@@ -113444,7 +113503,7 @@ LD
 fI
 LD
 LD
-LD
+fI
 LD
 LD
 LD
@@ -113657,6 +113716,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -113666,8 +113726,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 rt
@@ -113690,7 +113749,7 @@ Ho
 Ho
 SH
 Hl
-Hl
+Nh
 gv
 LD
 LD
@@ -113698,8 +113757,8 @@ LD
 LD
 LD
 LD
+Pf
 fI
-LD
 LD
 LD
 LD
@@ -113914,6 +113973,7 @@ jZ
 jZ
 jZ
 jZ
+EG
 TM
 TM
 TM
@@ -113923,8 +113983,7 @@ TM
 TM
 TM
 TM
-TM
-TM
+Ti
 CF
 CF
 CF
@@ -114171,6 +114230,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -114180,8 +114240,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 rt
@@ -114428,6 +114487,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -114438,9 +114498,8 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
-Fy
+XK
+Vg
 rt
 rt
 SH
@@ -114685,6 +114744,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -114696,8 +114756,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 SH
@@ -114942,6 +115001,7 @@ jZ
 jZ
 jZ
 jZ
+EG
 TM
 TM
 TM
@@ -114953,8 +115013,7 @@ TM
 TM
 TM
 TM
-TM
-TM
+Ti
 CF
 CF
 SH
@@ -115199,6 +115258,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -115210,8 +115270,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 SH
@@ -115456,6 +115515,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -115467,8 +115527,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 SH
@@ -115713,6 +115772,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -115724,8 +115784,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 SH
@@ -115970,6 +116029,7 @@ jZ
 jZ
 jZ
 jZ
+EG
 TM
 TM
 TM
@@ -115981,8 +116041,7 @@ TM
 TM
 TM
 TM
-TM
-TM
+Ti
 CF
 CF
 Kg
@@ -116227,6 +116286,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -116238,8 +116298,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 rt
@@ -116484,6 +116543,8 @@ HI
 HI
 HI
 HI
+fw
+SD
 Fy
 Fy
 Fy
@@ -116494,9 +116555,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
-Fy
+qn
 rt
 rt
 rt
@@ -116743,6 +116802,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -116752,8 +116812,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 rt
@@ -117000,6 +117059,7 @@ jZ
 jZ
 jZ
 jZ
+EG
 TM
 TM
 TM
@@ -117009,8 +117069,7 @@ TM
 TM
 TM
 TM
-TM
-TM
+Ti
 CF
 CF
 CF
@@ -117257,6 +117316,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -117266,8 +117326,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 rt
@@ -117514,6 +117573,7 @@ HI
 HI
 HI
 HI
+Yp
 Fy
 Fy
 Fy
@@ -117523,8 +117583,7 @@ Fy
 Fy
 Fy
 Fy
-Fy
-Fy
+qn
 rt
 rt
 rt
@@ -117771,17 +117830,17 @@ HI
 HI
 HI
 HI
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
-Fy
+fw
+SD
+SD
+SD
+SD
+SD
+SD
+SD
+SD
+SD
+rP
 rt
 rt
 rt
