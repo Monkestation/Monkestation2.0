@@ -220,12 +220,6 @@
 	cost = PAYCHECK_CREW * 2.5
 	contains = list(/obj/item/reagent_containers/pill/mutadone)
 
-/datum/supply_pack/goody/rapid_lighting_device
-	name = "Rapid Lighting Device (RLD)"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
-	cost = PAYCHECK_CREW * 10
-	contains = list(/obj/item/construction/rld)
-
 /datum/supply_pack/goody/moth_encryption_key
 	name = "Moffic radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand moffic when the radio is worn."
