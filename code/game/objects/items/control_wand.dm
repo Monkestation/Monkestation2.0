@@ -4,12 +4,14 @@
 
 /obj/item/door_remote
 	icon_state = "remote_omni_open"
+	base_icon_state = "remote"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	icon = 'icons/obj/devices/remote.dmi' //monkestation edit
 	name = "control wand"
 	desc = "Remotely controls airlocks."
+
 	w_class = WEIGHT_CLASS_TINY
 	var/mode = WAND_OPEN
 	var/region_access = REGION_GENERAL
