@@ -50,7 +50,7 @@
 
 /// Breathe fire in a line towards the target, optionally rotated at an offset from the target
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/fire_line(atom/target, offset)
-	if (isnull(target))
+	if (isnull(target) || HAS_TRAIT_FROM(owner, TRAIT_UNDENSE, SWOOPING_TRAIT))
 		return
 	var/turf/target_turf = get_ranged_target_turf_direct(owner, target, fire_range, offset)
 	var/list/turfs = get_line(owner, target_turf) - get_turf(owner)
@@ -63,7 +63,7 @@
 	// Guys we have already hit, no double dipping
 	var/list/hit_list = list(owner) // also don't burn ourselves
 	for(var/turf/target_turf in burn_turfs)
-		if (target_turf.is_blocked_turf(exclude_mobs = TRUE))
+		if (target_turf.is_blocked_turf(exclude_mobs = TRUE) || HAS_TRAIT_FROM(owner, TRAIT_UNDENSE, SWOOPING_TRAIT))
 			return
 		burn_turf(target_turf, hit_list, owner)
 		sleep(fire_delay)
@@ -127,16 +127,20 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/attack_sequence(atom/target)
 	var/queued_spins = 0
 	for (var/i in 1 to total_spins)
+		if(HAS_TRAIT_FROM(owner, TRAIT_UNDENSE, SWOOPING_TRAIT))
+			return
 		var/delay = queued_spins * breath_delay
 		queued_spins++
 		addtimer(CALLBACK(src, PROC_REF(fire_spin), target, queued_spins), delay)
 
 /// Breathe fire in a circle, with a slight angle offset based on which of our several circles it is
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/proc/fire_spin(target, spin_count)
-	if (QDELETED(owner) || owner.stat == DEAD)
+	if (QDELETED(owner) || owner.stat == DEAD || HAS_TRAIT_FROM(owner, TRAIT_UNDENSE, SWOOPING_TRAIT))
 		return // Too dead to spin
 	playsound(owner.loc, fire_sound, 200, TRUE)
 	var/angle_increment = 360 / sectors
 	var/additional_offset = spin_count * angle_increment / 2
 	for (var/i in 1 to sectors)
+		if(HAS_TRAIT_FROM(owner, TRAIT_UNDENSE, SWOOPING_TRAIT))
+			return
 		fire_line(target, (angle_increment * i) + (additional_offset))
