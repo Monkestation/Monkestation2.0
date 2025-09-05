@@ -14,6 +14,7 @@
 
 	if (isnull(moth_head))
 		moth_head = icon('icons/mob/species/moth/bodyparts.dmi', "moth_head")
+		moth_head.Blend(("#facc83"), ICON_MULTIPLY)
 		moth_head.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
 		moth_head.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
 
@@ -51,7 +52,6 @@
 	var/static/icon/moth_body
 	if (isnull(moth_body))
 		moth_body = icon('icons/blanks/32x32.dmi', "nothing")
-
 		moth_body.Blend(icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_BEHIND"), ICON_OVERLAY)
 
 		for (var/obj/item/bodypart/body_part as anything in body_parts)
@@ -59,6 +59,7 @@
 
 		moth_body.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
 		moth_body.Blend(icon('icons/mob/species/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
+		moth_body.Blend(("#facc83"), ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/markings = GLOB.moth_markings_list[value]
 	var/icon/icon_with_markings = new(moth_body)
