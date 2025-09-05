@@ -427,6 +427,16 @@ Key procs
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/nekomimetic = list(LANGUAGE_ATOM))
 
+/datum/language_holder/darkspawn
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/darkspawn = list(LANGUAGE_ATOM)
+		)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/darkspawn = list(LANGUAGE_ATOM)
+		)
+
 /datum/language_holder/shadowpeople
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/shadowtongue = list(LANGUAGE_ATOM))

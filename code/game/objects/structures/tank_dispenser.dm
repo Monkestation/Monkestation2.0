@@ -51,8 +51,8 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(!(user.istate & ISTATE_HARM))
-		to_chat(user, span_notice("[attacking_item] does not fit into [src]."))
+	else if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
+		balloon_alert(user, "can't insert!")
 		return
 	else
 		return ..()

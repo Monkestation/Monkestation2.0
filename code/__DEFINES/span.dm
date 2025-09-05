@@ -94,6 +94,7 @@
 #define span_priorityalert(str) ("<span class='priorityalert'>" + str + "</span>")
 #define span_priorityannounce(str) ("<span class='priorityannounce'>" + str + "</span>")
 #define span_prioritytitle(str) ("<span class='prioritytitle'>" + str + "</span>")
+#define span_progenitor(str) ("<span class='progenitor'>" + str + "</span>")
 #define span_purple(str) ("<span class='purple'>" + str + "</span>")
 #define span_radio(str) ("<span class='radio'>" + str + "</span>")
 #define span_reallybig(str) ("<span class='reallybig'>" + str + "</span>")
@@ -131,9 +132,11 @@
 #define span_unconscious(str) ("<span class='unconscious'>" + str + "</span>")
 #define span_uncommonradio(str) ("<span class='uncommonradio'>" + str + "</span>")
 #define span_userdanger(str) ("<span class='userdanger'>" + str + "</span>")
+#define span_velvet(str) ("<span class='velvet'>" + str + "</span>")
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
+#define span_center(str) ("<span class='center'>[str]</span>")
 
 // Spans that use embedded tgui components:
 // Sorted alphabetically

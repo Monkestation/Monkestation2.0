@@ -97,16 +97,20 @@
 	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
 	var/list/active_mutations = list()
 	for(var/datum/mutation/mutation in target.dna.mutations)
-		LAZYSET(buffer, mutation.type, GET_SEQUENCE(mutation.type))
+		LAZYOR(buffer, mutation.type)
 		active_mutations.Add(mutation.type)
 
-	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
+	var/list/lines = list()
+	lines += span_notice("Subject [span_name(target.name)]'s DNA sequence has been saved to buffer.")
+	lines += span_boldnotice("Genetic Stability: ") + "[target.dna.stability]%"
 	for(var/mutation in buffer)
 		//highlight activated mutations
 		if(LAZYFIND(active_mutations, mutation))
-			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
+			lines += span_boldnotice("[get_display_name(mutation)]")
 		else
-			to_chat(user, span_notice("[get_display_name(mutation)]"))
+			lines += span_notice("[get_display_name(mutation)]")
+	var/title = "<img class='icon bigicon' src='\ref[icon]?state=[url_encode(icon_state)]'> " + span_bold("Genetic Sequence Analysis")
+	to_chat(user, fieldset_block(title, jointext(lines, "<br>"), "boxed_message blue_box"), type = MESSAGE_TYPE_INFO)
 
 ///proc for scanning someone's genetic makeup
 /obj/item/sequence_scanner/proc/makeup_scan(mob/living/carbon/target, mob/living/user)

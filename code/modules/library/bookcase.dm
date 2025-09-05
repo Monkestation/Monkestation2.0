@@ -130,7 +130,7 @@
 						atom_storage.attempt_remove(T, src)
 				to_chat(user, span_notice("You empty \the [attacking_item] into \the [src]."))
 				update_appearance()
-			else if(istype(attacking_item, /obj/item/pen))
+			else if(IS_WRITING_UTENSIL(attacking_item))
 				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 					return
 				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)

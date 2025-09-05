@@ -13,6 +13,16 @@
 		update_appearance()
 		return
 
+	//removing integration cogs
+	if(opened && integration_cog && !IS_CLOCK(user))
+		balloon_alert(user, "prying something out of [src]...")
+		crowbar.play_tool_sound(src)
+		if(!crowbar.use_tool(src, user, 5 SECONDS))
+			return
+
+		balloon_alert(user, "pried out something, destroying it!")
+		QDEL_NULL(integration_cog)
+
 	//Opening and closing cover
 	if((!opened && opened != APC_COVER_REMOVED) && !(machine_stat & BROKEN))
 		if(coverlocked && !(machine_stat & MAINT)) // locked...
