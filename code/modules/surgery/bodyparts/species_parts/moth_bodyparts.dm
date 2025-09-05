@@ -9,16 +9,6 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/head/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	if(!is_creating || !owner)
-		return ..()
-	var/mob/living/carbon/human/human_owner = owner
-	if (human_owner.greyscale_limbs)
-		should_draw_greyscale = TRUE
-	else
-		should_draw_greyscale = FALSE
-	return ..()
-
 /obj/item/bodypart/chest/moth
 	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -29,16 +19,6 @@
 	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/chest/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	if(!is_creating || !owner)
-		return ..()
-	var/mob/living/carbon/human/human_owner = owner
-	if (human_owner.greyscale_limbs)
-		should_draw_greyscale = TRUE
-	else
-		should_draw_greyscale = FALSE
-	return ..()
 
 /obj/item/bodypart/arm/left/moth
 	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
@@ -52,16 +32,6 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/left/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	if(!is_creating || !owner)
-		return ..()
-	var/mob/living/carbon/human/human_owner = owner
-	if (human_owner.greyscale_limbs)
-		should_draw_greyscale = TRUE
-	else
-		should_draw_greyscale = FALSE
-	return ..()
-
 /obj/item/bodypart/arm/right/moth
 	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -74,16 +44,6 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/arm/right/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	if(!is_creating || !owner)
-		return ..()
-	var/mob/living/carbon/human/human_owner = owner
-	if (human_owner.greyscale_limbs)
-		should_draw_greyscale = TRUE
-	else
-		should_draw_greyscale = FALSE
-	return ..()
-
 /obj/item/bodypart/leg/left/moth
 	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -92,16 +52,6 @@
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
-/obj/item/bodypart/leg/left/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	if(!is_creating || !owner)
-		return ..()
-	var/mob/living/carbon/human/human_owner = owner
-	if (human_owner.greyscale_limbs)
-		should_draw_greyscale = TRUE
-	else
-		should_draw_greyscale = FALSE
-	return ..()
-
 /obj/item/bodypart/leg/right/moth
 	icon_greyscale = 'icons/mob/species/moth/bodyparts_greyscale.dmi'
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -109,13 +59,3 @@
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
-
-/obj/item/bodypart/leg/right/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	if(!is_creating || !owner)
-		return ..()
-	var/mob/living/carbon/human/human_owner = owner
-	if (human_owner.greyscale_limbs)
-		should_draw_greyscale = TRUE
-	else
-		should_draw_greyscale = FALSE
-	return ..()
