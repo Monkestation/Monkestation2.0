@@ -70,7 +70,7 @@
 //Peashooter ammo for mech and minigun
 #define CALIBER_22LR ".22 LR"
 //20mm ammo for mech
-#define CALIBER_22LR "20x160mm Neville"
+#define CALIBER_ATR "20x160mm Neville"
 // The caliber used by the PACO
 #define CALIBER_35 ".35"
 // The caliber used by the Quarad machinegun
