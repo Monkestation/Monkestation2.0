@@ -17,8 +17,6 @@
 
 	// let me have this
 	var/mob/living/carbon/human/moth = allocate(/mob/living/carbon/human/dummy/consistent)
-	var/datum/color_palette/generic_colors/moth_color = moth.dna.color_palettes[/datum/color_palette/generic_colors]
-	moth_color.mutant_color = "#facc83"
 	moth.dna.features["moth_antennae"] = "Firewatch"
 	moth.dna.features["moth_markings"] = "None"
 	moth.dna.features["moth_wings"] = "Firewatch"

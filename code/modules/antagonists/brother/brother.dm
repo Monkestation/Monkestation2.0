@@ -63,12 +63,10 @@
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 	var/datum/color_palette/generic_colors/located = brother1.dna.color_palettes[/datum/color_palette/generic_colors]
-	var/datum/color_palette/generic_colors/located2 = brother2.dna.color_palettes[/datum/color_palette/generic_colors]
 
 	located.ethereal_color = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
-	located2.mutant_color = "#facc83"
 	brother2.dna.features["moth_antennae"] = "Plain"
 	brother2.dna.features["moth_markings"] = "None"
 	brother2.dna.features["moth_wings"] = "Plain"
