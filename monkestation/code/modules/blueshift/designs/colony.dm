@@ -400,10 +400,6 @@
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 
-/datum/design/rld_mini/New()
-	. = ..()
-	build_type |= COLONY_FABRICATOR
-
 /datum/design/miningsatchel_holding/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
