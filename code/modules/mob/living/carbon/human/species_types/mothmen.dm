@@ -4,6 +4,7 @@
 	id = SPECIES_MOTH
 	inherent_traits = list(
 		TRAIT_HAS_MARKINGS,
+		TRAIT_MUTANT_COLORS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_markings" = "None")
