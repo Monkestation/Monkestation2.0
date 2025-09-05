@@ -16793,6 +16793,11 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"fkp" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay)
 "fkr" = (
 /obj/machinery/rnd/production/protolathe/department/security,
 /obj/effect/turf_decal/bot_white,
@@ -18051,6 +18056,11 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"fCK" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/vending/imported/tizirian,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay)
 "fCR" = (
 /obj/effect/landmark/tram/crater/ordnance/testing_site,
 /obj/structure/fluff/tram_rail/anchor,
@@ -30135,6 +30145,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/large,
 /area/station/hallway/secondary/exit/tram/west)
+"jja" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay)
 "jjb" = (
 /obj/item/pipe{
 	dir = 4;
@@ -63828,6 +63844,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
+"tiJ" = (
+/turf/open/genturf,
+/area/icemoon/surface/outdoors/nospawn)
 "tiL" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
@@ -71391,6 +71410,11 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
+"vvY" = (
+/obj/machinery/vending/imported/mothic,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay)
 "vwk" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch,
@@ -224610,9 +224634,9 @@ xrh
 gOk
 rjQ
 joI
-yav
-yav
-yav
+pgA
+pgA
+pgA
 yav
 yav
 yav
@@ -224866,9 +224890,9 @@ nTJ
 mzi
 jGh
 lyb
-yav
-yav
-yav
+pgA
+pgA
+uAv
 yav
 yav
 yav
@@ -225109,7 +225133,7 @@ yav
 yav
 yav
 ybc
-pgA
+uAv
 tvS
 uxB
 uxB
@@ -225123,8 +225147,8 @@ hDg
 gcz
 rbJ
 lyb
-yav
-yav
+pgA
+pgA
 yav
 yav
 yav
@@ -225380,7 +225404,7 @@ lyb
 lyb
 lyb
 lyb
-yav
+pgA
 yav
 yav
 yav
@@ -225626,18 +225650,18 @@ pgA
 pgA
 pgA
 pgA
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
+pgA
+pgA
+pgA
+pgA
+pgA
+xpA
+pgA
+pgA
+uAv
+pgA
+pgA
+pgA
 yav
 yav
 yav
@@ -226138,7 +226162,7 @@ yav
 yav
 pgA
 pgA
-pgA
+uAv
 pgA
 wYv
 pgA
@@ -226394,23 +226418,23 @@ yav
 yav
 yav
 yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
+pgA
+pgA
+pgA
+pgA
+pgA
+pgA
+uAv
+pgA
+pgA
+pgA
+pgA
+pgA
+pgA
+pgA
+pgA
+pgA
+tiJ
 yav
 yav
 yav
@@ -226653,18 +226677,18 @@ yav
 yav
 yav
 yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
-yav
+xpA
+pgA
+pgA
+pgA
+pgA
+pgA
+pgA
+uAv
+pgA
+pgA
+xpA
+pgA
 yav
 yav
 yav
@@ -234170,7 +234194,7 @@ rBU
 rBU
 rBU
 rBU
-pPl
+rBU
 pPl
 pPl
 rBU
@@ -234427,7 +234451,7 @@ rBU
 rBU
 rBU
 rBU
-pPl
+rBU
 pPl
 pPl
 rBU
@@ -237504,10 +237528,10 @@ jka
 jka
 jka
 rSR
-mcy
-lFK
-mcy
-mcy
+fkp
+jja
+fCK
+vvY
 mcy
 cSe
 mcy
