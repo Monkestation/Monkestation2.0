@@ -1,6 +1,5 @@
 /obj/item/bodypart/head/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_grayscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_head"
 	limb_id = SPECIES_MOTH
 	is_dimorphic = FALSE
@@ -10,8 +9,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/chest/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_grayscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	is_dimorphic = TRUE
 	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
@@ -20,8 +18,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/left/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_grayscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	unarmed_attack_verb = "slash"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
@@ -31,8 +28,7 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/right/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_grayscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	unarmed_attack_verb = "slash"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
@@ -42,15 +38,13 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/left/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_grayscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/right/moth
-	icon_greyscale = 'icons/mob/species/moth/bodyparts_grayscale.dmi'
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
+	icon_greyscale = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
