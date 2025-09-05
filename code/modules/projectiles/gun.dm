@@ -289,9 +289,11 @@
 	return NONE
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	if(ismob(interacting_with))
+		if(try_fire_gun(interacting_with, user, list2params(modifiers)))
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return FALSE
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if((user.istate & ISTATE_HARM) && isliving(interacting_with))

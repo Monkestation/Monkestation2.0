@@ -1,0 +1,5 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - balance: "IPCs now no longer have secretly much reduced limb health and increased limb->body damage transferance. they are still easier to dismember."
+  - bugfix: "Screen-saving for IPCs now works when you die"

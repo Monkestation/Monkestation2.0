@@ -1,0 +1,4 @@
+author: "Rex9001"
+delete-after: True
+changes:
+  - rscadd: "Optional Combat indicators - To show you want to fight someone. Toggled with \"C\""

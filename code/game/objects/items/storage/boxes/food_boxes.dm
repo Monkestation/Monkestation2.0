@@ -363,6 +363,13 @@
 	for(var/i in 1 to 4)
 		new/obj/item/food/bubblegum/happiness(src)
 
+/obj/item/storage/box/gum/happiness/diet
+	name = "Diet HP+ gum packet"
+
+/obj/item/storage/box/gum/happiness/diet/PopulateContents()
+	for(var/item in 1 to 4)
+		new/obj/item/food/bubblegum/happiness/diet(src)
+
 /obj/item/storage/box/gum/bubblegum
 	name = "bubblegum gum packet"
 	desc = "The packaging is entirely in Demonic, apparently. You feel like even opening this would be a sin."

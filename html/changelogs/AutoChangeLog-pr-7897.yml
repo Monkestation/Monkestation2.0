@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "(grungussuss) Refactored how sfx with multiple variants are coded, report any issues with sounds not playing!"
+  - sound: "(Melbert) Portals made by portal guns now make sounds as expected."
+  - sound: "(Melbert) Wormholes from the wormhole event now make sounds when formed."
