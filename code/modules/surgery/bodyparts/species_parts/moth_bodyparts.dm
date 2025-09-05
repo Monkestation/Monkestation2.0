@@ -10,6 +10,8 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/head/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	if(!is_creating || !owner)
+		return ..()
 	var/mob/living/carbon/human/human_owner = owner
 	if (human_owner.greyscale_limbs)
 		should_draw_greyscale = TRUE
@@ -29,6 +31,8 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/chest/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	if(!is_creating || !owner)
+		return ..()
 	var/mob/living/carbon/human/human_owner = owner
 	if (human_owner.greyscale_limbs)
 		should_draw_greyscale = TRUE
@@ -49,6 +53,8 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/left/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	if(!is_creating || !owner)
+		return ..()
 	var/mob/living/carbon/human/human_owner = owner
 	if (human_owner.greyscale_limbs)
 		should_draw_greyscale = TRUE
@@ -69,6 +75,8 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/arm/right/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	if(!is_creating || !owner)
+		return ..()
 	var/mob/living/carbon/human/human_owner = owner
 	if (human_owner.greyscale_limbs)
 		should_draw_greyscale = TRUE
@@ -85,6 +93,8 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/left/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	if(!is_creating || !owner)
+		return ..()
 	var/mob/living/carbon/human/human_owner = owner
 	if (human_owner.greyscale_limbs)
 		should_draw_greyscale = TRUE
@@ -101,6 +111,8 @@
 	palette_key = MUTANT_COLOR
 
 /obj/item/bodypart/leg/right/moth/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	if(!is_creating || !owner)
+		return ..()
 	var/mob/living/carbon/human/human_owner = owner
 	if (human_owner.greyscale_limbs)
 		should_draw_greyscale = TRUE
