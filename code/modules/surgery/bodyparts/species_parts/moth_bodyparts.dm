@@ -1,6 +1,5 @@
 /obj/item/bodypart/head/moth
 	icon_greyscale = 'icons/mob/species/moth/bodyparts.dmi'
-	icon_state = "moth_head"
 	limb_id = SPECIES_MOTH
 	is_dimorphic = FALSE
 	head_flags = HEAD_LIPS |HEAD_EYESPRITES |HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_HAIR
