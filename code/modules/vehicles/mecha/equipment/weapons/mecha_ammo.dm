@@ -67,6 +67,34 @@
 	rounds = 300
 	ammo_type = MECHA_AMMO_LMG
 
+/obj/item/mecha_ammo/minigun
+	name = "minigun ammo box"
+	desc = "A box of linked ammunition, designed for the Avtomat AC 3 exosuit weapon."
+	icon_state = "minigun"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	rounds = 500
+	ammo_type = MECHA_AMMO_PEASHOOTER
+
+
+/obj/item/mecha_ammo/flamer
+	name = "Flamethrower Fuel Drum"
+	desc = "A drum of incendiary jelly, used with the FNX-100."
+	icon_state = "flamer"
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*3)
+	rounds = 40
+	ammo_type = MECHA_AMMO_FLAME
+
+/obj/item/mecha_ammo/heavy
+	name = "20x160mm ammo box"
+	desc = "A box of large caliber rounds, used with the Executor Mech Rifle."
+	icon_state = "heavy"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4)
+	rounds = 40
+	ammo_type = MECHA_AMMO_ATR
+
+
+
+
 /// Missile Ammo
 /// SRM-8 Missile type - Used by Nuclear Operatives
 /obj/item/mecha_ammo/missiles_srm
