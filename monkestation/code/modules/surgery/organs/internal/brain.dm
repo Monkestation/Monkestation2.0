@@ -32,7 +32,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/gps_active = TRUE
 
 	var/datum/dna/stored_dna
-	var/datum/mind/original_mind
+	/// The mind of the oozeling that became this core.
+	/// This MUST be named `mind`, in order to allow IS_[antag] macros to work on cores.
+	var/datum/mind/mind
 
 ///////
 /// Core storage
@@ -105,7 +107,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	QDEL_NULL(stored_dna)
 	QDEL_LIST(stored_quirks)
 
-	original_mind = null
+	mind = null
 
 	if(stored_items)
 		var/drop_loc = drop_location()
@@ -120,7 +122,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(gps_active)
 		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
 		. += span_red("You could probably snuff that out.")
-	if((brainmob && (brainmob.client || brainmob.get_ghost())) || (original_mind?.current && (original_mind.current.client || original_mind.current.get_ghost())) || decoy_override)
+	if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
 		if(isnull(stored_dna))
 			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
 		else
@@ -178,7 +180,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(new_stat != DEAD)
 		return
 
-	original_mind = victim.mind || victim.last_mind
+	mind = victim.mind || victim.last_mind
 	copy_mind_and_dna(victim)
 	addtimer(CALLBACK(src, PROC_REF(core_ejection), victim), 0) // explode them after the current proc chain ends, to avoid weirdness
 
@@ -189,8 +191,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		addtimer(CALLBACK(src, PROC_REF(core_ejection), owner), 0)
 
 /obj/item/organ/internal/brain/slime/proc/copy_mind_and_dna(mob/living/carbon/human/slime)
-	if(QDELETED(original_mind))
-		original_mind = brainmob?.mind || slime.mind || slime.last_mind
+	if(QDELETED(mind))
+		mind = brainmob?.mind || slime.mind || slime.last_mind
 
 	if(isnull(slime.dna))
 		QDEL_NULL(stored_dna)
@@ -394,7 +396,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	//we have the plasma. we can rebuild them.
 	brainmob?.mind?.grab_ghost()
-	if(isnull(original_mind))
+	if(isnull(mind))
 		if(isnull(brainmob))
 			user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
 			return null
@@ -408,7 +410,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	rebuilt = TRUE
 
-	var/client/original_client = brainmob?.client || original_mind?.current?.client
+	var/client/original_client = brainmob?.client || mind?.current?.client
 	original_client?.prefs?.safe_transfer_prefs_to(new_body)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"

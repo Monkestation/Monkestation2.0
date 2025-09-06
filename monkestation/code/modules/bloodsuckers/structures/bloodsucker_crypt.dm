@@ -229,7 +229,7 @@
 /obj/structure/bloodsucker/vassalrack/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_PERSUASION_RACK))
 		return
-	if(IS_BLOODSUCKER(user) || IS_VASSAL(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED))
 		return ..()
 
 	if(buckled_mob == user)
@@ -538,7 +538,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(anchored && (IS_VASSAL(user) || IS_BLOODSUCKER(user)))
+	if(anchored && HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED))
 		set_lit(!lit)
 
 /obj/structure/bloodsucker/candelabrum/proc/set_lit(value)
@@ -558,7 +558,7 @@
 		return PROCESS_KILL
 	for(var/mob/living/carbon/nearly_people in viewers(7, src))
 		/// We dont want Bloodsuckers or Vassals affected by this
-		if(IS_VASSAL(nearly_people) || IS_BLOODSUCKER(nearly_people) || IS_MONSTERHUNTER(nearly_people))
+		if(HAS_MIND_TRAIT(nearly_people, TRAIT_BLOODSUCKER_ALIGNED) || IS_MONSTERHUNTER(nearly_people))
 			continue
 		nearly_people.set_hallucinations_if_lower(5 SECONDS)
 		nearly_people.add_mood_event("vampcandle", /datum/mood_event/vampcandle)
