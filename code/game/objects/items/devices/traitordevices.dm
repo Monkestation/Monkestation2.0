@@ -406,7 +406,7 @@ effective or pretty fucking useless.
 /obj/item/jammer/proc/disable_radios_on(atom/target, ignore_syndie = FALSE)
 	var/list/target_contents = target.get_all_contents() + target
 	for (var/obj/item/radio/radio in target_contents)
-		if(ignore_syndie && radio.syndie)
+		if((ignore_syndie && radio.syndie) || radio.ignores_radio_jammers)
 			continue
 		radio.set_broadcasting(FALSE)
 	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)

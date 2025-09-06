@@ -3,10 +3,26 @@
 	desc = "Track with this."
 	actions_types = null
 
+	has_surgical_warning = TRUE
+
 	///for how many deciseconds after user death will the implant work?
 	var/lifespan_postmortem = 6000
 	///will people implanted with this act as teleporter beacons?
-	var/allow_teleport = TRUE
+	var/allow_teleport = FALSE
+	//internal radio used for broadcasting to security when the tracker is surgically removed
+	var/obj/item/radio/internal_radio
+
+/obj/item/radio/internal_tracker_radio
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	subspace_transmission = TRUE
+	canhear_range = 0
+	ignores_radio_jammers = TRUE
+
+/obj/item/radio/internal_tracker_radio/Initialize(mapload)
+	. = ..()
+
+	src.set_listening(FALSE)
+	src.recalculateChannels()
 
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
@@ -25,15 +41,31 @@
 	deltimer(timerid)
 	timerid = null
 
-/obj/item/implant/tracking/c38/Destroy()
-	return ..()
+/obj/item/implant/tracking/miner
+	name = "miner tracking implant"
+	desc = "A modified tracker implant with a built-in teleportation beacon to recover shaft miners."
+
+	has_surgical_warning = FALSE
+	allow_teleport = TRUE
 
 /obj/item/implant/tracking/Initialize(mapload)
 	. = ..()
 	GLOB.tracked_implants += src
 
+	internal_radio = new /obj/item/radio/internal_tracker_radio(src)
+
 /obj/item/implant/tracking/Destroy()
 	GLOB.tracked_implants -= src
+	QDEL_NULL(internal_radio)
+	return ..()
+
+/obj/item/implant/tracking/on_surgical_removal_attempt()
+	say("Attention! You are removing a legally placed security implant. Please be warned this will notify the security department of your location.")
+	return ..()
+
+/obj/item/implant/tracking/on_surgical_removal_complete()
+	var/area/location = get_area(src)
+	internal_radio.talk_into(src, "Attention! Parolee [imp_in.get_visible_name(FALSE)] has had their tracking implant removed in [location]. Please monitor for anti-social behavior.", RADIO_CHANNEL_SECURITY)
 	return ..()
 
 /obj/item/implanter/tracking
