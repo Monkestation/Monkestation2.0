@@ -354,7 +354,7 @@
 		.["clan"] = list(
 			"name" = my_clan.name,
 			"desc" = my_clan.description,
-			"icon" = text_ref(my_clan.join_icon),
+			"icon" = my_clan.join_icon,
 			"icon_state" = my_clan.join_icon_state,
 		)
 
@@ -363,7 +363,7 @@
 		.["powers"] += list(list(
 			"name" = power.name,
 			"explanation" = power.html_power_explanation(),
-			"icon" = text_ref(power.button_icon),
+			"icon" = power.button_icon,
 			"icon_state" = power.button_icon_state,
 		))
 
