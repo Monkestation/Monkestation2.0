@@ -438,6 +438,7 @@
 	var/cell_hit_cost = 1000
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
+	var/passive_cell_drain = TRUE //if the cell should passively drain charge if left on
 
 /datum/armor/baton_security
 	bomb = 50
@@ -457,6 +458,14 @@
 /obj/item/melee/baton/security/get_cell()
 	return cell
 
+/obj/item/melee/baton/security/process(seconds_per_tick, mob/living/user)
+	if(!active || !cell)
+		return PROCESS_KILL
+
+	if(!cell.use((75 - (cell.maxcharge * 0.0025)) * seconds_per_tick) || cell.charge < cell_hit_cost) // This formula causes a exponential decay at 400 seconds. 6.66 minutes of baton time. Bluespace cells give 228 seconds, or 3.75 minutes
+		visible_message(span_warning("The baton fizzles and slowly dims as the charge runs out!"))
+		src.attack_self()
+
 /obj/item/melee/baton/security/suicide_act(mob/living/user)
 	if(cell?.charge && active)
 		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -470,6 +479,7 @@
 	if(cell)
 		QDEL_NULL(cell)
 	UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/melee/baton/security/proc/convert(datum/source, obj/item/item, mob/user)
@@ -545,6 +555,7 @@
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
+		STOP_PROCESSING(SSobj, src)
 		return TRUE
 	return FALSE
 
@@ -553,12 +564,16 @@
 		active = !active
 		balloon_alert(user, "turned [active ? "on" : "off"]")
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		if(passive_cell_drain)
+			START_PROCESSING(SSobj, src)
 	else
 		active = FALSE
 		if(!cell)
 			balloon_alert(user, "no power source!")
+			STOP_PROCESSING(SSobj, src)
 		else
 			balloon_alert(user, "out of charge!")
+			STOP_PROCESSING(SSobj, src)
 	update_appearance()
 	add_fingerprint(user)
 
@@ -571,6 +586,7 @@
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
 		active = FALSE
+		STOP_PROCESSING(SSobj, src)
 		update_appearance()
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 
@@ -783,6 +799,7 @@
 	slot_flags = null
 	throw_stun_chance = 50 //I think it'd be funny
 	can_upgrade = FALSE
+	passive_cell_drain = FALSE //this is a EVIL stick
 
 /obj/item/melee/baton/security/cattleprod/telecrystalprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

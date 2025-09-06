@@ -25,4 +25,7 @@
 	var/logging_text = "[key_name(cortical_owner)] forced [key_name(cortical_owner.human_host)] to say [borer_message] at [loc_name(human_turf)]"
 	cortical_owner.log_message(logging_text, LOG_GAME)
 	cortical_owner.human_host.log_message(logging_text, LOG_GAME)
+	if(cortical_host.is_willing_host(cortical_host))
+		StartCooldown(5 SECONDS)
+		return
 	StartCooldown()

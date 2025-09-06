@@ -6,7 +6,7 @@
 	greyscale_colors = "#878687"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
-	value_per_unit = 0.0025
+	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	ore_type = /obj/item/stack/ore/iron
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
@@ -28,8 +28,8 @@
 	sheet_type = /obj/item/stack/sheet/glass
 	shard_type = /obj/item/shard
 	debris_type = /obj/effect/decal/cleanable/glass
-	value_per_unit = 0.0025
-	beauty_modifier = 0.05
+	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, ENERGY = 1, BIO = 0.2, FIRE = 1, ACID = 0.2)
 	ore_type = /obj/item/stack/ore/glass
 	mineral_rarity = MATERIAL_RARITY_COMMON
@@ -52,8 +52,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#e3f1f8"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	value_per_unit = 0.025
-	beauty_modifier = 0.075
+	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 150 / SHEET_MATERIAL_AMOUNT
 	ore_type = /obj/item/stack/ore/silver
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
@@ -71,8 +71,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	value_per_unit = 0.0625
-	beauty_modifier = 0.15
+	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 300 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 0.7, ACID = 1.1)
 	ore_type = /obj/item/stack/ore/gold
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
@@ -92,8 +92,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
-	value_per_unit = 0.25
-	beauty_modifier = 0.3
+	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, FIRE = 1, ACID = 1)
 	ore_type = /obj/item/stack/ore/diamond
 	mineral_rarity = MATERIAL_RARITY_RARE
@@ -111,8 +111,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = rgb(48, 237, 26)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
-	value_per_unit = 0.05
-	beauty_modifier = 0.3 //It shines so beautiful
+	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT //It shines so beautiful
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
 	ore_type = /obj/item/stack/ore/uranium
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
@@ -149,8 +149,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#c162ec"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	value_per_unit = 0.1
-	beauty_modifier = 0.15
+	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 300 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, ENERGY = 1.2, BIO = 1.2, ACID = 0.5)
 	ore_type = /obj/item/stack/ore/plasma
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
@@ -184,9 +184,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	alpha = 200
 	starlight_color = COLOR_BLUE
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_ITEM_MATERIAL = TRUE)
-	beauty_modifier = 0.5
+	beauty_modifier = 1000 / SHEET_MATERIAL_AMOUNT
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
-	value_per_unit = 0.15
+	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
 	ore_type = /obj/item/stack/ore/bluespace_crystal
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
@@ -204,8 +204,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#ffff00"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	value_per_unit = 0.5
-	beauty_modifier = 0.5
+	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 1000 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
 	ore_type = /obj/item/stack/ore/bananium
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
@@ -235,8 +235,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
-	value_per_unit = 0.0625
-	beauty_modifier = 0.05
+	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
 	ore_type = /obj/item/stack/ore/titanium
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
@@ -253,8 +253,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/runite
-	value_per_unit = 0.3
-	beauty_modifier = 0.5
+	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
@@ -272,8 +272,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
-	value_per_unit = 0.0125
-	beauty_modifier = -0.01
+	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = -20 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, FIRE = 1.1, ACID = 1)
 	ore_type = /obj/item/stack/ore/slag
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Nobody's found oil on lavaland yet.
@@ -291,7 +291,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#735b4d"
 	greyscale_colors = "#735b4d"
 	strength_modifier = 0.8
-	value_per_unit = 0.025
+	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/wood
 	name = "wood"
@@ -301,8 +301,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
-	value_per_unit = 0.01
-	beauty_modifier = 0.1
+	value_per_unit = 20 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 200 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, ACID = 0.3)
 	texture_layer_icon_state = "woodgrain"
 
@@ -334,8 +334,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.5
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
-	value_per_unit = 0.25
-	beauty_modifier = 0.4
+	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 800 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, FIRE = 2.5, ACID = 1)
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
@@ -352,10 +352,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#f2d5d7"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
-	value_per_unit = 0.75
+	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.5, ENERGY = 1.5, BOMB = 1.5, BIO = 1.5, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.5
+	beauty_modifier = 1000 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 
@@ -387,8 +387,8 @@ monkestation end */
 	starlight_color = COLOR_BLUE_LIGHT
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/hot_ice
-	value_per_unit = 0.2
-	beauty_modifier = 0.2
+	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 400 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -412,8 +412,8 @@ monkestation end */
 	starlight_color = COLOR_MODERATE_BLUE
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
-	value_per_unit = 0.35
-	beauty_modifier = 0.35
+	value_per_unit = 700 / SHEET_MATERIAL_AMOUNT
+	beauty_modifier = 700 / SHEET_MATERIAL_AMOUNT
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, FIRE = 1.3, ACID = 1)
 
@@ -429,11 +429,11 @@ monkestation end */
 	greyscale_colors = "#EDC9AF"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/sandblock
-	value_per_unit = 0.001
+	value_per_unit = 2 / SHEET_MATERIAL_AMOUNT
 	strength_modifier = 0.5
 	integrity_modifier = 0.1
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 1.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.25
+	beauty_modifier = 500 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 
@@ -449,9 +449,9 @@ monkestation end */
 	greyscale_colors = "#B77D31"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
-	value_per_unit = 0.0025
+	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.3
+	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
 
@@ -462,9 +462,9 @@ monkestation end */
 	greyscale_colors = "#FFFFFF"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
-	value_per_unit = 0.0025
+	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 0.25, ACID = 1.5)
-	beauty_modifier = 0.3
+	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 
@@ -479,9 +479,9 @@ monkestation end */
 	greyscale_colors = "#3C3434"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/runed_metal
-	value_per_unit = 0.75
+	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = -0.15
+	beauty_modifier = -300 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "runed"
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -496,9 +496,9 @@ monkestation end */
 	greyscale_colors = "#92661A"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/bronze
-	value_per_unit = 0.025
+	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = 0.2
+	beauty_modifier = 400 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/paper
 	name = "paper"
@@ -507,9 +507,9 @@ monkestation end */
 	greyscale_colors = "#E5DCD5"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/paperframes
-	value_per_unit = 0.0025
+	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.1, BULLET = 0.1, LASER = 0.1, ENERGY = 0.1, BOMB = 0.1, BIO = 0.1, ACID = 1.5)
-	beauty_modifier = 0.3
+	beauty_modifier = 600 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "paper"
 
@@ -533,9 +533,9 @@ monkestation end */
 	greyscale_colors = "#5F625C"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/cardboard
-	value_per_unit = 0.003
+	value_per_unit = 6 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, ACID = 1.5)
-	beauty_modifier = -0.1
+	beauty_modifier = -200 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/cardboard/on_applied_obj(obj/source, amount, material_flags)
 	. = ..()
@@ -557,9 +557,9 @@ monkestation end */
 	greyscale_colors = "#e3dac9"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/bone
-	value_per_unit = 0.05
+	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
-	beauty_modifier = -0.2
+	beauty_modifier = -400 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/bamboo
 	name = "bamboo"
@@ -568,9 +568,9 @@ monkestation end */
 	greyscale_colors = "#87a852"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
-	value_per_unit = 0.0025
+	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 0.5, ENERGY = 0.5, BOMB = 0.5, BIO = 0.51, FIRE = 0.5, ACID = 1.5)
-	beauty_modifier = 0.2
+	beauty_modifier = 400 / SHEET_MATERIAL_AMOUNT
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
 
@@ -581,9 +581,9 @@ monkestation end */
 	greyscale_colors = COLOR_ALMOST_BLACK
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
-	value_per_unit = 0.45
+	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
-	beauty_modifier = 0.001
+	beauty_modifier = 2 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/zaukerite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)

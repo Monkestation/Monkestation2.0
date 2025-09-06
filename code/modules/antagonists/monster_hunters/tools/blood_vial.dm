@@ -54,7 +54,6 @@
 	. = ..()
 	if(proximity_flag && target == user)
 		attack_self(user)
-		. |= AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/blood_vial/update_icon_state()
 	icon_state = "[base_icon_state][filled ? "" : "_empty"]"

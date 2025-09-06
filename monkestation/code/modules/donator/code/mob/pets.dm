@@ -352,6 +352,8 @@
 	icon_state = "robodoggo"
 	icon_living = "robodoggo"
 	icon_dead = "robodoggo-dead"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
 	icon_gib = null
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
@@ -366,6 +368,7 @@
 	change_hud_ability.Grant(src)
 	var/mutable_appearance/overlay = mutable_appearance(icon, "robodoggo-glasses-dia")
 	src.add_overlay(overlay)
+	initial_language_holder = /datum/language_holder/synthetic
 
 ///switches the amimal huds
 /datum/action/cooldown/change_hud

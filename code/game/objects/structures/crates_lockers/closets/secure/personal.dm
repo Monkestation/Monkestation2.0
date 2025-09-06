@@ -35,8 +35,8 @@
 	new /obj/item/instrument/piano_synth(src)
 	new /obj/item/radio/headset( src )
 
-/obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
-	var/obj/item/card/id/I = W.GetID()
+/obj/structure/closet/secure_closet/personal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/obj/item/card/id/I = attacking_item.GetID()
 	if(istype(I))
 		if(broken)
 			to_chat(user, span_danger("It appears to be broken."))

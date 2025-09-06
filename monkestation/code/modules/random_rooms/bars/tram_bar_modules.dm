@@ -18,6 +18,7 @@
 	icon = 'monkestation/icons/turf/seafloor.dmi'
 	icon_state = "seafloor"
 	base_icon_state = "seafloor"
+	floor_tile = /obj/item/stack/tile/fake_seafloor
 
 /////////////////
 //BEACHSIDE BAR//
@@ -43,12 +44,12 @@
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand"
 	base_icon_state = "sand"
+	floor_tile = /obj/item/stack/tile/fakesand
 
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	floor_tile = /obj/item/stack/tile/fake_seafloor
 
 /turf/open/floor/fake_seafloor/medium
 	icon_state = "seafloor_med"

@@ -68,6 +68,9 @@
 /obj/item/gun/energy/e_gun/advtaser/cyborg/emp_act()
 	return
 
+/obj/item/gun/energy/e_gun/advtaser/cyborg/give_manufacturer_examine()
+	return
+
 /obj/item/gun/energy/disabler
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
@@ -82,6 +85,9 @@
 		light_overlay = "flight", \
 		overlay_x = 15, \
 		overlay_y = 10)
+
+/obj/item/gun/energy/disabler/cargo
+	pin = /obj/item/firing_pin/cargo/unremovable
 
 /obj/item/gun/energy/disabler/smg
 	name = "disabler smg"

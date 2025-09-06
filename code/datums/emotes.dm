@@ -66,6 +66,8 @@
 	var/falloff_exponent = SOUND_FALLOFF_EXPONENT
 	/// The extra range for audible emotes.
 	var/extra_range = 0
+	/// The volume to play an audible emote at.
+	var/volume = 50
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -112,13 +114,13 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		var/tmp_vary = should_vary(user)
 		playsound(
 			source = user,
 			soundin = tmp_sound,
-			vol = 50,
+			vol = get_emote_volume(user),
 			vary = tmp_vary,
 			extrarange = extra_range,
 			falloff_exponent = falloff_exponent,
@@ -176,6 +178,9 @@
  */
 /datum/emote/proc/get_sound(mob/living/user)
 	return sound //by default just return this var.
+
+/datum/emote/proc/get_emote_volume(mob/living/user)
+	return volume
 
 /**
  * To replace pronouns in the inputed string with the user's proper pronouns.

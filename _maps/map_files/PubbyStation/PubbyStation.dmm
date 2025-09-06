@@ -34886,10 +34886,8 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "hIR" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/gbp_redemption,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "hJp" = (

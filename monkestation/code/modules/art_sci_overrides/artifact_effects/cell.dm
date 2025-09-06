@@ -9,7 +9,7 @@
 	)
 	valid_type_paths = list(/obj/item/stock_parts/cell/artifact)
 	research_value = TECHWEB_DISCOUNT_MINOR
-	examine_discovered = span_warning("It appears to hold power")
+	examine_discovered = span_warning("It appears to hold power.")
 
 /datum/artifact_effect/cell/setup()
 	var/obj/item/stock_parts/cell/artifact/cell = our_artifact.holder

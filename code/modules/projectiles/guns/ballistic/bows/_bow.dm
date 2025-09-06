@@ -19,17 +19,22 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	/// whether the bow is drawn back
 	var/drawn = FALSE
+	///if you have a recharging bow keeps you from dropping your rechargable arrow which bricks the bow
+	var/nodrop = FALSE
 
 /obj/item/gun/ballistic/bow/update_icon_state()
 	. = ..()
 	icon_state = chambered ? "[base_icon_state]_[drawn ? "drawn" : "nocked"]" : "[base_icon_state]"
 
-/obj/item/gun/ballistic/bow/proc/drop_arrow()
+/obj/item/gun/ballistic/bow/proc/drop_arrow(mob/user)
+	if(nodrop)
+		return
 	drawn = FALSE
 	if(chambered)
 		chambered.forceMove(drop_location())
 		magazine.get_round(keep = FALSE)
 		chambered = null
+	to_chat(user, span_warning("Without drawing the bow, the arrow uselessly falls to the ground."))
 	update_appearance()
 
 /obj/item/gun/ballistic/bow/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
@@ -47,15 +52,12 @@
 		drawn = !drawn
 	update_appearance()
 
-/obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/gun/ballistic/bow/try_fire_gun(atom/target, mob/living/user, params)
 	if(!chambered)
-		return
+		return FALSE
 	if(!drawn)
-		to_chat(user, span_warning("Without drawing the bow, the arrow uselessly falls to the ground."))
 		drop_arrow()
-		update_appearance()
-		return
+		return FALSE
 	drawn = FALSE
 	. = ..() //fires, removing the arrow
 	update_appearance()
@@ -64,7 +66,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_BACK && chambered)
 		balloon_alert(user, "the arrow falls out!")
-		drop_arrow()
+		drop_arrow(user)
 		drawn = FALSE
 		update_appearance()
 
@@ -77,3 +79,6 @@
 	max_ammo = 1
 	start_empty = TRUE
 	caliber = CALIBER_ARROW
+
+/obj/item/gun/ballistic/bow/can_trigger_gun(mob/living/user, akimbo_usage)
+	return TRUE
