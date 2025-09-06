@@ -295,6 +295,10 @@
 		to_chat(src, span_notice("You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
 		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
 			. = clear_cuffs(I, cuff_break)
+
+			if (istype(I, /obj/item/restraints/handcuffs/silver) && !IS_BLOODSUCKER_OR_VASSAL(src))
+				visible_message(span_danger("As [src] removes the silver handcuffs, they shatter into a hundred pieces!"))
+				qdel(I)
 		else
 			to_chat(src, span_warning("You fail to remove [I]!"))
 
@@ -1366,10 +1370,8 @@
 	if(old_value)
 		if(!handcuffed)
 
-			var/obj/item/restraints/handcuffs/silver/silver_cuffs = astype(old_value, /obj/item/restraints/handcuffs/silver)
-			if (silver_cuffs)
-				if (IS_BLOODSUCKER_OR_VASSAL(src))
-					src.remove_status_effect(/datum/status_effect/silver_cuffed)
+			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
+				src.remove_status_effect(/datum/status_effect/silver_cuffed)
 
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
