@@ -1631,7 +1631,7 @@ MONKESTATION REMOVAL END */
 	description = "Reduces the stimulus response capacity of positronic systems, anesthetizing, soothing, and in high doses, rendering them unconcious."
 	reagent_state = LIQUID
 	color = "#6ccf0a"
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	ph = 7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
