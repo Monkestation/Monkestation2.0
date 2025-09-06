@@ -8,6 +8,11 @@
 	e_cost = 100
 	select_name = "maim"
 
+/obj/item/ammo_casing/energy/laser/hellfire/blueshield
+	projectile_type = /obj/projectile/beam/laser/hellfire
+	e_cost = LASER_SHOTS(13, 1000)
+	select_name = "maim"
+
 /obj/item/ammo_casing/energy/laser/hellfire/antique
 	e_cost = 100
 
@@ -35,6 +40,7 @@
 	e_cost = 90 //monkestation edit
 
 /obj/item/ammo_casing/energy/laser/musket
+	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	projectile_type = /obj/projectile/beam/laser/musket
 	e_cost = 1000
 
@@ -138,3 +144,12 @@
 /obj/item/ammo_casing/energy/nanite/cryo
 	projectile_type = /obj/projectile/energy/cryo
 	select_name = "cryo"
+
+/obj/item/ammo_casing/energy/laser/plasma_glob
+	projectile_type = /obj/projectile/beam/laser/plasma_glob
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/incinerate.ogg'
+
+/obj/item/ammo_casing/energy/laser/plasma_glob/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/caseless)

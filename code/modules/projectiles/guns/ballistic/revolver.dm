@@ -16,6 +16,7 @@
 	var/recent_spin = 0
 	var/last_fire = 0
 	gun_flags = GUN_SMOKE_PARTICLES
+	box_reload_delay = CLICK_CD_RAPID // honestly this is negligible because of the inherent delay of having to switch hands
 
 /obj/item/gun/ballistic/revolver/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	..()
@@ -98,12 +99,16 @@
 	if(last_fire && last_fire + 15 SECONDS > world.time)
 		. = span_notice("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
 
+/obj/item/gun/ballistic/revolver/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/gun/ballistic/revolver/c38/detective
 	name = "\improper Colt Detective Special"
@@ -131,6 +136,9 @@
 		"Black Panther" = "c38_panther"
 	)
 
+/obj/item/gun/ballistic/revolver/c38/detective/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+
 /obj/item/gun/ballistic/revolver/syndicate
 	name = "\improper Syndicate Revolver"
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
@@ -141,10 +149,16 @@
 	//There's already a cowboy sprite in there!
 	icon_state = "lucky"
 
+/obj/item/gun/ballistic/revolver/syndicate/nuclear
+	pin = /obj/item/firing_pin/implant/pindicate
+
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
+
+/obj/item/gun/ballistic/revolver/mateba/give_manufacturer_examine()
+	return
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
@@ -263,6 +277,9 @@
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(span_danger("[user.name] fires [src] at [user.p_their()] head!"), span_userdanger("You fire [src] at your head!"), span_hear("You hear a gunshot!"))
 
+/obj/item/gun/ballistic/revolver/russian/give_manufacturer_examine()
+	return
+
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
@@ -291,10 +308,130 @@
 		user.drop_all_held_items()
 		user.Paralyze(80)
 
+///Blueshift guns
+
+// .35 Sol mini revolver
+
+/obj/item/gun/ballistic/revolver/sol
+	name = "\improper Eland Revolver"
+	desc = "A small revolver with a comically short barrel and cylinder space for eight .35 Sol Short rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon_state = "eland"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c35sol
+	suppressor_x_offset = 3
+	w_class = WEIGHT_CLASS_SMALL
+	can_suppress = TRUE
+
+/obj/item/gun/ballistic/revolver/sol/evil
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/revolver/sol/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
+
+/obj/item/gun/ballistic/revolver/sol/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/revolver/sol/examine_more(mob/user)
+	. = ..()
+
+	. += "The Eland is one of the few Trappiste weapons not made for military contract. \
+		Instead, the Eland started life as a police weapon, offered as a gun to finally \
+		outmatch all others in the cheap police weapons market. Unfortunately, this \
+		coincided with nearly every SolFed police force realising they are actually \
+		comically overfunded. With military weapons bought for police forces taking \
+		over the market, the Eland instead found home in the civilian personal defense \
+		market. That is likely the reason you are looking at this one now."
+
+	return .
+
+
+// .585 super revolver. INSANELY slow fire rate for the damage
+
+/obj/item/gun/ballistic/revolver/takbok
+	name = "\improper Takbok Revolver"
+	desc = "A hefty revolver with an equally large cylinder capable of holding five .585 Trappiste rounds."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon_state = "takbok"
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
+	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_heavy.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
+	suppressor_x_offset = 5
+	can_suppress = TRUE
+	fire_delay = 1 SECONDS
+	recoil = 3
+	wield_recoil = 1
+
+/obj/item/gun/ballistic/revolver/takbok/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
+
+/obj/item/gun/ballistic/revolver/takbok/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/revolver/takbok/examine_more(mob/user)
+	. = ..()
+
+	. += "The Takbok is a unique design for Trappiste for the sole reason that it \
+		was made at first to be a one-off. Founder of partner company Carwo Defense, \
+		Darmaan Khaali Carwo herself, requested a sporting revolver from Trappiste. \
+		What was delivered wasn't a target revolver, it was a target crusher. The \
+		weapon became popular as Carwo crushed many shooting competitions using \
+		the Takbok, with the design going on several production runs up until \
+		2523 when the popularity of the gun fell off. Due to the number of revolvers \
+		made, they are still easy enough to find if you look despite production \
+		having already ceased many years ago."
+
+	return .
+
+// Blueshields custom takbok revolver.
+/obj/item/gun/ballistic/revolver/takbok/blueshield
+	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
+	icon_state = "takbok_blueshield"
+	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
+
+	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
+	fire_delay = 0.6 SECONDS
+	recoil = 2
+	wield_recoil = 0.8
+	projectile_damage_multiplier = 1.3
+
+/obj/item/gun/ballistic/revolver/takbok/blueshield/give_manufacturer_examine()
+	RemoveElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
+
+/obj/item/gun/ballistic/revolver/takbok/blueshield/examine_more(mob/user)
+	. = ..()
+	//Basically, it is a short continuation story of the original takbok about fans continuing their passion for an idea or project. Still, the original company stopped them despite the innovations they brought. And the ‘C’ is a callback to their inspirational figure ‘Cawgo’
+	. += ""
+	. += "After the production run of the original Takbok \
+		ended in 2523 alongside its popularity, enthusiasts of the sidearm continued \
+		to tinker with the make of the weapon to keep it with modern standards for \
+		firearms, despite Trappiste's license on the design. This unusual passion \
+		for the weapon led to variations with few to no identifying marks besides \
+		the occasional 'C' carved into the hilt of the gun. As a consequence of its \
+		production methods, it is unable to be distributed through conventional means \
+		despite the typical assessment of most being an improved model."
+	return .
+
+
+///.45 Long revolver, cargo cowboy gun
+
+/obj/item/gun/ballistic/revolver/r45l
+	name = "\improper .45 Long Revolver"
+	desc = "A cheap .45 Long Revolver. Pray the timing keeps."
+	icon_state = "45revolver"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45l
+	obj_flags = UNIQUE_RENAME
+
+	unique_reskin = list("Default" = "45revolver",
+						"Cowboy" = "357colt",
+						"Lucky" = "lucky" //Well do ya?
+						)
+
 
 // 45-70 GOV "MINING" REVOLVER
-
-#define CALIBER_GOV_MINING ".45-70 Gov Kinetic" //the ammo type (so it doesnt fit anywhere else)
 
 /obj/item/gun/ballistic/revolver/govmining
 	name = "45-70 GOV 'Duster' Revolver"
@@ -325,119 +462,3 @@
 		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 	. = ..()
 
-/obj/item/ammo_box/magazine/internal/cylinder/govmining
-	name = "Really Big Revolver Cylinder"
-	desc = "Hey BUB howdja do that, dont BREAK the expensive equipment. (REPORT ME)"
-	ammo_type = /obj/item/ammo_casing/govmining
-	caliber = CALIBER_GOV_MINING
-	max_ammo = 6
-
-//Once again the casings wont just fall out, you gotta eject them all
-/obj/item/ammo_box/magazine/internal/cylinder/govmining/give_round(obj/item/ammo_casing/R, replace_spent = 0)
-	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
-		return FALSE
-
-	for(var/i in 1 to stored_ammo.len)
-		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if(!bullet) // found a spent ammo
-			stored_ammo[i] = R
-			R.forceMove(src)
-			return TRUE
-
-	return FALSE
-
-/obj/item/ammo_casing/govmining
-	name = ".45-70 Gov Kinetic Magnum Casing"
-	desc = "An absolute beast of a round that will probably only fit in the 'Duster' Revolver."
-	icon = 'icons/obj/weapons/guns/ammo.dmi'
-	icon_state = ".45-70"
-	caliber = CALIBER_GOV_MINING
-	projectile_type = /obj/projectile/bullet/govmining
-
-/obj/item/ammo_box/govmining
-	name = "speed loader (.45-70 Kinetic)"
-	desc = "A six round speedloader carrying an absolute beast of a round for the 'Duster' Revolver."
-	icon_state = "4570loader"
-	w_class = WEIGHT_CLASS_TINY
-	ammo_type = /obj/item/ammo_casing/govmining
-	max_ammo = 6
-	caliber = CALIBER_GOV_MINING
-	multiple_sprites = AMMO_BOX_PER_BULLET
-
-/obj/projectile/bullet/govmining
-	name = ".45-70 Gov Kinetic Bullet"
-	damage = 75 //four shots to kill a goliath
-
-/obj/projectile/bullet/govmining/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
-	if(ismineralturf(target))
-		var/turf/closed/mineral/M = target
-		M.gets_drilled(firer, FALSE)
-	. = ..()
-
-/obj/item/storage/box/kinetic/govmining
-	name = "box of .45-70 Gov Kinetic rounds"
-	desc = "A box containing 36 individual .45-70 Gov Kinetic rounds. Good for loading your 'Duster' revolver or refilling your speedloaders. Fits in explorer webbing."
-	icon_state = "gov_box"
-	illustration = ""
-	foldable_result = /obj/item/stack/sheet/cardboard
-
-/obj/item/storage/box/kinetic/govmining/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 36
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 36
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/govmining,
-	))
-
-/obj/item/storage/box/kinetic/govmining/PopulateContents() //populate
-	for(var/i in 1 to 36)
-		new /obj/item/ammo_casing/govmining(src)
-
-/obj/item/storage/box/kinetic/govmining/bigcase
-	name = "Kinetic 'Duster' Revolver Case"
-	desc = "A case containing a 'Duster' kinetic revolver and three speedloaders."
-	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
-	w_class = WEIGHT_CLASS_BULKY
-	icon_state = "miner_case"
-	illustration = ""
-	foldable_result = /obj/item/stack/sheet/iron
-
-/obj/item/storage/box/kinetic/govmining/bigcase/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 4
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 4
-	atom_storage.set_holdable(list())
-
-/obj/item/storage/box/kinetic/govmining/bigcase/PopulateContents() //populate
-
-		new /obj/item/gun/ballistic/revolver/govmining (src)
-		new /obj/item/ammo_box/govmining (src)
-		new /obj/item/ammo_box/govmining (src)
-		new /obj/item/ammo_box/govmining (src)
-
-/obj/item/storage/box/kinetic/govmining/smallcase
-	name = "Case of 'Duster' Speedloaders"
-	desc = "A case containing three spare speedloaders for the 'Duster' revolver"
-	icon = 'icons/obj/storage/case.dmi'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
-	icon_state = "miner_case_small"
-	illustration = ""
-	foldable_result = /obj/item/stack/sheet/iron
-
-/obj/item/storage/box/kinetic/govmining/smallcase/Initialize(mapload) //initialize
-	. = ..()
-	atom_storage.max_slots = 3
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 3
-	atom_storage.set_holdable(list(/obj/item/ammo_box/govmining))
-
-/obj/item/storage/box/kinetic/govmining/smallcase/PopulateContents() //populate
-
-		new /obj/item/ammo_box/govmining (src)
-		new /obj/item/ammo_box/govmining (src)
-		new /obj/item/ammo_box/govmining (src)
