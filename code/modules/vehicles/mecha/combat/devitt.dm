@@ -1,13 +1,14 @@
 /obj/vehicle/sealed/mecha/devitt
 	desc = "A multi hundred year old tank. How the hell it is running and on a space station is the least of your worries."
 	name = "Devitt Mk3"
-	icon = 'monkestation/icons/mecha/tanks.dmi'
+	icon = 'icons/mecha/tanks.dmi'
 	icon_state = "devitt_0_0"
 	base_icon_state = "devitt"
 	max_integrity = 470 // its a hunk of steel that didnt need to be limited by mecha legs
 	force = 25 // only 4 shot but since its fast it can get a bunch of hits off
 	movedelay = 1.3
 	step_energy_drain = 40
+	SET_BASE_PIXEL(-12, 0)
 	bumpsmash = TRUE
 	stepsound = 'sound/vehicles/driving-noise.ogg'
 	turnsound = 'sound/vehicles/driving-noise.ogg'
