@@ -6380,7 +6380,6 @@
 #include "monkestation\code\datums\quirks\negative_quirks\kakologophobia.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\kleptomaniac.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\language_quirks.dm"
-#include "monkestation\code\datums\quirks\negative_quirks\light_drinker.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\lisp.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\monophobia.dm"
 #include "monkestation\code\datums\quirks\negative_quirks\prosthetic_limb.dm"
