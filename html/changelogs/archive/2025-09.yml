@@ -116,6 +116,10 @@
       any issues with sounds not playing!
   - sound: (Melbert) Portals made by portal guns now make sounds as expected.
   - sound: (Melbert) Wormholes from the wormhole event now make sounds when formed.
+  - bugfix: actually fixed invisible encryption keys.
+  - bugfix: Fixed renaming items with pens.
+  Loiosh42:
+  - code_imp: Demodularization of gun code
   Rex9001:
   - rscadd: Optional Combat indicators - To show you want to fight someone. Toggled
       with "C"
