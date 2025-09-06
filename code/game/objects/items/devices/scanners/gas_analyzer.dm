@@ -144,6 +144,10 @@
 		if(ranged_scan_distance > 1 && !user.CanReach(target_turf))
 			for(var/obj/effect/anomaly/anomaly in target_turf)
 				anomaly.scan_anomaly(user, src)
+				. = ITEM_INTERACT_SUCCESS
+			// block if we scanned an anomaly, to avoid chat spam
+			if(.)
+				return
 		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : target_turf))
 	return NONE // Non-blocking
 
