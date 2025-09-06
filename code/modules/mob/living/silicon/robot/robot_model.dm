@@ -1080,7 +1080,7 @@
 /obj/item/robot_model/centcom/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
 	if(!istype(cyborg, /mob/living/silicon/robot))
-		return ..()
+		..()
 	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 	if(cyborg.hud_used)
 		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
