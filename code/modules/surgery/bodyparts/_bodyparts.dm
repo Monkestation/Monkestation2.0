@@ -931,6 +931,11 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
+	if (HAS_TRAIT(human_owner, TRAIT_GREYSCALE_TOGGLE))
+		if (human_owner.greyscale_limbs)
+			should_draw_greyscale = TRUE
+		else
+			should_draw_greyscale = FALSE
 	if(HAS_TRAIT(human_owner, TRAIT_USES_SKINTONES))
 		skin_tone = human_owner.skin_tone
 	else if(HAS_TRAIT(human_owner, TRAIT_MUTANT_COLORS))

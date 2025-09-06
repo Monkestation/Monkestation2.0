@@ -100,3 +100,5 @@
 	var/list/alternative_laughs
 	///stored list of alternate deathgasps
 	var/list/alternative_deathgasps
+	///if we should greyscale limbs or set a preset color to them
+	var/greyscale_limbs = FALSE
