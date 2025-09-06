@@ -1648,7 +1648,7 @@ MONKESTATION REMOVAL END */
 		if(smacked_the_fuck_out)
 			affected_mob.SetSleeping(10 SECONDS)
 		else
-			if(prob(clamp((10 * (current_cycle - 15), 1, 100))))
+			if(prob(clamp(10 * (current_cycle - 15), 1, 100)))
 				smacked_the_fuck_out = TRUE
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_metabolize(mob/living/affected_mob)
