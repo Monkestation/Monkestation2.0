@@ -1,7 +1,7 @@
 //Replication Protocols
 /datum/nanite_program/protocol/kickstart
 	name = "Kickstart Protocol"
-	desc = "Replication Protocol: the nanites focus on early growth, heavily boosting replication rate for a few minutes after the initial implantation, \
+	desc = "Replication Protocol: the nanites focus on early growth, boosting replication rate by 3.5 for 2 minutes after the initial implantation, \
 			resulting in an additional 420 nanite volume being produced during the first two minutes."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
@@ -18,9 +18,9 @@
 
 /datum/nanite_program/protocol/factory
 	name = "Factory Protocol"
-	desc = "Replication Protocol: the nanites build a factory matrix within the host, gradually increasing replication speed over time, \
+	desc = "Replication Protocol: the nanites build a factory matrix within the host, increasing replication speed by 0.002 each second, \
 			granting a maximum of 2 additional nanite production after roughly 17 minutes. \
-			The factory decays if the protocol is not active, or if the nanites are disrupted by shocks or EMPs."
+			The factory decays at a rate of -0.01 replication rate per second if the protocol is not active, or if the nanites are disrupted by shocks or EMPs."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION
@@ -68,7 +68,7 @@
 
 /datum/nanite_program/protocol/offline
 	name = "Eclipse Protocol"
-	desc = "Replication Protocol: while the host is asleep or otherwise unconcious, the nanites exploit the reduced interference to replicate more quickly."
+	desc = "Replication Protocol: while the host is asleep or otherwise unconcious, the nanites exploit the reduced interference to increase replication rate by 3."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION
@@ -102,7 +102,7 @@
 
 /datum/nanite_program/protocol/zip
 	name = "Zip Protocol"
-	desc = "Storage Protocol: the nanites are disassembled and compacted when unused, increasing the maximum volume to 1000. However, the process slows down their replication rate slightly."
+	desc = "Storage Protocol: the nanites are disassembled and compacted when unused, increasing the maximum volume to 1000. However, the process reduces their replication rate by 0.2."
 	use_rate = 0.2
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_STORAGE

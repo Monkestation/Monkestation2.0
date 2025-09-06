@@ -12,7 +12,7 @@
 //Generic body-affecting programs will decay into this
 /datum/nanite_program/necrotic
 	name = "Necrosis"
-	desc = "The nanites attack internal tissues indiscriminately, causing widespread damage."
+	desc = "The nanites attack internal tissues indiscriminately, causing 0.75 brute damage per second."
 	use_rate = 0.75
 	unique = FALSE
 	rogue_types = list(/datum/nanite_program/glitch)
@@ -25,7 +25,7 @@
 //Programs that don't directly interact with the body will decay into this
 /datum/nanite_program/toxic
 	name = "Toxin Buildup"
-	desc = "The nanites cause a slow but constant toxin buildup inside the host."
+	desc = "The nanites cause a slow but constant toxin buildup inside the host, dealing 0.5 points of toxin damage per second."
 	use_rate = 0.25
 	unique = FALSE
 	rogue_types = list(/datum/nanite_program/glitch)
@@ -38,7 +38,7 @@
 //Generic blood-affecting programs will decay into this
 /datum/nanite_program/suffocating
 	name = "Hypoxemia"
-	desc = "The nanites prevent the host's blood from absorbing oxygen efficiently."
+	desc = "The nanites prevent the host's blood from absorbing oxygen efficiently, dealing 3 points of oxygen damage per second."
 	use_rate = 0.75
 	unique = FALSE
 	rogue_types = list(/datum/nanite_program/glitch)
@@ -51,7 +51,7 @@
 //Generic brain-affecting programs will decay into this
 /datum/nanite_program/brain_decay
 	name = "Neuro-Necrosis"
-	desc = "The nanites seek and attack brain cells, causing extensive neural damage to the host."
+	desc = "The nanites seek and attack brain cells, causing extensive neural damage to the host. This leads to 1 point of brain damage per second, and occasional halucinations."
 	use_rate = 0.75
 	unique = FALSE
 	rogue_types = list(/datum/nanite_program/necrotic)
@@ -84,7 +84,7 @@
 //Generic skin-affecting programs will decay into this
 /datum/nanite_program/skin_decay
 	name = "Dermalysis"
-	desc = "The nanites attack skin cells, causing irritation, rashes, and minor damage."
+	desc = "The nanites attack skin cells, causing irritation and rashes, as well as 0.25 brute damage per second."
 	use_rate = 0.25
 	unique = FALSE
 	rogue_types = list(/datum/nanite_program/necrotic)
