@@ -61,7 +61,5 @@
 		charges += 2
 		to_chat(user, span_notice("You insert [bs] into [src]. It now has [charges] charges."))
 
-///obj/item/compression_kit/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
-//	. = ..()
-//	if(HAS_TRAIT(storage_holder, TRAIT_BYPASS_COMPRESS_CHECK))
-//		return FALSE XANTODO
+/obj/item/compression_kit/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !HAS_TRAIT(storage_holder, TRAIT_BYPASS_COMPRESS_CHECK)
