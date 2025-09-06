@@ -88,6 +88,8 @@
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	hud.remove_atom_from_hud(gland_owner)
 	clear_mind_control()
+	if(IS_ABDUCTEE(gland_owner))
+		gland_owner.mind.remove_antag_datum(/datum/antagonist/abductee)
 
 /obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/gland_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()

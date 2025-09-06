@@ -240,6 +240,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 
+/// Checks if the given mob is a abductee.
+#define IS_ABDUCTEE(mob) (mob.mind?.has_antag_datum(/datum/antagonist/abductee))
+
 // Antag resource defines
 #define ANTAG_RESOURCE_DARKSPAWN "psi"
 
