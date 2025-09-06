@@ -1,9 +1,9 @@
 /obj/item/gun/energy/laser
 	name = "\improper Allstar SC-1 laser carbine"
-	desc = "A compact energy-based laser carbine that fires concentrated beams of light which pass through glass and thin metal."
+	desc = "A basic energy-based laser carbine that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	inhand_icon_state = "laser"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
@@ -34,10 +34,9 @@
 
 /obj/item/gun/energy/laser/carbine
 	name = "\improper Allstar SC-1A laser auto-carbine"
-	desc = "A bulky energy-based laser auto-carbine that rapidly fires weakened beams of light which pass through glass and thin metal."
+	desc = "An basic energy-based laser auto-carbine that rapidly fires weakened, concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
-	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/carbine/Initialize(mapload)
 	. = ..()
@@ -67,13 +66,11 @@
 	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."
 	icon_state = "hellgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
-	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/hellgun/blueshield
 	name ="modified hellfire laser gun"
 	desc = "A lightly overtuned version of NT's Hellfire Laser rifle, scratches showing its age and the fact it has definitely been owned before. This one is more energy efficient without sacrificing damage."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/blueshield)
-	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"

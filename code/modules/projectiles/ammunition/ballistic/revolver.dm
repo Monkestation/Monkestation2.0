@@ -11,31 +11,6 @@
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
 	projectile_type = /obj/projectile/bullet/a357/match
 
-/obj/item/ammo_casing/a357/nutcracker
-	name = ".357 Nutcracker bullet casing"
-	desc = "A .357 Nutcracker bullet casing."
-	projectile_type = /obj/projectile/bullet/a357/nutcracker
-
-/obj/item/ammo_casing/a357/heartpiercer
-	name = ".357 Heartpiercer bullet casing"
-	desc = "A .357 Heartpiercer bullet casing."
-	projectile_type = /obj/projectile/bullet/a357/heartpiercer
-
-/obj/item/ammo_casing/a357/heartpiercer/Initialize(mapload)
-	. = ..()
-	create_reagents(16, OPENCONTAINER)
-	reagents.add_reagent(/datum/reagent/toxin/spore, 6)
-	reagents.add_reagent(/datum/reagent/toxin, 6)
-	reagents.add_reagent(/datum/reagent/toxin/anacea, 4)
-
-/obj/item/ammo_casing/a357/heartpiercer/attackby()
-	return
-
-/obj/item/ammo_casing/a357/wallstake
-	name = ".357 Wallstake bullet casing"
-	desc = "A .357 Wallstake bullet casing."
-	projectile_type = /obj/projectile/bullet/a357/wallstake
-
 // 7.62x38mmR (Nagant Revolver)
 
 /obj/item/ammo_casing/n762

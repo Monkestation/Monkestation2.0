@@ -183,8 +183,8 @@
 //.980 riot grenades
 
 /obj/projectile/bullet/c980grenade
-	name = ".980 Tydhouer flashbang grenade"
-	damage = 10
+	name = ".980 Tydhouer practice grenade"
+	damage = 20
 	stamina = 30
 	range = 14
 	speed = 2 // Higher means slower, y'all
@@ -201,21 +201,8 @@
 
 /// Generic proc that is called when the projectile should 'detonate', being either on impact or when the range runs out
 /obj/projectile/bullet/c980grenade/proc/fuse_activation(atom/target)
-	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
-
-	explosion(target, flash_range = 2, adminlog = FALSE, explosion_cause = src)
-	do_sparks(rand(5, 9), FALSE, src)
-
-	var/turf/our_turf = get_turf(src)
-
-	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
-		if(valid_turf(our_turf, nearby_turf))
-			if(prob(50))
-				do_sparks(rand(1, 9), FALSE, nearby_turf)
-			for(var/mob/living/stunned_living in nearby_turf.contents)
-				stunned_living.Paralyze(2 SECONDS)
-				stunned_living.Knockdown(8 SECONDS)
-				stunned_living.soundbang_act(1, 200, 10, 15)
+	playsound(src, 'monkestation/code/modules/blueshift/sounds/grenade_burst.ogg', 50, TRUE, -3)
+	do_sparks(3, FALSE, src)
 
 
 /obj/projectile/bullet/c980grenade/smoke
@@ -245,14 +232,14 @@
 
 /obj/item/grenade/c980payload
 	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
-	shrapnel_radius = 3
+	shrapnel_radius = 2
 	ex_dev = 0
 	ex_heavy = 0
-	ex_light = 1
+	ex_light = 0
 	ex_flame = 0
 
 /obj/projectile/bullet/shrapnel/short_range
-	range = 3
+	range = 2
 
 
 /obj/projectile/bullet/c980grenade/shrapnel/phosphor
@@ -276,7 +263,7 @@
 	shrapnel_type = /obj/projectile/bullet/incendiary/fire/backblast/short_range
 
 /obj/projectile/bullet/incendiary/fire/backblast/short_range
-	range = 3
+	range = 2
 
 
 /obj/projectile/bullet/c980grenade/riot

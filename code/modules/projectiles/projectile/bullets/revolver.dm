@@ -95,7 +95,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(3)
+		M.adjust_fire_stacks(6)
 		M.ignite_mob()
 
 /obj/projectile/bullet/c38/iceblox //see /obj/projectile/temp for the original code
@@ -118,53 +118,6 @@
 	name = ".357 bullet"
 	damage = 60
 	wound_bonus = -30
-	armour_penetration = 30
-
-/obj/projectile/bullet/a357/nutcracker
-	name = ".357 Nutcracker bullet"
-	damage = 40
-	demolition_mod = 12
-
-/obj/projectile/bullet/dart/a357 //Contains
-	name = ".357 Heartpiercer bullet"
-	damage = 20
-	armour_penetration = 75
-	wound_bonus = 0
-	speed = 0.3
-
-/obj/projectile/bullet/a357/wallstake
-	name = ".357 Wallstake bullet"
-	damage = 60
-	armour_penetration = 0
-	sharpness = SHARP_NONE //Blunt
-	demolition_mod = 2
-	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
-	speed = 0.6
-
-/obj/projectile/bullet/a357/wallstake/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(isliving(target))
-		var/mob/living/poor_sap = target
-	if(pierces > 2)
-		projectile_piercing = NONE
-	return ..()
-
-/obj/projectile/bullet/a357/wallstake/Move()
-	. = ..()
-	var/turf/current_turf = get_turf(src)
-	if(!current_turf)
-		return
-	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
-	var/thrown_mobs = 0
-
-	for(var/mobs in current_turf.contents)
-		if(thrown_mobs > 3)
-			break
-		if(ismob(mob))
-			var/mob/tossable_mob = mobs
-			thrown_mob++
-			iter_item.throw_at(throw_at_turf, knockback_range, knockback_range)
-			LAZYADD(launched_items, tossable_mob)
-
 
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match

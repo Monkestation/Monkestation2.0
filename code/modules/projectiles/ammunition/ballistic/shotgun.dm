@@ -86,7 +86,7 @@
 	icon_state = "magshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/magnum
 	pellets = 4 // Half as many pellets for twice the damage each pellet, same overall damage as buckshot
-	variance = 40
+	variance = 20
 	advanced_print_req = TRUE
 
 /obj/item/ammo_casing/shotgun/express
@@ -95,7 +95,7 @@
 		openly near teshari, for reasons you would be personally blessed to not know at least some of."
 	icon_state = "expshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/express
-	pellets = 12 // Same overall damage as buckshot
+	pellets = 12 // 1.3x The pellets for 0.6x the damage, same overall damage as buckshot
 	variance = 30 // Slightly wider spread than buckshot
 
 /obj/item/ammo_casing/shotgun/flechette
