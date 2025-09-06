@@ -222,7 +222,7 @@ RSF
 	var/options = list(
 		bureaucracy = list(
 			name = "Bureaucracy",
-			icon = 'icons/obj/bureaucracy.dmi',
+			icon = 'icons/obj/service/bureaucracy.dmi',
 			icon_state = "pen-fountain",
 		),
 		bartending = list(
