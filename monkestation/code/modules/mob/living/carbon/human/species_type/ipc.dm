@@ -442,6 +442,8 @@
 /datum/species/ipc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/ipc, seconds_per_tick, times_fired)
 	if(chem?.synthetic_boozepwr)
 		var/booze_power = chem.synthetic_boozepwr
+		if(ipc.nutrition < NUTRITION_LEVEL_FULL)
+			ipc.adjust_nutrition(booze_power * 0.055) //one full glass of acetone = 1 full charge if my math is correct
 		if(HAS_TRAIT(ipc, TRAIT_ALCOHOL_TOLERANCE))
 			booze_power *= 0.7
 		if(HAS_TRAIT(ipc, TRAIT_LIGHT_DRINKER))
