@@ -6476,7 +6476,6 @@
 #include "monkestation\code\game\objects\effects\glowshroom.dm"
 #include "monkestation\code\game\objects\effects\landmark.dm"
 #include "monkestation\code\game\objects\effects\sprint_dust.dm"
-#include "monkestation\code\game\objects\effects\anomalies\_anomalies.dm"
 #include "monkestation\code\game\objects\effects\anomalies\anomalies_bioscrambler.dm"
 #include "monkestation\code\game\objects\effects\anomalies\anomalies_clown.dm"
 #include "monkestation\code\game\objects\effects\anomalies\anomalies_dimensional.dm"

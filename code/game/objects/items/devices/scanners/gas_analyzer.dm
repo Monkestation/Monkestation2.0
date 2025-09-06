@@ -140,8 +140,10 @@
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(can_see(user, interacting_with, ranged_scan_distance))
 		var/turf/target_turf = get_turf(interacting_with)
-		for(var/obj/effect/anomaly/anomaly in target_turf)
-			anomaly.scan_anomaly(user, src)
+		// only do this if we can't reach the anomaly anyways
+		if(!user.CanReach(target_turf))
+			for(var/obj/effect/anomaly/anomaly in target_turf)
+				anomaly.scan_anomaly(user, src)
 		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : target_turf))
 	return NONE // Non-blocking
 
