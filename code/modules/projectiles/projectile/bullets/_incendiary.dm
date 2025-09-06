@@ -48,6 +48,42 @@
 		new /obj/effect/hotspot(location)
 		location.hotspot_expose(700, 50, 1)
 
+/// Much more flamey version, used for mechas
+/obj/projectile/bullet/incendiary/fire/heavy
+	damage = 8
+	range = 10
+	alpha = 0
+	pass_flags = PASSTABLE | PASSMOB
+	sharpness = NONE
+	shrapnel_type = null
+	embedding = null
+	impact_effect_type = null
+	suppressed = SUPPRESSED_VERY
+	damage_type = BURN
+	armor_flag = BOMB
+	speed = 1.4
+	wound_bonus = 30
+	bare_wound_bonus = 45
+	wound_falloff_tile = -4
+	fire_stacks = 5
+
+/obj/projectile/bullet/incendiary/heavy/Move()
+	. = ..()
+
+	if(!leaves_fire_trail)
+		return
+	var/turf/location = get_turf(src)
+	if(location)
+		new /obj/effect/hotspot(location)
+		location.hotspot_expose(30000, 3000, 2)
+
+/obj/projectile/bullet/incendiary/heavy/fire/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	var/turf/location = get_turf(target)
+	if(isopenturf(location))
+		new /obj/effect/hotspot(location)
+		location.hotspot_expose(30000, 3000, 2)
+
 /// Used in [the backblast element][/datum/element/backblast]
 /obj/projectile/bullet/incendiary/fire/backblast
 	ricochet_chance = 10000

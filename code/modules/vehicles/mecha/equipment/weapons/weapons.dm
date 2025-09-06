@@ -340,6 +340,66 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LMG
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	name = "Executor Mech Rifle"
+	desc = "A large bore rifle designed to fire armor peircing rounds, will bring down men and mech alike."
+	icon_state = "mecha_heavy"
+	equip_cooldown = 1.6 SECONDS
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 20
+	projectiles_cache = 20
+	projectiles_cache_max = 100
+	projectiles_per_shot = 1
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rotary
+	name = "Hotchkiss Rotary Cannon"
+	desc = "A very expensive and complicated Rotary Cannon, for NT execs only."
+	icon_state = "mecha_rotary"
+	equip_cooldown = 0.3 SECONDS
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 400
+	projectiles_cache = 400
+	projectiles_cache_max = 400
+	projectiles_per_shot = 10
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minigun
+	name = "\improper Avtomat AC 3"
+	desc = "A Space Russian design liscened to NT, fires a small calliber at a conciderable rate."
+	icon_state = "mecha_minigun"
+	equip_cooldown = 0.3 SECONDS
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/peashooter
+	projectiles = 2000
+	projectiles_cache = 0
+	projectiles_cache_max = 2000
+	projectiles_per_shot = 4
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PEASHOOTER
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	name = "\improper FNX-100 \"Conflagorator\" Flamethrower"
+	desc = "A modification of the FNX-99 Hades carbine, This weapon has traded incendary bullets to be a full flamethrower."
+	icon_state = "mecha_flamethrower"
+	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
+	equip_cooldown = 0.7 SECONDS
+	projectile = /obj/projectile/bullet/incendiary/fire/heavy
+	projectiles = 120
+	projectiles_cache = 0
+	projectiles_cache_max = 240
+	projectiles_per_shot = 4
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_FLAME
+
 /// Missiles
 /// SRM-8 Missile Rack - Used by Nuclear Operatives - Explodes when it hits anything
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
@@ -601,3 +661,15 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/cuban
+	name = "\improper SGL-9001 fission grenade launcher \"The Cuban Pete\""
+	desc = "This Grenade Launcher goes chig chiggy boom chig chiggy BOOM."
+	icon_state = "mecha_cuban"
+	projectile = /obj/projectile/bullet/rocket/mininuke
+	projectiles = 100000000
+	projectiles_cache = 10000000
+	projectiles_cache_max = 100000000
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
