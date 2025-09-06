@@ -39,7 +39,7 @@
 			These rounds are more damaging but ineffective against armour."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/hp
-	cost = 2
+	cost = 3
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/pistolfire
@@ -64,39 +64,10 @@
 			For when you really need a lot of things dead."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/a357
-	cost = 1
+	cost = 4
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/ammo/revolver/wallstake
-	name = ".357 Wallstake Speed Loader"
-	desc = "A speed loader that contains seven additional .357 Wallstake rounds; usable with the Syndicate revolver. \
-			Send your enemies flying!."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/ammo_box/a357/wallstake
-	cost = 2
-	purchasable_from = ~UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
-
-/datum/uplink_item/ammo/revolver/heartpiercer
-	name = ".357 Speed Loader"
-	desc = "A speed loader that contains seven additional .357 Heartpiercer Dart rounds; usable with the Syndicate revolver. \
-			Punch through their armor then reteat while they rot from the inside out."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/ammo_box/a357/heartpiercer
-	cost = 2
-	purchasable_from = ~UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
-
-/datum/uplink_item/ammo/revolver/nutcracker
-	name = ".357 Speed Loader"
-	desc = "A speed loader that contains seven additional .357 Nutcracker rounds; usable with the Syndicate revolver. \
-			Doors? Windows? Gone in seconds.."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/ammo_box/a357/nutcracker
-	cost = 1
-	purchasable_from = ~UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/lighttankammo
 	name = "40mm cannon ammo"
