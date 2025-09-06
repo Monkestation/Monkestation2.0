@@ -207,7 +207,7 @@
 
 /// Uses fuel from the welding tool.
 /obj/item/weldingtool/use(used = 0)
-	if(!isOn() || !check_fuel())
+	if(!..() || !isOn() || !check_fuel())
 		return FALSE
 
 	if(used > 0)

@@ -462,6 +462,9 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	var/uses = 5
 
 /obj/item/fuel_pellet/use(used)
+	. = ..()
+	if(!.)
+		return
 	uses--
 	if(uses <= 0)
 		qdel(src)

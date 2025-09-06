@@ -145,6 +145,9 @@
 
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount, force)
+	if(!..() && !force)
+		return FALSE
+
 	if(rigged && amount > 0)
 		explode()
 		return FALSE
@@ -400,7 +403,8 @@
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/use()
+/obj/item/stock_parts/cell/infinite/use(amount, force)
+	..()
 	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor
