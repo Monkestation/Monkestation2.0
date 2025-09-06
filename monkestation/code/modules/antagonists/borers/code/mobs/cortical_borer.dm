@@ -493,16 +493,16 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		message = copytext(message, 2)
 		if(generation == 0) //Hivequeens demand attention.
 			for(var/borer in GLOB.cortical_borers)
-				to_chat(borer, span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"), MESSAGE_TYPE_RADIO,)
+				to_chat(borer, span_purplelarge("<b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"), type = MESSAGE_TYPE_RADIO,)
 			for(var/mob/dead_mob in GLOB.dead_mob_list)
 				var/link = FOLLOW_LINK(dead_mob, src)
-				to_chat(dead_mob, span_purplelarge("[link] <b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"), MESSAGE_TYPE_RADIO,)
+				to_chat(dead_mob, span_purplelarge("[link] <b>Cortical Hivemind: [src] choruses, \"[message]\"</b>"),  type =MESSAGE_TYPE_RADIO,)
 		else
 			for(var/borer in GLOB.cortical_borers)
-				to_chat(borer, span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>"), MESSAGE_TYPE_RADIO,)
+				to_chat(borer, span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>"), type = MESSAGE_TYPE_RADIO,)
 			for(var/mob/dead_mob in GLOB.dead_mob_list)
 				var/link = FOLLOW_LINK(dead_mob, src)
-				to_chat(dead_mob, span_purple("[link] <b>Cortical Hivemind: [src] sings, \"[message]\"</b>"), MESSAGE_TYPE_RADIO,)
+				to_chat(dead_mob, span_purple("[link] <b>Cortical Hivemind: [src] sings, \"[message]\"</b>"), type = MESSAGE_TYPE_RADIO,)
 		src.log_talk("[key_name(src)] spoke into the Borer hivemind: [message]", LOG_SAY)
 		return
 
