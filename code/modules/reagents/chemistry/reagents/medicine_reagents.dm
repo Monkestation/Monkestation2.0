@@ -1632,7 +1632,6 @@ MONKESTATION REMOVAL END */
 	reagent_state = LIQUID
 	color = "#6ccf0a"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
-	overdose_threshold = 20
 	ph = 7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_ANALGESIA, TRAIT_ANTICONVULSANT) //it's an anticonvulsant because it dampens both stimulus and response. Hard for your brain to move your body wrong if it can't move your body at all.
