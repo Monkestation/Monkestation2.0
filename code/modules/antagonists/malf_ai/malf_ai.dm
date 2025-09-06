@@ -40,7 +40,7 @@
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
-	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
+	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
 	return ..()
 
