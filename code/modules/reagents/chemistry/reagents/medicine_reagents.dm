@@ -1640,6 +1640,7 @@ MONKESTATION REMOVAL END */
 	affected_biotype = MOB_ROBOTIC
 	process_flags = PROCESS_SYNTHETIC
 	addiction_types = list(/datum/addiction/opioids = 16)
+	taste_description = "a segfault error"
 	var/smacked_the_fuck_out = FALSE //because i wanted it to be volume based but also not perfectly deterministic.
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
