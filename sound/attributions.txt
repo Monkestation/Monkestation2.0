@@ -149,3 +149,6 @@ https://uppbeat.io/sfx/whoosh-air-punch/114/1168
 https://uppbeat.io/sfx/throwing-item-swing/9430/25267
 
 portal_close, portal_open_1 , portal_open_2 , portal_open_3 , portal_travel made by @virgilcore (discord IGN)
+
+straw-suck.ogg and straw-end.ogg are adapted from straw slurp by dreamstobecome (Freesound) under Pixabay's license https://pixabay.com/service/license-summary/
+https://pixabay.com/sound-effects/straw-slurp-7066/
