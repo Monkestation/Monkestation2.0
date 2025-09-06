@@ -1024,6 +1024,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	for(var/mob/user as anything in is_using)
 		hide_contents(user)
 
+/// Closes the storage UIs of this and everything inside the parent for everyone viewing them.
+/datum/storage/proc/close_all_recursive()
+	close_all()
+	for(var/atom/movable/movable as anything in parent.get_all_contents())
+		movable.atom_storage?.close_all()
+
 /// Refresh the views of everyone currently viewing the storage.
 /datum/storage/proc/refresh_views()
 	for (var/mob/user in can_see_contents())
@@ -1156,10 +1162,3 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(new_locked > STORAGE_NOT_LOCKED)
 		close_all_recursive()
 	parent.update_appearance()
-
-/// Closes the storage UIs of this and everything inside the parent for everyone viewing them.
-/datum/storage/proc/close_all_recursive()
-	close_all()
-	for(var/atom/movable/movable as anything in parent.get_all_contents())
-		movable.atom_storage?.close_all()
-

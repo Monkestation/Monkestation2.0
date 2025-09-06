@@ -2931,9 +2931,7 @@
 /area/station/command/bridge)
 "aTx" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -6081,9 +6079,7 @@
 /area/station/security/prison/mess)
 "bVW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -9826,9 +9822,7 @@
 "dbp" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
@@ -18675,9 +18669,7 @@
 /area/station/cargo/storage)
 "fQb" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -26719,9 +26711,7 @@
 /area/station/maintenance/port/fore)
 "ikZ" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stock_parts/capacitor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
@@ -27148,9 +27138,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "iqp" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/random/clothing/costume,
 /obj/item/storage/box/lights/mixed,
@@ -37576,9 +37564,7 @@
 "lDa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
@@ -42485,9 +42471,7 @@
 /area/station/science/genetics)
 "ngl" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "ngt" = (
@@ -52790,9 +52774,7 @@
 /obj/item/flashlight/flare,
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/west,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/maintenance,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
@@ -59493,9 +59475,7 @@
 /area/station/science/ordnance)
 "sDe" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/structure/grille/broken,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -63435,9 +63415,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/tank/internals/oxygen/red{
 	pixel_x = 4
 	},

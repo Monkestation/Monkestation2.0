@@ -14511,9 +14511,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
 "aML" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/clothing/suit/wizrobe/red,
 /obj/item/clothing/head/wizard/red,
 /obj/item/staff,
@@ -21599,7 +21597,8 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi';
 	icon_state = "cc";
 	name = "centcom locker";
-	req_access = list("cent_captain")
+	req_access = list("cent_captain");
+	has_closed_overlay = 0
 	},
 /obj/item/radio/headset/headset_cent/commander,
 /obj/item/encryptionkey/heads/captain,
