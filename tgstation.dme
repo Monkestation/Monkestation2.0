@@ -8461,7 +8461,6 @@
 #include "monkestation\code\modules\research\techweb\all_nodes.dm"
 #include "monkestation\code\modules\research\techweb\cyborg_node.dm"
 #include "monkestation\code\modules\security\code\citationinator.dm"
-#include "monkestation\code\modules\security\code\holographic_handcuffs.dm"
 #include "monkestation\code\modules\security\code\officermonitor.dm"
 #include "monkestation\code\modules\security\code\undercover_id.dm"
 #include "monkestation\code\modules\security\code\weapons\lawbringer.dm"
