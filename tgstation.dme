@@ -6533,7 +6533,6 @@
 #include "monkestation\code\game\objects\items\devices\radio\encryptionkey.dm"
 #include "monkestation\code\game\objects\items\devices\radio\headset.dm"
 #include "monkestation\code\game\objects\items\devices\radio\radio.dm"
-#include "monkestation\code\game\objects\items\devices\scanners\gas_analyzer.dm"
 #include "monkestation\code\game\objects\items\drugs\cocaine_chem.dm"
 #include "monkestation\code\game\objects\items\drugs\cocaine_item.dm"
 #include "monkestation\code\game\objects\items\drugs\crack_pipe.dm"
