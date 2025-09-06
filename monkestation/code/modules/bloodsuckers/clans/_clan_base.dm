@@ -92,9 +92,8 @@
 /datum/bloodsucker_clan/proc/give_clan_objective()
 	if(isnull(clan_objective))
 		return
-	clan_objective = new clan_objective()
+	clan_objective = new clan_objective(null, bloodsuckerdatum.owner)
 	clan_objective.objective_name = "Clan Objective"
-	clan_objective.owner = bloodsuckerdatum.owner
 	bloodsuckerdatum.objectives += clan_objective
 	bloodsuckerdatum.owner.announce_objectives()
 
