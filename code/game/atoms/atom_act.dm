@@ -70,7 +70,7 @@
  * * def_zone - zone hit
  * * piercing_hit - is this hit piercing or normal?
  */
-/atom/proc/bullet_act(atom/A, obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone)

@@ -125,7 +125,7 @@
 	damage = 40
 	demolition_mod = 12
 
-/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 6u toxin, and 4u anacea. Deals roughly the same total damage as standard rounds
+/obj/projectile/bullet/dart/a357 //Contains
 	name = ".357 Heartpiercer bullet"
 	damage = 20
 	armour_penetration = 75
@@ -136,12 +136,14 @@
 	name = ".357 Wallstake bullet"
 	damage = 60
 	armour_penetration = 0
-	sharpness = NONE
+	sharpness = SHARP_NONE //Blunt
 	demolition_mod = 2
 	projectile_piercing = PASSMOB | PASSVEHICLE | PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 0.6
 
 /obj/projectile/bullet/a357/wallstake/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
+	if(isliving(target))
+		var/mob/living/poor_sap = target
 	if(pierces > 2)
 		projectile_piercing = NONE
 	return ..()
@@ -154,14 +156,14 @@
 	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
 	var/thrown_mobs = 0
 
-	for(var/atom/mob in current_turf.contents)
-		if(ismovable(mob))
-			var/atom/movable/moveable_mob = mob
-			if(thrown_mobs > 3)
-				break
-			if(ismob(moveable_mob))
-				thrown_mobs++
-				moveable_mob.throw_at(throw_at_turf, 3, 3)
+	for(var/mobs in current_turf.contents)
+		if(thrown_mobs > 3)
+			break
+		if(ismob(mob))
+			var/mob/tossable_mob = mobs
+			thrown_mob++
+			iter_item.throw_at(throw_at_turf, knockback_range, knockback_range)
+			LAZYADD(launched_items, tossable_mob)
 
 
 // admin only really, for ocelot memes

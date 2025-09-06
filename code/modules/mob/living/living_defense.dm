@@ -101,6 +101,7 @@
 	// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
 	// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
 	var/armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(def_zone, hitting_projectile, is_silent = TRUE))
+	var/stam_armor_check = min(ARMOR_MAX_BLOCK, check_projectile_stamina_armor(def_zone, hitting_projectile, is_silent = TRUE))
 
 	var/damage_done = apply_damage(
 		damage = hitting_projectile.damage,
@@ -117,7 +118,7 @@
 			damage = hitting_projectile.stamina,
 			damagetype = STAMINA,
 			def_zone = def_zone,
-			blocked = src.run_armor_check(attack_flag = ENERGY),
+			blocked = stam_armor_check,
 			attack_direction = hitting_projectile.dir,
 		)
 	if(hitting_projectile.pain)
@@ -170,6 +171,17 @@
 		. += 50
 	return .
 
+/mob/living/check_projectile_stamina_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
+	. = run_armor_check(
+		def_zone = def_zone,
+		attack_flag = ENERGY,
+		armour_penetration = (impacting_projectile.armour_penetration * 0.5),
+		silent = is_silent,
+		weak_against_armour = impacting_projectile.weak_against_armour,
+	)
+	if(impacting_projectile.grazing)
+		. += 50
+	return .
 
 /mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	return 0
