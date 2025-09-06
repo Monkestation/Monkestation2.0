@@ -17,7 +17,7 @@
 	melee = 35
 	bullet = 40
 	laser = 40
-	energy = 30
+	energy = 40
 	bomb = 25
 	fire = 50
 	acid = 50
@@ -176,7 +176,7 @@
 	melee = 35
 	bullet = 40
 	laser = 40
-	energy = 30
+	energy = 40
 	bomb = 25
 	fire = 70
 	acid = 90
@@ -340,7 +340,7 @@
 	melee = 35
 	bullet = 25
 	laser = 25
-	energy = 20
+	energy = 35
 	bomb = 25
 	fire = 50
 	acid = 50
@@ -558,7 +558,7 @@
 	melee = 20
 	bullet = 10
 	laser = 30
-	energy = 30
+	energy = 40
 	bomb = 15
 	fire = 40
 	acid = 50

@@ -394,9 +394,8 @@
 
 /datum/armor/under_chameleon
 	melee = 10
-	bullet = 20
-	laser = 20
-	energy = 10
+	bullet = 10
+	laser = 10
 	bio = 10
 	fire = 50
 	acid = 50
@@ -455,10 +454,9 @@
 	action_slots = ALL
 
 /datum/armor/suit_chameleon
-	melee = 20
+	melee = 10
 	bullet = 10
 	laser = 10
-	energy = 20
 	fire = 50
 	acid = 50
 

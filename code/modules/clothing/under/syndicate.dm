@@ -11,7 +11,6 @@
 
 /datum/armor/under_syndicate
 	melee = 10
-	energy = 10
 	bio = 10
 	fire = 50
 	acid = 40
@@ -47,7 +46,7 @@
 	melee = 10
 	bullet = 10
 	laser = 10
-	energy = 20
+	energy = 10
 	bio = 10
 	fire = 50
 	acid = 40
