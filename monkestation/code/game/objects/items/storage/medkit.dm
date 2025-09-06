@@ -8,8 +8,10 @@
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/surgical_drapes = 1,
-		/obj/item/scalpel = 1,
-		/obj/item/hemostat = 1,
-		/obj/item/cautery = 1,
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/cautery/advanced = 1,
+		/obj/item/bonesetter = 1,
+		/obj/item/blood_filter = 1,
 	)
 	generate_items_inside(items_inside,src)
