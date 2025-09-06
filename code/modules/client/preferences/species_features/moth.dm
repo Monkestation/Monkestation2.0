@@ -51,6 +51,7 @@
 	var/static/icon/moth_body
 	if (isnull(moth_body))
 		moth_body = icon('icons/blanks/32x32.dmi', "nothing")
+
 		moth_body.Blend(icon('icons/mob/species/moth/moth_wings.dmi', "m_moth_wings_plain_BEHIND"), ICON_OVERLAY)
 
 		for (var/obj/item/bodypart/body_part as anything in body_parts)
