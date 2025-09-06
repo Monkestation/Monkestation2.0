@@ -6,7 +6,7 @@
  * Odds are, there is a reason
  *
  **/
-
+GLOBAL_REAL(Debugger, /datum/debugger) = new
 // See initialization order in /code/game/world.dm
 GLOBAL_REAL(Master, /datum/controller/master)
 /datum/controller/master

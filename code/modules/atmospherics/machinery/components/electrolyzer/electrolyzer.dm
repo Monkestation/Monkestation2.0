@@ -98,8 +98,7 @@
 		update_appearance()
 		return PROCESS_KILL
 
-	var/turf/our_turf = loc
-	if(!istype(our_turf))
+	if(!isopenturf(get_turf(src)))
 		if(mode != ELECTROLYZER_MODE_STANDBY)
 			mode = ELECTROLYZER_MODE_STANDBY
 			update_appearance()
@@ -114,14 +113,14 @@
 	if(mode == ELECTROLYZER_MODE_STANDBY)
 		return
 
-	var/datum/gas_mixture/env = our_turf.return_air() //get air from the turf
+	var/datum/gas_mixture/env = return_air() //get air from the turf
 
 	if(!env)
 		return
 
 	call_reactions(env)
 
-	air_update_turf(FALSE, FALSE)
+	air_update_turf()
 
 	var/power_to_use = (5 * (3 * working_power) * working_power) / (efficiency + working_power)
 	if(anchored)
@@ -206,6 +205,8 @@
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	if(on)
 		SSair.start_processing_machine(src)
+	else
+		SSair.stop_processing_machine(src)
 
 /obj/machinery/electrolyzer/ui_state(mob/user)
 	return GLOB.physical_state

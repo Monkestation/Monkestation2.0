@@ -49,9 +49,9 @@
 	else
 		sending = (direction == PUMP_IN ? local_turf.return_air() : air_contents)
 		receiving = (direction == PUMP_IN ? air_contents : local_turf.return_air())
-
+	/// Update the environment if needed.
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
-		air_update_turf(FALSE, FALSE) // Update the environment if needed.
+		air_update_turf()
 
 	return ..()
 

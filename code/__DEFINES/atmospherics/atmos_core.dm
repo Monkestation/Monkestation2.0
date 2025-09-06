@@ -1,27 +1,3 @@
-//LISTMOS
-//indices of values in gas lists.
-///Amount of total moles in said gas mixture
-#define MOLES 1
-///Archived version of MOLES
-#define ARCHIVE 2
-///All gas related variables
-#define GAS_META 3
-///Gas specific heat per mole
-#define META_GAS_SPECIFIC_HEAT 1
-///Name of the gas
-#define META_GAS_NAME 2
-///Amount of moles required of the gas to be visible
-#define META_GAS_MOLES_VISIBLE 3
-///Overlay path of the gas, also setup the alpha based on the amount
-#define META_GAS_OVERLAY 4
-///Let the air alarm know if the gas is dangerous
-#define META_GAS_DANGER 5
-///Id of the gas for quick access
-#define META_GAS_ID 6
-///Power of the gas when used in the current iteration of fusion
-#define META_GAS_FUSION_POWER 7
-///Short description of the gas.
-#define META_GAS_DESC 8
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -182,3 +158,30 @@
 #define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
 /// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
 #define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01
+
+// Gas defines because i hate typepaths
+#define GAS_O2 "o2"
+#define GAS_N2 "n2"
+#define GAS_CO2 "co2"
+#define GAS_PLASMA "plasma"
+#define GAS_H2O "water_vapor"
+#define GAS_HYPERNOB "hypernob"
+#define GAS_NITROUS "n2o"
+#define GAS_NITRIUM "no2"
+#define GAS_TRITIUM "tritium"
+#define GAS_BZ "bz"
+#define GAS_PLUOXIUM "pluox"
+#define GAS_MIASMA "miasma"
+#define GAS_H2 "hydrogen"
+#define GAS_FREON "freon"
+#define GAS_HEALIUM "healium"
+#define GAS_PLUONIUM "pluonium"
+#define GAS_HALON "halon"
+#define GAS_ANTINOB "antinob"
+#define GAS_ZAUKER "zauker"
+//4 da future
+//#define GAS_HEXANE "hexane"
+//#define GAS_DILITHIUM "dilithium"
+
+#define GAS_FLAG_DANGEROUS (1<<0)
+#define GAS_FLAG_BREATH_PROC (1<<1)

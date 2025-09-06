@@ -172,13 +172,11 @@
 
 	return adjacent_turfs
 
-/atom/proc/air_update_turf(update = FALSE, remove = FALSE)
-	if(!SSair.initialized) // I'm sorry for polutting user code, I'll do 10 hail giacom's
-		return
+/atom/proc/air_update_turf()
 	var/turf/local_turf = get_turf(loc)
 	if(!local_turf)
 		return
-	local_turf.air_update_turf(update, remove)
+	local_turf.air_update_turf()
 
 /**
  * A helper proc for dealing with atmos changes
@@ -189,33 +187,29 @@
  * * update - Has the state of the structures in the world changed? If so, update our adjacent atmos turf list, if not, don't.
  * * remove - Are you removing an active turf (Read wall), or adding one
 */
-/turf/air_update_turf(update = FALSE, remove = FALSE)
-	if(!SSair.initialized) // I'm sorry for polutting user code, I'll do 10 hail giacom's
-		return
-	if(update)
-		immediate_calculate_adjacent_turfs()
-	if(remove)
-		SSair.remove_from_active(src)
-	else
-		SSair.add_to_active(src)
+/turf/air_update_turf()
+	immediate_calculate_adjacent_turfs()
 
 /atom/movable/proc/move_update_air(turf/target_turf)
 	if(isturf(target_turf))
-		target_turf.air_update_turf(TRUE, FALSE) //You're empty now
-	air_update_turf(TRUE, TRUE) //You aren't
+		target_turf.air_update_turf() //You're empty now
+	air_update_turf() //You aren't
+
+/atom/movable/proc/move_update_air(turf/target_turf)
+	if(isturf(target_turf))
+		target_turf.air_update_turf() //You're empty now
+	air_update_turf() //You aren't
 
 /atom/proc/atmos_spawn_air(text) //because a lot of people loves to copy paste awful code lets just make an easy proc to spawn your plasma fires
-	var/turf/open/local_turf = get_turf(src)
-	if(!istype(local_turf))
+	var/turf/open/T = get_turf(src)
+	if(!istype(T))
 		return
-	local_turf.atmos_spawn_air(text)
+	T.atmos_spawn_air(text)
 
 /turf/open/atmos_spawn_air(text)
 	if(!text || !air)
 		return
 
-	var/datum/gas_mixture/turf_mixture = SSair.parse_gas_string(text, /datum/gas_mixture/turf)
-
-	air.merge(turf_mixture)
-	archive()
-	SSair.add_to_active(src)
+	var/datum/gas_mixture/G = new
+	G.parse_gas_string(text)
+	assume_air(G)

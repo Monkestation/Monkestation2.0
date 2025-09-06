@@ -141,7 +141,7 @@
 	if(air.temperature > T20C)
 		delta_temperature *= -1
 	air.temperature += delta_temperature
-	holder.air_update_turf(FALSE, FALSE)
+	holder.air_update_turf()
 
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"

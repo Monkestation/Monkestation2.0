@@ -314,7 +314,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	merged_gasmix.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + merged_gasmix.temperature * waste_multiplier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 	merged_gasmix.garbage_collect()
 	env.merge(merged_gasmix)
-	air_update_turf(FALSE, FALSE)
+	air_update_turf()
 
 	// PART 6: EXTRA BEHAVIOUR
 	emit_radiation()

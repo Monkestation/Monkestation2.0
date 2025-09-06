@@ -102,7 +102,7 @@
 			environment.temperature = min(current_temp + ac_temp_inc, ac_temp_target)
 		else
 			environment.temperature = max(current_temp - ac_temp_inc, ac_temp_target)
-		air_update_turf(update = FALSE, remove = FALSE)
+		air_update_turf()
 		// Update the air of adjacent turfs too
 		var/adjacent_inc = CEILING(ac_temp_inc * ac_adjacent_mul, 0.1)
 		for(var/turf/open/adjacent_turf in location.get_atmos_adjacent_turfs())
@@ -116,7 +116,7 @@
 				adj_environment.temperature = min(adj_temp + adjacent_inc, ac_temp_target)
 			else
 				adj_environment.temperature = max(adj_temp - adjacent_inc, ac_temp_target)
-			adjacent_turf.air_update_turf(update = FALSE, remove = FALSE)
+			adjacent_turf.air_update_turf()
 
 #undef AC_ADJACENT_MUL
 #undef AC_DEFAULT_INC

@@ -155,7 +155,7 @@
 		for (var/turf/open/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
 			var/datum/gas_mixture/turf_gasmix = turf.return_air()
 			turf_gasmix.temperature += delta_temperature
-			air_update_turf(FALSE, FALSE)
+			air_update_turf()
 	cell.use(required_energy / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
@@ -240,13 +240,10 @@
 	data["minTemp"] = max(settable_temperature_median - settable_temperature_range, TCMB) - T0C
 	data["maxTemp"] = settable_temperature_median + settable_temperature_range - T0C
 
-	var/turf/local_turf = get_turf(loc)
 	var/current_temperature
-	if(istype(local_turf))
-		var/datum/gas_mixture/enviroment = local_turf.return_air()
-		current_temperature = enviroment.temperature
-	else if(isturf(local_turf))
-		current_temperature = local_turf.temperature
+	if(isopenturf(get_turf(src)))
+		var/datum/gas_mixture/env = return_air()
+		curTemp = env?.return_temperature()
 	if(isnull(current_temperature))
 		data["currentTemp"] = "N/A"
 	else
@@ -290,6 +287,8 @@
 	update_appearance()
 	if(on)
 		SSair.start_processing_machine(src)
+	else
+		SSair.stop_processing_machine(src)
 
 ///For use with heating reagents in a ghetto way
 /obj/machinery/space_heater/improvised_chem_heater

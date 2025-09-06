@@ -78,6 +78,11 @@
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.005
 
+//PIPENET UPDATE STATUS
+#define PIPENET_UPDATE_STATUS_DORMANT 0
+#define PIPENET_UPDATE_STATUS_REACT_NEEDED 1
+#define PIPENET_UPDATE_STATUS_RECONCILE_NEEDED 2
+
 /// intended to connect with all layers, check for all instead of just one.
 #define PIPING_ALL_LAYER (1<<0)
 /// can only be built if nothing else with this flag is on the tile already.

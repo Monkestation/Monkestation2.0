@@ -259,7 +259,7 @@
 	if (air.temperature > T20C)
 		air.temperature = max(air.temperature / 2, T20C)
 	air.garbage_collect()
-	location.air_update_turf(FALSE, FALSE)
+	location.air_update_turf()
 
 //MONKESTATION EDIT START
 /obj/effect/particle_effect/fluid/foam/firefighting/make_result()
@@ -316,10 +316,10 @@
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 
 /obj/structure/foamedmetal/Destroy()
-	air_update_turf(TRUE, FALSE)
+	air_update_turf()
 	. = ..()
 
 /obj/structure/foamedmetal/Move()

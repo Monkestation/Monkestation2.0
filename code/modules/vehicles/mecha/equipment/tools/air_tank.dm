@@ -91,7 +91,7 @@
 	var/datum/gas_mixture/sending = (tank_pump_direction == PUMP_IN ? local_turf.return_air() : internal_tank.air_contents)
 	var/datum/gas_mixture/receiving = (tank_pump_direction == PUMP_IN ? internal_tank.air_contents : local_turf.return_air())
 	if(sending.pump_gas_to(receiving, tank_pump_pressure))
-		air_update_turf(FALSE, FALSE)
+		air_update_turf()
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/disconnect_air()
 	SIGNAL_HANDLER

@@ -245,7 +245,7 @@
 		return
 
 	var/turf/our_turf = get_turf(loc)
-	RegisterSignal(our_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, PROC_REF(process_results))
+	air_update_turf()
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(our_turf, dir)
 
@@ -763,6 +763,11 @@
 		return !density
 	else
 		return TRUE
+
+/obj/machinery/door/firedoor/border_only/BlockThermalConductivity(opp_dir)
+	if(opp_dir == dir)
+		return density
+	return FALSE
 
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"

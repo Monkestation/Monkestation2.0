@@ -81,7 +81,7 @@
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
-	air_update_turf(TRUE, FALSE)
+	air_update_turf()
 	update_appearance()
 
 /obj/structure/mineral_door/wood/large_gate/Close()
@@ -94,7 +94,7 @@
 	set_opacity(TRUE)
 	door_opened = FALSE
 	layer = initial(layer)
-	air_update_turf(TRUE, TRUE)
+	air_update_turf()
 	update_appearance()
 
 /obj/structure/mineral_door/wood/large_gate/update_icon()
