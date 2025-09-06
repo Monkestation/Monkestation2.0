@@ -259,13 +259,36 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/sound/speak_sound
 		if(HAS_TRAIT(src, TRAIT_HELIUM))
 			speak_sound = sound('monkestation/sound/effects/helium_squeak.ogg')
-		else if(ending == "?")
-			speak_sound = voice_type2sound[voice_type]["?"]
-		else if(ending == "!")
-			speak_sound = voice_type2sound[voice_type]["!"]
 		else
-			speak_sound = voice_type2sound[voice_type][voice_type]
-		playsound(src, speak_sound, 300, 1, SHORT_RANGE_SOUND_EXTRARANGE-2, falloff_exponent = 0, pressure_affected = FALSE, ignore_walls = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
+			// Make sure we have a valid voice type
+			var/voice_type = client?.speaking_voice || "default"
+			// Get the sound list for this voice type
+			var/list/voice_sounds = voice_type2sound[voice_type]
+			if(!voice_sounds)
+				voice_sounds = voice_type2sound["default"]
+
+			// Select the appropriate sound
+			if(ending == "?")
+				speak_sound = voice_sounds["?"]
+			else if(ending == "!")
+				speak_sound = voice_sounds["!"]
+			else
+				// Pick from available variations
+				var/list/variations = list()
+				for(var/i in 1 to 4)
+					if(voice_sounds["[i]"])
+						variations += "[i]"
+				speak_sound = voice_sounds[pick(variations)]
+
+			if(!speak_sound) // Fallback if no sound was found
+				speak_sound = voice_type2sound["default"]["1"]
+
+		playsound(src, speak_sound, 300, 1, SHORT_RANGE_SOUND_EXTRARANGE-2,
+			falloff_exponent = 0,
+			pressure_affected = FALSE,
+			ignore_walls = FALSE,
+			use_reverb = FALSE,
+			mixer_channel = CHANNEL_MOB_SOUNDS)
 	//monkestation edit end
 
 	if(succumbed)

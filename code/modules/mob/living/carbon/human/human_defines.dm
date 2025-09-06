@@ -100,3 +100,5 @@
 	var/list/alternative_laughs
 	///stored list of alternate deathgasps
 	var/list/alternative_deathgasps
+	///Chosen voice pack with prefs - see speaking_voices.dm
+	var/speaking_voice
