@@ -660,7 +660,7 @@
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(. && new_model)
-		R.model.transform_to(new_model, FALSE, user)
+		R.model.transform_to(new_model, FALSE)
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"

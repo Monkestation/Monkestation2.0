@@ -19,6 +19,8 @@
 
 	///Represents the cyborg's model (engineering, medical, etc.)
 	var/obj/item/robot_model/model = null
+	///Variable to store a cyborg's model type incase someone uses a transform module on a cyborg with no client.
+	var/pending_model = null
 
 	radio = /obj/item/radio/borg
 

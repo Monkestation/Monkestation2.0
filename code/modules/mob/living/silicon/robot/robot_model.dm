@@ -225,12 +225,14 @@
 		module.emp_act(severity)
 	..()
 
-/obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE, mob/living/transform_upgrade_user)
+/obj/item/robot_model/proc/transform_to(new_config_type, forced = FALSE)
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	new_model.robot = cyborg
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
-	if(!new_model.be_transformed_to(src, forced, transform_upgrade_user))
+	if(!new_model.be_transformed_to(src, forced))
+		if(!cyborg.client)
+			cyborg.pending_model = new_config_type
 		qdel(new_model)
 		return
 	cyborg.model = new_model
@@ -249,7 +251,7 @@
 	qdel(src)
 	return new_model
 
-/obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE, mob/living/transform_upgrade_user)
+/obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	if(HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
 		robot.balloon_alert(robot, "can't transform right now!")
 		return FALSE
@@ -260,8 +262,6 @@
 			var/list/details = borg_skins[skin]
 			reskin_icons[skin] = image(icon = details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = details[SKIN_ICON_STATE])
 		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), cyborg, old_model), radius = 38, require_near = TRUE)
-		if(!borg_skin && transform_upgrade_user)
-			borg_skin = show_radial_menu(transform_upgrade_user, cyborg, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), cyborg, old_model), radius = 38, require_near = TRUE)
 		if(!borg_skin)
 			return FALSE
 		var/list/details = borg_skins[borg_skin]
@@ -1079,7 +1079,7 @@
 /obj/item/robot_model/centcom/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
 	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
-	if(istype(cyborg, /mob/living/silicon/robot))
+	if(istype(cyborg, /mob/living/silicon/robot) && cyborg.hud_used)
 		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
 			qdel(button)
 
