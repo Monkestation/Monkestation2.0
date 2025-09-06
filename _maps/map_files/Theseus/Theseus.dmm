@@ -28,7 +28,7 @@
 /obj/structure/table/glass/plasmaglass,
 /obj/effect/decal/cleanable/ash,
 /obj/effect/spawner/random/entertainment/drugs,
-/obj/item/reagent_containers/cocaine{
+/obj/item/stack/sheet/cocaine{
 	pixel_y = 12
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
