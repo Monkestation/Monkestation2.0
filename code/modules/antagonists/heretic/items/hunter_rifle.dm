@@ -132,8 +132,7 @@
 	name = "hunter's 7.62 bullet"
 	// These stats are only applied if the weapon is fired fully aimed
 	// If fired without aiming or at someone too close, it will do much less
-	damage = 45
-	armour_penetration = 60
+	damage = 30
 	stamina = 30
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 

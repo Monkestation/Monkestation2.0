@@ -14,10 +14,10 @@
 	armor_type = /datum/armor/suit_armor
 
 /datum/armor/suit_armor
-	melee = 30
+	melee = 35
 	bullet = 40
-	laser = 30
-	energy = 15
+	laser = 40
+	energy = 30
 	bomb = 25
 	fire = 50
 	acid = 50
@@ -102,7 +102,7 @@
 	melee = 50
 	bullet = 60
 	laser = 30
-	energy = 20
+	energy = 25
 	bomb = 50
 	bio = 100
 	fire = 40
@@ -113,7 +113,7 @@
 	melee = 40
 	bullet = 50
 	laser = 60
-	energy = 30
+	energy = 50
 	bomb = 50
 	bio = 100
 	acid = 50
@@ -176,7 +176,7 @@
 	melee = 35
 	bullet = 40
 	laser = 40
-	energy = 20
+	energy = 30
 	bomb = 25
 	fire = 70
 	acid = 90
@@ -250,7 +250,7 @@
 	melee = 50
 	bullet = 40
 	laser = 50
-	energy = 30
+	energy = 50
 	bomb = 25
 	fire = 100
 	acid = 90
@@ -284,16 +284,15 @@
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
-	slowdown = 0.5
 
 /datum/armor/armor_riot
-	melee = 50
+	melee = 60
 	bullet = 10
 	laser = 10
 	energy = 10
 	fire = 80
 	acid = 80
-	wound = -10  ///You can ignore the crew mobbing you, but the wounding will build up.
+	wound = -10  ///You can ignore the crew mobbing you, but the wounding will build up. Temporary change.
 
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"
@@ -357,11 +356,10 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	strip_delay = 70
 	equip_delay_other = 50
-	slowdown = 0.3
 
 /datum/armor/armor_bulletproof
 	melee = 10
-	bullet = 60
+	bullet = 65
 	laser = 10
 	energy = 10
 	bomb = 40
@@ -431,7 +429,7 @@
 	melee = 50
 	bullet = 50 //monkestation edit, 30 to 40
 	laser = 40
-	energy = 30
+	energy = 40
 	bomb = 50
 	bio = 90
 	fire = 100

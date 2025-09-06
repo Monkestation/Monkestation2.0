@@ -23,9 +23,10 @@
 
 /obj/item/ammo_casing/a357/heartpiercer/Initialize(mapload)
 	. = ..()
-	create_reagents(12, OPENCONTAINER)
+	create_reagents(16, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/toxin/spore, 6)
 	reagents.add_reagent(/datum/reagent/toxin, 6)
+	reagents.add_reagent(/datum/reagent/toxin/anacea, 4)
 
 /obj/item/ammo_casing/a357/heartpiercer/attackby()
 	return

@@ -19,8 +19,8 @@
 	faction = list(FACTION_CARP)
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
-	maxHealth = 600
-	health = 600
+	maxHealth = 400
+	health = 400
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	unsuitable_atmos_damage = 0
