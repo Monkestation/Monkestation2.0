@@ -1,6 +1,6 @@
 import { CheckboxInput, FeatureToggle } from '../base';
 
-export const limb_coloring: FeatureToggle = {
+export const greyscale_toggle: FeatureToggle = {
   name: 'Use mutant colors',
   component: CheckboxInput,
 };
