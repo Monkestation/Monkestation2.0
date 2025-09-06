@@ -25,6 +25,10 @@
 	item_path = /obj/item/autosurgeon/toolset/synthcare
 	cost_per_order = 750
 
+/datum/orderable_item/survival/robopiates //monkestation edit Slows you down so only really good for out of fight usage
+	item_path = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	cost_per_order = 500
+
 /datum/orderable_item/survival/temperature //monkestation edit
 	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature
 	cost_per_order = 200

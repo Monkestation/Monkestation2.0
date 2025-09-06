@@ -16,7 +16,7 @@
 		return FALSE
 
 	// No pain from mechanics but still show the message (usually)
-	if(mechanical_surgery)
+	if(mechanical_surgery && !(target.mob_biotypes && MOB_ROBOTIC))
 		if(prob(70))
 			target.pain_message(span_userdanger(pain_message))
 		return FALSE
