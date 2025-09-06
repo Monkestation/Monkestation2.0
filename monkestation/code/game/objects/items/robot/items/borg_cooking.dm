@@ -20,6 +20,12 @@
 	update_appearance()
 	return ..()
 
+/obj/item/borg/apparatus/cooking/get_proxy_attacker_for(atom/target, mob/user)
+	if(stored)
+		return stored
+	else
+		return ..()
+
 /obj/item/borg/apparatus/cooking/pre_attack(atom/atom, mob/living/user, params)
 	if(!stored)
 		var/itemcheck = FALSE
@@ -36,9 +42,6 @@
 			return TRUE
 		else
 			return ..()
-	else
-		stored.melee_attack_chain(user, atom, params)
-		return TRUE
 
 /obj/item/borg/apparatus/cooking/examine()
 	. = ..()
@@ -99,12 +102,7 @@
 		attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 		attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 
-//lets borgs interact with ovens and griddles.
-/obj/machinery/griddle/attack_robot(mob/user) //griddles seem like they could be controlled from afar
-	. = ..()
-	attack_hand(user)
-	return TRUE
-
+//lets borgs interact with ovens and stoves.
 /obj/machinery/oven/attack_robot(mob/user)
 	. = ..()
 	if(user.Adjacent(src))

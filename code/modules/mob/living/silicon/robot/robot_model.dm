@@ -878,8 +878,8 @@
 
 /obj/item/robot_model/service/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
-	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
 			qdel(button)
 	..()
@@ -1079,18 +1079,17 @@
 
 /obj/item/robot_model/centcom/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
-	if(!istype(cyborg, /mob/living/silicon/robot))
-		..()
-	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
-	if(cyborg.hud_used)
-		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
-			qdel(button)
+	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
+		if(cyborg.hud_used)
+			for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+				qdel(button)
 
-	qdel(cyborg.radio.keyslot)
-	cyborg.radio.recalculateChannels()
+		qdel(cyborg.radio.keyslot)
+		cyborg.radio.recalculateChannels()
 
-	cyborg.emagged = FALSE
-	cyborg.centcom = FALSE
+		cyborg.emagged = FALSE
+		cyborg.centcom = FALSE
 	..()
 
 // ------------------------------------------ Storages
