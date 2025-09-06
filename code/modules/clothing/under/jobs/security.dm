@@ -18,7 +18,7 @@
 	random_sensor = FALSE
 
 /datum/armor/rank_security
-	melee = 15
+	melee = 10
 	bullet = 10
 	bio = 10
 	fire = 30
