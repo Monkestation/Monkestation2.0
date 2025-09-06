@@ -155,8 +155,8 @@
 
 /obj/item/soap/proc/noUses(mob/user)
 	if(cyborg)
-  	to_chat(user, span_warning("[src] has ran out of chemicals! Head to a recharger to refill it."))
-    return
+		to_chat(user, span_warning("[src] has ran out of chemicals! Head to a recharger to refill it."))
+		return
 	to_chat(user, span_warning("[src] crumbles into tiny bits!"))
 	qdel(src)
 
