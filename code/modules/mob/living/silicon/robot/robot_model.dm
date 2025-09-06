@@ -866,8 +866,8 @@
 		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 //MONKESTATION ADDITION - lets service borgs craft
-/obj/item/robot_model/service/rebuild_modules()
-	..()
+/obj/item/robot_model/service/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
@@ -1050,8 +1050,8 @@
 	if(soap.uses < initial(soap.uses))
 		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
-/obj/item/robot_model/centcom/rebuild_modules()
-	..()
+/obj/item/robot_model/centcom/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
 	var/mob/living/silicon/robot/cyborg = loc
 	if(!istype(cyborg, /mob/living/silicon/robot))
 		return
