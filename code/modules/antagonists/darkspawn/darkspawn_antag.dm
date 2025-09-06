@@ -93,7 +93,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		return
 	handle_clown_mutation(current_mob, mob_override ? null : "Our powers allow us to overcome our clownish nature, allowing us to wield weapons with impunity.")
 	add_team_hud(current_mob)
-	current_mob.grant_language(/datum/language/darkspawn)
+	current_mob.grant_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 
 	//psi stuff
 	if(current_mob?.hud_used?.psi_counter)
@@ -106,8 +106,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	if(current_mob)
 		current_mob.AddComponent(/datum/component/internal_cam, list(ROLE_DARKSPAWN))
 		var/datum/component/internal_cam/cam = current_mob.GetComponent(/datum/component/internal_cam)
-		if(cam)
-			cam.change_cameranet(GLOB.thrallnet)
+		cam?.change_cameranet(GLOB.thrallnet)
 
 	//divulge
 	if(darkspawn_state == DARKSPAWN_MUNDANE)
@@ -117,16 +116,15 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 			action.Grant(current_mob)
 		addtimer(CALLBACK(src, PROC_REF(begin_force_divulge)), 25 MINUTES) //this won't trigger if they've divulged when the proc runs
 
-/datum/antagonist/darkspawn/remove_innate_effects()
-	owner.current.remove_language(/datum/language/darkspawn)
-	owner.current.faction -= FACTION_DARKSPAWN
-	if(owner.current)
-		qdel(owner.current.GetComponent(/datum/component/internal_cam))
-
-	for(var/datum/action/cooldown/spell/spells in owner.current.actions) //remove divulge if they haven't yet
-		if(istype(spells, /datum/action/cooldown/spell/divulge))
-			spells.Remove(owner.current)
-			qdel(spells)
+/datum/antagonist/darkspawn/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	if(current_mob)
+		current_mob.remove_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
+		current_mob.faction -= FACTION_DARKSPAWN
+		qdel(current_mob.GetComponent(/datum/component/internal_cam))
+		for(var/datum/action/cooldown/spell/divulge/divulge in current_mob.actions) //remove divulge if they haven't yet
+			divulge.Remove(current_mob)
+			qdel(divulge)
 
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//
