@@ -24,25 +24,6 @@
 	fire_sound_volume = 90
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasrifle)
 
-/obj/item/gun/energy/laser/heavylaser
-	name = "\improper Allstar SR-1 laser rifle"
-	desc = "A hefty energy-based laser rifle that fires beams which quickly punch through thin metal. It is fitted with an upgraded powersupply, allowing for faster charging."
-	icon_state = "lasrifle"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	inhand_icon_state = "lasrifle"
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavylaser)
-	w_class = WEIGHT_CLASS_BULKY
-	cell_type = /obj/item/stock_parts/cell/quickcharge
-
-/obj/item/gun/energy/laser/heavylaser/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.5 SECONDS, allow_akimbo = FALSE)
-
-/obj/item/stock_parts/cell/quickcharge
-	name = "Fast-charge energy cell"
-	chargerate = 255
-
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."

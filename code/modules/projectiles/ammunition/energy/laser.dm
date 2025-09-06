@@ -26,11 +26,6 @@
 	e_cost = 100 ///10 shots
 	select_name = "kill"
 
-/obj/item/ammo_casing/energy/laser/heavylaser
-	projectile_type = /obj/projectile/beam/laser/heavylaser
-	e_cost = LASER_SHOTS(30, 1000)
-	select_name = "kill"
-
 /obj/item/ammo_casing/energy/lasergun/carbine
 	projectile_type = /obj/projectile/beam/laser/carbine
 	e_cost = 25 // 40 shots
