@@ -500,6 +500,19 @@
 		return FALSE
 	if(istype(A, /mob/living/))
 		var/mob/living/living_atom = A
+			if((A.getarmor(def_zone, attack_flag) > 50) && check_ricochet(A)) //If armor is good, bounce is possible.
+					if(A.handle_ricochet(src))
+						on_ricochet(A)
+						impacted = list() // Shoot a x-ray laser at a pair of mirrors I dare you
+						ignore_source_check = TRUE // Firer is no longer immune
+						decayedRange = max(0, decayedRange - reflect_range_decrease)
+						ricochet_chance *= ricochet_decay_chance
+						damage *= ricochet_decay_damage
+						stamina *= ricochet_decay_damage
+						range = decayedRange
+						if(hitscan)
+							store_hitscan_collision(point_cache)
+						return TRUE
 		if(impacted[living_atom.buckled])
 			return FALSE
 	var/datum/point/point_cache = trajectory.copy_to()
