@@ -882,7 +882,7 @@
 		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
 			qdel(button)
-	..()
+	return ..()
 
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
@@ -1090,7 +1090,7 @@
 
 		cyborg.emagged = FALSE
 		cyborg.centcom = FALSE
-	..()
+	return ..()
 
 // ------------------------------------------ Storages
 /datum/robot_energy_storage
