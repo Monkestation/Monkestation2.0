@@ -1638,6 +1638,7 @@ MONKESTATION REMOVAL END */
 	metabolized_traits = list(TRAIT_ANALGESIA, TRAIT_ANTICONVULSANT) //it's an anticonvulsant because it dampens both stimulus and response. Hard for your brain to move your body wrong if it can't move your body at all.
 	pain_modifier = 0.7
 	affected_biotype = MOB_ROBOTIC
+	process_flags = PROCESS_SYNTHETIC
 	addiction_types = list(/datum/addiction/opioids = 16)
 	var/smacked_the_fuck_out = FALSE //because i wanted it to be volume based but also not perfectly deterministic.
 
