@@ -447,4 +447,5 @@
 		if(HAS_TRAIT(ipc, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
 		ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
+		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/5)
 	return ..()
