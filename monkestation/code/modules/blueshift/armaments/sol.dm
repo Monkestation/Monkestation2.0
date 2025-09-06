@@ -56,7 +56,7 @@
 /datum/armament_entry/company_import/sol_defense/armor_hardened/emt_hardened_vest
 	item_type = /obj/item/clothing/suit/armor/sf_hardened/emt
 
-/*
+
 
 /datum/armament_entry/company_import/sol_defense/case
 	subcategory = "Weapon Cases"
@@ -88,6 +88,7 @@
 	item_type = /obj/item/gun/ballistic/revolver/takbok
 	cost = PAYCHECK_COMMAND * 6
 
+/*
 // Lethal anything that's not a pistol, requires high company interest
 
 /datum/armament_entry/company_import/sol_defense/longarm

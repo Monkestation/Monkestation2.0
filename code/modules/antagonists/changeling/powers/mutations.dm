@@ -192,6 +192,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
+	armour_penetration = 50
 	wound_bonus = -20
 	bare_wound_bonus = 20
 	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
@@ -545,9 +546,9 @@
 
 /datum/armor/armor_changeling
 	melee = 40
-	bullet = 40
-	laser = 40
-	energy = 50
+	bullet = 55
+	laser = 50
+	energy = 20
 	bomb = 10
 	bio = 10
 	/*fire = 90*/ //MONKESTATION REMOVAL
@@ -571,9 +572,9 @@
 
 /datum/armor/helmet_changeling
 	melee = 40
-	bullet = 40
-	laser = 40
-	energy = 50
+	bullet = 55
+	laser = 50
+	energy = 30
 	bomb = 10
 	bio = 10
 	/*fire = 90*/ //MONKESTATION REMOVAL

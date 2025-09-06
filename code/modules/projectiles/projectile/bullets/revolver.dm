@@ -125,7 +125,7 @@
 	damage = 40
 	demolition_mod = 12
 
-/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 6u toxin, and 4u anacea. Deals roughly the same total damage as standard rounds
+/obj/projectile/bullet/dart/a357 //Contains 6u spore toxin, 6u toxin. Deals roughly the same total damage as standard rounds
 	name = ".357 Heartpiercer bullet"
 	damage = 20
 	armour_penetration = 75
