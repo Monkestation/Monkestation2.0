@@ -77,14 +77,14 @@
 
 /obj/projectile/bullet/c27_54cesarzowa
 	name = ".27-54 Cesarzowa piercing bullet"
-	damage = 15
+	damage = 12
 	armour_penetration = 30
 	wound_bonus = -10
 
 /obj/projectile/bullet/c27_54cesarzowa/rubber
 	name = ".27-54 Cesarzowa rubber bullet"
 	stamina = 30
-	damage = 6
+	damage = 3
 	weak_against_armour = TRUE
 	wound_bonus = -30
 	bare_wound_bonus = -10

@@ -292,11 +292,18 @@
 	var/turf/target_old_turf = target.loc
 	if(HAS_TRAIT(target,TRAIT_SHOVE_RESIST))
 		log_combat(src, target, "shoved")
-		target.stamina.adjust(-7)
+		target.stamina.adjust(-10)
 		target.visible_message("<span class='danger'>[name] tries to shove [target.name]</span>",
 							"<span class='userdanger'>You're nearly knocked down by [name]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, src)
 		return
-
+	else
+		if(isliving(target))
+			var/mob/living/living = target
+			var/datum/status_effect/stacking/debilitated/effect = living.has_status_effect(/datum/status_effect/stacking/debilitated)
+			if(effect)
+				effect.add_stacks(1)
+			else
+				living.apply_status_effect(/datum/status_effect/stacking/debilitated, 1)
 
 	//Are we hitting anything? or
 	if(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_PRESHOVE) & COMSIG_CARBON_ACT_SOLID)

@@ -3,7 +3,7 @@
 	icon_state = "pellet"
 	damage = 40
 	sharpness = SHARP_POINTY
-	wound_bonus = -5
+	wound_bonus = -15
 
 /obj/projectile/bullet/shotgun_slug/executioner
 	name = "executioner slug" // admin only, can dismember limbs
@@ -19,9 +19,9 @@
 	name = "tungsten sabot-slug"
 	icon_state = "gauss"
 	damage = 25 //10 less than slugs.
-	speed = 0.25 //sub-caliber + lighter = speed. (Smaller number = faster)
-	armour_penetration = 25
-	wound_bonus = -25
+	speed = 0.3 //sub-caliber + lighter = speed. (Smaller number = faster)
+	armour_penetration = 50
+	wound_bonus = -30
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
 	ricochet_chance = 50
 	ricochet_auto_aim_range = 0
@@ -46,7 +46,7 @@
 	name = "beanbag slug"
 	icon_state = "pellet"
 	damage = 5 //10 to 5 monkestation edit
-	stamina = 75 //monkestation edit
+	stamina = 80 //monkestation edit
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
@@ -55,12 +55,13 @@
 	name = "incendiary slug"
 	icon_state = "pellet"
 	damage = 20
+	speed = 0.5
 
 /obj/projectile/bullet/incendiary/shotgun/no_trail
 	name = "precision incendiary slug"
 	damage = 35
 	leaves_fire_trail = FALSE
-
+	speed = 0.5
 
 
 /obj/projectile/bullet/pellet
@@ -102,18 +103,21 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum ///4 pellets
 	name = "magnum blockshot pellet"
-	damage = 12
+	damage = 13
 	wound_bonus = 7
+	armour_penetration = 30
+	speed = 1.4
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum/Initialize(mapload)
 	. = ..()
-	transform = transform.Scale(1.25, 1.25)
+	transform = transform.Scale(2, 2)
 
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express ///12 pellets
 	name = "express buckshot pellet"
-	damage = 3
+	damage = 4
 	wound_bonus = 0
+	speed = 0.3
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
 	. = ..()
@@ -170,7 +174,7 @@
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
 	icon_state = "pellet"
-	damage = 15
+	damage = 10
 	paralyze = 10
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -182,8 +186,10 @@
 	name ="uranium penetrator"
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
 	icon_state = "uraniumpen"
-	damage = 35
+	damage = 30
+	armour_penetration = 75
 	projectile_piercing = (ALL & (~PASSMOB))
+	speed = 0.3
 
 /obj/projectile/bullet/pellet/trickshot
 	name = "trickshot pellet"

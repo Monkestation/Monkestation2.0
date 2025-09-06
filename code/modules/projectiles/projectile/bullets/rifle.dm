@@ -66,7 +66,7 @@
 /obj/projectile/bullet/c40sol/fragmentation
 	name = ".40 Sol Long fragmentation bullet"
 	damage = 10
-	stamina = 30
+	stamina = 20
 	weak_against_armour = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = -5
@@ -87,9 +87,9 @@
 /obj/projectile/bullet/c40sol/pierce
 	name = ".40 Sol match bullet"
 	icon_state = "gaussphase"
-	speed = 0.5
-	damage = 15
-	armour_penetration = 40
+	speed = 0.3
+	damage = 13
+	armour_penetration = 20
 	wound_bonus = -30
 	bare_wound_bonus = -10
 	ricochets_max = 2
@@ -103,11 +103,9 @@
 		var/mob/living/poor_sap = target
 
 		// If the target mob has enough armor to stop the bullet, or the bullet has already gone through two people, stop it on this hit
-		if((poor_sap.run_armor_check(def_zone, BULLET, "", "", silent = TRUE) > 20) || (pierces > 2))
+		if((poor_sap.run_armor_check(def_zone, BULLET, "", "", silent = TRUE) > 30) || (pierces > 2))
 			projectile_piercing = NONE
 
-			if(damage > 10) // Lets just be safe with this one
-				damage -= 5
 			armour_penetration -= 10
 
 	return ..()
@@ -117,6 +115,7 @@
 	name = ".40 Sol Long incendiary bullet"
 	icon_state = "redtrac"
 	damage = 15
+	speed = 0.5
 	/// How many firestacks the bullet should impart upon a target when impacting
 	var/firestacks_to_give = 1
 
@@ -134,10 +133,11 @@
 
 /obj/projectile/bullet/strilka310
 	name = ".310 Strilka bullet"
-	damage = 55    //-5 from mosin
-	armour_penetration = 10
+	damage = 48    //-12 from mosin
+	armour_penetration = 30
 	wound_bonus = -50  //-5 from mosin
 	wound_falloff_tile = 0
+	speed = 0.35
 
 /obj/projectile/bullet/strilka310/surplus
 	name = ".310 Strilka surplus bullet"
@@ -147,7 +147,7 @@
 /obj/projectile/bullet/strilka310/rubber
 	name = ".310 rubber bullet"
 	damage = 10
-	stamina = 55
+	stamina = 60
 	ricochets_max = 5
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
@@ -155,12 +155,13 @@
 	shrapnel_type = null
 	sharpness = NONE
 	embedding = null
+	speed = 0.5
 
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
-	damage = 45
+	damage = 40
 	armour_penetration = 60
 	wound_falloff_tile = -2
 	wound_bonus = -45
-	speed = 0.3
+	speed = 0.25
 
