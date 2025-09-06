@@ -61,6 +61,7 @@
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
 	armor_flag = BOMB
+	damage_walls = TRUE // melt the walls
 	speed = 1.4
 	wound_bonus = 30
 	bare_wound_bonus = 45

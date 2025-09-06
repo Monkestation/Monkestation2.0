@@ -365,6 +365,9 @@
 	projectiles_cache = 400
 	projectiles_cache_max = 400
 	projectiles_per_shot = 10
+	projectile_delay = 0.06 SECONDS
+	variance = 12
+	randomspread = 7
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_ATR
 
@@ -378,9 +381,10 @@
 	projectiles = 2000
 	projectiles_cache = 0
 	projectiles_cache_max = 2000
-	projectiles_per_shot = 4
-	variance = 24
-	randomspread = 15
+	projectiles_per_shot = 10
+	projectile_delay = 0.06 SECONDS
+	variance = 20
+	randomspread = 13
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_PEASHOOTER
 
