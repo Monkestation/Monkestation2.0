@@ -1053,6 +1053,8 @@
 /obj/item/robot_model/centcom/rebuild_modules()
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
+	if(!istype(cyborg, /mob/living/silicon/robot))
+		return
 	cyborg.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
 	crafting.forced_mode = TRUE
@@ -1077,8 +1079,10 @@
 
 /obj/item/robot_model/centcom/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
+	if(!istype(cyborg, /mob/living/silicon/robot))
+		return ..()
 	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
-	if(istype(cyborg, /mob/living/silicon/robot) && cyborg.hud_used)
+	if(cyborg.hud_used)
 		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
 			qdel(button)
 
