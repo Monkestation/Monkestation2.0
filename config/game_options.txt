@@ -37,7 +37,7 @@ COMMENDATION_PERCENT_POLL 0.05
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-SPRINT_DELAY 1.2
+SPRINT_DELAY 1.4
 RUN_DELAY 1.8
 WALK_DELAY 4
 

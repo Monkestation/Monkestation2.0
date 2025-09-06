@@ -236,7 +236,7 @@
 	suppressor_x_offset = 8
 	suppressor_y_offset = 0
 
-	fire_delay = 1 SECONDS
+	fire_delay = 0.8 SECONDS
 
 	recoil = 3
 	wield_recoil = 1
@@ -289,7 +289,7 @@
 	casing_ejector = FALSE
 	empty_indicator = FALSE
 	bolt_type = BOLT_TYPE_OPEN
-	fire_delay = 0.1 SECONDS
+	fire_delay = 0.2 SECONDS
 	spread = 15
 
 /obj/item/gun/ballistic/automatic/pistol/plasma_thrower/Initialize(mapload)
@@ -341,7 +341,7 @@
 	casing_ejector = FALSE
 	empty_indicator = FALSE
 	bolt_type = BOLT_TYPE_OPEN
-	fire_delay = 0.6 SECONDS
+	fire_delay = 0.8 SECONDS
 	spread = 2.5
 
 	projectile_damage_multiplier = 3 // 30 damage a shot

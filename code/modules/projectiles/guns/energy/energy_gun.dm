@@ -7,7 +7,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	modifystate = TRUE
 	ammo_x_offset = 3
-	dual_wield_spread = 60
+	cell_type = /obj/item/stock_parts/cell/upgraded
 
 /obj/item/gun/energy/e_gun/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
