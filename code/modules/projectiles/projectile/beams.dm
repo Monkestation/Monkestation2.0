@@ -30,14 +30,12 @@
 
 /obj/projectile/beam/laser/heavylaser
 	generic_name = "concentrated laser beam"
+	icon_state = "heavylaser"
 	damage = 25
-	demolition_mod = 1.5
 	pass_flags = PASSTABLE | PASSGLASS
 	projectile_piercing = PASSGRILLE
-
-/obj/projectile/beam/laser/heavylaser/Initialize(mapload)
-	. = ..()
-	transform = transform.Scale(1.5, 1.5)
+	wound_bonus = -35
+	bare_wound_bonus = 20
 
 /obj/projectile/beam/laser/lasrifle
 	generic_name = "rifle beam"

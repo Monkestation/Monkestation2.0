@@ -27,7 +27,7 @@
 /obj/item/gun/energy/laser/heavylaser
 	name = "\improper Allstar SR-1 laser rifle"
 	desc = "A hefty energy-based laser rifle that fires beams which quickly punch through thin metal. It is fitted with an upgraded powersupply, allowing for faster charging."
-	icon_state = "lasrifle"
+	icon_state = "heavylaser"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "lasrifle"

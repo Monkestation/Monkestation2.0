@@ -117,7 +117,7 @@
 			damage = hitting_projectile.stamina,
 			damagetype = STAMINA,
 			def_zone = def_zone,
-			blocked = armor_check,
+			blocked = src.run_armor_check(attack_flag = ENERGY),
 			attack_direction = hitting_projectile.dir,
 		)
 	if(hitting_projectile.pain)

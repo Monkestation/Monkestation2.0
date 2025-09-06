@@ -117,7 +117,7 @@
 	name = "express buckshot pellet"
 	damage = 4
 	wound_bonus = 0
-	speed = 0.3
+	speed = 0.6
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
 	. = ..()
