@@ -94,7 +94,7 @@
 	if(blood_shield)
 		var/shield = blood_shield?.resolve()
 		owner.visible_message(
-			span_warning("[owner]\'s [blood_shield] loses its form and disappears into [owner.p_their()] hands!"),
+			span_warning("[owner]\'s [shield] loses its form and disappears into [owner.p_their()] hands!"),
 			span_warning("We unform our Blood shield!"),
 			span_hear("You hear liquids sloshing around."),
 		)
