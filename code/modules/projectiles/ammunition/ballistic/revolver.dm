@@ -19,7 +19,7 @@
 /obj/item/ammo_casing/a357/heartpiercer
 	name = ".357 Heartpiercer bullet casing"
 	desc = "A .357 Heartpiercer bullet casing."
-	projectile_type = /obj/projectile/bullet/a357/heartpiercer
+	projectile_type = /obj/projectile/bullet/dart/a357
 
 /obj/item/ammo_casing/a357/heartpiercer/Initialize(mapload)
 	. = ..()

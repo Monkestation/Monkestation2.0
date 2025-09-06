@@ -199,6 +199,12 @@
 	fuse_activation(get_turf(src))
 	return ..()
 
+/obj/projectile/bullet/c980grenade/proc/valid_turf(turf1, turf2)
+	for(var/turf/line_turf in get_line(turf1, turf2))
+		if(line_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			return FALSE
+	return TRUE
+
 /// Generic proc that is called when the projectile should 'detonate', being either on impact or when the range runs out
 /obj/projectile/bullet/c980grenade/proc/fuse_activation(atom/target)
 	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
