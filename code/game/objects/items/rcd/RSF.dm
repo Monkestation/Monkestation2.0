@@ -219,6 +219,8 @@ RSF
 /obj/item/rsf/deluxe
 	name = "\improper Deluxe Rapid-Service-Fabricator"
 	icon_state = "drsf"
+	inhand_icon_state = "drsf"
+	base_icon_state = "drsf"
 	var/options = list(
 		bureaucracy = list(
 			name = "Bureaucracy",
