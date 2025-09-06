@@ -18,11 +18,12 @@
 	random_sensor = FALSE
 
 /datum/armor/rank_security
-	melee = 10
+	melee = 15
+	bullet = 10
 	bio = 10
 	fire = 30
 	acid = 30
-	wound = 10
+	wound = 15
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security uniform"
