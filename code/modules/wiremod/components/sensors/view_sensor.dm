@@ -34,7 +34,10 @@
 	. += create_ui_notice("Scan Cooldown: [DisplayTimeText(view_cooldown)]", "orange", "stopwatch")
 
 /obj/item/circuit_component/view_sensor/input_received(datum/port/input/port)
-	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_VIEW_SENSOR))
+	if(!parent.shell)
+		return
+
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_VIEW_SENSOR))
 		result.set_output(null)
 		cooldown.set_output(COMPONENT_SIGNAL)
 		return
