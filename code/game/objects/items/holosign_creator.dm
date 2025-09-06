@@ -107,63 +107,6 @@
 	holosign_type = /obj/structure/holosign/barrier
 	creation_time = 2 SECONDS
 	max_signs = 6
-	var/time_to_handcuff = 4.5 SECONDS
-
-/**
- * Gives the security holographic projector ability to handcuff targets
- */
-
-/obj/item/holosign_creator/security/interact_with_atom(mob/living/carbon/target, mob/living/user, list/modifiers)
-	if(!iscarbon(target))
-		return NONE
-	if(target.handcuffed)
-		to_chat(user, span_warning("[target] is already cuffed!"))
-		return ITEM_INTERACT_BLOCKING
-	else if(DOING_INTERACTION_WITH_TARGET(user, target))
-		to_chat(user, span_warning("You're already trying to cuff [target]!"))
-		return ITEM_INTERACT_BLOCKING
-	else if(!target.canBeHandcuffed())
-		to_chat(user, span_warning("[target] doesn't have two hands..."))
-		return ITEM_INTERACT_BLOCKING
-	log_combat(user, target, "attempted to handcuff")
-	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-	target.visible_message(span_danger("[user] begins restraining [target] with [src]!"), \
-							span_userdanger("[user] begins shaping a holographic field around your hands!"))
-	if(!do_after(user, time_to_handcuff, target) && target.canBeHandcuffed())
-		to_chat(user, span_warning("You fail to restrain [target]."))
-		return ITEM_INTERACT_BLOCKING
-	if(!target.handcuffed) // you cant trust people that they wont handcuff the person whilst someone else is handcuffing
-		target.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/used(target))
-		target.update_handcuffed()
-		to_chat(user, span_notice("You restrain [target]."))
-		log_combat(user, target, "handcuffed")
-	return ITEM_INTERACT_SUCCESS
-
-
-/**
- * Handcuffs
- * the handcuffs themselfes should be un-obtainable, /used version is applied on our actual target
- * as strong zipties, take 50% longer to handcuff someone with
- */
-
-/obj/item/restraints/handcuffs/holographic
-	name = "holographic energy field"
-	desc = "A weirdly solid holographic field... how did you get this? this item gives you the permission to scream at coders."
-	icon_state = "handcuffAlien"
-	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	breakouttime = 45 SECONDS
-	trashtype = /obj/item/restraints/handcuffs/holographic/used
-	flags_1 = NONE
-
-/obj/item/restraints/handcuffs/holographic/used
-	desc = "A holographic projection of handcuffs, suprisingly hard to break out of"
-	item_flags = DROPDEL
-
-/obj/item/restraints/handcuffs/holographic/used/dropped(mob/user)
-	user.visible_message(span_danger("[user]'s [name] dissapears!"), \
-							span_userdanger("[user]'s [name] dissapears!"))
-	return ..()
 
 /obj/item/holosign_creator/engineering
 	name = "engineering holobarrier projector"
