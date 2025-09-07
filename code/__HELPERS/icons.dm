@@ -767,9 +767,8 @@ world
 	var/render_icon = curicon
 
 	if (render_icon)
-		var/curstates = icon_states(curicon)
-		if(!(curstate in curstates))
-			if ("" in curstates)
+		if(!icon_exists(curicon, curstate))
+			if(icon_exists(curicon, ""))
 				curstate = ""
 			else
 				render_icon = FALSE
@@ -1471,14 +1470,35 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 /// If you want a stack trace to be output when the given state/file doesn't exist, use
 /// `/proc/icon_exists_or_scream()`.
 /proc/icon_exists(file, state)
-	var/static/list/icon_states_cache = list()
+	// monkestation start: icon_exists cache
+	var/static/list/icon_states_cache
+	if(isnull(icon_states_cache))
+#ifdef PRELOAD_ICON_EXISTS_CACHE
+		icon_states_cache = load_icon_exists_cache() || alist()
+#else
+		icon_states_cache = alist()
+#endif
+	// monkestation end
 	if(isnull(file) || isnull(state))
 		return FALSE //This is common enough that it shouldn't panic, imo.
 
+	// monkestation start: icon_exists cache
+#ifdef PRELOAD_ICON_EXISTS_CACHE
+	var/file_string = "[file]"
+	if(isfile(file) && length(file_string) && !isnull(icon_states_cache[file_string]?[state]))
+		return TRUE
+#endif
+	// monkestation end
+
 	if(isnull(icon_states_cache[file]))
-		icon_states_cache[file] = list()
-		for(var/istate in icon_states(file))
-			icon_states_cache[file][istate] = TRUE
+		icon_states_cache[file] = alist()
+		var/file_string = "[file]"
+		if(length(file_string) && file_string != "/icon") // ensure that it's actually a file, and not a runtime icon
+			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
+				icon_states_cache[file][istate] = TRUE
+		else // Otherwise, we have to use the slower BYOND proc
+			for(var/istate in icon_states(file))
+				icon_states_cache[file][istate] = TRUE
 
 	return !isnull(icon_states_cache[file][state])
 
@@ -1490,7 +1510,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(icon_exists(file, state))
 		return TRUE
 
-	var/static/list/screams = list()
+	var/static/alist/screams = alist()
 	if(!isnull(screams[file]))
 		screams[file] = TRUE
 		stack_trace("State [state] in file [file] does not exist.")
@@ -1498,22 +1518,25 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return FALSE
 
 /// Cache of the width and height of icon files, to avoid repeating the same expensive operation
-GLOBAL_LIST_EMPTY(icon_dimensions)
+GLOBAL_DATUM_INIT(icon_dimensions, /alist, alist())
 
 /// Returns a list containing the width and height of an icon file
-/proc/get_icon_dimensions(icon_path)
+/proc/get_icon_dimensions(icon_path) as /alist
 	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
 	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
 	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
 	if (!isfile(icon_path) || !length("[icon_path]"))
 		var/icon/my_icon = icon(icon_path)
-		return list("width" = my_icon.Width(), "height" = my_icon.Height())
+		return alist("width" = my_icon.Width(), "height" = my_icon.Height())
 	if (isnull(GLOB.icon_dimensions[icon_path]))
 		var/icon/my_icon = icon(icon_path)
-		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
+		GLOB.icon_dimensions[icon_path] = alist("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
 
-/proc/strip_appearance_underlays(mutable_appearance/appearance)
+/// Strips all underlays on a different plane from an appearance.
+/// Returns the stripped appearance.
+/proc/strip_appearance_underlays(mutable_appearance/appearance) as /mutable_appearance
+	RETURN_TYPE(/mutable_appearance)
 	var/base_plane = PLANE_TO_TRUE(appearance.plane)
 	for(var/mutable_appearance/underlay as anything in appearance.underlays)
 		if(isnull(underlay))
@@ -1521,3 +1544,43 @@ GLOBAL_LIST_EMPTY(icon_dimensions)
 		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance
+
+/**
+ * Copies the passed /appearance, returns a /mutable_appearance
+ *
+ * Filters out certain overlays from the copy, depending on their planes.
+ * Prevents stuff like lighting from being copied to the new appearance.
+ */
+/proc/copy_appearance_filter_overlays(appearance_to_copy, recursion = 0) as /mutable_appearance
+	RETURN_TYPE(/mutable_appearance)
+	var/mutable_appearance/copy = new(appearance_to_copy)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
+
+	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
+	var/list/overlays_to_keep = list()
+	for(var/mutable_appearance/special_overlay as anything in copy.overlays)
+		if(isnull(special_overlay))
+			continue
+		var/mutable_appearance/real = new()
+		real.appearance = special_overlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			if(recursion)
+				overlays_to_keep += .(real, recursion - 1)
+			else
+				overlays_to_keep += real
+	copy.overlays = overlays_to_keep
+
+	var/list/underlays_to_keep = list()
+	for(var/mutable_appearance/special_underlay as anything in copy.underlays)
+		if(isnull(special_underlay))
+			continue
+		var/mutable_appearance/real = new()
+		real.appearance = special_underlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			if(recursion)
+				underlays_to_keep += .(real, recursion - 1)
+			else
+				underlays_to_keep += real
+	copy.underlays = underlays_to_keep
+
+	return copy

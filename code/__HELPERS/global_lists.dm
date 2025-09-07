@@ -47,6 +47,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_nose, GLOB.goblin_nose_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/floran_leaves, GLOB.floran_leaves_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/apid_wings, GLOB.apid_wings_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/satyr_fluff, GLOB.satyr_fluff_list) //Monkestation Addition
@@ -56,6 +57,9 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arm_wingsopen, GLOB.arm_wingsopen_list) //NON-MODULE CHANGE
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, GLOB.tails_list_avian) //NON-MODULE CHANGE
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/plumage, GLOB.avian_ears_list) //NON-MODULE CHANGE
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_tail, GLOB.oni_tail_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_wings, GLOB.oni_wings_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/oni_horns, GLOB.oni_horns_list) //Monkestation Addition
 
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
 /proc/init_species_list()

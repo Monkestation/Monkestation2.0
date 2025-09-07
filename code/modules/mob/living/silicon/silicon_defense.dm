@@ -68,17 +68,63 @@
 		user_unbuckle_mob(buckled_mobs[1], user)
 	else
 		if((user.istate & ISTATE_HARM))
-			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
-			visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
-							span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
+			if(!try_punch_borg(user))
+				user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+				playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
+				visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
+								span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
 		else
 			visible_message(span_notice("[user] pets [src]."), \
 							span_notice("[user] pets you."), null, null, user)
 			to_chat(user, span_notice("You pet [src]."))
 			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
 
+/mob/living/silicon/proc/try_punch_borg(mob/living/carbon/human/attacker)
+	if(HAS_TRAIT(attacker, TRAIT_FEEBLE))
+		return FALSE
+
+	var/obj/item/bodypart/attacking_bodypart = astype(attacker.get_organ_slot(ORGAN_SLOT_BRAIN), /obj/item/organ/internal/brain)?.get_attacking_limb(src) || attacker.get_active_hand()
+	if(!attacking_bodypart)
+		return FALSE
+
+	// You either need a robotic arm (metal can punch metal), able to deal enough damage to knockdown, or have the TRAIT_BORG_PUNCHER trait on yourself or the attacking limb.
+	if((attacking_bodypart.unarmed_damage_high < attacking_bodypart.unarmed_stun_threshold) && !(attacking_bodypart.bodytype & BODYTYPE_ROBOTIC) && !HAS_TRAIT(attacking_bodypart, TRAIT_BORG_PUNCHER) && !HAS_TRAIT(attacker, TRAIT_BORG_PUNCHER))
+		return FALSE
+
+	. = TRUE
+
+	var/atk_verb = attacking_bodypart.unarmed_attack_verb
+	var/atk_effect = attacking_bodypart.unarmed_attack_effect
+
+	if(atk_effect == ATTACK_EFFECT_BITE && attacker.is_mouth_covered(ITEM_SLOT_MASK))
+		to_chat(attacker, span_warning("You can't [atk_verb] with your mouth covered!"))
+		return FALSE
+	attacker.do_attack_animation(src, atk_effect)
+
+	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+	var/armor_block = run_armor_check(attack_flag = MELEE)
+
+	playsound(src, 'monkestation/sound/weapons/bat_hit.ogg', 15, TRUE)
+	visible_message(
+		span_danger("[attacker] [atk_verb]ed [src]!"),
+		span_userdanger("You're [atk_verb]ed by [attacker]!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+		ignored_mobs = attacker,
+	)
+	to_chat(attacker, span_danger("You [atk_verb] [src]!"), type = MESSAGE_TYPE_COMBAT)
+
+	lastattacker = attacker.real_name
+	lastattackerckey = attacker.ckey
+
+	var/attack_direction = get_dir(attacker, src)
+
+	var/log_what = "punched"
+	if(atk_effect == ATTACK_EFFECT_KICK) //kicks deal 1.5x raw damage
+		log_what = "kicked"
+		damage *= 1.5
+	apply_damage(damage, attacking_bodypart.attack_type, blocked = armor_block, attack_direction = attack_direction)
+	log_combat(attacker, src, log_what)
 
 /mob/living/silicon/attack_drone(mob/living/basic/drone/user)
 	if((user.istate & ISTATE_HARM))

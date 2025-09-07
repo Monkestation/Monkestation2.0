@@ -184,7 +184,7 @@
 /mob/living/basic/bot/medbot/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
 		link_techweb(tool.buffer) // monkestation edit: techweb linking refactor
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 // Variables sent to TGUI
 /mob/living/basic/bot/medbot/ui_data(mob/user)
@@ -368,6 +368,7 @@
 	medical_mode_flags = MEDBOT_SPEAK_MODE
 	heal_threshold = 0
 	heal_amount = 5
+	maints_access_required = list(ACCESS_MEDICAL, ACCESS_AWAY_SCIENCE, ACCESS_AWAY_GENERAL, ACCESS_AWAY_MEDICAL)
 
 /mob/living/basic/bot/medbot/nukie
 	name = "Oppenheimer"

@@ -16,11 +16,8 @@
 //The user can change properties of the supplypod using the UI, and change the way that items are taken from the bay (One at a time, ordered, random, etc)
 //Many of the effects of the supplypod set here are put into action in supplypod.dm
 
-/client/proc/centcom_podlauncher() //Creates a verb for admins to open up the ui
-	set name = "Config/Launch Supplypod"
-	set desc = "Configure and launch a CentCom supplypod full of whatever your heart desires!"
-	set category = "Admin.Events"
-	new /datum/centcom_podlauncher(usr)//create the datum
+ADMIN_VERB(centcom_podlauncher, R_ADMIN, FALSE, "Config/Launch Supplypod", "Configure and launch a CentCom supplypod full of whatever your heart desires!", ADMIN_CATEGORY_EVENTS)
+	new /datum/centcom_podlauncher(user.mob)
 
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
 //Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)
@@ -65,8 +62,7 @@
 	var/obj/structure/closet/supplypod/centcompod/temp_pod //The temporary pod that is modified by this datum, then cloned. The buildObject() clone of this pod is what is launched
 	// Stuff needed to render the map
 	var/map_name
-	var/atom/movable/screen/map_view/cam_screen
-	var/atom/movable/screen/background/cam_background
+	var/atom/movable/screen/map_view/camera/cam_screen
 	var/tabIndex = 1
 	var/renderLighting = FALSE
 
@@ -102,26 +98,22 @@
 	cam_screen = new
 	cam_screen.generate_view(map_name)
 
-	var/datum/plane_master_group/planes = cam_screen.display_to(holder.mob)
-
+	// display_to doesn't send the planes to the client, so we have to do it via display_to_client
+	var/datum/plane_master_group/planes = cam_screen.display_to_client(holder)
 	if(!renderLighting)
 		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
 			instance.set_alpha(100)
 
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = TRUE
 	refreshView()
-	holder.register_map_obj(cam_background)
 
 /datum/centcom_podlauncher/ui_state(mob/user)
 	if (SSticker.current_state >= GAME_STATE_FINISHED)
 		return GLOB.always_state //Allow the UI to be given to players by admins after roundend
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/centcom_podlauncher/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/supplypods),
+		get_asset_datum(/datum/asset/spritesheet_batched/supplypods),
 	)
 
 /datum/centcom_podlauncher/ui_interact(mob/user, datum/tgui/ui)
@@ -514,7 +506,6 @@
 			. = TRUE
 		if("refreshView")
 			initMap()
-			refreshView()
 			. = TRUE
 		if("renderLighting")
 			renderLighting = !renderLighting
@@ -542,7 +533,6 @@
 /datum/centcom_podlauncher/ui_close(mob/user) //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
 	QDEL_NULL(temp_pod)
 	QDEL_NULL(cam_screen)
-	QDEL_NULL(cam_background)
 	qdel(src)
 
 /datum/centcom_podlauncher/proc/setupViewPod()
@@ -564,9 +554,7 @@
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
 
-	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_screen.show_camera(visible_turfs, size_x, size_y)
 
 /datum/centcom_podlauncher/proc/updateCursor(forceClear = FALSE) //Update the mouse of the user
 	if (!holder) //Can't update the mouse icon if the client doesnt exist!
@@ -808,7 +796,7 @@
 	message_admins("[key_name_admin(usr)] [msg] in [ADMIN_VERBOSEJMP(specificTarget)].")
 	if (length(whoDyin))
 		for (var/mob/living/M in whoDyin)
-			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")
+			admin_ticket_log(M, "[key_name(usr)] [msg]")
 
 /datum/centcom_podlauncher/proc/loadData(list/dataToLoad)
 	bayNumber = dataToLoad["bayNumber"]

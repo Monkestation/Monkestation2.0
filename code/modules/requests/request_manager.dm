@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		ui.open()
 
 /datum/request_manager/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/request_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())
@@ -170,22 +170,25 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	switch(action)
 		if ("pp")
-			usr.client.VUAP_selected_mob = request.owner?.mob
+			//SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/show_player_panel, request.owner?.mob)
 			usr.client.selectedPlayerCkey = request.owner?.mob.ckey
-			usr.client.holder.vuap_open()
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal)
 			return TRUE
+
 		if ("vv")
 			var/mob/M = request.owner?.mob
 			usr.client.debug_variables(M)
 			return TRUE
+
 		if ("sm")
-			var/mob/M = request.owner?.mob
-			usr.client.cmd_admin_subtle_message(M)
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/cmd_admin_subtle_message, request.owner?.mob)
 			return TRUE
+
 		if ("flw")
 			var/mob/M = request.owner?.mob
 			usr.client.admin_follow(M)
 			return TRUE
+
 		if ("tp")
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr,"The game hasn't started yet!")
@@ -200,8 +203,9 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 					D.traitor_panel()
 					return TRUE
 			else
-				usr.client.holder.show_traitor_panel(M)
+				SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_traitor_panel, M)
 				return TRUE
+
 		if ("logs")
 			var/mob/M = request.owner?.mob
 			if(!ismob(M))
@@ -209,6 +213,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				return TRUE
 			show_individual_logging_panel(M, null, null)
 			return TRUE
+
 		if ("smite")
 			if(!check_rights(R_FUN))
 				to_chat(usr, "Insufficient permissions to smite, you require +FUN", confidential = TRUE)
@@ -217,8 +222,9 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if (!H || !istype(H))
 				to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
 				return TRUE
-			usr.client.smite(H)
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/admin_smite, request.owner?.mob)
 			return TRUE
+
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)
 				to_chat(usr, "Cannot reply to a prayer", confidential = TRUE)
@@ -226,6 +232,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			var/mob/M = request.owner?.mob
 			usr.client.admin_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
 			return TRUE
+
 		if ("setcode")
 			if (request.req_type != REQUEST_NUKE)
 				to_chat(usr, "You cannot set the nuke code for a non-nuke-code-request request!", confidential = TRUE)
@@ -235,6 +242,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				SD.r_code = code
 			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
 			return TRUE
+
 		if ("show")
 			if(request.req_type != REQUEST_FAX)
 				to_chat(usr, "Request doesn't have a paper to read.", confidential = TRUE)
@@ -242,6 +250,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			var/obj/item/paper/request_message = request.additional_information
 			request_message.ui_interact(usr)
 			return TRUE
+
 		if ("play")
 			if(request.req_type != REQUEST_INTERNET_SOUND)
 				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)

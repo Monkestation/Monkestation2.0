@@ -26,7 +26,7 @@
 		return FALSE
 
 	var/obj/storage_item = locate(/obj/item/storage/backpack) in cast_on.contents
-	
+
 	if(isnull(storage_item))
 		return FALSE
 
@@ -37,3 +37,6 @@
 	to_chat(cast_on, span_warning("Your [storage_item] feels lighter..."))
 	to_chat(owner, span_notice("With a blink, you pull [item] out of [cast_on][p_s()] [storage_item]."))
 	owner.put_in_active_hand(item)
+
+	owner.log_message("stole [item] from [key_name(cast_on)] with [name]", LOG_ATTACK)
+	cast_on.log_message("had their [item] stolen by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)

@@ -287,3 +287,9 @@
 	uniform = /obj/item/clothing/under/plasmaman/bitrunner
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
 	head = /obj/item/clothing/head/helmet/space/plasmaman/bitrunner
+
+/datum/outfit/plasmaman/bridge_assistant //no unique plasmaman gear ig
+	name = "Bridge Assistant Plasmaman"
+	uniform = /obj/item/clothing/under/plasmaman
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman

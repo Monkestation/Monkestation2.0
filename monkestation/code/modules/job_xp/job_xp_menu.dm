@@ -4,16 +4,17 @@
 /datum/xp_menu
 	var/client/owner
 
-/datum/xp_menu/New(client/creator)
+/datum/xp_menu/New(client/owner)
 	. = ..()
-	owner = creator
+	src.owner = owner
 
 /datum/xp_menu/Destroy(force)
-	. = ..()
+	if(owner?.xp_menu == src)
+		owner.xp_menu = null
 	owner = null
+	return ..()
 
 /datum/xp_menu/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "XpMenu", "[owner.ckey]'s Job XP")
@@ -24,11 +25,8 @@
 
 /datum/xp_menu/ui_close(mob/user)
 	. = ..()
-	if(!owner)
-		return
-	if(QDELETED(src))
-		return
-	QDEL_NULL(owner?.xp_menu)
+	if(!QDELETED(src))
+		qdel(src)
 
 /datum/xp_menu/ui_data(mob/user)
 	var/list/data = list()

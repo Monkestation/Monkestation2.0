@@ -1,5 +1,5 @@
 /datum/artifact_fault/clown
-	name = "Funny Fault"
+	name = "Clown Fault"
 	trigger_chance = 5
 	inspect_warning = list(
 		"Smells faintly of bananas",
@@ -8,7 +8,7 @@
 	)
 	visible_message = "summons a portal to the HONK DIMENSION!"
 	discovered_credits = -500
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	weight = ARTIFACT_VERYRARE
 

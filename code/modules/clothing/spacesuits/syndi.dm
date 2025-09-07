@@ -5,6 +5,7 @@
 	inhand_icon_state = "space_syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	armor_type = /datum/armor/space_syndicate
+	slowdown = 0.25
 
 /datum/armor/space_syndicate
 	melee = 40
@@ -15,6 +16,19 @@
 	bio = 30
 	fire = 80
 	acid = 85
+	wound = 10
+
+/datum/armor/space_syndicate_fire
+	melee = 40
+	bullet = 50
+	laser = 30
+	energy = 40
+	bomb = 30
+	bio = 30
+	fire = 100
+	acid = 85
+	wound = 10
+
 
 // Don't blame me, blame whoever added this many variations
 GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
@@ -38,10 +52,27 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	inhand_icon_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	w_class = WEIGHT_CLASS_NORMAL
-	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
+	allowed = list(
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/gun,
+		/obj/item/tank/jetpack/oxygen,
+		/obj/item/tank/jetpack/harness,
+		/obj/item/storage/belt/holster/detective,
+		/obj/item/storage/belt/holster/nukie,
+		/obj/item/storage/belt/holster/energy,
+	) //monkestation edit: updated list
 	armor_type = /datum/armor/space_syndicate
 	cell = /obj/item/stock_parts/cell/hyper
 	var/helmet_type = /obj/item/clothing/head/helmet/space/syndicate
+	slowdown = 0.25 //monkestation edit: syndicate have a theme of no slowdown on their gear. e.g: syndicate duffel bags
 
 //Green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/green
@@ -109,7 +140,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black-green syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/green
-	name = "black space helmet"
+	name = "black and green space helmet"
 	icon_state = "syndicate-helm-black-green"
 	inhand_icon_state = "syndicate-helm-black-green"
 
@@ -135,12 +166,12 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black medical syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "black space helmet"
+	name = "black medical space helmet"
 	icon_state = "syndicate-helm-black-med"
 	inhand_icon_state = "syndicate-helm-black"
 
 /obj/item/clothing/suit/space/syndicate/black/med
-	name = "green space suit"
+	name = "black medical space suit"
 	icon_state = "syndicate-black-med"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/med
@@ -148,20 +179,25 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black-orange syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/orange
-	name = "black space helmet"
+	name = "black and orange space helmet"
 	icon_state = "syndicate-helm-black-orange"
 	inhand_icon_state = "syndicate-helm-black"
+	armor_type = /datum/armor/space_syndicate_fire
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/syndicate/black/orange
 	name = "black and orange space suit"
 	icon_state = "syndicate-black-orange"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/orange
-
+	armor_type = /datum/armor/space_syndicate_fire
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 //Black-red syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/red
-	name = "black space helmet"
+	name = "black and red space helmet"
 	icon_state = "syndicate-helm-black-red"
 	inhand_icon_state = "syndicate-helm-black-red"
 
@@ -190,12 +226,24 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "black space helmet"
+	name = "black engineering space helmet"
 	icon_state = "syndicate-helm-black-engie"
 	inhand_icon_state = "syndicate-helm-black"
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+
+/obj/item/clothing/head/helmet/space/syndicate/black/engie/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/space/syndicate/black/engie
 	name = "black engineering space suit"
 	icon_state = "syndicate-black-engie"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/engie
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+
+/obj/item/clothing/suit/space/syndicate/black/engie/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)

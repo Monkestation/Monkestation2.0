@@ -104,7 +104,6 @@
 		towards your attacker. This effect can only trigger once every 20 seconds."
 	gain_text = "The footsoldier was known to be a fearsome duelist. \
 		Their general quickly appointed them as their personal Champion."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 		/datum/heretic_knowledge/mark/blade_mark,
@@ -245,7 +244,6 @@
 		you gain increased resistance to gaining wounds and resistance to batons."
 	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
 		He was without rival, equal, or purpose."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/blade,
 		/datum/heretic_knowledge/reroll_targets,
@@ -375,7 +373,6 @@
 		at a target, dealing damage and causing bleeding."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/ultimate/blade_final,
@@ -388,7 +385,7 @@
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
 	desc = "The ascension ritual of the Path of Blades. \
-		Bring 3 headless corpses to a transmutation rune to complete the ritual. \
+		Bring 3 corpses with either no head or a split skull to a transmutation rune to complete the ritual. \
 		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
 		These blades will protect you from all attacks, but are consumed on use. \
 		Your Furious Steel spell will also have a shorter cooldown. \
@@ -406,7 +403,7 @@
 	if(!.)
 		return FALSE
 
-	return !sacrifice.get_bodypart(BODY_ZONE_HEAD)
+	return !sacrifice.get_bodypart(BODY_ZONE_HEAD) || HAS_TRAIT(sacrifice, TRAIT_HAS_CRANIAL_FISSURE)
 
 /datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()

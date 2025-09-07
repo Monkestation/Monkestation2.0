@@ -361,7 +361,8 @@
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
-	build_access_lists(new_access_list, normal_access, wildcard_access)
+	if(length(new_access_list))
+		build_access_lists(new_access_list, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
 	if(mode == ERROR_ON_FAIL)
@@ -428,13 +429,11 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
-/obj/item/card/id/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!proximity_flag || !check_allowed_items(target) || !isfloorturf(target))
-		return
-	try_project_paystand(user, target)
+/obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with) || !isfloorturf(interacting_with))
+		return NONE
+	try_project_paystand(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -482,7 +481,7 @@
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
-		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
+		playsound(projection, 'sound/effects/empulse.ogg', 40, TRUE)
 		my_store = new_store
 
 /**
@@ -557,15 +556,15 @@
 				if(ispath(trim))
 					SSid_access.apply_trim_to_card(src, trim)
 
-/obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rupee))
+/obj/item/card/id/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/rupee))
 		to_chat(user, span_warning("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
 		return
-	else if(iscash(W))
-		insert_money(W, user)
+	else if(iscash(attacking_item))
+		insert_money(attacking_item, user)
 		return
-	else if(istype(W, /obj/item/storage/bag/money))
-		var/obj/item/storage/bag/money/money_bag = W
+	else if(istype(attacking_item, /obj/item/storage/bag/money))
+		var/obj/item/storage/bag/money/money_bag = attacking_item
 		var/list/money_contained = money_bag.contents
 		var/money_added = mass_insert_money(money_contained, user)
 		if (money_added)
@@ -755,10 +754,10 @@
 		break
 
 /obj/item/card/id/examine_more(mob/user)
+	. = ..()
 	if(!user.can_read(src))
 		return
 
-	. = ..()
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
@@ -791,10 +790,14 @@
 	return access.Copy()
 
 /obj/item/card/id/GetID()
+	RETURN_TYPE(/obj/item/card/id)
 	return src
 
 /obj/item/card/id/RemoveID()
 	return src
+
+/obj/item/card/id/proc/chat_span()
+	return trim?.chat_span()
 
 /// Called on COMSIG_ATOM_UPDATED_ICON. Updates the visuals of the wallet this card is in.
 /obj/item/card/id/proc/update_in_wallet()
@@ -836,6 +839,26 @@
 	icon_state = "retro"
 	registered_age = null
 
+/obj/item/card/id/away/scp1
+	name = "Senior Scientist ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp1
+
+/obj/item/card/id/away/scp2
+	name = "Facility Guard ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp2
+
+/obj/item/card/id/away/scp3
+	name = "MTF Sergeant ID"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp3
+
+/obj/item/card/id/away/scp4
+	name = "Facility Manager"
+	desc = "A strange card with writing on it spelling out SCP. You feel like you shouldn't mess with this... "
+	trim = /datum/id_trim/away/scp4
+
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
@@ -852,27 +875,32 @@
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	trim = /datum/id_trim/away/old/sec
+	trim = /datum/id_trim/job/away/old/sec /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/sci
-	name = "Charlie Station Scientist's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	trim = /datum/id_trim/away/old/sci
+	name = "Delta Station Scientist's ID card"
+	desc = "A faded Delta Station ID card. You can make out the rank \"Scientist\"."
+	trim = /datum/id_trim/job/away/old/sci /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/eng
-	name = "Charlie Station Engineer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	trim = /datum/id_trim/away/old/eng
+	name = "Beta Station Engineer's ID card"
+	desc = "A faded Beta Station ID card. You can make out the rank \"Station Engineer\"."
+	trim = /datum/id_trim/job/away/old/eng /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
-/obj/item/card/id/away/old/apc
-	name = "APC Access ID"
-	desc = "A special ID card that allows access to APC terminals."
-	trim = /datum/id_trim/away/old/apc
+/obj/item/card/id/away/old/equipment
+	name = "Engineering Equipment Access"
+	desc = "A special ID card that allows access to engineering equipment."
+	trim = /datum/id_trim/job/away/old/equipment /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
 
 /obj/item/card/id/away/old/robo
 	name = "Delta Station Roboticist's ID card"
 	desc = "An ID card that allows access to bots maintenance protocols."
-	trim = /datum/id_trim/away/old/robo
+	trim = /datum/id_trim/job/away/old/robo /// MONKESTATION EDIT - Turns all Charlie Station trims into /datum/id_trim/job trims
+
+/obj/item/card/id/away/old/cargo
+	name = "Alpha Station Cargo Technician's ID card"
+	desc = "A faded Alpha Station ID card. You can make out the rank \"Cargo Technician\"."
+	trim = /datum/id_trim/job/away/old/cargo
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
@@ -908,6 +936,36 @@
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
 
+/obj/item/card/id/departmental_budget/civ
+	department_ID = ACCOUNT_CIV
+	department_name = ACCOUNT_CIV_NAME
+	icon_state = "civ_budget" //for the captain to squander
+
+/obj/item/card/id/departmental_budget/srv
+	department_ID = ACCOUNT_SRV
+	department_name = ACCOUNT_SRV_NAME
+	icon_state = "srv_budget" //for parties
+
+/obj/item/card/id/departmental_budget/sec
+	department_ID = ACCOUNT_SEC
+	department_name = ACCOUNT_SEC_NAME
+	icon_state = "sec_budget" //for buying 100 bobrs
+
+/obj/item/card/id/departmental_budget/med
+	department_ID = ACCOUNT_MED
+	department_name = ACCOUNT_MED_NAME
+	icon_state = "med_budget"
+
+/obj/item/card/id/departmental_budget/eng
+	department_ID = ACCOUNT_ENG
+	department_name = ACCOUNT_ENG_NAME
+	icon_state = "eng_budget"
+
+/obj/item/card/id/departmental_budget/sci
+	department_ID = ACCOUNT_SCI
+	department_name = ACCOUNT_SCI_NAME
+	icon_state = "sci_budget"
+
 /obj/item/card/id/departmental_budget/AltClick(mob/living/user)
 	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
 
@@ -936,6 +994,8 @@
 	var/trim_assignment_override
 	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/sechud_icon_state_override = null
+	/// If this is set, will manually override the chat span used for the wearer's name, normally set by the trim. Intended for admins to VV edit and chameleon ID cards.
+	var/trim_chat_span_override
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -944,14 +1004,15 @@
 
 /obj/item/card/id/advanced/Destroy()
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
 	return ..()
 
+/obj/item/card/id/advanced/chat_span()
+	return trim_chat_span_override || ..()
 
-/obj/item/card/id/advanced/attackby(obj/item/W, mob/user, params)
+/obj/item/card/id/advanced/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/our_crayon = W
+	if(istype(attacking_item, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/our_crayon = attacking_item
 		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
 			if(!do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
 				return
@@ -1346,6 +1407,7 @@
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+	action_slots = ALL
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
@@ -1357,20 +1419,20 @@
 	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
 
 // MONKESTATION ADDITION START
-/obj/item/card/id/advanced/chameleon/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+/obj/item/card/id/advanced/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_card_action.hidden)
 		chameleon_card_action.hidden = FALSE
 		actions += chameleon_card_action
 		chameleon_card_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [attacking_item]")
 	else
 		chameleon_card_action.hidden = TRUE
 		actions -= chameleon_card_action
 		chameleon_card_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [attacking_item]")
 // MONKESTATION ADDITION END
 
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
@@ -1386,67 +1448,61 @@
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
-	. = ..()
-
-/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity)
-	if(!proximity)
-		return
-
-	if(isidcard(target))
-		theft_target = WEAKREF(target)
-		ui_interact(user)
-		return AFTERATTACK_PROCESSED_ITEM
-
 	return ..()
 
-/obj/item/card/id/advanced/chameleon/pre_attack_secondary(atom/target, mob/living/user, params)
+/obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isidcard(interacting_with))
+		theft_target = WEAKREF(interacting_with)
+		ui_interact(user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/card/id/advanced/chameleon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
-	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(ishuman(target))
-		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
+	// return ITEM_INTERACT_BLOCKING to cancel any part of the following the attack chain.
+	if(ishuman(interacting_with))
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, target))
-			to_chat(user, "<span class='notice'>The scan was interrupted.</span>")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if(!do_after(user, 2 SECONDS, interacting_with))
+			interacting_with.balloon_alert(user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
 
-		var/mob/living/carbon/human/human_target = target
-
+		var/mob/living/carbon/human/human_target = interacting_with
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
 
 		if(!length(target_id_cards))
-			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	if(isitem(target))
-		var/obj/item/target_item = target
+	if(isitem(interacting_with))
+		var/obj/item/target_item = interacting_with
 
-		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
-
 		var/target_item_id = target_item.GetID()
 
 		if(target_item_id)
 			target_id_cards |= target_item_id
 
 		if(!length(target_id_cards))
-			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

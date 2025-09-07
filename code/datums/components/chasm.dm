@@ -46,7 +46,9 @@
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
 		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
-	parent.AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/chasm)
+	var/turf/turf_parent = parent
+	if(!istype(turf_parent.loc, /area/deathmatch/fullbright)) // there are so so so many explosives in deathmatch and i dont think anyone is going to fish in the *death*match arena
+		parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
 
 /datum/component/chasm/UnregisterFromParent()
 	storage = null
@@ -106,6 +108,9 @@
 		return CHASM_NOT_DROPPING
 	if(dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
 		return CHASM_REGISTER_SIGNALS
+	for(var/atom/thing_to_check as anything in parent)
+		if(HAS_TRAIT(thing_to_check, TRAIT_CHASM_STOPPER))
+			return CHASM_NOT_DROPPING
 
 	//Flies right over the chasm
 	if(ismob(dropped_thing))
@@ -244,15 +249,53 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
-	if(isliving(arrived))
+	if(isliving(arrived) || is_oozeling_core(arrived))
+		//Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
+		if(is_reserved_level(loc.z) && !istype(get_area(loc), /area/shuttle))
+			qdel(arrived)
+			return
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-		GLOB.chasm_fallen_mobs += arrived
+		LAZYADD(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], arrived)
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
-	if(isliving(gone))
+	if(isliving(gone) || is_oozeling_core(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
-		GLOB.chasm_fallen_mobs -= gone
+		LAZYREMOVE(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], gone)
+
+/obj/effect/abstract/chasm_storage/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	var/old_cat = get_chasm_category(old_turf)
+	var/new_cat = get_chasm_category(new_turf)
+	var/list/mobs = list()
+	for(var/fallen in src)
+		if(ismob(fallen) || is_oozeling_core(fallen))
+			mobs += fallen
+	LAZYREMOVE(GLOB.chasm_fallen_mobs[old_cat], mobs)
+	LAZYADD(GLOB.chasm_fallen_mobs[new_cat], mobs)
+
+/**
+ * Returns a key to store, remove and access fallen mobs depending on the z-level.
+ * This stops rescuing people from places that are waaaaaaaay too far-fetched.
+ */
+/proc/get_chasm_category(turf/turf)
+	var/z_level = turf?.z
+	var/area/area = get_area(turf)
+	if(istype(area, /area/shuttle)) //shuttle move between z-levels, so they're a special case.
+		return area
+
+	if(is_away_level(z_level))
+		return ZTRAIT_AWAY
+	if(is_mining_level(z_level))
+		return ZTRAIT_MINING
+	if(is_station_level(z_level))
+		return ZTRAIT_STATION
+	if(is_centcom_level(z_level))
+		return ZTRAIT_CENTCOM
+	if(is_reserved_level(z_level))
+		return ZTRAIT_RESERVED
+
+	return ZTRAIT_SPACE_RUINS
 
 #define CHASM_TRAIT "chasm trait"
 /**

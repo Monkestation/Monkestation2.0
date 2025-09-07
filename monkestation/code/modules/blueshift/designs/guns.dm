@@ -30,19 +30,6 @@
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
 	)
 
-/datum/design/c46x30mm_rubber
-	name = "4.6x30mm Rubber Bullet"
-	id = "c46x30mm_rubber"
-	build_type = AUTOLATHE
-	materials = list(
-		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5
-	)
-	build_path = /obj/item/ammo_casing/c46x30mm/rubber
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
-	)
-
 // .45
 
 /datum/design/c45_lethal
@@ -82,19 +69,6 @@
 	build_path = /obj/item/ammo_casing/c10mm
 	category = list(
 		RND_CATEGORY_HACKED,
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
-	)
-
-/datum/design/c10mm_rubber
-	name = "10mm Rubber Bullet"
-	id = "c10mm_rubber"
-	build_type = AUTOLATHE
-	materials = list(
-		/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5,
-	)
-	build_path = /obj/item/ammo_casing/c10mm/rubber
-	category = list(
-		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
 	)
 

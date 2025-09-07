@@ -11,9 +11,18 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+#define isimage(thing) (istype(thing, /image))
+
+GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
+#define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+#define isappearance_or_image(thing) (isimage(thing) || (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing)))
+
+// The filters list has the same ref type id as a filter, but isnt one and also isnt a list, so we have to check if the thing has Cut() instead
+GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
+#define isfilter(thing) (!hascall(thing, "Cut") && TYPEID(thing) == GLOB.refid_filter)
+
 #define isgenerator(A) (istype(A, /generator))
 
-#define isimage(A) (istype(A, /image))
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
@@ -23,7 +32,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/lava,
 	/turf/open/water,
 	/turf/open/openspace,
-	/turf/open/space/openspace
+	/turf/open/space/openspace,
+	/turf/open/gas,
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -85,17 +95,19 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
-#define isjellyperson(A) (is_species(A, /datum/species/jelly))
-#define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
+#define isslimeperson(A) (is_species(A, /datum/species/oozeling/slime))
 #define isoozeling(A) (is_species(A, /datum/species/oozeling))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
+#define isoni(A) (is_species(A, /datum/species/oni)) //Monkestation Addition
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
+#define iswerewolf(A) (is_species(A,/datum/species/werewolf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
+#define isshadowperson(A) (is_species(A, /datum/species/shadow))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
 #define isipc(A) (is_species(A, /datum/species/ipc)) // Monkestation Addition
 #define isgoblin(A) (is_species(A, /datum/species/goblin)) //Monkestation Addition
@@ -189,7 +201,9 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/basic/clown))
 
-#define isspider(A) (istype(A, /mob/living/basic/spider/giant))
+#define isspider(A) (istype(A, /mob/living/basic/spider))
+
+#define isbingle(A) (istype(A, /mob/living/basic/bingle))
 
 
 //Misc mobs
@@ -200,8 +214,6 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
-
-#define issentientdisease(A) (istype(A, /mob/camera/disease))
 
 #define iscameramob(A) (istype(A, /mob/camera))
 
@@ -262,6 +274,11 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
 
+#define isapc(A) (istype(A, /obj/machinery/power/apc))
+
+//MONKESTATION EDIT: used to block cargo teleporters from escaping with syndicate blackbox
+#define issyndicateblackbox(O) (istype(O, /obj/item/syndicate_blackbox))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 
@@ -290,6 +307,9 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)
 #define isbook(O) (is_type_in_typecache(O, GLOB.book_types))
 
+// Is this an iron tile, or a material tile made from iron?
+#define ismetaltile(tile_thing) (istype(tile_thing, /obj/item/stack/tile/iron) || istype(tile_thing, /obj/item/stack/tile/material) && tile_thing.has_material_type(/datum/material/iron))
+
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
@@ -313,3 +333,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 
 #define isartifact(thing) (istype(thing, /obj/structure/artifact) || istype(thing, /obj/item/melee/artifact) || istype(thing, /obj/item/gun/magic/artifact) || istype(thing, /obj/item/stock_parts/cell/artifact))
 #define iswater(A) (istype(A, /turf/open/water))
+
+#define is_oozeling_core(A) (istype(A, /obj/item/organ/internal/brain/slime))

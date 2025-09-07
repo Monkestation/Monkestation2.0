@@ -57,7 +57,6 @@
 /obj/item/organ/internal/eyes/jelly
 	name = "photosensitive eyespots"
 	zone = BODY_ZONE_CHEST
-	organ_flags = ORGAN_UNREMOVABLE
 
 /obj/item/organ/internal/eyes/roundstartslime
 	name = "photosensitive eyespots"
@@ -75,16 +74,16 @@
 /obj/item/organ/internal/eyes/synth/emp_act(severity)
 	. = ..()
 
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 
 	switch(severity)
 		if(EMP_HEAVY)
 			to_chat(owner, span_warning("Alert:Severe electromagnetic interference clouds your optics with static. Error Code: I-CS6"))
-			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maxHealth, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maximum = maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 		if(EMP_LIGHT)
 			to_chat(owner, span_warning("Alert: Mild interference clouds your optics with static. Error Code: I-CS0"))
-			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maxHealth, required_organtype = ORGAN_ROBOTIC)
+			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maximum =maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 
 /datum/design/synth_eyes
 	name = "Optical Sensors"
@@ -98,6 +97,16 @@
 	)
 	build_path = /obj/item/organ/internal/eyes/synth
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_SYNTHETIC_ORGANS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+
+/obj/item/organ/internal/eyes/robotic/meson
+	name = "meson eyes"
+	desc = "These cybernetic eye implants allow you to see the structural layout of your surroundings."
+	eye_color_left = "0c4"
+	eye_color_right = "0c4"
+	color_cutoffs = list(5, 15, 5)
+	sight_flags = SEE_TURFS
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM

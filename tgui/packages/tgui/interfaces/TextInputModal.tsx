@@ -72,13 +72,13 @@ export const TextInputModal = (props) => {
             <Stack.Item>
               <Box color="label">{message}</Box>
             </Stack.Item>
-            <Stack.Item grow>
+            <Stack.Item grow mb={!visualMultiline && -2}>
               <InputArea input={input} onType={onType} />
             </Stack.Item>
             <Stack.Item>
               <InputButtons
                 input={input}
-                message={`${input.length}/${max_length}`}
+                message={`${input.length}/${max_length || '∞'}`}
               />
             </Stack.Item>
           </Stack>

@@ -125,19 +125,21 @@
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.get_sharpness())
+/obj/item/toy/plush/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, span_warning("You already murdered it!"))
 				return
 			if(!divine)
 				user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
-				I.play_tool_sound(src)
+				attacking_item.play_tool_sound(src)
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				user.adjust_drunk_effect(20, up_to = 50)
+				if(isliving(user))
+					var/mob/living/living_user = user
+					living_user.adjust_drunk_effect(20, up_to = 50)
 
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
@@ -152,22 +154,22 @@
 			user.put_in_hands(grenade)
 			grenade = null
 		return
-	if(isgrenade(I))
+	if(isgrenade(attacking_item))
 		if(stuffed)
 			to_chat(user, span_warning("You need to remove some stuffing first!"))
 			return
 		if(grenade)
 			to_chat(user, span_warning("[src] already has a grenade!"))
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
-		span_danger("You slide [I] into [src]."))
-		grenade = I
-		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
+		span_danger("You slide [attacking_item] into [src]."))
+		grenade = attacking_item
+		user.log_message("added a grenade ([attacking_item.name]) to [src]", LOG_GAME)
 		return
-	if(istype(I, /obj/item/toy/plush))
-		love(I, user)
+	if(istype(attacking_item, /obj/item/toy/plush))
+		love(attacking_item, user)
 		return
 	return ..()
 
@@ -390,11 +392,14 @@
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "carpplush"
+	icon_state = "map_plushie_carp"
+	greyscale_config = /datum/greyscale_config/plush_carp
+	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
@@ -538,24 +543,36 @@
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
-/obj/item/toy/plush/space_lizard_plushie
+/obj/item/toy/plush/lizard_plushie/greyscale
+	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	greyscale_colors = "#d3d3d3#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
-	icon_state = "plushie_spacelizard"
-	inhand_icon_state = null
+	icon_state = "map_plushie_spacelizard"
+	greyscale_config = /datum/greyscale_config/plush_spacelizard
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
 	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
 
+/obj/item/toy/plush/lizard_plushie/space/green
+	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	greyscale_colors = "#66ff33#000000"
+
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "plushie_snake"
+	icon_state = "map_plushie_snake"
+	greyscale_config = /datum/greyscale_config/plush_snake
+	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("bites", "hisses", "tail slaps")
 	attack_verb_simple = list("bite", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -578,12 +595,15 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "plushie_slime"
+	icon_state = "map_plushie_slime"
+	greyscale_config = /datum/greyscale_config/plush_slime
+	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
 	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
 	attack_verb_simple = list("blorble", "slime", "absorb")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE //given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+	flags_1 = IS_PLAYER_COLORABLE_1 // monkestation edit
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -847,3 +867,10 @@
 	inhand_icon_state = "blahaj"
 	attack_verb_continuous = list("gnaws", "gnashes", "chews")
 	attack_verb_simple = list("gnaw", "gnash", "chew")
+
+/obj/item/toy/plush/donkpocket
+	name = "donk pocket plushie"
+	desc = "The stuffed companion of choice for the seasoned traitor."
+	icon_state = "donkpocket"
+	attack_verb_continuous = list("donks")
+	attack_verb_simple = list("donk")

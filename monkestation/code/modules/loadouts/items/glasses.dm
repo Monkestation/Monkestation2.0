@@ -87,6 +87,10 @@ GLOBAL_LIST_INIT(loadout_glasses, generate_loadout_items(/datum/loadout_item/gla
 	name = "Red Glasses"
 	item_path = /obj/item/clothing/glasses/red
 
+/datum/loadout_item/glasses/salesman
+	name = "Dealmaker"
+	item_path = /obj/item/clothing/glasses/salesman
+
 /*
 *	MISC
 */

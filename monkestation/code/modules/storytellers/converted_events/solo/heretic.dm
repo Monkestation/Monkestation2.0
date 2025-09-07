@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/heretic
 	antag_flag = ROLE_HERETIC
-	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_MAGICAL)
+	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_MAGICAL, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/heretic
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -18,12 +18,13 @@
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	weight = 6
+	weight = 2
 	min_players = 20
 
 /datum/round_event_control/antagonist/solo/heretic/roundstart

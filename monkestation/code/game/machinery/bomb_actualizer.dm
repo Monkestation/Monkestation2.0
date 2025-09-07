@@ -100,7 +100,7 @@
 	. = ..()
 	if(!active)
 		default_unfasten_wrench(user, tool)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/bomb_actualizer/screwdriver_act(mob/living/user, obj/item/tool)
@@ -119,7 +119,7 @@
  * Starts the Detonation Sequence
  */
 /obj/machinery/bomb_actualizer/proc/start_detonation()
-	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BOMB_BUTTON))
+	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BOMB_BUTTON))
 
 		if(active)
 			say("ERROR: The countdown has aready begun!!!")
@@ -131,8 +131,8 @@
 			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
 			return
 
-		else if(istype(get_area(src), /area/space))
-			say("ERROR: Does not work in space!")
+		else if(!istype(get_area(src), /area/station))
+			say("ERROR: Does not work off station!")
 			TIMER_COOLDOWN_START(src, COOLDOWN_BOMB_BUTTON, 3 SECONDS)
 			return
 

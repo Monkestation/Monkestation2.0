@@ -10,7 +10,7 @@
 	return NTNET_NO_SIGNAL
 
 /datum/crewmonitor/proc/get_tracking_level(tracked_mob, tracker_z, nt_net, validation=TRUE)
-	if(!tracked_mob)
+	if(isnull(tracked_mob))
 		if (validation)
 			stack_trace("Null entry in suit sensors or nanite sensors list.")
 		return SENSOR_OFF
@@ -21,9 +21,13 @@
 	var/turf/pos = get_turf(tracked_living_mob)
 
 	// Is our target in nullspace for some reason?
-	if(!pos)
+	if(isnull(pos))
 		if (validation)
 			stack_trace("Tracked mob has no loc and is likely in nullspace: [tracked_living_mob] ([tracked_living_mob.type])")
+		return SENSOR_OFF
+
+	// Radio jammers block sensors.
+	if(is_within_radio_jammer_range(pos))
 		return SENSOR_OFF
 
 	// Machinery and the target should be on the same level or different levels of the same station

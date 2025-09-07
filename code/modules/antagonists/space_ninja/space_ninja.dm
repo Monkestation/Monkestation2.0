@@ -151,6 +151,6 @@
 
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))
-	ninja.key = key
+	ninja.PossessByPlayer(key)
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 

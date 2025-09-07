@@ -71,6 +71,8 @@ GLOBAL_PROTECT(href_token)
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
+	try_give_profiling()
+	try_give_devtools()
 	if (force_active || (rank_flags() & R_AUTOADMIN))
 		activate()
 	else
@@ -93,12 +95,9 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins -= target
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
-	if(owner)
-		rementor(owner)
 	plane_debug = new(src)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
-
 
 /datum/admins/proc/deactivate()
 	if(IsAdminAdvancedProcCall())
@@ -110,8 +109,6 @@ GLOBAL_PROTECT(href_token)
 	GLOB.admin_datums -= target
 	QDEL_NULL(plane_debug)
 
-	if(owner)
-		dementor(owner)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]
@@ -163,8 +160,6 @@ GLOBAL_PROTECT(href_token)
 	owner.init_verbs() //re-initialize the verb list
 	owner.update_special_keybinds()
 	GLOB.admins |= client
-	if(!owner.mentor_datum)
-		owner.mentor_datum_set()
 
 	try_give_profiling()
 	try_give_devtools()
@@ -179,9 +174,6 @@ GLOBAL_PROTECT(href_token)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
 		owner.holder = null
-		GLOB.mentors -= owner
-		owner.mentor_datum?.owner = null
-		owner.mentor_datum = null
 		owner = null
 
 /// Returns the feedback forum thread for the admin holder's owner, as according to DB.
@@ -197,7 +189,10 @@ GLOBAL_PROTECT(href_token)
 	if (!SSdbcore.IsConnected())
 		return null
 
-	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
+	var/datum/db_query/feedback_query = SSdbcore.NewQuery(
+		"SELECT feedback FROM [format_table_name("admin")] WHERE ckey = :ckey",
+		list("ckey" = owner.ckey)
+	)
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
@@ -206,7 +201,7 @@ GLOBAL_PROTECT(href_token)
 
 	if(!feedback_query.NextRow())
 		qdel(feedback_query)
-		cached_feedback_link = NO_FEEDBACK_LINK // monkestation edit: fallback to prevent issues
+		cached_feedback_link = NO_FEEDBACK_LINK
 		return null // no feedback link exists
 
 	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
@@ -217,8 +212,15 @@ GLOBAL_PROTECT(href_token)
 
 	return cached_feedback_link
 
+/// Will check to see if rank has at least one of the rights required.
 /datum/admins/proc/check_for_rights(rights_required)
 	if(rights_required && !(rights_required & rank_flags()))
+		return FALSE
+	return TRUE
+
+/// Will check to see if rank has exact rights required.
+/datum/admins/proc/check_for_exact_rights(rights_required)
+	if(rights_required && ((rights_required & rank_flags()) != rights_required))
 		return FALSE
 	return TRUE
 
@@ -405,9 +407,9 @@ GLOBAL_PROTECT(href_token)
 	return combined_flags
 
 /datum/admins/proc/try_give_devtools()
-	if(!(rank_flags() & R_DEBUG) || owner.byond_version < 516)
+	if(isnull(owner) || !(rank_flags() & R_DEBUG))
 		return
-	winset(owner, null, "browser-options=byondstorage,find,refresh,devtools")
+	winset(owner, null, list("browser-options" = "+devtools"))
 
 /datum/admins/proc/try_give_profiling()
 	if (CONFIG_GET(flag/forbid_admin_profiling))
@@ -420,10 +422,15 @@ GLOBAL_PROTECT(href_token)
 		return
 
 	given_profiling = TRUE
-	world.SetConfig("APP/admin", owner.ckey, "role=admin")
+	world.SetConfig("APP/admin", owner?.ckey || target, "role=admin")
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
+
+/datum/admins/can_vv_get(var_name)
+	if(var_name == NAMEOF(src, href_token))
+		return FALSE
+	return ..()
 
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
@@ -434,7 +441,7 @@ generally it would be used like so:
 /proc/admin_proc()
 	if(!check_rights(R_ADMIN))
 		return
-	to_chat(world, "you have enough rights!", confidential = TRUE)
+	to_chat(world, "Hi, I’m Saul Goodman. Did you know that you have rights?", confidential = TRUE)
 
 NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc which they did not call
 you will have to do something like if(client.rights & R_ADMIN) yourself.
@@ -461,6 +468,12 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 /proc/check_rights_for(client/subject, rights_required)
 	if(subject?.holder)
 		return subject.holder.check_for_rights(rights_required)
+	return FALSE
+
+//This proc checks whether subject has ALL the rights specified in rights_required.
+/proc/check_exact_rights_for(client/subject, rights_required)
+	if(subject?.holder)
+		return subject.holder.check_for_exact_rights(rights_required)
 	return FALSE
 
 /proc/GenerateToken()

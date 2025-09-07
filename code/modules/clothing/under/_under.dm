@@ -95,7 +95,7 @@
 	if(accessory_overlay)
 		. += accessory_overlay
 
-/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/cabling = attacking_item
 		to_chat(user, span_notice("You repair the suit sensors on [src] with [cabling]."))
@@ -247,6 +247,15 @@
 	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, prime_accessory.icon_state)
 	accessory_overlay.alpha = prime_accessory.alpha
 	accessory_overlay.color = prime_accessory.color
+
+/// Updates the accessory's worn overlay mutable appearance
+/obj/item/clothing/under/proc/update_accessory_overlay()
+	if(isnull(accessory_overlay))
+		return
+
+	cut_overlay(accessory_overlay)
+	create_accessory_overlay()
+	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
 	. = ..()

@@ -92,15 +92,13 @@
 /datum/heretic_knowledge/key_ring
 	name = "Key Keeper’s Burden"
 	desc = "Allows you to transmute a box, an iron rod, and an ID card to create an Eldritch Card. \
-		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
-		You can use it in-hand to change its form to a card you fused. \
-		Does not preserve the card used in the ritual."
+		Attacking it with a normal ID card consumes it and gains its access, \
+		and you can use it in-hand to change its appearance to a card you fused."
 	gain_text = "Gateways shall open before me, my very will ensnaring reality."
-	adds_sidepath_points = 1
 	required_atoms = list(
 		/obj/item/storage/box = 1, //monkestation edit wallet ==> box (leather is too hard to get due to botany changes)
 		/obj/item/stack/rods = 1,
-		/obj/item/card/id = 1,
+		/obj/item/card/id/advanced = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
 	next_knowledge = list(
@@ -109,6 +107,18 @@
 	)
 	cost = 1
 	route = PATH_KNOCK
+
+/datum/heretic_knowledge/key_ring/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/obj/item/card/id = locate(/obj/item/card/id/advanced) in selected_atoms
+	if(isnull(id))
+		return FALSE
+	var/obj/item/card/id/advanced/heretic/result_item = new(loc)
+	if(!istype(result_item))
+		return FALSE
+	selected_atoms -= id
+	result_item.eat_card(id)
+	result_item.shapeshift(id)
+	return TRUE
 
 /datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
@@ -144,7 +154,6 @@
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Their trinkets will be mine, as will their lives in due time."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/reroll_targets,
@@ -175,7 +184,6 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Then I saw my my own reflection cascaded mind-numbingly enough times that I was but a haze."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/knock_final,
 		/datum/heretic_knowledge/spell/apetra_vulnera,

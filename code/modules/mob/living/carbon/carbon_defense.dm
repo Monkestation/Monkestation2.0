@@ -27,34 +27,35 @@
 	else
 		. += E.bang_protect
 
-/mob/living/carbon/is_mouth_covered(check_flags = ALL)
-	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSMOUTH))
-		return head
-	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
-		return wear_mask
-
+/mob/living/carbon/proc/check_equipment_cover_flags(flags = NONE)
+	for(var/obj/item/thing in get_equipped_items())
+		if(thing.flags_cover & flags)
+			return thing
 	return null
+
+/mob/living/carbon/is_mouth_covered(check_flags = ALL)
+	var/needed_coverage = NONE
+	if(check_flags & ITEM_SLOT_HEAD)
+		needed_coverage |= HEADCOVERSMOUTH
+	if(check_flags & ITEM_SLOT_MASK)
+		needed_coverage |= MASKCOVERSMOUTH
+	return check_equipment_cover_flags(needed_coverage)
 
 /mob/living/carbon/is_eyes_covered(check_flags = ALL)
-	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & HEADCOVERSEYES))
-		return head
-	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
-		return wear_mask
-	if((check_flags & ITEM_SLOT_EYES) && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
-		return glasses
-
-	return null
+	var/needed_coverage = NONE
+	if(check_flags & ITEM_SLOT_HEAD)
+		needed_coverage |= HEADCOVERSEYES
+	if(check_flags & ITEM_SLOT_MASK)
+		needed_coverage |= MASKCOVERSEYES
+	if(check_flags & ITEM_SLOT_EYES)
+		needed_coverage |= GLASSESCOVERSEYES
+	return check_equipment_cover_flags(needed_coverage)
 
 /mob/living/carbon/is_pepper_proof(check_flags = ALL)
 	var/obj/item/organ/internal/eyes/eyes = get_organ_by_type(/obj/item/organ/internal/eyes)
-	if(eyes && eyes.pepperspray_protect)
+	if(eyes?.pepperspray_protect)
 		return eyes
-	if((check_flags & ITEM_SLOT_HEAD) && head && (head.flags_cover & PEPPERPROOF))
-		return head
-	if((check_flags & ITEM_SLOT_MASK) && wear_mask && (wear_mask.flags_cover & PEPPERPROOF))
-		return wear_mask
-
-	return null
+	return check_equipment_cover_flags(PEPPERPROOF)
 
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
@@ -317,7 +318,7 @@
 		log_combat(src, target, "kicks", "onto their side (paralyzing)")
 
 	var/directional_blocked = FALSE
-	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
+	var/can_hit_something = iscarbon(target) && (!target.is_shove_knockdown_blocked() && !target.buckled)
 
 	//Directional checks to make sure that we're not shoving through a windoor or something like that
 	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
@@ -336,10 +337,7 @@
 		//Don't hit people through windows, ok?
 		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
 			return
-		//MONKESTATION EDIT START
-		// if(directional_blocked || shove_blocked) - MONKESTATION EDIT ORIGINAL
 		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
-		//MONKESTATION EDIT END
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
@@ -388,6 +386,8 @@
 		return
 	for(var/obj/item/organ/organ as anything in organs)
 		organ.emp_act(severity)
+	for(var/obj/item/bodypart/bodypart as anything in src.bodyparts)
+		bodypart.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
@@ -430,7 +430,32 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
-		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+		if(!HAS_TRAIT(helper, TRAIT_NOFIRE) || helper == src)
+			to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+			return
+		if(DOING_INTERACTION(helper, DOAFTER_SOURCE_EXTINGUISHING_HUG))
+			to_chat(helper, span_warning("You are already extinguishing someone!"))
+			return
+		visible_message(
+			span_notice("[helper] begins to closely hug [src], beginning to smother the fire consuming [p_their()] body!"),
+			span_boldnotice("[helper] holds you closely in a tight hug, beginning to smother the fire consuming your body!"),
+		)
+		while(on_fire && fire_stacks > 0)
+			if(!do_after(helper, 1 SECONDS, src, IGNORE_HELD_ITEM, interaction_key = DOAFTER_SOURCE_EXTINGUISHING_HUG))
+				visible_message(span_notice("[src] wriggles out of [helper]'s close hug!"), span_notice("You wriggle out of [src]'s close hug."))
+				return
+			visible_message(
+				span_notice("[helper] closely hugs [src], smothering the flames consuming [p_their()] body!"),
+				span_boldnotice("[helper] closely hugs you, smothering the flames consuming your body!"),
+				span_italics("You hear a fire sizzle out."),
+			)
+			var/stacks_to_extinguish = 2
+			if(pulledby == helper)
+				if(helper.grab_state > GRAB_PASSIVE)
+					stacks_to_extinguish = 5
+				else
+					stacks_to_extinguish = 3
+			adjust_fire_stacks(-stacks_to_extinguish)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)
@@ -751,7 +776,7 @@
 		to_chat(src, span_danger("You can't grasp your [grasped_part.name] with itself!"))
 		return
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	to_chat(src, span_warning("You try grasping at your [grasped_part.name][bleeding_text]..."))
 	if(!do_after(src, 0.75 SECONDS))
@@ -767,7 +792,7 @@
 
 /// If TRUE, the owner of this bodypart can try grabbing it to slow bleeding, as well as various other effects.
 /obj/item/bodypart/proc/can_be_grasped()
-	if (get_modified_bleed_rate())
+	if (cached_bleed_rate)
 		return TRUE
 
 	for (var/datum/wound/iterated_wound as anything in wounds)
@@ -820,7 +845,7 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
 	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
@@ -837,7 +862,7 @@
 	var/changed_something = FALSE
 	var/obj/item/organ/new_organ = pick(GLOB.bioscrambler_valid_organs)
 	var/obj/item/organ/replaced = get_organ_slot(initial(new_organ.slot))
-	if (!(replaced?.organ_flags & (ORGAN_SYNTHETIC | ORGAN_UNREMOVABLE | ORGAN_HIDDEN))) // monkestation edit: also check ORGAN_UNREMOVABLE and ORGAN_HIDDEN
+	if (!replaced || !(replaced.organ_flags & (ORGAN_ROBOTIC | ORGAN_UNREMOVABLE | ORGAN_HIDDEN))) // monkestation edit: also check ORGAN_UNREMOVABLE and ORGAN_HIDDEN
 		changed_something = TRUE
 		new_organ = new new_organ()
 		new_organ.replace_into(src)
@@ -868,8 +893,8 @@
 	GLOB.bioscrambler_valid_parts = body_parts
 
 	var/list/organs = subtypesof(/obj/item/organ/internal) + subtypesof(/obj/item/organ/external)
-	for (var/obj/item/organ/organ_type as anything in organs)
-		if(!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(organ_type::organ_flags & (ORGAN_SYNTHETIC | ORGAN_UNREMOVABLE | ORGAN_HIDDEN)) && organ_type::zone != "abstract") // monkestation edit: also check ORGAN_UNREMOVABLE and ORGAN_HIDDEN
+	for(var/obj/item/organ/organ_type as anything in organs)
+		if(!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(organ_type::organ_flags & (ORGAN_ROBOTIC | ORGAN_UNREMOVABLE | ORGAN_HIDDEN)) && organ_type::zone != "abstract") // monkestation edit: also check ORGAN_UNREMOVABLE and ORGAN_HIDDEN
 			continue
 		organs -= organ_type
 	GLOB.bioscrambler_valid_organs = organs

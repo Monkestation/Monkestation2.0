@@ -96,7 +96,7 @@
 		local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
 
 	//Collect client info:
-	var/issue_title = input(src, "Please give the issue a title:","Issue Title") as text|null
+	var/issue_title = input(src, "Please give the issue a title, you will be given another textbox to describe it in detail.","Issue Title") as text|null
 	if(!issue_title)
 		return //Consider it aborted
 	var/user_description = input(src, "Please describe the issue you are reporting:","Issue Body") as message|null
@@ -140,6 +140,17 @@
 		[span_warning("Please adminhelp immediately!")]\n\
 		[span_notice("Code:[issue_response.status_code || "9001 CATASTROPHIC ERROR"]")]")
 
+		log_runtime(
+			"Failed to send issue report. errored=[issue_response.errored], status_code=[isnull(issue_response.status_code) ? "(null)" : issue_response.status_code]",
+			list(
+				"status_code" = issue_response.status_code,
+				"errored" = issue_response.errored,
+				"headers" = issue_response.headers?.Copy(),
+				"error" = issue_response.error,
+				"body" = issue_report.body,
+			)
+		)
+
 		return
 	SEND_SOUND(src, 'sound/misc/compiler-stage2.ogg')
 	to_chat(src, span_notice("Bug submitted successfully."))
@@ -154,7 +165,7 @@
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
-		winset(src, "infowindow.changelog", "font-style=;")
+		winset(src, "infobuttons.changelog", "font-style=;")
 
 /client/verb/hotkeys_help()
 	set name = "Hotkeys Help"

@@ -9,9 +9,9 @@
 	var/cooldown_time = 10 SECONDS
 	COOLDOWN_DECLARE(activation_cooldown)
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
-	examine_discovered = span_warning("It appears to be some sort of chemical injector")
+	examine_discovered = span_warning("It appears to be some sort of chemical injector.")
 
 /datum/artifact_effect/injector/setup()
 	our_artifact.holder.create_reagents(200, NO_REACT | SEALED_CONTAINER)

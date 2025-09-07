@@ -156,20 +156,20 @@
 	update_power()
 	return TRUE
 
-/obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
-	if(W == paddles)
+/obj/item/defibrillator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item == paddles)
 		toggle_paddles()
-	else if(istype(W, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = W
+	else if(istype(attacking_item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/C = attacking_item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
 			if(C.maxcharge < paddles.revivecost)
 				to_chat(user, span_notice("[src] requires a higher capacity cell."))
 				return
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			cell = W
+			cell = attacking_item
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_power()
 	else
@@ -219,10 +219,6 @@
 	if(!(slot_flags & slot))
 		remove_paddles(user)
 		update_power()
-
-/obj/item/defibrillator/item_action_slot_check(slot, mob/user)
-	if(slot_flags & slot)
-		return TRUE
 
 /obj/item/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
@@ -284,10 +280,6 @@
 	nocell_state = "defibcompact-nocell"
 	emagged_state = "defibcompact-emagged"
 
-/obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBeltSlot())
-		return TRUE
-
 /obj/item/defibrillator/compact/loaded/Initialize(mapload)
 	. = ..()
 	cell = new(src)
@@ -315,8 +307,8 @@
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_power()
 
-/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
-	if(W == paddles)
+/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item == paddles)
 		toggle_paddles()
 		return
 

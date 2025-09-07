@@ -130,6 +130,20 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	name = "Ethereal Raincoat"
 	item_path = /obj/item/clothing/suit/hooded/ethereal_raincoat
 
+/datum/store_item/suit/jacket/cover
+	name = "Perfumed Dress Cover"
+	item_path = /obj/item/clothing/suit/jacket/gown
+	item_cost = 5000
+
+/datum/store_item/suit/jacket/butler
+	name = "Butler Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/butler
+	item_cost = 5000
+
+/datum/store_item/suit/jacket/silk
+	name = "Silk Jacket"
+	item_path = /obj/item/clothing/suit/jacket/silk
+	item_cost = 5000
 
 /*
 *	COSTUMES
@@ -497,7 +511,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 
 /datum/store_item/suit/frontiertrench
 	name = "Frontier Trenchcoat"
-	item_path = /obj/item/clothing/suit/jacket/frontier_colonist
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/unarmored
 	item_cost = 5000
 
 /datum/store_item/suit/cossak
@@ -539,12 +553,12 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 
 /datum/store_item/suit/frontierjacket/short
 	name = "Frontier Jacket (Short)"
-	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/short
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/short/unarmored
 	item_cost = 3500
 
 /datum/store_item/suit/frontierjacket/short/medical
 	name = "Frontier Medical Jacket (Short)"
-	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/medical
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/medical/unarmored
 	item_cost = 3500
 
 /datum/store_item/suit/woolcoat

@@ -4,7 +4,7 @@
 	///the challenge payout
 	var/challenge_payout = 100
 	///our host
-	var/datum/player_details/host
+	var/datum/persistent_client/host
 	///have we failed if we are a fail action
 	var/failed = FALSE
 	///the difficulty of the channgle
@@ -14,17 +14,15 @@
 	///the trait we apply if any
 	var/applied_trait
 
-/datum/challenge/New(datum/player_details/host)
+/datum/challenge/New(datum/persistent_client/host)
 	. = ..()
 	if(!host)
 		return
 	src.host = host
-	var/mob/current_mob = host.find_current_mob()
-	if(!current_mob)
-		CRASH("Couldn't find mob for [host]")
-	RegisterSignal(current_mob, COMSIG_MIND_TRANSFERRED, PROC_REF(on_transfer))
+	RegisterSignal(host.mob, COMSIG_MIND_TRANSFERRED, PROC_REF(on_transfer))
 
 /datum/challenge/Destroy(force)
+	on_remove()
 	host = null
 	return ..()
 
@@ -32,16 +30,17 @@
 /datum/challenge/proc/on_apply()
 	SHOULD_CALL_PARENT(TRUE)
 	LAZYADD(host.applied_challenges, src)
-	if(!applied_trait)
-		return
-	var/mob/current_mob = host.find_current_mob()
-	if(!current_mob)
-		CRASH("Couldn't find mob for [host]")
-	ADD_TRAIT(current_mob, applied_trait, CHALLENGE_TRAIT)
+	if(applied_trait)
+		ADD_TRAIT(host.mob, applied_trait, CHALLENGE_TRAIT)
+	if(processes)
+		START_PROCESSING(SSchallenges, src)
 
-///this fires every 10 seconds
-/datum/challenge/proc/on_process()
-	return
+/datum/challenge/proc/on_remove()
+	SHOULD_CALL_PARENT(TRUE)
+	STOP_PROCESSING(SSchallenges, src)
+	LAZYREMOVE(host.applied_challenges, src)
+	if(applied_trait)
+		REMOVE_TRAIT(host.mob, applied_trait, CHALLENGE_TRAIT)
 
 ///this fires when the mob dies
 /datum/challenge/proc/on_death()

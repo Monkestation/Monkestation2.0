@@ -67,10 +67,8 @@
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
-	if(iscarbon(user))
-		var/mob/living/carbon/arizona_ranger = user
-		if(arizona_ranger.is_holding(parent))
-			autofire_on(arizona_ranger.client)
+	if(user.is_holding(parent))
+		autofire_on(user.client)
 
 // There is a gun and there is a user wielding it. The component now waits for the mouse click.
 /datum/component/automatic_fire/proc/autofire_on(client/usercli)
@@ -251,17 +249,17 @@
 	if(get_dist(shooter, target) <= 0)
 		target = get_step(shooter, shooter.dir) //Shoot in the direction faced if the mouse is on the same tile as we are.
 		target_loc = target
-	else if(!in_view_range(shooter, target))
+	else if(!CAN_THEY_SEE(target, shooter))
 		stop_autofiring() //Elvis has left the building.
 		return FALSE
 	shooter.face_atom(target)
 	var/next_delay = autofire_shot_delay
 	if(windup_autofire)
 		next_delay = clamp(next_delay - current_windup_reduction, round(autofire_shot_delay * windup_autofire_cap), autofire_shot_delay)
-		current_windup_reduction = (current_windup_reduction + round(autofire_shot_delay * windup_autofire_reduction_multiplier))
+		current_windup_reduction = (current_windup_reduction + autofire_shot_delay * windup_autofire_reduction_multiplier)
 		timerid = addtimer(CALLBACK(src, PROC_REF(windup_reset), FALSE), windup_spindown, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 	if(HAS_TRAIT(shooter, TRAIT_DOUBLE_TAP))
-		next_delay = round(next_delay * 0.5)
+		next_delay = round(next_delay * 0.5, SSprojectiles.wait)
 	COOLDOWN_START(src, next_shot_cd, next_delay)
 	if(SEND_SIGNAL(parent, COMSIG_AUTOFIRE_SHOT, target, shooter, allow_akimbo, mouse_parameters) & COMPONENT_AUTOFIRE_SHOT_SUCCESS)
 		return TRUE
@@ -312,8 +310,11 @@
 	var/bonus_spread = 0
 	if(istype(akimbo_gun) && weapon_weight < WEAPON_MEDIUM && allow_akimbo)
 		if(akimbo_gun.weapon_weight < WEAPON_MEDIUM && akimbo_gun.can_trigger_gun(shooter))
-			bonus_spread = dual_wield_spread
-			addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 1)
+			if(!akimbo_gun.can_shoot())
+				addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, shoot_with_empty_chamber), shooter), 0.1 SECONDS)
+			else
+				bonus_spread = dual_wield_spread
+				addtimer(CALLBACK(akimbo_gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, shooter, TRUE, params, null, bonus_spread), 0.1 SECONDS)
 	process_fire(target, shooter, TRUE, params, null, bonus_spread)
 
 #undef AUTOFIRE_MOUSEUP

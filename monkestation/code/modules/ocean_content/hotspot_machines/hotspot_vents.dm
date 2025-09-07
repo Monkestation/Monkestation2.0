@@ -36,28 +36,28 @@
 	. = ..()
 	if(!setup)
 		if(!do_after(user, 2 SECONDS, src))
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		if(!connect_to_network())
 			to_chat(user, "You fail to turn on the [src] as it lacks a connection to the powergrid.")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		to_chat(user, "You pry the [src] up turning it on.")
 		setup = TRUE
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/vent/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!do_after(user, 5 SECONDS, src))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	to_chat(user, "You dissassemble the [src].")
 	disassemble()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/vent/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
 		var/turf/turf = get_turf(src)
-		turf.attackby(W)
+		turf.attackby(attacking_item)
 
 /obj/machinery/power/vent/examine(mob/user)
 	. = ..()

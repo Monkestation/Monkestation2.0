@@ -1,3 +1,7 @@
+/datum/design/strange_seeds
+	name = "Lesser Strange Seeds"
+	build_path = /obj/item/seeds/random/lesser
+
 /datum/design/rat_cube // Monkestation, useful for chaplain and pathologist.
 	name = "Mouse Cube"
 	id = "rcube" // R for Rat

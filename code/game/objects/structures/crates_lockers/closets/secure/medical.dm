@@ -28,7 +28,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/muzzle/breath(src)
+		new /obj/item/clothing/mask/breath/muzzle(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -75,6 +75,7 @@
 /obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/med(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
 	new /obj/item/computer_disk/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)

@@ -23,11 +23,6 @@
 	name = "Hazard Striped Canister"
 	json_config = 'code/datums/greyscale/json_configs/canister_hazard.json'
 
-/datum/greyscale_config/prototype_canister
-	name = "Prototype Canister"
-	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
-	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
-
 /datum/greyscale_config/stationary_canister
 	name = "Stationary Canister"
 	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -296,10 +291,30 @@
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
+/datum/greyscale_config/plush_carp
+	name = "Plushie Carp"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush_slime
+	name = "Plushie Slime"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_slime.json'
+
+/datum/greyscale_config/plush_snake
+	name = "Plushie Snake"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
+
+/datum/greyscale_config/plush_spacelizard
+	name = "Plushie Space Lizard"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"
@@ -718,6 +733,16 @@
 	name = "Wonderland Pinafore"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wlpinafore_worn.json'
+
+/datum/greyscale_config/ribbondress
+	name = "Ribboned Gown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress.json'
+
+/datum/greyscale_config/ribbondress_worn
+	name = "Ribboned Gown"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ribbondress_worn.json'
 //MONKESTATION ADDITION END
 
 /datum/greyscale_config/beanie
@@ -1277,3 +1302,18 @@
 	name = "Worn Tassled Jacket"
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'
+
+/datum/greyscale_config/umbrella
+	name = "Umbrella"
+	icon_file = 'icons/obj/weapons/umbrellas.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella.json'
+
+/datum/greyscale_config/umbrella_inhand_left
+	name = "Held Umbrella, Left, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_lh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'
+
+/datum/greyscale_config/umbrella_inhand_right
+	name = "Held Umbrella, Right, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_rh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'

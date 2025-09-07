@@ -6,7 +6,7 @@
 	icon_state = "coconut"
 
 	bite_consumption_mod = 3
-	juice_results = list(/datum/reagent/consumable/milk = 0)
+	juice_results = list(/datum/reagent/consumable/coconut_milk = 0)
 	seed = /obj/item/seeds/coconut
 
 /obj/item/food/grown/shell/coconut_gun

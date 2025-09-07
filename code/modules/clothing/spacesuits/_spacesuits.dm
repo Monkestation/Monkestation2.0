@@ -11,7 +11,7 @@
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT //monkestation edit
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -45,7 +45,7 @@
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack,
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
@@ -166,7 +166,7 @@
 //MONKSTATION REMOVAL
 ///obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
 //	toggle_spacesuit_cell(user)
-//	return TOOL_ACT_TOOLTYPE_SUCCESS
+//	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/suit/space/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell_cover_open)   //monkestation edit
@@ -182,17 +182,17 @@
 	if(deg_c && deg_c >= range_low && deg_c <= range_high)
 		temperature_setting = round(T0C + deg_c, 0.1)
 		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/cell))
+/obj/item/clothing/suit/space/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!cell_cover_open || !istype(attacking_item, /obj/item/stock_parts/cell))
 		return ..()
 	if(cell)
 		to_chat(user, span_warning("[src] already has a cell installed."))
 		return
-	if(user.transferItemToLoc(I, src))
-		cell = I
+	if(user.transferItemToLoc(attacking_item, src))
+		cell = attacking_item
 		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 		return
 
@@ -245,6 +245,8 @@
 	update_item_action_buttons()
 
 /obj/item/clothing/suit/space/ui_action_click(mob/user, actiontype)
+	if(!istype(actiontype, /datum/action/item_action/toggle_spacesuit))
+		return ..()
 	toggle_spacesuit(user)
 
 // let emags override the temperature settings

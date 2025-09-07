@@ -86,7 +86,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(remove_bodypart))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_analyzed))
 	RegisterSignal(parent, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fully_healed))
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(add_damage_pain))
+//	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(add_damage_pain))
 	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(on_parent_statchance))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_NO_PAIN_EFFECTS), SIGNAL_REMOVETRAIT(TRAIT_NO_PAIN_EFFECTS)), PROC_REF(refresh_pain_attributes))
 	RegisterSignal(parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_message))
@@ -209,6 +209,19 @@
 
 	LAZYREMOVE(pain_mods, key)
 	return update_pain_modifier()
+
+///Clear all pain attributes and bodypart pain
+/datum/pain/proc/remove_all_pain()
+	for(var/zone in body_zones)
+		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
+		adjust_bodypart_min_pain(zone, -INFINITY)
+		adjust_bodypart_pain(zone, -INFINITY)
+		// Shouldn't be necessary but you never know!
+		REMOVE_TRAIT(healed_bodypart, TRAIT_PARALYSIS, PAIN_LIMB_PARALYSIS)
+
+	clear_pain_attributes()
+	shock_buildup = 0
+	natural_pain_decay = base_pain_decay
 
 /**
  * Update our overall pain modifier.
@@ -363,7 +376,7 @@
  * damage - the amount of damage sustained
  * damagetype - the type of damage sustained
  * def_zone - the limb being targeted with damage (either a bodypart zone or an obj/item/bodypart)
- */
+
 /datum/pain/proc/add_damage_pain(
 	mob/living/carbon/source,
 	damage,
@@ -483,7 +496,7 @@
 #endif
 
 	adjust_bodypart_pain(def_zone, pain, damagetype)
-
+*/
 /**
  * Add pain in from a received wound based on severity.
  *
@@ -529,7 +542,7 @@
 		var/has_pain = FALSE
 		var/just_cant_feel_anything = !parent.can_feel_pain()
 		var/no_recent_pain = COOLDOWN_FINISHED(src, time_since_last_pain_loss)
-		for(var/part in shuffle(body_zones))
+		for(var/part in body_zones)
 			var/obj/item/bodypart/checked_bodypart = body_zones[part]
 			if(QDELETED(checked_bodypart))
 				continue
@@ -918,25 +931,6 @@
 	// Ideally pain would have its own heal flag but we live in a society
 	if(heal_flags & (HEAL_ADMIN|HEAL_WOUNDS|HEAL_STATUS))
 		remove_all_pain()
-
-/**
- * Remove all pain, pain paralysis, side effects, etc. from our mob after we're fully healed by something (like an adminheal)
- */
-/datum/pain/proc/remove_all_pain()
-	SIGNAL_HANDLER
-
-	for(var/zone in body_zones)
-		var/obj/item/bodypart/healed_bodypart = body_zones[zone]
-		if(QDELETED(healed_bodypart))
-			continue
-		adjust_bodypart_min_pain(zone, -INFINITY)
-		adjust_bodypart_pain(zone, -INFINITY)
-		// Shouldn't be necessary but you never know!
-		REMOVE_TRAIT(healed_bodypart, TRAIT_PARALYSIS, PAIN_LIMB_PARALYSIS)
-
-	clear_pain_attributes()
-	shock_buildup = 0
-	natural_pain_decay = base_pain_decay
 
 /**
  * Determines if we should be processing or not.

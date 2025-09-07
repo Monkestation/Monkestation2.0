@@ -43,7 +43,7 @@ Difficulty: Hard
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	speak_emote = list("gurgles")
-	armour_penetration = 40
+	armour_penetration = 60
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
@@ -146,13 +146,13 @@ Difficulty: Hard
  * This is used to award the frenching achievement for hitting bubblegum with a tongue
  *
  * Arguments:
- * * obj/item/W the item hitting bubblegum
+ * * obj/item/attacking_item the item hitting bubblegum
  * * mob/user The user of the item
  * * params, extra parameters
  */
-/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/organ/internal/tongue))
+	if(istype(attacking_item, /obj/item/organ/internal/tongue))
 		user.client?.give_award(/datum/award/achievement/jobs/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()

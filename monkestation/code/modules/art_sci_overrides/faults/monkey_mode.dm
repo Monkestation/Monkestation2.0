@@ -3,7 +3,7 @@
 	trigger_chance = 5
 	visible_message = "summons a mass of simians!"
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR
 
 	weight = ARTIFACT_VERYUNCOMMON
 

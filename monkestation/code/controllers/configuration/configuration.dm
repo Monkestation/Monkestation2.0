@@ -34,7 +34,7 @@
 			lobby_notices = parsed
 
 /datum/controller/configuration/proc/ShowLobbyNotices(target)
-	if (!config.lobby_notices) return FALSE
+	if (!length(config.lobby_notices)) return FALSE
 	var/final_notices = ""
 	var/do_final_top_separator = FALSE
 	for (var/notice as anything in config.lobby_notices)
@@ -52,6 +52,8 @@
 			do_final_top_separator = TRUE
 			final_notices = "[final_notices]<hr class='solid'>"
 
+	if(!final_notices)
+		return FALSE
 	to_chat(target, "[do_final_top_separator ? "<hr class='solid'>" : ""][final_notices]")
 
 	return TRUE

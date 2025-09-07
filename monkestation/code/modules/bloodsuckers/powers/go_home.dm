@@ -1,3 +1,4 @@
+
 #define GOHOME_START 0
 #define GOHOME_FLICKER_ONE 2
 #define GOHOME_FLICKER_TWO 4
@@ -20,7 +21,7 @@
 		Immediately after activating, lights around the user will begin to flicker. \n\
 		Once the user teleports to their coffin, in their place will be a Rat or Bat."
 	power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN
-	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED
+	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_IN_FRENZY
 	purchase_flags = NONE
 	bloodcost = 100
 	constant_bloodcost = 2
@@ -86,13 +87,13 @@
 	// If we aren't in the dark, anyone watching us will cause us to drop out stuff
 	if(!QDELETED(current_turf?.lighting_object) && current_turf.get_lumcount() >= 0.2)
 		for(var/mob/living/watchers in viewers(world.view, get_turf(owner)) - owner)
-			if(QDELETED(watchers.client) || watchers.stat != CONSCIOUS)
+			if(QDELETED(watchers.client) || watchers.client?.is_afk() || watchers.stat != CONSCIOUS)
 				continue
 			if(watchers.has_unlimited_silicon_privilege)
 				continue
 			if(watchers.is_blind())
 				continue
-			if(!IS_BLOODSUCKER(watchers) && !IS_VASSAL(watchers))
+			if(!IS_BLOODSUCKER(watchers) && !IS_VASSAL(watchers) && !HAS_TRAIT(watchers, TRAIT_GHOST_CRITTER))
 				drop_item = TRUE
 				break
 	// Drop all necessary items (handcuffs, legcuffs, items if seen)

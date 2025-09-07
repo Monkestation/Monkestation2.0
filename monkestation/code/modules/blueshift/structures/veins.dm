@@ -42,8 +42,8 @@
 	. = ..()
 	. += "[depleted ? "The ore vein is exhausted." : ""]"
 
-/obj/structure/ore_vein/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MINING)
+/obj/structure/ore_vein/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MINING)
 		to_chat(user, span_notice("You need a pickaxe to mine this."))
 		return FALSE
 	if(!ore_type)
@@ -57,11 +57,11 @@
 		return FALSE
 	// Our early return checks to tell the user what went wrong.
 	to_chat(user, span_notice("You start mining the [ore_descriptor]..."))
-	if(W.use_tool(src, user, src.mining_time, volume=50))
+	if(attacking_item.use_tool(src, user, src.mining_time, volume=50))
 		to_chat(user, span_notice("You mine the [ore_descriptor]."))
 		if(ore_type && ore_amount && depleted == FALSE)
 			new ore_type(loc, ore_amount)
-		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 		depleted = TRUE
 		update_icon_state()
 		addtimer(CALLBACK(src, PROC_REF(regenerate_ore)), regeneration_time)

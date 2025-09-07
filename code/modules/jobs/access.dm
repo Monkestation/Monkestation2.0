@@ -15,7 +15,11 @@
 		return FALSE
 	if(issilicon(accessor))
 		if(ispAI(accessor))
-			return FALSE
+			//MONKESTATION EDIT START: pAI has inherent maintenance access
+			// return FALSE //MONKESTATION EDIT ORIGINAL
+			var/mob/living/silicon/pai/pai = accessor
+			return check_access_list(pai.get_access())
+			//MONKESTATION EDIT END
 		if(!(ROLE_SYNDICATE in accessor.faction))
 			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
 				return FALSE
@@ -51,13 +55,14 @@
 		var/obj/item/mmi/brain_mmi = accessor.loc
 		if(ismecha(brain_mmi.loc))
 			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
-			return check_access_list(big_stompy_robot.operation_req_access)
+			return check_access_list(big_stompy_robot.accesses)
 	return FALSE
 
 /obj/item/proc/GetAccess()
 	return list()
 
-/obj/item/proc/GetID()
+/obj/item/proc/GetID() as /obj/item/card/id
+	RETURN_TYPE(/obj/item/card/id)
 	return null
 
 /obj/item/proc/RemoveID()

@@ -9,23 +9,23 @@
 	var/isolating = 0
 	var/beaker = null
 
-/obj/machinery/disease2/isolator/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I,/obj/item/reagent_containers/syringe))
-		return
+/obj/machinery/disease2/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/syringe))
+		return NONE
 
-	var/obj/item/reagent_containers/syringe/B = I
-
-	if(src.beaker)
+	var/obj/item/reagent_containers/syringe/B = tool
+	if(beaker)
 		to_chat(user, "A syringe is already loaded into the machine.")
-		return
-
-	if(user.dropItemToGround(B))
-		B.forceMove(src)
-		src.beaker =  B
-		if(istype(B,/obj/item/reagent_containers/syringe))
-			to_chat(user, "You add the syringe to the machine!")
-			src.updateUsrDialog()
-			icon_state = "isolator_in"
+		return ITEM_INTERACT_BLOCKING
+	if(!user.dropItemToGround(B))
+		return ITEM_INTERACT_BLOCKING
+	if(!B.forceMove(src))
+		return ITEM_INTERACT_BLOCKING
+	beaker = B
+	to_chat(user, "You add the syringe to the machine!")
+	src.updateUsrDialog()
+	icon_state = "isolator_in"
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/disease2/isolator/Topic(href, href_list)
 	if(..())
@@ -94,7 +94,7 @@
 						dat |= "<li>[G.name]: <A href='byond://?src=\ref[src];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
 			if(!passes)
 				dat += "<li><em>No pathogen</em></li>"
-	user << browse("<TITLE>Pathogenic Isolator</TITLE>Isolator menu:<BR><BR>[dat]</ul>", "window=isolator;size=575x400")
+	user << browse(HTML_SKELETON_TITLE("Pathogenic Isolator", dat), "window=isolator;size=575x400")
 	onclose(user, "isolator")
 	return
 

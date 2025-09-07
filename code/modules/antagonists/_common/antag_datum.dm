@@ -59,6 +59,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/can_assign_self_objectives = FALSE
 	/// Default to fill in when entering a custom objective.
 	var/default_custom_objective = "Cause chaos on the space station."
+	/// Whether we give a hardcore random bonus for greentexting as this antagonist while playing hardcore random
+	var/hardcore_random_bonus = FALSE
+	/// A path to the audio stinger that plays upon gaining this datum.
+	var/stinger_sound
 
 	//ANTAG UI
 
@@ -223,11 +227,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	var/mob/living/carbon/human/human_override = mob_override
 	if(removing) // They're a clown becoming an antag, remove clumsy
-		human_override.dna.remove_mutation(/datum/mutation/human/clumsy)
+		human_override.dna.remove_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 		if(!silent && message)
 			to_chat(human_override, span_boldnotice("[message]"))
 	else
-		human_override.dna.add_mutation(/datum/mutation/human/clumsy) // We're removing their antag status, add back clumsy
+		human_override.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS) // We're removing their antag status, add back clumsy
 
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -267,6 +271,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(count_against_dynamic_roll_chance && owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
+	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
+		antag_hud.apply_to_new_mob(owner.current)
+
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
 /**
@@ -292,7 +299,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
 		log_game("[key_name(chosen_one)] has taken control of ([key_name(owner)]) to replace antagonist banned player.")
 		owner.current.ghostize(FALSE)
-		owner.current.key = chosen_one.key
+		owner.current.PossessByPlayer(chosen_one.key)
 	else
 		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)]).")
 
@@ -319,10 +326,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
 
 	// Remove HUDs that they should no longer see
-	var/mob/living/current = owner.current
-	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
-		if(!antag_hud.mobShouldSee(current))
-			antag_hud.hide_from(current)
+	if(owner.current)
+		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
 
 	qdel(src)
 
@@ -333,6 +338,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/greet()
 	if(!silent)
 		to_chat(owner.current, span_big("You are \the [src]."))
+		play_stinger()
+
+/// Plays the antag stinger sound, if we have one
+/datum/antagonist/proc/play_stinger()
+	if(isnull(stinger_sound))
+		return
+	owner.current.playsound_local(get_turf(owner.current), stinger_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /**
  * Proc that sends fluff or instructional messages to the player when they lose this antag datum.
@@ -447,13 +459,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/get_admin_commands()
 	. = list()
 
+GLOBAL_LIST_EMPTY(cached_antag_previews)
+
 /// Creates an icon from the preview outfit.
 /// Custom implementors of `get_preview_icon` should use this, as the
 /// result of `get_preview_icon` is expected to be the completed version.
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
-	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
+	if(!isnull(GLOB.cached_antag_previews[outfit]))
+		return icon(GLOB.cached_antag_previews[outfit])
+	dummy ||= new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
 	var/icon = getFlatIcon(dummy)
+	GLOB.cached_antag_previews[outfit] = icon(icon)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
 	SSatoms.prepare_deletion(dummy)
@@ -511,8 +528,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	// Add HUDs that they couldn't see before
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
-		if (antag_hud.mobShouldSee(owner.current))
-			antag_hud.show_to(owner.current)
+		antag_hud.apply_to_new_mob(owner.current)
 
 /// Takes a location, returns an image drawing "on" it that matches this antag datum's hud icon
 /datum/antagonist/proc/hud_image_on(mob/hud_loc)
@@ -520,20 +536,23 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SET_PLANE_EXPLICIT(hud, ABOVE_GAME_PLANE, hud_loc)
 	return hud
 
-///generic helper to send objectives as data through tgui.
-/datum/antagonist/proc/get_objectives()
+/// Generic helper to send objectives as data through tgui.
+///
+/// If the `full_checks` argument is true,
+/// then it will use the objective's `check_completion` proc instead of the `completed` var
+/// to check to see if the objective is complete.
+/datum/antagonist/proc/get_objectives(full_checks = FALSE)
+	. = list()
 	var/objective_count = 1
-	var/list/objective_data = list()
 	//all obj
 	for(var/datum/objective/objective in objectives)
-		objective_data += list(list(
+		. += list(list(
 			"count" = objective_count,
 			"name" = objective.objective_name,
 			"explanation" = objective.explanation_text,
-			"complete" = objective.completed,
+			"complete" = full_checks ? objective.check_completion() : objective.completed,
 		))
 		objective_count++
-	return objective_data
 
 /// Used to create objectives for the antagonist.
 /datum/antagonist/proc/forge_objectives()
@@ -564,6 +583,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
 	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
+	for(var/client/staff as anything in GLOB.admins)
+		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
+			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+		window_flash(staff, ignorepref = TRUE)
 
 	var/datum/objective/custom/custom_objective = new()
 	custom_objective.owner = owner

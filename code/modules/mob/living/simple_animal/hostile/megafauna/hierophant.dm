@@ -50,7 +50,7 @@ Difficulty: Hard
 	icon = 'icons/mob/simple/lavaland/hierophant_new.dmi'
 	faction = list(FACTION_BOSS) //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
-	armour_penetration = 50
+	armour_penetration = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = 10
@@ -750,9 +750,9 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/H = I
+/obj/effect/hierophant/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/hierophant_club))
+		var/obj/item/hierophant_club/H = attacking_item
 		if(H.beacon == src)
 			to_chat(user, span_notice("You start removing your hierophant beacon..."))
 			if(do_after(user, 50, target = src))

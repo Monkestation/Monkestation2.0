@@ -52,38 +52,33 @@
 		manipcount += M.tier
 	base_efficiency = 1 + upgrade_efficiency * (manipcount-2)
 
-
-/obj/machinery/disease2/centrifuge/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
-
+/obj/machinery/disease2/centrifuge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(machine_stat & (BROKEN))
 		to_chat(user, span_warning("\The [src] is broken. Some components will have to be replaced before it can work again.") )
-		return FALSE
+		return NONE
 
-	if(.)
-		return
+	if(!istype(tool, /obj/item/reagent_containers/cup/tube))
+		return NONE
 
-	if (istype(I, /obj/item/reagent_containers/cup/tube))
-		special = CENTRIFUGE_LIGHTSPECIAL_OFF
-		if (on)
-			to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first.") )
-			return
-		var/obj/item/reagent_containers/cup/tube/tube = I
-		for (var/i = 1 to tubes.len)
-			if(!tubes[i])
-				tubes[i] = tube
-				tube_valid[i] = tube_has_antibodies(tube)
-				visible_message(span_notice("\The [user] adds \the [tube] to \the [src]."),span_notice("You add \the [tube] to \the [src]."))
-				playsound(loc, 'sound/machines/click.ogg', 50, 1)
-				user.transferItemToLoc(tube, loc)
-				tube.forceMove(src)
-				update_appearance()
-				updateUsrDialog()
-				return TRUE
+	special = CENTRIFUGE_LIGHTSPECIAL_OFF
+	if(on)
+		to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first.") )
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/reagent_containers/cup/tube/tube = tool
+	for(var/i = 1 to tubes.len)
+		if(!tubes[i])
+			tubes[i] = tube
+			tube_valid[i] = tube_has_antibodies(tube)
+			visible_message(span_notice("\The [user] adds \the [tube] to \the [src]."),span_notice("You add \the [tube] to \the [src]."))
+			playsound(loc, 'sound/machines/click.ogg', 50, 1)
+			user.transferItemToLoc(tube, loc)
+			tube.forceMove(src)
+			update_appearance()
+			updateUsrDialog()
+			return ITEM_INTERACT_SUCCESS
 
 		to_chat(user,span_warning("There is no room for more tubes.") )
-		return FALSE
-
+		return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/disease2/centrifuge/proc/tube_has_antibodies(obj/item/reagent_containers/cup/tube/tube)
 	if (!tube)
@@ -501,6 +496,14 @@
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
+
+/obj/machinery/disease2/centrifuge/attack_ai(mob/user)
+	if(!panel_open)
+		return attack_hand(user)
+
+/obj/machinery/disease2/centrifuge/attack_robot(mob/user)
+	return attack_ai(user)
+
 #undef CENTRIFUGE_LIGHTSPECIAL_OFF
 #undef CENTRIFUGE_LIGHTSPECIAL_BLINKING
 #undef CENTRIFUGE_LIGHTSPECIAL_ON

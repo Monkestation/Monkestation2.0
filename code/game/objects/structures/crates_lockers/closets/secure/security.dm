@@ -6,6 +6,7 @@
 /obj/structure/closet/secure_closet/captains/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/civ(src)
 	new /obj/item/storage/backpack/captain(src)
 	new /obj/item/storage/backpack/satchel/cap(src)
 	new /obj/item/storage/backpack/duffelbag/captain(src)
@@ -28,6 +29,7 @@
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
+	new /obj/item/card/id/departmental_budget/srv(src)
 	new /obj/item/dog_bone(src)
 	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
@@ -54,6 +56,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 
+	new /obj/item/card/id/departmental_budget/sec(src)
 	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/storage/bag/garment/hos(src)
@@ -85,26 +88,16 @@
 	..()
 	new /obj/item/dog_bone(src)
 	new /obj/item/radio/headset/headset_sec(src)
-	new /obj/item/clothing/suit/armor/vest/warden(src)
-	new /obj/item/clothing/head/hats/warden(src)
-	new /obj/item/clothing/head/hats/warden/drill(src)
-	new /obj/item/clothing/head/beret/sec/navywarden(src)
-	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
-	new /obj/item/clothing/under/rank/security/warden/formal(src)
-	new /obj/item/clothing/under/rank/security/warden/skirt(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/holosign_creator/security(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/storage/bag/garment/warden(src)
 	new /obj/item/storage/box/zipties(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/door_remote/head_of_security(src)
 	new /obj/item/storage/box/bodycamera(src) //monkestation edit: Security Liability Act
 	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) //undoing ancient removal
 	new /obj/item/ammo_box/advanced/s12gauge/rubber(src) //he can have some rubber ammo too
-
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
@@ -177,10 +170,12 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/detective/full(src)
+	new /obj/item/storage/belt/holster/detective/full(src) // Monkestation edit : Adding some substance to the detective role
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 	new /obj/item/clothing/head/fedora/inspector_hat(src)
+	new /obj/item/card/id/advanced/undercover(src) // Monkestation edit : Adding some substance to the detective role
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
 
 /obj/structure/closet/secure_closet/injection
@@ -331,7 +326,7 @@
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"
-	req_access = list(ACCESS_CENT_GENERAL)
+	req_one_access = list("blueshield","armory")
 	icon_state = "tac"
 
 /obj/structure/closet/secure_closet/tac/PopulateContents()

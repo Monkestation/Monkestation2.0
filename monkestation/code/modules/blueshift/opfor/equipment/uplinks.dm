@@ -57,7 +57,7 @@
 /datum/opposing_force_equipment/uplink/give_exploitables
 	name = "Exploitables Access"
 	description = "You will be given access to a network of exploitable information of certain crewmates, viewable using either a verb or on examine."
-	item_type = /obj/effect/gibspawner/generic
+	item_type = ABSTRACT_UPLINK_ITEM
 	admin_note = "Same effect as using the traitor panel Toggle Exploitables Override button. Usually safe to give."
 
 /datum/opposing_force_equipment/uplink/give_exploitables/on_issue(mob/living/target)
@@ -74,7 +74,7 @@
 /datum/opposing_force_equipment/uplink/power_outage
 	name = "Power Outage"
 	description = "A virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
-	item_type = /obj/effect/gibspawner/generic
+	item_type = ABSTRACT_UPLINK_ITEM
 	admin_note = "Equivalent to the Grid Check random event."
 	max_amount = 1
 
@@ -85,7 +85,7 @@
 /datum/opposing_force_equipment/uplink/telecom_outage
 	name = "Telecomms Outage"
 	description = "A virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
-	item_type = /obj/effect/gibspawner/generic
+	item_type = ABSTRACT_UPLINK_ITEM
 	admin_note = "Equivalent to the Communications Blackout random event."
 	max_amount = 1
 

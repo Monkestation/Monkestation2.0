@@ -55,7 +55,6 @@
 	access_view = ACCESS_ARMORY
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
-// MONKESTATION ADDITION START
 /datum/supply_pack/imports/Lrevolvercrate
 	name = "Long Revolver Crate"
 	desc = "We got these old revolvers from a unnamed man, enjoy them"
@@ -75,7 +74,7 @@
 	desc = "These old rifles were sold to us by a unnamed man, quite the bargin"
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
-		/obj/item/gun/ballistic/shotgun/leveraction = 3,
+		/obj/item/gun/ballistic/rifle/leveraction = 3,
 		/obj/item/ammo_box/g45l = 2,
 		/obj/item/ammo_box/g45l/rubber = 1,
 	)
@@ -83,4 +82,11 @@
 	access = ACCESS_ARMORY
 	access_view = ACCESS_ARMORY
 	crate_type = /obj/structure/closet/crate/secure/weapon
-// MONKESTATION ADDITION END
+
+/datum/supply_pack/imports/fss
+	name = "FSS-550 Design Disk"
+	desc = "Do you hate gun control? So do I! This will let any autolathe produce more guns than security can keep track of!"
+	cost = CARGO_CRATE_VALUE * 10
+	hidden = TRUE
+	contains = list(/obj/item/disk/design_disk/fss)
+	crate_name = "Emergency Crate"

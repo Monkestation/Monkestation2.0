@@ -103,18 +103,14 @@
 		if(allow_walk && moving_carbon.m_intent == MOVE_INTENT_WALK)
 			return TRUE
 
-// /obj/structure/holosign/barrier/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-// 	. = ..()
-// 	if(tool != projector)
-// 		return
-// 	if(openable)
-// 		open(user)
-
-/obj/structure/holosign/barrier/attackby(obj/item/tool, mob/living/user, params)
+/obj/structure/holosign/barrier/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(tool != projector)
 		return
-	qdel(src)
+	if(openable)
+		open(user)
+	else
+		qdel(src)
 
 /obj/structure/holosign/barrier/update_icon_state()
 	if(openable)
@@ -238,6 +234,8 @@
 	name = "\improper PENLITE holobarrier"
 	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
 	icon_state = "holo_medical"
+	base_icon_state = "holo_medical"
+	pass_icon_state = "holo_medical_pass"
 	var/force_allaccess = FALSE
 	openable = FALSE
 	COOLDOWN_DECLARE(virus_detected)
@@ -284,9 +282,20 @@
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
 	if(!(user.istate & ISTATE_HARM) && CanPass(user, get_dir(src, user)))
 		force_allaccess = !force_allaccess
+		update_Medicon_state()
 		to_chat(user, span_warning("You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.")) //warning spans because you can make the station sick!
 	else
 		return ..()
+
+/obj/structure/holosign/barrier/medical/proc/update_Medicon_state() // Due to how its coded it doesnt use the open variable so... new proc.
+	if(!force_allaccess)
+		icon_state = base_icon_state
+	else
+		icon_state = pass_icon_state
+	if(use_vis_overlay)
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+		var/turf/our_turf = get_turf(src)
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"

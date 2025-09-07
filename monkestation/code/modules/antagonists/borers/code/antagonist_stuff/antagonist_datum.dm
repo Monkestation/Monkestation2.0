@@ -41,7 +41,7 @@
 	var/vent = pick(vents)
 	var/mob/living/basic/cortical_borer/spawned_cb = new borer_mob_type(get_turf(vent))
 	spawned_cb.move_into_vent(vent)
-	spawned_cb.ckey = new_borer.ckey
+	spawned_cb.PossessByPlayer(new_borer.ckey)
 	spawned_cb.mind.add_antag_datum(type)
 	notify_ghosts(
 		"Someone has become a borer due to spending an antag token ([spawned_cb])!",
@@ -135,3 +135,8 @@
 	return list(
 		get_asset_datum(/datum/asset/simple/borer_icons),
 	)
+
+
+// Lets the borers see who is a willing host
+/datum/antagonist/cortical_borer/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)

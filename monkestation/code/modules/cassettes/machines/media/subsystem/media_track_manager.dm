@@ -22,6 +22,8 @@ SUBSYSTEM_DEF(media_tracks)
 	var/datum/media_track/current_lobby_track
 
 /datum/controller/subsystem/media_tracks/Initialize(timeofday)
+	if(!length(GLOB.jukebox_track_files))
+		return SS_INIT_NO_NEED
 	load_tracks()
 	sort_tracks()
 	return SS_INIT_SUCCESS
@@ -34,19 +36,24 @@ SUBSYSTEM_DEF(media_tracks)
 			log_runtime("File not found: [filename]")
 			continue
 
-		var/list/jsonData = json_decode(file2text(filename))
+		var/list/json_data = json_decode(file2text(filename))
 
-		if(!istype(jsonData))
+		if(!islist(json_data))
 			log_runtime("Failed to read tracks from [filename], json_decode failed.")
 			continue
 
-		var/is_json_obj = json_encode(jsonData)[1] == "{"
-		var/is_json_arr = json_encode(jsonData)[1] == "\["
+		var/is_json_obj = FALSE
+		var/is_json_arr = FALSE
+		switch(json_encode(json_data)[1])
+			if("{")
+				is_json_obj = TRUE
+			if("\[")
+				is_json_arr = TRUE
 		// Some files could be an object, since SSticker adds lobby tracks from jsons that aren't arrays
-		if (is_json_obj)
-			process_track(jsonData, filename)
-		else if (is_json_arr)
-			for(var/entry in jsonData)
+		if(is_json_obj)
+			process_track(json_data, filename)
+		else if(is_json_arr)
+			for(var/entry in json_data)
 				process_track(entry, filename)
 		else
 			// how did we end up here?
@@ -70,12 +77,12 @@ SUBSYSTEM_DEF(media_tracks)
 	if(!istext(entry["genre"]))
 		warning("Jukebox entry in [filename], [entry["title"]]: bad or missing 'genre'. Please consider adding a genre.")
 
-	var/datum/media_track/T = new(entry["url"], entry["title"], entry["duration"], entry["artist"], entry["genre"])
+	var/datum/media_track/track = new(entry["url"], entry["title"], entry["duration"], entry["artist"], entry["genre"])
 
-	T.secret = entry["secret"] ? 1 : 0
-	T.lobby = entry["lobby"] ? 1 : 0
+	track.secret = entry["secret"]
+	track.lobby = entry["lobby"]
 
-	all_tracks += T
+	all_tracks += track
 
 /datum/controller/subsystem/media_tracks/proc/sort_tracks()
 	message_admins("Sorting media tracks...")
@@ -84,28 +91,26 @@ SUBSYSTEM_DEF(media_tracks)
 	jukebox_tracks.Cut()
 	lobby_tracks.Cut()
 
-	for(var/datum/media_track/T in all_tracks)
-		if(!T.secret)
-			jukebox_tracks += T
-		if(T.lobby)
-			lobby_tracks += T
+	for(var/datum/media_track/track as anything in all_tracks)
+		if(!track.secret)
+			jukebox_tracks += track
+		if(track.lobby)
+			lobby_tracks += track
 
-	message_admins("Total tracks - Jukebox: [jukebox_tracks.len] - Lobby: [lobby_tracks.len]")
+	message_admins("Total tracks - Jukebox: [length(jukebox_tracks)] - Lobby: [length(lobby_tracks)]")
 
-/datum/controller/subsystem/media_tracks/proc/manual_track_add()
-	var/client/C = usr.client
-	if(!check_rights(R_DEBUG|R_FUN))
+/datum/controller/subsystem/media_tracks/proc/manual_track_add(mob/user = usr)
+	if(!check_rights(R_DEBUG | R_FUN))
 		return
 
 	// Required
-	var/url = tgui_input_text(C, "REQUIRED: Provide URL for track, or paste JSON if you know what you're doing. See code comments.", "Track URL", multiline = TRUE)
+	var/url = tgui_input_text(user, "REQUIRED: Provide URL for track, or paste JSON if you know what you're doing. See code comments.", "Track URL", multiline = TRUE)
 	if(!url)
 		return
 
 	var/list/json
-	try
+	if(rustg_json_is_valid(url))
 		json = json_decode(url)
-	catch
 
 	/**
 	 * Alternatively to using a series of inputs, you can use json and paste it in.
@@ -123,37 +128,37 @@ SUBSYSTEM_DEF(media_tracks)
 	if(islist(json))
 		for(var/song in json)
 			if(!islist(song))
-				to_chat(C, "<span class='warning'>Song appears to be malformed.</span>")
+				to_chat(user, span_warning("Song appears to be malformed."))
 				continue
 			var/list/songdata = song
 			if(!songdata["url"] || !songdata["title"] || !songdata["duration"])
-				to_chat(C, "<span class='warning'>URL, Title, or Duration was missing from a song. Skipping.</span>")
+				to_chat(user, span_warning("URL, Title, or Duration was missing from a song. Skipping"))
 				continue
-			var/datum/media_track/T = new(songdata["url"], songdata["title"], songdata["duration"], songdata["artist"], songdata["genre"], songdata["secret"], songdata["lobby"])
-			all_tracks += T
+			var/datum/media_track/track = new(songdata["url"], songdata["title"], songdata["duration"], songdata["artist"], songdata["genre"], songdata["secret"], songdata["lobby"])
+			all_tracks += track
 
-			message_admins("New media track added by [C]: [T.title]")
+			message_admins("New media track added by [key_name(user)]: [track.title]")
 		sort_tracks()
 		return
 
-	var/title = tgui_input_text(C, "REQUIRED: Provide title for track", "Track Title")
+	var/title = tgui_input_text(user, "REQUIRED: Provide title for track", "Track Title")
 	if(!title)
 		return
 
-	var/duration = tgui_input_number(C, "REQUIRED: Provide duration for track (in deciseconds, aka seconds*10)", "Track Duration")
+	var/duration = tgui_input_number(user, "REQUIRED: Provide duration for track (in deciseconds, aka seconds*10)", "Track Duration")
 	if(!duration)
 		return
 
 	// Optional
-	var/artist = tgui_input_text(C, "Optional: Provide artist for track", "Track Artist")
+	var/artist = tgui_input_text(user, "Optional: Provide artist for track", "Track Artist")
 	if(isnull(artist)) // Cancel rather than empty string
 		return
 
-	var/genre = tgui_input_text(C, "Optional: Provide genre for track (try to match an existing one)", "Track Genre")
+	var/genre = tgui_input_text(user, "Optional: Provide genre for track (try to match an existing one)", "Track Genre")
 	if(isnull(genre)) // Cancel rather than empty string
 		return
 
-	var/secret = tgui_alert(C, "Optional: Mark track as secret?", "Track Secret", list("Yes", "Cancel", "No"))
+	var/secret = tgui_alert(user, "Optional: Mark track as secret?", "Track Secret", list("Yes", "Cancel", "No"))
 	if(secret == "Cancel")
 		return
 	else if(secret == "Yes")
@@ -161,7 +166,7 @@ SUBSYSTEM_DEF(media_tracks)
 	else
 		secret = FALSE
 
-	var/lobby = tgui_alert(C, "Optional: Mark track as lobby music?", "Track Lobby", list("Yes", "Cancel", "No"))
+	var/lobby = tgui_alert(user, "Optional: Mark track as lobby music?", "Track Lobby", list("Yes", "Cancel", "No"))
 	if(lobby == "Cancel")
 		return
 	else if(secret == "Yes")
@@ -169,34 +174,37 @@ SUBSYSTEM_DEF(media_tracks)
 	else
 		secret = FALSE
 
-	var/datum/media_track/T = new(url, title, duration, artist, genre)
+	var/datum/media_track/track = new(url, title, duration, artist, genre)
 
-	T.secret = secret
-	T.lobby = lobby
+	track.secret = secret
+	track.lobby = lobby
 
-	all_tracks += T
+	all_tracks += track
 
-	message_admins("New media track added by [C]: [title]")
+	message_admins("New media track added by [key_name(user)]: [title]")
 	sort_tracks()
 
-/datum/controller/subsystem/media_tracks/proc/manual_track_remove()
-	var/client/C = usr.client
+/datum/controller/subsystem/media_tracks/proc/manual_track_remove(mob/user = usr)
 	if(!check_rights(R_DEBUG|R_FUN))
 		return
 
-	var/track = tgui_input_text(C, "Input track title or URL to remove (must be exact)", "Remove Track")
-	if(!track)
+	var/track_to_remove = tgui_input_text(user, "Input track title or URL to remove (must be exact)", "Remove Track")
+	if(!track_to_remove)
 		return
 
-	for(var/datum/media_track/T in all_tracks)
-		if(T.title == track || T.url == track)
-			all_tracks -= T
-			qdel(T)
-			message_admins("Media track removed by [C]: [track]")
-			sort_tracks()
-			return
+	var/found_track = FALSE
+	for(var/datum/media_track/track as anything in all_tracks)
+		if(track.title != track_to_remove && track.url != track_to_remove)
+			continue
+		all_tracks -= track
+		qdel(track)
+		message_admins("Media track removed by [key_name(user)]: [track]")
+		found_track = TRUE
 
-	to_chat(C, "<span class='warning>Couldn't find a track matching the specified parameters.</span>")
+	if(found_track)
+		sort_tracks()
+	else
+		to_chat(user, span_warning("Couldn't find a track matching the specified parameters."))
 
 /datum/controller/subsystem/media_tracks/vv_get_dropdown()
 	. = ..()

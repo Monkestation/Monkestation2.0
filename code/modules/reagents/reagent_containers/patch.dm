@@ -47,6 +47,12 @@
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	icon_state = "bandaid_both"
 
+/obj/item/reagent_containers/pill/patch/modafinil
+	name = "modafinil patch (WARNING)"
+	desc = "Helps quickly wake up patients and cures dizziness. Easy to overdose, apply one patch and wait for it to finish applying before applying another."
+	list_reagents = list(/datum/reagent/medicine/modafinil = 1)
+	icon_state = "bandaid_exclaimationpoint"
+
 // Patch styles for chem master
 
 /obj/item/reagent_containers/pill/patch/style

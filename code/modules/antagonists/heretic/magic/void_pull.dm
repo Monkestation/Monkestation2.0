@@ -9,17 +9,17 @@
 	sound = 'sound/magic/voidblink.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	cooldown_time = 45 SECONDS
 
 	invocation = "BR'NG F'RTH TH'M T' M'."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
-	aoe_radius = 7
+	aoe_radius = 5
 	/// The radius of the actual damage circle done before cast
 	var/damage_radius = 1
 	/// The radius of the stun applied to nearby people on cast
-	var/stun_radius = 4
+	var/stun_radius = 2
 
 /datum/action/cooldown/spell/aoe/void_pull/before_cast(atom/cast_on)
 	. = ..()
@@ -54,4 +54,3 @@
 	if(distance <= damage_radius)
 		victim.apply_damage(30, BRUTE, wound_bonus = CANT_WOUND)
 	victim.AdjustKnockdown(3 SECONDS)
-	victim.AdjustParalyzed(0.5 SECONDS)

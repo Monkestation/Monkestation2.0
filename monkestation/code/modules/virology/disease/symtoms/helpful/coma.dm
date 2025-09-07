@@ -1,7 +1,7 @@
 /datum/symptom/coma
 	name = "Regenerative Coma"
 	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
-	max_multiplier = 15
+	max_multiplier = 12
 	max_chance = 100
 	stage = 3
 	badness = EFFECT_DANGER_HELPFUL
@@ -13,7 +13,7 @@
 
 /datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
-	if(!added_to_mob && max_multiplier >= 12)
+	if(!added_to_mob && max_multiplier >= 9)
 		added_to_mob = TRUE
 		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 
@@ -33,16 +33,20 @@
 	REMOVE_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 
 /datum/symptom/coma/proc/CanHeal(mob/living/victim)
+	if(!iscarbon(victim))
+		return FALSE
+	if(HAS_TRAIT(victim, TRAIT_NO_HEALS))
+		return FALSE
 	if(HAS_TRAIT(victim, TRAIT_DEATHCOMA))
 		return multiplier
 	if(victim.IsSleeping())
-		return multiplier * 0.25 //Voluntary unconsciousness yields lower healing.
+		return multiplier * 0.3 //Voluntary unconsciousness yields lower healing.
 	switch(victim.stat)
 		if(UNCONSCIOUS, HARD_CRIT)
 			return multiplier * 0.9
 		if(SOFT_CRIT)
 			return multiplier * 0.5
-	if((victim.getBruteLoss() + victim.getFireLoss()) >= 70 && !active_coma)
+	if((victim.getBruteLoss() + victim.getFireLoss()) >= 80 && !active_coma)
 		to_chat(victim, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, PROC_REF(coma), victim), 6 SECONDS)

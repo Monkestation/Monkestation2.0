@@ -82,14 +82,14 @@
 	. = ..()
 	if(!istype(masquerade_breaker) || !masquerade_breaker.owner)
 		CRASH("Attempted to create [type] objective without a valid target bloodsucker datum!")
-	RegisterSignal(masquerade_breaker, BLOODSUCKER_FINAL_DEATH, PROC_REF(on_target_final_death))
+	RegisterSignal(masquerade_breaker, COMSIG_BLOODSUCKER_FINAL_DEATH, PROC_REF(on_target_final_death))
 	src.target = masquerade_breaker.owner
 	src.masquerade_breaker = masquerade_breaker
 	update_explanation_text()
 
 /datum/objective/enforce_masquerade/Destroy()
 	if(masquerade_breaker)
-		UnregisterSignal(masquerade_breaker, BLOODSUCKER_FINAL_DEATH)
+		UnregisterSignal(masquerade_breaker, COMSIG_BLOODSUCKER_FINAL_DEATH)
 		masquerade_breaker = null
 	return ..()
 

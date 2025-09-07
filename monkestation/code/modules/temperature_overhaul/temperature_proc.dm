@@ -95,6 +95,8 @@
 	if(amount == 0)
 		return 0
 	amount = round(amount, 0.01)
+	min_temp = max(min_temp, TCMB)
+	max_temp = min(max_temp, 603.15)
 
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		var/old_temp = bodytemperature

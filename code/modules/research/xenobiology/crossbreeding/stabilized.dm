@@ -15,11 +15,11 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSobj,src)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/stabilized/Destroy()
-	STOP_PROCESSING(SSobj,src)
-	qdel(linked_effect)
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(linked_effect)
 	return ..()
 
 /// Returns the mob that is currently holding us if we are either in their inventory or a backpack analogue.
@@ -40,6 +40,8 @@ Stabilized extracts:
 	return null
 
 /obj/item/slimecross/stabilized/process()
+	if(!QDELETED(linked_effect))
+		return
 	var/mob/living/holder = get_held_mob()
 	if(isnull(holder))
 		return
@@ -50,10 +52,8 @@ Stabilized extracts:
 			continue
 		effectpath = effect
 		break
-	if (holder.has_status_effect(effectpath))
-		return
-	holder.apply_status_effect(effectpath, src)
-	STOP_PROCESSING(SSobj,src)
+	if(!holder.has_status_effect(effectpath))
+		holder.apply_status_effect(effectpath, src)
 
 //Colors and subtypes:
 /obj/item/slimecross/stabilized/grey
@@ -190,6 +190,12 @@ Stabilized extracts:
 	colour = "rainbow"
 	effect_desc = "Accepts a regenerative extract and automatically uses it if the owner enters a critical condition."
 	var/obj/item/slimecross/regenerative/regencore
+
+/obj/item/slimecross/stabilized/rainbow/Destroy()
+	if(!QDELETED(regencore))
+		regencore.forceMove(drop_location())
+	regencore = null
+	return ..()
 
 /obj/item/slimecross/stabilized/rainbow/attackby(obj/item/O, mob/user)
 	var/obj/item/slimecross/regenerative/regen = O

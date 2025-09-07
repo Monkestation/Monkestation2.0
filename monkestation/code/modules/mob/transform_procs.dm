@@ -5,5 +5,4 @@
 	var/mob/living/basic/gorilla/gorilla = ..()
 	if(keep_name && old_name && gorilla)
 		gorilla.name = gorilla.real_name = old_name
-		gorilla.update_name_tag(old_name)
 	return gorilla

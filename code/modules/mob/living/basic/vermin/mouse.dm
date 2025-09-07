@@ -43,6 +43,9 @@
 
 	var/chooses_bodycolor = TRUE
 
+	///can they heal for eating non-cheese
+	var/hungry = FALSE
+
 //MONKESTATION EDIT START
 /mob/living/basic/mouse/get_scream_sound()
 	return 'sound/effects/mousesqueek.ogg'
@@ -53,6 +56,11 @@
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
 	if(contributes_to_ratcap)
+		var/cap = CONFIG_GET(number/ratcap)
+		if (LAZYLEN(SSmobs.cheeserats) > cap)
+			do_sparks(rand(3, 4), FALSE, src)
+			visible_message(span_warning("ERROR: Bluespace Disturbance Detected. More than [cap] entities will disturb bluespace harmonics. Entity eradicated."))
+			return INITIALIZE_HINT_QDEL
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -76,7 +84,7 @@
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -166,6 +174,8 @@
 			return //mice savour cheese differently
 		var/datum/component/edible/edible = attack_target.GetComponent(/datum/component/edible)
 		edible.UseByMouse(edible, src)
+		if(hungry && prob(90))
+			adjust_health(-4)
 
 		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
 			if(istype(target_reagent, /datum/reagent/toxin))
@@ -189,7 +199,7 @@
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
-/mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+/mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
 	faction |= FACTION_NEUTRAL
 	tame = TRUE
@@ -371,7 +381,7 @@
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
-/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/living_user = user
 	if(istype(living_user) && attacking_item.get_sharpness() && (living_user.istate & ISTATE_HARM))
 		if(!isturf(loc))
@@ -390,18 +400,16 @@
 
 	return ..()
 
-/obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && reagents && target.is_open_container())
-		. |= AFTERATTACK_PROCESSED_ITEM
-		// is_open_container will not return truthy if target.reagents doesn't exist
-		var/datum/reagents/target_reagents = target.reagents
-		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
-		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
-			to_chat(user, span_notice("You dip [src] into [target]."))
-		else
-			to_chat(user, span_warning("That's a terrible idea."))
-		return .
+/obj/item/food/deadmouse/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isnull(reagents) || !interacting_with.is_open_container())
+		return NONE
+
+	// is_open_container will not return truthy if target.reagents doesn't exist
+	var/datum/reagents/target_reagents = interacting_with.reagents
+	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
+	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
+		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"

@@ -1,3 +1,4 @@
+/*
 /*Voice Change
  * Slight stealth reduction
  * Reduces resistance
@@ -67,3 +68,4 @@
 	if(scramble_language)
 		A.affected_mob.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_VOICECHANGE)
 		A.affected_mob.remove_all_languages(LANGUAGE_VOICECHANGE) // In case someone managed to get more than one anyway.
+*/

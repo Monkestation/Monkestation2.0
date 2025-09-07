@@ -14,7 +14,7 @@
 				if(registered[icon_state])
 					continue
 
-				Insert(sprite_name = icon_state, I = 'icons/obj/tiles.dmi', icon_state = icon_state)
+				Insert(icon_state, 'icons/obj/tiles.dmi', icon_state)
 				registered[icon_state] = TRUE
 
 				var/list/tile_directions = design["tile_rotate_dirs"]
@@ -51,4 +51,4 @@
 							west_rotated.Turn(90)
 							img.Blend(west_rotated,ICON_MULTIPLY)
 							img.SetIntensity(2,2,2)
-					Insert(sprite_name = "[icon_state]-[dir2text(direction)]", I = img)
+					Insert("[icon_state]-[dir2text(direction)]", img)

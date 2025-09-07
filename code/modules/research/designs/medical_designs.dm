@@ -41,7 +41,7 @@
 	name = "X-large Beaker"
 	id = "xlarge_beaker"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 2500, /datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
@@ -52,7 +52,7 @@
 	name = "Metamaterial Beaker"
 	id = "meta_beaker"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 2500, /datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
@@ -63,7 +63,7 @@
 	name = "Chemical Analyzer"
 	id = "ph_meter"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 2500, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ph_meter
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -94,28 +94,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/piercesyringe
-	name = "Piercing Syringe"
-	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
-	id = "piercesyringe"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/reagent_containers/syringe/piercing
-	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
-
 //monkestation edit start
 /datum/design/rollerbed
 	name = "Roller Bed"
 	desc = "For the modern coma patient on the go!  Much better than dragging a bleeding person along the floor."
 	id = "rollerbed"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 3000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/emergency_bed
 	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -124,10 +112,10 @@
 	desc = "A bag for a body. For when the doctors couldn't get to them, or after they're done."
 	id = "bodybag"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 1000)
+	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/bodybag
 	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 //monkestation edit end
@@ -149,7 +137,7 @@
 	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
 	id = "plasmarefiller" //Why did this have no plasmatech
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/extinguisher_refill
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS_EQUIPMENT
@@ -174,7 +162,7 @@
 	id = "defibrillator"
 	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
 	build_path = /obj/item/defibrillator
-	materials = list(/datum/material/iron = 8000, /datum/material/glass = 4000, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -210,7 +198,7 @@
 	id = "defibrillator_compact"
 	build_type = PROTOLATHE | AWAY_LATHE
 	build_path = /obj/item/defibrillator/compact
-	materials = list(/datum/material/iron = 16000, /datum/material/glass = 8000, /datum/material/silver = 6000, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/silver = SHEET_MATERIAL_AMOUNT*3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -234,7 +222,7 @@
 	id = "healthanalyzer_advanced"
 	build_path = /obj/item/healthanalyzer/advanced
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = 2500, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -246,7 +234,7 @@
 	id = "medigel"
 	build_path = /obj/item/reagent_containers/medigel
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 2500, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
@@ -269,7 +257,7 @@
 	id = "laserscalpel"
 	build_path = /obj/item/scalpel/advanced
 	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
-	materials = list(/datum/material/iron = 6000, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*2)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -281,7 +269,7 @@
 	id = "mechanicalpinches"
 	build_path = /obj/item/retractor/advanced
 	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
-	materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -293,7 +281,7 @@
 	id = "searingtool"
 	build_path = /obj/item/cautery/advanced
 	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
-	materials = list(/datum/material/iron = 4000, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 1.5)
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL_ADVANCED
 	)
@@ -343,7 +331,7 @@
 	id = "portable_chem_mixer"
 	build_type = PROTOLATHE | AWAY_LATHE
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/iron = 10000, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/portable_chem_mixer
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
@@ -367,12 +355,26 @@
 	desc = "A portable, foldable version of the medical bed. Perfect for paramedics or whenever you have mass casualties!"
 	id = "medicalbed_emergency"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 5)
+	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7,)
 	build_path = /obj/item/emergency_bed
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/nifsoft_hud/medical
+	name = "Medical HUD NIFSoft"
+	desc = "A NIFSoft datadisk containing the Medical HUD NIFsoft."
+	id = "nifsoft_hud_medical"
+	build_path = /obj/item/disk/nifsoft_uploader/med_hud
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/nifsoft_hud/science
+	name = "Science HUD NIFSoft"
+	desc = "A NIFSoft datadisk containing the Science HUD NIFsoft."
+	id = "nifsoft_hud_science"
+	build_path = /obj/item/disk/nifsoft_uploader/sci_hud
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_MEDICAL
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -384,7 +386,7 @@
 	id = "ci-welding"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 400)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/organ/internal/eyes/robotic/shield
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
@@ -397,7 +399,7 @@
 	id = "ci-gloweyes"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
-	materials = list(/datum/material/iron = 600, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/organ/internal/eyes/robotic/glow
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_MISC
@@ -410,7 +412,7 @@
 	id = "ci-breather"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 35
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 250)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
 	build_path = /obj/item/organ/internal/cyberimp/mouth/breathing_tube
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH
@@ -422,7 +424,7 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	id = "ci-surgery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list (/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	construction_time =SMALL_MATERIAL_AMOUNT * 2
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/surgery
 	category = list(
@@ -435,7 +437,7 @@
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "ci-toolset"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (/datum/material/iron = 2500, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	materials = list (/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	construction_time =SMALL_MATERIAL_AMOUNT * 2
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/toolset
 	category = list(
@@ -449,7 +451,12 @@
 	id = "ci-medhud"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
@@ -462,12 +469,17 @@
 	id = "ci-sechud"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 750, /datum/material/gold = 750)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*7.5,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY // monkestation edit
 
 /datum/design/cyberimp_diagnostic_hud
 	name = "Diagnostic HUD Implant"
@@ -475,7 +487,12 @@
 	id = "ci-diaghud"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT*6,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
@@ -488,12 +505,21 @@
 	id = "ci-xray"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 60
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	build_path = /obj/item/organ/internal/eyes/robotic/xray
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY // monkestation edit
 
 /datum/design/cyberimp_thermals
 	name = "Thermal Eyes"
@@ -501,12 +527,19 @@
 	id = "ci-thermals"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 60
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond =SHEET_MATERIAL_AMOUNT,
+	)
 	build_path = /obj/item/organ/internal/eyes/robotic/thermals
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY // monkestation edit
 
 /datum/design/cyberimp_antidrop
 	name = "Anti-Drop Implant"
@@ -514,12 +547,17 @@
 	id = "ci-antidrop"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 60
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 400, /datum/material/gold = 400)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*4,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT*4,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY //  monkestation edit
 
 /datum/design/cyberimp_antistun
 	name = "CNS Rebooter Implant"
@@ -527,12 +565,17 @@
 	id = "ci-antistun"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 60
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY // monkestation edit
 
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
@@ -540,7 +583,11 @@
 	id = "ci-nutriment"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH
@@ -553,7 +600,12 @@
 	id = "ci-nutrimentplus"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 50
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5, /datum/material/uranium = 750)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/uranium = SMALL_MATERIAL_AMOUNT*7.5,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH
@@ -566,12 +618,17 @@
 	id = "ci-reviver"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 60
-	materials = list(/datum/material/iron = 800, /datum/material/glass = 800, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 3, /datum/material/uranium =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*8,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*8,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT * 3,
+		/datum/material/uranium =SMALL_MATERIAL_AMOUNT*5,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY // monkestation edit
 
 /datum/design/cyberimp_thrusters
 	name = "Thrusters Set Implant"
@@ -579,12 +636,30 @@
 	id = "ci-thrusters"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 80
-	materials = list(/datum/material/iron = 4000, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY // monkestation edit
+
+/datum/design/nif/standard
+	name = "Nanite Implant Framework"
+	desc = "A brain implant that infuses the user with nanites."
+	id = "nif_standard"
+	build_path = /obj/item/organ/internal/cyberimp/brain/nif/standard
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 8 SECONDS
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT , /datum/material/gold = SHEET_MATERIAL_AMOUNT)
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_MEDICAL
 
 /////////////////////////////////////////
 ////////////Regular Implants/////////////
@@ -595,7 +670,7 @@
 	desc = "A sterile automatic implant injector."
 	id = "implanter"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/implanter
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS
@@ -631,7 +706,7 @@
 	desc = "A glass case containing an implant."
 	id = "implant_chem"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 700)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*7)
 	build_path = /obj/item/implantcase/chem
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC
@@ -840,7 +915,7 @@
 	id = "cybernetic_ears"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 30
-	materials = list(/datum/material/iron = 250, /datum/material/glass = 400)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/organ/internal/ears/cybernetic
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
@@ -860,13 +935,47 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cybernetic_ears_whisper
+	name = "Whisper-sensitive Cybernetic Ears"
+	desc = "A pair of whisper-sensitive cybernetic ears."
+	id = "cybernetic_ears_whisper"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/internal/ears/cybernetic/whisper
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_ears_xray
+	name = "Wall-penetrating Cybernetic Ears"
+	desc = "A pair of wall-penetrating cybernetic ears."
+	id = "cybernetic_ears_xray"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/internal/ears/cybernetic/xray
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cybernetic_eyes
 	name = "Basic Cybernetic Eyes"
 	desc = "A basic pair of cybernetic eyes."
 	id = "cybernetic_eyes"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 30
-	materials = list(/datum/material/iron = 250, /datum/material/glass = 400)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/organ/internal/eyes/robotic/basic
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1

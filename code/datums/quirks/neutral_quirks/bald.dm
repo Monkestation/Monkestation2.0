@@ -14,8 +14,7 @@
 /datum/quirk/item_quirk/bald/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	old_hair = human_holder.hairstyle
-	human_holder.hairstyle = "Bald"
-	human_holder.update_body_parts()
+	human_holder.set_hairstyle("Bald", update = TRUE)
 	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, PROC_REF(equip_hat))
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 
@@ -33,8 +32,7 @@
 /datum/quirk/item_quirk/bald/remove()
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.hairstyle = old_hair
-	human_holder.update_body_parts()
+	human_holder.set_hairstyle(old_hair, update = TRUE)
 	UnregisterSignal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
 	human_holder.clear_mood_event("bad_hair_day")
 

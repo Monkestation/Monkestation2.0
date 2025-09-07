@@ -134,7 +134,8 @@
 /datum/action/cooldown/spell/pointed/projectile/cast(atom/cast_on)
 	. = ..()
 	var/atom/caster = get_caster_from_target(owner)
-	if(!isturf(caster.loc))
+//	if(!isturf(caster.loc)) // MONKESTATION EDIT OLD
+	if(!isturf(caster?.loc)) // MONKESTATION EDIT NEW
 		return FALSE
 
 	var/turf/caster_turf = caster.loc

@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return TRUE
 
 /mob/living/basic/bot/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN))
 		to_chat(user, span_warning("The maintenance panel is locked!"))
 		return
@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(user.istate & ISTATE_HARM)
 		return FALSE
 
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 
 	if(health >= maxHealth)
 		user.balloon_alert(user, "no repairs needed!")
@@ -548,10 +548,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
-	if(length(initial_access))
-		if(QDELETED(access_card))
-			access_card = new /obj/item/card/id/advanced/simple_bot(src)
-		access_card.set_access(initial_access)
+	if(QDELETED(access_card))
+		access_card = new /obj/item/card/id/advanced/simple_bot(src)
+	access_card.set_access(initial_access)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 	clear_path_hud()
@@ -732,7 +731,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if(isnull(mind))
 			mind.transfer_to(paicard.pai)
 		else
-			paicard.pai.key = key
+			paicard.pai.PossessByPlayer(key)
 	else
 		ghostize(FALSE) // The pAI card that just got ejected was dead.
 

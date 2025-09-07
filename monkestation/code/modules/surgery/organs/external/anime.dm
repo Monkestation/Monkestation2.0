@@ -21,6 +21,11 @@
 /datum/bodypart_overlay/mutant/anime_head/get_base_icon_state()
 	return sprite_datum.icon_state
 
+/datum/bodypart_overlay/mutant/anime_head/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.head?.flags_inv & HIDEEARS)
+		return FALSE
+	return ..()
+
 /obj/item/organ/external/anime_middle
 	name = "anime implants"
 	desc = "An anime implant fitted for a persons chest."
@@ -44,6 +49,11 @@
 /datum/bodypart_overlay/mutant/anime_middle/get_base_icon_state()
 	return sprite_datum.icon_state
 
+/datum/bodypart_overlay/mutant/anime_middle/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
+		return FALSE
+	return ..()
+
 /obj/item/organ/external/anime_bottom
 	name = "anime implants"
 	desc = "An anime implant fitted for a persons lower half."
@@ -66,3 +76,8 @@
 
 /datum/bodypart_overlay/mutant/anime_bottom/get_base_icon_state()
 	return sprite_datum.icon_state
+
+/datum/bodypart_overlay/mutant/anime_bottom/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
+		return FALSE
+	return ..()

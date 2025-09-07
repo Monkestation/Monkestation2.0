@@ -27,6 +27,7 @@ import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 // MONKESTATION ADDITION START
 import './styles/themes/clockwork.scss';
+import './styles/themes/admintickets.scss';
 // MONKESTATION ADDITION END
 
 import './styles/themes/chicken_book.scss';

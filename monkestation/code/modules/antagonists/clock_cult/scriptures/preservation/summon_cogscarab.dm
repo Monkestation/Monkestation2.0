@@ -1,6 +1,6 @@
 /datum/scripture/cogscarab
 	name = "Summon Cogscarab"
-	desc = "Summon a Cogscarab shell, which will be possessed by fallen Rat'Varian soldiers. Takes longer the more cogscarabs are alive. Requires 30 vitality."
+	desc = "Summon a Cogscarab shell, which will be possessed by fallen Ratvarian soldiers. Takes longer the more cogscarabs are alive. Requires 30 vitality."
 	tip = "Use Cogscarabs to fortify Reebe while the human servants convert and sabotage the crew."
 	button_icon_state = "Cogscarab"
 	power_cost = 500
@@ -13,7 +13,7 @@
 	fast_invoke_mult = 1
 
 /datum/scripture/cogscarab/begin_invoke(mob/living/invoking_mob, obj/item/clockwork/clockwork_slab/slab, bypass_unlock_checks)
-	invocation_time = 12 SECONDS + (6 SECONDS * GLOB.cogscarabs.len)
+	invocation_time = 12 SECONDS + (6 SECONDS * SSthe_ark.cogscarabs.len)
 	. = ..()
 
 /datum/scripture/cogscarab/check_special_requirements(mob/user)
@@ -25,12 +25,12 @@
 		to_chat(invoker, span_warning("You must do this on Reebe!"))
 		return FALSE
 
-	if(length(GLOB.cogscarabs) > MAXIMUM_COGSCARABS)
+	if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)
 		to_chat(invoker, span_warning("You can't summon anymore cogscarabs."))
 		return FALSE
 
 	if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
-		to_chat(invoker, span_warning("It is too late to summon cogscarabs now, Rat'var is coming!"))
+		to_chat(invoker, span_warning("It is too late to summon cogscarabs now, Ratvar is coming!"))
 		return FALSE
 	return TRUE
 

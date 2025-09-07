@@ -184,6 +184,8 @@
  * Pulls from the charger's silo connection, or fails otherwise.
  */
 /obj/item/robot_model/proc/restock_consumable()
+	if(!robot)
+		return //This means the model hasn't been chosen yet, and avoids a runtime. Anyway, there's nothing to restock yet.
 	var/obj/machinery/recharge_station/charger = robot.loc
 	if(!istype(charger))
 		return
@@ -202,9 +204,8 @@
 		if(!to_stock) //Nothing for us in the silo
 			continue
 
-		storage_datum.energy += mat_container.use_amount_mat(to_stock, storage_datum.mat_type)
+		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		charger.materials.silo_log(charger, "resupplied", -to_stock, "units", list(storage_datum.mat_type))
 		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, "restock process complete")
@@ -672,12 +673,12 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
-		/obj/item/retractor/augment, //monkestation edit start: Augmented tools
-		/obj/item/hemostat/augment,
-		/obj/item/cautery/augment,
-		/obj/item/surgicaldrill/augment,
-		/obj/item/scalpel/augment,
-		/obj/item/circular_saw/augment, //monkestation edit end: Augmented tools
+		/obj/item/retractor, //Monke edit start: remove augment tools
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/surgicaldrill,
+		/obj/item/scalpel,
+		/obj/item/circular_saw, //Monke edit end: remove augment tools
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
@@ -804,6 +805,10 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
+		// Monkestation edit start: Cooking
+		/obj/item/knife/kitchen/silicon,
+		/obj/item/borg/apparatus/cooking,
+		// Monkestation edit end
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
@@ -816,7 +821,7 @@
 		/obj/item/scissors,
 		/obj/item/hairbrush/comb,
 		/obj/item/dyespray,
-		// Monestation edit end
+		// Monkestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth/robot,
@@ -828,6 +833,12 @@
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
 		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/chisel,
+		// Monkestation edit start: Botany
+		/obj/item/storage/bag/plants,
+		/obj/item/plant_analyzer,
+		/obj/item/shovel/spade,
+		/obj/item/cultivator,
+		// Monkestation edit end
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -851,6 +862,25 @@
 	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
 	if(enzyme)
 		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+
+//MONKESTATION ADDITION - lets service borgs craft
+/obj/item/robot_model/service/rebuild_modules()
+	..()
+	var/mob/living/silicon/robot/cyborg = loc
+	cyborg.AddComponent(/datum/component/personal_crafting/borg)
+	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
+	crafting.forced_mode = TRUE
+	crafting.mode = TRUE
+	if(cyborg.client)
+		crafting.create_mob_button(cyborg, cyborg.client)
+
+/obj/item/robot_model/service/Destroy()
+	var/mob/living/silicon/robot/cyborg = loc
+	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
+	if(istype(cyborg, /mob/living/silicon/robot))
+		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+			qdel(button)
+	return ..()
 
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"

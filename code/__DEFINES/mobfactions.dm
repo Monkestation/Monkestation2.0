@@ -85,8 +85,12 @@
 #define FACTION_VINES "vines"
 /// Tamed creatures
 #define FACTION_TAMED "tamed"
-
-// Antagonist factions
+///Creates associated with plague doctor
+#define FACTION_PLAGUE "plague"
+/// Bingles
+#define FACTION_BINGLE "bingle"
+/// Darkspawn
+#define FACTION_DARKSPAWN "darkspawn"
 
 /// Cultists and their constructs
 #define FACTION_CULT "cult"

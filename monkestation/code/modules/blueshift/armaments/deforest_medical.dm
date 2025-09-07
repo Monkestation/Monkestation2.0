@@ -32,11 +32,11 @@
 	cost = PAYCHECK_COMMAND * 8
 
 /datum/armament_entry/company_import/deforest/first_aid_kit/first_responder
-	item_type = /obj/item/storage/backpack/duffelbag/deforest_surgical/stocked
+	item_type = /obj/item/storage/backpack/deforest_surgical/stocked
 	cost = PAYCHECK_COMMAND * 10
 
 /datum/armament_entry/company_import/deforest/first_aid_kit/orange_satchel
-	item_type = /obj/item/storage/backpack/duffelbag/deforest_medkit/stocked
+	item_type = /obj/item/storage/backpack/deforest_medkit/stocked
 	cost = PAYCHECK_COMMAND * 10
 
 // Basic first aid supplies like gauze, sutures, mesh, so on
@@ -122,6 +122,9 @@
 
 /datum/armament_entry/company_import/deforest/medpens/robo_cleaner
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner
+
+/datum/armament_entry/company_import/deforest/medpens/robo_painkiller
+	item_type = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
 
 /datum/armament_entry/company_import/deforest/medpens/pentibinin
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin

@@ -118,6 +118,8 @@
 
 /datum/round_event/supermatter_surge/poly/announce(fake)
 	priority_announce("The Crystal Integrity Monitoring System has detected unusual parrot type resonance in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class P Supermatter Surge Alert", 'sound/machines/engine_alert3.ogg')
+	engine.base_icon_state = "dm" //monkestation edit
+	engine.icon_state = "dm" //monkestation edit
 
 #undef SURGE_DURATION_MIN
 #undef SURGE_DURATION_MAX

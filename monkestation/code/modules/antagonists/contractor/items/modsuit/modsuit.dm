@@ -1,5 +1,6 @@
 /obj/item/mod/control/pre_equipped/contractor
 	theme = /datum/mod_theme/contractor
+	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	applied_modules = list(
 		/obj/item/mod/module/dna_lock,

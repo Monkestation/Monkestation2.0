@@ -11,15 +11,12 @@
 		if(tick_speed == INFINITY)
 			TEST_FAIL("Status effect [checking] has tick_interval set to INFINITY, this is not how you prevent ticks - use tick_interval = STATUS_EFFECT_NO_TICK instead.")
 			continue
-		if(tick_speed == 0)
-			TEST_FAIL("Status effect [checking] has tick_interval set to 0, this is not how you prevent ticks - use tick_interval = STATUS_EFFECT_NO_TICK instead.")
-			continue
 		switch(initial(checking.processing_speed))
 			if(STATUS_EFFECT_FAST_PROCESS, STATUS_EFFECT_PRIORITY) // monkestation edit: STATUS_EFFECT_PRIORITY
-				if(tick_speed < SSfastprocess.wait)
+				if(tick_speed < SSfastprocess.wait && tick_speed != STATUS_EFFECT_AUTO_TICK)
 					TEST_FAIL("Status effect [checking] has tick_interval set to [tick_speed], which is faster than SSfastprocess can tick ([SSfastprocess.wait]).")
 			if(STATUS_EFFECT_NORMAL_PROCESS)
-				if(tick_speed < SSprocessing.wait)
+				if(tick_speed < SSprocessing.wait && tick_speed != STATUS_EFFECT_AUTO_TICK)
 					TEST_FAIL("Status effect [checking] has tick_interval set to [tick_speed], which is faster than SSprocessing can tick ([SSprocessing.wait]).")
 			else
 				TEST_FAIL("Invalid processing speed for status effect [checking] : [initial(checking.processing_speed)]")

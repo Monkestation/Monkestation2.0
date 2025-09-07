@@ -64,15 +64,14 @@
 	force = 15
 	block_chance = 20
 	bare_wound_bonus = 30
-	armour_penetration = 35
+	armour_penetration = 85
 	COOLDOWN_DECLARE(lunge)
 
-/obj/item/mantis_blade/syndicate/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/mantis_blade/syndicate/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, lunge) || world.time < user.next_move)
 		return
 
-	if(proximity_flag || get_dist(user,target) > 3 || !isliving(target))
+	if(get_dist(user, interacting_with) > 3 || !isliving(interacting_with))
 		return
 
 	var/obj/item/some_item = user.get_inactive_held_item()
@@ -80,18 +79,17 @@
 		return
 	var/obj/item/mantis_blade/syndicate/other = some_item
 
-	for(var/i in 1 to get_dist(user,target))
-		if(!step_towards(user,target) && get_dist(user,target) >= 1)
-			return
+	for(var/i in 1 to get_dist(user, interacting_with))
+		if(!step_towards(user, interacting_with) && get_dist(user, interacting_with) >= 1)
+			break
 
 	COOLDOWN_START(src, lunge, 10 SECONDS)
 	COOLDOWN_START(other, lunge, 10 SECONDS)
 	if(isliving(user))
 		var/mob/living/living = user
-		living.stamina?.adjust(-30) // cost of a lunge
-
-	attack(target, user)
-
+		living.stamina?.adjust(-50) // cost of a lunge
+	attack(interacting_with, user)
+	return
 
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield
@@ -101,9 +99,10 @@
 	inhand_icon_state = "shield_mantis"
 	lefthand_file = 'monkestation/code/modules/cybernetics/icons/swords_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/cybernetics/icons/swords_righthand.dmi'
-	force = 11
-	wound_bonus = 5
-	attack_speed = 12
+	force = 12
+	wound_bonus = 10
+	armour_penetration = 40
+	attack_speed = 10
 	var/in_stance = FALSE  //Toggle for the defensive stance.
 
 /obj/item/mantis_blade/shield/Initialize(mapload)
@@ -126,6 +125,12 @@
 	user.remove_status_effect(/datum/status_effect/shield_mantis_defense)
 	to_chat(user, span_notice("You stop blocking with your blades."))
 
+/obj/item/mantis_blade/shield/attack(mob/living/target, mob/living/user)
+	if(in_stance)
+		user.disarm(target)
+	else
+		return . = ..()
+
 /obj/item/mantis_blade/shield/dropped(mob/living/user)
 	. = ..()
 	if (!user.has_status_effect(/datum/status_effect/shield_mantis_defense))
@@ -143,8 +148,8 @@
 	. = ..()
 	r_hand = owner.get_held_items_for_side(RIGHT_HANDS, FALSE)
 	l_hand = owner.get_held_items_for_side(LEFT_HANDS, FALSE)
-	r_hand.block_chance += 60
-	l_hand.block_chance += 60
+	r_hand.block_chance += 65
+	l_hand.block_chance += 65
 	ADD_TRAIT(owner, TRAIT_CANT_ATTACK, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shield_blades)
 	owner.balloon_alert_to_viewers("starts blocking!")

@@ -4,6 +4,18 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
+/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
+/proc/init_alcohol_containers()
+	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
+	for(var/typepath in containers)
+		containers -= typepath
+		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
+		if(!length(instance.list_reagents))
+			qdel(instance)
+			continue
+		containers[typepath] = instance
+	return containers
+
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -775,13 +787,14 @@
 			if(istype(contained_reagent, accelerant_type))
 				firestarter = 1
 				break
+	..()
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
-	..()
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(I.get_temperature() && !active)
+
+/obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_temperature() && !active)
 		active = TRUE
 		log_bomber(user, "has primed a", src, "for detonation")
 

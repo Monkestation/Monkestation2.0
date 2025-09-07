@@ -33,8 +33,18 @@
 	var/tame_message = "lets out a happy moo"
 	/// singular version for player cows
 	var/self_tame_message = "let out a happy moo"
+	/// does this cow contribute to the cowcap?
+	var/contributes_to_cowcap = TRUE
 
 /mob/living/basic/cow/Initialize(mapload)
+	if(contributes_to_cowcap)
+		var/cap = CONFIG_GET(number/cowcap)
+		if (LAZYLEN(SSmobs.cubecows) > cap)
+			do_sparks(rand(3, 4), FALSE, src)
+			visible_message(span_warning("ERROR: Bluespace Disturbance Detected. More than [cap] entities will disturb bluespace harmonics. Entity eradicated"))
+			ai_controller = null
+			return INITIALIZE_HINT_QDEL
+		SSmobs.cubecows |= src
 	AddComponent(/datum/component/tippable, \
 		tip_time = 0.5 SECONDS, \
 		untip_time = 0.5 SECONDS, \
@@ -46,6 +56,10 @@
 	setup_eating()
 	. = ..()
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_types)
+
+/mob/living/basic/cow/Destroy()
+	SSmobs.cubecows -= src
+	return ..()
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/udder_component()
@@ -61,10 +75,10 @@
 	var/static/list/food_types
 	if(!food_types)
 		food_types = src.food_types.Copy()
-	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 
-/mob/living/basic/cow/proc/tamed(mob/living/tamer)
+/mob/living/basic/cow/tamed(mob/living/tamer, atom/food)
 	buckle_lying = 0
 	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)

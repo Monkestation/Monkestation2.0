@@ -9,7 +9,7 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
-/// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
+/// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
 
 // /obj/machinery signals
@@ -41,6 +41,12 @@
 	#define COMPONENT_CANT_USE_MACHINE_INTERACT (1<<0)
 	/// Can't use tools on the machine
 	#define COMPONENT_CANT_USE_MACHINE_TOOLS (1<<1)
+
+#define COMSIG_ORE_SILO_PERMISSION_CHECKED "ore_silo_permission_checked"
+	/// The ore silo is not allowed to be used
+	#define COMPONENT_ORE_SILO_DENY (1<<0)
+	/// The ore silo is allowed to be used
+	#define COMPONENT_ORE_SILO_ALLOW (1<<1)
 
 ///from obj/machinery/iv_drip/IV_attach(target, usr) : (attachee)
 #define COMSIG_IV_ATTACH "iv_attach"
@@ -135,6 +141,8 @@
 #define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
 ///from base of datum/storage/attempt_insert(): ()
 #define COMSIG_ITEM_STORED "item_stored"
+///from base of datum/storage/handle_exit(): (datum/storage/storage)
+#define COMSIG_ITEM_UNSTORED "item_unstored"
 
 ///from base of obj/item/apply_fantasy_bonuses(): (bonus)
 #define COMSIG_ITEM_APPLY_FANTASY_BONUSES "item_apply_fantasy_bonuses"
@@ -152,6 +160,12 @@
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
+
+/// from /datum/component/cleave_attack/perform_sweep(): (atom/target, obj/item/item, mob/living/user, params)
+#define COMSIG_ATOM_CLEAVE_ATTACK "atom_cleave_attack"
+	/// allows cleave attack to hit things it normally wouldn't
+	#define ATOM_ALLOW_CLEAVE_ATTACK (1<<0)
+
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
@@ -194,7 +208,7 @@
 #define COMSIG_STACK_CAN_MERGE "stack_can_merge"
 	#define CANCEL_STACK_MERGE (1<<0)
 
-///from /obj/item/book/bible/afterattack(): (mob/user, proximity)
+///from /obj/item/book/bible/interact_with_atom(): (mob/user)
 #define COMSIG_BIBLE_SMACKED "bible_smacked"
 	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)
@@ -298,6 +312,8 @@
 #define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
 ///called from base of /obj/item/radio/proc/talk_into(): (atom/movable/M, message, channel)
 #define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
+///called from base of /obj/item/radio/proc/on_receive_messgae(): (list/data)
+#define COMSIG_RADIO_RECEIVE_MESSAGE "radio_receive_message"
 
 // /obj/item/pen signals
 
@@ -416,6 +432,8 @@
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF_SECONDARY "item_attack_self_secondary"
+///from base of obj/item/attack_atom(): (/atom, /mob, list/modifiers)
+#define COMSIG_ITEM_ATTACK_ATOM "item_attack_atom"
 ///from base of obj/item/attack_atom(): (/obj, /mob)
 #define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
 ///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
@@ -426,17 +444,19 @@
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
 /// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
-///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
+#define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
+///from base of [obj/item/attack()]: (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
-	/// Flag for when /afterattack potentially acts on an item.
-	/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
-	/// Does not necessarily imply success, or even that it did hit an item, just intent.
-	#define COMPONENT_AFTERATTACK_PROCESSED_ITEM (1<<0)
-///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
-#define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
+///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
+#define COMSIG_ITEM_EMBEDDED "item_embedded"
+///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)
+#define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
+/// from base of obj/item/failedEmbed()
+#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
+
+/// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
+#define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
+	#define COMPONENT_BLOCK_ITEM_DISARM_ATTACK (1<<0)
 
 ///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
@@ -444,7 +464,7 @@
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
 
-/// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
+/// from base of /obj/item/slimepotion/speed/interact_with_atom(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
@@ -471,3 +491,14 @@
 
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
 #define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"
+
+/// Sent from /obj/item/update_weight_class(). (old_w_class, new_w_class)
+#define COMSIG_ITEM_WEIGHT_CLASS_CHANGED "item_weight_class_changed"
+/// Sent from /obj/item/update_weight_class(), to its loc. (obj/item/changed_item, old_w_class, new_w_class)
+#define COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED "atom_contents_weight_class_changed"
+
+///Sent from /obj/item/skillchip/on_implant()
+#define COMSIG_SKILLCHIP_IMPLANTED "skillchip_implanted"
+
+///Sent from /obj/item/skillchip/on_remove()
+#define COMSIG_SKILLCHIP_REMOVED "skillchip_removed"

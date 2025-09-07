@@ -60,11 +60,6 @@
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
 
-//Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
-#define ORGAN_MINERAL 3 // Used for the plasmaman liver
-
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
@@ -114,11 +109,12 @@
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_TUNDRA "tundra_moth" //Monkestation Addition
+#define SPECIES_TUNDRA "tundra" //Monkestation Addition
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
 #define SPECIES_SHADOW "shadow"
+#define SPECIES_DARKSPAWN "darkspawn"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
 #define SPECIES_TALLBOY "tallboy"
@@ -132,17 +128,20 @@
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_OOZELING "oozeling"
 #define SPECIES_IPC "ipc"
+#define SPECIES_ONI "oni" //Monkestation Addition
 #define SPECIES_SIMIAN "simian" //Monkestation Addition
 #define SPECIES_GOBLIN "goblin" //Monkestation Addition
 #define SPECIES_FLORAN "floran" //Monkestation Addition
 #define SPECIES_SATYR "satyr" //Monkestation Addition
 #define SPECIES_TERATOMA "teratoma" //Monkestation Addition
+#define SPECIES_TRAINED_MONKEY "trainedmonkey"
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
 #define BODYPART_ID_ROBOTIC "robotic"
 #define BODYPART_ID_DIGITIGRADE "digitigrade"
 #define BODYPART_ID_LARVA "larva"
 #define BODYPART_ID_PSYKER "psyker"
+#define BODYPART_ID_DARKSPAWN "darkspawn"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -202,14 +201,16 @@
 #define TRAUMA_LIMIT_MAGIC 3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
 
-#define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
+/// This trauma cannot be cured through "special" means, such as nanites or viruses.
+#define TRAUMA_SPECIAL_CURE_PROOF (1<<0)
+/// This trauma transfers on cloning.
+#define TRAUMA_CLONEABLE (1<<1)
+/// This trauma CANNOT be obtained randomly.
+#define TRAUMA_NOT_RANDOM (1<<2)
+/// Default trauma flags.
+#define TRAUMA_DEFAULT_FLAGS (TRAUMA_CLONEABLE)
 
-//Surgery Defines
-#define BIOWARE_GENERIC "generic"
-#define BIOWARE_NERVES "nerves"
-#define BIOWARE_CIRCULATION "circulation"
-#define BIOWARE_LIGAMENTS "ligaments"
-#define BIOWARE_CORTEX "cortex"
+#define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -277,6 +278,7 @@
 #define NUTRITION_LEVEL_WELL_FED 450
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
+#define NUTRITION_LEVEL_VERY_HUNGRY 200
 #define NUTRITION_LEVEL_STARVING 150
 
 #define NUTRITION_LEVEL_START_MIN 250
@@ -401,8 +403,14 @@
 #define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
 #define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
+///light of this intensity suppresses healing and causes very slow burn damage
+#define SHADOW_SPECIES_DIM_LIGHT 0.2
+///light of this intensity causes rapid burn damage (high number because movable lights are weird)
+/**so the problem is that movable lights ALWAYS have a luminosity of 0.5, regardless of power or distance, so even at the edge of the overlay they still do damage
+* at 0.6 being bright they'll still do damage and disable some abilities, but it won't be weaponized
+*/
+#define SHADOW_SPECIES_BRIGHT_LIGHT 0.6
 
-#define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
 
 #define COOLDOWN_UPDATE_SET_MELEE "set_melee"
 #define COOLDOWN_UPDATE_ADD_MELEE "add_melee"
@@ -439,8 +447,8 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+#define OFFSET_HELD "held"
 #define OFFSET_ACCESSORY "accessory"
-#define OFFSET_HANDS "hands"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN 18 //youngest a character can be
@@ -627,6 +635,26 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
+///Defines for AI hologram preferences
+#define AI_HOLOGRAM_BEAR "Bear"
+#define AI_HOLOGRAM_CARP "Carp"
+#define AI_HOLOGRAM_CAT "Cat"
+#define AI_HOLOGRAM_CAT_2 "Cat Alternate"
+#define AI_HOLOGRAM_CHICKEN "Chicken"
+#define AI_HOLOGRAM_CORGI "Corgi"
+#define AI_HOLOGRAM_COW "Cow"
+#define AI_HOLOGRAM_CRAB "Crab"
+#define AI_HOLOGRAM_DEFAULT "Default"
+#define AI_HOLOGRAM_FACE "Floating Face"
+#define AI_HOLOGRAM_FOX "Fox"
+#define AI_HOLOGRAM_GOAT "Goat"
+#define AI_HOLOGRAM_NARSIE "Narsie"
+#define AI_HOLOGRAM_PARROT "Parrot"
+#define AI_HOLOGRAM_PUG "Pug"
+#define AI_HOLOGRAM_RATVAR "Ratvar"
+#define AI_HOLOGRAM_SPIDER "Spider"
+#define AI_HOLOGRAM_XENO "Xeno Queen"
+
 /// Icon state to use for ai displays that just turns them off
 #define AI_DISPLAY_DONT_GLOW "ai_off"
 /// Throw modes, defines whether or not to turn off throw mode after
@@ -665,16 +693,16 @@
 /// Assoc list of all heights, cast to strings, to """"tuples"""""
 /// The first """tuple""" index is the upper body offset
 /// The second """tuple""" index is the lower body offset
-GLOBAL_LIST_INIT(human_heights_to_offsets, list(
-	"[MONKEY_HEIGHT_DWARF]" = list(-9, -3),
-	"[MONKEY_HEIGHT_MEDIUM]" = list(-7, -4),
-	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
-	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
-	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
-	"[HUMAN_HEIGHT_MEDIUM]" = list(0, 0),
-	"[HUMAN_HEIGHT_TALL]" = list(1, 1),
-	"[HUMAN_HEIGHT_TALLER]" = list(2, 1),
-	"[HUMAN_HEIGHT_TALLEST]" = list(3, 2),
+GLOBAL_DATUM_INIT(human_heights_to_offsets, /alist, alist(
+	MONKEY_HEIGHT_DWARF = list(-9, -3),
+	MONKEY_HEIGHT_MEDIUM = list(-7, -4),
+	HUMAN_HEIGHT_DWARF = list(-5, -4),
+	HUMAN_HEIGHT_SHORTEST = list(-2, -1),
+	HUMAN_HEIGHT_SHORT = list(-1, -1),
+	HUMAN_HEIGHT_MEDIUM = list(0, 0),
+	HUMAN_HEIGHT_TALL = list(1, 1),
+	HUMAN_HEIGHT_TALLER = list(2, 1),
+	HUMAN_HEIGHT_TALLEST = list(3, 2),
 ))
 
 // Mob Overlays Indexes
@@ -830,8 +858,12 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 /// The layer above shoes
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
+/// The layer above suits
+#define ABOVE_SUIT_LAYER (SUIT_LAYER-1)
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
+/// The layer above the head layer
+#define ABOVE_HEAD_LAYER (HEAD_LAYER-1)
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
@@ -908,6 +940,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_CC_STATUS (1<<18)
 /// Deletes any restraints on the mob (handcuffs / legcuffs)
 #define HEAL_RESTRAINTS (1<<19)
+/// Heals any postive diseases
+#define HEAL_POSTIVE_DISEASES (1<<20)
 
 /// Combination flag to only heal the main damage types.
 #define HEAL_DAMAGE (HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_OXY|HEAL_CLONE|HEAL_STAM)
@@ -941,6 +975,15 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEALING_TOUCH_NOT_SELF "healing_touch_not_self"
 #define HEALING_TOUCH_SELF_ONLY "healing_touch_self_only"
 
+//MONKESTATION REMOVAL - These constants were moved as part of a temperature overhaul by Borbop, in
+// #3301. They now reside in `code\__DEFINES\atmospherics\atmos_mob_interaction.dm`.
+/*
+/// Default minimum body temperature mobs can exist in before taking damage
+#define NPC_DEFAULT_MIN_TEMP 250
+/// Default maximum body temperature mobs can exist in before taking damage
+#define NPC_DEFAULT_MAX_TEMP 350
+*/
+
 // Flags for mobs which can't do certain things while someone is looking at them
 /// Flag which stops you from moving while observed
 #define NO_OBSERVED_MOVEMENT (1<<0)
@@ -959,3 +1002,5 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define SYNTHETIC 2
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
+/// The amount of "blood" that a slimeperson consumes when regenerating a single limb.
+#define REGEN_BLOOD_REQUIREMENT 40

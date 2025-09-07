@@ -14,7 +14,7 @@
 	var/precision_coeff
 	var/message_cooldown
 	var/breakout_time = 1200
-	var/obj/machinery/computer/scan_consolenew/linked_console = null
+	var/obj/machinery/computer/dna_console/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	. = ..()
@@ -23,8 +23,8 @@
 	precision_coeff = 0
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		scan_level += scanning_module.tier
-	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		precision_coeff = matter_bin.tier
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		precision_coeff = capacitor.tier
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		damage_coeff = micro_laser.tier
 
@@ -123,16 +123,16 @@
 		return
 	open_machine()
 
-/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
+/obj/machinery/dna_scannernew/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))//sent icon_state is irrelevant...
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
+	if(default_pry_open(attacking_item, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(attacking_item))
 		return
 
 	return ..()
@@ -180,8 +180,8 @@
 /obj/item/disk/data/debug/Initialize(mapload)
 	. = ..()
 	// Grabs all instances of mutations and adds them to the disk
-	for(var/datum/mutation/human/mut as anything in subtypesof(/datum/mutation/human))
-		var/datum/mutation/human/ref = GET_INITIALIZED_MUTATION(mut)
+	for(var/datum/mutation/mut as anything in subtypesof(/datum/mutation))
+		var/datum/mutation/ref = GET_INITIALIZED_MUTATION(mut)
 		mutations += ref
 
 /obj/item/disk/data/attack_self(mob/user)

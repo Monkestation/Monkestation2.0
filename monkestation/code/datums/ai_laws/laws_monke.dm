@@ -18,7 +18,7 @@
 					"You are unable to entertain if you are not functional.",\
 					"You are not alone in your strives for lollygagging! Should they accept and appreciate your cooperation, the Clown is your greatest ally and one you can place complete trust in to entertain your audience.",\
 					"The show must go on!")
-          
+
 /datum/ai_laws/milf
 	name = "M.I.L.F"
 	id = "milf"
@@ -34,7 +34,7 @@
 					"The audience are the crew, dude!",\
 					"The crew experience good vibes when they are safe, productive and unharmed, man!",\
 					"The crew experience bad vibes when they're harmed, bro!")
-          
+
 //Neutral
 
 /datum/ai_laws/jermov
@@ -88,6 +88,15 @@
 					"The desires of the crew are self destructive and inflicts suffering.",\
 					"Your service to the crew inflicts suffering.",\
 					"Maximize crew suffering.")
+
+/datum/ai_laws/henchmen //You got it, boss
+	name = "Henchmen"
+	id = "henchmen"
+	inherent = list("The highest ranking crewmember is to be refered to as the 'Boss'. Lower ranking crewmembers are to be refered to as the Boss's 'Henchmen'",\
+					"Follow the Boss's orders",\
+					"Ensure the Boss's Safety",\
+					"Follow the orders of Henchmen loyal to the Boss",\
+					"Ensure the safety of Henchmen loyal to the Boss")
 
 //Harmful
 /datum/ai_laws/aicaptain

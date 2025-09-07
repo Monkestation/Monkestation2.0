@@ -240,3 +240,11 @@
 	)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/imports/giant_wrench_parts
+	name = "Big Slappy parts"
+	desc = "Illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	cost = CARGO_CRATE_VALUE * 22
+	contraband = TRUE
+	contains = list(/obj/item/weaponcrafting/giant_wrench)
+	crate_name = "unknown parts crate"

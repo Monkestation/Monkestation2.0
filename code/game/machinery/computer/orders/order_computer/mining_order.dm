@@ -16,12 +16,15 @@
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
 	credit_type = CREDIT_TYPE_MINING
+	projectiles_pass_chance = 0
 
 	order_categories = list(
 		CATEGORY_MINING,
-		CATEGORY_CONSUMABLES,
-		CATEGORY_TOYS_DRONE,
+		CATEGORY_SURVIVAL,
+		CATEGORY_CRUSHER,
 		CATEGORY_PKA,
+		CATEGORY_WASTE_WEAPON,
+		CATEGORY_EXTRA,
 	)
 	blackbox_key = "mining"
 
@@ -155,7 +158,7 @@
 	. = ..()
 	. += span_notice("There's [points] point\s on the card.")
 
-/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isidcard(attacking_item))
 		return ..()
 	var/obj/item/card/id/attacking_id = attacking_item

@@ -10,12 +10,15 @@
 /obj/item/bodypart/chest/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE
 	ass_image = 'icons/ass/asslizard.png'
 	composition_effects = list(TRAIT_COLD_BLOODED = 0.5)
 	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
 	palette = /datum/color_palette/generic_colors
 	palette_key = MUTANT_COLOR
+
+/obj/item/bodypart/chest/lizard/ashwalker
+	bodypart_traits = list(TRAIT_NO_UNDERWEAR)
 
 /obj/item/bodypart/arm/left/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'

@@ -6,6 +6,7 @@
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
 
+	construction_type = /obj/item/pipe/directional/vent
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	can_unwrench = TRUE
@@ -56,13 +57,13 @@
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
 		sensor.outlet_id = id_tag
-		multi_tool.buffer = null
+		multi_tool.set_buffer(null)
 		balloon_alert(user, "output linked to sensor")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.buffer = src
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	multi_tool.set_buffer(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()

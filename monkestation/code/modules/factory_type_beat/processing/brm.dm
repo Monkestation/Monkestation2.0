@@ -53,7 +53,7 @@
 
 	COOLDOWN_START(src, manual_teleport_cooldown, teleportation_time)
 
-/obj/machinery/bouldertech/brm/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/brm/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_wire_tool(attacking_item) && panel_open)
 		wires.interact(user)
 		return TRUE

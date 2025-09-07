@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/Destroy()
-	QDEL_NULL(marked_underlay)
+	marked_underlay = null
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
@@ -30,6 +30,10 @@
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
+
+// We WANT to call on_remove when replaced, else effects might not be cleaned up in the case where a mark is applied while a different mark is active.
+/datum/status_effect/eldritch/be_replaced()
+	qdel(src)
 
 /**
  * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
@@ -130,6 +134,7 @@ monkestation end */
 /datum/status_effect/eldritch/void/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	owner.apply_status_effect(/datum/status_effect/void_chill, 2)
 	owner.adjust_silence(10 SECONDS)
+	owner.adjust_emote_mute(10 SECONDS)
 	return ..()
 
 // MARK OF BLADES
@@ -309,4 +314,4 @@ monkestation end */
 	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// Incase the trait was not removed earlier
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))

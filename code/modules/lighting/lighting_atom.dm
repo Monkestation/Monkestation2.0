@@ -47,7 +47,7 @@
 		else
 			. = loc
 
-		if (light) // Update the light or create it if it does not exist.
+		if (!QDELETED(light)) // Update the light or create it if it does not exist.
 			light.update(.)
 		else
 			light = new/datum/light_source(src, .)

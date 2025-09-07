@@ -15,7 +15,7 @@
 
 	preview_outfit = /datum/outfit/assaultops_preview
 	/// In the preview icon, the operatives who are behind the leader
-	var/preview_outfit_behind = /datum/outfit/assaultops_preview/background
+	var/preview_outfit_behind = /datum/outfit/assaultops_preview_background
 
 	ui_name = "AntagInfoAssaultops"
 	/// The default outfit given BEFORE they choose their equipment.
@@ -164,9 +164,7 @@
 		human_target.set_species(/datum/species/human)
 		to_chat(human_target, span_userdanger("You are now a human!"))
 
-	for(var/obj/item/item in human_target.get_equipped_items(TRUE))
-		human_target.dropItemToGround(item, force = TRUE, silent = TRUE)
-		qdel(item)
+	human_target.clear_inventory()
 
 	var/obj/item/organ/internal/brain/human_brain = human_target.get_organ_slot(BRAIN)
 	human_brain.destroy_all_skillchips() // get rid of skillchips to prevent runtimes
@@ -192,15 +190,14 @@
 
 	if (!isnull(preview_outfit_behind))
 		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
-		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
+		teammate.Blend(rgb(128, 128, 128, 222), ICON_MULTIPLY)
 
 		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
 		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
 
 	var/icon/disky = icon('monkestation/code/modules/assault_ops/icons/goldeneye.dmi', "goldeneye_key")
-	disky.Shift(SOUTH, 12)
-	final_icon.Blend(disky, ICON_OVERLAY)
-
+	disky.Shift(NORTH, 6)
+	final_icon.Blend(disky, ICON_UNDERLAY)
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/assault_operative/proc/on_goldeneye_key_created(datum/source, obj/item/goldeneye_key/key)

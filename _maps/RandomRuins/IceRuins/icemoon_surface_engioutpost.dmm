@@ -15,7 +15,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "an" = (
 /turf/open/floor/engine/n2,
@@ -28,13 +28,13 @@
 "aq" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/disk/holodisk/ruin/snowengieruin,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "ar" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /obj/item/construction/rcd,
 /obj/structure/cable,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "as" = (
 /obj/machinery/modular_computer/preset/civilian{
@@ -46,14 +46,14 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/no_charge,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "au" = (
 /obj/machinery/rnd/production/circuit_imprinter/offstation,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 10
 	},
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "av" = (
 /obj/structure/cable,
@@ -78,14 +78,14 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/rcd_ammo,
 /obj/item/rcd_ammo,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "az" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "aA" = (
 /obj/machinery/rnd/production/protolathe/department/engineering/no_tax,
@@ -96,7 +96,7 @@
 	dir = 1
 	},
 /obj/item/rcd_upgrade/frames,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "aC" = (
 /turf/open/floor/engine/o2,
@@ -166,12 +166,12 @@
 /area/ruin/planetengi)
 "aV" = (
 /obj/machinery/autolathe,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "aW" = (
 /obj/item/clothing/under/rank/engineering/chief_engineer,
 /obj/structure/cable,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "aX" = (
 /obj/structure/flora/rock/icy/style_random,
@@ -179,7 +179,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "ba" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -217,7 +216,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "bo" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -227,7 +225,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/engineering,
 /obj/structure/cable,
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "br" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
@@ -494,13 +492,7 @@
 /area/ruin/planetengi)
 "cD" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer4,
-/turf/open/floor/plating,
-/area/ruin/planetengi)
-"cE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "cF" = (
@@ -650,7 +642,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "dn" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/plating,
 /area/ruin/planetengi)
@@ -791,9 +782,16 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/vacuum,
 /area/ruin/planetengi)
+"xI" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
 "yF" = (
 /mob/living/basic/construct/proteon,
 /turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"Ab" = (
+/turf/open/floor/iron,
 /area/ruin/planetengi)
 "Ai" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -854,11 +852,11 @@ do
 do
 do
 do
-cE
-cE
+cG
+cG
 vD
-cE
-cE
+cG
+cG
 do
 do
 do
@@ -894,7 +892,7 @@ de
 do
 ao
 an
-cE
+cG
 bs
 bL
 cb
@@ -902,7 +900,7 @@ cb
 cb
 cb
 cZ
-cE
+cG
 dw
 tH
 do
@@ -978,7 +976,7 @@ de
 do
 aD
 aC
-cE
+cG
 bF
 bc
 yF
@@ -986,7 +984,7 @@ cU
 cx
 cR
 dh
-cE
+cG
 dz
 xA
 do
@@ -1021,13 +1019,13 @@ do
 do
 do
 do
-cE
+cG
 vD
 bz
 bz
 bz
 do
-cE
+cG
 do
 do
 do
@@ -1081,7 +1079,7 @@ Ai
 do
 av
 az
-aJ
+xI
 aW
 bq
 aJ
@@ -1103,7 +1101,7 @@ do
 aw
 am
 ar
-cU
+Ab
 cG
 bH
 bZ

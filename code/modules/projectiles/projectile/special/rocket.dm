@@ -59,6 +59,19 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/heap/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flame_range = 4, flash_range = 1, adminlog = FALSE)
 
+/// 40mm tank shell - tank on a space station wtf, extremely good at anti tank, still explosive.
+/obj/projectile/bullet/rocket/lighttankshell
+	name = "\improper 40mm tank shell"
+	desc = "mechanized warfare in spess."
+	icon_state = "LIGHTTANKSHELL"
+	damage = 50
+	armour_penetration = 100
+	dismemberment = 10
+	anti_armour_damage = 150
+
+/obj/projectile/bullet/rocket/lighttankshell/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 1, adminlog = TRUE)
+
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
 	name = "low-yield rocket"
@@ -116,3 +129,15 @@ among other potential differences. This granularity is helpful for things like t
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
+
+/// admin only spawned vendozer
+/obj/projectile/bullet/rocket/mininuke
+	name = "\improper mininuke"
+	desc = "A torpedo with a nuclear warhead, Shouldn't see this unless an admin spawned it. Why a torpedo sprite? Fuck you thats why."
+	damage = 1 // damn this does so little damage
+	dismemberment = -100
+	anti_armour_damage = 0
+	speed = 3 // derp velocity
+	damage_walls = TRUE
+/obj/projectile/bullet/rocket/mininuke/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = 20, heavy_impact_range = 30, light_impact_range = 35, flame_range = 38, flash_range = 25, adminlog = TRUE)

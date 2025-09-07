@@ -49,6 +49,13 @@
 	resistance_flags = FLAMMABLE
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
+/obj/item/clothing/head/wizard/ralsei
+	name = "prince's wizard hat"
+	desc = "A fluffy hat designed after the one worn by the Prince of Darkners."
+	icon_state = "ralsei_hat"
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
 	desc = "Strange-looking hat-wear. Makes you want to cast fireballs."
@@ -167,6 +174,14 @@
 	name = "wizard robe"
 	desc = "A rather dull blue robe meant to mimic real wizard robes."
 	icon_state = "wizard-fake"
+	inhand_icon_state = "wizrobe"
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/suit/wizrobe/ralsei
+	name = "Prince's Robe"
+	desc = "A replica of the fluffy robes worn by the Prince of Darkners."
+	icon_state = "ralsei_robe"
 	inhand_icon_state = "wizrobe"
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE

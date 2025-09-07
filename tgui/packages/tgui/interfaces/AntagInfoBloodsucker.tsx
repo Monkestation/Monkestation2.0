@@ -1,108 +1,82 @@
-import { resolveAsset } from '../assets';
-import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Divider,
-  Dropdown,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
+import { Box, Button, DmIcon, Flex, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
-};
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 type BloodsuckerInformation = {
-  clan: ClanInfo[];
-  in_clan: BooleanLike;
-  power: PowerInfo[];
+  clan?: ClanInfo;
+  powers: PowerInfo[];
 };
 
 type ClanInfo = {
-  clan_name: string;
-  clan_description: string;
-  clan_icon: string;
+  name: string;
+  desc: string;
+  icon: string;
+  icon_state: string;
 };
 
 type PowerInfo = {
-  power_name: string;
-  power_explanation: string;
-  power_icon: string;
+  name: string;
+  explanation: string;
+  icon: string;
+  icon_state: string;
 };
 
 type Info = {
   objectives: Objective[];
 };
 
-const ObjectivePrintout = (props: any) => {
-  const { data } = useBackend<Info>();
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
-};
-
 export const AntagInfoBloodsucker = (props: any) => {
   const [tab, setTab] = useLocalState('tab', 1);
   return (
-    <Window width={620} height={580} theme="spookyconsole">
-      <Window.Content>
-        <Tabs>
-          <Tabs.Tab
-            icon="list"
-            lineHeight="23px"
-            selected={tab === 1}
-            onClick={() => setTab(1)}
-          >
-            Introduction
-          </Tabs.Tab>
-          <Tabs.Tab
-            icon="list"
-            lineHeight="23px"
-            selected={tab === 2}
-            onClick={() => setTab(2)}
-          >
-            Clan & Powers
-          </Tabs.Tab>
-        </Tabs>
-        {tab === 1 && <BloodsuckerIntro />}
-        {tab === 2 && <BloodsuckerClan />}
+    <Window width={620} height={700} theme="spookyconsole">
+      <Window.Content scrollable>
+        <Stack vertical>
+          <Stack.Item>
+            <Tabs>
+              <Tabs.Tab
+                icon="list"
+                lineHeight="23px"
+                selected={tab === 1}
+                onClick={() => setTab(1)}
+              >
+                Introduction
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="list"
+                lineHeight="23px"
+                selected={tab === 2}
+                onClick={() => setTab(2)}
+              >
+                Clan & Powers
+              </Tabs.Tab>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow>
+            {tab === 1 && <BloodsuckerIntro />}
+            {tab === 2 && <BloodsuckerClan />}
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
 };
 
 const BloodsuckerIntro = () => {
+  const {
+    data: { objectives },
+  } = useBackend<Info>();
   return (
     <Stack vertical fill>
-      <Stack.Item minHeight="16rem">
-        <Section scrollable fill>
+      <Stack.Item>
+        <Section fill>
           <Stack vertical>
-            <Stack.Item textColor="red" fontSize="20px">
-              You are a Bloodsucker, an undead blood-seeking monster living
-              aboard Space Station 13
+            <Stack.Item textColor="red" fontSize="20px" textAlign="center">
+              You are a <b>Bloodsucker</b>, an undead blood-seeking monster
+              living aboard Space Station 13
             </Stack.Item>
             <Stack.Item>
-              <ObjectivePrintout />
+              <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -159,9 +133,9 @@ const BloodsuckerIntro = () => {
 
 const BloodsuckerClan = (props: any) => {
   const { act, data } = useBackend<BloodsuckerInformation>();
-  const { clan, in_clan } = data;
+  const { clan } = data;
 
-  if (!in_clan) {
+  if (!clan) {
     return (
       <Section minHeight="220px">
         <Box mt={5} bold textAlign="center" fontSize="40px">
@@ -183,35 +157,34 @@ const BloodsuckerClan = (props: any) => {
   }
 
   return (
-    <Stack vertical fill>
-      <Stack.Item minHeight="20rem">
-        <Section scrollable fill>
+    <Stack vertical>
+      <Stack.Item>
+        <Section>
           <Stack vertical>
-            <Stack.Item>
-              {clan.map((ClanInfo) => (
-                <>
-                  <Box
-                    as="img"
-                    height="20rem"
-                    opacity={0.25}
-                    src={resolveAsset(`bloodsucker.${ClanInfo.clan_icon}.png`)}
-                    style={{
-                      '-ms-interpolation-mode': 'nearest-neighbor',
-                      'image-rendering': 'pixelated',
-                      position: 'absolute',
-                    }}
-                  />
-                  <Stack.Item fontSize="20px" textAlign="center">
-                    You are part of the {ClanInfo.clan_name}
-                  </Stack.Item>
-                  <Stack.Item fontSize="16px">
-                    {ClanInfo.clan_description}
-                  </Stack.Item>
-                </>
-              ))}
+            <Stack.Item textAlign="center">
+              <DmIcon
+                icon={clan.icon}
+                icon_state={clan.icon_state}
+                width="64px"
+                height="64px"
+                verticalAlign="middle"
+              />
+              <Box inline fontSize="20px" textAlign="center">
+                You are part of the <b>{clan.name}</b>
+              </Box>
+              <DmIcon
+                icon={clan.icon}
+                icon_state={clan.icon_state}
+                width="64px"
+                height="64px"
+                verticalAlign="middle"
+              />
             </Stack.Item>
+            <Stack.Item fontSize="16px">{clan.desc}</Stack.Item>
           </Stack>
         </Section>
+      </Stack.Item>
+      <Stack.Item>
         <PowerSection />
       </Stack.Item>
     </Stack>
@@ -219,57 +192,45 @@ const BloodsuckerClan = (props: any) => {
 };
 
 const PowerSection = (props: any) => {
-  const { act, data } = useBackend<BloodsuckerInformation>();
-  const { power } = data;
-  if (!power) {
-    return <Section minHeight="220px" />;
-  }
+  const { data } = useBackend<BloodsuckerInformation>();
+  const { powers } = data;
 
-  const [selectedPower, setSelectedPower] = useLocalState('power', power[0]);
+  const [powerTab, setPowerTab] = useLocalState('power', powers[0].name);
+
+  const selectedPower =
+    powers.find((power) => power.name === powerTab) || powers[0];
 
   return (
-    <Section
-      fill
-      scrollable={!!power}
-      title="Powers"
-      buttons={
-        <Button
-          icon="info"
-          tooltipPosition="left"
-          tooltip={
-            'Select a Power using the dropdown menu for an in-depth explanation.'
-          }
-        />
-      }
-    >
-      <Stack>
-        <Stack.Item grow>
-          <Dropdown
-            displayText={selectedPower.power_name}
-            selected={selectedPower.power_name}
-            width="100%"
-            options={power.map((powers) => powers.power_name)}
-            onSelected={(powerName: string) =>
-              setSelectedPower(
-                power.find((p) => p.power_name === powerName) || power[0],
-              )
-            }
+    <Section title="Powers">
+      <Flex>
+        <Flex.Item>
+          <Tabs vertical overflowY="auto">
+            {powers.map((power) => (
+              <Tabs.Tab
+                key={power.name}
+                leftSlot={
+                  <DmIcon
+                    icon={power.icon}
+                    icon_state={power.icon_state}
+                    verticalAlign="middle"
+                  />
+                }
+                selected={powerTab === power.name}
+                onClick={() => setPowerTab(power.name)}
+              >
+                {power.name}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Flex.Item>
+        <Flex.Item ml="1rem" grow={1} basis={0} fontSize="14px">
+          <Box
+            dangerouslySetInnerHTML={{
+              __html: selectedPower.explanation,
+            }}
           />
-          {selectedPower && (
-            <Box
-              position="absolute"
-              height="12rem"
-              as="img"
-              src={resolveAsset(`bloodsucker.${selectedPower.power_icon}.png`)}
-            />
-          )}
-          <Divider Vertical />
-        </Stack.Item>
-        <Stack.Divider />
-        <Stack.Item scrollable grow={1} fontSize="16px">
-          {selectedPower && selectedPower.power_explanation}
-        </Stack.Item>
-      </Stack>
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };

@@ -18,3 +18,4 @@
 #define SECHUD_CYBER_POLICE "hudcyberpolice"
 #define SECHUD_REAPER "hudreaper"
 #define SECHUD_RADIANT "hudradiant"
+#define SECHUD_XENOBIOLOGIST "hudxenobiologist"

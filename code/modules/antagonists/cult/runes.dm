@@ -168,10 +168,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 				L.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 			if(invoke_damage)
 				L.apply_damage(invoke_damage, BRUTE)
-				to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
+				to_chat(L, span_cult_italic("[src] saps your strength!"))
 		else if(istype(M, /obj/item/toy/plush/narplush))
 			var/obj/item/toy/plush/narplush/P = M
-			P.visible_message("<span class='cult italic'>[P] squeaks loudly!</span>")
+			P.visible_message(span_cult_italic("[P] squeaks loudly!"))
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
@@ -486,7 +486,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	var/turf/T = get_turf(src)
 	if(is_away_level(T.z))
-		to_chat(user, "<span class='cult italic'>You are not in the right dimension!</span>")
+		to_chat(user, span_cult_italic("You are not in the right dimension!"))
 		log_game("Teleport rune activated by [user] at [COORD(src)] failed - [user] is in away mission.")
 		fail_invoke()
 		return
@@ -530,6 +530,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				movesuccess = TRUE
 	if(movedsomething)
 		..()
+		playsound(src, SFX_PORTAL_ENTER, 50, TRUE)
+		playsound(target, SFX_PORTAL_ENTER, 50, TRUE)
 		if(moveuserlater)
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
@@ -552,7 +554,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
+	playsound(T, SFX_PORTAL_CREATED, 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)
@@ -718,7 +720,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(FALSE)
-			mob_to_revive.key = chosen_one.key
+			mob_to_revive.PossessByPlayer(chosen_one.key)
 		else
 			fail_invoke()
 			return
@@ -738,7 +740,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(QDELETED(target_mob))
 		return FALSE
 	if(!(target_mob in T.contents))
-		to_chat(user, "<span class='cult italic'>The cultist to revive has been moved!</span>")
+		to_chat(user, span_cult_italic("The cultist to revive has been moved!"))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - revival target moved.")
 		return FALSE
 	return TRUE
@@ -801,45 +803,48 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(isnull(cultist_to_summon))
-		to_chat(user, "<span class='cult italic'>You require a summoning target!</span>")
+		to_chat(user, span_cult_italic("You require a summoning target!"))
 		fail_logmsg += "no target."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(cultist_to_summon.stat == DEAD)
-		to_chat(user, "<span class='cult italic'>[cultist_to_summon] has died!</span>")
+		to_chat(user, span_cult_italic("[cultist_to_summon] has died!"))
 		fail_logmsg += "target died."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(cultist_to_summon.pulledby || cultist_to_summon.buckled)
-		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is being held in place!</span>")
+		to_chat(user, span_cult_italic("[cultist_to_summon] is being held in place!"))
 		fail_logmsg += "target restrained."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(!IS_CULTIST(cultist_to_summon))
-		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not a follower of the Geometer!</span>")
+		to_chat(user, span_cult_italic("[cultist_to_summon] is not a follower of the Geometer!"))
 		fail_logmsg += "target deconverted."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(is_away_level(cultist_to_summon.z))
-		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not in our dimension!</span>")
+		to_chat(user, span_cult_italic("[cultist_to_summon] is not in our dimension!"))
 		fail_logmsg += "target is in away mission."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	cultist_to_summon.visible_message(span_warning("[cultist_to_summon] suddenly disappears in a flash of red light!"), \
-									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
+									  span_cult_italic("<b>Overwhelming vertigo consumes you as you are hurled through the air!</b>"))
 	..()
 	visible_message(span_warning("A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!"))
+	var/turf/old_turf = get_turf(cultist_to_summon)
 	if(!do_teleport(cultist_to_summon, get_turf(src)))
 		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
 		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
+	playsound(src, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(old_turf, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -918,12 +923,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
-		to_chat(user, "<span class='cult italic'>You must be standing on [src]!</span>")
+		to_chat(user, span_cult_italic("You must be standing on [src]!"))
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
 		return list()
 	if(user.has_status_effect(/datum/status_effect/cultghost))
-		to_chat(user, "<span class='cult italic'>Ghosts can't summon more ghosts!</span>")
+		to_chat(user, span_cult_italic("Ghosts can't summon more ghosts!"))
 		fail_invoke()
 		log_game("Manifest rune failed - user is a ghost")
 		return list()
@@ -974,7 +979,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cultitalic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
-		new_human.key = ghost_to_spawn.key
+		new_human.PossessByPlayer(ghost_to_spawn.key)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
 		to_chat(new_human, span_cultitalic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
@@ -1110,8 +1115,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 			images += B
 		if(!IS_CULTIST(M))
 			if(M.client)
-				var/image/C = image('icons/effects/cult/effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
-				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)
+				var/image/C = image('icons/effects/cult/effects.dmi', M, "bloodsparkles", ABOVE_MOB_LAYER)
+				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/has_antagonist/cult, "cult_apoc", C, NONE)
 				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"cult_apoc",TRUE), duration)
 				images += C
 		else

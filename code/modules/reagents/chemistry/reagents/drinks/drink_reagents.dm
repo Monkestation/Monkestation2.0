@@ -239,7 +239,7 @@
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
-
+	addiction_types = list(/datum/addiction/coffee = 5)
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
@@ -337,6 +337,7 @@
 	nutriment_factor = 0
 	taste_description = "bitter coldness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/coffee = 5)
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
@@ -354,6 +355,7 @@
 	nutriment_factor = 0
 	taste_description = "bitter coldness and a hint of smoke"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/coffee = 5)
 
 /datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
@@ -672,6 +674,7 @@
 	taste_description = "creamy coffee"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+	addiction_types = list(/datum/addiction/coffee = 4)
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
@@ -692,6 +695,7 @@
 	taste_description = "bitter cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
+	addiction_types = list(/datum/addiction/coffee = 4)
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
@@ -792,7 +796,7 @@
 	color = "#ff7b7b"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8 * REAGENTS_METABOLISM
-	taste_description = "sweet strawberries and milk"
+	taste_description = "sweet strawberries and cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
@@ -806,6 +810,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
+/datum/reagent/consumable/ethanol/maltshake
+	name = "Malt Milkshake"
+	description = "A slightly alcoholic but sweet milkshake"
+	color = "#886a3f"
+	quality = DRINK_VERYGOOD
+	boozepwr = 25
+	nutriment_factor = 7 * REAGENTS_METABOLISM
+	taste_description = "Slight hint of malt within a creamy milkshake and happiness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
 	description = "A mix of pumpkin juice and coffee."
@@ -814,6 +829,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "creamy pumpkin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/coffee = 4)
 
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"
@@ -864,6 +880,21 @@
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/bogril
+	name = "Bogril"
+	description = "A savoury meat broth for drinking."
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	color = "#403010" // rgb: 64, 48, 16
+	taste_description = "savoury broth"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/bogril/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjust_bodytemperature(WARM_DRINK * REM * seconds_per_tick, max_temp = affected_mob.standard_body_temperature)
+	if(affected_mob.getFireLoss() && SPT_PROB(10, seconds_per_tick))
+		affected_mob.heal_bodypart_damage(0, 1)
+		. = TRUE
+	..()
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
@@ -1092,8 +1123,32 @@
 	description = "A classic smoothie made from chocolate and bananas."
 	color = "#663300"
 	nutriment_factor = 0
-	taste_description = "chocolate and banana"
+	taste_description = "Bananas and chocolate sprinkles"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
+
+
+/datum/reagent/consumable/ook_monkey
+	name = "ook monkey smoothie?"
+	description = "What the hell is this?"
+	color = "#663300"
+	nutriment_factor = 1
+	quality = FOOD_AMAZING
+	taste_description = "ook ook eee eee"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ook_monkey/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	drinker.set_jitter_if_lower(80 SECONDS * REM * seconds_per_tick)
+	drinker.remove_status_effect(/datum/status_effect/drowsiness)
+	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
+	drinker.adjust_bodytemperature(COLD_DRINK * REM * seconds_per_tick, min_temp = drinker.standard_body_temperature)
+	if(SPT_PROB(30, seconds_per_tick))
+		drinker.emote(pick("jump", "scream", "burp"))
+	return ..()
+
+
+
 
 /datum/reagent/consumable/green_giant
 	name = "green giant smoothie"
@@ -1105,18 +1160,18 @@
 
 /datum/reagent/consumable/melon_baller
 	name = "melon baller smoothie"
-	description = "A classic smoothie made from melons."
+	description = "A slightly alcoholic watermelon smoothie."
 	color = "#D22F55"
 	nutriment_factor = 0
-	taste_description = "fresh melon"
+	taste_description = "Summer memories and watermelon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vanilla_dream
 	name = "vanilla dream smoothie"
-	description = "A classic smoothie made from vanilla and fresh cream."
+	description = "A sweet vanilla smoothie that sparkles."
 	color = "#FFF3DD"
 	nutriment_factor = 0
-	taste_description = "creamy vanilla"
+	taste_description = "Gentle clouds and dreams"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cucumberjuice

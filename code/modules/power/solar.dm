@@ -309,8 +309,8 @@
 		return
 	randomise_offset(anchored ? 0 : random_offset)
 
-/obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
+/obj/item/solar_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, span_warning("You can't secure [src] here."))
 			return
@@ -319,10 +319,10 @@
 			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly [anchored ? "into place" : null]."),
 			span_notice("You [anchored ? null : "un"]wrench the solar assembly [anchored ? "into place" : null]."),
 		)
-		W.play_tool_sound(src, 75)
+		attacking_item.play_tool_sound(src, 75)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+	if(istype(attacking_item, /obj/item/stack/sheet/glass) || istype(attacking_item, /obj/item/stack/sheet/rglass))
 		if(!anchored)
 			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
 			return
@@ -330,9 +330,9 @@
 		if(locate(/obj/machinery/power/solar) in solarturf)
 			to_chat(user, span_warning("A solar panel is already assembled here."))
 			return
-		var/obj/item/stack/sheet/S = W
+		var/obj/item/stack/sheet/S = attacking_item
 		if(S.use(2))
-			glass_type = W.type
+			glass_type = attacking_item.type
 			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 			user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
 			if(tracker)
@@ -345,16 +345,16 @@
 		return TRUE
 
 	if(!tracker)
-		if(istype(W, /obj/item/electronics/tracker))
-			if(!user.temporarilyRemoveItemFromInventory(W))
+		if(istype(attacking_item, /obj/item/electronics/tracker))
+			if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 				return
 			tracker = TRUE
 			update_appearance()
-			qdel(W)
+			qdel(attacking_item)
 			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
 			return TRUE
 	else
-		if(W.tool_behaviour == TOOL_CROWBAR)
+		if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
 			update_appearance()
@@ -389,13 +389,25 @@
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
+	///History of power supply
+	var/list/history = list()
+	///Size of history, should be equal or bigger than the solar cycle
+	var/record_size = 0
+	///Interval between records
+	var/record_interval = 60 SECONDS
+	///History record timer
+	var/next_record = 0
+
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
-	azimuth_rate = SSsun.base_rotation
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, PROC_REF(timed_track))
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)
+	azimuth_rate = SSsun.base_rotation
+	record_interval = SSsun.wait
+	history["supply"] = list()
+	history["capacity"] = list()
 
 /obj/machinery/power/solar_control/Destroy()
 	for(var/obj/machinery/power/solar/M in connected_panels)
@@ -423,6 +435,26 @@
 					if(!T.control) //i.e unconnected
 						T.set_control(src)
 
+///Record the generated power supply and capacity for history
+/obj/machinery/power/solar_control/proc/record()
+	if(record_size == 0)
+		record_size = 1 + ROUND_UP(360 / (azimuth_rate * abs(SSsun.azimuth_mod))) //History contains full sun cycle
+
+	if(world.time >= next_record)
+		next_record = world.time + record_interval
+
+		var/list/supply = history["supply"]
+		if(powernet)
+			supply += round(lastgen)
+		if(supply.len > record_size)
+			supply.Cut(1, 2)
+
+		var/list/capacity = history["capacity"]
+		if(powernet)
+			capacity += round(max(connected_panels.len, 1) * SOLAR_GEN_RATE)
+		if(capacity.len > record_size)
+			capacity.Cut(1, 2)
+
 /obj/machinery/power/solar_control/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
@@ -443,14 +475,15 @@
 
 /obj/machinery/power/solar_control/ui_data()
 	var/data = list()
-	data["generated"] = round(lastgen)
-	data["generated_ratio"] = data["generated"] / round(max(connected_panels.len, 1) * SOLAR_GEN_RATE)
+	data["supply"] = round(lastgen)
+	data["capacity"] = connected_panels.len * SOLAR_GEN_RATE
 	data["azimuth_current"] = azimuth_target
 	data["azimuth_rate"] = azimuth_rate
 	data["max_rotation_rate"] = SSsun.base_rotation * 2
 	data["tracking_state"] = track
 	data["connected_panels"] = connected_panels.len
 	data["connected_tracker"] = (connected_tracker ? TRUE : FALSE)
+	data["history"] = history
 	return data
 
 /obj/machinery/power/solar_control/ui_act(action, params)
@@ -489,9 +522,9 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/power/solar_control/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(I.use_tool(src, user, 20, volume=50))
+/obj/machinery/power/solar_control/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+		if(attacking_item.use_tool(src, user, 20, volume=50))
 			if (src.machine_stat & BROKEN)
 				to_chat(user, span_notice("The broken glass falls out."))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
@@ -515,7 +548,7 @@
 				A.icon_state = "4"
 				A.set_anchored(TRUE)
 				qdel(src)
-	else if(!(user.istate & ISTATE_HARM) && !(I.item_flags & NOBLUDGEON))
+	else if(!(user.istate & ISTATE_HARM) && !(attacking_item.item_flags & NOBLUDGEON))
 		attack_hand(user)
 	else
 		return ..()
@@ -538,9 +571,9 @@
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
 	gen = 0
-
 	if(connected_tracker && (!powernet || connected_tracker.powernet != powernet))
 		connected_tracker.unset_control()
+	record()
 
 ///Ran every time the sun updates.
 /obj/machinery/power/solar_control/proc/timed_track()

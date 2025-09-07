@@ -20,6 +20,16 @@
 /obj/item/storage/box/sec_smokebomb/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/smokebomb/security(src)
+
+/obj/item/storage/box/smokebomb
+	name = "box of smoke grenades (WARNING)"
+	desc = "The rest of the warning label is torn off..."
+	icon_state = "secbox"
+	illustration = "grenade"
+
+/obj/item/storage/box/smokebomb/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/smokebomb(src)
 //MONKESTATION EDIT STOP
 
 /obj/item/storage/box/stingbangs
@@ -97,13 +107,13 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/minertracker
-	name = "boxed tracking implant kit"
+	name = "boxed miner tracking implant kit"
 	desc = "For finding those who have died on the accursed lavaworld."
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/implantcase/tracking = 3,
+		/obj/item/implantcase/tracking/miner = 3,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 		/obj/item/locator = 1,

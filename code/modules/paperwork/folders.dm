@@ -1,7 +1,7 @@
 /obj/item/folder
 	name = "folder"
 	desc = "A folder."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	pressure_resistance = 2
@@ -77,7 +77,7 @@
 			return
 		to_chat(user, span_notice("You put [weapon] into [src]."))
 		update_appearance()
-	else if(istype(weapon, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(weapon))
 		rename(user, weapon)
 
 /obj/item/folder/attack_self(mob/user)

@@ -30,6 +30,7 @@
 		"Off-Duty Staff",
 		"Off-Duty Crew",
 		"Test Subject",
+		"Vagabond",
 	)
 
 /datum/job/atmospheric_technician
@@ -70,6 +71,26 @@
 		"Druid",
 	)
 
+/datum/job/blueshield
+	alt_titles = list(
+		"Blueshield",
+		"Corporate Henchman",
+		"Bodyguard",
+		"Revolutionary Repellent",
+		"Heavily Armed Butler",
+		"Honor Guard",
+	)
+
+/datum/job/blueshield
+	alt_titles = list(
+		"Blueshield",
+		"Corporate Henchman",
+		"Bodyguard",
+		"Revolutionary Repellent",
+		"Heavily Armed Butler",
+		"Honor Guard",
+	)
+
 /datum/job/brig_physician
 	alt_titles = list(
 		"Brig Physician",
@@ -88,6 +109,8 @@
 		"Site Manager",
 		"Criminally Underpaid Babysitter",
 		"Princess",
+		"Head of Command",
+		"Scapegoat",
 	)
 
 /datum/job/cargo_technician
@@ -98,6 +121,7 @@
 		"Mailman",
 		"Union Associate",
 		"Inventory Associate",
+		"Prime Delivery Associate",
 	)
 
 /datum/job/chaplain
@@ -113,6 +137,7 @@
 		"Imam",
 		"Rabbi",
 		"Monk",
+		"Mortician",
 	)
 
 /datum/job/chemist
@@ -137,6 +162,7 @@
 		"Head of Medical",
 		"Chief Physician",
 		"Head Physician",
+		"Sr. Attending Physician"
 	)
 
 /datum/job/clown
@@ -199,6 +225,7 @@
 	alt_titles = list(
 		"Geneticist",
 		"Mutation Researcher",
+		"Genesmith",
 	)
 
 /datum/job/head_of_personnel
@@ -296,6 +323,7 @@
 		"Research Supervisor",
 		"Chief Science Officer",
 		"Chief Artificer",
+		"Head of Science",
 	)
 
 /datum/job/roboticist
@@ -305,6 +333,7 @@
 		"Mechatronic Engineer",
 		"Apprentice Roboticist",
 		"Ripperdoc",
+		"Cybertronic Engineer",
 	)
 
 /datum/job/science_guard //See orderly
@@ -313,8 +342,6 @@
 	alt_titles = list(
 		"Scientist",
 		"Circuitry Designer",
-		"Xenobiologist",
-		"Cytologist",
 		"Plasma Researcher",
 		"Anomalist",
 		"Lab Technician",
@@ -324,7 +351,6 @@
 		"Research Assistant",
 		"Graduate Student",
 		"Artificer",
-		"Cryptozoologist",
 	)
 
 /datum/job/security_officer
@@ -355,6 +381,8 @@
 		"Mechanic",
 		"Apprentice Engineer",
 		"Engineering Trainee",
+		"Station Reliability Engineer",
+		"Builder",
 	)
 
 /datum/job/virologist
@@ -374,12 +402,10 @@
 		"Jailer",
 	)
 
-/datum/job/blueshield
+/datum/job/xenobiologist
 	alt_titles = list(
-		"Blueshield",
-		"Corporate Henchman",
-		"Bodyguard",
-		"Revolutionary Repellent",
-		"Heavily Armed Butler",
-		"Honor Guard",
+		"Xenobiologist",
+		"Cytologist",
+		"Cryptozoologist",
+		"Slime Mage",
 	)

@@ -22,3 +22,4 @@
 	allowed_buildtypes = AWAY_IMPRINTER
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	charges_tax = FALSE
+	link_on_init = FALSE

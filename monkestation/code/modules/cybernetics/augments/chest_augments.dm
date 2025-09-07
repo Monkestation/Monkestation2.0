@@ -5,10 +5,9 @@
 	icon_state = "chest_implant"
 	implant_overlay = "chest_implant_overlay"
 	w_class = WEIGHT_CLASS_SMALL
-	encode_info = AUGMENT_NT_LOWLEVEL
 	implant_overlay = "chest_implant_overlay"
 	slot = ORGAN_SLOT_SPINAL
-	var/double_legged = FALSE
+	organ_flags = ORGAN_ROBOTIC
 
 /datum/action/item_action/organ_action/sandy
 	name = "Sandevistan Activation"
@@ -19,7 +18,6 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "sandy"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 	actions_types = list(/datum/action/item_action/organ_action/sandy)
 
 	COOLDOWN_DECLARE(in_the_zone)
@@ -29,8 +27,6 @@
 	var/cooldown_time = 45 SECONDS
 
 /obj/item/organ/internal/cyberimp/chest/sandevistan/ui_action_click()
-	if(!check_compatibility())
-		return
 
 	if((organ_flags & ORGAN_FAILING))
 		to_chat(owner, span_warning("The implant doesn't respond. It seems to be broken..."))
@@ -88,7 +84,7 @@
 
 
 /datum/reagent/medicine/brain_healer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 	..()
 
 
@@ -98,7 +94,6 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/implants_onmob.dmi'
 	icon_state = "chemvat_back_held"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 	var/obj/item/clothing/mask/chemvat/forced
 	var/obj/item/chemvat_tank/forced_tank
@@ -117,8 +112,6 @@
 	var/mutable_appearance/overlay
 
 /obj/item/organ/internal/cyberimp/chest/chemvat/on_life()
-	if(!check_compatibility())
-		return
 		//Cost of refilling is a little bit of nutrition, some blood and getting jittery
 	if(owner.nutrition > NUTRITION_LEVEL_STARVING && owner.blood_volume > BLOOD_VOLUME_SURVIVE && current_ticks_cooldown > 0)
 
@@ -228,11 +221,8 @@
 	var/synthesizing = 0
 	var/poison_amount = 5
 	slot = ORGAN_SLOT_STOMACH_AID
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/on_life(seconds_per_tick, times_fired)
-	if(!check_compatibility())
-		return
 
 	if(synthesizing)
 		return
@@ -268,16 +258,14 @@
 	implant_overlay = null
 	implant_color = null
 	slot = ORGAN_SLOT_HEART_AID
-	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/revive_cost = 0
 	var/reviving = FALSE
 	COOLDOWN_DECLARE(reviver_cooldown)
 	COOLDOWN_DECLARE(defib_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
-	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
-		return
-	try_heal() // Allows implant to work even on dead people
+	if(!QDELETED(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
+		try_heal() // Allows implant to work even on dead people
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life(seconds_per_tick, times_fired)
 	try_heal()
@@ -290,7 +278,7 @@
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
-		return
+		return // Keep this. Otherwise we spam defib cooldown and it never procs
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
 		return
@@ -303,6 +291,8 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
+	if(QDELETED(owner))
+		return
 	if(COOLDOWN_FINISHED(src, defib_cooldown))
 		revive_dead()
 
@@ -331,8 +321,6 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
-	if(!check_compatibility())
-		return
 	if(!COOLDOWN_FINISHED(src, defib_cooldown) || owner.stat != DEAD || owner.can_defib() != DEFIB_POSSIBLE)
 		return
 	owner.notify_ghost_cloning("You are being revived by [src]!")
@@ -376,6 +364,9 @@
 	if(human_owner.stat == CONSCIOUS)
 		to_chat(human_owner, span_notice("You feel your heart beating again!"))
 
+/obj/item/organ/internal/cyberimp/chest/reviver/syndicate
+	name = "contraband reviver implant"
+	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
 
 /obj/item/organ/internal/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
@@ -389,24 +380,19 @@
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
 
-	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/on = FALSE
-	var/datum/callback/get_mover
-	var/datum/callback/check_on_move
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, PROC_REF(get_user))
-	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
-	refresh_jetpack()
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/Destroy()
-	get_mover = null
-	check_on_move = null
-	return ..()
-
-/obj/item/organ/internal/cyberimp/chest/thrusters/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, FALSE, COMSIG_THRUSTER_ACTIVATED, COMSIG_THRUSTER_DEACTIVATED, THRUSTER_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion)
+	AddComponent( \
+		/datum/component/jetpack, \
+		FALSE, \
+		COMSIG_THRUSTER_ACTIVATED, \
+		COMSIG_THRUSTER_DEACTIVATED, \
+		THRUSTER_ACTIVATION_FAILED, \
+		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
+		/datum/effect_system/trail_follow/ion \
+	)
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
 	if(on)
@@ -417,8 +403,6 @@
 	toggle()
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
-	if(!check_compatibility())
-		return
 	if(on)
 		deactivate()
 	else
@@ -431,7 +415,7 @@
 		if(!silent)
 			to_chat(owner, span_warning("Your thrusters set seems to be broken!"))
 		return
-	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED) & THRUSTER_ACTIVATION_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED, owner) & THRUSTER_ACTIVATION_FAILED)
 		return
 
 	on = TRUE
@@ -443,7 +427,7 @@
 /obj/item/organ/internal/cyberimp/chest/thrusters/proc/deactivate(silent = FALSE)
 	if(!on)
 		return
-	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED)
+	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED, owner)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set off."))
@@ -489,10 +473,6 @@
 	deactivate(silent = TRUE)
 	return FALSE
 
-/obj/item/organ/internal/cyberimp/chest/thrusters/proc/get_user()
-	return owner
-
-
 /datum/action/item_action/organ_action/knockout
 	name = "Knockout Punch"
 
@@ -501,7 +481,6 @@
 	desc = "Knocks the socks of the person in front of you!"
 
 	actions_types = list(/datum/action/item_action/organ_action/knockout)
-	encode_info = AUGMENT_NT_LOWLEVEL
 
 	COOLDOWN_DECLARE(shoot)
 
@@ -515,8 +494,6 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/knockout/ui_action_click()
-	if(!check_compatibility())
-		return
 
 	if((organ_flags & ORGAN_FAILING))
 		to_chat(owner, span_warning("The implant doesn't respond. It seems to be broken..."))
@@ -570,7 +547,6 @@
 	icon = 'monkestation/code/modules/cybernetics/icons/implants.dmi'
 	icon_state = "ccms"
 	organ_flags = parent_type::organ_flags | ORGAN_HIDDEN
-	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 	visual_implant = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/simple/dualwield

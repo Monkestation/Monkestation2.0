@@ -9,7 +9,7 @@
 	min_wizard_trigger_potency = 1
 	max_wizard_trigger_potency = 4
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE)
+	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_MAGICAL)
 
 /datum/round_event/anomaly/anomaly_radiation
 	start_when = ANOMALY_START_HARMFUL_TIME
@@ -17,4 +17,6 @@
 	anomaly_path = /obj/effect/anomaly/radioactive
 
 /datum/round_event/anomaly/anomaly_radiation/announce(fake)
+	if(isnull(impact_area))
+		impact_area = placer.findValidArea()
 	priority_announce("Radioactive anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", SSstation.announcer.get_rand_alert_sound())

@@ -108,6 +108,8 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
+	var/datum/dna/record_dna = new()
+	person.dna.copy_dna(record_dna)
 
 	var/chosen_assignment = person_client?.prefs.alt_job_titles[assignment] || assignment
 
@@ -115,30 +117,31 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		age = person.age,
 		blood_type = "[person.get_blood_type() || "None"]",
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
-		rank = chosen_assignment	,
-		species = person.dna.species.name,
+		rank = chosen_assignment,
+		species = record_dna.species.name,
 		trim = assignment,
 		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
 		// Locked specifics
-		dna_ref = person.dna,
+		locked_dna = record_dna,
+		mind_ref = person.mind,
 	)
 
 	var/datum/record/crew/crewfile = new (
 		age = person.age,
 		blood_type = "[person.get_blood_type() || "None"]",
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = chosen_assignment,
-		species = person.dna.species.name,
+		species = record_dna.species.name,
 		trim = assignment,
 		mind_ref = WEAKREF(person.mind), // monkestation edit: weakreffed mind ref
 		// Crew specific

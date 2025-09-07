@@ -74,6 +74,10 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	item_path = /obj/item/clothing/neck/infinity_scarf
 	item_cost = 7500
 
+/datum/store_item/neck/large_scarf
+	name = "Large Scarf"
+	item_path = /obj/item/clothing/neck/large_scarf
+
 /datum/store_item/neck/boatcloak
 	name = "Boat cloak"
 	item_path = /obj/item/clothing/neck/boatcloak
@@ -189,6 +193,10 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	name = "Rainbow Bow Tie"
 	item_path = /obj/item/clothing/neck/bowtie/rainbow
 	item_cost = 10000
+
+/datum/store_item/neck/modlink
+	name = "MODlink Scryer"
+	item_path = /obj/item/clothing/neck/link_scryer/loaded
 
 /// EVERYTHING NOVA RELATED
 

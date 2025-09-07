@@ -12,6 +12,8 @@
 	var/use_large_steam_sprite = FALSE
 	/// REF() to the mind which placed us on the griddle
 	var/who_placed_us
+	/// Are we grilling right now?
+	var/is_grilling = FALSE
 
 	/// What type of pollutant we spread around as we are grilleed, can be none  // MONKESTATION EDIT ADDITION
 	var/pollutant_type
@@ -29,11 +31,19 @@
 
 /datum/component/grillable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED_ON, PROC_REF(on_grill_start))
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_ON, PROC_REF(on_grill_turned_on))
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_OFF, PROC_REF(on_grill_turned_off))
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(on_grill))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/grillable/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_GRILL_PLACED_ON, COMSIG_ITEM_GRILL_PROCESS, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(parent, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ITEM_GRILL_TURNED_ON,
+		COMSIG_ITEM_GRILL_TURNED_OFF,
+		COMSIG_ITEM_GRILL_PROCESS,
+		COMSIG_ITEM_GRILL_PLACED_ON
+	))
 
 // Inherit the new values passed to the component
 /datum/component/grillable/InheritComponent(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)
@@ -58,6 +68,22 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_grilled_item_overlay))
 
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance()
+
+/// Signal proc for [COMSIG_ITEM_GRILL_TURNED_ON], starts the grilling process.
+/datum/component/grillable/proc/on_grill_turned_on(datum/source)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_grilled_item_overlay))
+
+	is_grilling = TRUE
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance()
+
+/// Signal proc for [COMSIG_ITEM_GRILL_TURNED_OFF], stops the grilling process.
+/datum/component/grillable/proc/on_grill_turned_off(datum/source)
+	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+
+	is_grilling = FALSE
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance()
 

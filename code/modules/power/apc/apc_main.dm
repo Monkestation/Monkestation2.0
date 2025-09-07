@@ -221,6 +221,12 @@
 		disconnect_terminal()
 	return ..()
 
+/obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
+	energy_fail(disrupt_duration)
+	return TRUE
+
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)
 		return
@@ -609,12 +615,11 @@
 			charging = APC_NOT_CHARGING
 			chargecount = 0
 
-		// MONKESTATION ADDITION START - CLOCK CULT
-		if(integration_cog && GLOB.clock_power < GLOB.max_clock_power)
-			var/power_delta = clamp(cell.charge - 10, 0, 10)
-			GLOB.clock_power = min(round(GLOB.clock_power + (power_delta)), GLOB.max_clock_power)
+		//clock cult stuff
+		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
+			var/power_delta = clamp(cell.charge - 7, 0, 7)
+			SSthe_ark.adjust_clock_power(power_delta / 7, TRUE)
 			cell.charge -= power_delta
-		// MONKESTATION ADDITION END
 
 	else // no cell, switch everything off
 

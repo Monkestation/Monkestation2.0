@@ -62,7 +62,7 @@
 
 /obj/machinery/doppler_array/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/doppler_array/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))
@@ -243,7 +243,7 @@
 
 /obj/machinery/doppler_array/Destroy()
 	inserted_disk = null
-	QDEL_NULL(records) //We only want the list nuked, not the contents.
+	records.Cut() //We only want the list nuked, not the contents.
 	. = ..()
 
 /obj/machinery/doppler_array/proc/update_doppler_light()

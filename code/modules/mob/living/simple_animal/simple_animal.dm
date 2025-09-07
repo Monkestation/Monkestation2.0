@@ -420,9 +420,11 @@
 	. += "Health: [round((health / maxHealth) * 100)]%"
 
 /mob/living/simple_animal/proc/drop_loot()
-	if(loot.len)
-		for(var/i in loot)
-			new i(loc)
+	if (!length(loot))
+		return
+	for(var/i in loot)
+		new i(drop_location())
+	loot.Cut()
 
 /mob/living/simple_animal/death(gibbed)
 	drop_loot()
@@ -431,6 +433,7 @@
 		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0
@@ -465,7 +468,7 @@
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress() || mind || key) // monkestation edit: add player check
 		return
 	next_scan_time = world.time + 400
 	var/alone = TRUE
@@ -474,6 +477,10 @@
 	for(var/mob/M in view(7, src))
 		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
+		// monkestation start: add player check
+		if(M.mind || M.key)
+			continue
+		// monkestation end
 		var/is_child = is_type_in_list(M, childtype)
 		if(is_child) //Check for children SECOND.
 			children++

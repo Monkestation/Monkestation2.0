@@ -5,7 +5,8 @@
 	max_multiplier = 3
 	badness = EFFECT_DANGER_HELPFUL
 	severity = 0
-	
+	max_chance = 12
+
 /datum/symptom/mind_restoration/activate(mob/living/carbon/mob)
 	if(!iscarbon(mob))
 		return
@@ -14,6 +15,6 @@
 	if(prob(10))
 		switch(round(multiplier, 1))
 			if(2)
-				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 			if(3)
-				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
+				mob.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)

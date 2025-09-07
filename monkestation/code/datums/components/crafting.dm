@@ -11,6 +11,7 @@
 		/obj/item/grenade = 1
 	)
 	time = 1.5 SECONDS
+	always_available = FALSE
 	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/ph_sensor //Ghetto science goggles for the wanna-be Walter White's upon our grimey-ass station.

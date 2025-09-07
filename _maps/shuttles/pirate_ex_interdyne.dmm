@@ -162,10 +162,8 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+600
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/magical,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aF" = (

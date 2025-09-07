@@ -412,6 +412,16 @@
 							post_status("alert", "bluealert")
 						if(SEC_LEVEL_GREEN)
 							post_status("alert", "greenalert")
+						if(SEC_LEVEL_AMBER)
+							post_status("alert", "amberalert")
+						if(SEC_LEVEL_YELLOW)
+							post_status("alert", "yellowalert")
+						if(SEC_LEVEL_LAMBDA)
+							post_status("alert", "lambdaalert")
+						if(SEC_LEVEL_GAMMA)
+							post_status("alert", "gammaalert")
+						if(SEC_LEVEL_EPSILON)
+							post_status("alert", "epsilonalert")
 				else
 					post_status("alert", picture)
 
@@ -653,6 +663,7 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	play_click_sound(user)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "CommunicationsConsole")
@@ -710,7 +721,7 @@
 /// Returns TRUE if the user can buy shuttles.
 /// If they cannot, returns FALSE or a string detailing why.
 /obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
-	if (!SSmapping.config.allow_custom_shuttles)
+	if (!SSmapping.current_map.allow_custom_shuttles)
 		return FALSE
 	if (issilicon(user))
 		return FALSE

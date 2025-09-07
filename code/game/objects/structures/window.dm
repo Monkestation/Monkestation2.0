@@ -26,7 +26,6 @@
 	var/fulltile = FALSE
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
-	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/break_sound = SFX_SHATTER
 	var/knock_sound = 'sound/effects/glassknock.ogg'
@@ -203,7 +202,7 @@
 		return
 	return ..()
 
-/obj/structure/window/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/structure/window/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 	add_fingerprint(user)
@@ -212,7 +211,7 @@
 /obj/structure/window/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
@@ -220,7 +219,7 @@
 		atom_integrity = max_integrity
 		update_nearby_icons()
 		to_chat(user, span_notice("You repair [src]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1)
@@ -248,7 +247,7 @@
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 					set_anchored(TRUE)
 					to_chat(user, span_notice("You fasten the frame to the floor."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
@@ -258,14 +257,14 @@
 
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
 	if(!tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 	if (!QDELETED(G))
 		G.add_fingerprint(user)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	to_chat(user, span_notice("You successfully disassemble [src]."))
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
 	if(!anchored || (flags_1 & NODECONSTRUCT_1))
@@ -285,9 +284,9 @@
 		else
 			return FALSE
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/window/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/window/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 
@@ -427,15 +426,21 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
-
-	var/ratio = atom_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
-	cut_overlay(crack_overlay)
-	if(ratio > 75)
-		return
-	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-	. += crack_overlay
-
+	// this always rounds up - you can change CEILING to round if you want to round to the nearest 25.
+	var/ratio = CEILING((atom_integrity / max_integrity) * 100, 25)
+	if(ratio <= 75)
+		var/cracks_alpha = 100
+		// lighter colored windows need the alpha higher so it can be seen better
+		if(isnull(color) || !is_color_dark(color, 55))
+			cracks_alpha = 200
+		. += mutable_appearance(
+			icon = 'icons/obj/structures.dmi',
+			icon_state = "damage[ratio]",
+			layer = layer + 0.1,
+			offset_spokesman = src,
+			alpha = cracks_alpha,
+			appearance_flags = RESET_COLOR,
+		)
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
 
@@ -564,7 +569,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 		state = RWINDOW_SECURE
 		to_chat(user, span_notice("You pry the window back into the frame."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
@@ -938,7 +943,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
 	glass_type = /obj/item/stack/sheet/bronze
-	uses_color // monkestation edit
+	//uses_color // monkestation edit
 
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE

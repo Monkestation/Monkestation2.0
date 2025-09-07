@@ -5,7 +5,7 @@
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
 	lose_text = span_warning("The voices in your head fall silent.")
 	can_gain = TRUE
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM | TRAUMA_SPECIAL_CURE_PROOF
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 	var/mob/living/obsession
 	var/datum/objective/spendtime/attachedobsessedobj
@@ -125,6 +125,14 @@
 		JOB_MIME = TRAIT_MIME_FAN,
 		JOB_CLOWN = TRAIT_CLOWN_ENJOYER,
 		JOB_CHAPLAIN = TRAIT_SPIRITUAL,
+		JOB_BARTENDER = TRAIT_EXTROVERT,
+		JOB_CURATOR = TRAIT_INTROVERT,
+		JOB_COOK = TRAIT_GOURMAND,
+		JOB_BOTANIST = TRAIT_SMOKER,
+		JOB_PSYCHOLOGIST = TRAIT_DEPRESSION,
+		JOB_LAWYER = TRAIT_JAILBIRD,
+		JOB_JANITOR = TRAIT_SNOB,
+		JOB_LATEJOIN_BARBER = TRAIT_BALD,
 	) // Jobs and their corresponding quirks
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target

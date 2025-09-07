@@ -44,7 +44,6 @@
 	rpg_title = "Guard"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
-	alt_titles = list()
 
 /datum/outfit/job/blueshield
 	name = "Blueshield"
@@ -55,11 +54,11 @@
 	id = /obj/item/card/id/advanced/centcom
 	shoes = /obj/item/clothing/shoes/jackboots
 	ears = /obj/item/radio/headset/headset_bs/alt
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+
 	implants = list(/obj/item/implant/mindshield)
 	backpack_contents = list(
 		/obj/item/choice_beacon/blueshield = 1,
-		/obj/item/melee/baton/telescopic = 1,
 	)
 	backpack = /obj/item/storage/backpack/blueshield
 	satchel = /obj/item/storage/backpack/satchel/blueshield
@@ -67,9 +66,10 @@
 
 	head = /obj/item/clothing/head/beret/blueshield
 	box = /obj/item/storage/box/survival/security
-	belt = /obj/item/storage/belt/security/blueshield
+	belt = /obj/item/storage/belt/military/assault/blueshield
 	l_pocket = /obj/item/sensor_device/blueshield
 	r_pocket = /obj/item/modular_computer/pda/blueshield
+	pda_slot = ITEM_SLOT_RPOCKET
 	id_trim = /datum/id_trim/job/blueshield
 
 /datum/outfit/plasmaman/blueshield

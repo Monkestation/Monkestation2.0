@@ -143,7 +143,7 @@
 	/// Cached particle type
 	var/cached_state
 
-/datum/status_effect/fire_handler/fire_stacks/tick(seconds_per_tick, times_fired)
+/datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks, times_fired)
 	var/turf/source_turf = get_turf(owner)
 	if(istype(source_turf, /turf/open/floor/plating/ocean))
 		qdel(src)
@@ -157,11 +157,11 @@
 		return TRUE
 
 	if(HAS_TRAIT(owner, TRAIT_HUSK))
-		adjust_stacks(-2 * seconds_per_tick)
+		adjust_stacks(-2 * seconds_between_ticks)
 		if(stacks <= 0)
 			extinguish()
 	else
-		adjust_stacks(owner.fire_stack_decay_rate * seconds_per_tick)
+		adjust_stacks(owner.fire_stack_decay_rate * seconds_between_ticks)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -172,7 +172,7 @@
 		qdel(src)
 		return TRUE
 
-	deal_damage(seconds_per_tick)
+	deal_damage(seconds_between_ticks)
 
 /datum/status_effect/fire_handler/fire_stacks/update_particles()
 	if (!on_fire)
@@ -197,33 +197,38 @@
  * Proc that handles damage dealing and all special effects
  *
  * Arguments:
- * - seconds_per_tick
+ * - seconds_between_ticks
  * - times_fired
  *
  */
 
-/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(seconds_per_tick, times_fired, no_protection = FALSE)
-	owner.on_fire_stack(seconds_per_tick, times_fired, src)
+/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(seconds_between_ticks, times_fired, no_protection = FALSE)
+	owner.on_fire_stack(seconds_between_ticks, times_fired, src)
 
 	var/turf/location = get_turf(owner)
-	location.hotspot_expose(700, 25 * seconds_per_tick, TRUE)
+	location.hotspot_expose(700, 25 * seconds_between_ticks, TRUE)
 
-	if(ishuman(owner) && !no_protection)
-		var/mob/living/carbon/human/victim = owner
-		if(victim.get_thermal_protection() >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			return
 
-	owner.adjust_bodytemperature((stacks KELVIN) * seconds_per_tick)
+	if(!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/toasty_person = owner
+
+	if(toasty_person.get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
+		return
+
+	var/fire_armor = (100 - toasty_person.getarmor(null, FIRE)) * 0.01
+
 	switch(ticks_on_fire)
 		if(0 to 3)
-			owner.apply_damage(0.10 * stacks, BURN)
-		if(3 to 6)
-			owner.apply_damage(0.20 * stacks, BURN)
-		if(6 to 9)
-			owner.apply_damage(0.30 * stacks, BURN)
+			toasty_person.apply_damage((0.20 * stacks * fire_armor), BURN)
+		if(4 to 6)
+			toasty_person.apply_damage((0.30 * stacks * fire_armor), BURN)
+		if(7 to 9)
+			toasty_person.apply_damage((0.40 * stacks * fire_armor), BURN)
 		if(10 to INFINITY)
-			owner.apply_damage(0.50 * stacks, BURN)
-	ticks_on_fire += 1 * seconds_per_tick
+			toasty_person.apply_damage((0.50 * stacks * fire_armor), BURN)
+	ticks_on_fire += 1 * seconds_between_ticks
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
@@ -311,7 +316,7 @@
 	. = ..()
 	owner.remove_shared_particles(/particles/droplets)
 
-/datum/status_effect/fire_handler/wet_stacks/tick(seconds_per_tick)
-	adjust_stacks(-0.5 * seconds_per_tick)
+/datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
+	adjust_stacks(-0.5 * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)

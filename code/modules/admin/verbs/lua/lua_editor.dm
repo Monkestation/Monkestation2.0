@@ -42,7 +42,7 @@
 		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_state(mob/user)
-	return GLOB.debug_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
@@ -282,15 +282,10 @@
 	qdel(src)
 #endif
 
-/client/proc/open_lua_editor()
-	set name = "Open Lua Editor"
-	set desc = "Its codin' time."
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))
-		return
+ADMIN_VERB(lua_editor, R_DEBUG, FALSE, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
 #ifndef DISABLE_DREAMLUAU
 	var/datum/lua_editor/editor = new
-	editor.ui_interact(mob)
+	editor.ui_interact(user.mob)
 #else
-	to_chat(src, span_warning("Lua support has been disabled at compile-time."), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE) // doing this instead of just disabling the verb entirely so it's clear WHY it doesn't work.
+	to_chat(user.mob, span_warning("Lua support has been disabled at compile-time."), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE) // doing this instead of just disabling the verb entirely so it's clear WHY it doesn't work.
 #endif

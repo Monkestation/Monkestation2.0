@@ -54,6 +54,14 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 	name = "Russian Boots"
 	item_path = /obj/item/clothing/shoes/russian
 
+/datum/loadout_item/shoes/angel_boots
+	name = "Angel Boots"
+	item_path = /obj/item/clothing/shoes/angel
+
+/datum/loadout_item/shoes/devil_boots
+	name = "Devil Boots"
+	item_path = /obj/item/clothing/shoes/devil
+
 /*
 *	COWBOY
 */
@@ -61,14 +69,17 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/brown_cowboy_boots
 	name = "Brown Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy
+	preload = FALSE // causes problems due to rare snake in boot
 
 /datum/loadout_item/shoes/black_cowboy_boots
 	name = "Black Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/black
+	preload = FALSE
 
 /datum/loadout_item/shoes/white_cowboy_boots
 	name = "White Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/white
+	preload = FALSE
 
 
 /*
@@ -136,6 +147,22 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/heels
 	name = "Colorable Heels"
 	item_path = /obj/item/clothing/shoes/heels
+
+/datum/loadout_item/shoes/ball_heels
+	name = "Ball Heels"
+	item_path = /obj/item/clothing/shoes/ballheels
+
+/datum/loadout_item/shoes/gilded_sandals
+	name = "Gilded Sandals"
+	item_path = /obj/item/clothing/shoes/sandal/gilded
+
+/datum/loadout_item/shoes/flowery
+	name = "Perfumed Flats"
+	item_path = /obj/item/clothing/shoes/flowery
+
+/datum/loadout_item/shoes/starry
+	name = "Blue Flats"
+	item_path = /obj/item/clothing/shoes/starry
 
 /*
 *	JOB-RESTRICTED
@@ -273,8 +300,8 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
 
 /datum/loadout_item/shoes/wheelys
-	name = "Wheely-Heels"
-	item_path = /obj/item/clothing/shoes/wheelys
+	name = "Cheap Wheely-Heels"
+	item_path = /obj/item/clothing/shoes/wheelys/cheap
 
 /*
 *	SEASONAL

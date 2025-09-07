@@ -81,8 +81,13 @@
 		. += "[t_He] [t_is] wearing [shoes.get_examine_string(user)] on [t_his] feet."
 
 	//mask
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK)  && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
+	// monkestation edit start PR #5133
+	if(!(obscured & ITEM_SLOT_MASK))
+		if(wear_mask && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
+			. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
+		if(HAS_TRAIT(src, TRAIT_CORRUPTED_MONITOR))
+			. += span_boldwarning("[t_His] monitor is weirdly corrupted!")
+	// monkestation edit end PR #5133
 
 	if(wear_neck && !(obscured & ITEM_SLOT_NECK)  && !HAS_TRAIT(wear_neck, TRAIT_EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
@@ -151,7 +156,7 @@
 		if(body_part.current_gauze)
 			var/gauze_href = body_part.current_gauze.name
 			if(adjacent && isliving(user)) // only shows the href if we're adjacent
-				gauze_href = "<a href='?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
+				gauze_href = "<a href='byond://?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
 			msg += span_notice("There is some [icon2html(body_part.current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].\n")
 
 		for(var/i in body_part.wounds)
@@ -251,6 +256,10 @@
 	var/apparent_blood_volume = blood_volume
 	if(HAS_TRAIT(src, TRAIT_USES_SKINTONES) && (skin_tone == "albino"))
 		apparent_blood_volume -= 150 // enough to knock you down one tier
+	// MONKESTATION EDIT START
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		apparent_blood_volume = BLOOD_VOLUME_NORMAL // Duh.
+	// MONKESTATION EDIT END
 	if(isethereal(src))//Monkestation Changes Start:
 		if(appears_dead)
 			if(blood_volume < ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
@@ -282,7 +291,7 @@
 		var/list/obj/item/bodypart/grasped_limbs = list()
 
 		for(var/obj/item/bodypart/body_part as anything in bodyparts)
-			if(body_part.get_modified_bleed_rate())
+			if(body_part.cached_bleed_rate)
 				bleeding_limbs += body_part
 			if(body_part.grasped_by)
 				grasped_limbs += body_part
@@ -321,6 +330,9 @@
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
+	if((!wear_suit && !w_uniform) && mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn))
+		msg += "[t_His] whole body is covered in sigils!\n"
+
 	if(just_sleeping)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 
@@ -345,6 +357,20 @@
 					msg += "[t_He] [t_is] flushed and wheezing.\n"
 				if (bodytemperature < bodytemp_cold_damage_limit)
 					msg += "[t_He] [t_is] shivering.\n"
+				if(HAS_TRAIT(src, TRAIT_EVIL))
+					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
+					if(living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
+						. += span_warning("PERFECT FOR SMITING!!")
+					else
+						/* MONKESTATION EDIT OLD START
+						living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+						living_user.set_jitter_if_lower(15 SECONDS)
+						*/
+						// MONKESTATION EDIT NEW START
+						if(!HAS_TRAIT(user, TRAIT_EVIL))
+							living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+							living_user.set_jitter_if_lower(15 SECONDS)
+						// MONKESTATION EDIT NEW END
 
 			msg += "</span>"
 
@@ -403,9 +429,9 @@
 			. += "<span class='deptradio'>Rank:</span> [target_record.rank]\n<a href='byond://?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='byond://?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
 			var/cyberimp_detect
-			for(var/obj/item/organ/internal/cyberimp/CI in organs)
-				if(CI.status == ORGAN_ROBOTIC && !(CI.organ_flags & ORGAN_HIDDEN))
-					cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
+			for(var/obj/item/organ/internal/cyberimp/cyberimp in organs)
+				if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
+					cyberimp_detect += "[!cyberimp_detect ? "[cyberimp.get_examine_string(user)]" : ", [cyberimp.get_examine_string(user)]"]"
 			if(cyberimp_detect)
 				. += "<span class='notice ml-1'>Detected cybernetic modifications:</span>"
 				. += "<span class='notice ml-2'>[cyberimp_detect]</span>"

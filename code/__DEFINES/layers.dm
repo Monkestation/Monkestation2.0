@@ -52,6 +52,7 @@
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
+#define WEATHER_PLANE 1
 #define AREA_PLANE 2
 #define MASSIVE_OBJ_PLANE 3
 #define GHOST_PLANE 4
@@ -67,7 +68,6 @@
 
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 10
-#define LIGHTING_PLANE_ADDITIVE 11
 
 ///Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 12
@@ -92,6 +92,8 @@
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
+
+#define WEATHER_GLOW_PLANE 18
 
 ///---------------- MISC -----------------------
 

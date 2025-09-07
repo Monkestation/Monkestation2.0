@@ -81,20 +81,30 @@
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 		if(A == loc || (A in loc) || (A in contents))
-			W.melee_attack_chain(src, A, params)
+			W.melee_attack_chain(src, A, modifiers)
 			return
 
 		if(!isturf(loc))
 			return
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
+		//MONKESTATION REMOVAL
+		/*
 		if(isturf(A) || isturf(A.loc))
 			if(A.Adjacent(src)) // see adjacent.dm
-				W.melee_attack_chain(src, A, params)
+				W.melee_attack_chain(src, A, modifiers)
 				return
 			else
-				W.afterattack(A, src, 0, params)
+				W.afterattack(A, src, 0, modifiers)
 				return
+		*/
+		//MONKESTATION REMOVAL END
+		//MONKESTATION ADDITION
+		if(CanReach(A,W))
+			W.melee_attack_chain(src, A, modifiers)
+			return
+		else if(isturf(A) || isturf(A.loc))
+			A.base_ranged_item_interaction(src, W, modifiers)
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs

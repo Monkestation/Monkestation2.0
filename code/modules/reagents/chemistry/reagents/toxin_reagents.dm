@@ -224,7 +224,8 @@
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(5, seconds_per_tick))
-		to_chat(affected_mob, span_danger("Your insides are burning!"))
+		if(!HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) && !HAS_TRAIT(affected_mob, TRAIT_TOXIMMUNE))
+			to_chat(affected_mob, span_danger("Your insides are burning!"))
 		affected_mob.adjustToxLoss(rand(20, 60), FALSE, required_biotype = affected_biotype)
 		. = TRUE
 	else if(SPT_PROB(23, seconds_per_tick))
@@ -1139,7 +1140,7 @@
 		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/BP = affected_mob.get_bodypart(selected_part)
 		if(BP)
-			playsound(affected_mob, get_sfx(SFX_DESECRATION), 50, TRUE, -1)
+			playsound(affected_mob, SFX_DESECRATION, 50, TRUE, -1)
 			affected_mob.visible_message(span_warning("[affected_mob]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
 			affected_mob.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
 			BP.receive_damage(20, 0, 200, wound_bonus = rand(30, 130))

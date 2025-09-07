@@ -184,7 +184,7 @@
 /obj/machinery/coffeemaker/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
 	//You can only screw open empty grinder
@@ -527,7 +527,7 @@
 
 /obj/machinery/coffeemaker/impressa/Destroy()
 	QDEL_NULL(coffeepot)
-	QDEL_NULL(coffee)
+	QDEL_LIST(coffee)
 	return ..()
 
 /obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)

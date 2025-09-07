@@ -94,7 +94,7 @@
 
 	// MonkeStation Edit Start
 	// Alternative Scream Hook
-	if(user.alternative_screams.len)
+	if(LAZYLEN(user.alternative_screams))
 		return pick(user.alternative_screams)
 	// MonkeStation Edit End
 

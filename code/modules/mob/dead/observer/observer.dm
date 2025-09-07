@@ -34,6 +34,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null //The target mob that the ghost is observing. Used as a reference in logout()
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
+	var/disease_view = FALSE //Is disease view currently enabled? (Init signals is on living and I'm not poking that bear.) MONKESTATION EDIT
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
@@ -138,11 +139,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	add_to_dead_mob_list()
 
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
 
 	. = ..()
 
@@ -301,10 +299,17 @@ Works together with spawning an observer, noted above.
 	var/mob/dead/observer/ghost = new(src) // Transfer safety to observer spawning proc.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
-	ghost.key = key
+	ghost.PossessByPlayer(key)
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
+
+	var/recordable_time = world.time
+	var/mob/living/former_mob = ghost.mind?.current
+	if(isliving(former_mob))
+		recordable_time = former_mob.timeofdeath
+
+	ghost.persistent_client?.time_of_death = recordable_time
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
@@ -352,7 +357,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		set_glide_size(glide_size_override)
 	if(NewLoc)
 		abstract_move(NewLoc)
-		update_parallax_contents()
 	else
 		var/turf/destination = get_turf(src)
 
@@ -374,6 +378,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	abstract_move(destination) // move like the wind
 	return TRUE
 
+/mob/dead/observer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	var/area/new_area = get_area(src)
+	if(new_area != ambience_tracked_area)
+		update_ambience_area(new_area)
+
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
@@ -392,7 +402,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
 		to_chat(src, span_warning("To leave your body again use the Ghost verb."))
-	mind.current.key = key
+	mind.current.PossessByPlayer(key)
 	mind.current.client.init_verbs()
 	return TRUE
 
@@ -442,7 +452,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.add_overlay(source)
 				source.layer = old_layer
 				source.plane = old_plane
-	to_chat(src, span_ghostalert("<a href=?src=[REF(src)];reenter=1>(Click to re-enter)</a>"))
+	to_chat(src, span_ghostalert("<a href='byond://?src=[REF(src)];reenter=1'>(Click to re-enter)</a>"))
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
@@ -474,7 +484,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	usr.abstract_move(pick(L))
-	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -517,6 +526,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = ..()
 	//restart our floating animation after orbit is done.
 	pixel_y = base_pixel_y
+	// if we were autoobserving, reset perspective
+	if (!isnull(client) && !isnull(client.eye))
+		reset_perspective(null)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -546,7 +558,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(isturf(destination_turf))
 		source_mob.abstract_move(destination_turf)
-		source_mob.update_parallax_contents()
 	else
 		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
@@ -686,7 +697,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_warning("Someone has taken this body while you were choosing!"))
 		return FALSE
 
-	target.key = key
+	target.PossessByPlayer(key)
 	target.faction = list(FACTION_NEUTRAL)
 	return TRUE
 
@@ -783,6 +794,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		show_data_huds()
 		to_chat(src, span_notice("Data HUDs enabled."))
 		data_huds_on = 1
+
+// MONKESTATION ADDITION START
+/mob/dead/observer/verb/toggle_disease_view()
+	set name = "Toggle Disease View"
+	set desc = "Toggles whether you see disease infection vectors. (dormant, blood, contact and airborne)"
+	set category = "Ghost"
+
+	if(disease_view)
+		RemoveElement(/datum/element/virus_viewer)
+		to_chat(src, span_notice("Disease view disabled."))
+	else
+		AddElement(/datum/element/virus_viewer)
+		to_chat(src, span_notice("Disease view enabled."))
+
+	disease_view = !disease_view
+// MONKESTATION ADDITION END
 
 /mob/dead/observer/verb/toggle_health_scan()
 	set name = "Toggle Health Scan"
@@ -929,6 +956,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
 		return
 
+	if (chosen_target == usr)
+		return
+
 	do_observe(chosen_target)
 
 /mob/dead/observer/proc/do_observe(mob/mob_eye)
@@ -997,7 +1027,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
-		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+		change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
 	. = ..()

@@ -1,4 +1,4 @@
-/obj/machinery/jukebox
+/obj/machinery/dance_machine
 	name = "jukebox"
 	desc = "A classic music player."
 	icon = 'icons/obj/stationobjs.dmi'
@@ -15,7 +15,7 @@
 	var/volume = 50
 	COOLDOWN_DECLARE(jukebox_error_cd)
 
-/obj/machinery/jukebox/disco
+/obj/machinery/dance_machine/disco
 	name = "radiant dance machine mark IV"
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon_state = "disco"
@@ -24,7 +24,7 @@
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 
-/obj/machinery/jukebox/disco/indestructible
+/obj/machinery/dance_machine/disco/indestructible
 	name = "radiant dance machine mark V"
 	desc = "Now redesigned with data gathered from the extensive disco and plasma research."
 	req_access = null
@@ -44,7 +44,7 @@
 	song_length = length
 	song_beat = beat
 
-/obj/machinery/jukebox/Initialize(mapload)
+/obj/machinery/dance_machine/Initialize(mapload)
 	. = ..()
 	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
 
@@ -62,11 +62,11 @@
 	if(songs.len)
 		selection = pick(songs)
 
-/obj/machinery/jukebox/Destroy()
+/obj/machinery/dance_machine/Destroy()
 	dance_over()
 	return ..()
 
-/obj/machinery/jukebox/attackby(obj/item/O, mob/user, params)
+/obj/machinery/dance_machine/attackby(obj/item/O, mob/user, params)
 	if(!active && !(flags_1 & NODECONSTRUCT_1))
 		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
@@ -79,11 +79,11 @@
 			return
 	return ..()
 
-/obj/machinery/jukebox/update_icon_state()
+/obj/machinery/dance_machine/update_icon_state()
 	icon_state = "[initial(icon_state)][active ? "-active" : null]"
 	return ..()
 
-/obj/machinery/jukebox/ui_status(mob/user)
+/obj/machinery/dance_machine/ui_status(mob/user)
 	if(!anchored)
 		to_chat(user,span_warning("This device must be anchored by a wrench!"))
 		return UI_CLOSE
@@ -97,13 +97,13 @@
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/jukebox/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/dance_machine/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Jukebox", name)
 		ui.open()
 
-/obj/machinery/jukebox/ui_data(mob/user)
+/obj/machinery/dance_machine/ui_data(mob/user)
 	var/list/data = list()
 	data["active"] = active
 	data["songs"] = list()
@@ -122,7 +122,7 @@
 	data["volume"] = volume
 	return data
 
-/obj/machinery/jukebox/ui_act(action, list/params)
+/obj/machinery/dance_machine/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
@@ -172,19 +172,19 @@
 				volume = text2num(new_volume)
 				return TRUE
 
-/obj/machinery/jukebox/proc/activate_music()
+/obj/machinery/dance_machine/proc/activate_music()
 	active = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 	START_PROCESSING(SSobj, src)
 	stop = world.time + selection.song_length
 
-/obj/machinery/jukebox/disco/activate_music()
+/obj/machinery/dance_machine/disco/activate_music()
 	..()
 	dance_setup()
 	lights_spin()
 
-/obj/machinery/jukebox/disco/proc/dance_setup()
+/obj/machinery/dance_machine/disco/proc/dance_setup()
 	var/turf/cen = get_turf(src)
 	FOR_DVIEW(var/turf/t, 3, get_turf(src),INVISIBILITY_LIGHTING)
 		if(t.x == cen.x && t.y > cen.y)
@@ -214,14 +214,14 @@
 		continue
 	FOR_DVIEW_END
 
-/obj/machinery/jukebox/disco/proc/hierofunk()
+/obj/machinery/dance_machine/disco/proc/hierofunk()
 	for(var/i in 1 to 10)
 		spawn_atom_to_turf(/obj/effect/temp_visual/hierophant/telegraph/edge, src, 1, FALSE)
 		sleep(0.5 SECONDS)
 
 #define DISCO_INFENO_RANGE (rand(85, 115)*0.01)
 
-/obj/machinery/jukebox/disco/proc/lights_spin()
+/obj/machinery/dance_machine/disco/proc/lights_spin()
 	for(var/i in 1 to 25)
 		if(QDELETED(src) || !active)
 			return
@@ -318,7 +318,7 @@
 
 #undef DISCO_INFENO_RANGE
 
-/obj/machinery/jukebox/disco/proc/dance(mob/living/M) //Show your moves
+/obj/machinery/dance_machine/disco/proc/dance(mob/living/M) //Show your moves
 	set waitfor = FALSE
 	switch(rand(0,9))
 		if(0 to 1)
@@ -330,7 +330,7 @@
 		if(7 to 9)
 			dance5(M)
 
-/obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
+/obj/machinery/dance_machine/disco/proc/dance2(mob/living/M)
 	for(var/i in 0 to 9)
 		dance_rotate(M, CALLBACK(M, TYPE_PROC_REF(/mob, dance_flip)))
 		sleep(2 SECONDS)
@@ -339,7 +339,7 @@
 	if(dir == WEST)
 		emote("flip")
 
-/obj/machinery/jukebox/disco/proc/dance3(mob/living/M)
+/obj/machinery/dance_machine/disco/proc/dance3(mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 75)
 		if (!M)
@@ -386,7 +386,7 @@
 		sleep(0.1 SECONDS)
 	M.lying_fix()
 
-/obj/machinery/jukebox/disco/proc/dance4(mob/living/M)
+/obj/machinery/dance_machine/disco/proc/dance4(mob/living/M)
 	var/speed = rand(1,3)
 	set waitfor = 0
 	var/time = 30
@@ -398,7 +398,7 @@
 				NS.set_resting(!NS.resting, TRUE, TRUE)
 		time--
 
-/obj/machinery/jukebox/disco/proc/dance5(mob/living/M)
+/obj/machinery/dance_machine/disco/proc/dance5(mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 60)
@@ -440,19 +440,19 @@
 	rebuild_transform()
 //MONKESTATION EDIT END
 
-/obj/machinery/jukebox/proc/dance_over()
+/obj/machinery/dance_machine/proc/dance_over()
 	for(var/mob/living/L in rangers)
 		if(!L || !L.client)
 			continue
 		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	rangers = list()
 
-/obj/machinery/jukebox/disco/dance_over()
+/obj/machinery/dance_machine/disco/dance_over()
 	..()
 	QDEL_LIST(spotlights)
 	QDEL_LIST(sparkles)
 
-/obj/machinery/jukebox/process()
+/obj/machinery/dance_machine/process()
 	if(world.time < stop && active)
 		var/sound/song_played = sound(selection.song_path)
 
@@ -477,7 +477,7 @@
 		update_appearance()
 		stop = world.time + 100
 
-/obj/machinery/jukebox/disco/process()
+/obj/machinery/dance_machine/disco/process()
 	. = ..()
 	if(active)
 		for(var/mob/living/M in rangers)

@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/his_grace,
 	/obj/item/bodybag/bluespace,
 	/obj/item/mod/control,
+	/obj/machinery/power/apc, //i cant believe im doing this
 )))
 
 /obj/machinery/deepfryer
@@ -77,7 +78,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
 	// Dissolving pills into the frier

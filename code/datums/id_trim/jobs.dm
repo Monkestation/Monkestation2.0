@@ -27,7 +27,7 @@
 		job = SSjob.GetJobType(job)
 
 	if(isnull(job_changes))
-		job_changes = SSmapping.config.job_changes
+		job_changes = SSmapping.current_map.job_changes
 
 	if(!length(job_changes))
 		refresh_trim_access()
@@ -101,6 +101,32 @@
 	if(CONFIG_GET(flag/assistants_have_maint_access))
 		access |= list(
 			ACCESS_MAINT_TUNNELS)
+
+/datum/id_trim/job/bridge_assistant
+	assignment = "Bridge Assistant"
+	trim_state = "trim_assistant"
+	sechud_icon_state = SECHUD_BRIDGEASSISTANT
+	department_color = COLOR_COMMAND_BLUE
+	subdepartment_color = COLOR_COMMAND_BLUE
+	minimal_access = list(
+		ACCESS_COMMAND,
+		ACCESS_SECURITY, //console
+		ACCESS_MEDICAL, //console AGAIN
+		ACCESS_EVA,
+		ACCESS_GATEWAY,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_TELEPORTER,
+	)
+	extra_access = list(ACCESS_RC_ANNOUNCE,)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+	)
+	job = /datum/job/bridge_assistant
+
+/datum/id_trim/job/bridge_assistant/chat_span()
+	return "job__bridgeassistant"
 
 /datum/id_trim/job/atmospheric_technician
 	assignment = "Atmospheric Technician"
@@ -920,11 +946,11 @@
 		ACCESS_ORDNANCE_STORAGE,
 		ACCESS_RESEARCH,
 		ACCESS_SCIENCE,
-		ACCESS_XENOBIOLOGY,
 		)
 	extra_access = list(
 		ACCESS_GENETICS,
 		ACCESS_ROBOTICS,
+		ACCESS_XENOBIOLOGY, //monkestation edit: Xenobio job
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,

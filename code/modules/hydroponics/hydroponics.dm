@@ -216,12 +216,12 @@
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!(user.istate & ISTATE_HARM))
 		// handle opening the panel
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 			return
-		if(default_deconstruction_crowbar(I))
+		if(default_deconstruction_crowbar(attacking_item))
 			return
 
 	return ..()
@@ -828,9 +828,9 @@
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-				var/image/splash_animation = image('icons/effects/effects.dmi', src, "splash_hydroponics")
+				var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash_hydroponics")
 				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
-				flick_overlay_global(splash_animation, GLOB.clients, 1.1 SECONDS)
+				flick_overlay_view(splash_animation, 1.1 SECONDS)
 
 		if(visi_msg)
 			visible_message(span_notice("[visi_msg]."))
@@ -1353,4 +1353,4 @@
 /obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS

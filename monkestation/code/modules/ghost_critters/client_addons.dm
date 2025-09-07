@@ -1,5 +1,5 @@
 /client
-	var/ghost_critter_cooldown = 0
+	COOLDOWN_DECLARE(ghost_critter_cooldown)
 
 
 /client/proc/get_critter_spawn(obj/structure/ghost_critter_spawn/spawner)
@@ -15,7 +15,7 @@
 
 	mobs_to_pick += return_donator_mobs()
 
-	if(!player_details.patreon.has_access(ACCESS_ASSISTANT_RANK) && !is_admin(src) && !length(mobs_to_pick))
+	if(!persistent_client.patreon.has_access(ACCESS_ASSISTANT_RANK) && !is_admin(src) && !length(mobs_to_pick))
 		return pick(basic_list)
 
 	mobs_to_pick += basic_list
@@ -45,26 +45,25 @@
 	var/mob/living/basic/created_mob = new spawned_mob(turf)
 
 	var/cooldown_time = get_critter_cooldown()
-	ghost_critter_cooldown = cooldown_time
-
-	if(player_details.patreon.has_access(ACCESS_NUKIE_RANK) || is_admin(src))
-		created_mob.AddComponent(/datum/component/basic_inhands, y_offset = -6)
-		created_mob.AddComponent(/datum/component/max_held_weight, WEIGHT_CLASS_SMALL)
-		created_mob.AddElement(/datum/element/dextrous)
-	created_mob.add_traits(list(TRAIT_MUTE, TRAIT_GHOST_CRITTER), INNATE_TRAIT)
+	COOLDOWN_START(src, ghost_critter_cooldown, cooldown_time)
 
 	if(!mob.mind)
 		mob.mind = new /datum/mind(key)
 
-	var/mob/dead/observer/observe = mob
-	created_mob.key = observe.key
+	created_mob.PossessByPlayer(key)
+
+	if(persistent_client.patreon.has_access(ACCESS_NUKIE_RANK) || is_admin(src))
+		created_mob.AddComponent(/datum/component/basic_inhands, y_offset = -6)
+		created_mob.AddComponent(/datum/component/max_held_weight, WEIGHT_CLASS_SMALL)
+		created_mob.AddElement(/datum/element/dextrous)
+	created_mob.add_traits(list(TRAIT_MUTE, TRAIT_GHOST_CRITTER), INNATE_TRAIT)
 
 	init_verbs()
 
 /client/proc/get_critter_cooldown()
 	var/base_time = 25 MINUTES
 
-	switch(player_details.patreon.access_rank)
+	switch(persistent_client.patreon.access_rank)
 		if(0, 1)
 			return base_time
 		if(2)

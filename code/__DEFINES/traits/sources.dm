@@ -33,7 +33,7 @@
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
 #define LICH_TRAIT "lich"
-
+#define BINGLE_PIT_TRAIT "bingle_pit"
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
@@ -96,6 +96,8 @@
 #define SWORDPLAY_TRAIT "swordplay"
 /// Trait given by being recruited as a nuclear operative
 #define NUKE_OP_MINION_TRAIT "nuke-op-minion"
+/// Trait given by joining as a crewmember
+#define CREW_JOIN_TRAIT "crew_join_trait"
 
 /// Trait given to you by shapeshifting
 #define SHAPESHIFT_TRAIT "shapeshift_trait"
@@ -282,8 +284,6 @@
 
 /// Trait from an organ being inside a bodypart
 #define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
-/// Trait when something was labelled by the /datum/element/tool_renaming element.
-#define RENAMING_TOOL_LABEL_TRAIT "renaming_tool_label"
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"

@@ -17,6 +17,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species
 	///If the game needs to manually check your race to do something not included in a proc here, it will use this.
 	var/id
+	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
+	var/examine_limb_id
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
 	/// The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
@@ -29,23 +31,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/visual_gender =TRUE
 	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
-	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
-	var/list/offset_features = list(
-		OFFSET_UNIFORM = list(0,0),
-		OFFSET_ID = list(0,0),
-		OFFSET_GLOVES = list(0,0),
-		OFFSET_GLASSES = list(0,0),
-		OFFSET_EARS = list(0,0),
-		OFFSET_SHOES = list(0,0),
-		OFFSET_S_STORE = list(0,0),
-		OFFSET_FACEMASK = list(0,0),
-		OFFSET_HEAD = list(0,0),
-		OFFSET_FACE = list(0,0),
-		OFFSET_BELT = list(0,0),
-		OFFSET_BACK = list(0,0),
-		OFFSET_SUIT = list(0,0),
-		OFFSET_NECK = list(0,0),
-	)
+
 	///If this species needs special 'fallback' sprites, what is the path to the file that contains them?
 	var/fallback_clothing_path
 	///The maximum number of bodyparts this species can have.
@@ -59,8 +45,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Examine text when the person has cellular damage.
 	var/cellular_damage_desc = DEFAULT_CLONE_EXAMINE_TEXT
-	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
-	var/examine_limb_id
 	///Never, Optional, or Forced digi legs?
 	var/digitigrade_customization = DIGITIGRADE_NEVER
 	/// If your race uses a non standard bloodtype (typepath)
@@ -100,11 +84,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
 
-	///Percentage modifier for overall defense of the race, or less defense, if it's negative.
+	/// Percentage modifier for overall defense of the race, or less defense, if it's negative.
+	/// Please use bodypart damage modifiers instead of this.
 	var/armor = 0
-	///multiplier for brute damage
+	/// Multiplier for brute damage.
+	/// Please use bodypart damage modifiers instead of this.
 	var/brutemod = 1
-	///multiplier for burn damage
+	/// Multiplier for burn damage.
+	/// Please use bodypart damage modifiers instead of this.
 	var/burnmod = 1
 	//Used for metabolizing reagents. We're going to assume you're a meatbag unless you say otherwise.
 	var/reagent_tag = PROCESS_ORGANIC
@@ -197,7 +184,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///A fixed hair color that's independent of the mcolor feature in DNA.
 	var/fixed_hair_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
-	var/inert_mutation = /datum/mutation/human/dwarfism
+	var/inert_mutation = /datum/mutation/dwarfism
 	///Used to set the mob's death_sound upon species change
 	var/death_sound
 	///Special sound for grabbing
@@ -253,7 +240,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/New()
 	if(!plural_form)
 		plural_form = "[name]\s"
-
+	if(!examine_limb_id)
+		examine_limb_id = id
 	return ..()
 
 /// Gets a list of all species available to choose in roundstart.
@@ -474,6 +462,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/species_organs = mutant_organs + external_organs
 	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
+		if(ispath(organ_path, /obj/item/organ/external) && !should_external_organ_apply_to(organ_path, organ_holder))
+			if(!isnull(current_organ) && replace_current)
+				// if we have an organ here and we're replacing organs, remove it
+				current_organ.Remove(organ_holder)
+				QDEL_NULL(current_organ)
+			continue
+
 		if(!current_organ || replace_current)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			// If there's an existing mutant organ, we're technically replacing it.
@@ -542,6 +537,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
+			if(!should_external_organ_apply_to(organ_path, human))
+				continue
+
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
@@ -594,9 +592,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
-		C.dna.remove_mutation(inert_mutation)
+		C.dna.remove_mutation(inert_mutation, MUTATION_SOURCE_ACTIVATED)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
+		// MONKESTATION EDIT START
+		if(islist(new_species.inert_mutation))
+			var/list/inert_mutations = new_species.inert_mutation
+			new_species.inert_mutation = pick(inert_mutations)
+		// MONKESTATION EDIT END
 		C.dna.mutation_index[location] = new_species.inert_mutation
 		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
@@ -681,7 +684,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL, flat = !!(species_human.mob_biotypes & MOB_REPTILE)) //MONKESTATION EDIT - Lizards
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
@@ -693,7 +696,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(undershirt)
 				var/mutable_appearance/working_shirt
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
-					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER, flat = !!(species_human.mob_biotypes & MOB_REPTILE))  //MONKESTATION EDIT - Lizards
 				else
 					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 				standing += working_shirt
@@ -747,8 +750,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 	if(mutant_bodyparts["ears"])
-		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
+		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || (source.head && (source.head.flags_inv & HIDEHAIR)) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || IS_ROBOTIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
+
+// MONKESTATION ADDITION START
+	if(mutant_bodyparts["ipc_screen"])
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || (source.head && (source.head.flags_inv & HIDEFACE)) || (source.wear_mask && (source.head.flags_inv & HIDEFACE)) || !noggin)
+			bodyparts_to_add -= "ipc_screen"
+// MONKESTATION ADDITION END
 
 	if(!bodyparts_to_add)
 		return
@@ -769,7 +778,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
-				if("ipc_screen")
+				if("ipc_screen") // Monkestation Addition
 					accessory = GLOB.ipc_screens_list[source.dna.features["ipc_screen"]]
 
 			if(!accessory || accessory.icon_state == "none")
@@ -853,8 +862,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_body_parts()
+	human_mob.set_hairstyle(random_hairstyle(human_mob.gender), update = FALSE)
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob,
 /// but will not update the body right away.
@@ -1016,15 +1024,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a suit before you can attach this [I.name]!"))
 				return FALSE
-			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					to_chat(H, span_warning("You somehow have a suit with no defined allowed items for suit storage, stop that."))
-				return FALSE
+			var/any_suit_storage = (is_type_in_typecache(I, GLOB.any_suit_storage) || I.w_class == WEIGHT_CLASS_TINY)
+			if(any_suit_storage)
+				return TRUE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
 					to_chat(H, span_warning("The [I.name] is too big to attach!")) //should be src?
 				return FALSE
-			if( istype(I, /obj/item/modular_computer/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_HANDCUFFED)
@@ -1091,7 +1098,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdosed = TRUE
 		chem.overdose_start(affected)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
-	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, affected, seconds_per_tick, times_fired)
+	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.
@@ -1141,8 +1148,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/go_bald(mob/living/carbon/human/target)
 	if(QDELETED(target)) //may be called from a timer
 		return
-	target.facial_hairstyle = "Shaved"
-	target.hairstyle = "Bald"
+	target.set_facial_hairstyle("Shaved", update = FALSE)
+	target.set_hairstyle("Bald", update = FALSE)
 	target.update_body_parts()
 
 //////////////////
@@ -1208,8 +1215,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		user.do_attack_animation(target, atk_effect)
 
 		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
-
-		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
+		var/zone = target.get_random_valid_zone(user.zone_selected)
+		var/obj/item/bodypart/affecting = target.get_bodypart(zone)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(attacking_bodypart.unarmed_damage_low)
@@ -1254,10 +1261,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
-			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
+				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
+					if(iter_clothing.clothing_flags & THICKMATERIAL)
+						if(iter_clothing.body_parts_covered && BODY_ZONE_PRECISE_GROIN)
+							return TRUE
+				target.sharp_pain(BODY_ZONE_CHEST, 50, BRUTE, 30 SECONDS)
+				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
+				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
+				target.emote("scream", message="screams for dear life!")
+				playsound(target.loc, 'sound/effects/hit_on_shattered_glass.ogg')
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
-			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
+			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "punched")

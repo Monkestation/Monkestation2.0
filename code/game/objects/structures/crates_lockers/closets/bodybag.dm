@@ -43,7 +43,7 @@
 	return ..()
 
 /obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
-	if (istype(interact_tool, /obj/item/pen) || istype(interact_tool, /obj/item/toy/crayon))
+	if (IS_WRITING_UTENSIL(interact_tool))
 		if(!user.can_write(interact_tool))
 			return
 		var/t = tgui_input_text(user, "What would you like the label to be?", name, max_length = 53)
@@ -158,7 +158,7 @@
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(iscarbon(content))
 			var/mob/living/carbon/mob = content
-			if (mob.dna.get_mutation(/datum/mutation/human/dwarfism))
+			if (mob.dna?.get_mutation(/datum/mutation/dwarfism))
 				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
 				continue
 		if(!isitem(content))

@@ -26,7 +26,7 @@
 
 			if(length(managed_slimes) >= max_capacity)
 				slime.death()
-				slime.visible_message("The pressure of the slimes kills [slime].")
+				slime.visible_message(span_warning("[slime] dies from being crowded in with so many other slimes!"))
 				continue
 
 			managed_slimes |= slime
@@ -71,7 +71,7 @@
 
 	if(length(managed_slimes) >= max_capacity)
 		var/mob/living/living = arrived
-		living.visible_message("The pressure of the slimes kills [living].")
+		living.visible_message(span_warning("[arrived] dies from being crowded in with so many other slimes!"))
 		living.death()
 		return
 

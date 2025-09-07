@@ -116,12 +116,11 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
 	if(light)
 		update_light()
 	if(rotation)
 		shuttleRotate(rotation)
-
-	update_parallax_contents()
 
 	return TRUE
 
@@ -203,18 +202,16 @@ All ShuttleMove procs go here
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	if(pipe_vision_img)
-		pipe_vision_img.loc = loc
-
 /obj/machinery/computer/auxiliary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	. = ..()
+	if(pipe_vision_img)
+		pipe_vision_img.loc = loc
+		
 	var/missing_nodes = FALSE
 	for(var/i in 1 to device_type)
 		if(nodes[i])
@@ -257,17 +254,6 @@ All ShuttleMove procs go here
 	if(codes[NAVBEACON_DELIVERY_MODE])
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
-
-/************************************Item move procs************************************/
-
-/obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	// If the pod was launched, the storage will always open. The reserved_level check
-	// ignores the movement of the shuttle from the transit level to
-	// the station as it is loaded in.
-	if (oldT && !is_reserved_level(oldT.z))
-		unlocked = TRUE
-		update_appearance()
 
 /************************************Mob move procs************************************/
 

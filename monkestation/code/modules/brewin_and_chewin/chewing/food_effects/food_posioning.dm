@@ -9,7 +9,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/food/food_poisoning
 	var/min_vomit_processes = 5
 
-/datum/status_effect/food/food_poisoning/tick(seconds_per_tick, times_fired)
+/datum/status_effect/food/food_poisoning/tick(seconds_between_ticks, times_fired)
 	. = ..()
 	owner.adjust_hallucinations(0.5 SECONDS)
 	owner.adjust_drugginess(0.75 SECONDS)

@@ -149,6 +149,7 @@
 		return
 	if(status_overlay)
 		owner.cut_overlay(status_overlay)
-		QDEL_NULL(status_overlay)
+		status_overlay = null
 	if(status_underlay)
 		owner.underlays -= status_underlay
+		status_underlay = null

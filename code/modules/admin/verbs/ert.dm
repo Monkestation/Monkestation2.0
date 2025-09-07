@@ -30,7 +30,7 @@
 	if(!istype(mannequin))
 		return
 
-	for(var/I in mannequin.get_equipped_items(TRUE))
+	for(var/I in mannequin.get_equipped_items(include_pockets = TRUE))
 		qdel(I)
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag
@@ -190,7 +190,7 @@
 				var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
 				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
 				admin_officer.equipOutfit(chosen_outfit)
-				admin_officer.key = usr.key
+				admin_officer.PossessByPlayer(usr.key)
 
 			else
 				to_chat(usr, span_warning("Could not spawn you in as briefing officer as you are not a ghost!"))
@@ -248,7 +248,7 @@
 				if(ertemplate.enforce_human || !(ert_operative_carbon.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
 					ert_operative_carbon.set_species(/datum/species/human)
 
-			ert_operative.key = chosen_candidate.key
+			ert_operative.PossessByPlayer(chosen_candidate.key)
 			// MONKESTATION EDIT END
 
 			//Give antag datum
@@ -283,18 +283,14 @@
 
 	return
 
-/client/proc/summon_ert()
-	set category = "Admin.Fun"
-	set name = "Summon ERT"
-	set desc = "Summons an emergency response team"
-
-	message_admins("[key_name(usr)] is creating a CentCom response team...")
-	if(holder?.makeEmergencyresponseteam())
-		message_admins("[key_name(usr)] created a CentCom response team.")
-		log_admin("[key_name(usr)] created a CentCom response team.")
+ADMIN_VERB(summon_ert, R_FUN, FALSE, "Summon ERT", "Summons an emergency response team.", ADMIN_CATEGORY_FUN)
+	message_admins("[key_name_admin(user)] is creating a CentCom response team...")
+	if(user.holder?.makeEmergencyresponseteam())
+		message_admins("[key_name_admin(user)] created a CentCom response team.")
+		log_admin("[key_name(user)] created a CentCom response team.")
 	else
-		message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
-		log_admin("[key_name(usr)] failed to create a CentCom response team.")
+		message_admins("[key_name_admin(user)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
+		log_admin("[key_name(user)] failed to create a CentCom response team.")
 
 #undef ERT_EXPERIENCED_LEADER_CHOOSE_TOP
 #undef DUMMY_HUMAN_SLOT_ADMIN

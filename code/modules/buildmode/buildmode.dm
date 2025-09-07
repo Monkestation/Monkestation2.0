@@ -28,7 +28,7 @@
 	holder = c
 	buttons = list()
 	li_cb = CALLBACK(src, PROC_REF(post_login))
-	holder.player_details.post_login_callbacks += li_cb
+	holder.persistent_client.post_login_callbacks += li_cb
 	holder.show_popup_menus = FALSE
 	create_buttons()
 	holder.screen += buttons
@@ -44,9 +44,11 @@
 
 /datum/buildmode/Destroy()
 	close_switchstates()
-	holder.player_details.post_login_callbacks -= li_cb
+	holder.persistent_client.post_login_callbacks -= li_cb
 	li_cb = null
 	holder = null
+	modebutton = null
+	dirbutton = null
 	QDEL_NULL(mode)
 	QDEL_LIST(buttons)
 	QDEL_LIST(modeswitch_buttons)

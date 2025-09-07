@@ -258,6 +258,12 @@ export const VUAP_personal = (props) => {
                         content="SM"
                         onClick={() => handleAction('sm')}
                       />
+                      <Button
+                        fluid
+                        icon="comment-alt"
+                        content="HEADSET MSG"
+                        onClick={() => handleAction('headsetmsg')}
+                      />
                     </Grid.Column>
                     <Grid.Column size={6}>
                       <Button

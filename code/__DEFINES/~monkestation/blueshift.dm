@@ -87,21 +87,6 @@ GLOBAL_LIST_INIT(colonist_suit_allowed, list(
 /// We just use this macro to ensure that we will only pass strings to this BYOND-level function without developers needing to really worry about it.
 #define LOWER_TEXT(thing) lowertext(UNLINT("[thing]"))
 
-// Converts cable layer to its human readable name
-GLOBAL_LIST_INIT(cable_layer_to_name, list(
-	"[CABLE_LAYER_1]" = CABLE_LAYER_1_NAME,
-	"[CABLE_LAYER_2]" = CABLE_LAYER_2_NAME,
-	"[CABLE_LAYER_3]" = CABLE_LAYER_3_NAME
-))
-
-// Converts cable color name to its layer
-GLOBAL_LIST_INIT(cable_name_to_layer, list(
-	CABLE_LAYER_1_NAME = CABLE_LAYER_1,
-	CABLE_LAYER_2_NAME = CABLE_LAYER_2,
-	CABLE_LAYER_3_NAME = CABLE_LAYER_3
-))
-
-
 // Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
 #define HANDCUFFS_TYPE_WEAK 0
 // Handcuffs... alien handcuffs. Can be cut through only by jaws of life.

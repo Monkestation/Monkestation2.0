@@ -195,6 +195,15 @@
 	worn_icon_state = "swordon"
 	menu_description = "A sharp weapon which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
+/obj/item/nullrod/claymore/glowing/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+
+/obj/item/nullrod/claymore/glowing/proc/on_light_eater(atom/source, datum/light_eater)
+	SIGNAL_HANDLER
+	visible_message("The undying glow of \the [src] refuses to fade.")
+	return COMPONENT_BLOCK_LIGHT_EATER
+
 /obj/item/nullrod/claymore/katana
 	name = "\improper Hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."
@@ -529,7 +538,9 @@
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
 	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "carpplush"
+	icon_state = "map_plushie_carp"
+	greyscale_config = /datum/greyscale_config/plush_carp
+	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
 	worn_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

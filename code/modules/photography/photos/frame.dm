@@ -12,12 +12,12 @@
 	var/obj/item/photo/displayed
 	pixel_shift = 30
 
-/obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/photo))
+/obj/item/wallframe/picture/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/photo))
 		if(!displayed)
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			displayed = I
+			displayed = attacking_item
 			update_appearance()
 		else
 			to_chat(user, span_warning("\The [src] already contains a photo."))
@@ -143,16 +143,16 @@
 	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
 	framed = null
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
-/obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/picture_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
-	if(istype(I, /obj/item/photo))
+	if(istype(attacking_item, /obj/item/photo))
 		if(framed)
 			to_chat(user, span_warning("\The [src] already contains a photo."))
 			return TRUE
-		var/obj/item/photo/P = I
+		var/obj/item/photo/P = attacking_item
 		if(!user.transferItemToLoc(P, src))
 			return
 		framed = P
@@ -268,6 +268,6 @@
 
 ///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
 /obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)
-	if(SSmapping.config.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
-		persistence_id = "frame_bar_[SSmapping.config.map_name]"
+	if(SSmapping.current_map.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
+		persistence_id = "frame_bar_[SSmapping.current_map.map_name]"
 	return ..()

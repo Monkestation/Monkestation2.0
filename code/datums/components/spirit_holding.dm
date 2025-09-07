@@ -75,7 +75,7 @@
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	bound_spirit = new(parent)
-	bound_spirit.ckey = chosen_spirit.ckey
+	bound_spirit.PossessByPlayer(chosen_spirit.ckey)
 	bound_spirit.fully_replace_character_name(null, "The spirit of [parent]")
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
 	bound_spirit.update_atom_languages()
@@ -111,7 +111,7 @@
 	SIGNAL_HANDLER
 	return COMSIG_BLOCK_RELAYMOVE
 
-/datum/component/spirit_holding/proc/on_bible_smacked(datum/source, mob/living/user, direction)
+/datum/component/spirit_holding/proc/on_bible_smacked(datum/source, mob/living/user, ...)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_exorcism), user)
 

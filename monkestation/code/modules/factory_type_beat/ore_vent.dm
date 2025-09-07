@@ -92,7 +92,7 @@
 		SSore_generation.processed_vents -= src
 	return ..()
 
-/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
@@ -286,6 +286,8 @@
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
 		if(do_after(user, 4 SECONDS))
+			if(discovered)
+				return
 			discovered = TRUE
 			balloon_alert(user, "vent scanned!")
 			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
@@ -297,16 +299,20 @@
 
 	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
 		return
-	if(!COOLDOWN_FINISHED(src, wave_cooldown))
+	if(!COOLDOWN_FINISHED(src, wave_cooldown) || QDELETED(src))
 		return
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
+	if(QDELETED(src))
+		return
 	node = new /mob/living/basic/node_drone(loc)
 	node.arrive(src)
 	RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
 	add_shared_particles(/particles/smoke/ash)
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
+		if(QDELETED(src))
+			return
 		for(var/turf/closed/mineral/rock in oview(i))
 			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
 				new /obj/effect/decal/cleanable/rubble(rock)
@@ -323,14 +329,16 @@
  * Ore_string is passed to examine().
  */
 /obj/structure/ore_vent/proc/generate_description(mob/user)
-	for(var/mineral_count in 1 to length(mineral_breakdown))
-		var/datum/material/resource = mineral_breakdown[mineral_count]
-		if(mineral_count == length(mineral_breakdown))
-			ore_string += "and " + span_bold(initial(resource.name)) + "."
-		else
-			ore_string += span_bold(initial(resource.name)) + ", "
-	if(!length(ore_string))
-		ore_string += "random ores."
+	ore_string = ""
+	var/list/mineral_names = list()
+	for(var/datum/material/resource as anything in mineral_breakdown)
+		mineral_names += span_bold(initial(resource.name))
+
+	if(!length(mineral_names))
+		ore_string += "<b>random ores</b>."
+	else
+		ore_string = "[english_list(mineral_names)]."
+
 	if(user)
 		ore_string += "\nThis vent was first discovered by [user]."
 /**

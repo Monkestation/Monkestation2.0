@@ -125,7 +125,6 @@
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/flesh_mark,
 		/datum/heretic_knowledge/void_cloak,
@@ -174,7 +173,7 @@
 			return FALSE
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(soon_to_be_ghoul)]) to replace an AFK player.")
 		soon_to_be_ghoul.ghostize(FALSE)
-		soon_to_be_ghoul.key = chosen_one.key
+		soon_to_be_ghoul.PossessByPlayer(chosen_one.key)
 
 	selected_atoms -= soon_to_be_ghoul
 	make_ghoul(user, soon_to_be_ghoul)
@@ -235,7 +234,6 @@
 		the ability to link minds to communicate with ease, but are very fragile and weak in combat."
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/flesh,
 		/datum/heretic_knowledge/reroll_targets,
@@ -276,7 +274,6 @@
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/flesh_final,
 		/datum/heretic_knowledge/spell/apetra_vulnera,

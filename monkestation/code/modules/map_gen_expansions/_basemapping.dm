@@ -1,6 +1,6 @@
 /// Returns true if the map we're playing on is on a planet, but it DOES have space access.
 /datum/controller/subsystem/mapping/proc/is_planetary_with_space()
-	return config.planetary && config.allow_space_when_planetary
+	return current_map.planetary && current_map.allow_space_when_planetary
 
 
 /datum/map_config

@@ -79,14 +79,14 @@
 
 			var/datum/symptom/e = new symptom(D)
 			e.stage = i
-			e.chance = input(C, "Choose the default chance for this effect to activate", "Effect", e.chance) as null | num
-			e.chance = clamp(e.chance,0,100)
 			e.max_chance = input(C, "Choose the maximum chance for this effect to activate", "Effect", e.max_chance) as null | num
 			e.max_chance = clamp(e.max_chance,0,100)
-			e.multiplier = input(C, "Choose the default strength for this effect", "Effect", e.multiplier) as null | num
-			e.multiplier = clamp(e.multiplier,0,100)
+			e.chance = input(C, "Choose the default chance for this effect to activate", "Effect", e.chance) as null | num
+			e.chance = clamp(e.chance,0,100)
 			e.max_multiplier = input(C, "Choose the maximum strength for this effect", "Effect", e.max_multiplier) as null | num
 			e.max_multiplier = clamp(e.max_multiplier,0,100)
+			e.multiplier = input(C, "Choose the default strength for this effect", "Effect", e.multiplier) as null | num
+			e.multiplier = clamp(e.multiplier,0,100)
 
 			D.log += "Added [e.name] at [e.chance]% chance and [e.multiplier] strength<br>"
 			D.symptoms += e
@@ -162,30 +162,20 @@
 
 	return 1
 
-/mob/var/disease_view = FALSE
-/client/proc/disease_view()
-	set category = "Admin.Debug"
-	set name = "Disease View"
-	set desc = "See viro Overlay"
-
-	if(!holder)
+ADMIN_VERB(disease_view, R_ADMIN, FALSE, "Disease View", "See disease visuals.", ADMIN_CATEGORY_DEBUG)
+	if(isobserver(user.mob))
+		var/mob/dead/observer/observer = user.mob
+		observer.toggle_disease_view() // The trait doesn't work if you're an observer, so this redirects the call to the observer verb.
 		return
-	if(!mob)
-		return
-	if(mob.disease_view)
-		mob.stopvirusView()
+	if(HAS_TRAIT_FROM(user.mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT))
+		REMOVE_TRAIT(user.mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
+		to_chat(user, span_notice("Admin disease view disabled."))
 	else
-		mob.virusView()
-	mob.disease_view = !mob.disease_view
+		ADD_TRAIT(user.mob, TRAIT_VIRUS_SCANNER, ADMIN_TRAIT)
+		to_chat(user, span_notice("Admin disease view enabled."))
 
-/client/proc/diseases_panel()
-	set category = "Admin.Logging"
-	set name = "Disease Panel"
-	set desc = "See diseases and disease information"
-
-	if(!holder)
-		return
-	holder.diseases_panel()
+ADMIN_VERB(diseases_panel, R_ADMIN, FALSE, "Disease Panel", "See diseases and disease information.", ADMIN_CATEGORY_LOGGING)
+	user.holder.diseases_panel()
 
 /datum/admins/var/viewingID
 
@@ -258,12 +248,12 @@
 
 		var/datum/disease/acute/D = GLOB.inspectable_diseases[ID]
 		dat += {"<tr>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_examine=["[D.uniqueID]"]-["[D.subID]"]'>[D.form] #["[D.uniqueID]"]-["[D.subID]"]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_examine=["[D.uniqueID]"]-["[D.subID]"]'>[D.form] #["[D.uniqueID]"]-["[D.subID]"]</a></td>
 			<td>[D.origin]</td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_toggledb=\ref[D]'>[(ID in GLOB.virusDB) ? "Yes" : "No"]</a></td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infectedmobs=\ref[D]'>[infctd_mobs][infctd_mobs_dead ? " (including [infctd_mobs_dead] dead)" : "" ]</a></td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infecteditems=\ref[D]'>[infctd_items]</a></td>
-			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_dishes=\ref[D]'>[dishes]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_toggledb=\ref[D]'>[(ID in GLOB.virusDB) ? "Yes" : "No"]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infectedmobs=\ref[D]'>[infctd_mobs][infctd_mobs_dead ? " (including [infctd_mobs_dead] dead)" : "" ]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infecteditems=\ref[D]'>[infctd_items]</a></td>
+			<td><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_dishes=\ref[D]'>[dishes]</a></td>
 			</tr>
 			"}
 
