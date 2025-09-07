@@ -59,9 +59,14 @@
 	else
 		return ..()
 
-/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(whip_trip(user, target))
+/obj/item/melee/curator_whip/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/melee/curator_whip/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isliving(interacting_with) && whip_trip(user, interacting_with))
 		user.changeNext_move(CLICK_CD_WHIP)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /// Tries to find a target to throw a a disarmed item towards.
 /// It will ignore anything adjacent to the user or target.
