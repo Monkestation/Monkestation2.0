@@ -366,6 +366,31 @@
 	icon_state = "cuff_used"
 
 /**
+ * Handcuffs used for the security holobarrier projector
+ * the handcuffs themselfes should be un-obtainable, /used version is applied on our actual target
+ * as strong zipties, take 50% longer to handcuff someone with
+ */
+
+/obj/item/restraints/handcuffs/holographic
+	name = "holographic energy field"
+	desc = "A weirdly solid holographic field... how did you get this? this item gives you the permission to scream at coders."
+	icon_state = "handcuffAlien"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	breakouttime = 45 SECONDS
+	trashtype = /obj/item/restraints/handcuffs/holographic/used
+	flags_1 = NONE
+
+/obj/item/restraints/handcuffs/holographic/used
+	desc = "A holographic projection of handcuffs, suprisingly hard to break out of"
+	item_flags = DROPDEL
+
+/obj/item/restraints/handcuffs/holographic/used/dropped(mob/user)
+	user.visible_message(span_danger("[user]'s [name] dissapears!"), \
+							span_userdanger("[user]'s [name] dissapears!"))
+	. = ..()
+
+/**
  * # Generic leg cuffs
  *
  * Parent class for everything that can legcuff carbons. Can't legcuff anything itself.
