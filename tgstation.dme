@@ -7182,7 +7182,6 @@
 #include "monkestation\code\modules\blueshift\effects\ash_walker.dm"
 #include "monkestation\code\modules\blueshift\effects\mapping_helper.dm"
 #include "monkestation\code\modules\blueshift\elements\caseless.dm"
-#include "monkestation\code\modules\blueshift\elements\cuffsnapping.dm"
 #include "monkestation\code\modules\blueshift\elements\gun_launches_little_guy.dm"
 #include "monkestation\code\modules\blueshift\elements\manufacturer_examine.dm"
 #include "monkestation\code\modules\blueshift\elements\projectile_drop.dm"

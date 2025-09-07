@@ -17,11 +17,6 @@
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
-#define HANDCUFFS_TYPE_WEAK 0
-// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
-#define HANDCUFFS_TYPE_STRONG 1
-
 /**
  * # Handcuffs
  *
