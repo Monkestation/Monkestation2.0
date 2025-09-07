@@ -71,7 +71,7 @@
 	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
 	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	deaf = max(deaf + (ddeaf*damage_multiplier)*0.75, 0)
 
 /obj/item/organ/internal/ears/invincible
 	damage_multiplier = 0
