@@ -1,4 +1,0 @@
-author: "Loiosh42"
-delete-after: True
-changes:
-  - code_imp: "Demodularization of gun code"
