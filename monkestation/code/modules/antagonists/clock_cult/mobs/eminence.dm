@@ -3,7 +3,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 /mob/living/eminence //yes this should be a camera mob, that will not work because cameras are deaf
 	name = "Eminence"
 	real_name = "Eminence"
-	desc = "An entity forever bound to Rat'var, acting upon his will."
+	desc = "An entity forever bound to Ratvar, acting upon his will."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "eminence"
 	mob_biotypes = MOB_SPIRIT

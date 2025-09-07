@@ -434,3 +434,8 @@
 		ADD_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
 		StartCooldown()
 		return
+
+/mob/living/basic/pet/cyber_husky/death(gibbed)
+	src.cut_overlays()
+	change_hud_ability.current_hud = 3
+	. = ..()

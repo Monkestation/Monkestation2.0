@@ -267,7 +267,7 @@
 				"amount" = sheet_amount,
 				"category" = "material",
 				"value" = ore_values[material.type],
-				"icon" = text_ref(sheet_type::icon),
+				"icon" = sheet_type::icon,
 				"icon_state" = sheet_type::icon_state,
 			))
 
@@ -279,7 +279,7 @@
 				"id" = alloy.id,
 				"category" = "alloy",
 				"amount" = can_smelt_alloy(alloy),
-				"icon" = text_ref(alloy_type::icon),
+				"icon" = alloy_type::icon,
 				"icon_state" = alloy_type::icon_state,
 			))
 	data["disconnected"] = null

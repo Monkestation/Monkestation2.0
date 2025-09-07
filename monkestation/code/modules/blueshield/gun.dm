@@ -1,64 +1,3 @@
-/*
-	Blueshield's Hellfire is between SC-1 and the Hellfire in terms of Damage and wound output
-*/
-
-/// Blueshield's Custom Hellfire
-/obj/item/ammo_casing/energy/laser/hellfire/blueshield
-	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = LASER_SHOTS(13, 1000)
-	select_name = "maim"
-
-/obj/item/gun/energy/laser/hellgun/blueshield
-	name ="modified hellfire laser gun"
-	desc = "A lightly overtuned version of NT's Hellfire Laser rifle, scratches showing its age and the fact it has definitely been owned before. This one is more energy efficient without sacrificing damage."
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/blueshield)
-
-// Blueshields custom takbok revolver.
-/obj/item/gun/ballistic/revolver/takbok/blueshield
-	name = "unmarked takbok revolver" //Give it a unique prefix compared hellfire's 'modified' to stand out
-	icon_state = "takbok_blueshield"
-	desc = "A modified revolver resembling that of Trappiste's signature Takbok, notably lacking any of the company's orginal markings or traceable identifaction. The custom modifactions allows it to shoot the five .585 Trappiste rounds in its cylinder quicker and with more consistancy."
-
-	//In comparasion to the orginal's fire_delay = 1 second, recoil = 3, wield_recoil = 1
-	fire_delay = 0.6 SECONDS
-	recoil = 2
-	wield_recoil = 0.8
-	projectile_damage_multiplier = 1.3
-
-/obj/item/gun/ballistic/revolver/takbok/blueshield/give_manufacturer_examine()
-	RemoveElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
-	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
-
-/obj/item/gun/ballistic/revolver/takbok/blueshield/examine_more(mob/user)
-	. = ..()
-    //Basically, it is a short continuation story of the original takbok about fans continuing their passion for an idea or project. Still, the original company stopped them despite the innovations they brought. And the ‘C’ is a callback to their inspirational figure ‘Cawgo’
-	. += ""
-	. += "After the production run of the original Takbok \
-		ended in 2523 alongside its popularity, enthusiasts of the sidearm continued \
-		to tinker with the make of the weapon to keep it with modern standards for \
-		firearms, despite Trappiste's license on the design. This unusual passion \
-		for the weapon led to variations with few to no identifying marks besides \
-		the occasional 'C' carved into the hilt of the gun. As a consequence of its \
-		production methods, it is unable to be distributed through conventional means \
-		despite the typical assessment of most being an improved model."
-	return .
-
-// Gunset for the custom Takbok Revolver
-
-/obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield
-	name = "Unmarked 'Takbok' gunset"
-
-	weapon_to_spawn = /obj/item/gun/ballistic/revolver/takbok/blueshield
-
-/obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield/PopulateContents()
-	new weapon_to_spawn (src)
-
-	generate_items_inside(list(
-		/obj/item/ammo_box/c585trappiste/incapacitator = 1,
-		/obj/item/ammo_box/c585trappiste = 1,
-		/obj/item/ammo_box/c585trappiste/hollowpoint = 1,
-	), src)
-
 //Weapon beacon
 /obj/item/choice_beacon/blueshield
 	name = "armament beacon"
@@ -76,6 +15,21 @@
 	)
 
 	return selectable_gun_types
+
+// Gunset for the custom Takbok Revolver
+/obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield
+	name = "Unmarked 'Takbok' gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/takbok/blueshield
+
+/obj/item/storage/toolbox/guncase/skyrat/pistol/trappiste_small_case/takbok/blueshield/PopulateContents()
+	new weapon_to_spawn (src)
+
+	generate_items_inside(list(
+		/obj/item/ammo_box/c585trappiste/incapacitator = 1,
+		/obj/item/ammo_box/c585trappiste = 1,
+		/obj/item/ammo_box/c585trappiste/hollowpoint = 1,
+	), src)
 
 /obj/item/storage/toolbox/guncase/skyrat/pistol/tech_9
 	name = "Tech-9 Gunset"
@@ -98,22 +52,6 @@
 		/obj/item/ammo_box/magazine/m35/rubber = 2,
 		/obj/item/ammo_box/magazine/m35 = 1,
 	), src)
-
-
-/obj/item/gun/ballistic/automatic/pistol/tech_9
-	name = "\improper Glock-O"
-	desc = "The standard issue service pistol of blueshield agents."
-	burst_size = 4
-	fire_delay = 1
-
-	icon = 'monkestation/icons/obj/weapons/guns/tech9.dmi'
-	icon_state = "tech9"
-
-	fire_sound = 'monkestation/code/modules/blueshift/sounds/pistol_light.ogg'
-	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
-
-/obj/item/gun/ballistic/automatic/pistol/tech_9/no_mag
-	spawnwithmagazine = FALSE
 
 /obj/item/storage/box/shield_blades
 	name = "S.A.Y.A. Arm Defense System Cyberset"

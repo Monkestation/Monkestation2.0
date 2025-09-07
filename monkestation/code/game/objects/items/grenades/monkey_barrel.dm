@@ -13,8 +13,8 @@
 	if(user)
 		add_fingerprint(user)
 		if(msg)
-			to_chat(user, "<span class='warning'>You shake the barrel, angering the monkeys inside!</span>")
-	playsound(src, 'sound/creatures/monkey/monkey_screech_7.ogg', volume, 1, mixer_channel = CHANNEL_MOB_SOUNDS)
+			to_chat(user, span_warning("You shake the barrel, angering the monkeys inside!"))
+	playsound(src, SFX_SCREECH, volume, 1, mixer_channel = CHANNEL_MOB_SOUNDS)
 	active = TRUE
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	addtimer(CALLBACK(src, PROC_REF(arm_grenade)), isnull(delayoverride)? det_time : delayoverride)

@@ -1,0 +1,5 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - rscadd: "Positronic Neural Dampener, an analgesic/anesthetic for robots. Made from 1:1:1 Silver, Dinitrogen Plasmide, and Acetone."
+  - rscadd: "Medipens of the PND, purchasable via mining rewards or company imports from the relevant cargo doohickies."

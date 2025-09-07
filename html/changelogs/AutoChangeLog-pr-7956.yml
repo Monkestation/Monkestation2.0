@@ -1,0 +1,6 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - balance: "Nanite Program: Temperature Adjustment homeostasis speed quadrupled. 2.5K/second -> 10K/second, so as to be on par with leporozine"
+  - qol: "Nanite program descriptions are now more explicit in their effect explanations."
+  - bugfix: "Nanite Program: Sub-Dermal Combustion now actually ignites you as advertised, instead of just making you more flammable."
