@@ -109,6 +109,8 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	var/max_range = clamp((strength / 20) - 1, 0, 7)
 	for (var/turf/open/T in range(max_range, loc))//stronger viruses can reach turfs further away.
 		possible_turfs += T
+	if(!length(possible_turfs))
+		return INITIALIZE_HINT_QDEL
 	target = pick(possible_turfs)
 	START_PROCESSING(SSpathogen_processing, src)
 
