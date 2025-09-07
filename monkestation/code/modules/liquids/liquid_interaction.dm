@@ -27,4 +27,4 @@
 	if(!isturf(interacting_with) || !turf_target.liquids)
 		return NONE
 	if(interaction_callback.Invoke(parent, turf_target, user, turf_target.liquids))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
