@@ -12,6 +12,8 @@
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), SIGNAL_REMOVETRAIT(TRAIT_NOHUNGER)), PROC_REF(on_nohunger))
 
 	RegisterSignal(src, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, PROC_REF(check_pocket_weght))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), PROC_REF(refresh_obscured))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_INVISIBLE_MAN), SIGNAL_REMOVETRAIT(TRAIT_INVISIBLE_MAN)), PROC_REF(invisible_man_toggle))
 
 /// Gaining [TRAIT_HEAVY_BLEEDER] doubles our bleed_mod.
 /mob/living/carbon/human/proc/on_gain_heavy_bleeder_trait(datum/source)
@@ -93,3 +95,9 @@
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)
+
+/// When [TRAIT_INVISIBLE_MAN] is added or removed we need to update a few things
+/mob/living/carbon/human/proc/invisible_man_toggle(datum/source)
+	SIGNAL_HANDLER
+	refresh_obscured()
+	name = get_visible_name()

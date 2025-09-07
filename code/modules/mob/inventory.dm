@@ -377,7 +377,7 @@
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)
-		I.dropped(src, silent)
+		has_unequipped(I, silent)
 	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
 	return TRUE
@@ -405,6 +405,17 @@
 		dropItemToGround(I)
 	drop_all_held_items()
 
+
+/// This proc is called after an item has been successfully handled and equipped to a slot.
+/mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	return item.on_equipped(src, slot, initial)
+
+/// This proc is called after an item has been removed from a mob but before it has been officially deslotted.
+/mob/proc/has_unequipped(obj/item/item, silent = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	item.dropped(src, silent)
+	return TRUE
 
 /obj/item/proc/equip_to_best_slot(mob/equipper)
 	var/should_prioritize_storage = !isclothing(src) && !(slot_flags & ITEM_SLOT_ON_BODY)
