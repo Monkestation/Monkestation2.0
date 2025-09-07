@@ -606,7 +606,7 @@
 		do_suck(chosen, user)
 
 /obj/item/vacuum_nozzle/proc/extra_selection_checks(mob/living/user, turf/target_turf)
-	return user.get_active_held_item() == src && !user.incapacitated() && in_view_range(user, target_turf, require_same_z = TRUE)
+	return user.get_active_held_item() == src && !user.incapacitated() && CAN_THEY_SEE(user, target_turf)
 
 /obj/item/disk/vacuum_upgrade
 	name = "vacuum pack upgrade disk"

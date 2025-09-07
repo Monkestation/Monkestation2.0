@@ -24,7 +24,7 @@
 /mob/living/basic/pet/dog/bullterrier/walter/negative
 	name = "Negative Walter"
 	real_name = "Negative Walter"
-	desc = "Nar'sie and rat'var are a lot compared to the might of this skcurtretsnom despising god."
+	desc = "Nar'sie and ratvar are a lot compared to the might of this skcurtretsnom despising god."
 	icon = 'monkestation/icons/mob/walterverse.dmi'
 	icon_state = "negative"
 	icon_living = "negative"
@@ -139,7 +139,7 @@
 /mob/living/basic/pet/dog/bullterrier/walter/french
 	name = "French Walter"
 	real_name = "French Walter"
-	desc = "Nar'sie et rat'var ne sont rien comparés à la puissance de ce chien qui aime les monstertrucks."
+	desc = "Nar'sie et ratvar ne sont rien comparés à la puissance de ce chien qui aime les monstertrucks."
 	icon = 'monkestation/icons/mob/walterverse.dmi'
 	icon_state = "french"
 	icon_living = "french"
@@ -189,7 +189,7 @@
 /mob/living/basic/pet/dog/bullterrier/walter/smallter
 	name = "Smallter"
 	real_name = "Smallter"
-	desc = "Nar'sie and rat'var are nothing compared to the might of this tiny dog."
+	desc = "Nar'sie and ratvar are nothing compared to the might of this tiny dog."
 	gold_core_spawnable = FRIENDLY_SPAWN
 	unique_pet = TRUE
 

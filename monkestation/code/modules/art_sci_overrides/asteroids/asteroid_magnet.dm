@@ -14,8 +14,6 @@
 	var/list/datum/map_template/asteroid/templates_on_map
 	/// The map that stores asteroids
 	var/datum/cartesian_plane/map
-	/// The currently selected template
-	var/datum/map_template/asteroid/selected_template
 
 	/// Center turf X, set in mapping
 	VAR_PRIVATE/center_x = 0
@@ -155,20 +153,23 @@
 	var/magnet_error = check_for_magnet_errors(template)
 	if(magnet_error)
 		status = magnet_error
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		updateUsrDialog()
 		return
+
+	templates_on_map -= template
 
 	var/area/station/cargo/mining/asteroid_magnet/A = get_area(center_turf)
 
 	summon_in_progress = TRUE
 	A.area_flags |= NOTELEPORT // We dont want people getting nuked during the generation sequence
-	status = "Summoning[ellipsis()]"
+	status = "Summoning..."
 	available_templates -= template
 	updateUsrDialog()
 
 	var/time = world.timeofday
 	var/list/forcefields = PlaceForcefield()
-	CleanupTemplate()
+	CleanupAsteroidMagnet(center_turf, area_size)
 	PlaceTemplate(template)
 
 	time = (world.timeofday + 20 SECONDS) - time
@@ -201,23 +202,6 @@
 	var/list/turfs = RANGE_TURFS(area_size, center_turf) ^ RANGE_TURFS(area_size + 1, center_turf)
 	for(var/turf/T as anything in turfs)
 		. += new /obj/effect/forcefield/asteroid_magnet(T)
-
-
-/// Cleanup our currently loaded mining template
-/obj/machinery/asteroid_magnet/proc/CleanupTemplate()
-	PRIVATE_PROC(TRUE)
-
-	var/list/turfs_to_destroy = ReserveTurfsForAsteroidGeneration(center_turf, area_size, baseturf_only = FALSE)
-	for(var/turf/T as anything in turfs_to_destroy)
-		CHECK_TICK
-		for(var/atom/movable/AM as anything in T)
-			CHECK_TICK
-			if(isdead(AM) || iscameramob(AM) || iseffect(AM) || !(ismob(AM) || isobj(AM)))
-				continue
-			qdel(AM)
-
-		T.ChangeTurf(/turf/baseturf_bottom)
-
 
 /// Generates the random map for the magnet.
 /obj/machinery/asteroid_magnet/proc/GenerateMap(initial = TRUE)
@@ -273,6 +257,7 @@
 	data["coords_y"] = coords_y
 	data["ping_result"] = ping_result
 	data["Auto_pinging"] = Auto_pinging
+	data["status"] = status
 
 	var/list/asteroid_data = list()
 	for(var/datum/map_template/asteroid/asteroid as anything in templates_on_map)
@@ -302,12 +287,13 @@
 				coords_x = 0
 				if(Auto_pinging)
 					ping(coords_x, coords_y)
-				return
+				return TRUE
 
 			coords_x = WRAP(coords_x + map_offsets[1] + amount, map_bounds[1] + map_offsets[1], map_bounds[2] + map_offsets[1])
 			coords_x -= map_offsets[1]
 			if(Auto_pinging)
 				ping(coords_x, coords_y)
+			return TRUE
 
 		if("Change Y Coordinates")
 			var/amount = params["Position_Change"]
@@ -315,24 +301,26 @@
 				coords_y = 0
 				if(Auto_pinging)
 					ping(coords_x, coords_y)
-				return
+				return TRUE
 
 			coords_y = WRAP(coords_y + map_offsets[2] + amount, map_bounds[3] + map_offsets[2], map_bounds[4] + map_offsets[2])
 			coords_y -= map_offsets[2]
 			if(Auto_pinging)
 				ping(coords_x, coords_y)
+			return TRUE
 
 		if("TogglePinging")
 			Auto_pinging = !Auto_pinging
+			return TRUE
 
 		if("ping")
 			ping(coords_x, coords_y)
+			return TRUE
 
 		if("select")
 			var/datum/map_template/asteroid/asteroid = locate(params["asteroid_reference"]) in templates_on_map
-			templates_on_map -= asteroid
-			selected_template = asteroid
-			summon_sequence(selected_template)
+			summon_sequence(asteroid)
+			return TRUE
 
 
 #undef MAX_COLLISIONS_BEFORE_ABORT

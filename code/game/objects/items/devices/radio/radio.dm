@@ -66,8 +66,10 @@
 	var/translate_binary = FALSE
 	/// If true, can say/hear on the special CentCom channel.
 	var/independent = FALSE
-	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from radio jammers.
+	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from passive radio jamming effects.
 	var/syndie = FALSE
+	/// If true, ignores all radio jamming effects, including targeted disruptor waves.
+	var/ignores_radio_jammers = FALSE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
@@ -335,7 +337,7 @@
 	// monkestation end
 
 	// Nearby active jammers prevent the message from transmitting
-	if(is_within_radio_jammer_range(src) && !syndie)
+	if(is_within_radio_jammer_range(src) && !syndie && !ignores_radio_jammers)
 		return
 
 	// Determine the identity information which will be attached to the signal.

@@ -222,7 +222,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 				knowledge_data["disabled"] = (initial(knowledge.willpower_cost) > willpower)
 				knowledge_data["infinite"] = (initial(knowledge.infinite))
 				if(initial(knowledge.icon_state)) //only include an icon if one actually exists
-					knowledge_data["icon"] = text_ref(initial(knowledge.icon))
+					knowledge_data["icon"] = initial(knowledge.icon)
 					knowledge_data["icon_state"] = initial(knowledge.icon_state)
 
 				paths += list(knowledge_data)

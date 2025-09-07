@@ -398,6 +398,12 @@
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/gladiator/cheap
+	name = "gladiator helmet replica"
+	max_heat_protection_temperature = null
+	min_cold_protection_temperature = null
+	armor_type = /datum/armor/none
+
 /obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"
 	desc = "They have chosen their own end."

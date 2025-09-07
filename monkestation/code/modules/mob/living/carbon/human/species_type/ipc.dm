@@ -214,7 +214,7 @@
 		return
 	booting_ipc.say("Unit [booting_ipc.real_name] is fully functional. Have a nice day.")
 	if(booting_ipc.get_bodypart(BODY_ZONE_HEAD))
-		switch_to_screen(booting_ipc, "Console")
+		switch_to_screen(booting_ipc, saved_screen)
 		booting_ipc.visible_message(span_notice("[booting_ipc]'s [change_screen ? "monitor lights up" : "monitor flickers to life"]!"), span_notice("You're back online!"))
 	playsound(booting_ipc.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	return

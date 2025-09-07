@@ -2,7 +2,7 @@
   AffectedArc07:
   - rscadd: The crew manifest on the PDA is now bearable to use.
   ArcaneMusic:
-  - rscadd: Recent graduates of the Rat'var Academy of Trapmaking and Puzzlecraft
+  - rscadd: Recent graduates of the Ratvar Academy of Trapmaking and Puzzlecraft
       have begun giving lectures in your local area about how to make more interesting
       puzzle systems, before they were all arrested for heresy.
   - bugfix: Pressure Plates can now be activated On/Off by Ctrl-Clicking them, so

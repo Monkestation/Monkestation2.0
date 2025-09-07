@@ -97,19 +97,19 @@
 		if (!isturf(T))
 			return
 
-		if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
-			return
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
+		return
 
-		TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
+	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
 
-		balloon_alert(user, "picking...")
+	balloon_alert(user, "picking...")
 
-		if(!attacking_item.use_tool(src, user, tool_mine_speed, volume=50))
-			TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
-			return
-		if(ismineralturf(src))
-			gets_drilled(user, TRUE)
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
+	if(!attacking_item.use_tool(src, user, tool_mine_speed, volume=50))
+		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
+		return
+	if(ismineralturf(src))
+		gets_drilled(user, TRUE)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 
 /turf/closed/mineral/attack_hand(mob/user)
 	if(!weak_turf)
@@ -117,7 +117,7 @@
 	var/turf/user_turf = user.loc
 	if (!isturf(user_turf))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
 		return
 	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1

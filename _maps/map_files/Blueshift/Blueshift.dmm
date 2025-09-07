@@ -29729,7 +29729,7 @@
 /area/space/nearstation)
 "fIR" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Engineering Maintenance"
+	name = "Machining Room"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
@@ -32196,6 +32196,10 @@
 	dir = 4
 	},
 /area/station/engineering/storage)
+"gjj" = (
+/obj/machinery/lathe/furnace,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "gjk" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating,
@@ -32438,7 +32442,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wrench,
 /turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
+/area/station/maintenance/port/aft)
 "glz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -34427,6 +34431,10 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"gEc" = (
+/obj/effect/spawner/random/trash/box,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "gEe" = (
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/loading_area/red{
@@ -46506,6 +46514,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
+"iZd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/lathe/tablesaw,
+/turf/open/floor/iron,
+/area/station/maintenance/port/aft)
 "iZi" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/corner{
@@ -48795,9 +48808,10 @@
 /area/station/engineering/atmos/upper)
 "jvX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/floodlight_frame,
+/obj/machinery/lathe/tailor,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
+/area/station/maintenance/port/aft)
 "jvZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -53956,6 +53970,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"krv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/iron,
+/area/station/maintenance/port/aft)
 "krG" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -61549,6 +61569,11 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/station/common/tailoring)
+"lRl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/lathe,
+/turf/open/floor/iron,
+/area/station/maintenance/port/aft)
 "lRo" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
@@ -69306,9 +69331,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "nuL" = (
-/obj/structure/girder,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/construction)
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall,
+/area/station/maintenance/port/aft)
 "nuR" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plating,
@@ -75127,6 +75152,12 @@
 	dir = 8
 	},
 /area/station/command/heads_quarters/nt_rep)
+"oAk" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Construction Area"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "oAu" = (
 /obj/structure/chair/sofa/middle/brown,
 /obj/structure/window/spawner/directional/north,
@@ -99944,6 +99975,10 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"tnY" = (
+/obj/structure/floodlight_frame,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "toc" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
@@ -100265,8 +100300,9 @@
 /area/station/security/prison/safe)
 "trC" = (
 /obj/structure/light_construct/directional/west,
+/obj/machinery/lathe/drophammer,
 /turf/open/floor/plating,
-/area/station/hallway/secondary/construction)
+/area/station/maintenance/port/aft)
 "trE" = (
 /obj/structure/cable,
 /obj/machinery/light_switch/directional/west,
@@ -100419,6 +100455,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"tud" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/lathe/drillpress,
+/turf/open/floor/iron,
+/area/station/maintenance/port/aft)
 "tue" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
@@ -103895,6 +103936,10 @@
 /obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/control)
+"ubC" = (
+/obj/machinery/lathe/workstation,
+/turf/open/floor/iron,
+/area/station/maintenance/port/aft)
 "ubD" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/trunk/multiz,
@@ -122848,8 +122893,8 @@
 "xEi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/south,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
+/turf/closed/wall,
+/area/station/maintenance/port/aft)
 "xEr" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/telescience,
@@ -147865,13 +147910,13 @@ uDf
 adi
 uDf
 sVC
+eqS
+eqS
+eqS
+eqS
+eqS
 uDf
-uDf
-uDf
-uDf
-uDf
-uDf
-uDf
+eqS
 pRk
 pRk
 wyC
@@ -148122,13 +148167,13 @@ uDf
 wvC
 pYk
 tyB
-gwf
+eqS
 trC
-pOJ
-gwf
-fWT
-fWT
-uDf
+dlp
+gjj
+lRl
+krv
+eqS
 uHU
 aPS
 buC
@@ -148379,12 +148424,12 @@ uDf
 vTy
 fWT
 fWT
-gwf
-gwf
-fWT
-fWT
+oAk
+vPM
+kZg
+kZg
 glt
-pOJ
+dlp
 fIR
 vTs
 buC
@@ -148636,13 +148681,13 @@ uDf
 lGD
 gwf
 pOJ
-gwf
-fWT
-fWT
+eqS
+tud
+iZd
 jvX
-pOJ
-gwf
-uDf
+ubC
+gEc
+eqS
 wAN
 fhe
 enl
@@ -148893,13 +148938,13 @@ uDf
 uDf
 gwf
 pOJ
+eqS
+eqS
+eqS
 nuL
-gwf
-pOJ
-fWT
 xEi
-uDf
-uDf
+eqS
+eqS
 jYH
 eqS
 nhQ
@@ -149923,7 +149968,7 @@ cMm
 gwf
 gwf
 pOJ
-pOJ
+tnY
 gwf
 gwf
 uDf
