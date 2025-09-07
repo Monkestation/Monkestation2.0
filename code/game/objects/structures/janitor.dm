@@ -36,6 +36,7 @@
 		var/obj/item/mop/attacking_mop = weapon
 		attacking_mop.reagents?.trans_to(src, weapon.reagents.maximum_volume, transfered_by = user)
 		balloon_alert(user, "wring mop")
+		update_appearance(UPDATE_OVERLAYS)
 		return FALSE
 	return ..()
 

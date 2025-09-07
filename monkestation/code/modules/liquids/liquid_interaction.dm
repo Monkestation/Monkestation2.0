@@ -16,17 +16,18 @@
 	return ..()
 
 /datum/component/liquids_interaction/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(AfterAttack)) //The only signal allowing item -> turf interaction
+	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(item_turf_interact))
 
 /datum/component/liquids_interaction/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
+	UnregisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM)
 
-/datum/component/liquids_interaction/proc/AfterAttack(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
+/datum/component/liquids_interaction/proc/item_turf_interact(datum/source, mob/living/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	var/turf/turf_target = victim
+	var/turf/turf_target = target
 
 	if(!isturf(turf_target) || !turf_target.liquids)
 		return NONE
 
-	if(interaction_callback.Invoke(parent, victim, caster, turf_target.liquids))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(interaction_callback.Invoke(parent, target, user, turf_target.liquids))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
