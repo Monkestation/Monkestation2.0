@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 
 /obj/item/stack/sheet/durathread/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
+	if(isstack(interacting_with) || (!isclothing(interacting_with) && interacting_with.atom_storage))
+		return NONE
 	var/obj/item/welder
 	for(var/obj/item/thingy in user.held_items)
 		if(thingy.tool_behaviour == TOOL_WELDER)
