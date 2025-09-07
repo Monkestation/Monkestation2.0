@@ -1,7 +1,7 @@
 /obj/structure/destructible/clockwork/sigil/submission
 	name = "sigil of submission"
 	desc = "A strange sigil, with otherworldy drawings on it."
-	clockwork_desc = "A sigil pulsating with a glorious light. Anyone held on top of this for 8 seconds will become a loyal servant of Rat'var."
+	clockwork_desc = "A sigil pulsating with a glorious light. Anyone held on top of this for 8 seconds will become a loyal servant of Ratvar."
 	icon_state = "sigilsubmission"
 	effect_stand_time = 8 SECONDS
 	idle_color = "#FFFFFF"
@@ -36,7 +36,7 @@
 		cogger.PossessByPlayer(converted_mob.key)
 		cogger.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
 		cogger.visible_message("A light envelops \the [converted_mob]! As the light fades you see it has become a cogscarab!",
-							   span_brass("Rat'var has granted you your freedom, you must protect the ark at all costs!"))
+							   span_brass("Ratvar has granted you your freedom, you must protect the ark at all costs!"))
 		qdel(converted_mob)
 		return TRUE
 
