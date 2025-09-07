@@ -413,8 +413,9 @@
 		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
 
-/obj/item/modular_computer/pda/ipc
-	name = "internal framework"
+/obj/item/modular_computer/pda/internal
+	name = "internal modular computer"
+	desc = "if you see this shit has gone BAAAD bad"
 	icon_state = "tablet-silicon"
 	base_icon_state = "tablet-silicon"
 	greyscale_config = null
@@ -428,29 +429,45 @@
 		/datum/computer_file/program/ntnetdownload,
 	)
 
-	///Ref to the ipc we're installed in. Set by the ipc when the species happens
+	///Ref to the person we're installed in. Set by the organ when the implantation happens
 	var/mob/living/carbon/human/goober
+	var/obj/item/organ/internal/cyberimp/chest/internal_pda/gooberorgan
 
-/obj/item/modular_computer/pda/ipc/Initialize(mapload)
+/obj/item/modular_computer/pda/internal/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(tab_no_detonate))
 	vis_flags |= VIS_INHERIT_ID
-	goober = loc
-	if(!istype(goober))
+	gooberorgan = loc
+	if(!istype(gooberorgan))
 		goober = null
-		stack_trace("[type] initialized outside of an ipc, deleting.")
+		stack_trace("[type] initialized outside of an internal pda organ, deleting.")
 		return INITIALIZE_HINT_QDEL
 
-/obj/item/modular_computer/pda/ipc/Destroy()
+/obj/item/modular_computer/pda/internal/Destroy()
 	goober = null
+	gooberorgan = null
 	return ..()
 
-/obj/item/modular_computer/pda/ipc/turn_on(mob/user, open_ui = FALSE)
+/obj/item/modular_computer/pda/internal/turn_on(mob/user, open_ui = FALSE)
 	if(goober?.stat != DEAD)
 		return ..()
 	return FALSE
 
-/obj/item/modular_computer/pda/ipc/GetAccess()
+/obj/item/modular_computer/pda/internal/GetAccess()
 	. = ..()
-	if(goober.get_access())
+	if(goober?.get_access())
 		return goober.get_access()
 	return .
+
+/obj/item/modular_computer/pda/internal/use_power(amount)
+	if(!goober)
+		return FALSE
+	if(goober?.nutrition > ((amount JOULES) / 10000))
+		goober.adjust_nutrition(-(amount JOULES) / 10000) //10 kj = 1 nutrition in IPC charging and amount is in joules so 10000 joules to the nutrition point.
+		return TRUE
+	to_chat(goober, span_warning("Internal bio-reactor cannot supply computation. Deactivating."))
+	return FALSE
+
+/obj/item/modular_computer/pda/internal/proc/tab_no_detonate()
+	SIGNAL_HANDLER
+	return COMPONENT_TABLET_NO_DETONATE

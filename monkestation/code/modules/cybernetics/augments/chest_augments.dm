@@ -626,3 +626,47 @@
 		)
 		var/obj/item/bodypart/arm = owner.get_holding_bodypart_of_item(item)
 		arm?.receive_damage(brute = 10, wound_bonus = 10, sharpness = NONE) // You can get away with like 5 spazzes before you get a dislocation.
+
+/obj/item/organ/internal/cyberimp/chest/internal_pda
+	name = "computation matrix"
+	desc = "This implant uses a miniaturized bioelectrical reactor and highly efficient computer hardware to... shove a PDA inside someone's chest. It's kind of simple but it gets the job done."
+	slot = ORGAN_SLOT_THRUSTERS
+	icon_state = "brain_implant_rebooter"
+	implant_overlay = null
+	implant_color = null
+	actions_types = list(/datum/action/item_action/organ_action/use_fone)
+	w_class = WEIGHT_CLASS_SMALL
+
+	var/obj/item/modular_computer/pda/internal/myfone
+
+/obj/item/organ/internal/cyberimp/chest/internal_pda/Initialize(mapload)
+	. = ..()
+	myfone = new(src)
+	if(owner)
+		myfone.goober = owner
+		myfone.imprint_id(owner.name, "")
+	myfone.gooberorgan = src
+
+/obj/item/organ/internal/cyberimp/chest/internal_pda/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	myfone.goober = organ_owner
+	myfone.imprint_id(organ_owner.name, "")
+
+/obj/item/organ/internal/cyberimp/chest/internal_pda/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	myfone.goober = null
+
+/obj/item/organ/internal/cyberimp/chest/internal_pda/Destroy()
+	. = ..()
+	QDEL_NULL(myfone)
+
+
+/datum/action/item_action/organ_action/use_fone
+	name = "Activate Internal Computer"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon = 'icons/obj/modular_pda.dmi'
+	button_icon_state = "tablet-silicon"
+
+/obj/item/organ/internal/cyberimp/chest/internal_pda/ui_action_click()
+	myfone.interact(usr)
+
