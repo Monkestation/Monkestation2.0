@@ -33,8 +33,10 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return FALSE // skip attack animation when refilling cart
 	if(istype(weapon, /obj/item/mop))
-		reagents.trans_to(src, weapon.reagents.maximum_volume, transfered_by = user)
+		var/obj/item/mop/attacking_mop = weapon
+		attacking_mop.reagents?.trans_to(src, weapon.reagents.maximum_volume, transfered_by = user)
 		balloon_alert(user, "wring mop")
+		return FALSE
 	return ..()
 
 /obj/structure/mop_bucket/attackby_secondary(obj/item/weapon, mob/user, params)
