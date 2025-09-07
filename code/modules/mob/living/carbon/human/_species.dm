@@ -1215,8 +1215,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		user.do_attack_animation(target, atk_effect)
 
 		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
-
-		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
+		var/zone = target.get_random_valid_zone(user.zone_selected)
+		var/obj/item/bodypart/affecting = target.get_bodypart(zone)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(attacking_bodypart.unarmed_damage_low)
@@ -1262,6 +1262,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				target.force_say()
 			log_combat(user, target, "kicked")
 			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && iscarbon(target))
+				target.sharp_pain(BODY_ZONE_CHEST, 30, BRUTE, 30 SECONDS)
+				user.visible_message("[target] gets brutally [atk_verb]ed in the groin! Holy shit!", self_message="You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>", blind_message="You hear a horrific pained screech!", ignored_mobs=list(target))
+				to_chat(target, span_boldwarning("[uppertext(user)] BRUTALLY [uppertext(atk_verb)]s YOU RIGHT IN THE GROIN! <b>JESUS FUCK IT HURTS!</b>"))
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
