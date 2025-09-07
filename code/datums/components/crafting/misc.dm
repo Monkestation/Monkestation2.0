@@ -40,5 +40,5 @@
 	result = /obj/item/comically_large_straw
 	time = 10 SECONDS
 	reqs = list(/obj/item/stack/sheet/plastic = 10)
-	tool_paths = list(/obj/item/weldingtool)
+	tool_behaviors = list(TOOL_WELDER)
 	category = CAT_MISC
