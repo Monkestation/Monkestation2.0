@@ -26,6 +26,8 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	. = ..()
 	if (!loc || length(virus) <= 0)
 		return INITIALIZE_HINT_QDEL
+	if(!SSpathogen_clouds.can_fire) // presumably an admin has manually disabled this bc it's being laggy as shit
+		return INITIALIZE_HINT_QDEL
 	core = isCore
 	sourceIsCarrier = isCarrier
 	GLOB.pathogen_clouds += src
