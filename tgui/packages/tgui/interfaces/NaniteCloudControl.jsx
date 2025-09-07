@@ -273,40 +273,6 @@ export const NaniteProgramHub = (props) => {
     <Window width={500} height={700}>
       <Window.Content scrollable>
         <Section
-          title="Program Disk"
-          buttons={
-            <>
-              <Button
-                icon="eject"
-                content="Eject"
-                onClick={() => act('eject')}
-              />
-              <Button
-                icon="minus-circle"
-                content="Delete Program"
-                onClick={() => act('clear')}
-              />
-            </>
-          }
-        >
-          {has_disk ? (
-            has_program ? (
-              <LabeledList>
-                <LabeledList.Item label="Program Name">
-                  {disk.name}
-                </LabeledList.Item>
-                <LabeledList.Item label="Description">
-                  {disk.desc}
-                </LabeledList.Item>
-              </LabeledList>
-            ) : (
-              <NoticeBox>No Program Installed</NoticeBox>
-            )
-          ) : (
-            <NoticeBox>Insert Disk</NoticeBox>
-          )}
-        </Section>
-        <Section
           title="Programs"
           buttons={
             <>
