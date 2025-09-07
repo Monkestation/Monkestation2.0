@@ -1,4 +1,5 @@
-import { useBackend } from '../backend';
+import { map } from 'common/collections';
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -8,6 +9,9 @@ import {
   NoticeBox,
   NumberInput,
   Section,
+  Flex,
+  Tabs,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -270,99 +274,95 @@ export const NaniteProgramHub = (props) => {
   const [selectedCategory, setSelectedCategory] = useSharedState('category');
   const programsInCategory = (programs && programs[selectedCategory]) || [];
   return (
-    <Window width={500} height={700}>
-      <Window.Content scrollable>
-        <Section
-          title="Programs"
-          buttons={
-            <>
-              <Button
-                icon={detail_view ? 'info' : 'list'}
-                content={detail_view ? 'Detailed' : 'Compact'}
-                onClick={() => act('toggle_details')}
-              />
-              <Button
-                icon="sync"
-                content="Sync Research"
-                onClick={() => act('refresh')}
-              />
-            </>
-          }
-        >
-          {programs !== null ? (
-            <Flex>
-              <Flex.Item minWidth="110px">
-                <Tabs vertical>
-                  {map((cat_contents, category) => {
-                    const progs = cat_contents || [];
-                    // Backend was sending stupid data that would have been
-                    // annoying to fix
-                    const tabLabel = category.substring(0, category.length - 8);
-                    return (
-                      <Tabs.Tab
-                        key={category}
-                        selected={category === selectedCategory}
-                        onClick={() => setSelectedCategory(category)}
-                      >
-                        {tabLabel}
-                      </Tabs.Tab>
-                    );
-                  })(programs)}
-                </Tabs>
-              </Flex.Item>
-              <Flex.Item grow={1} basis={0}>
-                {detail_view ? (
-                  programsInCategory.map((program) => (
-                    <Section
-                      key={program.id}
-                      title={program.name}
-                      level={2}
-                      buttons={
-                        <Button
-                          icon="download"
-                          content="Download"
-                          disabled={!has_disk}
-                          onClick={() =>
-                            act('download', {
-                              program_id: program.id,
-                            })
-                          }
-                        />
+    <Section
+      title="Programs"
+      buttons={
+        <>
+          <Button
+            icon={detail_view ? 'info' : 'list'}
+            content={detail_view ? 'Detailed' : 'Compact'}
+            onClick={() => act('toggle_details')}
+          />
+          <Button
+            icon="sync"
+            content="Sync Research"
+            onClick={() => act('refresh')}
+          />
+        </>
+      }
+    >
+      {programs !== null ? (
+        <Flex>
+          <Flex.Item minWidth="110px">
+            <Tabs vertical>
+              {map((cat_contents, category) => {
+                const progs = cat_contents || [];
+                // Backend was sending stupid data that would have been
+                // annoying to fix
+                const tabLabel = category.substring(0, category.length - 8);
+                return (
+                  <Tabs.Tab
+                    key={category}
+                    selected={category === selectedCategory}
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    {tabLabel}
+                  </Tabs.Tab>
+                );
+              })(programs)}
+            </Tabs>
+          </Flex.Item>
+          <Flex.Item grow={1} basis={0}>
+            {detail_view ? (
+              programsInCategory.map((program) => (
+                <Section
+                  key={program.id}
+                  title={program.name}
+                  level={2}
+                  buttons={
+                    <Button
+                      icon="download"
+                      content="Download"
+                      disabled={!has_disk}
+                      onClick={() =>
+                        act('download', {
+                          program_id: program.id,
+                        })
                       }
-                    >
-                      {program.desc}
-                    </Section>
-                  ))
-                ) : (
-                  <LabeledList>
-                    {programsInCategory.map((program) => (
-                      <LabeledList.Item
-                        key={program.id}
-                        label={program.name}
-                        buttons={
-                          <Button
-                            icon="download"
-                            content="Download"
-                            disabled={!has_disk}
-                            onClick={() =>
-                              act('download', {
-                                program_id: program.id,
-                              })
-                            }
-                          />
+                    />
+                  }
+                >
+                  {program.desc}
+                </Section>
+              ))
+            ) : (
+              <LabeledList>
+                {programsInCategory.map((program) => (
+                  <LabeledList.Item
+                    key={program.id}
+                    label={program.name}
+                    buttons={
+                      <Button
+                        icon="download"
+                        content="Download"
+                        disabled={!has_disk}
+                        onClick={() =>
+                          act('download', {
+                            program_id: program.id,
+                          })
                         }
                       />
-                    ))}
-                  </LabeledList>
-                )}
-              </Flex.Item>
-            </Flex>
-          ) : (
-            <NoticeBox>No nanite programs are currently researched.</NoticeBox>
-          )}
-        </Section>
-      </Window.Content>
-    </Window>
+                    }
+                  />
+                ))}
+              </LabeledList>
+            )}
+          </Flex.Item>
+        </Flex>
+      ) : (
+        <NoticeBox>No nanite programs are currently researched.</NoticeBox>
+      )}
+    </Section>
   );
 };
 
@@ -385,45 +385,52 @@ export const NaniteCloudControl = (props) => {
         >
           <NaniteDiskBox />
         </Section>
-        <Section
-          title="Cloud Storage"
-          buttons={
-            current_view ? (
-              <Button
-                icon="arrow-left"
-                content="Return"
-                onClick={() =>
-                  act('set_view', {
-                    view: 0,
-                  })
-                }
-              />
-            ) : (
-              <>
-                {'New Backup: '}
-                <NumberInput
-                  value={new_backup_id}
-                  minValue={1}
-                  maxValue={100}
-                  stepPixelSize={4}
-                  width="39px"
-                  onChange={(e, value) =>
-                    act('update_new_backup_value', {
-                      value: value,
-                    })
-                  }
-                />
-                <Button icon="plus" onClick={() => act('create_backup')} />
-              </>
-            )
-          }
-        >
-          {!data.current_view ? (
-            <NaniteCloudBackupList />
-          ) : (
-            <NaniteCloudBackupDetails />
-          )}
-        </Section>
+        <Stack>
+          <Stack.Item width="500px">
+            <NaniteProgramHub />
+          </Stack.Item>
+          <Stack.Item width="375px">
+            <Section
+              title="Cloud Storage"
+              buttons={
+                current_view ? (
+                  <Button
+                    icon="arrow-left"
+                    content="Return"
+                    onClick={() =>
+                      act('set_view', {
+                        view: 0,
+                      })
+                    }
+                  />
+                ) : (
+                  <>
+                    {'New Backup: '}
+                    <NumberInput
+                      value={new_backup_id}
+                      minValue={1}
+                      maxValue={100}
+                      stepPixelSize={4}
+                      width="39px"
+                      onChange={(e, value) =>
+                        act('update_new_backup_value', {
+                          value: value,
+                        })
+                      }
+                    />
+                    <Button icon="plus" onClick={() => act('create_backup')} />
+                  </>
+                )
+              }
+            >
+              {!data.current_view ? (
+                <NaniteCloudBackupList />
+              ) : (
+                <NaniteCloudBackupDetails />
+              )}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
