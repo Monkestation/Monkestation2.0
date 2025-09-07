@@ -28,6 +28,36 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
+/obj/projectile/beam/laser/lasrifle
+	generic_name = "rifle beam"
+	damage = 30
+	range = 30
+	tracer_type = /obj/effect/projectile/tracer/laser/rifle
+	impact_type = /obj/effect/projectile/impact/laser/rifle
+	muzzle_type = /obj/effect/projectile/muzzle/laser/rifle
+	hitscan = TRUE
+	tile_dropoff = 1 //This makes ricochets less impactful
+	armour_penetration = -30 //armor is * 130% more effective against it
+	wound_bonus = -15
+	wound_falloff_tile = 3
+	impact_effect_type = null
+	hitscan_light_intensity = 2
+	hitscan_light_outer_range = 0.5
+	hitscan_light_color_override = LIGHT_COLOR_INTENSE_RED
+	muzzle_flash_intensity = 4
+	muzzle_flash_range = 0.5
+	muzzle_flash_color_override = LIGHT_COLOR_INTENSE_RED
+	impact_light_intensity = 4
+	impact_light_outer_range = 1
+	impact_light_color_override = LIGHT_COLOR_INTENSE_RED
+	expanded_bounce = TRUE
+	ricochets_max = 2
+	ricochet_chance = 100
+	ricochet_auto_aim_angle = 10
+	ricochet_auto_aim_range = 10
+	ricochet_incidence_leeway = 90
+	ricochet_shoots_firer = TRUE
+
 /obj/projectile/beam/laser/carbine
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser

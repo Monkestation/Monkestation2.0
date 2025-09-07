@@ -49,6 +49,29 @@
 		return FALSE
 
 	return TRUE
+
+/datum/action/cooldown/alien/neutered_larva_evolve
+	name = "Neutered Evolve"
+	desc = "Evolve into a higher alien caste."
+	button_icon_state = "alien_evolve_larva"
+	plasma_cost = 0
+
+/datum/action/cooldown/alien/neutered_larva_evolve/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!islarva(owner))
+		return FALSE
+
+	var/mob/living/carbon/alien/larva/larva = owner
+	if(larva.handcuffed || larva.legcuffed) // Cuffing larvas ? Eh ?
+		return FALSE
+	if(larva.amount_grown < larva.max_grown)
+		return FALSE
+	if(larva.movement_type & VENTCRAWLING)
+		return FALSE
+
+	return TRUE
 /*
 /datum/action/cooldown/alien/larva_evolve/Activate(atom/target)
 	var/mob/living/carbon/alien/larva/larva = owner

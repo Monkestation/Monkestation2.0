@@ -431,6 +431,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/trench_tool, //monkestation edit
 		/obj/item/cargo_teleporter, //monkestation edit
 		/obj/item/storage/box/kinetic, //monkestation edit
 		/obj/item/ammo_box/magazine/pksmgmag, //monkestation edit
@@ -440,6 +441,22 @@
 		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
 		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
 		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
+		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_casing/shotgun/hydrakinetic,
+		/obj/item/storage/box/kinetic/autoshotgun,
+		/obj/item/storage/box/kinetic/autoshotgun/smallcase,
+		/obj/item/ammo_casing/a762/kinetic,
+		/obj/item/ammo_box/a762/kinetic,
+		/obj/item/storage/box/kinetic/kineticlmg,
+		/obj/item/ammo_box/a762/kinetic/big,
+		/obj/item/ammo_casing/a40mm/kinetic,
+		/obj/item/storage/box/kinetic/grenadelauncher,
+		/obj/item/ammo_casing/govmining,
+		/obj/item/ammo_box/govmining,
+		/obj/item/storage/box/kinetic/govmining,
+		/obj/item/ammo_casing/minerjdj,
+		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
+		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
 	))
 
 

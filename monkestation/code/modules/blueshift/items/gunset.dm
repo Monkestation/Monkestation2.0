@@ -210,14 +210,26 @@
 	new weapon_to_spawn (src)
 
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag = 1,
-		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 3,
-		/obj/item/ammo_box/c980grenade/shrapnel = 2,
+		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 4,
+		/obj/item/ammo_box/c980grenade/shrapnel = 1,
 		/obj/item/ammo_box/c980grenade/smoke = 1,
-		/obj/item/ammo_box/c980grenade/riot = 2,
+		/obj/item/ammo_box/c980grenade/riot = 3,
 		/obj/item/clothing/mask/gas/sechailer/swat = 1,
 	), src)
 
+
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom
+	name = "\improper Wylom heavy rifle gunset"
+
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/wylom
+	extra_to_spawn = /obj/item/ammo_box/magazine/wylom
+
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom/PopulateContents()
+	new weapon_to_spawn (src)
+
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/wylom = 3,
+	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko
 	name = "heavy equipment locker"
@@ -230,6 +242,7 @@
 	generate_items_inside(list(
 		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1, //monke edit
 		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1, //monke edit
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom = 1, //REPLACE WITH IGNIFIST/20mm WHEN THE PR IS DONE
 	), src)
 
 /obj/structure/closet/secure_closet/armory_kiboko_but_evil

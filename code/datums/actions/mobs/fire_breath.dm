@@ -83,6 +83,7 @@
 		hit_list |= robotron
 		robotron.take_damage(mech_damage, BURN, FIRE)
 
+	QDEL_IN(fire_hotspot, 2.5 SECONDS)
 	return fire_hotspot
 
 /// Do something unpleasant to someone we set on fire

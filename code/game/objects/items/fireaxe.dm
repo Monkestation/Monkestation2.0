@@ -1,3 +1,5 @@
+GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
+
 /*
  * Fireaxe
  */
@@ -34,6 +36,9 @@
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
+	if(!GLOB.bridge_axe && istype(get_area(src), /area/station/command))
+		GLOB.bridge_axe = src
+
 	AddComponent(/datum/component/butchering, \
 		speed = 10 SECONDS, \
 		effectiveness = 80, \
@@ -47,19 +52,22 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
+/obj/item/fireaxe/Destroy()
+	if(GLOB.bridge_axe == src)
+		GLOB.bridge_axe = null
+	return ..()
+
 /obj/item/fireaxe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/fireaxe/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/fireaxe/afterattack(atom/target, mob/user, click_parameters)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
-		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window_sill))
-			if(!(A.resistance_flags & INDESTRUCTIBLE))
-				var/obj/structure/W = A
-				W.atom_destruction("fireaxe")
+	if(target.resistance_flags & INDESTRUCTIBLE)
+		return
+	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille))
+		target.atom_destruction("fireaxe")
 
 /*
  * Bone Axe

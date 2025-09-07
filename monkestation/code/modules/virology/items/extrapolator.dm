@@ -28,24 +28,24 @@
 	user_data = null
 	return ..()
 
-/obj/item/extrapolator/attack(atom/AM, mob/living/user)
-	return
+//obj/item/extrapolator/attack(atom/AM, mob/living/user)
+//	return
 
-/obj/item/extrapolator/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/extrapolator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity_flag && !scan)
-		return
-	if(isliving(target) && target != usr)
-		user_data = WEAKREF(target)
 	if(!scan)
-		try_disease_modification(user, target)
+		return
+	if(isliving(interacting_with) && interacting_with != usr)
+		user_data = WEAKREF(interacting_with)
+	if(!scan)
+		try_disease_modification(user, interacting_with)
 	else
-		switch(target.extrapolator_act(user, src, scan))
+		switch(interacting_with.extrapolator_act(user, src, scan))
 			if(FALSE)
 				if(scan)
 					to_chat(user, "<span class='notice'>[src] fails to return any data</span>")
 			else
-				to_chat(user, span_notice("You store \the [target]'s blood sample in [src]."))
+				to_chat(user, span_notice("You store \the [interacting_with]'s blood sample in [src]."))
 
 /obj/item/extrapolator/attack_self(mob/user)
 	. = ..()

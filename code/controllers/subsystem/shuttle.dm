@@ -832,7 +832,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
 		C.update_hidden_docking_ports(remove_images, add_images)
 
-	QDEL_LIST(remove_images)
+	remove_images.Cut()
 
 /**
  * Loads a shuttle template and sends it to a given destination port, optionally replacing the existing shuttle

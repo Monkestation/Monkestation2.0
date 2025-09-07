@@ -94,7 +94,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/vest_marine
 
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 

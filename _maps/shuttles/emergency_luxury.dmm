@@ -198,6 +198,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/brig)
 "jH" = (
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "jJ" = (
@@ -1134,10 +1135,6 @@
 /area/shuttle/escape)
 "UK" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "UX" = (
@@ -1409,7 +1406,7 @@ bY
 CQ
 "}
 (8,1,1) = {"
-jy
+JV
 jH
 XU
 Nm
@@ -1431,7 +1428,7 @@ oX
 CQ
 "}
 (9,1,1) = {"
-JV
+jy
 UK
 Br
 wP

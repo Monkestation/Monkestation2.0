@@ -9057,7 +9057,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main/robotics)
 "GB" = (
-/obj/machinery/mecha_part_fabricator,
+/obj/machinery/mecha_part_fabricator/emagged,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/robotics)
 "GC" = (
@@ -9503,7 +9503,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "In" = (
-/obj/vehicle/sealed/mecha/working/ripley/mining,
+/obj/vehicle/sealed/mecha/ripley/mining,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/recharge_floor,
 /area/awaymission/snowdin/post/mining_main/mechbay)

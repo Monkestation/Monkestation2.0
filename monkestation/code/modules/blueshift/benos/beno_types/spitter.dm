@@ -11,6 +11,8 @@
 	melee_damage_upper = 20
 
 /mob/living/carbon/alien/adult/nova/spitter/Initialize(mapload)
+	if(neutered)
+		src.name = "Lamarr"
 	. = ..()
 
 	add_movespeed_modifier(/datum/movespeed_modifier/alien_heavy)
@@ -21,3 +23,6 @@
 	organs += new /obj/item/organ/internal/alien/plasmavessel
 	organs += new /obj/item/organ/internal/alien/neurotoxin/spitter
 	..()
+
+/mob/living/carbon/alien/adult/nova/spitter/lamarr
+	name = "Lamarr"

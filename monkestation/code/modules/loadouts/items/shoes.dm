@@ -69,14 +69,17 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/brown_cowboy_boots
 	name = "Brown Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy
+	preload = FALSE // causes problems due to rare snake in boot
 
 /datum/loadout_item/shoes/black_cowboy_boots
 	name = "Black Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/black
+	preload = FALSE
 
 /datum/loadout_item/shoes/white_cowboy_boots
 	name = "White Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/white
+	preload = FALSE
 
 
 /*

@@ -3,7 +3,6 @@
 	desc = "Choose a piece of gear of your choice. You can only pick one, and all teammates must agree."
 	button_icon_state = "weapons"
 	check_flags = AB_CHECK_CONSCIOUS
-	var/static/list/choices
 
 /datum/action/bb/gear/IsAvailable(feedback, post_choice = FALSE)
 	. = ..()
@@ -30,20 +29,27 @@
 
 /datum/action/bb/gear/proc/choose_gear()
 	team.update_action_icons()
-	if(!choices)
-		for(var/name in GLOB.bb_gear)
-			var/datum/bb_gear/gear = GLOB.bb_gear[name]
-			var/datum/radial_menu_choice/option = new
-			option.name = gear.name
-			option.info = gear.desc
-			option.image = gear.preview()
-			LAZYSET(choices, name, option)
+	var/list/choices = list()
+	for(var/name in GLOB.bb_gear)
+		var/datum/bb_gear/gear = GLOB.bb_gear[name]
+		if(!gear.is_available())
+			continue
+		var/datum/radial_menu_choice/option = new
+		option.name = gear.name
+		option.info = gear.desc
+		option.image = gear.preview()
+		LAZYSET(choices, name, option)
 	var/chosen = show_radial_menu(owner, owner, choices, uniqueid = "bb_gear_[REF(team)]", tooltips = TRUE)
 	if(!chosen || !IsAvailable(feedback = TRUE, post_choice = TRUE))
 		team.choosing_gear = FALSE
 		team.update_action_icons()
 		return
 	var/datum/bb_gear/chosen_gear = GLOB.bb_gear[chosen]
+	if(!chosen_gear.is_available())
+		team.choosing_gear = FALSE
+		team.update_action_icons()
+		to_chat(owner, span_warning("That gear isn't available!"))
+		CRASH("somehow managed to pick gear that isn't available? ([chosen])")
 	var/list/to_poll = list()
 	for(var/datum/mind/member as anything in team.members)
 		if(member == owner.mind || QDELETED(member.current) || QDELETED(member.current.client) || member.current.stat == DEAD)

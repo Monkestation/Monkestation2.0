@@ -42,23 +42,23 @@
 	name = "Immunity Scanner"
 	id = "antibodyscanner"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/device/antibody_scanner
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/tube
 	name = "Tube"
 	id = "tube"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/glass = 200)
+	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/reagent_containers/cup/tube
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/path_data
 	name = "Pathology Records Board"

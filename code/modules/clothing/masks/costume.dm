@@ -10,7 +10,9 @@
 			"Flushed" = "flushed",
 			"Pensive" = "pensive",
 			"Angry" = "angry",
-			"Pleading" = "pleading"
+			"Pleading" = "pleading",
+			"Epic" = "epicface",
+			"Smile" = "smile"
 	)
 
 /obj/item/clothing/mask/joy/Initialize(mapload)

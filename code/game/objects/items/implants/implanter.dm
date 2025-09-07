@@ -44,14 +44,14 @@
 	else
 		to_chat(user, span_warning("[src] fails to implant [target]."))
 
-/obj/item/implanter/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I, /obj/item/pen))
+/obj/item/implanter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/pen))
 		return ..()
-	if(!user.can_write(I))
+	if(!user.can_write(attacking_item))
 		return
 
 	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
-	if(user.get_active_held_item() != I)
+	if(user.get_active_held_item() != attacking_item)
 		return
 	if(!user.can_perform_action(src))
 		return

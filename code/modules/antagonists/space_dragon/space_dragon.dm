@@ -6,6 +6,7 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	stinger_sound = 'sound/magic/demon_attack1.ogg'
 	/// All space carps created by this antagonist space dragon
 	var/list/datum/mind/carp = list()
 	/// The innate ability to summon rifts
@@ -37,7 +38,6 @@
 					Today, we will snuff out one of those lights.</b>")
 	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/magic/demon_attack1.ogg', 80)
 
 /datum/antagonist/space_dragon/forge_objectives()
 	var/static/list/area/allowed_areas

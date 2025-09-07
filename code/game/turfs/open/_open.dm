@@ -10,6 +10,49 @@
 	/// Pollution of this turf
 	var/datum/pollution/pollution
 
+/// Determines the type of damage overlay that will be used for the tile
+	var/damaged_dmi = null
+	var/broken = FALSE
+	var/burnt = FALSE
+
+
+/// Returns a list of every turf state considered "broken".
+/// Will be randomly chosen if a turf breaks at runtime.
+/turf/open/proc/broken_states()
+	return list()
+
+/// Returns a list of every turf state considered "burnt".
+/// Will be randomly chosen if a turf is burnt at runtime.
+/turf/open/proc/burnt_states()
+	return list()
+
+/turf/open/break_tile()
+	if(isnull(damaged_dmi) || broken)
+		return FALSE
+	broken = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/burn_tile()
+	if(isnull(damaged_dmi) || burnt)
+		return FALSE
+	burnt = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/update_overlays()
+	if(isnull(damaged_dmi))
+		return ..()
+	. = ..()
+	if(broken)
+		. += mutable_appearance(damaged_dmi, pick(broken_states()))
+	else if(burnt)
+		var/list/burnt_states = burnt_states()
+		if(burnt_states.len)
+			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+		else
+			. += mutable_appearance(damaged_dmi, pick(broken_states()))
+
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
 	if(direction != DOWN)
@@ -190,6 +233,17 @@
 	heavyfootstep = FOOTSTEP_MEAT
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/meat
+
+
+/turf/open/indestructible/bingle
+	desc = "The floor of a bingle pit, its blue and unbreakable."
+	icon = 'icons/turf/floors/bingle.dmi'
+	icon_state = "carpet_orange-0"
+	footstep = FOOTSTEP_MEAT
+	barefootstep = FOOTSTEP_MEAT
+	clawfootstep = FOOTSTEP_MEAT
+	heavyfootstep = FOOTSTEP_MEAT
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/indestructible/meat/airless
 	initial_gas_mix = AIRLESS_ATMOS

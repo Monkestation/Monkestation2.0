@@ -680,7 +680,7 @@
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
 		for(var/obj/item/bodypart/part as anything in bodyparts)
-			if(part.get_modified_bleed_rate())
+			if(part.cached_bleed_rate)
 				bleeding_limbs += part
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)

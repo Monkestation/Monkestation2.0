@@ -37,4 +37,4 @@
 	desc = "A .22LR bullet casing"
 	icon_state = "s-casing"
 	caliber = CALIBER_22LR
-	projectile_type = /obj/projectile/bullet/peashooter
+	projectile_type = /obj/projectile/bullet/peashooter/minigun

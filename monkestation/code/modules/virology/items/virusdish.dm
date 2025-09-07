@@ -13,8 +13,8 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	var/datum/disease/acute/contained_virus
 	var/open = FALSE
 	var/cloud_delay = 8 SECONDS//similar to a mob's breathing
-	var/last_cloud_time = 0
 	var/mob/last_openner
+	COOLDOWN_DECLARE(cloud_cooldown)
 
 /obj/item/weapon/virusdish/New(loc)
 	..()
@@ -33,8 +33,8 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	RegisterSignals(src.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
 /obj/item/weapon/virusdish/Destroy()
-	contained_virus = null
 	STOP_PROCESSING(SSobj, src)
+	contained_virus = null
 	GLOB.virusdishes.Remove(src)
 	. = ..()
 
@@ -88,44 +88,43 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	open = !open
 	update_appearance()
 	to_chat(user,span_notice("You [open?"open":"close"] dish's lid."))
-	update_desc()
 	if (open)
 		last_openner = user
 		if (contained_virus)
 			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish opened by [key_name(user)]."
-		START_PROCESSING(SSobj, src)
+			START_PROCESSING(SSobj, src)
 	else
 		if (contained_virus)
 			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish closed by [key_name(user)]."
 		STOP_PROCESSING(SSobj, src)
 	infection_attempt(user)
 
-/obj/item/weapon/virusdish/attackby(obj/item/I, mob/living/user, params)
+/obj/item/weapon/virusdish/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
-	if(istype(I,/obj/item/hand_labeler))
+	if(istype(attacking_item, /obj/item/hand_labeler))
 		return
-	if(istype(I, /obj/item/reagent_containers/syringe))
+	if(istype(attacking_item, /obj/item/reagent_containers/syringe))
 		if(growth < 50)
 			to_chat(user, span_warning("There isn't enough growth in the [src]."))
 		else
 			growth = growth - 50
-			var/obj/item/reagent_containers/syringe/B = I
+			var/obj/item/reagent_containers/syringe/B = attacking_item
 			var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"="O-","resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
 			data["viruses"] |= list(contained_virus)
 			B.reagents.add_reagent(/datum/reagent/blood, B.volume, data)
 			to_chat(user, span_notice("You take some blood from the [src]."))
 	if (open)
-		if (istype(I,/obj/item/reagent_containers))
+		if (istype(attacking_item, /obj/item/reagent_containers))
 			var/success = 0
-			var/obj/container = I
+			var/obj/container = attacking_item
 			if (!container.is_open_container() && istype(container, /obj/item/reagent_containers))
 				return
-			if(I.is_open_container())
-				success = I.reagents.trans_to(src, 10, transfered_by = user)
+			if(attacking_item.is_open_container())
+				success = attacking_item.reagents.trans_to(src, 10, transfered_by = user)
 			if (success > 0)
 				to_chat(user, span_notice("You transfer [success] units of the solution to \the [src]."))
 			return
-	if((user.istate & ISTATE_HARM) && I.force)
+	if((user.istate & ISTATE_HARM) && attacking_item.force)
 		visible_message(span_danger("The virus dish is smashed to bits!"))
 		shatter(user)
 
@@ -166,17 +165,24 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	reagents.clear_reagents()
 
 /obj/item/weapon/virusdish/process()
-	if (!contained_virus || !(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE))
-		STOP_PROCESSING(SSobj, src)
-		return
-	if(world.time - last_cloud_time >= cloud_delay)
-		last_cloud_time = world.time
-		var/list/L = list()
-		L += contained_virus
-		new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
+	if(!contained_virus || !open)
+		return PROCESS_KILL
+	if(isliving(loc))
+		var/mob/living/holder = loc
+		if(holder.is_holding(src))
+			infection_attempt(holder, contained_virus)
+	else if(isopenturf(loc))
+		for(var/mob/living/potential_victim in loc.contents)
+			infection_attempt(potential_victim, contained_virus)
+	if(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE)
+		if(COOLDOWN_FINISHED(src, cloud_cooldown))
+			COOLDOWN_START(src, cloud_cooldown, cloud_delay)
+			var/list/L = list(contained_virus)
+			new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
 
 /obj/item/weapon/virusdish/random
 	name = "growth dish"
+
 /obj/item/weapon/virusdish/random/New(loc)
 	..(loc)
 	if (loc)//because fuck you /datum/subsystem/supply_shuttle/Initialize()
@@ -227,7 +233,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		if (blood)
 			var/list/L = list()
 			L |= contained_virus
-			blood.data["diseases"] |= filter_disease_by_spread(L, required = DISEASE_SPREAD_BLOOD)
+			LAZYOR(blood.data["diseases"], filter_disease_by_spread(L, required = DISEASE_SPREAD_BLOOD))
 
 /obj/item/weapon/virusdish/proc/shatter(mob/user)
 	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))

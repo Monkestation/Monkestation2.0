@@ -60,6 +60,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/admin_only = FALSE
 	//can only mentors use this?
 	var/mentor_only = FALSE
+	/// Should this be preloaded in SSwardrobe?
+	var/preload = TRUE
 
 /*
  * Place our [var/item_path] into [outfit].
@@ -132,4 +134,4 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	if(ispath(outfit_contents.back, /obj/item/storage) || (!outfit_contents.back && (ispath(equipper.back, /obj/item/storage) || !isnull(equipper.backpack))))
 		LAZYADD(outfit_contents.backpack_contents, item_path_to_spawn)
 	else
-		new item_path_to_spawn(equipper.drop_location())
+		SSwardrobe.provide_type(item_path_to_spawn, equipper.drop_location())

@@ -28,6 +28,7 @@
 
 //monkestation edit note: this list was out dated due to TG not using it so I put all the pirate types in it
 /datum/round_event/pirates
+	fakeable = FALSE
 	///admin chosen pirate team
 	var/list/datum/pirate_gang/gang_list
 

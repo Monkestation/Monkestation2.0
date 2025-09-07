@@ -44,6 +44,52 @@
 	empty_indicator = TRUE
 	suppressor_x_offset = 12
 
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher
+	name = "\improper Ansem/SC pistol"
+	desc = "A modified variant of the Ansem, spiritual successor to the Makarov, featuring an integral suppressor and push-button trigger on the grip \
+	for an underbarrel-mounted disruptor, similar in operation to the standalone SC/FISHER. Chambered in 10mm."
+	desc_controls = "Right-click to use the underbarrel disruptor. Two shots maximum between self-charges."
+	icon_state = "pistol_evil_fisher"
+	suppressed = TRUE
+	can_suppress = FALSE
+	can_unsuppress = FALSE
+	var/obj/item/gun/energy/recharge/fisher/underbarrel
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/examine_more(mob/user)
+	. = ..()
+	. += span_notice("The Ansem/SC is a Scarborough Arms-manufactured overhaul suite for the also Scarborough Arms-manufactured Ansem handgun, designed for special \
+	operators who like to operate operationally, and/or people who really, really hate lightbulbs, and tend to fight people who really like lightbulbs. \
+	The slide is lengthened and has an integrated suppressor, while a compact kinetic light disruptor was mounted underneath the barrel. \
+	Scarborough Arms has never actually officially responded to allegations that they're involved with the modification and/or manufacture \
+	of the SC/FISHER or similar disruptor weapons. Operators are reminded that kinetic light disruptors do not actually physically harm targets.<br>\
+	Caveat emptor.")
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/Initialize(mapload)
+	. = ..()
+	underbarrel = new /obj/item/gun/energy/recharge/fisher(src)
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/Destroy()
+	QDEL_NULL(underbarrel)
+	return ..()
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return underbarrel.try_fire_gun(target, user, params)
+	return ..()
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/afterattack(atom/target, mob/user, click_parameters)
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = user
+	simulated_hit.on_hit(target)
+
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(.)
+		return
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = throwingdatum.thrower
+	simulated_hit.on_hit(hit_atom)
+
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."

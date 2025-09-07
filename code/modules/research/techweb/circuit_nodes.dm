@@ -85,6 +85,7 @@
 		"chemical_injector_bci",
 		"internal_chemical_tank",
 	)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/adv_shells
 	id = "adv_shells"
@@ -106,6 +107,7 @@
 		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/bci_shells
 	id = "bci_shells"
@@ -126,6 +128,7 @@
 		"comp_vox",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/movable_shells_tech
 	id = "movable_shells"
@@ -138,6 +141,7 @@
 		"drone_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/server_shell_tech
 	id = "server_shell"
@@ -148,3 +152,4 @@
 		"server_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)

@@ -172,7 +172,7 @@
 	. += "Its master ID string seems to be [(!master_name || emagged) ? "empty" : master_name]."
 
 /mob/living/silicon/pai/get_status_tab_items()
-	. += ..()
+	. = ..()
 	if(!stat)
 		. += text("Emitter Integrity: [holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)].")
 	else
@@ -322,6 +322,7 @@
 /mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
 	set_silence_if_lower(disrupt_duration)
+	set_emote_mute_if_lower(disrupt_duration)
 	balloon_alert(src, "muted!")
 	return TRUE
 

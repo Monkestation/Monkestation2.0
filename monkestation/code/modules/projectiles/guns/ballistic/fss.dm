@@ -81,7 +81,7 @@
 	desc = "FSS-550 autorifle."
 	id = "fss"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 20000, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/gun/ballistic/automatic/wt550/fss/no_mag
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -90,7 +90,7 @@
 	desc = "A 20 round magazine for the out of date WT-550 Autorifle."
 	id = "mag_autorifle_fss"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 12000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)
 	build_path = /obj/item/ammo_box/magazine/wt550m9
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -98,7 +98,7 @@
 	name = "WT-550 Autorifle Armour Piercing Magazine (4.6x30mm AP) (Lethal)"
 	desc = "A 20 round armour piercing magazine for the out of date WT-550 Autorifle."
 	id = "mag_autorifle_ap_fss"
-	materials = list(/datum/material/iron = 15000, /datum/material/silver = 600)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*15, /datum/material/silver = SMALL_MATERIAL_AMOUNT*6)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -106,7 +106,7 @@
 	name = "WT-550 Autorifle Incendiary Magazine (4.6x30mm IC) (Lethal/Highly Destructive)"
 	desc = "A 20 round armour piercing magazine for the out of date WT-550 Autorifle."
 	id = "mag_autorifle_ic_fss"
-	materials = list(/datum/material/iron = 15000, /datum/material/silver = 600, /datum/material/glass = 1000)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*15, /datum/material/silver = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -114,7 +114,7 @@
 	name = "WT-550 Autorifle Rubber Magazine (4.6x30mm R) (Lethal)"
 	desc = "A 20 round rubber magazine for the out of date WT-550 Autorifle."
 	id = "mag_autorifle_rub_fss"
-	materials = list(/datum/material/iron = 6000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtrub
 	category = list(RND_CATEGORY_IMPORTED)
 
@@ -122,6 +122,6 @@
 	name = "WT-550 Autorifle Saltshot Magazine (4.6x30mm SALT) (Non-Lethal)"
 	desc = "A 20 round saltshot magazine for the out of date WT-550 Autorifle."
 	id = "mag_autorifle_salt_fss"
-	materials = list(/datum/material/iron = 6000, /datum/material/plasma = 600)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/plasma = SMALL_MATERIAL_AMOUNT*6)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtsalt
 	category = list(RND_CATEGORY_IMPORTED)

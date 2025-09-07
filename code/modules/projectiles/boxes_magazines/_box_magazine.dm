@@ -31,18 +31,12 @@
 	var/multiload = TRUE
 	///Whether the magazine should start with nothing in it
 	var/start_empty = FALSE
-	///cost of all the bullets in the magazine/box
-	var/list/bullet_cost
-	///cost of the materials in the magazine/box itself
-	var/list/base_cost
 	///Whether the sprite updates if it has ammunition, monke var
 	var/spriteshift = TRUE
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
-	if(!bullet_cost)
-		base_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
-		bullet_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.9 / max_ammo)
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
 	if(!start_empty)
 		top_off(starting=TRUE)
 	update_icon_state()
@@ -82,7 +76,7 @@
 
 	for(var/i in max(1, stored_ammo.len) to max_ammo)
 		stored_ammo += new round_check(src)
-	update_ammo_count()
+	update_appearance()
 
 ///gets a round from the magazine, if keep is TRUE the round will stay in the gun
 /obj/item/ammo_box/proc/get_round(keep = FALSE)
@@ -136,7 +130,7 @@
 			if(!did_load || !multiload)
 				break
 		if(num_loaded)
-			AM.update_ammo_count()
+			AM.update_appearance()
 	if(isammocasing(A))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
@@ -148,7 +142,7 @@
 		if(!silent)
 			to_chat(user, span_notice("You load [num_loaded] shell\s into \the [src]!"))
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-		update_ammo_count()
+		update_appearance()
 
 	return num_loaded
 
@@ -162,11 +156,6 @@
 		A.bounce_away(bounce_angle = rand(0, 360), spread_multiplier = 0.75, still_warm = FALSE, sound_delay = 0)
 	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 	to_chat(user, span_notice("You remove a round from [src]!"))
-	update_ammo_count()
-
-/// Updates the materials and appearance of this ammo box
-/obj/item/ammo_box/proc/update_ammo_count()
-	update_custom_materials()
 	update_appearance()
 
 /obj/item/ammo_box/update_desc(updates)
@@ -183,13 +172,6 @@
 			if(AMMO_BOX_FULL_EMPTY)
 				icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
 	return ..()
-
-/// Updates the amount of material in this ammo box according to how many bullets are left in it.
-/obj/item/ammo_box/proc/update_custom_materials()
-	var/temp_materials = custom_materials.Copy()
-	for(var/material in bullet_cost)
-		temp_materials[material] = (bullet_cost[material] * stored_ammo.len) + base_cost[material]
-	set_custom_materials(temp_materials)
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
@@ -215,7 +197,7 @@
 
 /obj/item/ammo_box/magazine/handle_atom_del(atom/A)
 	stored_ammo -= A
-	update_ammo_count()
+	update_appearance()
 
 // monkestation edit start
 /obj/item/ammo_box/handle_atom_del(atom/A)

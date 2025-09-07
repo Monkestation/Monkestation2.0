@@ -1261,6 +1261,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/table,
+/obj/machinery/ecto_sniffer,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "eD" = (
@@ -6501,7 +6502,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Gv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/mecha_part_fabricator,
+/obj/machinery/mecha_part_fabricator/emagged,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "Gz" = (

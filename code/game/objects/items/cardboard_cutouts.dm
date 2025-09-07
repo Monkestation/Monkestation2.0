@@ -58,9 +58,9 @@
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
 	pushed_over = FALSE
 
-/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/toy/crayon))
-		change_appearance(I, user)
+/obj/item/cardboard_cutout/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/toy/crayon))
+		change_appearance(attacking_item, user)
 		return TRUE
 
 	return ..()

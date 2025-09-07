@@ -111,3 +111,7 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/defender/Activate(atom/target_atom)
 	. = ..()
 	return TRUE
+
+/mob/living/carbon/alien/adult/nova/defender/lamarr
+	name = "Lamarr"
+	next_evolution = /mob/living/carbon/alien/adult/nova/warrior/lamarr

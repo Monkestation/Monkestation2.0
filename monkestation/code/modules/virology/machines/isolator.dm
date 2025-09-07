@@ -9,11 +9,11 @@
 	var/isolating = 0
 	var/beaker = null
 
-/obj/machinery/disease2/isolator/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I,/obj/item/reagent_containers/syringe))
+/obj/machinery/disease2/isolator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item ,/obj/item/reagent_containers/syringe))
 		return
 
-	var/obj/item/reagent_containers/syringe/B = I
+	var/obj/item/reagent_containers/syringe/B = attacking_item
 
 	if(src.beaker)
 		to_chat(user, "A syringe is already loaded into the machine.")

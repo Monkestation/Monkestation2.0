@@ -66,25 +66,25 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
 
-/obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
-	if(stationary)
-		if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", I))
-			update_indicator()
-			return
+/obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!stationary || !panel_open)
+		return ITEM_INTERACT_BLOCKING
 
-		if(panel_open)
-			if(I.tool_behaviour == TOOL_MULTITOOL)
-				if(!multitool_check_buffer(user, I))
-					return
-				var/obj/item/multitool/M = I
-				M.set_buffer(src)
-				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
-				return 1
+	multi.set_buffer(src)
+	to_chat(user, span_notice("You save the data in the [multi.name]'s buffer."))
+	return ITEM_INTERACT_SUCCESS
 
-		if(default_deconstruction_crowbar(I))
-			return
+/obj/machinery/launchpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!stationary)
+		return ..()
 
-	return ..()
+	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", attacking_item))
+		update_indicator()
+		return
+
+	if(default_deconstruction_crowbar(attacking_item))
+		return
 
 /obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
 	. = ..()
@@ -336,20 +336,20 @@
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage?.close_all() // monke edit: fix runtime
 
-/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src.pad)) //do not attempt to link when already linked
-			return ..()
-		L.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [L]."))
-	else
-		return ..()
+/obj/item/storage/briefcase/launchpad/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(istype(inserted, /obj/item/launchpad_remote))
+		var/obj/item/launchpad_remote/remote = inserted
+		if(remote.pad == WEAKREF(src.pad))
+			return TRUE
+		remote.pad = WEAKREF(src.pad)
+		to_chat(user, span_notice("You link [pad] to [remote]."))
+		return FALSE // no insert
+	return TRUE
 
 /obj/item/launchpad_remote
 	name = "folder"
 	desc = "A folder."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE

@@ -74,24 +74,24 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool))
 		power_change()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /*******************
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(obj/item/O, mob/living/user, params)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
+/obj/machinery/smartfridge/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
 		cut_overlays()
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-panel")
 		SStgui.update_uis(src)
 		return
 
-	if(default_pry_open(O, close_after_pry = TRUE))
+	if(default_pry_open(attacking_item, close_after_pry = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(O))
+	if(default_deconstruction_crowbar(attacking_item))
 		SStgui.update_uis(src)
 		return
 
@@ -101,16 +101,16 @@
 			to_chat(user, span_warning("\The [src] is full!"))
 			return FALSE
 
-		if(accept_check(O))
-			load(O)
-			user.visible_message(span_notice("[user] adds \the [O] to \the [src]."), span_notice("You add \the [O] to \the [src]."))
+		if(accept_check(attacking_item))
+			load(attacking_item)
+			user.visible_message(span_notice("[user] adds \the [attacking_item] to \the [src]."), span_notice("You add \the [attacking_item] to \the [src]."))
 			SStgui.update_uis(src)
 			if(visible_contents)
 				update_appearance()
 			return TRUE
 
-		if(istype(O, /obj/item/storage/bag))
-			var/obj/item/storage/P = O
+		if(istype(attacking_item, /obj/item/storage/bag))
+			var/obj/item/storage/P = attacking_item
 			var/loaded = 0
 			for(var/obj/G in P.contents)
 				if(shown_contents.len >= max_n_of_items)
@@ -122,23 +122,26 @@
 
 			if(loaded)
 				if(shown_contents.len >= max_n_of_items)
-					user.visible_message(span_notice("[user] loads \the [src] with \the [O]."), \
-						span_notice("You fill \the [src] with \the [O]."))
+					user.visible_message(span_notice("[user] loads \the [src] with \the [attacking_item]."), \
+						span_notice("You fill \the [src] with \the [attacking_item]."))
 				else
-					user.visible_message(span_notice("[user] loads \the [src] with \the [O]."), \
-						span_notice("You load \the [src] with \the [O]."))
-				if(O.contents.len > 0)
+					user.visible_message(span_notice("[user] loads \the [src] with \the [attacking_item]."), \
+						span_notice("You load \the [src] with \the [attacking_item]."))
+				if(attacking_item.contents.len > 0)
 					to_chat(user, span_warning("Some items are refused."))
 				if (visible_contents)
 					update_appearance()
 				return TRUE
 			else
-				to_chat(user, span_warning("There is nothing in [O] to put in [src]!"))
+				to_chat(user, span_warning("There is nothing in [attacking_item] to put in [src]!"))
 				return FALSE
 
-	if(!(user.istate & ISTATE_HARM))
-		to_chat(user, span_warning("\The [src] smartly refuses [O]."))
-		SStgui.update_uis(src)
+	if(!powered())
+		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		return FALSE
+
+	if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
+		to_chat(user, span_warning("\The [src] smartly refuses [attacking_item]."))
 		return FALSE
 	else
 		return ..()

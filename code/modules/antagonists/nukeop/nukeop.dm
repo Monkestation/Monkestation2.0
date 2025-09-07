@@ -9,6 +9,7 @@
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
 	remove_from_manifest = TRUE
+	stinger_sound = 'sound/ambience/antag/ops.ogg'
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -48,7 +49,7 @@
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
@@ -272,7 +273,7 @@
 			H.update_icons()
 
 /datum/antagonist/nukeop/leader/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
 	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))

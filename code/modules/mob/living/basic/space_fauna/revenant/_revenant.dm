@@ -219,7 +219,7 @@
 	if(HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) || HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM) || !Adjacent(target) || !incorporeal_move_check(target))
 		return
 
-	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	var/alist/icon_dimensions = get_icon_dimensions(target.icon)
 	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 	orbit(target, orbitsize)

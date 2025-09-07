@@ -27,6 +27,8 @@
 	preview_outfit = /datum/outfit/heretic
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Turn a department into a testament for your dark knowledge."
+	hardcore_random_bonus = TRUE
+	stinger_sound = 'sound/ambience/antag/heretic/heretic_gain.ogg'
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -209,8 +211,6 @@ monkestation end */
 	if(give_objectives)
 		forge_primary_objectives()
 
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/heretic/heretic_gain.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
-
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge)
 
@@ -233,8 +233,7 @@ monkestation end */
 	our_mob.faction |= FACTION_HERETIC
 
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
-	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(on_item_afterattack))
-	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, PROC_REF(fix_influence_network))
+	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
@@ -245,8 +244,7 @@ monkestation end */
 	UnregisterSignal(our_mob, list(
 		COMSIG_MOB_BEFORE_SPELL_CAST,
 		COMSIG_MOB_SPELL_ACTIVATED,
-		COMSIG_MOB_ITEM_AFTERATTACK,
-		COMSIG_MOB_LOGIN,
+		COMSIG_USER_ITEM_INTERACTION,
 		COMSIG_LIVING_POST_FULLY_HEAL,
 	))
 
@@ -286,26 +284,25 @@ monkestation end */
 	return SPELL_CANCEL_CAST
 
 /*
- * Signal proc for [COMSIG_MOB_ITEM_AFTERATTACK].
+ * Signal proc for [COMSIG_USER_ITEM_INTERACTION].
  *
  * If a heretic is holding a pen in their main hand,
  * and have mansus grasp active in their offhand,
  * they're able to draw a transmutation rune.
  */
-/datum/antagonist/heretic/proc/on_item_afterattack(mob/living/source, atom/target, obj/item/weapon, proximity_flag, click_parameters)
+/datum/antagonist/heretic/proc/on_item_use(mob/living/source, atom/target, obj/item/weapon, click_parameters)
 	SIGNAL_HANDLER
-
 	if(!is_type_in_typecache(weapon, scribing_tools))
-		return
-	if(!isturf(target) || !isliving(source) || !proximity_flag)
-		return
+		return NONE
+	if(!isturf(target) || !isliving(source))
+		return NONE
 
 	var/obj/item/offhand = source.get_inactive_held_item()
 	if(QDELETED(offhand) || !istype(offhand, /obj/item/melee/touch_attack/mansus_fist))
-		return
+		return NONE
 
 	try_draw_rune(source, target, additional_checks = CALLBACK(src, PROC_REF(check_mansus_grasp_offhand), source))
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Attempt to draw a rune on [target_turf].
@@ -373,18 +370,6 @@ monkestation end */
 /datum/antagonist/heretic/proc/check_mansus_grasp_offhand(mob/living/user)
 	var/obj/item/offhand = user.get_inactive_held_item()
 	return !QDELETED(offhand) && istype(offhand, /obj/item/melee/touch_attack/mansus_fist)
-
-/*
- * Signal proc for [COMSIG_MOB_LOGIN].
- *
- * Calls rework_network() on our reality smash tracker
- * whenever a login / client change happens, to ensure
- * influence client visibility is fixed.
- */
-/datum/antagonist/heretic/proc/fix_influence_network(mob/source)
-	SIGNAL_HANDLER
-
-	GLOB.reality_smash_track.rework_network()
 
 /// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL],
 /// Gives the heretic aliving heart on aheal or organ refresh
@@ -463,7 +448,7 @@ monkestation end */
 /datum/antagonist/heretic/proc/passive_influence_gain()
 	knowledge_points++
 	if(owner.current?.stat <= SOFT_CRIT)
-		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick(strings(HERETIC_INFLUENCE_FILE, "drain_message")))]")
+		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 
 /datum/antagonist/heretic/roundend_report()

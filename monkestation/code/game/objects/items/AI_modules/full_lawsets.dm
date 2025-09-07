@@ -21,7 +21,7 @@
 /obj/item/ai_module/core/full/dj
 	name = "Disc Jockey AI Module"
 	desc = "Party on dude!"
-	law_id = "id"
+	law_id = "dj"
 
 /obj/item/ai_module/core/full/henchmen
 	name = "Henchmen AI module"

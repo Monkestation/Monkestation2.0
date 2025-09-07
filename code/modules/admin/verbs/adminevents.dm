@@ -163,6 +163,7 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers ar
 	SSshuttle.admin_emergency_no_recall = TRUE
 	SSshuttle.emergency.setTimer(0)
 	SSshuttle.emergency.mode = SHUTTLE_DISABLED
+	SSshuttle.admin_emergency_disabled = TRUE //monkestation edit
 	priority_announce(
 		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
 		title = "Uplink Failure",
@@ -182,6 +183,7 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, FALSE, "Enable Shuttle", "Those fuckers ARE 
 	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
 	SSshuttle.admin_emergency_no_recall = FALSE
 	SSshuttle.emergency_no_recall = FALSE
+	SSshuttle.admin_emergency_disabled = FALSE //monkestation edit
 	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
 		SSshuttle.last_mode = SHUTTLE_IDLE
 

@@ -111,47 +111,44 @@
 	if(!tracker)
 		if(lower_quality_on_fail)
 			for (var/obj/item/contained in contents)
-				contained?:food_quality -= lower_quality_on_fail
-		else
-			tracker = new /datum/chewin_cooking/recipe_tracker(src)
+				contained.food_quality -= lower_quality_on_fail
+		tracker = new /datum/chewin_cooking/recipe_tracker(src)
 
-	var/return_value = 0
+	. = FALSE
 	switch(tracker.process_item_wrap(I, user))
 		if(CHEWIN_NO_STEPS)
 			if(no_step_checks(I)) //literally fryers
 				if(send_message)
-					to_chat(user, "It doesn't seem like you can create a meal from that. Yet.")
+					to_chat(user, span_warning("It doesn't seem like you can create a meal from that. Yet."))
 				if(lower_quality_on_fail)
 					for (var/datum/chewin_cooking/recipe_pointer/pointer in tracker.active_recipe_pointers)
-						pointer?:tracked_quality -= lower_quality_on_fail
+						pointer.tracked_quality -= lower_quality_on_fail
 		if(CHEWIN_CHOICE_CANCEL)
 			if(send_message)
-				to_chat(user, "You decide against cooking with the [src].")
+				to_chat(user, span_notice("You decide against cooking with the [src]."))
 		if(CHEWIN_COMPLETE)
 			if(send_message)
-				to_chat(user, "You finish cooking with the [src].")
+				to_chat(user, span_green("You finish cooking with the [src]."))
 			qdel(tracker)
 			tracker = null
 			clear_cooking_data()
 			update_icon()
-			return_value = 1
+			. = TRUE
 		if(CHEWIN_SUCCESS)
 			if(send_message)
-				to_chat(user, "You have successfully completed a recipe step.")
+				to_chat(user, span_green("You have successfully completed a recipe step."))
 			clear_cooking_data()
-			return_value = 1
+			. = TRUE
 			update_icon()
 		if(CHEWIN_PARTIAL_SUCCESS)
 			if(send_message)
-				to_chat(user, "More must be done to complete this step of the recipe.")
+				to_chat(user, span_warning("More must be done to complete this step of the recipe."))
 		if(CHEWIN_LOCKOUT)
 			if(send_message)
-				to_chat(user, "You can't make the same decision twice!")
+				to_chat(user, span_warning("You can't make the same decision twice!"))
 
 	if(tracker && !tracker.recipe_started)
-		qdel(tracker)
-		tracker = null
-	return return_value
+		QDEL_NULL(tracker)
 
 //TODO: Handle the contents of the container being ruined via burning.
 /obj/item/reagent_containers/cooking_container/proc/handle_burning()

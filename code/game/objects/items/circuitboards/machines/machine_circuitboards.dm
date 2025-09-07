@@ -698,6 +698,13 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
 
+/obj/item/circuitboard/machine/vending/donksnackvendor
+	name = "Donk Co Snack Vendor"
+	build_path = /obj/machinery/vending/donksnack
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/vending_refill/donksnackvendor = 1)
+
 /obj/item/circuitboard/machine/bountypad
 	name = "Civilian Bounty Pad"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
@@ -1311,6 +1318,9 @@
 		/datum/stock_part/manipulator = 1,
 		/obj/item/assembly/igniter = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/ore_redemption/offstation
+	build_path = /obj/machinery/mineral/ore_redemption/offstation
 
 /obj/item/circuitboard/machine/ore_silo
 	name = "Ore Silo"

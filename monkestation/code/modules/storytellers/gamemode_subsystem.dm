@@ -267,6 +267,9 @@ SUBSYSTEM_DEF(gamemode)
 		var/mob/antag_mob = antag.owner.current
 		if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
 			continue
+		// don't count admins mucking around on centcom or whatever
+		if(istype(get_area(antag_mob), /area/centcom))
+			continue
 		already_counted[antag.owner] = TRUE
 		.++
 

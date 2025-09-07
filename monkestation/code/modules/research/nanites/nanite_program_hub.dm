@@ -26,9 +26,9 @@
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 
-/obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = I
+/obj/machinery/nanite_program_hub/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/disk/nanite_program))
+		var/obj/item/disk/nanite_program/N = attacking_item
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, span_notice("You insert [N] into [src]."))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
