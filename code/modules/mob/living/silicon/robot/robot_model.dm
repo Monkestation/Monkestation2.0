@@ -869,6 +869,7 @@
 /obj/item/robot_model/service/be_transformed_to(obj/item/robot_model/old_model)
 	. = ..()
 	var/mob/living/silicon/robot/cyborg = loc
+
 	cyborg.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
 	crafting.forced_mode = TRUE
@@ -1053,8 +1054,7 @@
 /obj/item/robot_model/centcom/be_transformed_to(obj/item/robot_model/old_model)
 	. = ..()
 	var/mob/living/silicon/robot/cyborg = loc
-	if(!istype(cyborg, /mob/living/silicon/robot))
-		return
+
 	cyborg.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
 	crafting.forced_mode = TRUE
@@ -1081,9 +1081,8 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if(istype(cyborg, /mob/living/silicon/robot))
 		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
-		if(cyborg.hud_used)
-			for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
-				qdel(button)
+		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+			qdel(button)
 
 		qdel(cyborg.radio.keyslot)
 		cyborg.radio.recalculateChannels()
