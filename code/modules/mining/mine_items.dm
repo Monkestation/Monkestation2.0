@@ -386,7 +386,7 @@
 		return
 
 	setDir(movedir)
-	var/datum/move_loop/loop = GLOB.move_manager.move(src, dir, delay = calculate_delay(), subsystem = SSconveyors, flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY)
+	var/datum/move_loop/loop = SSmove_manager.move(src, dir, delay = calculate_delay(), subsystem = SSconveyors, flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(check_rail))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(decay_momentum))
 
@@ -395,7 +395,7 @@
 
 	if(momentum <= 0)
 		stack_trace("Mine cart moving on 0 momentum!")
-		GLOB.move_manager.stop_looping(src, SSconveyors)
+		SSmove_manager.stop_looping(src, SSconveyors)
 		return MOVELOOP_SKIP_STEP
 	// Forced to not move
 	if(anchored || !has_gravity())
@@ -413,7 +413,7 @@
 		source.direction = next_dir
 		return NONE
 	// Can't go straight and cant turn = STOP
-	GLOB.move_manager.stop_looping(src, SSconveyors)
+	SSmove_manager.stop_looping(src, SSconveyors)
 	if(momentum >= 8)
 		visible_message(span_warning("[src] comes to a halt!"))
 		throw_contents()
@@ -435,7 +435,7 @@
 			else
 				visible_message(span_notice("[src] comes to a stop."))
 			momentum = 0
-			GLOB.move_manager.stop_looping(src, SSconveyors)
+			SSmove_manager.stop_looping(src, SSconveyors)
 			cable.add_delayedload(10 KILO JOULES)
 			return
 		// This is a powered rail, so maintain speed
@@ -453,12 +453,12 @@
 
 	// No more momentum = STOP
 	if(momentum <= 0)
-		GLOB.move_manager.stop_looping(src, SSconveyors)
+		SSmove_manager.stop_looping(src, SSconveyors)
 		visible_message(span_notice("[src] comes to a slow stop."))
 		return
 
 	// Handles slowing down the move loop / cart
-	var/datum/move_loop/loop = GLOB.move_manager.processing_on(src, SSconveyors)
+	var/datum/move_loop/loop = SSmove_manager.processing_on(src, SSconveyors)
 	loop?.set_delay(calculate_delay())
 
 /// Calculates how fast the cart is going
