@@ -372,9 +372,7 @@
 	icon_state = "staffofanimation"
 	inhand_icon_state = "staffofanimation"
 
-/obj/item/ash_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return ..()
+/obj/item/ash_staff/interact_with_atom(atom/target, mob/user, list/modifiers)
 
 	if(!user.mind.has_antag_datum(/datum/antagonist/ashwalker))
 		return ..()

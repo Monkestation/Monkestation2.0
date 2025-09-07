@@ -82,11 +82,11 @@
 /obj/item/attachable_soulcatcher/attack_self(mob/user, modifiers)
 	linked_soulcatcher.ui_interact(user)
 
-/obj/item/attachable_soulcatcher/afterattack(obj/item/target_item, mob/user, proximity_flag, click_parameters)
+/obj/item/attachable_soulcatcher/interact_with_atom(atom/interacting_with, mob/user)
 	. = ..()
-	if(!proximity_flag || !istype(target_item))
+	if(!istype(interacting_with, /obj/item))
 		return FALSE
-
+	var/obj/item/target_item = interacting_with
 	if(target_item.GetComponent(/datum/component/soulcatcher))
 		balloon_alert(user, "already attached!")
 		return FALSE

@@ -142,23 +142,23 @@
 
 	return .
 
-/obj/item/nif_hud_adapter/afterattack(obj/item/clothing/glasses/target_glasses, mob/user, proximity_flag, click_parameters)
+/obj/item/nif_hud_adapter/interact_with_atom(atom/interacting_with, mob/user, list/modifiers)
 	. = ..()
-	if(!proximity_flag || !istype(target_glasses))
+	if(!istype(interacting_with, /obj/item/clothing/glasses))
 		return FALSE
 
-	if(!is_type_in_list(target_glasses, glasses_whitelist))
+	if(!is_type_in_list(interacting_with, glasses_whitelist))
 		balloon_alert(user, "incompatible!")
 		return FALSE
 
-	if(HAS_TRAIT(target_glasses, TRAIT_NIFSOFT_HUD_GRANTER))
+	if(HAS_TRAIT(interacting_with, TRAIT_NIFSOFT_HUD_GRANTER))
 		balloon_alert(user, "already upgraded!")
 		return FALSE
 
-	user.visible_message(span_notice("[user] upgrades [target_glasses] with [src]."), span_notice("You upgrade [target_glasses] to be NIF HUD compatible."))
-	target_glasses.name = "\improper HUD-upgraded " + target_glasses.name
-	target_glasses.AddElement(/datum/element/nifsoft_hud)
-	playsound(target_glasses.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
+	user.visible_message(span_notice("[user] upgrades [interacting_with] with [src]."), span_notice("You upgrade [interacting_with] to be NIF HUD compatible."))
+	interacting_with.name = "\improper HUD-upgraded " + interacting_with.name
+	interacting_with.AddElement(/datum/element/nifsoft_hud)
+	playsound(interacting_with.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
 
 	if(!multiple_uses)
 		qdel(src)
