@@ -14,9 +14,8 @@
 /obj/item/comically_large_straw/proc/try_straw(atom/target, mob/user, proximity)
 	if(!target.reagents)
 		return FALSE
-	if(check_living)
-		if(isliving(target))
-			return FALSE
+	if(check_living && isliving(target))
+		return FALSE
 	return TRUE
 
 /obj/item/comically_large_straw/afterattack(atom/interacting_with, mob/living/user, list/modifiers)
