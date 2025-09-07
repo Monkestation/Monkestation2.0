@@ -381,8 +381,8 @@
 	projectiles = 2000
 	projectiles_cache = 0
 	projectiles_cache_max = 2000
-	projectiles_per_shot = 10
-	projectile_delay = 0.06 SECONDS
+	projectiles_per_shot = 8
+	projectile_delay = 0.09 SECONDS
 	variance = 20
 	randomspread = 13
 	harmful = TRUE
