@@ -83,6 +83,10 @@
 	var/blending
 	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
 	var/forced_speech = 0
+	/// internal PDA
+	var/obj/item/modular_computer/pda/ipc/myfone
+	/// using their pda
+	var/datum/action/innate/use_fone/use_fone
 
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - \
@@ -105,9 +109,14 @@
 	if(L)
 		L.Remove(C)
 		QDEL_NULL(L)
+	create_myfone(C)
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)
+	if(ishuman(C) && !use_fone)
+		use_fone = new
+		use_fone.Grant(C)
+
 
 	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
@@ -448,3 +457,28 @@
 			booze_power *= 2
 		ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 	return ..()
+
+/datum/species/ipc/proc/create_myfone(mob/living/carbon/human/thisgoober)
+	if(!myfone)
+		myfone = new /obj/item/modular_computer/pda/ipc(thisgoober)
+	myfone.layer = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(myfone, ABOVE_HUD_PLANE, thisgoober)
+	myfone.imprint_id(thisgoober.name, "")
+	myfone.goober = thisgoober
+
+/datum/action/innate/use_fone
+	name = "Activate Internal Computer"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon = 'icons/obj/modular_pda.dmi'
+	button_icon_state = "tablet-silicon"
+
+/datum/action/innate/use_fone/Activate()
+	if(!ishuman(owner))
+		return FALSE
+	var/mob/living/carbon/human/ourguy = owner
+	var/datum/species/ipc/myspecies = ourguy.dna.species
+	if(!istype(myspecies))
+		return FALSE
+	if(!myspecies.myfone)
+		myspecies.create_myfone(ourguy)
+	myspecies.myfone?.interact(ourguy)
