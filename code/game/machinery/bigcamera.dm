@@ -116,18 +116,19 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/big_broadcast_camera/process(seconds_per_tick)
-	internal_camera.view_offset_x = 0
-	internal_camera.view_offset_y = 0
-	if(do_offset && internal_camera)
-		switch(dir)
-			if(NORTH)
-				internal_camera.view_offset_y = camera_offset
-			if(SOUTH)
-				internal_camera.view_offset_y = -camera_offset
-			if(EAST)
-				internal_camera.view_offset_x = camera_offset
-			if(WEST)
-				internal_camera.view_offset_x = -camera_offset
+	if(internal_camera)
+		internal_camera.view_offset_x = 0
+		internal_camera.view_offset_y = 0
+		if(do_offset && internal_camera)
+			switch(dir)
+				if(NORTH)
+					internal_camera.view_offset_y = camera_offset
+				if(SOUTH)
+					internal_camera.view_offset_y = -camera_offset
+				if(EAST)
+					internal_camera.view_offset_x = camera_offset
+				if(WEST)
+					internal_camera.view_offset_x = -camera_offset
 
 /datum/crafting_recipe/big_broadcast_camera
 	name = "big broadcast camera"
