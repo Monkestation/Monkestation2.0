@@ -43,44 +43,43 @@
 		. += span_brass("Walls and windows will be built slower while on reebe.")
 
 
-/obj/item/clockwork/replica_fabricator/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !IS_CLOCK(user))
-		return
+/obj/item/clockwork/replica_fabricator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!IS_CLOCK(user))
+		return NONE
 
-	if(istype(target, /obj/item/stack/sheet)) // If it's an item, handle it seperately
-		attempt_convert_materials(target, user)
-		return
+	if(istype(interacting_with, /obj/item/stack/sheet)) // If it's an item, handle it seperately
+		attempt_convert_materials(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
 
 	if(!selected_output) // Now we handle objects
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(SSthe_ark.clock_power < selected_output.cost)
 		to_chat(user, span_clockyellow("[src] needs at least [selected_output.cost]W of power to create this."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	var/turf/creation_turf = get_turf(target)
+	var/turf/creation_turf = get_turf(interacting_with)
 	var/atom/movable/replaced
 	if(locate(selected_output.to_create_path) in creation_turf)
 		to_chat(user, span_clockyellow("There is already one of these on this tile!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(selected_output.replace_types_of && istype(selected_output, /datum/replica_fabricator_output/turf_output))
-		if(!isopenturf(target) && !(locate(creation_turf) in selected_output.replace_types_of))
-			return
+		if(!isopenturf(interacting_with) && !(locate(creation_turf) in selected_output.replace_types_of))
+			return ITEM_INTERACT_BLOCKING
 	else if(selected_output.replace_types_of)
 		for(var/checked_type in selected_output.replace_types_of)
 			var/atom/movable/found_replaced = locate(checked_type) in creation_turf
 			if(found_replaced)
 				replaced = found_replaced
 				break
-		if(!replaced && !isopenturf(target))
-			return
-	else if(!isopenturf(target))
-		return
+		if(!replaced && !isopenturf(interacting_with))
+			return ITEM_INTERACT_BLOCKING
+	else if(!isopenturf(interacting_with))
+		return ITEM_INTERACT_BLOCKING
 
-	if(!selected_output.extra_checks(target, creation_turf, user))
-		return
+	if(!selected_output.extra_checks(interacting_with, creation_turf, user))
+		return ITEM_INTERACT_BLOCKING
 
 	var/creation_delay_mult = 1
 	if(on_reebe(user))
@@ -92,20 +91,20 @@
 
 	var/selected_creation_delay = selected_output.creation_delay * max(creation_delay_mult, 0.1)
 	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, selected_creation_delay)
-	if(!do_after(user, selected_creation_delay, target))
+	if(!do_after(user, selected_creation_delay, interacting_with))
 		qdel(effect)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!SSthe_ark.adjust_clock_power(-selected_output.cost))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/atom/created
 	if(!ispath(selected_output.to_create_path, /turf))
-		if(replaced)
-			qdel(replaced)
+		qdel(replaced)
 		created = new selected_output.to_create_path(creation_turf)
 
 	selected_output.on_create(created, creation_turf, user)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/clockwork/replica_fabricator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
