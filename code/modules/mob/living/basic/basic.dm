@@ -333,7 +333,7 @@
 
 /mob/living/basic/update_held_items()
 	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
+	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_REDUCED)
 		return
 	var/turf/our_turf = get_turf(src)
 	for(var/obj/item/held in held_items)

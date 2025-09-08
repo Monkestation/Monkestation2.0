@@ -1143,6 +1143,9 @@
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
 
+/obj/item/gun/energy/laser/chameleon/give_manufacturer_examine()
+	return
+
 // MONKESTATION ADDITION START
 /obj/item/gun/energy/laser/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)

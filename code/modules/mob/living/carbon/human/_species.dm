@@ -1215,8 +1215,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		user.do_attack_animation(target, atk_effect)
 
 		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
-
-		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
+		var/zone = target.get_random_valid_zone(user.zone_selected)
+		var/obj/item/bodypart/affecting = target.get_bodypart(zone)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(attacking_bodypart.unarmed_damage_low)
@@ -1262,6 +1262,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				target.force_say()
 			log_combat(user, target, "kicked")
 			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
+				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
+					if(iter_clothing.clothing_flags & THICKMATERIAL)
+						if(iter_clothing.body_parts_covered && BODY_ZONE_PRECISE_GROIN)
+							return TRUE
+				target.sharp_pain(BODY_ZONE_CHEST, 25, BRUTE, 30 SECONDS)
+				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
+				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
+				target.emote("scream", message="screams for dear life!")
+				playsound(target.loc, 'sound/effects/hit_on_shattered_glass.ogg')
 		else//other attacks deal full raw damage + 1.5x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage * 1.5, STAMINA, affecting, armor_block)
@@ -1313,7 +1323,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	if(owner.mind)
 		attacker_style = owner.mind.martial_art
-	if((owner != target) && (owner.istate & ISTATE_HARM) && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
+	if((owner != target) && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
 		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
 						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)

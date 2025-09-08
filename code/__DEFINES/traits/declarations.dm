@@ -342,6 +342,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This mob can not enter or move on a shuttle
 /* #define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement" */
 
+/// Given to mobs which have been implanted with a sponsorship implant
+#define TRAIT_SPONSOR_IMPLANT "sponsor_implant"
+
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
 /// Lets us scan machine parts and tech unlocks
@@ -1101,7 +1104,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /* #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage" */
 
 ///Deathmatch traits
-/* #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants" */
+#define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
 
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"

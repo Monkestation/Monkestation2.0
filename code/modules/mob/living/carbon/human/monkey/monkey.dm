@@ -135,3 +135,17 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		file_data["relic_mask"] = wear_mask ? wear_mask.type : null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/mob/living/carbon/human/species/monkey/wide
+	name = " W i d e  A p e "
+	desc = "This ape is the widest. There are many things in this cosmos; Stars, planets, galaxies, gods. But, of all of those things, this ape is the widest. Imagine the largest room you can imagine. The ape is wider than that room, because this ape is the widest."
+
+/mob/living/carbon/human/species/monkey/wide/Initialize(mapload)
+	src.transform = src.transform.Scale(4,1) //wide
+	for (var/obj/item/bodypart/part in src.bodyparts)
+		part.transform = part.transform.Scale(7, 1)
+		part.name = "wide " + part.name
+		for (var/obj/item/organ/organ in part.get_organs())
+			organ.transform = organ.transform.Scale(7,1)
+			organ.name = "wide " + organ.name
+	return ..()

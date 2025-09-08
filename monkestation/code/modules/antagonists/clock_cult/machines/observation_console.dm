@@ -1,6 +1,6 @@
 /obj/machinery/computer/camera_advanced/ratvar
 	name = "Ratvarian Observation Console"
-	desc = "Used by the servants of Rat'var to conduct operations on Nanotrasen property."
+	desc = "Used by the servants of Ratvar to conduct operations on Nanotrasen property."
 	icon_screen = "ratvar1"
 	icon_keyboard = "ratvar_key1"
 	icon_state = "ratvarcomputer"
