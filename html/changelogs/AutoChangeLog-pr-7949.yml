@@ -1,0 +1,4 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - rscadd: "CMO's medkit now starts with advanced surgery tools"
