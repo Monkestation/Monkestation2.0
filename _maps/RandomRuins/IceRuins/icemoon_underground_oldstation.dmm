@@ -496,7 +496,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/charlie/hall)
 "cR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -951,7 +951,7 @@
 	icon_state = "small"
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/delta/hall)
 "fq" = (
 /turf/closed/wall/rust,
@@ -4068,7 +4068,7 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/delta/hall)
 "xl" = (
 /turf/closed/mineral/random/snow/underground,
@@ -8090,7 +8090,7 @@
 /obj/item/stack/rods,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/charlie/hall)
 "Un" = (
 /obj/item/shard,
@@ -8157,7 +8157,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/stack/rods,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/delta/hall)
 "UP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,

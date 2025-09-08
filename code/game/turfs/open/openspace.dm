@@ -200,6 +200,10 @@
 
 /turf/open/openspace/icemoon/keep_below
 	drill_below = FALSE
+	protect_station = TRUE //vscode cant even TELL me where this cursed turf is implemented so i can replace it with the mapgen version. it sure as hell isnt in mapping.dm. words cannot express my distaste for the eons of technical debt this codebase has built.
+
+/turf/open/openspace/icemoon/keep_below/no_protect_station
+	protect_station = FALSE
 
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE

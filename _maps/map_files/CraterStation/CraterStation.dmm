@@ -63989,9 +63989,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
-"tiJ" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
 "tiL" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
@@ -221784,7 +221781,7 @@ pgA
 pgA
 pgA
 pgA
-pgA
+crJ
 pgA
 yav
 yav
@@ -222043,11 +222040,11 @@ pgA
 pgA
 pgA
 pgA
-yav
-yav
-yav
-yav
-yav
+pgA
+pgA
+crJ
+pgA
+oMo
 yav
 yav
 yav
@@ -222303,8 +222300,8 @@ pgA
 pgA
 pgA
 pgA
-oMo
-yav
+pgA
+pgA
 yav
 yav
 yav
@@ -224873,7 +224870,7 @@ pgA
 pgA
 pgA
 pgA
-oMo
+pgA
 pgA
 vmC
 pgA
@@ -225130,7 +225127,7 @@ pgA
 pgA
 pgA
 pgA
-xpA
+oMo
 pgA
 pgA
 pgA
@@ -226606,7 +226603,7 @@ pgA
 pgA
 pgA
 pgA
-tiJ
+pgA
 yav
 yav
 yav

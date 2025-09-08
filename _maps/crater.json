@@ -7,7 +7,7 @@
 	"space_empty_levels": 0,
 	"planetary": 1,
 	"shuttles": {
-		"cargo": "cargo_nova",
+		"cargo": "cargo_crater",
 		"ferry": "ferry_crater",
 		"whiteship": "whiteship_box",
 		"emergency": "emergency_crater"
