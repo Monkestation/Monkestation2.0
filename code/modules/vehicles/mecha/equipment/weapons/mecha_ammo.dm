@@ -92,9 +92,6 @@
 	rounds = 40
 	ammo_type = MECHA_AMMO_ATR
 
-
-
-
 /// Missile Ammo
 /// SRM-8 Missile type - Used by Nuclear Operatives
 /obj/item/mecha_ammo/missiles_srm
