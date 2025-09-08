@@ -97,9 +97,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert_to_viewers("extracting!")
-	if(loc == user && ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		human_user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
+	if(get(loc, /mob/living/carbon/human) == user && thing == user) // Self extraction
+		user.quick_equip()
 	uses_left--
 
 	if(uses_left <= 0)

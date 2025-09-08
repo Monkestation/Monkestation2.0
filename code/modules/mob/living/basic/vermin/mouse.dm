@@ -84,7 +84,7 @@
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -199,7 +199,7 @@
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
-/mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+/mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
 	faction |= FACTION_NEUTRAL
 	tame = TRUE
@@ -409,9 +409,7 @@
 	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
 		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
-	else
-		to_chat(user, span_warning("That's a terrible idea."))
-	return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"

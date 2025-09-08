@@ -390,23 +390,23 @@ effective or pretty fucking useless.
 	GLOB.active_jammers -= src
 	return ..()
 
-/obj/item/jammer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(.)
-		return
-
-	if (!(target in view(disruptor_range, user)))
+/obj/item/jammer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!(interacting_with in view(disruptor_range, user)))
 		user.balloon_alert(user, "out of reach!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	target.balloon_alert(user, "radio distrupted!")
-	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [target]."))
-	disable_radios_on(target)
+	interacting_with.balloon_alert(user, "radio distrupted!")
+	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
+	disable_radios_on(interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/jammer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/jammer/proc/disable_radios_on(atom/target, ignore_syndie = FALSE)
 	var/list/target_contents = target.get_all_contents() + target
 	for (var/obj/item/radio/radio in target_contents)
-		if(ignore_syndie && radio.syndie)
+		if((ignore_syndie && radio.syndie) || radio.ignores_radio_jammers)
 			continue
 		radio.set_broadcasting(FALSE)
 	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
@@ -450,7 +450,7 @@ effective or pretty fucking useless.
 		COMBAT_MESSAGE_RANGE,
 	)
 
-	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+	playsound(src, 'sound/items/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new turret_type(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src

@@ -90,7 +90,8 @@
 	icon_dead = "slime_dead"
 	gold_core_spawnable = NO_SPAWN
 	initial_language_holder = /datum/language_holder/slime
-	ai_controller = /datum/ai_controller/basic_controller/
+	faction = list(FACTION_SLIME)
+	ai_controller = /datum/ai_controller/basic_controller
 	var/quips = list("Your fingers taste like Donk Pockets, get out more.",
 					"I've seen salad that dresses better than you.",
 					"I smell smoke, are you thinking too hard again?",
@@ -434,3 +435,8 @@
 		ADD_TRAIT(usr, TRAIT_SECURITY_HUD, ACTION_TRAIT)
 		StartCooldown()
 		return
+
+/mob/living/basic/pet/cyber_husky/death(gibbed)
+	src.cut_overlays()
+	change_hud_ability.current_hud = 3
+	. = ..()

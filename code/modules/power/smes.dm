@@ -128,45 +128,40 @@
 		if(!can_place_terminal(user, installing_cable, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
 
-		//select cable layer
-		var/terminal_cable_layer
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
-			if(isnull(choice) \
-				|| !user.is_holding(installing_cable) \
-				|| !user.Adjacent(src) \
-				|| user.incapacitated() \
-				|| !can_place_terminal(user, installing_cable, silent = TRUE) \
-			)
-				return ITEM_INTERACT_BLOCKING
-			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
-		user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
-		balloon_alert(user, "adding cables...")
-		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	if(!can_place_terminal(user, installing_cable, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	var/terminal_cable_layer
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+		if(isnull(choice) \
+			|| !user.is_holding(installing_cable) \
+			|| !user.Adjacent(src) \
+			|| user.incapacitated() \
+			|| !can_place_terminal(user, installing_cable, silent = TRUE) \
+		)
+			return ITEM_INTERACT_BLOCKING
+		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+	user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
+	balloon_alert(user, "adding cables...")
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
-		//use cable
-		if(!do_after(user, 2 SECONDS, target = src))
-			return ITEM_INTERACT_BLOCKING
-		if(!can_place_terminal(user, installing_cable, silent = TRUE))
-			return ITEM_INTERACT_BLOCKING
-		var/obj/item/stack/cable_coil/cable = installing_cable
-		var/turf/turf = get_turf(user)
-		var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
-		if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
-			do_sparks(5, TRUE, src)
-			return ITEM_INTERACT_BLOCKING
-		cable.use(10)
-		user.visible_message(span_notice("[user.name] adds cables to [src]."))
-		balloon_alert(user, "cables added")
-
-		//build the terminal and link it to the network
-		terminal = new(turf)
-		terminal.master = src
-		terminal.cable_layer = terminal_cable_layer
-		terminal.setDir(get_dir(turf, src))
-		terminal.connect_to_network()
-		set_machine_stat(machine_stat & ~BROKEN)
-		return ITEM_INTERACT_SUCCESS
+	if(!do_after(user, 2 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	if(!can_place_terminal(user, installing_cable, silent = TRUE))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/stack/cable_coil/cable = installing_cable
+	var/turf/turf = get_turf(user)
+	var/obj/structure/cable/connected_cable = turf.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
+	if (prob(50) && electrocute_mob(user, connected_cable, connected_cable, 1, TRUE)) //animate the electrocution if uncautious and unlucky
+		do_sparks(5, TRUE, src)
+		return ITEM_INTERACT_BLOCKING
+	cable.use(10)
+	user.visible_message(span_notice("[user.name] adds cables to [src]."))
+	balloon_alert(user, "cables added")
+	//build the terminal and link it to the network
+	make_terminal(turf, terminal_cable_layer)
+	terminal.connect_to_network()
+	return ITEM_INTERACT_SUCCESS
 
 //opening using screwdriver
 /obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
@@ -241,6 +236,15 @@
 	if(terminal)
 		disconnect_terminal()
 	return ..()
+
+// create a terminal object pointing towards the SMES
+// wires will attach to this
+/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_cable_layer = cable_layer)
+	terminal = new/obj/machinery/power/terminal(T)
+	terminal.cable_layer = terminal_cable_layer
+	terminal.setDir(get_dir(T,src))
+	terminal.master = src
+	set_machine_stat(machine_stat & ~BROKEN)
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)
