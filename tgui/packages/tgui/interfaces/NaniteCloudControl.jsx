@@ -270,7 +270,7 @@ export const NaniteCloudBackupDetails = (props) => {
 
 export const NaniteProgramHub = (props) => {
   const { act, data } = useBackend();
-  const { detail_view, disk, has_disk, has_program, programs = {} } = data;
+  const { detail_view, has_program, programs = {} } = data;
   const [selectedCategory, setSelectedCategory] = useSharedState('category');
   const programsInCategory = (programs && programs[selectedCategory]) || [];
   return (
@@ -323,7 +323,7 @@ export const NaniteProgramHub = (props) => {
                     <Button
                       icon="download"
                       content="Download"
-                      disabled={!has_disk}
+                      disabled={current_view === 0}
                       onClick={() =>
                         act('download', {
                           program_id: program.id,
@@ -345,7 +345,7 @@ export const NaniteProgramHub = (props) => {
                       <Button
                         icon="download"
                         content="Download"
-                        disabled={!has_disk}
+                        disabled={current_view === 0}
                         onClick={() =>
                           act('download', {
                             program_id: program.id,
