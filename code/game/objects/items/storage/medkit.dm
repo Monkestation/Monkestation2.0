@@ -313,7 +313,7 @@
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = HEAL_ALL_DAMAGE
 
-/obj/item/storage/medkit/surgery/Initialize(mapload)
+/obj/item/storage/medkit/advanced/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 8
 	atom_storage.max_total_storage = 16
