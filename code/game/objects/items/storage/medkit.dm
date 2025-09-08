@@ -128,8 +128,8 @@
 /obj/item/storage/medkit/surgery/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
-	atom_storage.max_slots = 12
-	atom_storage.max_total_storage = 24
+	atom_storage.max_slots = 13
+	atom_storage.max_total_storage = 26
 	atom_storage.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -312,6 +312,11 @@
 	inhand_icon_state = "medkit-rad"
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/surgery/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 8
+	atom_storage.max_total_storage = 16
 
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
