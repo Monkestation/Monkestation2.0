@@ -10,5 +10,5 @@
 
 /datum/quirk/polyglot/add_unique(client/client_source)
 	for(var/language in GLOB.roundstart_languages)
-		quirk_holder.grant_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_QUIRK)
+		quirk_holder.grant_language(language, source = LANGUAGE_QUIRK)
 

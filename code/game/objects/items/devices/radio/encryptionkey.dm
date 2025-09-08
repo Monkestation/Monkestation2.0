@@ -12,23 +12,42 @@
 	var/independent = FALSE
 	/// What channels does this encryption key grant to the parent headset.
 	var/list/channels = list()
-	var/datum/language/translated_language
+	/// Assoc list of language to how well understood it is. 0 is invalid, 100 is perfect.
+	var/list/language_data
+
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#820a16#3758c4"
 
 /obj/item/encryptionkey/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(channels) || translate_binary)
-		var/list/examine_text_list = list()
-		for(var/i in channels)
-			examine_text_list += "[GLOB.channel_tokens[i]] - [lowertext(i)]"
+	if(!LAZYLEN(channels) && !(translate_binary) && !LAZYLEN(language_data))
+		. += span_warning("Has no special codes in it. You should probably tell a coder!")
+		return
+
+	var/list/examine_text_list = list()
+	for(var/i in channels)
+		examine_text_list += "[GLOB.channel_tokens[i]] - [LOWER_TEXT(i)]"
 
 		if(translate_binary)
 			examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
 
+	if(length(examine_text_list))
 		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
-	else
-		. += span_warning("Has no special codes in it. You should probably tell a coder!")
+
+	var/list/language_text_list = list()
+	for(var/lang in language_data)
+		var/langstring = "[GLOB.language_datum_instances[lang].name]"
+		switch(language_data[lang])
+			if(25 to 50)
+				langstring += " (poor)"
+			if(50 to 75)
+				langstring += " (average)"
+			if(75 to 100)
+				langstring += " (good)"
+		language_text_list += langstring
+
+	if(length(language_text_list))
+		. += span_notice("It can translate the following languages; [jointext(language_text_list, ", ")].")
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"
@@ -42,7 +61,9 @@
 	name = "binary translator key"
 	icon_state = "cypherkey_basic"
 	translate_binary = TRUE
-	translated_language = /datum/language/machine
+	language_data = list(
+		/datum/language/machine = 100,
+	)
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#24a157#3758c4"
 
@@ -246,7 +267,9 @@
 	name = "\improper Moffic translation key"
 	desc = "An encryption key that automatically encodes moffic heard through the radio into common. The signal's a little fuzzy."
 	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/moffic
+	language_data = list(
+		/datum/language/moffic = 100,
+	)
 	greyscale_config = null
 	greyscale_colors = null
 
@@ -254,7 +277,9 @@
 	name = "\improper Tiziran translation key"
 	desc = "An encryption key that automatically encodes draconic heard through the radio into common. The signal's not quite to scale."
 	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/draconic
+	language_data = list(
+		/datum/language/draconic = 100,
+	)
 	greyscale_config = null
 	greyscale_colors = null
 
@@ -262,7 +287,9 @@
 	name = "\improper Calcic translation key"
 	desc = "An encryption key that automatically encodes calcic heard through the radio into common. The signal lacks a bit of teeth."
 	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/calcic
+	language_data = list(
+		/datum/language/calcic = 100,
+	)
 	greyscale_config = null
 	greyscale_colors = null
 
@@ -270,7 +297,9 @@
 	name = "\improper Ethereal translation key"
 	desc = "An encryption key that automatically encodes ethereal heard through the radio into common. The signal's overpowering."
 	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/voltaic
+	language_data = list(
+		/datum/language/voltaic = 100,
+	)
 	greyscale_config = null
 	greyscale_colors = null
 
@@ -278,6 +307,8 @@
 	name = "\improper Felinid translation key"
 	desc = "An encryption key that automatically encodes nekomimetic heard through the radio into common. The signal's rather scratchy."
 	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/nekomimetic
+	language_data = list(
+		/datum/language/nekomimetic = 100,
+	)
 	greyscale_config = null
 	greyscale_colors = null

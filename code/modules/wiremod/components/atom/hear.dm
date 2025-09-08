@@ -48,7 +48,7 @@
 		var/language_output = message_language::name
 		if(!(message_language in GLOB.roundstart_languages))
 			var/datum/language/dialect = GLOB.language_datum_instances[message_language]
-			output_message = dialect.scramble(output_message)
+			output_message = dialect.scramble_sentence(output_message, get_partially_understood_languages())
 			if(dialect.flags & LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD)
 				language_output = "Unknown Language"
 		language_port.set_output(language_output)
