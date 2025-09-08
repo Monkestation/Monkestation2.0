@@ -214,8 +214,8 @@
 	if(!buckle_mob(target))
 		return
 	user.visible_message(
-		span_notice("[user] straps [target] into the rack, immobilizing them."),
-		span_boldnotice("You secure [target] tightly in place. They won't escape you now."),
+		span_notice("[user] straps [target] into the rack, immobilizing [target.p_them()]."),
+		span_boldnotice("You secure [target] tightly in place. [target.p_They()] won't escape you now."),
 	)
 
 	playsound(loc, 'sound/effects/pop_expl.ogg', vol = 25, vary = TRUE)
@@ -234,7 +234,7 @@
 
 	if(buckled_mob == user)
 		buckled_mob.visible_message(
-			span_danger("[user] tries to release themself from the rack!"),
+			span_danger("[user] tries to release [user.p_them()]self from the rack!"),
 			span_danger("You attempt to release yourself from the rack!"),
 			span_hear("You hear a squishy wet noise.")
 		)
@@ -410,7 +410,7 @@
 
 	held_item?.play_tool_sound(target)
 	target.visible_message(
-		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [user.p_their()] [selected_bodypart.name] and shaking them up!"),
+		span_danger("[user] performs a ritual, spilling some of [target]'s blood from [user.p_their()] [selected_bodypart.name] and shaking [user.p_them()] up!"),
 		span_userdanger("[user] performs a ritual, spilling some blood from your [selected_bodypart.name], shaking you up!")
 	)
 
