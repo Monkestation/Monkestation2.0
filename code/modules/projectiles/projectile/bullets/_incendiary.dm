@@ -52,20 +52,9 @@
 /obj/projectile/bullet/incendiary/fire/heavy
 	damage = 8
 	range = 10
-	alpha = 0
-	pass_flags = PASSTABLE | PASSMOB
-	sharpness = NONE
-	shrapnel_type = null
-	embedding = null
-	impact_effect_type = null
-	suppressed = SUPPRESSED_VERY
-	damage_type = BURN
-	armor_flag = BOMB
 	damage_walls = TRUE // melt the walls
 	speed = 1.4
-	wound_bonus = 30
 	bare_wound_bonus = 45
-	wound_falloff_tile = -4
 	fire_stacks = 5
 
 /obj/projectile/bullet/incendiary/heavy/Move()
