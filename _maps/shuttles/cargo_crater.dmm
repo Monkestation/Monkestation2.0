@@ -15,10 +15,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/supply)
-"d" = (
-/obj/structure/sign/warning/docking,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/supply)
 "e" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -229,6 +225,12 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
+"L" = (
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
+/turf/open/floor/iron/dark/smooth_half{
+	dir = 1
+	},
+/area/shuttle/supply)
 "M" = (
 /obj/docking_port/mobile/supply,
 /obj/structure/fans/tiny,
@@ -373,7 +375,7 @@ b
 n
 a
 q
-u
+L
 o
 u
 o
@@ -414,7 +416,7 @@ S
 (7,1,1) = {"
 s
 t
-d
+n
 e
 j
 n
