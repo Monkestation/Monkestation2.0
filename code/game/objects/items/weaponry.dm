@@ -608,7 +608,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
 	resistance_flags = FLAMMABLE
-	obj_flags = UNIQUE_RENAME
 
 /obj/item/staff/broom
 	name = "broom"
