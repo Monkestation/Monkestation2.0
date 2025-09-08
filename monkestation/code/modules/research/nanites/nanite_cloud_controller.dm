@@ -11,6 +11,22 @@
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
 	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID
 	var/new_backup_id = 1
+	var/datum/techweb/linked_techweb
+	var/current_category = "Main"
+	var/detail_view = TRUE
+	var/categories = list(
+		list(name = "Utility Nanites"),
+		list(name = "Medical Nanites"),
+		list(name = "Sensor Nanites"),
+		list(name = "Augmentation Nanites"),
+		list(name = "Suppression Nanites"),
+		list(name = "Weaponized Nanites"),
+		list(name = "Protocols"),
+	)
+
+/obj/machinery/computer/nanite_cloud_controller/Initialize()
+	. = ..()
+	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
 	QDEL_LIST(cloud_backups) //rip backups
@@ -106,6 +122,7 @@
 	else
 		data["has_disk"] = FALSE
 
+
 	data["new_backup_id"] = new_backup_id
 
 	data["current_view"] = current_view
@@ -165,6 +182,30 @@
 			cloud_backup["cloud_id"] = backup.cloud_id
 			backup_list += list(cloud_backup)
 		data["cloud_backups"] = backup_list
+
+	data["detail_view"] = detail_view
+
+	return data
+
+/obj/machinery/computer/nanite_cloud_controller/ui_static_data(mob/user)
+	var/list/data = list()
+	data["programs"] = list()
+	for(var/i in linked_techweb.researched_designs)
+		var/datum/design/nanites/D = SSresearch.techweb_design_by_id(i)
+		if(!istype(D))
+			continue
+		var/cat_name = D.category[1] //just put them in the first category fuck it
+		if(isnull(data["programs"][cat_name]))
+			data["programs"][cat_name] = list()
+		var/list/program_design = list()
+		program_design["id"] = D.id
+		program_design["name"] = D.name
+		program_design["desc"] = D.desc
+		data["programs"][cat_name] += list(program_design)
+
+	if(!length(data["programs"]))
+		data["programs"] = null
+
 	return data
 
 /obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
@@ -247,6 +288,13 @@
 				P.all_rules_required = !P.all_rules_required
 				investigate_log("[key_name(usr)] edited rule logic for program [P.name] into [P.all_rules_required ? "All" : "Any"] in cloud #[current_view]", INVESTIGATE_NANITES)
 				. = TRUE
+
+		if("refresh")
+			update_static_data(usr)
+			. = TRUE
+		if("toggle_details")
+			detail_view = !detail_view
+			. = TRUE
 
 /datum/nanite_cloud_backup
 	var/cloud_id = 0
