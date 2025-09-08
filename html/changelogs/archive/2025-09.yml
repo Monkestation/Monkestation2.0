@@ -70,6 +70,14 @@
   Zoooooooop:
   - balance: Increased bingle attack stamina damage to -65 (up from -35)
 2025-09-04:
+  Absolucy:
+  - bugfix: The radio jammer's targeted disruptor works again.
+  Ice-Type:
+  - bugfix: you can now put guns in containers by clicking on them
+  - bugfix: resonators no longer start picking at regolith you place the resonance
+      thingies on
+  - qol: you can interact with objects using a resonator by right clicking (it will
+      no longer do a resonance)
   MrBagHead:
   - rscadd: Slashers gain a new "Recall Traps" ability to recall beartraps not in
       their belt, or recreate destroyed ones. Recalling removes traps attached to
@@ -95,7 +103,146 @@
       ingame) and delete the unneeded ones. Despite some of the tags, changelogs should
       generally represent how a player might be affected by the changes rather than
       a summary of the PR''s contents. -->'
+  Wisemonster:
+  - balance: Loadout HP+ gum, gladiator helmet, and wheely-heely have been replaced
+      with weaker variants
   flleeppyy:
   - bugfix: Bloodpacks can now be drawn from with syringes.
   throwawayuseless:
   - rscadd: Wide Ape.
+2025-09-05:
+  Absolucy:
+  - refactor: (grungussuss) Refactored how sfx with multiple variants are coded, report
+      any issues with sounds not playing!
+  - sound: (Melbert) Portals made by portal guns now make sounds as expected.
+  - sound: (Melbert) Wormholes from the wormhole event now make sounds when formed.
+  - bugfix: actually fixed invisible encryption keys.
+  - bugfix: Fixed renaming items with pens.
+  Loiosh42:
+  - code_imp: Demodularization of gun code
+  Rex9001:
+  - rscadd: Optional Combat indicators - To show you want to fight someone. Toggled
+      with "C"
+  notghosti:
+  - map: Thesuses no longer has roundstart piss floods in the walls
+  - map: Thesuses no longer had a roundstart pizza bomb in holodeck
+  - map: Thesuses has its many roundstart atmospheric differences fixed
+  - map: Thesuses prison gym no long depowers every single round
+  - map: There is no longer 70000 moles of plasma waiting to burn the station alive
+      in Thesuses maintence.
+  - map: Moves the royal cheese into a nearby trash can on Thesuses to prevent an
+      instant and trapped ratking every round.
+  throwawayuseless:
+  - balance: IPCs now no longer have secretly much reduced limb health and increased
+      limb->body damage transferance. they are still easier to dismember.
+  - bugfix: Screen-saving for IPCs now works when you die
+2025-09-06:
+  Absolucy:
+  - rscadd: Added the "Inexorable" mutation, which disables softcrit and acts as a
+      painkiller, but causes ticking brute/toxin damage and forces you to whisper.
+  Ice-Type:
+  - bugfix: security holobarriers can cuff people again
+  - code_imp: their code is also way nicer
+  Sorenon:
+  - rscadd: Added the Corporate Sponsorship Quirk, Sponsorship Implants and The Advertisement
+      Echolalia Brain Trauma
+  - qol: Improved subdermal implant removal surgery
+  - bugfix: Fixed html encoding causing premature cut off in runechat messages
+  - bugfix: Fixed COMPONENT_DUPE_SOURCES duplicating components instead of adding
+      to the list of sources
+  notghosti:
+  - rscadd: Hivequeens cortical borer now gets loudspeak in hivelink.
+  - rscadd: Cortical borers now have a hud element to see who is currently already
+      hosting a borer.
+  - rscadd: Becoming a willing host now has more mechanical effects, including hearing
+      borers more clearly, a mood buff/debuff whether your infected with one, and
+      a reduced cooldown on forced speak, faster chemical processing, and a allergy
+      to sugar
+  - bugfix: Should fix health dolls breaking to borers. Probably
+  - qol: Cortical borers now cause a balloon popup when speaking in someones head
+  - qol: Borer hivemind is now sorted into radio chat tab
+  - code_imp: Willing hosts are tracked by mobs mind, not ckey.
+  - rscdel: Removed the IPC punishment system
+  - balance: Moved all associated quirks with the punishment system to the species
+      blacklist on the quirks.
+2025-09-07:
+  Absolucy:
+  - qol: Added a visible message for oozelings being melted by water.
+  - bugfix: Evolving as a xeno while no longer deletes items you're holding.
+  - bugfix: You can now light matches on matchboxes again.
+  - bugfix: Long-range gas analyzer can now analyze anomalies from a range again.
+  - bugfix: Fixed the slasher's machete not being "properly" dropped when picked up
+      by a non-slasher.
+  - bugfix: The broadcast camera now has a small amount of light when on, as intended.
+  - bugfix: Replica Fabricators work again, unfortunately.
+  - bugfix: Darkspawn now properly get a 5 minute warning before they forcefully divulge.
+  - bugfix: (Bisar) The light eater can now again eat lights from things with lights.
+  - bugfix: (GPeckman) The modsuit paint kit is no longer broken.
+  - bugfix: (Ben10Omintrix) Fixes mansus grasp not clearing runes.
+  - bugfix: (SmArtKar) You can now put dead mice into mortars/grinders properly.
+  - bugfix: (SyncIt21) No runtime when unwrenching atmos components.
+  - spellcheck: (SyncIt21) Fixed typo in attack chain define comment.
+  - map: Fixed some SMES loops in a couple of space ruins.
+  - map: The Deep Storage ruin no longer has floor lights hidden under tables and
+      lockers.
+  Absolucy, SmArtKar:
+  - admin: Clientless mobs no longer log their emotes.
+  BingusSS13:
+  - bugfix: Lighting will no longer break when you make a custom area.
+  JupiterJaeden:
+  - balance: Tracker implants no longer allow teleportation onto them. The bluespace
+      locator's range from the tracking implant kit has been massively increased to
+      compensate. The purchasable miner tracking implant still allows teleportation.
+  - balance: Tracker implants now broadcast a warning to security when surgically
+      removed. This warning bypasses radio jammers, but not full telecomms outages.
+  - balance: Tracker implants can now be remotely (and silently) deleted using a prisoner
+      management console.
+  Molti:
+  - balance: made darkspawns innately slightly tankier
+  - balance: buffed darkspawn damage reduction upgrades
+  Singul0, Killermankey:
+  - rscadd: You can now find machining machineries in engineering or in abandoned
+      maintenance rooms near engineering. Maybe you can make use of them?
+  TheColorCyan:
+  - bugfix: (necromanceranne) Every person on the station now no longer has the Tranquility
+      Evades the Shield Pinky Finger Shovegrab unarmed combat technique, an ancient
+      and forbidden strike that allows anyone (literally anyone) to bypass all forms
+      of blocking defense by simply not being in combat mode when they shove or grab
+      their target. As a direct result, the chakra energy of the Spinward Sector has
+      become severely misaligned. Oh well.
+  ThePooba:
+  - bugfix: cyberhusky
+  - bugfix: removed shitty fucking gun flip
+  Tractor Maam:
+  - spellcheck: updated the bug report title text to note the existence of the description
+      box that appears immediately after.
+  carlarctg:
+  - refactor: Refactors snipping cuffs into a bespoke cuffsnapping element, adding
+      support for delayed cuffsnipping. Adds this element to box cutters! Effectively
+      speaking everything is the same as usual.
+  throwawayuseless:
+  - rscadd: System Cleaner dedrunkifies IPCs and purges things that get IPCs drunk
+      from IPCs.
+  - rscadd: Stuff that gets IPCs drunk now adds alcohol addiction points to them and
+      sates alcohol addictions for them
+  - rscadd: IPC intoxicants also recharge them because i think the idea of a robot
+      recharging by hammering back a canister of industrial solvent like a beer is
+      funny
+  - balance: 'Nanite Program: Temperature Adjustment homeostasis speed quadrupled.
+      2.5K/second -> 10K/second, so as to be on par with leporozine'
+  - qol: Nanite program descriptions are now more explicit in their effect explanations.
+  - bugfix: 'Nanite Program: Sub-Dermal Combustion now actually ignites you as advertised,
+      instead of just making you more flammable.'
+  - rscadd: Positronic Neural Dampener, an analgesic/anesthetic for robots. Made from
+      1:1:1 Silver, Dinitrogen Plasmide, and Acetone.
+  - rscadd: Medipens of the PND, purchasable via mining rewards or company imports
+      from the relevant cargo doohickies.
+  - rscadd: If you kick a downed person while aiming groin, hitting the chest with
+      your kick will deal 50 sharp brute pain to them. It also is appropriately brutal.
+      This effect is blocked if your target is wearing thick clothing that covers
+      the groin.
+  - rscadd: Combine meth with dinitrogen plasmide to make an equivalent amount of
+      Positronic Excitement Salts (robometh)
+  - spellcheck: It's spelled Ratvar, not Rat'var, vyyvgr-engr sbbyf!
+  - bugfix: Positronic Neural Dampener pens are now purchasable from the company imports
+      console, as intended.

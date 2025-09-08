@@ -1,6 +1,6 @@
 /datum/scripture/cogscarab
 	name = "Summon Cogscarab"
-	desc = "Summon a Cogscarab shell, which will be possessed by fallen Rat'Varian soldiers. Takes longer the more cogscarabs are alive. Requires 30 vitality."
+	desc = "Summon a Cogscarab shell, which will be possessed by fallen Ratvarian soldiers. Takes longer the more cogscarabs are alive. Requires 30 vitality."
 	tip = "Use Cogscarabs to fortify Reebe while the human servants convert and sabotage the crew."
 	button_icon_state = "Cogscarab"
 	power_cost = 500
@@ -30,7 +30,7 @@
 		return FALSE
 
 	if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
-		to_chat(invoker, span_warning("It is too late to summon cogscarabs now, Rat'var is coming!"))
+		to_chat(invoker, span_warning("It is too late to summon cogscarabs now, Ratvar is coming!"))
 		return FALSE
 	return TRUE
 

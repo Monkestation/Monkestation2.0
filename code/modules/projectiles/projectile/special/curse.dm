@@ -53,8 +53,8 @@
 	if(!T) //T can be in nullspace when src is set to QDEL
 		return
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
-	starting.Beam(T, icon_state = "curse[handedness]", time = 32, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
-	animate(T, alpha = 0, time = 32)
+	var/datum/beam/beam = starting.Beam(T, icon_state = "curse[handedness]", time = 3.2 SECONDS, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
+	animate(beam.visuals, alpha = 0, time = 3.2 SECONDS)
 
 /obj/projectile/curse_hand/on_range()
 	finale()

@@ -50,9 +50,9 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 			count++
 
 	if(failure)
-		parts += "<span class='redtext big'>The clock cult has failed to protect the ark and summon Rat'var, he will remain forever trapped!</span>"
+		parts += "<span class='redtext big'>The clock cult has failed to protect the ark and summon Ratvar, he will remain forever trapped!</span>"
 	else
-		parts += "<span class='greentext big'>The clock cult has succeeded! Rat'var's light shall shine forever more!</span>"
+		parts += "<span class='greentext big'>The clock cult has succeeded! Ratvar's light shall shine forever more!</span>"
 
 	if(length(checked_objectives))
 		parts += "<b>The clock cultists' objectives were:</b>"
@@ -70,12 +70,12 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	check_member_distribution()
 	max_human_servants = round(max((get_active_player_count() / 8), max_human_servants))
 	var/human_servant_count = length(human_servants)
-	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Rat'var\
+	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Ratvar\
 						[SSthe_ark.charged_anchoring_crystals >= ANCHORING_CRYSTALS_TO_SUMMON ? "." : " and \
 						[ANCHORING_CRYSTALS_TO_SUMMON] Anchoring Crystal[ANCHORING_CRYSTALS_TO_SUMMON > 1 ? "s are" : " is"] summoned and protected on the station."]"
 
 	if((human_servant_count * 2) > max_human_servants && warning_stage < CONVERSION_WARNING_HALFWAY)
-		send_clock_message(null, span_bigbrass("Rat'var's influence is growing. [main_message]"), sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
+		send_clock_message(null, span_bigbrass("Ratvar's influence is growing. [main_message]"), sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 		warning_stage = CONVERSION_WARNING_HALFWAY
 
 	else if(human_servant_count > ((3/4) * max_human_servants) && warning_stage < CONVERSION_WARNING_THREEQUARTERS)
@@ -160,7 +160,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	return SSthe_ark.charged_anchoring_crystals >= ANCHORING_CRYSTALS_TO_SUMMON || completed
 
 /datum/objective/ratvar
-	explanation_text = "Protect The Ark so that Rat'var may enlighten this world!"
+	explanation_text = "Protect The Ark so that Ratvar may enlighten this world!"
 
 /datum/objective/ratvar/check_completion()
 	return GLOB.ratvar_risen || completed
