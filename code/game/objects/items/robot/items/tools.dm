@@ -31,7 +31,7 @@
 	/// The owner of the dampener
 	var/mob/living/silicon/robot/host = null
 	/// The field
-	var/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/dampening_field
+	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/peaceborg/dampening_field
 	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10

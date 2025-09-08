@@ -111,6 +111,9 @@
 		/obj/item/flashlight = 2,
 		/obj/item/restraints/handcuffs/cable = 1
 	)
+	blacklist = list(
+		/obj/item/flashlight/lamp/space_bubble,
+	)
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/extendohand_r
