@@ -1267,7 +1267,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					if(iter_clothing.clothing_flags & THICKMATERIAL)
 						if(iter_clothing.body_parts_covered && BODY_ZONE_PRECISE_GROIN)
 							return TRUE
-				target.sharp_pain(BODY_ZONE_CHEST, 50, BRUTE, 30 SECONDS)
+				target.sharp_pain(BODY_ZONE_CHEST, 25, BRUTE, 30 SECONDS)
 				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
 				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
 				target.emote("scream", message="screams for dear life!")
