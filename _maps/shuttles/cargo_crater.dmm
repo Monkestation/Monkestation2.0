@@ -76,7 +76,8 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "k" = (
-/obj/machinery/door/airlock/qm/glass{
+/obj/machinery/door/airlock/command/glass{
+	dir = 4;
 	name = "Cockpit"
 	},
 /turf/open/floor/iron/dark/smooth_half,
@@ -130,9 +131,7 @@
 "y" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2";
-	name = "Unloading Conveyor";
-	pixel_x = 11;
-	pixel_y = -4
+	name = "Unloading Conveyor"
 	},
 /turf/open/floor/iron/dark/smooth_half,
 /area/shuttle/supply)
@@ -252,9 +251,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
 	id = "QMLoad";
-	name = "Loading Conveyor";
-	pixel_x = 11;
-	pixel_y = 22
+	name = "Loading Conveyor"
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/smooth_half,
@@ -307,14 +304,6 @@
 /area/shuttle/supply)
 "X" = (
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/paper_bin{
-	pixel_x = -1;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_x = -2;
-	pixel_y = 5
-	},
 /obj/machinery/button/door/directional/east{
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
