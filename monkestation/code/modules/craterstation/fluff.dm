@@ -117,6 +117,15 @@
 	content = list("<center><b>FATAL ERROR</center></b> <BR> <BR> <b>WARNING:</b> MOTOR INTEGRITY COMPROMISED. PLEASE CONTACT YOUR NEAREST SERVICE TEAM.")
 	upperinfo = "Signed in as ADMIN // Johnson & Co Architecture - ntOS 3.11"
 
+/obj/machinery/computer/terminal/craterstation/cargo_helm
+	name = "helm terminal"
+	desc = "The helm terminal of the cargo shuttle. Seems to be locked-down."
+	tguitheme = "nanotrasen"
+	icon_screen = "shuttle"
+	icon_keyboard = "tech_key"
+	content = list("<center><b>SYSTEM LOCKED</center></b> <BR> <BR> Due to this vessel's nature as a high-liability automated cargo relay (CentCom direct transport), this console has been locked. Contact Central Command or your nearest Galaxywise technician for an override.")
+	upperinfo = "HelmOS 3.11 - Galaxywise Fleetyards - Autopilot Mode"
+
 //fake armour for theatre
 
 /obj/item/clothing/suit/costume/fake_armor
