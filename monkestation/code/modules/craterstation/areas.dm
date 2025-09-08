@@ -67,3 +67,6 @@
 
 /area/station/cargo/warehouse/abandoned
 	name = "Abandoned Warehouse"
+
+/area/station/engineering/machining
+	name = "Machining Room"
