@@ -156,7 +156,6 @@
 /obj/projectile/bullet/neville
 	name ="20x160mm Neville"
 	speed = 0.65
-	range = 50 // If you managed to range out this thing, funny.
 	damage = 50
 	dismemberment = 25
 	armour_penetration = 85 // she may be big, but its armor piercing. less damage then the .50 cal cause of it
