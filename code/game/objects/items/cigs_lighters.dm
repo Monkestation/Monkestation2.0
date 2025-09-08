@@ -40,6 +40,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/match/fire_act(exposed_temperature, exposed_volume)
 	matchignite()
 
+/obj/item/match/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, /obj/item/storage/box/matches)
+
 /obj/item/match/proc/matchignite()
 	if(lit || burnt)
 		return
