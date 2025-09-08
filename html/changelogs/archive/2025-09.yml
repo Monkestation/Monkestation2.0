@@ -168,8 +168,27 @@
 2025-09-07:
   Absolucy:
   - qol: Added a visible message for oozelings being melted by water.
+  - bugfix: Evolving as a xeno while no longer deletes items you're holding.
+  - bugfix: You can now light matches on matchboxes again.
+  - bugfix: Long-range gas analyzer can now analyze anomalies from a range again.
+  - bugfix: Fixed the slasher's machete not being "properly" dropped when picked up
+      by a non-slasher.
+  - bugfix: The broadcast camera now has a small amount of light when on, as intended.
+  - bugfix: Replica Fabricators work again, unfortunately.
+  - bugfix: Darkspawn now properly get a 5 minute warning before they forcefully divulge.
+  - bugfix: (Bisar) The light eater can now again eat lights from things with lights.
+  - bugfix: (GPeckman) The modsuit paint kit is no longer broken.
+  - bugfix: (Ben10Omintrix) Fixes mansus grasp not clearing runes.
+  - bugfix: (SmArtKar) You can now put dead mice into mortars/grinders properly.
+  - bugfix: (SyncIt21) No runtime when unwrenching atmos components.
+  - spellcheck: (SyncIt21) Fixed typo in attack chain define comment.
+  - map: Fixed some SMES loops in a couple of space ruins.
+  - map: The Deep Storage ruin no longer has floor lights hidden under tables and
+      lockers.
   Absolucy, SmArtKar:
   - admin: Clientless mobs no longer log their emotes.
+  BingusSS13:
+  - bugfix: Lighting will no longer break when you make a custom area.
   JupiterJaeden:
   - balance: Tracker implants no longer allow teleportation onto them. The bluespace
       locator's range from the tracking implant kit has been massively increased to
@@ -184,8 +203,46 @@
   Singul0, Killermankey:
   - rscadd: You can now find machining machineries in engineering or in abandoned
       maintenance rooms near engineering. Maybe you can make use of them?
+  TheColorCyan:
+  - bugfix: (necromanceranne) Every person on the station now no longer has the Tranquility
+      Evades the Shield Pinky Finger Shovegrab unarmed combat technique, an ancient
+      and forbidden strike that allows anyone (literally anyone) to bypass all forms
+      of blocking defense by simply not being in combat mode when they shove or grab
+      their target. As a direct result, the chakra energy of the Spinward Sector has
+      become severely misaligned. Oh well.
   ThePooba:
   - bugfix: cyberhusky
+  - bugfix: removed shitty fucking gun flip
   Tractor Maam:
   - spellcheck: updated the bug report title text to note the existence of the description
       box that appears immediately after.
+  carlarctg:
+  - refactor: Refactors snipping cuffs into a bespoke cuffsnapping element, adding
+      support for delayed cuffsnipping. Adds this element to box cutters! Effectively
+      speaking everything is the same as usual.
+  throwawayuseless:
+  - rscadd: System Cleaner dedrunkifies IPCs and purges things that get IPCs drunk
+      from IPCs.
+  - rscadd: Stuff that gets IPCs drunk now adds alcohol addiction points to them and
+      sates alcohol addictions for them
+  - rscadd: IPC intoxicants also recharge them because i think the idea of a robot
+      recharging by hammering back a canister of industrial solvent like a beer is
+      funny
+  - balance: 'Nanite Program: Temperature Adjustment homeostasis speed quadrupled.
+      2.5K/second -> 10K/second, so as to be on par with leporozine'
+  - qol: Nanite program descriptions are now more explicit in their effect explanations.
+  - bugfix: 'Nanite Program: Sub-Dermal Combustion now actually ignites you as advertised,
+      instead of just making you more flammable.'
+  - rscadd: Positronic Neural Dampener, an analgesic/anesthetic for robots. Made from
+      1:1:1 Silver, Dinitrogen Plasmide, and Acetone.
+  - rscadd: Medipens of the PND, purchasable via mining rewards or company imports
+      from the relevant cargo doohickies.
+  - rscadd: If you kick a downed person while aiming groin, hitting the chest with
+      your kick will deal 50 sharp brute pain to them. It also is appropriately brutal.
+      This effect is blocked if your target is wearing thick clothing that covers
+      the groin.
+  - rscadd: Combine meth with dinitrogen plasmide to make an equivalent amount of
+      Positronic Excitement Salts (robometh)
+  - spellcheck: It's spelled Ratvar, not Rat'var, vyyvgr-engr sbbyf!
+  - bugfix: Positronic Neural Dampener pens are now purchasable from the company imports
+      console, as intended.

@@ -448,7 +448,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		return
 	to_chat(owner.current, span_userdanger("You feel the skin you're wearing crackling like paper - you will forcefully divulge soon! Get somewhere hidden and dark!"))
 	owner.current.playsound_local(owner.current, 'sound/magic/darkspawn/divulge_01.ogg', 50, FALSE, pressure_affected = FALSE)
-	addtimer(CALLBACK(src, PROC_REF(force_divulge), 5 MINUTES))
+	addtimer(CALLBACK(src, PROC_REF(force_divulge)), 5 MINUTES)
 
 /datum/antagonist/darkspawn/proc/force_divulge()
 	if(darkspawn_state != DARKSPAWN_MUNDANE)

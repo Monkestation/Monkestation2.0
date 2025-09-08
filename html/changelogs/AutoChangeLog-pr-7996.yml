@@ -1,6 +1,0 @@
-author: "throwawayuseless"
-delete-after: True
-changes:
-  - rscadd: "System Cleaner dedrunkifies IPCs and purges things that get IPCs drunk from IPCs."
-  - rscadd: "Stuff that gets IPCs drunk now adds alcohol addiction points to them and sates alcohol addictions for them"
-  - rscadd: "IPC intoxicants also recharge them because i think the idea of a robot recharging by hammering back a canister of industrial solvent like a beer is funny"
