@@ -482,6 +482,7 @@
 	var/obj/item/organ/internal/eyes/user_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(user_eyes)
 		user_eyes.flash_protect = initial(user_eyes.flash_protect)
+		user_eyes.lighting_cutoff = initial(user_eyes.lighting_cutoff)
 		user_eyes.color_cutoffs = initial(user_eyes.color_cutoffs)
 		user_eyes.sight_flags = initial(user_eyes.sight_flags)
 	user.update_sight()
