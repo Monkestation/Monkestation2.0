@@ -323,7 +323,7 @@ export const NaniteProgramHub = (props) => {
                     <Button
                       icon="download"
                       content="Download"
-                      disabled={current_view === 0}
+                      // disabled={!current_view} Not working
                       onClick={() =>
                         act('download', {
                           program_id: program.id,
@@ -345,7 +345,7 @@ export const NaniteProgramHub = (props) => {
                       <Button
                         icon="download"
                         content="Download"
-                        disabled={current_view === 0}
+                        // disabled={!current_view}
                         onClick={() =>
                           act('download', {
                             program_id: program.id,
