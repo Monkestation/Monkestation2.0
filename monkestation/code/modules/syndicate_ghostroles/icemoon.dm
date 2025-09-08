@@ -177,7 +177,7 @@
 	"\n<big><span class='warning'>LAW EXPLANATION FOR SYNDICATE BAR DRONES</span></big>\n"+\
 	"<span class='notice'>You are meant to assist your base's crew in maintenance (such as cooking and cleaning) and keep them well-fed. You are authorised to attack planetary fauna if necessary. </span>\n"+\
 	"<span class='notice'>BARDRONE GUIDELINES</span>\n"+\
-	"<span class='notice'>     -Do not harm people. Harming fauna, however, is allowed.</span>\n"+\
+	"<span class='notice'>     -Do not harm people. Harming fauna, however, is allowed if they are damaging the bar. The rest of the base is not your concern, as long as the bar is functional.</span>\n"+\
 	"<span class='notice'>     -Do not interact with anyone outside of your base.</span>\n"+\
 	"<span class='notice'>     -Do not get into altercations with other players, remove yourself from the situation. </span>\n"+\
 	"<span class='notice'>     -Do not protect the bar from sentient agressors. </span>\n"+\

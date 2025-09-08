@@ -139,7 +139,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "crater_cargo_windows";
-	dir = 1
+	dir = 1;
+	set_dir_on_move = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
@@ -243,7 +244,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "crater_cargo_windows";
-	dir = 8
+	dir = 8;
+	set_dir_on_move = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
