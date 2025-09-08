@@ -9110,8 +9110,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
+/obj/structure/closet/crate/preopen{
 	name = "Chemistry Supplies"
 	},
 /obj/item/storage/box/beakers,
