@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit start
 	if(IS_CLOCK(src)) //cant emag clock borgs
-		to_chat(src, span_brass("The light of Rat'var protects you from subversion!"))
+		to_chat(src, span_brass("The light of Ratvar protects you from subversion!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag cyborg [key_name(src)], but they were a clockwork borg.")
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit end

@@ -5,7 +5,6 @@
 	damage = 30
 	wound_bonus = 20 ///monke -10 -> 20
 	wound_falloff_tile = -10
-/// Monkestation edit start
 
 /obj/projectile/bullet/c45/rubber
 	name = ".45 bullet"
@@ -20,8 +19,6 @@
 	sharpness = NONE
 	embedding = null
 
-/// Monkestation edit end
-
 /obj/projectile/bullet/c45/ap
 	name = ".45 armor-piercing bullet"
 	armour_penetration = 75
@@ -35,6 +32,10 @@
 	name = ".45 hollow-point bullet"
 	damage = 40
 	weak_against_armour = TRUE
+
+/obj/projectile/bullet/c45/caseless
+	damage = 26 //parent damage var is 30
+
 
 // 4.6x30mm (Autorifles)
 
@@ -55,3 +56,35 @@
 	name = "4.6x30mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1
+
+/obj/projectile/bullet/c46x30mm/salt
+	name = "4.6x30mm saltshot bullet"
+	damage = 0
+	stamina = 40
+	embedding = null
+	sharpness = NONE
+
+/obj/projectile/bullet/c46x30mm/rub
+	name = "4.6x30mm rubber bullet"
+	damage = 4
+	stamina = 50
+	embedding = null
+	sharpness = NONE
+
+
+// .27-54 Cesarzowa
+// Low-caliber crew SMG round
+
+/obj/projectile/bullet/c27_54cesarzowa
+	name = ".27-54 Cesarzowa piercing bullet"
+	damage = 15
+	armour_penetration = 30
+	wound_bonus = -10
+
+/obj/projectile/bullet/c27_54cesarzowa/rubber
+	name = ".27-54 Cesarzowa rubber bullet"
+	stamina = 30
+	damage = 6
+	weak_against_armour = TRUE
+	wound_bonus = -30
+	bare_wound_bonus = -10

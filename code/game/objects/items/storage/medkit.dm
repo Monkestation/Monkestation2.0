@@ -803,14 +803,7 @@
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
 
-/obj/item/storage/organbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(is_reagent_container(inserted) && inserted.is_open_container())
-		return FALSE
-	if(istype(inserted, /obj/item/plunger))
-		return FALSE
-	return TRUE
-
-/obj/item/storage/organbox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/storage/organbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_reagent_container(tool) && tool.is_open_container())
 		var/obj/item/reagent_containers/RC = tool
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
@@ -820,11 +813,11 @@
 		return ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/plunger))
 		balloon_alert(user, "plunging...")
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
 		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
