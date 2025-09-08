@@ -1,0 +1,12 @@
+author: "BingusSS13"
+delete-after: True
+changes:
+  - rscadd: "Added CentCom cyborgs. (admin only. duh.)"
+  - rscadd: "Added deluxe Rapid-Service-Fabricator. (currently admin only.)"
+  - balance: "Cyborg-mounted disablers now consume x15 more energy."
+  - qol: "Service storage apparatuses can now hold folders and clipboards."
+  - qol: "Cyborgs can now right click chem dispensers, biogenerators, and more with a storage apparatus to quickly eject whatever's inside into the storage apparatus."
+  - bugfix: "SSD cyborgs can now select a skin from a newly installed cyborg transform module after rejoining. (If it has multiple skins, that is.)"
+  - bugfix: "Service storage apparatuses can add and remove food from ovens again."
+  - bugfix: "Cyborg storage apparatuses can place held objects on tables again."
+  - bugfix: "Cyborgs can toggle griddles again."

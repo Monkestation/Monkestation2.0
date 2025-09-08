@@ -552,3 +552,12 @@
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/coagulant = 10, /datum/reagent/iron = 20, /datum/reagent/medicine/salglu_solution = 60)
 	stripe_style = "blood"
 	inhand_icon_state = "stimpen"
+
+/obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	name = "positronic neural dampener autoinjector"
+	desc = "An autoinjector that can be used to dampen the stimulus response capabilties and pain senses of robots and positronics. One dose for analgesia, two for anesthesia. May cause slight decrease in motor function after injection."
+	icon_state = "invispen"
+	base_icon_state = "invispen"
+	amount_per_transfer_from_this = 10
+	volume = 10
+	list_reagents = list(/datum/reagent/medicine/painkiller/robopiates = 7.5, /datum/reagent/dinitrogen_plasmide = 2.5)

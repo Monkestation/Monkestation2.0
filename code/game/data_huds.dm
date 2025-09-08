@@ -80,6 +80,9 @@
 /datum/atom_hud/data/human/permit
 	hud_icons = list(PERMIT_HUD)
 
+/datum/atom_hud/borer
+	hud_icons = list(BORER_HUD)
+
 /datum/atom_hud/ai_detector/show_to(mob/new_viewer)
 	..()
 	if(!new_viewer || hud_users.len != 1)

@@ -1,0 +1,4 @@
+author: "LassiH"
+delete-after: True
+changes:
+  - balance: "rld and mrld glowstick mode will now have same cooldown as other light modes and cost 20 materials instead of 5"
