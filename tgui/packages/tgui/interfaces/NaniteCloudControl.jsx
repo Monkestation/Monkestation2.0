@@ -683,11 +683,16 @@ export const NaniteCloudControl = (props) => {
   const { act, data } = useBackend();
   const { has_disk, current_view, new_backup_id } = data;
   return (
-    <Window width={875} height={800}>
+    <Window width={1295} height={700}>
       <Window.Content scrollable>
         <Stack>
           <Stack.Item width="500px">
             <NaniteProgramHub />
+          </Stack.Item>
+          <Stack.Item width="420px">
+            <Section>
+              <NaniteDiskBox />
+            </Section>
           </Stack.Item>
           <Stack.Item width="375px">
             <Section
@@ -731,9 +736,7 @@ export const NaniteCloudControl = (props) => {
             </Section>
           </Stack.Item>
         </Stack>
-        <Section>
-          <NaniteDiskBox />
-        </Section>
+
         {/*  TODO Add ability to save cloud to a disk?
         <Section
           title="Program Disk"
