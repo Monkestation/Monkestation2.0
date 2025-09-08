@@ -187,6 +187,8 @@
       lockers.
   Absolucy, SmArtKar:
   - admin: Clientless mobs no longer log their emotes.
+  BingusSS13:
+  - bugfix: Lighting will no longer break when you make a custom area.
   JupiterJaeden:
   - balance: Tracker implants no longer allow teleportation onto them. The bluespace
       locator's range from the tracking implant kit has been massively increased to
@@ -201,12 +203,23 @@
   Singul0, Killermankey:
   - rscadd: You can now find machining machineries in engineering or in abandoned
       maintenance rooms near engineering. Maybe you can make use of them?
+  TheColorCyan:
+  - bugfix: (necromanceranne) Every person on the station now no longer has the Tranquility
+      Evades the Shield Pinky Finger Shovegrab unarmed combat technique, an ancient
+      and forbidden strike that allows anyone (literally anyone) to bypass all forms
+      of blocking defense by simply not being in combat mode when they shove or grab
+      their target. As a direct result, the chakra energy of the Spinward Sector has
+      become severely misaligned. Oh well.
   ThePooba:
   - bugfix: cyberhusky
   - bugfix: removed shitty fucking gun flip
   Tractor Maam:
   - spellcheck: updated the bug report title text to note the existence of the description
       box that appears immediately after.
+  carlarctg:
+  - refactor: Refactors snipping cuffs into a bespoke cuffsnapping element, adding
+      support for delayed cuffsnipping. Adds this element to box cutters! Effectively
+      speaking everything is the same as usual.
   throwawayuseless:
   - rscadd: System Cleaner dedrunkifies IPCs and purges things that get IPCs drunk
       from IPCs.
