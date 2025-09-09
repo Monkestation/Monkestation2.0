@@ -378,7 +378,7 @@
 		return ..()
 
 	if(istype(target, /obj/structure/lavaland/ash_walker))
-		return
+		return NONE
 
 	if(isopenturf(target))
 		var/turf/target_turf = target
@@ -386,18 +386,18 @@
 			to_chat(user, span_warning("You begin to corrupt the land even further..."))
 			if(!do_after(user, 4 SECONDS, target = target_turf))
 				to_chat(user, span_warning("[src] had their casting cut short!"))
-				return
+				return ITEM_INTERACT_BLOCKING
 
 			target_turf.ChangeTurf(/turf/open/lava/smooth/lava_land_surface)
 			to_chat(user, span_notice("[src] sparks, corrupting the area too far!"))
-			return
+			return ITEM_INTERACT_SUCCESS
 
 		if(!do_after(user, 2 SECONDS, target = target_turf))
 			to_chat(user, span_warning("[src] had their casting cut short!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		target_turf.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
