@@ -31,7 +31,6 @@ export const NaniteRemoteContent = (props) => {
     comms,
     message,
     saved_settings = [],
-	can_lock,
 	silicon,
   } = data;
 
@@ -49,7 +48,7 @@ export const NaniteRemoteContent = (props) => {
           <Button
             icon="lock"
             content="Lock Interface"
-			disabled={!can_lock}
+			disabled={silicon}
             onClick={() => act('lock')}
           />
         }

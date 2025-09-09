@@ -19,7 +19,6 @@
 	var/code = 0
 	var/relay_code = 0
 	var/current_program_name = "Program"
-	var/can_lock = TRUE
 	var/silicon = FALSE
 
 /obj/item/nanite_remote/examine(mob/user)
@@ -98,7 +97,6 @@
 
 /obj/item/nanite_remote/ui_data()
 	var/list/data = list()
-	data["can_lock"] = can_lock
 	data["code"] = code
 	data["relay_code"] = relay_code
 	data["mode"] = mode
@@ -172,7 +170,7 @@
 			mode = params["mode"]
 			. = TRUE
 		if("lock")
-			if(!(obj_flags & EMAGGED) & can_lock)
+			if(!(obj_flags & EMAGGED) & !silicon)
 				locked = TRUE
 				update_appearance()
 			. = TRUE
@@ -242,7 +240,6 @@
 			. = TRUE
 
 /obj/item/nanite_remote/cyborg
-	can_lock = FALSE
 	silicon = TRUE
 
 #undef REMOTE_MODE_OFF

@@ -42,7 +42,6 @@
 
 /datum/nanite_remote_settings/ui_data(mob/user)
 	var/list/data = list()
-	data["can_lock"] = FALSE
 	data["code"] = code
 	data["relay_code"] = relay_code
 	data["mode"] = mode
