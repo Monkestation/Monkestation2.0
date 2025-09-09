@@ -10,10 +10,9 @@
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
 	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID
 	var/new_backup_id = 1
-	var/datum/techweb/linked_techweb
-	var/current_category = "Main"
-	var/detail_view = TRUE
-	var/categories = list(
+	var/datum/techweb/linked_techweb		//The techweb we are linked to.
+	var/detail_view = TRUE					//Is nanite program hub in detailed view mode
+	var/categories = list(					//Which program categories there are for nanite program hub section of UI
 		list(name = "Utility Nanites"),
 		list(name = "Medical Nanites"),
 		list(name = "Sensor Nanites"),
@@ -23,7 +22,7 @@
 		list(name = "Protocols"),
 	)
 
-	var/datum/nanite_program/current_program
+	var/datum/nanite_program/current_program	//The nanite program currently in the programming (middle) section.
 
 /obj/machinery/computer/nanite_cloud_controller/Initialize()
 	. = ..()
@@ -90,7 +89,6 @@
 				data["can_rule"] = TRUE
 		else
 			data["can_rule"] = FALSE
-		// data["disk"] = disk_data TODO CHECK THIS
 
 
 	data["new_backup_id"] = new_backup_id

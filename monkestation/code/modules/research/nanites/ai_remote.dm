@@ -22,13 +22,12 @@
 	remote_settings.ui_interact(owner)
 
 /datum/nanite_remote_settings
-	var/name = "Nanite Remote Settings"
-	var/mode = REMOTE_MODE_OFF
-	var/list/saved_settings = list()
-	var/last_id = 0
-	var/code = 0
-	var/relay_code = 0
-	var/current_program_name = "Program"
+	var/mode = REMOTE_MODE_OFF					//Which mode the remote is on, is it on targeted mode? is it on AOE mode?
+	var/list/saved_settings = list()			//Stores lists of settings.
+	var/last_id = 0								//Believe this is for which point in list to save to.
+	var/code = 0								//Which code is being targeted.
+	var/relay_code = 0							//Which	relay is being targeted.
+	var/current_program_name = "Program"		//name of the program you're on.
 
 /datum/nanite_remote_settings/ui_state(mob/user)
 	return GLOB.always_state
@@ -36,7 +35,7 @@
 /datum/nanite_remote_settings/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "NaniteRemote", name)
+		ui = new(user, src, "NaniteRemote", "Nanite Remote Settings")
 		ui.open()
 
 /datum/nanite_remote_settings/ui_data(mob/user)
