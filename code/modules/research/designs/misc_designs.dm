@@ -1158,6 +1158,29 @@
 	build_path = /obj/item/disk/nifsoft_uploader/diag_hud
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/nifsoft_hud/cargo
+	name = "Permit HUD NIFSoft"
+	desc = "A NIFSoft datadisk containing the Permit HUD NIFsoft."
+	id = "nifsoft_hud_cargo"
+	build_path = /obj/item/disk/nifsoft_uploader/permit_hud
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/nifsoft_money_sense
+	name = "Automatic Appraisal NIFSoft"
+	desc = "A NIFSoft datadisk containing the Automatic Appraisal NIFsoft."
+	id = "nifsoft_money_sense"
+	build_type = PROTOLATHE | AWAY_LATHE
+	build_path = /obj/item/disk/nifsoft_uploader/money_sense
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
+	)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
 // Anomaly locked item
 
 /datum/design/space_furnace

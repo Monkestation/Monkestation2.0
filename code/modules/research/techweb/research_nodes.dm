@@ -115,9 +115,9 @@
 	design_ids = list(
 		"anomaly_neutralizer",
 		"reactive_armour",
+		"space_furnace",
 		//"artifact_heater", //MONKESTATION EDIT REMOVAL
 		//"artifact_xray",	//MONKESTATION EDIT REMOVAL
-		"space_furnace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

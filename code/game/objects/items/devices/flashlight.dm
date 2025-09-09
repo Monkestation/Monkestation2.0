@@ -983,8 +983,8 @@
 		QDEL_NULL(space_bubble)
 	return ..()
 
-/obj/item/flashlight/lamp/space_bubble/init_slapcrafting()
-	return
+///obj/item/flashlight/lamp/space_bubble/init_slapcrafting()
+//	return
 
 /obj/item/flashlight/lamp/space_bubble/update_icon_state()
 	. = ..()
@@ -1005,8 +1005,8 @@
 
 /obj/item/flashlight/lamp/space_bubble/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(light_on && istype(tool, /obj/item/cigarette))
-		var/obj/item/cigarette/cig = tool
+	if(light_on && istype(tool, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/cig = tool
 		if(cig.lit)
 			return NONE
 		cig.light(flavor_text = "[user] lights up \the [cig] using the burning coming out of the [src]. Damn.")

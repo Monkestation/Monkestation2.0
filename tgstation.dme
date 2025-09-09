@@ -1691,6 +1691,8 @@
 #include "code\datums\proximity_monitor\fields\projectile_dampener.dm"
 #include "code\datums\proximity_monitor\fields\timestop.dm"
 #include "code\datums\proximity_monitor\fields\void_storm.dm"
+#include "code\datums\proximity_monitor\fields\projectile_dampener\projectile_dampener.dm"
+#include "code\datums\proximity_monitor\fields\projectile_dampener\projectile_dampener_effects.dm"
 #include "code\datums\quirks\_quirk.dm"
 #include "code\datums\quirks\negative_quirks\allergic.dm"
 #include "code\datums\quirks\negative_quirks\bad_back.dm"
