@@ -2788,6 +2788,8 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "aRB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/caution/no_step,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
 "aRF" = (
@@ -7339,6 +7341,12 @@
 /area/station/maintenance/space_hut/cabin)
 "cnB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/caution/no_step{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
 "cnF" = (
@@ -13425,6 +13433,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
 "egV" = (
@@ -15949,6 +15960,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"eTl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine/insulation,
+/area/station/engineering/supermatter/room)
 "eTv" = (
 /obj/structure/fluff/metalpole/end/right{
 	dir = 4;
@@ -18449,6 +18466,9 @@
 /area/station/service/hydroponics)
 "fDJ" = (
 /obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
 "fDK" = (
@@ -34199,6 +34219,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
 "klp" = (
@@ -40121,6 +40144,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
+"lXX" = (
+/obj/effect/turf_decal/caution/no_step{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine/insulation,
+/area/station/engineering/supermatter/room)
 "lYf" = (
 /obj/machinery/power/smes/full,
 /obj/structure/cable,
@@ -45151,6 +45183,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"nyS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/engine/insulation,
+/area/station/engineering/supermatter/room)
 "nyZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/west,
@@ -71269,6 +71307,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/barber)
+"vgs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine/insulation,
+/area/station/engineering/supermatter/room)
 "vgz" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/atmospheric_technician,
@@ -72349,6 +72396,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/radshelter/weathershelter)
+"vvQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine/insulation,
+/area/station/engineering/supermatter/room)
 "vvV" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -80314,6 +80367,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"xPt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/engine/insulation,
+/area/station/engineering/supermatter/room)
 "xPv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -80610,6 +80669,9 @@
 "xVe" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/engine/insulation,
 /area/station/engineering/supermatter/room)
@@ -194178,11 +194240,11 @@ dnn
 dnn
 dnn
 dnn
-dJZ
-dJZ
-dJZ
-dJZ
-dJZ
+nyS
+crl
+lXX
+crl
+vvQ
 dnn
 dnn
 dnn
@@ -194435,11 +194497,11 @@ dnn
 dnn
 dnn
 dnn
-dJZ
+tGh
 dJZ
 kVp
 dJZ
-dJZ
+sHy
 dnn
 dnn
 dnn
@@ -194690,15 +194752,15 @@ wIp
 kxk
 dnn
 dnn
-dJZ
-dJZ
+nyS
+crl
 fDJ
 uid
 uid
 uid
 kll
-dJZ
-dJZ
+crl
+vvQ
 dnn
 dnn
 hwN
@@ -194947,7 +195009,7 @@ wIp
 lCA
 dnn
 dnn
-dJZ
+tGh
 dJZ
 sHy
 crm
@@ -194955,7 +195017,7 @@ crm
 crm
 tGh
 dJZ
-dJZ
+sHy
 dnn
 dnn
 mSa
@@ -195461,7 +195523,7 @@ wIp
 pTN
 dnn
 dnn
-dJZ
+tGh
 dJZ
 sHy
 crm
@@ -195469,7 +195531,7 @@ crm
 crm
 tGh
 dJZ
-dJZ
+sHy
 dnn
 dnn
 fmD
@@ -195718,15 +195780,15 @@ wIp
 pTN
 dnn
 dnn
-dJZ
-dJZ
+xPt
+uid
 egO
-crl
-crl
-crl
+vgs
+vgs
+vgs
 xVe
-dJZ
-dJZ
+uid
+eTl
 dnn
 dnn
 fmD
