@@ -12,16 +12,16 @@
 /obj/item/syndie_glue/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(!interacting_with)
-		return
+		return NONE
 	else
 		if(uses == 0)
 			to_chat(user, "<span class='warning'>The bottle of glue is empty!</span>")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(istype(interacting_with, /obj/item))
 			var/obj/item/I = interacting_with
 			if(HAS_TRAIT_FROM(I, TRAIT_NODROP, GLUED_ITEM_TRAIT))
 				to_chat(user, "<span class='warning'>[I] is already sticky!</span>")
-				return
+				return ITEM_INTERACT_BLOCKING
 			uses -= 1
 			ADD_TRAIT(I, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 			I.desc += " It looks sticky."
@@ -30,4 +30,4 @@
 				icon_state = "glue_used"
 				name = "empty bottle of super glue"
 				ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
-			return
+			return ITEM_INTERACT_SUCCESS
