@@ -21,12 +21,12 @@
 	lighting_cutoff_blue = 50
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	faction = list(FACTION_DARKSPAWN)
+	initial_language_holder = /datum/language_holder/darkspawn
 
 /mob/living/simple_animal/hostile/illusion/darkspawn/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/light_eater)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	grant_language(/datum/language/darkspawn)
 
 /mob/living/simple_animal/hostile/illusion/darkspawn/Life(seconds_per_tick, times_fired)
 	. = ..()
@@ -42,9 +42,9 @@
 	. = ..()
 	life_span = INFINITY //doesn't actually despawn
 
-/mob/living/simple_animal/hostile/illusion/darkspawn/psyche/Login()
+/mob/living/simple_animal/hostile/illusion/darkspawn/psyche/mind_initialize()
 	. = ..()
-	if(mind	&& !IS_PSYCHE(src))
+	if(!IS_PSYCHE(src))
 		mind.add_antag_datum(/datum/antagonist/psyche)
 
 ///special antagonist used to give an internal camera and antag hud to non-thrall darkspawn teammates
@@ -64,7 +64,7 @@
 	add_team_hud(current_mob, /datum/antagonist/thrall_darkspawn)
 	add_team_hud(current_mob, /datum/antagonist/darkspawn)
 
-	current_mob.grant_language(/datum/language/darkspawn)
+	current_mob.grant_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction |= FACTION_DARKSPAWN
 
 	current_mob.AddComponent(/datum/component/internal_cam, list(FACTION_DARKSPAWN))
@@ -77,7 +77,7 @@
 	if(!current_mob)
 		return //sanity check
 
-	current_mob.remove_language(/datum/language/darkspawn)
+	current_mob.remove_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction -= FACTION_DARKSPAWN
 	qdel(current_mob.GetComponent(/datum/component/internal_cam))
 

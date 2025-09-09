@@ -67,11 +67,17 @@
 		/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/creme_de_menthe, /datum/reagent/consumable/ethanol/gin,\
 		/datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake,\
 		/datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,\
-		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine\
+		/datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine,\
 	)
 #define HACKED_SERVICE_REAGENTS list(\
 		/datum/reagent/toxin/fakebeer,\
-		/datum/reagent/consumable/ethanol/fernet\
+		/datum/reagent/consumable/ethanol/fernet,\
+	)
+#define CENTCOM_SERVICE_REAGENTS list(\
+		/datum/reagent/consumable/icetea, /datum/reagent/consumable/melon_soda, /datum/reagent/consumable/bogril,\
+		/datum/reagent/consumable/ethanol/absinthe, /datum/reagent/consumable/ethanol/coconut_rum, /datum/reagent/consumable/ethanol/curacao,\
+		/datum/reagent/consumable/ethanol/hcider, /datum/reagent/consumable/ethanol/beer/maltliquor, /datum/reagent/consumable/ethanol/navy_rum,\
+		/datum/reagent/consumable/ethanol/rice_beer, /datum/reagent/consumable/ethanol/yuyake, /datum/reagent/consumable/ethanol/wine_voltaic\
 	)
 
 ///Borg Hypospray
@@ -437,6 +443,15 @@
 	tgui_theme = "syndicate"
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS
+
+/obj/item/reagent_containers/borghypo/borgshaker/centcom
+	max_volume_per_reagent = 50
+	charge_cost = 5
+	recharge_time = 1
+
+/obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)
+	default_reagent_types += CENTCOM_SERVICE_REAGENTS
+	. = ..()
 
 #undef BASE_MEDICAL_REAGENTS
 #undef EXPANDED_MEDICAL_REAGENTS

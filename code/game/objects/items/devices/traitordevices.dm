@@ -642,37 +642,41 @@ effective or pretty fucking useless.
 	balloon_alert(user, "targetting [target_mode_on ? "on" : "off"]")
 	update_icon_state()
 
-/obj/item/missile_targeter/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/missile_targeter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/missile_targeter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(!(check_usability(user)))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!target_mode_on)
 		balloon_alert(user, "targeting mode off!")
-		return
-	if(!check_allowed_items(target, not_inside = TRUE))
-		return
-	var/turf/targeted_turf = get_turf(target)
+		return ITEM_INTERACT_BLOCKING
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/targeted_turf = get_turf(interacting_with)
 	if(targeted_turf.density)
 		balloon_alert(user, "target has to be in the open!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(targeted_turf == designated_target)
 		balloon_alert(user, "already being targeted!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(targeting)
 		balloon_alert(user, "already targetting!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	targeting = TRUE
 
-	if(!do_after(user, 3 SECONDS, target = target))
+	if(!do_after(user, 3 SECONDS, target = interacting_with))
 		targeting = FALSE
-		return
+		return ITEM_INTERACT_BLOCKING
 	designated_target = targeted_turf
 	if(target_laser)
 		qdel(target_laser)
 	target_laser = new /obj/effect/abstract/targetting_laser(designated_target)
 	playsound(src, 'sound/machines/chime.ogg', 30, TRUE)
 	targeting = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/missile_targeter/update_icon_state()
 	. = ..()

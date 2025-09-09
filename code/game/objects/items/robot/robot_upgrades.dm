@@ -660,7 +660,7 @@
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(. && new_model)
-		R.model.transform_to(new_model)
+		R.model.transform_to(new_model, FALSE)
 
 /obj/item/borg/upgrade/transform/clown
 	name = "borg model picker (Clown)"
@@ -782,3 +782,9 @@
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
 	borgo.logevent("System brought online.")
 	return ..()
+
+/obj/item/borg/upgrade/transform/centcom
+	name = "borg model picker (CentCom)"
+	desc = "Allows you to to turn a cyborg into a CentCom cyborg."
+	icon_state = "cyborg_upgrade3"
+	new_model = /obj/item/robot_model/centcom
