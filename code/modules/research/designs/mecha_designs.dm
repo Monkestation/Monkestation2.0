@@ -295,7 +295,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 /datum/design/mech_flamethrower
-	name = "FNX-100 \"Immolator\" Flamethrower"
+	name = "FNX-100 \"Conflagorator\" Flamethrower"
 	desc = "Allows for the construction of FNX-100 \"Conflagorator\" Flamethrower."
 	id = "mech_flamethrower"
 	build_type = MECHFAB
