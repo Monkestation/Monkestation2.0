@@ -247,7 +247,52 @@
   - bugfix: Positronic Neural Dampener pens are now purchasable from the company imports
       console, as intended.
 2025-09-08:
+  Absolucy:
+  - rscdel: Removed the Darkspeak language, and replaced it with pre-existing Shadowtongue
+      language.
+  BingusSS13:
+  - rscadd: The curator can now craft their broadcast camera into a bigger broadcast
+      camera that doesn't need to be held.
+  - rscadd: Added CentCom cyborgs. (admin only. duh.)
+  - rscadd: Added deluxe Rapid-Service-Fabricator. (currently admin only.)
+  - balance: Cyborg-mounted disablers now consume x15 more energy.
+  - qol: Service storage apparatuses can now hold folders and clipboards.
+  - qol: Cyborgs can now right click chem dispensers, biogenerators, and more with
+      a storage apparatus to quickly eject whatever's inside into the storage apparatus.
+  - bugfix: SSD cyborgs can now select a skin from a newly installed cyborg transform
+      module after rejoining. (If it has multiple skins, that is.)
+  - bugfix: Service storage apparatuses can add and remove food from ovens again.
+  - bugfix: Cyborg storage apparatuses can place held objects on tables again.
+  - bugfix: Cyborgs can toggle griddles again.
+  Ice-Type:
+  - bugfix: fireaxes instantly break window sills again
+  LassiH:
+  - balance: rld and mrld glowstick mode will now have same cooldown as other light
+      modes and cost 20 materials instead of 5
+  Shoddd:
+  - rscadd: CMO's medkit now starts with advanced surgery tools
+  ThePooba:
+  - balance: Changed vendor unwrench time from 6 to 3 seconds.
+  Wisemonster:
+  - balance: Replaced CE's welder with an industrial version
   Xander3359:
   - balance: Downgraded CE tools to T1 instead of T2
+  notghosti:
+  - rscadd: Added sprite for Dobermans
+  - map: Walter the Doberman and Walter the Bullterrier are now seperate on the maps.
+  - bugfix: You no longer will sometimes be killing goliath the miner pet for kiling
+      pet objectives
+  - rscdel: Removed Revolutionary propaganda, As nanotrasen intended. (Removed rev
+      tips)
   throwawayuseless:
   - balance: halves the potency of nutshots
+  - rscadd: '*flare, *flicker, and *glow, three new ethereal emotes.'
+  - rscadd: The Horrific Necktie now starts with a built-in soulcatcher. REJOICE,
+      BRATAN!
+2025-09-09:
+  MrBagHead:
+  - bugfix: Commando Op Missile Targeter Now Works
+  - bugfix: Mining Style Meter no longer uses afterattack, so it can properly be attached
+      to glasses
+  - bugfix: Spellbook Charges properly increase the spellbooks point count
+  - bugfix: Battlemage Armour Charges increase Wiz Armour Charges Again

@@ -46,6 +46,12 @@
 			compost(to_compost)
 		to_chat(user, span_info("You empty \the [bag] into \the [src]."))
 
+/obj/machinery/composters/attack_robot(mob/user)
+	. = ..()
+	if(user.Adjacent(src))
+		attack_hand(user)
+	return TRUE
+
 /obj/machinery/composters/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
