@@ -418,7 +418,7 @@
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_TAILOR
     crafting_time = MACHINING_DELAY_NORMAL
-    result = /obj/item/mod/control/pre_equipped/loader
+    result = /obj/item/clothing/suit/space/eva
     reqs = list(
         /obj/item/stack/machining_intermediates/steel = 2,
         /obj/item/stack/machining_intermediates/screwbolt = 4,
