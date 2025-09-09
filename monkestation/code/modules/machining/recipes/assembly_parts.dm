@@ -402,7 +402,7 @@
     name = "Tank Transfer Valve"
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_WORKSTATION
-    crafting_time = MACHINING_DELAY_SLOW
+    crafting_time = MACHINING_DELAY_NORMAL
     result = /obj/item/transfer_valve
     reqs = list(
         /obj/item/stack/sheet/iron = 4,
@@ -412,3 +412,95 @@
         /obj/item/stack/machining_intermediates/smallwire = 5,
     )
     machining_skill_required = 4
+
+/datum/machining_recipe/mardsuit_eva
+    name = "EVA Suit"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_TAILOR
+    crafting_time = MACHINING_DELAY_NORMAL
+    result = /obj/item/mod/control/pre_equipped/loader
+    reqs = list(
+        /obj/item/stack/machining_intermediates/steel = 2,
+        /obj/item/stack/machining_intermediates/screwbolt = 4,
+        /obj/item/machining_intermediates/moltenplastic = 6,
+		/obj/item/machining_intermediates/sewingsupplies = 4,
+    )
+    machining_skill_required = 2
+
+/datum/machining_recipe/mardsuit_eva_helm
+    name = "EVA Helmet"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_TAILOR
+    crafting_time = MACHINING_DELAY_NORMAL
+    result = /obj/item/clothing/head/helmet/space/eva
+    reqs = list(
+        /obj/item/stack/machining_intermediates/screwbolt = 2,
+        /obj/item/machining_intermediates/moltenplastic = 2,
+		/obj/item/machining_intermediates/sewingsupplies = 2,
+		/obj/item/stack/sheet/glass = 2,
+    )
+    machining_skill_required = 2
+
+/datum/machining_recipe/mardsuit_loader
+    name = "Loader Modsuit"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_SLOW
+    result = /obj/item/mod/control/pre_equipped/loader
+    reqs = list(
+    	/obj/item/machining_intermediates/suitsensors = 1,
+        /obj/item/machining_intermediates/smallmotor = 2,
+        /obj/item/stack/machining_intermediates/steel = 4,
+        /obj/item/stack/machining_intermediates/screwbolt = 8,
+        /obj/item/machining_intermediates/universalcircuit = 2,
+        /obj/item/stack/machining_intermediates/smallwire = 15,
+		/obj/item/stack/sheet/glass = 1,
+    )
+    machining_skill_required = 3
+
+/datum/machining_recipe/mardsuit_Eng
+    name = "Engineering Hardsuit"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_SLOW
+    result = /obj/item/clothing/suit/space/hardsuit/engine
+    reqs = list(
+    	/obj/item/machining_intermediates/suitsensors = 1,
+        /obj/item/machining_intermediates/smallmotor = 1,
+        /obj/item/stack/machining_intermediates/steel = 2,
+        /obj/item/machining_intermediates/moltenplastic = 3,
+        /obj/item/stack/machining_intermediates/screwbolt = 12,
+        /obj/item/machining_intermediates/universalcircuit = 2,
+        /obj/item/stack/machining_intermediates/smallwire = 15,
+		/obj/item/stack/sheet/glass = 2,
+    )
+    machining_skill_required = 3
+
+/datum/machining_recipe/mardsuit_Sec
+    name = "Security Hardsuit"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_SLOW
+    result = /obj/item/clothing/suit/space/hardsuit/sec
+    reqs = list(
+		/obj/item/machining_intermediates/hardarmor = 2,
+    	/obj/item/machining_intermediates/suitsensors = 1,
+        /obj/item/machining_intermediates/smallmotor = 1,
+        /obj/item/stack/machining_intermediates/steel = 4,
+        /obj/item/machining_intermediates/moltenplastic = 2,
+        /obj/item/stack/machining_intermediates/screwbolt = 12,
+        /obj/item/machining_intermediates/universalcircuit = 1,
+        /obj/item/stack/machining_intermediates/smallwire = 10,
+        /obj/item/stack/sheet/glass = 4,
+    )
+    machining_skill_required = 3
+
+
+
+
+
+
+
+
+
+
