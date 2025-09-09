@@ -361,3 +361,8 @@
 	. = ..()
 	to_chat(host_mob, span_notice("The non-newtonian nonsense is no more, thankfully."))
 	host_mob.RemoveElement(/datum/element/forced_gravity, gravitymod, can_override = TRUE)
+
+#undef NES_GRAVITY
+#undef NANITE_GRAV_NONE
+#undef NANITE_GRAV_NORMAL
+#undef NANITE_GRAV_HIGH
