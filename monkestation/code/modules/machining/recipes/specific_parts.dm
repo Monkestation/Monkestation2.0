@@ -256,17 +256,3 @@
 		/obj/item/stack/sheet/mineral/titanium = 8,
 	)
 	machining_skill_required = 4
-
-/datum/machining_recipe/mosin
-	category = TAB_SPECIFIC_PARTS
-	machinery_type = MACHINING_WORKSTATION
-	crafting_time = MACHINING_DELAY_EXCRUCIATINGLY_SLOW
-	result = /obj/item/gun/ballistic/rifle/boltaction
-	reqs = list(
-		/obj/item/machining_intermediates/stock_wood = 1,
-		/obj/item/machining_intermediates/gunbarrel_rifle = 1,
-		/obj/item/machining_intermediates/firearm_bolt = 2,
-		/obj/item/stack/sheet/mineral/wood = 4,
-		/obj/item/stack/machining_intermediates/screwbolt = 6,
-	)
-	machining_skill_required = 4

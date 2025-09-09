@@ -28,6 +28,38 @@
     )
     machining_skill_required = 5
 
+/datum/machining_recipe/mosin
+	name = "Mosin Nagant"
+	category = TAB_ASSEMBLY_PARTS
+	machinery_type = MACHINING_WORKSTATION
+	crafting_time = MACHINING_DELAY_EXCRUCIATINGLY_SLOW
+	result = /obj/item/gun/ballistic/rifle/boltaction
+	reqs = list(
+		/obj/item/machining_intermediates/stock_wood = 1,
+		/obj/item/machining_intermediates/gunbarrel_rifle = 1,
+		/obj/item/machining_intermediates/firearm_bolt = 2,
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/stack/machining_intermediates/screwbolt = 6,
+		/obj/item/machining_intermediates/bullet_large = 6,
+	)
+	machining_skill_required = 4
+
+/datum/machining_recipe/mosin
+	name = "Pump Action Shotgun"
+	category = TAB_ASSEMBLY_PARTS
+	machinery_type = MACHINING_WORKSTATION
+	crafting_time = MACHINING_DELAY_EXCRUCIATINGLY_SLOW
+	result = /obj/item/gun/ballistic/shotgun/riot
+	reqs = list(
+		/obj/item/machining_intermediates/stock_wood = 1,
+		/obj/item/machining_intermediates/gunbarrel_smootbore = 1,
+		/obj/item/machining_intermediates/firearm_bolt = 1,
+		/obj/item/stack/sheet/mineral/wood = 6,
+		/obj/item/stack/machining_intermediates/screwbolt = 4,
+		/obj/item/machining_intermediates/bullet_large = 6,
+	)
+	machining_skill_required = 4
+
 /datum/machining_recipe/revolver_38
     name = ".38 Revolver"
     category = TAB_ASSEMBLY_PARTS
