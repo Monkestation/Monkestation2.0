@@ -31,7 +31,6 @@
 		"repairing_nanites",
 		"repeater_nanites",
 		"sensor_nanite_volume",
-		"cyborg_remote",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 
@@ -63,7 +62,6 @@
 		"emp_nanites",
 		"hardening_nanites",
 		"refractive_nanites",
-		"shock_nanites",
 		"temperature_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4, TECHWEB_POINT_TYPE_NANITES = 500)
@@ -101,7 +99,6 @@
 		"nervous_nanites",
 		"paralyzing_nanites",
 		"selfscan_nanites",
-		"stun_nanites",
 		"word_filter_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
@@ -117,7 +114,6 @@
 		"mindshield_nanites",
 		"mute_nanites",
 		"pacifying_nanites",
-		"sleep_nanites",
 		"speech_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2, TECHWEB_POINT_TYPE_NANITES = 1000)
@@ -131,7 +127,6 @@
 		"aggressive_nanites",
 		"brainheal_plus_nanites",
 		"defib_nanites",
-		"fakedeath_nanites",
 		"purging_plus_nanites",
 		"regenerative_plus_nanites",
 		"oxygen_rush_nanites",
@@ -149,6 +144,7 @@
 		"nanite_sting_nanites",
 		"pyro_nanites",
 		"viral_nanites",
+		"stun_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 2500)
 
@@ -161,6 +157,9 @@
 		"mindcontrol_nanites",
 		"mitosis_nanites",
 		"spreading_nanites",
+		"sleep_nanites",
+		"fakedeath_nanites",
+		"shock_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS, TECHWEB_POINT_TYPE_NANITES = 4000)
 
