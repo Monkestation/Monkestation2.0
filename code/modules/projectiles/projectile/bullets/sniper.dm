@@ -8,7 +8,8 @@
 	paralyze = 100
 	dismemberment = 50
 	catastropic_dismemberment = TRUE
-	armour_penetration = 50
+	armour_penetration = 75
+	armour_ignorance = 5
 	///Determines object damage.
 	var/object_damage = 80
 	///Determines how much additional damage the round does to mechs.
@@ -74,6 +75,7 @@
 	icon_state = "gauss"
 	damage = 60
 	range = 50
+	armour_ignorance = 15
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
 	phasing_ignore_direct_target = TRUE

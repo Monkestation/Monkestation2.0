@@ -4,3 +4,5 @@
 /// Always does *deathgasp when they die
 /// If unset mobs will only deathgasp if supplied a death sound or custom death message
 #define ALWAYS_DEATHGASP (1<<1)
+/// Nutrition changed last life tick, so we should bulk update this tick
+#define QUEUE_NUTRITION_UPDATE (1<<3)

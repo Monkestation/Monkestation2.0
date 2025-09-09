@@ -114,7 +114,7 @@
 		REMOVE_TRAIT(owner, X, TRAUMA_TRAIT)
 
 /datum/brain_trauma/severe/paralysis/crushed
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 
 /datum/brain_trauma/severe/paralysis/crushed/New(specific_type)
@@ -136,7 +136,7 @@
 		// this is not the best way to do this, but uh
 
 /datum/brain_trauma/severe/paralysis/paraplegic
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
@@ -302,7 +302,7 @@
 	scan_desc = "oneiric feedback loop"
 	gain_text = span_warning("You feel odd, like you just forgot something important.")
 	lose_text = span_notice("You feel like a weight was lifted from your mind.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	var/trigger_phrase = "Nanotrasen"
 
 /datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
@@ -353,7 +353,7 @@
 	scan_desc = "H_E##%%%WEEP6%11S!!,)()"
 	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
 	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// Our cooldown declare for causing hallucinations
 	COOLDOWN_DECLARE(weeping_hallucinations)
 
@@ -377,7 +377,7 @@
 	scan_desc = "H_(82882)G3E:__))9R"
 	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
 	lose_text = span_notice("You no longer feel the hunger for flesh...")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// How much faster we loose hunger
 	var/hunger_rate = 15
 
@@ -406,7 +406,7 @@
 	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
 	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
 	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// How much damage we deal with each scratch
 	var/scratch_damage = 0.5
 
@@ -432,7 +432,7 @@
 	scan_desc = "C_)L(#_I_##M;B"
 	gain_text = span_warning("The rusted climb shall finish at the peak")
 	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
 	var/atom/tile = get_turf(owner)

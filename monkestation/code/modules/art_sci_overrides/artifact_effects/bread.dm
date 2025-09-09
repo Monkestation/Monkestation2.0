@@ -4,7 +4,7 @@
 	discovered_credits = CARGO_CRATE_VALUE * 2 //Mmm bread
 	activation_message = "begins baking some fresh eldritch brand bread!"
 	deactivation_message = "runs out of bread!"
-	research_value = 500
+	research_value = TECHWEB_DISCOUNT_MINOR
 	type_name = "Bread Teleportation Effect"
 
 	COOLDOWN_DECLARE(bread_cd)

@@ -44,8 +44,14 @@
 	icon_state = "hardsuit-toxins"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/gun/energy/wormhole_projector,
-	/obj/item/hand_tele, /obj/item/aicard)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/tank/jetpack,
+		/obj/item/gun/energy/wormhole_projector,
+		/obj/item/hand_tele,
+		/obj/item/aicard,
+	)
 	armor_type = /datum/armor/hardsuit/science
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/toxins
+	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/toxins
 	cell = /obj/item/stock_parts/cell/super

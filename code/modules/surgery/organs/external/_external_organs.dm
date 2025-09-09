@@ -7,7 +7,7 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	organ_flags = ORGAN_EDIBLE
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	visual = TRUE
 
 	///The overlay datum that actually draws stuff on the limb
@@ -344,6 +344,11 @@
 
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
+
+/datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.head?.flags_inv & HIDEANTENNAE))
+		return TRUE
+	return FALSE
 
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair

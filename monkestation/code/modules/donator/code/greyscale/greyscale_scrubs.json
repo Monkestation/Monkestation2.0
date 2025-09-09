@@ -1,0 +1,11 @@
+{
+
+	"greyscale_scrubs" : [
+		{
+			"type": "icon_state",
+			"icon_state": "greyscale_scrubs",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

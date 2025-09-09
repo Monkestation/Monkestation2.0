@@ -42,6 +42,8 @@
 		new_trait.on_trait_add(material_stats.parent)
 		material_stats.material_traits |= new_trait
 
+	material_stats.update_should_process()
+
 /atom/proc/create_stats_from_material(datum/material/material_type, colors = TRUE, stack = FALSE)
 	if(!material_type)
 		return
@@ -66,13 +68,15 @@
 
 	for(var/datum/material_trait/trait as anything in material.material_traits)
 		var/datum/material_trait/new_trait = new trait
-		if(stack && (trait.trait_flags & MATERIAL_NO_STACK_ADD))
+		if(stack && (trait.trait_flags & MT_NO_STACK_ADD))
 			material_stats.material_traits |= new_trait
 			material_stats.material_traits[new_trait] = material.material_traits[trait]
 			continue
 		new_trait.on_trait_add(material_stats.parent)
 		material_stats.material_traits |= new_trait
 		material_stats.material_traits[new_trait] = material.material_traits[trait]
+
+	material_stats.update_should_process()
 
 
 /datum/material_stats
@@ -114,11 +118,10 @@
 	if(parent)
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
 		RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,PROC_REF(post_parent_init))
-	START_PROCESSING(SSobj, src)
 
 /datum/material_stats/Destroy(force)
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSmaterial_traits, src)
 	for(var/datum/material_trait/trait as anything in material_traits)
 		trait.on_remove(parent)
 		qdel(trait)
@@ -137,7 +140,9 @@
 
 /datum/material_stats/process(seconds_per_tick)
 	for(var/datum/material_trait/trait as anything in material_traits)
-		if((trait.trait_flags & MATERIAL_TRACK_NO_STACK_PROCESS) && (material_bitflags & MATERIAL_STACK))
+		if(!(trait.trait_flags & MT_PROCESSES))
+			continue
+		if((trait.trait_flags & MT_NO_STACK_PROCESS) && (material_bitflags & MATERIAL_STACK))
 			continue
 		trait.on_process(parent, src)
 
@@ -198,6 +203,7 @@
 		material_traits[new_trait] = material.material_traits[trait]
 		new_trait.on_trait_add(parent)
 
+	update_should_process()
 	apply_color()
 
 /datum/material_stats/proc/apply_color()
@@ -212,6 +218,7 @@
 	trait.on_trait_add(parent)
 	material_traits |= trait
 	material_traits[trait] = trait.reforges
+	update_should_process()
 
 /datum/material_stats/proc/apply_traits_from(datum/material_stats/incoming)
 	for(var/datum/material_trait/trait as anything in incoming.material_traits)
@@ -219,3 +226,14 @@
 		new_trait.on_trait_add(parent)
 		material_traits |= new_trait
 		material_traits[new_trait] = incoming.material_traits[trait]
+	update_should_process()
+
+/datum/material_stats/proc/update_should_process()
+	var/is_stack = (material_bitflags & MATERIAL_STACK)
+	for(var/datum/material_trait/trait as anything in material_traits)
+		if(is_stack && (trait.trait_flags & MT_NO_STACK_PROCESS))
+			continue
+		if(trait.trait_flags & MT_PROCESSES)
+			START_PROCESSING(SSmaterial_traits, src)
+			return
+	STOP_PROCESSING(SSmaterial_traits, src)

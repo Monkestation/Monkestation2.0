@@ -116,6 +116,10 @@
 	name = "Space Cola"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 50)
 
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/space_bola
+	name = "Space Bola"
+	list_reagents = list(/datum/reagent/consumable/space_cola = 40, /datum/reagent/drug/cocaine = 10)
+
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)

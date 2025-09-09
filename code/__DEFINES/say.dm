@@ -73,14 +73,19 @@
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_HELIUM "small"
 #define SPAN_SOAPBOX "soapbox"
-#define SPAN_BOLD "bold" // monkestation addition
+#define SPAN_BOLD "bold"
+#define SPAN_HYPNOPHRASE "hypnophrase"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)
 #define REDUCE_RANGE (1<<1)
 #define NOPASS (1<<2)
 
-//Eavesdropping
+/// Range to hear normal messages
+#define MESSAGE_RANGE 7
+/// Range to hear whispers normally
+#define WHISPER_RANGE 1
+/// Additional range to partially hear whispers
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 /// How close intercoms can be for radio code use

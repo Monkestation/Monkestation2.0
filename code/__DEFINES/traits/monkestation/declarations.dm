@@ -1,6 +1,18 @@
 // BEGIN TRAIT DEFINES
 
 // /mob/living
+// Genetics start
+/// Removes tackle and throwing debuffs from dwarfs
+#define TRAIT_STABLE_DWARF "stable_dwarf"
+/// Makes you heal from radiation received
+#define TRAIT_RADHEALING "radiation_healing"
+/// Makes embed-able projectiles have an additional 50% chance at not embedding when hitting the target
+#define TRAIT_EMBED_RESISTANCE "embed_resistance"
+/// Makes you not leave fingerprints (you still leave fibers though)
+#define TRAIT_NO_FINGERPRINTS "no_fingerprints"
+/// Gives you a coinflip chance when eating disliked food to actually like its taste
+#define TRAIT_STABILIZED_EATER "stabilized_eater"
+// Genetics end
 /// Monkeys are friendly/neutral to this mob by defaulot.
 #define TRAIT_MONKEYFRIEND 	"monkeyfriend"
 /// User's stamina is over the STAMINA_EXHAUSTION_THRESHOLD.
@@ -35,8 +47,6 @@
 #define TRAIT_ALL_SURGERIES "all_surgeries"
 /// Prevents the user from ever (unintentionally) failing a surgery step, and ensures they always have the maximum surgery speed.
 #define TRAIT_PERFECT_SURGEON "perfect_surgeon"
-/// Reduces the complexity of any cyberlink hacking minigames for the user.
-#define TRAIT_BETTER_CYBERCONNECTOR "better_cyberconnector_hacking"
 /// Allows the user to climb tables and such faster.
 #define TRAIT_FAST_CLIMBER 	"fast_climber"
 /// The user is more resistant to being shoved.
@@ -59,16 +69,22 @@
 #define TRAIT_CONVERSION_FLASHED "conversion_flashed"
 /// For when a mob has been consumed by a zombie
 #define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
+/// Applied when blight is cured. Prevents getting blight again while present.
+#define TRAIT_REVENANT_BLIGHT_PROTECTION "revenant_blight_protection"
 
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS	"cant_sign_spells"
 /// You have special interactions with bloodsuckers and the occult.
 #define TRAIT_OCCULTIST			"occultist"
+/// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
+#define TRAIT_UNBORGABLE	"unborgable"
 
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
 #define TRAIT_REMOVED_FROM_MANIFEST	"removed_from_manifest"
+/// Trait for people that have joined as a crewmember
+#define TRAIT_JOINED_AS_CREW	"joined_as_crew"
 
 // Traits related to food
 /// Trait for Fire Burps
@@ -117,8 +133,6 @@
 #define TRAIT_HIDDEN_EXPORT_VALUE	"hiddenexportvalue"
 
 // /obj/item
-/// Applied to a satchel that is being worn on the belt.
-#define TRAIT_BELT_SATCHEL 			"belt_satchel"
 /// Whether a storage item can be compressed by the bluespace compression kit, without the usual storage limitation.
 #define TRAIT_BYPASS_COMPRESS_CHECK	"can_compress_anyways"
 /// This item is considered "trash" (and will be eaten by cleaner slimes)

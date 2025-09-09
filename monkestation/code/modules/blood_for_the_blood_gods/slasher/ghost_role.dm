@@ -6,6 +6,7 @@
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_SPOOKY, TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
 	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/slasher
 	minimum_required = 1
@@ -21,7 +22,7 @@
 		alert_pic = /datum/antagonist/slasher,
 		role_name_text = "slasher"
 	)
-	var/turf/spawn_loc = find_safe_turf()//Used for the Drop Pod type of spawn
+	var/turf/spawn_loc = find_safe_turf_in_maintenance()//Used for the Drop Pod type of spawn for maints only
 
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS

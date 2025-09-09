@@ -25,8 +25,9 @@
 	///Used for tracking if the clog signal should be sent.
 	var/clogged = TRUE
 
-/datum/round_event/scrubber_clog/announce()
-	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)].", "Custodial Notification")
+/datum/round_event/scrubber_clog/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area].", "Custodial Notification")
 
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
@@ -156,8 +157,9 @@
 	)
 	return pick(mob_list)
 
-/datum/round_event/scrubber_clog/major/announce()
-	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)] area.", "Infestation Alert")
+/datum/round_event/scrubber_clog/major/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area] area.", "Infestation Alert")
 
 /datum/round_event_control/scrubber_clog/critical
 	name = "Scrubber Clog: Critical"
@@ -177,8 +179,9 @@
 	. = ..()
 	spawn_delay = rand(15,25)
 
-/datum/round_event/scrubber_clog/critical/announce()
-	priority_announce("Potentially hazardous lifesigns detected in the [get_area_name(scrubber)] ventilation network.", "Security Alert")
+/datum/round_event/scrubber_clog/critical/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Potentially hazardous lifesigns detected in the [event_area] ventilation network.", "Security Alert")
 
 /datum/round_event/scrubber_clog/critical/get_mob()
 	var/static/list/mob_list = list(
@@ -206,8 +209,9 @@
 	end_when = rand(600, 720)
 	spawn_delay = rand(6, 25) //Wide range, for maximum utility/comedy
 
-/datum/round_event/scrubber_clog/strange/announce()
-	priority_announce("Unusual lifesign readings detected in the [get_area_name(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
+/datum/round_event/scrubber_clog/strange/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(scrubber)
+	priority_announce("Unusual lifesign readings detected in the [event_area] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/scrubber_clog/strange/get_mob()
 	var/static/list/mob_list = list(

@@ -57,6 +57,9 @@
 	/// Default raw text to fill this paper with on init.
 	var/default_raw_text
 
+	/// Checks to see if the paper can be folded
+	var/can_be_folded = TRUE
+
 	/// The number of input fields
 	var/input_field_count = 0
 
@@ -809,3 +812,59 @@
 
 /obj/item/paper/crumpled/muddy
 	icon_state = "scrap_mud"
+
+/obj/item/paper/selfdestruct
+	name = "Self-Incinerating Note"
+	desc = "A note that will incinerate itself after being read."
+	can_be_folded = FALSE
+	var/has_been_read = FALSE
+	var/armed = FALSE
+
+/obj/item/paper/selfdestruct/examine(mob/user)
+	. = ..()
+
+	if(!has_been_read)
+		return
+
+	. += span_warning("This feels warm to the touch.")
+
+
+/obj/item/paper/selfdestruct/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+
+	if(ui && armed && !has_been_read)
+		playsound(user, 'sound/machines/click.ogg', 25)
+		to_chat(user, span_warning("You hear a faint click as you open the note. It feels strangely warm."))
+
+		has_been_read = TRUE
+
+		addtimer(CALLBACK(src, PROC_REF(combust_now)), 20 SECONDS, TIMER_UNIQUE)
+	return
+
+/obj/item/paper/selfdestruct/proc/combust_now(mob/user_who_initiated)
+	if(!src || QDELETED(src))
+		return
+
+	SStgui.close_uis(src)
+
+	var/mob/living/holder = null
+	if(ismob(loc))
+		holder = loc
+
+	if(holder)
+		to_chat(holder, span_warning("[src] suddenly bursts into flames in your hands!"))
+	else if(get_turf(src))
+		var/atom/turf_location = get_turf(src)
+		turf_location.visible_message(span_warning("[src] suddenly bursts into flames on the ground!"))
+	else if(loc)
+		loc.visible_message(span_warning("[src] suddenly bursts into flames!"))
+
+	fire_act(100)
+
+/obj/item/paper/selfdestruct/AltClick(mob/living/user, obj/item/used_item)
+	if(!armed)
+		to_chat(user, span_warning("You arm the incineration mechanism."))
+		armed = TRUE
+		return
+
+	return

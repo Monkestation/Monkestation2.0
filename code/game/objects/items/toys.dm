@@ -25,6 +25,7 @@
  * Fake heretic codex
  * Fake Pierced Reality
  * Intento
+ * Heretic Replica Blades
  */
 /obj/item/toy
 	throwforce = 0
@@ -110,7 +111,7 @@
 		inhand_icon_state = "balloon-empty"
 	return ..()
 
-#define BALLOON_COLORS list("red", "blue", "green", "yellow")
+#define BALLOON_COLORS list("red", "blue", "green", "yellow", "orange", "purple")
 
 /obj/item/toy/balloon
 	name = "balloon"
@@ -126,6 +127,57 @@
 	throw_range = 7
 	force = 0
 	var/random_color = TRUE
+	/// the string describing the name of balloon's current colour.
+	var/current_color
+
+/obj/item/toy/balloon/long
+	name = "long balloon"
+	desc = "A perfect balloon to contort into goofy forms. Sealed with a mechanical bluespace wrap so it remains floating no matter what."
+	icon_state = "balloon_long"
+	inhand_icon_state = "balloon"
+	w_class = WEIGHT_CLASS_NORMAL
+	/// Combinations of balloon colours to make specific animals.
+	var/list/balloon_combos = list(
+		list("red", "blue") = /obj/item/toy/balloon_animal/guy,
+		list("red", "green") = /obj/item/toy/balloon_animal/nukie,
+		list("red", "yellow") = /obj/item/toy/balloon_animal/clown,
+		list("red", "orange") = /obj/item/toy/balloon_animal/cat,
+		list("red", "purple") = /obj/item/toy/balloon_animal/fly,
+		list("blue", "green") = /obj/item/toy/balloon_animal/podguy,
+		list("blue", "yellow") = /obj/item/toy/balloon_animal/ai,
+		list("blue", "orange") = /obj/item/toy/balloon_animal/dog,
+		list("blue", "purple") = /obj/item/toy/balloon_animal/xeno,
+		list("green", "yellow") = /obj/item/toy/balloon_animal/banana,
+		list("green", "orange") = /obj/item/toy/balloon_animal/lizard,
+		list("green", "purple") = /obj/item/toy/balloon_animal/slime,
+		list("yellow", "orange") = /obj/item/toy/balloon_animal/moth,
+		list("yellow", "purple") = /obj/item/toy/balloon_animal/ethereal,
+		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
+	)
+
+
+/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return ..()
+
+	var/obj/item/toy/balloon/long/hit_by = attacking_item
+	if(hit_by.current_color == current_color)
+		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
+		return ..()
+	visible_message(
+		span_notice("[user.name] starts contorting up a balloon animal!"),
+		blind_message = span_hear("You hear balloons being contorted."),
+		vision_distance = 3,
+		ignored_mobs = user,
+	)
+	for(var/list/pair_of_colors in balloon_combos)
+		if((hit_by.current_color == pair_of_colors[1] && current_color == pair_of_colors[2]) || (current_color == pair_of_colors[1] && hit_by.current_color == pair_of_colors[2]))
+			var/path_to_spawn = balloon_combos[pair_of_colors]
+			user.put_in_hands(new path_to_spawn)
+			break
+	qdel(hit_by)
+	qdel(src)
+	return TRUE
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
@@ -158,12 +210,20 @@
 		name = "[chosen_balloon_color] [name]"
 		icon_state = "[icon_state]_[chosen_balloon_color]"
 		inhand_icon_state = icon_state
+		current_color = chosen_balloon_color
 
 /obj/item/toy/balloon/corgi
 	name = "corgi balloon"
 	desc = "A balloon with a corgi face on it. For the all year good boys."
 	icon_state = "corgi"
 	inhand_icon_state = "corgi"
+	random_color = FALSE
+
+/obj/item/toy/balloon/heart
+	name = "heart balloon"
+	desc = "A balloon in the shape of a heart. How lovely"
+	icon_state = "heart"
+	inhand_icon_state = "heart"
 	random_color = FALSE
 
 /obj/item/toy/balloon/syndicate
@@ -197,6 +257,97 @@
 	random_color = FALSE
 
 #undef BALLOON_COLORS
+
+/*
+* Balloon animals
+*/
+
+/obj/item/toy/balloon_animal
+	name = "balloon animal"
+	desc = "You shouldn't have this."
+	icon = 'icons/obj/toys/balloons.dmi'
+	inhand_icon_state = "balloon"
+	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
+	throwforce = 0
+	throw_speed = 2
+	throw_range = 5
+	force = 0
+
+/obj/item/toy/balloon_animal/guy
+	name = "balloon guy"
+	desc = "A balloon effigy of the everyday standard issue human guy. Wonder if he pays balloon taxes. He probably evades them."
+	icon_state = "balloon_guy"
+
+/obj/item/toy/balloon_animal/nukie
+	name = "balloon nukie"
+	desc = "A balloon effigy of syndicate's nuclear operative. Either made to appease them and pray for survival, or to poke fun at them."
+	icon_state = "balloon_nukie"
+
+/obj/item/toy/balloon_animal/clown
+	name = "balloon clown"
+	desc = "A balloon clown, smiling from ear to ear and beyond!"
+	icon_state = "balloon_clown"
+
+/obj/item/toy/balloon_animal/cat
+	name = "balloon cat"
+	desc = "Without the sharp claws, balloon cats are possibly cuter than their live counterparts, though not as relatable, warm and fuzzy."
+	icon_state = "balloon_cat"
+
+/obj/item/toy/balloon_animal/fly
+	name = "balloon fly"
+	desc = "A balloon effigy of a flyperson. Thankfully, it doesn't come with balloon vomit."
+	icon_state = "balloon_fly"
+
+/obj/item/toy/balloon_animal/podguy
+	name = "balloon podguy"
+	desc = "A balloon effigy of a podperson. Though, actual podpeople have heads and not stalks and leaves."
+	icon_state = "balloon_podguy"
+
+/obj/item/toy/balloon_animal/ai
+	name = "balloon ai core"
+	desc = "A somewhat unrealistic balloon effigy of the station's AI core. Actual AI probably wouldn't smile like this."
+	icon_state = "balloon_ai"
+
+/obj/item/toy/balloon_animal/dog
+	name = "balloon dog"
+	desc = "A balloon effigy of the best boy. It cannot truly compare, but it makes an effort."
+	icon_state = "balloon_dog"
+
+/obj/item/toy/balloon_animal/xeno
+	name = "balloon xeno"
+	desc = "A balloon effigy of a spooky xeno! Too squishy to scare anyone itself, though."
+	icon_state = "balloon_xeno"
+
+/obj/item/toy/balloon_animal/banana
+	name = "balloon banana"
+	desc = "A balloon banana. This one can't be slipped on. Good for psychological warfare, though."
+	icon_state = "balloon_banana"
+
+/obj/item/toy/balloon_animal/lizard
+	name = "balloon lizard"
+	desc = "A balloon effigy of a lizard. One of the first species to adapt to clown planet's culture. Perhaps because they are naturally laughable?"
+	icon_state = "balloon_lizard"
+
+/obj/item/toy/balloon_animal/slime
+	name = "balloon slime"
+	desc = "A balloon effigy of single specimen of the galaxy-wide slime scourge, of purple variety. Slimes tried to invade clown planet once. They got quickly washed out by water-spitting flowers, though."
+	icon_state = "balloon_slime"
+
+/obj/item/toy/balloon_animal/moth
+	name = "balloon moth"
+	desc = "A balloon effigy of a common member of moth flotillas. Very few of them ever decide to settle on the clown planet, but those who do have the best 'piece-of-cloth-disappearing' acts."
+	icon_state = "balloon_moth"
+
+/obj/item/toy/balloon_animal/ethereal
+	name = "balloon ethereal"
+	desc = "A balloon effigy of an ethereal artisan. Clownery is one form of art, and as such, ethereals were both drawn to and readily accepted at clown planet. Don't mind the lighbulb head, it's art too."
+	icon_state = "balloon_ethereal"
+
+/obj/item/toy/balloon_animal/plasmaman
+	name = "balloon plasmaman"
+	desc = "A balloon effigy of a plasmaman. Among the rarest on the clown planet, only having appeared recently thanks to ready trade between clown planet and NT."
+	icon_state = "balloon_plasmaman"
 
 /*
 * Captain's Aid
@@ -1587,6 +1738,143 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/*
+ * Heretic Replica Blades
+ */
+/obj/item/gun/magic/sickly_blade_toy
+	name = "plastic replica blade"
+	desc = "A sickly green crescent blade, decorated with a plastic eye. You feel like this was cheaply made. A Donk Co logo is on the hilt."
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "eldritch_blade"
+	inhand_icon_state = "eldritch_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	force = 0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	recharge_rate = 3
+	ammo_type = /obj/item/ammo_casing/magic/sickly_blade_toy
+	fire_sound = 'sound/weapons/batonextend.ogg'
+	item_flags = NEEDS_PERMIT
+	var/trash_type = /obj/effect/decal/cleanable/plastic
+
+/obj/item/gun/magic/sickly_blade_toy/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, span_warning("The [name] grumbles quietly. It is not yet ready to fire again!"))
+
+/obj/item/gun/magic/sickly_blade_toy/attack(mob/living/M, mob/living/user)
+	if((IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
+		to_chat(user, span_danger("You feel a pulse of the old gods lash out at your mind, laughing how you're using a fake blade!"))
+	return ..()
+
+/obj/item/gun/magic/sickly_blade_toy/attack_self(mob/living/user)
+	to_chat(user,span_warning("You shatter [src]. It was a REALLY cheap replica after all."))
+	playsound(src, SFX_SHATTER, 70, TRUE)
+	var/datum/effect_system/spark_spread/sparks = new()
+	sparks.set_up(3, 1, src)
+	sparks.start()
+	new trash_type(user.loc)
+	qdel(src)
+
+/obj/item/gun/magic/sickly_blade_toy/rust_toy
+	name = "rustic replica blade"
+	desc = "This crescent blade is decrepit, wasting to dust. Yet still it bites, catching flesh with jagged, rotten foam."
+	icon_state = "rust_blade"
+	inhand_icon_state = "rust_blade"
+
+/obj/item/gun/magic/sickly_blade_toy/ash_toy
+	name = "metallic replica blade"
+	desc = "A hunk of molten soft injection plastic warped to cinders and slag. Unmade and remade countless times over, it aspires to be more than it is."
+	icon_state = "ash_blade"
+	inhand_icon_state = "ash_blade"
+
+/obj/item/gun/magic/sickly_blade_toy/flesh_toy
+	name = "flesh-like replica blade"
+	desc = "A blade of strange material born from a fleshwarped creature. Keenly aware, it seeks to spread the excruciating comedy it has endured from dread origins."
+	icon_state = "flesh_blade"
+	inhand_icon_state = "flesh_blade"
+
+/obj/item/ammo_casing/magic/sickly_blade_toy
+	name = "toy hook"
+	desc = "A harmless plastic hook used for play."
+	projectile_type = /obj/projectile/sickly_blade_toy/dragging
+	harmful = FALSE
+
+/obj/projectile/sickly_blade_toy/dragging
+	name = "toy hook"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "hook"
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	damage = 0
+	range = 6
+	pass_flags = PASSTABLE
+	knockdown = 0
+	immobilize = 0
+	armour_penetration = 0
+	var/chain
+	var/chain_iconstate = "chain"
+
+/obj/projectile/sickly_blade_toy/dragging/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = chain_iconstate, emissive = FALSE)
+	..()
+
+/obj/projectile/sickly_blade_toy/dragging/on_hit(atom/movable/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(!ismovable(target) || target.anchored || ismachinery(target) || !firer || target.move_resist > MOVE_FORCE_NORMAL)
+		return BULLET_ACT_BLOCK
+
+	var/mob/living/user = firer
+	if(iscarbon(target))
+		if (user.zone_selected == BODY_ZONE_HEAD)
+			var/mob/living/carbon/victim = target
+			if(istype(victim.head, /obj/item))
+				var/obj/item/hat = victim.head
+				if(HAS_TRAIT(hat, TRAIT_NODROP))
+					return BULLET_ACT_BLOCK
+				if(istype(hat, /obj/item/clothing/head))
+					var/obj/item/clothing/head/hat_head = hat
+					if(hat_head.clothing_flags & SNUG_FIT)
+						return BULLET_ACT_BLOCK
+				if(victim.dropItemToGround(hat))
+					hat.visible_message(span_warning("[hat] is yanked off [victim]'s head by the toy hook!"))
+					hat.throw_at(
+						target = get_turf(user),
+						range = 6,
+						speed = 1,
+						thrower = user,
+						diagonals_first = TRUE,
+						gentle = TRUE,
+					)
+					return BULLET_ACT_HIT
+		else
+			return BULLET_ACT_BLOCK
+	if(isliving(target))
+		return BULLET_ACT_BLOCK
+
+	var/atom/movable/pullee = target
+	pullee.visible_message(span_notice("[pullee] is gently tugged by [user]'s toy hook."))
+	pullee.throw_at(
+		target = get_turf(user),
+		range = 6,
+		speed = 2,
+		thrower = user,
+		diagonals_first = TRUE,
+		gentle = TRUE,
+	)
+
+	return BULLET_ACT_HIT
+
+/obj/projectile/sickly_blade_toy/dragging/Destroy()
+	if(chain)
+		qdel(chain)
 	return ..()
 
 #undef HELP

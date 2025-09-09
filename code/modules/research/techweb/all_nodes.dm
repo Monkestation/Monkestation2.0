@@ -1,4 +1,3 @@
-
 //Current rate: 135000 research points in 90 minutes
 
 //Base Nodes
@@ -146,6 +145,7 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
+		"modlink_scryer", // monkestation addition
 	)
 
 /datum/techweb_node/basic_tools
@@ -180,7 +180,6 @@
 		"spade",
 		"spraycan",
 		"spraycan_gun", // MONKESTATION ADDITION (monkestation/code/game/objects/items/spraycan_gun.dm)
-		"tile_sprayer",
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",
@@ -202,6 +201,7 @@
 		"bonesetter",
 		"cautery",
 		"circular_saw",
+		"cybernetic_ears",
 		"cybernetic_eyes",
 		"cybernetic_heart",
 		"cybernetic_liver",
@@ -213,6 +213,7 @@
 		"large_beaker",
 		"medicalbed",
 		"mmi_m",
+		"monketech_translator",
 		"operating",
 		"petri_dish",
 		"pillbottle",

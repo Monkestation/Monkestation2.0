@@ -134,6 +134,8 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
+	if(!can_be_folded)
+		return
 	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 
 /obj/item/paper/AltClick(mob/living/user, obj/item/I)
@@ -144,6 +146,9 @@
 		if(!Carbon.copied)
 			to_chat(user, span_notice("Take off the carbon copy first."))
 			return
+	if(!can_be_folded)
+		to_chat(user, span_notice("This paper cannot be folded into a plane."))
+		return
 	//Origami Master
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active)

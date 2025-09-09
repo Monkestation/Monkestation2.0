@@ -23,11 +23,6 @@
 	name = "Hazard Striped Canister"
 	json_config = 'code/datums/greyscale/json_configs/canister_hazard.json'
 
-/datum/greyscale_config/prototype_canister
-	name = "Prototype Canister"
-	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
-	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
-
 /datum/greyscale_config/stationary_canister
 	name = "Stationary Canister"
 	icon_file = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -1307,3 +1302,18 @@
 	name = "Worn Tassled Jacket"
 	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/linjacket_worn.json'
+
+/datum/greyscale_config/umbrella
+	name = "Umbrella"
+	icon_file = 'icons/obj/weapons/umbrellas.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella.json'
+
+/datum/greyscale_config/umbrella_inhand_left
+	name = "Held Umbrella, Left, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_lh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'
+
+/datum/greyscale_config/umbrella_inhand_right
+	name = "Held Umbrella, Right, Closed"
+	icon_file = 'icons/mob/inhands/weapons/umbrellas_inhand_rh.dmi'
+	json_config = 'code/datums/greyscale/json_configs/_umbrella_inhand.json'

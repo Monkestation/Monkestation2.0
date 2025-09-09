@@ -156,9 +156,10 @@
 						span_userdanger("[src] leaps at your face!"))
 
 	// probiscis-blocker handling
-	if(target.is_mouth_covered(ITEM_SLOT_HEAD))
-		target.visible_message(span_danger("[src] smashes against [target]'s [target.head]!"), \
-							span_userdanger("[src] smashes against your [target.head]!"))
+	var/obj/item/blocking_item = target.is_mouth_covered(ITEM_SLOT_HEAD)
+	if(blocking_item)
+		target.visible_message(span_danger("[src] smashes against [target]'s [blocking_item]!"), \
+							span_userdanger("[src] smashes against your [blocking_item]!"))
 		Die()
 		return FALSE
 

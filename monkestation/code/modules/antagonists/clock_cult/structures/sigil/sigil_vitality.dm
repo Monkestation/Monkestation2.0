@@ -61,7 +61,7 @@
 				to_chat(affected_mob.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 				message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace an AFK player.")
 				affected_mob.ghostize(FALSE)
-				affected_mob.key = chosen_one.key
+				affected_mob.PossessByPlayer(chosen_one.key)
 				revived = TRUE
 		if(revived)
 			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')
@@ -88,7 +88,7 @@
 		if(affected_mob.client)
 			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
-			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)))
+			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)) && !HAS_MIND_TRAIT(affected_mob, TRAIT_UNBORGABLE)) // monkestation edit: TRAIT_UNBORGABLE
 				new_vessel.transfer_personality(affected_mob)
 		affected_mob.dust(TRUE, TRUE)
 		return

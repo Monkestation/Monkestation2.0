@@ -21,6 +21,14 @@ export const brief_outfit: Feature<string> = {
   component: FeatureDropdownInput,
 };
 
+export const autoadmin: FeatureToggle = {
+  name: 'Autoadmin - On join',
+  category: 'ADMIN',
+  description:
+    'When enabled, you will automatically readmin on new connection (Only if you have a rank with the AUTOADMIN flag).',
+  component: CheckboxInput,
+};
+
 export const bypass_deadmin_in_centcom: FeatureToggle = {
   name: 'Bypass deadmin options when in CentCom',
   category: 'ADMIN',

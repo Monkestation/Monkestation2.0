@@ -37,7 +37,7 @@
 	melee_damage_lower = 35
 	melee_attack_cooldown = CLICK_CD_MELEE
 	mob_size = MOB_SIZE_HUGE
-	armour_penetration = 30
+	armour_penetration = 75
 	pixel_x = -16
 	base_pixel_x = -16
 	maptext_height = 64

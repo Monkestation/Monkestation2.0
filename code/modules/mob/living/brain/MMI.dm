@@ -40,6 +40,11 @@
 	. = ..()
 	. += add_mmi_overlay()
 
+/obj/item/mmi/blob_act(obj/structure/blob/B)
+	if(brain)
+		eject_brain()
+	return ..()
+
 /obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
 		. += "mmi_alive"
@@ -129,10 +134,10 @@
 		brainmob.emp_damage = 0
 		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 		brain.brainmob = brainmob //Set the brain to use the brainmob
-		user.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
+		user?.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
 		brainmob = null //Set mmi brainmob var to null
 	brain.forceMove(drop_location())
-	if(Adjacent(user))
+	if(user && Adjacent(user))
 		user.put_in_hands(brain)
 	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here

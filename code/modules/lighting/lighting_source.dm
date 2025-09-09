@@ -195,13 +195,16 @@
 /datum/light_source/proc/remove_lum()
 	SETUP_CORNERS_REMOVAL_CACHE(src)
 	applied = FALSE
+#ifndef DISABLE_DEMOS
 	var/list/marked_turfs = SSdemo.marked_turfs
+#endif
 	for (var/datum/lighting_corner/corner as anything in effect_str)
 		if(isnull(corner))
 			continue
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
 
+#ifndef DISABLE_DEMOS
 		// monkestation start: REPLAYS
 		if(!isnull(marked_turfs))
 			marked_turfs[corner.master_NE] = TRUE
@@ -209,6 +212,7 @@
 			marked_turfs[corner.master_SW] = TRUE
 			marked_turfs[corner.master_NW] = TRUE
 		// monkestation end: REPLAYS
+#endif
 
 	effect_str = null
 
@@ -255,6 +259,9 @@
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
 
+	if (QDELETED(src))
+		return
+
 	if (QDELETED(source_atom))
 		qdel(src)
 		return
@@ -276,7 +283,8 @@
 		update = TRUE
 
 	if (!light_outer_range || !light_power)
-		qdel(src)
+		if (!QDELETED(src))
+			qdel(src)
 		return
 
 	if (isturf(top_atom))
@@ -322,7 +330,9 @@
 		return //nothing's changed
 
 	var/list/datum/lighting_corner/corners = list()
+#ifndef DISABLE_DEMOS
 	var/list/marked_turfs = SSdemo.marked_turfs
+#endif
 
 	if (source_turf)
 		var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
@@ -339,7 +349,9 @@
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
+#ifndef DISABLE_DEMOS
 				marked_turfs?[T] = TRUE // Monkestation Edit: REPLAYS
+#endif
 		else
 			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
 				if(IS_OPAQUE_TURF(T))
@@ -351,7 +363,9 @@
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
+#ifndef DISABLE_DEMOS
 				marked_turfs?[T] = TRUE // Monkestation Edit: REPLAYS
+#endif
 
 				var/turf/below = GET_TURF_BELOW(T)
 				var/turf/previous = T
@@ -373,7 +387,9 @@
 					corners[below.lighting_corner_SE] = 0
 					corners[below.lighting_corner_SW] = 0
 					corners[below.lighting_corner_NW] = 0
+#ifndef DISABLE_DEMOS
 					marked_turfs?[below] = TRUE // Monkestation Edit: REPLAYS
+#endif
 					// ANNND then we add the one below it
 					previous = below
 					below = GET_TURF_BELOW(below)
@@ -390,7 +406,9 @@
 					corners[above.lighting_corner_SE] = 0
 					corners[above.lighting_corner_SW] = 0
 					corners[above.lighting_corner_NW] = 0
+#ifndef DISABLE_DEMOS
 					marked_turfs?[above] = TRUE // Monkestation Edit: REPLAYS
+#endif
 					above = GET_TURF_ABOVE(above)
 
 		source_turf.luminosity = oldlum
@@ -399,36 +417,20 @@
 
 	var/list/datum/lighting_corner/new_corners = (corners - src.effect_str)
 	LAZYINITLIST(src.effect_str)
-	var/list/effect_str = src.effect_str
-
-	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (var/datum/lighting_corner/corner as anything in new_corners)
-			if(isnull(corner))
-				continue
+	for (var/datum/lighting_corner/corner as anything in new_corners)
+		APPLY_CORNER(corner)
+		if (. != 0)
+			LAZYADD(corner.affecting, src)
+			effect_str[corner] = .
+	// New corners are a subset of corners. so if they're both the same length, there are NO old corners!
+	if(needs_update != LIGHTING_VIS_UPDATE && length(corners) != length(new_corners))
+		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
 			APPLY_CORNER(corner)
 			if (. != 0)
-				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
-	else
-		for (var/datum/lighting_corner/corner as anything in new_corners)
-			if(isnull(corner))
-				continue
-			APPLY_CORNER(corner)
-			if (. != 0)
-				LAZYADD(corner.affecting, src)
-				effect_str[corner] = .
-
-		// New corners are a subset of corners. so if they're both the same length, there are NO old corners!
-		if(length(corners) != length(new_corners))
-			for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
-				if(isnull(corner))
-					continue
-				APPLY_CORNER(corner)
-				if (. != 0)
-					effect_str[corner] = .
-				else
-					LAZYREMOVE(corner.affecting, src)
-					effect_str -= corner
+			else
+				LAZYREMOVE(corner.affecting, src)
+				effect_str -= corner
 
 
 	var/list/datum/lighting_corner/gone_corners = effect_str - corners

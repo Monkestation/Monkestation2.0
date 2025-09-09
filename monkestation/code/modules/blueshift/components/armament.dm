@@ -42,9 +42,9 @@
 		inserted_card = parent
 
 /datum/component/armament/Destroy(force)
-	if(inserted_card)
+	if(!QDELETED(inserted_card))
 		inserted_card.forceMove(parent_atom.drop_location())
-		inserted_card = null
+	inserted_card = null
 	return ..()
 
 /datum/component/armament/proc/context(datum/source,
@@ -113,7 +113,8 @@
 					continue
 				subcategory_items += list(list(
 					"ref" = REF(armament_entry),
-					"icon" = armament_entry.cached_base64,
+					"icon" = text_ref(armament_entry.item_type::icon_preview || armament_entry.item_type::icon),
+					"icon_state" = armament_entry.item_type::icon_state_preview || armament_entry.item_type::icon_state,
 					"name" = armament_entry.name,
 					"cost" = armament_entry.cost,
 					"buyable_ammo" = armament_entry.magazine ? TRUE : FALSE,
@@ -390,7 +391,8 @@
 
 				subcategory_items += list(list(
 					"ref" = REF(armament_entry),
-					"icon" = armament_entry.cached_base64,
+					"icon" = text_ref(armament_entry.item_type::icon_preview || armament_entry.item_type::icon),
+					"icon_state" = armament_entry.item_type::icon_state_preview || armament_entry.item_type::icon_state,
 					"name" = armament_entry.name,
 					"cost" = cost_calculate(armament_entry.cost),
 					"buyable_ammo" = armament_entry.magazine ? TRUE : FALSE,
@@ -467,10 +469,6 @@
 		if(self_paid)
 			if(!istype(id_card))
 				to_chat(user, span_warning("No ID card detected."))
-				return
-
-			if(istype(id_card, /obj/item/card/id/departmental_budget))
-				to_chat(user, span_warning("[id_card] cannot be used to make purchases."))
 				return
 
 			var/datum/bank_account/account = id_card.registered_account

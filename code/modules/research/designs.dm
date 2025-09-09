@@ -6,13 +6,13 @@
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
-The currently supporting non-reagent materials. All material amounts are set as the define SHEET_MATERIAL_AMOUNT, which defaults to 2000
+The currently supporting non-reagent materials. All material amounts are set as the define SHEET_MATERIAL_AMOUNT, which defaults to 100
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from iron). Only add raw materials.
 
 Design Guidelines
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
-- A single sheet of anything is 2000 units of material. Materials besides iron/glass require help from other jobs (mining for
+- A single sheet of anything is 100 units of material. Materials besides iron/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
@@ -80,7 +80,7 @@ other types of metals and chemistry for reagents).
 	materials = temp_list
 
 /datum/design/proc/icon_html(client/user)
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	sheet.send(user)
 	return sheet.icon_tag(id)
 
@@ -115,7 +115,7 @@ other types of metals and chemistry for reagents).
  * Args:
  * - stored_research - The techweb that's storing us.
  */
-/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research, atom/research_source)
 	return
 
 /obj/item/disk/design_disk/bepis
@@ -136,9 +136,9 @@ other types of metals and chemistry for reagents).
 		blueprints += new_entry
 
 ///Unhide and research our node so we show up in the R&D console.
-/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research, atom/research_source)
 	stored_research.hidden_nodes -= bepis_node.id
-	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE)
+	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE, research_source = research_source)
 
 /**
  * Subtype of Bepis tech disk

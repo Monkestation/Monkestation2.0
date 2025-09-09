@@ -115,7 +115,7 @@
 	if(!. || refreshing)
 		return
 
-	var/obj/item/organ/cavity = real_location?.resolve()
+	var/obj/item/organ/cavity = real_location
 	if(!istype(cavity))
 		return
 
@@ -138,7 +138,7 @@
 	if(isobserver(user) || refreshing)
 		return
 
-	var/obj/item/organ/cavity = real_location?.resolve()
+	var/obj/item/organ/cavity = real_location
 	if(!istype(cavity))
 		return
 

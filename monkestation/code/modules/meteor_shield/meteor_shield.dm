@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 
 /obj/machinery/satellite/meteor_shield/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, /obj/item/flatpacked_machine/generic, 5 SECONDS, TRUE, TRUE)
+	AddElement(/datum/element/repackable, /obj/item/flatpacked_machine/generic, 2 SECONDS, TRUE, TRUE)
 
 	GLOB.meteor_shield_sats += src
 	RegisterSignal(src, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move)) // so these fuckers don't drift off into space when you're trying to position them

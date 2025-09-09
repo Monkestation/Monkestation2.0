@@ -22,13 +22,12 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 	var/mapping_id
 
 /obj/machinery/slime_pen_controller/Initialize(mapload)
-	. = ..()
+	..()
 	GLOB.slime_pen_controllers += src
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/slime_pen_controller/LateInitialize()
-	. = ..()
 	locate_machinery()
 
 /obj/machinery/slime_pen_controller/Destroy()
@@ -129,7 +128,7 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 
 	data["reagent_amount"] = 0
 	data["reagent_data"] = list()
-	if(linked_sucker)
+	if(!QDELETED(linked_sucker))
 		data["reagent_amount"] = linked_sucker.reagents.total_volume
 		data["reagent_data"] = list()
 		for(var/datum/reagent/reagent as anything in linked_sucker.reagents.reagent_list)
@@ -187,12 +186,11 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 		return
 	if(linked_oozesucker(multitool.buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
 		balloon_alert_to_viewers("linked sucker")
-		multitool.buffer.balloon_alert_to_viewers("linked to controller")
 		to_chat(user, span_notice("You link the [multitool.buffer] to the [src]."))
 		return TRUE
 
-	var/obj/machinery/corral_corner/pad = multitool.buffer
-	if(!istype(pad) || !pad.connected_data)
+	var/obj/machinery/corral_corner/pad = astype(multitool.buffer)
+	if(!pad?.connected_data)
 		return
 	if(linked_data)
 		UnregisterSignal(linked_data, COMSIG_QDELETING)
@@ -212,6 +210,7 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 		linked_sucker = target
 		target.linked_controller = src
 		RegisterSignal(linked_sucker, COMSIG_QDELETING, PROC_REF(clear_sucker_data))
+		target.balloon_alert_to_viewers("linked to controller")
 		return TRUE
 	return
 

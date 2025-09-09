@@ -24,12 +24,17 @@
 
 /obj/projectile/bullet/c45/ap
 	name = ".45 armor-piercing bullet"
-	armour_penetration = 50
+	armour_penetration = 75
 
 /obj/projectile/bullet/incendiary/c45
 	name = ".45 incendiary bullet"
 	damage = 15
 	fire_stacks = 2
+
+/obj/projectile/bullet/c45/hp
+	name = ".45 hollow-point bullet"
+	damage = 40
+	weak_against_armour = TRUE
 
 // 4.6x30mm (Autorifles)
 

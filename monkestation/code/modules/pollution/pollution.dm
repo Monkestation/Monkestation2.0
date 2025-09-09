@@ -142,9 +142,7 @@
 	var/list/sharing_turfs
 	var/list/already_processed_cache = SSpollution.processed_this_run
 	var/list/potential_activers
-	for(var/turf/open/open_turf as anything in my_turf.atmos_adjacent_turfs)
-		if(!isopenturf(open_turf) || QDELING(open_turf))
-			continue
+	for(var/turf/open/open_turf in my_turf.atmos_adjacent_turfs)
 		if(!already_processed_cache[open_turf])
 			if(can_share_with(open_turf))
 				LAZYSET(sharing_turfs, open_turf, TRUE)
@@ -157,10 +155,10 @@
 	//Now we've gotten all the turfs that should share pollution. Gather their total pollutions and split evenly
 	var/list/total_share_pollutants = list()
 	var/total_share_amount = 0
-	for(var/turf/open/open_turf as anything in sharing_turfs)
-		if(!isopenturf(open_turf) || QDELING(open_turf) || QDELETED(open_turf.pollution))
-			continue
+	for(var/turf/open/open_turf in sharing_turfs)
 		var/datum/pollution/cached_pollution = open_turf.pollution
+		if(QDELETED(cached_pollution))
+			continue
 		for(var/type in cached_pollution.pollutants)
 			if(!total_share_pollutants[type])
 				total_share_pollutants[type] = 0
@@ -173,8 +171,8 @@
 	total_share_amount /= sharing_len
 	var/new_heights = calculate_height(total_share_amount)
 	var/obj/effect/abstract/pollution/new_overlay = get_overlay(total_share_pollutants, total_share_amount)
-	for(var/turf/open/open_turf as anything in sharing_turfs)
-		if(!isopenturf(open_turf) || isspaceturf(open_turf) || QDELING(open_turf))
+	for(var/turf/open/open_turf in sharing_turfs)
+		if(isspaceturf(open_turf))
 			continue
 
 		assert_pollution(open_turf)
@@ -191,9 +189,7 @@
 		cached_pollution.height = new_heights
 		SET_ACTIVE_POLLUTION(cached_pollution)
 
-	for(var/turf/open/open_turf as anything in potential_activers)
-		if(!isopenturf(open_turf) || QDELING(open_turf))
-			continue
+	for(var/turf/open/open_turf in potential_activers)
 		if(open_turf?.pollution?.can_share_with(my_turf))
 			SET_ACTIVE_POLLUTION(open_turf.pollution)
 

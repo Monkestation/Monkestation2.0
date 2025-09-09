@@ -76,8 +76,8 @@
 /obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
 	. = ..()
 	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
-		for(var/mob/voreman as anything in return_drivers())
-			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
+		for(var/mob/victim as anything in return_drivers())
+			victim.client.give_award(/datum/award/achievement/misc/round_and_full, victim)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if((user.loc != src) || user.environment_smash >= ENVIRONMENT_SMASH_WALLS)

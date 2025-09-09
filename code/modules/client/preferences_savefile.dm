@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 43
+#define SAVEFILE_VERSION_MAX 44
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -90,6 +90,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if (current_version < 41)
 		migrate_preferences_to_tgui_prefs_menu()
+
+	if (current_version < 44)
+		key_bindings -= "show_names"
 
 /datum/preferences/proc/update_character(current_version, list/save_data)
 	if (current_version < 41)
@@ -378,6 +381,43 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	save_character_monkestation(save_data)
 
 	return TRUE
+
+/datum/preferences/proc/switch_to_slot(new_slot)
+	// SAFETY: `load_character` performs sanitization on the slot number
+	if (!load_character(new_slot))
+		tainted_character_profiles = TRUE
+		randomise_appearance_prefs()
+		save_character()
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		preference_middleware.on_new_character(usr)
+
+	character_preview_view.update_body()
+
+/datum/preferences/proc/remove_current_slot()
+	PRIVATE_PROC(TRUE)
+
+	var/closest_slot
+	for (var/other_slot in default_slot - 1 to 1 step -1)
+		var/save_data = savefile.get_entry("character[other_slot]")
+		if (!isnull(save_data))
+			closest_slot = other_slot
+			break
+
+	if (isnull(closest_slot))
+		for (var/other_slot in default_slot + 1 to max_save_slots)
+			var/save_data = savefile.get_entry("character[other_slot]")
+			if (!isnull(save_data))
+				closest_slot = other_slot
+				break
+
+	if (isnull(closest_slot))
+		stack_trace("remove_current_slot() being called when there are no slots to go to, the client should prevent this")
+		return
+
+	savefile.remove_entry("character[default_slot]")
+	tainted_character_profiles = TRUE
+	switch_to_slot(closest_slot)
 
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()

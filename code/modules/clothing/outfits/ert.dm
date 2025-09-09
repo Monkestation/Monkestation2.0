@@ -284,9 +284,7 @@
 	if(visualsOnly)
 		return
 	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
-	H.dna.add_mutation(/datum/mutation/human/clumsy)
-	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
-		M.mutadone_proof = TRUE
+	H.dna.add_mutation(/datum/mutation/clumsy,  MUTATION_SOURCE_CLOWN_CLUMSINESS)
 
 /datum/outfit/centcom/centcom_intern
 	name = "CentCom Intern"
@@ -446,7 +444,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/melee/energy/sword/saber
-	r_pocket = /obj/item/shield/energy
+	r_pocket = /obj/item/shield/energy/advanced
 	l_hand = /obj/item/gun/energy/pulse/loyalpin
 
 	skillchips = list(

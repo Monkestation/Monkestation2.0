@@ -301,6 +301,12 @@
 		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
 			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
 		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+
+		// monkestation edit start
+		if(lastkey) // This is a sad way to do it. But a way to do it none the lesser.
+			log_bomber(get_mob_by_key(lastkey), "Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [touch_msg] Source: [holder.my_atom]")
+		// monkestation edit end
+
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)

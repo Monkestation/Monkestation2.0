@@ -1,24 +1,15 @@
-/client/proc/spawn_mixtape()
-	set category = "Admin.Game"
-	set name = "Spawn Mixtape"
-	set desc = "Select an approved mixtape to spawn at your location."
-
-	var/datum/mixtape_spawner/tgui = new(usr)//create the datum
-	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+ADMIN_VERB(spawn_mixtape, R_FUN, FALSE, "Spawn Mixtape", "Select an approved mixtape to spawn at your location.", ADMIN_CATEGORY_GAME)
+	var/datum/mixtape_spawner/tgui = new(user)//create the datum
+	tgui.ui_interact(user.mob)//datum has a tgui component, here we open the window
 
 /datum/mixtape_spawner
 	var/client/holder //client of whoever is using this datum
 
 /datum/mixtape_spawner/New(user)//user can either be a client or a mob due to byondcode(tm)
-	if (istype(user, /client))
-		var/client/user_client = user
-		holder = user_client //if its a client, assign it to holder
-	else
-		var/mob/user_mob = user
-		holder = user_mob.client //if its a mob, assign the mob's client to holder
+	holder = user //AVD user is a client so this would be setting a client.
 
 /datum/mixtape_spawner/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/mixtape_spawner/ui_close()
 	qdel(src)

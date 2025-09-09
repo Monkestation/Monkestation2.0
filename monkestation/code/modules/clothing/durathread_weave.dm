@@ -29,6 +29,9 @@ GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 	. = ..()
 	. += span_info("You can click on a piece of clothing, with an active welder in your offhand, in order to reinforce it!")
 
+/obj/item/stack/sheet/durathread/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !isclothing(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+
 /obj/item/stack/sheet/durathread/afterattack(obj/item/clothing/clothing, mob/living/user, proximity)
 	. = ..()
 	if(. || !isliving(user) || !proximity)

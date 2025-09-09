@@ -41,10 +41,36 @@
 	/// A multiplier for the bloodcost during sol.
 	var/sol_multiplier
 
+	/// A looping timer ID to update the button status, because this code is garbage and doesn't process properly, and I don't feel like refactoring it. ~Lucy
+	var/stupid_looping_timer_id
+
 // Modify description to add cost.
 /datum/action/cooldown/bloodsucker/New(Target)
 	. = ..()
 	update_desc()
+	RegisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN, PROC_REF(on_sol_warning))
+
+/datum/action/cooldown/bloodsucker/Destroy()
+	bloodsuckerdatum_power = null
+	UnregisterSignal(SSsol, COMSIG_SOL_WARNING_GIVEN)
+	return ..()
+
+/datum/action/cooldown/bloodsucker/proc/on_sol_warning(datum/source, danger_level, vampire_warning_message, vassal_warning_message)
+	SIGNAL_HANDLER
+	if(danger_level != DANGER_LEVEL_SOL_ROSE || !active)
+		return
+	if(check_flags & BP_CANT_USE_DURING_SOL)
+		if(can_deactivate())
+			to_chat(owner, span_userdanger("Sol prevents you from using [name]!"), type = MESSAGE_TYPE_WARNING)
+			DeactivatePower()
+	else if(sol_multiplier)
+		to_chat(owner, span_userdanger("Sol burdens your body, [name] now costs more blood to upkeep!"), type = MESSAGE_TYPE_WARNING)
+
+/// Gets the current cost of the ability, accounting for `sol_multiplier` during Sol.
+/datum/action/cooldown/bloodsucker/proc/get_blood_cost(constant = FALSE)
+	. = constant ? constant_bloodcost : bloodcost
+	if(bloodsuckerdatum_power && sol_multiplier && SSsol.sunlight_active)
+		. *= sol_multiplier
 
 /datum/action/cooldown/bloodsucker/proc/update_desc(rebuild = TRUE)
 	desc = initial(desc)
@@ -57,16 +83,18 @@
 	if(rebuild)
 		build_all_button_icons(UPDATE_BUTTON_NAME)
 
-/datum/action/cooldown/bloodsucker/Destroy()
-	bloodsuckerdatum_power = null
-	return ..()
-
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
 	return COOLDOWN_FINISHED(src, next_use_time)
 
 /datum/action/cooldown/bloodsucker/Grant(mob/user)
 	. = ..()
 	find_bloodsucker_datum()
+
+/datum/action/cooldown/bloodsucker/Remove(mob/removed_from)
+	if(stupid_looping_timer_id)
+		deltimer(stupid_looping_timer_id)
+		stupid_looping_timer_id = null
+	return ..()
 
 //This is when we CLICK on the ability Icon, not USING.
 /datum/action/cooldown/bloodsucker/Trigger(trigger_flags, atom/target)
@@ -94,6 +122,7 @@
 	if(!COOLDOWN_FINISHED(src, next_use_time))
 		owner.balloon_alert(owner, "power unavailable!")
 		return FALSE
+	var/bloodcost = get_blood_cost()
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD) && living_owner.blood_volume < bloodcost)
@@ -139,6 +168,8 @@
 	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB)))
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
+	var/bloodcost = get_blood_cost()
+	var/constant_bloodcost = get_blood_cost(constant = TRUE)
 	// Constant Cost (out of blood)
 	if(constant_bloodcost > 0)
 		var/can_upkeep = bloodsuckerdatum_power ? (bloodsuckerdatum_power.bloodsucker_blood_volume > 0) : (HAS_TRAIT(user, TRAIT_NOBLOOD) || (user.blood_volume > (bloodcost + BLOOD_VOLUME_OKAY)))
@@ -158,7 +189,9 @@
 	else
 		cooldown_time = max(initial(cooldown_time) / 2, initial(cooldown_time) - (initial(cooldown_time) / 16 * (level_current - 1)))
 
-	return ..()
+	. = ..()
+
+	stupid_looping_timer_id = addtimer(CALLBACK(src, PROC_REF(stupid_looping_timer)), 0.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_LOOP) // this is why we can't have nice things
 
 /datum/action/cooldown/bloodsucker/proc/can_deactivate()
 	return TRUE
@@ -168,6 +201,7 @@
 
 /datum/action/cooldown/bloodsucker/proc/pay_cost()
 	// Non-bloodsuckers will pay in other ways.
+	var/bloodcost = get_blood_cost()
 	if(!bloodsuckerdatum_power)
 		var/mob/living/living_owner = owner
 		if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
@@ -184,6 +218,7 @@
 	if(power_flags & BP_AM_TOGGLE)
 		START_PROCESSING(SSprocessing, src)
 
+	var/bloodcost = get_blood_cost()
 	owner.log_message("used [src][bloodcost != 0 ? " at the cost of [bloodcost]" : ""].", LOG_ATTACK, color="red")
 	build_all_button_icons()
 
@@ -210,6 +245,7 @@
 		return
 	// We can keep this up (For now), so Pay Cost!
 	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
+		var/constant_bloodcost = get_blood_cost(constant = TRUE)
 		if(bloodsuckerdatum_power)
 			bloodsuckerdatum_power.AddBloodVolume(-constant_bloodcost)
 		else
@@ -222,10 +258,30 @@
 /datum/action/cooldown/bloodsucker/proc/ContinueActive(mob/living/user, mob/living/target)
 	if(QDELETED(user))
 		return FALSE
-	if(!constant_bloodcost > 0 || bloodsuckerdatum_power.bloodsucker_blood_volume > 0)
+	if((check_flags & BP_CANT_USE_DURING_SOL) && user.has_status_effect(/datum/status_effect/bloodsucker_sol))
+		return FALSE
+	var/constant_bloodcost = get_blood_cost(constant = TRUE)
+	if(constant_bloodcost <= 0)
 		return TRUE
+	if((power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
+		return TRUE
+	if(bloodsuckerdatum_power)
+		if(bloodsuckerdatum_power.bloodsucker_blood_volume >= constant_bloodcost)
+			return TRUE
+	else if(user.blood_volume >= max(constant_bloodcost, BLOOD_VOLUME_OKAY))
+		return TRUE
+	return FALSE
 
 /// Used to unlearn Single-Use Powers
 /datum/action/cooldown/bloodsucker/proc/remove_after_use()
 	bloodsuckerdatum_power?.powers -= src
 	Remove(owner)
+
+/datum/action/cooldown/bloodsucker/proc/stupid_looping_timer()
+	if(world.time >= next_use_time)
+		deltimer(stupid_looping_timer_id)
+		stupid_looping_timer_id = null
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/datum/action/cooldown/bloodsucker/proc/html_power_explanation()
+	return replacetext_char(html_encode(trimtext(power_explanation)), "\n", "<br>")

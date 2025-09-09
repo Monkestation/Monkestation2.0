@@ -4,7 +4,7 @@
 /// If a map vote is called before the emergency shuttle leaves the station, the players can call another vote to re-run the vote on the shuttle leaving.
 /datum/vote/shuttle_call
 	name = "Call Shuttle"
-	message = "Should we go home?"
+	default_message = "Should we go home?"
 	default_choices = list(
 		CHOICE_CALL,
 		CHOICE_CONTINUE,

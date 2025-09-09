@@ -37,6 +37,7 @@
 	biological_state = BIO_ROBOTIC | BIO_BLOODED
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	bodypart_traits = list(TRAIT_LIMBATTACHMENT)
+	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	body_damage_coeff = 1	//IPC Chest at default	///Monkestation Edit
 	max_damage = 250	//Default: 200 ///Monkestation Edit
 	brute_modifier = 1.2 // Monkestation Edit
@@ -46,7 +47,7 @@
 
 	disabling_threshold_percentage = 1
 
-	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
+	biological_state = (BIO_ROBOTIC)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 

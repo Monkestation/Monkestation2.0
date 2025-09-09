@@ -1,3 +1,4 @@
+#ifndef DISABLE_DEMOS
 /atom
 	var/image/demo_last_appearance
 
@@ -13,12 +14,12 @@
 	return ..()
 
 /client/New()
-	SSdemo.write_event_line("login [ckey]")
+	SSdemo?.write_event_line("login [ckey]")
 	return ..()
 
 /client/Destroy()
 	. = ..()
-	SSdemo.write_event_line("logout [ckey]")
+	SSdemo?.write_event_line("logout [ckey]")
 
 /turf/setDir()
 	. = ..()
@@ -40,6 +41,9 @@
 /obj/effect/spawner
 	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 
+/obj/effect/countdown
+	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
+
 /obj/effect/turf_decal
 	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 
@@ -57,3 +61,7 @@
 
 /obj/effect/abstract/chasm_storage
 	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
+
+/obj/structure/disposalholder
+	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
+#endif

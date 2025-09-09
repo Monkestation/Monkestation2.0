@@ -36,8 +36,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_BARKS,
 ))
 
-GLOBAL_LIST_EMPTY(cached_mixer_channels)
-
+GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 
 /proc/guess_mixer_channel(soundin)
 	var/sound_text_string
@@ -64,6 +63,18 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
 	else
 		return FALSE
+
+/// Calculates the "adjusted" volume for a user's volume mixer
+/proc/calculate_mixed_volume(user, volume, mixer_channel)
+	. = volume
+	var/client/client = CLIENT_FROM_VAR(user)
+	var/list/channels = client?.prefs?.channel_volume
+	if(!channels)
+		return volume
+	if("[CHANNEL_MASTER_VOLUME]" in channels)
+		. *= channels["[CHANNEL_MASTER_VOLUME]"] * 0.01
+	if(mixer_channel && ("[mixer_channel]" in channels))
+		. *= channels["[mixer_channel]"] * 0.01
 
 ///Default override for echo
 /sound
@@ -119,40 +130,50 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	if(!mixer_channel)
 		mixer_channel = guess_mixer_channel(soundin)
 
+	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		return
+
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
 
 	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
-	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
-	. = list()//output everything that successfully heard the sound
+	if(vary && !frequency)
+		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
+
+	var/list/listeners
 
 	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
 	var/turf/below_turf = GET_TURF_BELOW(turf_source)
 
-	if(ignore_walls)
+	var/audible_distance = falloff_exponent ? CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(vol, maxdistance, falloff_distance, falloff_exponent) : maxdistance
 
+	if(ignore_walls)
+		listeners = get_hearers_in_range(audible_distance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		if(above_turf && istransparentturf(above_turf))
-			listeners += SSmobs.clients_by_zlevel[above_turf.z]
+			listeners += get_hearers_in_range(audible_distance, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += SSmobs.clients_by_zlevel[below_turf.z]
+			listeners += get_hearers_in_range(audible_distance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 	else //these sounds don't carry through walls
-		listeners = get_hearers_in_view(maxdistance, turf_source)
+		listeners = get_hearers_in_view(audible_distance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(above_turf && istransparentturf(above_turf))
-			listeners += get_hearers_in_view(maxdistance, above_turf)
+			listeners += get_hearers_in_view(audible_distance, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += get_hearers_in_view(maxdistance, below_turf)
+			listeners += get_hearers_in_view(audible_distance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		for(var/mob/listening_ghost as anything in SSmobs.dead_players_by_zlevel[source_z])
+			if(get_dist(listening_ghost, turf_source) <= audible_distance)
+				listeners += listening_ghost
 
-	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
-		if(get_dist(listening_mob, turf_source) <= maxdistance)
-			listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb, mixer_channel)
-			. += listening_mob
+	for(var/mob/listening_mob in listeners)//had nulls sneak in here, hence the typecheck
+		listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb, mixer_channel)
+
+	return listeners
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, mixer_channel = 0)
 	if(!client || !can_hear())
@@ -165,12 +186,8 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
 
-	// monkestation edit start
-	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
-		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
-
-	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
-		sound_to_use.volume *= 0
+	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
+		return
 
 	if((channel in GLOB.used_sound_channels) || (mixer_channel in GLOB.used_sound_channels))
 		var/used_channel = 0
@@ -193,15 +210,16 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		else
 			sound_to_use.frequency = get_rand_frequency()
 
+	var/distance = 0
+
 	if(isturf(turf_source))
 		var/turf/turf_loc = get_turf(src)
 
 		//sound volume falloff with distance
-		var/distance = get_dist(turf_loc, turf_source) * distance_multiplier
+		distance = get_dist(turf_loc, turf_source) * distance_multiplier
 
-		if(max_distance && falloff_exponent) //If theres no max_distance we're not a 3D sound, so no falloff. MONKESTATION EDIT
-			sound_to_use.volume -= (max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * sound_to_use.volume
-			//https://www.desmos.com/calculator/sqdfl8ipgf
+		if(max_distance && falloff_exponent) //If theres no max_distance we're not a 3D sound, so no falloff.
+			sound_to_use.volume -= CALCULATE_SOUND_VOLUME(vol, distance, max_distance, falloff_distance, falloff_exponent)
 
 		if(pressure_affected)
 			//Atmosphere affects sound
@@ -222,7 +240,7 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 			sound_to_use.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
-		if(sound_to_use.volume <= 0)
+		if(sound_to_use.volume < SOUND_AUDIBLE_VOLUME_MIN)
 			return //No sound
 
 		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
@@ -256,6 +274,17 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		return //No sound
 	// monkestation edit end
 
+	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
+		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
+
+	if(!mixer_channel)
+		if(channel in GLOB.used_sound_channels)
+			mixer_channel = channel
+		else
+			mixer_channel = guess_mixer_channel(soundin)
+
+	sound_to_use.volume = calculate_mixed_volume(src, sound_to_use.volume, mixer_channel)
+
 	SEND_SOUND(src, sound_to_use)
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)
@@ -278,18 +307,16 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music_done) //wait for SSticker init to set the login music // monkestation edit: fix-lobby-music
 	UNTIL(fully_created)
-	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
-		if(prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] != 0)
-			vol = prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"]
-			vol *= prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
-	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
+	var/list/channel_volume = prefs?.channel_volume
+	if("[CHANNEL_LOBBYMUSIC]" in channel_volume)
+		vol = channel_volume["[CHANNEL_LOBBYMUSIC]"]
+	if("[CHANNEL_MASTER_VOLUME]" in channel_volume)
+		vol *= channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
+	if(vol <= 0 || (prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return
 
-	if(!media) ///media is set on creation thats weird
-		media = new /datum/media_manager(src)
-		media.open()
-		media.update_music()
-	media.lobby_music = TRUE
+	if(QDELETED(media_player)) ///media is set on creation thats weird
+		media_player = new(src)
 
 	if(!length(SSmedia_tracks.lobby_tracks))
 		return
@@ -302,11 +329,12 @@ GLOBAL_LIST_EMPTY(cached_mixer_channels)
 		text2file(SSmedia_tracks.current_lobby_track.url, "data/last_round_lobby_music.txt")
 		// monkestation edit end
 		SSmedia_tracks.first_lobby_play = FALSE
+		GLOB.lobby_media.current_track = SSmedia_tracks.current_lobby_track
+		GLOB.lobby_media.update_for_all_listeners()
 
-	var/datum/media_track/T = SSmedia_tracks.current_lobby_track
-	media.push_music(T.url, world.time, 1)
-	media.update_volume(vol) // this makes it easier if we modify volume later on
-	to_chat(src,"<span class='notice'>Lobby music: <b>[T.title]</b> by <b>[T.artist]</b>.</span>")
+	GLOB.lobby_media.add_listener(mob)
+	var/datum/media_track/track = SSmedia_tracks.current_lobby_track
+	to_chat(src, span_notice("Lobby music: <b>[track.title]</b> by <b>[track.artist]</b>."))
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.

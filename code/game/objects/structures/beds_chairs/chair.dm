@@ -172,7 +172,7 @@
 	if(same_z_layer)
 		return ..()
 	cut_overlay(armrest)
-	QDEL_NULL(armrest)
+	armrest = null
 	gen_armrest()
 	return ..()
 
@@ -186,7 +186,7 @@
 	return mutable_appearance(icon, "[icon_state]_armrest")
 
 /obj/structure/chair/comfy/Destroy()
-	QDEL_NULL(armrest)
+	armrest = null
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
@@ -298,6 +298,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
+	can_buckle = TRUE
+
+/obj/structure/chair/stool/bar/post_buckle_mob(mob/living/M)
+	M.pixel_y += 4
+
+/obj/structure/chair/stool/bar/post_unbuckle_mob(mob/living/M)
+	M.pixel_y -= 4
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 

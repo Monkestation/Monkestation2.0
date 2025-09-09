@@ -33,6 +33,8 @@
  * * params: paramas passed in from attackby
  */
 /obj/item/stack/sheet/proc/on_attack_floor(mob/user, params)
+	if(is_zero_amount(delete_if_zero = TRUE))
+		return FALSE
 	var/list/shards = list()
 	for(var/datum/material/mat in custom_materials)
 		if(mat.shard_type)

@@ -5,6 +5,11 @@
 	icon_state = "hypernoblium_crystal"
 	var/uses = 1
 
+// monkestation start: allow using on storage items via right clicking or combat mode
+/obj/item/hypernoblium_crystal/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+	return !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
+// monkestation end
+
 /obj/item/hypernoblium_crystal/afterattack(obj/target_object, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -25,7 +30,7 @@
 		if(istype(worn_item, /obj/item/clothing/suit/space))
 			to_chat(user, span_warning("The [worn_item] is already pressure-resistant!"))
 			return
-		if(worn_item.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && worn_item.clothing_flags & STOPSPRESSUREDAMAGE)
+		if(worn_item.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && (worn_item.clothing_flags & STOPSPRESSUREDAMAGE))
 			to_chat(user, span_warning("[worn_item] is already pressure-resistant!"))
 			return
 		to_chat(user, span_notice("You see how the [worn_item] changes color, it's now pressure proof."))

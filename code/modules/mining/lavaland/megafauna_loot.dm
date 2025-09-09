@@ -59,6 +59,7 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/vortex_recall)
+	action_slots = ALL
 	/// Linked teleport beacon for the group teleport functionality.
 	var/obj/effect/hierophant/beacon
 	/// TRUE if currently doing a teleport to the beacon, FALSE otherwise.
@@ -433,7 +434,7 @@
 	)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
-		soul.ckey = picked_ghost.ckey
+		soul.PossessByPlayer(picked_ghost.ckey)
 		soul.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
 		soul.update_atom_languages()
 		soul.faction = list("[REF(user)]")

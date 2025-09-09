@@ -104,10 +104,13 @@
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	organ_owner.grant_language(/datum/language/xenocommon, TRUE, TRUE, LANGUAGE_GLAND)
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	organ_owner.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	if(!QDELING(organ_owner))
+		organ_owner.remove_language(/datum/language/xenocommon, TRUE, TRUE, LANGUAGE_GLAND)
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

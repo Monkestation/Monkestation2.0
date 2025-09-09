@@ -11,7 +11,7 @@
 	var/valid_lair_area = TRUE
 	if(!coffin_turf)
 		valid_lair_area = FALSE
-	else if(!is_eclipse_level(coffin_turf.z)) // if we ever get planet colonizing back, let's allow bloodsuckers to make colony lairs, 'cuz why not
+	else if(!is_eclipse_level(coffin_turf.z) && !(current_area.area_flags & ALWAYS_VALID_BLOODSUCKER_LAIR))
 		if(!is_station_level(coffin_turf.z) || !is_station_area_or_adjacent(current_area))
 			valid_lair_area = FALSE
 	if(!valid_lair_area)
@@ -235,7 +235,9 @@
 		//Level up if possible.
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
-		else
+		else if(!bloodsuckerdatum.frenzied)
+			if(bloodsuckerdatum.bloodsucker_level_unspent < 1)
+				bloodsuckerdatum.blood_level_gain()
 			bloodsuckerdatum.SpendRank()
 		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
 		bloodsuckerdatum.check_begin_torpor()

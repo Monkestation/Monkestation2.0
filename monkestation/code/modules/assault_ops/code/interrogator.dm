@@ -57,7 +57,7 @@
 /obj/machinery/interrogator/examine(mob/user)
 	. = ..()
 	. += "It requies a direct link to a Nanotrasen defence network, stay near a Nanotrasen comms sat!"
-	. += span_info(span_italics("If a target has committed suicide, their body can be still be used to instantly extract the keycard."))
+	. += span_info(span_italics("If a target has committed suicide, their body can still be used to instantly extract the keycard."))
 
 /obj/machinery/interrogator/AltClick(mob/user)
 	. = ..()

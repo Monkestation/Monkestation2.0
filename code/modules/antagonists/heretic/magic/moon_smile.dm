@@ -47,4 +47,8 @@
 	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)
 	//Lowers sanity
 	cast_on.mob_mood.set_sanity(cast_on.mob_mood.sanity - 20)
+
+	owner.log_message("used [name] on [key_name(cast_on)]", LOG_ATTACK)
+	cast_on.log_message("was hit by [key_name(owner)] with [name]", LOG_VICTIM, log_globally = FALSE)
+
 	return TRUE

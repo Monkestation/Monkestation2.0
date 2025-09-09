@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Section, Button, Tabs, LabeledList, Stack } from '../components';
+import { Section, Tabs, Stack } from '../components';
 
 type ExtrapolatorData = {
   varients: string[];
@@ -19,8 +19,8 @@ type SymptomListData = {
 };
 
 export const Extrapolator = (props) => {
-  const { act, data } = useBackend<ExtrapolatorData>();
-  const { varients, diseases } = data;
+  const { data } = useBackend<ExtrapolatorData>();
+  const { diseases } = data;
 
   // State for selected disease and symptom
   const [selectedDisease, setSelectedDisease] = useLocalState<string | ''>(
@@ -33,7 +33,7 @@ export const Extrapolator = (props) => {
   );
 
   return (
-    <Window title="Extrapolator" width={600} height={200}>
+    <Window title="Extrapolator" width={325} height={200}>
       <Window.Content>
         <Stack grow>
           <Stack.Item>
@@ -69,32 +69,6 @@ export const Extrapolator = (props) => {
                     ))}
                 </Tabs>
               </Section>
-            </Stack.Item>
-          )}
-
-          {selectedSymptom && (
-            <Stack.Item>
-              <Stack grow>
-                <Section title="Variants">
-                  <LabeledList>
-                    {varients.map((variant, index) => (
-                      <LabeledList.Item key={index}>
-                        <Button
-                          onClick={() =>
-                            act('add_varient', {
-                              varient_name: variant,
-                              disease_ref: selectedDisease,
-                              symptom_ref: selectedSymptom,
-                            })
-                          }
-                        >
-                          {variant}
-                        </Button>
-                      </LabeledList.Item>
-                    ))}
-                  </LabeledList>
-                </Section>
-              </Stack>
             </Stack.Item>
           )}
         </Stack>

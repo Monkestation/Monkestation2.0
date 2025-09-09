@@ -171,7 +171,7 @@
 /obj/machinery/space_heater{
 	anchored = 1
 	},
-/obj/machinery/camera/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /obj/item/pipe_dispenser,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -216,7 +216,7 @@
 "Ea" = (
 /obj/machinery/recharge_station,
 /obj/structure/sign/warning/vacuum/external/directional/east,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/plating,
 /area/template_noop)
 "FK" = (
@@ -304,7 +304,7 @@
 /area/template_noop)
 "OR" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/camera/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/ore_silo,
 /turf/template_noop,
 /area/template_noop)
@@ -366,7 +366,7 @@
 /turf/open/floor/circuit/green/airless,
 /area/template_noop)
 "VW" = (
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south{
 	environ = 0;

@@ -134,6 +134,8 @@
 	var/fall_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
+	for(var/obj/item/cane/cane in owner.held_items) // crutches will lessen the chance of you falling.
+		fall_chance /= 2
 	if(SPT_PROB(0.5 * fall_chance, seconds_per_tick) && owner.body_position == STANDING_UP)
 		to_chat(owner, span_warning("Your leg gives out!"))
 		owner.Paralyze(35)

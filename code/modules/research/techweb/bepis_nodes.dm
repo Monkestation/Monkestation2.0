@@ -9,9 +9,10 @@
 		"bright_helmet",
 		"rld_mini",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)
 
 /datum/techweb_node/extreme_office
 	id = "extreme_office"
@@ -22,9 +23,10 @@
 		"mauna_mug",
 		"rolling_table",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)
 
 /datum/techweb_node/spec_eng
 	id = "spec_eng"
@@ -35,9 +37,10 @@
 		"eng_gloves",
 		"lava_rods",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/aus_security
 	id = "aus_security"
@@ -48,9 +51,10 @@
 		"pin_explorer",
 		"stun_boomerang",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/interrogation
 	id = "interrogation"
@@ -61,9 +65,10 @@
 	design_ids = list(
 		"hypnochair",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/sticky_advanced
 	id = "sticky_advanced"
@@ -73,9 +78,10 @@
 		"pointy_tape",
 		"super_sticky_tape",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)
 
 /datum/techweb_node/tackle_advanced
 	id = "tackle_advanced"
@@ -86,9 +92,10 @@
 		"tackle_dolphin",
 		"tackle_rocket",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mod_experimental
 	id = "mod_experimental"
@@ -99,6 +106,7 @@
 		"mod_disposal",
 		"mod_joint_torsion",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
+	announce_channels = list(RADIO_CHANNEL_COMMON)

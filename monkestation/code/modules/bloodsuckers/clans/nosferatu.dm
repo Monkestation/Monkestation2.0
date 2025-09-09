@@ -1,7 +1,7 @@
 /datum/bloodsucker_clan/nosferatu
 	name = CLAN_NOSFERATU
 	description = "The Nosferatu Clan is unable to blend in with the crew, with no abilities such as Masquerade and Veil. \n\
-		Additionally, has a permanent bad back and looks like a Bloodsucker upon a simple examine, and is entirely unidentifiable, \n\
+		Additionally, has a permanent bad back and looks like a Bloodsucker upon a simple examine by those in touch with the occult, and is entirely unidentifiable, \n\
 		they can fit in the vents regardless of their form and equipment. \n\
 		The Favorite Vassal is permanetly disfigured, and can also ventcrawl, but only while entirely nude."
 	clan_objective = /datum/objective/bloodsucker/kindred
@@ -9,15 +9,14 @@
 	join_description = "You are permanetly disfigured, look like a Bloodsucker to all who examine you, \
 		lose your Masquerade ability, but gain the ability to Ventcrawl even while clothed."
 	blood_drink_type = BLOODSUCKER_DRINK_INHUMANELY
+	banned_powers = list(/datum/action/cooldown/bloodsucker/masquerade, /datum/action/cooldown/bloodsucker/veil)
 
 /datum/bloodsucker_clan/nosferatu/New(datum/antagonist/bloodsucker/owner_datum)
 	. = ..()
-	for(var/datum/action/cooldown/bloodsucker/power as anything in bloodsuckerdatum.powers)
-		if(istype(power, /datum/action/cooldown/bloodsucker/masquerade) || istype(power, /datum/action/cooldown/bloodsucker/veil))
-			bloodsuckerdatum.RemovePower(power)
 	if(!bloodsuckerdatum.owner.current.has_quirk(/datum/quirk/badback))
 		bloodsuckerdatum.owner.current.add_quirk(/datum/quirk/badback)
 	bloodsuckerdatum.owner.current.add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_DISFIGURED), BLOODSUCKER_TRAIT)
+	bloodsuckerdatum.break_masquerade(silent = TRUE) // malks won't immediately try to kill them
 
 /datum/bloodsucker_clan/nosferatu/Destroy(force)
 	for(var/datum/action/cooldown/bloodsucker/power in bloodsuckerdatum.powers)

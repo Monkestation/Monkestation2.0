@@ -8,11 +8,30 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biomass_recycler
-	var/stored_matter = 0
-	var/cube_production = 0.2
 
-	var/static/list/recyclable_types = list(/mob/living/carbon/human/species/monkey = 1)
+	/// How much biomass is currently stores in the recycler
+	var/stored_matter = 0
+	/// Multiplier that affects how much biomass is gained when recycling
+	var/cube_production = 0.2
+	/// List of all creatures that the biomass recycler can grind down for biomass
+	var/static/list/recyclable_types = list(
+		/mob/living/carbon/human/species/monkey = 1,
+		/mob/living/basic/cockroach/rockroach = 1,
+		/mob/living/basic/cockroach/iceroach = 1,
+		/mob/living/basic/xenofauna/meatbeast = 2,
+		/mob/living/basic/xenofauna/diyaab = 1,
+		/mob/living/basic/xenofauna/thinbug = 1,
+		/mob/living/basic/cockroach/recursive = 1,
+		/mob/living/basic/xenofauna/thoom = 2,
+		/mob/living/basic/xenofauna/greeblefly = 2,
+		/mob/living/basic/xenofauna/lavadog = 1,
+		/mob/living/basic/xenofauna/voxslug = 1,
+		/mob/living/basic/xenofauna/possum = 1,
+		/mob/living/basic/xenofauna/dron = 1,
+	)
+	/// List of things you can print at the biomass recycler
 	var/list/printable_types = list(/obj/item/stack/biomass = 1, /obj/item/food/monkeycube = 1)
+	/// List of things you can generate with the right click of a linked vacuum
 	var/list/vacuum_printable_types = list(/mob/living/carbon/human/species/monkey = 1)
 
 /obj/machinery/biomass_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
@@ -27,6 +46,7 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Recycles <b>[cube_production]</b> biomass units per unit inserted.")
+		. += span_info("It currently has [stored_matter] unit\s of biomass.")
 
 /obj/machinery/biomass_recycler/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

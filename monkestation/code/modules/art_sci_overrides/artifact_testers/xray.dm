@@ -168,7 +168,7 @@
 		if(artifact.chosen_fault)
 			last_results = list("ARTIFACT FAULT DISCOVERED: [artifact.chosen_fault.name]", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
 		else
-			research_added += 2500
+			research_added += TECHWEB_TIER_1_POINTS
 			last_results = list("FLAWLESS ARTIFACT. NO FAULTS.", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
 		if(length(artifact.discovered_effects) != length(artifact.artifact_effects))
 			for(var/datum/artifact_effect/eff in artifact.artifact_effects)

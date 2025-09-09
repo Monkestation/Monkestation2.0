@@ -64,7 +64,7 @@
 	force = 15
 	block_chance = 20
 	bare_wound_bonus = 30
-	armour_penetration = 35
+	armour_penetration = 85
 	COOLDOWN_DECLARE(lunge)
 
 /obj/item/mantis_blade/syndicate/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -103,7 +103,7 @@
 	righthand_file = 'monkestation/code/modules/cybernetics/icons/swords_righthand.dmi'
 	force = 12
 	wound_bonus = 10
-	armour_penetration = 20
+	armour_penetration = 40
 	attack_speed = 10
 	var/in_stance = FALSE  //Toggle for the defensive stance.
 

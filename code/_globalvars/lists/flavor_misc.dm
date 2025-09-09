@@ -59,6 +59,9 @@ GLOBAL_LIST_EMPTY(floran_leaves_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_fluff_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_tail_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(satyr_horns_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_tail_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_wings_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(oni_horns_list) //Monkestation Addition
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",
@@ -152,75 +155,6 @@ GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
 	"skeleghost",
 ))
 //stores the ghost forms that support hair and other such things
-
-GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
-	":thinking:",
-	"Alien",
-	"Angel",
-	"Banned",
-	"Bliss",
-	"Blue",
-	"Boxfort",
-	"Boy",
-	"Clown",
-	"Database",
-	"Dorf",
-	"Firewall",
-	"Fuzzy",
-	"Gentoo",
-	"Girl",
-	"Glitchman",
-	"Gondola",
-	"Goon",
-	"Hades",
-	"HAL 9000",
-	"Heartline",
-	"Helios",
-	"Hotdog",
-	"House",
-	"Inverted",
-	"Matrix",
-	"Monochrome",
-	"Murica",
-	"Nanotrasen",
-	"Not Malf",
-	"Portrait",
-	"President",
-	"Rainbow",
-	"Random",
-	"Red October",
-	"Red",
-	"Static",
-	"Syndicat Meow",
-	"Terminal",
-	"Text",
-	"Too Deep",
-	"Triumvirate-M",
-	"Triumvirate",
-	"Weird",
-	"Yes-Man",
-	"Randomgod", //MONKEYSTATION ADDITION
-)))
-
-/// A form of resolve_ai_icon that is guaranteed to never sleep.
-/// Not always accurate, but always synchronous.
-/proc/resolve_ai_icon_sync(input)
-	SHOULD_NOT_SLEEP(TRUE)
-
-	if(!input || !(input in GLOB.ai_core_display_screens))
-		return "ai"
-	else
-		if(input == "Random")
-			input = pick(GLOB.ai_core_display_screens - "Random")
-		return "ai-[lowertext(input)]"
-
-/proc/resolve_ai_icon(input)
-	if (input == "Portrait")
-		var/datum/portrait_picker/tgui = new(usr)//create the datum
-		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-		return "ai-portrait" //just take this until they decide
-
-	return resolve_ai_icon_sync(input)
 
 GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_ENGINEERING,
@@ -391,8 +325,33 @@ GLOBAL_LIST_INIT(status_display_approved_pictures, list(
 	"bluealert",
 	"redalert",
 	"deltaalert",
+	"amberalert",
+	"yellowalert",
+	"lambdaalert",
+	"gammaalert",
+	"epsilonalert",
 	"radiation",
 	"currentalert", //For automatic set of status display on current level
+))
+
+// All possible alert level displays
+GLOBAL_LIST_INIT(status_display_alert_level_pictures, list(
+	"greenalert",
+	"bluealert",
+	"redalert",
+	"deltaalert",
+	"amberalert",
+	"yellowalert",
+	"lambdaalert",
+	"gammaalert",
+	"epsilonalert",
+))
+
+// Alert level names on the same level
+GLOBAL_LIST_INIT(same_level_alert_levels, list(
+	"blue",
+	"yellow",
+	"amber",
 ))
 
 // Members of status_display_approved_pictures that are actually states and not alert values

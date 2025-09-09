@@ -8,17 +8,17 @@
 		"mecha_camera",
 		"botnavbeacon",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/adv_robotics
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
 	description = "Machines using actual neural networks to simulate human lives."
-	prereq_ids = list("neural_programming", "robotics")
+	prereq_ids = list("neural_programming", "robotics", "cyborg")
 	design_ids = list(
 		"mmi_posi",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/exodrone_tech
 	id = "exodrone"
@@ -31,7 +31,8 @@
 		"exoscanner",
 		"exoscanner_console",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/adv_bots
 	id = "adv_bots"
@@ -42,7 +43,7 @@
 		"botpad",
 		"botpad_remote",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/neural_programming
 	id = "neural_programming"
@@ -52,8 +53,8 @@
 	design_ids = list(
 		"skill_station",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
 // AI root node
 /datum/techweb_node/ai_basic
 	id = "ai_basic"
@@ -82,7 +83,8 @@
 		"freeform_module",
 		"remove_module",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/ai_adv
 	id = "ai_adv"
@@ -90,6 +92,7 @@
 	description = "State of the art lawsets to be used for AI research."
 	prereq_ids = list("ai_basic")
 	design_ids = list(
+		"ai_power_upgrade",
 		"asimovpp_module",
 		"paladin_devotion_module",
 		"dungeon_master_module",
@@ -111,7 +114,8 @@
 		"onehuman_module",
 		"purge_module",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_COMMAND)
 
 //Any kind of point adjustment needs to happen before SSresearch sets up the whole node tree, it gets cached
 /datum/techweb_node/ai/New()

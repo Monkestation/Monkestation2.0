@@ -118,7 +118,7 @@
 	use_power(active_power_usage) // Use a lot of power.
 
 	// monkestation edit start PR #5133
-	if(is_ipc_mode)
+	if(is_ipc_mode || HAS_MIND_TRAIT(victim, TRAIT_UNBORGABLE)) // can't escape by just being unborgable
 		victim.set_species(/datum/species/ipc)
 		if(master_ai && victim.get_organ_by_type(/obj/item/organ/internal/brain) && !victim?.mind.has_antag_datum(/datum/antagonist/infected_ipc))
 			var/datum/brain_trauma/special/infected_ipc/trauma = victim.gain_trauma(/datum/brain_trauma/special/infected_ipc)

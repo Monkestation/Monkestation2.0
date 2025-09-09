@@ -257,8 +257,8 @@
 	. = ..()
 	if(. != MOD_CANCEL_ACTIVATE || !isliving(user))
 		return
-	if(mod.ai == user)
-		to_chat(mod.ai, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
+	if(mod.ai_assistant == user)
+		to_chat(mod.ai_assistant, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
 		return
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
@@ -296,7 +296,7 @@
 		all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
 		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
 		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
-	show_time = TRUE
+	display_time = TRUE
 	death_sound = null
 	death_sound_volume = null
 
@@ -311,34 +311,25 @@
 	module_type = MODULE_ACTIVE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 6
 	incompatible_modules = list(/obj/item/mod/module/energy_net)
-	cooldown_time = 1.5 SECONDS
+	cooldown_time = 5 SECONDS
 	/// List of all energy nets this module made.
 	var/list/energy_nets = list()
+
+/obj/item/mod/module/energy_net/on_suit_deactivation(deleting)
+	for(var/obj/structure/energy_net/net as anything in energy_nets)
+		net.atom_destruction(ENERGY)
 
 /obj/item/mod/module/energy_net/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	if(!isliving(target))
-		balloon_alert(mod.wearer, "invalid target!")
-		return
-	var/mob/living/living_target = target
-	if(locate(/obj/structure/energy_net) in get_turf(living_target))
-		balloon_alert(mod.wearer, "already trapped!")
-		return
-	for(var/turf/between_turf as anything in get_line(get_turf(mod.wearer), get_turf(living_target)))
-		if(between_turf.density)
-			balloon_alert(mod.wearer, "not through obstacles!")
-			return
-	if(IS_SPACE_NINJA(mod.wearer))
+	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
-	mod.wearer.Beam(living_target, "n_beam", time = 1.5 SECONDS)
-	var/obj/structure/energy_net/net = new /obj/structure/energy_net(living_target.drop_location())
-	net.affected_mob = living_target
-	mod.wearer.visible_message(span_danger("[mod.wearer] caught [living_target] with an energy net!"), span_notice("You caught [living_target] with an energy net!"))
-	if(living_target.buckled)
-		living_target.buckled.unbuckle_mob(living_target, force = TRUE)
-	net.buckle_mob(living_target, force = TRUE)
+	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
+	net.preparePixelProjectile(target, mod.wearer)
+	net.firer = mod.wearer
+	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
 
 /obj/item/mod/module/energy_net/proc/add_net(obj/structure/energy_net/net)

@@ -169,6 +169,9 @@
 /obj/item/gun/ballistic/automatic/sol_rifle/evil/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/sol_rifle/evil/unrestricted
+	pin = /obj/item/firing_pin
+
 // SolFed shotgun (this was gonna be in a proprietary shotgun shell type outside of 12ga at some point, wild right?)
 
 /obj/item/gun/ballistic/shotgun/riot/sol
@@ -238,6 +241,8 @@
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
 
+/obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 // Low caliber grenade launcher (fun & games)
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher
@@ -340,6 +345,9 @@
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/sol_grenade_launcher/evil/unrestricted
+	pin = /obj/item/firing_pin
+
 /*
 *	QM Sporter Rifle
 */
@@ -404,8 +412,8 @@
 // Evil .585 smg that blueshields spawn with that will throw your screen like hell but itll sure kill whoever threatens a head really good
 
 /obj/item/gun/ballistic/automatic/xhihao_smg
-	name = "\improper Bogseo Submachine Gun"
-	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the .27-54 cartridge. \
+	name = "\improper Bogseo Heavy Submachine Gun"
+	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the hefty .585 cartridge. \
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
 
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
@@ -423,7 +431,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT
 
-	accepted_magazine_type = /obj/item/ammo_box/magazine/miecz
+	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
 
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 	can_suppress = TRUE
@@ -439,10 +447,11 @@
 	// Hope you didn't need to see anytime soon
 	recoil = 2
 	wield_recoil = 1
+	projectile_wound_bonus = -5
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+///	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/examine(mob/user)
 	. = ..()
@@ -607,6 +616,9 @@
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 // Trappiste high caliber pistol in .585
 
@@ -1066,6 +1078,9 @@
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
 	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
+	pin = /obj/item/firing_pin
 
 /// File location for the long gun's speech
 #define LONG_MOD_LASER_SPEECH "nova/long_modular_laser.json"

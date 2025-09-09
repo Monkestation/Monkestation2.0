@@ -167,3 +167,10 @@
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
+
+/datum/map_template/ruin/icemoon/underground/oldstation
+	id = "ice_oldstation"
+	suffix = "icemoon_underground_oldstation.dmm"
+	name = "Ancient Ice Moon Outpost"
+	description = "The crew of an outpost awaken one hundred years after a crisis. Awaking to a derelict outpost on the verge of collapse, and a hostile force of invading \
+	xenomorphs. Can the surviving crew overcome the odds and survive and rebuild, or will the cold embrace of the stars become their new home?"

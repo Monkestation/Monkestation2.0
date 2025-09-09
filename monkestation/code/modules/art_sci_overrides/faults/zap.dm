@@ -3,7 +3,7 @@
 	trigger_chance = 12
 	visible_message = "discharges a large amount of electricity!"
 
-	research_value = 200
+	research_value = TECHWEB_DISCOUNT_MINOR / 4
 
 	weight = ARTIFACT_RARE
 

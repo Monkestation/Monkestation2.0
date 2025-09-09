@@ -199,6 +199,10 @@
 
 /// Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
+	// you ain't bladewolf, bud
+	if(current == creator || astype(current, /mob/living/carbon)?.last_mind == src)
+		return
+
 	if(IS_CULTIST(creator))
 		add_antag_datum(/datum/antagonist/cult)
 

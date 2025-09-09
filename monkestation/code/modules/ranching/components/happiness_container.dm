@@ -31,7 +31,7 @@
 
 /datum/component/happiness_container/Destroy(force)
 	unhappy_callbacks = null
-	QDEL_NULL(applied_visual)
+	remove_visual()
 	return ..()
 
 /datum/component/happiness_container/RegisterWithParent()
@@ -124,9 +124,11 @@
 	addtimer(CALLBACK(src, PROC_REF(remove_visual)), 3 SECONDS)
 
 /datum/component/happiness_container/proc/remove_visual()
+	if(!applied_visual)
+		return
 	var/atom/movable/parent_movable = parent
-	parent_movable.cut_overlay(applied_visual)
-	QDEL_NULL(applied_visual)
+	parent_movable?.cut_overlay(applied_visual)
+	applied_visual = null
 
 /datum/component/happiness_container/proc/passes_happy(datum/source, check)
 	if(check > 0)

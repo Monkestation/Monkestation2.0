@@ -620,14 +620,17 @@
 				build_step++
 
 		if(ASSEMBLY_SIXTH_STEP)
-			if(istype(part, /obj/item/tank/internals/emergency_oxygen))
+			if(istype(part, /obj/item/tank/internals))
+				var/obj/item/tank/internals/tank = part
+				if(tank.return_air()?.return_pressure() <= HAZARD_LOW_PRESSURE)
+					balloon_alert(user, "not enough air in tank!")
+					return
 				if(!user.temporarilyRemoveItemFromInventory(part))
 					return
 				balloon_alert(user, "assembly finished!")
-				var/obj/item/tank/internals/emergency_oxygen/assembly_tank = part
 				var/obj/vehicle/sealed/car/vim/new_vim = new(drop_location())
 				new_vim.name = created_name
-				new_vim.tank = assembly_tank
-				assembly_tank.forceMove(new_vim)
+				new_vim.tank = tank
+				tank.forceMove(new_vim)
 				qdel(src)
 		//MONKESTATION EDIT STOP

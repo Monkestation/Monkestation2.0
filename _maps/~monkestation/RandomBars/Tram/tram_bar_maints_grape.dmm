@@ -650,7 +650,7 @@
 /obj/structure/rack,
 /obj/structure/sign/poster/contraband/random/directional/north,
 /obj/effect/spawner/random/decoration/paint,
-/obj/item/airlock_painter/decal/tile,
+/obj/item/airlock_painter/decal,
 /turf/open/floor/plating,
 /area/station/service/theater)
 "ps" = (

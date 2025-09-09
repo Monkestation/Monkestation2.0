@@ -199,11 +199,24 @@
 	WRITE_FILE(F["scar[char_index]-[scar_index]"], sanitize_text(valid_scars))
 
 /// Save any scars we have to our designated slot, then write our current slot so that the next time we call [/mob/living/carbon/human/proc/increment_scar_slot] (the next round we join), we'll be there
-/mob/living/carbon/human/proc/save_persistent_scars(nuke = FALSE)
-	if(!ckey || !mind?.original_character_slot_index || !client?.prefs.read_preference(/datum/preference/toggle/persistent_scars))
+/mob/living/carbon/human/proc/save_persistent_scars(nuke = FALSE, target_ckey)
+	if(!target_ckey)
+		target_ckey = ckey
+	if(!target_ckey || !mind?.original_character_slot_index)
 		return
 
-	var/path = "data/player_saves/[ckey[1]]/[ckey]/scars.sav"
+	var/persistent_scars_enabled = persistent_scars
+	if(isnull(persistent_scars_enabled))
+		if(client)
+			persistent_scars_enabled = client?.prefs?.read_preference(/datum/preference/toggle/persistent_scars)
+		else
+			var/client/user_client = GLOB.directory[target_ckey]
+			persistent_scars_enabled = user_client?.prefs?.read_preference(/datum/preference/toggle/persistent_scars)
+
+	if(!persistent_scars_enabled)
+		return
+
+	var/path = "data/player_saves/[target_ckey[1]]/[target_ckey]/scars.sav"
 	var/savefile/F = new /savefile(path)
 	var/char_index = mind.original_character_slot_index
 	var/scar_index = mind.current_scar_slot_index || F["current_scar_index"] || 1
@@ -227,7 +240,8 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
+	if(client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")

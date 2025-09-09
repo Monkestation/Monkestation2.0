@@ -75,7 +75,7 @@
 	name = "Chicken Carrier"
 	id = "chicken_carrier"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/chicken_carrier
 	category = list(
 		RND_CATEGORY_INITIAL,

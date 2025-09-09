@@ -72,7 +72,7 @@
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		boombox.forceMove(user)
 		boombox = null
-		Destroy()
+		qdel(src)
 		return
 	if(istype(W, /obj/item/tank))
 		if(boombox.tank_one && boombox.tank_two)

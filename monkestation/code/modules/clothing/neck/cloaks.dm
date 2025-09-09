@@ -170,11 +170,8 @@
 
 /obj/item/clothing/neck/mentorcloak/examine(mob/user)
 	. = ..()
-	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !user.client?.is_mentor())
-		. += span_warning("While you can still feel the displeasure from the cloak it feels like \
-							it might just let you wear it")
-	if(!user.client?.is_mentor())
-		. += span_warning("You can feel this cloak despises you for lacking a high enough level of knowledge")
+	if(!is_mentor(user.client))
+		. += span_warning("You can feel this cloak despises you for lacking a high enough level of knowledge.")
 
 /obj/item/clothing/neck/mentorcloak/equipped(mob/living/user, slot)
 	. = ..()
@@ -184,7 +181,7 @@
 /obj/item/clothing/neck/mentorcloak/dropped(mob/living/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
-		select_cloak_appearance.Remove(user)
+		select_cloak_appearance?.Remove(user)
 
 /obj/item/clothing/neck/mentorcloak/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()

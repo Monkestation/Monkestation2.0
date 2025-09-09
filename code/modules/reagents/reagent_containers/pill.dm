@@ -99,6 +99,21 @@
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	list_reagents = list(/datum/reagent/toxin/cyanide = 50)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/spewium
+	name = "spewium pill"
+	desc = "Hope you had an empty stomach."
+	icon_state = "pill5"
+	list_reagents = list(/datum/reagent/toxin/spewium = 50)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/amanitin
+	name = "amanitin pill"
+	desc = "You won't feel it until it's too late."
+	icon_state = "pill5"
+	list_reagents = list(/datum/reagent/toxin/amanitin = 50)
+	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"

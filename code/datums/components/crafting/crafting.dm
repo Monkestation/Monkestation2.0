@@ -20,6 +20,7 @@
 	var/mode = CRAFTING
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
+	var/forced_mode = FALSE //MONKESTATION ADDITION
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -413,6 +414,7 @@
 	var/list/data = list()
 	var/list/material_occurences = list()
 
+	data["forced_mode"] = forced_mode //MONKESTATION ADDITION
 	data["recipes"] = list()
 	data["categories"] = list()
 	data["foodtypes"] = FOOD_FLAGS
@@ -486,6 +488,8 @@
 			display_compact = !display_compact
 			. = TRUE
 		if("toggle_mode")
+			if(forced_mode) //MONKESTATION ADDITION
+				return
 			mode = !mode
 			var/mob/user = usr
 			update_static_data(user)
@@ -493,8 +497,8 @@
 
 /datum/component/personal_crafting/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/crafting),
-		get_asset_datum(/datum/asset/spritesheet/crafting/cooking),
+		get_asset_datum(/datum/asset/spritesheet_batched/crafting),
+		get_asset_datum(/datum/asset/spritesheet_batched/crafting/cooking),
 	)
 ///
 /datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)

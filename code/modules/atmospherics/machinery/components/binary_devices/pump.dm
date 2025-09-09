@@ -27,6 +27,7 @@
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/atmos_pump,
 	))
+	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -58,10 +59,11 @@
 	if(!on || !is_operational)
 		return
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/input_air = airs[1]
+	var/datum/gas_mixture/output_air = airs[2]
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
-	if(air1.pump_gas_to(air2, target_pressure))
+	if(input_air.pump_gas_to(output_air, target_pressure, output_pipenet_air = output_pipenet_air))
 		update_parents()
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, datum/tgui/ui)

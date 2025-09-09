@@ -158,7 +158,7 @@
 			return TRUE
 	else
 		if(O.loc.atom_storage)
-			return O.loc.atom_storage.attempt_remove(O, src, silent = TRUE)
+			return O.loc.atom_storage.attempt_remove(O, src)
 		else
 			O.forceMove(src)
 			return TRUE

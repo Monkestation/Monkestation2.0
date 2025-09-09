@@ -155,6 +155,8 @@
 	else if(istype(AM, /obj/singularity))
 		investigate_log("([key_name(A)]) has been consumed by the Spatial rift at [AREACOORD(T)].", INVESTIGATE_ENGINE)
 		return
+	else if(!isobj(AM) || istype(AM, /obj/effect/abstract))
+		return
 	AM.forceMove(src)
 
 /obj/spatial_rift/proc/admin_investigate_setup()

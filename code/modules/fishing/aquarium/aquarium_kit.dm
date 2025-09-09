@@ -25,7 +25,7 @@
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	storage_type = /datum/storage/fish_case
+	storage_type = /datum/storage/fish_case/adjust_size
 
 /obj/item/storage/fish_case/Initialize(mapload)
 	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC) // Before populate so fish instatiates in ready container already

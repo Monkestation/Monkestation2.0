@@ -20,6 +20,16 @@
 /obj/item/storage/box/sec_smokebomb/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/smokebomb/security(src)
+
+/obj/item/storage/box/smokebomb
+	name = "box of smoke grenades (WARNING)"
+	desc = "The rest of the warning label is torn off..."
+	icon_state = "secbox"
+	illustration = "grenade"
+
+/obj/item/storage/box/smokebomb/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/grenade/smokebomb(src)
 //MONKESTATION EDIT STOP
 
 /obj/item/storage/box/stingbangs

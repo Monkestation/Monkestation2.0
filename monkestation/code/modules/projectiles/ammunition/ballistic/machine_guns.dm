@@ -57,7 +57,7 @@
 
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 
 	ammo_type = /obj/item/ammo_casing/c65xeno
 	caliber = CALIBER_C65XENO

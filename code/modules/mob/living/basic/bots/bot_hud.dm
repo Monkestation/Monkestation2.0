@@ -44,12 +44,14 @@
 	if(isnull(ai_controller))
 		return
 
+	//Removes path images and handles removing hud client images
 	clear_path_hud()
+
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 
-	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
 
 	var/atom/move_target = ai_controller.current_movement_target
 	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
@@ -58,9 +60,6 @@
 	var/list/our_path = source.movement_path
 	if(!length(our_path))
 		return
-
-	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
-		hud.remove_atom_from_hud(src)
 
 	for(var/index in 1 to our_path.len)
 		if(index == 1 || index == our_path.len)
@@ -114,4 +113,9 @@
 		var/image/our_image = current_pathed_turfs[index]
 		animate(our_image, alpha = 0, time = 0.3 SECONDS)
 		current_pathed_turfs -= index
+
+	// Call hud remove handlers to ensure viewing user client images are removed
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_atom_from_hud(src)
 

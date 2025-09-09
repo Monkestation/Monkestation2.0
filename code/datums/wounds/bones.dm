@@ -206,7 +206,7 @@
 	return .
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)
-	if(victim.stat == DEAD || wounding_dmg < WOUND_MINIMUM_DAMAGE || wounding_type == WOUND_BURN)
+	if(QDELETED(victim) || victim.stat == DEAD || wounding_dmg < WOUND_MINIMUM_DAMAGE || wounding_type == WOUND_BURN)
 		return
 	if(limb.body_zone != BODY_ZONE_CHEST || !limb.can_bleed() || !prob(internal_bleeding_chance))
 		return
@@ -385,6 +385,7 @@
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
+	victim.cause_pain(limb.body_zone, 25)
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] back into place!"), span_notice("You snap [victim]'s dislocated [limb.plaintext_zone] back into place!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] back into place!"))
@@ -404,6 +405,7 @@
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
+	victim.cause_pain(limb.body_zone, 40)
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), span_danger("You snap [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] with a sickening crack!"))

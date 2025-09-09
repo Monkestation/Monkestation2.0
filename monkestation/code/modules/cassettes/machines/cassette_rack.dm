@@ -33,10 +33,7 @@
 
 // Allow opening on a normal left click
 /datum/storage/cassette_rack/on_attack(datum/source, mob/user)
-	var/obj/structure/cassette_rack/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-	if(QDELETED(user) || !user.Adjacent(resolve_parent) || user.incapacitated() || !user.canUseStorage())
+	if(QDELETED(user) || !user.Adjacent(parent) || user.incapacitated() || !user.canUseStorage())
 		return ..()
 	INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

@@ -9,7 +9,7 @@
 	///Name of the mechpad in a mechpad console
 	var/display_name = "Orbital Pad"
 	///Can we carry mobs or just mechs?
-	var/mech_only = FALSE
+	var/mech_only = TRUE
 
 /obj/machinery/mechpad/Initialize(mapload)
 	. = ..()
@@ -41,7 +41,7 @@
 	if(!multitool_check_buffer(user, tool))
 		return
 	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
+	multitool.set_buffer(src)
 	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
 	return TRUE
 

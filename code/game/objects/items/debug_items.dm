@@ -78,7 +78,7 @@
 		"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
 		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
-		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
+		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "welder"),
 		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
 		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
 		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "shovel"),

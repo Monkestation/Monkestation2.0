@@ -719,11 +719,6 @@
 	if(welding_upgraded)
 		. += "It has been upgraded with welding shutters, which are currently [welding_protection ? "closed" : "opened"]."
 
-/obj/item/clothing/glasses/welding/steampunk_goggles/item_action_slot_check(slot, mob/user)
-	. = ..()
-	if(. && (slot & ITEM_SLOT_HEAD))
-		return FALSE
-
 /obj/item/clothing/glasses/welding/steampunk_goggles/attack_self(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_HEAD) == src)
 		to_chat(user, span_warning("You can't seem to slip those on your eyes from the top of your head!"))

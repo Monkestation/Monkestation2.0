@@ -1,12 +1,18 @@
 SUBSYSTEM_DEF(polling)
 	name = "Polling"
-	flags = SS_BACKGROUND | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_NO_INIT | SS_HIBERNATE
 	wait = 1 SECONDS
 	runlevels = RUNLEVEL_GAME
 	/// List of polls currently ongoing, to be checked on next fire()
 	var/list/datum/candidate_poll/currently_polling
 	/// Number of polls performed since the start
 	var/total_polls = 0
+
+/datum/controller/subsystem/polling/PreInit()
+	. = ..()
+	hibernate_checks = list(
+		NAMEOF(src, currently_polling),
+	)
 
 /datum/controller/subsystem/polling/fire()
 	if(!currently_polling) // if polls_active is TRUE then this shouldn't happen, but still..
@@ -186,7 +192,7 @@ SUBSYSTEM_DEF(polling)
 			// monkestation end
 			var/surrounding_icon
 			if(surrounding_image)
-				surrounding_icon = icon2html(surrounding_image, candidate_mob, extra_classes = "bigicon")
+				surrounding_icon = ma2html(surrounding_image, candidate_mob, extra_classes = "bigicon")
 			var/final_message =  boxed_message("<span style='text-align:center;display:block'>[surrounding_icon] <span style='font-size:1.2em'>[span_ooc(question)]</span> [surrounding_icon]\n[act_jump]      [act_signup]      [act_never]</span>")
 			to_chat(candidate_mob, final_message)
 

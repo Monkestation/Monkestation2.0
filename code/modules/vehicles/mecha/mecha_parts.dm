@@ -332,6 +332,45 @@
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "savannah_ivanov_armor"
 
+
+// The Vendozer, Needed a spot to put the parts, doesnt have a mech buildup. Has intermediary parts.
+
+/obj/item/mecha_parts/part/vendozer_fl
+	name="\improper Vendozer Front left Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_fl"
+
+/obj/item/mecha_parts/part/vendozer_fr
+	name="\improper Vendozer Front right Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_fr"
+
+/obj/item/mecha_parts/part/vendozer_br
+	name="\improper Vendozer Back right Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_br"
+
+/obj/item/mecha_parts/part/vendozer_bl
+	name="\improper Vendozer Back left Armor"
+	desc="Giant shitty armor for something..."
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_bl"
+
+/obj/item/mecha_parts/part/vendozer_ck
+	name="\improper Oven Cockpit"
+	desc="A armored box with an oven as its top, Multiple pipeguns are sticking out and theres cameras everywhere, why would someone build this?"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_ck"
+
+/obj/item/mecha_parts/part/vendozer_eg
+	name="\improper Giant Turbine Engine"
+	desc="The Atmospherics turbine ripped from its mountings and modified, Who needs something like this?"
+	icon = 'icons/mecha/tanks_construct.dmi'
+	icon_state = "vendozer_eg"
+
 ///////// Circuitboards
 
 /obj/item/circuitboard/mecha

@@ -162,7 +162,10 @@
 	var/title
 	var/message
 
-	if(current_level_number > previous_level_number)
+	if((SSsecurity_level.number_level_to_text(previous_level_number) in GLOB.same_level_alert_levels) && (current_level_name in GLOB.same_level_alert_levels))
+		title = "Attention! Security level switched to [current_level_name]:"
+		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name())
+	else if(current_level_number > previous_level_number)
 		title = "Attention! Security level elevated to [current_level_name]:"
 		message = replacetext_char(selected_level.elevating_to_announcement, "%STATION_NAME%", station_name()) // monkestation edit: add %STATION_NAME% replacement
 	else
@@ -203,9 +206,14 @@
 		if(!should_play_sound)
 			continue
 
-		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-//			SEND_SOUND(target, sound(sound_to_play)) MONKESTATION EDIT CHANGE OLD -- Volume mixer PR#7
-			SEND_SOUND(target, sound(sound_to_play, volume = target.client.prefs.channel_volume["[CHANNEL_VOX]"])) // MONKESTATION EDIT CHANGE NEW
+		if(target.client?.prefs?.read_preference(/datum/preference/toggle/sound_announcements))
+			// monkestation start: volume mixer
+			var/sound/mixed_sound = sound(sound_to_play)
+			if("[CHANNEL_VOX]" in target.client?.prefs?.channel_volume)
+				mixed_sound.volume = target.client?.prefs?.channel_volume["[CHANNEL_VOX]"]
+			if(!isnull(target.client))
+				SEND_SOUND(target, mixed_sound)
+			// monkestation end
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT

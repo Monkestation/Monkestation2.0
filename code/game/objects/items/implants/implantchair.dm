@@ -167,13 +167,12 @@
 	injection_cooldown = 0
 	replenish_cooldown = 300
 
-/obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/H,mob/user)
-	if(!istype(H))
+/obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/human, mob/user)
+	if(!istype(human))
 		return FALSE
-	H.set_species(/datum/species/human, 1)//lizards go home
-	H.dna.remove_all_mutations()//hulks out
+	human.dna.remove_all_mutations() //hulks out
+	human.set_species(/datum/species/human, 1)//lizards go home
 	return TRUE
-
 
 /obj/machinery/implantchair/brainwash
 	name = "Neural Imprinter"

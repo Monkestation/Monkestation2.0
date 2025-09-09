@@ -45,7 +45,7 @@
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack,
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
@@ -245,6 +245,8 @@
 	update_item_action_buttons()
 
 /obj/item/clothing/suit/space/ui_action_click(mob/user, actiontype)
+	if(!istype(actiontype, /datum/action/item_action/toggle_spacesuit))
+		return ..()
 	toggle_spacesuit(user)
 
 // let emags override the temperature settings

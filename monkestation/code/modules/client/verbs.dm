@@ -16,7 +16,7 @@ GLOBAL_LIST(antag_token_config)
 		return
 
 	if(isobserver(mob))
-		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so becareful where you are."))
+		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so be careful where you are."))
 
 	if(!client_token_holder)
 		if(!prefs?.loaded)

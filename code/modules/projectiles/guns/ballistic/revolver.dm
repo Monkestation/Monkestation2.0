@@ -292,3 +292,148 @@
 		user.Paralyze(80)
 
 
+// 45-70 GOV "MINING" REVOLVER
+
+#define CALIBER_GOV_MINING ".45-70 Gov Kinetic" //the ammo type (so it doesnt fit anywhere else)
+
+/obj/item/gun/ballistic/revolver/govmining
+	name = "45-70 GOV 'Duster' Revolver"
+	desc = "A .45-70 cartridge adapted to Proto Kinetic Acceleration technology has proven \
+	very effective for taking down the heavy hitting local fauna, making this a rather useful \
+	option to carry out into the wilds. Comes with a spin nanochip in the grip that grants \
+	the wielder the dexterity to spin the revolver to eject the casings. Why it was designed to \
+	only eject the casings when spun, we cant be sure, but the Mining Research Director said \
+	that 'it will be really cool trust me'."
+	icon_state = "miningbigiron"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/govmining
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
+	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
+	fire_sound_volume = 100
+	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
+	pin = /obj/item/firing_pin/wastes
+
+/obj/item/gun/ballistic/revolver/govmining/attack_self(mob/living/user) //you do a sick flip when you empty the rounds
+	SpinAnimation(4,2)
+	if(flip_cooldown <= world.time)
+		flip_cooldown = (world.time + 30)
+		user.visible_message(span_notice("[user] spins [src] around [user.p_their()] finger by the trigger, ejecting any loaded cartridges!"))
+		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+	. = ..()
+
+/obj/item/ammo_box/magazine/internal/cylinder/govmining
+	name = "Really Big Revolver Cylinder"
+	desc = "Hey BUB howdja do that, dont BREAK the expensive equipment. (REPORT ME)"
+	ammo_type = /obj/item/ammo_casing/govmining
+	caliber = CALIBER_GOV_MINING
+	max_ammo = 6
+
+//Once again the casings wont just fall out, you gotta eject them all
+/obj/item/ammo_box/magazine/internal/cylinder/govmining/give_round(obj/item/ammo_casing/R, replace_spent = 0)
+	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
+		return FALSE
+
+	for(var/i in 1 to stored_ammo.len)
+		var/obj/item/ammo_casing/bullet = stored_ammo[i]
+		if(!bullet) // found a spent ammo
+			stored_ammo[i] = R
+			R.forceMove(src)
+			return TRUE
+
+	return FALSE
+
+/obj/item/ammo_casing/govmining
+	name = ".45-70 Gov Kinetic Magnum Casing"
+	desc = "An absolute beast of a round that will probably only fit in the 'Duster' Revolver."
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = ".45-70"
+	caliber = CALIBER_GOV_MINING
+	projectile_type = /obj/projectile/bullet/govmining
+
+/obj/item/ammo_box/govmining
+	name = "speed loader (.45-70 Kinetic)"
+	desc = "A six round speedloader carrying an absolute beast of a round for the 'Duster' Revolver."
+	icon_state = "4570loader"
+	w_class = WEIGHT_CLASS_TINY
+	ammo_type = /obj/item/ammo_casing/govmining
+	max_ammo = 6
+	caliber = CALIBER_GOV_MINING
+	multiple_sprites = AMMO_BOX_PER_BULLET
+
+/obj/projectile/bullet/govmining
+	name = ".45-70 Gov Kinetic Bullet"
+	damage = 75 //four shots to kill a goliath
+
+/obj/projectile/bullet/govmining/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
+	if(ismineralturf(target))
+		var/turf/closed/mineral/M = target
+		M.gets_drilled(firer, FALSE)
+	. = ..()
+
+/obj/item/storage/box/kinetic/govmining
+	name = "box of .45-70 Gov Kinetic rounds"
+	desc = "A box containing 36 individual .45-70 Gov Kinetic rounds. Good for loading your 'Duster' revolver or refilling your speedloaders. Fits in explorer webbing."
+	icon_state = "gov_box"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/cardboard
+
+/obj/item/storage/box/kinetic/govmining/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 36
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 36
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/govmining,
+	))
+
+/obj/item/storage/box/kinetic/govmining/PopulateContents() //populate
+	for(var/i in 1 to 36)
+		new /obj/item/ammo_casing/govmining(src)
+
+/obj/item/storage/box/kinetic/govmining/bigcase
+	name = "Kinetic 'Duster' Revolver Case"
+	desc = "A case containing a 'Duster' kinetic revolver and three speedloaders."
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "miner_case"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/govmining/bigcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 4
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 4
+	atom_storage.set_holdable(list())
+
+/obj/item/storage/box/kinetic/govmining/bigcase/PopulateContents() //populate
+
+		new /obj/item/gun/ballistic/revolver/govmining (src)
+		new /obj/item/ammo_box/govmining (src)
+		new /obj/item/ammo_box/govmining (src)
+		new /obj/item/ammo_box/govmining (src)
+
+/obj/item/storage/box/kinetic/govmining/smallcase
+	name = "Case of 'Duster' Speedloaders"
+	desc = "A case containing three spare speedloaders for the 'Duster' revolver"
+	icon = 'icons/obj/storage/case.dmi'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	icon_state = "miner_case_small"
+	illustration = ""
+	foldable_result = /obj/item/stack/sheet/iron
+
+/obj/item/storage/box/kinetic/govmining/smallcase/Initialize(mapload) //initialize
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_total_storage = 3
+	atom_storage.set_holdable(list(/obj/item/ammo_box/govmining))
+
+/obj/item/storage/box/kinetic/govmining/smallcase/PopulateContents() //populate
+
+		new /obj/item/ammo_box/govmining (src)
+		new /obj/item/ammo_box/govmining (src)
+		new /obj/item/ammo_box/govmining (src)

@@ -279,9 +279,10 @@
 	taste_mult = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	. = ..()
-	holder?.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!iscarbon(affected_mob))
+		return ..()
+	holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
 
 	var/heating = 0
 	switch(current_cycle)
@@ -294,7 +295,8 @@
 		if(35 to INFINITY)
 			heating = 1.2 KELVIN
 
-	M.adjust_bodytemperature(heating * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(39 CELCIUS))
+	affected_mob.adjust_bodytemperature(heating * REM * seconds_per_tick, max_temp = CELCIUS_TO_KELVIN(39 CELCIUS))
+	return ..()
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -309,8 +311,9 @@
 	bypass_restriction = TRUE
 	turf_exposure = TRUE
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	. = ..()
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!iscarbon(affected_mob))
+		return ..()
 	holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
 
 	var/cooling = 0
@@ -322,13 +325,14 @@
 		if(25 to 35)
 			cooling = -1 KELVIN
 			if(prob(1))
-				M.emote("shiver")
+				affected_mob.emote("shiver")
 		if(35 to INFINITY)
 			cooling = -2 KELVIN
 			if(prob(5))
-				M.emote("shiver")
+				affected_mob.emote("shiver")
 
-	M.adjust_bodytemperature(cooling * REM * seconds_per_tick, min_temp = M.bodytemp_cold_damage_limit - 15 KELVIN)
+	affected_mob.adjust_bodytemperature(cooling * REM * seconds_per_tick, min_temp = affected_mob.bodytemp_cold_damage_limit - 15 KELVIN)
+	return ..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -386,11 +390,10 @@
 			if(prob(5))
 				victim.vomit()
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(!holder.has_reagent(/datum/reagent/consumable/milk))
-		if(SPT_PROB(5, seconds_per_tick))
-			M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
-	..()
+/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!holder.has_reagent(/datum/reagent/consumable/milk) && SPT_PROB(5, seconds_per_tick))
+		affected_mob.visible_message(span_warning("[affected_mob] [pick("dry heaves!","coughs!","splutters!")]"))
+	return ..()
 
 /datum/reagent/consumable/salt
 	name = "Table Salt"
@@ -850,7 +853,7 @@
 /datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
 	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion))
+	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion), override = TRUE)
 
 /datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
 	UnregisterSignal(living_holder, COMSIG_QDELETING)
@@ -986,14 +989,14 @@
 	color = "#800000"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet chocolate"
+	taste_description = "chocolate and cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/chocolatepudding
 	required_drink_type = /datum/reagent/consumable/chocolatepudding
-	name = "chocolate pudding"
-	desc = "Tasty."
+	name = "Chocolate Pudding"
+	desc = "Chocolate pudding in a clear cup with soft whipping cream and chocolate sprinkles."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "chocolatepudding"
 
@@ -1003,15 +1006,48 @@
 	color = "#FAFAD2"
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet vanilla"
+	taste_description = "vanilla and happiness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/vanillapudding
 	required_drink_type = /datum/reagent/consumable/vanillapudding
-	name = "vanilla pudding"
-	desc = "Tasty."
+	name = "Vanilla Pudding"
+	desc = "Vanilla pudding in a clear cup with a dollop of icing shaped like a baby bunny on top."
 	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "vanillapudding"
+
+/datum/reagent/consumable/flan
+	name = "Flan"
+	description = "A carefully constructed caramel pudding."
+	color = "#ce6f30"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "caramel custard"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/flan
+	required_drink_type = /datum/reagent/consumable/flan
+	name = "Flan"
+	desc = "Tasty and caramelly."
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "flan"
+
+/datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	description = "Cherry pudding in a clear cup with icing and a cherry on top."
+	color = "#bd4138"
+	quality = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_description = "Cherry with a cherry on top"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
+/datum/glass_style/drinking_glass/cherrypudding
+	required_drink_type = /datum/reagent/consumable/cherrypudding
+	name = "Cherry Pudding"
+	desc = "A sweet creamy treat"
+	icon = 'icons/obj/drinks/shakes.dmi'
+	icon_state = "cherrypudding"
 
 /datum/reagent/consumable/laughsyrup
 	name = "Laughin' Syrup"

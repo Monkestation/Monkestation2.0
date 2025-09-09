@@ -1,7 +1,7 @@
-/datum/asset/spritesheet/rcd
+/datum/asset/spritesheet_batched/rcd
 	name = "rcd-tgui"
 
-/datum/asset/spritesheet/rcd/create_spritesheets()
+/datum/asset/spritesheet_batched/rcd/create_spritesheets()
 	//We load airlock icons seperatly from other icons cause they need overlays
 
 	//load all category essential icon_states. format is icon_file = list of icon states we need from that file
@@ -15,18 +15,20 @@
 		'icons/obj/objects.dmi' = list("bed"),
 		'icons/obj/smooth_structures/catwalk.dmi' = list("catwalk-0"),
 		'icons/hud/radial.dmi' = list("cnorth", "csouth", "ceast", "cwest", "chair", "secure_windoor", "stool", "wallfloor", "windowsize", "windowtype", "windoor"),
-		'icons/obj/structures.dmi' = list("glass_table", "rack", "rwindow0", "reflector_base", "table", "window0", "girder"),
-		// monkestation edit: window sills
+		'icons/obj/structures.dmi' = list("glass_table", "rack", "reflector_base", "table", "girder"),
+		'monkestation/icons/obj/structures/window/window.dmi' = list("window-0"),
+		'monkestation/icons/obj/structures/window/reinforced_window.dmi' = list("reinforced_window-0"),
 		'monkestation/icons/obj/structures/window/window_sill.dmi' = list("window_sill-0"),
 	)
 
-	var/icon/icon
+	var/datum/universal_icon/icon
 	for(var/icon_file as anything in essentials)
 		for(var/icon_state as anything in essentials[icon_file])
-			icon = icon(icon = icon_file, icon_state = icon_state)
-			if(icon_state == "window0" || icon_state == "rwindow0")
-				icon.Blend(icon(icon = 'icons/obj/structures.dmi', icon_state = "grille"), ICON_UNDERLAY)
-			Insert(sprite_name = sanitize_css_class_name(icon_state), I = icon)
+			icon = uni_icon(icon_file, icon_state)
+			if(icon_state == "window-0" || icon_state == "reinforced_window-0")
+				icon.blend_color("#305a6d", ICON_MULTIPLY)
+				icon.blend_icon(uni_icon('monkestation/icons/obj/structures/window/grille.dmi', "grille-0"), ICON_UNDERLAY)
+			insert_icon(sanitize_css_class_name(icon_state), icon)
 
 	//for each airlock type we create its overlayed version with the suffix Glass in the sprite name
 	var/list/airlocks = list(
@@ -52,14 +54,15 @@
 
 	for(var/airlock_name in airlocks)
 		//solid door with overlay
-		icon = icon(icon = airlocks[airlock_name] , icon_state = "closed" , dir = SOUTH)
-		icon.Blend(icon(icon = airlocks[airlock_name], icon_state = "fill_closed", dir = SOUTH), ICON_OVERLAY)
-		Insert(sprite_name = sanitize_css_class_name(airlock_name), I = icon)
+		icon = uni_icon(airlocks[airlock_name], "closed", SOUTH)
+		if(icon_exists(airlocks[airlock_name], "fill_closed"))
+			icon.blend_icon(uni_icon(airlocks[airlock_name], "fill_closed", SOUTH), ICON_OVERLAY)
+		insert_icon(sanitize_css_class_name(airlock_name), icon)
 
 		//exclude these glass types
 		if(airlock_name in exclusion)
 			continue
 
 		//glass door no overlay
-		icon = icon(airlocks[airlock_name] , "closed" , SOUTH)
-		Insert(sprite_name = sanitize_css_class_name("[airlock_name]Glass"), I = icon)
+		icon = uni_icon(airlocks[airlock_name], "closed", SOUTH)
+		insert_icon(sanitize_css_class_name("[airlock_name]Glass"), icon)

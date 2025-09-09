@@ -14,6 +14,8 @@
 	paycheck_department = ACCOUNT_CIV
 
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+	allow_overflow = FALSE
+
 
 	departments_list = list(
 		 /datum/job_department/spring,

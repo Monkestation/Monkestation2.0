@@ -226,7 +226,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/rank/engineering/chief_engineer,
 		/obj/item/clothing/under/rank/medical/chief_medical_officer,
 		/obj/item/clothing/under/rank/rnd/research_director,
-		/obj/item/clothing/under/rank/rnd/research_director/alt,
 		/obj/item/clothing/under/rank/rnd/research_director/turtleneck,
 		/obj/item/clothing/under/rank/security/head_of_security,
 		/obj/item/clothing/under/rank/security/head_of_security/alt,
@@ -594,7 +593,6 @@ GLOBAL_LIST_INIT(phobia_turfs, list(
 GLOBAL_LIST_INIT(phobia_species, list(
 	"aliens" = typecacheof(list(
 		/datum/species/abductor,
-		/datum/species/jelly,
 		/datum/species/pod,
 		/datum/species/shadow,
 		/datum/species/oozeling,

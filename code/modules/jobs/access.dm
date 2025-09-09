@@ -55,13 +55,14 @@
 		var/obj/item/mmi/brain_mmi = accessor.loc
 		if(ismecha(brain_mmi.loc))
 			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
-			return check_access_list(big_stompy_robot.operation_req_access)
+			return check_access_list(big_stompy_robot.accesses)
 	return FALSE
 
 /obj/item/proc/GetAccess()
 	return list()
 
-/obj/item/proc/GetID()
+/obj/item/proc/GetID() as /obj/item/card/id
+	RETURN_TYPE(/obj/item/card/id)
 	return null
 
 /obj/item/proc/RemoveID()

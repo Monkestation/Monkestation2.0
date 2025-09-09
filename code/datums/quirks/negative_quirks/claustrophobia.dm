@@ -8,7 +8,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_PROCESSES
 	maximum_process_stat = SOFT_CRIT
 	mail_goodies = list(/obj/item/reagent_containers/syringe/convermol) // to help breathing
-	no_process_traits = list(TRAIT_FEARLESS)
+	no_process_traits = list(TRAIT_FEARLESS, TRAIT_MIND_TEMPORARILY_GONE)
 
 /datum/quirk/claustrophobia/remove()
 	quirk_holder.clear_mood_event("claustrophobia")

@@ -39,12 +39,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/centcom/tdome/arena/actual)
-"hn" = (
-/obj/effect/turf_decal/siding/thinplating/dark/corner{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/centcom/tdome/arena/actual)
 "hX" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
@@ -66,7 +60,9 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/turf/open/space/basic,
+/turf/open/floor/fakespace{
+	density = 1
+	},
 /area/centcom/tdome/arena/actual)
 "iB" = (
 /obj/effect/turf_decal/siding/thinplating/light{
@@ -83,7 +79,9 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/open/floor/fakespace{
+	density = 1
+	},
 /area/centcom/tdome/arena/actual)
 "ju" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -420,7 +418,9 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
-/turf/open/space/basic,
+/turf/open/floor/fakespace{
+	density = 1
+	},
 /area/centcom/tdome/arena/actual)
 "Mw" = (
 /obj/effect/turf_decal/siding/thinplating/light{
@@ -723,7 +723,7 @@ LE
 "}
 (16,1,1) = {"
 oJ
-hn
+EZ
 Xf
 ih
 fy

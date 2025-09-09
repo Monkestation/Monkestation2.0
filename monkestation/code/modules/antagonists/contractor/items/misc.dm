@@ -39,6 +39,8 @@
 
 	/// a switch, if TRUE it will display all door turfs instead of all open turfs
 	var/door_mode = FALSE
+	/// only tracks areas when on the station z
+	var/station_locked = FALSE
 
 /obj/item/pinpointer/area_pinpointer/Destroy()
 	tracked_area = null
@@ -147,11 +149,13 @@
 
 	if(!user)
 		CRASH("[src] has had attack_self attempted by a non-existing user.")
-
+	var/our_z = user.z
+	if(!is_station_level(our_z) && station_locked)
+		balloon_alert(user, "no signals found!")
+		return
 	// This list should ONLY include areas that are on our z-level and are actually recognizable, else we confuse the contractor
 	var/list/possible_areas = list()
 	for(var/area/area in GLOB.areas)
-		var/our_z = user.z
 		var/area_z = area.z
 		if(!our_z)
 			// What the actual hell are you doing
@@ -180,6 +184,9 @@
 	toggle_on()
 
 	user.visible_message(span_notice("[user] activates [user.p_their()] pinpointer."), span_notice("You activate your pinpointer."))
+
+/obj/item/pinpointer/area_pinpointer/station_locked
+	station_locked = TRUE
 
 /**
  * Debug area pinpointer focuses on visualization, to better show how the area pinpointer interacts with turfs

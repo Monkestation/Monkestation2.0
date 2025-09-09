@@ -15,7 +15,7 @@
 
 	mobs_to_pick += return_donator_mobs()
 
-	if(!player_details.patreon.has_access(ACCESS_ASSISTANT_RANK) && !is_admin(src) && !length(mobs_to_pick))
+	if(!persistent_client.patreon.has_access(ACCESS_ASSISTANT_RANK) && !is_admin(src) && !length(mobs_to_pick))
 		return pick(basic_list)
 
 	mobs_to_pick += basic_list
@@ -50,9 +50,9 @@
 	if(!mob.mind)
 		mob.mind = new /datum/mind(key)
 
-	created_mob.key = key
+	created_mob.PossessByPlayer(key)
 
-	if(player_details.patreon.has_access(ACCESS_NUKIE_RANK) || is_admin(src))
+	if(persistent_client.patreon.has_access(ACCESS_NUKIE_RANK) || is_admin(src))
 		created_mob.AddComponent(/datum/component/basic_inhands, y_offset = -6)
 		created_mob.AddComponent(/datum/component/max_held_weight, WEIGHT_CLASS_SMALL)
 		created_mob.AddElement(/datum/element/dextrous)
@@ -63,7 +63,7 @@
 /client/proc/get_critter_cooldown()
 	var/base_time = 25 MINUTES
 
-	switch(player_details.patreon.access_rank)
+	switch(persistent_client.patreon.access_rank)
 		if(0, 1)
 			return base_time
 		if(2)

@@ -24,8 +24,8 @@
 	var/list/design_ids = list()
 	/// CALCULATED FROM OTHER NODE'S PREREQUISITIES. Associated list id = TRUE
 	var/list/unlock_ids = list()
-	/// Associative list, path = list(point type = point_value)
-	var/list/boost_item_paths = list()
+	/// List of items you need to deconstruct to unlock this node.
+	var/list/required_items_to_unlock = list()
 	/// Boosting this will autounlock this node
 	var/autounlock_by_boost = TRUE
 	/// The points cost to research the node, type = amount
@@ -38,6 +38,12 @@
 	var/list/discount_experiments = list()
 	/// Whether or not this node should show on the wiki
 	var/show_on_wiki = TRUE
+	/**
+	 * If set, the researched node will be announced on these channels by an announcement system
+	 * with 'announce_research_node' set to TRUE when researched by the station.
+	 * Not every node has to be announced if you want, some are best kept a little "subtler", like Illegal Weapons.
+	 */
+	var/list/announce_channels
 
 /datum/techweb_node/error_node
 	id = "ERROR"
@@ -88,11 +94,42 @@
 			if(actual_costs[booster])
 				var/delta = max(0, actual_costs[booster] - 250)
 				actual_costs[booster] -= min(boostlist[booster], delta)
-	
+
 	return actual_costs
+
+/datum/techweb_node/proc/is_free(datum/techweb/host)
+	var/list/costs = get_price(host)
+	var/total_points = 0
+
+	for(var/point_type in costs)
+		total_points += costs[point_type]
+
+	if(total_points == 0)
+		return TRUE
+	return FALSE
 
 /datum/techweb_node/proc/price_display(datum/techweb/TN)
 	return techweb_point_display_generic(get_price(TN))
 
-/datum/techweb_node/proc/on_research() //new proc, not currently in file
-	return
+/datum/techweb_node/proc/on_research(atom/research_source) //new proc, not currently in file
+	SHOULD_CALL_PARENT(TRUE)
+	var/channels_to_use = announce_channels
+	if(istype(research_source, /obj/machinery/computer/rdconsole))
+		var/obj/machinery/computer/rdconsole/console = research_source
+		var/obj/item/circuitboard/computer/rdconsole/board = console.circuit
+		if(board.silence_announcements)
+			return
+		if(board.obj_flags & EMAGGED)
+			channels_to_use = list(RADIO_CHANNEL_COMMON)
+	if(!length(channels_to_use) || starting_node)
+		return
+	var/obj/machinery/announcement_system/system
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.announce_research_node)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	system = pick(available_machines)
+	system.announce(AUTO_ANNOUNCE_NODE, display_name, channels = channels_to_use)

@@ -2,7 +2,7 @@
 	id = "biotech"
 	display_name = "Biological Technology"
 	description = "What makes us tick." //the MC, silly!
-	prereq_ids = list("base")
+	prereq_ids = list("basic_medical")
 	design_ids = list(
 		"beer_dispenser",
 		"blood_pack",
@@ -33,8 +33,8 @@
 		"cold_pack",
 		"medical_crutch",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	discount_experiments = list(/datum/experiment/dissection/human = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/dissection/human = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -51,15 +51,17 @@
 		"limbgrower",
 		"meta_beaker",
 		"ph_meter",
+		"medicalbed_emergency",
 		"piercesyringe",
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
-		"surgical_gloves", //Monkestation Edit
+		"surgical_gloves", //Monkestation Addition
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,
-								/datum/experiment/dissection/nonhuman = 2000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/material/meat = TECHWEB_DISCOUNT_MINOR * 3,
+								/datum/experiment/dissection/nonhuman = TECHWEB_DISCOUNT_MINOR * 3)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/xenoorgan_biotech
 	id = "xenoorgan_bio"
@@ -70,13 +72,15 @@
 		"limbdesign_ethereal",
 		"limbdesign_lizard",
 		"limbdesign_plasmaman",
+		"limbdesign_other",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(
-		/datum/experiment/scanning/random/cytology/easy = 1000,
-		/datum/experiment/scanning/points/slime/hard = 5000,
-		/datum/experiment/dissection/xenomorph = 5000,
+		/datum/experiment/scanning/random/cytology/easy = TECHWEB_DISCOUNT_MINOR * 3,
+		/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_2_POINTS,
+		/datum/experiment/dissection/xenomorph = TECHWEB_TIER_2_POINTS,
 	)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cryotech
 	id = "cryotech"
@@ -89,4 +93,5 @@
 		"splitbeaker",
 		"stasis",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)

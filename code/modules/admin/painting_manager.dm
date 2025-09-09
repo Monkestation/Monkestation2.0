@@ -1,17 +1,12 @@
-/datum/admins/proc/paintings_manager()
-	set name = "Paintings Manager"
-	set category = "Admin.Logging"
-
-	if(!check_rights(R_ADMIN))
-		return
-	var/datum/paintings_manager/ui = new(usr)
-	ui.ui_interact(usr)
+ADMIN_VERB(painting_manager, R_ADMIN, FALSE, "Paintings Manager", "View and redact paintings.", ADMIN_CATEGORY_MAIN)
+	var/static/datum/paintings_manager/ui = new
+	ui.ui_interact(user.mob)
 
 /// Painting Admin Management Panel
 /datum/paintings_manager
 
 /datum/paintings_manager/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/paintings_manager/ui_close(mob/user)
 	qdel(src)

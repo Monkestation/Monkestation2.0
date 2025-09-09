@@ -326,18 +326,18 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
 	desc_by_access["[ACCESS_PERMABRIG]"] = "Permabrig" // monkestation edit: add permabrig-only access
 	//MONKESTATION ADDITION - Adds descriptions to Charlie Station access levels. Used for Charlie Station ID Console.
-	desc_by_access["[ACCESS_AWAY_GENERAL]"] = "Charlie Station General"
-	desc_by_access["[ACCESS_AWAY_SCIENCE]"] = "Charlie Station Science"
+	desc_by_access["[ACCESS_AWAY_GENERAL]"] = "Station General Access"
+	desc_by_access["[ACCESS_AWAY_SCIENCE]"] = "Delta Station Science"
 	desc_by_access["[ACCESS_AWAY_MAINTENANCE]"] = "Charlie Station Maintenance"
-	desc_by_access["[ACCESS_AWAY_SUPPLY]"] = "Charlie Station Supply"
-	desc_by_access["[ACCESS_AWAY_GENERIC1]"] = "Charlie Station Generic 1"
-	desc_by_access["[ACCESS_AWAY_GENERIC2]"] = "Charlie Station Generic 2"
-	desc_by_access["[ACCESS_AWAY_GENERIC3]"] = "Charlie Station Generic 3"
-	desc_by_access["[ACCESS_AWAY_GENERIC4]"] = "Charlie Station Generic 4"
+	desc_by_access["[ACCESS_AWAY_SUPPLY]"] = "Alpha Station Supply"
+	desc_by_access["[ACCESS_AWAY_GENERIC1]"] = "Station Generic 1"
+	desc_by_access["[ACCESS_AWAY_GENERIC2]"] = "Station Generic 2"
+	desc_by_access["[ACCESS_AWAY_GENERIC3]"] = "Station Generic 3"
+	desc_by_access["[ACCESS_AWAY_GENERIC4]"] = "Station Generic 4"
 	desc_by_access["[ACCESS_AWAY_COMMAND]"] = "Charlie Station Command"
-	desc_by_access["[ACCESS_AWAY_MEDICAL]"] = "Charlie Station Medical"
+	desc_by_access["[ACCESS_AWAY_MEDICAL]"] = "Beta Station Medical"
 	desc_by_access["[ACCESS_AWAY_SEC]"] = "Charlie Station Security"
-	desc_by_access["[ACCESS_AWAY_ENGINEERING]"] = "Charlie Station Engineering"
+	desc_by_access["[ACCESS_AWAY_ENGINEERING]"] = "Beta Station Engineering"
 	//END OF ADDITION
 
 /**
@@ -450,6 +450,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.department_color_override = trim.department_color
 	id_card.department_state_override = trim.department_state
 	id_card.subdepartment_color_override = trim.subdepartment_color
+	id_card.trim_chat_span_override = trim.chat_span()
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -470,6 +471,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.department_color_override = null
 	id_card.department_state_override = null
 	id_card.subdepartment_color_override = null
+	id_card.trim_chat_span_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.

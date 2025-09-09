@@ -101,7 +101,7 @@
 		chat_text_border_icon = preview,
 	)
 	if(chosen_one)
-		clonee.key = chosen_one.key
+		clonee.PossessByPlayer(chosen_one.key)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonee.grab_ghost()
@@ -150,7 +150,7 @@
 	if(!isnull(preview))
 		return preview
 	var/mob/living/carbon/human/dummy/preview_dummy = generate_or_wait_for_human_dummy(REF(src))
-	clone_dna.transfer_identity(preview_dummy, transfer_SE = FALSE, transfer_species = TRUE)
+	clone_dna.copy_dna(preview_dummy.dna, COPY_DNA_SPECIES)
 	preview_dummy.set_cloned_appearance()
 	preview_dummy.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	preview = getFlatIcon(preview_dummy)
@@ -254,7 +254,7 @@
 		if(istype(P.buffer, /obj/machinery/clonepod/experimental))
 			if(get_area(P.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				P.set_buffer(null)
 				return
 			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
 			var/obj/machinery/clonepod/experimental/pod = P.buffer
@@ -262,8 +262,8 @@
 				pod.connected.DetachCloner(pod)
 			AttachCloner(pod)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			P.set_buffer(src)
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
 		return
 	else
 		return ..()

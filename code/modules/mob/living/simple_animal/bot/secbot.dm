@@ -5,9 +5,9 @@
 	icon_state = "secbot"
 	density = FALSE
 	anchored = FALSE
-	// monkestation edit: slightly raise beepsky's health (25 -> 35)
-	health = 35
-	maxHealth = 35
+	//Perish
+	health = 41
+	maxHealth = 41
 	// monkestation end
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
@@ -146,6 +146,16 @@
 	SSmove_manager.stop_looping(src)
 	last_found = world.time
 
+/mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
+	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
+		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
+		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)
+		return TRUE
+
+/mob/living/simple_animal/bot/secbot/proc/remove_saboteur_effect()
+	security_mode_flags &= ~SECBOT_SABOTEUR_AFFECTED
+
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
@@ -206,6 +216,8 @@
 		final |= JUDGE_RECORDCHECK
 	if(security_mode_flags & SECBOT_CHECK_WEAPONS)
 		final |= JUDGE_WEAPONCHECK
+	if(security_mode_flags & SECBOT_SABOTEUR_AFFECTED)
+		final |= JUDGE_CHILLOUT
 	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.

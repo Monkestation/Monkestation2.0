@@ -113,10 +113,11 @@
 		return FALSE
 	if(!isturf(table.loc))
 		return FALSE
-	if(!table.can_flip)
-		return FALSE
-	if(!iscat(src) && !can_hold_items())
-		return FALSE
+	if(!iscat(src))
+		if(!table.can_flip)
+			return FALSE
+		if(!can_hold_items())
+			return FALSE
 	if(full_checks)
 		if(TIMER_COOLDOWN_CHECK(src, REF(table)))
 			return FALSE

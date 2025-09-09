@@ -433,6 +433,7 @@
 		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
+		ghostize(can_reenter_corpse = FALSE)
 		qdel(src)
 	else
 		health = 0

@@ -193,7 +193,7 @@
 	slime_color = "#FFFFFF"
 
 /datum/slime_color/rainbow/on_add_to_slime(mob/living/basic/slime/slime)
-	slime.rainbow_effect()
+	slime?.rainbow_effect()
 
 /datum/slime_color/oil
 	name = "oil"

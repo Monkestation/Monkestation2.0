@@ -1,5 +1,55 @@
 #ifdef REFERENCE_TRACKING
 
+#ifdef FAST_REFERENCE_TRACKING
+// typecache of types that almost certainly have no refs, and thus can be safely skipped when finding references
+GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_typecache())
+
+/proc/init_reftracker_skip_typecache()
+	. = alist()
+	for(var/base_type in list(
+		/icon,
+		/regex,
+		/datum/armor,
+		/datum/asset_cache_item,
+		/datum/book_info,
+		/datum/card,
+		/datum/cassette_data,
+		/datum/chat_payload,
+		/datum/color_palette,
+		/datum/component/mirage_border, // only turf and mirage holder refs
+		/datum/gas_mixture,
+		/datum/greyscale_layer,
+		/datum/instrument_key,
+		/datum/lighting_object, // only contains turf and MA refs
+		/datum/media_track,
+		/datum/movespeed_modifier,
+		/datum/painting,
+		/datum/paper_input,
+		/datum/physiology,
+		/datum/plant_gene/core,
+		/datum/plant_gene/reagent,
+		/datum/qdel_item,
+		/datum/stack_recipe,
+		/datum/tlv,
+		/datum/weakref,
+		/turf/open/space/basic,
+		/turf/cordon,
+		/obj/effect/abstract/mirage_holder, // only a turf ref i think?
+		// no need to scan these two
+		/datum/controller/subsystem/demo,
+		/datum/controller/subsystem/garbage,
+		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue
+		/datum/light_source,
+		/datum/lighting_corner,
+		/datum/component/connect_loc_behalf,
+		/datum/reagent/consumable/nutriment,
+		/datum/chatmessage,
+		/atom/movable/outdoor_effect,
+	))
+		for(var/type in typesof(base_type))
+			.[type] = TRUE
+#endif
+
 /datum/proc/find_references(skip_alert)
 	running_find_references = type
 	if(usr?.client)
@@ -41,11 +91,23 @@
 	DoSearchVar(global_vars, "Native Global", search_time = starting_time)
 	log_reftracker("Finished searching native globals")
 
+#ifdef FAST_REFERENCE_TRACKING
+	var/alist/skip_types = GLOB.reftracker_skip_typecache
+#endif
+
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
+#ifdef FAST_REFERENCE_TRACKING
+		if(skip_types[thing.type])
+			continue
+#endif
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching atoms")
 
 	for(var/datum/thing) //datums
+#ifdef FAST_REFERENCE_TRACKING
+		if(skip_types[thing.type])
+			continue
+#endif
 		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching datums")
 
@@ -88,6 +150,10 @@
 		var/datum/datum_container = potential_container
 		if(datum_container.last_find_references == search_time)
 			return
+#ifdef FAST_REFERENCE_TRACKING
+		if(GLOB.reftracker_skip_typecache[datum_container.type])
+			return
+#endif
 
 		datum_container.last_find_references = search_time
 		var/container_print = datum_container.ref_search_details()

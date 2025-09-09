@@ -186,7 +186,7 @@
 /obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
-/obj/machinery/jukebox{
+/obj/machinery/dance_machine{
 	active = 1
 	},
 /obj/effect/turf_decal/siding/brown,

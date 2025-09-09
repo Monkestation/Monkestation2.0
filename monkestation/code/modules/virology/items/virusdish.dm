@@ -13,8 +13,8 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	var/datum/disease/acute/contained_virus
 	var/open = FALSE
 	var/cloud_delay = 8 SECONDS//similar to a mob's breathing
-	var/last_cloud_time = 0
 	var/mob/last_openner
+	COOLDOWN_DECLARE(cloud_cooldown)
 
 /obj/item/weapon/virusdish/New(loc)
 	..()
@@ -33,8 +33,8 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	RegisterSignals(src.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
 /obj/item/weapon/virusdish/Destroy()
-	contained_virus = null
 	STOP_PROCESSING(SSobj, src)
+	contained_virus = null
 	GLOB.virusdishes.Remove(src)
 	. = ..()
 
@@ -88,12 +88,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	open = !open
 	update_appearance()
 	to_chat(user,span_notice("You [open?"open":"close"] dish's lid."))
-	update_desc()
 	if (open)
 		last_openner = user
 		if (contained_virus)
 			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish opened by [key_name(user)]."
-		START_PROCESSING(SSobj, src)
+			START_PROCESSING(SSobj, src)
 	else
 		if (contained_virus)
 			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish closed by [key_name(user)]."
@@ -166,17 +165,24 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	reagents.clear_reagents()
 
 /obj/item/weapon/virusdish/process()
-	if (!contained_virus || !(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE))
-		STOP_PROCESSING(SSobj, src)
-		return
-	if(world.time - last_cloud_time >= cloud_delay)
-		last_cloud_time = world.time
-		var/list/L = list()
-		L += contained_virus
-		new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
+	if(!contained_virus || !open)
+		return PROCESS_KILL
+	if(isliving(loc))
+		var/mob/living/holder = loc
+		if(holder.is_holding(src))
+			infection_attempt(holder, contained_virus)
+	else if(isopenturf(loc))
+		for(var/mob/living/potential_victim in loc.contents)
+			infection_attempt(potential_victim, contained_virus)
+	if(contained_virus.spread_flags & DISEASE_SPREAD_AIRBORNE)
+		if(COOLDOWN_FINISHED(src, cloud_cooldown))
+			COOLDOWN_START(src, cloud_cooldown, cloud_delay)
+			var/list/L = list(contained_virus)
+			new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
 
 /obj/item/weapon/virusdish/random
 	name = "growth dish"
+
 /obj/item/weapon/virusdish/random/New(loc)
 	..(loc)
 	if (loc)//because fuck you /datum/subsystem/supply_shuttle/Initialize()

@@ -14,6 +14,9 @@
 /// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
 #define WEIGHT_CLASS_GIGANTIC 6
 
+/// Weight class that can fit in pockets
+#define POCKET_WEIGHT_CLASS WEIGHT_CLASS_SMALL
+
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
 #define INVENTORY_DEPTH 3
@@ -89,6 +92,10 @@
 #define HIDESNOUT (1<<12)
 ///hides mutant/moth wings, does not apply to functional wings
 #define HIDEMUTWINGS (1<<13)
+///hides belts and riggings
+//#define HIDEBELT (1<<14)
+///hides antennae
+#define HIDEANTENNAE (1<<15)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
@@ -174,6 +181,34 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define AFK_THEFT_MESSAGE 2
 /// The index of the entry in 'afk_thefts' with the time it happened
 #define AFK_THEFT_TIME 3
+
+/// A list of things that any suit storage can hold
+/// Should consist of ubiquitous, non-specialized items
+/// or items that are meant to be "suit storage agnostic" as
+/// a benefit, which of the time of this commit only applies
+/// to the captain's jetpack, here
+GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
+	/obj/item/clipboard,
+	/obj/item/flashlight,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman,
+	/obj/item/lighter,
+	/obj/item/pen,
+	/obj/item/modular_computer/pda,
+	/obj/item/toy,
+	/obj/item/radio,
+	/obj/item/storage/bag/books,
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/tank/jetpack/oxygen/captain,
+	/obj/item/stack/spacecash,
+	/obj/item/storage/wallet,
+	/obj/item/folder,
+	/obj/item/storage/box/matches,
+	/obj/item/clothing/mask/cigarette,
+	/obj/item/gun/energy/laser/bluetag,
+	/obj/item/gun/energy/laser/redtag,
+	/obj/item/storage/belt/holster
+)))
 
 //Allowed equipment lists for security vests.
 

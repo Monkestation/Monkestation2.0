@@ -118,7 +118,7 @@
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-	new_xeno.key = ghost.key
+	new_xeno.PossessByPlayer(ghost.key)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
@@ -160,4 +160,4 @@ Des: Removes all images from the mob infected by this embryo
 		for(var/image/I in alien.client?.images)
 			var/searchfor = "infected"
 			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-				qdel(I)
+				alien.client?.images -= I

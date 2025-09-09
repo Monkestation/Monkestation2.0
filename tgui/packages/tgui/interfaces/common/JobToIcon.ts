@@ -9,6 +9,7 @@ const BASEICONS = {
   Bitrunner: 'gamepad',
   Blueshield: 'chess-rook',
   Botanist: 'seedling',
+  'Bridge Assistant': 'coffee',
   // Really I wanted this to be like heart wings but thats not really an option
   'Brig Physician': 'heart',
   Captain: 'crown',
@@ -64,6 +65,7 @@ const BASEICONS = {
   'Syndicate Operative': 'dragon',
   Virologist: 'virus',
   Warden: 'handcuffs',
+  Xenobiologist: 'spaghetti-monster-flying', // Monkestation addition: Xenobio Job
   'Yellow Clown': 'lemon', // yellow lemon.
 } as const;
 
@@ -109,6 +111,20 @@ const ALTTITLES = {
   'Botanical Researcher': BASEICONS['Botanist'],
   Herbalist: BASEICONS['Botanist'],
   Florist: BASEICONS['Botanist'],
+  // Bridge Assistant - coffee
+  'Bridge Assistant': BASEICONS['Bridge Assistant'],
+  'Bridge Staff': BASEICONS['Bridge Assistant'],
+  'Coffee Logistics Officer': BASEICONS['Bridge Assistant'],
+  'Bridge Watchman': BASEICONS['Bridge Assistant'],
+  Helmsman: BASEICONS['Bridge Assistant'],
+  'Command Intern': BASEICONS['Bridge Assistant'],
+  // Brig Physician - heart
+  'Brig Physician': BASEICONS['Brig Physician'],
+  'Jail Doctor': BASEICONS['Brig Physician'],
+  'Brig Orderly': BASEICONS['Brig Physician'],
+  'Prison Medic': BASEICONS['Brig Physician'],
+  'Chief Tickler': BASEICONS['Brig Physician'],
+  'Navy Corpsman': BASEICONS['Brig Physician'],
   // Bouncer - shield-heart
   'Service Guard': BASEICONS['Bouncer'],
   // Captain - crown
@@ -251,8 +267,6 @@ const ALTTITLES = {
   Ripperdoc: BASEICONS['Roboticist'],
   // Scientist - flask
   'Circuitry Designer': BASEICONS['Scientist'],
-  Xenobiologist: BASEICONS['Scientist'],
-  Cytologist: BASEICONS['Scientist'],
   'Plasma Researcher': BASEICONS['Scientist'],
   Anomalist: BASEICONS['Scientist'],
   'Lab Technician': BASEICONS['Scientist'],
@@ -262,7 +276,6 @@ const ALTTITLES = {
   'Research Assistant': BASEICONS['Scientist'],
   'Graduate Student': BASEICONS['Scientist'],
   Artificer: BASEICONS['Scientist'],
-  Cryptozoologist: BASEICONS['Scientist'],
   // Security Officer - shield-halved
   'Security Operative': BASEICONS['Security Officer'],
   Peacekeeper: BASEICONS['Security Officer'],
@@ -300,13 +313,10 @@ const ALTTITLES = {
   'Dispatch Officer': BASEICONS['Warden'],
   'Brig Governor': BASEICONS['Warden'],
   Jailer: BASEICONS['Warden'],
-  // Brig Physician - heart
-  'Brig Physician': BASEICONS['Brig Physician'],
-  'Jail Doctor': BASEICONS['Brig Physician'],
-  'Brig Orderly': BASEICONS['Brig Physician'],
-  'Prison Medic': BASEICONS['Brig Physician'],
-  'Chief Tickler': BASEICONS['Brig Physician'],
-  'Navy Corpsman': BASEICONS['Brig Physician'],
+  // Xenobiologist -
+  Cytologist: BASEICONS['Xenobiologist'],
+  Cryptozoologist: BASEICONS['Xenobiologist'],
+  'Slime Mage': BASEICONS['Xenobiologist'],
 } as const;
 
 // Combine the Base icons and ALt titles

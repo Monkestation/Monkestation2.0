@@ -37,7 +37,6 @@
 	if(active())
 		if(!last_active)
 			owner.SetAllImmobility(0)
-			owner.set_safe_hunger_level()
 			owner.extinguish_mob()
 		give_traits()
 		last_active = TRUE
@@ -56,13 +55,7 @@
 		return FALSE
 
 /datum/status_effect/centcom_grace/proc/give_traits()
-	if(QDELETED(owner))
-		qdel(src)
-	else
-		owner.add_traits(given_traits, TRAIT_STATUS_EFFECT(id))
+	owner?.add_traits(given_traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/centcom_grace/proc/take_traits()
-	if(QDELETED(owner))
-		qdel(src)
-	else
-		owner.remove_traits(given_traits, TRAIT_STATUS_EFFECT(id))
+	owner?.remove_traits(given_traits, TRAIT_STATUS_EFFECT(id))

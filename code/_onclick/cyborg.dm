@@ -88,6 +88,8 @@
 			return
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
+		//MONKESTATION REMOVAL
+		/*
 		if(isturf(A) || isturf(A.loc))
 			if(A.Adjacent(src)) // see adjacent.dm
 				W.melee_attack_chain(src, A, params)
@@ -95,6 +97,15 @@
 			else
 				W.afterattack(A, src, 0, params)
 				return
+		*/
+		//MONKESTATION REMOVAL END
+		//MONKESTATION ADDITION
+		if(CanReach(A,W))
+			W.melee_attack_chain(src, A, params)
+			return
+		if(isturf(A) || isturf(A.loc))
+			W.afterattack(A, src, 0, params)
+		//MONKESTATION ADDITION END
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs

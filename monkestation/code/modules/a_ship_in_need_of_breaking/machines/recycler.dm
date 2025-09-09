@@ -38,7 +38,7 @@
 		/datum/material/titanium,
 		/datum/material/bluespace
 	)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT)
 
 /obj/machinery/shipbreaker/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -73,9 +73,9 @@
 				account.adjust_money(recycle_reward*0.2, "Shipbreaker Scrap Processed. Payout:[recycle_reward*0.2]")
 		if(morsel?.custom_materials)
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/material_amount = materials.get_item_material_amount(morselstack, BREAKDOWN_FLAGS_RECYCLER)
+			var/material_amount = materials.get_item_material_amount(morselstack)
 			if(material_amount)
-				materials.insert_item(morselstack, material_amount, multiplier = 1, breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+				materials.insert_item(morselstack, material_amount, multiplier = 1)
 				materials.retrieve_all()
 	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
 	qdel(morsel)

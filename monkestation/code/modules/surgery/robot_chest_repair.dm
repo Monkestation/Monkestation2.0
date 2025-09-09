@@ -53,7 +53,7 @@
 
 /datum/surgery_step/add_plating/fullbody
 	time = 3 SECONDS
-	ironamount = 15
+	ironamount = 5
 
 /datum/surgery_step/add_plating/fullbody/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -92,25 +92,23 @@
 /datum/surgery_step/finalize_positronic_restoration/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
 		target.emote("buzz")
-		target.visible_message(span_warning("...[target.p_they()] convulses, then goes offline."))
-		return TRUE
-
-	if (target.stat < DEAD)
-		target.visible_message(span_notice("...[target] is completely unaffected! Seems like they're already active!"))
+		target.visible_message(span_warning("...[target] does not respond. [target.p_Their()] personality matrix appears corrupted."))
 		return FALSE
-
-	target.cure_husk()
-	target.grab_ghost()
-	target.updatehealth()
-
-	if(target.revive())
+	if(target.stat < DEAD)
+		target.visible_message(span_notice("...[target] is completely unaffected! Seems like [target.p_theyre()] already active!"))
+		return FALSE
+	if(target.stat == DEAD && target.health > SYNTH_BRAIN_WAKE_THRESHOLD) // Only revive them if they are of structural integrity to be revived...
+		target.revive()
+		target.cure_husk()
+		target.grab_ghost()
+		target.updatehealth()
 		target.emote("chime")
-		target.visible_message(span_notice("...[target] reactivates, their chassis coming online!"))
-		return FALSE //This is due to synths having some weirdness with their revive.
+		target.visible_message(span_notice("...[target] reactivates, [target.p_their()] chassis coming online!"))
+		return TRUE
 	else
 		target.emote("buzz")
-		target.visible_message(span_warning("...[target.p_they()] convulses, then goes offline."))
-		return TRUE
+		target.visible_message(span_warning("...[target] convulses, then goes offline. [target.p_They()] appear too damaged to reboot.")) // ...Otherwise, they need more repair.
+		return FALSE
 
 /datum/surgery_step/finalize_positronic_restoration/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob)
 	. = ..()

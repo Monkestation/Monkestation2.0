@@ -122,6 +122,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
+	inhand_icon_state = "plunger"
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT
@@ -184,6 +185,7 @@
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 	worn_icon_state = "reinforced_plunger"
+	inhand_icon_state = "reinforced_plunger"
 	reinforced = TRUE
 	plunge_mod = 0.5
 	layer_mode_sprite = "reinforced_plunger_layer"

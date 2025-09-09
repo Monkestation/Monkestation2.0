@@ -14,6 +14,7 @@ import { range, sortBy } from 'common/collections';
 import { KeyEvent } from '../../events';
 import { TabbedMenu } from './TabbedMenu';
 import { fetchRetry } from '../../http';
+import { isEscape } from 'common/keys';
 
 type Keybinding = {
   name: string;
@@ -40,7 +41,7 @@ const isStandardKey = (event: KeyboardEvent): boolean => {
     event.key !== 'Alt' &&
     event.key !== 'Control' &&
     event.key !== 'Shift' &&
-    event.key !== 'Esc'
+    !isEscape(event.key)
   );
 };
 
@@ -54,7 +55,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
   PAGEDOWN: 'Southeast',
   PAGEUP: 'Northeast',
   RIGHT: 'East',
-  SPACEBAR: 'Space',
+  ' ': 'Space',
   UP: 'North',
 };
 
@@ -289,7 +290,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     if (isStandardKey(event)) {
       this.setRebindingHotkey(formatKeyboardEvent(event));
       return;
-    } else if (event.key === 'Esc') {
+    } else if (isEscape(event.key)) {
       this.setRebindingHotkey(undefined);
       return;
     }

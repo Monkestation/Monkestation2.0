@@ -18,6 +18,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
+		JOB_BRIDGE_ASSISTANT,
 	)
 	weight = 4
 	max_occurrences = 3

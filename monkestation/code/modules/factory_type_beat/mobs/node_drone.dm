@@ -87,7 +87,7 @@
 	var/funny_ending = FALSE
 	flying_state = FLY_OUT_STATE
 	update_appearance(UPDATE_ICON_STATE)
-	if(prob(1))
+	if(prob(1) || check_holidays(APRIL_FOOLS))
 		say("I have to go now, my planet needs me.")
 		funny_ending = TRUE
 	visible_message(span_notice("The drone flies away to safety as the vent is secured."))

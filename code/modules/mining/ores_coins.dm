@@ -72,7 +72,7 @@
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
-	icon_state = "Uranium ore"
+	icon_state = "uranium"
 	singular_name = "uranium ore chunk"
 	points = 30
 	material_flags = NONE
@@ -85,7 +85,7 @@
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
-	icon_state = "Iron ore"
+	icon_state = "iron"
 	singular_name = "iron ore chunk"
 	points = 1
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
@@ -97,7 +97,7 @@
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
-	icon_state = "Glass ore"
+	icon_state = "glass"
 	singular_name = "sand pile"
 	points = 1
 	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
-	icon_state = "Plasma ore"
+	icon_state = "plasma"
 	singular_name = "plasma ore chunk"
 	points = 15
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
-	icon_state = "Silver ore"
+	icon_state = "silver"
 	singular_name = "silver ore chunk"
 	points = 16
 	mine_experience = 3
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
-	icon_state = "Gold ore"
+	icon_state = "gold"
 	singular_name = "gold ore chunk"
 	points = 18
 	mine_experience = 5
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
-	icon_state = "Diamond ore"
+	icon_state = "diamond"
 	singular_name = "diamond ore chunk"
 	points = 50
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
-	icon_state = "Bananium ore"
+	icon_state = "bananium"
 	singular_name = "bananium ore chunk"
 	points = 60
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
-	icon_state = "Titanium ore"
+	icon_state = "titanium"
 	singular_name = "titanium ore chunk"
 	points = 50
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/ore.dmi'
-	icon_state = "Gibtonite ore"
+	icon_state = "gibtonite"
 	inhand_icon_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 0
@@ -260,52 +260,60 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
-	if(primed)
-		if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
-			primed = FALSE
-			if(det_timer)
-				deltimer(det_timer)
-			user.visible_message(span_notice("The chain reaction stopped! ...The ore's quality looks diminished."), span_notice("You stopped the chain reaction. ...The ore's quality looks diminished."))
-			icon_state = "Gibtonite ore"
-			quality = GIBTONITE_QUALITY_LOW
-			return
-	..()
+
+	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
+		defuse(user)
+		return
+
+	return ..()
+
+/// Stop the reaction and reduce ore explosive power
+/obj/item/gibtonite/proc/defuse(mob/defuser)
+	if (!primed)
+		return
+	primed = FALSE
+	if(det_timer)
+		deltimer(det_timer)
+	defuser?.visible_message(span_notice("The chain reaction stopped! ...The ore's quality looks diminished."), span_notice("You stopped the chain reaction. ...The ore's quality looks diminished."))
+	icon_state = "gibtonite"
+	quality = GIBTONITE_QUALITY_LOW
 
 /obj/item/gibtonite/attack_self(user)
 	if(wires)
 		wires.interact(user)
 	else
-		..()
+		return ..()
 
 /obj/item/gibtonite/bullet_act(obj/projectile/P)
 	GibtoniteReaction(P.firer)
-	. = ..()
+	return ..()
 
 /obj/item/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
 
 /obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
-	if(!primed)
-		primed = TRUE
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
-		icon_state = "Gibtonite active"
-		var/notify_admins = FALSE
-		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
-			notify_admins = TRUE
+	if(primed)
+		return
+	primed = TRUE
+	playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
+	icon_state = "Gibtonite active"
+	var/notify_admins = FALSE
+	if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
+		notify_admins = TRUE
 
-		if(triggered_by == 1)
-			log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
-		else if(triggered_by == 2)
-			var/turf/bombturf = get_turf(src)
-			if(notify_admins)
-				message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
-			var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
-			log_game(bomb_message)
-			GLOB.bombers += bomb_message
-		else
-			user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
-			log_bomber(user, "has primed a", src, "for detonation", notify_admins)
-		det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
+	if(triggered_by == 1)
+		log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
+	else if(triggered_by == 2)
+		var/turf/bombturf = get_turf(src)
+		if(notify_admins)
+			message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
+		var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
+		log_game(bomb_message)
+		GLOB.bombers += bomb_message
+	else
+		user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
+		log_bomber(user, "has primed a", src, "for detonation", notify_admins)
+	det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/gibtonite/proc/detonate(notify_admins)
 	if(primed)

@@ -13,3 +13,6 @@
 #define COMSIG_HERETIC_BLADE_ATTACK "blade_attack"
 /// From /obj/item/melee/sickly_blade/afterattack (without proximity) : (mob/living/source, mob/living/target)
 #define COMSIG_HERETIC_RANGED_BLADE_ATTACK "ranged_blade_attack"
+
+/// Sent to the heretic's mind when the choose a path: (datum/antagonist/heretic, path)
+#define COMSIG_HERETIC_PATH_CHOSEN "path_chosen"

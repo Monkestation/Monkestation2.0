@@ -18,6 +18,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	. += "It has [uses_left] use\s remaining."
 
 /obj/item/extraction_pack/attack_self(mob/user)
+	. = ..()
+	if(choose_beacon(user))
+		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
+
+/obj/item/extraction_pack/proc/choose_beacon(mob/user)
+	. = FALSE
 	var/list/possible_beacons = list()
 	for(var/obj/structure/extraction_point/extraction_point as anything in GLOB.total_extraction_beacons)
 		if(extraction_point.beacon_network in beacon_networks)
@@ -25,17 +31,14 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!length(possible_beacons))
 		to_chat(user, span_warning("There are no extraction beacons in existence!"))
 		return
-	else
-		var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
-		if(isnull(chosen_beacon))
-			return
-		beacon = chosen_beacon
-		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
+	var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
+	if(isnull(chosen_beacon))
+		return
+	beacon = chosen_beacon
+	return TRUE
 
 /obj/item/extraction_pack/afterattack(atom/movable/thing, mob/living/carbon/human/user, proximity_flag, params)
 	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-
 	if(QDELETED(beacon))
 		balloon_alert(user, "not linked")
 		beacon = null
@@ -71,8 +74,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return
 
 	balloon_alert_to_viewers("extracting!")
-	if(loc == user)
-		user.back?.atom_storage?.attempt_insert(src, user)
+	if(get(loc, /mob/living/carbon/human) == user && thing == user) // Self extraction
+		user.quick_equip()
 	uses_left--
 
 	if(uses_left <= 0)
@@ -98,6 +101,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	balloon2.pixel_y = 10
 	balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.add_overlay(balloon2)
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	sleep(0.4 SECONDS)
 
@@ -160,7 +164,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(uses_left <= 0)
 		qdel(src)
 
-
 /obj/item/fulton_core
 	name = "extraction beacon assembly kit"
 	desc = "When built, emits a signal which fulton recovery devices can lock onto. Activate in hand to unfold into a beacon."
@@ -168,6 +171,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon_state = "folded_extraction"
 
 /obj/item/fulton_core/attack_self(mob/user)
+	if(istype(get_area(user), /area/misc/hilbertshotel))
+		to_chat(user, span_userdanger("Something about this place is interfering with the beacon. The warning reads unsafe to deploy."))
+		return
+
 	if(do_after(user,15,target = user) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
 		playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)

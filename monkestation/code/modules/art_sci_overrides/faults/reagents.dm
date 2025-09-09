@@ -4,7 +4,7 @@
 	visible_message = "shoots a syringe out."
 	var/list/reagents = list()
 
-	research_value = 100
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 /datum/artifact_fault/reagent/on_trigger()
 	. = ..()

@@ -130,6 +130,9 @@
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
 
+/obj/item/clothing/shoes/workboots/independent //nanotrasen does not make all work boots in existence
+	desc = "A pair of lace-up work boots for the especially blue-collar."
+
 /datum/armor/shoes_workboots
 	bio = 80
 
@@ -189,3 +192,26 @@
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
+
+/obj/item/clothing/shoes/pirate
+	name = "pirate boots"
+	desc = "Yarr."
+	icon_state = "pirateboots"
+	inhand_icon_state = null
+
+/obj/item/clothing/shoes/pirate/armored
+	armor_type = /datum/armor/shoes_pirate
+	strip_delay = 40
+	resistance_flags = NONE
+	lace_time = 12 SECONDS
+	body_parts_covered = FEET|LEGS
+
+/datum/armor/shoes_pirate
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 50
+	bio = 90
+	fire = 70
+	acid = 50

@@ -74,9 +74,6 @@
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
 
-/datum/atom_hud/sentient_disease
-	hud_icons = list(SENTIENT_DISEASE_HUD)
-
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
 
@@ -337,16 +334,16 @@ Security HUDs! Basic mode shows only the job.
 	var/image/holder = hud_list[WANTED_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
 	var/perp_name = get_face_name(get_id_name(""))
-	
+
 	crew_hud_set_crew_status()
-	
+
 	if(!perp_name || !GLOB.manifest)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
 		return
 
 	var/datum/record/crew/target = find_record(perp_name)
-	
+
 	if(!target || target.wanted_status == WANTED_NONE)
 		holder.icon_state = null
 		set_hud_image_inactive(WANTED_HUD)
@@ -365,6 +362,23 @@ Security HUDs! Basic mode shows only the job.
 			holder.icon_state = "huddischarged"
 
 	set_hud_image_active(WANTED_HUD)
+
+//Utility functions
+
+/**
+ * Updates the visual security huds on all mobs in GLOB.human_list that match the name passed to it.
+ */
+/proc/update_matching_security_huds(perp_name)
+	for (var/mob/living/carbon/human/h as anything in GLOB.human_list)
+		if (h.get_face_name(h.get_id_name("")) == perp_name)
+			h.sec_hud_set_security_status()
+
+/**
+ * Updates the visual security huds on all mobs in GLOB.human_list
+ */
+/proc/update_all_security_huds()
+	for(var/mob/living/carbon/human/h as anything in GLOB.human_list)
+		h.sec_hud_set_security_status()
 
 /***********************************************
 Diagnostic HUDs!
@@ -495,7 +509,7 @@ Diagnostic HUDs!
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_camera()
 	var/image/holder = hud_list[DIAG_CAMERA_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
-	if(chassis_camera.is_emp_scrambled)
+	if(chassis_camera?.is_emp_scrambled)
 		holder.icon_state = "hudcamera_empd"
 		return
 	holder.icon_state = "hudcamera"
@@ -564,13 +578,13 @@ Diagnostic HUDs!
 /atom/proc/get_cached_width()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_WIDTH_INDEX]
 
 /atom/proc/get_cached_height()
 	if (isnull(icon))
 		return 0
-	var/list/dimensions = get_icon_dimensions(icon)
+	var/alist/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
@@ -586,7 +600,7 @@ MONKE, crew hud for silicon.
 	var/image/holder = hud_list[CREW_HUD]
 	holder.pixel_y = get_cached_height() - world.icon_size
 	var/crew_name = get_face_name(get_id_name(""))
-	
+
 	if(!crew_name || !GLOB.manifest || istype(wear_id?.GetID(), /obj/item/card/id/advanced/chameleon))
 		holder.icon_state = null
 		set_hud_image_inactive(CREW_HUD)

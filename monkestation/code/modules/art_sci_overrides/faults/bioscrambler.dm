@@ -6,7 +6,7 @@
 	inspect_warning = list(span_danger("It looks like its made of patchwork flesh!"),
 	span_danger("It looks Frankenstien like!"))
 
-	research_value = 250
+	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	weight = ARTIFACT_UNCOMMON
 
