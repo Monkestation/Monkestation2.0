@@ -567,7 +567,7 @@
 
 /obj/item/toy/plush/admin/birdion
 	name = "birdion aziz"
-	desc = "It's Birdion! You feel the urge to beat the shit out of them."
+	desc = "It's Birdion! You feel the urge to beat the shit out of her."
 	icon_state = "birdion"
 	pet_message = "You beat the shit out of birdion. You feel better."
 	squeak_override = list('sound/weapons/punch1.ogg'=1)
