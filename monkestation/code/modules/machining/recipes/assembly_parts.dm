@@ -495,12 +495,14 @@
     )
     machining_skill_required = 3
 
-
-
-
-
-
-
-
-
-
+/datum/machining_recipe/prescription_glasses
+    name = "Prescription Glasses"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_NORMAL
+    result = /obj/item/clothing/glasses/regular
+    reqs = list(
+        /obj/item/machining_intermediates/lens = 1,
+        /obj/item/stack/rods = 2,
+    )
+    machining_skill_required = 2
