@@ -1022,7 +1022,7 @@
 /obj/item/storage/medkit/robotic_repair/stocked/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/cable_coil/five = 1,
+		/obj/item/stack/cable_coil/five = 3,
 		/obj/item/reagent_containers/hypospray/medipen/synthcare = 2,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1, // Coagulants help electrical damage

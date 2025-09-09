@@ -347,5 +347,5 @@
 	name = "'Extractor' enclosed helmet"
 	desc = "A thick-fronted helmet with extendable visor for whole face protection. The materials and geometry of the helmet \
 		combine in such a way that bullets lose much of their armor penetrating energy before any damage can be done, rather than penetrate into it. \
-		This one has a red dot on the front."
+		This one has a red cross on the front."
 	icon_state = "enclosed_emt2"
