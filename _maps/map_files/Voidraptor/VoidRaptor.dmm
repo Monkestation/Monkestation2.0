@@ -25333,7 +25333,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/nanite_programmer,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
@@ -45483,7 +45482,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -56514,6 +56512,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
+/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/item/binoculars{
 	pixel_x = -6;
 	pixel_y = 8
@@ -56521,14 +56520,6 @@
 /obj/item/binoculars{
 	pixel_x = -6;
 	pixel_y = 8
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 5;
-	pixel_y = 12
-	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 7;
-	pixel_y = 3
 	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 7;

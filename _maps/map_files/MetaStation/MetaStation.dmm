@@ -1437,7 +1437,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "ayz" = (
-/obj/machinery/nanite_program_hub,
 /obj/effect/turf_decal/tile/purple/anticorner{
 	dir = 4
 	},
@@ -3342,21 +3341,14 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/box/disks_nanite{
-	pixel_x = -6;
-	pixel_y = 9
-	},
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 3;
-	pixel_x = -6
-	},
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 1
 	},
+/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /turf/open/floor/iron/white,
 /area/station/science/circuits)
 "bcQ" = (
@@ -5907,7 +5899,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cdL" = (
-/obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},

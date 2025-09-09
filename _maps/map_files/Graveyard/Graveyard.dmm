@@ -21567,10 +21567,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"ioC" = (
-/obj/machinery/nanite_program_hub,
-/turf/open/floor/iron,
-/area/station/science/circuits)
 "ioW" = (
 /obj/structure/lattice,
 /obj/machinery/camera/autoname/directional/south{
@@ -31869,13 +31865,10 @@
 /area/station/maintenance/aft)
 "moQ" = (
 /obj/structure/table,
-/obj/item/storage/box/disks_nanite,
-/obj/item/storage/box/disks_nanite{
-	pixel_y = 4
-	},
 /obj/item/nanite_remote,
 /obj/item/nanite_remote,
 /obj/item/nanite_scanner,
+/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/item/nanite_scanner,
 /turf/open/floor/iron/white,
 /area/station/science/circuits)
@@ -51752,7 +51745,6 @@
 /turf/open/floor/iron,
 /area/graveyard/bunker/science)
 "ufL" = (
-/obj/machinery/nanite_programmer,
 /turf/open/floor/iron,
 /area/station/science/circuits)
 "ufM" = (
@@ -174890,7 +174882,7 @@ sZv
 mTZ
 abZ
 rzJ
-ioC
+ufL
 ufL
 tiX
 kkb
