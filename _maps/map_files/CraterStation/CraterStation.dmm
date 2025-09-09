@@ -35012,6 +35012,9 @@
 	},
 /turf/open/floor/engine/hull/reinforced/planetary/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"kAS" = (
+/turf/closed/mineral/random/snow/high_chance,
+/area/icemoon/surface/outdoors/labor_camp)
 "kAT" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -123711,7 +123714,7 @@ sgL
 crc
 crc
 crc
-pWC
+crc
 crc
 pWC
 pWC
@@ -123967,8 +123970,8 @@ oYd
 sgL
 crc
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -124224,8 +124227,8 @@ oYd
 sgL
 crc
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -124481,8 +124484,8 @@ oYd
 sgL
 crc
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -124738,8 +124741,8 @@ oYd
 sgL
 crc
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -124994,8 +124997,8 @@ oke
 oYd
 sgL
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -125251,8 +125254,8 @@ oYd
 oYd
 sgL
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -125508,8 +125511,8 @@ aJX
 oke
 sgL
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -125765,8 +125768,8 @@ sgL
 sgL
 sgL
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -126022,8 +126025,8 @@ crc
 crc
 crc
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -126278,8 +126281,8 @@ sgL
 crc
 crc
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -126535,8 +126538,8 @@ sgL
 crc
 crc
 crc
-pWC
-pWC
+crc
+crc
 pWC
 pWC
 pWC
@@ -130498,7 +130501,7 @@ pWC
 pWC
 "}
 (192,1,1) = {"
-ijl
+kAS
 ijl
 ijl
 ijl
@@ -130755,8 +130758,8 @@ pWC
 pWC
 "}
 (193,1,1) = {"
-ijl
-ijl
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -131012,9 +131015,9 @@ pWC
 pWC
 "}
 (194,1,1) = {"
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -131269,9 +131272,9 @@ pWC
 pWC
 "}
 (195,1,1) = {"
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -131526,9 +131529,9 @@ pWC
 pWC
 "}
 (196,1,1) = {"
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -131783,8 +131786,8 @@ pWC
 pWC
 "}
 (197,1,1) = {"
-ijl
-ijl
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -132040,7 +132043,7 @@ pWC
 pWC
 "}
 (198,1,1) = {"
-ijl
+kAS
 ijl
 ijl
 ijl
@@ -135653,8 +135656,8 @@ ijl
 ijl
 ijl
 ijl
-ijl
-ijl
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -135908,11 +135911,11 @@ ijl
 ijl
 ijl
 ijl
-ijl
-ijl
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -136165,11 +136168,11 @@ ijl
 ijl
 ijl
 ijl
-ijl
-ijl
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -136423,10 +136426,10 @@ ijl
 ijl
 ijl
 ijl
-ijl
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -139754,8 +139757,8 @@ ijl
 ijl
 ijl
 ijl
-ijl
-ijl
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -140010,9 +140013,9 @@ pWC
 ijl
 ijl
 ijl
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -140266,9 +140269,9 @@ pWC
 (230,1,1) = {"
 ijl
 ijl
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -140523,9 +140526,9 @@ pWC
 (231,1,1) = {"
 ijl
 ijl
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -140780,8 +140783,8 @@ pWC
 (232,1,1) = {"
 ijl
 ijl
-ijl
-ijl
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -143605,8 +143608,8 @@ pWC
 pWC
 "}
 (243,1,1) = {"
-ijl
-ijl
+kAS
+kAS
 ijl
 ijl
 ijl
@@ -143862,9 +143865,9 @@ pWC
 pWC
 "}
 (244,1,1) = {"
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 ijl
 vwL
 vwL
@@ -144119,9 +144122,9 @@ pWC
 pWC
 "}
 (245,1,1) = {"
-ijl
-ijl
-ijl
+kAS
+kAS
+kAS
 vwL
 vwL
 vwL
@@ -144376,8 +144379,8 @@ pWC
 pWC
 "}
 (246,1,1) = {"
-ijl
-ijl
+kAS
+kAS
 vwL
 vwL
 vwL
@@ -144633,8 +144636,8 @@ pWC
 pWC
 "}
 (247,1,1) = {"
-ijl
-ijl
+kAS
+kAS
 vwL
 vwL
 vwL
@@ -144890,8 +144893,8 @@ pWC
 pWC
 "}
 (248,1,1) = {"
-ijl
-ijl
+kAS
+kAS
 vwL
 vwL
 vwL
