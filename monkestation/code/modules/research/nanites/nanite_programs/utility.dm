@@ -461,8 +461,8 @@
 	unique = FALSE
 	can_trigger = TRUE
 	trigger_cost = 1
-	trigger_cooldown = 10
+	trigger_cooldown = 20
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/access/on_trigger(comm_message)
-	playsound(host_mob, 'sound/items/bikehorn.ogg', 50, 20)
+	playsound(host_mob, 'sound/items/bikehorn.ogg', 50, TRUE, falloff_distance = 20)
