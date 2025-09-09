@@ -227,7 +227,7 @@
     crafting_time = MACHINING_DELAY_NORMAL
     result = /obj/item/machining_intermediates/jewelry_t2
     reqs = list(
-    	/obj/item/machining_intermediates/fancyring = 1
+    	/obj/item/machining_intermediates/fancyring = 1,
         /obj/item/stack/sheet/mineral/gold  = 1,
 		/obj/item/stack/sheet/mineral/silver = 1,
     )
