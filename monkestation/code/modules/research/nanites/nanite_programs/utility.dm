@@ -459,7 +459,7 @@
 
 /datum/nanite_program/nanite_injector
 	name = "Nanomechanical Injection System"
-	desc = "When triggered, draws a large amount of the host's nanites into a nanite-based injection device, allowing them to transfer those nanites to others."
+	desc = "While active, draws a large amount of the host's nanites into a nanite-based injection device, allowing them to transfer those nanites to others."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
 	var/obj/item/nanite_injection_tentacle/pokey
@@ -476,14 +476,50 @@
 		to_chat(host_mob, span_warning("Your nanites fail to form an injector."))
 		QDEL_NULL(pokey)
 		return
-	host_mob.visible_message(span_danger("A metallic blade rapidly forms around [host_mob]'s arm!"), span_warning("A nanite blade quickly forms around our arm!"))
+	host_mob.visible_message(span_notice("A cloud of nanites forms around [host_mob]'s arm."), span_notice("A nanomechanical cloud forms around your arm."))
 
 /datum/nanite_program/nanite_injector/disable_passive_effect()
 	. = ..()
 	if(pokey)
-		host_mob.visible_message(span_danger("The mass of nanomachines around [host_mob]'s arm disolves."), span_warning("Your injection device dissipates."))
+		host_mob.visible_message(span_notice("The mass of nanomachines around [host_mob]'s arm dissolves."), span_notice("Your injection device dissipates."))
 		QDEL_NULL(pokey)
 
 /obj/item/nanite_injection_tentacle
 	name = "nanomechanical mass"
 	desc = "This condensed mass of nanomachines allows you to transfer (if inefficiently) some of your nanites into other nanite users, or even those without nanites."
+	icon = 'icons/obj/weapons/changeling_items.dmi'
+	icon_state = "tentacle"
+	inhand_icon_state = "tentacle"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	resistance_flags = INDESTRUCTIBLE
+	color = COLOR_SILVER
+
+/obj/item/nanite_injection_tentacle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/goofygoober = interacting_with
+	if(!(goofygoober.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return NONE
+	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
+	if(nanos.nanite_volume < (200 + nanos.safety_threshold))
+		balloon_alert(user, "Not enough nanites")
+		return NONE
+	visible_message(span_notice("[user] presses a [src] against [goofygoober], and it begins flowing into [goofygoober.p_their()]."), ignored_mobs=list(user,goofygoober))
+	if(do_after(user, 5 SECONDS, goofygoober))
+		nanos.consume_nanites(200)
+		if(goofygoober.GetComponent(/datum/component/nanites))
+			var/datum/component/nanites/theirnanos = goofygoober.GetComponent(/datum/component/nanites)
+			theirnanos.consume_nanites(-150)
+		else
+			goofygoober.AddComponent(/datum/component/nanites, 150)
+			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SYNC, nanos)
+			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_FAILURE
+
+/obj/item/nanite_injection_tentacle/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, "nanite_injector_tentacle")

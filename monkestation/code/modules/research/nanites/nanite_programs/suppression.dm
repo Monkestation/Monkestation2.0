@@ -314,6 +314,7 @@
 			message = replacetext(message, phrase.get_value(), replacement_phrase)
 			hearing_args[HEARING_RAW_MESSAGE] = message
 
+#define NES_GRAVITY "Gravity Field"
 #define NANITE_GRAV_NONE "0G"
 #define NANITE_GRAV_NORMAL "1G"
 #define NANITE_GRAV_HIGH "2G"
@@ -325,6 +326,7 @@
 	rogue_types = list(/datum/nanite_program/glitch)
 	var/gravitymod = 0
 	var/current_mode
+	unique = FALSE
 
 /datum/nanite_program/gravity/register_extra_settings()
 	. = ..()
@@ -340,8 +342,9 @@
 
 /datum/nanite_program/gravity/enable_passive_effect()
 	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_GRAVITY]
 	current_mode = mode.get_value()
-	switch(currentmode)
+	switch(current_mode)
 		if(NANITE_GRAV_NONE)
 			gravitymod = 0
 
