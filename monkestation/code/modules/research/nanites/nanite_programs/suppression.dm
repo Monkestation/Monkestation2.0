@@ -315,7 +315,6 @@
 			hearing_args[HEARING_RAW_MESSAGE] = message
 
 #define NES_GRAVITY "Gravity Field"
-#define NANITE_GRAV_NONE "0G"
 #define NANITE_GRAV_NORMAL "1G"
 #define NANITE_GRAV_HIGH "2G"
 
@@ -330,7 +329,7 @@
 
 /datum/nanite_program/gravity/register_extra_settings()
 	. = ..()
-	extra_settings[NES_GRAVITY] = new /datum/nanite_extra_setting/type(NANITE_GRAV_NONE, list(NANITE_GRAV_NONE, NANITE_GRAV_NORMAL, NANITE_GRAV_HIGH))
+	extra_settings[NES_GRAVITY] = new /datum/nanite_extra_setting/type(NANITE_GRAV_NORMAL, list(NANITE_GRAV_NORMAL, NANITE_GRAV_HIGH))
 
 /datum/nanite_program/gravity/active_effect()
 	. = ..()
@@ -345,9 +344,6 @@
 	var/datum/nanite_extra_setting/mode = extra_settings[NES_GRAVITY]
 	current_mode = mode.get_value()
 	switch(current_mode)
-		if(NANITE_GRAV_NONE)
-			gravitymod = 0
-
 		if(NANITE_GRAV_NORMAL)
 			gravitymod = 1
 
@@ -363,6 +359,5 @@
 	host_mob.RemoveElement(/datum/element/forced_gravity, gravitymod, can_override = TRUE)
 
 #undef NES_GRAVITY
-#undef NANITE_GRAV_NONE
 #undef NANITE_GRAV_NORMAL
 #undef NANITE_GRAV_HIGH
