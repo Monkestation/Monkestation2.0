@@ -27787,6 +27787,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit)
+"iqa" = (
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/structure/closet/crate/mail,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/upper)
 "iqg" = (
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
@@ -197661,7 +197672,7 @@ vrz
 tSj
 wYT
 sBB
-oke
+iqa
 oYd
 oYd
 oYd
