@@ -252,7 +252,7 @@
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
 	QDEL_NULL(nanite_remote)
-	QDEL_NULL(nanite_settings)
+	QDEL_NULL(nanite_menu)
 	malfhack = null
 	current = null
 	bot_ref = null
