@@ -9765,6 +9765,7 @@
 /obj/machinery/light_switch/directional/west,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/large,
 /area/station/maintenance/abandon_diner)
 "dbe" = (
@@ -23580,6 +23581,11 @@
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
+"hef" = (
+/mob/living/basic/mouse/rat,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/station/maintenance/abandon_diner)
 "hek" = (
 /obj/structure/closet/cabinet,
 /obj/item/storage/backpack/satchel/leather,
@@ -251375,7 +251381,7 @@ wfv
 wtn
 ejV
 jdr
-oUk
+hef
 tDo
 pZg
 lhN
