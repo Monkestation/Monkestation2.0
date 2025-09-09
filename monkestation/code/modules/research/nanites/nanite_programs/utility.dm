@@ -303,7 +303,7 @@
 	for(var/mob/living/L in oview(5, host_mob))
 		if(!prob(25))
 			continue
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || istype(L, /mob/living/silicon))
 			continue
 		target_hosts += L
 	if(!target_hosts.len)
@@ -327,7 +327,7 @@
 /datum/nanite_program/nanite_sting/on_trigger(comm_message)
 	var/list/mob/living/target_hosts = list()
 	for(var/mob/living/L in oview(1, host_mob))
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob) || istype(L, /mob/living/silicon))
 			continue
 		target_hosts += L
 	if(!target_hosts.len)
