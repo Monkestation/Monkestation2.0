@@ -105,7 +105,7 @@
 	shielding = FALSE
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	tint = 0
-	to_chat(eye_owner, "The protective film over your opticalsensors recedes.")
+	to_chat(eye_owner, "The protective film over your optical sensors recedes.")
 
 
 /obj/item/organ/internal/eyes/synth/emp_act(severity)
