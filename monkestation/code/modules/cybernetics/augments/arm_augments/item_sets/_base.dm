@@ -81,8 +81,8 @@
 	if(Retract())
 		return COMSIG_KB_ACTIVATED
 
-/obj/item/organ/internal/cyberimp/arm/item_set/on_item_attack_self(datum/source, mob/user)
-	INVOKE_ASYNC(src, PROC_REF(ui_action_click), user)
+///obj/item/organ/internal/cyberimp/arm/item_set/on_item_attack_self(datum/source, mob/user)
+	//INVOKE_ASYNC(src, PROC_REF(ui_action_click), user) // disabled to fix detective scanner of arm implant
 
 /obj/item/organ/internal/cyberimp/arm/item_set/proc/Retract(mob/living/carbon/passover)
 	var/mob/living/carbon/user = owner
@@ -137,10 +137,10 @@
 		span_hear("You hear a short mechanical noise."))
 	playsound(get_turf(owner), extend_sound, 50, TRUE)
 
-	if(length(items_list) > 1)
-		RegisterSignals(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY), PROC_REF(swap_tools)) // secondary for welders
+	// if(length(items_list) > 1) // disabled until better fix found
+		// RegisterSignals(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY), PROC_REF(swap_tools)) // secondary for welders
 
-/obj/item/organ/internal/cyberimp/arm/item_set/proc/swap_tools(active_item)
+/obj/item/organ/internal/cyberimp/arm/item_set/proc/swap_tools(active_item) // not called due to disabling of lines 140-141
 	SIGNAL_HANDLER
 	Retract(owner)
 	INVOKE_ASYNC(src, PROC_REF(ui_action_click))
