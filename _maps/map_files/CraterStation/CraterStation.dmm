@@ -3208,13 +3208,14 @@
 /area/station/engineering/supermatter/room)
 "aYz" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
+/obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "machining_airlock"
 	},
+/obj/machinery/door/airlock/maintenance/external,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "aYA" = (
@@ -20125,6 +20126,15 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/security/prison/mess)
+"gfB" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Machining Building"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "machining_airlock"
+	},
+/turf/open/floor/plating,
+/area/station/engineering/machining)
 "gfF" = (
 /obj/structure/fence{
 	dir = 1
@@ -21217,6 +21227,10 @@
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
+	},
+/obj/machinery/button/door/directional/west{
+	id = "machining_shutters";
+	name = "Shutter Control"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/machining)
@@ -41713,6 +41727,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "mCq" = (
@@ -51991,6 +52006,10 @@
 "pDi" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Machining Building"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "machining_airlock"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/machining)
@@ -68757,6 +68776,10 @@
 	dir = 8
 	},
 /obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	dir = 8;
+	id = "machining_shutters"
+	},
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "uAH" = (
@@ -197681,7 +197704,7 @@ snk
 obP
 snk
 jzp
-pDi
+gfB
 jBq
 yhM
 aYz
