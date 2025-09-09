@@ -456,3 +456,17 @@
 /datum/action/innate/nanite_button/Activate()
 	program.press()
 	playsound(owner, SFX_BUTTON_CLICK, vol = 20, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY)
+
+/datum/nanite_program/honk
+	unique = FALSE
+	can_trigger = TRUE
+	trigger_cost = 1
+	trigger_cooldown = 10
+	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
+
+
+
+playsound(parent, pick_weight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, mixer_channel = CHANNEL_SQUEAK)
+
+/datum/nanite_program/access/on_trigger(comm_message)
+	playsound(host_mob, 'sound/items/bikehorn.ogg', 50, 20)
