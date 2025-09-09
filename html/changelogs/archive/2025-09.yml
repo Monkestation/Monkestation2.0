@@ -289,3 +289,10 @@
   - rscadd: '*flare, *flicker, and *glow, three new ethereal emotes.'
   - rscadd: The Horrific Necktie now starts with a built-in soulcatcher. REJOICE,
       BRATAN!
+2025-09-09:
+  MrBagHead:
+  - bugfix: Commando Op Missile Targeter Now Works
+  - bugfix: Mining Style Meter no longer uses afterattack, so it can properly be attached
+      to glasses
+  - bugfix: Spellbook Charges properly increase the spellbooks point count
+  - bugfix: Battlemage Armour Charges increase Wiz Armour Charges Again
