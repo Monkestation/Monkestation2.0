@@ -99,27 +99,27 @@
 	)
 	machining_skill_required = 3
 
-/datum/machining_recipe/bullet_small_ap
-	category = TAB_SPECIFIC_PARTS
-	machinery_type = MACHINING_LATHE
-	crafting_time = MACHINING_DELAY_VERY_FAST
-	result = /obj/item/machining_intermediates/bullet_small_ap
-	reqs = list(
-		/obj/item/stack/machining_intermediates/hardsteel = 1,
-	)
-	machining_skill_required = 4
-	result_amount = 6
-
-/datum/machining_recipe/bullet_large_ap
-	category = TAB_SPECIFIC_PARTS
-	machinery_type = MACHINING_LATHE
-	crafting_time = MACHINING_DELAY_VERY_FAST
-	result = /obj/item/machining_intermediates/bullet_large_ap
-	reqs = list(
-		/obj/item/stack/machining_intermediates/hardsteel = 1,
-	)
-	machining_skill_required = 4
-	result_amount = 12
+//datum/machining_recipe/bullet_small_ap
+//	category = TAB_SPECIFIC_PARTS
+//	machinery_type = MACHINING_LATHE
+//	crafting_time = MACHINING_DELAY_VERY_FAST
+//	result = /obj/item/machining_intermediates/bullet_small_ap
+//	reqs = list(
+//		/obj/item/stack/machining_intermediates/hardsteel = 1,
+//	)
+//	machining_skill_required = 4
+//	result_amount = 6
+// comented out because 0 use for them for now.
+//datum/machining_recipe/bullet_large_ap
+//	category = TAB_SPECIFIC_PARTS
+//	machinery_type = MACHINING_LATHE
+//	crafting_time = MACHINING_DELAY_VERY_FAST
+//	result = /obj/item/machining_intermediates/bullet_large_ap
+//	reqs = list(
+//		/obj/item/stack/machining_intermediates/hardsteel = 1,
+//	)
+//	machining_skill_required = 4
+//	result_amount = 12
 
 /datum/machining_recipe/lens
 	category = TAB_SPECIFIC_PARTS
@@ -139,7 +139,7 @@
 	result = /obj/item/machining_intermediates/lasercavity
 	reqs = list(
 		/obj/item/stack/sheet/glass = 2,
-		/obj/item/machining_intermediates/universalcircuit = 2,
+		/obj/item/machining_intermediates/universalcircuit = 1,
 		/obj/item/stock_parts/micro_laser = 4,
 	)
 	machining_skill_required = 2
@@ -150,7 +150,7 @@
 	crafting_time = MACHINING_DELAY_FAST
 	result = /obj/item/machining_intermediates/crappyring
 	reqs = list(
-		/obj/item/stack/sheet/mineral/silver = 3,
+		/obj/item/stack/sheet/mineral/silver = 1,
 		/obj/item/stack/sheet/mineral/titanium = 1,
 	)
 	machining_skill_required = 2
@@ -161,7 +161,7 @@
 	crafting_time = MACHINING_DELAY_FAST
 	result = /obj/item/machining_intermediates/fancyring
 	reqs = list(
-		/obj/item/stack/sheet/mineral/gold = 3,
+		/obj/item/stack/sheet/mineral/gold = 2,
 		/obj/item/stack/sheet/mineral/titanium = 1,
 	)
 	machining_skill_required = 3
@@ -172,7 +172,7 @@
 	crafting_time = MACHINING_DELAY_NORMAL
 	result = /obj/item/machining_intermediates/axehead
 	reqs = list(
-		/obj/item/stack/machining_intermediates/hardsteel = 5,
+		/obj/item/stack/machining_intermediates/hardsteel = 10,
 	)
 	machining_skill_required = 4
 

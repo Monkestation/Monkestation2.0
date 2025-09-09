@@ -156,9 +156,9 @@
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_WORKSTATION
     crafting_time = MACHINING_DELAY_NORMAL
-    result = /obj/item/machining_intermediates/crappyring
+    result = /obj/item/machining_intermediates/jewelry_t1
     reqs = list(
-        /obj/item/stack/sheet/iron = 1,
+        /obj/item/machining_intermediates/crappyring = 1,
         /obj/item/stack/sheet/glass = 2,
     )
     machining_skill_required = 2
@@ -168,10 +168,11 @@
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_WORKSTATION
     crafting_time = MACHINING_DELAY_NORMAL
-    result = /obj/item/machining_intermediates/fancyring
+    result = /obj/item/machining_intermediates/jewelry_t2
     reqs = list(
+    	/obj/item/machining_intermediates/fancyring = 1
         /obj/item/stack/sheet/mineral/gold  = 1,
-		/obj/item/stack/sheet/iron = 1,
+		/obj/item/stack/sheet/mineral/silver = 1,
     )
     machining_skill_required = 3
 
@@ -180,7 +181,7 @@
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_WORKSTATION
     crafting_time = MACHINING_DELAY_NORMAL
-    result = /obj/item/machining_intermediates/fancyring
+    result = /obj/item/machining_intermediates/jewelry_t3
     reqs = list(
         /obj/item/machining_intermediates/fancyring = 1,
 		/obj/item/stack/sheet/mineral/gold  = 2,
