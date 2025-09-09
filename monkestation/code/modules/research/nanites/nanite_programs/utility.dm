@@ -464,9 +464,5 @@
 	trigger_cooldown = 10
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
-
-
-playsound(parent, pick_weight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, mixer_channel = CHANNEL_SQUEAK)
-
 /datum/nanite_program/access/on_trigger(comm_message)
 	playsound(host_mob, 'sound/items/bikehorn.ogg', 50, 20)
