@@ -477,7 +477,6 @@ export const NaniteCloudBackupList = (props) => {
 export const NaniteCloudBackupDetails = (props) => {
   const { act, data } = useBackend();
   const { current_view, disk, can_rule, has_program, cloud_backup } = data;
-  // const can_rule = (has_program && disk.can_rule) || false; TODO Remove this probably
   if (!cloud_backup) {
     return <NoticeBox>ERROR: Backup not found</NoticeBox>;
   }
@@ -636,7 +635,6 @@ export const NaniteProgramHub = (props) => {
                     <Button
                       icon="download"
                       content="Download"
-                      // disabled={!current_view} Not working
                       onClick={() =>
                         act('download', {
                           program_id: program.id,
@@ -658,7 +656,6 @@ export const NaniteProgramHub = (props) => {
                       <Button
                         icon="download"
                         content="Download"
-                        // disabled={!current_view}
                         onClick={() =>
                           act('download', {
                             program_id: program.id,

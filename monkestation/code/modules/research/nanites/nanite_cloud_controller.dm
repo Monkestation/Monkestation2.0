@@ -120,6 +120,8 @@
 			var/datum/nanite_program/sensor/sensor = current_program
 			if(sensor.can_rule)
 				data["can_rule"] = TRUE
+		else
+			data["can_rule"] = false
 		// data["disk"] = disk_data TODO CHECK THIS
 
 
