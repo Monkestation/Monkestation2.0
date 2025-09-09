@@ -308,6 +308,40 @@
     )
     machining_skill_required = 3
 
+/datum/machining_recipe/pinches
+    name = "Mechanical Pinches"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_SLOW
+    result = /obj/item/retractor/advanced
+    reqs = list(
+        /obj/item/machining_intermediates/smallmotor = 2,
+        /obj/item/stack/machining_intermediates/steel = 2,
+        /obj/item/stack/machining_intermediates/screwbolt = 4,
+        /obj/item/machining_intermediates/universalcircuit = 2,
+        /obj/item/stack/machining_intermediates/smallwire = 4,
+        /obj/item/machining_intermediates/handle_polymer = 1,
+    )
+    machining_skill_required = 3
+
+/datum/machining_recipe/laser_scalpel
+    name = "Laser Scalpel"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_NORMAL
+    result = /obj/item/scalpel/advanced
+    reqs = list(
+    	/obj/item/machining_intermediates/lasercavity = 1,
+        /obj/item/machining_intermediates/lens = 1,
+        /obj/item/stack/machining_intermediates/steel = 1,
+        /obj/item/stack/machining_intermediates/screwbolt = 2,
+        /obj/item/machining_intermediates/universalcircuit = 1,
+        /obj/item/stack/machining_intermediates/smallwire = 4,
+        /obj/item/machining_intermediates/handle_polymer = 1,
+    )
+    machining_skill_required = 3
+
+
 /datum/machining_recipe/fire_axe
     name = "Fire Axe"
     category = TAB_ASSEMBLY_PARTS
