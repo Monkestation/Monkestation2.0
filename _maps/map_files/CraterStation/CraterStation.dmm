@@ -3205,7 +3205,6 @@
 /turf/open/openspace,
 /area/station/engineering/supermatter/room)
 "aYz" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -3214,6 +3213,7 @@
 	cycle_id = "machining_airlock"
 	},
 /obj/machinery/door/airlock/maintenance/external,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "aYA" = (
@@ -3507,6 +3507,7 @@
 	dir = 1
 	},
 /obj/machinery/lathe/furnace,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "bcv" = (
@@ -5441,6 +5442,7 @@
 	dir = 1
 	},
 /obj/machinery/lathe/drillpress,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "bLn" = (
@@ -6701,6 +6703,7 @@
 	amount = 5
 	},
 /obj/item/stack/sheet/plastic/five,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/large,
 /area/station/engineering/machining)
 "cfy" = (
@@ -8758,6 +8761,7 @@
 /area/station/maintenance/port/greater)
 "cJz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "cJG" = (
@@ -9106,6 +9110,7 @@
 /obj/machinery/lathe{
 	pixel_y = 0
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "cQv" = (
@@ -9741,6 +9746,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/misc/dirt/station,
 /area/icemoon/underground/explored)
+"daO" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/engineering/machining)
 "daR" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Nanotrasen Representative's Office"
@@ -10603,6 +10618,13 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"dnp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/upper)
 "dnI" = (
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
@@ -15134,6 +15156,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "eIL" = (
@@ -19630,6 +19653,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "fXt" = (
@@ -20193,6 +20217,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "machining_airlock"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "gfF" = (
@@ -22836,6 +22861,7 @@
 "gSW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "gTj" = (
@@ -23915,6 +23941,10 @@
 	name = "snowed-over transport cart";
 	desc = "A heated transport cart, covered in a thin layer of snow despite the efforts of a heater below, humming away to protect its supplies from the cold."
 	},
+/area/icemoon/surface/outdoors/nospawn)
+"hin" = (
+/obj/structure/sign/poster/official/build/directional/east,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "hiA" = (
 /obj/structure/cable,
@@ -31633,6 +31663,7 @@
 "jzp" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "jzu" = (
@@ -31753,6 +31784,7 @@
 /area/station/medical/office)
 "jBq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "jBs" = (
@@ -41855,6 +41887,7 @@
 	},
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/firealarm/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "mCq" = (
@@ -49547,6 +49580,7 @@
 /area/station/commons/dorms/bunkhouse/floor2)
 "oQq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "oQA" = (
@@ -52169,6 +52203,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "machining_airlock"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "pDl" = (
@@ -66949,6 +66984,7 @@
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/turf_decal/bot_blue,
 /obj/item/flashlight/lantern/rayne,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "tSm" = (
@@ -67081,6 +67117,7 @@
 	dir = 1
 	},
 /obj/machinery/lathe/drophammer,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "tUM" = (
@@ -72142,6 +72179,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "vuH" = (
@@ -73352,6 +73390,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/machining)
 "vPD" = (
@@ -73427,6 +73466,10 @@
 	},
 /turf/closed/wall/ice,
 /area/icemoon/surface/outdoors/nospawn)
+"vQw" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/upper)
 "vQy" = (
 /obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
@@ -74574,6 +74617,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "wiJ" = (
@@ -77410,6 +77454,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "wZa" = (
@@ -81377,6 +81422,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "yhN" = (
@@ -197148,7 +197194,7 @@ ewN
 ewN
 ewN
 ewN
-pgA
+hin
 pgA
 pgA
 pgA
@@ -197664,7 +197710,7 @@ pgA
 sBB
 tUK
 vPv
-lQd
+daO
 lQd
 lQd
 gvX
@@ -198187,7 +198233,7 @@ sBB
 sBB
 sBB
 sBB
-oke
+vQw
 oYd
 hpj
 gtZ
@@ -198441,10 +198487,10 @@ eBM
 vuF
 eIE
 wiH
-oYd
-oYd
-oYd
-oYd
+dnp
+dnp
+dnp
+dnp
 oYd
 sgL
 gtZ
@@ -262940,13 +262986,13 @@ stL
 pPl
 pPl
 pPl
-pPl
-pPl
-pPl
-pPl
-pPl
-pPl
-pPl
+rBU
+rBU
+rBU
+rBU
+rBU
+rBU
+rBU
 pgA
 pgA
 pgA
@@ -263197,8 +263243,8 @@ stL
 hyH
 pPl
 pPl
-pPl
-pPl
+rBU
+rBU
 pgA
 pgA
 pgA
