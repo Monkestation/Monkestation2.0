@@ -7,7 +7,6 @@
 	icon_keyboard = null
 	icon_screen = null
 
-	var/obj/item/disk/nanite_program/disk
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
 	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID
 	var/new_backup_id = 1
@@ -32,34 +31,7 @@
 
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
 	QDEL_LIST(cloud_backups) //rip backups
-	eject()
 	return ..()
-
-/obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = attacking_item
-		if (user.transferItemToLoc(N, src))
-			to_chat(user, span_notice("You insert [N] into [src]."))
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-			if(disk)
-				eject(user)
-			disk = N
-	else
-		..()
-
-
-/obj/machinery/computer/nanite_cloud_controller/AltClick(mob/user)
-	if(disk && !issilicon(user))
-		to_chat(user, span_notice("You take out [disk] from [src]."))
-		eject(user)
-	return
-
-/obj/machinery/computer/nanite_cloud_controller/proc/eject(mob/living/user)
-	if(!disk)
-		return
-	if(!istype(user) || !Adjacent(user) ||!user.put_in_active_hand(disk))
-		disk.forceMove(drop_location())
-	disk = null
 
 /obj/machinery/computer/nanite_cloud_controller/proc/get_backup(cloud_id)
 	for(var/I in cloud_backups)
@@ -89,10 +61,6 @@
 /obj/machinery/computer/nanite_cloud_controller/ui_data()
 	var/list/data = list()
 
-	//if(disk)
-	data["has_disk"] = disk
-	//else
-	//	data["has_disk"] = FALSE
 	data["has_program"] = istype(current_program)
 	if(current_program)
 		data["name"] = current_program.name
@@ -121,7 +89,7 @@
 			if(sensor.can_rule)
 				data["can_rule"] = TRUE
 		else
-			data["can_rule"] = false
+			data["can_rule"] = FALSE
 		// data["disk"] = disk_data TODO CHECK THIS
 
 
@@ -215,9 +183,6 @@
 	if(.)
 		return
 	switch(action)
-		if("eject")
-			eject(usr)
-			. = TRUE
 		if("set_view")
 			current_view = text2num(params["view"])
 			. = TRUE
@@ -239,7 +204,7 @@
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
-			if(current_program) // TODO check if this works
+			if(current_program)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)

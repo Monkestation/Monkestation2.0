@@ -333,11 +333,11 @@ export const NaniteProgrammerContent = (props) => {
 
 export const NaniteDiskBox = (props) => {
   const { data } = useBackend();
-  const { has_program, disk } = data;
+  const { has_program } = data;
   if (!has_program) {
     return <NoticeBox>No program downloaded.</NoticeBox>;
   }
-  return <NaniteProgrammerContent program={disk} />;
+  return <NaniteProgrammerContent />;
 };
 
 export const NaniteInfoBox = (props) => {
@@ -476,7 +476,7 @@ export const NaniteCloudBackupList = (props) => {
 
 export const NaniteCloudBackupDetails = (props) => {
   const { act, data } = useBackend();
-  const { current_view, disk, can_rule, has_program, cloud_backup } = data;
+  const { current_view, can_rule, has_program, cloud_backup } = data;
   if (!cloud_backup) {
     return <NoticeBox>ERROR: Backup not found</NoticeBox>;
   }
@@ -489,7 +489,7 @@ export const NaniteCloudBackupDetails = (props) => {
         !!has_program && (
           <Button
             icon="upload"
-            content="Upload Program from Disk"
+            content="Upload Program from Programmer"
             color="good"
             onClick={() => act('upload_program')}
           />
@@ -526,7 +526,7 @@ export const NaniteCloudBackupDetails = (props) => {
                       {!!can_rule && (
                         <Button
                           icon="plus"
-                          content="Add Rule from Disk"
+                          content="Add Rule from Programmer"
                           color="good"
                           onClick={() =>
                             act('add_rule', {
@@ -678,7 +678,7 @@ export const NaniteProgramHub = (props) => {
 
 export const NaniteCloudControl = (props) => {
   const { act, data } = useBackend();
-  const { has_disk, current_view, new_backup_id } = data;
+  const { current_view, new_backup_id } = data;
   return (
     <Window width={1295} height={700}>
       <Window.Content scrollable>
@@ -733,20 +733,6 @@ export const NaniteCloudControl = (props) => {
             </Section>
           </Stack.Item>
         </Stack>
-
-        {/*  TODO Add ability to save cloud to a disk?
-        <Section
-          title="Program Disk"
-          buttons={
-            <Button
-              icon="eject"
-              content="Eject"
-              disabled={!has_disk}
-              onClick={() => act('eject')}
-            />
-          }
-         />
-        */}
       </Window.Content>
     </Window>
   );
