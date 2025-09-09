@@ -145,15 +145,15 @@
 /obj/item/nif_hud_adapter/interact_with_atom(atom/interacting_with, mob/user, list/modifiers)
 	. = ..()
 	if(!istype(interacting_with, /obj/item/clothing/glasses))
-		return FALSE
+		return NONE
 
 	if(!is_type_in_list(interacting_with, glasses_whitelist))
 		balloon_alert(user, "incompatible!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	if(HAS_TRAIT(interacting_with, TRAIT_NIFSOFT_HUD_GRANTER))
 		balloon_alert(user, "already upgraded!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user] upgrades [interacting_with] with [src]."), span_notice("You upgrade [interacting_with] to be NIF HUD compatible."))
 	interacting_with.name = "\improper HUD-upgraded " + interacting_with.name
@@ -162,3 +162,4 @@
 
 	if(!multiple_uses)
 		qdel(src)
+	return ITEM_INTERACT_SUCCESS
