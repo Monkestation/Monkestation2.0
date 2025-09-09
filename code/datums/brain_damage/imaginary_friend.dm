@@ -502,7 +502,7 @@
 	desc = "Patient appears to be targeted by an invisible entity."
 	gain_text = ""
 	lose_text = ""
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 
 /datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
 	friend = new /mob/camera/imaginary_friend/trapped(get_turf(owner), src)

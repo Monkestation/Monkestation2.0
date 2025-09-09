@@ -67,17 +67,17 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return ..()
 
-/obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/jetpack_module))
+/obj/item/clothing/suit/space/hardsuit/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/jetpack_module))
 		if(jetpack_upgrade)
 			to_chat(user, span_warning("[src] has already been upgraded!"))
 			return
-		if(user.transferItemToLoc(I, src))
-			jetpack_upgrade = I
+		if(user.transferItemToLoc(attacking_item, src))
+			jetpack_upgrade = attacking_item
 			to_chat(user, span_notice("You install the upgrade module."))
 			return
 
-	if(istype(I, /obj/item/tank/jetpack))
+	if(istype(attacking_item, /obj/item/tank/jetpack))
 		if(isnull(jetpack_upgrade))
 			to_chat(user, span_warning("[src] needs to be upgraded to hold a jetpack."))
 			return
@@ -88,12 +88,12 @@
 			to_chat(user, span_warning("You cannot install the upgrade to [src] while wearing it."))
 			return
 
-		if(user.transferItemToLoc(I, src))
-			attached_jetpack = I
+		if(user.transferItemToLoc(attacking_item, src))
+			attached_jetpack = attacking_item
 			to_chat(user, span_notice("You successfully install the jetpack into [src]."))
 			return
 
-	if(!cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
+	if(!cell_cover_open && attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!attached_jetpack)
 			to_chat(user, span_warning("[src] has no jetpack installed."))
 			return

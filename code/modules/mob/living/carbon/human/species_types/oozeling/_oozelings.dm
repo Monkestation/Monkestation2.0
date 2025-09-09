@@ -208,7 +208,10 @@
 		return COMPONENT_NO_EXPOSE_REAGENTS
 	slime.blood_volume = max(slime.blood_volume - (30 * water_multiplier), 0)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
-		to_chat(slime, span_danger("The water causes you to melt away!"))
+		slime.visible_message(
+			span_warning("[slime]'s form melts away from the water!"),
+			span_danger("The water causes you to melt away!"),
+		)
 		slime.balloon_alert(slime, "water melts you!")
 		COOLDOWN_START(src, water_alert_cooldown, 1 SECONDS)
 	return NONE

@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - balance: "Lowered the weight of round-start nukies, ass ops, commando ops, and darkspawn to 3, 3, 4, and 4 respectively. (Down from 4, 4, 5, and 8)"

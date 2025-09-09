@@ -634,15 +634,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	disliked_foodtypes = CLOTH
 
 /obj/item/organ/internal/tongue/monkey/get_scream_sound()
-	return pick(
-		'sound/creatures/monkey/monkey_screech_1.ogg',
-		'sound/creatures/monkey/monkey_screech_2.ogg',
-		'sound/creatures/monkey/monkey_screech_3.ogg',
-		'sound/creatures/monkey/monkey_screech_4.ogg',
-		'sound/creatures/monkey/monkey_screech_5.ogg',
-		'sound/creatures/monkey/monkey_screech_6.ogg',
-		'sound/creatures/monkey/monkey_screech_7.ogg',
-	)
+	return SFX_SCREECH
 
 /obj/item/organ/internal/tongue/monkey/hindered
 	modifies_speech = TRUE

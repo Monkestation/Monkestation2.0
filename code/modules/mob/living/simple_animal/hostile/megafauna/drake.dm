@@ -296,8 +296,9 @@
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
 	playsound(T, SFX_EXPLOSION, 80, TRUE)
-	new /obj/effect/hotspot(T)
+	var/obj/effect/hotspot/hotspot = new(T)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
+	QDEL_IN(hotspot, 1 SECONDS)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue

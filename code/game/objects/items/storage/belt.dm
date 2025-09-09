@@ -93,22 +93,21 @@
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
 	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)//This can be changed if this is too much //It's been 5 years
+	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
 	SSwardrobe.provide_type(/obj/item/analyzer, src)
-	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/screwdriver/power
 	to_preload += /obj/item/crowbar/power
 	to_preload += /obj/item/weldingtool/experimental
-	to_preload += /obj/item/multitool
-	to_preload += /obj/item/stack/cable_coil
 	to_preload += /obj/item/extinguisher/mini
 	to_preload += /obj/item/analyzer
+	to_preload += /obj/item/multitool
+	to_preload += /obj/item/stack/cable_coil
 	return to_preload
 
 /obj/item/storage/belt/utility/full/PopulateContents()
@@ -441,6 +440,20 @@
 		/obj/item/storage/box/kinetic/shotgun, //monkestation edit
 		/obj/item/storage/box/kinetic/shotgun/rockbreaker, //monkestation edit
 		/obj/item/storage/box/kinetic/shotgun/sniperslug, //monkestation edit
+		/obj/item/ammo_box/magazine/autoshotgun,
+		/obj/item/ammo_casing/shotgun/hydrakinetic,
+		/obj/item/storage/box/kinetic/autoshotgun,
+		/obj/item/storage/box/kinetic/autoshotgun/smallcase,
+		/obj/item/ammo_casing/a762/kinetic,
+		/obj/item/ammo_box/a762/kinetic,
+		/obj/item/storage/box/kinetic/kineticlmg,
+		/obj/item/ammo_box/a762/kinetic/big,
+		/obj/item/ammo_casing/a40mm/kinetic,
+		/obj/item/storage/box/kinetic/grenadelauncher,
+		/obj/item/ammo_casing/govmining,
+		/obj/item/ammo_box/govmining,
+		/obj/item/storage/box/kinetic/govmining,
+		/obj/item/ammo_casing/minerjdj,
 		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
 		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
 	))

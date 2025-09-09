@@ -26,11 +26,11 @@
 		if(LAZYLEN(managed_overlay.vis_locs) == 0)
 			qdel(managed_overlay)
 		managed_overlay = null
-	REMOVE_POLLUTION_CURRENTRUN(src)
 	SET_UNACTIVE_POLLUTION(src)
 	UNREGISTER_POLLUTION(src)
 	if(my_turf?.pollution == src)
 		my_turf.pollution = null
+	my_turf = null
 	return ..()
 
 /datum/pollution/proc/touch_act(mob/living/carbon/victim)
@@ -97,7 +97,7 @@
 		to_chat(sniffer, span_notice(smell_string))
 
 /datum/pollution/proc/scrub_amount(amount_to_scrub, update_active = TRUE, planetary_multiplier = FALSE)
-	if(amount_to_scrub >= total_amount || !isopenturf(my_turf) || QDELING(my_turf))
+	if(amount_to_scrub >= total_amount || !isopenturf(my_turf))
 		qdel(src)
 		return
 	if(planetary_multiplier && my_turf.planetary_atmos) //Dissipate faster on planetary atmos
@@ -250,6 +250,6 @@
 ///Atmos adjacency has been updated on this turf, see if it affects any of our pollutants
 /turf/proc/update_adjacent_pollutants()
 	for(var/turf/open/open_turf as anything in atmos_adjacent_turfs)
-		if(!isopenturf(open_turf) || QDELING(open_turf) || QDELETED(open_turf.pollution))
+		if(!isopenturf(open_turf) || QDELETED(open_turf.pollution))
 			continue
 		SET_ACTIVE_POLLUTION(open_turf.pollution)

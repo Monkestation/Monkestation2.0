@@ -163,6 +163,7 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, FALSE, "Disable Shuttle", "Those fuckers ar
 	SSshuttle.admin_emergency_no_recall = TRUE
 	SSshuttle.emergency.setTimer(0)
 	SSshuttle.emergency.mode = SHUTTLE_DISABLED
+	SSshuttle.admin_emergency_disabled = TRUE //monkestation edit
 	priority_announce(
 		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
 		title = "Uplink Failure",
@@ -182,6 +183,7 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, FALSE, "Enable Shuttle", "Those fuckers ARE 
 	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
 	SSshuttle.admin_emergency_no_recall = FALSE
 	SSshuttle.emergency_no_recall = FALSE
+	SSshuttle.admin_emergency_disabled = FALSE //monkestation edit
 	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
 		SSshuttle.last_mode = SHUTTLE_IDLE
 
@@ -216,9 +218,16 @@ ADMIN_VERB(hostile_environment, R_ADMIN, FALSE, "Hostile Environment", "Disable 
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 
-ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, FALSE, "Toggle Nuke", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS, obj/machinery/nuclearbomb/nuke in world)
+ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, FALSE, "Toggle Nuke", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS)
+	var/list/nukes = list()
+	for (var/obj/machinery/nuclearbomb/bomb in world)
+		nukes += bomb
+	var/obj/machinery/nuclearbomb/nuke = tgui_input_list(user, "", "Toggle Nuke", nukes)
+	if (isnull(nuke))
+		return
+
 	if(!nuke.timing)
-		var/newtime = input(user, "Set activation timer.", "Activate Nuke", "[nuke.timer_set]") as num | null
+		var/newtime = tgui_input_number(user, "Set activation timer.", "Activate Nuke", nuke.timer_set)
 		if(!newtime)
 			return
 		nuke.timer_set = newtime

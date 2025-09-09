@@ -62,6 +62,14 @@
 	icon_state = "milkman"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/batter
+	name = "batter uniform"
+	desc = "Purification in Progress."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "batter"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/tragic
 	name = "tragic mime suit"
 	desc = "A skin-tight black suit for theatre actors. You feel the need to remind a doctor to eat food and sleep."

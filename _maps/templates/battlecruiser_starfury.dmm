@@ -1780,8 +1780,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "gx" = (
-/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser{
-	dir = 8
+/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/assault{
+	dir = 8;
+	uses = 4
 	},
 /turf/open/floor/carpet/orange,
 /area/shuttle/sbc_starfury)
@@ -3310,7 +3311,8 @@
 /area/shuttle/sbc_starfury)
 "kw" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/assault{
-	dir = 8
+	dir = 8;
+	uses = 4
 	},
 /turf/open/floor/carpet,
 /area/shuttle/sbc_starfury)

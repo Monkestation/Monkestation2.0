@@ -2,7 +2,7 @@
 //they are the easiest to cure, which means that if you want
 //to keep them, you can't cure your other traumas
 /datum/brain_trauma/special
-	clonable = FALSE
+	trauma_flags = NONE
 
 /datum/brain_trauma/special/godwoken
 	name = "Godwoken Syndrome"
@@ -357,7 +357,7 @@ monkestation end */
 	scan_desc = "criminal mind"
 	gain_text = span_warning("Justice is coming for you.")
 	lose_text = span_notice("You were absolved for your crimes.")
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	/// A ref to our fake beepsky image that we chase the owner with
 	var/obj/effect/client_image_holder/securitron/beepsky
 
@@ -512,7 +512,7 @@ monkestation end */
 	gain_text = span_notice("You feel like protecting the fire axe is one of your greatest duties.")
 	lose_text = span_warning("You feel like you lost your sense of duty.")
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
-	random_gain = FALSE
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM
 	var/static/list/talk_lines = list(
 		"I'm proud of you.",
 		"I believe in you!",

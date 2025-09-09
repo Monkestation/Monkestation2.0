@@ -27,7 +27,7 @@
 	name = "OneHuman Module"
 	desc = "Allows for the construction of a OneHuman AI Module."
 	id = "onehuman_module"
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = 6000, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT*3, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/zeroth/onehuman
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_DANGEROUS_MODULES
@@ -71,7 +71,7 @@
 	name = "Freeform Module"
 	desc = "Allows for the construction of a Freeform AI Module."
 	id = "freeform_module"
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = 10000, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)//Custom inputs should be more expensive to get
+	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT*5, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)//Custom inputs should be more expensive to get
 	build_path = /obj/item/ai_module/supplied/freeform
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION

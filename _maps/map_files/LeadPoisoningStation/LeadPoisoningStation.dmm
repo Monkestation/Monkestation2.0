@@ -57,6 +57,10 @@
 	pixel_x = -11;
 	pixel_y = 7
 	},
+/obj/structure/desk_bell/departmental/security{
+	pixel_y = 5;
+	pixel_x = 6
+	},
 /turf/open/floor/plating,
 /area/station/security/brig)
 "abz" = (
@@ -230,7 +234,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "afq" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/railing,
+/obj/structure/window/reinforced/spawner/directional/south,
 /mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
@@ -1365,9 +1369,6 @@
 /obj/item/healthanalyzer{
 	pixel_y = 3
 	},
-/obj/item/healthanalyzer{
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
@@ -2203,18 +2204,9 @@
 	},
 /obj/item/book/manual/wiki/infections,
 /obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
-/obj/item/reagent_containers/cup/tube,
 /obj/item/storage/box/monkeycubes/mousecubes,
 /obj/item/storage/box/monkeycubes/mousecubes,
 /obj/item/storage/box/monkeycubes/mousecubes,
@@ -2372,8 +2364,7 @@
 "bib" = (
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/machinery/light/directional/south,
-/obj/machinery/vending/wardrobe/viro_wardrobe,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "bim" = (
@@ -4156,7 +4147,6 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison)
 "ciy" = (
-/obj/structure/nestbox,
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/chicken,
@@ -4323,6 +4313,9 @@
 	},
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
+"cme" = (
+/turf/open/floor/grass,
+/area/station/medical/pathology)
 "cmi" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/security_officer,
@@ -7056,7 +7049,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "dAm" = (
-/obj/structure/nestbox,
 /mob/living/basic/chicken,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
@@ -8162,9 +8154,6 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
-	pixel_x = -7
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
 	id = "rndlab1";
@@ -8177,6 +8166,9 @@
 /obj/item/pen{
 	pixel_y = 4;
 	pixel_x = 4
+	},
+/obj/structure/desk_bell/departmental/science{
+	pixel_x = -7
 	},
 /turf/open/floor/plating,
 /area/station/science/lobby)
@@ -9234,6 +9226,10 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin,
+/obj/structure/desk_bell/departmental/command/hop{
+	pixel_y = 9;
+	pixel_x = 5
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "eCN" = (
@@ -9682,8 +9678,8 @@
 "eNz" = (
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/structure/cable,
+/obj/machinery/disease2/incubator,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "eNB" = (
@@ -10610,9 +10606,9 @@
 /area/station/security/brig/entrance)
 "fgY" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/chicken,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "fha" = (
@@ -10909,8 +10905,8 @@
 "frf" = (
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/structure/closet/secure_closet/medical1,
 /obj/structure/cable,
+/obj/structure/table/glass,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "frg" = (
@@ -11835,18 +11831,6 @@
 /area/station/engineering/main)
 "fOy" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/beakers{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/syringes,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/machinery/camera/directional/east{
@@ -11855,6 +11839,8 @@
 	network = list("ss13","medbay","virology")
 	},
 /obj/structure/reagent_dispensers/wall/virusfood/directional/east,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "fOI" = (
@@ -15328,6 +15314,7 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/egg_incubator,
 /turf/open/floor/stone,
 /area/station/service/hydroponics)
 "hwh" = (
@@ -15477,6 +15464,18 @@
 /obj/machinery/vending/wallmed/directional/east,
 /obj/structure/table/glass,
 /obj/machinery/light/directional/south,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakers{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "hAh" = (
@@ -16980,6 +16979,10 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
+"igO" = (
+/obj/structure/flora/tree/jungle/small/style_6,
+/turf/open/floor/grass,
+/area/station/medical/pathology)
 "ihb" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/diagonal_edge,
@@ -17660,9 +17663,20 @@
 "ixP" = (
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/structure/closet/crate/freezer/blood,
-/obj/machinery/iv_drip,
 /obj/machinery/light/directional/north,
+/obj/structure/table/glass,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
+	},
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakers{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "ixQ" = (
@@ -17993,6 +18007,13 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
+"iGj" = (
+/obj/effect/turf_decal/tile/green/diagonal_edge,
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/table/glass,
+/obj/machinery/microwave,
+/turf/open/floor/iron/diagonal,
+/area/station/medical/pathology)
 "iGn" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/porta_turret/ai,
@@ -19378,7 +19399,6 @@
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/structure/table/glass,
-/obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
@@ -25184,8 +25204,10 @@
 /area/station/service/bar)
 "maq" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing,
-/mob/living/basic/chicken,
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics")
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "maV" = (
@@ -25535,6 +25557,10 @@
 /obj/item/shard,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
+"mjX" = (
+/obj/structure/cable,
+/turf/open/floor/grass,
+/area/station/medical/pathology)
 "mkb" = (
 /obj/structure/sink/kitchen/directional/north,
 /obj/effect/turf_decal/tile/red/diagonal_centre,
@@ -25706,7 +25732,7 @@
 	pixel_x = -4
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/engineering{
 	pixel_x = 8;
 	pixel_y = 9
 	},
@@ -26637,13 +26663,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/structure/table/glass,
-/obj/machinery/microwave{
-	desc = "Cooks and boils stuff, somehow.";
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/structure/cable,
+/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "mLD" = (
@@ -28112,6 +28133,7 @@
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/machinery/disease2/centrifuge,
+/obj/item/storage/box/tube,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "nrM" = (
@@ -29212,8 +29234,7 @@
 /area/station/security/prison/shower)
 "nVi" = (
 /obj/structure/nestbox,
-/obj/effect/decal/cleanable/dirt,
-/mob/living/basic/chicken,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "nVp" = (
@@ -29533,11 +29554,12 @@
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7;
-	pixel_y = 6
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/desk_bell/departmental/medical{
+	bell_location = "Pharmacy Desk";
+	pixel_y = 9;
+	pixel_x = 7
+	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "oex" = (
@@ -31256,7 +31278,7 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
-/obj/structure/desk_bell{
+/obj/structure/desk_bell/departmental/supply{
 	pixel_x = -7
 	},
 /turf/open/floor/plating,
@@ -32936,6 +32958,10 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/computer/records/pathology{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "pNZ" = (
@@ -33736,6 +33762,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/closet/crate/freezer/blood,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "qkm" = (
@@ -33761,7 +33789,8 @@
 /area/station/security/prison/mess)
 "qkS" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/railing,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "qkW" = (
@@ -33904,7 +33933,8 @@
 /area/station/security/execution/transfer)
 "qoV" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/railing,
+/obj/structure/nestbox,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "qoW" = (
@@ -35583,6 +35613,10 @@
 /obj/effect/turf_decal/tile/green/diagonal_edge,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/vending/wardrobe/viro_wardrobe,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 17
+	},
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "reb" = (
@@ -36742,9 +36776,16 @@
 /turf/open/floor/carpet/grimey,
 /area/station/service/bar/backroom)
 "rFJ" = (
+/obj/machinery/door/airlock/virology{
+	autoclose = 0;
+	frequency = 1449;
+	id_tag = "virology_airlock_interior";
+	name = "Pathology Interior Airlock"
+	},
 /obj/effect/turf_decal/tile/green/diagonal_edge,
+/obj/effect/mapping_helpers/airlock/access/all/medical/virology,
+/obj/structure/cable,
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/machinery/computer/records/pathology,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
 "rFV" = (
@@ -41488,9 +41529,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "tPl" = (
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "tPJ" = (
@@ -44049,6 +44089,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/central)
+"vcl" = (
+/obj/item/food/grown/banana/bunch,
+/mob/living/basic/monkey_animatronic,
+/turf/open/floor/grass,
+/area/station/medical/pathology)
 "vcG" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Eastation Checkpoint";
@@ -44135,6 +44180,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"veA" = (
+/mob/living/carbon/human/species/monkey,
+/turf/open/floor/grass,
+/area/station/medical/pathology)
 "veJ" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -44528,7 +44577,6 @@
 /turf/open/floor/grass,
 /area/station/hallway/floor2/fore)
 "vnD" = (
-/obj/structure/nestbox,
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/sandy_dirt,
@@ -45361,8 +45409,12 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "vLl" = (
-/obj/structure/nestbox,
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics");
+	dir = 8;
+	pixel_x = 1
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "vLm" = (
@@ -49333,11 +49385,8 @@
 /turf/open/floor/iron/diagonal,
 /area/station/security/prison/garden)
 "xDw" = (
-/obj/effect/turf_decal/tile/green/diagonal_edge,
-/obj/effect/turf_decal/tile/dark/diagonal_centre,
-/obj/structure/table/glass,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/iron/diagonal,
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
 /area/station/medical/pathology)
 "xDL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -49693,7 +49742,10 @@
 /turf/closed/wall,
 /area/station/service/hydroponics)
 "xOy" = (
-/obj/structure/railing,
+/obj/machinery/door/window/left/directional/south{
+	name = "Chicken Pen";
+	req_access = list("hydroponics")
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "xOQ" = (
@@ -95998,11 +96050,11 @@ rcY
 rdw
 rcY
 rcY
-aHu
-aHu
-aHu
-aHu
-aHu
+hpG
+hpG
+hpG
+hpG
+hpG
 aHu
 aHu
 aHu
@@ -96255,11 +96307,11 @@ qZb
 uux
 eqg
 rcY
-aHu
-aHu
-aHu
-aHu
-aHu
+cme
+veA
+veA
+cme
+hpG
 aHu
 aHu
 aHu
@@ -96512,11 +96564,11 @@ iaZ
 fLX
 nIy
 hpG
-aHu
-aHu
-aHu
-aHu
-aHu
+cme
+cme
+igO
+vcl
+hpG
 aHu
 aHu
 aHu
@@ -96769,11 +96821,11 @@ rdX
 uuL
 pms
 hpG
-aHu
-aHu
-aHu
-aHu
-aHu
+cme
+cme
+xDw
+cme
+hpG
 aHu
 aHu
 aHu
@@ -97021,16 +97073,16 @@ xHi
 jUI
 mdh
 elw
-xHi
+iGj
 xHi
 uuL
-bib
-rcY
-aHu
-aHu
-aHu
-aHu
-aHu
+vUN
+rFJ
+mjX
+veA
+veA
+cme
+hpG
 aHu
 aHu
 aHu
@@ -97283,11 +97335,11 @@ ilk
 ivn
 pNM
 rcY
-aHu
-aHu
-aHu
-aHu
-aHu
+hpG
+hpG
+hpG
+hpG
+hpG
 aHu
 aHu
 aHu
@@ -97533,7 +97585,7 @@ rcY
 whT
 xHi
 ceW
-nHW
+bib
 bjz
 xHi
 eNz
@@ -97787,7 +97839,7 @@ fcU
 fcU
 tuh
 rcY
-rFJ
+nHW
 xHi
 vUN
 xHi
@@ -97795,7 +97847,7 @@ xHi
 xHi
 vUN
 wTB
-xDw
+nHW
 hpG
 aHu
 aHu
@@ -98045,7 +98097,7 @@ fcU
 wxa
 rcY
 ixP
-xHi
+nrz
 frf
 beH
 fOy
@@ -98060,10 +98112,10 @@ aHu
 aHu
 aHu
 aHu
+aHu
+aHu
+aHu
 uYy
-aHu
-aHu
-aHu
 aHu
 aHu
 aHu
@@ -141391,9 +141443,9 @@ rgt
 nMJ
 eDq
 pzf
-mtH
+dAm
 ciy
-xOy
+nVi
 cog
 sUD
 ilv
@@ -144733,8 +144785,8 @@ rgt
 nMJ
 pzf
 wwE
-ouH
 tPl
+vLl
 tPl
 moV
 ouH
@@ -144989,11 +145041,11 @@ gwq
 rgt
 mcx
 pzf
-vLl
+xbb
 mtH
 nQE
 xbb
-vLl
+xbb
 xbb
 pzf
 oXp
@@ -145251,7 +145303,7 @@ mtH
 vnD
 mtH
 mtH
-nVi
+nQE
 pzf
 alr
 vrs

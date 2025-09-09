@@ -51,7 +51,7 @@
 	var/busy
 
 /obj/machinery/door_buttons/access_button/findObjsByTag()
-	for(var/obj/machinery/door_buttons/airlock_controller/A in GLOB.machines)
+	for(var/obj/machinery/door_buttons/airlock_controller/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons/airlock_controller))
 		if(A.idSelf == idSelf)
 			controller = A
 			break
@@ -122,7 +122,7 @@
 		exteriorAirlock = null
 
 /obj/machinery/door_buttons/airlock_controller/Destroy()
-	for(var/obj/machinery/door_buttons/access_button/A in GLOB.machines)
+	for(var/obj/machinery/door_buttons/access_button/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons/access_button))
 		if(A.controller == src)
 			A.controller = null
 	return ..()

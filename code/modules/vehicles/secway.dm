@@ -61,16 +61,16 @@
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 
-/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, params)
-	if(!istype(W, /obj/item/food/grown/banana))
+/obj/vehicle/ridden/secway/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/food/grown/banana))
 		return ..()
 	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
-	user.visible_message(span_warning("[user] begins stuffing [W] into [src]'s tailpipe."), span_warning("You begin stuffing [W] into [src]'s tailpipe..."), ignored_mobs = occupants)
+	user.visible_message(span_warning("[user] begins stuffing [attacking_item] into [src]'s tailpipe."), span_warning("You begin stuffing [attacking_item] into [src]'s tailpipe..."), ignored_mobs = occupants)
 	if(!do_after(user, 3 SECONDS, src))
 		return TRUE
-	if(user.transferItemToLoc(W, src))
-		user.visible_message(span_warning("[user] stuffs [W] into [src]'s tailpipe."), span_warning("You stuff [W] into [src]'s tailpipe."), ignored_mobs = occupants)
-		eddie_murphy = W
+	if(user.transferItemToLoc(attacking_item, src))
+		user.visible_message(span_warning("[user] stuffs [attacking_item] into [src]'s tailpipe."), span_warning("You stuff [attacking_item] into [src]'s tailpipe."), ignored_mobs = occupants)
+		eddie_murphy = attacking_item
 	return TRUE
 
 /obj/vehicle/ridden/secway/attack_hand(mob/living/user, list/modifiers)
