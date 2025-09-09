@@ -1264,7 +1264,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
 				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
-					if(iter_clothing.clothing_flags & THICKMATERIAL)
+					if(iter_clothing.clothing_flags & THICKMATERIAL || iter_clothing.get_armor_rating(MELEE) >= 15)
 						if(iter_clothing.body_parts_covered && BODY_ZONE_PRECISE_GROIN)
 							return TRUE
 				target.sharp_pain(BODY_ZONE_CHEST, 25, BRUTE, 30 SECONDS)
