@@ -251,7 +251,7 @@
 	med_hud.hide_from(owner)
 
 /datum/status_effect/hippocratic_oath/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
+	return span_notice("[owner.p_they(TRUE)] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick()
 	if(owner.stat == DEAD)
@@ -424,8 +424,11 @@
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
 	alert_type = null
+	var/slowdown
 
-/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration, multiplier)
+	if(multiplier)
+		slowdown = multiplier
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
@@ -560,3 +563,28 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/datum/status_effect/time_dilation //used by darkspawn; greatly increases action times etc
+	id = "time_dilation"
+	duration = 60 SECONDS
+	alert_type = /obj/screen/alert/status_effect/time_dilation
+
+/datum/status_effect/time_dilation/get_examine_text()
+	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] is moving jerkily and unpredictably!")
+
+/datum/status_effect/time_dilation/on_apply()
+	owner.add_movespeed_modifier(/datum/status_effect/time_dilation)
+	owner.next_move_modifier *= 0.5 // For the duration of this you move and attack faster
+	owner.ignore_slowdown(id)
+	return TRUE
+
+/datum/status_effect/time_dilation/on_remove()
+	owner.remove_movespeed_modifier(/datum/status_effect/time_dilation)
+	owner.next_move_modifier *= 2
+	owner.unignore_slowdown(id)
+
+/obj/screen/alert/status_effect/time_dilation
+	name = "Time Dilation"
+	desc = "Your actions are twice as fast, and the delay between them is halved."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
+	icon_state = "time_dilation"

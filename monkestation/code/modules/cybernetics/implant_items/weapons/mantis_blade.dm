@@ -67,12 +67,11 @@
 	armour_penetration = 85
 	COOLDOWN_DECLARE(lunge)
 
-/obj/item/mantis_blade/syndicate/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/mantis_blade/syndicate/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, lunge) || world.time < user.next_move)
 		return
 
-	if(proximity_flag || get_dist(user,target) > 3 || !isliving(target))
+	if(get_dist(user, interacting_with) > 3 || !isliving(interacting_with))
 		return
 
 	var/obj/item/some_item = user.get_inactive_held_item()
@@ -80,18 +79,17 @@
 		return
 	var/obj/item/mantis_blade/syndicate/other = some_item
 
-	for(var/i in 1 to get_dist(user,target))
-		if(!step_towards(user,target) && get_dist(user,target) >= 1)
-			return
+	for(var/i in 1 to get_dist(user, interacting_with))
+		if(!step_towards(user, interacting_with) && get_dist(user, interacting_with) >= 1)
+			break
 
 	COOLDOWN_START(src, lunge, 10 SECONDS)
 	COOLDOWN_START(other, lunge, 10 SECONDS)
 	if(isliving(user))
 		var/mob/living/living = user
-		living.stamina?.adjust(-30) // cost of a lunge
-
-	attack(target, user)
-
+		living.stamina?.adjust(-50) // cost of a lunge
+	attack(interacting_with, user)
+	return
 
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield

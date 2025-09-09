@@ -253,6 +253,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /obj/item/traitor_bug
 	name = "suspicious device"
 	desc = "It looks dangerous."
+	item_flags = NOBLUDGEON
 
 	icon = 'icons/obj/device_syndie.dmi'
 	icon_state = "bug"
@@ -286,7 +287,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /obj/item/traitor_bug/interact_with_atom(atom/movable/target, mob/living/user, list/modifiers)
 	if(!target_object_type || !ismovable(target))
 		return NONE
-
+	if(SHOULD_SKIP_INTERACTION(target, src, user))
+		return NONE
 	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
 	if(!(result & COMPONENT_FORCE_PLACEMENT))
 		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object_type))
@@ -321,6 +323,3 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		anchored = FALSE
 		UnregisterSignal(planted_on, COMSIG_QDELETING)
 		planted_on = null
-
-/obj/item/traitor_bug/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return !istype(storage_holder, target_object_type)

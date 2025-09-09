@@ -64,6 +64,7 @@
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /// Checks if there a connecting trunk diposal pipe under the disposal
@@ -124,7 +125,7 @@
 				deconstruct()
 			return
 
-	if(!(user.istate & ISTATE_HARM))
+	if(!(user.istate & ISTATE_HARM) || (attacking_item.item_flags & NOBLUDGEON))
 		if((attacking_item.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(attacking_item))
 			return
 		place_item_in_disposal(attacking_item, user)

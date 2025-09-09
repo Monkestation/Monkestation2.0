@@ -326,7 +326,7 @@
 			var/turf/closed/wall/target_wall = target_turf
 			target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
 			//monkestation edit start
-			if(damage_walls)
+			if(damage_walls && target_wall.uses_integrity)
 				target_wall.take_damage(damage * wall_dem_mod, damage_type, armor_flag, armour_penetration = armour_penetration)
 			//monkestation edit end
 
