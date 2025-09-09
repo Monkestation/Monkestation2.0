@@ -20,6 +20,7 @@
 	var/relay_code = 0
 	var/current_program_name = "Program"
 	var/can_lock = TRUE
+	var/silicon = FALSE
 
 /obj/item/nanite_remote/examine(mob/user)
 	. = ..()
@@ -104,6 +105,7 @@
 	data["locked"] = locked
 	data["saved_settings"] = saved_settings
 	data["program_name"] = current_program_name
+	data["silicon"] = silicon
 	return data
 
 /obj/item/nanite_remote/ui_act(action, params)
@@ -238,6 +240,10 @@
 				return
 			comm_message = new_message
 			. = TRUE
+
+/obj/item/nanite_remote/cyborg
+	can_lock = FALSE
+	silicon = TRUE
 
 #undef REMOTE_MODE_OFF
 #undef REMOTE_MODE_SELF

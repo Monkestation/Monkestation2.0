@@ -32,6 +32,7 @@ export const NaniteRemoteContent = (props) => {
     message,
     saved_settings = [],
 	can_lock,
+	silicon,
   } = data;
 
   const modes = ['Off', 'Local', 'Targeted', 'Area', 'Relay'];
@@ -118,6 +119,7 @@ export const NaniteRemoteContent = (props) => {
                 key={key}
                 content={key}
                 selected={mode === key}
+                disabled={silicon && key === 'Local'}
                 onClick={() =>
                   act('select_mode', {
                     mode: key,

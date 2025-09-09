@@ -49,6 +49,7 @@
 	data["locked"] = FALSE
 	data["saved_settings"] = saved_settings
 	data["program_name"] = current_program_name
+	data["silicon"] = TRUE
 	return data
 
 /datum/nanite_remote_settings/ui_act(action, list/params)
