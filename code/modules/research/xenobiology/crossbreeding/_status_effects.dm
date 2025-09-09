@@ -186,7 +186,7 @@
 
 /datum/status_effect/bloodchill
 	id = "bloodchill"
-	duration = 15 SECONDS
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
@@ -194,7 +194,7 @@
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
-	owner.adjust_bodytemperature(-25 KELVIN)
+	owner.adjust_bodytemperature(-20 KELVIN)
 
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
@@ -695,7 +695,7 @@
 		linked_alert.desc = "The stabilized bluespace extract will try to redirect you from harm!"
 		linked_alert.icon_state = "slime_bluespace_on"
 
-	if(owner.stat >= UNCONSCIOUS)
+	if(owner.stat >= SOFT_CRIT)
 		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
