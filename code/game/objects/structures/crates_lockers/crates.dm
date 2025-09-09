@@ -169,7 +169,7 @@
 	paint_jobs = null
 
 /obj/structure/closet/crate/maint
-
+/*
 /obj/structure/closet/crate/maint/Initialize(mapload)
 	..()
 
@@ -182,7 +182,7 @@
 		random_crate.open(null, special_effects = FALSE) //crates spawned as immediatly opened don't need to animate into being opened
 
 	return INITIALIZE_HINT_QDEL
-
+*/
 /obj/structure/closet/proc/populate_with_random_maint_loot()
 	SIGNAL_HANDLER
 
