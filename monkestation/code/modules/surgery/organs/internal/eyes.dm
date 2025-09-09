@@ -66,10 +66,47 @@
 /obj/item/organ/internal/eyes/synth
 	name = "optical sensors"
 	icon_state = "cybernetic_eyeballs"
-	desc = "A very basic set of optical sensors with no extra vision modes or functions."
+	desc = "A very sensitive set of optical sensors, with functionality to toggle a protective film against lights."
 	maxHealth = 1 * STANDARD_ORGAN_THRESHOLD
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
+	var/shielding = FALSE
+
+/obj/item/organ/internal/eyes/synth/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/organ_action/toggle))
+		toggle_active()
+
+/**
+ * Toggles the welding/tint of the eyes
+ */
+/obj/item/organ/internal/eyes/synth/proc/toggle_active()
+	if(shielding)
+		deactivate()
+	else
+		activate()
+	owner.update_tint()
+
+/**
+ *
+ * Turns the shielding on but gives tint.
+ */
+/obj/item/organ/internal/eyes/synth/proc/activate()
+	shielding = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
-	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES | ORGAN_DOESNT_PROTECT_AGAINST_CONVERSION
+	tint = 2
+	to_chat(eye_owner, "A protective film covers your optical sensors, shielding you from lights.")
+
+/**
+ *
+ * Turns the shielding off but removes tint.
+ */
+/obj/item/organ/internal/eyes/synth/proc/deactivate(mob/living/carbon/eye_owner = owner, close_ui = FALSE)
+	shielding = FALSE
+	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	tint = 0
+	to_chat(owner, "The protective film over your opticalsensors recedes.")
+
 
 /obj/item/organ/internal/eyes/synth/emp_act(severity)
 	. = ..()
