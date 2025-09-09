@@ -7,9 +7,8 @@
 /datum/action/innate/internal_nanite_menu
 	name = "Open Nanite Remote Menu"
 	desc = "Configures your nanite remote"
-	
-	button_icon = 'icons/mob/actions/actions_AI.dmi'	//PLACEHOLDER
-	button_icon_state = "modules_menu"
+	button_icon = 'monkestation/icons/obj/machines/research.dmi'
+	button_icon_state = "nanite_programmer"
 	var/datum/nanite_remote_settings/remote_settings
 
 /datum/action/innate/internal_nanite_menu/New(nanite_menu)
@@ -110,9 +109,10 @@
 /datum/action/innate/ai/ranged/internal_nanite_remote
 	name = "Nanite Remote"
 	desc = "Remotely trigger nanite signals in nanite hosting crew."
-	button_icon_state = "override_machine"	//PLACEHOLDER
-	//uses = 4
-	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'	//PLACEHOLDER
+	button_icon = 'monkestation/icons/obj/device.dmi'
+	button_icon_state = "nanite_remote"
+
+	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'	//Seems good enough?
 	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites.")
 	disable_text = span_notice("You disconnect from the nanite cloud.")
 	var/datum/nanite_remote_settings/remote_settings
