@@ -118,6 +118,10 @@
 	COOLDOWN_DECLARE(command_report_cd) // monkestation edit
 
 	var/jobtitles = TRUE
+	
+	var/datum/nanite_remote_settings/nanite_settings = new			//Stores the settings for the AI's nanite remote.
+	var/datum/action/innate/internal_nanite_menu/nanite_menu
+	
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -181,6 +185,9 @@
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
 
 	deploy_action.Grant(src)
+
+	nanite_menu = new(nanite_settings)
+	nanite_menu.Grant(src)
 
 	if(isturf(loc))
 		add_verb(src, list(
