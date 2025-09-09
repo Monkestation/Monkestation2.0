@@ -91,7 +91,7 @@
  *
  * Turns the shielding on but gives tint.
  */
-/obj/item/organ/internal/eyes/synth/proc/activate()
+/obj/item/organ/internal/eyes/synth/proc/activate(mob/living/carbon/eye_owner = owner)
 	shielding = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
@@ -101,11 +101,11 @@
  *
  * Turns the shielding off but removes tint.
  */
-/obj/item/organ/internal/eyes/synth/proc/deactivate(mob/living/carbon/eye_owner = owner, close_ui = FALSE)
+/obj/item/organ/internal/eyes/synth/proc/deactivate(mob/living/carbon/eye_owner = owner)
 	shielding = FALSE
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	tint = 0
-	to_chat(owner, "The protective film over your opticalsensors recedes.")
+	to_chat(eye_owner, "The protective film over your opticalsensors recedes.")
 
 
 /obj/item/organ/internal/eyes/synth/emp_act(severity)
