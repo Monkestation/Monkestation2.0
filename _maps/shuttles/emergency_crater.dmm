@@ -24,14 +24,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"aZ" = (
-/obj/machinery/porta_turret/aux_base,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
 "ch" = (
 /obj/structure/table/reinforced/titaniumglass,
 /turf/open/floor/mineral/titanium/blue,
@@ -74,14 +66,6 @@
 	},
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron/large,
-/area/shuttle/escape)
-"ex" = (
-/obj/machinery/porta_turret/aux_base,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "eK" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -181,6 +165,14 @@
 "jk" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"jH" = (
+/obj/machinery/porta_turret/aux_base,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "jY" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -435,6 +427,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"ug" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution/no_step{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "uw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -715,6 +716,15 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Hb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution/no_step{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
 "Hw" = (
 /obj/structure/cable,
 /obj/structure/chair/comfy/shuttle{
@@ -733,6 +743,14 @@
 "If" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape/brig)
+"Ik" = (
+/obj/machinery/porta_turret/aux_base,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
 "Iu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced/titaniumglass,
@@ -872,6 +890,9 @@
 	},
 /obj/structure/flora/bush/grassy/style_random,
 /obj/machinery/light/directional/east,
+/obj/effect/turf_decal/caution/no_step{
+	dir = 8
+	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Oc" = (
@@ -904,10 +925,30 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"PF" = (
+/obj/structure/railing/wood{
+	dir = 4
+	},
+/obj/structure/flora/bush/grassy/style_random,
+/obj/effect/turf_decal/caution/no_step{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
 "PH" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"PU" = (
+/obj/structure/railing/wood{
+	dir = 8
+	},
+/obj/structure/flora/bush/grassy/style_random,
+/obj/effect/turf_decal/caution/no_step{
+	dir = 8
+	},
+/turf/open/floor/grass,
 /area/shuttle/escape)
 "Qe" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1021,6 +1062,9 @@
 	},
 /obj/structure/flora/bush/grassy/style_random,
 /obj/machinery/light/directional/west,
+/obj/effect/turf_decal/caution/no_step{
+	dir = 4
+	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "VD" = (
@@ -1183,9 +1227,9 @@ Kk
 eK
 kY
 Zv
-ex
-sb
-VV
+Ik
+ug
+Ik
 Zv
 ln
 eK
@@ -1243,8 +1287,8 @@ sb
 sb
 sb
 sb
-sb
 VV
+ug
 If
 Hz
 Hz
@@ -1278,7 +1322,7 @@ sb
 sb
 sb
 sb
-Zv
+pz
 pz
 Hz
 nj
@@ -1383,7 +1427,7 @@ WH
 rM
 YL
 eK
-zv
+PF
 Yq
 Yq
 Hz
@@ -1523,7 +1567,7 @@ yq
 UI
 fZ
 eK
-iE
+PU
 pz
 pz
 pz
@@ -1628,7 +1672,7 @@ sb
 sb
 sb
 sb
-Zv
+pz
 pz
 eK
 vW
@@ -1663,8 +1707,8 @@ sb
 sb
 sb
 sb
-sb
 mh
+Hb
 Zv
 eK
 eK
@@ -1743,9 +1787,9 @@ Cv
 eK
 Cv
 Zv
-aZ
-sb
-mh
+jH
+Hb
+jH
 eK
 Ku
 eK
