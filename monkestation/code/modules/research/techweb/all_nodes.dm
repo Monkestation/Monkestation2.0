@@ -21,7 +21,6 @@
 		"nanite_chamber_control",
 		"nanite_cloud_control",
 		"nanite_comm_remote",
-		"nanite_disk",
 		"nanite_program_hub",
 		"nanite_programmer",
 		"nanite_remote",
