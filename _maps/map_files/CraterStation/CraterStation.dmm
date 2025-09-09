@@ -6700,6 +6700,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 5
 	},
+/obj/item/stack/sheet/plastic/five,
 /turf/open/floor/iron/large,
 /area/station/engineering/machining)
 "cfy" = (
