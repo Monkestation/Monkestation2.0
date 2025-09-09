@@ -44,7 +44,20 @@
 	)
 	machining_skill_required = 4
 
-/datum/machining_recipe/mosin
+/datum/machining_recipe/mosin_magazine
+    name = "7.62 Stripper Clip"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_NORMAL
+    result = /obj/item/ammo_box/a762
+    reqs = list(
+        /obj/item/stack/rods = 2,
+        /obj/item/stack/machining_intermediates/screwbolt = 1,
+		/obj/item/machining_intermediates/bullet_large = 5,
+    )
+    machining_skill_required = 4
+
+/datum/machining_recipe/shotgun
 	name = "Pump Action Shotgun"
 	category = TAB_ASSEMBLY_PARTS
 	machinery_type = MACHINING_WORKSTATION
@@ -59,6 +72,18 @@
 		/obj/item/machining_intermediates/bullet_large = 6,
 	)
 	machining_skill_required = 4
+
+/datum/machining_recipe/buckshot_box
+    name = "Box of Buckshot"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_NORMAL
+    result = /obj/item/ammo_box/advanced/s12gauge/buckshot
+    reqs = list(
+        /obj/item/machining_intermediates/moltenplastic = 2,
+		/obj/item/machining_intermediates/bullet_large = 16,
+    )
+    machining_skill_required = 4
 
 /datum/machining_recipe/revolver_38
     name = ".38 Revolver"
