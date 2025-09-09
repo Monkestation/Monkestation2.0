@@ -69071,6 +69071,12 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/station/medical/pathology)
+"urx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/station/engineering/atmos/office)
 "urB" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
@@ -195004,7 +195010,7 @@ xOG
 fcJ
 dmv
 hwZ
-hwZ
+urx
 hwZ
 dmv
 vMy
