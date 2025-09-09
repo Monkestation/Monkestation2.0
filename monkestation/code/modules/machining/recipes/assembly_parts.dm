@@ -334,3 +334,47 @@
         /obj/item/stack/machining_intermediates/screwbolt = 4,
     )
     machining_skill_required = 2
+
+/datum/machining_recipe/atv
+    name = "All Terrain Vehicle"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_SLOW
+    result = /obj/vehicle/ridden/atv
+    reqs = list(
+        /obj/item/machining_intermediates/smallmotor = 6,
+        /obj/item/stack/machining_intermediates/steel = 4,
+        /obj/item/stack/sheet/iron = 8,
+        /obj/item/stack/machining_intermediates/screwbolt = 12,
+        /obj/item/machining_intermediates/universalcircuit = 1,
+        /obj/item/stack/machining_intermediates/smallwire = 12,
+        /obj/item/machining_intermediates/handle_polymer = 2,
+    )
+    machining_skill_required = 3
+
+/datum/machining_recipe/atv_key
+    name = "ATV Key"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_SLOW
+    result = /obj/item/key/atv
+    reqs = list(
+        /obj/item/stack/sheet/iron = 1,
+        /obj/item/machining_intermediates/moltenplastic = 1,
+    )
+    machining_skill_required = 3
+
+/datum/machining_recipe/ttv
+    name = "Tank Transfer Valve"
+    category = TAB_ASSEMBLY_PARTS
+    machinery_type = MACHINING_WORKSTATION
+    crafting_time = MACHINING_DELAY_SLOW
+    result = /obj/item/transfer_valve
+    reqs = list(
+        /obj/item/stack/sheet/iron = 4,
+        /obj/item/stack/machining_intermediates/hardsteel = 4,
+        /obj/item/machining_intermediates/moltenplastic = 2,
+        /obj/item/machining_intermediates/smallmotor = 1,
+        /obj/item/stack/machining_intermediates/smallwire = 5,
+    )
+    machining_skill_required = 4
