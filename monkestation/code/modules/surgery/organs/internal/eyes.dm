@@ -95,7 +95,7 @@
 	shielding = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
-	to_chat(eye_owner, "A protective film covers your optical sensors, shielding you from lights.")
+	to_chat(eye_owner, "A protective film covers your optical sensors, shielding you from flashing lights.")
 
 /**
  *
