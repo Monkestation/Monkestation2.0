@@ -66934,6 +66934,9 @@
 /turf/open/floor/iron,
 /area/station/service/theater)
 "tSj" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/bot_blue,
+/obj/item/flashlight/lantern/rayne,
 /turf/open/floor/plating,
 /area/station/engineering/machining)
 "tSm" = (
