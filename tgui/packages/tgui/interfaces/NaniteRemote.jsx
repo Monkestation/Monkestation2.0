@@ -31,7 +31,7 @@ export const NaniteRemoteContent = (props) => {
     comms,
     message,
     saved_settings = [],
-	silicon,
+    silicon,
   } = data;
 
   const modes = ['Off', 'Local', 'Targeted', 'Area', 'Relay'];
@@ -48,7 +48,7 @@ export const NaniteRemoteContent = (props) => {
           <Button
             icon="lock"
             content="Lock Interface"
-			disabled={silicon}
+            disabled={silicon}
             onClick={() => act('lock')}
           />
         }

@@ -170,7 +170,7 @@
 			mode = params["mode"]
 			. = TRUE
 		if("lock")
-			if(!(obj_flags & EMAGGED) & !silicon)
+			if(!(obj_flags & EMAGGED) && !silicon)
 				locked = TRUE
 				update_appearance()
 			. = TRUE
