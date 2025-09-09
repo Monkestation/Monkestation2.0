@@ -467,5 +467,4 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/honk/on_trigger(comm_message)
-	var/mob/living/carbon/C = host_mob
-	playsound(C, 'sound/items/bikehorn.ogg', 50, TRUE, falloff_distance = 20)
+	playsound(host_mob, 'sound/items/bikehorn.ogg', 50, FALSE) //Should this be TRUE?
