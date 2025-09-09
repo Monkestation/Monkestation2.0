@@ -121,6 +121,7 @@
 	
 	var/datum/nanite_remote_settings/nanite_settings = new			//Stores the settings for the AI's nanite remote.
 	var/datum/action/innate/internal_nanite_menu/nanite_menu
+	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
 	
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
@@ -187,7 +188,9 @@
 	deploy_action.Grant(src)
 
 	nanite_menu = new(nanite_settings)
+	nanite_remote = new(nanite_settings)
 	nanite_menu.Grant(src)
+	nanite_remote.Grant(src)
 
 	if(isturf(loc))
 		add_verb(src, list(

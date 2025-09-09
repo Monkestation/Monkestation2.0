@@ -51,7 +51,6 @@
 	data["program_name"] = current_program_name
 	return data
 
-// /datum/action/innate/internal_nanite_menu/ui_act(action, params)
 /datum/nanite_remote_settings/ui_act(action, list/params)
 	. = ..()
 	if(.)
@@ -107,6 +106,50 @@
 		if("select_mode")
 			mode = params["mode"]
 			. = TRUE
+
+/datum/action/innate/ai/ranged/internal_nanite_remote
+	name = "Nanite Remote"
+	desc = "Remotely trigger nanite signals in nanite hosting crew."
+	button_icon_state = "override_machine"	//PLACEHOLDER
+	//uses = 4
+	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'	//PLACEHOLDER
+	enable_text = span_notice("You access the nanite cloud, click to remotely trigger nanites.")
+	disable_text = span_notice("You disconnect from the nanite cloud.")
+	var/datum/nanite_remote_settings/remote_settings
+
+/datum/action/innate/ai/ranged/internal_nanite_remote/New(nanite_menu)
+	. = ..()
+	if(istype(nanite_menu, /datum/nanite_remote_settings))
+		remote_settings = nanite_menu
+	else
+		CRASH("nanite_remote_settings action created with non nanite settings")
+
+/datum/action/innate/ai/ranged/internal_nanite_remote/do_ability(mob/living/silicon/ai/user, atom/clicked_on)
+	if(user.incapacitated() || user.control_disabled)
+		unset_ranged_ability(user)
+		return FALSE
+	switch(remote_settings.mode)
+		if(REMOTE_MODE_OFF)
+			unset_ranged_ability(user, span_danger("Your nanite remote was off!"))
+		if(REMOTE_MODE_TARGET)		//For now intentionally not unsetting ability in target and AOE mode in case you want to spam it.
+			if(isliving(clicked_on))
+				var/mob/living/L = clicked_on
+				to_chat(user, span_notice("You signal the nanites inside [L]."))
+				SEND_SIGNAL(L, COMSIG_NANITE_SIGNAL, remote_settings.code, src)
+		if(REMOTE_MODE_AOE)
+			to_chat(user, span_notice("You activate the nanites in a radius, signaling the nanites inside every host around the point."))
+			for(var/mob/living/L in view(clicked_on, 7))
+				SEND_SIGNAL(L, COMSIG_NANITE_SIGNAL, remote_settings.code, src)
+		if(REMOTE_MODE_RELAY)
+			unset_ranged_ability(user, span_notice("You activate the relay, signaling all connected relay nanites."))
+			for(var/X in SSnanites.nanite_relays)
+				var/datum/nanite_program/relay/N = X
+				N.relay_signal(remote_settings.code, remote_settings.relay_code, src)
+
+	//user.playsound_local(user, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE) Change to something?
+
+	//unset_ranged_ability(user, span_danger("Sending nanite signal..."))
+	return TRUE
 
 #undef REMOTE_MODE_OFF
 #undef REMOTE_MODE_SELF
