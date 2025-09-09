@@ -121,6 +121,15 @@
 /obj/effect/turf_decal/caution/stand_clear/red
 	icon_state = "stand_clear_red"
 
+/obj/effect/turf_decal/caution/no_step
+	icon_state = "no_step"
+
+/obj/effect/turf_decal/caution/no_step/red
+	icon_state = "no_step_red"
+
+/obj/effect/turf_decal/caution/no_step/white
+	icon_state = "no_step_white"
+
 /obj/effect/turf_decal/arrows
 	icon_state = "arrows"
 
