@@ -1045,11 +1045,6 @@
 	. = ..()
 	update_stat() // This is probably not needed, but hopefully should be a little sanity check for the spaghetti that borgs are built from
 
-/mob/living/silicon/robot/on_knockedout_trait_loss(datum/source)
-	. = ..()
-	set_stat(CONSCIOUS) //This is a horrible hack, but silicon code forced my hand
-	update_stat()
-
 /mob/living/silicon/robot/proc/on_dampen()
 	SIGNAL_HANDLER
 	eject_riders()

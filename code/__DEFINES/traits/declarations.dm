@@ -1363,7 +1363,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// they fingersnap real sexy, with like screen effect and boosted volume n whatnot
 #define TRAIT_PANACHEFUL_SNAPS "panacheful_snaps"
 
-///Trait given to atoms currently affected by projectile dampeners
-#define TRAIT_GOT_DAMPENED "got_dampened"
-
 // END TRAIT DEFINES

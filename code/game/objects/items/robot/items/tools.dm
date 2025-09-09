@@ -24,22 +24,14 @@
 	var/energy = 1500
 	/// Recharging rate in energy per second
 	var/energy_recharge = 37.5
-	/// Charge draining right
-	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	/// Critical power level percentage
 	var/cyborg_cell_critical_percentage = 0.05
 	/// The owner of the dampener
 	var/mob/living/silicon/robot/host = null
 	/// The field
 	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/peaceborg/dampening_field
-	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
-	/**
-	 * Speed coefficient
-	 * Higher the coefficient slower the projectile.
-	*/
-	var/projectile_speed_coefficient = 1.5
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	/// Projectiles dampened by our dampener
@@ -151,7 +143,7 @@
 			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient)
+		host.cell.use(energy_recharge * seconds_per_tick * 0.4) // On TG POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER is 0.4
 		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
@@ -162,11 +154,6 @@
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
-
-	tracked -= projectile
-	projectile.damage *= (1 / projectile_damage_coefficient)
-	projectile.speed *= (1 / projectile_speed_coefficient)
-	projectile.cut_overlay(projectile_effect)
 	tracked_bullet_cost -= REF(projectile)
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
