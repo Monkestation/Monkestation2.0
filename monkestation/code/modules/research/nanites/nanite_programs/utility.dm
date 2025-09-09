@@ -456,3 +456,34 @@
 /datum/action/innate/nanite_button/Activate()
 	program.press()
 	playsound(owner, SFX_BUTTON_CLICK, vol = 20, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, mixer_channel = CHANNEL_MACHINERY)
+
+/datum/nanite_program/nanite_injector
+	name = "Nanomechanical Injection System"
+	desc = "When triggered, draws a large amount of the host's nanites into a nanite-based injection device, allowing them to transfer those nanites to others."
+	use_rate = 0.5
+	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
+	var/obj/item/nanite_injection_tentacle/pokey
+
+/datum/nanite_program/nanite_injector/enable_passive_effect()
+	. = ..()
+	if(pokey)
+		QDEL_NULL(pokey)
+	if(!host_mob)
+		return
+	pokey = new(host_mob)
+	host_mob.dropItemToGround(host_mob.get_active_held_item())
+	if(!host_mob.put_in_hands(pokey))
+		to_chat(host_mob, span_warning("Your nanites fail to form an injector."))
+		QDEL_NULL(pokey)
+		return
+	host_mob.visible_message(span_danger("A metallic blade rapidly forms around [host_mob]'s arm!"), span_warning("A nanite blade quickly forms around our arm!"))
+
+/datum/nanite_program/nanite_injector/disable_passive_effect()
+	. = ..()
+	if(pokey)
+		host_mob.visible_message(span_danger("The mass of nanomachines around [host_mob]'s arm disolves."), span_warning("Your injection device dissipates."))
+		QDEL_NULL(pokey)
+
+/obj/item/nanite_injection_tentacle
+	name = "nanomechanical mass"
+	desc = "This condensed mass of nanomachines allows you to transfer (if inefficiently) some of your nanites into other nanite users, or even those without nanites."
