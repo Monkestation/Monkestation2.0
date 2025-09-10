@@ -5945,7 +5945,6 @@
 #include "code\modules\surgery\organs\internal\appendix\_appendix.dm"
 #include "code\modules\surgery\organs\internal\heart\_heart.dm"
 #include "code\modules\surgery\organs\internal\heart\heart_anomalock.dm"
-#include "code\modules\surgery\organs\internal\heart\heart_ethereal.dm"
 #include "code\modules\surgery\organs\internal\liver\_liver.dm"
 #include "code\modules\surgery\organs\internal\liver\liver_plasmamen.dm"
 #include "code\modules\surgery\organs\internal\liver\liver_skeleton.dm"
