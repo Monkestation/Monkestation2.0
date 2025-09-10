@@ -64,16 +64,16 @@ const FeatureSliderInput = (
 };
 
 export const bark_pitch_range: FeatureNumeric = {
-  name: 'Voice Pitch Range',
+  name: 'Voice Pitch Range - default 0.2',
   component: FeatureSliderInput,
 };
 
 export const bark_speech_speed: FeatureNumeric = {
-  name: 'Voice Duration',
+  name: 'Voice Duration - default 6',
   component: FeatureSliderInput,
 };
 
 export const bark_speech_pitch: FeatureNumeric = {
-  name: 'Voice Pitch',
+  name: 'Voice Pitch - default 1',
   component: FeatureSliderInput,
 };
