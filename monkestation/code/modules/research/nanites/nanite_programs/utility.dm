@@ -509,7 +509,7 @@
 		goofygoober.balloon_alert(user, "Not enough nanites")
 		return ITEM_INTERACT_BLOCKING
 	visible_message(span_notice("[user] jabs the [src] into [goofygoober], and it begins flowing into [goofygoober.p_their()] skin."), ignored_mobs=list(user,goofygoober))
-	to_chat(goofygoober, span_warning("Your skin burns as [user] begins forcing the [src] through your chest!)) //agent smith type shit
+	to_chat(goofygoober, span_warning("Your skin burns as [user] begins forcing the [src] through your chest!")) //agent smith type shit
 	if(do_after(user, 5 SECONDS, goofygoober))
 		nanos.consume_nanites(200)
 		to_chat(goofygoober, span_warning("The firey pain receedes to a low ache as the [src] flows through you.))
