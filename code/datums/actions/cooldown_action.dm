@@ -167,7 +167,7 @@
 /// Starts a cooldown time for this ability only
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
-	var/cooldown_multiplier = HAS_TRAIT(owner, fast cooldowns) ? 0.66 : 1
+	var/cooldown_multiplier = HAS_TRAIT(owner, TRAIT_FAST_COOLDOWNS) ? 0.66 : 1
 	if(isnum(override_cooldown_time))
 		next_use_time = world.time + override_cooldown_time * cooldown_multiplier
 	else
