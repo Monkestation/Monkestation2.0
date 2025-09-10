@@ -7,7 +7,7 @@
 /datum/bark_screen/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "BarkScreen")
+		ui = new(user, src, "VoiceScreen")
 		ui.open()
 
 /datum/bark_screen/ui_state(mob/user)
@@ -18,8 +18,8 @@
 	if (.)
 		return
 
-	var/datum/bark_sound/bark
-	bark = GLOB.bark_list[params["selected"]]
+	var/datum/voice_pack/bark
+	bark = GLOB.voice_pack_list[params["selected"]]
 	if (!bark)
 		stack_trace("Failed to locate desired bark sound (path: [params["selected"]]) in the global list of bark sounds!")
 		return
@@ -29,7 +29,7 @@
 
 	switch(action)
 		if("select")
-			owner.preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/bark_sound], bark.id)
+			owner.preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/voice_pack], bark.id)
 			SStgui.update_uis(owner.preferences)
 			return TRUE
 
@@ -39,17 +39,17 @@
 /datum/bark_screen/ui_data(mob/user)
 	var/list/data = list()
 
-	data["selected"] = owner.preferences.read_preference(/datum/preference/choiced/bark_sound)
+	data["selected"] = owner.preferences.read_preference(/datum/preference/choiced/voice_pack)
 	return data
 
 /datum/bark_screen/ui_static_data()
 	var/list/data = list()
 
-	data["bark_groups"] = list()
-	for (var/group in GLOB.bark_groups_visible)
+	data["voice_pack_groups"] = list()
+	for (var/group in GLOB.voice_pack_groups_visible)
 		var/list/bark_names = list()
-		for (var/datum/bark_sound/bark in GLOB.bark_groups_visible[group])
+		for (var/datum/voice_pack/bark in GLOB.voice_pack_groups_visible[group])
 			bark_names += list(list(bark.name, bark.id))
-		data["bark_groups"][group] = bark_names
+		data["voice_pack_groups"][group] = bark_names
 
 	return data

@@ -47,40 +47,40 @@
 */
 
 /// Which sound does the player want to make
-/datum/preference/choiced/bark_sound
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+/datum/preference/choiced/voice_pack
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
-	savefile_key = "bark_sound"
+	savefile_key = "voice_pack"
 
-/datum/preference/choiced/bark_sound/compile_ui_data(mob/user, value)
-	var/datum/bark_sound/bark = GLOB.bark_list[value]
+/datum/preference/choiced/voice_pack/compile_ui_data(mob/user, value)
+	var/datum/voice_pack/bark = GLOB.voice_pack_list[value]
 	return bark.group_name + ": " + bark.name
 
-/datum/preference/choiced/bark_sound/init_possible_values()
-	return assoc_to_keys(GLOB.bark_list)
+/datum/preference/choiced/voice_pack/init_possible_values()
+	return assoc_to_keys(GLOB.voice_pack_list)
 
-/datum/preference/choiced/bark_sound/is_valid(value)
-	var/datum/bark_sound/bark = GLOB.bark_list[value]
+/datum/preference/choiced/voice_pack/is_valid(value)
+	var/datum/voice_pack/bark = GLOB.voice_pack_list[value]
 	if (!bark)
 		return FALSE
 	return !bark.hidden
 
-/datum/preference/choiced/bark_sound/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/voice_pack/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_bark(value)
 
-/datum/preference/choiced/bark_sound/create_default_value()
-	return pick(GLOB.random_barks)
+/datum/preference/choiced/voice_pack/create_default_value()
+	return pick(GLOB.random_voice_packs)
 
 /*
 	----- Bark Speed / Duration -----
 */
 
 /datum/preference/numeric/bark_speech_speed
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "bark_speech_speed"
-	minimum = BARK_DEFAULT_MINSPEED
-	maximum = BARK_DEFAULT_MAXSPEED
+	minimum = VOICE_DEFAULT_MINSPEED
+	maximum = VOICE_DEFAULT_MAXSPEED
 	step = 0.01
 
 /datum/preference/numeric/bark_speech_speed/apply_to_human(mob/living/carbon/human/target, value)
@@ -94,11 +94,11 @@
 */
 
 /datum/preference/numeric/bark_speech_pitch
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "bark_speech_pitch"
-	minimum = BARK_DEFAULT_MINPITCH
-	maximum = BARK_DEFAULT_MAXPITCH
+	minimum = VOICE_DEFAULT_MINPITCH
+	maximum = VOICE_DEFAULT_MAXPITCH
 	step = 0.01
 
 /datum/preference/numeric/bark_speech_pitch/apply_to_human(mob/living/carbon/human/target, value)
@@ -112,11 +112,11 @@
 */
 
 /datum/preference/numeric/bark_pitch_range
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "bark_pitch_range"
-	minimum = BARK_DEFAULT_MINVARY
-	maximum = BARK_DEFAULT_MAXVARY
+	minimum = VOICE_DEFAULT_MINVARY
+	maximum = VOICE_DEFAULT_MAXVARY
 	step = 0.01
 
 /datum/preference/numeric/bark_pitch_range/apply_to_human(mob/living/carbon/human/target, value)
@@ -132,21 +132,21 @@
 /// Should this player only hear a single bark
 /datum/preference/toggle/barks_short
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_barks_short"
+	savefile_key = "voice_sounds_short"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = FALSE
 
 /// Should this player hear barks without pitch modification
 /datum/preference/toggle/barks_limited_pitch
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_barks_limited_pitch"
+	savefile_key = "voice_sounds_limited_pitch"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = FALSE
 
 /// Should this player hear barks from goonstation
 /datum/preference/toggle/barks_only_goon
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_barks_only_goon"
+	savefile_key = "voice_sounds_only_goon"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = FALSE
 
@@ -154,5 +154,5 @@
 // /// Should this player only hear goonstation speak barks
 // /datum/preference/toggle/barks_only_goon_speak
 // 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-// 	savefile_key = "sound_barks_disabled"
+// 	savefile_key = "voice_sounds_disabled"
 // 	savefile_identifier = PREFERENCE_PLAYER

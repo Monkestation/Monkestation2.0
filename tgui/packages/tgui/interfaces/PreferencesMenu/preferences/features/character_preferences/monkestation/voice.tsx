@@ -38,8 +38,8 @@ const FeatureBarkDropdownInput = (
   );
 };
 
-export const bark_sound: FeatureChoiced = {
-  name: 'Bark (disable in settings)',
+export const voice_pack: FeatureChoiced = {
+  name: 'Voice (disable in settings)',
   component: FeatureBarkDropdownInput,
 };
 
@@ -64,16 +64,16 @@ const FeatureSliderInput = (
 };
 
 export const bark_pitch_range: FeatureNumeric = {
-  name: 'Bark Pitch Range',
+  name: 'Voice Pitch Range',
   component: FeatureSliderInput,
 };
 
 export const bark_speech_speed: FeatureNumeric = {
-  name: 'Bark Duration',
+  name: 'Voice Duration',
   component: FeatureSliderInput,
 };
 
 export const bark_speech_pitch: FeatureNumeric = {
-  name: 'Bark Pitch',
+  name: 'Voice Pitch',
   component: FeatureSliderInput,
 };

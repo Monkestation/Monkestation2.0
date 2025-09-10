@@ -23,7 +23,7 @@
 #define CHANNEL_SQUEAK 1004
 #define CHANNEL_MOB_EMOTES 1003
 #define CHANNEL_SILICON_EMOTES 1002
-#define CHANNEL_BARKS 1001
+#define CHANNEL_VOICES 1001
 // monkestation end
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored

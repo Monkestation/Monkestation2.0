@@ -3,21 +3,21 @@ import { Box, Button, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
-  bark_groups: Record<string, [string, string][]>;
+  voice_pack_groups: Record<string, [string, string][]>;
   selected: string;
 };
 
-export const BarkScreen = (props) => {
-  const { data, act } = useBackend<Data>();
+export const VoiceScreen = () => {
+  const { data } = useBackend<Data>();
 
   return (
-    <Window title="Bark Sound" width={270} height={500} theme="generic">
+    <Window title="Voice Sound" width={270} height={500} theme="generic">
       <Window.Content scrollable>
-        {Object.keys(data.bark_groups).map((group_name, index) => (
-          <BarkGroup
+        {Object.keys(data.voice_pack_groups).map((group_name, index) => (
+          <VoicePackGroup
             key={index}
             name={group_name}
-            barks={data.bark_groups[group_name]}
+            voice_packs={data.voice_pack_groups[group_name]}
             selected={data.selected}
           />
         ))}
@@ -26,24 +26,24 @@ export const BarkScreen = (props) => {
   );
 };
 
-const BarkGroup = (props: {
+const VoicePackGroup = (props: {
   name: string;
-  barks: [string, string][];
+  voice_packs: [string, string][];
   selected: string;
 }) => {
   return (
     <Box>
       <h3>{props.name}</h3>
       <Box>
-        {props.barks.map((bark, index) => (
-          <Bark key={index} name={bark} selected={props.selected} />
+        {props.voice_packs.map((voice_pack, index) => (
+          <VoicePack key={index} name={voice_pack} selected={props.selected} />
         ))}
       </Box>
     </Box>
   );
 };
 
-const Bark = (props: { name: [string, string]; selected: string }) => {
+const VoicePack = (props: { name: [string, string]; selected: string }) => {
   const { act } = useBackend<Data>();
 
   return (

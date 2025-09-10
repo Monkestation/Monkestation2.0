@@ -1,12 +1,12 @@
 /datum/atom_voice
-	var/datum/bark_sound/bark
+	var/datum/voice_pack/bark
 	var/pitch = 1
 	var/pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
 	var/base_volume = 300
 	var/speed = 6 //Lower values are faster, higher values are slower
 
 /datum/atom_voice/proc/set_bark(id)
-	bark = GLOB.bark_list[id]
+	bark = GLOB.voice_pack_list[id]
 
 /datum/atom_voice/proc/copy_from(datum/atom_voice/other)
 	bark = other.bark
@@ -18,20 +18,20 @@
 /datum/atom_voice/proc/set_from_prefs(datum/preferences/prefs)
 	if (!prefs)
 		return
-	set_bark(prefs.read_preference(/datum/preference/choiced/bark_sound))
+	set_bark(prefs.read_preference(/datum/preference/choiced/voice_pack))
 	pitch = prefs.read_preference(/datum/preference/numeric/bark_speech_pitch)
 	speed = prefs.read_preference(/datum/preference/numeric/bark_speech_speed)
 	pitch_range = prefs.read_preference(/datum/preference/numeric/bark_pitch_range)
 
 /datum/atom_voice/proc/randomise(atom/who)
-	set_bark(pick(GLOB.random_barks))
+	set_bark(pick(GLOB.random_voice_packs))
 	pitch = ((who.gender == MALE ? rand(60, 120) : (who.gender == FEMALE ? rand(80, 140) : rand(60,140))) / 100)
 	pitch_range = 0.2
 	speed = 6
 	base_volume = 300
 
 /datum/atom_voice/proc/start_barking(message, list/hearers, message_range, talk_icon_state, is_speaker_whispering, atom/movable/speaker)
-	if (!bark || !GLOB.barking_enabled)
+	if (!bark || !GLOB.voices_enabled)
 		return
 	var/len = LAZYLEN(message)
 	if (!len)
@@ -119,7 +119,7 @@
 		hearer.playsound_local(turf, vol = volume, vary = TRUE,
 			max_distance = distance, falloff_distance = 0, use_reverb = FALSE,
 			falloff_exponent = falloff_exponent,
-			distance_multiplier = 1, mixer_channel = CHANNEL_BARKS,
+			distance_multiplier = 1, mixer_channel = CHANNEL_VOICES,
 			sound_to_use = sound_to_use,
 			frequency = pitch_to_use,
 			)

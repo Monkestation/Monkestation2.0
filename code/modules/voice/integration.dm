@@ -1,11 +1,10 @@
 /mob/living/carbon/human/Initialize(mapload)
 	. = ..()
-	// This gives a random vocal bark to a random created person
+	// This gives a random voice pack to a random created person
 	if(!client && !voice)
 		voice = new()
 		voice.randomise(src)
 
-// we let borgs have some bark too
 /mob/living/silicon/Login()
 	if (!voice)
 		voice = new()
@@ -45,15 +44,15 @@
 	target.get_voice().randomise(target)
 
 ADMIN_VERB(togglebark, R_SERVER, FALSE, "Toggle Barks", "Toggles atom talk sounds.", ADMIN_CATEGORY_SERVER)
-	GLOB.barking_enabled = !GLOB.barking_enabled
-	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.barking_enabled ? "enabled" : "disabled"].</B></span>")
+	GLOB.voices_enabled = !GLOB.voices_enabled
+	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.voices_enabled ? "enabled" : "disabled"].</B></span>")
 
 	log_admin("[key_name(usr)] toggled Voice Barks.")
 	message_admins("[key_name_admin(usr)] toggled Voice Barks.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Voice Bark", "[GLOB.barking_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Voice Bark", "[GLOB.voices_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB(reload_bark_sounds_file, R_SERVER, FALSE, "Reload Barks", "", ADMIN_CATEGORY_SERVER)
-	GLOB.bark_groups_visible = list()
-	GLOB.bark_groups_all = list()
-	GLOB.random_barks = list()
-	GLOB.bark_list = gen_barks()
+ADMIN_VERB(reload_voice_packs_file, R_SERVER, FALSE, "Reload Barks", "", ADMIN_CATEGORY_SERVER)
+	GLOB.voice_pack_groups_visible = list()
+	GLOB.voice_pack_groups_all = list()
+	GLOB.random_voice_packs = list()
+	GLOB.voice_pack_list = gen_voice_packs()

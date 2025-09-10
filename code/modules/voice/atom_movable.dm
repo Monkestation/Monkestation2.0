@@ -26,7 +26,7 @@
 	return FALSE
 
 /mob/initial_bark_id()
-	return pick(GLOB.random_barks)
+	return pick(GLOB.random_voice_packs)
 
 /mob/can_long_bark()
 	return !isnull(client)
