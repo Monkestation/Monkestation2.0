@@ -68,7 +68,7 @@
 /datum/nanite_program/pacifying		//Extremely powerful in a fight, but you can still at least run away.
 	name = "Pacification"
 	desc = "The nanites suppress the aggression center of the brain, preventing the host from causing direct harm to others."
-	use_rate = 3
+	use_rate = 2
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
 
 /datum/nanite_program/pacifying/enable_passive_effect()
