@@ -296,3 +296,19 @@
       to glasses
   - bugfix: Spellbook Charges properly increase the spellbooks point count
   - bugfix: Battlemage Armour Charges increase Wiz Armour Charges Again
+2025-09-10:
+  TheColorCyan:
+  - balance: werewolf is no longer obtainable through charged black crossbreed
+  - balance: stabilized bluespace will only teleport you if you enter soft-crit
+  - balance: burning black extracts now immediately transform you into slime upon
+      activation
+  - balance: slime transformation cooldown 0->10
+  - balance: bloodchill gun now lowers body temperature instead of doing burn
+  - balance: bloodchilled slowdown 3->2
+  - bugfix: (imedial) bloodless species no longer have a free bonechiller
+  - rscadd: added santashy's admin plushie - birdion
+  Wisemonster:
+  - balance: Clothing that covers the chest with an armor rating of at least II now
+      block nut shots
+  - balance: Lowered the weight of round-start nukies, ass ops, commando ops, and
+      darkspawn to 3, 3, 4, and 4 respectively. (Down from 4, 4, 5, and 8)
