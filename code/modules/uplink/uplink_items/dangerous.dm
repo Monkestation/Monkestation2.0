@@ -24,6 +24,13 @@
 	cost = 7
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/dangerous/whispering_jester_45
+	name = "Whispering-Jester .45 ACP Handgun"
+	desc = "A .45 handgun that is designed by Rayne Corp. The handgun has a built in suppressor. It's magazines contain 18 rounds."
+	item = /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
+	cost = 11
+	surplus = 50
+
 /datum/uplink_item/dangerous/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
@@ -99,6 +106,24 @@
 	cost = 13
 	surplus = 50
 	purchasable_from = ~UPLINK_CLOWN_OPS
+
+/datum/uplink_item/dangerous/razorwire
+	name = "Razorwire Implant"
+	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
+	Two tile range and can anchor further targets to keep them still."
+	item = /obj/item/autosurgeon/organ/syndicate/razorwire
+	progression_minimum = 15 MINUTES
+	cost = 12
+	surplus = 20
+
+/datum/uplink_item/dangerous/mantis_blade
+	name = "Razorwire Implant"
+	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
+	Two tile range and can anchor further targets to keep them still."
+	item = /obj/item/autosurgeon/organ/syndicate/razorwire
+	progression_minimum = 15 MINUTES
+	cost = 12
+	surplus = 20
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"

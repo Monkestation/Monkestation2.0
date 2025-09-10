@@ -174,8 +174,28 @@
 	light_power = 0.80
 	light_color = COLOR_BLUE_LIGHT
 
+/turf/open/floor/grass/fairy/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+
+/turf/open/floor/grass/fairy/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
+	SIGNAL_HANDLER
+	visible_message("Dark energies lash out and corrupt [src].")
+	TerraformTurf(/turf/open/floor/grass/fairy/dark)
+	return COMPONENT_BLOCK_LIGHT_EATER
+
 /turf/open/floor/grass/fairy/spawniconchange()
 	icon_state = "fairygrass[rand(0,3)]"
+
+/turf/open/floor/grass/fairy/dark
+	name = "dark fairygrass patch"
+	floor_tile = /obj/item/stack/tile/fairygrass/dark
+	light_power = -1
+	light_color = "#21007F"
+	color = "#21007F"
+
+/turf/open/floor/grass/fairy/dark/on_light_eater(obj/machinery/light/source, datum/light_eater)
+	return
 
 /turf/open/floor/fake_snow
 	gender = PLURAL

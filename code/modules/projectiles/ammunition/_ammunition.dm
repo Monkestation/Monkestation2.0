@@ -33,6 +33,12 @@
 	var/heavy_metal = TRUE
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
+	/// Can this bullet casing be printed at an ammunition workbench?
+	var/can_be_printed = TRUE
+	/// If it can be printed, does this casing require an advanced ammunition datadisk? Mainly for specialized ammo.
+	/// Rubbers aren't advanced. Standard ammo (or FMJ if you're particularly pedantic) isn't advanced.
+	/// Think more specialized or weird, niche ammo, like armor-piercing, incendiary, hollowpoint, or God forbid, phasic.
+	var/advanced_print_req = FALSE
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
@@ -46,6 +52,7 @@
 	pixel_y = base_pixel_y + rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
 	update_appearance()
+	update_trash_trait()
 
 /obj/item/ammo_casing/Destroy()
 	var/turf/T = get_turf(src)
@@ -96,17 +103,18 @@
 		update_appearance()
 		victim.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
 		source_item?.reagents?.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
-
+	update_trash_trait()
 	return ..()
 
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
+	update_trash_trait()
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
+/obj/item/ammo_casing/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/ammo_box))
+		var/obj/item/ammo_box/box = attacking_item
 		if(isturf(loc))
 			var/boolets = 0
 			for(var/obj/item/ammo_casing/bullet in loc)
@@ -155,3 +163,17 @@
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), sound_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
 	else if(our_turf.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, our_turf.bullet_bounce_sound, 20, 1), sound_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.
+
+/obj/item/ammo_casing/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
+	. = ..()
+	update_trash_trait()
+
+/obj/item/ammo_casing/refresh_shot()
+	. = ..()
+	update_trash_trait()
+
+/obj/item/ammo_casing/proc/update_trash_trait()
+	if(QDELETED(loaded_projectile))
+		ADD_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_TRASH_ITEM, TRAIT_GENERIC)

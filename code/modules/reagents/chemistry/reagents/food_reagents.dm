@@ -316,18 +316,23 @@
 		return ..()
 	holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
 
-	var/cooling = 0
+	var/cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
 	switch(current_cycle)
 		if(1 to 15)
-			cooling = -0.1 KELVIN
+			if(isslime(affected_mob))
+				cooling = -rand(5,20)
 		if(15 to 25)
-			cooling = -0.5 KELVIN
+			cooling *= 2
+			if(isslime(affected_mob))
+				cooling = -rand(10,20)
 		if(25 to 35)
-			cooling = -1 KELVIN
+			cooling *= 3
+			if(isslime(affected_mob))
+				cooling = -rand(15,20)
 			if(prob(1))
 				affected_mob.emote("shiver")
 		if(35 to INFINITY)
-			cooling = -2 KELVIN
+			cooling *= 4
 			if(prob(5))
 				affected_mob.emote("shiver")
 

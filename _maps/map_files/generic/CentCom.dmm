@@ -14511,9 +14511,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/hall)
 "aML" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/clothing/suit/wizrobe/red,
 /obj/item/clothing/head/wizard/red,
 /obj/item/staff,
@@ -20577,7 +20575,7 @@
 	},
 /obj/structure/table/optable,
 /obj/machinery/light/cold/directional/north,
-/obj/machinery/defibrillator_mount/loaded/directional/north,
+/obj/machinery/defibrillator_mount/charging/loaded/directional/north,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
 "cKq" = (
@@ -21599,7 +21597,8 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/closet.dmi';
 	icon_state = "cc";
 	name = "centcom locker";
-	req_access = list("cent_captain")
+	req_access = list("cent_captain");
+	has_closed_overlay = 0
 	},
 /obj/item/radio/headset/headset_cent/commander,
 /obj/item/encryptionkey/heads/captain,
@@ -31613,7 +31612,7 @@
 /area/centcom/central_command_areas/adminroom)
 "vRs" = (
 /obj/item/paper{
-	text = "FUUUUUUUUUUU-"
+	raw_text_inputs = "FUUUUUUUUUUU-"
 	},
 /obj/effect/temp_visual/cult/rune_spawn/rune4{
 	color = "#880808";

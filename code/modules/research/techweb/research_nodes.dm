@@ -115,6 +115,7 @@
 	design_ids = list(
 		"anomaly_neutralizer",
 		"reactive_armour",
+		"space_furnace",
 		//"artifact_heater", //MONKESTATION EDIT REMOVAL
 		//"artifact_xray",	//MONKESTATION EDIT REMOVAL
 	)

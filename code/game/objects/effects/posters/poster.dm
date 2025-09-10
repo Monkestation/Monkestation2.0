@@ -53,19 +53,19 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/poster/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/shard))
+/obj/item/poster/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, /obj/item/shard))
 		return ..()
 
 	if (poster_structure.trap?.resolve())
 		balloon_alert(user, "already trapped!")
 		return
 
-	if(!user.transferItemToLoc(I, poster_structure))
+	if(!user.transferItemToLoc(attacking_item, poster_structure))
 		return
 
-	poster_structure.trap = WEAKREF(I)
-	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	poster_structure.trap = WEAKREF(attacking_item)
+	to_chat(user, span_notice("You conceal the [attacking_item.name] inside the rolled up poster."))
 
 /obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()

@@ -31,10 +31,14 @@
 	verb_say = "states"
 	circuit = /obj/item/circuitboard/machine/clonepod
 
-	var/heal_level //The clone is released once its health reaches this level.
-	var/obj/machinery/computer/cloning/connected //So we remember the connected clone machine.
-	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
-	var/attempting = FALSE //One clone attempt at a time thanks
+	///The clone is released once its health reaches this level.
+	var/heal_level
+	///So we remember the connected clone machine.
+	var/obj/machinery/computer/cloning/connected
+	///Need to clean out it if it's full of exploded clone.
+	var/mess = FALSE
+	///One clone attempt at a time thanks
+	var/attempting = FALSE
 	var/speed_coeff
 	var/efficiency
 
@@ -314,58 +318,66 @@
 			icon_state = "pod_0"
 		use_power(200)
 
-//Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/W, mob/user, params)
+/obj/machinery/clonepod/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
 	if(!(occupant || mess))
-		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
-			return
-
-	if(default_deconstruction_crowbar(W))
 		return
 
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/P = W
+	if(!istype(multi.buffer, /obj/machinery/computer/cloning))
+		multi.set_buffer(src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+		return ITEM_INTERACT_SUCCESS
 
-		if(istype(P.buffer, /obj/machinery/computer/cloning))
-			if(get_area(P.buffer) != get_area(src))
-				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.set_buffer(null)
-				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/computer/cloning/comp = P.buffer
-			if(connected)
-				connected.DetachCloner(src)
-			comp.AttachCloner(src)
-		else
-			P.set_buffer(src)
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer] in buffer %-</font color>")
+	if(get_area(multi.buffer) != get_area(src))
+		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
+		multi.set_buffer(null)
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
+	var/obj/machinery/computer/cloning/comp = multi.buffer
+	if(connected)
+		connected.DetachCloner(src)
+	comp.AttachCloner(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/clonepod/screwdriver_act(mob/living/user, obj/item/tool)
+	. = NONE
+	if(occupant && mess)
 		return
+	if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]", tool))
+		return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/clonepod/crowbar_act(mob/living/user, obj/item/tool)
+	. = NONE
+	if(occupant && mess)
+		return
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/clonepod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(!tool.GetID())
+		return NONE
+	if(!check_access(tool))
+		to_chat(user, "<span class='danger'>Access Denied.</span>")
+		return ITEM_INTERACT_BLOCKING
+	if(!(occupant || mess))
+		to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
+		return ITEM_INTERACT_BLOCKING
 	var/mob/living/mob_occupant = occupant
-	if(W.GetID())
-		if(!check_access(W))
-			to_chat(user, "<span class='danger'>Access Denied.</span>")
-			return
-		if(!(mob_occupant || mess))
-			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
-			return
-		else
-			add_fingerprint(user)
-			connected_message("Emergency Ejection")
-			SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
-			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
-			go_out()
-			log_cloning("[key_name(user)] manually ejected [key_name(mob_occupant)] from [src] at [AREACOORD(src)].")
-			log_combat(user, mob_occupant, "ejected", W, "from [src]")
-	else
-		return ..()
+	add_fingerprint(user)
+	connected_message("Emergency Ejection")
+	SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
+	to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
+	go_out()
+	log_cloning("[key_name(user)] manually ejected [key_name(mob_occupant)] from [src] at [AREACOORD(src)].")
+	log_combat(user, mob_occupant, "ejected", tool, "from [src]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/clonepod/emag_act(mob/user)
 	if(!occupant)
 		return
-	to_chat(user, "<span class='warning'>You corrupt the genetic compiler.</span>")
+	to_chat(user, span_warning("You corrupt the genetic compiler."))
 	malfunction()
 	add_fingerprint(user)
 	log_cloning("[key_name(user)] emagged [src] at [AREACOORD(src)], causing it to malfunction.")

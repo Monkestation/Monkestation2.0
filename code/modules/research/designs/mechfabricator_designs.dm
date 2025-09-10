@@ -1346,6 +1346,7 @@
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = WHITELISTED_DESIGN
 
 /datum/design/mecha_tracking_ai_control
 	name = "AI Control Beacon"
@@ -1365,6 +1366,7 @@
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = WHITELISTED_DESIGN
 
 /datum/design/mecha_camera
 	name = "Exosuit External Camera Kit"
@@ -1385,6 +1387,7 @@
 		RND_CATEGORY_MECHFAB_ODYSSEUS + RND_SUBCATEGORY_MECHFAB_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	special_design_flags = WHITELISTED_DESIGN
 
 // Monkestation edit end: Research touchups
 
