@@ -349,3 +349,9 @@
 	storage.cloud_backups -= src
 	SSnanites.cloud_backups -= src
 	return ..()
+
+/obj/machinery/computer/nanite_cloud_controller/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+	. = ..()
+	var/static/regex/when = regex("(?:^\\W*when|when\\W*$)", "i") //starts or ends with when
+	if(findtext(raw_message, when) && !istype(speaker, /obj/machinery/computer/nanite_cloud_controller))
+		say("When you code it!!")
