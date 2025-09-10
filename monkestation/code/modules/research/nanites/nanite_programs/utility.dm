@@ -512,7 +512,7 @@
 	to_chat(goofygoober, span_warning("Your skin burns as [user] begins forcing the [src] through your chest!")) //agent smith type shit
 	if(do_after(user, 5 SECONDS, goofygoober))
 		nanos.consume_nanites(200)
-		to_chat(goofygoober, span_warning("The firey pain receedes to a low ache as the [src] flows through you.))
+		to_chat(goofygoober, span_warning("The firey pain receedes to a low ache as the [src] flows through you."))
 		if(goofygoober.GetComponent(/datum/component/nanites))
 			var/datum/component/nanites/theirnanos = goofygoober.GetComponent(/datum/component/nanites)
 			theirnanos.consume_nanites(-150)
