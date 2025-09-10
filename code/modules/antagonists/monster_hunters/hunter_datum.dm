@@ -150,7 +150,7 @@
 			"id" = trick_weapon,
 			"name" = trick_weapon::name,
 			"desc" = trick_weapon::ui_desc,
-			"icon" = text_ref(trick_weapon::icon_preview || trick_weapon::icon),
+			"icon" = trick_weapon::icon_preview || trick_weapon::icon,
 			"icon_state" = trick_weapon::icon_state_preview || trick_weapon::icon_state,
 		))
 	return list("weapons" = weapons)

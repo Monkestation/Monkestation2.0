@@ -26,6 +26,8 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	. = ..()
 	if (!loc || length(virus) <= 0)
 		return INITIALIZE_HINT_QDEL
+	if(!SSpathogen_clouds.can_fire) // presumably an admin has manually disabled this bc it's being laggy as shit
+		return INITIALIZE_HINT_QDEL
 	core = isCore
 	sourceIsCarrier = isCarrier
 	GLOB.pathogen_clouds += src
@@ -109,6 +111,8 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	var/max_range = clamp((strength / 20) - 1, 0, 7)
 	for (var/turf/open/T in range(max_range, loc))//stronger viruses can reach turfs further away.
 		possible_turfs += T
+	if(!length(possible_turfs))
+		return INITIALIZE_HINT_QDEL
 	target = pick(possible_turfs)
 	START_PROCESSING(SSpathogen_processing, src)
 

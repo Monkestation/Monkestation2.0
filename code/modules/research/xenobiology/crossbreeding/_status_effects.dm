@@ -186,7 +186,7 @@
 
 /datum/status_effect/bloodchill
 	id = "bloodchill"
-	duration = 100
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
@@ -194,8 +194,7 @@
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
-	if(prob(50))
-		owner.adjustFireLoss(2)
+	owner.adjust_bodytemperature(-20 KELVIN)
 
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
@@ -679,14 +678,13 @@
 
 /datum/status_effect/bluespacestabilization
 	id = "stabilizedbluespacecooldown"
-	duration = 1200
+	duration = 2 MINUTES
 	alert_type = null
 
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
 	colour = "bluespace"
 	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
-	var/healthcheck
 
 /datum/status_effect/stabilized/bluespace/tick()
 	if(owner.has_status_effect(/datum/status_effect/bluespacestabilization))
@@ -697,8 +695,8 @@
 		linked_alert.desc = "The stabilized bluespace extract will try to redirect you from harm!"
 		linked_alert.icon_state = "slime_bluespace_on"
 
-	if(healthcheck && (healthcheck - owner.health) > 5)
-		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
+	if(owner.stat >= SOFT_CRIT)
+		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
 		var/range = 0
@@ -709,7 +707,6 @@
 			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
-	healthcheck = owner.health
 	return ..()
 
 /datum/status_effect/stabilized/sepia
