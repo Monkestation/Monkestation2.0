@@ -16181,6 +16181,7 @@
 "eUN" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/caution/no_step,
 /turf/open/floor/plating,
 /area/mine/laborcamp/production)
 "eUT" = (
@@ -69078,6 +69079,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/caution/no_step,
 /turf/open/floor/plating,
 /area/mine/laborcamp/production)
 "uqN" = (

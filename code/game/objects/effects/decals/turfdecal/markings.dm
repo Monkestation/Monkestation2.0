@@ -130,6 +130,9 @@
 /obj/effect/turf_decal/caution/no_step/white
 	icon_state = "no_step_white"
 
+/obj/effect/turf_decal/caution/no_step/blue
+	icon_state = "no_step_blue"
+
 /obj/effect/turf_decal/arrows
 	icon_state = "arrows"
 
