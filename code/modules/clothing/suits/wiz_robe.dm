@@ -218,7 +218,7 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/robe_durathread
 	allowed = /obj/item/clothing/suit/apron::allowed
-	fishing_modifier = -6
+	//fishing_modifier = -6 // MONKE EDIT: not a var
 
 /datum/armor/robe_durathread
 	melee = 15
