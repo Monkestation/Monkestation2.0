@@ -1,15 +1,15 @@
 /datum/atom_voice
-	var/datum/voice_pack/bark
+	var/datum/voice_pack/voicepack
 	var/pitch = 1
 	var/pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
 	var/base_volume = 300
 	var/speed = 6 //Lower values are faster, higher values are slower
 
-/datum/atom_voice/proc/set_bark(id)
-	bark = GLOB.voice_pack_list[id]
+/datum/atom_voice/proc/set_voice_pack(id)
+	voicepack = GLOB.voice_pack_list[id]
 
 /datum/atom_voice/proc/copy_from(datum/atom_voice/other)
-	bark = other.bark
+	voicepack = other.voicepack
 	pitch = other.pitch
 	pitch_range = other.pitch_range
 	base_volume = other.base_volume
@@ -18,20 +18,20 @@
 /datum/atom_voice/proc/set_from_prefs(datum/preferences/prefs)
 	if (!prefs)
 		return
-	set_bark(prefs.read_preference(/datum/preference/choiced/voice_pack))
+	set_voice_pack(prefs.read_preference(/datum/preference/choiced/voice_pack))
 	pitch = prefs.read_preference(/datum/preference/numeric/bark_speech_pitch)
 	speed = prefs.read_preference(/datum/preference/numeric/bark_speech_speed)
 	pitch_range = prefs.read_preference(/datum/preference/numeric/bark_pitch_range)
 
 /datum/atom_voice/proc/randomise(atom/who)
-	set_bark(pick(GLOB.random_voice_packs))
+	set_voice_pack(pick(GLOB.random_voice_packs))
 	pitch = ((who.gender == MALE ? rand(60, 120) : (who.gender == FEMALE ? rand(80, 140) : rand(60,140))) / 100)
 	pitch_range = 0.2
 	speed = 6
 	base_volume = 300
 
 /datum/atom_voice/proc/start_barking(message, list/hearers, message_range, talk_icon_state, is_speaker_whispering, atom/movable/speaker)
-	if (!bark || !GLOB.voices_enabled)
+	if (!voicepack || !GLOB.voices_enabled)
 		return
 	var/len = LAZYLEN(message)
 	if (!len)
@@ -69,7 +69,7 @@
 		long_bark(long_hearers, sound_range, volume, is_yell, len, speaker)
 
 /datum/atom_voice/proc/long_bark(list/hearers, sound_range, volume, is_yell, message_len, atom/movable/speaker)
-	var/vocal_speed = clamp(speed, bark.min_speed, bark.max_speed)
+	var/vocal_speed = clamp(speed, voicepack.min_speed, voicepack.max_speed)
 	// Any bark speeds below this feature higher bark density, any speeds above feature lower bark density. Keeps barking length consistent
 	var/bark_speed_baseline = 4
 	var/base_duration = vocal_speed / bark_speed_baseline
@@ -90,7 +90,7 @@
 		return
 
 	var/vocal_pitch = pitch + (rand(pitch_range * -50, pitch_range * 50) / 100)
-	vocal_pitch = clamp(vocal_pitch, bark.min_pitch, bark.max_pitch)
+	vocal_pitch = clamp(vocal_pitch, voicepack.min_pitch, voicepack.max_pitch)
 
 	if(HAS_TRAIT(speaker, TRAIT_HELIUM))
 		vocal_pitch *= 2
@@ -108,12 +108,12 @@
 		if (sound_override)
 			sound_to_use = sound_override
 		else
-			if (hearer.client.prefs.read_preference(/datum/preference/toggle/barks_only_goon) && !bark.is_goon)
-				sound_to_use = bark.goon_equiv.sounds[sound_idx]
-				volume *= bark.goon_equiv.volume
+			if (hearer.client.prefs.read_preference(/datum/preference/toggle/barks_only_goon) && !voicepack.is_goon)
+				sound_to_use = voicepack.goon_equiv.sounds[sound_idx]
+				volume *= voicepack.goon_equiv.volume
 			else
-				volume *= bark.volume
-				sound_to_use = bark.sounds[sound_idx]
+				volume *= voicepack.volume
+				sound_to_use = voicepack.sounds[sound_idx]
 			if (!hearer.client.prefs.read_preference(/datum/preference/toggle/barks_limited_pitch))
 				pitch_to_use = vocal_pitch
 		hearer.playsound_local(turf, vol = volume, vary = TRUE,

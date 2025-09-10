@@ -53,20 +53,20 @@
 	savefile_key = "voice_pack"
 
 /datum/preference/choiced/voice_pack/compile_ui_data(mob/user, value)
-	var/datum/voice_pack/bark = GLOB.voice_pack_list[value]
-	return bark.group_name + ": " + bark.name
+	var/datum/voice_pack/voicepack = GLOB.voice_pack_list[value]
+	return voicepack.group_name + ": " + voicepack.name
 
 /datum/preference/choiced/voice_pack/init_possible_values()
 	return assoc_to_keys(GLOB.voice_pack_list)
 
 /datum/preference/choiced/voice_pack/is_valid(value)
-	var/datum/voice_pack/bark = GLOB.voice_pack_list[value]
-	if (!bark)
+	var/datum/voice_pack/voicepack = GLOB.voice_pack_list[value]
+	if (!voicepack)
 		return FALSE
-	return !bark.hidden
+	return !voicepack.hidden
 
 /datum/preference/choiced/voice_pack/apply_to_human(mob/living/carbon/human/target, value)
-	target.set_bark(value)
+	target.set_voice_pack(value)
 
 /datum/preference/choiced/voice_pack/create_default_value()
 	return pick(GLOB.random_voice_packs)

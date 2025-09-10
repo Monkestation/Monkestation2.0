@@ -12,7 +12,7 @@
 	voice.set_from_prefs(client?.prefs)
 	. = ..()
 
-/mob/living/basic/cow/initial_bark_id()
+/mob/living/basic/cow/initial_voice_pack_id()
 	return "goon.cow"
 
 /*
@@ -36,14 +36,14 @@
 	---- Admin Tools ----
 */
 
-/datum/smite/normalbark
-	name = "Normalise bark"
+/datum/smite/normalvoicepack
+	name = "Normalise voicepack"
 
-/datum/smite/normalbark/effect(client/user, mob/living/carbon/human/target)
+/datum/smite/normalvoicepack/effect(client/user, mob/living/carbon/human/target)
 	. = ..()
 	target.get_voice().randomise(target)
 
-ADMIN_VERB(togglebark, R_SERVER, FALSE, "Toggle Barks", "Toggles atom talk sounds.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(togglebark, R_SERVER, FALSE, "Toggle Voices", "Toggles atom talk sounds.", ADMIN_CATEGORY_SERVER)
 	GLOB.voices_enabled = !GLOB.voices_enabled
 	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.voices_enabled ? "enabled" : "disabled"].</B></span>")
 
@@ -51,7 +51,7 @@ ADMIN_VERB(togglebark, R_SERVER, FALSE, "Toggle Barks", "Toggles atom talk sound
 	message_admins("[key_name_admin(usr)] toggled Voice Barks.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Voice Bark", "[GLOB.voices_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB(reload_voice_packs_file, R_SERVER, FALSE, "Reload Barks", "", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(reload_voice_packs_file, R_SERVER, FALSE, "Reload Voice Packs", "", ADMIN_CATEGORY_SERVER)
 	GLOB.voice_pack_groups_visible = list()
 	GLOB.voice_pack_groups_all = list()
 	GLOB.random_voice_packs = list()
