@@ -167,13 +167,11 @@
 /// Starts a cooldown time for this ability only
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
-	var/cooldown_multiplied = cooldown_time
-	if(owner && HAS_TRAIT(owner, TRAIT_FAST_COOLDOWNS))
-		cooldown_multiplied *= 0.66
+	var/cooldown_multiplier = HAS_TRAIT(owner, fast cooldowns) ? 0.66 : 1
 	if(isnum(override_cooldown_time))
-		next_use_time = world.time + override_cooldown_time
+		next_use_time = world.time + override_cooldown_time * cooldown_multiplier
 	else
-		next_use_time = world.time + cooldown_multiplied
+		next_use_time = world.time + cooldown_time * cooldown_multiplier
 	if(next_use_time == world.time)
 		return
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
