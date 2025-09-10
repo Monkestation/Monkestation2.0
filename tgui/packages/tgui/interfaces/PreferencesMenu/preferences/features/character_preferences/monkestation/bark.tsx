@@ -39,7 +39,7 @@ const FeatureBarkDropdownInput = (
 };
 
 export const bark_sound: FeatureChoiced = {
-  name: 'Bark',
+  name: 'Bark (disable in settings)',
   component: FeatureBarkDropdownInput,
 };
 

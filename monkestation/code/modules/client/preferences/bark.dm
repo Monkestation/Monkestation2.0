@@ -130,7 +130,29 @@
 */
 
 /// Should this player only hear a single bark
-/datum/preference/toggle/short_barks
+/datum/preference/toggle/barks_short
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_short_barks"
+	savefile_key = "sound_barks_short"
 	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+
+/// Should this player hear barks without pitch modification
+/datum/preference/toggle/barks_limited_pitch
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_barks_limited_pitch"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+
+/// Should this player hear barks from goonstation
+/datum/preference/toggle/barks_only_goon
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_barks_only_goon"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+
+
+// /// Should this player only hear goonstation speak barks
+// /datum/preference/toggle/barks_only_goon_speak
+// 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+// 	savefile_key = "sound_barks_disabled"
+// 	savefile_identifier = PREFERENCE_PLAYER

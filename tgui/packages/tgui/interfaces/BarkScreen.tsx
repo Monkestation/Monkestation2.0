@@ -11,7 +11,7 @@ export const BarkScreen = (props) => {
   const { data, act } = useBackend<Data>();
 
   return (
-    <Window title="Bark Sound" width={250} height={500} theme="generic">
+    <Window title="Bark Sound" width={270} height={500} theme="generic">
       <Window.Content scrollable>
         {Object.keys(data.bark_groups).map((group_name, index) => (
           <BarkGroup

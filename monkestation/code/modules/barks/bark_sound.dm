@@ -50,12 +50,20 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 				stack_trace("Bark " + bark.name + " has no name")
 				continue
 
-			bark.talk = get_bark_sound(bark_obj, group_path, "path")
-			bark.ask = get_bark_sound(bark_obj, group_path, "ask")
-			bark.exclaim = get_bark_sound(bark_obj, group_path, "exclaim")
-			if (!bark.talk)
+			bark.sounds = list(
+				get_bark_sound(bark_obj, group_path, "path"),
+				get_bark_sound(bark_obj, group_path, "ask"),
+				get_bark_sound(bark_obj, group_path, "exclaim"),
+				null,
+				null,
+				null,
+			)
+			if (!bark.sounds[1])
 				stack_trace("Bark " + bark_id + " has no talk sound")
 				continue
+			for (var/i in 2 to 3)
+				if (!bark.sounds[i])
+					bark.sounds[i] = bark.sounds[1]
 
 			// Setup parameters
 			bark.max_pitch = bark_obj["max_pitch"]
@@ -91,6 +99,17 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 		else if (length(visible_barks))
 			GLOB.bark_groups_all[group_name] = visible_barks
 
+	// Setup goon-only barks system
+	for (var/bark_id in bark_list)
+		var/datum/bark_sound/bark = bark_list[bark_id]
+		var/datum/bark_sound/goon_bark
+		if (bark.group_name == "goon" || bark.hidden)
+			goon_bark = bark
+		else
+			goon_bark = bark_list[pick(GLOB.random_barks)]
+		for (var/i in 1 to 3)
+			bark.sounds[i + 3] = goon_bark.sounds[i]
+
 	return bark_list
 
 /// Thank you SPLURT, FluffySTG and Citadel
@@ -99,9 +118,14 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 	var/id
 	var/group_name
 
-	var/sound/talk
-	var/sound/ask = null
-	var/sound/exclaim = null
+	/// List of bark sounds
+	// 1 : talk
+	// 2 : ask
+	// 3 : exclaim
+	// 4 : talk, goonstation
+	// 5 : ask, goonstation
+	// 6 : exclaim, goonstation only
+	var/list/sounds
 
 	var/max_pitch
 	var/min_pitch

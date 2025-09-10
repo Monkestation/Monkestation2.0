@@ -10,27 +10,22 @@ path = "sound/runtime/instruments/synthesis_samples"
 [instruments.muted_string_low]
 name = "Muted String (Low)"
 path = "guitar/crisis_muted/C2.ogg"
-allow_random = true
 
 [instruments.muted_string_medium]
 name = "Muted String (Medium)"
 path = "guitar/crisis_muted/C3.ogg"
-allow_random = true
 
 [instruments.muted_string_high]
 name = "Muted String (High)"
 path = "guitar/crisis_muted/C4.ogg"
-allow_random = true
 
 # [instruments.banjo_medium]
 # name = "Banjo (Medium)"
 # path = "guitar/crisis_muted/banjo/Cn3.ogg"
-# allow_random = true
 
 # [instruments.banjo_high]
 # name = "Banjo (High)"
 # path = "guitar/crisis_muted/banjo/Cn.ogg"
-# allow_random = true
 
 # --------- Misc Sounds ---------
 
@@ -84,7 +79,6 @@ hidden = true
 [animal.chirp]
 name = "Chirp"
 path = "chirp.ogg"
-allow_random = true
 
 [animal.caw]
 name = "Caw"
@@ -123,7 +117,7 @@ path = "wx78.ogg"
 
 # --------- Goonstation Sounds ---------
 [goon]
-name = "Goonstation"
+name = "Goonstation (Recommended)"
 path = "goon/sounds/misc/talk"
 
 [goon.blub]
@@ -212,6 +206,7 @@ name = "Roach"
 path = "roach.ogg"
 ask_path = "roach_ask.ogg"
 exclaim_path = "roach_exclaim.ogg"
+hidden = true
 
 [goon.skelly]
 name = "Skelly"

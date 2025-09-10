@@ -38,17 +38,13 @@
 */
 
 /datum/smite/normalbark
-	name = "Normal bark"
+	name = "Normalise bark"
 
 /datum/smite/normalbark/effect(client/user, mob/living/carbon/human/target)
 	. = ..()
 	target.get_voice().randomise(target)
 
-/datum/admins/proc/togglebark()
-	set category = "Server"
-	set desc = "Toggles atom talk sounds."
-	set name = "Toggle Barks"
-
+ADMIN_VERB(togglebark, R_SERVER, FALSE, "Toggle Barks", "Toggles atom talk sounds.", ADMIN_CATEGORY_SERVER)
 	GLOB.barking_enabled = !GLOB.barking_enabled
 	to_chat(world, "<span class='oocplain'><B>Vocal barks have been globally [GLOB.barking_enabled ? "enabled" : "disabled"].</B></span>")
 
@@ -56,10 +52,7 @@
 	message_admins("[key_name_admin(usr)] toggled Voice Barks.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Voice Bark", "[GLOB.barking_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-/client/proc/reload_bark_sounds_file()
-	set category = "Server"
-	set name = "Reload Barks"
-
+ADMIN_VERB(reload_bark_sounds_file, R_SERVER, FALSE, "Reload Barks", "", ADMIN_CATEGORY_SERVER)
 	GLOB.bark_groups_visible = list()
 	GLOB.bark_groups_all = list()
 	GLOB.random_barks = list()
