@@ -26,6 +26,7 @@
 
 /obj/machinery/computer/nanite_cloud_controller/Initialize()
 	. = ..()
+	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
