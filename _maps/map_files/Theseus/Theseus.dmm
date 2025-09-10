@@ -11440,7 +11440,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "duI" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "duP" = (
@@ -16694,7 +16694,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "eYb" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -17426,7 +17426,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "fhj" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/circuitboard/machine/thermomachine,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -31909,7 +31909,7 @@
 /turf/open/floor/plating,
 /area/station/security/bitden)
 "jus" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -68896,7 +68896,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "tXI" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
