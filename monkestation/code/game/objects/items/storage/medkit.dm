@@ -16,7 +16,7 @@
 	)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/pill_bottle/mannitol
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor
 	name = "bottle of radiomagnetic disruptor pills"
 	desc = "Contains pills used to purge nanites."
 
