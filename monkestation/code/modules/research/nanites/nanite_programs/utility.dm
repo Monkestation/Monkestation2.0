@@ -502,14 +502,17 @@
 		return NONE
 	var/mob/living/goofygoober = interacting_with
 	if(!(goofygoober.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
-		return NONE
+		goofygoober.balloon_alert(user, "Incompatible")
+		return ITEM_INTERACT_BLOCKING
 	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
 	if(nanos.nanite_volume < (200 + nanos.safety_threshold))
-		balloon_alert(user, "Not enough nanites")
-		return NONE
-	visible_message(span_notice("[user] presses a [src] against [goofygoober], and it begins flowing into [goofygoober.p_their()]."), ignored_mobs=list(user,goofygoober))
+		goofygoober.balloon_alert(user, "Not enough nanites")
+		return ITEM_INTERACT_BLOCKING
+	visible_message(span_notice("[user] jabs the [src] into [goofygoober], and it begins flowing into [goofygoober.p_their()] skin."), ignored_mobs=list(user,goofygoober))
+	to_chat(goofygoober, span_warning("Your skin burns as [user] begins forcing the [src] through your chest!)) //agent smith type shit
 	if(do_after(user, 5 SECONDS, goofygoober))
 		nanos.consume_nanites(200)
+		to_chat(goofygoober, span_warning("The firey pain receedes to a low ache as the [src] flows through you.))
 		if(goofygoober.GetComponent(/datum/component/nanites))
 			var/datum/component/nanites/theirnanos = goofygoober.GetComponent(/datum/component/nanites)
 			theirnanos.consume_nanites(-150)
@@ -517,6 +520,7 @@
 			goofygoober.AddComponent(/datum/component/nanites, 150)
 			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SYNC, nanos)
 			SEND_SIGNAL(goofygoober, COMSIG_NANITE_SET_CLOUD, nanos.cloud_id)
+			to_chat(goofygoober, span_big(span_robot("Integration complete.")))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_FAILURE
 
