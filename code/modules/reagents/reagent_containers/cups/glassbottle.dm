@@ -46,7 +46,7 @@
 	custom_price = PAYCHECK_CREW * 0.9
 
 /obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE, break_top)
-	if(bartender_check(target) && ranged)
+	if(bartender_check(target) && ranged && !istype(src, /obj/item/reagent_containers/cup/glass/bottle/molotov))
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new(drop_location())
