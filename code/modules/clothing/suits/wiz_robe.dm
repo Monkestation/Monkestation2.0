@@ -228,7 +228,7 @@
 	bomb = 10
 	fire = 30
 	acid = 40
-
+/*
 /obj/item/clothing/suit/wizrobe/durathread/fire
 	name = "pyromancer robe"
 	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
@@ -253,7 +253,7 @@
 	name = "necromancer robe"
 	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-necro"
-
+*/ // MONKE EDIT: Sprites not currently implemented
 /obj/item/clothing/suit/wizrobe/paper
 	name = "papier-mache robe" // no non-latin characters!
 	desc = "A robe held together by various bits of clear-tape and paste."
