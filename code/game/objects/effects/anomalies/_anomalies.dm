@@ -25,6 +25,8 @@
 	var/immobile = FALSE
 	///Chance per second that we will move
 	var/move_chance = ANOMALY_MOVECHANCE
+	/// If TRUE, the anomaly is contained to its impact_area.
+	var/contained = FALSE
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
@@ -104,7 +106,15 @@
 /obj/effect/anomaly/attackby(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour == TOOL_ANALYZER && scan_anomaly(user, weapon)) // monke edit: refactor into scan_anomaly
 		return TRUE
+	return ..()
 
+/obj/effect/anomaly/Move(atom/newloc, direct, glide_size_override, update_dir)
+	if(contained)
+		if(impact_area != get_area(newloc))
+			return FALSE
+		else if(impact_area != get_area(src)) // if we somehow escaped ANYWAYS, let's just go poof
+			qdel(src)
+			return FALSE
 	return ..()
 
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
@@ -113,4 +123,12 @@
 	name = (has_core ? "stable " : "hollow ") + name
 	aSignal = has_core ? aSignal : null
 	immobile = anchor
+	contained = TRUE
+
+/obj/effect/anomaly/proc/scan_anomaly(mob/user, obj/item/scanner)
+	if(!aSignal)
+		return FALSE
+	playsound(get_turf(user), 'sound/machines/ping.ogg', vol = 30, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	to_chat(user, span_boldnotice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code]."))
+	return TRUE
 

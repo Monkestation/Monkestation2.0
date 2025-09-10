@@ -65871,7 +65871,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/machinery/airalarm/directional/south,
-/mob/living/basic/pet/dog/bullterrier/walter,
+/mob/living/basic/pet/dog/dobermann/walter,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/blueshield)
 "snr" = (

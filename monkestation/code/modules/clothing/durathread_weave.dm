@@ -29,11 +29,13 @@ GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 	. = ..()
 	. += span_info("You can click on a piece of clothing, with an active welder in your offhand, in order to reinforce it!")
 
-///obj/item/stack/sheet/durathread/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
-//	return !isclothing(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY)) XANTODO
+/obj/item/stack/sheet/durathread/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return !isclothing(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
 
 /obj/item/stack/sheet/durathread/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
+	if(isstack(interacting_with) || (!isclothing(interacting_with) && interacting_with.atom_storage))
+		return NONE
 	var/obj/item/welder
 	for(var/obj/item/thingy in user.held_items)
 		if(thingy.tool_behaviour == TOOL_WELDER)

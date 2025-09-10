@@ -39522,7 +39522,7 @@
 /obj/structure/bed/dogbed{
 	name = "Walter's bed"
 	},
-/mob/living/basic/pet/dog/bullterrier/walter,
+/mob/living/basic/pet/dog/dobermann/walter,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "mEH" = (

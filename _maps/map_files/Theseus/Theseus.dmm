@@ -78000,12 +78000,8 @@
 /area/station/science/ordnance/freezerchamber)
 "wIl" = (
 /obj/structure/bed/dogbed,
-/mob/living/basic/pet/dog/bullterrier{
-	name = "Walter";
-	real_name = "Walter";
-	desc = "It's Walter!"
-	},
 /obj/item/radio/intercom/directional/south,
+/mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "wIq" = (
@@ -81808,9 +81804,12 @@
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "xKw" = (
-/obj/item/kirbyplants/random,
 /obj/structure/sign/poster/official/carwo_magazine/directional/north,
 /obj/effect/turf_decal/delivery/white,
+/mob/living/basic/pet/dog/dobermann/walter,
+/obj/structure/bed/dogbed{
+	name = "Walter's bed"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/blueshield)
 "xKx" = (
