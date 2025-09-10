@@ -34,7 +34,7 @@
 			return TRUE
 
 		if("play")
-			usr.playsound_local(get_turf(usr), bark.sounds[1], 75, FALSE, 1, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
+			usr.playsound_local(get_turf(usr), bark.sounds[1], 300 * bark.volume, FALSE, 1, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 
 /datum/bark_screen/ui_data(mob/user)
 	var/list/data = list()

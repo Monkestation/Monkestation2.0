@@ -2,7 +2,7 @@
 	var/datum/bark_sound/bark
 	var/pitch = 1
 	var/pitch_range = 0.2 //Actual pitch is (pitch - (vocal_pitch_range*0.5)) to (pitch + (vocal_pitch_range*0.5))
-	var/base_volume = 100
+	var/base_volume = 300
 	var/speed = 6 //Lower values are faster, higher values are slower
 
 /datum/atom_voice/proc/set_bark(id)
@@ -28,7 +28,7 @@
 	pitch = ((who.gender == MALE ? rand(60, 120) : (who.gender == FEMALE ? rand(80, 140) : rand(60,140))) / 100)
 	pitch_range = 0.2
 	speed = 6
-	base_volume = 100
+	base_volume = 300
 
 /datum/atom_voice/proc/start_barking(message, list/hearers, message_range, talk_icon_state, is_speaker_whispering, atom/movable/speaker)
 	if (!bark || !GLOB.barking_enabled)
@@ -38,7 +38,7 @@
 		return
 
 	var/is_yell = talk_icon_state == "2"
-	var/volume = min(base_volume * (is_yell ? 1.5 : 1), 200)
+	var/volume = min(base_volume * (is_yell ? 1.5 : 1), 300)
 	var/sound_range = message_range + 1
 
 	if (is_speaker_whispering)
@@ -63,7 +63,7 @@
 			sound_idx = 3
 		else if (talk_icon_state == "1")
 			sound_idx = 2
-		short_bark(short_hearers, sound_range, volume, 0, bark.sounds, speaker, sound_idx)
+		short_bark(short_hearers, sound_range, volume, 0, speaker, sound_idx)
 
 	if (LAZYLEN(long_hearers))
 		long_bark(long_hearers, sound_range, volume, is_yell, len, speaker)
@@ -81,11 +81,11 @@
 	for (var/i in 0 to num_barks)
 		if (total_delay > (1.5 SECONDS))
 			break
-		addtimer(CALLBACK(src, /datum/atom_voice/proc/short_bark, hearers, sound_range, volume, speaker.long_bark_start_time, bark.sounds, speaker), total_delay)
+		addtimer(CALLBACK(src, /datum/atom_voice/proc/short_bark, hearers, sound_range, volume, speaker.long_bark_start_time, speaker), total_delay)
 		total_delay += (DS2TICKS(base_duration) + rand(DS2TICKS(base_duration * (is_yell ? 0.5 : 1)))) TICKS
 	return total_delay
 
-/datum/atom_voice/proc/short_bark(list/hearers, distance, volume, queue_time, list/bark_sounds, atom/movable/speaker, sound_idx=1)
+/datum/atom_voice/proc/short_bark(list/hearers, distance, volume, queue_time, atom/movable/speaker, sound_idx=1, sound/sound_override=null)
 	if(queue_time && speaker.long_bark_start_time != queue_time)
 		return
 
@@ -103,12 +103,23 @@
 	for(var/mob/hearer in hearers)
 		if(!hearer.client)
 			continue
-		var/limited_pitch = hearer.client.prefs.read_preference(/datum/preference/toggle/barks_limited_pitch)
-		var/goon_only = hearer.client.prefs.read_preference(/datum/preference/toggle/barks_only_goon)
+		var/pitch_to_use = 0
+		var/sound/sound_to_use
+		if (sound_override)
+			sound_to_use = sound_override
+		else
+			if (hearer.client.prefs.read_preference(/datum/preference/toggle/barks_only_goon) && !bark.is_goon)
+				sound_to_use = bark.goon_equiv.sounds[sound_idx]
+				volume *= bark.goon_equiv.volume
+			else
+				volume *= bark.volume
+				sound_to_use = bark.sounds[sound_idx]
+			if (!hearer.client.prefs.read_preference(/datum/preference/toggle/barks_limited_pitch))
+				pitch_to_use = vocal_pitch
 		hearer.playsound_local(turf, vol = volume, vary = TRUE,
 			max_distance = distance, falloff_distance = 0, use_reverb = FALSE,
 			falloff_exponent = falloff_exponent,
 			distance_multiplier = 1, mixer_channel = CHANNEL_BARKS,
-			sound_to_use = bark_sounds[goon_only ? sound_idx + 3 : sound_idx],
-			frequency = limited_pitch ? 0 : vocal_pitch,
+			sound_to_use = sound_to_use,
+			frequency = pitch_to_use,
 			)

@@ -54,9 +54,6 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 				get_bark_sound(bark_obj, group_path, "path"),
 				get_bark_sound(bark_obj, group_path, "ask"),
 				get_bark_sound(bark_obj, group_path, "exclaim"),
-				null,
-				null,
-				null,
 			)
 			if (!bark.sounds[1])
 				stack_trace("Bark " + bark_id + " has no talk sound")
@@ -70,6 +67,7 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 			bark.min_pitch = bark_obj["min_pitch"]
 			bark.max_speed = bark_obj["max_speed"]
 			bark.min_speed = bark_obj["min_speed"]
+			bark.volume = bark_obj["volume"]
 			if (bark.max_pitch == null)
 				bark.max_pitch = BARK_DEFAULT_MAXPITCH
 			if (bark.min_pitch == null)
@@ -78,6 +76,8 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 				bark.max_speed = BARK_DEFAULT_MAXSPEED
 			if (bark.min_speed == null)
 				bark.min_speed = BARK_DEFAULT_MINSPEED
+			if (bark.volume == null)
+				bark.volume = 1
 
 			// Add to the bark lists
 			bark_list[bark.id] = bark
@@ -92,6 +92,8 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 			if (all_barks)
 				all_barks += bark
 
+			bark.is_goon = group_id == "goon" || bark.hidden
+
 		if (length(visible_barks))
 			GLOB.bark_groups_visible[group_name] = visible_barks
 		if (all_barks)
@@ -102,13 +104,8 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 	// Setup goon-only barks system
 	for (var/bark_id in bark_list)
 		var/datum/bark_sound/bark = bark_list[bark_id]
-		var/datum/bark_sound/goon_bark
-		if (bark.group_name == "goon" || bark.hidden)
-			goon_bark = bark
-		else
-			goon_bark = bark_list[pick(GLOB.random_barks)]
-		for (var/i in 1 to 3)
-			bark.sounds[i + 3] = goon_bark.sounds[i]
+		if (!bark.is_goon)
+			bark.goon_equiv = bark_list[pick(GLOB.random_barks)]
 
 	return bark_list
 
@@ -122,14 +119,15 @@ GLOBAL_VAR_INIT(barking_enabled, TRUE)
 	// 1 : talk
 	// 2 : ask
 	// 3 : exclaim
-	// 4 : talk, goonstation
-	// 5 : ask, goonstation
-	// 6 : exclaim, goonstation only
 	var/list/sounds
 
 	var/max_pitch
 	var/min_pitch
 	var/max_speed
 	var/min_speed
+	var/volume = 1
 
 	var/hidden = TRUE
+
+	var/is_goon
+	var/datum/bark_sound/goon_equiv
