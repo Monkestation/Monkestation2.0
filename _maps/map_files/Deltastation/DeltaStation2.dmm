@@ -66104,12 +66104,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table,
 /obj/machinery/newscaster/directional/west,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 8;
 	pixel_y = 12
 	},
 /obj/machinery/cell_charger,
-/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)

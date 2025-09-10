@@ -26807,7 +26807,6 @@
 	pixel_x = -7;
 	pixel_y = 19
 	},
-/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/item/paper_bin{
 	pixel_x = 8;
 	pixel_y = 4
@@ -66944,6 +66943,7 @@
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 12
 	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/multitool{
 	pixel_x = -4;
 	pixel_y = 2

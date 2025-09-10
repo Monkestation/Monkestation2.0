@@ -47568,8 +47568,8 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/structure/table/glass,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "poh" = (

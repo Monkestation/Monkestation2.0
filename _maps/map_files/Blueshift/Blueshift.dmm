@@ -69810,12 +69810,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/item/storage/box/nanitecontrol{
 	pixel_x = 0;
 	pixel_y = 21
 	},
 /obj/structure/railing/wood,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/wood/large,
 /area/station/science/circuits)
 "nzB" = (

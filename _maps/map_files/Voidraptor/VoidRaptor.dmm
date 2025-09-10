@@ -56512,7 +56512,6 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/item/binoculars{
 	pixel_x = -6;
 	pixel_y = 8
@@ -59421,6 +59420,8 @@
 /obj/machinery/camera/autoname/directional/south,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/sign/poster/random/directional/south,
+/obj/structure/table,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},

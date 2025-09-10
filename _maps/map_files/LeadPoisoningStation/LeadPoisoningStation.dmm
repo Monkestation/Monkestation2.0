@@ -7439,7 +7439,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
-/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "dIO" = (

@@ -9423,6 +9423,11 @@
 	},
 /turf/open/misc/grass/jungle,
 /area/graveyard/surface)
+"dCY" = (
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/science/circuits)
 "dDc" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/stone,
@@ -31868,7 +31873,6 @@
 /obj/item/nanite_remote,
 /obj/item/nanite_remote,
 /obj/item/nanite_scanner,
-/obj/item/reagent_containers/cup/bottle/radiomagnetic_disruptor,
 /obj/item/nanite_scanner,
 /turf/open/floor/iron/white,
 /area/station/science/circuits)
@@ -174883,7 +174887,7 @@ mTZ
 abZ
 rzJ
 ufL
-ufL
+dCY
 tiX
 kkb
 kSK
