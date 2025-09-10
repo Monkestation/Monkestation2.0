@@ -52337,14 +52337,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"prb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/science/lower)
 "pri" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack{
@@ -69872,7 +69864,6 @@
 /obj/item/folder{
 	pixel_x = 5
 	},
-/obj/structure/cable,
 /obj/structure/desk_bell/departmental/science{
 	pixel_x = -7
 	},
@@ -128053,7 +128044,7 @@ iix
 iix
 iix
 qQg
-prb
+gbu
 xoo
 tfx
 iix
