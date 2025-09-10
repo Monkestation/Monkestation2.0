@@ -13915,6 +13915,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/station/science/explab)
+"emF" = (
+/obj/structure/stairs/south,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "emI" = (
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plating/snowed/icemoon,
@@ -17332,6 +17340,9 @@
 /obj/structure/sign/flag/nanotrasen/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
+"fkQ" = (
+/turf/closed/wall/prefab_plastic,
+/area/icemoon/surface/outdoors/nospawn)
 "fkT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/door_timer{
@@ -23374,6 +23385,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
+"gWn" = (
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "gWu" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -48806,6 +48825,10 @@
 /obj/machinery/atm/directional/south,
 /turf/open/floor/wood,
 /area/station/commons/lounge/public_house)
+"oyN" = (
+/obj/structure/mineral_door/manual_colony_door,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "oyP" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -49764,6 +49787,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"oLW" = (
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "oMi" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -68602,6 +68633,14 @@
 /obj/structure/closet/secure_closet/brig/genpop,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
+"ujb" = (
+/obj/structure/stairs/south,
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "uji" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -69984,6 +70023,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
+"uFJ" = (
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "uFL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -72990,6 +73036,13 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/tcommsat/computer)
+"vwQ" = (
+/obj/structure/railing{
+	dir = 8;
+	layer = 4.1
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "vwV" = (
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron/dark,
@@ -206632,11 +206685,11 @@ vFw
 vFw
 vFw
 vFw
-vFw
-vFw
-vFw
-vFw
-vFw
+fkQ
+fkQ
+oyN
+fkQ
+fkQ
 vFw
 vFw
 vFw
@@ -206889,11 +206942,11 @@ vFw
 vFw
 vFw
 vFw
-vFw
-vFw
-vFw
-vFw
-vFw
+fkQ
+oLW
+rBU
+ujb
+fkQ
 vFw
 vFw
 vFw
@@ -207146,11 +207199,11 @@ vFw
 vFw
 vFw
 vFw
-vFw
-vFw
-vFw
-vFw
-vFw
+fkQ
+gWn
+rBU
+emF
+fkQ
 vFw
 vFw
 vFw
@@ -207403,11 +207456,11 @@ vFw
 vFw
 vFw
 vFw
-vFw
-vFw
-vFw
-vFw
-vFw
+fkQ
+fkQ
+oyN
+fkQ
+fkQ
 vFw
 vFw
 vFw
@@ -272167,13 +272220,13 @@ yav
 yav
 yav
 yav
-yav
-yav
-yav
+ewN
+uFJ
+uFJ
 pgA
-yav
-yav
-yav
+uFJ
+uFJ
+ewN
 yav
 yav
 yav
@@ -272424,13 +272477,13 @@ yav
 yav
 yav
 yav
-yav
-yav
-yav
-pgA
-yav
-yav
-yav
+ewN
+ewN
+pPl
+pPl
+pPl
+ewN
+ewN
 yav
 yav
 yav
@@ -272681,13 +272734,13 @@ yav
 yav
 yav
 yav
-yav
-yav
-yav
-pgA
-yav
-yav
-yav
+ewN
+ewN
+pPl
+pPl
+pPl
+ewN
+ewN
 yav
 yav
 yav
@@ -272938,13 +272991,13 @@ yav
 yav
 yav
 yav
-yav
-yav
-yav
+ewN
+vwQ
+vwQ
 pgA
-yav
-yav
-yav
+vwQ
+vwQ
+ewN
 yav
 yav
 yav
