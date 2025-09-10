@@ -458,7 +458,7 @@
     )
     machining_skill_required = 3
 
-/datum/machining_recipe/mardsuit_Eng
+/datum/machining_recipe/mardsuit_eng
     name = "Engineering Hardsuit"
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_WORKSTATION
@@ -476,7 +476,7 @@
     )
     machining_skill_required = 3
 
-/datum/machining_recipe/mardsuit_Sec
+/datum/machining_recipe/mardsuit_sec
     name = "Security Hardsuit"
     category = TAB_ASSEMBLY_PARTS
     machinery_type = MACHINING_WORKSTATION

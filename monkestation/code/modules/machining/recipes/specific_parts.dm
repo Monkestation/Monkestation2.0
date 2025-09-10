@@ -99,28 +99,6 @@
 	)
 	machining_skill_required = 3
 
-//datum/machining_recipe/bullet_small_ap
-//	category = TAB_SPECIFIC_PARTS
-//	machinery_type = MACHINING_LATHE
-//	crafting_time = MACHINING_DELAY_VERY_FAST
-//	result = /obj/item/machining_intermediates/bullet_small_ap
-//	reqs = list(
-//		/obj/item/stack/machining_intermediates/hardsteel = 1,
-//	)
-//	machining_skill_required = 4
-//	result_amount = 6
-// comented out because 0 use for them for now.
-//datum/machining_recipe/bullet_large_ap
-//	category = TAB_SPECIFIC_PARTS
-//	machinery_type = MACHINING_LATHE
-//	crafting_time = MACHINING_DELAY_VERY_FAST
-//	result = /obj/item/machining_intermediates/bullet_large_ap
-//	reqs = list(
-//		/obj/item/stack/machining_intermediates/hardsteel = 1,
-//	)
-//	machining_skill_required = 4
-//	result_amount = 12
-
 /datum/machining_recipe/lens
 	category = TAB_SPECIFIC_PARTS
 	machinery_type = MACHINING_DRILLPRESS
