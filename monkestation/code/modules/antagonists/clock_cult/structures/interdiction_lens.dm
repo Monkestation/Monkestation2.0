@@ -72,6 +72,9 @@
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/clockcult/setup_effect_directions()
 	return NONE // Should be invisible
 
+/datum/proximity_monitor/advanced/bubble/projectile_dampener/clockcult/draw_effect()
+	return NONE // Should be invisible
+
 /datum/proximity_monitor/advanced/bubble/projectile_dampener/clockcult/catch_bullet_effect(obj/projectile/bullet)
 	if(isliving(bullet.firer))
 		var/mob/living/living_firer = bullet.firer
