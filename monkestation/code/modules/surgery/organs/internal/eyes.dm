@@ -68,7 +68,7 @@
 	icon_state = "cybernetic_eyeballs"
 	desc = "A very sensitive set of optical sensors, with functionality to toggle a protective film against lights."
 	maxHealth = 1 * STANDARD_ORGAN_THRESHOLD
-	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	organ_flags = ORGAN_ROBOTIC | ORGAN_SYNTHETIC_FROM_SPECIES
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	var/shielding = FALSE
@@ -103,7 +103,7 @@
  */
 /obj/item/organ/internal/eyes/synth/proc/deactivate(mob/living/carbon/eye_owner = owner)
 	shielding = FALSE
-	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	tint = 0
 	to_chat(eye_owner, "The protective film over your optical sensors recedes.")
 
