@@ -13,7 +13,7 @@
 
 /datum/dampener_projectile_effects/proc/apply_effects(obj/projectile/bullet)
 	if(projectile_speed_multiplier)
-		bullet.speed *= projectile_speed_multiplier
+		bullet.speed /= projectile_speed_multiplier //---- MONKE EDIT: Bullet speed is inverted, so these operations are inversed compared to TG
 	if(projectile_damage_multiplier)
 		bullet.damage *= projectile_damage_multiplier
 	if(projectile_knockdown_multiplier)
@@ -24,7 +24,7 @@
 		bullet.stun *= projectile_stun_multiplier
 
 /datum/dampener_projectile_effects/proc/remove_effects(obj/projectile/bullet)
-	bullet.speed /= projectile_speed_multiplier
+	bullet.speed *= projectile_speed_multiplier //---- MONKE EDIT: Bullet speed is inverted, so these operations are inversed compared to TG
 	bullet.damage /= projectile_damage_multiplier
 	bullet.knockdown /= projectile_knockdown_multiplier
 	bullet.stamina /= projectile_stamina_multiplier
