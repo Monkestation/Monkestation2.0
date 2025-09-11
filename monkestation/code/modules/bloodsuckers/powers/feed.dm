@@ -122,11 +122,15 @@
 			vision_distance = FEED_NOTICE_RANGE, ignored_mobs = feed_target)
 
 	//check if we were seen
+	var/noticed = FALSE
 	for(var/mob/living/viewer in oviewers(FEED_NOTICE_RANGE, owner) - feed_target)
 		if(check_for_masquerade_infraction(viewer))
-			owner.balloon_alert(owner, "feed noticed!")
-			bloodsuckerdatum_power.give_masquerade_infraction()
-			break
+			viewer.balloon_alert(owner, "!!!")
+			noticed = TRUE
+
+	if(noticed)
+		owner.balloon_alert(owner, "feed noticed!")
+		bloodsuckerdatum_power.give_masquerade_infraction()
 
 	if(!HAS_MIND_TRAIT(feed_target, TRAIT_BLOODSUCKER_ALIGNED) && !IS_MONSTERHUNTER(feed_target))
 		to_chat(feed_target, span_reallybig(span_hypnophrase("Huh? What just happened? You don't remember the last few moments")))
