@@ -15519,7 +15519,6 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/computer/nanite_cloud_controller,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
@@ -57528,7 +57527,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/nanite_program_hub,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "qQc" = (
@@ -62416,7 +62414,7 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/nanite_programmer,
+/obj/machinery/computer/nanite_cloud_controller,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
 "stL" = (
@@ -72468,10 +72466,7 @@
 	id = "ordnancestorage";
 	name = "Ordance Storage Shutters"
 	},
-/obj/item/storage/box/disks_nanite{
-	pixel_x = 6;
-	pixel_y = 9
-	},
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor,
 /obj/item/food/cherrycupcake{
 	pixel_x = -6;
 	pixel_y = 1
