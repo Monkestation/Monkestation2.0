@@ -415,7 +415,6 @@
 		/datum/surgery/robot_healing/experimental,
 		/datum/surgery/healing/combo,
 		/datum/surgery/healing/combo/upgraded,
-		/datum/surgery/robot_healing/experimental,
 		/datum/surgery/blood_filter/upgraded,
 		/datum/surgery/blood_filter/femto,
 		/datum/surgery/advanced/lobotomy,
