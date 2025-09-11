@@ -411,7 +411,7 @@
 		/datum/surgery/healing/burn/upgraded/femto,
 		/datum/surgery/healing/brute/upgraded,
 		/datum/surgery/healing/brute/upgraded/femto,
-		/datum/surgery/robot_healing/upgraded
+		/datum/surgery/robot_healing/upgraded,
 		/datum/surgery/robot_healing/experimental,
 		/datum/surgery/healing/combo,
 		/datum/surgery/healing/combo/upgraded,
