@@ -407,6 +407,10 @@
 
 /obj/item/surgical_processor/cmo
 	loaded_surgeries = list(
+		/datum/surgery/healing/burn/upgraded,
+		/datum/surgery/healing/brute/upgraded,
+		/datum/surgery/robot_healing/experimental
+		/datum/surgery/healing/combo // Unless we have the weaker upgrades the prior ones to these wont clear.
 		/datum/surgery/healing/combo/upgraded,
 		/datum/surgery/healing/brute/upgraded/femto,
 		/datum/surgery/healing/burn/upgraded/femto,
