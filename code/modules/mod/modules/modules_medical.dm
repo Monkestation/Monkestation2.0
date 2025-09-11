@@ -418,6 +418,7 @@
 		/datum/surgery/robot_healing/experimental,
 		/datum/surgery/blood_filter/upgraded,
 		/datum/surgery/blood_filter/femto,
+		/datum/surgery/advanced/lobotomy,
 		/datum/surgery/advanced/dna_recovery,
 		/datum/surgery/advanced/wing_reconstruction,
 	)
